@@ -1,3 +1,8 @@
+// ⭐ 2026-10-10 RAMENO = STRANA × ZONA (KUKY "8. ano, prepis ㉳ a zapni to v labu"; DECISIONS 2026-10-10 (34) a zapnuti): rameno = strana
+//   (oblast; bez oblasti koluje na lehci stranu) × zona (Urd / Verdandi / Skuld), vrchol = zakladaci Skuld + Skuld bez strany; vedlejsi vetev na
+//   rameni = dalsi zivel v tom miste (kapacita Urd 3, Verdandi 3, Skuld 2, vrchol 2 — 2 × (4+4+3) + 3 = 25); dalsi zivel roste jako vetvicky
+//   primo na rameni. Proto se zmenilo: (d) nejvys 7 pramenu (6 ramen + vrchol), (g) misto = strana × zona (+ zivel na vedlejsi), (h) strop
+//   25 hlida stavba sama, (n) "drzet misto zivel × zona" pryc (mista zivel × zona uz nejsou ramena); nove (o) stalost, (p) kapacita, (q) koreny.
 // ㉳ KAZDA VETEV Z JINEHO MISTA + NIC NEKLIKATELNEHO (lab stromu, CODE-tree 2026-10-03).
 //
 // Guard proti 2026-10-03. KUKY: "proc dve vetve vyrustaji presne z jednoho mista? … nechci, aby vyrustaly dve nebo vice
@@ -13,21 +18,24 @@
 //       mladem kmeni jen 8 ramen a strom vypadal jako koste; leve a prave se stridaji v polovine,
 //   (b) vetve na tomtez rodici (vetvicky i povysene) zacinaji aspon MIN_SIB px od sebe,
 //   (c) kazdy nakresleny tah patri klikatelne casti stromu,
-//   (d) v kmeni je nejvys 15 pramenu (14 mist element × zona, vzacne 15. pri trech zakladacich runach stinu).
+//   (d) v kmeni je nejvys 7 pramenu (6 ramen strana × zona + vrchol; do 2026-10-10 nejvys 15 = 14 mist element × zona + vzacny 15.).
 //   (e) INSPEKCE odpovida logu (2026-10-03, KUKY: "proc se informace nemeni?" — inspekce popisovala model z kroku 1):
 //       vetvicka vznikla ze cteni, ktere jeji runu opravdu obsahuje; "tahl celkem Nx" = skutecny pocet v logu.
-//   (g) KAZDE CTENI NA SVEM MISTE (KUKY 2026-10-05: "kazde cteni, kazde!!! mam ji presne tam, kam patri"): kazde tazeni visi na
-//       vetvi sveho elementu a sveho pasma zony, a ma-li cteni stranu (oblast nitro/svet), i na sve strane; vetev se stranou je
-//       NAKRESLENA na te strane (uhel). Data z labu (window._PLACE), strana kresby z picku. Drive ~80 cteni na opacne strane.
+//   (g) KAZDE CTENI NA SVEM MISTE (KUKY 2026-10-05: "kazde cteni, kazde!!! mam ji presne tam, kam patri"; 2026-10-10 "proc by na neco
+//       nemelo zbyt misto?"): kazde tazeni visi na vetvi sve strany a sve zony (rameno nebo jeho vedlejsi), na vedlejsi jen sveho zivlu;
+//       na rameni jineho zivlu jen kdyz ma rameno plnou kapacitu vedlejsich. Ma-li cteni stranu (oblast), visi na sve strane a vetev je
+//       NAKRESLENA na te strane (uhel). Data z labu (window._PLACE), strana kresby z picku. Drive (2026-10-05) misto = zivel × zona × strana.
 //   (i) OBLAST NEHYBE VYSKOU (2026-10-09, KUKY: "vyrovnany clovek ma vyrovnany strom"): dve cteni, ktera se lisi JEN oblasti
 //       (nitro × svet, tyz zamer), padnou do tehoz pasma. Do 2026-10-09 vstupovala oblast do vysky (vaha 0,3) a cteni z nitra se
 //       do koruny nedostalo nikdy (KUKYho strom: vlevo v korune 0 z 98 tazeni).
 //   (j) STROM BEZ OBLASTI JE VYVAZENY (2026-10-09): cteni bez strany jdou na lehci stranu, takze clovek, ktery oblast nevyplnuje,
 //       ma na obou nakreslenych stranach podobne tazeni (pomer aspon MIN_LR). Drive stranu zakladal svet runy a cteni se lepila na
 //       prvni vetev zony -> modelove 71 : 192.
-//   (n) DRZET MISTO (2026-10-10, KUKY: "tim, ze se drzi misto pro ten element, dokud se neobjevi"): kazde misto zivel × zona, ktere
-//       cteni pouzila, ma vlastni pramen (rameno z kmene), dokud strom neni na stropu 25 a pramenu je mene nez 14. Drive kapacita
-//       kratkeho kmene pustila jen nekolik pramenu a zbytek visel jako povysena z ramene v jine zone (KUKYho Nauthiz v korune).
+//   (n) ~~DRZET MISTO zivel × zona~~ ZRUSENO 2026-10-10 s rameny strana × zona — kazde rameno ma pramen vzdy (jeho misto je pevne).
+//   (o) STALOST (2026-10-10, KUKY "strom je zivy, ale vetve neskacou"): rameno tehoz mista (strana × zona) vychazi z kmene v kazdem okamziku
+//       rustu ve stejne vysce (do 2026-10-10 vysku vedla casova smycka podle zon cteni a ramena se posouvala).
+//   (p) KAPACITA: na rameni Urd a Verdandi nejvys 3 vedlejsi, na Skuld 2, na vrcholu 2; vedlejsi nese jiny zivel nez rameno a zadny dvakrat.
+//   (q) KAZDA VETEV MA KOREN (DECISIONS 2026-10-10 (26)): kazda vedlejsi vetev ma svuj koren (klikatelny), ramena ho maji ve svem tahu.
 //   (m) VETVICKY KOLEM VETVE (2026-10-09, KUKY: "vetvicky by se stridaly kolem vetve na obe strany, protoze stranu vetve uz urcila
 //       oblast"): zadna hlavni vetev s aspon 3 primymi vetvickami nema vsechny na jedne strane (strana = kam vetvicka miri od smeru
 //       rodice v miste uchyceni). Drive strana podle oblasti -> na leve vetvi skoro jen nitro -> KUKYho strom 4 jednostranne vetve.
@@ -47,8 +55,8 @@
 //   node scripts/verify_tree_mista.js            (TREE_LAB_HTML=<cesta> = jina kopie labu, napr. pro mutacni test)
 const path = require('path'), cp = require('child_process'), fs = require('fs');
 const ROOT = path.resolve(__dirname, '..');
-const MAX_BR = 25, CAP_OFF = 0.05, MIN_LR = 0.75;   // MIN_LR: (j) mensi : vetsi strana u stromu bez oblasti   // (h): 25 run = nejvys 25 hlavnich vetvi; pri stropu nejvys 5 % tazeni na vetvi vedle sveho mista
-const MIN_EXIT = 29, MIN_EXIT_LR = 14, MIN_SIB = 4, MAX_STRANDS = 15, FLOOR = 0.215;   // FLOOR: vychozi exitFloor 0,22 minus zaokrouhleni; MIN_EXIT: KUKY 2026-10-03 "30px min." (drive 10 — mene nez sirka kmene); MIN_EXIT_LR: levo-pravo = polovina (obrazek 4)
+const MAX_BR = 25, MIN_LR = 0.75, CAPB = { '-1': 3, '0': 3, '1': 2 }, CAP_TOP = 2;   // MIN_LR: (j) mensi : vetsi strana u stromu bez oblasti   // (h): 25 run = nejvys 25 hlavnich vetvi; pri stropu nejvys 5 % tazeni na vetvi vedle sveho mista
+const MIN_EXIT = 29, MIN_EXIT_LR = 14, MIN_SIB = 4, MAX_STRANDS = 7, FLOOR = 0.215;   // FLOOR: vychozi exitFloor 0,22 minus zaokrouhleni; MIN_EXIT: KUKY 2026-10-03 "30px min." (drive 10 — mene nez sirka kmene); MIN_EXIT_LR: levo-pravo = polovina (obrazek 4)
 const sideOf = m => (m.idx === 0) ? 0 : (Math.cos(m.ang) >= 0 ? 1 : -1);   // strana = kam rameno skutecne miri (nakresleny uhel), vudci 0
 let html = process.env.TREE_LAB_HTML || null;
 if (!html) {   // lab neni v gitu (generuje ho builder) -> postavit cerstvy
@@ -71,7 +79,7 @@ const gen = (seed, sc, N, sa) => { let s = seed; const rnd = () => (s = (s * 110
 const LOGS = [['vsude', gen(3933, [1 / 3, 1 / 3, 1 / 3], 300)], ['minulost', gen(3000, [0.6, 0.2, 0.2], 300)],
   ['svet', gen(4111, [1 / 3, 1 / 3, 1 / 3], 300, [0.15, 0.15, 0.7])]];   // svet: viz (h) — povysena z vudci vetve na druhe strane
 const NS = [20, 60, 150, 300];
-const fails = []; let worstE = 1e9, worstLR = 1e9, worstS = 1e9, maxStr = 0, runs = 0, maxBr = 0, worstCap = 0;
+const fails = []; let worstE = 1e9, worstLR = 1e9, worstS = 1e9, maxStr = 0, runs = 0, maxBr = 0, worstForeign = 0; const STAL = {};
 LOGS.forEach(([nm, log]) => NS.forEach(n => {
   const r = labRun(log.slice(0, n), html, null); runs++;
   const mains = r.picks.filter(m => !m.gradOf && m.exitX != null);
@@ -94,22 +102,30 @@ LOGS.forEach(([nm, log]) => NS.forEach(n => {
   const sub = log.slice(0, n);
   const PL = r.sb._PLACE;
   if (!PL) fails.push('lab nevystavuje misto cteni (_PLACE) — kontrola mist nebezi');
-  else { let off = 0, ex = '', offS = 0, capOff = 0, draws = 0;
+  else { let off = 0, ex = '', offS = 0, foreign = 0, draws = 0;
     const nBr = PL.sec.length + PL.grads.length; maxBr = Math.max(maxBr, nBr);
     if (nBr > MAX_BR) fails.push(nm + ' po ' + n + ': ' + nBr + ' hlavnich vetvi (strop ' + MAX_BR + ')');
-    { const elb = new Set(); PL.rd.forEach(row => (row || []).forEach(k => { if (k) elb.add(k.split('|').slice(0, 2).join('|')); }));   // (n)
-      const strands = PL.sec.filter(b => !b.noStrand).length;
-      if (nBr < MAX_BR && strands < Math.min(14, elb.size)) fails.push(nm + ' po ' + n + ': mist zivel × zona ' + elb.size + ', vlastnich pramenu jen ' + strands + ' (drzet misto)'); }
+    /* (p) kapacita ramene: vedlejsi na matce, jiny zivel nez rameno, zadny dvakrat */
+    const subs = {}; PL.grads.forEach(g => { (subs[g.p] = subs[g.p] || []).push(g); });
+    Object.keys(subs).forEach(q => { const m = PL.sec[q], L = subs[q], cap = (!m || m.side === 0) ? CAP_TOP : CAPB[String(m.band)];
+      if (L.length > cap) fails.push(nm + ' po ' + n + ': rameno ' + (m ? m.el + '|' + m.band + '|' + m.side : q) + ' ma ' + L.length + ' vedlejsich (kapacita ' + cap + ')');
+      const els = new Set(); L.forEach(g => { if (m && g.el === m.el) fails.push(nm + ' po ' + n + ': vedlejsi ' + g.el + ' na rameni tehoz zivlu'); if (els.has(g.el)) fails.push(nm + ' po ' + n + ': na rameni dve vedlejsi ' + g.el); els.add(g.el); }); });
     const SIDE = { healing: -1, family: -1, inner: -1, purpose: 1, career: 1, spirituality: 1 };   // osa B (RUNAR_TREE.md §3), nezavisle na labu; logy zacinaji Nornami -> poradi cteni = poradi v labu
-    PL.rd.forEach((row, i) => (row || []).forEach((key, j) => { if (key == null) return; const [el, b, sd] = key.split('|'), o = (PL.own[i] || [])[j];
-      const br = (o == null) ? null : (o >= 100 ? PL.grads[o - 100] : PL.sec[o]);
-      const capped = nBr >= MAX_BR && br && br.el === el; draws++;   // (h) na stropu: na nejblizsi vetvi sveho elementu
-      if (!br || br.el !== el || String(br.band) !== b || (+sd !== 0 && br.side !== +sd)) { if (capped) capOff++; else { off++; if (!ex) ex = ' (cteni #' + (i + 1) + ' ' + key + ' visi na ' + (br ? br.el + '|' + br.band + '|' + br.side : 'nicem') + ')'; } }
-      const exp = SIDE[(sub[i] || {}).area] || 0; if (exp && br && br.side !== exp && !capped) offS++; }));
-    worstCap = Math.max(worstCap, capOff / Math.max(1, draws));
-    if (capOff > CAP_OFF * draws) fails.push(nm + ' po ' + n + ': na stropu ' + MAX_BR + ' vetvi visi ' + capOff + ' z ' + draws + ' tazeni mimo sve misto (nejvys ' + Math.round(CAP_OFF * 100) + ' %)');
+    PL.rd.forEach((row, i) => (row || []).forEach((key, j) => { if (key == null) return; const [el, b, sd] = key.split('|'), o = (PL.own[i] || [])[j]; draws++;
+      const isG = o != null && o >= 100, br = (o == null) ? null : (isG ? PL.grads[o - 100] : PL.sec[o]);
+      const full = !isG && br && (subs[o] || []).length >= ((br.side === 0) ? CAP_TOP : CAPB[String(br.band)]);
+      const okSlot = br && String(br.band) === b && br.side === +sd, okEl = br && (br.el === el || (!isG && full));
+      if (okSlot && !isG && br.el !== el) foreign++;
+      if (!okSlot || !okEl) { off++; if (!ex) ex = ' (cteni #' + (i + 1) + ' ' + key + ' visi na ' + (br ? br.el + '|' + br.band + '|' + br.side + (isG ? ' vedlejsi' : ' rameno') : 'nicem') + ')'; }
+      const exp = SIDE[(sub[i] || {}).area] || 0; if (exp && br && br.side !== 0 && br.side !== exp) offS++; }));   /* vrchol (strana 0) = stred: zakladaci Skuld tam jde vzdy, ma-li cteni oblast nebo ne */
+    worstForeign = Math.max(worstForeign, foreign / Math.max(1, draws));
     if (off) fails.push(nm + ' po ' + n + ': ' + off + ' tazeni mimo sve misto' + ex);
     if (offS) fails.push(nm + ' po ' + n + ': ' + offS + ' tazeni se stranou z oblasti visi na vetvi druhe strany');
+    /* (o) stalost: vyska vystupu ramene kazdeho mista v case */
+    mains.forEach(m => { const sl = PL.sec[m.idx]; if (!sl) return; const key = nm + '|' + sl.side + '|' + sl.band; (STAL[key] = STAL[key] || []).push({ n, f: m.frac, name: m.name }); });
+    /* (q) koren kazde vedlejsi vetve */
+    const nSR = r.allPicks.filter(p => p.meta && p.meta.sideRoot).length;
+    if (nSR !== PL.grads.length) fails.push(nm + ' po ' + n + ': korenu vedlejsich ' + nSR + ', vedlejsich vetvi ' + PL.grads.length);
     r.allPicks.forEach(p => { if (typeof p.k !== 'number' || !p.meta) return; const br = (p.k >= 100) ? PL.grads[p.k - 100] : PL.sec[p.k];
       if (!br || !br.side || p.meta.idx === 0) return; const ds = Math.cos(p.meta.ang) >= 0 ? 1 : -1;
       if (ds !== br.side) fails.push(nm + ' po ' + n + ': vetev ' + p.meta.name + ' patri na stranu ' + (br.side > 0 ? 'svet (vpravo)' : 'nitro (vlevo)') + ', nakreslena na druhe'); }); }
@@ -138,8 +154,13 @@ LOGS.forEach(([nm, log]) => NS.forEach(n => {
     if (!m.twig && typeof p.k === 'number' && m.ownN != null && (!m.rdl || m.rdl.length !== m.ownN)) fails.push(nm + ' po ' + n + ': vetev ' + m.name + ' — "vetev jako celek" ma ' + (m.rdl ? m.rdl.length : 'zadna') + ' cteni, na vetvi jich visi ' + m.ownN); });   // 2026-10-09: blok VETEV JAKO CELEK v inspekci
   const sm = /prameny (\d+)/.exec(r.grow), sn = sm ? +sm[1] : null; if (sn != null) maxStr = Math.max(maxStr, sn);
   if (sn == null) fails.push(nm + ' po ' + n + ': pocet pramenu v kmeni nejde precist');
-  else if (sn > MAX_STRANDS) fails.push(nm + ' po ' + n + ': ' + sn + ' pramenu v kmeni (max ' + MAX_STRANDS + ' — povysene vetve nemaji vlastni pramen)');
+  else if (sn > MAX_STRANDS) fails.push(nm + ' po ' + n + ': ' + sn + ' pramenu v kmeni (max ' + MAX_STRANDS + ' — 6 ramen + vrchol, vedlejsi vlastni pramen nemaji)');
 }));
+/* (o) stalost: rameno tehoz mista ve vsech okamzicich rustu ve stejne vysce */
+let oMsg = '';
+{ let worst = 0; Object.keys(STAL).forEach(k => { const L = STAL[k], f0 = L[0].f; L.forEach(x => { worst = Math.max(worst, Math.abs(x.f - f0));
+    if (Math.abs(x.f - f0) > 0.002) fails.push('(o) rameno ' + k + ' (' + x.name + ') se posunulo z ' + (f0 * 100).toFixed(1) + ' % na ' + (x.f * 100).toFixed(1) + ' % kmene (po ' + x.n + ' ctenich)'); }); });
+  oMsg = 'ramena v case nejvys ' + (worst * 100).toFixed(2) + ' % kmene od sve vysky'; }
 /* (i) oblast nehybe vyskou: Norny + dve cteni Fehu se zamerem "rozhodnuti", jedno z nitra, druhe ze sveta */
 let iMsg = '', jMsg = '';
 { const twin = LOGS[0][1].slice(0, 1).concat([{ spread: 'single', runes: [{ rune: 'fehu', el: 'fire' }], area: 'inner', intention: 'decision', seeking: null },
@@ -177,4 +198,4 @@ let kMsg = '', lMsg = '';
   if (!(lc > lr + 0.05)) fails.push('(l) lab: konce vetvicek s Clarity nejsou vys nez s Reflection (' + lc.toFixed(2) + ' vs ' + lr.toFixed(2) + ') — preda lab seekTip?');
   else lMsg = 'konce vetvicek: Clarity ' + lc.toFixed(2) + ' > Reflection ' + lr.toFixed(2); }
 if (fails.length) { fails.slice(0, 12).forEach(f => console.log('   ' + f)); console.log('strom: ' + fails.length + ' poruseni (vetve ze stejneho mista / pod podlahou / cteni mimo sve misto / vetvi nad strop / neklikatelne / prameny navic / inspekce neodpovida logu)'); process.exit(1); }
-console.log('strom (lab): ' + runs + ' stromu — vystupy ramen na stejne strane aspon ' + worstE.toFixed(0) + ' px, levo-pravo aspon ' + worstLR.toFixed(0) + ' px, zadne pod podlahou, kazde cteni na svem miste (na stropu nejvys ' + (worstCap * 100).toFixed(1) + ' % o misto vedle), nejvys ' + maxBr + ' hlavnich vetvi, vetve na rodici aspon ' + worstS.toFixed(1) + ' px, vse klikatelne, inspekce = log, nejvys ' + maxStr + ' pramenu v kmeni, ' + iMsg + ', ' + jMsg + ', ' + kMsg + ', ' + lMsg);
+console.log('strom (lab): ' + runs + ' stromu — vystupy ramen na stejne strane aspon ' + worstE.toFixed(0) + ' px, levo-pravo aspon ' + worstLR.toFixed(0) + ' px, zadne pod podlahou, kazde cteni na svem miste strana × zona (jako vetvicka na plnem rameni jineho zivlu nejvys ' + (worstForeign * 100).toFixed(0) + ' %), nejvys ' + maxBr + ' vetvi, kapacita ramen drzi, kazda vedlejsi ma koren, ' + oMsg + ', vetve na rodici aspon ' + worstS.toFixed(1) + ' px, vse klikatelne, inspekce = log, nejvys ' + maxStr + ' pramenu v kmeni, ' + iMsg + ', ' + jMsg + ', ' + kMsg + ', ' + lMsg);

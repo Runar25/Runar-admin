@@ -11,12 +11,12 @@
 1. **Log → brána založení** — bez zakládacích Noren (3 runy) jen semínko; s nimi Norny první, ostatní čtení v čase (i ta před založením).
 2. **`routingFromLog`** — mix elementů, počty tažení run, velké spready (vícerunová čtení).
 3. **Velikost stromu** — výška kmene (`trunkT.topY`).
-4. **`stableAssign`** — místa „element × zóna“ (= ramena = prameny), větvičky (čtení), povýšení; vše v jednom průchodu v čase.
+4. **`slotAssign`** (od 2026-10-10; dřív `stableAssign`, ten už jen pro semínko) — ramena „strana × zóna“ (= prameny) + vrchol, vedlejší větve (živly), větvičky (čtení); vše v jednom průchodu v čase.
 5. **Kostra `FR`** — strana a neutrální rozevření ramene při zrodu.
-6. **Časová smyčka (v drawu)** — pro všechna ramena naráz: výška výstupu z kmene, strana, úhel. Po každém čtení krok k cíli.
+6. **Časová smyčka (v drawu)** — běží dál (zóna stromu, výška kmene), ale **výšky a úhly ramen od 2026-10-10 dává jejich místo** (§5).
 7. **Kmen** — `Tk.buildTrunk` (`runar-trunk.js`): prameny, svazek, náklon, vlnění, kořenové konce.
 8. **Ramena** — pro každý pramen: výstup z kmene → `growBranch` → `B.buildBranch` (`runar-branch.js`) + větvičky + kořen.
-9. **Povýšené větve** — `growGrad`: z matky v místě odštěpení; matka je do toho místa tlustší.
+9. **Vedlejší větve** (dřív „povýšené“) — `growGrad`: z ramene na pevném místě podle pořadí; každá má svůj kořen z kořene matky.
 10. **Kreslení** — auto-fit na plátno, kůra / WebGL; **inspekce**, **přehled větví**, text **RŮST**.
 
 ## 1. Vstup čtení → zóna (`readZone`)
@@ -29,23 +29,21 @@
 - ⚠️ **MRTVÉ:** `wExp` (velké spready vody/země → „šířka“) a `mExp` (stínu → „mohutnost“) se spočítají (`effCanopy`, `girth`) a **nikde se nepoužijí** — panel RŮST je přesto ukazuje jako „expanze: šířka / mohutnost“. Nalezeno 2026-10-03 při mapování.
 - **Promítne se:** výška kmene = kolik místa je pro ramena (kapacita, §3) a jak daleko od sebe vycházejí.
 
-## 3. Místa a ramena — `stableAssign`
-- **Místo = element × pásmo zóny × strana** (`bandOf`; strana = oblast: nitro vlevo, svět vpravo, Love/Crossroads/bez oblasti = střed). Oheň/voda/vzduch/země tři pásma, stín dvě (na hranách). Pravidla → `RUNAR_TREE.md` §3, §5.
-- **Každé čtení jde na SVÉ místo** (od 2026-10-05; KUKY „každé čtení, každé!!! mám ji přesně tam, kam patří“). Místo založí první čtení, které tam patří — jakákoli runa elementu (dá větvi tvar; jedna runa může být na víc větvích). Střed stranu nezakládá: přidá se k větvi elementu v tom pásmu (KUKY); když žádná není, založí ji uprostřed. Hlídá smoke ㉳ (g).
-- **Rameno s vlastním pramenem** = první místo elementu×pásma (nejvýš `maxMains` = 14 pramenů). **Od 2026-10-10 se místo drží:** první čtení živlu × zóny založí pramen vždy, i na krátkém kmeni — místo udělá časová smyčka (zrod do mezery své zóny, sousedé se rozestoupí, kmen povyroste, §5). Do té doby ho pustila jen kapacita kmene (`capSecAt`: kolik výstupů se v tu chvíli vešlo nad podlahu) a zbytek visel jako povýšená z ramene v jiné zóně (KUKYho Nauthiz v koruně). `capSecAt` dál počítá, ale pramen nebrzdí.
-- **Každé další místo** (druhá strana nebo střed téhož pásma; pásmo, pro které už není pramen) = **povýšená větev** z ramene téhož elementu, které je na straně místa (nejbližší pásmo). Nemá-li element na té straně žádné rameno, dostane místo **vlastní výstup z kmene** (rameno bez pramene: vyjde z kmene na své straně, pramen sdílí uvnitř kmene; bez kořene). Dřív „sousední zóna“: runa s ramenem poslala další čtení jinam (KUKYho strom: 5).
-- **Čtení bez strany** (bez oblasti, Love, Crossroads; od 2026-10-09): jde na **lehčí stranu** (`lightSide`: strana, na jejíž větvích zatím visí méně tažení) a tam na místo svého živlu a zóny jako čtení se stranou (přidá se / převezme / založí). Místo vůdčí větve zůstává střed. Na stropu 25 nezakládá: přidá se k existující větvi svého živlu a zóny, pokud možno na lehčí straně. Dřív se přidalo k větvi, která v zóně už byla, a stranu zakládal svět runy → strom lidí bez oblasti křivý (modelově 71 : 192 tažení).
-- **Převzetí** (2026-10-07): čtení se stranou přijde na element×pásmo, kde visí jen větev založená středem (Love/Crossroads/bez oblasti, zakládací Norny) nakreslená na jeho straně → ta větev je jeho místem (značka `adopt`), další se nezakládá. Strana z dat zůstává 0, takže kostra `FR` i kresba se nemění. Vůdčí větev se nepřevezme.
-- **Strop 25 hlavních větví** (`MAX_BR` = počet run; KUKY 2026-10-07, do té doby „povýšených, kolik je třeba“): je-li jich 25, nové místo vlastní větev nedostane — čtení jde k nejbližší větvi svého elementu (napřed na své straně, nejbližší pásmo; při shodě ta s víc čteními). Kolik tažení tak visí o místo vedle, hlídá smoke ㉳ (§12).
-- **Větvičky** = čtení: každé čtení jde do stromu svého ramene (`attachR`): na rameni nejvýš `twigMax`, pak o patro níž do větvičky s nejmenším podstromem.
-- ~~Povýšení podle prahu~~ (runa tažená dost často; nejvýš 2 na rameno, tempo `gradEvery`) — **zrušeno 2026-10-05**: povýšená větev = místo čtení, ne odměna za četnost.
-- **Promítne se:** počet ramen a pramenů v kmeni, co roste na kterém rameni, délka ramene (§7), povýšené větve (§9).
+## 3. Místa a ramena — `slotAssign` (od 2026-10-10)
+- **Rameno = strana × zóna**: vlevo / vpravo × Urð / Verðandi / Skuld (`bandOf` jako dřív, stín jen dole nebo nahoře). Založí ho první čtení, které tam patří (jeho runa a živel). **Vrchol** (vůdčí větev, rameno 0) = zakládací Skuld + čtení bez strany v Skuld (místo vůdčí větve zůstává střed). Pravidla → `RUNAR_TREE.md` §3; rozhodnutí → DECISIONS 2026-10-10 (34) a zapnutí.
+- **Čtení bez strany** (bez oblasti, Love, Crossroads) **koluje** na lehčí stranu (`lightSide` uvnitř `slotAssign`: strana, na kterou zatím šlo méně tažení); bez záměru dá zónu svět runy (`readZone`).
+- **Vedlejší větev = další živel v místě** (kdo dřív přijde, má ji dřív): kapacita Urð 3, Verðandi 3, Skuld 2, vrchol 2 → nejvýš 25 větví samo od sebe. Další živel vlastní větev nemá — jeho čtení rostou jako **větvičky přímo na rameni** (místo má každé čtení; na KUKYho stromě 19 % tažení). Čtení živlu, který na rameni větev má, jde na ni.
+- **Nic se nepřesouvá:** kde rameno nebo vedlejší vznikly, tam zůstanou; pořadí vedlejší na rameni (`_xi`) a kapacita (`_xn`) dávají její pevné místo.
+- **Větvičky** = čtení: každé čtení jde do stromu své větve (`attachR`): nejvýš `twigMax`, pak o patro níž do větvičky s nejmenším podstromem.
+- **Promítne se:** počet ramen (nejvýš 6 + vrchol) a pramenů v kmeni (nejvýš 7), co roste na kterém rameni, vedlejší větve (§9), kořeny (§10).
+- *Historie:* do 2026-10-10 místo = živel × pásmo × strana (`stableAssign`, nejvýš 14 pramenů, převzetí, držet místo, strop 25) — `git log -- RUNAR_TREE_MAP.md`.
 
 ## 4. Kostra `FR` (strana při zrodu)
 - **Strana = strana místa (z dat)** — od 2026-10-05; dřív střídání v pořadí zrodu (vyvažovalo počty a počítalo i povýšené, které na přidělené straně nerostly → KUKYho strom 9 : 4). Místo ze středu: strmě u kmene, strana kresby = svět runy (Hel vlevo, Asgard vpravo, Midgard podle runy). Demo bez logu dál střídá. Neutrální rozevření `bendN` (+ drobná variace zlatým řezem) × šířka koruny `canopy`.
 - **Promítne se:** výchozí strana a úhel nového ramene; povýšené větve mají v kostře taky místo (klíč 100+).
 
 ## 5. Časová smyčka — výšky, strany, úhly (draw, „VYSKY VYSTUPU predem“)
+⚠️ **Od 2026-10-10 (ramena strana × zóna) výsledky smyčky pro ramena přepíše jejich MÍSTO** (blok „RAMENA“ hned za smyčkou): výška výstupu podle místa (Urð dole, Skuld nahoře, levá a pravá se v zóně střídají — která níž, dá životní runa a datum), úhel podle místa (dole nejvíc do strany), délka = patro × medián praxe ramen, dráha pramene ve svazku podle strany a patra. Tíha, natočení za oblastí a rozestup níž proto ramena teď **neovlivní** (čeká na rozhodnutí o „živém tvaru ramen“, `RUNAR_BACKLOG.md`).
 Prochází čtení od založení; po každém čtení:
 - **Strana** ramene: kostra FR = strana místa; překlápění zůstalo v kódu, ale nenastane (čtení druhé strany na rameno nejdou).
 - **Cílová výška**: střed pásma zóny + zóna čtení na rameni (tlumeně); vůdčí větev = vrchol kmene.
@@ -79,32 +77,34 @@ Směr ramene se po délce mění — **tohle rozhoduje, jestli se ramena potkaj�
 - **Konec větvičky podle seekingu** (od 2026-10-09): lab předá `seekTip` větvičkám (level ≥ 1, ramenům ne), engine (`runar-branch.js`) otočí konec — Clarity nahoru, Reflection dolů (nejvýš 0,6 rad, plynule od poloviny délky), Confirmation rovně (menší oblouk, vlnění i zdvih), Insight zalomení (0,5 rad kolem 62–72 % délky), General jeden z nich podle semínka větvičky. Tvar konce (`eTipc`) dál dává runa. Bez `seekTip` (aplikace) engine beze změny.
 - **Promítne se:** hustota a směr drobných větví; kořeny zrcadlí prvních `mirrorN` větviček (§10).
 
-## 9. Povýšené větve — `growGrad`
-- **= místa čtení** (od 2026-10-05): matka = rameno téhož elementu na straně místa; délka a počet čtení = čtení jejího místa (`gradTree.n`); místo odštěpení ze čtení, které místo založilo (stálé); s matkou na druhé straně **nebo svislou (vůdčí)** roste vždy ke své straně; odbočka od matky na své straně nesmí přes svislici (zastaví se těsně na své straně) — obojí 2026-10-07; od 2026-10-09 se odbočka (`gTurnQ`, určená jednou při povýšení) rovnou otočí, kdyby větev poslala přes svislici na druhou stranu místa — zastavení u svislice zůstává jen jako pojistka (dřív Nauthiz z Othily −1°, hřeben); dolní strop směru jako rameno (`softSide`). Strana místa = strana z dat, nebo převzetí (`adopt`, §3). Čtení povýšené patří jí, ne matce (matku dřív táhla na druhou stranu).
-- Nemají vlastní pramen ani kořen: součást pramene matky; matka je od kořene po místo odštěpení tlustší. Místo odštěpení: zóna jejích čtení do chvíle povýšení + rozdělovač míst (odstup od větviček matky). Úhel: od směru matky v místě odštěpení odbočí o stálý úhel (`GREL`) na stranu, která se určí jednou, v čtení povýšení (`_GTURN`: u strmé matky ven, u vodorovné nahoru; druhá povýšená téže matky a sousedé na téže straně se střídají). Ke svému úhlu se stočí přes 15 % své délky (rameno z kmene přes `limbBendU`, výchozí 45 %) — pomalé stočení ji vedlo souběžně s matkou. Délka: praxe × náběh × `gradLen`.
+## 9. Vedlejší větve (dřív „povýšené“) — `growGrad`
+- **Od 2026-10-10:** matka = rameno téže strany a zóny (ne téhož živlu); vedlejší nese jiný živel než rameno. Místo podél ramene pevné podle pořadí a kapacity (`u` 0,25–0,80, na vrcholu 0,12–0,82); rozdělovač míst (`_KU`) je postaví napřed, větvičky se jim vyhnou.
+- **Směr:** od směru RAMENE střídavě nahoru / dolů (nahoru víc dole, nahoře méně); na vrcholu střídavě vlevo / vpravo (kreslená strana `_dsd`, data strana 0 = střed), dole širší, nahoře strmější. Ke svému úhlu se stočí přes 6 % délky. **Otočená dolů zvedá špičku jen 0,35 ×** (ona i její větvičky) — jinak se větvičky zespodu stočily nahoru a byly všechny navrchu.
+- **Délka:** u kmene delší, ke špičce kratší (podíl délky ramene), ale **aspoň 0,8 × své praxe** (F5) — krátká vedlejší s mnoha čteními měla větvičky 3–4 px od sebe.
+- Nemají vlastní pramen v kmeni: matka je od kořene po místo odštěpení tlustší (kmen jen o čtvrtinu, kořen jako dřív).
 
 ## 10. Kořeny — `buildRootFor`, `mirrorTwig`
-- Každé rameno má kořen tvaru své runy (posuvníky KOŘENY); zrcadlo koruny = prvních `mirrorN` větviček ramene dolů. Povýšené větve kořen nemají.
+- Každé rameno má kořen tvaru své runy (posuvníky KOŘENY); zrcadlo koruny = prvních `mirrorN` větviček ramene dolů. **Od 2026-10-10 má kořen i každá vedlejší větev** (DECISIONS 2026-10-10 (26)): téže stavby (`buildRootFor`, velikost `gradStrandW`), vyroste z kořene matky ve stejném místě a natočí se zrcadlově k odbočce (nejvýš 63° od svislice). Kořen se smí natočit, ohnout a prodloužit, **nepředělává se** (DECISIONS (23), (28)). Směr kořenů ramen: vrchol dolů, na straně podle patra 52° / 34° / 17° od svislice.
 
 ## 11. Co lab ukazuje
 - **Inspekce** (klik): rameno (kolikrát runa padla, kolik čtení nese, kdy vzniklo, místo, výška, směr, tíha), větvička (ze kterého čtení, na čem roste, kolik nese), kořen. **Přehled větví**: čtení, délka, tloušťka, větvičky, povýšené. **RŮST**: věk, čtení, prameny, ramena, sousední zóna, mix, expanze (⚠️ viz §2).
 - **Posuvníky** jsou jen ty s viditelným účinkem (audit `tree_diag.js sliders`, `DEFAULTS=1` = výchozí hodnoty, jak je vidí KUKY); ODLOŽENO = kůra.
 
 ## 12. Kontroly
-- **Smoke ㉳** `scripts/verify_tree_mista.js` (lab, výchozí posuvníky): výstupy ramen na stejné straně aspoň `exitMinPx`, levé–pravé polovinu, žádné rameno pod podlahou, **každé čtení na svém místě** (element, pásmo, strana — strana i nezávisle z oblasti v logu; větev se stranou nakreslená na té straně), větve na rodiči od sebe, každý nakreslený tah klikatelný, nejvýš 15 pramenů, inspekce = log, **nejvýš 25 hlavních větví** a na stropu nejvýš 5 % tažení o místo vedle; (i) oblast a (k) seeking nehýbou výškou, (j) strom bez oblasti vyvážený, (l) konce větviček podle seekingu (engine i celá cesta labem), (m) větvičky kolem větve (žádná hlavní větev s aspoň 3 přímými větvičkami jen na jedné straně), (n) držet místo (každé použité místo živel × zóna má vlastní pramen, dokud není strop 25 a pramenů je méně než 14). Tři logy: všude, minulost, **svět** (oblasti hlavně svět — přidán 2026-10-07, jediný z nich ukáže povýšenou na druhé straně, když selže pravidlo strany v §9).
+- **Smoke ㉳** `scripts/verify_tree_mista.js` (lab, výchozí posuvníky; přepsán 2026-10-10 na ramena strana × zóna): výstupy ramen na stejné straně aspoň `exitMinPx`, levé–pravé polovinu, žádné rameno pod podlahou, **každé čtení na svém místě** (rameno své strany a zóny; na vedlejší jen svého živlu, na rameni jiného živlu jen při plné kapacitě; strana i nezávisle z oblasti v logu, vrchol = střed; větev se stranou nakreslená na té straně), větve na rodiči od sebe, každý nakreslený tah klikatelný, nejvýš 7 pramenů, inspekce = log, nejvýš 25 větví, (o) rameno téhož místa v čase ve stejné výšce, (p) kapacita ramen, (q) kořen každé vedlejší; (i) oblast a (k) seeking nehýbou výškou, (j) strom bez oblasti vyvážený, (l) konce větviček podle seekingu (engine i celá cesta labem), (m) větvičky kolem větve (žádná hlavní větev s aspoň 3 přímými větvičkami jen na jedné straně); ~~(n) držet místo živel × zóna~~ zrušeno 2026-10-10. Tři logy: všude, minulost, **svět** (oblasti hlavně svět — přidán 2026-10-07, jediný z nich ukáže povýšenou na druhé straně, když selže pravidlo strany v §9).
 - **Detektor překryvu** `scripts/utils/tree_overlap.js`: pro dvojice ramen a povýšených větví vzdálenost jejich čar po délce proti součtu polovin tloušťky (bez paty u kmene a místa odštěpení); úsek pod 25° = souběh (překryv), jinak protnutí. Zatím jen nástroj — do smoke až po opravě. ⚠️ **Hranice 25° je hrubá:** mělké křížení pod 21–24° (~20 px) hlásí jako souběh, i když jsou obě větve vidět (KUKYho strom 2026-10-03: Gebo + Uruz, Hagalaz + Eihwaz — ověřeno výřezem). Hraniční nález se ověřuje okem.
 - Ruční: `scripts/utils/tree_diag.js` (`zony`, `misto`, `klik`, `jump2`, `limbjump`, `scen`, `zscen`, `sliders`) · `scripts/utils/tree_render.js` — KUKYho strom z několika verzí labu vedle sebe do PNG (před hlášením každé změny stromu, DECISIONS 2026-10-03 (15)). · `scripts/utils/tree_read.js` — strom přečtený z dat (strany, ramena zdola nahoru, špička, proč) — podklad pro popis ownerovi.
 
 ## 13. Co se kde promítne — páka → účinek
 | páka (panel) | promítne se do |
 |---|---|
-| max ramen s vlastním pramenem | kolik míst dostane pramen a výstup z kmene (§3); povýšení/tempo z panelu pryč (2026-10-05) |
+| max ramen s vlastním pramenem | ⚠️ od 2026-10-10 bez účinku (ramena = 6 míst strana × zóna, §3) |
 | kam nejníž smí větev · rozestup ramen na stejné straně | výšky výstupů, kapacita kmene, růst kmene kvůli místu (§2, §3, §5) |
 | napojení ramene · zdvih špičky ramen | tvar ramen po délce (§7) |
 | výška kmene : rozpětí ramen | výška kmene, jak strom roste do výšky se šířkou (§2) |
-| čas čtení → výška | jak silně zóna posouvá výšku ramene (§5) |
-| nitro/svět → natočení | úhel ramene za oblastmi čtení (§5) |
-| tíha · kolik čtení ohne · neutrální poloha | úhel ramene (§5) |
+| čas čtení → výška | ⚠️ od 2026-10-10 ramena neovlivní (výška z místa, §5); zóna stromu ano |
+| nitro/svět → natočení | ⚠️ od 2026-10-10 bez účinku na ramena (§5) |
+| tíha · kolik čtení ohne · neutrální poloha | ⚠️ od 2026-10-10 bez účinku na ramena (úhel z místa, §5) — čeká na „živý tvar ramen“ |
 | ætt → charakter · gesto · variace | prohnutí, vlnění, zdvih špičky ramen (§7) |
 | délka hlavní · délka povýšené | délka ramen / povýšených (§7, §9) |
 | max větví na jedné větvi · zrod · dorůst | hustota a velikost větviček (§3, §8) |

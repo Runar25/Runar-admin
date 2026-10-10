@@ -488,11 +488,17 @@
   (nejnižší ~80°, nejvyšší ~20° od svislice). Výsledek: koruna široký oblouk (~2× širší než vysoká), ale větve dlouhé a řídké, vršek slabý,
   boční větve visí, kořeny drobné; smoke ㉳ (m) 1 porušení. Krok 1 sám (bez úhlů) dal plochý deštník. Další kroky k rozhodnutí: kořeny do
   dolního půloblouku, hustší a kratší koruna, konce větví vzhůru, kratší kmen; střet s „délka = praxe“ a „výška roste se šířkou“ (hwRatio).
-- [ ] ⭐ **Strom (lab): návrh „rameno = strana × zóna, vedlejší = další živly“ — umístění nanečisto** (CODE-tree, 2026-10-10). KUKY *„jak to vyřešíme
+- [x] ✅ **Strom (lab): „rameno = strana × zóna, vedlejší = další živly“ — ZAPNUTO v labu 2026-10-10 (DECISIONS (38)), smoke ㉳ přepsán.** Původně:
+  ⭐ **návrh — umístění nanečisto** (CODE-tree, 2026-10-10). KUKY *„jak to vyřešíme
   technicky?“* → *„13. ano“*. Patch `docs/archive/tree/2026-10-10_nanecisto_rameno_strana_zona.patch` (funkce `slotAssign` místo `stableAssign`): 6 ramen
   (strana × zóna) + vrchol, vedlejší = další živly (kapacita 3 / 3 / 2, vrchol 2), další živel jako větvičky na rameni, bez strany na lehčí stranu.
   Na jeho stromě 25 větví, 19 % tažení jako větvičky na rameni jiného živlu, výšky stálé od 30 čtení. **Další kroky:** ownerův pohled → přepsat
   smoke ㉳ na nová pravidla → zapnout v labu → port do aplikace. DECISIONS 2026-10-10 (34).
+- [ ] ⭐ **Strom (lab): živý tvar ramen — strom se má měnit, ne stát od začátku stejně** (KUKY 2026-10-10: *„strom by neměl zůstávat úplně statický.
+  měli jsme tam ty věci, kdy seeking nebo co to bylo tvarovalo větve určitým způsobem, by to mělo platit i pro hlavní větve, jinak bude strom
+  vypadat stejně od začátku, ale je to živý organismus, který se mění a tvaruje“*). S rameny strana × zóna dává výšku, úhel a délku ramene jeho
+  místo — posuvníky tíha, natočení za oblastí, čas → výška a max ramen teď ramena neovlivní (`RUNAR_TREE_MAP.md` §5, §13). Návrh ownerovi
+  2026-10-10 (CODE-tree), čeká na odpověď. DECISIONS 2026-10-10 (38).
 - [ ] **Strom (lab): Berkanin kořen má větvičky nad zemí** (CODE-tree, nalezeno 2026-10-10 při pokusu s kořeny). Na KUKYho stromě dnes jedna
   větvička kořene Berkany vyleze 42 px nad zem (v pokusu se 25 kořeny tři, až 72 px) — ostatní runy ne. Příčina asi tvar runy v branch composeru
   (větvičky Berkany míří vzhůru i u kořene). Ověřit v `runar-branch.js` (`RUNE_CHAR` / `RUNE_TUNE` berkano) a rozhodnout s ownerem — kořen se

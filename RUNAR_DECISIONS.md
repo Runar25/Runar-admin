@@ -9768,3 +9768,23 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno v prohlížeči:** počítač i mobil, EN i IS (Perth/Perþ); styl popisu změřený shodně s kolekcí (Cormorant kurzíva 14,72 px,
   řádkování 27,23 px, `--muted`); přepnutí jazyka po tahu; přihlášený bez popisu; ㉼ OK, smoke 66/66.
 - Affected doc(s): —
+
+## 2026-10-10 (38) — Strom (lab): ZAPNUTO — rameno = strana × zóna, vedlejší = další živly; smoke ㉳ přepsán
+
+- **Rozhodl:** KUKY 2026-10-10 po obrázcích návrhu (34): *„8. ano, přepiš ㉳ a zapni to v labu.“* **Provedl:** CODE-tree, LAB (aplikace beze změny).
+- **Co je v labu** (`build_crown_composer.py`, funkce `slotAssign` místo `stableAssign`; `stableAssign` jen pro semínko): rameno = strana × zóna,
+  vrchol = zakládací Skuld + Skuld bez strany, bez strany jinak koluje na lehčí stranu; vedlejší = další živel v místě (kdo dřív přijde),
+  kapacita Urð 3 · Verðandi 3 · Skuld 2 · vrchol 2, další živel jako větvičky na rameni; výška, úhel a délka ramene z jeho místa (levá
+  a pravá se v zóně střídají), vedlejší na pevném místě podél ramene střídavě nahoru / dolů, kořen pro každou větev (DECISIONS (26), (30)).
+- **Cestou opraveno (proti návrhu):** vedlejší na vrcholu rostly obě vpravo (data strana 0) → kreslená strana střídavě; vedlejší s mnoha
+  čteními byla krátká a její větvičky rostly 3–4 px od sebe → délka aspoň 0,8 × své praxe (F5); větvičky zespodu skoro vodorovné vedlejší
+  se hned stočily nahoru (všechny navrchu) → vedlejší otočená dolů zvedá špičku jen 0,35 × (ona i její větvičky).
+- **Smoke ㉳ přepsán:** (d) nejvýš 7 pramenů · (g) každé tažení na rameni své strany a zóny, na vedlejší jen svého živlu, na rameni jiného
+  živlu jen při plné kapacitě · (n) „držet místo živel × zóna“ pryč · nové (o) rameno téhož místa v čase ve stejné výšce, (p) kapacita,
+  (q) kořen každé vedlejší. Mutační test: posun výšek, kapacita 4 i vedlejší cizího živlu — všechny tři chyceny. Celý smoke 66/66.
+- **Mění:** 2026-10-03 („povýšené vyrůstají ze svého živlu“, KROK 5 pramen = místo živel × zóna), 2026-10-05 (12) (místo = živel × pásmo × strana),
+  2026-10-10 (4) (držet místo), časovou smyčku výšek a úhlů ramen (výsledky pro ramena nahrazuje místo; smyčka dál běží pro zónu stromu).
+- **Otevřené (KUKY týž den):** *„strom by neměl zůstávat úplně statický … měli jsme tam ty věci, kdy seeking … tvarovalo větve … mělo by to platit
+  i pro hlavní větve … je to živý organismus, který se mění a tvaruje“* → návrh ownerovi, `RUNAR_BACKLOG.md`. Posuvníky, které teď ramena
+  neovlivní (tíha, natočení za oblastí, čas čtení → výška, max ramen), čekají na to rozhodnutí.
+- Affected doc(s): `RUNAR_TREE.md` §3 · `RUNAR_TREE_MAP.md` §0, §3, §5, §9, §10, §12, §13 · `RUNAR_BACKLOG.md` — v témže commitu.
