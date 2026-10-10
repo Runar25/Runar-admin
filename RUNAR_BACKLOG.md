@@ -2138,7 +2138,11 @@ táž položka jako „Kam s databází, promptem a hostingem“.
 
 ### Část 23 — styly bez prvku (`runar-reader.css`, 2026-10-10)
 Metoda: každá `.třída`/`#id` z CSS, jejíž jméno se nevyskytuje v žádném `v2/*.js|html` (ani jako skládaný prefix `'x-' +` / `x-${}`).
-- ⚪ **Pro CODE-tune (h):** ~34 mrtvých selektorů — celý starý blok deníku `.journal-*` (33 řádků od ~768: section/header/count/toggle/
+- ✅ *(CODE-tune 2026-10-10: všech 34 tříd pryč — 45 pravidel. Ověřeno nezávislým skenem (34 = 33 + `.btn-outline`, který skenu
+  zakryl prefix `mode-btn-${}`) a porovnáním obrazovek: tatáž stránka se starými a novými styly, 12 stavů × počítač i mobil, návštěvník
+  i přihlášený — 24/24 snímků pixelově shodných; kontrola „nic neměním“ shodná, podstrčená změna živého stylu o 1 px chycena přesně
+  v otevřeném bočním panelu. Pozn.: `.sp-item.signout` (čára nad „Odhlásit“) se nikdy nepoužil — tlačítko má jen `.sp-item`.)*
+  ~~**Pro CODE-tune (h):**~~ ~34 mrtvých selektorů — celý starý blok deníku `.journal-*` (33 řádků od ~768: section/header/count/toggle/
   body/entry/rune-glyph/meta/date/excerpt/area-tag/expand-btn/deep*/life-rune), starý boční panel `.sp-row`, `.sp-account-label`,
   `.sp-tier-sub`, `.sp-path-gift-note`, `.sp-higher-path-lbl`, `.signout`, `.dd-item`, `.btn-outline`, strom `.tree-or-sep`,
   `.tree-upgrade-block`, `.tree-upgrade-note`, `.tree-lifelens` (čočka odešla 2026-09-25), `.badge-meta-lbl`, `.badge-name`, `.rs-link`.
