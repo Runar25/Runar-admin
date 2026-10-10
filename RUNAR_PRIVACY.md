@@ -11,7 +11,7 @@
   OpenAI a u adminova přepínače Opus; `RUNAR_DECISIONS.md` 2026-10-09 (13)): jméno, když ho člověk zadá · volby (oblast, hledání, záměr) ·
   volná otázka · u životní runy DEN a MĚSÍC narození a jméno islandského měsíce — **rok ne** (do promptu od 2026-09-30, minimalizace
   čl. 5 odst. 1 c, `RUNAR_DECISIONS.md` 2026-09-30 (11); **od 2026-10-09 se rok vůbec nezadává** — islandský měsíc se počítá bez něj,
-  uložený rok starých účtů slouží jen jako semínko tvaru stromu, `RUNAR_DECISIONS.md` 2026-10-09 „Rok narození se nezadává“)
+  uložený rok starých účtů slouží jen jako semínko tvaru stromu, `RUNAR_DECISIONS.md` 2026-10-09 „Rok narození se nezadává“; ty staré účty jsou admin účty a rok u nich ZŮSTÁVÁ — KUKY 2026-10-10, `RUNAR_DECISIONS.md` 2026-10-10 (35), data admin účtů nejsou nález)
   · u Asku jeho otázky a text čtení. Hlas: text čtení k ElevenLabs (USA).
 
 ## Právní základy — KTERÝ na CO (klíč k „bez popupu")
