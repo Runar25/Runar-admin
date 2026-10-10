@@ -1,5 +1,7 @@
 # Vegvísir — data míst v3 (24 míst, jedno na životní runu)
 
+> ⏸ **Vegvísir je ODLOŽENÝ od 2026-10-05** (owner: „zatím odkládáme, vrátíme se k tomu“). Tenhle soubor je pracovní podklad pro návrat, ne platný plán. Stav a co visí → `RUNAR_BACKLOG.md` sekce „Vegvísir“; rozhodnutí → DECISIONS 2026-09-27 (3) (4) (6). *(Řádka doplněna 2026-10-10, kontrola architektury.)*
+
 **Od:** Cowork-read (handoff přes ownera, 2026-08-24; psáno proti 9b652fb) · **uložil CODE-tune** (Cowork do repa nepíše).
 **STATUS: v3 (2026-08-24 pozdě večer)** — Cowork zapracoval TEST 37 mandát: Gebo·Wunjo·Thurisaz
 přepsány na MATERIÁL, story-klauzule pryč i u Fehu/Nauthiz; formátové kolize opraveny

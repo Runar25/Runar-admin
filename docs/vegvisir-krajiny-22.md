@@ -1,5 +1,7 @@
 # Vegvísir — zásobník KRAJIN (22)
 
+> ⏸ **Vegvísir je ODLOŽENÝ od 2026-10-05** (owner: „zatím odkládáme, vrátíme se k tomu“). Tenhle soubor je pracovní podklad pro návrat, ne platný plán. Krajiny a momenty odložené zvlášť už 2026-09-27 (3). Stav a co visí → `RUNAR_BACKLOG.md` sekce „Vegvísir“; rozhodnutí → DECISIONS 2026-09-27 (3) (4) (6). *(Řádka doplněna 2026-10-10, kontrola architektury.)*
+
 **Od:** Cowork-read (ÚKOL 2, přes ownera 2026-08-26) · **uložil CODE-tune** (Cowork do repa nepíše).
 **Co to je:** místa, kterými pouť PROCHÁZÍ — odlišné od 24 **domovů** (`vegvisir-mista-v1.md`),
 kde pouť začíná a kam se může vrátit. Momenty mají vlastní soubor (`vegvisir-momenty-24-mist.md`).

@@ -1,5 +1,7 @@
 # Vegvísir — zásobník MOMENTŮ (24 míst)
 
+> ⏸ **Vegvísir je ODLOŽENÝ od 2026-10-05** (owner: „zatím odkládáme, vrátíme se k tomu“). Tenhle soubor je pracovní podklad pro návrat, ne platný plán. Krajiny a momenty odložené zvlášť už 2026-09-27 (3). Stav a co visí → `RUNAR_BACKLOG.md` sekce „Vegvísir“; rozhodnutí → DECISIONS 2026-09-27 (3) (4) (6). *(Řádka doplněna 2026-10-10, kontrola architektury.)*
+
 **Od:** Cowork-read (ÚKOL 1, přes ownera 2026-08-25/26) · **uložil CODE-tune** (Cowork do repa nepíše).
 **Co to je:** co se v každém domově může přihodit — ne příběh, ale to, **čím se runa ukáže**.
 Momenty patří k domovům (`vegvisir-mista-v1.md`); krajiny pouti mají vlastní soubor.

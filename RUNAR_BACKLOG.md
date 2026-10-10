@@ -2193,6 +2193,14 @@ jméno klíče ani locale se nepočítají (samotest).
 - ⚪ **Pro CODE-tune (i):** ráčna drží 25 větví — `runar-auth.js` 2 (návod k instalaci Safari/Chrome, UI) · `runar-config.js` 1 („Allt sem …
   hefur“ ve výpisu tierů, UI) · `runar-character.js` 15 + `runar-utils.js` 7 (text a značky promptu → jazykové balíčky). Po přesunu snížit BASELINE.
 
+### Část 30 — kořen `docs/`: co tam leží jako živé (2026-10-10)
+**Platí:** `docs/monitor/ozveny.md` živý · `docs/runar-prompt-map.html` nese banner snímku (část 17) · `docs/TREE_BRIEF_CODE_2026-07-04.md`
+vede `RUNAR_TREE.md` výslovně jako historickou poznámku (strom = CODE-tree, nesahám).
+**Opraveno (CODE-read, doména Vegvísir):** šest pracovních dokumentů `docs/vegvisir-*.md` leželo jako živé a ani jeden neříkal, že je
+Vegvísir od 2026-10-05 odložený — kdo by je otevřel bez BACKLOGu, četl by je jako plán. Každý dostal pod nadpis řádku s odkazem
+na vlastníka stavu (sekce „Vegvísir“ výš) a na DECISIONS 2026-09-27 (3) (4) (6); u krajin a momentů i dřívější odložení (3).
+Do archivu nejdou — jsou podklad pro návrat (§26).
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
