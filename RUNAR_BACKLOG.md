@@ -2371,6 +2371,21 @@ dvojího odečtu. **Z dat (30 dní):** 0 záloh, 0 dvojích generování; dat po
   (kvalita IS je kritická, levnější model měl 2026-10-09 cizí slova). **Největší páka na peníze je hlas (ElevenLabs), ne model — a hlas
   je přednes čtení.**
 
+### Část 42 — nápověda (`runar-help.html`) × co appka opravdu dělá (pokračování části 39, 2026-10-10)
+- ⚪ **Pro CODE-tune (o) — 5 vět v nápovědě slibuje něco jiného, než appka dělá (EN statické + slovník, IS):**
+  1. „tap **+ Gift Card**“ / „ýttu á **+ Gjafakort**“ — položka v menu se jmenuje `'+ ' + vl('card')` = „+ Rune Reading Card“ / „+ Rúnakort“
+     (`runar-app.js` ~654); vede správně na zadání kódu (`toggleRedeem`), jen jiné jméno. Text z `vl('card')`, ne natvrdo (§15).
+  2. „Filterable by rune, area, and **time**“ / „sía eftir rún, svæði og **tíma**“ — filtry deníku jsou runa, oblast, **jazyk**
+     (`runar-reader.html` `jf-rune`, `jf-area`, `jf-lang`).
+  3. „Everything is erased **immediately**“ — účet ano, ale šifrované zálohy drží data až 30 dní (DECISIONS 2026-10-10 (36); zásady to už říkají).
+  4. „Your data is stored in **Europe** (Ireland)“ — databáze ano, šifrované zálohy jdou na Google Drive (DECISIONS (32); zásady to říkají).
+  5. FAQ „The app will **let you know when they renew**“ / „Appið lætur þig vita…“ — žádné upozornění na nový měsíc v kódu není; appka jen při
+     vyčerpání řekne „They return with the new month“ (`err_monthly_limit`). Buď větu ubrat, nebo upozornění postavit (to je rozhodnutí → owner).
+
+**Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
+„Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
+k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
