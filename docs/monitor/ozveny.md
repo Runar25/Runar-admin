@@ -108,3 +108,27 @@ Opakované fráze ve čteních (≥ 30 %): „thorn catches your sleeve“ 2 · 
 
 **⚠ Upozornit ownera:** obraz opsán (≥ 4 slova za sebou) 3/5 · obraz opsán (≥ 4 slova za sebou) (sol) 3/5
 <!-- do: 2026-10-08 16:06:15.64621+00 -->
+
+## 2026-10-09 · čtení po 2026-10-08 16:06 → 2026-10-09 23:27
+
+Čtení 1 · Asků 0 · modely: gpt-6-sol 1
+
+| vstup → výstup | vše | sol | opus | poznámka |
+|---|---|---|---|---|
+| obraz opsán (≥ 4 slova za sebou) | 0/1 | 0/1 | — |  |
+| význam z hlavičky doslova v textu (definiční věta, záměr) | 0/1 | 0/1 | — |  |
+| sloveso z losu hned za jménem runy (záměr, v5.01) | 1/1 | 1/1 | — | věta 2: 1 · embodies 1 |
+| nejčastější sloveso po jménu runy (embodies) | 1/1 | 1/1 | — | embodies 1 |
+| podoba oblasti opsaná (≥ 3 slova) | 1/1 | 1/1 | — | „bringing into being“ věta posl.: 1 |
+| otázka runy z Kolekce opsaná (≥ 3 slova) | 0/1 | 0/1 | — |   |
+| pokyn úhlu opsaný (≥ 4 slova) | 0/1 | 0/1 | — |  |
+| pokyn konce opsaný (≥ 4 slova) | 0/1 | 0/1 | — |  |
+| Ask: slova otázky zopakovaná | — | — | — |  |
+| Ask: „drawn“ (runa tažená / netažená) | — | — | — |  |
+| Ask: „the rune / reading does not say“ | — | — | — |  |
+| Ask: „leaves … open“ | — | — | — |  |
+| Ask: „not a promise / verdict / sign“ | — | — | — |  |
+| Ask: „…, or not“ | — | — | — |  |
+
+Bez varování.
+<!-- do: 2026-10-09 23:27:59.655687+00 -->
