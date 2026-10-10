@@ -9843,3 +9843,20 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   Clarity 3, Reflection 5, Confirmation 5 (s plným narovnáním 15, nejdelší 117 px), Insight 3. Jeho seeking je smíšený (převažující podíl
   25–35 procent), proto je tvar na jeho stromě jemný; strom se samým jedním seekingem se liší zřetelně. Čeká na ownerův pohled.
 - Affected doc(s): `RUNAR_BACKLOG.md` (položka „živý tvar ramen“) — v témže commitu; `RUNAR_TREE.md` §4 až se zapnutím.
+
+## 2026-10-10 (42) — Hlas Rune Seekera: jedno volné čtení = jeden hlas, jednou; další jen s kreditem. `VOICE_MONTHLY_LIMIT` je strop serveru, ne nárok
+
+- **Kdo / proč:** KUKY 2026-10-10 na moji (CODE-read) větu „každý nový účet dostane 5 hlasů měsíčně“: *„pozor na těch 5 hlasů měsíčně…
+  je to nastavené na 1 hlas a jen jednou! jedno čtení a jeden hlas! pak je potřeba si koupit kredit. zkontroluj to pořádně, takhle chyba
+  už tu byla několikrát, takže někde je stále stará informace!“*
+- **Pravidlo (a jak ho kód drží):** nový účet = Rune Seeker s `free_balance = 1` (jedno volné čtení, bez měsíčního obnovení — „model B“,
+  komentář `TIER_LIMITS.rune_seeker` v `runar-config.js`) a `credits_balance = 0`. Hlas se v appce nabízí k čtení, které člověk má →
+  **jedno čtení, jeden hlas, jednou**. Každé další čtení (a jeho hlas) jen za kredit (Rune Reading Card). Předplatitelé: hlas nejvýš
+  `VOICE_MONTHLY_LIMIT` za měsíc. **`VOICE_MONTHLY_LIMIT` (dnes 5) je strop v `elevenlabs-proxy` pro VŠECHNY, ne nárok, který se dá
+  Rune Seekerovi slibovat**; víc hlasů bez čtení jde jen ručním požadavkem mimo appku (známé #2b „Proxy Fáze 2“).
+- **Kde stála chybná informace (2026-10-10):** výpis tierů v appce (`TIER_FEATURES` klíč `voice`) sliboval Rune Seekerovi „až 5 čtení
+  hlasem měsíčně“ — vzniklo dnes z mé předávky (BACKLOG část 17 (c): „strop … plošně všem“), CODE-tune ji převzal; nápověda „up to
+  {voice_n} times a month“ bez rozlišení; komentář u návštěvníka v configu („slyší hlas při svém 1 čtení“ — návštěvník čtení od 2026-08-02
+  nemá); moje BACKLOG část 38 („per-účet dárky … 5 hlasů/měsíc“). Opraveno: BACKLOG 17 (c) a 38 (CODE-read); appka + nápověda + komentář
+  → CODE-tune. Návrh mechanismu (§30): `verify_tier_features.js` ať odmítne u tieru bez `monthly_readings` větu s měsíčním počtem hlasů.
+- Affected doc(s): `RUNAR_BACKLOG.md` části 17, 38 — v témže commitu.

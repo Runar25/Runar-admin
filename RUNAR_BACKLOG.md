@@ -1837,6 +1837,10 @@ Zákazy se vynucují samy, protože jsou měřitelné. Kladné pokyny ne. To je 
 Každá část: co o ní tvrdí komentáře, `CLAUDE.md`, DECISIONS a smoke → proti kódu. Rozpor Code rovnou opraví; co potřebuje
 ownera, stojí tady pod **PRO OWNERA**. Pořadí: claude-proxy → ostatní edge funkce → DB → appka → prompt → strom → docy.
 
+⭐ **Kolo 2 a další (KUKY 2026-10-10):** *„až projedeme celou kontrolu, tak ji pojedeme znova, dokud všechno nevychytáme.“* — po poslední
+části projít znovu od části 1 (stejné otázky, čerstvé grepy, nic nepřebírat z kola 1 bez ověření); konec, až kolo nenajde nic nového.
+Doklad, proč: 2026-10-10 se v kole 1 vrátila chyba „5 hlasů měsíčně pro Rune Seekera“, kterou owner opravoval opakovaně (DECISIONS (42)).
+
 ### Část 1 — claude-proxy (`supabase/functions/claude-proxy/index.ts`, 958 ř., přečteno celé 2026-10-09)
 **Platí (ověřeno v kódu):** anonym → 401 před voláním modelu · rate limit 10/60 s na uživatele · admin z JWT (e-mail, kopie hlídá
 smoke ㉪) · strop délky promptu 8000 / Ask 12000 / system 8000 · `max_tokens` strop 2500 · `spread_cost` sanitizace 1..9 (smoke ⑨ ji
@@ -2081,8 +2085,10 @@ a kdo ji čte, čte starý stav. ✅ **Smazáno 2026-10-10** (owner: *„9. sma�
   nota, ne čtení“ — Kolekce ukáže **text** a přehrávač, Rúnar ho **mluví**, verze se losuje (`runar-app.js` `pick = rows[random]`).
 - ✅ *(CODE-tune 2026-10-10, b2f50b7: „up to {VOICE_MONTHLY_LIMIT} … each month“, IS přepsán s korpusem; td-card bez hlasu)* **(c) — hlas slibuje víc, než server pustí:** `TIER_FEATURES` klíč `voice` (`runar-config.js`) píše „Rúnar's voice
   reads every reading aloud“ / „…les hverja … upphátt“ a nápověda „When you use a reading card, Rúnar speaks your reading aloud“
-  (s4 odst. 2, `td-card`). Server ale pustí hlas **nejvýš `VOICE_MONTHLY_LIMIT` za měsíc, plošně všem** (`elevenlabs-proxy`, KUKY
+  (s4 odst. 2, `td-card`). Server ale pustí hlas **nejvýš `VOICE_MONTHLY_LIMIT` za měsíc** (`elevenlabs-proxy`, KUKY
   2026-09-11 „spíš ochutnávka“) a na kartu vázaný není. Číslo do textu přes `VOICE_MONTHLY_LIMIT` (§8), ne natvrdo.
+  ⚠️ **OPRAVA 2026-10-10 (KUKY):** „plošně všem“ bylo zavádějící — strop serveru není nárok. Rune Seeker má **jedno volné čtení = jeden
+  hlas, jednou**, další jen s kreditem; tahle věta vyrobila chybný řádek u Rune Seekera v appce. DECISIONS 2026-10-10 (42).
 - ✅ *(rozhodnuto 2026-10-10, DECISIONS 2026-10-10 (22): Starter 5 · Seeker 10 · Walker 20 · Wanderer 30 · Elder 50, ceny 3. 6.; `RUNAR_PRICING.md` opraven)* **ceny balíčků kreditů:** nápověda (tabulka v HTML, od 2026-05-20) a `RUNAR_PRICING.md` (od 2026-06-03) se liší:
   nápověda 4 balíčky (Seeker 10 = 2.690 kr, Wanderer 20 = 5.050 kr, Elder **50** = 11.900 kr + ceny v €), PRICING 5 balíčků
   (Seeker 2.490 · Wanderer 4.490 · Elder **30** = 6.490 · Master 50 = 9.990, bez €). Shoda jen Starter 5 = 1.490. Novější je PRICING,
@@ -2302,8 +2308,9 @@ psala ostatním. `hooks/pre-push.py` pouští `smoke.py` přímo nad pracovním 
 ### Část 38 — přihlašování a registrace (veřejné `/auth/v1/settings`, 2026-10-10, jen čtení)
 **Platí:** zapnuté jen Google a e-mail (kód), telefon/SMS ne · e-mail se potvrzuje (`mailer_autoconfirm: false`) · registrace otevřená
 (`disable_signup: false`) — záměr, návštěvník dostává výzvu „joining is free“.
-- ⚪ **Před veřejným spuštěním (nic teď, jen ať se na to nezapomene):** otevřená registrace + per-účet dárky (volné čtení, 5 hlasů/měsíc)
-  = zakládání účtů zdarma dává čtení i hlas. Hlas na libovolný text je známý (#2b „Proxy Fáze 2“), levnější placení přes `spread_cost`
+- ⚪ **Před veřejným spuštěním (nic teď, jen ať se na to nezapomene):** otevřená registrace + per-účet dárek (jedno volné čtení
+  s jedním hlasem, jednou — DECISIONS 2026-10-10 (42); do 2026-10-10 tu chybně stálo „5 hlasů/měsíc“) = zakládání účtů zdarma dává
+  čtení i hlas. Hlas na libovolný text je známý (#2b „Proxy Fáze 2“), levnější placení přes `spread_cost`
   taky (#4). Navíc zvážit **CAPTCHA při registraci** (Supabase umí Cloudflare Turnstile / hCaptcha přímo v Auth — přepínač + klíč, v appce
   jeden token u přihlášení). Útratu dnes drží stropy u poskytovatelů (část 15) a rate limity.
 
