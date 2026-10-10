@@ -9700,3 +9700,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   Německo) a kopie na Drive se vypne. Mezera vznikla rozhodnutím (9), které zásady neřešilo.
 - **Platí, dokud se nepředplatí Supabase Pro nebo Hetzner** — pak se zálohy i jejich místo přehodnotí (owner).
 - Affected doc(s): `RUNAR_BACKLOG.md` část 33 (odškrtnuto v témže commitu); `RUNAR_PRIVACY.md` + `v2/runar-privacy.html` (b) → CODE-tune.
+
+## 2026-10-10 (33) — supabase-js hostujeme u nás (v2/vendor), ne z cdn.jsdelivr.net
+
+- **Kdo / proč:** KUKY na otázku CODE-read (kontrola architektury část 34): *„4. ano, hostuj u nás.“* Knihovna se v readeru i shrine
+  načítala z jsDelivr — stejně jako dřív písma od Googlu (32) dostával cizí server IP každého návštěvníka a zásady ho nejmenují;
+  navíc bez jsDelivr appka nenaběhla a SW knihovnu nepředukládal.
+- **Co:** tentýž soubor 2.117.3 (otisk SRI beze změny, ověřeno bajtově) leží ve `v2/vendor/supabase.min.js`, obě stránky ho načítají
+  se stejným `integrity`, `sw.js` ho má v precache. Povýšení verze: `node scripts/utils/supabase_js_pin.js <verze> --zapsat`
+  (stáhne k nám, přepíše otisk i značku verze v obou stránkách; ověřeno, že se stejnou verzí nic nezmění).
+- **Ověřeno v prohlížeči:** 0 požadavků na jsDelivr v readeru i shrine, `supabase.createClient` k dispozici, klient vznikl, appka
+  volá Supabase API; jediné 404 = registrace SW na produkční cestě `/Runar-admin/` (lokálně neexistuje, i před změnou).
+- **Provedl:** CODE-read. Affected doc(s): `RUNAR_BACKLOG.md` část 34 (odškrtnuto v témže commitu).

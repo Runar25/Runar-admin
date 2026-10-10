@@ -1,11 +1,13 @@
-// Rúnar Service Worker — v615
+// Rúnar Service Worker — v616
 // HTML: network-first (always fresh). JS/CSS/icons: cache-first (fast, offline ok).
 // External (Supabase, ElevenLabs, fonts): pass-through, never intercepted.
 
-const CACHE = 'runar-v615';
+const CACHE = 'runar-v616';
 const JS_SHELL = [
   '/Runar-admin/v2/runar-reader.css',
   '/Runar-admin/v2/runar-utils.js',
+  // 2026-10-10: supabase-js u nás (dřív cdn.jsdelivr.net, SW externí nechytal) — bez precache by offline appka nenaběhla.
+  '/Runar-admin/v2/vendor/supabase.min.js',
   '/Runar-admin/v2/runar-journal.js',
   '/Runar-admin/v2/runar-tree.js',
   '/Runar-admin/v2/runar-auth.js',

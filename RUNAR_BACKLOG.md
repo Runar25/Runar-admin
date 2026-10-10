@@ -2240,7 +2240,7 @@ Ověřeno: poddotaz dá 564 = 564 (nikdo odhlášený) a při předstíraném od
 ### Část 34 — co stránky načítají samy od cizích serverů (2026-10-10)
 **Platí:** odkazy na openai.com, elevenlabs.io, anthropic.com, supabase.com, agndofa.is jsou jen klikací (zásady) — nic se z nich samo
 nenačítá · obrázek Rúnara jde z našeho Supabase úložiště (Irsko) · písma od 2026-10-10 u nás (DECISIONS (32)).
-- 🟡 **PRO OWNERA:** knihovna `supabase-js` se v readeru i shrine načítá z `cdn.jsdelivr.net` → stejně jako dřív písma od Googlu dostane
+- ✅ *(KUKY 2026-10-10 „hostuj u nás“ → hotovo CODE-read, DECISIONS 2026-10-10 (33); 0 požadavků na jsDelivr)* knihovna `supabase-js` se v readeru i shrine načítala z `cdn.jsdelivr.net` → stejně jako dřív písma od Googlu dostane
   jsDelivr IP každého návštěvníka a zásady ho nejmenují. Navíc: když jsDelivr nejede, appka se nespustí, a SW knihovnu nepředukládá.
   Doporučení CODE-read: hostovat u nás jako písma — TENTÝŽ soubor 2.117.3, ověřený stávajícím otiskem SRI (`v2/vendor/supabase.min.js`), <!-- doc-links:ok 2026-10-10 navrhovaná cesta, soubor zatím není -->
   + do precache `sw.js`; `scripts/utils/supabase_js_pin.js` upravit, ať při povýšení stáhne soubor k nám.
