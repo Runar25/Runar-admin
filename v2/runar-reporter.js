@@ -1,4 +1,4 @@
-// runar-reporter.js — in-app tester reporter (bug_reports). (Odkaz na „spec runar_reporter_spec_CODE.md“ odstraněn 2026-10-10 —
+// runar-reporter.js — in-app tester reporter (bug_reports). (Odkaz na „spec runar_reporter_spec_CODE.md“ odstraněn 2026-10-10 —  // doc-links:ok 2026-10-10 záměrně: cituje odstraněný odkaz (kontrola ㉺)
 // ten soubor v repu nikdy nebyl; chování popisuje tenhle soubor a CLAUDE.md §29.)
 // Samostatný modul: injektuje plovoucí tlačítko + panel + styl, zachytí text/kontext,
 // offline fronta (localStorage) + dedupe přes UNIQUE client_uuid (plain insert; 23505 = už odesláno).

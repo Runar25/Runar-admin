@@ -1,6 +1,6 @@
 // Odkaz do prázdna = doc, který posílá čtenáře na neexistující soubor.
 //
-// 2026-07-18 jich audit našel několik naráz: `RUNAR_DOC_SYNC.md` (nikdy neexistoval
+// 2026-07-18 jich audit našel několik naráz: `RUNAR_DOC_SYNC.md` (nikdy neexistoval  // doc-links:ok 2026-10-10 záměrně: příklad / zmínka neexistujícího docu (kontrola ㉺)
 // pod tím jménem), `RUNAR_TREE_LAB.md` vedený jako živý doménový doc (byl v archivu),
 // cesty `scripts/utils/smoke.py` (nástroje jsou v kořeni). Každý z nich poslal
 // nějakou session hledat něco, co tam není — a ta si pak našla náhradu jinde,
@@ -8,7 +8,7 @@
 //
 // KONTROLUJE DVĚ VĚCI:
 //   1. markdown odkazy [text](cesta) — musí sedět relativně k tomu docu
-//   2. cesty v backtickách `neco.md` / `scripts/neco.js` — soubor toho jména
+//   2. cesty v backtickách `neco.md` / `scripts/neco.js` — soubor toho jména  // doc-links:ok 2026-10-10 záměrně: příklad / zmínka neexistujícího docu (kontrola ㉺)
 //      musí v repu existovat (kdekoli; archiv se počítá — odkaz do archivu
 //      je legitimní, pokud je označený)
 //
@@ -70,7 +70,7 @@ for (const doc of docs) {
       }
     }
 
-    // 2) `cesta.md` v backtickách
+    // 2) `cesta.md` v backtickách  // doc-links:ok 2026-10-10 záměrně: příklad / zmínka neexistujícího docu (kontrola ㉺)
     for (const m of line.matchAll(/`([^`]+)`/g)) {
       const ref = m[1].trim();
       if (IGNORE.test(ref) || ref.includes(' ')) continue;

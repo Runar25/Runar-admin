@@ -285,7 +285,7 @@ check(summary if passed else 'rozhodnuti slibilo opravu docu, ktera se nestala',
       '' if passed else output)
 
 # ⑯ — odkaz do prázdna pošle čtenáře hledat náhradu, a ta se najde v zastaralé kopii.
-# 2026-07-18: RUNAR_DOC_SYNC.md (nikdy neexistoval), RUNAR_TREE_LAB.md vedený jako živý
+# 2026-07-18: RUNAR_DOC_SYNC.md (nikdy neexistoval), RUNAR_TREE_LAB.md vedený jako živý  # doc-links:ok 2026-10-10 záměrně: historie (kontrola ㉺)
 # (byl v archivu), scripts/utils/ cesty (nástroje jsou v kořeni). Rozšíření ⑪ na celý repo.
 print('\n⑯ DOC ODKAZY (verify_doc_links.js)')
 r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_doc_links.js')],
@@ -835,6 +835,19 @@ passed = r.returncode == 0 and r2.returncode == 0
 output = (r2.stdout + r.stdout + r.stderr + r2.stderr).strip()
 radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola jazyka komunikace probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
+# ㉺ Odkazy z kódu na dokumenty (CODE-read 2026-10-10, kontrola architektury — owner „jak jsi našel README… pozor na to“):
+# ⑯ hlídá odkazy jen v dokumentech; hlavička runar-reporter.js odkazovala na spec, který nikdy neexistoval, a nic to nechytilo.
+print('\n' + chr(0x327A) + ' ODKAZY Z KÓDU NA DOKUMENTY (verify_code_doc_refs.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_code_doc_refs.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+r2 = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_code_doc_refs.js'), '--test'],
+                    capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0 and r2.returncode == 0
+output = (r2.stdout + r.stdout + r.stderr + r2.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola odkazu z kodu probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
 # ── Výsledek ─────────────────────────────────────────────────
