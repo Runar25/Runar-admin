@@ -1952,6 +1952,16 @@ nevyžaduje, DMARC projde přes DKIM. (Že kód zatím nikomu neodešel, řeší
 pevná verze 2.117.3 + SRI v `runar-reader.html` i `runar-shrine.html` (bajtově tentýž soubor, co se servíroval). Povýšení:
 `node scripts/utils/supabase_js_pin.js` vypíše novou adresu a otisk — opravy z nových vydání už nepřijdou samy. **Pro ownera:** nic.
 
+### Část 15 — nasazené funkce proti repu, strop útraty u poskytovatelů (2026-10-10)
+**Platí:** všech 10 nasazených edge funkcí staženo a porovnáno s repem — shodné; jen `elevenlabs-proxy` a `elevenlabs-static`
+se liší komentáři z kontroly 2026-10-09 (kód stejný, nasazovat netřeba). Náklady modelů za 30 dní ~2,9 $ (čtení 1,91 $ + Ask 0,98 $;
+`node scripts/utils/stats.js`), hlas drží plán ElevenLabs (strop znaků). Strop OpenAI → 429 → `claude-proxy` přepne na Claude.
+
+**PRO OWNERA:**
+17. ⚪ **Měsíční strop útraty u OpenAI a Anthropicu není nikde zapsaný.** Rúnar stojí na modelech pár dolarů měsíčně; strop (třeba
+    desítky dolarů) zastaví účet, kdyby chyba v kódu nebo uniklý klíč začaly generovat ve smyčce. Anthropic: Organization settings →
+    Billing → Spend limits; OpenAI: hard limit projektu / organizace (od července 2026). Nastavuje owner v konzolích.
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
