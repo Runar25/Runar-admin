@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 12b7cce8-c1bb-4d60-afe0-c53fe2a58d0b
-  modified: 2026-10-10T13:56:20.812Z
+  modified: 2026-10-10T19:36:50.053Z
 ---
 
 Schránka **runar@therunekeeper.com** (Google Workspace, od 2026-10-10) je kontakt pro testery a dotazy k Rúnarovi — uvádí ji
@@ -31,5 +31,9 @@ ostatních. Nový tester v `allowed_emails` = je v příštím e-mailu sám.
 adresa se obalí `google.com/url?q=…` (příjemce by po kliknutí viděl přesměrovací stránku Google). Text, tučné, nadpisy a seznamy
 přežijí. E-mail s obrázky a čistými odkazy: HTML soubor → owner ho otevře v prohlížeči, Ctrl+A, Ctrl+C a vloží do konceptu
 (obrázky musí ležet na veřejné adrese — `v2/email/` na GitHub Pages; Gmail nezobrazí obrázky vložené jako `data:`).
+**Ani inline příloha nepomůže** (ověřeno 2026-10-10 na RAW konceptu): `<img src="cid:…">` konektor vyřízne taky a obrázek uloží jen
+jako přílohu na konec zprávy (Content-ID si vymyslí vlastní). Koncept, který owner upravuje v Gmailu, proto obrázky nikdy nemá, dokud do
+něj nevloží zkopírovanou stránku — 2026-10-10 to owner zjistil až v hotovém konceptu („chybí obrázky!!!“). Hned při předání konceptu
+říct, že obrázky přijdou jen vložením stránky, a stránku stavět z JEHO aktuálního konceptu (vytáhnout přes get_draft), ne ze staré kopie.
 
 Souvisí: [[copy-always-in-runar-voice]], [[is-vazba-check]], [[nacti-cteni-a-reporty]].
