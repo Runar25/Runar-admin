@@ -457,6 +457,12 @@
   straně v jiné zóně, např. Nauthiz vpravo z Uruzu 25 %) a Fehu z prvních čtení.
   ✅ **(c) držet místo zapnuto v labu 2026-10-10** (KUKY „7. ano zapni to v labu“, DECISIONS 2026-10-10 (4)). Zbývá druhá strana zóny
   (povýšená z matky v jiné zóně) — KUKY se ptá, jestli je zóna to nejlepší řešení (2026-10-10, bod 4) → návrh modelu podle definice Yggdrasilu.
+  **Návrh „jasan“ nanečisto 2026-10-10** (Yggdrasil je v kánonu jasan, jasan má vstřícné větvení; KUKY: *„nemusí být úplně přesně proti
+  sobě, ale přirozeně cca v té oblasti … trochu mimo linii, tak to udělá strom zajímavý“*), patch `docs/archive/tree/2026-10-10_nanecisto_jasan.patch`:
+  druhá strana živlu × zóny = vlastní výstup z kmene mířící na skutečnou výšku pramene své zóny → pár ~16 px od sebe (9 z 10 párů na jeho
+  stromě; v1 mířila jen na cíl pramene a páry vyšly 46–201 px od sebe). Jeho strom: mimo svou zónu 2/22 (dnes 9), výstupů z kmene 24
+  (dnes 17), povýšená 1; smoke ㉳ projde. Strom užší a vyšší, větve kratší a vodorovnější v párech (mladý strom jako mladý jasan / jehličnan).
+  Zbývá Tiwaz 89 % (pořadí z prvních čtení). Čeká na ownerovo porovnání s dneškem.
 - [ ] **Strom (lab): `AREA_LAT` odporuje „oblast = strana“** (CODE-tree, nalezeno 2026-10-09). Tabulka v `runar-branch.js` (sdílená
   s aplikací) bere Love −0,75 (nitro), Spirituality −0,20 (skoro střed), Crossroads +0,10 — kánon (`RUNAR_TREE.md` §3) má Love a Crossroads
   bez strany a Spirituality ve světě. Čte ji strana větvičky (`sideOf`), natočení ramene za čteními (`latOf` / `areaSide`) i lateral

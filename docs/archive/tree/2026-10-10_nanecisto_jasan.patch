@@ -1,0 +1,24 @@
+--- a/build_crown_composer.py
++++ b/build_crown_composer.py
+@@ -1426,7 +1426,8 @@
+              zalozi pramen i na kratkem kmeni (bez kapacity capI). Drive kapacita pustila jen tolik pramenu, kolik se v te chvili veslo, a zbytek
+              sel jako povysena z ramene v jine zone (KUKYho Nauthiz: prvni zemni cteni "ted" #25 -> povysena z Othily v korune, 85 % kmene). */
+           if(qs==null && (nStr()<maxN || nq<0)) tq=newSec(el, b, rk, i, log[i], j, null, sd, null);   /* rameno s pramenem */
+-          else if(sd!==0 && motherOnSide(el, b, sd)<0) tq=newSec(el, b, rk, i, log[i], j, null, sd, (qs!=null) ? qs : nearStr(el, b));   /* element na te strane nema rameno: vlastni vystup z kmene, pramen sdili */
++          /* NANECISTO JASAN 2026-10-10: vlastni vystup i tehdy, kdyz je matka na strane mista v JINE zone (kazda vetev ve sve zone). */
++          else if(sd!==0 && (motherOnSide(el, b, sd)<0 || slots[motherOnSide(el, b, sd)].band!==b)) tq=newSec(el, b, rk, i, log[i], j, null, sd, (qs!=null) ? qs : nearStr(el, b));   /* element na te strane nema rameno: vlastni vystup z kmene, pramen sdili */
+           else { var mo=motherOnSide(el, b, sd); if(mo<0) mo=(qs!=null) ? qs : nearSec(el, b); tg=grads.length; gplace[pk+'|'+sd]=tg;                                    /* povysena vetev mista */
+             grads.push({ p:mo, rune:rk, at:i, crossAt:i, name:(RBK[rk]?RBK[rk].name:rk), side:sd, band:b, kind:(qs!=null) ? 'side' : 'band' });
+             gradTree.push(mkR(rk, i, log[i], j)); } }
+@@ -1659,7 +1660,10 @@
+       /* ZONY (2026-10-03): cil = STRED PASMA ramene (urd · verdandi · skuld; stin na hranach) a uvnitr pasma prumer zon jeho
+          cteni (tlumeny KZ). Element vysku nemeni (KUKY: "rozprostreni elementu neni systematicke"). */
+       var HLe=HL;
+-      var tgtOf=function(q){ var be4=branchEls[q]||{}, bd4=be4.band||0, c4=bandC(be4.el, bd4), lh4=bandLoHi(be4.el, bd4);
++      /* NANECISTO JASAN 2026-10-10: druha strana zivlu × zony (rameno bez pramene s matkou v tez zone) cili tam, kam pramen jeji zony — par.
++         Rozestup vlevo–vpravo (G0) je pak rozestoupi o kousek: "cca proti sobe, trochu mimo linii" (KUKY). */
++      var tgtOf=function(q){ var bp=branchEls[q]||{}; if(bp.noStrand && bp.mother!=null && branchEls[bp.mother] && branchEls[bp.mother].band===bp.band){ if(hh[bp.mother]!=null) return hh[bp.mother]; q=bp.mother; }
++        var be4=branchEls[q]||{}, bd4=be4.band||0, c4=bandC(be4.el, bd4), lh4=bandLoHi(be4.el, bd4);
+         var av4=zn[q] ? clamp(zs[q]/zn[q], lh4[0], lh4[1]) : c4, Z=c4+(av4-c4)*zn[q]/(zn[q]+KZ);
+         return clamp(0.5*(HLe+HH)+0.5*(HH-HLe)*clamp(Z*zsp,-1,1), HLe, HH); };
+       /* KAZDE RAMENO Z JINEHO MISTA — ZARUCENE (2026-10-03, KUKY: "proc dve vetve vyrustaji presne z jednoho mista? …
