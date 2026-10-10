@@ -106,7 +106,7 @@ async function fetchUserProfile(userId) {
       // slow connection lets updateTreeTab() run while readerUser.d is still empty — it draws
       // the "when were you born?" onboarding and, without this, never redraws. To the user
       // that reads as the app forgetting a life rune it actually has (Sigrún, iPhone, 3×).
-      if (activeAppTab === 'tree' && typeof updateTreeTab === 'function') updateTreeTab();
+      if ((activeAppTab === 'tree' || activeAppTab === 'liferune') && typeof updateTreeTab === 'function') updateTreeTab();   // + Lífsrúnin (2026-10-10)
       profileName = data.name            || '';
       norseName   = data.norse_name      || '';
       addressPref = data.address_pref === 'norse' ? 'norse' : 'name';
@@ -153,7 +153,7 @@ async function fetchUserProfile(userId) {
   } catch(e) { console.warn('fetchUserProfile:', e.message); }
   profileLoaded = true;
   // Profil dobehl -> na Tree tabu prekresli (loading -> spravny stav: founding CTA / no-dob formular).
-  if (activeAppTab === 'tree' && typeof updateTreeTab === 'function') updateTreeTab();
+  if ((activeAppTab === 'tree' || activeAppTab === 'liferune') && typeof updateTreeTab === 'function') updateTreeTab();   // + Lífsrúnin (vlastní záložka od 2026-09-11; doplněno 2026-10-10)
   updateAuthUI();
   showTopbarGreeting();
   if (typeof _updateReadingForm === 'function') _updateReadingForm();
@@ -292,7 +292,9 @@ function setLang(l) {
   // Only the reading tab treats a language switch as "re-speak the reading". On
   // collection/journal/tree the user is browsing -> fall through so the visible
   // content re-renders in the new language (bug: collection rune popis stayed stale).
-  if (activeAppTab === 'reading' && outputVisible && readerRune) {
+  // Návštěvník (2026-10-10): po tahu runy čtení nemá — okno „SPEAK AGAIN IN ICELANDIC? … uses one credit“ pro něj nedává smysl
+  // (do té doby se mu ukázalo). Jazyk se přepne rovnou; kartu po tahu i hlavičku runy přepíše updateUIText.
+  if (activeAppTab === 'reading' && outputVisible && readerRune && currentUser) {
     if (readerTexts[l]) {
       lang = l; applyLangToggle(l); showCachedReading(l); updateUIText(); updateSidePanel(); buildPills();
     } else {
@@ -310,6 +312,9 @@ function setLang(l) {
     loadCollection();
     if (activeCollRune) loadCollAudio(l);
   }
+  // Životní runa (od 2026-09-11 vlastní záložka): texty kreslí updateTreeTab, updateUIText je nepřepíše — po přepnutí jazyka tu
+  // zůstávala předchozí řeč (2026-10-10, kontrola návštěvníka: v EN „Skráðu þig til að lesa hvað þessi rún ber.“ a tlačítko IS).
+  if (activeAppTab === 'liferune' && typeof updateTreeTab === 'function') updateTreeTab();
 }
 
 function applyLangToggle(l) {
@@ -768,9 +773,10 @@ function _updateTrialTexts() {
   // (§8). Do té doby „YOUR JOURNEY AS VISITOR IS COMPLETE“ po čtení, které návštěvník od 2026-08-02 nedostával, a natvrdo psané
   // texty počítadla zkušebních čtení a auth-gate (ten se nikde nezobrazoval — z HTML pryč).
   const ob = TIER_LIMITS.rune_seeker['onboarding_label_' + (lang === 'is' ? 'is' : 'en')];
-  setText('trial-end-title', t('visitor_join_title'));
   const ten = document.getElementById('trial-end-note');
   if (ten) ten.innerHTML = tp('visitor_join_note', { onboarding: ob });
+  // 2026-10-10 (KUKY: „mělo by tam být přesměrování na rune collection“) — týž popisek jako záložka; nadpis karty pryč (styl pruhu)
+  setText('trial-end-coll', t('atab_collection'));
   setText('trial-end-btn', t('become_rs_btn'));
 }
 
@@ -839,7 +845,7 @@ function updateUIText() {
   // reader-card1-lbl and reader-note are set by _updateReadingForm() — not here
   _updateDobLabel();
   _updateAreaSeekLabels();
-  setText('begin-btn', t('begin_btn'));
+  // begin-btn nastavuje _updateReadingForm (návštěvník má jiný text, 2026-10-10)
   setText('draw-lbl', t('draw_lbl'));
   setText('draw-note', t('draw_note'));
   setText('btn-random', t('random_btn'));

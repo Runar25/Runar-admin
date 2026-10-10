@@ -374,6 +374,9 @@ function updateTreeTab() {
       // Nabidka „za 3 kredity" nema pro nepřihlášeného smysl — nema ucet ani zustatek.
       var ctaV = document.getElementById('tree-rs-cta-block');
       if (ctaV) ctaV.style.display = 'none';
+      // 2026-10-10: tlačítko k registraci — do té doby tu stál jen text „Sign in to read…“ a nebylo na co klepnout (slepá ulička).
+      setText('tree-visitor-btn', t('become_rs_btn'));
+      var vbV = document.getElementById('tree-visitor-cta'); if (vbV) vbV.style.display = '';
     }
     return;
   }
@@ -446,6 +449,7 @@ function updateTreeTab() {
       // jinak by po prihlaseni zustal neviditelny (styl zustava na prvku).
       var ctaR = document.getElementById('tree-rs-cta-block');
       if (ctaR) ctaR.style.display = '';
+      var vbR = document.getElementById('tree-visitor-cta'); if (vbR) vbR.style.display = 'none';   // jen pro návštěvníka (2026-10-10)
       var nm = document.getElementById('tree-rune-name-teaser');
       var gl = document.getElementById('tree-rune-glyph-teaser');
       if (nm) nm.textContent = runeName;

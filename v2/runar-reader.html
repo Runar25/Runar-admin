@@ -446,6 +446,19 @@
         <div class="layer2-lbl" id="layer2-lbl">~ DEEPER REFLECTION</div>
         <div class="out-txt" id="out-deep"></div>
       </div>
+      <!-- KARTA PO TAHU NÁVŠTĚVNÍKA (_showVisitorJoin → _visitorJoin). 2026-10-10 (KUKY: „runa thurisaz bez jakékoliv zprávy o tom, že
+           nemůžu udělat jako visitor žádné čtení… mělo by tam být přesměrování na rune collection… obě dvě sekce musí být sladěny“
+           a „dva rámečky become a rune seeker asi zbytečné“): stojí hned pod runou, má styl horního pruhu návštěvníka (.tier-notice)
+           a ukazuje se MÍSTO něj (třída .host-drawn na #apane-reading, runar-reader.css). Do té doby byla až pod tlačítky, se zlatou
+           září, glyfem ᚱ a velkým tlačítkem, a horní pruh nad ní zůstával — dvě výzvy k registraci a ani jedna neřekla, proč čtení
+           nepřišlo. Texty plní _updateTrialTexts z UI_TEXT (§20). -->
+      <div class="tier-notice" id="trial-end">
+        <p class="tn-text" id="trial-end-note"></p>
+        <div class="tn-btns">
+          <button class="tn-btn btn-upgrade" onclick="showAppTab('collection')" id="trial-end-coll"></button>
+          <button class="tn-btn btn-upgrade" onclick="openAuthModal()" id="trial-end-btn"></button>
+        </div>
+      </div>
       <!-- Norns output (3-rune spread) -->
       <div id="spread3-output" style="display:none;">
         <div class="layer1-lbl" id="s3-norns-lbl" style="letter-spacing:0.18em;margin-bottom:12px;"></div>
@@ -495,16 +508,6 @@
         <button class="btn-half"     id="draw-another-btn" onclick="drawAnother()">DRAW ANOTHER RUNE</button>
         <button class="btn-half sec" id="start-over-btn"   onclick="resetReader()">START OVER</button>
       </div>
-    </div>
-
-    <!-- VÝZVA PO TAHU NÁVŠTĚVNÍKA (2026-10-10, _showVisitorJoin; do té doby po posledním zkušebním čtení). Texty plní
-         _updateTrialTexts z UI_TEXT visitor_join_*; tady jen prázdné místo, ať se nerozejdou (§20). -->
-    <div class="trial-end" id="trial-end" style="display:none;">
-      <div class="trial-end-rune">ᚱ</div>
-      <div class="trial-end-divider"></div>
-      <div class="trial-end-title" id="trial-end-title"></div>
-      <div class="trial-end-note" id="trial-end-note"></div>
-      <button class="btn-full sec" onclick="openAuthModal()" id="trial-end-btn" style="max-width:300px;margin:0 auto;display:block;">BECOME A RUNE SEEKER &#x2192;</button>
     </div>
 
     <div class="status" id="st-reader"></div>
@@ -637,6 +640,11 @@
           <!-- 2026-09-27: odkud runa je — půlměsíc narození, moderní rozdělení roku (KUKY, DECISIONS 2026-09-27 (5)); text plní updateTreeTab -->
           <p class="tree-gate-text tree-lr-origin"></p>
           <p class="tree-gate-text" id="tree-teaser-text"></p>
+          <!-- 2026-10-10: tlačítko jen pro návštěvníka (updateTreeTab) — do té doby tu četl „Sign in to read what this rune carries.“
+               a nebylo na co klepnout. Obal .tree-cta-block = na střed a týž odstup jako tlačítko Rune Seekera pod ním. -->
+          <div class="tree-cta-block" id="tree-visitor-cta" style="display:none;">
+            <button class="vcn-btn btn-upgrade" onclick="openAuthModal()" id="tree-visitor-btn"></button>
+          </div>
 
           <!-- Primary CTA: Life Rune for 3 credits -->
           <!-- id 2026-09-11: navstevnik vidi tentyz teaser, ale nabidka za kredity
@@ -715,11 +723,12 @@
   <!-- ═ COLLECTION PANE ═ -->
   <div id="apane-collection" style="display:none;">
 
-    <!-- Visitor notice — shown only for anonymous/free_trial users -->
-    <div class="visitor-coll-notice" id="visitor-coll-notice" style="display:none;">
-      <div class="vcn-rune">ᚠ</div>
-      <p class="vcn-text" id="vcn-text"></p>
-      <button class="vcn-btn btn-upgrade" onclick="openAuthModal()" id="vcn-btn"></button>
+    <!-- Visitor notice — shown only for anonymous/free_trial users. 2026-10-10 (KUKY: „divná runa v okně. ten rámeček je úplně jiný,
+         než co používáme. barva uvnitř“): styl pruhu návštěvníka ve Spá (.tier-notice · .tn-text · .tn-btn). Do té doby vlastní rámeček
+         s nažloutlým pozadím, větší písmo i tlačítko a glyf ᚠ písmem — Cormorant runy nemá, prohlížeč půjčil cizí písmo (§5). -->
+    <div class="tier-notice" id="visitor-coll-notice" style="display:none;">
+      <p class="tn-text" id="vcn-text"></p>
+      <button class="tn-btn btn-upgrade" onclick="openAuthModal()" id="vcn-btn"></button>
     </div>
 
     <div class="coll-grid" id="coll-grid"></div>
@@ -757,12 +766,12 @@
   <!-- ═ JOURNAL PANE ═ -->
   <div id="apane-journal" style="display:none;">
 
-    <!-- Gate: logged out / Visitor -->
+    <!-- Gate: logged out / Visitor. 2026-10-10: styl pruhu návštěvníka ve Spá (.tier-notice), jako v Safn rúna a po tahu runy — do té
+         doby text kapitálkami, glyf ᚱ a velké tučné tlačítko (čtvrtý vzhled téže výzvy). Texty plní updateUIText z UI_TEXT (§20). -->
     <div id="journal-gate">
-      <div class="journal-gate-wrap">
-        <div class="journal-gate-rune">ᚱ</div>
-        <p class="journal-gate-txt" id="journal-gate-txt">You walk here as a <strong>Visitor</strong>.<br>The journal keeps every reading, so none is lost.<br>It opens when you become a <strong>Rune Seeker</strong> — free to join.</p>
-        <button class="btn-full sec" onclick="openAuthModal()" style="max-width:300px;margin:0 auto;display:block;white-space:nowrap;" id="journal-gate-btn">BECOME A RUNE SEEKER →</button>
+      <div class="tier-notice">
+        <p class="tn-text" id="journal-gate-txt"></p>
+        <button class="tn-btn btn-upgrade" onclick="openAuthModal()" id="journal-gate-btn"></button>
       </div>
     </div>
 

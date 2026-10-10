@@ -9445,3 +9445,31 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   odbočky); kořen × (1 + 1/3 × s) podle toho, jak moc míří do strany pod povrchem. Jeho strom: Kenaz 22 % ×1,33 … Dagaz 98 % ×1,00. Patch
   `docs/archive/tree/2026-10-10_nanecisto_spodni.patch`; čeká na ownerův pohled.
 - Affected doc(s): `RUNAR_BACKLOG.md` (dóm zamítnut, nová položka „spodní větve o 1/3“) — v témže commitu.
+
+## 2026-10-10 (16) — Návštěvník: jedna výzva v jednom stylu; po tahu napřímo „čtení je pro Rune Seekery“ a cesta do Safn rúna
+
+- **Proč:** KUKY 2026-10-10 (prošel appku jako návštěvník): *„runa thurisaz bez jakékoliv zprávy o tom, že nemůžu udělat jako visitor
+  žádné čtení. mělo by tam být přesměrování na rune collection … obě dvě sekce musí být sladěny … deeper reflexion nevím, co tam dělá.
+  chce to udělat hlubší kontrolu“*, *„divná runa v okně. ten rámeček je úplně jiný, než co používáme“* a *„dva rámečky become a rune
+  seeker asi zbytečné. ale … chci, aby to vizuálně odpovídalo s tím, co už máme“*. **Provedl:** CODE-tune.
+- **Co:** (1) Čtyři vzhledy téže výzvy (Spá nahoře · karta po tahu se zlatou září, ᚱ a tučným tlačítkem · Safn rúna s nažloutlým pozadím
+  a ᚠ z cizího písma · Lestrar kapitálkami s ᚱ) → jeden: `.tier-notice` horního pruhu ve Spá. (2) Po tahu: karta hned pod runou MÍSTO
+  horního pruhu (třída `.host-drawn`, nikdy obě); text napřímo *„As a Visitor, you see which rune came to you. The reading itself is for
+  Rune Seekers …“* + tlačítko ◈ RUNES COLLECTION; prázdné „~ DEEPER REFLECTION“ pryč. (3) Tlačítka čtení neslibují: návštěvník má
+  DRAW A RUNE / DRAW THIS RUNE (IS DRAGA RÚN / DRAGA ÞESSA RÚN) místo BEGIN THE READING / HEAR RÚNAR SPEAK. (4) Lífsrúnin: pod „Sign in
+  to read what this rune carries“ tlačítko k registraci (do té doby slepá ulička). (5) Boční panel, znění schválil owner: *„The Runes
+  Collection and your life rune are free. · Readings are for Rune Seekers. · Joining costs nothing.“* — do té doby sliboval první čtení
+  zdarma bez účtu. (6) IS „frjáls“ (= svobodný) ve smyslu „zdarma“ → „ókeypis“ na 4 místech; vzor do BAD_PATTERNS (`check-is.py`).
+  (7) Safn rúna: „draw one / dragðu eina“ → „choose one / veldu eina“; nápověda už nemíchá pět run kolekce s tahem z pětadvaceti.
+- **Nalezeno cestou a opraveno:** přepnutí jazyka po tahu otevřelo návštěvníkovi okno *„SPEAK AGAIN IN ICELANDIC? … uses one credit“*;
+  záložka Lífsrúnin se po přepnutí jazyka ani po načtení profilu nepřekreslovala (podmínky znaly jen `'tree'`, životní runa má od
+  2026-09-11 vlastní záložku); mrtvý klíč `drawn_lbl` (IS „DREGIN RÚNA“, „rúna“ ve slovníku není).
+- **Ověřeno v náhledu** (návštěvník, IS i EN, šířka 1024 i 375 px): po tahu jediný rámeček, horní pruh skrytý; DRAW ANOTHER, START OVER
+  i odchod do Safn rúna a zpět ho vrátí; rámeček v Safn rúna = pruh ve Spá (změřeno pozadí, okraj, písmo, barva, tlačítko); IS v korpusu
+  (čísla u klíčů v `runar-translations.js` a `runar-config.js`); smoke 62/62.
+- **Otázka ownera — výklad životní runy:** návštěvník si ho neudělá; `claude-proxy` bez přihlášení vrací 401 dřív, než zavolá model
+  (2026-10-10 curl s `mode: life_rune` → `{"error":"unauthorized"}`). Appka mu proto ukáže jen glyf a výzvu k registraci.
+- **Zbývá (BACKLOG, „2026-10-10 — Kontrola návštěvníka: co zbylo“):** runové glyfy písmem v popiscích, brána deníku při chybě načtení,
+  §10/§14 drobnosti, otázka na formulář návštěvníka.
+- Affected doc(s): `RUNAR_BACKLOG.md` (kontrola architektury část 1 bod 3 hotovo; nová sekce se zbytkem) — v témže commitu.
+- Odvolává se na: 2026-10-10 (1).

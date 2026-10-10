@@ -63,6 +63,12 @@ BAD_PATTERNS = [
     ('ÞAGNINNI',         'ÞÖGNINNI',          'wrong vowel mutation'),
     ('Velkomin.',        'Gaman að sjá þig',  'standalone welcome greeting (not in titles)'),
     ('fimm frjáls',      '(check context)',   'old "five free" reference'),
+    # 2026-10-10: „frjáls“ = svobodný, ne „zdarma“ (= ókeypis). Kalk z EN „free reading“ stál v onboarding_label_is, TIER_FEATURES
+    # a rs_exhausted_* — korpus „frjáls spá“ 0×, „ókeypis aðgangur“ 596×.
+    ('ein frjáls',       'ein ókeypis',       'kalk z EN "free": zdarma = ókeypis'),
+    (" frjálsar '",      " ókeypis '",        'kalk z EN "free" (šablona TIER_FEATURES)'),
+    ('frjálsar sp',      'ókeypis sp',        'kalk z EN "free": zdarma = ókeypis'),
+    ('frjálsu sp',       'ókeypis sp',        'kalk z EN "free": zdarma = ókeypis'),
     ('fimm lestrar á',   '(check context)',   'old "five readings per month" reference'),
     ('þrjár ókeypis',    '(check context)',   'old "three free" reference'),
     ('Ótakmarkaðir lestrar', '(check context)', 'old "unlimited readings" reference'),

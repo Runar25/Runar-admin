@@ -138,15 +138,16 @@ const UI_TEXT = {
     disclaimer:       'Rúnar offers a reading to reflect on, not professional advice.',
     opt:              '(OPTIONAL)',
     begin_btn:        'BEGIN THE READING',
+    begin_btn_visitor: 'DRAW A RUNE',        // 2026-10-10: návštěvník čtení nedostane — tlačítko ho neslibuje (_updateReadingForm)
     draw_lbl:         'ᚠ DRAW YOUR RUNE',
     draw_note:        'Close your eyes. Hold your question. Then choose the rune that calls to you.',
     random_btn:       'ᚲ LET THE RUNES DECIDE',
     speak_btn:        'HEAR RÚNAR SPEAK',
+    speak_btn_visitor: 'DRAW THIS RUNE',     // 2026-10-10: viz begin_btn_visitor
     speak_btn_add:    'ADD RUNE',
     speak_btn_draw:   'DRAW YOUR RUNES',
     spread_cost:      'This reading costs {casts}.',   // 2026-09-29 reporty ownera: cena čtení nikde nebyla
     life_rune_lbl:    'YOUR LIFE RUNE',
-    drawn_lbl:        'DRAWN RUNE',
     badge_life_note:  'your life rune',
     layer1_lbl:       '✦ RÚNAR SPEAKS',
     layer2_lbl:       '~ DEEPER REFLECTION',
@@ -341,7 +342,8 @@ const UI_TEXT = {
     // Kolekce (2026-09-23, z runar-app.js kvuli §10)
     coll_no_audio:      'No recording available yet.',
     coll_audio_missing: 'Audio file missing.',
-    vcn_text:           'You walk here as a <strong>Visitor</strong>. Five runes await you — draw one, and listen to the ancient stones.<br><br>Should you want all twenty-five, and a reading that speaks to you alone, become a <strong>Rune Seeker</strong>. Free to join.',
+    // 2026-10-10: „draw one“ → „choose one“ — v Safn rúna se runa vybírá, netáhne.
+    vcn_text:           'You walk here as a <strong>Visitor</strong>. Five runes await you — choose one, and listen to the ancient stones.<br><br>Should you want all twenty-five, and a reading that speaks to you alone, become a <strong>Rune Seeker</strong>. Free to join.',
     guide_title:        'How a reading works',
     // 2026-09-29 (report KUKY 10:04 „mělo by být: you bring the question… in area of life, pak pojmenovat seeking a intention“):
     // první řádek nahrazen čtyřmi o tom, co člověk volí a co to ve čtení dělá (oblast · tón · čas · volitelné).
@@ -460,8 +462,10 @@ const UI_TEXT = {
     // 2026-10-10 (DECISIONS 2026-10-10 (1) bod 1): návštěvník čtení nedostane (proxy ho odmítá od 2026-08-02) — texty mu ho už
     // neslibují. Pryč visitor_counter („1 rune reading remaining“) a visitor_exhausted; karta po tahu = visitor_join_*.
     visitor_desc:       'You walk here as a <strong>Visitor</strong>. Draw a rune and see which one comes to you.<br><br>Rúnar reads the runes for those who walk with him. Become a <strong>Rune Seeker</strong> — {onboarding} when you join.',
-    visitor_join_title: 'THE RUNE IS DRAWN',
-    visitor_join_note:  'Rúnar reads the runes for those who walk with him.<br><b class="rs-link">Become a Rune Seeker</b> — {onboarding} when you join.',
+    // 2026-10-10 (KUKY: „runa thurisaz bez jakékoliv zprávy o tom, že nemůžu udělat jako visitor žádné čtení… přesměrování na rune
+    // collection“): karta po tahu řekne napřímo, že čtení je pro Rune Seekery, a ukáže Safn rúna. Do té doby jen „Rúnar reads the runes
+    // for those who walk with him“. Nadpis THE RUNE IS DRAWN pryč — karta má styl pruhu návštěvníka a ten nadpis nemá; runa stojí nad ní.
+    visitor_join_note:  'As a <strong>Visitor</strong>, you see which rune came to you. The reading itself is for <strong>Rune Seekers</strong> — {onboarding} when you join.<br><br>Meanwhile, the Runes Collection waits for you.',
     redeem_ok_msg:      '\u2746 {units} added{rune} \u2014 balance: {bal}',
     redeem_toast_msg:   '\u2746 {UNITS} ADDED',
     redeem_card_code:   '\u16a0 ENTER {card} CODE',
@@ -647,15 +651,16 @@ const UI_TEXT = {
     disclaimer:       'Rúnar býður lestur til umhugsunar, ekki faglega ráðgjöf.',
     opt:              '(VALKVÆTT)',
     begin_btn:        'HEFJA LESTURINN',
+    begin_btn_visitor: 'DRAGA RÚN',          // 2026-10-10: viz EN; „draga rún“ korpus 4× (jako DRAGA AÐRA RÚN)
     draw_lbl:         'ᚠ DRAGÐU RÚNINA ÞÍNA',
     draw_note:        'Lokaðu augunum um stund. Haltu spurningunni í huga. Veldu síðan rúnina sem kallar til þín.',
     random_btn:       'ᚲ LÁTTU RÚNIRNAR VELJA',
     speak_btn:        'HEYRA RÚNAR TALA',
+    speak_btn_visitor: 'DRAGA ÞESSA RÚN',    // 2026-10-10: „draga þessa“ 928×, „þessa rún“ 6×
     speak_btn_add:    'BÆTA VIÐ RÚNU',
     speak_btn_draw:   'DRAGÐU RÚNIRNAR',
     spread_cost:      'Þessi lestur kostar {casts}.',   // 2026-09-29 viz EN; is-grammar-qa čisté (spá/spár = 4. pád)
     life_rune_lbl:    'LÍFSRÚNIN ÞÍN',
-    drawn_lbl:        'DREGIN RÚNA',
     badge_life_note:  'lífsrúnin þín',
     layer1_lbl:       '✦ RÚNAR TALAR',
     layer2_lbl:       '~ DÝPRI HUGLEIÐING',
@@ -846,7 +851,8 @@ const UI_TEXT = {
     helper_ask2:        'Spurðu hvernig myndin snertir spurningu þína.',
     coll_no_audio:      'Engin hljóðupptaka til.',
     coll_audio_missing: 'Hljóðskrá vantar.',
-    vcn_text:           'Þú ert hér <strong>Gestur</strong>. Fimm rúnir bíða þín — dragðu eina og hlustaðu á fornu steinana.<br><br>Viljir þú allar tuttugu og fimm rúnirnar, og lestur sem á aðeins við þig, gerðu þig að <strong>Leitanda</strong>. Skráning er ókeypis.',
+    // 2026-10-10: „dragðu eina“ → „veldu eina“ (korpus 0× / 16×) — v Safn rúna se runa vybírá, netáhne.
+    vcn_text:           'Þú ert hér <strong>Gestur</strong>. Fimm rúnir bíða þín — veldu eina og hlustaðu á fornu steinana.<br><br>Viljir þú allar tuttugu og fimm rúnirnar, og lestur sem á aðeins við þig, gerðu þig að <strong>Leitanda</strong>. Skráning er ókeypis.',
     guide_title:        'Hvernig lestur verður til',
     // 2026-09-29 viz EN; psáno islandsky, is-grammar-qa čisté.
     guide_lines:        ['Þú kemur með spurninguna og velur hvar hún á heima, það svið lífsins sem lesturinn snýr að.',
@@ -920,8 +926,9 @@ const UI_TEXT = {
     rs_banner_desc:     'Þú gengur sem <strong>Leitandi</strong> \u2014 {casts_month} til að byrja, allar tuttugu og fimm rúnirnar opnar, Rúnar hlustandi.<br><br>Þegar hún er gengin og steinarnir eiga enn eftir að segja, opnar {card} dyrnar. Eitt kort. Jafn margar spár og þú berð. Enginn gildistími, engin áskrift.',
     rs_credits_counter: '{units} eftir',
     rs_credits_desc:    'Frjáls spá þín er uppgengin. Næsta spá verður tekin úr inneign þinni.',
-    rs_exhausted_one:   'Þú hefur dregið frjálsu spána þína. Opnaðu dyrnar með <b>{card}</b> \u2014 eitt kort, enginn gildistími, engin áskrift.',
-    rs_exhausted_many:  'Þú hefur gengið allar {n} frjálsu spárnar þínar. Opnaðu dyrnar með <b>{card}</b> \u2014 eitt kort, enginn gildistími, engin áskrift.',
+    // 2026-10-10: „frjáls“ = svobodný, zdarma = „ókeypis“ (kalk z EN „free“); „dregið/gengið … spána“ → „notað“ („hefur notað allar“ 16×).
+    rs_exhausted_one:   'Þú hefur notað ókeypis spána þína. Opnaðu dyrnar með <b>{card}</b> \u2014 eitt kort, enginn gildistími, engin áskrift.',
+    rs_exhausted_many:  'Þú hefur notað allar {n} ókeypis spárnar þínar. Opnaðu dyrnar með <b>{card}</b> \u2014 eitt kort, enginn gildistími, engin áskrift.',
     err_rate_limited:   'Of margar beiðnir. Bíddu aðeins.',
     ask_lbl:            'Spyrðu Rúnar um þennan lestur',
     ask_placeholder:    'Hvað vakti athygli þína?',
@@ -952,8 +959,8 @@ const UI_TEXT = {
     err_generic:        'Rúnar hvílist — reyndu aftur eftir andartak.',
     err_save_failed:    'Ekki tókst að vista — athugaðu nettenginguna og reyndu aftur.',
     visitor_desc:       'Þú ert hér <strong>Gestur</strong>. Dragðu rún og sjáðu hver kemur til þín.<br><br>Rúnar les í rúnirnar fyrir þá sem ganga með honum. Gerðu þig að <strong>Leitanda</strong> — {onboarding} þegar þú skráir þig.',
-    visitor_join_title: 'RÚNIN ER DREGIN',
-    visitor_join_note:  'Rúnar les í rúnirnar fyrir þá sem ganga með honum.<br><b class="rs-link">Gerðu þig að Leitanda</b> — {onboarding} þegar þú skráir þig.',
+    // 2026-10-10: viz EN. Korpus: „sem gestur“ 1361×, „sérðu hvaða“ 217×, „kom til þín“ 1240×, „lesturinn sjálfur“ 6×, „bíður þín“ 704×.
+    visitor_join_note:  'Sem <strong>Gestur</strong> sérðu hvaða rún kom til þín. Lesturinn sjálfur er fyrir <strong>Leitendur</strong> — {onboarding} þegar þú skráir þig.<br><br>Á meðan bíður þín Safn rúna.',
     redeem_ok_msg:      '\u2746 {units} bætt við{rune} \u2014 staða: {bal}',
     redeem_toast_msg:   '\u2746 {UNITS} BÆTT VIÐ',
     redeem_card_code:   'ᚠ SLÁÐU INN {card} KÓÐA',

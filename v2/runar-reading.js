@@ -422,16 +422,21 @@ function _showVisitorJoin() {
   var ld = document.getElementById('reading-loading'); if (ld) ld.style.display = 'none';
   var os = document.getElementById('out-short'); if (os) os.innerHTML = '';
   var vb = document.getElementById('btn-generate-voice'); if (vb) vb.style.display = 'none';
+  // 2026-10-10 (KUKY: „deeper reflection nevím, co tam dělá“): prázdný rámeček „~ DEEPER REFLECTION“. _hideAllSpreadOutputs ho při tahu
+  // vrací a přihlášenému ho schová až _generateReading před voláním proxy — návštěvníkovi, který tam nedojde, ho nikdo neschoval.
+  var l2 = document.getElementById('single-layer2'); if (l2) l2.style.display = 'none';
   _hdr = { lblId: 'layer1-lbl', runes: [readerRune], single: true, cast: _castIdx(readerUser) };
   _paintReadingHeader();
-  _showTrialEnd();
+  _visitorJoin(true);
 }
-function _showTrialEnd() {
-  updateAuthUI();
-  const el = document.getElementById('trial-end');
-  if (!el) return;
-  el.style.display = 'block';
-  setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'center' }), DELAY_SCROLL);
+// Karta po tahu návštěvníka MÍSTO horního pruhu návštěvníka (KUKY 2026-10-10: „dva rámečky become a rune seeker asi zbytečné“).
+// Obojí řídí třída .host-drawn na #apane-reading (runar-reader.css); tohle je jediné místo, které ji mění. Vypíná ji každý návrat
+// k tahu: drawAnother, resetReader, _resetReadingTab. Do 2026-10-10 _showTrialEnd: inline display karty, horní pruh zůstával.
+function _visitorJoin(on) {
+  var p = document.getElementById('apane-reading');
+  if (p) p.classList.toggle('host-drawn', !!on);
+  var el = document.getElementById('trial-end');
+  if (on && el) setTimeout(function () { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, DELAY_SCROLL);
 }
 
 function startReading() {
@@ -1147,7 +1152,7 @@ function drawAnother() {
   if (_spreadMode === 'yggdrasil') { _spread9Runes = []; _updateSpread9Slots(); }
   readerRune = null; readerTexts = {}; voiceGenerated = {};
   document.getElementById('reader-output').style.display = 'none';
-  document.getElementById('trial-end').style.display = 'none';
+  _visitorJoin(false);
   if (currentUser && userTier === 'rune_seeker' && userFreeBalance <= 0 && userCredits <= 0) { updateAuthUI(); return; }
   document.getElementById('reader-rune-card').style.display = 'block';
   document.querySelectorAll('#reader-grid .rb').forEach(b => b.classList.remove('on'));
@@ -1164,6 +1169,7 @@ function _resetReadingTab() {
   _hdr = null;
   _hideAllSpreadOutputs();
   var _ro = document.getElementById('reader-output'); if (_ro) _ro.style.display = 'none';
+  _visitorJoin(false);   // karta po tahu návštěvníka pryč, horní pruh zpět (2026-10-10)
   ['single','kriz','norns','horseshoe','yggdrasil'].forEach(function(m){
     var _b = document.getElementById('mode-btn-' + m); if (_b) _b.classList.toggle('active', m === 'single');
   });
@@ -1184,7 +1190,7 @@ function resetReader() {
   document.getElementById('reader-hero').classList.remove('hidden');
   document.getElementById('reader-output').style.display = 'none';
   document.getElementById('reader-rune-card').style.display = 'none';
-  document.getElementById('trial-end').style.display = 'none';
+  _visitorJoin(false);
   if (currentUser && userTier === 'rune_seeker' && userFreeBalance <= 0 && userCredits <= 0) {
     updateAuthUI(); return;
   }
@@ -1495,6 +1501,12 @@ function _updateReadingForm() {
   var nameInp = document.getElementById('r-name');
   if (nameLbl) nameLbl.textContent = isMine ? t('name_lbl') : t('setup_for_name_lbl');
   if (nameInp) nameInp.placeholder = isMine ? t('name_ph') : t('setup_for_name_ph');
+
+  // Návštěvník čtení nedostane (proxy ho odmítá, 401) — tlačítka mu ho neslibují (KUKY 2026-10-10: „nechal jsem si udělat čtení
+  // a tohle jsem dostal… bez jakékoliv zprávy“). Do té doby i jemu „BEGIN THE READING“ a „HEAR RÚNAR SPEAK“. Stavový text patří sem,
+  // ne do updateUIText (§14): begin-btn se odtamtud odebral; btn-speak tam zůstává jako výchozí (spready mění text samy).
+  setText('begin-btn', t(currentUser ? 'begin_btn' : 'begin_btn_visitor'));
+  if (_spreadMode === 'single') setText('btn-speak', t(currentUser ? 'speak_btn' : 'speak_btn_visitor'));
 }
 
 // Norns = NORMALNI placeny spread (2 kredity) pro KAZDEHO prihlaseneho (KUKY 2026-08-03,

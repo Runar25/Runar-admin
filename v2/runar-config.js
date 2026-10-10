@@ -327,16 +327,19 @@ const TIER_LIMITS = {
   free_trial: {
     onboarding:   1,     // historické (zkušební čtení návštěvníka) — od 2026-10-10 nic nehradí, viz _showVisitorJoin
     // weekly_drip odebráno 2026-10-10 ze všech tierů: mrtvé od modelu B (2026-06-12), nic ho nečetlo (nález CODE-read)
+    // 2026-10-10 (KUKY schválil: „kolekce run a životní runa jsou zdarma, čtení po registraci“; kontrola architektury část 1 bod 3):
+    // do té doby panel sliboval „Your first reading is a gift. No account, no payment.“ — návštěvník čtení od 2026-08-02 nedostane
+    // (proxy 401). Bez rodu (dřív „tilbúinn“). Korpus: „eru ókeypis“ 1056×, „lestrar eru“ 8×, „skráning kostar“ 26×.
     panel_props: {
-      en: ['Your first reading is a gift.', 'No account, no payment.', 'Step further when you are ready.'],
-      is: ['Fyrsti lesturinn er gjöf.', 'Enginn reikningur, engin greiðsla.', 'Farðu lengra þegar þú ert tilbúinn.'],
+      en: ['The Runes Collection and your life rune are free.', 'Readings are for Rune Seekers.', 'Joining costs nothing.'],
+      is: ['Safn rúna og lífsrúnin þín eru ókeypis.', 'Lestrar eru fyrir Leitendur.', 'Skráning kostar ekkert.'],
     },
   },
   rune_seeker: {
     onboarding:   1,     // 1 free reading at registration
     journal_entries: 5,
     onboarding_label_en: 'one free reading',
-    onboarding_label_is: 'ein frjáls spá',
+    onboarding_label_is: 'ein ókeypis spá',   // 2026-10-10: „frjáls“ = svobodný (kalk z EN „free“), zdarma = ókeypis („ókeypis aðgangur“ 596×)
     // panel_props + journal_label_* ODEBRÁNY 2026-09-26 — výpis featur skládá tierFeatures() z TIER_FEATURES (níž).
   },
   standard: {
@@ -364,9 +367,10 @@ const TIER_FEATURES = [
   { key: 'month', hodnota: function (t) { return t.monthly_readings > 0 ? t.monthly_readings : null; },
     en: function (n) { return n + ' ' + (n === 1 ? VOCAB.cast.en : VOCAB.cast.en_pl) + ' a month.'; },
     is: function (n) { return n + ' ' + (n === 1 ? VOCAB.cast.is : VOCAB.cast.is_pl) + ' á mánuði.'; } },
+  // 2026-10-10: IS „frjáls/frjálsar“ → „ókeypis“ (frjáls = svobodný; kalk z EN „free“).
   { key: 'join', hodnota: function (t, id) { return (id !== 'free_trial' && !(t.monthly_readings > 0) && (TIER_LIMITS[id] || {}).onboarding > 0) ? TIER_LIMITS[id].onboarding : null; },
     en: function (n) { return n === 1 ? 'One free ' + VOCAB.cast.en + ' when you join.' : n + ' free ' + VOCAB.cast.en_pl + ' when you join.'; },
-    is: function (n) { return n === 1 ? 'Ein frjáls ' + VOCAB.cast.is + ' þegar þú skráir þig.' : n + ' frjálsar ' + VOCAB.cast.is_pl + ' þegar þú skráir þig.'; } },
+    is: function (n) { return n === 1 ? 'Ein ókeypis ' + VOCAB.cast.is + ' þegar þú skráir þig.' : n + ' ókeypis ' + VOCAB.cast.is_pl + ' þegar þú skráir þig.'; } },
   { key: 'card', hodnota: function (t, id) { return (id !== 'free_trial' && !(t.monthly_readings > 0) && t.voice_credits) ? true : null; },
     en: function () { return 'A ' + VOCAB.card.en + ' opens further ' + VOCAB.cast.en_pl + '.'; },
     is: function () { return VOCAB.card.is + ' opnar fleiri ' + VOCAB.cast.is_pl + '.'; } },

@@ -1848,7 +1848,9 @@ Nasazená funkce se od repa liší jen těmito komentáři a mrtvou funkcí — 
    (`readRune` → `_generateReading` → `callProxy` bez přihlášení) a 401 přeloží na `err_generic`. Známé jako „client visitor gate →
    registruj se místo volání proxy“ (sekce C, „Proxy defense-in-depth“), dosud neudělané. `CLAUDE.md` („Gating“) psal „Visitor má
    Single 1×“ — opraveno na stav produkce (§20: vyhrává produkce). Rozhodnout: co má návštěvník po tahu vidět (výzva k registraci?).
-   ⚠️ **Zbytek (CODE-tune 2026-10-10, §22):** boční panel návštěvníka (`TIER_LIMITS.free_trial.panel_props`, runar-config.js) pořád
+   ✅ *(CODE-tune 2026-10-10, DECISIONS 2026-10-10 (16): znění schválil owner — „kolekce run a životní runa jsou zdarma, čtení po
+   registraci“; IS bez rodu. Karta po tahu má od téhož dne styl horního pruhu, jasnou větu a tlačítko do Safn rúna.)*
+   ~~**Zbytek (CODE-tune 2026-10-10, §22):**~~ boční panel návštěvníka (`TIER_LIMITS.free_trial.panel_props`, runar-config.js) pořád
    slibuje *„Your first reading is a gift. · No account, no payment.“* / *„Fyrsti lesturinn er gjöf. · Enginn reikningur, engin
    greiðsla.“* — od 2026-10-10 neplatí (bez účtu žádné čtení). Navíc IS *„þegar þú ert tilbúinn“* má mužský rod, appka přitom oslovuje
    podle zvoleného rodu. Nové znění je obsah → **čeká na ownera / Cowork**; CODE pak přepíše a ověří IS.
@@ -2923,3 +2925,16 @@ Podklad: `docs/archive/2026-09-23-audit-obrazu.md`. Owner je potřebuje vysvětl
 3. ✅ **Uzavřeno** → DECISIONS 2026-09-23 (10). ~~**Úvodní pokyn „začni celým obrazem najednou"** (jeden ze 7 losovaných začátků čtení) — dává první
    větu ~25 slov proti 17–21 u ostatních a vede model dokreslovat okolí, které v obrazu není.
    Návrh: přepsat a změřit na ~12 čteních před/po. Owner zatím nerozhodl (nevěděl, o co jde).~~
+
+## 2026-10-10 — Kontrola návštěvníka: co zbylo (CODE-tune, DECISIONS 2026-10-10 (16))
+1. ⚪ **Runové glyfy písmem v popiscích:** „ᚠ DRAW YOUR RUNE“ (`draw_lbl`), „ᚲ LET THE RUNES DECIDE“ (`random_btn`), „ᚢ HEAR RÚNAR
+   SPEAK“ (hlas), „ᚠ ENTER RUNE READING CARD CODE“ (redeem). Cormorant runy nemá → prohlížeč půjčí cizí písmo; tentýž „divný“ tvar
+   owner 2026-10-10 vytkl v Safn rúna (§5: glyf jen z RUNE_SVGS, výjimka jen ᚱ). Rozhodnout: naše SVG malé, nebo glyf z popisku pryč.
+2. ⚪ **Deník: chyba načtení ukáže přihlášenému bránu návštěvníka.** `loadJournal` v `catch` volá `hideJournal()` → „You walk here
+   as a Visitor… It opens when you become a Rune Seeker“ i Rune Seekerovi, kterému jen spadlo spojení (`runar-journal.js`).
+3. ⚪ **§10 v bočním panelu:** `updateSidePanel` má natvrdo `is ? '✦ LESTRAR MÍNIR' : '✦ MY JOURNAL'` a `'× EYÐA REIKNINGI' :
+   '× DELETE ACCOUNT'` (`runar-app.js`) — patří do UI_TEXT.
+4. ⚪ **§14 u tlačítka tahu:** `updateUIText` při každém přepnutí jazyka nastaví `btn-speak` na `speak_btn` („HEAR RÚNAR SPEAK“) —
+   ve spreadu, kde ještě chybí runy, má stát `speak_btn_draw` („DRAW YOUR RUNES“). Stavový text patří do funkce stavu.
+5. ❓ **Formulář návštěvníka (čeká na ownera):** návštěvník čtení nedostane, formulář se ho přesto ptá na jméno a „jak tě má Rúnar
+   oslovovat“ (oblast/hledání/záměr má zamčené). Nechat jako ukázku, nebo mu ukázat rovnou tah runy?

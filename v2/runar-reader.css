@@ -442,11 +442,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .coll-rune-text p{font-size:0.92em;font-style:italic;color:var(--muted);line-height:1.85;margin:0 0 12px;}
 .guide p{font-size:0.92em;color:var(--muted);line-height:1.8;margin:0 0 10px;}
 .coll-no-audio{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:1.5px;color:var(--muted);padding:12px 0;}
-/* ── VISITOR COLLECTION NOTICE ── */
-.visitor-coll-notice{border:1px solid rgba(255,191,0,0.2);padding:28px 24px 24px;margin-bottom:20px;text-align:center;background:rgba(255,191,0,0.04);}
-.vcn-rune{font-size:2.4em;color:var(--gold);opacity:0.7;margin-bottom:14px;line-height:1;}
-.vcn-text{font-size:1.02em;font-style:italic;color:var(--muted);line-height:1.85;margin-bottom:22px;}
-.vcn-text strong{color:var(--gold);font-style:normal;font-weight:400;}
+/* ── VISITOR COLLECTION NOTICE ── od 2026-10-10 .tier-notice (styl pruhu návštěvníka ve Spá); vlastní .visitor-coll-notice,
+   .vcn-rune a .vcn-text pryč — KUKY: „ten rámeček je úplně jiný, než co používáme. barva uvnitř“. .vcn-btn zůstává (tlačítka stromu). */
 /* Shared upgrade button style — used for all tier-upgrade CTAs */
 .btn-upgrade{font-family:'Cinzel',serif;letter-spacing:2.5px;background:transparent;border:1px solid var(--gold);color:var(--gold);cursor:pointer;transition:all 0.25s;}
 .btn-upgrade:hover{background:var(--gold);color:#000;}
@@ -825,11 +822,7 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 .jcard-audio-btn:hover{border-color:rgba(255,191,0,0.6);}
 .jcard-audio-btn:disabled{opacity:0.4;cursor:default;}
 .jcard-audio-player{margin-top:10px;}
-/* Journal gate (logged-out) */
-.journal-gate-wrap{text-align:center;padding:52px 20px;}
-/* ᚱ v gate — vždy zlaté, bez ozdob kolem */
-.journal-gate-rune{font-size:2.4em;color:var(--gold);margin-bottom:14px;opacity:0.85;}
-.journal-gate-txt{font-family:'Cinzel',serif;font-size:0.63em;letter-spacing:1.5px;color:var(--muted);line-height:2.3;margin-bottom:26px;}
+/* Journal gate (logged-out): od 2026-10-10 .tier-notice jako ostatní výzvy návštěvníkovi (do té doby kapitálky, ᚱ, velké tlačítko). */
 /* ── RS-LINK — šablona pro "Rune Seeker" gold inline text ── */
 /* Použití: <b class="rs-link">Rune Seeker</b> kdekoliv v textu */
 .rs-link{color:var(--gold);font-style:normal;font-weight:400;}
@@ -885,14 +878,14 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 
 
 
-/* ── TRIAL END PROMPT ── */
-.trial-end{background:linear-gradient(160deg,rgba(255,191,0,0.055) 0%,rgba(18,22,31,0.92) 60%);border:1px solid rgba(255,191,0,0.42);padding:32px 24px 28px;text-align:center;margin-top:20px;animation:trialFadeIn 0.8s ease;box-shadow:0 0 40px rgba(255,191,0,0.07),0 0 0 1px rgba(255,191,0,0.08) inset;}
-@keyframes trialFadeIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
-.trial-end-rune{font-size:2.2em;color:var(--gold);opacity:0.7;margin-bottom:10px;filter:drop-shadow(0 0 10px rgba(255,191,0,0.4));}
-.trial-end-divider{width:40px;height:1px;background:rgba(255,191,0,0.3);margin:0 auto 16px;}
-.trial-end-title{font-family:'Cinzel',serif;font-size:0.8em;letter-spacing:3px;color:var(--gold);margin-bottom:14px;}
-.trial-end-note{font-size:0.9em;color:var(--muted);font-style:italic;line-height:1.9;margin-bottom:24px;max-width:360px;margin-left:auto;margin-right:auto;}
-.trial-end-note b,.trial-end-note strong{color:var(--gold);font-style:normal;font-weight:400;}
+/* ── VÝZVA PO TAHU NÁVŠTĚVNÍKA (#trial-end) ── 2026-10-10 (KUKY: „dva rámečky become a rune seeker asi zbytečné… chci, aby to
+   vizuálně odpovídalo s tím, co už máme“): týž .tier-notice jako horní pruh návštěvníka (#trial-banner) a vždy jen jeden z nich.
+   Stav nese třída .host-drawn na #apane-reading (_visitorJoin v runar-reading.js); !important přebije inline display, které pruhu
+   nastavuje updateBanners. Do té doby vlastní karta se zlatou září, glyfem ᚱ a velkým tučným tlačítkem, a pruh nad ní zůstával. */
+#trial-end{display:none;}
+#apane-reading.host-drawn #trial-end{display:block;}
+#apane-reading.host-drawn #trial-banner{display:none!important;}
+.tn-btns{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;}
 
 /* ── SPREAD MODE SWITCHER ── */
 /* 5 spready: horní řádek 3 (každý 2/6), spodní řádek 2 (každý 3/6) — symetrické, bez scrollu */
