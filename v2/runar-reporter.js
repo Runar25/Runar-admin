@@ -140,7 +140,7 @@
     btn.title = L('report_btn'); btn.setAttribute('aria-label', L('report_btn'));
     // capture selection on pointerdown (before focus clears it), open on click
     btn.addEventListener('pointerdown', captureContext);
-    btn.addEventListener('click', openPanel);
+    btn.addEventListener('click', function () { if (typeof currentUser !== 'undefined' && currentUser) openPanel(); });
     document.body.appendChild(btn);
 
     var ov = document.createElement('div');
@@ -288,8 +288,16 @@
     });
   }
 
+  // 2026-10-10 (DECISIONS 2026-10-10 (1) bod 2 — kontrola architektury, KUKY „opravit“): tlačítko vidí jen přihlášený. Databáze
+  // hlášení od nepřihlášeného odmítne (politika bug_reports_insert jen pro authenticated); do té doby tlačítko viděl každý.
+  // Volá init a updateAuthUI (runar-auth.js) při každé změně přihlášení.
+  function paintReportBtn() {
+    if (btn) btn.style.display = (typeof currentUser !== 'undefined' && currentUser) ? '' : 'none';
+  }
+  window._paintReportBtn = paintReportBtn;
+
   function init() {
-    injectStyle(); buildUI();
+    injectStyle(); buildUI(); paintReportBtn();
     fetch('sw.js', { cache: 'no-store' }).then(function (r) { return r.text(); })
       .then(function (txt) { var m = txt.match(/v(\d+)/); if (m) APP_VERSION = 'v' + m[1]; }).catch(function () {});
     window.addEventListener('online', flush);

@@ -118,7 +118,7 @@ function toggleFreeNote() {
 function updateBanners() {
   const banner      = document.getElementById('trial-banner');
   const freeBanner  = document.getElementById('free-user-banner');
-  const gate        = document.getElementById('auth-gate');
+  // (auth-gate pryč 2026-10-10 — nikde se nezobrazoval, jen skrýval; texty natvrdo v _updateTrialTexts byly mrtvé)
   const upgradeGate = document.getElementById('upgrade-gate');
   const content     = document.getElementById('reader-content');
   const creditsBanner = document.getElementById('credits-banner');
@@ -126,7 +126,6 @@ function updateBanners() {
   if (currentUser) {
     // ── Logged in ──
     banner.style.display = 'none';
-    gate.style.display   = 'none';
 
     // ── Rune Walker / Rune Wanderer — unlimited ──
     if (userTier === 'standard' || userTier === 'premium') {
@@ -197,41 +196,19 @@ function updateBanners() {
       if (btnEl) { btnEl.textContent = tp('gift_card_btn', { card: vl('card', lang).toUpperCase() }); btnEl.style.display = ''; }
     }
   } else {
-    // ── Anonymous ──
+    // ── Anonymous ── 2026-10-10 (DECISIONS 2026-10-10 (1) bod 1): návštěvník čtení nedostane (proxy ho odmítá od 2026-08-02),
+    // banner mu ho proto už neslibuje — žádné „1 rune reading remaining“, jen co může (vytáhnout runu) a výzva stát se Rune
+    // Seekerem. Do té doby počítadlo zkušebních čtení (FREE_TRIAL_LIMIT − getTrialCount) a texty visitor_counter / visitor_exhausted.
     freeBanner.style.display  = 'none';
     upgradeGate.style.display = 'none';
-    const remaining = Math.max(0, FREE_TRIAL_LIMIT - getTrialCount());
-    if (remaining > 0) {
-      // Build Visitor notice
-      banner.style.display = 'block';
-      const isIs = lang === 'is';
-      const cntEl = document.getElementById('trial-count');
-      if (cntEl) {
-        cntEl.textContent = tp('visitor_counter', { casts: vn('cast', remaining, lang) });
-        cntEl.className = 'tn-counter' + (remaining === 1 ? ' warn' : '');
-      }
-      const txtEl = document.getElementById('trial-text');
-      if (txtEl) txtEl.innerHTML = t('visitor_desc');
-      const btnEl = document.getElementById('tn-visitor-btn');
-      if (btnEl) btnEl.textContent = t('become_rs_btn');
-      gate.style.display    = 'none';
-      content.style.display = 'block';
-    } else {
-      // Trial exhausted — show 0 in banner, form stays visible so visitor can sign up
-      gate.style.display    = 'none';
-      banner.style.display  = 'block';
-      content.style.display = 'block';
-      const isIs = lang === 'is';
-      const cntEl = document.getElementById('trial-count');
-      if (cntEl) {
-        cntEl.textContent = tp('visitor_counter', { casts: vn('cast', 0, lang) });
-        cntEl.className = 'tn-counter warn';
-      }
-      const txtEl = document.getElementById('trial-text');
-      if (txtEl) txtEl.innerHTML = t('visitor_exhausted');
-      const btnEl = document.getElementById('tn-visitor-btn');
-      if (btnEl) btnEl.textContent = t('become_rs_btn');
-    }
+    banner.style.display      = 'block';
+    content.style.display     = 'block';
+    const cntEl = document.getElementById('trial-count');
+    if (cntEl) cntEl.style.display = 'none';
+    const txtEl = document.getElementById('trial-text');
+    if (txtEl) txtEl.innerHTML = tp('visitor_desc', { onboarding: TIER_LIMITS.rune_seeker['onboarding_label_' + (lang === 'is' ? 'is' : 'en')] });
+    const btnEl = document.getElementById('tn-visitor-btn');
+    if (btnEl) btnEl.textContent = t('become_rs_btn');
   }
   updateQuestionGate();
 }
@@ -247,6 +224,7 @@ function updateAuthUI() {
   // jménem (úroveň, e-mail, počet čtení) se plní tady, při KAŽDÉ změně přihlášení. Do té doby jen při uložení jména a překreslení
   // bočního panelu — kdo se přihlásil a nic dalšího neudělal, měl v menu prázdný e-mail.
   if (typeof updateDropdown === 'function') updateDropdown();
+  if (typeof _paintReportBtn === 'function') _paintReportBtn();   // ⚑ jen pro přihlášené (2026-10-10, DECISIONS 2026-10-10 (1) bod 2)
 }
 
 // ── SPECIFIC QUESTION GATE ────────────────────────────────

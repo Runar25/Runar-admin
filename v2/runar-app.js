@@ -726,24 +726,14 @@ function _updateAreaSeekLabels() {
 
 // Trial banner, auth gate, trial-end modal texts
 function _updateTrialTexts() {
-  // Trial banner — fallback texts (přepíše updateAuthUI pokud je logged out)
-  const remaining = Math.max(0, FREE_TRIAL_LIMIT - getTrialCount());
-  setText('trial-count', lang === 'is'
-    ? `${remaining} ókeypis lestur${remaining !== 1 ? 'ar' : ''} eftir`
-    : `${remaining} free reading${remaining !== 1 ? 's' : ''} remaining`);
-  // Auth gate
-  setText('gate-title', lang === 'is' ? 'ÓKEYPIS SPÁ ÞÍN ER FULLNÝTT' : 'YOUR FREE RUNE READING IS COMPLETE');
-  setText('gate-note', lang === 'is'
-    ? 'Þú hefur farið með Rúnar einu sinni sem gestur.\nStofnaðu reikning til að halda áfram.'
-    : 'You have walked with Rúnar once as a Visitor.\nCreate a free account to continue.');
-  setText('gate-btn', lang === 'is' ? 'GERAST LEITANDI' : 'BECOME A RUNE SEEKER');
-  // Trial end prompt translations
-  setText('trial-end-title', lang === 'is' ? 'FERÐ ÞÍN SEM GESTUR ER LOKIÐ' : 'YOUR JOURNEY AS VISITOR IS COMPLETE');
+  // 2026-10-10 (DECISIONS 2026-10-10 (1) bod 1): karta po tahu návštěvníka (_showVisitorJoin) — texty z UI_TEXT (§10), počet z configu
+  // (§8). Do té doby „YOUR JOURNEY AS VISITOR IS COMPLETE“ po čtení, které návštěvník od 2026-08-02 nedostával, a natvrdo psané
+  // texty počítadla zkušebních čtení a auth-gate (ten se nikde nezobrazoval — z HTML pryč).
+  const ob = TIER_LIMITS.rune_seeker['onboarding_label_' + (lang === 'is' ? 'is' : 'en')];
+  setText('trial-end-title', t('visitor_join_title'));
   const ten = document.getElementById('trial-end-note');
-  if (ten) ten.innerHTML = lang === 'is'
-    ? 'Þú hefur farið með Rúnar sem Gestur. Steinarnir muna.<br><b class="rs-link">Gerast Leitandi</b> til að halda áfram — ' + TIER_LIMITS.rune_seeker.onboarding_label_is + ' þegar þú skráir þig.'
-    : 'You have walked with Rúnar as a Visitor. The stones remember.<br><b class="rs-link">Become a Rune Seeker</b> to continue — ' + TIER_LIMITS.rune_seeker.onboarding_label_en + ' when you join.';
-  setText('trial-end-btn', lang === 'is' ? 'GERAST LEITANDI →' : 'BECOME A RUNE SEEKER →');
+  if (ten) ten.innerHTML = tp('visitor_join_note', { onboarding: ob });
+  setText('trial-end-btn', t('become_rs_btn'));
 }
 
 // Journal gate, auth modal consent, journal re-render, buildPills

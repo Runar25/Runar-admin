@@ -167,7 +167,7 @@ const TIERS = {
    // 2026-09-30: IS pády jména pro věty „…með {tier}“ (3. p.) a „yfir í {tier}“ (4. p.) — tierLabel() v runar-utils.js
     label_is_acc:     'Gest',
     label_is_dat:     'Gesti',
-    readings:         1,          // total, no account needed — CHANGED 2026-05-29
+    readings:         1,          // historické: od 2026-08-02 návštěvník čtení nedostane (proxy 401), od 2026-10-10 ho appka ani neslibuje
     // ↓ VOICE FLAGS — flip here to enable/disable without touching logic
     // voice_monthly: true = Visitor slyší hlas při svém 1 čtení
     // Až budeme limitovat: flip na false → Visitor dostane jen text
@@ -322,7 +322,7 @@ const TIER_LIMITS = {
   // Rule §8: ALL user-facing tier values live here — never hardcode in UI text.
   // When any value changes, update here only. Výpis featur tierů se skládá sám — TIER_FEATURES + tierFeatures() níž.
   free_trial: {
-    onboarding:   1,     // lifetime readings for Visitor
+    onboarding:   1,     // historické (zkušební čtení návštěvníka) — od 2026-10-10 nic nehradí, viz _showVisitorJoin
     weekly_drip:  0,
     panel_props: {
       en: ['Your first reading is a gift.', 'No account, no payment.', 'Step further when you are ready.'],

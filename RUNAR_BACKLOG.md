@@ -1762,7 +1762,7 @@ Nasazená funkce se od repa liší jen těmito komentáři a mrtvou funkcí — 
    hlas) + texty, které spread Rune Seekerovi nabízejí. Kód nikdo nemění, dokud owner nerozhodne.
 2. ⚪ **`credits_used` může lhát.** Odečet a zápis jsou dva zápisy; když zápis selže, klient čtení pošle přes `resave` a to
    uloží `credits_used = false`, i když kredit stržen byl. Shrine pak ukáže „free“. Jen štítek, peníze se nepletou. Stačí vědět.
-3. 🟠 **Návštěvník si vytáhne runu a dostane obecnou chybu.** ➜ **ROZHODNUTO 2026-10-09: výzva k registraci** (DECISIONS 2026-10-10 (1)), dělá CODE-tune. Živé čtení nepřihlášenému proxy odmítá od 2026-08-02 (401,
+3. ✅ *(CODE-tune 2026-10-10: po tahu karta „THE RUNE IS DRAWN“ s výzvou k registraci, proxy se nevolá; banner a nápověda čtení neslibují — `_showVisitorJoin`)* 🟠 **Návštěvník si vytáhne runu a dostane obecnou chybu.** ➜ **ROZHODNUTO 2026-10-09: výzva k registraci** (DECISIONS 2026-10-10 (1)), dělá CODE-tune. Živé čtení nepřihlášenému proxy odmítá od 2026-08-02 (401,
    DECISIONS 2026-08-02 „Fáze 1“ — návštěvník má jen statickou kolekci run). Appka mu ale záložku čtení ukáže, tah dovolí
    (`readRune` → `_generateReading` → `callProxy` bez přihlášení) a 401 přeloží na `err_generic`. Známé jako „client visitor gate →
    registruj se místo volání proxy“ (sekce C, „Proxy defense-in-depth“), dosud neudělané. `CLAUDE.md` („Gating“) psal „Visitor má
@@ -1801,7 +1801,7 @@ nepoužitá konstanta islandského hlasu označena · `tree-update` „volá ji 
    `runar_static_audio`); smoke ㉪ je vědomě nehlídá (SQL = historie, ne běžící kód). Při změně adminů je nutné přepsat i je.
 8. ⚪ **`user_profiles` má dvě totožné politiky** ➜ ✅ **smazáno 2026-10-10** (SQL spustil owner; zůstala „Users manage own profile“). („Users manage own profile“ a „own profile“, obě ALL, `auth.uid() = id`). Neškodí,
    jen duplikát. Úklid (spustí owner): `drop policy "own profile" on public.user_profiles;`
-9. ⚪ **`bug_reports`:** ➜ **owner „opravit“:** DB jen přihlášení ✅ 2026-10-10 (SQL spustil owner, ověřeno v `pg_policies`) + tlačítko jen přihlášeným (CODE-tune) + `RUNAR_PRIVACY.md` doplněn (CODE-read); doba uchování dál otevřená. vložit hlášení smí i nepřihlášený (politika INSERT, role public, `CHECK true`) — kdo zná veřejný klíč, může
+9. ⚪ **`bug_reports`:** ➜ **owner „opravit“:** DB jen přihlášení ✅ 2026-10-10 (SQL spustil owner, ověřeno v `pg_policies`) + tlačítko jen přihlášeným ✅ 2026-10-10 (CODE-tune, `_paintReportBtn`) + `RUNAR_PRIVACY.md` doplněn (CODE-read); doba uchování dál otevřená. vložit hlášení smí i nepřihlášený (politika INSERT, role public, `CHECK true`) — kdo zná veřejný klíč, může
    posílat hlášení a pingat Slack. A hlášení nesou jméno testera (ručně zadané, 0 e-mailů z 241) a výřez čtení, bez vazby na účet →
    přežijí smazání účtu; `RUNAR_PRIVACY.md` o `bug_reports` nepíše nic. Rozhodnout: nechat / jen přihlášení / doba uchování.
 

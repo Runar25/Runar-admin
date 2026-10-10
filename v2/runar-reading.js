@@ -281,6 +281,7 @@ function _renderLifeBadge(life) {
 
 async function _generateReading() {
   if (!readerRune) return;
+  if (!currentUser) { _showVisitorJoin(); return; }   // návštěvník: výzva k registraci, ne volání proxy (2026-10-10, viz _showVisitorJoin)
   _hideAllSpreadOutputs();  // isolate: no stale spread pane lingers over a single reading
   const vBtn = document.getElementById('btn-generate-voice');
   vBtn.disabled = true; vBtn.textContent = t('voice_btn');
@@ -401,16 +402,6 @@ async function _generateReading() {
   _showAsk();
   document.getElementById('out-deep').innerHTML = '';
 
-  // After streaming is done — if last free reading, show join prompt after 8s
-  if (!currentUser && getTrialCount() >= FREE_TRIAL_LIMIT) {
-    setTimeout(() => {
-      const el = document.getElementById('trial-end');
-      if (el && document.getElementById('reader-output')?.style.display !== 'none') {
-        el.style.display = 'block';
-      }
-    }, DELAY_TRIAL_END);
-  }
-
   // Hlas — povol jen pokud tier dovoluje (viz canUseVoice() + runar-config.js TIERS)
   if (canUseVoice()) {
     vBtn.disabled = false;
@@ -422,6 +413,19 @@ async function _generateReading() {
 }
 
 // ─── READER FLOW ─────────────────────────────────────────
+// Návštěvník po tahu runy (2026-10-10, DECISIONS 2026-10-10 (1) bod 1 — KUKY „návštěvník po tahu uvidí výzvu k registraci“).
+// Proxy nepřihlášeného odmítá od 2026-08-02 (401) a appka mu do té doby po tahu ukázala „Rúnar odpočívá“. Teď runu vidí v hlavičce
+// (glyf + jméno; ťuknutím na glyf se otevře její význam, runar-rune-popup.js) a místo čtení kartu trial-end s výzvou stát se
+// Rune Seekerem (texty visitor_join_* v _updateTrialTexts). Zkušební počítadlo (getTrialCount) už nic nehradí — návštěvník
+// může tahat kolikrát chce, čtení nedostane nikdy.
+function _showVisitorJoin() {
+  var ld = document.getElementById('reading-loading'); if (ld) ld.style.display = 'none';
+  var os = document.getElementById('out-short'); if (os) os.innerHTML = '';
+  var vb = document.getElementById('btn-generate-voice'); if (vb) vb.style.display = 'none';
+  _hdr = { lblId: 'layer1-lbl', runes: [readerRune], single: true, cast: _castIdx(readerUser) };
+  _paintReadingHeader();
+  _showTrialEnd();
+}
 function _showTrialEnd() {
   updateAuthUI();
   const el = document.getElementById('trial-end');
@@ -431,7 +435,6 @@ function _showTrialEnd() {
 }
 
 function startReading() {
-  if (!currentUser && getTrialCount() >= FREE_TRIAL_LIMIT) { _showTrialEnd(); return; }
   // Rune Seeker without enough for THIS reading is stopped here, before the draw. Single: free reading or ≥ 1 credit.
   // Spread: credits ≥ its price — 2026-10-09 the free reading stopped covering spreads (lacksCredits / shouldUseCredit in
   // runar-app.js, same rule in claude-proxy); until then a spread without credits got through to a 402 after the runes were drawn.
@@ -1145,7 +1148,6 @@ function drawAnother() {
   readerRune = null; readerTexts = {}; voiceGenerated = {};
   document.getElementById('reader-output').style.display = 'none';
   document.getElementById('trial-end').style.display = 'none';
-  if (!currentUser && getTrialCount() >= FREE_TRIAL_LIMIT) { _showTrialEnd(); return; }
   if (currentUser && userTier === 'rune_seeker' && userFreeBalance <= 0 && userCredits <= 0) { updateAuthUI(); return; }
   document.getElementById('reader-rune-card').style.display = 'block';
   document.querySelectorAll('#reader-grid .rb').forEach(b => b.classList.remove('on'));
@@ -1183,9 +1185,6 @@ function resetReader() {
   document.getElementById('reader-output').style.display = 'none';
   document.getElementById('reader-rune-card').style.display = 'none';
   document.getElementById('trial-end').style.display = 'none';
-  if (!currentUser && getTrialCount() >= FREE_TRIAL_LIMIT) {
-    _showTrialEnd(); return;
-  }
   if (currentUser && userTier === 'rune_seeker' && userFreeBalance <= 0 && userCredits <= 0) {
     updateAuthUI(); return;
   }

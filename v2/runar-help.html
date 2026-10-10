@@ -143,7 +143,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
           <tbody id="tier-tbody">
             <tr>
               <td>VISITOR</td>
-              <td id="td-visitor">1 reading, no account needed. Five runes open to you — enough to sense what waits inside.</td>
+              <td id="td-visitor">Five runes are open to you — draw one and see which comes to you. Rúnar reads the runes for those who walk with him; joining is free.</td>
             </tr>
             <tr>
               <td>RUNE SEEKER</td>
@@ -288,7 +288,8 @@ const CONTENT = {
       <p><em>The runes do not decide your path. They help you remember it.</em></p>`,
     's2-lbl':        'YOUR ACCOUNT',
     'th-tier':       'TIER', 'th-what': 'WHAT YOU GET',
-    'td-visitor':    '1 reading, no account needed. Five runes open to you — enough to sense what waits inside.',
+    // 2026-10-10 (DECISIONS 2026-10-10 (1) bod 1): návštěvník čtení nedostává (od 2026-08-02) — „1 reading, no account needed“ pryč.
+    'td-visitor':    'Five runes are open to you — draw one and see which comes to you. Rúnar reads the runes for those who walk with him; joining is free.',
     'td-seeker':     tierFeatures('rune_seeker', 'en').join(' '),   // 2026-09-26: skládá se z configu (TIER_FEATURES), ne ručně
     'td-card':       'Credits never expire and follow your account across devices. Rúnar\'s voice speaks your reading aloud.',
     'td-standard':   tierFeatures('standard', 'en').join(' '),
@@ -341,7 +342,7 @@ const CONTENT = {
       <p><em>Rúnirnar ákveða ekki leið þína. Þær hjálpa þér að muna hana.</em></p>`,
     's2-lbl':        'REIKNINGUR ÞINN',
     'th-tier':       'STIG', 'th-what': 'HVAÐ FÆR ÞÚ',
-    'td-visitor':    'Einn lestur, engan reikning þarf. Fimm rúnir eru þér opnar — nóg til að finna hvað bíður inni.',
+    'td-visitor':    'Fimm rúnir eru þér opnar — dragðu eina og sjáðu hver kemur til þín. Rúnar les í rúnirnar fyrir þá sem ganga með honum — skráning er ókeypis.',
     'td-seeker':     tierFeatures('rune_seeker', 'is').join(' '),
     'td-card':       'Þegar mánaðarlegir lestrar eru gengnar — lesturarkort heldur dyrunum opnum. Kreditarnir renna aldrei út. Rödd Rúnars les lesturinn þinn upphátt.',
     'td-standard':   tierFeatures('standard', 'is').join(' '),
