@@ -2340,6 +2340,30 @@ odečtu; sol: prázdná odpověď → `null` → Claude cesta se stejnými kontr
   začátku (atomicky odečíst / zvýšit čítač) a při chybě VRÁTIT — slib „chyba nestojí kredit“ zůstane. Money-critical → E2E test všech
   cest (čtení, spready, Ask, životní runa, rozbor jména) PŘED nasazením (poučení z #2b 2026-08-03); nasazení pouští owner.
 
+### Část 41 — plýtvání voláními, která stojí peníze; levnější modely mimo čtení (2026-10-10)
+KUKY: *„budeme ještě chtít hlídat případné plýtvání voláním, což nás stojí peníze“* + *„případně pokud na něco můžeme použít levnější
+modely, ale ne na čtení“*.
+**Nový nástroj (CODE-read):** `scripts/utils/plytvani.js` — jen čtení DB, žádné API: zálohy sol→Claude (dvojí platba), dvojí generování do
+20 s, tokeny přemýšlení, cache (čtení i zápis), hlas bez uloženého čtení. **Hlídá se sám:** `nacti_cteni.js` (owner „načti čtení a reporty“)
+nově ukáže blok „PLÝTVÁNÍ VOLÁNÍMI (7 dní)“ — souhrn + varování.
+**Kód:** přepnutí jazyka u čtení se ptá oknem (vědomá platba) · tlačítka tahu, hlasu a Asku se během volání vypínají (dvojklik ne) · hlas
+čtení se v relaci namluví jednou na jazyk, deník přehrává předtočené statické audio (zdarma) · sol prázdná/chybná odpověď → Claude bez
+dvojího odečtu. **Z dat (30 dní):** 0 záloh, 0 dvojích generování; dat po přechodu na sol málo (admin účty) — hranice nálezu.
+- ⚪ **Pro CODE-tune (n) — plýtvání na cestě Claude:** `claude-proxy` dává `cache_control: ephemeral` na systémový prompt při KAŽDÉM volání
+  (~800 tok. zápisu, zápis se platí dráž než běžný vstup), z cache se ale skoro nečte — za 30 dní opus-4-8 16 835 tok. zapsáno / 1 % vstupu
+  z cache, opus-5 23 605 / 13 %. Čtení jsou řídká (cache drží 5 min) → přirážka bez návratu. Claude je dnes záloha + přepínač admina →
+  malé částky, ale při výpadku solu by platil každé čtení. Návrh: `cache_control` pryč (nebo jen u Asku, kde jde druhé volání hned po čtení).
+- **Levnější modely mimo čtení:** rozhodnuto už 2026-10-09 (oddíl „Haiku 5.5“ výš: rozbor čtení zrušen, třídění hlášení modelem
+  „neřešit“, `tree-update` = Haiku 5.5; Ask ne — model proti hlasu malá část ceny). Nově projito: rozbor jména (`name_lore`, gpt-6-sol) —
+  Rúnarův hlas a islandština jako u Asku, levný už teď → nevyplatí se. Vývojové nástroje: `profsteinn.js` soudí 3× claude-opus-4-8
+  (nejdražší položka mimo produkci, ale běží jen při stížnosti; výměna soudce = přeměřit nástroj, §27) · `is-gpt-check.py` gpt-6-sol
+  (kvalita IS je kritická, levnější model měl 2026-10-09 cizí slova). **Největší páka na peníze je hlas (ElevenLabs), ne model — a hlas
+  je přednes čtení.**
+
+**Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
+„Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
+k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.

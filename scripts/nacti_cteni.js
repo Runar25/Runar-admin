@@ -84,6 +84,14 @@ if (cteni.length) {
   if (r.status !== 0) console.log('   ⚠ monitor skončil chybou: ' + kratce(r.stderr, 300));
 }
 
+// 2b) plýtvání voláními — KUKY 2026-10-10: „budeme ještě chtít hlídat případné plýtvání voláním, což nás stojí peníze“.
+// Jen čtení DB (scripts/utils/plytvani.js), týden zpět, krátce: souhrn + varování. Podrobně: node scripts/utils/plytvani.js.
+{
+  const p = cp.spawnSync('node', [path.join(__dirname, 'utils', 'plytvani.js'), '--dny', '7', '--kratce'], { cwd: ROOT, encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
+  console.log('\n══ PLÝTVÁNÍ VOLÁNÍMI (7 dní)');
+  console.log(String(p.stdout || '').split('\n').filter((l) => l.trim()).join('\n') || '   ⚠ přehled se nespustil: ' + kratce(p.stderr, 200));
+}
+
 // 3) hlášení — NEPŘEČTENÁ (stav „new“), bez ohledu na datum
 const rep = dotaz("select id, created_at, type, status, message, flagged_text, suggested_replacement, screen_context, locale, app_version "
   + "from bug_reports where status = 'new' order by created_at");
