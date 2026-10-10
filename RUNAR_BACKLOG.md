@@ -1745,7 +1745,7 @@ Nasazená funkce se od repa liší jen těmito komentáři a mrtvou funkcí — 
    hlas) + texty, které spread Rune Seekerovi nabízejí. Kód nikdo nemění, dokud owner nerozhodne.
 2. ⚪ **`credits_used` může lhát.** Odečet a zápis jsou dva zápisy; když zápis selže, klient čtení pošle přes `resave` a to
    uloží `credits_used = false`, i když kredit stržen byl. Shrine pak ukáže „free“. Jen štítek, peníze se nepletou. Stačí vědět.
-3. 🟠 **Návštěvník si vytáhne runu a dostane obecnou chybu.** Živé čtení nepřihlášenému proxy odmítá od 2026-08-02 (401,
+3. 🟠 **Návštěvník si vytáhne runu a dostane obecnou chybu.** ➜ **ROZHODNUTO 2026-10-09: výzva k registraci** (DECISIONS 2026-10-10 (1)), dělá CODE-tune. Živé čtení nepřihlášenému proxy odmítá od 2026-08-02 (401,
    DECISIONS 2026-08-02 „Fáze 1“ — návštěvník má jen statickou kolekci run). Appka mu ale záložku čtení ukáže, tah dovolí
    (`readRune` → `_generateReading` → `callProxy` bez přihlášení) a 401 přeloží na `err_generic`. Známé jako „client visitor gate →
    registruj se místo volání proxy“ (sekce C, „Proxy defense-in-depth“), dosud neudělané. `CLAUDE.md` („Gating“) psal „Visitor má
@@ -1765,7 +1765,7 @@ nepoužitá konstanta islandského hlasu označena · `tree-update` „volá ji 
    `used_by` → kód je zase „nepoužitý“. V produkci teď **2 takové kódy** (`used_by` null, `used_at` vyplněné; dotaz 2026-10-09).
    **Opraveno v repu** (`redeem-code` hlídá i `used_at`, v kontrole i v CAS) — **čeká na nasazení**:
    `supabase functions deploy redeem-code --project-ref pmitxjvkeovijreepror --no-verify-jwt`. Po nasazení jsou ty 2 kódy zavřené samy.
-5. ⚪ **`tree-update` je nasazená, appka ji nevolá** — a zavolat ji může každý přihlášený bez rate limitu a bez stropu délky textu
+5. ⚪ **`tree-update` je nasazená, appka ji nevolá** ➜ **owner „opravit“ → stáhnout z nasazení; příkaz spustí owner** (DECISIONS 2026-10-10 (1)). — a zavolat ji může každý přihlášený bez rate limitu a bez stropu délky textu
    (platí Haiku, zapíše `tree_state`, `credits_used` bere od klienta = známé #6/#7 v sekci C). Data se dnes nikam nepoužijí (vrstvy
    A/B/C vypnuté). Volba: stáhnout, dokud ji CODE-tree neoživí (`supabase functions delete tree-update`), nebo nechat.
 6. ⚪ `elevenlabs-proxy` vrací klientovi text chyby ElevenLabs (`claude-proxy` příčiny záměrně skrývá) a měsíční čítač hlasu není
@@ -1782,9 +1782,9 @@ nepoužitá konstanta islandského hlasu označena · `tree-update` „volá ji 
 **PRO OWNERA:**
 7. ⚪ **Seznam adminů žije i v 5 RLS politikách** (`gift_codes`, `knowledge_base`, `runar_character`, `runar_corrections`,
    `runar_static_audio`); smoke ㉪ je vědomě nehlídá (SQL = historie, ne běžící kód). Při změně adminů je nutné přepsat i je.
-8. ⚪ **`user_profiles` má dvě totožné politiky** („Users manage own profile“ a „own profile“, obě ALL, `auth.uid() = id`). Neškodí,
+8. ⚪ **`user_profiles` má dvě totožné politiky** ➜ **owner „opravit“; SQL spustí owner** (CODE-read DB měnit nesmí). („Users manage own profile“ a „own profile“, obě ALL, `auth.uid() = id`). Neškodí,
    jen duplikát. Úklid (spustí owner): `drop policy "own profile" on public.user_profiles;`
-9. ⚪ **`bug_reports`:** vložit hlášení smí i nepřihlášený (politika INSERT, role public, `CHECK true`) — kdo zná veřejný klíč, může
+9. ⚪ **`bug_reports`:** ➜ **owner „opravit“:** DB jen přihlášení (SQL spustí owner) + tlačítko jen přihlášeným (CODE-tune) + `RUNAR_PRIVACY.md` doplněn (CODE-read); doba uchování dál otevřená. vložit hlášení smí i nepřihlášený (politika INSERT, role public, `CHECK true`) — kdo zná veřejný klíč, může
    posílat hlášení a pingat Slack. A hlášení nesou jméno testera (ručně zadané, 0 e-mailů z 241) a výřez čtení, bez vazby na účet →
    přežijí smazání účtu; `RUNAR_PRIVACY.md` o `bug_reports` nepíše nic. Rozhodnout: nechat / jen přihlášení / doba uchování.
 
@@ -1797,7 +1797,7 @@ rate_limited | no_credits“ — vrací víc, včetně `unauthorized` návštěv
 (nikdo ji nevolal od rozdělení monolitu) · **nová kontrola smoke ㉸**: větve `lang === 'is' ? '…'` nesmí přibývat (bod 10).
 
 **PRO OWNERA:**
-10. ⚪ **57 textů natvrdo podle jazyka** (`lang === 'is' ? '…' : '…'` — app 26, utils 8, auth 7, reading 7, character 4, tree 3,
+10. ⚪ **57 textů natvrdo podle jazyka** ➜ **owner „opravit všechno“** → CODE-tune (nebo CODE-read v souborech, které uvolní). (`lang === 'is' ? '…' : '…'` — app 26, utils 8, auth 7, reading 7, character 4, tree 3,
     config 1, runes 1): záložky, brány návštěvníka, souhlas, přihlašovací okno. §10 je zakazuje, kontrola ② je neviděla. Od teď je
     drží ráčna ㉸ (nesmí přibýt). Přepis do `UI_TEXT` = práce CODE-tune s ověřenou islandštinou — kdy, rozhodne owner.
 11. ⚪ Mrtvé drobnosti: `EL_VOICE_SETTINGS` v configu nikdo nečte (server má vlastní nastavení hlasu); shrine posílá do
@@ -1832,6 +1832,12 @@ Rune Seekera = posledních 5 (`TIER_LIMITS.rune_seeker.journal_entries`).
       `runar-help.html` „Is Rúnar an AI?“ říká GPT od OpenAI, Claude jen při výpadku (EN i IS). Zbývá jen zásady na agndofa.is
       (znění B v `RUNAR_PRIVACY.md` — doplnit OpenAI stejně jako A; publikuje owner).
     Obě stránky drží angličtinu dvakrát (statické HTML + slovník v JS) — při úpravě opravit obojí.
+
+### Část 9 — shrine (admin appka, 2026-10-09)
+**Platí:** volá jen nasazené funkce, všechny s přihlášením kromě jedné (níž) · po zrušeném rozboru GPT nezůstaly zbytky ·
+zápisy do `gift_codes`, `runar_corrections`, `runar_character`, `runar_static_audio` kryje admin politika v DB.
+**Opraveno rovnou:** náhled hlasu (teach) volal `elevenlabs-proxy` bez přihlášení → proxy ho od 2026-08-02 odmítal (401) a tlačítko
+nefungovalo; teď posílá token jako sousední generování statického audia. **Pro ownera:** nic.
 
 ## 2026-08-16 — otevřené po zavedení registru `direct`
 

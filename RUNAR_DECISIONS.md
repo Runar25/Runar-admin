@@ -9179,3 +9179,21 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Teď v labu:** jen data v inspekci (2026-10-09 (14)). Nic dalšího se nestaví, dokud owner nerozhodne.
 - Odvolává se na: 2026-10-09 (14) · 2026-08-14 (zrcadlo, ne orákulum).
 - Affected doc(s): `RUNAR_BACKLOG.md` (Strom: popis větve Rúnarovým hlasem) — v témže commitu.
+
+## 2026-10-10 (1) — Kontrola architektury: návštěvník po tahu dostane výzvu k registraci; drobnosti z bodu 7 „opravit všechno“
+- **Rozhodl:** KUKY 2026-10-09 *„návštěvník po tahu uvidí výzvu k registraci“* · *„7. opravit vsechno. nasazená funkce tree-update,
+  kterou appka nevolá; nevim co je“* · *„udělej postupně všechno a oprav co je jednoduché… nebo to dej code-tune“*. **Provedl:** CODE-read
+  (shrine, docy), CODE-tune (appka), owner (databáze a nasazení — CODE-read je oprávnění nepustí).
+- **Proč:** kontrola architektury (`RUNAR_BACKLOG.md` „Kontrola architektury po částech“, body 3, 7–11): proxy nepřihlášeného
+  odmítá od 2026-08-02, appka mu ale tah dovolí a ukáže „Rúnar odpočívá“; politiky v DB měly duplikát a otevřený zápis hlášení.
+- **Co:**
+  1. Návštěvník po tahu runy → výzva k registraci místo volání proxy; s ní texty, které mu slibují čtení (nápověda, `_updateTrialTexts`). Dělá CODE-tune.
+  2. Tlačítko hlášení jen pro přihlášené (CODE-tune) + DB `bug_reports_insert` jen pro `authenticated` (owner spustí SQL).
+  3. Zdvojená politika `user_profiles` „own profile“ pryč (owner spustí SQL).
+  4. `tree-update` stáhnout z nasazení (owner spustí příkaz) — kód zůstává v repu pro CODE-tree, nic jiného na ní nevisí.
+  5. 57 textů natvrdo podle jazyka → `UI_TEXT` (CODE-tune, nebo CODE-read v souborech, které uvolní); ráčna ㉸ drží stav.
+  6. Shrine: náhled hlasu (teach) neposílal přihlášení → od 2026-08-02 nefungoval; opraveno (CODE-read).
+  7. `RUNAR_PRIVACY.md` popisuje `bug_reports` (do té doby nic); doba uchování nerozhodnuta.
+- **Hranice:** CODE-read nesmí měnit produkční DB ani nasazené funkce (automatická kontrola oprávnění to 2026-10-09 zastavila) —
+  body 2–4 v DB a nasazení čekají na ownera.
+- Affected doc(s): `RUNAR_BACKLOG.md` (Kontrola architektury) · `RUNAR_PRIVACY.md` — v témže commitu.

@@ -988,9 +988,13 @@ async function generateStaticVoice() {
   document.getElementById('teach-audio-player').classList.remove('visible');
 
   try {
+    // 2026-10-09 (kontrola architektury): bez tokenu proxy od 2026-08-02 vracel 401 a náhled hlasu nefungoval.
+    // voice_id/model_id server záměrně ignoruje (hlas a model volí podle jazyka sám) — posílají se jen ze zvyku.
+    const { data: { session: _teachSession } } = await sb.auth.getSession();
     const res = await fetch(EL_PROXY, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json',
+                 ...(_teachSession?.access_token ? { Authorization: 'Bearer ' + _teachSession.access_token } : {}) },
       body: JSON.stringify({ text: teachText, lang: lang || 'en', voice_id: elVoiceId(lang), model_id: elModel(lang) })
     });
 
