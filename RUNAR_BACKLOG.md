@@ -622,7 +622,7 @@
 - [x] **Čtvrtý živý rozpor v promptu: DEF_CHAR „Does NOT explain — reveals" vs describe — VYŘEŠENO v4.0-mynd 2026-08-22 (sjednoceno: „does NOT lecture or explain around the image — he reveals: one image, and one essence line"). Původně:** vs describe „NAME THE RUNE… say in ordinary words"** (nalezeno 2026-08-22 při prověrce pravidla jména). Stejná rodina jako noqBranch/zakončení/oblast. Řešení patří do v4.0: „reveal" = esenční řádek dle `RUNAR_DESIGN.md` „tři beaty" (L1) — jedna formulace, ne dvě proti sobě. ⚠️ Vlastní poučení: pravidlo formy jsem 2× vymýšlel bez čtení DESIGN, ač memory `read-design-before-voice-work` přesně tohle zakazuje — esenční řádek tam byl NAPSANÝ (NEPOSTAVENO).
 - [x] **OPRAVENO 2026-09-27 (KUKY: „hook ano")** v `~/.claude/tree-guard.sh`, tři vady: (1) compact už nepřepisuje marker session (Stop dřív zapomněl vše před compactem); (2) neplatný JSON z `runar-context.py` spadne na statický text; (3) Stop zastaví jen tu session, která na věc sáhla sama — ověří se ve volání nástrojů v jejím transcriptu (necitelný transcript → původní chování). Otestováno 7 případy (vč. „builder změnila jiná session" → nezastaví) a na skutečném transcriptu 138 MB (~3,4 s, běží jen když by hook jinak zastavil). Záloha `tree-guard.sh.bak-2026-09-27`. Původně: **Stop hook „TREE ENGINE" viní špatnou session** (2026-08-20, narazila CODE-tune): `tree-guard.sh` rozhoduje podle STAVU pracovního stromu, ne podle toho, co změnila TA session. Dnes zastavil CODE-tune kvůli neverzovaným `build_branch_composer.py` + `v2/tree-lab-branch-composer/runar-branch.js`, které patří CODE-tree — ověřeno, že žádný dnešní commit CODE-tune na tree nesáhl. Ve sdíleném stromě to nastane pokaždé, když má CODE-tree rozdělanou práci, takže z hlídače je nag, který kryje vlka (týž mechanismus jako 35 holých escape značek → §28). Fix je v témže souboru o pár řádků výš: memory-guard větev už porovnává `-nt "$MARK"` proti markeru session, tree větev ne. Soubor žije mimo git → viz položka o hoocích níž.  <!-- doc-links:ok 2026-09-27 hook je uživatelský soubor ~/.claude mimo repo, do gitu nepatří (doplnil CODE-tune kvůli smoke ⑯) -->
 - [ ] **Celý mechanismus načtení po compactu žije MIMO git** (2026-08-17): <!-- doc-links:ok 2026-08-17 tyhle tri soubory NEEXISTUJI v repu a je to PRESNE obsah teto polozky; odkaz musi zustat cteny, aby slo dohledat, o cem se rozhoduje --> `~/.claude/runar-context.py` (co se vlije do kontextu), `tree-guard.sh` (SessionStart + Stop blok), `compact-backup.py` (záloha přepisu). Jediná pojistka jsou ruční `.bak*` kopie vedle nich. Zálohy se ztratí s diskem a žádná session nepozná, že se soubor změnil pod rukama. Rozhodnout: verzovat v repu (je PUBLIC — obsahují jen cesty a naše pravidla, žádné klíče; ověřit před přesunem) + odkaz odsud, nebo vědomě nechat mimo a přijmout riziko.
-- [ ] **RUNAR_SEGMENTATION_SPEC.md** popisuje zrušenou featuru (deeper_meaning), není v indexu → archiv nebo index s poznámkou.
+- [x] **RUNAR_SEGMENTATION_SPEC.md** popisuje zrušenou featuru (deeper_meaning), není v indexu → ✅ archivováno 2026-10-10 (`docs/archive/`, s hlavičkou).
 - [ ] **Session Start Protocol** nařizuje číst celý RUNAR_DECISIONS.md (~2086 ř.) — nereálné. Změnit na „grepni dle tématu" + živý index posledních N rozhodnutí nahoře.
 
 ### C — profi / SRE mezery (OWNER: vysvětlit podrobně před realizací)
@@ -2007,6 +2007,17 @@ který nic neopisuje a odkazuje na vlastníky (§20).
 19. ⚪ **Dvě tabulky bez kódu:** `knowledge_base` (3 výklady run z května, záložka Teach už do ní nepíše) a `gpt_reviews` (6 rozborů
     GPT z adminových čtení; funkce zrušena 2026-10-09, zápis v `RUNAR_PRIVACY.md`). Nic na nich nevisí; smazat nebo nechat jako historii
     rozhodne owner (data maže owner). Obě jsou v denní záloze.
+
+### Část 17 — zastaralá místa z dřívějška (2026-10-10; owner: *„jak jsi našel README, možná najdeš víc míst… pozor na to“*)
+Hledáno strojem, ne náhodou: (a) jména souborů v komentářích kódu, která neexistují; (b) dokumenty mimo hlavní sadu podle stáří;
+(c) stopy po změněných věcech (přihlášení odkazem, staré modely, týdenní příděl); (d) odkazy v `memory/`.
+**Opraveno rovnou:** hlavička `runar-reporter.js` odkazovala na spec, který v repu nikdy nebyl · `RUNAR_SEGMENTATION_SPEC.md` (plán
+z léta, „SW v109“, formát bez ✦) a jednorázová předávka `DOCSYNC_HANDOFF_2026-07-04.md` → `docs/archive/` s hlavičkou ·
+`docs/runar-prompt-map.html` (stav v4.15, zmiňuje Opus 4.8/Sonnet) dostala viditelné „snímek k 2026-09-06, pravda je kód“.
+**Předáno CODE-tune:** zbytky „magic link“ po přechodu na kód — **shrine přihlášení e-mailem nefunguje** (posílá kód, pole na kód nemá;
+Google funguje), nápověda slibuje odkaz (EN 2×, IS 1×), výchozí text okna v `runar-reader.html`; mrtvé pole `weekly_drip` v `TIER_LIMITS`.
+**Bez nálezu:** odkazy v `memory/` (zástupná jména, gitignorované sloty, historie stromu); `docs/findings/` jsou datované záznamy běhů.
+Nepřezkoumáno: `docs/TREE_BRIEF_CODE_2026-07-04.md` a `RUNAR_TREE_RENDER.md` (strom = CODE-tree).
 
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí

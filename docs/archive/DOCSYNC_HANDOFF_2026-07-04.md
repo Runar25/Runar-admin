@@ -1,3 +1,5 @@
+> **ARCHIV (přesunuto 2026-10-10, kontrola architektury):** jednorázová předávka z 2026-07-04 (migrace docs do repa, §17); hotová. Neplatí jako popis dneška.
+
 # Doc-sync handoff pro Code — 2026-07-04
 # Od: Cowork (owner-schválená změna). Pro: Code (Claude Code session).
 

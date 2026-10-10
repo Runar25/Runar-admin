@@ -1,4 +1,5 @@
-// runar-reporter.js — in-app tester reporter (bug_reports). Spec: runar_reporter_spec_CODE.md
+// runar-reporter.js — in-app tester reporter (bug_reports). (Odkaz na „spec runar_reporter_spec_CODE.md“ odstraněn 2026-10-10 —
+// ten soubor v repu nikdy nebyl; chování popisuje tenhle soubor a CLAUDE.md §29.)
 // Samostatný modul: injektuje plovoucí tlačítko + panel + styl, zachytí text/kontext,
 // offline fronta (localStorage) + dedupe přes UNIQUE client_uuid (plain insert; 23505 = už odesláno).
 // Závisí na globálech: sb (supabase client), t() (translations), lang. Načítat po runar-app.js.

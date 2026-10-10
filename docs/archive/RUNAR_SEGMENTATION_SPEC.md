@@ -1,3 +1,5 @@
+> **ARCHIV (přesunuto 2026-10-10, kontrola architektury):** plán z 2026-07/08 (deeper_meaning zrušeno, Fáze B nepostavena); formát odpovědi dnes vlastní kód — JSON kontrakt v buildech runar-character.js a _parseSegments v runar-utils.js. Neplatí jako popis dneška.
+
 # RÚNAR — segmentovaný výstup čtení (spec)
 
 > **Cíl:** generovat čtení jako STRUKTURU `{rune, position, text, deeper_meaning}` per runa, ale uživatel pořád
