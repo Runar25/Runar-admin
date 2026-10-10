@@ -1310,7 +1310,9 @@ a 2 z 10 rozborů s ruským slovem v češtině. `tree-update` přepnut na Haiku
 ✅ **Rozhodnuto 2026-10-09 (KUKY):** rozbor čtení *„zrušit úplně“* (luna se nepoužívá, Haiku místo ní nebude) — tlačítko i edge fn
 `gpt-review` pryč, DECISIONS 2026-10-09 (8). Třídění hlášení modelem *„ok, neřešit“*. Zůstává: `tree-update` na Haiku 5.5.
 
-### Životní runa: element „Shadow“ splývá s významy runy — ČEKÁ NA OWNERA, probrat (report 048c14c1, CODE-tune 2026-10-09)
+### ✅ Životní runa: element „Shadow“ splýval s významy runy — VYŘEŠENO 2026-10-10: element do čtení nejde (report 048c14c1)
+✅ *KUKY 2026-10-10: „element runy vůbec do čtení jít nemá“* → pryč ze single i životní runy (v5.08, DECISIONS 2026-10-10 „Element runy
+do čtení nejde“). Otevřené jen to, jestli by čtení mělo element ŘÍKAT s výkladem — nedoporučeno (§23), rozhodne owner. Původní zápis:
 KUKY (report z testu životní runy na solu, 2026-10-09 23:21): *„Shadow má být oddělené, ať jde poznat, že jde o něco jiného. … Mě by
 se líbilo rune Shadow. Musíme to probrat. … Co zůstává za hranicí klidu a pozornosti? … jiný pohled na význam runy, na runu. Na její
 stín. Co stojí za runou.“* K tomu: *„4. čtení je dobré, potřebuje jen menší úpravu.“*

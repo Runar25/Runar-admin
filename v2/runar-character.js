@@ -1503,7 +1503,7 @@ var RP_LIFE = {
   is: {
     header:'Þú ert Rúnar, rúnavörður Agndofa.',
     PERSON:'MANNESKJAN', LIFE:'LÍFSRÚNA', BORN:'FÆDD/UR', MONTH:'ÍSLENSKUR MÁNUÐUR',
-    ELEM:'FRUMEFNI', CORE:'MERKINGAR',
+    CORE:'MERKINGAR',
     rname:function(r){ return _bezGlosy(r.is_n); },   // 2026-09-24: bez glosy „(Eignir)“ — viz rnPrompt() v runar-utils.js
     rcore:function(r){ return r.k_is; },
     birth:function(d,m){ return d + '. ' + m + '.'; },   // 2026-09-30: bez roku (minimalizace údajů, viz buildLifeRuneBase)
@@ -1529,7 +1529,7 @@ var RP_LIFE = {
   en: {
     header:'You are Runar, rune keeper of Agndofa.',
     PERSON:'PERSON', LIFE:'LIFE RUNE', BORN:'BORN', MONTH:'ICELANDIC MONTH',
-    ELEM:'ELEMENT', CORE:'MEANINGS',
+    CORE:'MEANINGS',
     rname:function(r){ return r.n; },
     rcore:function(r){ return r.k; },
     birth:function(d,m){ return d + ' ' + m; },   // 2026-09-30: bez roku (minimalizace údajů, viz buildLifeRuneBase)
@@ -1570,7 +1570,9 @@ function buildLifeRuneBase(name, rune, day, month, year, lang, isPremium) {
     // navíc (čl. 5 GDPR, minimalizace). Rok dál počítá islandský měsíc výš (getBirthMonth), do promptu jde jen jeho jméno.
     S.BORN + ': ' + S.birth(day, month),
     S.MONTH + ': ' + monthDesc,
-    S.ELEM + ': ' + (Array.isArray(rune.elements) ? rune.elements.join(' / ') : rune.elements),
+    // 2026-10-10 (KUKY „element runy vůbec do čtení jít nemá“): řádek ELEMENT / FRUMEFNI pryč. Model z něj dělal další význam runy —
+    // Isa: „Shadow belongs here as the part that remains out of sight…“ (report 048c14c1). Element je třídění stromu, ne význam.
+    // V IS navíc šel anglicky („FRUMEFNI: Shadow“). Návrat jen očištěný (§26).
     S.CORE + ': ' + S.rcore(rune),   // významy runy — část 2 se na ně odkazuje („listed above“ / „hér að ofan“), 2026-09-27
     '',
     S.sections,
@@ -1917,7 +1919,7 @@ function _splitThought(reading, segs) {
 var RP_SINGLE = {
   is: {
     PERSON:'MANNESKJAN', LIFE:'LÍFSRÚNA', DRAWN:'DREGNA RÚNA', focus:'áhersla',
-    REALM_life:'Heimur', REALM_drawn:'Heimur', ELEM:'Frumefni',
+    REALM_life:'Heimur', REALM_drawn:'Heimur',
     AREA:'SVIÐ', SEEK:'LEITAÐ',
     // Rúnaþula se do promptu NEVKLÁDÁ a mechanika je pryč (2026-08-10). Vkládala hotovou
     // větu z `formula_is` — tedy DEFINICI runy tři řádky nad zákazem definic
@@ -1940,7 +1942,7 @@ var RP_SINGLE = {
   },
   en: {
     PERSON:'PERSON', LIFE:'LIFE RUNE', DRAWN:'DRAWN RUNE', focus:'focus on',
-    REALM_life:'Realm', REALM_drawn:'World', ELEM:'Elements',
+    REALM_life:'Realm', REALM_drawn:'World',
     AREA:'AREA', SEEK:'SEEKING',
     // 2026-10-05: „Respond in English.“ pryč — systémový prompt nese „Respond only in English.“ (bod 3 auditu, jednou).
     langInstr:'',
@@ -1981,8 +1983,10 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     // 2026-09-25: SVĚT runy (World/Heimur) z hlavičky VEN — owner: „pojďme je vypnout… čím víc vstupů, tím větší guláš“.
     // Doklad: sol z Thurisaz (svět Hel „the roots, what lies beneath“) udělal kus obrazu „The roots below stay out of sight“
     // (report 2026-09-25 11:29). Přínos světa v hlavičce nikdy změřen nebyl (přibyl s otevírací větví, DECISIONS 2026-08-13).
-    // Živly zůstávají. Návrat jen očištěný a změřený (§26) — rworld() i REALM_* štítky zůstávají pro ten případ v kódu.
-    + (drawn.world ? ' · ' + S.ELEM + ': ' + relements(drawn) : '');
+    // Návrat jen očištěný a změřený (§26) — rworld() i REALM_* štítky zůstávají pro ten případ v kódu.
+    // 2026-10-10: pryč i ŽIVLY („· Elements: …“), které 2026-09-25 zůstaly — KUKY „element runy vůbec do čtení jít nemá“. Doklad
+    // z životní runy (Isa: z elementu Shadow se stal význam, report 048c14c1); single dostával týž údaj v hlavičce tažené runy.
+    ;
   var parts = [
     S.PERSON + ': ' + u.name,
     // drawn == life: NEopakovat tutéž runu podruhé jako kontext a NEpřidávat hotovou

@@ -7,7 +7,7 @@
 //   READING_ANGLES / READING_ANGLES_IS / _randomAngle(lang)
 //   NAME_PLACEMENTS / NAME_PLACEMENTS_IS / _namePlacement(name, lang)
 //   ENDING_HEAVY / ENDING_OPEN (+_IS) / _endingShape(drawn, lang)
-//   rk(), rn(), rworld(), relements()  — rune data helpers (read global lang)
+//   rk(), rn(), rworld()  — rune data helpers (read global lang); relements() pryč 2026-10-10 (element do čtení nejde)
 //   setText(), setPH(), setSt()        — DOM helpers
 //   showToast()                        — toast notification
 //   stream(id, text)                   — word-by-word streaming display
@@ -399,12 +399,16 @@ function _promptDraws(prompt, lang) {
 
     // Klíčová slova: z pěti až šesti se losují tři (pickedKws) — fasety runy položené
     // modelu před oči. Řádka vypadá takto:
-    //   DRAWN RUNE: Fehu — focus on: wealth, material prosperity, cattle · World: …
-    // Bere se, co stojí mezi značkou a prvním „ · ".
+    //   DRAWN RUNE: Fehu — focus on: wealth, material prosperity, cattle
+    // Bere se, co stojí mezi značkou a koncem ŘÁDKY (nebo prvním „ · “, kdyby se za slova zase něco přidalo).
+    // 2026-10-10: do té doby jen do „ · “ — řádka končila „ · Elements: …“; po jejich odebrání (v5.08) hledání přeskočilo na další
+    // řádek a do kws šel kus pokynu úhlu (smoke ㉤: Hagalaz „nature force\nREADING ANGLE…“).
     var kwMark = isIs ? 'áhersla: ' : 'focus on: ';
     var ki = p.indexOf(kwMark);
     if (ki >= 0) {
       var rest = p.slice(ki + kwMark.length);
+      var eol = rest.search(/\r?\n/);
+      if (eol >= 0) rest = rest.slice(0, eol);
       var cut = rest.indexOf(' · ');
       var kws = (cut > 0 ? rest.slice(0, cut) : rest.slice(0, 120)).trim();
       if (kws) out.kws = kws;
@@ -931,15 +935,8 @@ function rworld(r) {
   return r.world ? (set[r.world] || '') : '';
 }
 
-// ─── relements() ─────────────────────────────────────────
-// v4.6 (2026-08-23): islandsky prompt nesl anglicke nazvy elementu (Frumefni: Air) —
-// tyz druh vady jako rworld pred opravou (lint_prompts 13.8.). Data v runes.js
-// zustavaji EN (sdilena vrstva s TREE); preklada se jen popisek, jako u rworld.
-function relements(r) {
-  const isMap = { Fire: 'eldur', Earth: 'jörð', Air: 'loft', Water: 'vatn', Shadow: 'skuggi' };
-  if (!r.elements) return '';
-  return r.elements.map(function (e) { return lang === 'is' ? (isMap[e] || e) : e; }).join(', ');
-}
+// (relements() — element runy do promptu single — odstraněna 2026-10-10: KUKY „element runy vůbec do čtení jít nemá“.
+//  Islandské názvy elementů, které nesla (eldur, jörð, loft, vatn, skuggi), jsou v gitu, kdyby se element vracel očištěný, §26.)
 
 // ─── setText() ─────────────────────────────────────────
 function setText(id, v)   { const el = document.getElementById(id); if (el && v !== undefined) el.textContent = v; }

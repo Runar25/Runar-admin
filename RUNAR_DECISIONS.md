@@ -9223,3 +9223,24 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   `life_rune_immutable` je stejně nedovolí změnit.
 - Odvolává se na: 2026-09-30 (11), 2026-09-27 (5).
 - Affected doc(s): `RUNAR_PRIVACY.md` (Co jde k modelu) — v témže commitu.
+
+## 2026-10-10 (2) — Element runy do čtení nejde (single i životní runa, v5.08)
+
+- **Rozhodl:** KUKY 2026-10-10: *„tohle je ovšem chyba. Element runy vůbec do čtení jít nemá. To jsem to špatně pochopil.“*
+  (k reportu 048c14c1 „Shadow má být oddělené…“). **Provedl:** CODE-tune.
+- **Proč:** ownerova životní runa Isa (sol) udělala z řádku `ELEMENT: Shadow` v promptu další význam runy: *„Shadow belongs here as
+  the part that remains out of sight while the light is scarce.“* Element je třídění pro STROM (5 barev-elementů, `RUNAR_DESIGN.md`),
+  ne význam runy. Islandský prompt životní runy ho navíc nesl anglicky (`FRUMEFNI: Fire / Earth`).
+- **Co:** pryč řádek `ELEMENT` / `FRUMEFNI` z promptu životní runy a `· Elements: …` / `· Frumefni: …` z hlavičky tažené runy v single
+  (zbyl tam 2026-09-25, kdy z ní odešel svět runy). Spready element nikdy neměly. `relements()` a štítky `ELEM` smazány (nikdo je
+  nečetl). `RUNAR_PROMPT_VERSION` → `v5.08-bez-elementu`. Labová V2 (`buildLifeRuneContext`) element nese dál — do appky nejde.
+- **Oprava při tom:** `_promptDraws` četl klíčová slova tažené runy (`kws`) až po první „ · “ — po odebrání elementu přeskočil na další
+  řádek a do `prompt_draws.kws` (databáze čtení, Ask) by šel kus pokynu úhlu. Teď končí koncem řádku. Chytil to smoke ㉤ před commitem.
+- **Ověřeno:** golden — 14 ze 42 promptů změněno, ve všech jen odebraný element; element už není v žádném promptu. Smoke ㉤ chybu
+  `_promptDraws` chytil, po opravě prošel (aspekt↔klíč 189/189); ostatní kontroly zelené.
+- **K vlastníkově otázce „zkusit, jak by to znělo, kdyby u každé runy čtení řeklo její element a co znamená — má to vůbec význam?“:**
+  nedoporučuju. Elementy jsou v našem kánonu zavedené pro strom (`RUNAR_DESIGN.md` „5 elementů“) a k významu run pro ně v kánonu
+  žádný zdroj nemáme — čtení by vydávalo naše třídění za význam runy (§23). Pokud by to owner chtěl slyšet, levně: pár čtení napsat v konverzaci
+  (bez API) a přečíst nahlas — rozhodnutí je jeho.
+- Odvolává se na: 2026-09-25 (svět runy z hlavičky pryč, živly tehdy zůstaly).
+- Affected doc(s): `RUNAR_BACKLOG.md` (Životní runa: element „Shadow“ splývá s významy) — v témže commitu.

@@ -61,7 +61,9 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 //    jako tichy fakt — Runar ji nevyslovi sam od sebe, jen kdyz se na ni clovek zepta.
 // v5.07 (2026-10-09): čtení pro všechny přes GPT-6 sol — výchozí READ_ENGINE 'sol' dává každému větu za obrazem a esenční
 //    rámec pro sol (do té doby jen admin). Čtení před/po přepnutí se podle téhle verze rozliší. DECISIONS 2026-10-09 (13).
-const RUNAR_PROMPT_VERSION = 'v5.07-sol-pro-vsechny';
+// v5.08 (2026-10-10): element runy z promptu pryč — hlavička single („· Elements“) i řádek ELEMENT u životní runy (KUKY „element
+//    runy vůbec do čtení jít nemá“; model z něj dělal význam, report 048c14c1).
+const RUNAR_PROMPT_VERSION = 'v5.08-bez-elementu';
 
 // Mesicni strop hlasu. KUKY 2026-09-11: „limit na hlas max 5 na mesic — je to spis
 // ochutnavka nez aby to porad vyuzivali." ElevenLabs se plati po znacich a jedine, co ho
