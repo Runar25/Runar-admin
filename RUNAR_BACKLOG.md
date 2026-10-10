@@ -2159,10 +2159,10 @@ existující funkci.
 a bez `CREATE FUNCTION` `add_credits`, `check_rate_limit`, `update_updated_at`. Pravdu o schématu nese jen databáze — a záloha.
 **Opraveno (CODE-read):** `scripts/utils/zaloha_db.js` nesl sloupce/politiky/funkce/triggery/omezení, ale **ne** oprávnění k funkcím,
 zapnuté RLS, granty tabulek, indexy ani rozšíření. Obnova by `add_credits` (připíše kredity komukoli) vytvořila s výchozím EXECUTE pro
-PUBLIC a nikdo by to nepoznal. Doplněno; ověřeno ostrým během + rozbalením archivu (`schema.json`: oprávnění 21, RLS 15, granty 41,
+PUBLIC a nikdo by to nepoznal. Doplněno; ověřeno ostrým během + rozbalením archivu (`schema.json`: oprávnění 21, RLS 15, granty 41, <!-- doc-links:ok 2026-10-10 schema.json je soubor uvnitř šifrovaného archivu zálohy, ne v repu -->
 indexy 53, rozšíření 6; `add_credits` → jen `service_role`).
 - ⚪ **Při přesunu databáze (Hetzner, „Kam s databází…“ výš):** napřed `pg_dump --schema-only` z produkce do `sql/` jako výchozí schéma
-  (tam už Docker netřeba) — teprve pak bude repo schopné databázi postavit. Do té doby obnova = data z JSON + struktura podle `schema.json`.
+  (tam už Docker netřeba) — teprve pak bude repo schopné databázi postavit. Do té doby obnova = data z JSON + struktura podle `schema.json`. <!-- doc-links:ok 2026-10-10 schema.json je soubor uvnitř šifrovaného archivu zálohy, ne v repu -->
 
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
