@@ -1812,9 +1812,12 @@ rate_limited | no_credits“ — vrací víc, včetně `unauthorized` návštěv
 (nikdo ji nevolal od rozdělení monolitu) · **nová kontrola smoke ㉸**: větve `lang === 'is' ? '…'` nesmí přibývat (bod 10).
 
 **PRO OWNERA:**
-10. ⚪ **57 textů natvrdo podle jazyka** ➜ **owner „opravit všechno“** → CODE-tune (nebo CODE-read v souborech, které uvolní). (`lang === 'is' ? '…' : '…'` — app 26, utils 8, auth 7, reading 7, character 4, tree 3,
-    config 1, runes 1): záložky, brány návštěvníka, souhlas, přihlašovací okno. §10 je zakazuje, kontrola ② je neviděla. Od teď je
-    drží ráčna ㉸ (nesmí přibýt). Přepis do `UI_TEXT` = práce CODE-tune s ověřenou islandštinou — kdy, rozhodne owner.
+10. ⚪ **Texty natvrdo podle jazyka — skutečně 44, ne 57** (první ráčna počítala i `lang === 'is' ? 'is' : 'en'`, což je jen
+    výběr jazykového bloku dat, ne text — opraveno 2026-10-10). ➜ owner „opravit všechno“, rozdělení s CODE-tune:
+    ✅ CODE-read 2026-10-10: `runar-auth.js` 7 (hlášky dárkového kódu) + `runar-tree.js` 3 (životní runa, oslovení) → `UI_TEXT`,
+    znění beze změny (ověřeno: nový `t()`/`tp()` dává týž text EN i IS). CODE-tune: `runar-app.js` 24 + `runar-reading.js` 7.
+    Zbývá: `runar-character.js` 2 + `runar-utils.js` 1 jsou text PROMPTU → patří do balíčků `RP_*` (CODE-tune), ne do `UI_TEXT`.
+    Ráčna ㉸ drží stav po souborech.
 11. ⚪ Mrtvé drobnosti: `EL_VOICE_SETTINGS` v configu nikdo nečte (server má vlastní nastavení hlasu); shrine posílá do
     `elevenlabs-proxy` `voice_id`/`model_id`, které server záměrně ignoruje. Neškodí.
 

@@ -481,7 +481,7 @@ function updateTreeTab() {
       if (revBtn) {
         revBtn.disabled = bal < LIFE_RUNE_COST;
         revBtn.title = bal < LIFE_RUNE_COST
-          ? (lang === 'is' ? 'Þú þarft ' + vn('unit', LIFE_RUNE_COST, 'is') : 'You need ' + vn('unit', LIFE_RUNE_COST, 'en'))
+          ? tp('life_need_units', { units: vn('unit', LIFE_RUNE_COST, lang) })
           : '';
       }
     }
@@ -653,9 +653,7 @@ function _rsLifeRuneReading() {
   var COST = (SPREAD_COSTS && SPREAD_COSTS.life_rune) ? SPREAD_COSTS.life_rune.credits : 3;
   var bal  = typeof userCredits !== 'undefined' ? userCredits : 0;
   if (bal < COST) {
-    showToast(lang === 'is'
-      ? 'Þú þarft ' + COST + ' kredit. Keyptu þér gjafakort.'
-      : 'You need ' + COST + ' credits. Get a reading gift card.');
+    showToast(tp('life_need_credits', { n: COST }));
     return;
   }
   generateLifeRuneReading();
@@ -819,7 +817,7 @@ function _lifeRuneName() {
   var z = (typeof displayName === 'function') ? displayName() : '';
   if (z) return z;
   if (readerUser && readerUser.name) return readerUser.name;
-  return lang === 'is' ? 'þú' : 'you';
+  return t('name_you');
 }
 async function generateLifeRuneReading() {
   if (!currentUser) return;

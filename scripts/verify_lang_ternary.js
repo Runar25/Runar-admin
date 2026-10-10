@@ -1,7 +1,7 @@
 // Smoke ㉸ — text natvrdo v podobě `lang === 'is' ? '…' : '…'` nesmí přibývat (CLAUDE.md §10: NULA hardcoded strings v logice).
 //
 // Proč (2026-10-09, kontrola architektury, CODE-read; DECISIONS 2026-10-09 (15)): §10 říká „t('key') ze UI_TEXT“, ale v2/*.js
-// měl 57 takových větví (záložky, brány návštěvníka, souhlas, přihlašovací okno…) — kontrola ② je nevidí, protože hledá
+// měl 44 takových větví (záložky, brány návštěvníka, souhlas, přihlašovací okno…) — kontrola ② je nevidí, protože hledá
 // typické anglické fráze, ne větvení podle jazyka. Seznam „known offenders“ ve working-style.md je z 2026-06-12 a tyhle
 // neobsahuje. Přepsat je všechny = islandský text přes UI_TEXT a ověření (§2), na to tahle kontrola nečeká.
 // Co dělá: RÁČNA. Počet na soubor nesmí stoupnout nad BASELINE. Klesne-li (někdo je přesunul do UI_TEXT), kontrola projde
@@ -10,12 +10,15 @@
 'use strict';
 const fs = require('fs'), path = require('path');
 const DIR = path.join(__dirname, '..', 'v2');
-const RE = /\b(lang|lng|l|_lang)\s*===\s*['"]is['"]\s*\?\s*['"`]/g;
+// ⚠️ 2026-10-10: první verze počítala i `lang === 'is' ? 'is' : 'en'` — to není text, jen výběr jazykového bloku dat, a §10
+// ho nezakazuje. Hlásilo to 57 místo 44 (13 falešných, nalezeno při přepisu prvních větví). Negativní výhled je vyřazuje.
+const RE = /\b(lang|lng|l|_lang)\s*===\s*['"]is['"]\s*\?\s*(['"`])(?!is\2\s*:\s*['"`]en['"`])/g;
 // Stav 2026-10-09. Snižovat, nikdy nezvyšovat — nový text patří do UI_TEXT (runar-translations.js) a čte se přes t()/tp().
 // 2026-10-09 runar-app.js 26 → 24: CODE-tune smazal mrtvý blok starého data ve formuláři čtení (dob-lbl, report 58a0c728).
+// 2026-10-10: přepočet bez výběru jazyka; auth 7 → 0 a tree 3 → 0 přesunuty do UI_TEXT (CODE-read). character 2 a utils 1
+// jsou text PROMPTU (patří do jazykových balíčků RP_*, doména CODE-tune), ne UI.
 const BASELINE = {
-  'runar-app.js': 24, 'runar-auth.js': 7, 'runar-character.js': 4, 'runar-config.js': 1,
-  'runar-reading.js': 7, 'runar-runes.js': 1, 'runar-tree.js': 3, 'runar-utils.js': 8,
+  'runar-app.js': 24, 'runar-character.js': 2, 'runar-reading.js': 7, 'runar-utils.js': 1,
 };
 const pocet = (txt) => (txt.match(RE) || []).length;
 
@@ -25,7 +28,9 @@ if (process.argv.includes('--test')) {
     && pocet("setText('a', lang === 'is' ? 'Já' : 'Me');") === 1
     && pocet('x = lng==="is"?`a`:`b`;') === 1
     && pocet("if (lang === 'is') doIt();") === 0
-    && pocet("v = lang === 'en' ? 'a' : 'b';") === 0;
+    && pocet("v = lang === 'en' ? 'a' : 'b';") === 0
+    && pocet("var b = UI_TEXT[lang === 'is' ? 'is' : 'en'];") === 0   // výběr jazyka není text (2026-10-10)
+    && pocet("x = lang === 'is' ? 'isl' : 'eng';") === 1;
   console.log(ok ? 'OK    samotest: větev se pozná, t() a jiné porovnání ne' : 'FAIL  samotest regexu');
   process.exit(ok ? 0 : 1);
 }

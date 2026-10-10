@@ -383,7 +383,7 @@ async function redeemCode() {
 
   const btn = document.getElementById('redeem-btn');
   btn.disabled = true;
-  setSt('st-redeem', lang === 'is' ? 'Athuga kóða…' : 'Verifying code…');
+  setSt('st-redeem', t('redeem_checking'));
 
   try {
     const { data: { session } } = await sb.auth.getSession();
@@ -402,12 +402,12 @@ async function redeemCode() {
 
     if (!res.ok || data.error) {
       const msgs = {
-        'Code not found':        lang === 'is' ? 'Kóði fannst ekki.' : 'Code not found.',
-        'Code already used':     lang === 'is' ? 'Þessi kóði hefur þegar verið notaður.' : 'This code has already been used.',
-        'Code already redeemed': lang === 'is' ? 'Þessi kóði hefur þegar verið notaður.' : 'This code has already been used.',
-        'Not authenticated':     lang === 'is' ? 'Skráðu þig inn fyrst.' : 'Please sign in first.',
-        'Invalid session':       lang === 'is' ? 'Skráðu þig inn aftur.' : 'Please sign in again.',
-        'rate_limited':          lang === 'is' ? 'Of margar tilraunir. Bíddu 15 mínútur.' : 'Too many attempts. Please wait 15 minutes.',
+        'Code not found':        t('redeem_err_not_found'),
+        'Code already used':     t('redeem_err_used'),
+        'Code already redeemed': t('redeem_err_used'),
+        'Not authenticated':     t('redeem_err_signin'),
+        'Invalid session':       t('redeem_err_session'),
+        'rate_limited':          t('redeem_err_rate'),
       };
       setSt('st-redeem', msgs[data.error] || data.error || 'Error.', 'err');
       btn.disabled = false;
