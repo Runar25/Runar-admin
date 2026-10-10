@@ -2216,6 +2216,15 @@ souhrny (`naklady.py`, `stats.js`) čtou všechna čtení se značkou `opt-out:o
 Ověřeno: poddotaz dá 564 = 564 (nikdo odhlášený) a při předstíraném odhlášení všech 0; `verify_no_recur.py`, `oblasti_slova.js`,
 `stats.js` naostro běží; `nacti_cteni.js` jen syntaxe (označuje hlášení — nespouštět naprázdno).
 
+### Část 32 — slib „smazání účtu smaže všechno“ × co se opravdu smaže (2026-10-10, jen čtení)
+`delete-account` odpojí `gift_codes.used_by` a smaže uživatele v `auth`; zbytek nesou cizí klíče. **Platí:** `readings`, `user_profiles`,
+`tree_state`, `gpt_reviews` → `ON DELETE CASCADE` · `voice_usage` → `SET NULL` (anonymní účetní řádek) · `credit_ledger` bez vazby
+(UUID už nemá s čím spojit) a `bug_reports` bez vazby na účet — obojí zdůvodněné v `RUNAR_PRIVACY.md`.
+- ⚪ **Pro CODE-tune (j):** `allowed_emails` (seznam pozvaných testerů, e-mail) smazání účtu **přežije** — stránka soukromí ale slibuje
+  „Email address — until account deleted“ a „ERASURE: Everything goes“. `delete-account` má smazat i řádek s e-mailem mazaného
+  (`delete from allowed_emails where lower(email) = lower(<e-mail z auth>)`, PŘED `deleteUser`) + nasadit. Dnes 5 e-mailů, žádný nemá
+  účet → slib zatím porušený nebyl; poprvé by byl u testera, který si účet založí a smaže. Není to nové rozhodnutí, jen kód podle slibu.
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
