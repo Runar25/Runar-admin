@@ -1868,7 +1868,7 @@ z klienta · `ledger_user_profiles` zapisuje do `credit_ledger` i smazání úč
 **Opraveno rovnou:** nic.
 
 **PRO OWNERA:**
-13. 🔴 **Do úložiště smí nahrát soubor kdokoli.** Politika `service_role_upload 1rtepqd_0` na `storage.objects` (INSERT, role public,
+13. 🔴 **Do úložiště smí nahrát soubor kdokoli.** ➜ ✅ **opraveno 2026-10-10** (SQL spustil owner; v `storage` teď žádná politika — ověřeno `pg_policies`). Politika `service_role_upload 1rtepqd_0` na `storage.objects` (INSERT, role public,
     `WITH CHECK true`, bez omezení bucketu) → s veřejným klíčem z appky jde nahrát cokoli do veřejných `runar-audio` a `runar-images`
     (bez stropu velikosti i typu). Zneužití zatím žádné (55 + 1 souborů, poslední nahrání v květnu). Politika je zbytečná:
     jediné nahrávání (`elevenlabs-static`) jde přes service role, která RLS obchází. SQL pro ownera:
@@ -1876,6 +1876,13 @@ z klienta · `ledger_user_profiles` zapisuje do `credit_ledger` i smazání úč
 14. ⚪ **Smazání verze audia ve shrine nesmaže soubor** (`deleteVersion` → `storage.remove`): na `storage.objects` není pravidlo DELETE,
     chyba skončí v konzoli a soubor zůstane. Dnes 2 soubory v `runar-audio` bez záznamu v `runar_static_audio`. Volba: pravidlo
     „admin smí mazat v `runar-audio`“, nebo sirotky smazat ručně.
+15. ⚪ **Stará kopie repa v `.claude/worktrees/modest-murdock-d57976`** (větev z 2026-08-17, plně sloučená do `main`, bez vlastních
+    commitů, jen dočasný `supabase/.temp`). Neškodí, ale grep přes repo z ní vrací zastaralý kód (2026-10-09 tak vyskočil
+    `buildSysPromptV2` ve „volajících“). Nástroj appky na úklid ji nebere za svou. Úklid (spustí owner nebo Code se souhlasem):
+    `git -C C:/Users/zkuku/Downloads/Runar-admin worktree remove --force .claude/worktrees/modest-murdock-d57976`.
+**Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
+„Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
+k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
 
 ## 2026-08-16 — otevřené po zavedení registru `direct`
 

@@ -41,17 +41,54 @@ if (!targets.length) {
   process.exit(0);
 }
 
+// RYCHLOST (2026-10-10, CODE-read — kontrola architektury; CODE-tune hlásil smoke 30+ min): dřív `git blame -L n,n` zvlášť
+// pro každý z ~340 řádků nad souborem o 9 000 řádcích, plus `show`/`log` znovu pro tytéž commity a soubory. Teď JEDEN blame celého
+// souboru a JEDEN průchod historií (`git log --name-only`) místo `show`/`log`/`ls-files` pro každý řádek. Změřeno: 575 s → 5 s.
+// Ověřeno týž den: výstup na repu shodný a v testovacím repu obě verze chytí tentýž nesplněný slib a pustí splněný.
+let _blame = null;
+function blameOf(lineNo) {
+  if (!_blame) {
+    _blame = {};
+    let out = '';
+    try { out = git(`blame --line-porcelain -- ${DOC}`); } catch (e) { return null; }
+    const shaTime = {};
+    let cur = null;
+    for (const l of out.split('\n')) {
+      const h = l.match(/^([0-9a-f]{40}) \d+ (\d+)/);
+      if (h) { cur = { sha: h[1], line: +h[2] }; continue; }
+      const at = l.match(/^author-time (\d+)$/);
+      if (at && cur) shaTime[cur.sha] = new Date(+at[1] * 1000).toISOString().slice(0, 10);
+      if (l.startsWith('\t') && cur) { _blame[cur.line] = cur.sha; cur = null; }
+    }
+    for (const k of Object.keys(_blame)) _blame[k] = { sha: _blame[k], when: shaTime[_blame[k]] || '?' };
+  }
+  return _blame[lineNo] || null;
+}
+// Jeden průchod historií: commit → soubory, soubor (basename) → časy commitů (lokální čas jako `git log --since`),
+// a seznam souborů v gitu. Nahrazuje `git show`/`git log --since`/`git ls-files` pro každý řádek zvlášť.
+let _hist = null;
+function hist() {
+  if (_hist) return _hist;
+  _hist = { files: {}, times: [], tracked: [] };
+  const out = git('log --format=@@%H@%cd --date=format-local:%Y-%m-%dT%H:%M:%S --name-only');
+  let cur = null;
+  for (const l of out.split('\n')) {
+    if (l.startsWith('@@')) { const [h, d] = l.slice(2).split('@'); cur = { h, d }; _hist.files[h] = []; continue; }
+    if (!l.trim() || !cur) continue;
+    _hist.files[cur.h].push(l.trim());
+    _hist.times.push([l.trim(), cur.d]);   // cesta + čas; maska "*název" jako u git log -- "*${base}"
+  }
+  _hist.tracked = git('ls-files').split('\n').map((f) => f.trim()).filter(Boolean);
+  return _hist;
+}
+
 const stale = [], legacy = [];
 
 for (const t of targets) {
   // commit, kterým ten řádek vznikl
-  let sha, when;
-  try {
-    const bl = git(`blame --line-porcelain -L ${t.line},${t.line} -- ${DOC}`);
-    sha  = bl.split('\n')[0].split(' ')[0];
-    const m = bl.match(/^author-time (\d+)$/m);
-    when = m ? new Date(+m[1] * 1000).toISOString().slice(0, 10) : '?';
-  } catch (e) { continue; }
+  const bi = blameOf(t.line);
+  if (!bi) continue;
+  const sha = bi.sha, when = bi.when;
   // Rozepsaný, ještě nezacommitovaný řádek: blame vrací samé nuly. Nelze soudit slib,
   // který zatím není v historii — a hlavně: PRÁVĚ TEĎ ho autor možná plní. Kontrola
   // ho uvidí při dalším běhu, až bude commitnutý. (Chyba nalezena 2026-07-19: bez
@@ -60,7 +97,7 @@ for (const t of targets) {
 
   // soubory dotčené TÍMŽ commitem se počítají jako splněné
   let sameCommit = [];
-  try { sameCommit = git(`show --name-only --format= ${sha}`).trim().split('\n'); } catch (e) {}
+  sameCommit = hist().files[sha] || [];
 
   for (const name of t.names) {
     const base = name.split('/').pop();
@@ -79,12 +116,12 @@ for (const t of targets) {
     // jako splněný. Volnější, ale nikdy nelže obráceně — a falešný poplach je
     // u kontroly, která má běžet před každým commitem, dražší než průchod.
     let after = '';
-    try { after = git(`log --since="${when}T00:00:00" --oneline -- "*${base}"`).trim(); } catch (e) {}
+    after = hist().times.some(([f, d]) => f.endsWith(base) && d >= when + 'T00:00:00') ? 'ano' : '';
     if (after) continue;
 
     // existuje ten soubor vůbec?
     let exists = true;
-    try { exists = git(`ls-files -- "*${base}"`).trim().length > 0; } catch (e) {}
+    exists = hist().tracked.some((f) => f.endsWith(base));
 
     const hit = { doc: DOC + ':' + t.line, when, sha: sha.slice(0, 7), name, exists };
     (when >= ENFORCE_FROM ? stale : legacy).push(hit);
