@@ -9489,7 +9489,7 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   s nejvíc čteními; délky ramen ×1,33 / ×1,17 / ×1,0; vedlejší střídavě nahoru / dolů; kořeny stlačené do hloubky na 55 %. Cestou: prameny
   ležely v kmeni podle pořadí a ramena se křížila (dráha teď podle strany a patra, spodní patro hned u středu); pramen spodního ramene se 4
   vedlejšími byl 1,9× tlustší a kmen vypadal jako lyra, ověřeno i v labu v prohlížeči (zesílení matky vedlejšími jen čtvrtinou). Kmen užší než
-  dnes (7 pramenů místo 17); živel a zóna o místě větve nerozhodují. Čeká na ownerův pohled.
+  dnes (7 pramenů místo 14; do opravy 2026-10-10 tu stálo 17 = počet ramen i s výstupy bez pramene); živel a zóna o místě větve nerozhodují. Čeká na ownerův pohled.
 - Affected doc(s): `RUNAR_TREE.md` §2 (kořeny: zrcadlo i ve stavbě), `RUNAR_BACKLOG.md` (nová položka) — v témže commitu.
 
 ## 2026-10-10 (18) — Runy v popiscích a oknech jako naše glyfy; návštěvník rovnou k tahu runy (bez formuláře)
@@ -9586,7 +9586,7 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   stlačením do hloubky, přidanými vedlejšími kořeny, narovnaným kůlovým kořenem a menším ohybem — taky změna stavby.
 - **Pokus teď** (patch `docs/archive/tree/2026-10-10_nanecisto_ramena_koreny.patch`): koruna jako v (21), 2 × (4+4+3) + 3; kořeny původní, jen směr —
   vůdčí dolů, na každé straně kořen nejnižšího ramene 52°, dalšího 34°, nejvyššího 17° od svislice. Změřeno na jeho stromě: kořeny 71 % šířky koruny
-  (dnes 63 %), hloubka 39 % výšky koruny (dnes 39 %), kořínků nad zemí 3 z 64 (dnes 1 ze 125); kořenů je 7 (prameny), dnes 17. Se směrem 60°
+  (dnes 63 %), hloubka 39 % výšky koruny (dnes 39 %), kořínků nad zemí 3 z 64 (dnes 1 ze 125); kořenů je 7 (prameny), dnes 14 (do opravy 2026-10-10 tu stálo 17 = počet ramen, ne pramenů). Se směrem 60°
   stejná šířka a 5 kořínků nad zemí. Na plnou šířku koruny by musely být kořeny delší — to už je změna kořene, čeká na ownera.
 - Affected doc(s): `RUNAR_TREE.md` §2 (kořeny), `RUNAR_BACKLOG.md` (položka pokusu) — v témže commitu.
 
