@@ -1963,6 +1963,10 @@ se liší komentáři z kontroly 2026-10-09 (kód stejný, nasazovat netřeba). 
     Billing → Spend limits; OpenAI: hard limit projektu / organizace (od července 2026). Nastavuje owner v konzolích.
     **Stav 2026-10-10 (snímky ownera):** OpenAI strop 100 $ + upozornění 80 % a 100 % ✅. Anthropic strop 1 000 $ (výchozí) — návrh snížit
     (~50 $) a přidat upozornění; u Anthropicu hláška „Add a card“ — auto-reload jede přes Link bez karty, při selhání by došel kredit zálohy.
+    ✅ **Hotovo 2026-10-10 (owner):** Anthropic strop 20 $, karta přidaná. (Do stropu se počítají i testy přes Claude API.)
+18. ⚪ **Supabase Free projekt se po týdnu bez aktivity uspí** — appka pak nejede, dokud ho někdo ručně neprobudí (Dashboard → Resume;
+    data zůstanou, e-mail týden předem). Dnes nehrozí (denní provoz; nejspíš i denní záloha — jestli se dotazy přes CLI počítají
+    jako aktivita, dokumentace neříká). Zmizí s přechodem na Pro před produkcí (DECISIONS 2026-10-10 (9)).
 
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
