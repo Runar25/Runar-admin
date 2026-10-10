@@ -627,6 +627,8 @@
   ✅ **Ruční záloha 2026-10-10** (owner „ano, udělej“): všech 15 tabulek public + `auth.users` (id, e-mail, časy) jako JSON, schéma
   (sloupce, politiky, funkce, triggery, cizí klíče, granty) a 53 souborů statického audia — u ownera mimo repo (`runar-eval/zaloha-db/`).
   `supabase db dump` nejde (chce Docker) → export přes `supabase db query`. Je to JEDNA kopie, ne záloha průběžná; bod zůstává otevřený.
+  ✅ **Od 2026-10-10 automaticky** (DECISIONS 2026-10-10 (9)): denně 3:30 šifrovaná záloha → lokálně + Google Drive runar@therunekeeper.com
+  (`scripts/utils/zaloha_db.js`, úloha Windows „Runar - zaloha databaze“). Zbývá: Supabase Pro před produkcí, obnova do DB nanečisto.
 - [ ] **Monitoring / alerting** (error rate + fail-open události → Slack/Sentry). Dnes jen pull logy.
 - [ ] **Staging / preview** prostředí pro migrace + edge fn (dnes vše proti prod DB).
 - [ ] **Deploy / rollback runbook** pro edge funkce (živý stav je mimo git, neviditelný).

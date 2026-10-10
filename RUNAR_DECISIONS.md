@@ -9345,3 +9345,20 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   (přejmenováno v Gmailu); koncepty odpovědí v IS a EN.
 - Affected doc(s): `CLAUDE.md` §31 · memory `schranka-runar-gmail`.
 - Odvolává se na: 2026-10-10 (7).
+
+## 2026-10-10 (9) — Automatická denní záloha databáze na Google Drive Rúnara; zatím Supabase Free, před produkcí Pro
+- **Rozhodl:** KUKY 2026-10-10 *„začneme dělat automaticky… zatím free. Před produkcí supabase pro… google drive… runar@therunekeeper.com“*.
+  **Provedl:** CODE-read.
+- **Proč:** `supabase backups list` vrátil prázdný seznam (Free nezálohuje, PITR vypnuté) — deníky, kredity a profily neměly žádnou kopii
+  (`RUNAR_BACKLOG.md` „Zálohy / DR“, kontrola architektury bod 16). PITR za 100 $ měsíčně owner nechce; denní zálohy Supabase Pro (v ceně,
+  7 dní) přijdou s přechodem na Pro před produkcí.
+- **Co:** `scripts/utils/zaloha_db.js` — všechny tabulky public + `auth.users` (id, e-mail, časy) + schéma jako JSON přes `supabase db query`
+  (bez Dockeru), 7z AES-256 se šifrovanými názvy, heslo v `~/.claude/runar-zaloha-heslo.txt` (mimo repo i Drive), ověření archivu, statické
+  audio jen při změně. Lokálně `~/runar-eval/zaloha-db/archiv` + kopie na `H:/My Drive/Runar-zalohy` (Drive pro počítač, účet
+  runar@therunekeeper.com). Naplánovaná úloha Windows „Runar - zaloha databaze“ denně 3:30 (po zapnutí doběhne zmeškaná).
+- **Ověřeno:** obnova ze zálohy (564 čtení, 4 profily, 15 politik, 13 funkcí, 176 sloupců), špatné heslo odmítnuto; běh z plánovače
+  výsledek 0, soubory na Drive. Past nalezená cestou: Supabase CLI vrací JSON jen s proměnnou `AI_AGENT` (Claude Code ji nastavuje,
+  plánovač ne) — skript si ji nastaví sám.
+- **Hranice:** běží jen když je počítač ownera zapnutý a Drive pro počítač přihlášený; obnova do živé DB nanečisto nevyzkoušena (jen
+  rozbalení a kontrola dat). Heslo si owner musí uložit i jinam — bez něj jsou zálohy k ničemu.
+- Affected doc(s): `RUNAR_BACKLOG.md` (C „Zálohy / DR“) — v témže commitu.
