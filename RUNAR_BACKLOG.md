@@ -2018,7 +2018,7 @@ Hledáno strojem, ne náhodou: (a) jména souborů v komentářích kódu, kter�
 **Opraveno rovnou:** hlavička `runar-reporter.js` odkazovala na spec, který v repu nikdy nebyl · `RUNAR_SEGMENTATION_SPEC.md` (plán
 z léta, „SW v109“, formát bez ✦) a jednorázová předávka `DOCSYNC_HANDOFF_2026-07-04.md` → `docs/archive/` s hlavičkou ·
 `docs/runar-prompt-map.html` (stav v4.15, zmiňuje Opus 4.8/Sonnet) dostala viditelné „snímek k 2026-09-06, pravda je kód“.
-**Předáno CODE-tune:** zbytky „magic link“ po přechodu na kód — **shrine přihlášení e-mailem nefunguje** (posílá kód, pole na kód nemá;
+✅ **Hotovo CODE-tune 2026-10-10 (c81b4da, nasazeno):** zbytky „magic link“ po přechodu na kód — shrine teď jen Google (oba admini ho mají), nápověda EN+IS kódem, výchozí text okna z UI_TEXT, `weekly_drip` pryč. Původně: **shrine přihlášení e-mailem nefungovalo** (posílá kód, pole na kód nemá;
 Google funguje), nápověda slibuje odkaz (EN 2×, IS 1×), výchozí text okna v `runar-reader.html`; mrtvé pole `weekly_drip` v `TIER_LIMITS`.
 **Bez nálezu:** odkazy v `memory/` (zástupná jména, gitignorované sloty, historie stromu); `docs/findings/` jsou datované záznamy běhů.
 Nepřezkoumáno: `docs/TREE_BRIEF_CODE_2026-07-04.md` a `RUNAR_TREE_RENDER.md` (strom = CODE-tree).
