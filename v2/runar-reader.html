@@ -470,19 +470,9 @@
       <button class="btn-voice" id="btn-generate-voice" onclick="generateVoice()" disabled>ᚢ HEAR RÚNAR SPEAK</button>
       <div class="audio-player" id="audio-player">
         <div class="audio-player-lbl" id="audio-player-lbl">♪ RÚNAR SPEAKS</div>
-        <!-- Hidden native audio — playback only, no browser controls -->
-        <audio id="runar-audio" preload="none"></audio>
-        <!-- Custom amber player UI -->
-        <div class="cap">
-          <button class="cap-btn" id="cap-play" onclick="capToggle()" title="Play / Pause">▶</button>
-          <span class="cap-time" id="cap-current">0:00</span>
-          <input type="range" class="cap-seek" id="cap-seek" value="0" min="0" max="100" step="0.1"
-                 oninput="capSeek(this.value)" title="Seek">
-          <span class="cap-time" id="cap-dur">0:00</span>
-          <button class="cap-btn" id="cap-mute" onclick="capMute()" title="Mute / Unmute" style="display:flex;align-items:center;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06C16.89 6.15 19 8.83 19 12c0 3.17-2.11 5.84-5 6.71v2.06c4.01-.91 7-4.49 7-8.77 0-4.28-2.99-7.86-7-8.77z"/></svg>
-          </button>
-        </div>
+        <!-- 2026-10-10: přehrávač staví _makeCapPlayer('cap') v runar-app.js — jediný přehrávač appky (KUKY „jen jeden typ“);
+             do té doby tu stál vlastní (s ztlumením) a kolekce s deníkem měly jiný. -->
+        <div id="cap-host"></div>
       </div>
       <div class="status" id="st-voice"></div>
       <!-- Ask Rúnar — follow-up Q&A (Premium, one question per reading) -->

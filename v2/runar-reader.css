@@ -701,18 +701,24 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .audio-player{display:none;margin-top:14px;background:transparent;border:1px solid rgba(255,191,0,0.3);border-radius:6px;padding:16px 18px;}
 .audio-player.visible{display:block;}
 .audio-player-lbl{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:3px;color:var(--gold);margin-bottom:12px;opacity:0.9;}
-/* ── CUSTOM AUDIO PLAYER (main reading voice) ── */
+/* ── PŘEHRÁVAČ — jediný v appce (hlas čtení, kolekce, deník; staví ho _makeCapPlayer v runar-app.js) ── */
 .cap{display:flex;align-items:center;gap:12px;}
 .cap-btn{background:none;border:none;color:var(--gold);font-size:1.15em;cursor:pointer;padding:2px 4px;line-height:1;flex-shrink:0;transition:opacity 0.15s;}
 .cap-btn:hover{opacity:0.75;}
 .cap-time{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:1px;color:var(--gold);flex-shrink:0;min-width:38px;}
-/* height:5px = track height. margin-top:(5-16)/2=-5.5px centers 16px thumb exactly on track */
-.cap-seek{flex:1;-webkit-appearance:none;appearance:none;height:5px;border-radius:3px;outline:none;cursor:pointer;background:linear-gradient(to right,var(--gold) var(--pct,0%),rgba(255,191,0,0.18) var(--pct,0%));}
-.cap-seek::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--gold);cursor:pointer;box-shadow:0 0 5px rgba(255,191,0,0.6);margin-top:-5.5px;}
-.cap-seek::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--gold);cursor:pointer;border:none;box-shadow:0 0 5px rgba(255,191,0,0.6);}
+/* 2026-10-10 (KUKY: „kolečko posuvníku není vycentrované… uděláme svislou čáru velikosti kuličky přesně uprostřed čáry zvukové
+   stopy“): jezdec = svislá čárka 3×16 px. Stopu (5 px) kreslí pseudo-prvek stopy, ne samotný input: do té doby ji WebKit neměl
+   výslovně danou, odsazení jezdce (−5,5 px) se počítalo od jiného boxu a kulička seděla 2,7 px nad středem (změřeno při 10×
+   zvětšení). Input je 20 px vysoký kvůli prstu; průhledné boky jezdce (2× 8 px) zvětšují plochu, za kterou jde chytit. */
+.cap-seek{flex:1;-webkit-appearance:none;appearance:none;height:20px;margin:0;background:transparent;outline:none;cursor:pointer;}
+.cap-seek:focus-visible{outline:1px solid rgba(255,191,0,0.5);outline-offset:2px;}
+.cap-seek::-webkit-slider-runnable-track{height:5px;border-radius:3px;background:linear-gradient(to right,var(--gold) var(--pct,0%),rgba(255,191,0,0.18) var(--pct,0%));}
+.cap-seek::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;box-sizing:content-box;width:3px;height:16px;border:0 solid transparent;border-width:0 8px;background:var(--gold);background-clip:content-box;margin-top:-5.5px;cursor:pointer;}
 .cap-seek::-moz-range-track{height:5px;border-radius:3px;background:rgba(255,191,0,0.18);}
+.cap-seek::-moz-range-progress{height:5px;border-radius:3px;background:var(--gold);}
+.cap-seek::-moz-range-thumb{box-sizing:content-box;width:3px;height:16px;border:0 solid transparent;border-width:0 8px;background:var(--gold);background-clip:content-box;border-radius:0;cursor:pointer;}
 .cap-btn svg{display:block;}
-/* Global audio element — keep amber accent for secondary players (collection, journal) */
+/* Globální <audio> — v appce bez nativního ovládání (jediný přehrávač je .cap); jantar pro případ <audio controls> */
 audio{accent-color:var(--gold);color-scheme:dark;}
 audio::-webkit-media-controls-panel{background-color:rgba(10,10,10,0.6)!important;}
 audio::-webkit-media-controls-enclosure{border-radius:6px;}
@@ -814,7 +820,6 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 .jcard-audio-btn:hover{border-color:rgba(255,191,0,0.6);}
 .jcard-audio-btn:disabled{opacity:0.4;cursor:default;}
 .jcard-audio-player{margin-top:10px;}
-.jcard-audio-player audio{width:100%;outline:none;}
 /* Journal gate (logged-out) */
 .journal-gate-wrap{text-align:center;padding:52px 20px;}
 /* ᚱ v gate — vždy zlaté, bez ozdob kolem */

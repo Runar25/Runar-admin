@@ -9391,3 +9391,18 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   odmítne; smoke 61/61. Šablonu (Go) lokálně ověřit nejde — ověří ji první e-maily po vložení (EN, IS, účet bez jazyka).
 - Affected doc(s): `supabase/templates/prihlaseni-kod.html` (zdroj šablony, hlavička).
 - Odvolává se na: 2026-10-10 (10).
+
+## 2026-10-10 (12) — Jeden přehrávač v celé appce; jezdec je svislá čárka uprostřed stopy
+
+- **Rozhodl:** KUKY 2026-10-10: *„kolečko posuvníku není vycentrované, ale říkám si, že uděláme svislou čáru velikosti kuličky přesně
+  uprostřed té čáry zvukové stopy. Přehrávač je na více místech. Měl by se používat jen jeden typ.“* **Provedl:** CODE-tune.
+- **Co:** hlas čtení, kolekce run i deník staví přehrávač jednou funkcí (`_makeCapPlayer` + `_capWire/_capReset/_capStop`,
+  runar-app.js); hlas čtení má prefix `cap`. Do té doby měl hlas čtení vlastní kód (statický HTML + `capToggle/capSeek/capMute`) —
+  jiná ikona pauzy, zlatý průběh ve stopě a tlačítko ztlumení jen u čtení. **Ztlumení odpadlo** (jeden typ = stejné ovládání všude;
+  v telefonu se hlasitost ovládá tlačítky). Jezdec = čárka 3×16 px; stopu kreslí `::-webkit-slider-runnable-track` /
+  `::-moz-range-track`, input je 20 px vysoký kvůli prstu.
+- **Proč kulička nebyla na středu:** WebKit neměl stopu výslovně danou, odsazení −5,5 px se počítalo od jiného boxu → kulička 2,7 px
+  nad středem (změřeno při 10× zvětšení). Po opravě rozdíl pod desetinu pixelu.
+- **Ověřeno v náhledu se skutečnou nahrávkou:** přehrání, pauza tlačítkem, posun na 50 % (9,94 s z 19,88 s), konec → návrat na začátek,
+  zastavení → přehrávač prázdný. Posuvník růstu stromu (`#tree-seek`) nese tutéž třídu, takže má taky čárku.
+- Odvolává se na: —

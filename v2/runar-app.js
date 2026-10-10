@@ -213,29 +213,49 @@ async function syncFreeBalance(userId) {
   } catch(e) { console.warn('syncFreeBalance:', e.message); }
 }
 
-// ─── GENERIC SECONDARY CAP PLAYER ───────────────────────
-// Used by collection modal and journal entries.
-// prefix = unique string (e.g. 'coll', 'j0', 'j3')
+// ─── PŘEHRÁVAČ — JEDINÝ v appce (hlas čtení, kolekce, deník) ─────────────
+// 2026-10-10 (KUKY: „přehrávač je na více místech. Měl by se používat jen jeden typ.“): do té doby měl hlas čtení vlastní
+// přehrávač (statický HTML + capToggle/capSeek/capMute v runar-reading.js) a kolekce s deníkem tenhle — dva kódy, jiná ikona
+// pauzy, zlatý průběh ve stopě a ztlumení jen u čtení. Teď jeden tvar i jeden kód; hlas čtení má prefix 'cap'.
+// prefix = unique string (e.g. 'cap', 'coll', 'j0')
+var _CAP_PLAY = '&#9654;&#xFE0E;', _CAP_PAUSE = '&#9646;&#9646;';   // FE0E: ▶ jako znak, ne barevné emoji (iOS)
 function _makeCapPlayer(prefix, src, autoplay) {
-  return '<audio id="' + prefix + '-a" src="' + src + '" preload="none"' + (autoplay ? ' autoplay' : '') + '></audio>'
+  // bez src žádný atribut: src="" by prohlížeč načítal stránku jako zvuk
+  return '<audio id="' + prefix + '-a"' + (src ? ' src="' + src + '"' : '') + ' preload="none"' + (autoplay ? ' autoplay' : '') + '></audio>'
        + '<div class="cap" style="margin-top:0;">'
-       + '<button class="cap-btn" id="' + prefix + '-pb" onclick="_capPlay(\'' + prefix + '\')" title="Play / Pause">&#9654;</button>'
+       + '<button class="cap-btn" id="' + prefix + '-pb" onclick="_capPlay(\'' + prefix + '\')" title="Play / Pause">' + _CAP_PLAY + '</button>'
        + '<span class="cap-time" id="' + prefix + '-ct">0:00</span>'
        + '<input type="range" class="cap-seek" id="' + prefix + '-sk" value="0" min="0" max="100" step="0.1" oninput="_capSeekTo(\'' + prefix + '\',this.value)" title="Seek">'
        + '<span class="cap-time" id="' + prefix + '-dr">0:00</span>'
        + '</div>';
 }
 function _capFmt(s) { var m = Math.floor(s / 60); return m + ':' + String(Math.floor(s % 60)).padStart(2, '0'); }
+function _capPct(p, pct) {   // zlatý průběh ve stopě: --pct čte ::-webkit-slider-runnable-track (Firefox má ::-moz-range-progress)
+  var sk = document.getElementById(p + '-sk');
+  if (sk) sk.style.setProperty('--pct', (+pct || 0).toFixed(1) + '%');
+}
 function _capPlay(p) {
   var a = document.getElementById(p + '-a');
-  var b = document.getElementById(p + '-pb');
-  if (!a) return;
-  if (a.paused) { a.play(); if (b) b.innerHTML = '&#9646;&#9646;'; }
-  else          { a.pause(); if (b) b.innerHTML = '&#9654;'; }
+  if (!a || !a.getAttribute('src')) return;
+  if (a.paused) a.play(); else a.pause();   // ikonu tlačítka nastaví události play/pause (_capWire), ne klik
 }
 function _capSeekTo(p, v) {
   var a = document.getElementById(p + '-a');
   if (a && a.duration) a.currentTime = (v / 100) * a.duration;
+  _capPct(p, v);
+}
+function _capReset(p) {
+  var sk = document.getElementById(p + '-sk'), ct = document.getElementById(p + '-ct'), pb = document.getElementById(p + '-pb');
+  if (pb) pb.innerHTML = _CAP_PLAY;
+  if (sk) sk.value = 0;
+  if (ct) ct.textContent = '0:00';
+  _capPct(p, 0);
+}
+function _capStop(p) {   // zastavit a vyprázdnit (nové čtení, jiný jazyk); removeAttribute + load(), ne src='' (viz _makeCapPlayer)
+  var a = document.getElementById(p + '-a'), dr = document.getElementById(p + '-dr');
+  if (a) { a.pause(); a.removeAttribute('src'); a.load(); }
+  if (dr) dr.textContent = '0:00';
+  _capReset(p);
 }
 function _capWire(p, doPlay) {
   var a  = document.getElementById(p + '-a');
@@ -246,16 +266,14 @@ function _capWire(p, doPlay) {
   if (!a) return;
   a.addEventListener('timeupdate', function() {
     if (ct) ct.textContent = _capFmt(a.currentTime);
-    if (sk && a.duration) sk.value = (a.currentTime / a.duration) * 100;
+    if (sk && a.duration) { sk.value = (a.currentTime / a.duration) * 100; _capPct(p, sk.value); }
   });
   a.addEventListener('loadedmetadata', function() {
     if (dr) dr.textContent = _capFmt(a.duration);
   });
-  a.addEventListener('ended', function() {
-    if (pb) pb.innerHTML = '&#9654;';
-    if (sk) sk.value = 0;
-    if (ct) ct.textContent = '0:00';
-  });
+  a.addEventListener('play',  function() { if (pb) pb.innerHTML = _CAP_PAUSE; });
+  a.addEventListener('pause', function() { if (pb) pb.innerHTML = _CAP_PLAY; });
+  a.addEventListener('ended', function() { _capReset(p); });
   if (doPlay) {
     a.addEventListener('canplay', function() { _capPlay(p); }, { once: true });
   }
@@ -365,7 +383,7 @@ function showCachedReading(l) {
   document.getElementById(_outId).textContent = cached.short;
   document.getElementById('out-deep').textContent  = cached.deep || '';
   document.getElementById('audio-player').classList.remove('visible');
-  document.getElementById('runar-audio').src = '';
+  _capStop('cap');
   setSt('st-voice', '');
   const vBtn = document.getElementById('btn-generate-voice');
   if (voiceGenerated[l]) {
@@ -1428,32 +1446,10 @@ function _renderYourPath() {
 }
 // Wire audio element events once DOM ready
 window.addEventListener('DOMContentLoaded', () => {
-  const a = document.getElementById('runar-audio');
-  if (!a) return;
-  a.addEventListener('timeupdate', () => {
-    const pct = a.duration ? (a.currentTime / a.duration * 100) : 0;
-    const seek = document.getElementById('cap-seek');
-    const cur  = document.getElementById('cap-current');
-    if (seek) { seek.value = pct; _capTrack(pct); }
-    if (cur)  cur.textContent = _capFmt(a.currentTime);
-  });
-  a.addEventListener('loadedmetadata', () => {
-    const dur = document.getElementById('cap-dur');
-    if (dur) dur.textContent = _capFmt(a.duration);
-  });
-  a.addEventListener('ended', () => {
-    const btn = document.getElementById('cap-play');
-    if (btn) btn.textContent = '▶';
-    _capTrack(100);
-  });
-  a.addEventListener('pause', () => {
-    const btn = document.getElementById('cap-play');
-    if (btn) btn.textContent = '▶';
-  });
-  a.addEventListener('play', () => {
-    const btn = document.getElementById('cap-play');
-    if (btn) btn.textContent = '⏸';
-  });
+  // Přehrávač hlasu čtení — týž jako v kolekci a deníku (2026-10-10, KUKY „jen jeden typ“). Do té doby tu byl vlastní drát
+  // na #runar-audio a `if (!a) return` by při chybějícím přehrávači přeskočil i zbytek téhle funkce.
+  const capHost = document.getElementById('cap-host');
+  if (capHost) { capHost.innerHTML = _makeCapPlayer('cap', '', false); _capWire('cap'); }
   // ── Close topbar dropdown on outside click ──
   document.addEventListener('click', function(e) {
     const wrap = document.getElementById('auth-dropdown-wrap');
