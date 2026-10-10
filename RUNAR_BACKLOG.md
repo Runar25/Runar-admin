@@ -2080,6 +2080,14 @@ s novým HTML trvá jen do toho reloadu · manifest (rozsah, start, ikony) sedí
   (`vn(...) + ' fyrir venjulegar dregnar rúnir'` / `' available for regular draws'`) → UI_TEXT + `tp()` s `{casts}`; IS ověřit (§2).
   `runar-auth.js` ~334 `openUpgradeModal` — nikdo ho nevolá (grep), text natvrdo; smazat. Po obou snížit BASELINE v `verify_lang_ternary.js`.
 
+### Část 19 — soubory v `v2/`, na které nic neodkazuje (2026-10-10)
+**Platí:** všechny `.js`/`.html`/`.css` ve `v2/` něco načítá · `v2/email/*.png` (CODE-tune 2026-10-10) odkazují koncepty e-mailů
+testerům v Gmailu přes adresu — v repu odkaz NEMÁ být, nemazat.
+- 🟡 **PRO OWNERA:** `v2/assets/` (7 obrázků z 2026-05-17: moodboard, paleta, Rúnar ceremonial/expressions/fullbody/portrait/travel)
+  a `v2/runar-portrait.png` (2026-05-16, „hero“) — **nic v repu na ně neodkazuje**, ~19 MB, nasazené veřejně na GitHub Pages.
+  Appka bere Rúnarův portrét ze Supabase úložiště (`runar-images/Runar_portrait.png`). Smazat z repa (historie v gitu zůstane),
+  nebo nechat jako designový podklad?
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
