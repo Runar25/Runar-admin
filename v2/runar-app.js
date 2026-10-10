@@ -949,9 +949,11 @@ function showAppTab(tab) {
   } else {
     // Owner request: reset stale spread output/label/mode to clean single on tab entry
     if (typeof _resetReadingTab === 'function') _resetReadingTab();
-    // Restore hero only if no reading is in progress
+    // Restore hero only if no reading is in progress. Mřížka návštěvníka (data-host, _syncVisitorDraw) je jeho úvodní obrazovka, ne
+    // rozdělané čtení — do 2026-10-10 se kvůli ní po návratu do záložky Rúnarova fotka nevrátila (KUKY: „kde je Rúnarova fotka?“).
+    const _rc = document.getElementById('reader-rune-card');
     const inReading = document.getElementById('reader-output')?.style.display !== 'none'
-                   || document.getElementById('reader-rune-card')?.style.display !== 'none';
+                   || (_rc?.style.display !== 'none' && _rc?.getAttribute('data-host') !== '1');
     if (!inReading) document.getElementById('reader-hero').classList.remove('hidden');
     // Update reading form mode/state when switching to reading tab
     if (typeof _updateReadingForm === 'function') _updateReadingForm();

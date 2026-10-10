@@ -1524,7 +1524,6 @@ function _syncVisitorDraw() {
     readerUser = { name: t('name_you'), d: null, m: null, y: null, lifeRune: null, area: '', seeking: '', intention: '', question: '' };
     card.style.display = 'block';
     card.setAttribute('data-host', '1');
-    _syncNornsGate();   // Norny jen pro přihlášené — při čerstvém načtení jinak NORNIR viděl i návštěvník (2026-10-10, náhled)
     buildGrid();
   } else if (card.getAttribute('data-host') === '1') {
     card.removeAttribute('data-host');
@@ -1581,7 +1580,10 @@ function _syncFoundingLock() {
 }
 
 function _syncNornsGate() {
-  var has = !!currentUser;   // Norns viditelny pro kazdeho prihlaseneho; founding rozlisuje _foundingPending, ne viditelnost
+  // Norny vidí každý, i návštěvník — jako ostatní spready; klepnutí mu řekne, ať se přihlásí (readRune, signin_spread_norns).
+  // KUKY 2026-10-10: „proč jsi smazal NORN?“ Do té doby has = !!currentUser: návštěvníkovi se Norny skryly po přepnutí záložky
+  // a CODE-tune je 2a3f03b skryl i při čerstvém načtení. Founding rozlišuje _foundingPending, ne viditelnost.
+  var has = true;
   var btn = document.getElementById('mode-btn-norns');
   var row = document.getElementById('spread-mode-row');
   if (btn) btn.style.display = has ? '' : 'none';

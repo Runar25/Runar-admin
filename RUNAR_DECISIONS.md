@@ -9513,3 +9513,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - Affected doc(s): `RUNAR_BACKLOG.md` (sekce „Kontrola návštěvníka: co zbylo“: body 1 a 5 hotové, shrine, toast odhlášení, čtení
   návštěvníka) — v témže commitu.
 - Odvolává se na: 2026-10-10 (16), 2026-08-02 „Fáze 1 security“.
+
+## 2026-10-10 (19) — Vráceno, co rozbil commit 2a3f03b: Norny návštěvník zase vidí, Rúnarova fotka se po návratu do Spá vrací
+
+- **Proč:** KUKY 2026-10-10 po nasazení 2a3f03b: *„proč jsi smazal NORN? … kde je Rúnarova fotka? … vracíš, co jsi zkurvil“*.
+  **Provedl:** CODE-tune.
+- **Co:** (1) Norny vidí každý, i návštěvník — jako ostatní spready; klepnutí na čtení mu řekne, ať se přihlásí (`readRune`).
+  `_syncNornsGate` je do té doby nepřihlášenému skrýval po přepnutí záložky a 2a3f03b je skryl i při čerstvém načtení. **Bod (18)
+  „Norny skryté i při čerstvém načtení“ tím neplatí.** (2) Rúnarova fotka (hero) se po návratu do záložky Spá vrací i návštěvníkovi:
+  jeho mřížka je úvodní obrazovka, ne rozdělané čtení (`showAppTab`, `data-host`).
+- **Chyba postupu:** Norny jsem skryl podle komentáře v kódu, bez otázky na ownera a bez porovnání s tím, co návštěvník do té doby
+  viděl. Stavy po přepnutí záložky jsem kontroloval jen u prvků, které jsem měnil — fotku nad nimi ne.
+- **Ověřeno v náhledu:** fotka i Norny při načtení, po návratu z Lífsrúnin, Lestrar a Safn rúna, po tahu, Start over a dalším tahu.
+- Affected doc(s): — (oprava kódu; neplatný bod v (18) opravuje tento záznam)
+- Odvolává se na: 2026-10-10 (18).
