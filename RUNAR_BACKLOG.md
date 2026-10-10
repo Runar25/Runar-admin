@@ -1961,6 +1961,8 @@ se liší komentáři z kontroly 2026-10-09 (kód stejný, nasazovat netřeba). 
 17. ⚪ **Měsíční strop útraty u OpenAI a Anthropicu není nikde zapsaný.** Rúnar stojí na modelech pár dolarů měsíčně; strop (třeba
     desítky dolarů) zastaví účet, kdyby chyba v kódu nebo uniklý klíč začaly generovat ve smyčce. Anthropic: Organization settings →
     Billing → Spend limits; OpenAI: hard limit projektu / organizace (od července 2026). Nastavuje owner v konzolích.
+    **Stav 2026-10-10 (snímky ownera):** OpenAI strop 100 $ + upozornění 80 % a 100 % ✅. Anthropic strop 1 000 $ (výchozí) — návrh snížit
+    (~50 $) a přidat upozornění; u Anthropicu hláška „Add a card“ — auto-reload jede přes Link bez karty, při selhání by došel kredit zálohy.
 
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
