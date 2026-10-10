@@ -198,6 +198,7 @@ const UI_TEXT = {
     journal_title:      '\u2726 YOUR RUNE READINGS',
     journal_count_recent: 'last {n}',   // 2026-10-10: dřív natvrdo v runar-journal.js; počet všech čtení skládá vn('reading')
     journal_empty:      'No rune readings recorded yet.<br>Draw your first rune.',
+    journal_load_err:   'Could not load your rune readings — check your connection and try again.',   // 2026-10-10: chyba načtení deníku (dřív brána návštěvníka / prázdný deník)
     life_rune_short:    'Life rune',
     jcard_audio_btn:    "\u266a R\u00danar'S VOICE",
     audio_loading:      '\u266a LOADING\u2026',
@@ -683,6 +684,7 @@ const UI_TEXT = {
     journal_title:      '\u2726 SP\u00c1R \u00de\u00cdNAR',
     journal_count_recent: 'síðustu {n}',   // 2026-10-10: dřív kalk z „last N“ (tvar v check-is.py BAD_PATTERNS, korpus 2×); „síðustu fimm“ 13 235×
     journal_empty:      'Engar skr\u00e1\u00f0ar sp\u00e1r enn.<br>Dragðu fyrstu r\u00fanina þ\u00edna.',
+    journal_load_err:   'Ekki tókst að sækja spárnar þínar — athugaðu nettenginguna og reyndu aftur.',   // 2026-10-10: vzor err_save_failed; korpus viz runar-journal.js
     life_rune_short:    'L\u00edfsr\u00fan',
     jcard_audio_btn:    '\u266a HLUSTA \u00c1 R\u00daNAR',
     audio_loading:      '\u266a HLE\u00d0UR\u2026',

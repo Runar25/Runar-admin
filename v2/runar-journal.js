@@ -23,7 +23,8 @@ async function loadJournal() {
       .order('drawn_at', { ascending: false });
     const lim = journalLimit();
     if (lim) q = q.limit(lim);
-    const { data } = await q;
+    const { data, error } = await q;
+    if (error) throw error;   // klient chybu nevyhazuje — bez tohohle by chyba vypadala jako prázdný deník (2026-10-10)
     _journalCache = data || [];
     renderJournal(_journalCache);
     if (userTier === 'standard' || userTier === 'premium') {
@@ -31,7 +32,22 @@ async function loadJournal() {
     } else {
       updateJournalTeaser();
     }
-  } catch(e) { hideJournal(); }
+  } catch(e) { _journalLoadFailed(); }
+}
+
+// Chyba načtení u přihlášeného (2026-10-10, BACKLOG „Kontrola návštěvníka“ bod 2): do té doby se ukázala brána návštěvníka
+// („…It opens when you become a Rune Seeker“) i Rune Seekerovi, kterému jen spadlo spojení. Už načtená čtení nechat — přepsat je
+// hláškou by bylo horší než starý seznam; prázdný deník dostane hlášku místo „zatím žádná čtení“.
+function _journalLoadFailed() {
+  if (_journalCache.length) return;
+  const gate    = document.getElementById('journal-gate');
+  const content = document.getElementById('journal-content');
+  const list    = document.getElementById('journal-list');
+  const countEl = document.getElementById('journal-pane-count');
+  if (gate)    gate.style.display    = 'none';
+  if (content) content.style.display = 'block';
+  if (countEl) countEl.textContent   = '';
+  if (list)    list.innerHTML = `<div class="journal-empty">${t('journal_load_err')}</div>`;
 }
 
 function hideJournal() {

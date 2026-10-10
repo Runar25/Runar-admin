@@ -3113,8 +3113,10 @@ Podklad: `docs/archive/2026-09-23-audit-obrazu.md`. Owner je potřebuje vysvětl
    soukromí ᚱ; hlídá smoke ㉻)* ~~**Runové glyfy písmem v popiscích:**~~ „ᚠ DRAW YOUR RUNE“ (`draw_lbl`), „ᚲ LET THE RUNES DECIDE“ (`random_btn`), „ᚢ HEAR RÚNAR
    SPEAK“ (hlas), „ᚠ ENTER RUNE READING CARD CODE“ (redeem). Cormorant runy nemá → prohlížeč půjčí cizí písmo; tentýž „divný“ tvar
    owner 2026-10-10 vytkl v Safn rúna (§5: glyf jen z RUNE_SVGS, výjimka jen ᚱ). Rozhodnout: naše SVG malé, nebo glyf z popisku pryč.
-2. ⚪ **Deník: chyba načtení ukáže přihlášenému bránu návštěvníka.** `loadJournal` v `catch` volá `hideJournal()` → „You walk here
-   as a Visitor… It opens when you become a Rune Seeker“ i Rune Seekerovi, kterému jen spadlo spojení (`runar-journal.js`).
+2. ✅ *(CODE-tune 2026-10-10: chyba se pozná i když ji klient vrátí místo vyhození — do té doby vypadala jako prázdný deník, „zatím
+   žádná čtení“; už načtená čtení zůstanou, jinak hláška `journal_load_err`. V prohlížeči ověřeno s podvrženou databází: chyba
+   vrácená, vyhozená, po úspěchu, úspěch, návštěvník — EN i IS.)* ~~**Deník: chyba načtení ukáže přihlášenému bránu návštěvníka.**~~
+   `loadJournal` v `catch` volá `hideJournal()` → „You walk here as a Visitor…“ i Rune Seekerovi, kterému jen spadlo spojení.
 3. ✅ *(CODE-tune 2026-10-10: UI_TEXT `sp_journal_link`, `sp_delete_account`; po cestě i počet v deníku `journal_count_*`
    a věta `tree_carry_life_rune` — znění beze změny, vykreslení před a po v EN i IS shodné. Všechny tři utekly smoke ㉸: ta hledá
    jen `lang === 'is' ?`, ne zkratku `isIs ?`/`is ?` → předáno CODE-read (jeho kontrola). Zbývá takových míst: text promptu
