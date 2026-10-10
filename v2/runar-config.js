@@ -352,6 +352,19 @@ const TIER_LIMITS = {
   },
 };
 
+// ─── BALÍČKY KREDITŮ (Rúnakort) ──────────────────────────────────────────────────
+// KUKY 2026-10-10 (DECISIONS 2026-10-10 (22)): „starter 5, seeker 10, walker 20, wanderer 30, Elder 50… jinak platí ceny 3.6.“ Jediné
+// místo balíčků v kódu — nápověda (runar-help.html) z něj skládá tabulku; do té doby tam stála vlastní kopie z 2026-05-20 (Elder 50 =
+// 11.900 kr, ceny v €). Ceny v ISK; € owner neurčil (§23). Jména rozhodl anglicky — islandská zatím nejsou (otázka na ownera).
+// ⚠️ „Walker“ a „Wanderer“ jsou i části jmen tarifů (TIERS.*.label): u balíčku vždy s počtem kreditů.
+const CARD_PACKS = [
+  { name: 'Starter',  credits: 5,  isk: 1490 },
+  { name: 'Seeker',   credits: 10, isk: 2490 },
+  { name: 'Walker',   credits: 20, isk: 4490 },
+  { name: 'Wanderer', credits: 30, isk: 6490 },
+  { name: 'Elder',    credits: 50, isk: 9990 },
+];
+
 // ─── TIER FEATURES — co tier umí, SLOŽENÉ z nastavení (2026-09-26) ──────────────
 // KUKY: „chtělo by to dělat tak, abychom to pořád nemuseli dělat manuálně. věci přibývají a odpadají.“ Do té doby byl výpis psaný
 // ručně ve dvou kopiích (TIER_LIMITS.*.panel_props a runar-help.html) a obě zastaraly: Yggdrasil jako výhoda Premium (má ho každý
@@ -375,8 +388,9 @@ const TIER_FEATURES = [
     en: function () { return 'A ' + VOCAB.card.en + ' opens further ' + VOCAB.cast.en_pl + '.'; },
     is: function () { return VOCAB.card.is + ' opnar fleiri ' + VOCAB.cast.is_pl + '.'; } },
   { key: 'voice', hodnota: function (t, id) { return (id !== 'free_trial' && (t.voice_monthly || t.voice_credits)) ? true : null; },
-    en: function () { return 'Rúnar\u2019s voice reads every reading aloud.'; },
-    is: function () { return 'Rödd Rúnars les hverja ' + VOCAB.cast.is + ' upphátt.'; } },
+    // 2026-10-10: „every reading“ neplatilo — hlas má každý nejvýš VOICE_MONTHLY_LIMIT za měsíc (elevenlabs-proxy; hlášení CODE-read).
+    en: function () { return 'Rúnar\u2019s voice reads up to ' + VOICE_MONTHLY_LIMIT + ' ' + (VOICE_MONTHLY_LIMIT === 1 ? VOCAB.cast.en : VOCAB.cast.en_pl) + ' aloud each month.'; },
+    is: function () { return 'Rödd Rúnars les allt að ' + VOICE_MONTHLY_LIMIT + ' ' + (VOICE_MONTHLY_LIMIT === 1 ? VOCAB.cast.is : VOCAB.cast.is_pl) + ' upphátt á mánuði.'; } },
   { key: 'journal', hodnota: function (t) { return t.journal === null ? 'all' : (t.journal > 0 ? t.journal : null); },
     en: function (v) { return v === 'all' ? 'Your full journal \u2014 every reading, back to the first.' : 'Journal of your last ' + v + ' readings.'; },
     is: function (v) { return v === 'all' ? 'Dagbók með öllum ' + VOCAB.cast.is_dat_pl + ' þínum, allt frá þeirri fyrstu.' : 'Dagbók með síðustu ' + v + ' ' + VOCAB.cast.is_dat_pl + ' þínum.'; } },

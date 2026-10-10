@@ -152,7 +152,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
             </tr>
             <tr>
               <td>+ READING CARD</td>
-              <td id="td-card">When monthly readings are walked — a reading card keeps the door open. Credits never expire. Rúnar's voice speaks your reading aloud.</td>
+              <td id="td-card">Credits never expire and follow your account across devices.</td>
             </tr>
             <tr>
               <td><span id="tier-lbl-standard">RUNE WALKER</span> <span style="opacity:0.4;font-size:0.85em">soon</span></td>
@@ -196,16 +196,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
           <tr>
             <th id="pt-card">CARD</th>
             <th id="pt-credits">CREDITS</th>
-            <th>EUR</th>
             <th>ISK</th>
           </tr>
         </thead>
-        <tbody>
-          <tr><td id="pt-starter">Starter</td><td>5</td><td>€10</td><td>1.490 kr</td></tr>
-          <tr><td id="pt-seeker">Seeker</td><td>10</td><td>€18</td><td>2.690 kr</td></tr>
-          <tr><td id="pt-wanderer">Wanderer</td><td>20</td><td>€34</td><td>5.050 kr</td></tr>
-          <tr><td id="pt-elder">Elder</td><td>50</td><td>€80</td><td>11.900 kr</td></tr>
-        </tbody>
+        <!-- 2026-10-10: řádky skládá applyContent z CARD_PACKS (runar-config.js, DECISIONS 2026-10-10 (22)); do té doby tu stála vlastní
+             tabulka z 2026-05-20 (4 balíčky, Elder 50 = 11.900 kr, ceny v €). -->
+        <tbody id="pt-body"></tbody>
       </table>
     </div>
   </div>
@@ -216,7 +212,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
     <div class="help-block">
       <div class="help-block-body" id="s4-body">
         <p>In the collection, every rune has Rúnar's own words about it — you can read them and listen to them in his voice. Recorded in advance. His teaching about the rune, not your reading.</p>
-        <p>When you use a reading card, Rúnar speaks your reading aloud. Not a recording. Generated in the moment, shaped around your specific words. Each time different. Each time his.</p>
+        <p>Rúnar can also speak your own reading aloud — up to {voice_n} times a month. Not a recording. Each time different. Each time his.</p>
       </div>
     </div>
   </div>
@@ -295,7 +291,7 @@ const CONTENT = {
     // 2026-10-10 (DECISIONS 2026-10-10 (1) bod 1): návštěvník čtení nedostává (od 2026-08-02) — „1 reading, no account needed“ pryč.
     'td-visitor':    'Draw a rune and see which comes to you; five runes in the Runes Collection and your life rune are open to you. Rúnar reads the runes for those who walk with him; joining is free.',
     'td-seeker':     tierFeatures('rune_seeker', 'en').join(' '),   // 2026-09-26: skládá se z configu (TIER_FEATURES), ne ručně
-    'td-card':       'Credits never expire and follow your account across devices. Rúnar\'s voice speaks your reading aloud.',
+    'td-card':       'Credits never expire and follow your account across devices.',   // 2026-10-10: hlas na kartu vázaný není (VOICE_MONTHLY_LIMIT)
     'td-standard':   tierFeatures('standard', 'en').join(' '),
     'td-premium':    tierFeatures('premium', 'en').join(' '),
     's3-lbl':        'READING CARDS',
@@ -307,10 +303,9 @@ const CONTENT = {
     's3-redeem-body':    `<p>Sign in → open the menu → tap <strong>+ Gift Card</strong> → enter your code → REDEEM. Credits are added instantly. They never expire. They follow your account, not your device.</p>`,
     's3-price-title':    'PRICING',
     'pt-card': 'CARD', 'pt-credits': 'CREDITS',
-    'pt-starter': 'Starter', 'pt-seeker': 'Seeker', 'pt-wanderer': 'Wanderer', 'pt-elder': 'Elder',
     's4-lbl':  'RÚNAR\'S VOICE',
     's4-body': `<p>In the collection, every rune has Rúnar's own words about it — you can read them and listen to them in his voice. Recorded in advance. His teaching about the rune, not your reading.</p>
-      <p>When you use a reading card, Rúnar speaks your reading aloud. Not a recording. Generated in the moment, shaped around your specific words. Each time different. Each time his.</p>`,
+      <p>Rúnar can also speak your own reading aloud — up to {voice_n} times a month. Not a recording. Each time different. Each time his.</p>`,
     's5-lbl':  'YOUR JOURNAL',
     's5-body': `<p>Every reading you take is remembered. As a Rune Seeker, your last five readings wait in the journal — the rune drawn, the date, the area, the words spoken.</p>
       <p>When you move to <strong>Rune Walker</strong>, the journal becomes a full chronicle. Every reading, going back to the beginning. Filterable by rune, area, and time.</p>`,
@@ -348,7 +343,7 @@ const CONTENT = {
     'th-tier':       'STIG', 'th-what': 'HVAÐ FÆR ÞÚ',
     'td-visitor':    'Dragðu rún og sjáðu hver kemur til þín; fimm rúnir í Safni rúna og lífsrúnin þín standa þér opnar. Rúnar les í rúnirnar fyrir þá sem ganga með honum — skráning er ókeypis.',
     'td-seeker':     tierFeatures('rune_seeker', 'is').join(' '),
-    'td-card':       'Þegar mánaðarlegir lestrar eru gengnar — lesturarkort heldur dyrunum opnum. Kreditarnir renna aldrei út. Rödd Rúnars les lesturinn þinn upphátt.',
+    'td-card':       'Kreditarnir renna aldrei út og fylgja reikningnum þínum á milli tækja.',   // 2026-10-10: viz EN; dřív „lestrar eru gengnar“ (rod), „lesturarkort“
     'td-standard':   tierFeatures('standard', 'is').join(' '),
     'td-premium':    tierFeatures('premium', 'is').join(' '),
     's3-lbl':        'LESTURARKORT',
@@ -360,10 +355,9 @@ const CONTENT = {
     's3-redeem-body':    `<p>Skráðu þig inn → opnaðu valmyndina → ýttu á <strong>+ Gjafakort</strong> → sláðu inn kóðann → INNLEYSA. Kreditarnir bætast við samstundis. Þeir renna aldrei út. Þeir fylgja reikningnum þínum.</p>`,
     's3-price-title':    'VERÐLISTI',
     'pt-card': 'KORT', 'pt-credits': 'KREDITARNIR',
-    'pt-starter': 'Byrjandi', 'pt-seeker': 'Leitandinn', 'pt-wanderer': 'Ráfari', 'pt-elder': 'Eldri',
     's4-lbl':  'RÖDD RÚNARS',
     's4-body': `<p>Í safninu á hver rún sín eigin orð frá Rúnari — þú getur lesið þau og hlustað á þau í rödd hans. Tekin upp fyrirfram. Kennsla hans um rúnina, ekki lesturinn þinn.</p>
-      <p>Þegar þú notar lesturarkort talar Rúnar lesturinn þinn upphátt. Ekki upptaka. Myndað í augnablikinu, mótað í kringum sérstakar orðin þín. Í hvert skipti öðruvísi. Í hvert skipti hans.</p>`,
+      <p>Rúnar getur líka lesið spána þína upphátt — allt að {voice_n} sinnum á mánuði. Ekki upptaka. Í hvert skipti öðruvísi. Í hvert skipti hans.</p>`,
     's5-lbl':  'DAGBÓK ÞÍN',
     's5-body': `<p>Sérhver lestur sem þú tekur er muninn. Sem Leitandi bíða síðustu fimm lestrar þínir í dagbókinni — rúnin sem dregin var, dagsetningin, svæðið, orðin.</p>
       <p>Þegar þú ferð yfir í <strong>Vegfarandi</strong> verður dagbókin full kronika. Sérhver lestur, allt aftur til upphafins. Hægt að sía eftir rún, svæði og tíma.</p>`,
@@ -404,7 +398,7 @@ function applyContent() {
     const el = document.getElementById(id);
     if (!el) return;
     if (id.endsWith('-body') || id.startsWith('td-')) {
-      el.innerHTML = c[id];
+      el.innerHTML = c[id].replace(/\{voice_n\}/g, VOICE_MONTHLY_LIMIT);   // počet hlasů z configu (§8), 2026-10-10
     } else {
       el.textContent = c[id];
     }
@@ -413,6 +407,11 @@ function applyContent() {
   if (_tls) _tls.textContent = (lang === 'is' ? TIERS.standard.label_is : TIERS.standard.label).toUpperCase();
   var _tlp = document.getElementById('tier-lbl-premium');
   if (_tlp) _tlp.textContent = (lang === 'is' ? TIERS.premium.label_is : TIERS.premium.label).toUpperCase();
+  // Balíčky kreditů z configu (CARD_PACKS) — jediné místo; € sloupec pryč, dokud owner € ceny neurčí (DECISIONS 2026-10-10 (22)).
+  var _pb = document.getElementById('pt-body');
+  if (_pb && typeof CARD_PACKS !== 'undefined') _pb.innerHTML = CARD_PACKS.map(function (p) {
+    return '<tr><td>' + p.name + '</td><td>' + p.credits + '</td><td>' + String(p.isk).replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' kr</td></tr>';
+  }).join('');
   buildFaq(c.faq || []);
 }
 
