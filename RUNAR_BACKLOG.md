@@ -2089,6 +2089,16 @@ testerům v Gmailu přes adresu — v repu odkaz NEMÁ být, nemazat.
   Appka bere Rúnarův portrét ze Supabase úložiště (`runar-images/Runar_portrait.png`). Smazat z repa (historie v gitu zůstane),
   nebo nechat jako designový podklad?
 
+### Část 20 — překlady UI_TEXT (2026-10-10)
+**Platí:** EN a IS mají stejných 370 klíčů (`check-translations.py`).
+**Opraveno (CODE-read):** nová kontrola **smoke ㉽** (`scripts/verify_ui_text_used.js`) — klíč, který nic nečte, nesmí přibýt
+(ráčna podle jmen, samotest + útok obrácenou pákou: vyřazený klíč z BASELINE kontrolu shodí). Našla **35 mrtvých klíčů** v obou
+jazycích: editor charakteru a test hlasu (`char_*`, `test_*`, `save_char_btn`, `version_lbl`, `preview_btn`, `st_char_*`, `st_restored`,
+`st_no_versions`, `st_no_table`, `st_name_req`, `st_listening`, `runar_responds`), starý formulář (`dob_lbl`, `area_hint`, `seek_hint`,
+`intention_hint`, `commit_btn`, `continue_btn`, `setup_someone_lbl`, `reading_ready_note`), staré Norny (`spread3_*`, `ritual_3readings`),
+`tab_reader`, `error_prefix`, `visitor_label`, `tree_signin_note`, `rs_banner_counter`.
+- ⚪ **Pro CODE-tune (f):** smazat těch 35 z `runar-translations.js` (EN i IS) a vyškrtnout je z `BASELINE` ve `verify_ui_text_used.js`.
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.

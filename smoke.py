@@ -850,6 +850,19 @@ radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola odkazu z kodu probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# ㉽ Mrtvé klíče UI_TEXT (CODE-read 2026-10-10, kontrola architektury): check-translations hlídá jen shodu EN×IS, ne to, jestli
+# klíč někdo čte. Při zavedení 35 mrtvých v obou jazycích (editor charakteru, starý formulář, „3 readings“…) — ráčna podle jmen.
+print('\n' + chr(0x327D) + ' MRTVÉ KLÍČE UI_TEXT (verify_ui_text_used.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_ui_text_used.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+r2 = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_ui_text_used.js'), '--test'],
+                    capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0 and r2.returncode == 0
+output = (r2.stdout + r.stdout + r.stderr + r2.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola mrtvych klicu probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ㉻ Runy písmem (CODE-tune 2026-10-10, KUKY bod 11 „nahradit našimi glyfy“; §5): klíče UI_TEXT s runou na začátku jen přes
 # setRuneText a stránky readeru bez run písmem (kromě ᚱ). Při zavedení našla i ᛜ na stránce soukromí, kterou nikdo nehlásil.
 print('\n' + chr(0x327B) + ' RUNY PÍSMEM (verify_rune_glyphs.js)')
