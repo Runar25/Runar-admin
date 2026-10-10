@@ -9601,3 +9601,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   Elder“, ceny z (22).
 - Affected doc(s): — (`RUNAR_PRICING.md` odkazuje na config, nic neopisuje)
 - Odvolává se na: 2026-10-10 (22).
+
+## 2026-10-10 (25) — Balíčky Starter a Elder islandsky: Byrjandi a Öldungur
+
+- **Rozhodl:** KUKY 2026-10-10 k (24), kde Starter a Elder zůstaly v IS anglicky: *„nezůstanou v EN, ale budou IS!“* Jména vybral
+  CODE-tune (owner je nedal): osoby jako jména účtů (Leitandi, Vegfarandi, Ferðalangur), řada = cesta Byrjandi → Leitandi → Vegfarandi
+  → Ferðalangur → Öldungur. Slovník (nútímamálsorðabók): byrjandi [n m] „námskeið fyrir byrjendur“, öldungur [n m] „hvíthærðum
+  öldungi“; korpus byrjandi 3625×, öldungur 554×. Stará „Eldri“ z nápovědy (do 2026-10-10) = přídavné jméno „starší“, ne jméno.
+- **Co:** `CARD_PACKS` — Starter `name_is: 'Byrjandi'`, Elder `name_is: 'Öldungur'`; `cardPackName` je v IS vrací. Ověřeno v nápovědě.
+- **Bod (24) „Starter a Elder jen anglicky“ tím neplatí.**
+- Affected doc(s): — (jména jsou jen v configu)
+- Odvolává se na: 2026-10-10 (24), (22).

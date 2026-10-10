@@ -358,17 +358,18 @@ const TIER_LIMITS = {
 // 11.900 kr, ceny v €). Ceny v ISK; € owner neurčil (§23).
 // Jména = jména účtů, kde je mají — KUKY 2026-10-10: „walker máme i jména účtu, proto jsem to udělal tak, že to jsou i jména credity
 // plus elder… IS walker máš! je to stejné jako IS účet Walker.“ Balíček s `tier` bere jméno z TIERS (EN bez „Rune“, IS celé), takže se
-// s účtem nerozejde; Starter a Elder účet nemají a jméno mají jen anglické (i v IS). U balíčku vždy s počtem kreditů.
+// s účtem nerozejde. Starter a Elder účet nemají — islandsky Byrjandi a Öldungur (KUKY 2026-10-10: „nezůstanou v EN, ale budou IS!“;
+// osoby jako jména účtů, řada = cesta: Byrjandi → Leitandi → Vegfarandi → Ferðalangur → Öldungur). U balíčku vždy s počtem kreditů.
 const CARD_PACKS = [
-  { name: 'Starter',     credits: 5,  isk: 1490 },
+  { name: 'Starter', name_is: 'Byrjandi', credits: 5,  isk: 1490 },
   { tier: 'rune_seeker', credits: 10, isk: 2490 },
   { tier: 'standard',    credits: 20, isk: 4490 },
   { tier: 'premium',     credits: 30, isk: 6490 },
-  { name: 'Elder',       credits: 50, isk: 9990 },
+  { name: 'Elder', name_is: 'Öldungur',   credits: 50, isk: 9990 },
 ];
 function cardPackName(p, lng) {
   var T = p.tier && typeof TIERS !== 'undefined' ? TIERS[p.tier] : null;
-  if (!T) return p.name;
+  if (!T) return (lng === 'is' && p.name_is) || p.name;
   return lng === 'is' ? T.label_is : T.label.replace(/^Rune\s+/, '');
 }
 
