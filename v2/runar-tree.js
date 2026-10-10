@@ -419,8 +419,9 @@ function updateTreeTab() {
         var fn = document.getElementById('tree-founding-name');
         var ft2 = document.getElementById('tree-founding-text');
         if (fn)  fn.textContent = t('tree_founding_reading_lbl');
-        if (ft2) ft2.innerHTML = String(_foundingText)
-          .replace(/^#[^\n]*\n+/, '').trim().replace(/\n/g, '<br>');
+        // escapeHtml: text od modelu nesmí jít do stránky jako HTML (2026-10-10, kontrola architektury)
+        if (ft2) ft2.innerHTML = escapeHtml(String(_foundingText)
+          .replace(/^#[^\n]*\n+/, '').trim()).replace(/\n/g, '<br>');
       }
     }
 
@@ -534,7 +535,7 @@ function _showTreeReading(rune, runeName, isIs) {
   var txt = document.getElementById('tree-reading-text');
   // Strip any leading markdown header (# ...) from stored Claude output
   var cleanText = (_lifeRuneText || '').replace(/^#[^\n]*\n+/, '').trim();
-  if (txt) txt.innerHTML = cleanText.replace(/\n/g, '<br>');
+  if (txt) txt.innerHTML = escapeHtml(cleanText).replace(/\n/g, '<br>');   // 2026-10-10: escapovat — text od modelu / z profilu
   // ADMIN reset (KUKY 2026-09-14) — jen adminum; stav zavisi na uzivateli, proto tady a ne
   // v updateUIText() (§14).
   var rb = document.getElementById('tree-admin-reset');
@@ -683,7 +684,7 @@ function _renderNameLore() {
     if (intro) { intro.style.display = uvod ? 'block' : 'none'; if (uvod) intro.textContent = uvod; }
     if (cta) cta.style.display = tlacitko ? '' : 'none';
     if (btn && tlacitko && !btn.disabled) btn.textContent = tlacitko;
-    if (txt) { txt.style.display = text ? 'block' : 'none'; if (text) txt.innerHTML = String(text).replace(/\n/g, '<br>'); }
+    if (txt) { txt.style.display = text ? 'block' : 'none'; if (text) txt.innerHTML = escapeHtml(String(text)).replace(/\n/g, '<br>'); }   // 2026-10-10: escapovat (rozbor jména od modelu)
   }
   // Nadpis nese SAMO JMENO, ne „YOUR NAME". KUKY 2026-09-12: „melo by tam byt uz napsane me
   // uvedene jmeno Kuky a ne YOUR NAME!" Severske jmeno ma prednost (sekce je o nem); bez nej

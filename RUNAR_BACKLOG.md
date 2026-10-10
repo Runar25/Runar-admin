@@ -1884,6 +1884,12 @@ z klienta · `ledger_user_profiles` zapisuje do `credit_ledger` i smazání úč
     commitů, jen dočasný `supabase/.temp`). Neškodí, ale grep přes repo z ní vrací zastaralý kód (2026-10-09 tak vyskočil
     `buildSysPromptV2` ve „volajících“). Nástroj appky na úklid ji nebere za svou. Úklid (spustí owner nebo Code se souhlasem):
     `git -C C:/Users/zkuku/Downloads/Runar-admin worktree remove --force .claude/worktrees/modest-murdock-d57976`.
+### Část 11 — vkládání textu do stránky (XSS, 2026-10-10)
+**Platí:** čtení, spready, myšlenka ✦ a Ask jdou do stránky přes `textContent`; deník a prohlížeče ve shrine (čtení, hlášení)
+escapují každé pole (`escapeHtml` / `esc`). **Opraveno rovnou:** záložka životní runy dávala do `innerHTML` bez escapování text
+životní runy, text založení a rozbor jména (od modelu; `life_rune_text` smí klient zapsat i sám) → `escapeHtml`. Dopad byl jen na
+vlastní účet; v uložených textech 0 HTML značek, vzhled beze změny. **Pro ownera:** nic.
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
