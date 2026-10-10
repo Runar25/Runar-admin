@@ -9895,3 +9895,23 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   „větvičky vždy na jednu stranu“ chycena 178×. Celý smoke 67/67.
 - **Zbývá (owner):** kořeny dodělat. Odvolává se na (34), (38), (41).
 - Affected doc(s): `RUNAR_TREE.md` §4 (seeking) · `RUNAR_TREE_MAP.md` §5, §7, §8, §12 · `RUNAR_BACKLOG.md` — v témže commitu.
+
+## 2026-10-10 (45) — Sliby appky srovnány s kódem a zásadami: hlas Rune Seekera podle (42), okno přihlášení a zásady říkají o rozboru čtení
+
+- **Proč:** dvě předávky CODE-read (kontrola „sliby appky × tok kódu“, BACKLOG část 39): (1) výpis tierů a nápověda slibovaly Rune
+  Seekerovi „až 5 hlasů měsíčně“ — owner: *„1 hlas a jen jednou! jedno čtení a jeden hlas! pak je potřeba si koupit kredit“* (42);
+  (2) okno přihlášení tvrdilo, že ukládáme „jen to, co je potřeba k zapamatování čtení“, a deník sliboval „každé čtení“.
+- **Hlas (podle (42), žádné nové rozhodnutí):** věta o hlasu se skládá z nastavení tieru — předplatitel „nejvýš N za měsíc“, Rune Seeker
+  „hlas k volnému čtení, s kartou nejvýš N za měsíc“ (strop serveru platí i pro čtení z karty — tvrdit „každé čtení z karty“ by bylo
+  nepravdivé od šestého v měsíci). Nápověda totéž: počet hlasů a „bez předplatného jen volné čtení a čtení z karty“. Návštěvník
+  `voice_monthly` false (živý hlas nemá od 2026-08-02; nic nepoužíval). Řádek o kartě už nezávisí na hlasu.
+- **Zásady (nález při práci):** CODE-read psal, že zásady rozbor kvality čtení uvádějí — platilo to jen pro plán v `RUNAR_PRIVACY.md`.
+  Stránka zásad měla v „oprávněném zájmu“ jen ochranu volného čtení a provoz, ačkoli rozbor běží (prohlížeč čtení, evaly) a přepínač
+  odhlášení v menu existuje. Doplněno EN + IS podle textu z `RUNAR_PRIVACY.md`: zlepšování kvality, co procházíme (text a zadané údaje),
+  kde se odhlásit. Okno přihlášení: „ukládáme tvá čtení a to, co Rúnarovi řekneš, aby si je pamatoval a čtení byla lepší“.
+  Deník a nápověda: jen vlastní čtení („pro někoho“ se neukládá).
+- **Islandština po cestě (nápověda s5–s6):** tier v 1. pádě po „yfir í“, „upphafins“, „sína eigin myndir“, neexistující „munin“,
+  pravopis krónika, kalk „taka lestur“ — opraveno, chybné tvary do `BAD_PATTERNS`. Ověřeno is-greynir + is-gpt-check (1 volání) + korpus.
+- **Mechanismus (§30):** `verify_tier_features.js` (6) protlačí nastavení hlasu až do věty a obrací páky (bez hlasu z karty / k volnému
+  čtení / bez volného čtení / hlas vypnutý); na původním configu padá 13×. Nápověda: odstavec s počtem hlasů musí nést omezení.
+- Affected doc(s): `RUNAR_BACKLOG.md` část 17 (c) a 39 — v témže commitu; `RUNAR_PRIVACY.md` (zásady v appce už rozbor uvádějí) — v témže commitu.

@@ -61,8 +61,8 @@ const UI_TEXT = {
     auth_code_wait:       'Your code is on its way. You can ask for a new one after a minute.',   // 2026-10-10: druhý kód do minuty
     auth_failed:          'Sign-in did not work: {msg}',
     q_teaser:             'Deeper questions open with {tier}.',
-    journal_teaser:       'Every reading you have ever taken is kept. Move to {tier} to open your full journal.',
-    journal_teaser_count: 'Every reading you have ever taken is kept — {count} in total. Move to <strong style="color:var(--gold);font-style:normal;">{tier}</strong> to open your full journal.',   // 2026-09-30: dřív natvrdo v runar-journal.js
+    journal_teaser:       'Every reading you take for yourself is kept. Move to {tier} to open your full journal.',   // 2026-10-10: čtení „pro někoho“ se neukládá (CODE-read (l))
+    journal_teaser_count: 'Every reading you take for yourself is kept — {count} in total. Move to <strong style="color:var(--gold);font-style:normal;">{tier}</strong> to open your full journal.',   // 2026-09-30: dřív natvrdo v runar-journal.js
     tree_growth_quote:    '<em>"The tree does not grow between visits.<br>It grows through them — slowly,<br>the way birch roots find water under stone.<br>Each rune you draw is already here.<br>Come back. The tree remembers."</em>',
     setup_someone_note:   'Enter the name of the person you are reading for. This reading will not be added to your journal.',
     setup_for_name_lbl:   'NAME',
@@ -458,7 +458,7 @@ const UI_TEXT = {
     atab_journal:         '◌ JOURNAL',
     journal_gate_txt:     'You walk here as a <strong>Visitor</strong>.<br>The journal keeps every reading, so none is lost.<br>It opens when you become a <strong>Rune Seeker</strong> — free to join.',
     redeem_btn:           'REDEEM',
-    auth_consent_txt:     'By continuing, you agree to our <a href="runar-privacy.html" target="_blank" rel="noopener">Privacy Policy</a>. We store only what is needed to remember your readings. No tracking, no ads.',
+    auth_consent_txt:     'By continuing, you agree to our <a href="runar-privacy.html" target="_blank" rel="noopener">Privacy Policy</a>. We keep your readings and what you tell Rúnar, so he remembers them and his readings get better. No tracking, no ads.',   // 2026-10-10: „only what is needed“ zužovalo — ukládáme i pro rozbor kvality (zásady, oprávněný zájem); CODE-read (l)
     auth_modal_title:     "ENTER RÚNAR'S WORLD",
     auth_google_lbl:      'CONTINUE WITH GOOGLE',
     atab_reading:         '✦ RUNE READING',
@@ -555,8 +555,8 @@ const UI_TEXT = {
     auth_code_wait:       'Kóðinn er á leiðinni. Nýjan kóða má biðja um eftir mínútu.',
     auth_failed:          'Innskráning tókst ekki: {msg}',
     q_teaser:             'Dýpri spurningar opnast með {tier}.',
-    journal_teaser:       'Sérhver lestur sem þú hefur tekið er geymdur. Farðu yfir í {tier} til að opna fulla króniku þína.',
-    journal_teaser_count: 'Sérhver lestur sem þú hefur tekið er geymdur — {count} samtals. Farðu yfir í <strong style="color:var(--gold);font-style:normal;">{tier}</strong> til að opna fulla króniku þína.',   // {tier} ve 4. pádě (tierLabel)
+    journal_teaser:       'Allir þínir eigin lestrar eru geymdir. Farðu yfir í {tier} til að opna alla dagbókina þína.',   // 2026-10-10: jen vlastní čtení; „taka lestur“ byl kalk, krónika navíc s chybou v pravopisu
+    journal_teaser_count: 'Allir þínir eigin lestrar eru geymdir — {count} samtals. Farðu yfir í <strong style="color:var(--gold);font-style:normal;">{tier}</strong> til að opna alla dagbókina þína.',   // {tier} ve 4. pádě (tierLabel)
     tree_growth_quote:    '<em>"Tréð vex ekki milli heimsókna.<br>Það vex í gegnum þær — hægt,<br>eins og bjarkarrætur finna vatn undir steini.<br>Sérhver rún sem þú dregur er þegar hér.<br>Komdu aftur. Tréð man."</em>',
     setup_someone_note:   'Sláðu inn nafn þess sem þú ert að spá fyrir. Þessi spá fer ekki í dagbókina þína.',
     setup_for_name_lbl:   'NAFN',
@@ -925,7 +925,7 @@ const UI_TEXT = {
     atab_journal:         '◌ LESTRAR',
     journal_gate_txt:     'Þú ert hér <strong>Gestur</strong>.<br>Dagbókin geymir hvern lestur svo enginn glatist.<br>Hún opnast þegar þú gerist <strong>Leitandi</strong> — skráning er ókeypis.',
     redeem_btn:           'INNLEYSA',
-    auth_consent_txt:     'Með því að halda áfram samþykkir þú <a href="runar-privacy.html" target="_blank" rel="noopener">persónuverndarstefnu okkar</a>. Við geymum aðeins það sem þarf til að muna lestrana þína. Engin rakning, engar auglýsingar.',
+    auth_consent_txt:     'Með því að halda áfram samþykkir þú <a href="runar-privacy.html" target="_blank" rel="noopener">persónuverndarstefnu okkar</a>. Við geymum lestrana þína og það sem þú segir Rúnari, svo að hann muni það og lestrarnir verði betri. Engin rakning, engar auglýsingar.',
     auth_modal_title:     'GAKKTU INN Í HEIM RÚNARS',
     auth_google_lbl:      'HALDA ÁFRAM MEÐ GOOGLE',
     atab_reading:         '✦ SPÁ',

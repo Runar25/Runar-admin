@@ -70,6 +70,8 @@ const RUNAR_PROMPT_VERSION = 'v5.08-bez-elementu';
 // dosud drzelo, byl rate limit 5/minutu — tedy zadny mesicni strop vubec.
 // ⚠️ Plati PLOSNE, ne per tier: hlas dnes nikdo neplati zvlast. Az bude, udelej z toho
 // mapu jako `MONTHLY_LIMITS` a rozsir kontrolu ⑨, ktera kopii v proxy hlida.
+// Strop, NE nárok (DECISIONS 2026-10-10 (42)): Rune Seeker má hlas jen k volnému čtení a ke čtením z karty, nikdy „N měsíčně“ bez
+// čtení. Větu pro každý tier skládá TIER_FEATURES (klíč `voice`) a hlídá ji verify_tier_features.js.
 const VOICE_MONTHLY_LIMIT = 5;
 
 // Rozbor jmena od modelu: prvni rozbor + JEDNO precteni po zmene severskeho jmena
@@ -165,9 +167,10 @@ const TIERS = {
     label_is_dat:     'Gesti',
     readings:         1,          // historické: od 2026-08-02 návštěvník čtení nedostane (proxy 401), od 2026-10-10 ho appka ani neslibuje
     // ↓ VOICE FLAGS — flip here to enable/disable without touching logic
-    // voice_monthly: true = Visitor slyší hlas při svém 1 čtení
-    // Až budeme limitovat: flip na false → Visitor dostane jen text
-    voice_monthly:    true,       // ← aktuálně otevřeno; připraveno pro gating
+    // voice_monthly: návštěvník živý hlas NEMÁ — čtení od 2026-08-02 nedostane a elevenlabs-proxy nepřihlášeného odmítne (401).
+    // 2026-10-10 false; do té doby true s komentářem, že návštěvník slyší hlas u svého čtení (neplatilo, CODE-read, DECISIONS (42)).
+    // canUseVoice() sem padá i pro neznámý tier, takže „bez hlasu“ je i bezpečnější výchozí. Audio v Kolekci = voice_static.
+    voice_monthly:    false,
     voice_credits:    false,      // n/a pro Visitor (nemůže mít kredity)
     voice_static:     true,       // pre-generované audio v Collection
     journal:          false,
@@ -378,7 +381,8 @@ function cardPackName(p, lng) {
 // smazat řádek nebo vypnout její flag v TIERS. Nepostavené věci (ceremonial, seasonal_content, physical_unlock) tu ŘÁDEK NEMAJÍ —
 // přibude, až budou postavené a budou mít ověřenou islandštinu.
 // Premium: řádky, které má stejné jako Standard, se složí do „Everything a Rune Walker has.“ (TIER_FEATURES_BASE).
-// IS šablony počítají s ženským „spá“ (VOCAB.cast) — kdyby se slovo změnilo, přečíst znovu pády. is-grammar-qa čisté (2026-09-26).
+// IS šablony počítají s ženským „spá“ (VOCAB.cast, i `is_acc_def` + „þína“) — kdyby se slovo změnilo, přečíst znovu pády.
+// Ověřeno is-grammar-qa 2026-09-26; věty o hlasu 2026-10-10 is-greynir + is-gpt-check + korpus.
 const _N_WORD = { en: ['', 'One', 'Two', 'Three', 'Four'], is_f: ['', 'Ein', 'Tvær', 'Þrjár', 'Fjórar'] };
 const TIER_FEATURES = [
   { key: 'month', hodnota: function (t) { return t.monthly_readings > 0 ? t.monthly_readings : null; },
@@ -388,13 +392,32 @@ const TIER_FEATURES = [
   { key: 'join', hodnota: function (t, id) { return (id !== 'free_trial' && !(t.monthly_readings > 0) && (TIER_LIMITS[id] || {}).onboarding > 0) ? TIER_LIMITS[id].onboarding : null; },
     en: function (n) { return n === 1 ? 'One free ' + VOCAB.cast.en + ' when you join.' : n + ' free ' + VOCAB.cast.en_pl + ' when you join.'; },
     is: function (n) { return n === 1 ? 'Ein ókeypis ' + VOCAB.cast.is + ' þegar þú skráir þig.' : n + ' ókeypis ' + VOCAB.cast.is_pl + ' þegar þú skráir þig.'; } },
-  { key: 'card', hodnota: function (t, id) { return (id !== 'free_trial' && !(t.monthly_readings > 0) && t.voice_credits) ? true : null; },
+  // 2026-10-10: už bez podmínky na voice_credits — karta otevírá čtení bez ohledu na hlas; vypnutý hlas z kreditu by jinak schoval i to.
+  { key: 'card', hodnota: function (t, id) { return (id !== 'free_trial' && !(t.monthly_readings > 0)) ? true : null; },
     en: function () { return 'A ' + VOCAB.card.en + ' opens further ' + VOCAB.cast.en_pl + '.'; },
     is: function () { return VOCAB.card.is + ' opnar fleiri ' + VOCAB.cast.is_pl + '.'; } },
-  { key: 'voice', hodnota: function (t, id) { return (id !== 'free_trial' && (t.voice_monthly || t.voice_credits)) ? true : null; },
-    // 2026-10-10: „every reading“ neplatilo — hlas má každý nejvýš VOICE_MONTHLY_LIMIT za měsíc (elevenlabs-proxy; hlášení CODE-read).
-    en: function () { return 'Rúnar\u2019s voice reads up to ' + VOICE_MONTHLY_LIMIT + ' ' + (VOICE_MONTHLY_LIMIT === 1 ? VOCAB.cast.en : VOCAB.cast.en_pl) + ' aloud each month.'; },
-    is: function () { return 'Rödd Rúnars les allt að ' + VOICE_MONTHLY_LIMIT + ' ' + (VOICE_MONTHLY_LIMIT === 1 ? VOCAB.cast.is : VOCAB.cast.is_pl) + ' upphátt á mánuði.'; } },
+  // Hlas (DECISIONS 2026-10-10 (42)): předplatitel nejvýš VOICE_MONTHLY_LIMIT za měsíc; Rune Seeker jen k volnému čtení (voice_monthly)
+  // a ke čtením z karty (voice_credits) — strop serveru platí i pro ně, ale nárokem bez čtení není. Do 2026-10-10 dostal Rune Seeker
+  // tutéž větu se stropem jako předplatitel (owner: „1 hlas a jen jednou! jedno čtení a jeden hlas! pak je potřeba si koupit kredit“).
+  // Volné čtení se jmenuje jen tam, kde ho tier opravdu má (TIER_LIMITS.onboarding). IS: čte Rúnar, ne jeho hlas — „les upphátt“ 79×
+  // v korpusu, spojení hlasu se slovesem „les“ 3×.
+  { key: 'voice', hodnota: function (t, id) {
+      if (id === 'free_trial') return null;
+      if (t.monthly_readings > 0) return t.voice_monthly ? 'month' : null;
+      var volne = !!t.voice_monthly && (TIER_LIMITS[id] || {}).onboarding > 0, karta = !!t.voice_credits;
+      return volne && karta ? 'volne_karta' : karta ? 'karta' : volne ? 'volne' : null; },
+    en: function (v) {
+      var n = VOICE_MONTHLY_LIMIT, kolik = 'up to ' + n + ' ' + (n === 1 ? VOCAB.cast.en : VOCAB.cast.en_pl);
+      var volne = 'Rúnar\u2019s voice reads your free ' + VOCAB.cast.en + ' aloud';
+      if (v === 'month') return 'Rúnar\u2019s voice reads ' + kolik + ' aloud each month.';
+      if (v === 'karta') return 'With a ' + VOCAB.card.en + ', Rúnar\u2019s voice reads ' + kolik + ' aloud each month.';
+      return v === 'volne_karta' ? volne + ' \u2014 and, with a ' + VOCAB.card.en + ', ' + kolik + ' each month.' : volne + '.'; },
+    is: function (v) {
+      var n = VOICE_MONTHLY_LIMIT, kolik = 'allt að ' + n + ' ' + (n === 1 ? VOCAB.cast.is : VOCAB.cast.is_pl);
+      var volne = 'Rúnar les ókeypis ' + VOCAB.cast.is_acc_def + ' þína upphátt';
+      if (v === 'month') return 'Rúnar les ' + kolik + ' upphátt á mánuði.';
+      if (v === 'karta') return 'Með ' + VOCAB.card.is_dat + ' les Rúnar ' + kolik + ' upphátt á mánuði.';
+      return v === 'volne_karta' ? volne + ', og með ' + VOCAB.card.is_dat + ' les hann ' + kolik + ' á mánuði.' : volne + '.'; } },
   { key: 'journal', hodnota: function (t) { return t.journal === null ? 'all' : (t.journal > 0 ? t.journal : null); },
     en: function (v) { return v === 'all' ? 'Your full journal \u2014 every reading, back to the first.' : 'Journal of your last ' + v + ' readings.'; },
     is: function (v) { return v === 'all' ? 'Dagbók með öllum ' + VOCAB.cast.is_dat_pl + ' þínum, allt frá þeirri fyrstu.' : 'Dagbók með síðustu ' + v + ' ' + VOCAB.cast.is_dat_pl + ' þínum.'; } },
@@ -477,8 +500,8 @@ const MODEL_PRICES = {
 // use these to pluralize + translate everywhere in the UI.
 const VOCAB = {
   unit: { en: 'rune reading', en_pl: 'rune readings', is: 'spá', is_pl: 'spár' },
-  cast: { en: 'rune reading', en_pl: 'rune readings', is: 'sp\u00e1',      is_pl: 'sp\u00e1r', is_dat_pl: 'sp\u00e1m' },   // is_dat_pl: TIER_FEATURES (2026-09-26)
-  card: { en: 'Rune Reading Card', en_pl: 'Rune Reading Cards', is: 'R\u00fanakort', is_pl: 'R\u00fanakort' },
+  cast: { en: 'rune reading', en_pl: 'rune readings', is: 'sp\u00e1',      is_pl: 'sp\u00e1r', is_dat_pl: 'sp\u00e1m', is_acc_def: 'spána' },   // is_dat_pl: TIER_FEATURES (2026-09-26); is_acc_def: hlas Rune Seekera tamtéž (2026-10-10)
+  card: { en: 'Rune Reading Card', en_pl: 'Rune Reading Cards', is: 'R\u00fanakort', is_pl: 'R\u00fanakort', is_dat: 'Rúnakorti' },   // is_dat: „með …“ v TIER_FEATURES (2026-10-10)
   reading: { en: 'reading', en_pl: 'readings', is: 'lestur', is_pl: 'lestrar' },   // počet v deníku (2026-10-10); korpus „einn lestur“ 15×, „tveir lestrar“ 3×
 };
 // ─── SPREAD CONFIG — single source of truth ──────────────

@@ -2094,6 +2094,7 @@ a kdo ji čte, čte starý stav. ✅ **Smazáno 2026-10-10** (owner: *„9. sma�
   2026-09-11 „spíš ochutnávka“) a na kartu vázaný není. Číslo do textu přes `VOICE_MONTHLY_LIMIT` (§8), ne natvrdo.
   ⚠️ **OPRAVA 2026-10-10 (KUKY):** „plošně všem“ bylo zavádějící — strop serveru není nárok. Rune Seeker má **jedno volné čtení = jeden
   hlas, jednou**, další jen s kreditem; tahle věta vyrobila chybný řádek u Rune Seekera v appce. DECISIONS 2026-10-10 (42).
+  ✅ Chybný řádek opraven 2026-10-10 (CODE-tune, DECISIONS (45)) — věta se skládá podle tieru a hlídá ji `verify_tier_features.js` (6).
 - ✅ *(rozhodnuto 2026-10-10, DECISIONS 2026-10-10 (22): Starter 5 · Seeker 10 · Walker 20 · Wanderer 30 · Elder 50, ceny 3. 6.; `RUNAR_PRICING.md` opraven)* **ceny balíčků kreditů:** nápověda (tabulka v HTML, od 2026-05-20) a `RUNAR_PRICING.md` (od 2026-06-03) se liší:
   nápověda 4 balíčky (Seeker 10 = 2.690 kr, Wanderer 20 = 5.050 kr, Elder **50** = 11.900 kr + ceny v €), PRICING 5 balíčků
   (Seeker 2.490 · Wanderer 4.490 · Elder **30** = 6.490 · Master 50 = 9.990, bez €). Shoda jen Starter 5 = 1.490. Novější je PRICING,
@@ -2325,10 +2326,20 @@ Prošlo: `TIER_FEATURES` všech tierů + 28 textů UI_TEXT s počtem/nárokem (E
 Standard 50/měsíc, celý deník, 1 Ask · Premium 75/měsíc, 2 Asky (`ASKS_PER_READING` = config, smoke ⑨) · návštěvník 5 run v kolekci
 (Fehu, Isa, Tiwaz, Sowilo, Ansuz) a u všech pěti namluvené audio EN i IS („listen to the ancient stones“ sedí) · zakládací Norny „zdarma,
 jen text“ (rituál v proxy, appka hlas nenabízí) · Ask teaser („open with {tier}“) i rozbor jména bez slibovaného počtu sedí.
-**Nesedí:** (1) hlas Rune Seekera „až 5 měsíčně“ → DECISIONS (42), u CODE-tune. (2) ⚪ **pro CODE-tune (l):** `auth_consent_txt` (EN + IS,
-okno přihlášení) „We store only what is needed to remember your readings“ — zásady uvádějí i analýzu kvality (s možností odhlášení)
-a tabulka údajů má 14 řádků; věta to zužuje. Srovnat se zásadami (žádné nové rozhodnutí). Drobnost: `journal_teaser` „Every reading you
-have ever taken is kept“ — čtení „pro někoho“ se u běžného uživatele neukládá.
+**Nesedí:** (1) ✅ *(CODE-tune 2026-10-10, DECISIONS (45): výpis tierů skládá větu o hlasu z nastavení — Rune Seeker „k volnému čtení,
+s kartou nejvýš N měsíčně“; nápověda totéž; komentář a flag návštěvníka; hlídá `verify_tier_features.js` (6), na starém configu padá 13×)*
+hlas Rune Seekera „až 5 měsíčně“ → DECISIONS (42), u CODE-tune. (2) ✅ *(CODE-tune 2026-10-10, DECISIONS (45): okno přihlášení „ukládáme
+tvá čtení a to, co Rúnarovi řekneš, aby si je pamatoval a čtení byla lepší“; deník a nápověda jen vlastní čtení. ⚠️ Premisa neplatila:
+zásady v appce rozbor kvality NEuváděly — byl jen v plánu `RUNAR_PRIVACY.md`; doplněno do oddílu 3 EN + IS i s cestou k odhlášení.
+Statické kopie obou textů v `runar-reader.html` pryč — JS je přepíše dřív, než jsou vidět, a rozcházely se.)* **pro CODE-tune (l):**
+`auth_consent_txt` (EN + IS, okno přihlášení) „We store only what is needed to remember your readings“ — zásady uvádějí i analýzu kvality
+(s možností odhlášení) a tabulka údajů má 14 řádků; věta to zužuje. Srovnat se zásadami (žádné nové rozhodnutí). Drobnost:
+`journal_teaser` „Every reading you have ever taken is kept“ — čtení „pro někoho“ se u běžného uživatele neukládá.
+⚪ **Pro CODE-tune — zbytek islandské nápovědy (nález 2026-10-10 při (l), is-greynir na všech 30 IS textech `runar-help.html`):** oddíly
+s4–s6 opravené (DECISIONS (45)); zbývá (a) **slovo pro kredity nejednotné** — nápověda „kreditar“ (BÍN ho nezná, U001), zásady a appka
+„inneign“ → sjednotit na jedno (ověřit korpusem, „inneign“ je domácí slovo); (b) s3 „Innleysið í appinu“ = množné/vykání, appka jinde tyká
+(„Innleystu“); (c) s1 věta „spyr Rúnar nokkurra hluta: nafns þíns, þess sviðs lífsins…“ nerozebraná (E001) → přepsat, ať jí nástroj
+rozumí (§19.2); (d) s7 + FAQ projít is-gpt-check (Greynir v nich chybu nenašel, jen zkratku EES). Postup: is-greynir → is-gpt-check → korpus.
 
 ### Část 40 — slib „chyba nestojí kredit“ × souběh požadavků (`claude-proxy`, 2026-10-10, čtení kódu)
 **Platí:** odečet běží až po skutečném textu (`applyDeduction`, ř. ~892) — chyba upstreamu, 2xx s chybou i prázdný text vrátí 503/400 bez

@@ -7,7 +7,9 @@
 //  (2) změna nastavení se do výpisu propíše SAMA (seed: jiný počet Asků / vypnutý Ask → jiná věta / žádná),
 //  (3) Premium skládá shodné řádky do „Everything a <Standard> has“ a vypisuje jen rozdíl,
 //  (4) žádný nedosazený {placeholder}, žádné undefined,
-//  (5) panel účtu i nápověda výpis BEROU z tierFeatures — ruční kopie (panel_props, věty v help.html) se nevrátí.
+//  (5) panel účtu i nápověda výpis BEROU z tierFeatures — ruční kopie (panel_props, věty v help.html) se nevrátí,
+//  (6) hlas podle tieru: Rune Seeker k volnému čtení a ke čtením z karty, ne „N měsíčně“ jako předplatitel (DECISIONS 2026-10-10 (42)),
+//      s obrácenými pákami a s nápovědou.
 //
 //   node scripts/verify_tier_features.js
 'use strict';
@@ -56,6 +58,50 @@ rekni((help.match(/tierFeatures\('(rune_seeker|standard|premium)', '(en|is)'\)/g
   const S0 = nacti();
   rekni(['rune_seeker', 'standard', 'premium'].every(id => vm.runInContext('TIER_LIMITS.' + id + '.panel_props', S0) === undefined),
         'TIER_LIMITS už nemá ruční panel_props pro placené tiery / Rune Seekera');
+}
+
+// (6) Hlas podle tieru (DECISIONS 2026-10-10 (42)). Rune Seeker má hlas k volnému čtení a ke čtením z karty — NE „až N měsíčně“ jako
+//     předplatitel. Do 2026-10-10 dostaly všechny tiery tutéž větu se stropem serveru; owner: „1 hlas a jen jednou! jedno čtení a jeden
+//     hlas! pak je potřeba si koupit kredit… takhle chyba už tu byla několikrát“. Kontrola protlačí nastavení až do věty (§19) a obrací
+//     páky (§25): vypnutý hlas k volnému čtení / ke kartě / žádné volné čtení → věta to musí přestat slibovat.
+{
+  const veta = (S, id, L) => {
+    const f = vm.runInContext('TIER_FEATURES', S).find((x) => x.key === 'voice');
+    const v = f.hodnota(vm.runInContext('TIERS', S)[id], id);
+    return v === null || v === undefined ? null : f[L](v);
+  };
+  const S6 = nacti(), V = vm.runInContext('VOCAB', S6), N = String(vm.runInContext('VOICE_MONTHLY_LIMIT', S6));
+  const ZNAK = { en: { volne: /\bfree\b/, mesic: /each month/, karta: V.card.en },
+                 is: { volne: /ókeypis/, mesic: /á mánuði/, karta: V.card.is_dat } };
+  for (const L of ['en', 'is']) {
+    const z = ZNAK[L], rs = veta(S6, 'rune_seeker', L), std = veta(S6, 'standard', L);
+    rekni(!!rs && z.volne.test(rs), L + '  Rune Seeker: hlas k volnému čtení — „' + rs + '“');
+    rekni(!!rs && (!z.mesic.test(rs) || rs.indexOf(z.karta) !== -1), L + '  Rune Seeker: měsíční počet hlasů jen spolu s kartou');
+    rekni(rs !== std, L + '  Rune Seeker nemá tutéž větu o hlasu jako předplatitel');
+    rekni(!!std && std.indexOf(N) !== -1 && z.mesic.test(std), L + '  předplatitel: strop ' + N + ' za měsíc ve větě');
+  }
+  rekni(vm.runInContext('TIERS.free_trial.voice_monthly', S6) === false, 'návštěvník živý hlas nemá (free_trial.voice_monthly = false)');
+  // obrácené páky — každá musí větu změnit správným směrem
+  const s = (kod) => { const S = nacti(); vm.runInContext(kod, S); return S; };
+  for (const L of ['en', 'is']) {
+    const z = ZNAK[L];
+    const bezKarty = veta(s('TIERS.rune_seeker.voice_credits = false;'), 'rune_seeker', L);
+    rekni(!!bezKarty && z.volne.test(bezKarty) && !z.mesic.test(bezKarty) && bezKarty.indexOf(z.karta) === -1,
+          L + '  bez hlasu z karty: jen volné čtení, žádný měsíční počet ani karta');
+    const bezVolneho = veta(s('TIERS.rune_seeker.voice_monthly = false;'), 'rune_seeker', L);
+    rekni(!!bezVolneho && !z.volne.test(bezVolneho) && bezVolneho.indexOf(z.karta) !== -1 && z.mesic.test(bezVolneho),
+          L + '  bez hlasu k volnému čtení: jen karta se stropem');
+    const bezOnb = veta(s('TIER_LIMITS.rune_seeker.onboarding = 0;'), 'rune_seeker', L);
+    rekni(!!bezOnb && !z.volne.test(bezOnb), L + '  bez volného čtení se hlas k volnému čtení neslibuje');
+    rekni(veta(s('TIERS.rune_seeker.voice_monthly = false; TIERS.rune_seeker.voice_credits = false;'), 'rune_seeker', L) === null,
+          L + '  hlas vypnutý celý → řádek o hlasu zmizí');
+  }
+  const kartaRadek = vm.runInContext('tierFeatures', s('TIERS.rune_seeker.voice_credits = false;'))('rune_seeker', 'en').join(' ');
+  rekni(kartaRadek.indexOf(V.card.en + ' opens') !== -1, 'řádek o kartě nezávisí na hlasu (voice_credits false → karta dál otevírá čtení)');
+  // nápověda: každý odstavec s počtem hlasů {voice_n} říká, že bez předplatného je hlas jen k volnému čtení a ke kartě
+  const odst = help.split('<p>').filter((p) => p.indexOf('{voice_n}') !== -1);
+  rekni(odst.length >= 3 && odst.every((p) => /subscription|áskrift/.test(p)),
+        'nápověda: ' + odst.length + '× {voice_n}, vždy s omezením bez předplatného');
 }
 
 console.log(fail ? '\n' + fail + ' selhalo' : '\nOK  výpis featur tierů se skládá z nastavení');

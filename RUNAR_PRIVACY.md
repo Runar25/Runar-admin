@@ -23,6 +23,8 @@
 
 → **Běžný user nedostane otravný popup.** Zlepšování kvality = oprávněný zájem + privacy policy + možnost
 opt-outu (ne opt-in brána). Výslovný souhlas jen u testerů — a ti CHTĚJÍ pomoct, takže tam friction nevadí.
+Zásady v appce (`v2/runar-privacy.html`, oddíl 3, EN i IS) rozbor kvality i cestu k odhlášení uvádějí od 2026-10-10 — do té doby
+v „oprávněném zájmu“ chyběl, ačkoli rozbor běžel (`RUNAR_DECISIONS.md` 2026-10-10 (45)).
 
 ## Pravidla analýzy (aby oprávněný zájem obstál)
 1. Analyzuj **VÝSTUP** (text čtení) + inputy pro kvalitu/gramatiku — **ne identitu**.

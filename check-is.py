@@ -65,6 +65,12 @@ BAD_PATTERNS = [
     ('ÞAGNINNI',         'ÞÖGNINNI',          'wrong vowel mutation'),
     ('Velkomin.',        'Gaman að sjá þig',  'standalone welcome greeting (not in titles)'),
     ('fimm frjáls',      '(check context)',   'old "five free" reference'),
+    # 2026-10-10 nápověda a deník (GreynirCorrect U001/S004 + korpus): každá původní fráze v korpusu 0×.
+    ('Ósk þín er munin', 'Appið man valið þitt', '„munin“ neexistuje (U001)'),
+    ('upphafins',        'upphafsins',        'gen. upphaf → upphafs(ins); korpus 0 × 270'),
+    ('sína eigin myndir', 'sínar eigin myndir', 'myndir = ž. mn. č.; korpus 0 × 122'),
+    ('fulla króniku',    'alla dagbókina',    'pravopis króníka + kalk „full chronicle“'),
+    ('full kronika',     '(check context)',   'pravopis króníka'),
     # 2026-10-10: „frjáls“ = svobodný, ne „zdarma“ (= ókeypis). Kalk z EN „free reading“ stál v onboarding_label_is, TIER_FEATURES
     # a rs_exhausted_* — korpus „frjáls spá“ 0×, „ókeypis aðgangur“ 596×.
     ('ein frjáls',       'ein ókeypis',       'kalk z EN "free": zdarma = ókeypis'),

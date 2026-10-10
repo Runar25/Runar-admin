@@ -73,7 +73,8 @@
       </div>
       </div>
       <div class="status" id="st-auth"></div>
-      <p class="auth-consent" id="auth-consent-txt">By continuing, you agree to our <a href="runar-privacy.html" target="_blank" rel="noopener">Privacy Policy</a>. We store only what is needed to remember your readings. No tracking, no ads.</p>
+      <!-- text = UI_TEXT auth_consent_txt (updateUIText) — 2026-10-10 bez statické kopie: okno se otevře až po JS a kopie se rozešla se zásadami -->
+      <p class="auth-consent" id="auth-consent-txt"></p>
     </div>
   </div>
 </div>
@@ -807,9 +808,9 @@
 
       <!-- Rune Walker teaser — rune_seeker with >5 total readings -->
       <div class="journal-standard-teaser" id="journal-standard-teaser" style="display:none;">
-        <p class="journal-standard-teaser-txt" id="journal-teaser-txt">
-          Every reading you have ever taken is kept. Move to Rune Walker to open your full journal.
-        </p>
+        <!-- text = UI_TEXT journal_teaser / journal_teaser_count — 2026-10-10 bez statické kopie: blok je skrytý, dokud ho JS nenaplní,
+             a kopie měla tier natvrdo a slib „každé čtení“ -->
+        <p class="journal-standard-teaser-txt" id="journal-teaser-txt"></p>
       </div>
 
     </div><!-- /journal-content -->
