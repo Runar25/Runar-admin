@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
- "zapsano": "2026-10-09",
- "prompt_version": "v5.06-podoby-zpet-bez-long",
+ "zapsano": "2026-10-10",
+ "prompt_version": "v5.07-sol-pro-vsechny",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
@@ -754,10 +754,10 @@
    "zacatek": "This is the life rune reading of Anna — not a reading of today, but of"
   },
   {
-   "hash": "582177cc5663",
+   "hash": "341ac96bed17",
    "lang": "en",
    "zdroj": "liferune",
-   "zacatek": "ICELANDIC MONTH: Ýlir — winter in full darkness, aurora, the sky speak"
+   "zacatek": "ICELANDIC MONTH: Ýlir or Mörsugur — the birthday lies where one gives "
   },
   {
    "hash": "476011d7812d",
@@ -778,7 +778,7 @@
    "zacatek": "SECTION 1 — THE PLACE IN THE YEAR (2–3 sentences):"
   },
   {
-   "hash": "6e66c59fd489",
+   "hash": "16b080118c7e",
    "lang": "en",
    "zdroj": "liferune",
    "zacatek": "Ansuz holds the half-month from 13 August – 28 August in the runic yea"
@@ -1738,10 +1738,10 @@
    "zacatek": "Þetta er lestur lífsrúnar Anna — ekki lestur dagsins, heldur lestur þe"
   },
   {
-   "hash": "0bcf35b0a38d",
+   "hash": "47140b5960b0",
    "lang": "is",
    "zdroj": "liferune",
-   "zacatek": "ÍSLENSKUR MÁNUÐUR: Ýlir — svartasta skammdegið, norðurljós, himinninn "
+   "zacatek": "ÍSLENSKUR MÁNUÐUR: Ýlir eða Mörsugur — fæðingardagurinn er á mörkum þe"
   },
   {
    "hash": "e13c12951202",
@@ -1762,7 +1762,7 @@
    "zacatek": "HLUTI 1 — STAÐURINN Í ÁRINU (2–3 setningar):"
   },
   {
-   "hash": "8e097613a3b4",
+   "hash": "e6742e1d4dc8",
    "lang": "is",
    "zdroj": "liferune",
    "zacatek": "Lífsrúnin er Ansuz. Tímabil hennar í rúnaárinu er 13. ágúst – 28. ágús"

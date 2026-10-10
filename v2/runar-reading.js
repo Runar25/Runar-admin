@@ -1190,7 +1190,7 @@ function resetReader() {
     updateAuthUI(); return;
   }
   document.getElementById('reader-setup').style.display = 'block';
-  ['r-name','r-day','r-month','r-year','r-question'].forEach(id => {
+  ['r-name','r-question'].forEach(id => {   // r-day/r-month/r-year v HTML nejsou (2026-10-09)
     const el = document.getElementById(id); if (el) el.value = '';
   });
   readerUser.intention = '';

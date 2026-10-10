@@ -119,14 +119,36 @@ rekni(key(undefined, 7, 1985) === null && key(NaN, NaN, NaN) === null, 'neplatn�
   const hey = fn('buildLifeRunePrompt')('Thor', gebo, 1, 8, 1985, 'is', false, null);
   rekni(hey.indexOf('(heyannir)') !== -1 && !/Hvað ber heyannir/i.test(hey) && !/Hvað ber sólmánuður/i.test(is),
         'IS prompt: jméno měsíce není podmět („Hvað ber Heyannir" nesedělo číslem)');
-  // 2026: léto 23. 4. → aukanætur 22.–25. 7. (středa), heyannir od neděle 26. 7.
+  // 2026: léto 23. 4. → aukanætur 22.–25. 7. (středa), heyannir od neděle 26. 7. — kalendář s rokem dál platí (key).
+  // 2026-10-09: prompt rok NEČTE (rok se nezadává, report 58a0c728). 23. 7. bez roku = jediný den, který může padnout do tří
+  // období — prompt je musí nést všechny, v pořadí roku. Do 2026-10-08 se tu čekalo jen „(aukanætur)“ podle roku 2026.
   const auk = fn('buildLifeRunePrompt')('Thor', gebo, 23, 7, 2026, 'is', false, null);
-  rekni(auk.indexOf('(aukanætur)') !== -1 && key(21, 7, 2026) === 'solmanudur' && key(26, 7, 2026) === 'heyannir',
-        'aukanætur 2026 (22.–25. 7.) dojdou do promptu; 21. 7. sólmánuður, 26. 7. heyannir');
+  rekni(auk.indexOf('(sólmánuður, aukanætur eða heyannir)') !== -1 && auk.indexOf('ÍSLENSKUR MÁNUÐUR: Sólmánuður, Aukanætur eða Heyannir — ') !== -1
+        && key(21, 7, 2026) === 'solmanudur' && key(26, 7, 2026) === 'heyannir',
+        '23. 7. bez roku: v promptu všechna tři možná období v pořadí roku; kalendář 2026: 21. 7. sólmánuður, 26. 7. heyannir');
   const nic = fn('buildLifeRunePrompt')('Thor', gebo, undefined, undefined, undefined, 'en', false, null);
   rekni(nic.indexOf('ICELANDIC MONTH: unknown month') !== -1, 'bez data → „unknown month", nic si nevymyslí');
   const lab = fn('_getIcelandicSeason')();
   rekni(Object.keys(BM).some((k) => lab.indexOf(BM[k].name + ' (') === 0), 'laboratorní V2 cesta bere jméno z téhož kalendáře');
+}
+
+// 6) Měsíc BEZ ROKU (2026-10-09, report 58a0c728 — rok se nezadává). icelandicMonthKeysNoYear počítá přes 1980–2040; musí dát pro
+//    každý den roku přesně tutéž sadu jako celé 1900–2100, jinak by někomu na hranici měsíc chyběl nebo přebýval. Rozložení
+//    281 / 84 / 1 (jeden, dva, tři možné měsíce) je změřené při zavedení — změní-li se, změnil se kalendář a je potřeba to vědět.
+{
+  const bez = fn('icelandicMonthKeysNoYear'), dny = [0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  let nesedi = 0; const hist = {};
+  for (let m = 1; m <= 12; m++) for (let d = 1; d <= dny[m]; d++) {
+    const s = new Set();
+    for (let y = 1900; y <= 2100; y++) { if (new Date(Date.UTC(y, m - 1, d)).getUTCMonth() !== m - 1) continue; s.add(key(d, m, y)); }
+    const b = bez(d, m); hist[b.length] = (hist[b.length] || 0) + 1;
+    if (b.length !== s.size || !b.every((k) => s.has(k))) nesedi++;
+  }
+  rekni(nesedi === 0 && hist[1] === 281 && hist[2] === 84 && hist[3] === 1,
+        'měsíc bez roku: sady 1980–2040 = 1900–2100 pro všech 366 dnů (neshod ' + nesedi + '; 1/2/3 měsíce: ' + [hist[1], hist[2], hist[3]].join('/') + ')');
+  const p = fn('icelandicMonthKeysNoYear');
+  rekni(p(22, 4).join() === 'einmanudur,harpa' && p(21, 1).join() === 'morsugur,thorri',
+        'pořadí roku i přes přelom: 22. 4. einmánuður → harpa, 21. 1. mörsugur → þorri');
 }
 
 console.log('');

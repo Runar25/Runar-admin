@@ -270,7 +270,9 @@ async function renderLivingTree(rune) {
     var bk = (window.RunarBranch && window.RunarBranch.RUNES.filter(function(x){ return x.g === rune.g; })[0]);
     _treeLog  = log;
     _treeRkey = bk ? bk.k : 'berkano';
-    _treeDob  = { d: readerUser.d, m: readerUser.m, y: readerUser.y };
+    // y = uložený rok starého účtu, nebo null — dobSeed v runar-tree-prod.js ho míchá do hashe, takže stávajícím stromům
+    // se tvar nemění a nový účet dostane stabilní semínko „d-m-null“ (2026-10-09, rok se už nezadává).
+    _treeDob  = { d: readerUser.d, m: readerUser.m, y: readerUser.y || null };
     wrap.style.display = 'block';
 
     var bar  = document.getElementById('tree-seek-bar');
@@ -319,7 +321,7 @@ function updateTreeTab() {
       if (_rb) _rb.textContent = t('tester_reset_btn');
     }
   }
-  var hasDob = readerUser && readerUser.d && readerUser.m && readerUser.y;
+  var hasDob = readerUser && readerUser.d && readerUser.m;   // 2026-10-09: rok se nezadává (report 58a0c728)
   var isStdPlus = currentUser && (userTier === 'standard' || userTier === 'premium' || isAdmin(currentUser.email));
   var rune = hasDob ? calcLifeRune(readerUser.d, readerUser.m, readerUser.y) : null;
   // Vytazeno sem 2026-09-11: potrebuje ho uz vetev navstevnika niz. `rune` muze byt null
@@ -566,19 +568,20 @@ async function adminResetLifeRune() {
 async function setTreeDOB() {
   var d = parseInt(document.getElementById('tree-dob-d').value);
   var m = parseInt(document.getElementById('tree-dob-m').value);
-  var y = parseInt(document.getElementById('tree-dob-y').value);
-  if (!d || !m || !y || d < 1 || d > 31 || m < 1 || m > 12 || y < 1900 || y > 2099) {
+  // 2026-10-09 (report 58a0c728, KUKY „už není potřeba zadávat rok narození… Nikde“): jen den a měsíc. Runa rok nikdy nepotřebovala,
+  // islandský měsíc se počítá bez něj (getBirthMonth). Datum se ale musí dát v nějakém roce: 31. 4. ne, 29. 2. ano (přestupný 2000).
+  if (!d || !m || d < 1 || d > 31 || m < 1 || m > 12 || new Date(Date.UTC(2000, m - 1, d)).getUTCMonth() !== m - 1) {
     var btn = document.getElementById('tree-dob-btn');
     if (btn) { btn.textContent = t('invalid_date'); setTimeout(function(){ btn.textContent = t('tree_reveal_btn') + ' →'; }, DELAY_ERROR_RESET); }
     return;
   }
-  readerUser.d = d; readerUser.m = m; readerUser.y = y;
+  readerUser.d = d; readerUser.m = m; readerUser.y = null;   // rok jen u starých účtů (semínko stromu), nově se nesbírá
   // Save DOB to DB. supabase-js RESOLVES a failed write as { error } — it never throws — so
   // the old .then(noop).catch() could not see a failure at all. A lost DOB is invisible until
   // the next login, when the life rune (computed from memory) is simply gone.
   if (currentUser) {
     var _dobRes = await sb.from('user_profiles')
-      .update({ dob_day: d, dob_month: m, dob_year: y }).eq('id', currentUser.id);
+      .update({ dob_day: d, dob_month: m }).eq('id', currentUser.id);   // dob_year se nezapisuje (2026-10-09)
     if (_dobRes && _dobRes.error) {
       console.error('persist DOB failed:', _dobRes.error.message);
       showToast(t('err_save_failed'));
@@ -820,7 +823,7 @@ function _lifeRuneName() {
 }
 async function generateLifeRuneReading() {
   if (!currentUser) return;
-  var hasDob = readerUser && readerUser.d && readerUser.m && readerUser.y;
+  var hasDob = readerUser && readerUser.d && readerUser.m;   // 2026-10-09: rok se nezadává (report 58a0c728)
   if (!hasDob) return;
   // Zivotni runa je NEMENNA. Skutecna brana je DB trigger trg_life_rune_immutable
   // (sql/2026-07-19_life_rune_immutable.sql) — sloupce life_rune_* jsou pro klienta

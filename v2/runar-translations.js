@@ -70,7 +70,6 @@ const UI_TEXT = {
     dob_lbl:          'DATE OF BIRTH',
     day_ph:           'Day',
     month_ph:         'Month',
-    year_ph:          'Year',
     area_lbl:         'AREA OF LIFE',
     // 2026-09-29 (KUKY bod 4: jen jedna věta, „není potřeba to víc vysvětlovat, alespoň ne zatím“) — rozbalí „+“ u popisku.
     area_hint:        'The area tells Rúnar where in your life to let the picture land.',
@@ -550,7 +549,6 @@ const UI_TEXT = {
     dob_lbl:          'FÆÐINGARDAGUR',
     day_ph:           'Dagur',
     month_ph:         'Mánuður',
-    year_ph:          'Ár',
     area_lbl:         'SVIÐ LÍFSINS',
     area_hint:        'Sviðið segir Rúnari hvar í lífi þínu myndin á að lenda.',   // 2026-09-29 viz EN; is-grammar-qa čisté
     seek_hint:        'Þetta ræður tóninum.',

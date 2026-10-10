@@ -93,10 +93,11 @@ async function fetchUserProfile(userId) {
         _lifeRuneNum  = data.life_rune_number;
       }
       // Load DOB from DB → Tree tab can find life rune without Reading form
-      if (data.dob_day && data.dob_month && data.dob_year) {
+      // 2026-10-09: stačí den a měsíc — rok se už nezadává (report 58a0c728). Uložený rok starých účtů se čte jen pro semínko stromu.
+      if (data.dob_day && data.dob_month) {
         readerUser.d = data.dob_day;
         readerUser.m = data.dob_month;
-        readerUser.y = data.dob_year;
+        readerUser.y = data.dob_year || null;
       }
       // Load tree name (single source: currentUser.tree_name) -> render edit/display state
       if (currentUser) currentUser.tree_name = data.tree_name || '';
@@ -688,25 +689,8 @@ function _updateDobLabel() {
   setPH('r-name', t('name_ph'));
   setPH('tree-dob-d', t('day_ph'));
   setPH('tree-dob-m', t('month_ph'));
-  setPH('tree-dob-y', t('year_ph'));
-  const dlbl = document.getElementById('dob-lbl');
-  const _dobVisitor = !currentUser;
-  if (dlbl) {
-    const _dobHint = _dobVisitor
-      ? (lang === 'is' ? '· Gerast Leitandi til að birta lífstíðarrúnina þína' : '· Become a Rune Seeker to unveil your life rune')
-      : (lang === 'is' ? '· til að uppgötva lífstíðarrúnina þína' : '· to reveal your life rune');
-    dlbl.innerHTML = t('dob_lbl') + ' <span class="opt">'+t('opt')+'</span>' + ' <span class="visitor-lock-hint">' + _dobHint + '</span>';
-  }
-  setPH('r-day',   t('day_ph'));
-  setPH('r-month', t('month_ph'));
-  setPH('r-year',  t('year_ph'));
-  ['r-day', 'r-month', 'r-year'].forEach(function(id) {
-    var el = document.getElementById(id);
-    if (!el) return;
-    el.disabled = _dobVisitor;
-    el.style.opacity = _dobVisitor ? '0.35' : '';
-    el.style.cursor  = _dobVisitor ? 'default' : '';
-  });
+  // 2026-10-09: pryč pole roku (tree-dob-y — rok se nezadává, report 58a0c728) a mrtvý blok starého data ve formuláři čtení
+  // (dob-lbl, r-day/r-month/r-year): ty prvky v runar-reader.html od přestavby formuláře nejsou, kód sahal do prázdna.
 }
 
 // Area of Life + Seeking + Question labels with tier lock hints
@@ -1477,10 +1461,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
 // ─── INIT ────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', async () => {
-  // Set DOB year max to current year
-  const yearInput = document.getElementById('r-year');
-  if (yearInput) yearInput.max = new Date().getFullYear();
-
   // Hidden admin reset: ?reset_trial=1 clears visitor trial counter (dev/testing)
   if (new URLSearchParams(window.location.search).get('reset_trial') === '1') {
     localStorage.removeItem('runar_trial_count');

@@ -12,8 +12,9 @@ const fs = require('fs'), path = require('path');
 const DIR = path.join(__dirname, '..', 'v2');
 const RE = /\b(lang|lng|l|_lang)\s*===\s*['"]is['"]\s*\?\s*['"`]/g;
 // Stav 2026-10-09. Snižovat, nikdy nezvyšovat — nový text patří do UI_TEXT (runar-translations.js) a čte se přes t()/tp().
+// 2026-10-09 runar-app.js 26 → 24: CODE-tune smazal mrtvý blok starého data ve formuláři čtení (dob-lbl, report 58a0c728).
 const BASELINE = {
-  'runar-app.js': 26, 'runar-auth.js': 7, 'runar-character.js': 4, 'runar-config.js': 1,
+  'runar-app.js': 24, 'runar-auth.js': 7, 'runar-character.js': 4, 'runar-config.js': 1,
   'runar-reading.js': 7, 'runar-runes.js': 1, 'runar-tree.js': 3, 'runar-utils.js': 8,
 };
 const pocet = (txt) => (txt.match(RE) || []).length;

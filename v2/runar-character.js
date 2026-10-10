@@ -1457,10 +1457,42 @@ var BIRTH_MONTHS = {
   einmanudur:   { name: 'Einmánuður',   is: 'síðasti mánuður vetrar, dagurinn orðinn lengri en nóttin',             en: 'the last month of winter, the day now longer than the night' },
 };
 
-function getBirthMonth(d, m, y, lang) {
-  var e = BIRTH_MONTHS[icelandicMonthKey(d, m, y)];
-  if (!e) return (lang === 'is') ? 'óþekktur mánuður' : 'unknown month';
-  return e.name + ' — ' + ((lang === 'is') ? e.is : e.en);
+// ── Islandský měsíc BEZ ROKU (2026-10-09, report 58a0c728 — KUKY: „Už není potřeba zadávat rok narození… Nikde.“) ──
+// Hranice starých islandských měsíců se každý rok posouvají (léto začíná prvním čtvrtkem po 18. dubnu), takže bez roku nejde
+// u části dnů říct, který měsíc to byl. Změřeno 1900–2100: 281 dnů má vždy týž měsíc, 84 dnů dva, 23. 7. tři (Sólmánuður /
+// Aukanætur / Heyannir). Takový den dostane do promptu VŠECHNY možné měsíce v pořadí roku a poznámku, že narozeniny leží na jejich
+// hranici — pravdivě, bez hádání roku. Do 2026-10-08 se měsíc počítal z roku, který člověk zadával jen kvůli němu.
+// Rozsah let 1980–2040 dá tytéž sady jako 1900–2100 (ověřeno při zavedení; vzor se opakuje po 28 letech).
+var _IS_MESICE_KRUH = ['harpa', 'skerpla', 'solmanudur', 'aukanaetur', 'heyannir', 'tvimanudur', 'haustmanudur',
+                       'gormanudur', 'ylir', 'morsugur', 'thorri', 'goa', 'einmanudur'];
+function icelandicMonthKeysNoYear(d, m) {
+  var seen = {}, n = 0;
+  for (var y = 1980; y <= 2040; y++) {
+    if (new Date(Date.UTC(y, m - 1, d)).getUTCMonth() !== m - 1) continue;   // 29. 2. jen v přestupném roce
+    var k = icelandicMonthKey(d, m, y);
+    if (k && !seen[k]) { seen[k] = true; n++; }
+  }
+  if (n < 2) return Object.keys(seen);
+  // Pořadí roku: začni měsícem, jehož předchůdce v kruhu v sadě není (Einmánuður → Harpa tak kruh přetočí správně).
+  var K = _IS_MESICE_KRUH, start = -1;
+  for (var i = 0; i < K.length && start < 0; i++)
+    if (seen[K[i]] && !seen[K[(i + K.length - 1) % K.length]]) start = i;
+  var out = [];
+  for (var j = 0; j < K.length && out.length < n; j++) { var kk = K[(start + j) % K.length]; if (seen[kk]) out.push(kk); }
+  return out;
+}
+
+function getBirthMonth(d, m, y, lang) {   // `y` už nečte (2026-10-09, viz výš) — zůstal kvůli volajícím
+  var is = (lang === 'is');
+  var e = icelandicMonthKeysNoYear(d, m).map(function (k) { return BIRTH_MONTHS[k]; }).filter(Boolean);
+  if (!e.length) return is ? 'óþekktur mánuður' : 'unknown month';
+  if (e.length === 1) return e[0].name + ' — ' + (is ? e[0].is : e[0].en);
+  // Hraniční den: „A eða B“ / „A or B“ (do p1 jde jen tahle část před pomlčkou), pak popis každého měsíce.
+  // IS ověřeno korpusem: „á mörkum þeirra“ 20, „fæðingardagurinn er“ 8; jména měsíců v 1. pádě — žádné skloňování.
+  var jm = e.map(function (x) { return x.name; });
+  var nazev = jm.slice(0, -1).join(', ') + (is ? ' eða ' : ' or ') + jm[jm.length - 1];
+  return nazev + ' — ' + (is ? 'fæðingardagurinn er á mörkum þeirra: ' : 'the birthday lies where one gives way to the next: ')
+    + e.map(function (x) { return x.name + ': ' + (is ? x.is : x.en); }).join('; ');
 }
 
 // --- LIFE RUNE PROMPT --- one generic builder + per-language pack (§18.1).

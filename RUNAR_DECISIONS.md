@@ -9197,3 +9197,29 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Hranice:** CODE-read nesmí měnit produkční DB ani nasazené funkce (automatická kontrola oprávnění to 2026-10-09 zastavila) —
   body 2–4 v DB a nasazení čekají na ownera.
 - Affected doc(s): `RUNAR_BACKLOG.md` (Kontrola architektury) · `RUNAR_PRIVACY.md` — v témže commitu.
+
+## 2026-10-09 (20) — Rok narození se nezadává; islandský měsíc se počítá bez roku (hraniční den dostane všechny možné měsíce)
+
+- **Rozhodl:** KUKY 2026-10-09, report 58a0c728: *„Už není potřeba zadávat rok narození u uživatele. Nikde. Teď to bylo u life rune
+  a to by mělo být jediné místo, ale už to tam být nemá!“* **Provedl:** CODE-tune.
+- **Proč a korekce (§21):** životní runa rok nepotřebuje (změřeno: 0 dnů roku). Rok ale ještě četl islandský měsíc — hranice
+  starých měsíců se každý rok posouvají (léto začíná prvním čtvrtkem po 18. dubnu). Bez roku jde u části dnů měsíc určit jen jako
+  „jeden z“: změřeno 1900–2100 — **281 dnů má vždy týž měsíc, 84 dva, 23. 7. tři** (Sólmánuður / Aukanætur / Heyannir). Tipnout
+  jeden by u ~23 % lidí dalo špatný měsíc; proto hraniční den dostane do promptu všechny možné měsíce v pořadí roku a poznámku,
+  že narozeniny leží na jejich hranici (EN *„the birthday lies where one gives way to the next“*, IS *„fæðingardagurinn er á mörkum
+  þeirra“* — korpus „á mörkum þeirra“ 20).
+- **Co:** formulář životní runy jen den a měsíc (pole roku pryč; platné datum = existuje v přestupném roce, 29. 2. projde, 31. 4. ne) ·
+  `dob_year` se nezapisuje · profil stačí den a měsíc · `getBirthMonth` rok nečte (`icelandicMonthKeysNoYear`) · anglický řádek
+  „Date of birth“ na stránce soukromí → „Day and month of birth“ (islandské „Fæðingardagur“ už znamená den a měsíc, rok je
+  „fæðingarár“) · smazán mrtvý blok starého data ve formuláři čtení (`dob-lbl`, `r-day/r-month/r-year` — prvky v HTML nebyly;
+  ráčna ㉸ runar-app.js 26 → 24) · klíč `year_ph` pryč.
+- **Strom (doména CODE-tree):** tvar stromu má v semínku `d-m-y` (`dobSeed`, runar-tree-prod.js). Uložený rok starých účtů se proto
+  dál čte — jen pro semínko, jejich stromy se nemění. Nový účet má `y = null` → stabilní semínko „d-m-null“. Kód stromu beze změny.
+- **Ověřeno:** sady měsíců bez roku (1980–2040) = 1900–2100 pro všech 366 dnů, pořadí i přes přelom Einmánuður → Harpa — natrvalo
+  ve smoke ㉦ (útok: zkrácený rozsah let i rozbité pořadí → exit 1). Prompt životní runy pro 21. 1. EN i IS bez undefined/null,
+  golden 0 změn (fixture 15. 6. má jeden měsíc). Prohlížeč: pole roku není, 31. 4. odmítnuto, 29. 2. a 21. 1. přijaty, `y` null.
+  Smoke 60/60.
+- **Hranice:** roky, které už v databázi jsou, zůstávají (mazat je = zásah do dat uživatelů, rozhodne owner); databázová pojistka
+  `life_rune_immutable` je stejně nedovolí změnit.
+- Odvolává se na: 2026-09-30 (11), 2026-09-27 (5).
+- Affected doc(s): `RUNAR_PRIVACY.md` (Co jde k modelu) — v témže commitu.
