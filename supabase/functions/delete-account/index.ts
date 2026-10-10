@@ -1,6 +1,6 @@
 // Supabase Edge Function: delete-account
 // Permanently deletes the authenticated user and all their data.
-// ON DELETE CASCADE in DB removes: user_profiles, readings automatically.
+// ON DELETE CASCADE in DB removes: user_profiles, readings automatically. allowed_emails (no FK) is cleared by email below.
 // Deploy: supabase functions deploy delete-account --project-ref pmitxjvkeovijreepror --no-verify-jwt
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
@@ -37,6 +37,22 @@ serve(async (req) => {
     // ── Uvolni foreign key v gift_codes (used_by → SET NULL) ──
     // gift_codes.used_by nemá ON DELETE CASCADE — musíme nullovat ručně
     await sb.from("gift_codes").update({ used_by: null }).eq("used_by", user.id);
+
+    // ── E-mail ze seznamu testerů (allowed_emails) ──
+    // 2026-10-10 (CODE-read BACKLOG část 32 (j)): tabulka nemá vazbu na auth.users, takže e-mail smazání účtu přežil — zásady přitom
+    // slibují „Email address — until account deleted“ a „Everything goes“. Shoda bez ohledu na velikost písmen, ale přesná: NE ilike —
+    // v něm jsou %, _ i * (alias PostgREST) zástupné znaky a „a_b@x“ by smazal i „acb@x“. Seznam je malý (testeři) → načíst, porovnat,
+    // smazat přesné uložené hodnoty. Selže-li to, účet se nemaže — uživatel to zkusí znovu a slib platí.
+    if (user.email) {
+      const { data: radky, error: selErr } = await sb.from("allowed_emails").select("email");
+      if (selErr) return json({ error: "Failed to read allowlist: " + selErr.message }, 500);
+      const moje = (radky || []).map((r: { email: string | null }) => r.email)
+        .filter((e): e is string => typeof e === "string" && e.toLowerCase() === user.email!.toLowerCase());
+      if (moje.length) {
+        const { error: allowErr } = await sb.from("allowed_emails").delete().in("email", moje);
+        if (allowErr) return json({ error: "Failed to remove email from allowlist: " + allowErr.message }, 500);
+      }
+    }
 
     // ── Delete user (CASCADE removes user_profiles + readings) ──
     const { error: deleteErr } = await sb.auth.admin.deleteUser(user.id);
