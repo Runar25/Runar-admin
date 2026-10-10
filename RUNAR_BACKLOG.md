@@ -2282,6 +2282,16 @@ vynulovaly a dávaly znovu (stav účtů = admin, nehodnotí se — memory `admi
 běžného uživatele se NEUKLÁDÁ: klient pošle `journal` jen u `mine` nebo u testera (`runar-reading.js` ~332, ~1344), deník tahá jen
 `mine`/null (`runar-journal.js`) — bod 6 sedí. Nic k opravě.
 
+### Část 37 — pre-push smoke běží nad SDÍLENÝM pracovním stromem → cizí rozdělaná práce blokuje push všem (2026-10-10)
+**Doloženo dnes 3×:** moje rozdělaná ㉸ zablokovala push CODE-tune (b2f50b7) · jejich necommitnutý `setRuneText` (㉣) můj · rozdělaná práce
+CODE-tree (㉳, 61 porušení) push CODE-tune (11c3bc3). Pokaždé smoke hlásil chybu v kódu, který se vůbec nepushoval; session pak čekala nebo
+psala ostatním. `hooks/pre-push.py` pouští `smoke.py` přímo nad pracovním stromem.
+- 🟡 **PRO OWNERA — návrh (§21, vč. kritiky):** hook před pushem udělá DOČASNOU čistou kopii pushovaného commitu (`git worktree add --detach
+  <tmp> <commit>`), smoke pustí v ní a kopii smaže. Sdílený strom zůstává jeden — tohle NENÍ zamítnutý „worktree pro každou session“
+  (DECISIONS 2026-07-19), jen pár sekund uvnitř hooku. **Háčky:** ⑪/⑫ hledají soubory zapomenuté MIMO git — v čisté kopii nejsou z principu,
+  ty dál nad skutečným stromem · cena = checkout (repo s `docs/eval` ~1 000 souborů, odhad pár sekund) · ㉼ (prohlížeč) ověřit, že běží
+  i z dočasné cesty. **Bez toho** zůstává dnešní stav: kdo má rozdělané, zablokuje ostatní, a jediný obchvat je `--no-verify`.
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
