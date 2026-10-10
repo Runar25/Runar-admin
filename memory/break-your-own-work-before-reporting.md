@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: feedback
   originSessionId: 12b7cce8-c1bb-4d60-afe0-c53fe2a58d0b
-  modified: 2026-08-14T23:10:42.821Z
+  modified: 2026-10-10T18:58:56.772Z
 ---
 
 **KUKY 2026-08-14: „dřív jsi rozbíjel a přestal jsi to zase dělat."** Je to návyk, ne úkol na
@@ -66,3 +66,12 @@ stromu: `scripts/utils/tree_render.js` (jeho strom, výchozí posuvníky) vedle 
 nezadal (tvar, úhly, podlaha), patří na obrázek zvlášť, ne schovaná v balíku s tou zadanou. A jeho pravidlo s číslem („30px min.") nejdřív
 ukaž s důsledkem (kolik ramen se vejde, jak strom vypadá), než ho zapečeš — 30 px mezi všemi rameny nechalo 8 ramen, on myslel stejnou stranu.
 Souvisí: [[runar-trunk-incremental-rule]], [[ownerovo-slovo-neni-spec]].
+
+**8. Opravuješ jednu vlastnost prvku UI → porovnej VŠECHNY jeho vlastnosti se sousedem, ke kterému patří (2026-10-10, CODE-tune).**
+Zarovnal jsem „+“ u počtu čtení (posun o 0,13em, změřeno) a ohlásil hotovo — „+“ přitom zůstal šedý (`--muted` z `.tree-toggle-arrow`)
+vedle zlatého počtu. Owner: *„plus nemá stejnou barvu. proboha co děláš? kontroluj to po sobě!!!“* **Před hlášením UI změny vypiš
+`getComputedStyle` prvku i souseda (barva, opacity, písmo, velikost, okraj, pozadí) a srovnej je** — stejně jsem pak chytil, že tlačítko
+pod životní runou stojí vlevo (259–415 při sekci 259–765). A projdi i přepnutí jazyka a všechny stavy (tah → další tah → jiná záložka
+→ zpět), ne jen první obrázek: tam vylezlo okno „SPEAK AGAIN … uses one credit“ pro návštěvníka.
+Náhled: snímek s emulovanou velikostí (resize_window) se ořezává vpravo — pro celou šířku `preset: desktop` +
+`document.documentElement.style.zoom='0.78'` (jen na snímek, před klikem vrátit `''`), rozměry mobilu měř v DOM.
