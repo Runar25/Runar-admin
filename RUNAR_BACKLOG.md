@@ -2033,6 +2033,11 @@ Nepřezkoumáno: `docs/TREE_BRIEF_CODE_2026-07-04.md` a `RUNAR_TREE_RENDER.md` (
 **Mechanismus (§30), aby to nehlídala pozornost:** nová smoke ㉺ `scripts/verify_code_doc_refs.js` — komentář v kódu nesmí odkazovat
 na `*.md`, který v repu není (⑯ hlídá jen dokumenty). Záměrné zmínky nesou `doc-links:ok <datum> <důvod>`. Cestou opraveno `CLAUDE.md` §16:
 „RUNAR_DOC_SYNC.md je v docs/archive/“ — není, archiv má jen `RUNAR_DOC_SYNC_CODE.md`.
+**Pokračování 2026-10-10:** `CLAUDE.md` „Stack: … Claude API“ → model čtení přes `claude-proxy` (`SOL_MODEL`, záloha `MODELS`); rozcestník
+`MEMORY.md` totéž · `RUNAR_DESIGN.md` sekce tarifů odporovala kódu ve 4 bodech (Kříž/Podkova „ani za kredity“, Norny „za kredity“,
+rozbor jména „pouze Premium“, tabulka stromu podle tarifů) → opraveno s odkazem na vlastníky a s vyznačením, co tam stálo.
+Pro CODE-tune (⚪): `buildLifeRuneBase(…, isPremium)` parametr nepoužívá — mrtvý (nebo chybějící) rozdíl Premium; `RUNAR_PRICING.md`
+tabulky nákladů nesou štítek „Claude API“, čte ale GPT-6 sol (levnější) — přepočet a štítky patří k pricingu.
 
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí

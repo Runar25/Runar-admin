@@ -920,23 +920,20 @@ Zdroj pravdy = helpery v `runar-character.js` (`_lensContext` / `_domainContext`
 
 ### Spreads per tier — viz RUNAR_PRICING.md (kompletní tabulka)
 
-Klíčová pravidla:
-- Rune Seeker: Single zdarma (free_balance), Norns/Gathering za kredity, Yggdrasil za kredity (sezónní)
-- Kříž a Horseshoe: Standard+ pouze — Rune Seeker ani za kredity
-- Yggdrasil: všichni přihlášení, kdykoliv (RS za kredity, Standard/Premium z limitu).
-  Zimní slunovrat = větší síla ve stromě, NE podmínka přístupu (KUKY 2026-07-18).
-- Standard limit: 50 run/měsíc
-- Premium limit: 75 run/měsíc
+Kdo na co dosáhne, vlastní `CLAUDE.md` („Spread systém → Gating“) a čísla `v2/runar-config.js` (`SPREAD_COSTS`,
+`TIERS.*.monthly_readings`) — tady se neopisují (§20). Ve zkratce: blokuje se jen nepřihlášený; každý přihlášený dosáhne na
+všechny spready — Rune Seeker za kredity (volné čtení jen na single), předplatitelé z měsíčních jednotek (počítají se jednotky
+čtení, ne runy). Yggdrasil kdykoli; zimní slunovrat = větší síla ve stromě, NE podmínka přístupu (KUKY 2026-07-18).
+⚠️ Do 2026-10-10 tu stálo „Kříž a Horseshoe jen Standard+, Rune Seeker ani za kredity“ a „limit 50/75 run“ — kód obojí dávno
+dělá jinak (`readRune` blokuje jen nepřihlášeného; měsíční strop počítá jednotky).
 
 ### Tree of Life per tier
 
-| Feature | Visitor | Rune Seeker | Standard | Premium |
-|---------|---------|-------------|---------|---------|
-| Tree tab | ❌ skrytý | teaser | plný | plný + hloubka |
-| Life Rune výklad | ❌ | symbol + jméno | plný výklad | hlubší + etymologie + mythol. postava |
-| Zakládací rituál (Norns) | ❌ | za kredity | z měsíčních jednotek | z měsíčních jednotek |
-| Branch systém | ❌ | ❌ | ✅ | ✅ |
-| Elementy | ❌ | ❌ | ✅ | ✅ |
+Stav vlastní `RUNAR_TREE.md` a kód. Ověřeno 2026-10-10: záložka Strom je jen pro admina (`runar-auth.js`, od 2026-09-11);
+životní runu (výpočet) vidí každý i bez účtu, její čtení až po přihlášení a pro všechny stejné (parametr `isPremium` builder
+přijme, ale nepoužije); zakládací Norny i rozbor jména jsou rituály — zdarma pro každého přihlášeného, jednou (`claude-proxy`
+`isRitual`). ⚠️ Do 2026-10-10 tu stála tabulka podle tarifů (strom jako teaser pro Rune Seekera, životní runa „hlubší“ pro
+Premium, Norny za kredity) — nic z toho kód nedělá.
 
 ---
 
@@ -955,7 +952,8 @@ Statická část (vždy, bez generování):
 Generované Claudem:
 - Část 1 — datum: islandský měsíc a atmosféra doby narození
 - Část 2 — runa: tvar, mytologie, dar, stín — jméno vetkáno do textu
-- Část 3 — jméno: etymologie + mytologická postava ← **pouze Premium**
+- ~~Část 3 — jméno: etymologie + mytologická postava ← pouze Premium~~ → od 2026-09-11 samostatná volba **rozbor jména**,
+  zdarma pro každého přihlášeného (DECISIONS 2026-09-11 (7)); čtení životní runy jméno nerozebírá.
 
 ### Zakládací rituál — JEDNA session ✅ ROZHODNUTO
 (Dřívější model „tři oddělené sessions" byl nahrazen Nornami; nadpis to do 2026-07-18 tvrdil dál,
@@ -967,10 +965,8 @@ Tři Norny = tři kořeny. Jedno čtení zasadí všechny tři kořeny najednou.
 - Verðandi → druhý kořen: kterým směrem se skláníš teď
 - Skuld → třetí kořen: co pohání tvůj růst, co musí přijít
 
-Rune Seeker: platí kredity (hodnota = SPREAD_COSTS).
-Standard: 3 z měsíčního limitu (viz TIER_LIMITS.standard.monthly_limit).
-Premium: 3 z měsíčního limitu (viz TIER_LIMITS.premium.monthly_limit).
-Hodnoty jsou vždy z configu — nikdy hardcoded.
+Zakládací Norny jsou **zdarma pro každého přihlášeného, jednou** — server je bere jako rituál (`claude-proxy` `isRitual`,
+bez odečtu a bez měsíčního stropu). ⚠️ Do 2026-10-10 tu stálo „Rune Seeker platí kredity, Standard/Premium 3 z limitu“.
 Po dokončení se kořeny uzamknou navždy — nelze je změnit.
 
 ### Kořeny — jak silí
