@@ -2249,6 +2249,19 @@ nenačítá · obrázek Rúnara jde z našeho Supabase úložiště (Irsko) · p
   Doporučení CODE-read: hostovat u nás jako písma — TENTÝŽ soubor 2.117.3, ověřený stávajícím otiskem SRI (`v2/vendor/supabase.min.js`), <!-- doc-links:ok 2026-10-10 navrhovaná cesta, soubor zatím není -->
   + do precache `sw.js`; `scripts/utils/supabase_js_pin.js` upravit, ať při povýšení stáhne soubor k nám.
 
+### Část 35 — tabulka „jaké údaje ukládáme“ na stránce soukromí × sloupce v databázi (2026-10-10, jen čtení)
+Veřejná tabulka (`v2/runar-privacy.html`, EN i IS) má 8 řádků: e-mail, jméno, den a měsíc narození, čtení, jazyk, počet čtení, kredity,
+dárkový kód. `user_profiles` drží navíc (stav 2026-10-10, 4 profily):
+- **oslovení** `address_gender` + `address_pref` (Hann/Hún/Hán — jak Rúnar oslovuje; vyplněné u 4 ze 4) · **severské jméno** `norse_name`
+  (2) + **rozbor jména** `name_lore_text/for/count` · **čtení životní runy** `life_rune_text` · **strom** `tree_name`, `tree_founded_at`,
+  `founding_reading_id` · **hlas** `voice_month_key/count` · **volby** `analytics_opt_out`, `is_tester`, `tester_consent_at` ·
+  **rok narození** `dob_year` — od 2026-10-09 se nezadává (DECISIONS (20)), ale **3 ze 4** starých účtů ho mají uložený (interně
+  `RUNAR_PRIVACY.md`: „semínko tvaru stromu“; veřejně nikde).
+- 🟡 **PRO OWNERA (a):** doplnit do veřejné tabulky řádky pro oslovení, severské jméno a rozbor jména, uložené texty (životní runa,
+  rozbor), počet hlasových čtení a volby soukromí/testera (EN + IS → CODE-tune). Doporučení: ano — tabulka má říkat, co držíme.
+- 🟡 **PRO OWNERA (b):** rok narození 3 starých účtů — **smazat** (rok se nezadává, slib „den a měsíc“), napřed CODE-tree potvrdí, že strom
+  semínko bez roku zvládne; nebo ho nechat a uvést. Doporučení: smazat (zápis do DB = owner, SQL připravím).
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
