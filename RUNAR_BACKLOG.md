@@ -1538,6 +1538,25 @@ podstatná část hodnoty, takže odpověď nejspíš ano — ale stojí to pře
   `isAdmin()` je jen UI. Podvržení e-mailu v klientovi nikam nevede.
 - `max_tokens` od klienta je serverově **zastropovaný na 2500** (`:432`).
 
+#### Mapa: z čeho appka skládá prompt — podklad pro přesun na server (CODE-read 2026-10-10)
+Platí pro Supabase edge funkci i vlastní server (Hetzner) — viz „Kam s databází, promptem a hostingem“ výš.
+1. **Vstupy od člověka** (z klienta dál jako parametry): jméno, oblast, co hledá, záměr, otázka, tažené runy + pozice ve spreadu,
+   jazyk, režim mine/someone, IS oslovení (`userGender` kk/kvk/hk), životní runa; u Asku navíc text čtení, otázka, předchozí výměna.
+2. **Data a kód appky** (přestěhují se na server; dnes veřejné soubory): `runar-character.js` (hlas, `RP_*`, `RUNE_IMAGES`, buildery),
+   `runar-runes.js`, `runar-config.js` (`SPREAD_CONFIG`, `TIERS`…), z `runar-utils.js` úhly, umístění jména, konce, `LENGTH_BUDGETS`, `_promptDraws`.
+3. **Z databáze:** korekce (`runar_corrections`), poslední obraz téže runy (`readings.prompt_draws`, `_loadServerLastImage`),
+   tarif pro myšlenku ✦ (server ho zná z JWT).
+4. ⚠️ **Stav v prohlížeči — musí do DB, jinak se změní chování:** sáček obrazů `seasonbag_<bucket>_<druh>`, poslední motiv a obraz
+   `seasonmotif_` / `seasonlast_<runa>` (localStorage, na zařízení), adminův výběr obrazu `runar_img_pin`. Na serveru stav na uživatele.
+5. **Náhoda a čas:** `Math.random` (úhel, délka, konec, jméno, obraz ze sáčku); `new Date().getMonth()` = sezóna obrazů — server běží
+   v UTC (Island = UTC; jinde se sezóna na přelomu měsíce posune o hodiny). `_getTimeOfDay` je jen v laboratorní V2 cestě.
+6. **Engine:** `READ_ENGINE` (sol/opus) mění variantu promptu, volí ji klient — model ale server; při výpadku solu dnes dostane Claude
+   prompt psaný pro sol. Na serveru obojí na jednom místě.
+7. **Zpětné čtení losu:** `_promptDraws` dnes luští hotový prompt; na serveru jde zapsat přímo z losu.
+8. **Shrine** (laboratoř promptu) buildery používá taky (§3) — po přesunu potřebuje vlastní cestu jen pro admina, jinak zůstane kód veřejný.
+9. **Ověření:** golden — server pro stejné vstupy a stejný los musí dát bajtově stejný prompt jako dnes klient (`scripts/golden`).
+10. **Zavře navíc:** „libovolný prompt“ (níž), cenu spreadu z klienta (#4 v sekci C). Přestavba = CODE-tune.
+
 ### Přihlášený uživatel může proxy poslat LIBOVOLNÝ prompt (2026-08-16)
 Plyne z předchozího: proxy bere `prompt` jako text od klienta a jen ho zastropuje na 2500 tokenů.
 Přihlášený člověk si tedy může za cenu jednoho kreditu nechat vygenerovat cokoli — je to
