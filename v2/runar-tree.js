@@ -473,9 +473,8 @@ function updateTreeTab() {
       if (freeLineEl && currentUser) {
         var freeRem  = Math.max(0, userFreeBalance);
         if (freeRem > 0) {
-          freeLineEl.textContent = lang === 'is'
-            ? vn('cast', freeRem, 'is') + ' fyrir venjulegar dregnar rúnir'
-            : vn('cast', freeRem, 'en') + ' available for regular draws';
+          // 2026-10-10 (ráčna ㉸, CODE-read): text z UI_TEXT tree_rs_free_line, znění beze změny; dřív natvrdo podle jazyka.
+          freeLineEl.textContent = tp('tree_rs_free_line', { casts: vn('cast', freeRem, lang) });
           freeLineEl.style.display = '';
         } else {
           freeLineEl.style.display = 'none';

@@ -25,7 +25,8 @@ const HEAD = /\b(lang|lng|l|_lang)\s*===\s*['"]is['"]\s*\?/g;
 // 2026-10-10 CODE-tune: app 24 → 0, reading 7 → 0 (UI_TEXT), character 2 → 0, utils 1 → 0 (data po jazycích) — ráčna vyprázdněna.
 // 2026-10-10 CODE-read: rozšířená detekce (viz HEAD) našla dvě → ráčna je drží, než je CODE-tune přesune (RUNAR_BACKLOG část 17).
 // auth = openUpgradeModal (mrtvý, nikdo ho nevolá) · tree = řádek volných čtení v záložce životní runy (živý).
-const BASELINE = { 'runar-auth.js': 1, 'runar-tree.js': 1 };
+// 2026-10-10 CODE-tune: obě pryč — tree → UI_TEXT tree_rs_free_line, auth openUpgradeModal smazán (nikdo ho nevolal). Ráčna zase na nule.
+const BASELINE = {};
 // Literály na nejvyšší úrovni islandské větve; větev končí `:`, `;` nebo `,` mimo závorky, nebo zavřením vnější závorky.
 function litVeVetvi(txt, from) {
   const out = [];

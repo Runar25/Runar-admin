@@ -274,6 +274,7 @@ const UI_TEXT = {
     tree_rs_teaser:     'This rune is the root you grew from, carried since birth. Rúnar does not foretell it — he helps you remember it.',
     life_rune_free:   'Free',
     tree_rs_balance:    'your rune readings:',
+    tree_rs_free_line:  '{casts} available for regular draws',   // 2026-10-10: dřív natvrdo v runar-tree.js (ráčna ㉸)
     tree_name_label:    'NAME YOUR TREE',
     tree_hist_all:      'whole tree · {casts}',
     tree_hist_at:       'reading {k} of {n}',
@@ -785,6 +786,7 @@ const UI_TEXT = {
     tree_rs_teaser:     'Þessi rúna er rótin undir öllu sem þú ert — hún hefur verið þín frá fæðingu. Rúnar les enga framtíð úr henni; hann hjálpar þér að muna hana.',
     life_rune_free:   'Fr\u00edtt',
     tree_rs_balance:    'spár:',
+    tree_rs_free_line:  '{casts} fyrir venjulegar dregnar rúnir',   // 2026-10-10: viz EN; znění beze změny
     tree_name_label:    'NAFN TRÉSINS ÞÍNS',
     tree_hist_all:      'allt tréð · {casts}',
     tree_hist_at:       '{k}. spá af {n}',

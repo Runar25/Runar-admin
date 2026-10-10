@@ -330,14 +330,7 @@ if ('serviceWorker' in navigator) {
 }
 
 
-// ─── UPGRADE MODAL (stub — Rune Walker purchase not yet implemented) ─
-// TODO: replace with real checkout flow when billing is ready
-function openUpgradeModal() {
-  // Until Rune Walker purchase flow exists, show info and link to site
-  showToast(lang === 'is'
-    ? TIERS.standard.label_is + ' - kemur bráðlega. Sjá agndofa.is'
-    : TIERS.standard.label + ' subscription — coming soon. See agndofa.is');
-}
+// (openUpgradeModal pryč 2026-10-10 — nikdo ho nevolal a text měl natvrdo podle jazyka; nález ráčny ㉸, CODE-read)
 
 function openAuthModal() {
   document.getElementById('auth-modal').classList.add('open');
