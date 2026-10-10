@@ -1991,7 +1991,7 @@ se liší komentáři z kontroly 2026-10-09 (kód stejný, nasazovat netřeba). 
 **Platí:** trigger `notify-report` na `bug_reports` posílá hlavičku s tajemstvím a funkce odpovídá 200 (`net._http_response`,
 6 posledních odpovědí, víc pg_net nedrží). `runar_character` používá appka i shrine; `rate_limits` a `allowed_emails` čtou DB funkce.
 **Opraveno rovnou:** `README.md` popisoval nástroj z verze 1 (shrine jako appka, 2 funkce místo 10, korekce „na každý výstup“ —
-post-processor je pryč od 2026-08-09, návody na jazyk a tarif neodpovídaly kódu, neexistující `index.html`) → krátký rozcestník,
+post-processor je pryč od 2026-08-09, návody na jazyk a tarif neodpovídaly kódu, odkaz na už smazanou stránku verze 1) → krátký rozcestník,
 který nic neopisuje a odkazuje na vlastníky (§20).
 
 **PRO OWNERA:**
