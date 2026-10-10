@@ -196,8 +196,7 @@ const UI_TEXT = {
     cancel_btn:         'CANCEL',
     deleting_btn:       'DELETING...',
     journal_title:      '\u2726 YOUR RUNE READINGS',
-    journal_count_all:    '{n} readings',   // 2026-10-10: dřív natvrdo v runar-journal.js (isIs ? … — ㉸ alias neviděl); znění beze změny
-    journal_count_recent: 'last {n}',
+    journal_count_recent: 'last {n}',   // 2026-10-10: dřív natvrdo v runar-journal.js; počet všech čtení skládá vn('reading')
     journal_empty:      'No rune readings recorded yet.<br>Draw your first rune.',
     life_rune_short:    'Life rune',
     jcard_audio_btn:    "\u266a R\u00danar'S VOICE",
@@ -682,8 +681,7 @@ const UI_TEXT = {
     cancel_btn:         'H\u00c6TTA VI\u00d0',
     deleting_btn:       'EY\u00d0IR...',
     journal_title:      '\u2726 SP\u00c1R \u00de\u00cdNAR',
-    journal_count_all:    '{n} lestrar',   // 2026-10-10: viz EN; znění beze změny
-    journal_count_recent: '{n} nýlegastir',
+    journal_count_recent: 'síðustu {n}',   // 2026-10-10: dřív kalk z „last N“ (tvar v check-is.py BAD_PATTERNS, korpus 2×); „síðustu fimm“ 13 235×
     journal_empty:      'Engar skr\u00e1\u00f0ar sp\u00e1r enn.<br>Dragðu fyrstu r\u00fanina þ\u00edna.',
     life_rune_short:    'L\u00edfsr\u00fan',
     jcard_audio_btn:    '\u266a HLUSTA \u00c1 R\u00daNAR',

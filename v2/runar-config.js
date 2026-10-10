@@ -479,6 +479,7 @@ const VOCAB = {
   unit: { en: 'rune reading', en_pl: 'rune readings', is: 'spá', is_pl: 'spár' },
   cast: { en: 'rune reading', en_pl: 'rune readings', is: 'sp\u00e1',      is_pl: 'sp\u00e1r', is_dat_pl: 'sp\u00e1m' },   // is_dat_pl: TIER_FEATURES (2026-09-26)
   card: { en: 'Rune Reading Card', en_pl: 'Rune Reading Cards', is: 'R\u00fanakort', is_pl: 'R\u00fanakort' },
+  reading: { en: 'reading', en_pl: 'readings', is: 'lestur', is_pl: 'lestrar' },   // počet v deníku (2026-10-10); korpus „einn lestur“ 15×, „tveir lestrar“ 3×
 };
 // ─── SPREAD CONFIG — single source of truth ──────────────
 // rune_count: how many runes to draw

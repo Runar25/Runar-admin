@@ -98,8 +98,11 @@ function renderJournal(entries) {
   const titleEl = document.getElementById('journal-pane-title');
   const countEl = document.getElementById('journal-pane-count');
   if (titleEl) titleEl.textContent = t('journal_title');
-  // 2026-10-10 z UI_TEXT (dřív `isIs ? … : …` natvrdo, ㉸ alias neviděl); znění beze změny
-  if (countEl) countEl.textContent = entries.length === 0 ? '' : tp(isStandard ? 'journal_count_all' : 'journal_count_recent', { n: entries.length });
+  // Počet: Standard vidí všechna čtení („5 lestrar“), ostatní jen posledních pár („síðustu 5“). Jedno čtení = „1 lestur“ v obou
+  // (2026-10-10: dřív „1 lestrar“ / „1 readings“ a islandský štítek posledních čtení jako kalk z „last N“ — zakázaný tvar
+  // je v check-is.py; tvar podle čísla dělá vn, VOCAB.reading).
+  var n = entries.length;
+  if (countEl) countEl.textContent = n === 0 ? '' : (isStandard || n === 1) ? vn('reading', n, lang) : tp('journal_count_recent', { n: n });
 
   // Filter bar
   const filterBar = document.getElementById('journal-filter-bar');

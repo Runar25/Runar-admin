@@ -25,6 +25,8 @@ BAD_PATTERNS = [
     # segjum þetta ekki svona á íslensku." V promptu to pak zustalo dva tydny, protoze
     # z reportu nevedla zadna cesta do pravidel. Tenhle radek je ta cesta.
     ('ríður vindinum',  'svífur hátt',  'kalk z EN "riding the wind"; rodily mluvci 2026-08-02'),
+    # Štítek deníku „{n} nýlegastir“ = kalk z „last N“: korpus nýlegastir 2×, „síðustu fimm“ 13 235× (CODE-tune 2026-10-10).
+    ('nýlegastir',      'síðustu {n}',  'kalk z EN "last N" ve štítku deníku; 2026-10-10'),
     # 2026-10-06: citát nad čtením měl „Rúnirnar spá ekki um örlög þín“ — vazba je „spá fyrir um“ (Risamálheild 8477, „spá um örlög“ 0).
     ('spá ekki um örlög', 'spá ekki fyrir um örlög', 'vazba spá fyrir um; citát nad čtením 2026-10-06'),
     # 2026-09-23: kolokace a shoda z testu modelu (EVAL_LOG 2026-09-22 (1)/(2), 2026-09-23 (4)); kazda s korpusem.

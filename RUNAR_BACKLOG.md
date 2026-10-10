@@ -3111,9 +3111,9 @@ Podklad: `docs/archive/2026-09-23-audit-obrazu.md`. Owner je potřebuje vysvětl
    v `runar-character.js` (měsíc narození na hraně, ~ř. 1492–1498) a značky promptu, podle kterých admin rozkládá složení čtení
    (`runar-utils.js` ~ř. 321–407 — opisují text builderu, při jeho změně se rozpad tiše rozbije).)* ~~**§10 v bočním panelu:**~~
    `updateSidePanel` má natvrdo `is ? '✦ LESTRAR MÍNIR' : '✦ MY JOURNAL'` a `'× EYÐA REIKNINGI' : '× DELETE ACCOUNT'` (`runar-app.js`).
-   ⚪ **Počet v deníku pro 1 čtení:** „1 lestrar“ / „1 nýlegastir“ / „1 readings“ (`journal_count_*`) — islandsky i anglicky špatně;
-   `vn()` umí jen jednotné číslo pro 1 (ne 21, 31… — islandská shoda s číslovkou končící na 1, napřed ověřit korpusem). Oprava = tvar
-   podle čísla, IS ověřená `is-vazba.py`.
+   ✅ *(CODE-tune 2026-10-10, DECISIONS 2026-10-10 (29): `vn()` s islandskou shodou po 21, 31…, `VOCAB.reading`, štítek „síðustu {n}“;
+   korpusem ověřeno, v prohlížeči 1/2/5/11/21 × tiery × jazyky.)* ~~**Počet v deníku pro 1 čtení:**~~ „1 lestrar“ / „1 readings“ a štítek
+   posledních čtení jako kalk (`journal_count_*`) — islandsky i anglicky špatně; `vn()` uměl jednotné číslo jen pro 1.
 4. ✅ *(CODE-tune 2026-10-10: text tlačítka určuje `_speakBtnKey()` podle stavu výkladu, volá ji `_updateReadingForm` pro všechny
    výklady. V prohlížeči ověřeno ve všech čtyřech výkladech: po přepnutí jazyka „DRAW YOUR RUNES“/„ADD RUNE“ místo „HEAR RÚNAR SPEAK“;
    bez přepínání, u plného výkladu i u návštěvníka beze změny.)* ~~**§14 u tlačítka tahu:**~~ `updateUIText` při každém přepnutí jazyka

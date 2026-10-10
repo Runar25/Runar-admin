@@ -160,10 +160,12 @@ function normalizeCorrections(rows) {
 // Vocabulary helpers — read from VOCAB (runar-config.js)
 // vn('unit', 9, 'en')  =>  '9 rune readings'
 // vn('cast', 1, 'is')  =>  '1 sp\u00e1'
+// IS: jednotné číslo i po 21, 31, 101… (číslovka končící na „einn/ein/eitt“), ne po 11 — korpus „og einn dagur“ 278×,
+// „og einn dagar“ 0× (2026-10-10; do té doby jen n === 1, takže „21 spár“ místo „21 spá“).
 function vn(key, n, lang) {
   var v = VOCAB && VOCAB[key];
   if (!v) return n + ' ' + key;
-  if (lang === 'is') return n + '\u00a0' + (n === 1 ? v.is : v.is_pl);
+  if (lang === 'is') return n + '\u00a0' + ((n % 10 === 1 && n % 100 !== 11) ? v.is : v.is_pl);
   return n + '\u00a0' + (n === 1 ? v.en : v.en_pl);
 }
 // vl('card', 'en')  =>  'Rune Reading Card'

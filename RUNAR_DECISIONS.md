@@ -9650,3 +9650,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Změřeno na jeho stromě** (patch `docs/archive/tree/2026-10-10_nanecisto_ramena_koreny.patch`): 25 kořenů, šířka 103 procent koruny (prodloužení
   0,4; při 0,7 už 120, při 1,0 138), hloubka 48 procent výšky koruny (předtím 40), nad zemí 0 větviček. Čeká na ownerův pohled.
 - Affected doc(s): `RUNAR_TREE.md` §2 (kořeny), `RUNAR_BACKLOG.md` (položka pokusu, Berkanin kořen) — v témže commitu.
+
+## 2026-10-10 (29) — Islandský počet podle číslovky (21 = jednotné číslo) a štítek deníku „síðustu {n}“
+
+- **Rozhodl:** CODE-tune — islandská gramatika je 🔒 (externě ukotvená), §2: IS se opravuje ověřeně, neodkládá. Podnět: BACKLOG
+  „Kontrola návštěvníka“, položka za bodem 3 (počet v deníku pro 1 čtení).
+- **Co:** `vn()` dává islandsky jednotné číslo po každé číslovce končící na 1 kromě 11 („1 / 21 / 31 / 101 spá“, „21 lestur“); do té
+  doby jen pro 1, takže „21 spár“. Deník: počet všech čtení (Standard) = `vn('reading')` („1 lestur“, „5 lestrar“ / „1 reading“,
+  „5 readings“), posledních pár (ostatní) = „síðustu {n}“ / „last {n}“; jedno čtení vždy „1 lestur“ / „1 reading“. Dřív „1 lestrar“,
+  „1 readings“ a islandský štítek posledních čtení jako kalk z „last N“ (teď v check-is.py BAD_PATTERNS).
+- **Doklad (Risamálheild, `is-vazba.py --freq`):** „og einn dagur“ 278 × „og einn dagar“ 0; starý štítek 2 výskyty × „síðustu fimm“
+  13 235; „einn lestur“ 15, „tveir lestrar“ 3. Číslice korpus nevede, proto rozepsané číslovky.
+- **Ověřeno:** v prohlížeči deník pro 1, 2, 5, 11, 21 čtení × Standard / Rune Seeker × EN / IS a `vn('cast')` pro 1, 11, 21, 31, 111;
+  smoke 65/65.
+- Affected doc(s): — (texty bydlí v UI_TEXT a VOCAB)
