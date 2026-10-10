@@ -822,8 +822,10 @@ var RUNE_Q_LINE = {
 //   (2026-07-10, "-971 lines, drift surface"). The defs below are NEVER called.
 //   Do NOT wire into production without a decision -- reviving them brings back
 //   the drift layer that was deliberately removed. Production imagery lives in
-//   SEASON_POOLS (runar-character.js), injected per-reading by _seasonalImagery
+//   RUNE_IMAGES (rune-keyed), injected per-reading by _seasonalImagery
 //   (user-prompt path, which the model obeys).
+//   2026-10-10 (CODE-read): until then this said "SEASON_POOLS" — those never reach a
+//   reading (CLAUDE.md "Obraznost", verified by pushing through 2026-09-08).
 // Which dimension of the rune leads the reading.
 const READING_ASPECTS = [
   'shadow — what this rune quietly demands, not what it offers; the cost beneath the gift',

@@ -2097,7 +2097,24 @@ jazycích: editor charakteru a test hlasu (`char_*`, `test_*`, `save_char_btn`, 
 `st_no_versions`, `st_no_table`, `st_name_req`, `st_listening`, `runar_responds`), starý formulář (`dob_lbl`, `area_hint`, `seek_hint`,
 `intention_hint`, `commit_btn`, `continue_btn`, `setup_someone_lbl`, `reading_ready_note`), staré Norny (`spread3_*`, `ritual_3readings`),
 `tab_reader`, `error_prefix`, `visitor_label`, `tree_signin_note`, `rs_banner_counter`.
-- ⚪ **Pro CODE-tune (f):** smazat těch 35 z `runar-translations.js` (EN i IS) a vyškrtnout je z `BASELINE` ve `verify_ui_text_used.js`.
+- ✅ *(CODE-tune 2026-10-10, f424aee: 35 klíčů pryč EN i IS, BASELINE ㉽ prázdný; ověřeno CODE-read — ㉽ „335 klíčů, 0 mrtvých“)* **(f):** smazat těch 35 z `runar-translations.js` (EN i IS) a vyškrtnout je z `BASELINE` ve `verify_ui_text_used.js`.
+
+### Část 21 — mrtvý kód: top-level konstanty a funkce ve `v2/*.js`, na které nic neodkazuje (2026-10-10)
+Metoda: každé `const/let/var/function` na nejvyšší úrovni, jehož jméno se mimo definici a komentáře neobjeví v žádném `v2/*.js|html`
+(16 kandidátů), pak `git grep -w` přes celé repo + komentář u definice.
+**Mrtvé záměrně (komentář to říká, nechat):** `buildSysPromptV2`, `_lensContext` (laboratoř, §26) · `_randomAspect/_randomImagery/
+_randomRegister/_randomPlacement` + jejich pooly (ve `runar-utils.js`, „NEVER called… do NOT wire without a decision“) · `TREE_UPDATE`
+(adresa nenasazené `tree-update`, kód pro CODE-tree) · `PATTERN_WINDOW`, `TRANSFORMATION_PAIRS` (čekají na `detectPatterns`).
+**Opraveno (CODE-read):** komentář u mrtvých poolů v `runar-utils.js` posílal do `SEASON_POOLS` jako „produkční obraznosti“ — ty se do
+čtení nedostanou (CLAUDE.md „Obraznost“); teď `RUNE_IMAGES`. Jen komentář.
+- ⚪ **Pro CODE-tune (g):** (1) `runar-app.js` `FREE_TRIAL_LIMIT`, `DELAY_TRIAL_END` — zkušební čtení návštěvníka zrušené (od 2026-08-02,
+  `TIER_LIMITS.free_trial.onboarding` sám říká „historické“); hlavičky `runar-auth.js:6` a `runar-reading.js:7–8` je dál vypisují.
+  (2) `_updatePrivacyBannerText`, `dismissPrivacyBanner` (nikdo nevolá) a `_initPrivacyBanner` (volá se, ale je prázdný) — mrtvý řetěz
+  starého banneru. (3) `DEF_CHAR` = alias na `DEF_CHAR_EN`, nikdo ho nečte (shrine ho jen zmiňuje v komentáři). (4) `EL_VOICE_SETTINGS`
+  v configu nikdo nečte — nastavení hlasu mají obě edge funkce vlastní (třetí kopie, §20). (5) `runar-app.js` ~45–47 osiřelý komentář
+  „Reading angles…“ bez kódu pod ním. (6) `AETTY` (`runar-runes.js`) — komentář „Used for: pattern detection, visual pulse, Gathering
+  triggers“, nic z toho nepostaveno a nic ho nečte → buď „rezervováno pro detectPatterns“, nebo pryč; CLAUDE.md ho vede mezi daty, která
+  „čtou obě session“.
 
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
