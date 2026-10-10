@@ -410,7 +410,7 @@ function applyContent() {
   // Balíčky kreditů z configu (CARD_PACKS) — jediné místo; € sloupec pryč, dokud owner € ceny neurčí (DECISIONS 2026-10-10 (22)).
   var _pb = document.getElementById('pt-body');
   if (_pb && typeof CARD_PACKS !== 'undefined') _pb.innerHTML = CARD_PACKS.map(function (p) {
-    return '<tr><td>' + p.name + '</td><td>' + p.credits + '</td><td>' + String(p.isk).replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' kr</td></tr>';
+    return '<tr><td>' + cardPackName(p, lang) + '</td><td>' + p.credits + '</td><td>' + String(p.isk).replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' kr</td></tr>';
   }).join('');
   buildFaq(c.faq || []);
 }

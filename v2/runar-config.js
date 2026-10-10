@@ -355,15 +355,22 @@ const TIER_LIMITS = {
 // ─── BALÍČKY KREDITŮ (Rúnakort) ──────────────────────────────────────────────────
 // KUKY 2026-10-10 (DECISIONS 2026-10-10 (22)): „starter 5, seeker 10, walker 20, wanderer 30, Elder 50… jinak platí ceny 3.6.“ Jediné
 // místo balíčků v kódu — nápověda (runar-help.html) z něj skládá tabulku; do té doby tam stála vlastní kopie z 2026-05-20 (Elder 50 =
-// 11.900 kr, ceny v €). Ceny v ISK; € owner neurčil (§23). Jména rozhodl anglicky — islandská zatím nejsou (otázka na ownera).
-// ⚠️ „Walker“ a „Wanderer“ jsou i části jmen tarifů (TIERS.*.label): u balíčku vždy s počtem kreditů.
+// 11.900 kr, ceny v €). Ceny v ISK; € owner neurčil (§23).
+// Jména = jména účtů, kde je mají — KUKY 2026-10-10: „walker máme i jména účtu, proto jsem to udělal tak, že to jsou i jména credity
+// plus elder… IS walker máš! je to stejné jako IS účet Walker.“ Balíček s `tier` bere jméno z TIERS (EN bez „Rune“, IS celé), takže se
+// s účtem nerozejde; Starter a Elder účet nemají a jméno mají jen anglické (i v IS). U balíčku vždy s počtem kreditů.
 const CARD_PACKS = [
-  { name: 'Starter',  credits: 5,  isk: 1490 },
-  { name: 'Seeker',   credits: 10, isk: 2490 },
-  { name: 'Walker',   credits: 20, isk: 4490 },
-  { name: 'Wanderer', credits: 30, isk: 6490 },
-  { name: 'Elder',    credits: 50, isk: 9990 },
+  { name: 'Starter',     credits: 5,  isk: 1490 },
+  { tier: 'rune_seeker', credits: 10, isk: 2490 },
+  { tier: 'standard',    credits: 20, isk: 4490 },
+  { tier: 'premium',     credits: 30, isk: 6490 },
+  { name: 'Elder',       credits: 50, isk: 9990 },
 ];
+function cardPackName(p, lng) {
+  var T = p.tier && typeof TIERS !== 'undefined' ? TIERS[p.tier] : null;
+  if (!T) return p.name;
+  return lng === 'is' ? T.label_is : T.label.replace(/^Rune\s+/, '');
+}
 
 // ─── TIER FEATURES — co tier umí, SLOŽENÉ z nastavení (2026-09-26) ──────────────
 // KUKY: „chtělo by to dělat tak, abychom to pořád nemuseli dělat manuálně. věci přibývají a odpadají.“ Do té doby byl výpis psaný

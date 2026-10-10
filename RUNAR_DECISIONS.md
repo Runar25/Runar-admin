@@ -9589,3 +9589,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   (dnes 63 %), hloubka 39 % výšky koruny (dnes 39 %), kořínků nad zemí 3 z 64 (dnes 1 ze 125); kořenů je 7 (prameny), dnes 17. Se směrem 60°
   stejná šířka a 5 kořínků nad zemí. Na plnou šířku koruny by musely být kořeny delší — to už je změna kořene, čeká na ownera.
 - Affected doc(s): `RUNAR_TREE.md` §2 (kořeny), `RUNAR_BACKLOG.md` (položka pokusu) — v témže commitu.
+
+## 2026-10-10 (24) — Jména balíčků kreditů = jména účtů; islandsky taky (Leitandi, Vegfarandi, Ferðalangur)
+
+- **Rozhodl:** KUKY 2026-10-10 na otázku CODE-tune k islandským jménům balíčků: *„walker máme i jména účtu, proto jsem to udělal tak, že
+  to jsou i jména credity plus elder. takže IS walker máš! je to stejné jako IS účet Walker. dodělej to.“* **Provedl:** CODE-tune.
+- **Co:** `CARD_PACKS` (runar-config.js) — balíček Seeker / Walker / Wanderer odkazuje na účet (`tier`) a jméno bere z `TIERS`: anglicky
+  bez „Rune“ (Seeker, Walker, Wanderer), islandsky celé `label_is` (Leitandi, Vegfarandi, Ferðalangur). Jméno účtu je tak jediné místo
+  i pro balíček. Starter a Elder účet nemají — jméno jen anglické, i v IS. Nápověda skládá tabulku přes `cardPackName`.
+- **Ověřeno v náhledu:** tabulka EN „Starter · Seeker · Walker · Wanderer · Elder“, IS „Starter · Leitandi · Vegfarandi · Ferðalangur ·
+  Elder“, ceny z (22).
+- Affected doc(s): — (`RUNAR_PRICING.md` odkazuje na config, nic neopisuje)
+- Odvolává se na: 2026-10-10 (22).
