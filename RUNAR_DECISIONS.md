@@ -9637,3 +9637,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   Berkanin o sedm (její větvičky rostou vzhůru); větviček nad zemí 3 → 0 (dnes v labu 1); šířka kořenů 79 → 69 procent koruny, hloubka beze
   změny (40 procent výšky koruny). Čeká na ownerův pohled.
 - Affected doc(s): `RUNAR_TREE.md` §2 (kořeny), `RUNAR_BACKLOG.md` (položka pokusu, Berkanin kořen) — v témže commitu.
+
+## 2026-10-10 (28) — Strom: kořen se ohýbá a prodlužuje, nikdy neruší ani neotáčí celý; co leze nahoru do koruny, se u povrchu ohne dolů (nanečisto; opravuje (27))
+
+- **Rozhodl:** KUKY 2026-10-10 k pokusu (27): *„ty jsi ty kořeny zrušil místo toho, abys je ohnul dolů!!! nechápeš, co ti říkám!!! že máš ohýbat,
+  prodlužovat, ale neničit!!!“* **Provedl:** CODE-tree, jen nanečisto.
+- **Platí (vedle (23)):** kořen se smí ohnout a prodloužit; nikdy se neruší, neodebírá ani neotáčí celý. Část kořene nebo větvičky, která by šla nad
+  zem, se u povrchu plynule ohne dolů — stejně daleko, jen pod zem (tvar i délka zůstávají). Délka: × (1 + 0,4 × sinus úhlu od svislice dolů) —
+  kořen mířící do strany je delší, svislý beze změny.
+- ✖ **Nevracet:** (27) natočení celého kořene ke svislici, dokud nepřestane lézt nahoru — Berkanin kořen se otočil o sedm kroků skoro svisle,
+  pravá strana přišla o šířku (79 → 69 procent koruny) a pro ownera kořeny „zmizely“.
+- **Změřeno na jeho stromě** (patch `docs/archive/tree/2026-10-10_nanecisto_ramena_koreny.patch`): 25 kořenů, šířka 103 procent koruny (prodloužení
+  0,4; při 0,7 už 120, při 1,0 138), hloubka 48 procent výšky koruny (předtím 40), nad zemí 0 větviček. Čeká na ownerův pohled.
+- Affected doc(s): `RUNAR_TREE.md` §2 (kořeny), `RUNAR_BACKLOG.md` (položka pokusu, Berkanin kořen) — v témže commitu.
