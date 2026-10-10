@@ -13,13 +13,8 @@ const fs = require('fs'), path = require('path'), vm = require('vm');
 const V2 = path.join(__dirname, '..', 'v2');
 
 // Stav 2026-10-10 (CODE-read). Smazat je = doména CODE-tune (runar-translations.js, EN i IS najednou); pak je odsud vyškrtni.
-const BASELINE = new Set([
-  'tab_reader', 'commit_btn', 'setup_someone_lbl', 'reading_ready_note', 'dob_lbl', 'area_hint', 'seek_hint', 'intention_hint',
-  'ritual_3readings', 'spread3_pos_past', 'spread3_pos_present', 'spread3_pos_future', 'spread3_draw_note',
-  'char_lbl', 'char_note', 'test_lbl', 'test_note', 'test_ph', 'test_btn', 'runar_responds', 'version_lbl', 'preview_btn',
-  'save_char_btn', 'st_listening', 'st_char_saved', 'st_char_memory', 'st_restored', 'st_name_req', 'st_no_versions', 'st_no_table',
-  'continue_btn', 'error_prefix', 'visitor_label', 'tree_signin_note', 'rs_banner_counter',
-]);
+// 2026-10-10 CODE-tune: všech 35 smazáno z runar-translations.js (EN i IS) — ráčna na nule.
+const BASELINE = new Set([]);
 
 function prefixy(src) {
   const out = new Set();

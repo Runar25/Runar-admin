@@ -14,7 +14,6 @@ const UI_TEXT = {
     // Tabs
     tab_teach:    'TEACH RÚNAR',
     tab_progress: 'PROGRESS',
-    tab_reader:   '⚗ V2 LAB',
     tab_correct:  'WORD CORRECTIONS',
     progress_lbl: '♦ AUDIO PROGRESS',
 
@@ -26,7 +25,6 @@ const UI_TEXT = {
     invoke_btn:         '↯ LET RÚNAR SPEAK',
     runar_speaks:       'RÚNAR SPEAKS',
     teach_edit_lbl:     'EDIT BEFORE SAVING — CHANGES APPLY TO BOTH TEXT AND VOICE',
-    commit_btn:         'COMMIT TO RÚNAR’S MEMORY',
     teach_audio_lbl:    '♪ RÚNAR SPEAKS — PREVIEW',
     teach_save_btn:     'SAVE VOICE TO MEMORY',
     teach_next_btn:     'ᚠ TEACH ANOTHER RUNE',
@@ -65,19 +63,13 @@ const UI_TEXT = {
     journal_teaser:       'Every reading you have ever taken is kept. Move to {tier} to open your full journal.',
     journal_teaser_count: 'Every reading you have ever taken is kept — {count} in total. Move to <strong style="color:var(--gold);font-style:normal;">{tier}</strong> to open your full journal.',   // 2026-09-30: dřív natvrdo v runar-journal.js
     tree_growth_quote:    '<em>"The tree does not grow between visits.<br>It grows through them — slowly,<br>the way birch roots find water under stone.<br>Each rune you draw is already here.<br>Come back. The tree remembers."</em>',
-    setup_someone_lbl:    '✦ READING FOR SOMEONE',
     setup_someone_note:   'Enter the name of the person you are reading for. This reading will not be added to your journal.',
     setup_for_name_lbl:   'NAME',
     setup_for_name_ph:    'Name or nickname',
-    reading_ready_note:   'Tell me where to look. The rune speaks for itself.',
-    dob_lbl:          'DATE OF BIRTH',
     day_ph:           'Day',
     month_ph:         'Month',
     area_lbl:         'AREA OF LIFE',
     // 2026-09-29 (KUKY bod 4: jen jedna věta, „není potřeba to víc vysvětlovat, alespoň ne zatím“) — rozbalí „+“ u popisku.
-    area_hint:        'The area tells Rúnar where in your life to let the picture land.',
-    seek_hint:        'This sets the tone.',
-    intention_hint:   'This sets the time the reading speaks to.',
     seek_lbl:         'WHAT ARE YOU SEEKING?',
     intention_lbl:    'THIS READING IS FOR',
     report_btn:       'Report a note',
@@ -160,7 +152,6 @@ const UI_TEXT = {
     voice_btn_done:    '♪ RÚNAR HAS SPOKEN',
     voice_player_lbl:  '♪ RÚNAR SPEAKS',
 
-    ritual_3readings:         "3 READINGS",
     spread3_mode_single:      "SINGLE RUNE",
     spread_mode_norns:        "NORNS",
     spread_mode_kriz:         "COMPASS",
@@ -172,10 +163,6 @@ const UI_TEXT = {
     jf_all_areas:             "All areas",
     jf_spreads:               "✦ Spreads",
     slot_remove_hint:         "click to remove",
-    spread3_pos_past:         "PAST",
-    spread3_pos_present:      "PRESENT",
-    spread3_pos_future:       "FUTURE",
-    spread3_draw_note:        "Draw three runes — past, present, future. Let each call to you in turn.",
 
     // Corrections tab
     corr_lbl:       '✒ WORD CORRECTIONS',
@@ -195,33 +182,15 @@ const UI_TEXT = {
     no_corr:        'No corrections yet.',
 
     // Character tab
-    char_lbl:       '\u{1F464} RÚNAR’S IDENTITY',
-    char_note:      'This is who Rúnar is. Edit freely — changes take effect on the next invocation.',
-    test_lbl:       '\u{1F9EA} TEST RÚNAR’S VOICE',
-    test_note:      'Type something and hear how Rúnar responds with the current character.',
-    test_ph:        'e.g. I drew Fehu today and I feel stuck…',
-    test_btn:       'TEST CURRENT CHARACTER',
-    runar_responds: 'RÚNAR RESPONDS',
-    version_lbl:    '\u{1F4DC} VERSION HISTORY',
-    preview_btn:    'PREVIEW FULL PROMPT',
-    save_char_btn:  'SAVE CHARACTER',
 
     // Status messages
     st_traversing:   'Rúnar is traversing the realms…',
     st_spoken:       '✓ Rúnar has spoken. Review and commit.',
-    st_listening:    'Listening…',
     st_saving:       'Saving…',
     st_saved:        '✓ Saved.',
     st_saved_local:  '✓ Saved locally.',
-    st_char_saved:   '✓ Character saved.',
-    st_char_memory:  '✓ Updated in memory.',
-    st_restored:     '✓ Version restored.',
-    st_name_req:     'Please enter your name.',
     st_fill_fields:  'Fill in both fields.',
-    st_no_versions:  'No saved versions yet.',
-    st_no_table:     'Create runar_character table to enable history.',
     // ── Reader UI (added refactor #6) ──────────────────────
-    continue_btn:       'CONTINUE',
     dam_title:          'DELETE YOUR ACCOUNT?',
     delete_btn:         'DELETE',
     cancel_btn:         'CANCEL',
@@ -234,7 +203,6 @@ const UI_TEXT = {
     audio_none:         '\u2014 No audio available',
     audio_playing:      '\u266a NOW PLAYING',
     audio_error:        '\u2014 Error',
-    error_prefix:       'Error: ',
     gift_card_btn:      '+ GET A {card}',
     become_rs_btn:      'BECOME A RUNE SEEKER \u2192',
     install_title:      'INSTALL R\u00daNAR',
@@ -253,8 +221,6 @@ const UI_TEXT = {
     // 2026-10-09: čtení píše OpenAI, Anthropic jen jako záloha (DECISIONS 2026-10-09 (13)); znění = docs/inbox/2026-09-30-navrh-textu-soukromi.md C.
     tcm_body: 'To help us make the readings better, we store the readings you draw and review their text and the details you enter, to improve the quality of Rúnar. For a reading to exist at all, the details you enter are sent to OpenAI, which writes it (or to Anthropic, if OpenAI is unavailable), and its text to ElevenLabs for the voice — all in the United States. Neither OpenAI nor Anthropic uses them to train its models, and each keeps them for no more than 30 days, to check for misuse. What we keep is stored in the EU, we never sell it, and you can ask us to delete it at any time. You can stop testing whenever you like.',
     tcm_agree: 'I AGREE',
-    visitor_label:      'VISITOR',
-    tree_signin_note:   'Sign in to discover your life rune.',
     tree_visitor_dob:   'Your life rune is written into the day you were born. Enter it, and see which one you carry.',
     tree_visitor_read:  'Sign in to read what this rune carries.',
     // 2026-09-27 (KUKY „ano zapoj“; DECISIONS 2026-09-27 (5)): odkud životní runa je. Autora nejmenuje (owner), ale přiznává, že
@@ -419,7 +385,6 @@ const UI_TEXT = {
     },
     // ── Dynamic banner strings — used via tp(), vars: {casts}, {casts_month}, {units}, {card}, {n}, {rune}, {bal}, {UNITS}
     // Rule §10: ALL user-visible strings here. tp() in logic files. Adding a language = add block here only.
-    rs_banner_counter:  '{casts} remaining',
     rs_banner_desc:     'You walk as <strong>Rune Seeker</strong> \u2014 {casts_month} to begin, all twenty-five runes open, R\u00fanar listening.<br><br>When it is drawn and the stones still have more to say, a {card} keeps the door open. One card. As many readings as you carry. No subscription, no expiry.',
     rs_credits_counter: '{units} remaining',
     rs_credits_desc:    'Your free rune reading is used. R\u00fanar will draw from your {units} from here on.',
@@ -532,7 +497,6 @@ const UI_TEXT = {
     // Tabs
     tab_teach:    'KENNA RÚNARI',
     tab_progress: 'FRAMVINDA',
-    tab_reader:   '⚗ V2 RANNSÓKNARSTOFA',
     tab_correct:  'ORÐALEIÐRÉTTINGAR',
     progress_lbl: '♦ HLJÓÐFRAMVINDA',
 
@@ -544,7 +508,6 @@ const UI_TEXT = {
     invoke_btn:         '↯ LÁTUM RÚNAR TALA',
     runar_speaks:       'RÚNAR TALAR',
     teach_edit_lbl:     'BREYTA ÁÐUR EN VISTAÐ — BREYTINGAR GILDA BÆÐI FYRIR TEXTA OG RÖDD',
-    commit_btn:         'VISTA Í MINNI RÚNARS',
     teach_audio_lbl:    '♪ RÚNAR TALAR — FORSKOÐUN',
     teach_save_btn:     'VISTA RÖDD Í MINNI',
     teach_next_btn:     'ᚠ KENNA AÐRA RÚN',
@@ -585,18 +548,12 @@ const UI_TEXT = {
     journal_teaser:       'Sérhver lestur sem þú hefur tekið er geymdur. Farðu yfir í {tier} til að opna fulla króniku þína.',
     journal_teaser_count: 'Sérhver lestur sem þú hefur tekið er geymdur — {count} samtals. Farðu yfir í <strong style="color:var(--gold);font-style:normal;">{tier}</strong> til að opna fulla króniku þína.',   // {tier} ve 4. pádě (tierLabel)
     tree_growth_quote:    '<em>"Tréð vex ekki milli heimsókna.<br>Það vex í gegnum þær — hægt,<br>eins og bjarkarrætur finna vatn undir steini.<br>Sérhver rún sem þú dregur er þegar hér.<br>Komdu aftur. Tréð man."</em>',
-    setup_someone_lbl:    '✦ SPÁ FYRIR AÐRA',
     setup_someone_note:   'Sláðu inn nafn þess sem þú ert að spá fyrir. Þessi spá fer ekki í dagbókina þína.',
     setup_for_name_lbl:   'NAFN',
     setup_for_name_ph:    'Nafn eða gælunafn',
-    reading_ready_note:   'Segðu mér hvert ég á að líta. Rúnin talar sínu máli.',
-    dob_lbl:          'FÆÐINGARDAGUR',
     day_ph:           'Dagur',
     month_ph:         'Mánuður',
     area_lbl:         'SVIÐ LÍFSINS',
-    area_hint:        'Sviðið segir Rúnari hvar í lífi þínu myndin á að lenda.',   // 2026-09-29 viz EN; is-grammar-qa čisté
-    seek_hint:        'Þetta ræður tóninum.',
-    intention_hint:   'Þetta ræður því um hvaða tíma lesturinn talar.',
     seek_lbl:         'HVAÐ ERTU AÐ LEITA AÐ?',
     intention_lbl:    'ÞESSI LESTUR ER FYRIR',
     report_btn:       'Tilkynna athugasemd',
@@ -674,7 +631,6 @@ const UI_TEXT = {
     voice_player_lbl:  '♪ RÚNAR TALAR',
 
     // Ritual names — change here, reflects everywhere
-    ritual_3readings:         "3 LESTRAR",
     spread3_mode_single:      "EIN RÚN",
     spread_mode_norns:        "NORNIR",
     spread_mode_kriz:         "ÁTTAVITI",
@@ -686,10 +642,6 @@ const UI_TEXT = {
     jf_all_areas:             "Öll svið",
     jf_spreads:               "✦ Lagnir",
     slot_remove_hint:         "smelltu til að fjarlægja",
-    spread3_pos_past:         "FORTÍÐ",
-    spread3_pos_present:      "NÚTÍÐ",
-    spread3_pos_future:       "FRAMTÍÐ",
-    spread3_draw_note:        "Dragðu þrjár rúnur — fortíð, nútíð, framtíð. Leyfðu hverri að kalla til þín.",
 
     // Corrections tab
     corr_lbl:       '✒ ORÐALEIÐRÉTTINGAR',
@@ -709,33 +661,15 @@ const UI_TEXT = {
     no_corr:        'Engar leiðréttingar enn.',
 
     // Character tab
-    char_lbl:       '\u{1F464} PERSÓNULEIKI RÚNARS',
-    char_note:      'Þetta er hver Rúnar er. Breyttu frjálslega — breytingar taka gildi við næstu köllun.',
-    test_lbl:       '\u{1F9EA} PRÓFAÐU RÖDD RÚNARS',
-    test_note:      'Skrifaðu eitthvað og heyrðu hvernig Rúnar svarar með núverandi persónuleika.',
-    test_ph:        'T.d. Ég dró Fehu í dag og finn mig standa í stað…',
-    test_btn:       'PRÓFA NÚVERANDI PERSÓNULEIKA',
-    runar_responds: 'RÚNAR SVARAR',
-    version_lbl:    '\u{1F4DC} ÚTGÁFUSAGA',
-    preview_btn:    'FORSKOÐUN',
-    save_char_btn:  'VISTA PERSÓNULEIKA',
 
     // Status messages
     st_traversing:   'Rúnar fer um heimana…',
     st_spoken:       '✓ Rúnar hefur talað.',
-    st_listening:    'Hlustandi…',
     st_saving:       'Vistandi…',
     st_saved:        '✓ Vistað.',
     st_saved_local:  '✓ Vistað staðbundið.',
-    st_char_saved:   '✓ Persónuleiki vistaður.',
-    st_char_memory:  '✓ Uppfært í minni.',
-    st_restored:     '✓ Útgáfa endurreist.',
-    st_name_req:     'Vinsamlegast sláðu inn nafnið þitt.',
     st_fill_fields:  'Fylltu í bæði svæðin.',
-    st_no_versions:  'Engar vistaðar útgáfur enn.',
-    st_no_table:     'Búðu til runar_character töflu til að virkja sögu.',
     // ── Reader UI (added refactor #6) ──────────────────────
-    continue_btn:       'HALDA \u00c1FRAM',
     dam_title:          'EY\u00d0A REIKNINGI?',
     delete_btn:         'EY\u00d0A',
     cancel_btn:         'H\u00c6TTA VI\u00d0',
@@ -748,7 +682,6 @@ const UI_TEXT = {
     audio_none:         '\u2014 Ekkert hljó\u00f0 tiltækt',
     audio_playing:      '\u266a SPILANDI',
     audio_error:        '\u2014 Villa',
-    error_prefix:       'Villa: ',
     gift_card_btn:      '+ {card}',
     become_rs_btn:      'GERAST LEITANDI \u2192',
     install_title:      'SETJA INN R\u00daNAR',
@@ -766,8 +699,6 @@ const UI_TEXT = {
     tcm_title: '\u00de\u00da ERT PR\u00d3FARI FYRIR R\u00daNAR',
     tcm_body: 'Til að hjálpa okkur að bæta lestrana geymum við lestrana sem þú dregur og förum yfir texta þeirra og upplýsingarnar sem þú slærð inn. Til að lestur verði til eru upplýsingarnar sem þú slærð inn sendar til OpenAI, sem semur hann. Ef OpenAI svarar ekki fara þær til Anthropic. Texti lestursins fer til ElevenLabs sem ljær honum rödd. Öll þessi fyrirtæki eru í Bandaríkjunum. Hvorki OpenAI né Anthropic notar þær til að þjálfa gervigreind sína, og hvort um sig geymir þær ekki lengur en í 30 daga til að fylgjast með misnotkun. Það sem við geymum er geymt innan EES, við seljum það aldrei, og þú getur beðið um að því verði eytt hvenær sem er. Þú getur hætt að prófa hvenær sem þér hentar.',
     tcm_agree: '\u00c9g sam\u00feykki',
-    visitor_label:      'GESTUR',
-    tree_signin_note:   'Skr\u00e1\u00f0u þig til a\u00f0 uppgötva l\u00edfsr\u00fanuna þ\u00edna.',
     tree_visitor_dob:   'Lífsrúnin þín er skrifuð í daginn sem þú fæddist. Sláðu inn fæðingardaginn og sjáðu hvaða rún þú berð.',
     tree_visitor_read:  'Skráðu þig til að lesa hvað þessi rún ber.',
     // IS vymyšleno islandsky, ne přeloženo; is-grammar-qa čisté, korpus: komst í heiminn 158, hálfa mánuði 157, sólin var í 19, úr fornöld 223.
@@ -922,7 +853,6 @@ const UI_TEXT = {
       Blank: ['Auða rúnin ber engin merki, ekkert sem þú getur stuðst við. Hún er eins og hlé í miðri sögu.', 'Í lestri horfir þú á það sem er að gerast í myndinni, áður en þú getur sagt hvað það er. Hér er það ekki rúnin sem talar, heldur þitt eigið líf.', 'Hún ákveður ekkert og spáir ekki fyrir um framtíðina. Ef þú flýtir þér að fylla í eyðuna, getur þú falið það sem er rétt byrjað að koma í ljós.', 'Eftir stendur spurningin: Hvað er það í lífi þínu sem hefur enn ekki fengið nafn — og getur þú látið það standa opið um stund?'],
     },
     // ── Dynamic banner strings — notaðar með tp(), breytur: {casts}, {casts_month}, {units}, {card}, {n}, {rune}, {bal}, {UNITS}
-    rs_banner_counter:  '{casts} eftir',
     rs_banner_desc:     'Þú gengur sem <strong>Leitandi</strong> \u2014 {casts_month} til að byrja, allar tuttugu og fimm rúnirnar opnar, Rúnar hlustandi.<br><br>Þegar hún er gengin og steinarnir eiga enn eftir að segja, opnar {card} dyrnar. Eitt kort. Jafn margar spár og þú berð. Enginn gildistími, engin áskrift.',
     rs_credits_counter: '{units} eftir',
     rs_credits_desc:    'Frjáls spá þín er uppgengin. Næsta spá verður tekin úr inneign þinni.',
