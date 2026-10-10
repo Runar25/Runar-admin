@@ -476,9 +476,8 @@
   (kopie koruny ✖, `…_ramena.patch` jen historie) a *„kořenů je málo.. každý pramen na větve a to by cca mělo být vidět v kořenech“*. Patch
   `docs/archive/tree/2026-10-10_nanecisto_ramena_koreny.patch`: 6 ramen střídavě vlevo a vpravo (26–76 % kmene), na straně rameno + 3, + 3, + 2,
   vrchol + 2; délky ×1,33 → ×1,0; kořeny původní stavby, 25 (každá větev svůj): hlavní natočené (vůdčí dolů, na straně 52° / 34° / 17°), vedlejší
-  z kořene matky zrcadlově k odbočce; kořeny prodloužené podle toho, jak míří do strany, a co by šlo nad zem, je u povrchu ohnuté dolů.
-  Šířka kořenů 103 % koruny, hloubka 48 % výšky koruny. DECISIONS 2026-10-10
-  (17), (21), (23), (26), (27), (28). Čeká na ownerův pohled.
+  z kořene matky zrcadlově k odbočce (verze (26); prodloužení a ohnutí z (28) owner nechce). Šířka kořenů 79 % koruny. DECISIONS 2026-10-10
+  (17), (21), (23), (26), (27), (28), (30). Další krok: jak ramena a vedlejší větve skládat technicky (návrh ownerovi 2026-10-10).
 - [x] ✖ **Strom: obrys stromu života (dóm) — ZAMÍTNUTO** (KUKY 2026-10-10: *„chybí tomu úplně všechno. je to zrůda! … takže ne. není to dobré
   a žádná oprava tvého návrhu to nezlepší“*). Nevracet konce větví na kruh ani vějíř podle výšky. Původně (CODE-tree, 2026-10-10). KUKY s pěti obrázky stromu života: *„spodní větve
   jako nejstarší, největší a nejdelší. koruna více zarovnaná do půloblouku, u kořenů to samé. to naše vypadá jako strom, ale my neděláme
@@ -492,7 +491,7 @@
 - [ ] **Strom (lab): Berkanin kořen má větvičky nad zemí** (CODE-tree, nalezeno 2026-10-10 při pokusu s kořeny). Na KUKYho stromě dnes jedna
   větvička kořene Berkany vyleze 42 px nad zem (v pokusu se 25 kořeny tři, až 72 px) — ostatní runy ne. Příčina asi tvar runy v branch composeru
   (větvičky Berkany míří vzhůru i u kořene). Ověřit v `runar-branch.js` (`RUNE_CHAR` / `RUNE_TUNE` berkano) a rozhodnout s ownerem — kořen se
-  nepředělává (DECISIONS 2026-10-10 (23)). V pokusu vyřešeno ohnutím dolů u povrchu (DECISIONS 2026-10-10 (28)); v labu zůstává do zapnutí.
+  nepředělává (DECISIONS 2026-10-10 (23)). V pokusu (26) zůstává (ohnutí z (28) owner nechce, DECISIONS 2026-10-10 (30)); v labu taky.
 - [ ] **Strom (lab): `AREA_LAT` odporuje „oblast = strana“** (CODE-tree, nalezeno 2026-10-09). Tabulka v `runar-branch.js` (sdílená
   s aplikací) bere Love −0,75 (nitro), Spirituality −0,20 (skoro střed), Crossroads +0,10 — kánon (`RUNAR_TREE.md` §3) má Love a Crossroads
   bez strany a Spirituality ve světě. Čte ji strana větvičky (`sideOf`), natočení ramene za čteními (`latOf` / `areaSide`) i lateral

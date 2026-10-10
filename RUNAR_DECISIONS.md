@@ -9664,3 +9664,11 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno:** v prohlížeči deník pro 1, 2, 5, 11, 21 čtení × Standard / Rune Seeker × EN / IS a `vn('cast')` pro 1, 11, 21, 31, 111;
   smoke 65/65.
 - Affected doc(s): — (texty bydlí v UI_TEXT a VOCAB)
+
+## 2026-10-10 (30) — Strom: platí pokus s kořenem pro každou větev (26) — bez prodloužení a ohnutí z (28)
+
+- **Rozhodl:** KUKY 2026-10-10 po porovnání (26) a (28) vedle sebe: *„radši tu předešlou verzi.“* **Provedl:** CODE-tree, nanečisto.
+- **Platí:** pokus (26) — 25 kořenů původní stavby, hlavní natočené, vedlejší z kořene matky; patch `docs/archive/tree/2026-10-10_nanecisto_ramena_koreny.patch`
+  vrácen na tuto verzi. Prodloužení kořenů podle úhlu (× 1 + 0,4 × sinus) a ohnutí u povrchu z (28) se nepoužívají. Pravidlo z (28) „kořen se smí
+  ohnout a prodloužit, nikdy se neruší ani neotáčí celý“ platí dál; tři větvičky Berkanina kořene nad zemí zůstávají (`RUNAR_BACKLOG.md`).
+- Affected doc(s): `RUNAR_BACKLOG.md` (položka pokusu) — v témže commitu.
