@@ -41,7 +41,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 | Tiery, jejich jména, limity · ceny spreadů · VOCAB · SPREAD_CONFIG | `v2/runar-config.js` — **doky to NEOPISUJÍ** | 🔄 |
 | Runy, ætty, AREAS/SEEKS/INTENTIONS (+ `.norns` osy) | `v2/runar-runes.js` | 🔒 |
 | Prompty, buildery, délky čtení, IS gramatický blok | `v2/runar-character.js` | 🔒 gramatika · 📜 hlas (DEF_CHAR) |
-| Model čtení + fallback chain | `supabase/functions/claude-proxy/index.ts` MODELS | 🔄 |
+| Model čtení (`SOL_MODEL`) + záložní řetěz Claude (`MODELS`) | `supabase/functions/claude-proxy/index.ts` | 🔄 |
 | Architektura, pravidla §1+, DB sloupce, lanes a commit prefixy | `CLAUDE.md` | 🏛 |
 | Proč je něco tak, jak to je (datovaná rozhodnutí) | `RUNAR_DECISIONS.md` | log |
 | Business model, kredity, break-even, fyzické produkty | `RUNAR_PRICING.md` | 🔄 · fyz. produkt 🔒 |

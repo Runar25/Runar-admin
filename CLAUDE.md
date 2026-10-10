@@ -8,7 +8,8 @@
 AI-powered průvodce runami pro Agndofa (Island). Poetický hlas, nordická filozofie.
 Produkce: runar25.github.io/Runar-admin/v2/
 Lokální: C:\Users\zkuku\Downloads\Runar-admin\v2\
-Stack: HTML + CSS + vanilla JS · Supabase (projekt v `runar-config.js` SB_URL) · Claude API + ElevenLabs · IS primární + EN
+Stack: HTML + CSS + vanilla JS · Supabase (projekt v `runar-config.js` SB_URL) · modely čtení přes edge funkci `claude-proxy`
+(který model čte, vlastní `SOL_MODEL` + záložní `MODELS` tam — do 2026-10-10 tu stálo „Claude API“, od 2026-10-09 čte GPT-6 sol) · ElevenLabs · IS primární + EN
 
 ---
 
