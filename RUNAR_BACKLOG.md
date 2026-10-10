@@ -397,6 +397,7 @@
 
 - [x] **Gender field** — HOTOVO (kód, SW v118): selektor Hann/Hún/Hán (kk/kvk/hk=hán default) v side panelu, jen IS; ÁVARP do všech 5 IS builderů; rule#5 skloňuje dle rodu. **Čeká jen DB sloupec:** `alter table user_profiles add column if not exists address_gender text default 'hk';` (owner v SQL editoru). Do té doby jede přes localStorage.
 - [ ] **RUNAR_PRICING.md — model ref na Opus** — model čtení přepnut sonnet-4-5 → opus-4-8; cenový model může zmiňovat starý (delta zanedbatelný, hlas dominuje). Aktualizovat referenci.
+  ⚠️ 2026-10-10 (CODE-read, kontrola architektury): od 2026-10-09 čte GPT-6 sol (`SOL_MODEL`), Opus je jen záloha — položka platí dál, ale cíl je sol, ne Opus. Totéž → část 17 níž (štítky „Claude API“ v tabulkách).
 
 ## Multijazyčnost
 
@@ -544,7 +545,7 @@
 
 - [x] **Fáze B1 — segment highlight** (owner vize 2026-07-10) — HOTOVO + OVĚŘENO (SW v165): ťuk na runu → její text-segment **zezlátne**, ostatní text **beze změny** (owner: žádné ztlumení, subtilní; „někdo si skoro nevšimne, to je cajk"). `_parseSegments` vrací `segs`; `_renderSegments` = per-runa spany (`.rseg data-seg`) po `stream()`; tap toggle v `runar-rune-popup.js`; CSS `.rseg.on{color:var(--gold)}`. Hlas beze změny (innerText netknutý), žádný náklad ani změna promptu. Jen spready (2+ run); single plain. Mapování dle POZICE (index) = robustní (řeší Kříž +1).
 - [~] **Fáze B2 — deeper_meaning reveal** — **ZRUŠENO (owner 2026-07-10): nebudeme dělat.** Nahrazeno feature „Ask Rúnar" (níže) — organičtější a levnější způsob jít do hloubky (generuje se jen NA DOTAZ, ne pokaždé; čtení zůstane čisté). deeper_meaning zůstává zahozený.
-- [x] **Ask Rúnar — follow-up otázka** (Premium) — HOTOVO 2026-08-09. Generování + persistence + jedna otázka na čtení. Přístup má **jen premium a hlídá to server** (`claude-proxy`: `mode==="ask" && userTier!=="premium"` → 403), ne jen klient. Ostatní přihlášení vidí **neaktivní teaser** (`ask_teaser`, EN+IS). Detail → RUNAR_DECISIONS 2026-08-09.
+- [x] **Ask Rúnar — follow-up otázka** (Premium) — HOTOVO 2026-08-09. Generování + persistence + jedna otázka na čtení. Přístup má **jen premium a hlídá to server** (`claude-proxy`: `mode==="ask" && userTier!=="premium"` → 403), ne jen klient. ⚠️ Stav k 2026-08-09 — od 2026-09-25 Standard 1 Ask, Premium 2 (`ASKS_PER_READING` v `claude-proxy`); poznámka 2026-10-10. Ostatní přihlášení vidí **neaktivní teaser** (`ask_teaser`, EN+IS). Detail → RUNAR_DECISIONS 2026-08-09.
 
 ## Launch blockers (z CLAUDE.md)
 
