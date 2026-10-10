@@ -863,6 +863,18 @@ radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola run pismem probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# ㉼ Základ produkce (CODE-tune 2026-10-10, KUKY „nikdy do produkce nebudeš sahat tak, že z ní odstraníš to, co je její základ…
+# tohle si budeš kontrolovat“; CLAUDE.md §32): skutečný prohlížeč bez okna, appka jako návštěvník i simulovaný přihlášený, všechny
+# stavy. Na commitu 2a3f03b našla 10 vad (Norny skryté, Rúnarova fotka po návratu do Spá) — tam, kde je owner našel v produkci.
+print('\n' + chr(0x327C) + ' ZÁKLAD PRODUKCE (verify_zaklad_produkce.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_zaklad_produkce.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0
+output = (r.stdout + r.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola zakladu produkce probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

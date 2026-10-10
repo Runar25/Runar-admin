@@ -9527,3 +9527,20 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno v náhledu:** fotka i Norny při načtení, po návratu z Lífsrúnin, Lestrar a Safn rúna, po tahu, Start over a dalším tahu.
 - Affected doc(s): — (oprava kódu; neplatný bod v (18) opravuje tento záznam)
 - Odvolává se na: 2026-10-10 (18).
+
+## 2026-10-10 (20) — Základ produkce se nesmí odebrat: pravidlo CLAUDE.md §32 a kontrola ve skutečném prohlížeči (smoke ㉼)
+
+- **Rozhodl:** KUKY 2026-10-10 po commitu 2a3f03b (návštěvníkovi zmizely Norny a po návratu do Spá Rúnarova fotka): *„nikdy do produkce
+  nebudeš sahat tak, že z ní odstraníš to, co je její základ!!! nikdy! tohle si budeš kontrolovat!“* **Provedl:** CODE-tune.
+- **Co:** (1) CLAUDE.md §32 — základ = Rúnarova fotka, záložky, všech pět výkladů, 25 run v tahu i v Safn rúna; změna toho, co uživatel
+  vidí, se porovnává celou obrazovkou před a po; co ze základu zmizí, je chyba. (2) `scripts/verify_zaklad_produkce.js` (smoke ㉼):
+  Chrome/Edge bez okna přes DevTools protokol (vestavěný WebSocket, bez balíčků), appka z pracovního stromu jako návštěvník
+  i simulovaný přihlášený, 9 stavů (načtení, návrat z každé záložky, Start over, další tah, jazyk, přihlášený). Seznam základu
+  vlastní ten skript.
+- **Ověřeno:** na opraveném stromu OK (15 s), smoke 64/64; na commitu 2a3f03b FAIL s 10 vadami — Norny ve všech stavech, fotka po
+  návratu z Lífsrúnin, Lestrar i Safn rúna (přesně co owner našel). Samotest v každém běhu: kontrola sama skryje Norny a fotku a musí
+  to poznat.
+- **Hranice:** neumí skutečné přihlášení, mobilní rozložení, hlas ani čtení přes proxy; nová část základu = owner ji označí, přibude do
+  seznamu ve skriptu.
+- Affected doc(s): `CLAUDE.md` (§32) — v témže commitu.
+- Odvolává se na: 2026-10-10 (19).

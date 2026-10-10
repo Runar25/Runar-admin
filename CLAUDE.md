@@ -350,6 +350,16 @@ jelikož to je náš společný jazyk se Sigrún. Zapiš, vytvoř kontrolu, coko
   Co neumí (česká věta bez háčků a bez slova ze seznamu), stojí v její hlavičce — minutou češtinu oprav a slovo přidej do
   `CZ_SLOVA`. Gmail nevidí: štítky a postup → memory `schranka-runar-gmail`. Proč a co našla → `RUNAR_DECISIONS.md` 2026-10-10.
 
+### §32 — Základ produkce se nesmí odebrat (platí pro VŠECHNY session)
+KUKY 2026-10-10: *„nikdy do produkce nebudeš sahat tak, že z ní odstraníš to, co je její základ!!! nikdy! tohle si budeš kontrolovat!“*
+Commit 2a3f03b (návštěvník rovnou k tahu) mu skryl Norny a po návratu do Spá Rúnarovu fotku; owner to našel v produkci sám.
+- **Základ** = co appka ukazuje vždy: Rúnarova fotka, záložky, všech pět výkladů, 25 run v tahu i v Safn rúna. Seznam vlastní
+  `scripts/verify_zaklad_produkce.js` (jedno místo); co owner označí za základ, přibude tam.
+- **Hlídá stroj — smoke ㉼:** skutečný prohlížeč bez okna, appka z pracovního stromu jako návštěvník i simulovaný přihlášený, ve všech
+  stavech (načtení, návrat z každé záložky, Start over, další tah, jazyk). Na 2a3f03b našla 10 vad.
+- **Změna toho, co uživatel vidí:** porovnej celou obrazovku PŘED a PO, ne jen prvek, který měníš. Co ze základu zmizí, je chyba, i když
+  to zdánlivě chce kód (Norny skryl komentář „jen pro přihlášené“) — napřed se zeptej ownera.
+
 ---
 
 ## Tier systém
