@@ -115,15 +115,25 @@
        trunkT.exitFrac=_STRS.map(function(k0){ return FRAC[k0]; }); }   /* engine kmene: jen prameny (kompaktne) */
      var gt=Tk.buildTrunk({rune:state.rune,dob:{d:state.d,m:state.m,y:state.y}}, trunkT);
      var el=gt.info.el;
-@@ -1831,6 +1902,7 @@
+@@ -1812,7 +1883,7 @@
+     var all=[], crown=[], roots=[]; var strandK=0, strands=[];
+     /* KOREN pramene jako funkce -- pouziva ji hlavni vetev i graduant (verze B).
+        sMul zmensi koren graduanta proti rodici. */
+-    function buildRootFor(L, rE, runeK, runeName, be, k, pf, emg, sMul){
++    function buildRootFor(L, rE, runeK, runeName, be, k, pf, emg, sMul, dirO){
+       var rbase=L.pts[rE];
+       var rTT={ length:rootsT.length*pf*emg*sMul, width:rootsT.width*sMul,   /* F5: koren sleduje TUTEZ praxi jako vetev */ curve:rootsT.curve, taper:rootsT.taper,
+                 wobble:rootsT.wobble, tipLift:rootsT.tipLift, jitter:rootsT.jitter, steer:1,
+@@ -1831,6 +1902,8 @@
          var rdev=-clamp(rdx/rspan,-1,1)*rootsT.fan + (((k*0x2545)>>>0)%100/100-0.5)*0.10;
          if(Math.abs(rdev)<0.04) rdev=(k%2?0.04:-0.04);
          rSpec.dev=rdev; rdevUsed=rdev; }
 +      if(_EXP && _EXP.rdev[k]!=null){ rSpec.dev=_EXP.rdev[k]; rdevUsed=rSpec.dev; }   /* POKUS: jen SMER korene (rozlozeni jako koruna); stavba korene beze zmeny */
++      if(dirO){ rSpec.baseAng=dirO.baseAng; rSpec.dev=dirO.dev; rdevUsed=dirO.dev; }   /* POKUS: koren vedlejsi vetve — odkud a kam miri (stavba beze zmeny) */
        var rG=B.buildBranch(rSpec, rTT);   /* KROK 2: koren = vlastni runa pramene (runeK), rovne dolu */
        var rspine=rG.paths[0].pts, rf=rbase.w/((rspine[0].w)||1), rdepth=rbase.depth+0.0007*k;
        for(var ri=0;ri<rspine.length;ri++){ var rtt=rspine[ri].t;
-@@ -1942,6 +2014,7 @@
+@@ -1942,6 +2015,7 @@
            var ac=AETT_CHAR[be.aett]; if(ac){ var as=crownT.aettStr;
              mcfg.curve*=(1+(ac.curve-1)*as); mcfg.tipLift=crownT.tipLift*(1+(ac.tipLift-1)*as); mcfg.wobble*=(1+(ac.wobble-1)*as); }
            var lenF=pf*emg*(1+vA*0.045*(2*mr()-1));   /* F5: praxe x nabeh; nahoda jen +-3 % (drive +-28 % a prebijela data) */
@@ -131,16 +141,16 @@
            var EP=exitPoint(L.pts, frac, rE), ei=EP.i;   /* presna vyska mezi body pramene (drive nejblizsi z 40 bodu = skok 1/39 kmene) */
            /* --- KOREN (composer, per-runa, dolu): SPINE se VPLETE do tahu kmene (jako vetev, jen dolu),
               twigy zvlast. Trunk-engine vlastni koren (0..rE) se NEkresli = vypnuty (KROK 3). --- */
-@@ -1987,7 +2060,7 @@
+@@ -1987,7 +2061,7 @@
            /* V4b: tuhe otoceni (rotateFrom) zruseno — viz hlavicka patche; strana ohybu je pevna (mcfg._side). */
            /* verze B: patef vetve se za chvili prepise (dole se k ni prilepi kmen), takze
               kopie TED. Graduant se po ni povede zevnitr az k mistu, kde se odlepi. */
 -          if(mainLimb) mainInfo[k]={ spine:mainLimb.pts.slice(), ei:ei, be:be, pf:pf, emg:emg, el:be.el,
-+          if(mainLimb) mainInfo[k]={ spine:mainLimb.pts.slice(), ei:ei, be:be, pf:pf, emg:emg, el:be.el, xl:lenF, rn:rspine.length,
++          if(mainLimb) mainInfo[k]={ spine:mainLimb.pts.slice(), ei:ei, be:be, pf:pf, emg:emg, el:be.el, xl:lenF, rn:rspine.length, rsp:rspine, rdep:rdepth,
                                      limb:mainLimb, tp:trunkPart.length, frac:frac, mcfg:mcfg, name:brune.name };   /* KROK 2 */
            for(var ct=_cStart; ct<crown.length; ct++){ crown[ct].k=k; crown[ct].age01=_curAge01; }
            if(mainLimb){ mainLimb.pts = trunkPart.concat(mainLimb.pts); mainLimb.src='vetev'; mainLimb.k=k;
-@@ -2058,6 +2131,8 @@
+@@ -2058,6 +2132,8 @@
          var sdr=((_ANG[qr]+Math.PI/2)>=0)?1:-1; if(sdr===mSdB && FRAC[qr]>FRAC[GS.p]) sideRank++; }
        var gTurn=(_GTURN[j]!=null) ? _GTURN[j] : ((Math.abs(mBase)<0.75) ? mSdB : -mSdB)*((GS.slot===1) ? -1 : 1)*((sideRank%2===1) ? -1 : 1);   /* urceno pri povyseni (casova smycka) */
        gAng=sAngN + gTurn*GREL;   /* strma matka -> ven, vodorovna -> nahoru */
@@ -149,7 +159,7 @@
        /* MISTO NA DRUHE STRANE (2026-10-05): povysena patri na stranu sveho mista (GS.side z dat). Kdyby ji odbocka od matky poslala
           jinam, roste rovnou ke sve strane (kostra FR ma jeji stranu z dat + tiha jejich cteni). */
        /* i kdyz je matka VUDCI (svisla, pSide 0) — 2026-10-07, KUKYho strom: Fehu (ohen nahore) a Dagaz (ohen uprostred) rostly z vudci
-@@ -2067,6 +2142,7 @@
+@@ -2067,6 +2143,7 @@
        var GSd=GS.side||GS.adopt||0;   /* strana mista: z dat, nebo prevzeta (adopt) */
        if(GSd && pSide!==GSd) gAng=softSide((gLP.ang!=null) ? gLP.ang : gFrame+lifeLean*0.6, -Math.PI/2);   /* matka na druhe strane nebo svisla: vzdy ke sve strane (stale) */
        gAng=softSide(gAng, -Math.PI/2);   /* dolni strop jako u ramene (~100°): s matkou s tihou dolu visela az na −155° (Ehwaz z Raidha) */
@@ -157,7 +167,7 @@
        /* STRANA MISTA I PRI ODBOCCE OD MATKY NA SVE STRANE (2026-10-07): u strme matky poslala odbocka "nahoru" (gTurn) vetev za
           svislici na druhou stranu nez jeji misto (modelovy strom "svet" po 20 ctenich: Hagalaz −93° z matky −58°; smoke ㉳).
           Spojite: ne opacna odbocka (pri malem pootoceni matky by skocila o ~60°), ale zastaveni tesne na sve strane svislice. */
-@@ -2083,7 +2159,10 @@
+@@ -2083,7 +2160,10 @@
           jinak prvni kus bezel ve smeru matky souběžne s ni (modelove stromy: soubehu povysena + matka 146 -> 18; obracene,
           stoceni pres 70 % delky: 162). Ramena z kmene si drzi ranni napojeni (posuvnik limbBendU; KUKY obrazek 4). */
        gcfg.limbBendU=Math.min(0.15, (crownT.limbBendU!=null) ? crownT.limbBendU : 0.45);
@@ -168,7 +178,25 @@
        var gRt=(branchEls.gradTree||[])[GS.gi], gKids=gRt ? repKids(gRt, vlog.length, bandLoHi(par.el, par.be.band||0)) : [];   /* cteni od povyseni */
        var _gStart=crown.length;
        var gLimb=growBranch(crown, gcfg, sp.x, sp.y, gBase, gDev, 'main', GS.rune, (dobSeed ^ (k*0x9e37))>>>0,
-@@ -2106,10 +2185,10 @@
+@@ -2099,6 +2179,17 @@
+           born:gBorn, strandAge:gAge, domV:1, sizeF:gPf*gEmg, lenF:gLen, rootDev:null,
+           tw:gKids.map(function(t){ return { name:(RBK[t.k]?RBK[t.k].name:t.k), n:t.n||0, g:t.g, grad:false, rep:1, born:(t.born!=null?t.born:null),
+             pick:('t'+k+'_'+t.k+(t.id!=null?('_'+t.id):'')), kids:[] }; }) } }); }
++      /* POKUS — KAZDA VETEV MA SVUJ KOREN (KUKY 2026-10-10: "korenu je malo.. kazdy pramen na vetve a to by cca melo byt videt v korenech";
++         kanon "1 pramen = 1 runa = vetev nahoru + koren dolu (koren = zrcadlo vetve)"). Vedlejsi vetev dostane koren TEZE stavby jako kazdy jiny
++         (buildRootFor: jeji runa, jeji praxe a nabeh, vetvicky, ohyb; sMul = gradStrandW jako koren graduanta ve verzi B 2026-09-29) — jen je
++         postaveny tam, kde se vetev v korune odstepuje (na koreni matky ve stejnem miste u), a natoceny zrcadlove k jeji odbocce od matky. */
++      if(_EXP && GS._xi!=null && par.rsp && par.rsp.length>3){ var rsp=par.rsp, rix=Math.max(1, Math.min(rsp.length-2, Math.round(GS.u*(rsp.length-1)))), rp=rsp[rix], rq=rsp[rix-1];
++        var rAng=Math.atan2(rp.y-rq.y, rp.x-rq.x), dlt=gAng-sAngN; while(dlt>Math.PI) dlt-=2*Math.PI; while(dlt<-Math.PI) dlt+=2*Math.PI;
++        var tgR=rAng-dlt, dDn=tgR-Math.PI/2; while(dDn>Math.PI) dDn-=2*Math.PI; while(dDn<-Math.PI) dDn+=2*Math.PI;   /* smer nejvys 63° od svislice dolu: */
++        dDn=clamp(dDn, -1.10, 1.10); var dvR=(Math.PI/2+dDn)-rAng; while(dvR>Math.PI) dvR-=2*Math.PI; while(dvR<-Math.PI) dvR+=2*Math.PI;   /* vodorovnejsi koren se svym ohybem vylezl nad zem */
++        var sRt=buildRootFor({ pts:[{ x:rp.x, y:rp.y, w:rp.w*0.85, depth:rp.depth, ct:rp.ct, t:rp.t }], depth:rp.depth }, 0, GS.rune, GS.name, par.be, k, gPf, gEmg,
++                             clamp((crownT.gradStrandW!=null) ? crownT.gradStrandW : 0.65, 0.15, 1), { baseAng:rAng, dev:dvR });
++        if(sRt.rspine && sRt.rspine.length>1) roots.push({ pts:sRt.rspine, el:par.el, depth:sRt.rdepth, src:'koren', rune:GS.rune, k:k, pi:0, age01:clamp(gAge/Math.max(1,trunkT.matureDays),0,1) }); }
+     };
+     if(crownT.gradStrand && !seed && gradStrands.length){
+       var gwS=clamp((crownT.gradStrandW!=null)?crownT.gradStrandW:0.65, 0.15, 1), byM={};
+@@ -2106,10 +2197,10 @@
        Object.keys(byM).forEach(function(pk){ var par=mainInfo[pk], lp=par.limb.pts, tp0=par.tp, nL=lp.length-tp0, lst=byM[pk];
          lst.forEach(function(it){ it.sidx=Math.max(1, Math.min(nL-2, Math.round(it.GS.u*(nL-1))));
            it.gAge=Math.max(1, realAge-(SEED_AGE + it.GS.at*crownT.readingEvery)); it.r=clamp(it.gAge/90, 0, 1); });

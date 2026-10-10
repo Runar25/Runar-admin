@@ -470,13 +470,13 @@
   povýšená podle výšky odbočky); kořen × (1 + 1/3 × s), s = jak moc míří do strany pod povrchem. Změřeno na jeho stromě: Kenaz 22 % ×1,33 …
   Dagaz 98 % ×1,00; kmen trochu povyroste (drží poměr k rozpětí, `hwRatio`); smoke ㉳ projde. Čeká na ownerův pohled.
   KUKY 2026-10-10: *„nejsem si jistý, že tak jak to máme teď udělané je správně“* — místo odpovědi pokus „patra 4 / 3 / 2“ (níž).
-- [ ] ⭐ **Strom (lab): pokus „2 × (4+4+3) + 3 vrchol“, kořeny původní a jen natočené — nanečisto** (CODE-tree, 2026-10-10). KUKY nejdřív *„spodní
-  větev bude mít až 4 vedlejší větve, nad ní až 3, nad ní až 2 … jde mi teď o vizuální“* (pokus v párech, `…_patra.patch`), pak *„2x(4+4+3)+3
-  vrchol“*; kořeny *„normálně je rozprostři, žádná mezera kolem prostřední … nepůjde tak hluboko … šířka bude stejná jako koruna“* a hned *„nemáš
-  měnit, jak se dělají kořeny … máš jen měnit směr“* (kopie koruny ✖, `…_ramena.patch` jen historie). Patch
+- [ ] ⭐ **Strom (lab): pokus „2 × (4+4+3) + 3 vrchol“, kořen pro každou větev — nanečisto** (CODE-tree, 2026-10-10). KUKY nejdřív *„spodní větev
+  bude mít až 4 vedlejší větve, nad ní až 3, nad ní až 2 … jde mi teď o vizuální“* (pokus v párech, `…_patra.patch`), pak *„2x(4+4+3)+3 vrchol“*;
+  kořeny *„normálně je rozprostři, žádná mezera kolem prostřední … šířka bude stejná jako koruna“*, *„nemáš měnit, jak se dělají kořeny … jen směr“*
+  (kopie koruny ✖, `…_ramena.patch` jen historie) a *„kořenů je málo.. každý pramen na větve a to by cca mělo být vidět v kořenech“*. Patch
   `docs/archive/tree/2026-10-10_nanecisto_ramena_koreny.patch`: 6 ramen střídavě vlevo a vpravo (26–76 % kmene), na straně rameno + 3, + 3, + 2,
-  vrchol + 2; délky ×1,33 → ×1,0; kořeny původní, směr vůdčí dolů a na straně 52° / 34° / 17°. Kořeny 71 % šířky koruny (dnes 63 %). **Otevřené:**
-  plná šířka koruny jen s delšími kořeny (změna kořene) — čeká na ownera. DECISIONS 2026-10-10 (17), (21), (23).
+  vrchol + 2; délky ×1,33 → ×1,0; kořeny původní stavby, 25 (každá větev svůj): hlavní natočené (vůdčí dolů, na straně 52° / 34° / 17°), vedlejší
+  z kořene matky zrcadlově k odbočce. Šířka kořenů 79 % koruny. DECISIONS 2026-10-10 (17), (21), (23), (26). Čeká na ownerův pohled.
 - [x] ✖ **Strom: obrys stromu života (dóm) — ZAMÍTNUTO** (KUKY 2026-10-10: *„chybí tomu úplně všechno. je to zrůda! … takže ne. není to dobré
   a žádná oprava tvého návrhu to nezlepší“*). Nevracet konce větví na kruh ani vějíř podle výšky. Původně (CODE-tree, 2026-10-10). KUKY s pěti obrázky stromu života: *„spodní větve
   jako nejstarší, největší a nejdelší. koruna více zarovnaná do půloblouku, u kořenů to samé. to naše vypadá jako strom, ale my neděláme
@@ -487,6 +487,10 @@
   (nejnižší ~80°, nejvyšší ~20° od svislice). Výsledek: koruna široký oblouk (~2× širší než vysoká), ale větve dlouhé a řídké, vršek slabý,
   boční větve visí, kořeny drobné; smoke ㉳ (m) 1 porušení. Krok 1 sám (bez úhlů) dal plochý deštník. Další kroky k rozhodnutí: kořeny do
   dolního půloblouku, hustší a kratší koruna, konce větví vzhůru, kratší kmen; střet s „délka = praxe“ a „výška roste se šířkou“ (hwRatio).
+- [ ] **Strom (lab): Berkanin kořen má větvičky nad zemí** (CODE-tree, nalezeno 2026-10-10 při pokusu s kořeny). Na KUKYho stromě dnes jedna
+  větvička kořene Berkany vyleze 42 px nad zem (v pokusu se 25 kořeny tři, až 72 px) — ostatní runy ne. Příčina asi tvar runy v branch composeru
+  (větvičky Berkany míří vzhůru i u kořene). Ověřit v `runar-branch.js` (`RUNE_CHAR` / `RUNE_TUNE` berkano) a rozhodnout s ownerem — kořen se
+  nepředělává (DECISIONS 2026-10-10 (23)), takže jen pokud to owner chce.
 - [ ] **Strom (lab): `AREA_LAT` odporuje „oblast = strana“** (CODE-tree, nalezeno 2026-10-09). Tabulka v `runar-branch.js` (sdílená
   s aplikací) bere Love −0,75 (nitro), Spirituality −0,20 (skoro střed), Crossroads +0,10 — kánon (`RUNAR_TREE.md` §3) má Love a Crossroads
   bez strany a Spirituality ve světě. Čte ji strana větvičky (`sideOf`), natočení ramene za čteními (`latOf` / `areaSide`) i lateral

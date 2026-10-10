@@ -9612,3 +9612,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Bod (24) „Starter a Elder jen anglicky“ tím neplatí.**
 - Affected doc(s): — (jména jsou jen v configu)
 - Odvolává se na: 2026-10-10 (24), (22).
+
+## 2026-10-10 (26) — Strom: každá větev má svůj kořen, i vedlejší a vrchol (nanečisto); kořen vedlejší vyrůstá z kořene matky jako zrcadlo odbočky
+
+- **Rozhodl:** KUKY 2026-10-10 k pokusu s původními kořeny jen natočenými (23): *„lepší, ale kořenů je málo.. každý pramen na větve a to by cca
+  mělo být vidět v kořenech. zatím vidím pořád něco jiného.“* Kánon (memory `tree-roots-rebuild`, KUKY): *„1 pramen = 1 runa = větev nahoru + kořen
+  dolů (kořen = zrcadlo větve). Max 25.“* **Provedl:** CODE-tree, jen nanečisto.
+- **Směr:** kořen má každá větev, ne jen ramena s pramenem v kmeni — **mění rozhodnutí KROK 5 (2026-10-03) v části kořenů** („povýšená větev už
+  vlastní pramen ani kořen nemá“; pramen v kmeni dál nemá). Kořen vedlejší větve má stejnou stavbu jako každý kořen (`buildRootFor`: její runa,
+  praxe a náběh, větvičky, ohyb; velikost `gradStrandW` jako kořen graduanta ve verzi B 2026-09-29) a vyrůstá z kořene matky ve stejném místě, kde
+  se větev v koruně odštěpuje, natočený zrcadlově k její odbočce (nejvýš 63° od svislice — vodorovnější se svým ohybem vylezl nad zem).
+- **Změřeno na jeho stromě** (patch `docs/archive/tree/2026-10-10_nanecisto_ramena_koreny.patch`): 25 kořenů (7 hlavních + 18 vedlejších), šířka
+  79 % koruny (jen hlavní 71 %, dnes 63 %), hloubka 40 % výšky koruny (dnes 39 %). Nad zem lezou 3 větvičky Berkanina kořene až 72 px — totéž
+  dělá Berkana i dnes (42 px), tvar její runy → `RUNAR_BACKLOG.md`. Čeká na ownerův pohled.
+- Affected doc(s): `RUNAR_TREE.md` §2 (kořeny), `RUNAR_BACKLOG.md` (položka pokusu + Berkanin kořen) — v témže commitu.
