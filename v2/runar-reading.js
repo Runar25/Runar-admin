@@ -1200,6 +1200,7 @@ function resetReader() {
   });
   readerUser.intention = '';
   buildPills();
+  _syncVisitorDraw();   // návštěvník: START OVER = zpět k tahu, ne k formuláři (2026-10-10)
 }
 
 // Přehrávač hlasu = _makeCapPlayer('cap') / _capWire / _capReset / _capStop v runar-app.js — jediný přehrávač appky (2026-10-10,
@@ -1502,11 +1503,36 @@ function _updateReadingForm() {
   if (nameLbl) nameLbl.textContent = isMine ? t('name_lbl') : t('setup_for_name_lbl');
   if (nameInp) nameInp.placeholder = isMine ? t('name_ph') : t('setup_for_name_ph');
 
-  // Návštěvník čtení nedostane (proxy ho odmítá, 401) — tlačítka mu ho neslibují (KUKY 2026-10-10: „nechal jsem si udělat čtení
-  // a tohle jsem dostal… bez jakékoliv zprávy“). Do té doby i jemu „BEGIN THE READING“ a „HEAR RÚNAR SPEAK“. Stavový text patří sem,
-  // ne do updateUIText (§14): begin-btn se odtamtud odebral; btn-speak tam zůstává jako výchozí (spready mění text samy).
-  setText('begin-btn', t(currentUser ? 'begin_btn' : 'begin_btn_visitor'));
+  // Návštěvník čtení nedostane (proxy ho odmítá, 401) — tlačítko tahu mu ho neslibuje (KUKY 2026-10-10: „nechal jsem si udělat čtení
+  // a tohle jsem dostal… bez jakékoliv zprávy“); do té doby i jemu „HEAR RÚNAR SPEAK“. Stavový text patří sem, ne do updateUIText
+  // (§14); tam btn-speak zůstává jako výchozí (spready mění text samy). Formulář s begin-btn návštěvník nevidí (_syncVisitorDraw).
   if (_spreadMode === 'single') setText('btn-speak', t(currentUser ? 'speak_btn' : 'speak_btn_visitor'));
+  _syncVisitorDraw();
+}
+
+// Návštěvník rovnou k tahu runy, bez formuláře (KUKY 2026-10-10, bod 12: „rovnou tah runy“). Formulář (jméno, „jak tě má Rúnar
+// oslovovat“, zamčené volby) mu nic nedal — čtení nedostane. Volá ho _updateReadingForm (start appky až po getSession, vstup do
+// záložky, jazyk, přihlášení) a resetReader (START OVER). Po přihlášení vrátí formulář; byl-li už výsledek tahu, začne znovu.
+function _syncVisitorDraw() {
+  var setup = document.getElementById('reader-setup'), card = document.getElementById('reader-rune-card');
+  var out = document.getElementById('reader-output');
+  if (!setup || !card) return;
+  var outShown = !!out && out.style.display !== 'none';
+  if (!currentUser) {
+    if (outShown || card.style.display !== 'none') return;   // už táhne, nebo vidí výsledek
+    setup.style.display = 'none';
+    readerUser = { name: t('name_you'), d: null, m: null, y: null, lifeRune: null, area: '', seeking: '', intention: '', question: '' };
+    card.style.display = 'block';
+    card.setAttribute('data-host', '1');
+    _syncNornsGate();   // Norny jen pro přihlášené — při čerstvém načtení jinak NORNIR viděl i návštěvník (2026-10-10, náhled)
+    buildGrid();
+  } else if (card.getAttribute('data-host') === '1') {
+    card.removeAttribute('data-host');
+    var pane = document.getElementById('apane-reading');
+    if (outShown || readerRune || (pane && pane.classList.contains('host-drawn'))) { resetReader(); return; }
+    card.style.display = 'none';
+    setup.style.display = 'block';
+  }
 }
 
 // Norns = NORMALNI placeny spread (2 kredity) pro KAZDEHO prihlaseneho (KUKY 2026-08-03,

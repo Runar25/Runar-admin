@@ -845,7 +845,7 @@ function updateUIText() {
   // reader-card1-lbl and reader-note are set by _updateReadingForm() — not here
   _updateDobLabel();
   _updateAreaSeekLabels();
-  // begin-btn nastavuje _updateReadingForm (návštěvník má jiný text, 2026-10-10)
+  setText('begin-btn', t('begin_btn'));
   setRuneText('draw-lbl', t('draw_lbl'));   // popisky s runou → setRuneText (naše SVG, bod 11, 2026-10-10)
   setText('draw-note', t('draw_note'));
   setRuneText('btn-random', t('random_btn'));

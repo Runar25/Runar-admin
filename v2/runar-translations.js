@@ -138,12 +138,11 @@ const UI_TEXT = {
     disclaimer:       'Rúnar offers a reading to reflect on, not professional advice.',
     opt:              '(OPTIONAL)',
     begin_btn:        'BEGIN THE READING',
-    begin_btn_visitor: 'DRAW A RUNE',        // 2026-10-10: návštěvník čtení nedostane — tlačítko ho neslibuje (_updateReadingForm)
     draw_lbl:         'ᚠ DRAW YOUR RUNE',
     draw_note:        'Close your eyes. Hold your question. Then choose the rune that calls to you.',
     random_btn:       'ᚲ LET THE RUNES DECIDE',
     speak_btn:        'HEAR RÚNAR SPEAK',
-    speak_btn_visitor: 'DRAW THIS RUNE',     // 2026-10-10: viz begin_btn_visitor
+    speak_btn_visitor: 'DRAW THIS RUNE',     // 2026-10-10: návštěvník čtení nedostane — tlačítko tahu ho neslibuje (_updateReadingForm)
     speak_btn_add:    'ADD RUNE',
     speak_btn_draw:   'DRAW YOUR RUNES',
     spread_cost:      'This reading costs {casts}.',   // 2026-09-29 reporty ownera: cena čtení nikde nebyla
@@ -651,7 +650,6 @@ const UI_TEXT = {
     disclaimer:       'Rúnar býður lestur til umhugsunar, ekki faglega ráðgjöf.',
     opt:              '(VALKVÆTT)',
     begin_btn:        'HEFJA LESTURINN',
-    begin_btn_visitor: 'DRAGA RÚN',          // 2026-10-10: viz EN; „draga rún“ korpus 4× (jako DRAGA AÐRA RÚN)
     draw_lbl:         'ᚠ DRAGÐU RÚNINA ÞÍNA',
     draw_note:        'Lokaðu augunum um stund. Haltu spurningunni í huga. Veldu síðan rúnina sem kallar til þín.',
     random_btn:       'ᚲ LÁTTU RÚNIRNAR VELJA',

@@ -2948,7 +2948,8 @@ Podklad: `docs/archive/2026-09-23-audit-obrazu.md`. Owner je potřebuje vysvětl
    Návrh: přepsat a změřit na ~12 čteních před/po. Owner zatím nerozhodl (nevěděl, o co jde).~~
 
 ## 2026-10-10 — Kontrola návštěvníka: co zbylo (CODE-tune, DECISIONS 2026-10-10 (16))
-1. ⚪ **Runové glyfy písmem v popiscích:** „ᚠ DRAW YOUR RUNE“ (`draw_lbl`), „ᚲ LET THE RUNES DECIDE“ (`random_btn`), „ᚢ HEAR RÚNAR
+1. ✅ *(CODE-tune 2026-10-10, DECISIONS 2026-10-10 (17): owner „nahradit našimi glyfy“ → setRuneText, okna přes data-rune-glyph,
+   soukromí ᚱ; hlídá smoke ㉻)* ~~**Runové glyfy písmem v popiscích:**~~ „ᚠ DRAW YOUR RUNE“ (`draw_lbl`), „ᚲ LET THE RUNES DECIDE“ (`random_btn`), „ᚢ HEAR RÚNAR
    SPEAK“ (hlas), „ᚠ ENTER RUNE READING CARD CODE“ (redeem). Cormorant runy nemá → prohlížeč půjčí cizí písmo; tentýž „divný“ tvar
    owner 2026-10-10 vytkl v Safn rúna (§5: glyf jen z RUNE_SVGS, výjimka jen ᚱ). Rozhodnout: naše SVG malé, nebo glyf z popisku pryč.
 2. ⚪ **Deník: chyba načtení ukáže přihlášenému bránu návštěvníka.** `loadJournal` v `catch` volá `hideJournal()` → „You walk here
@@ -2957,5 +2958,19 @@ Podklad: `docs/archive/2026-09-23-audit-obrazu.md`. Owner je potřebuje vysvětl
    '× DELETE ACCOUNT'` (`runar-app.js`) — patří do UI_TEXT.
 4. ⚪ **§14 u tlačítka tahu:** `updateUIText` při každém přepnutí jazyka nastaví `btn-speak` na `speak_btn` („HEAR RÚNAR SPEAK“) —
    ve spreadu, kde ještě chybí runy, má stát `speak_btn_draw` („DRAW YOUR RUNES“). Stavový text patří do funkce stavu.
-5. ❓ **Formulář návštěvníka (čeká na ownera):** návštěvník čtení nedostane, formulář se ho přesto ptá na jméno a „jak tě má Rúnar
+5. ✅ *(CODE-tune 2026-10-10, DECISIONS 2026-10-10 (17): owner „rovnou tah runy“ → _syncVisitorDraw)* ~~**Formulář návštěvníka:**~~ návštěvník čtení nedostane, formulář se ho přesto ptá na jméno a „jak tě má Rúnar
    oslovovat“ (oblast/hledání/záměr má zamčené). Nechat jako ukázku, nebo mu ukázat rovnou tah runy?
+6. ⚪ **Shrine: runy písmem.** `teach_select_lbl` „ᚠ SELECT RUNE“, `teach_next_btn` „ᚠ TEACH ANOTHER RUNE“ a tlačítko hlasu v učení
+   (`voice_btn*`, v `runar-shrine.html` přes `textContent`) mají runu dál písmem. Admin, nespěchá; oprava = `setRuneText` na těch
+   místech a shrine přidat do smoke ㉻ (dnes ho záměrně vynechává).
+7. ⚪ **Toast při odhlášení natvrdo anglicky:** `showToast('YOU HAVE LEFT THE CIRCLE')` (`runar-app.js`, `onAuthStateChange`
+   → `SIGNED_OUT`) — i v islandské appce. Patří do UI_TEXT (§10) s ověřenou IS.
+8. ❓ **Čtení pro návštěvníka (čeká na ownera):** owner 2026-10-10 *„text je pro nás v pohodě, ať dostane čuchnout bez registrace…
+   ASK bude zobrazen taky jen jako teaser“*. Vrací rozhodnutí 2026-08-02 „Fáze 1“ (proxy pro nepřihlášené zavřená: anonym posílal
+   modelu libovolný prompt bez omezení — „nechci to mít děravé“), tedy jen očištěně (§26). Varianty:
+   **A — živé čtení přes proxy:** nový omezený mód pro nepřihlášené; server musí prompt sestavit sám nebo ho přísně ověřit (builder je
+   dnes jen v klientovi), limit na IP + denní strop, bez deníku a hlasu. I se stropem zůstane otvor: kdo prompt podvrhne, spálí strop.
+   **B — hotová čtení (doporučuje CODE-tune):** pro každou runu a jazyk 2 čtení předem (týž builder, oslovení þú/you, bez voleb),
+   uložená jako data; návštěvník dostane jedno k tažené runě. Žádné volání modelu, žádný otvor, kvalitu vybereme. Potřeba: ownerovo ano
+   na generování (~100 volání, §30). Pak karta po tahu = text čtení + teaser hlasu + teaser Asku (stejné provedení jako teaser Asku
+   u Rune Seekera: funkce vidět celá, zamčená, pod ní řádek „opens with {tier}“) + výzva k registraci.

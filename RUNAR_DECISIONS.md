@@ -9491,3 +9491,25 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   vedlejšími byl 1,9× tlustší a kmen vypadal jako lyra, ověřeno i v labu v prohlížeči (zesílení matky vedlejšími jen čtvrtinou). Kmen užší než
   dnes (7 pramenů místo 17); živel a zóna o místě větve nerozhodují. Čeká na ownerův pohled.
 - Affected doc(s): `RUNAR_TREE.md` §2 (kořeny: zrcadlo i ve stavbě), `RUNAR_BACKLOG.md` (nová položka) — v témže commitu.
+
+## 2026-10-10 (18) — Runy v popiscích a oknech jako naše glyfy; návštěvník rovnou k tahu runy (bez formuláře)
+
+- **Proč:** KUKY 2026-10-10 k otázkám 11 a 12: *„11. nahradit našimi glyfy. 12. rovnou tah runy bez hlasu…“*. Runy v popiscích
+  („ᚠ DRAW YOUR RUNE“, „ᚲ LET THE RUNES DECIDE“, „ᚢ HEAR RÚNAR SPEAK“, redeem) a v oknech (ᛏ souhlas testera, ᚾ smazání účtu) byly znak
+  písma — Cormorant runy nemá, prohlížeč půjčoval cizí písmo, týž „divný“ tvar jako v okně Safn rúna (§5). Formulář (jméno, oslovení,
+  zamčené volby) návštěvníkovi nic nedal. **Provedl:** CODE-tune.
+- **Co:** (1) `setRuneText` (runar-utils.js): popisek, jehož text v UI_TEXT začíná runou (kromě značky ᚱ), kreslí runu jako naši holou
+  linku; viewBox oříznutý na inkoust runy (`_runeInkBox`), takže je každá runa stejně vysoká; barva = barva textu (v šedém tlačítku
+  hlasu šedá). Okna přes `data-rune-glyph`. Stránka soukromí: ᛜ písmem → značka ᚱ jako v nápovědě (stránka runy nenačítá). Smoke ㉻
+  (`verify_rune_glyphs.js`) hlídá obě plochy; shrine zatím mimo (BACKLOG). (2) Návštěvník: formulář pryč, rovnou mřížka tahu
+  (`_syncVisitorDraw`); START OVER i návrat do záložky = mřížka; po přihlášení se formulář vrátí (byl-li už tah, začne se znovu). Norny
+  skryté i při čerstvém načtení (do té doby je návštěvník viděl, dokud nepřepnul záložku). `begin_btn_visitor` z (16) zrušen.
+- **Ověřeno v náhledu** (IS i EN): velká písmena 8 px, runa 8,2–9,1 px, střed ±0,3 px, barva = text ve všech čtyřech popiscích; okna
+  se SVG; stavy návštěvníka (start, tah, START OVER, další tah, záložka zpět, EN, simulované přihlášení u mřížky i po tahu); smoke 63/63.
+  Kontrola ㉻ na verzi před opravou našla 18 míst, na opravené 0.
+- **Nerozhodnuto — čeká na ownera:** zbytek bodu 12, čtení pro návštěvníka bez registrace (jen text; hlas a Ask jako teaser). Vrací
+  rozhodnutí 2026-08-02 „Fáze 1“ (anonym dostával přes proxy libovolný prompt bez omezení — „nechci to mít děravé, zavřeme to“), proto
+  podle §26 jen očištěně: návrh variant ve zprávě a v BACKLOGu.
+- Affected doc(s): `RUNAR_BACKLOG.md` (sekce „Kontrola návštěvníka: co zbylo“: body 1 a 5 hotové, shrine, toast odhlášení, čtení
+  návštěvníka) — v témže commitu.
+- Odvolává se na: 2026-10-10 (16), 2026-08-02 „Fáze 1 security“.
