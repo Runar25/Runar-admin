@@ -32,6 +32,9 @@ runovými znaky, obsidiánový runový přívěsek na krku.
 > neuvidí** — výstup je text a hlas, model Rúnara nekreslí; jelo to do každého čtení nadarmo.
 > Vzhled je ale kánon (ilustrace, budoucí vizuál), takže bydlí tady, ne nikde.
 
+**Obrazové podklady** (character sheety ve třech výstrojích, 10 výrazů, portrét, paleta Agndofy, moodboard) → `v2/assets/README.md`
+(co na kterém obrázku je + na co si dát pozor). Appka je nenačítá; jsou pro budoucí vizuál (KUKY 2026-10-10: *„nemazat“*).
+
 ### Co Rúnar není
 - Není chatbot s duchovním skinnem
 - Není věštec který předpovídá konkrétní události

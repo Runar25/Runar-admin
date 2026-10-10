@@ -2084,7 +2084,7 @@ s novým HTML trvá jen do toho reloadu · manifest (rozsah, start, ikony) sedí
 ### Část 19 — soubory v `v2/`, na které nic neodkazuje (2026-10-10)
 **Platí:** všechny `.js`/`.html`/`.css` ve `v2/` něco načítá · `v2/email/*.png` (CODE-tune 2026-10-10) odkazují koncepty e-mailů
 testerům v Gmailu přes adresu — v repu odkaz NEMÁ být, nemazat.
-- 🟡 **PRO OWNERA:** `v2/assets/` (7 obrázků z 2026-05-17: moodboard, paleta, Rúnar ceremonial/expressions/fullbody/portrait/travel)
+- ✅ *(KUKY 2026-10-10: „nemazat, je to designový podklad, dej tomu vysvětlení a odkaz“ → `v2/assets/README.md` popisuje každý obrázek, odkaz z `RUNAR_DESIGN.md` „Jak vypadá“; `v2/runar-portrait.png` = bajtově shodná kopie, ponechána)* `v2/assets/` (7 obrázků z 2026-05-17: moodboard, paleta, Rúnar ceremonial/expressions/fullbody/portrait/travel)
   a `v2/runar-portrait.png` (2026-05-16, „hero“) — **nic v repu na ně neodkazuje**, ~19 MB, nasazené veřejně na GitHub Pages.
   Appka bere Rúnarův portrét ze Supabase úložiště (`runar-images/Runar_portrait.png`). Smazat z repa (historie v gitu zůstane),
   nebo nechat jako designový podklad?
