@@ -2070,6 +2070,16 @@ a kdo ji čte, čte starý stav. ✅ **Smazáno 2026-10-10** (owner: *„9. sma�
   5 řádků, ISK z `RUNAR_PRICING.md`, € sloupec pryč (€ ceny owner neurčil). Ideálně balíčky jako data v configu a nápověda je čte (§20),
   ať je druhá kopie pryč úplně.
 
+### Část 18 — Service Worker a PWA; ráčna textu podle jazyka (2026-10-10)
+**Platí:** všechny soubory v předem ukládaném seznamu `v2/sw.js` existují a seznam hlídá ㉧ proti `runar-reader.html` · HTML ze sítě,
+JS z cache — po převzetí nové verze se appka jednou sama obnoví (`controllerchange` v `runar-auth.js`), takže smíchání starého JS
+s novým HTML trvá jen do toho reloadu · manifest (rozsah, start, ikony) sedí s cestami.
+**Opraveno (CODE-read):** ráčna ㉸ viděla jen větev `lang === 'is' ? '…'`, která ZAČÍNÁ uvozovkou. Teď čte celou islandskou větev
+(literály na nejvyšší úrovni, ne klíče v argumentech, ne komentáře) → našla dvě, BASELINE je drží.
+- ⚪ **Pro CODE-tune (e):** `runar-tree.js` ~476 — řádek volných čtení v záložce životní runy má EN i IS větu natvrdo
+  (`vn(...) + ' fyrir venjulegar dregnar rúnir'` / `' available for regular draws'`) → UI_TEXT + `tp()` s `{casts}`; IS ověřit (§2).
+  `runar-auth.js` ~334 `openUpgradeModal` — nikdo ho nevolá (grep), text natvrdo; smazat. Po obou snížit BASELINE v `verify_lang_ternary.js`.
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
