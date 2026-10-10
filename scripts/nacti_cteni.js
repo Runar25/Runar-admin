@@ -102,7 +102,10 @@ if (rep.length && !process.argv.includes('--bez-zapisu')) {
     + " přečteno' || case when type='keep' then ' (keep — nechat)' else '' end where id in (" + ids + ") and status='new' returning id");
   console.log('\n   ' + rep.length + ' hlášení označeno jako přečtená (triaged).');
   const kz = kZapisu();
-  for (const x of rep) if (x.type !== 'keep') kz[x.id] = { nacteno: new Date().toISOString().slice(0, 16), zprava: kratce(x.message || x.flagged_text, 80) };
+  // 2026-10-10: + `session` (CLAUDE_CODE_SESSION_ID = session_id, který dostává Stop-hook) — hook pak zastaví jen session, která hlášení
+  // načetla. Do té doby ji poznával podle textu „nacti_cteni.js“ v příkazech a zastavil i CODE-read, která soubor jen četla grepem.
+  for (const x of rep) if (x.type !== 'keep') kz[x.id] = { nacteno: new Date().toISOString().slice(0, 16), zprava: kratce(x.message || x.flagged_text, 80),
+                                                       session: process.env.CLAUDE_CODE_SESSION_ID || null };
   ulozKZapisu(kz);
   const n = Object.keys(kz).length;
   if (n) console.log('   ⚠ K zápisu (' + n + '): ke každému --hotovo <id8> "<co se udělalo>", nebo --backlog <id8> "<položka>". Dokud něco zbývá, Stop-hook tah neukončí.');
