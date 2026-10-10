@@ -624,6 +624,9 @@
   Deníky, kredity, profily i hlášení nemají kopii; `scripts/utils/zaloha_cteni.js` zálohuje jen čtení z pokusů, ne produkci.
   Volba (owner): placený tarif Supabase s denními zálohami (cena podle ceníku Supabase), nebo vlastní pravidelný `supabase db dump`
   do soukromého úložiště mimo repo (nese osobní údaje → šifrovat). → i `RUNAR_BACKLOG.md` „Kontrola architektury“, bod 16.
+  ✅ **Ruční záloha 2026-10-10** (owner „ano, udělej“): všech 15 tabulek public + `auth.users` (id, e-mail, časy) jako JSON, schéma
+  (sloupce, politiky, funkce, triggery, cizí klíče, granty) a 53 souborů statického audia — u ownera mimo repo (`runar-eval/zaloha-db/`).
+  `supabase db dump` nejde (chce Docker) → export přes `supabase db query`. Je to JEDNA kopie, ne záloha průběžná; bod zůstává otevřený.
 - [ ] **Monitoring / alerting** (error rate + fail-open události → Slack/Sentry). Dnes jen pull logy.
 - [ ] **Staging / preview** prostředí pro migrace + edge fn (dnes vše proti prod DB).
 - [ ] **Deploy / rollback runbook** pro edge funkce (živý stav je mimo git, neviditelný).
