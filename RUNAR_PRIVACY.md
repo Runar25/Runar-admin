@@ -89,8 +89,8 @@ a souhlasí na pravdivém textu. Detail → `RUNAR_DECISIONS.md` 2026-09-11 (8).
   výřez textu (u čtení začátek čtení, může nést jméno), kontext obrazovky, jazyk, verze appky, `user_agent` a pole `tester` =
   jméno, které si tester sám napsal (2026-10-09: 0 e-mailů z 241). **Žádná vazba na účet** (`user_id` tabulka nemá) → smazání účtu
   hlášení nesmaže. Číst je smí jen admin přes `list-reports` (RLS bez SELECT politiky); do Slacku jde jen typ a metadata
-  (`notify-report`, ne text ani jméno). Vložit hlášení: do 2026-10-09 i nepřihlášený — oprava na „jen přihlášený“ čeká na
-  spuštění SQL ownerem (`RUNAR_BACKLOG.md` „Kontrola architektury“, bod 9). **Doba uchování nerozhodnuta.**
+  (`notify-report`, ne text ani jméno). Vložit hlášení smí od 2026-10-10 jen přihlášený (do té doby i nepřihlášený;
+  politika `bug_reports_insert` → `authenticated`, `RUNAR_BACKLOG.md` „Kontrola architektury“, bod 9). **Doba uchování nerozhodnuta.**
 - **Rozbory čtení od GPT (`gpt_reviews`, 2026-09-25 – 2026-10-09)** — tlačítko v adminově vlastní session (text jeho čtení šel
   k OpenAI) je od 2026-10-09 **zrušené** i s edge funkcí `gpt-review`; nové rozbory nevznikají. Uložené řádky zůstaly: text rozboru,
   model, id čtení a admin; cizí čtení v nich nejsou. Smazáním účtu admina zmizí (`on delete cascade`). Klient tabulku nečte ani nepíše.

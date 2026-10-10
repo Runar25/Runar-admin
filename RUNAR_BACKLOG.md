@@ -1780,7 +1780,7 @@ nepoužitá konstanta islandského hlasu označena · `tree-update` „volá ji 
    `used_by` → kód je zase „nepoužitý“. V produkci teď **2 takové kódy** (`used_by` null, `used_at` vyplněné; dotaz 2026-10-09).
    **Opraveno v repu** (`redeem-code` hlídá i `used_at`, v kontrole i v CAS) — **čeká na nasazení**:
    `supabase functions deploy redeem-code --project-ref pmitxjvkeovijreepror --no-verify-jwt`. Po nasazení jsou ty 2 kódy zavřené samy.
-5. ⚪ **`tree-update` je nasazená, appka ji nevolá** ➜ **owner „opravit“ → stáhnout z nasazení; příkaz spustí owner** (DECISIONS 2026-10-10 (1)). — a zavolat ji může každý přihlášený bez rate limitu a bez stropu délky textu
+5. ⚪ **`tree-update` je nasazená, appka ji nevolá** ➜ ✅ **staženo z nasazení 2026-10-10** (DECISIONS 2026-10-10 (1)); kód v repu zůstává. — a zavolat ji může každý přihlášený bez rate limitu a bez stropu délky textu
    (platí Haiku, zapíše `tree_state`, `credits_used` bere od klienta = známé #6/#7 v sekci C). Data se dnes nikam nepoužijí (vrstvy
    A/B/C vypnuté). Volba: stáhnout, dokud ji CODE-tree neoživí (`supabase functions delete tree-update`), nebo nechat.
 6. ⚪ `elevenlabs-proxy` vrací klientovi text chyby ElevenLabs (`claude-proxy` příčiny záměrně skrývá) a měsíční čítač hlasu není
@@ -1797,9 +1797,9 @@ nepoužitá konstanta islandského hlasu označena · `tree-update` „volá ji 
 **PRO OWNERA:**
 7. ⚪ **Seznam adminů žije i v 5 RLS politikách** (`gift_codes`, `knowledge_base`, `runar_character`, `runar_corrections`,
    `runar_static_audio`); smoke ㉪ je vědomě nehlídá (SQL = historie, ne běžící kód). Při změně adminů je nutné přepsat i je.
-8. ⚪ **`user_profiles` má dvě totožné politiky** ➜ **owner „opravit“; SQL spustí owner** (CODE-read DB měnit nesmí). („Users manage own profile“ a „own profile“, obě ALL, `auth.uid() = id`). Neškodí,
+8. ⚪ **`user_profiles` má dvě totožné politiky** ➜ ✅ **smazáno 2026-10-10** (SQL spustil owner; zůstala „Users manage own profile“). („Users manage own profile“ a „own profile“, obě ALL, `auth.uid() = id`). Neškodí,
    jen duplikát. Úklid (spustí owner): `drop policy "own profile" on public.user_profiles;`
-9. ⚪ **`bug_reports`:** ➜ **owner „opravit“:** DB jen přihlášení (SQL spustí owner) + tlačítko jen přihlášeným (CODE-tune) + `RUNAR_PRIVACY.md` doplněn (CODE-read); doba uchování dál otevřená. vložit hlášení smí i nepřihlášený (politika INSERT, role public, `CHECK true`) — kdo zná veřejný klíč, může
+9. ⚪ **`bug_reports`:** ➜ **owner „opravit“:** DB jen přihlášení ✅ 2026-10-10 (SQL spustil owner, ověřeno v `pg_policies`) + tlačítko jen přihlášeným (CODE-tune) + `RUNAR_PRIVACY.md` doplněn (CODE-read); doba uchování dál otevřená. vložit hlášení smí i nepřihlášený (politika INSERT, role public, `CHECK true`) — kdo zná veřejný klíč, může
    posílat hlášení a pingat Slack. A hlášení nesou jméno testera (ručně zadané, 0 e-mailů z 241) a výřez čtení, bez vazby na účet →
    přežijí smazání účtu; `RUNAR_PRIVACY.md` o `bug_reports` nepíše nic. Rozhodnout: nechat / jen přihlášení / doba uchování.
 
