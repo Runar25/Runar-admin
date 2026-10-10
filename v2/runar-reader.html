@@ -21,7 +21,9 @@
      takze si ho prohlizec stahoval driv nez appku. PNG 96x96 + ICO pod tim staci. -->
 <link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96x96.png">
 <link rel="shortcut icon" href="icons/favicon.ico">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- 2026-10-10 (kontrola architektury): pevná verze + otisk (SRI). Dřív @2 = každé nové vydání se nahrálo samo, bez kontroly — chybná
+     nebo podvržená verze by běžela s přístupem k přihlášení. Povýšení: node scripts/utils/supabase_js_pin.js (vypíše novou adresu i otisk). -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.3/dist/umd/supabase.min.js" integrity="sha384-dl/4LkSyQ4uEucc48NM6VDZLAjLLq9yMzZ5JLXumBq7Ld33XBof73hseOqPhO89+" crossorigin="anonymous"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
 <script src="runar-config.js"></script>
 <script src="runar-runes.js"></script>

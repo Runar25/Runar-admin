@@ -1938,6 +1938,14 @@ Celá historie gitu (všechny větve) bez klíče Anthropic (`sk-ant-api`), Open
 16. 🔴 **Produkční databáze nemá žádnou zálohu** (`supabase backups list`: prázdný seznam, obnova k okamžiku vypnutá). Kdyby se
     databáze poškodila nebo omylem smazala, deníky, kredity a profily jsou pryč. Podrobnosti a volby → sekce C „Zálohy / DR“.
 
+### Část 14 — cizí kód načítaný appkou, přihlašovací e-maily (2026-10-10)
+**Platí:** jediný cizí skript je supabase-js z jsDelivr (+ fonty Google); SW ho nepředukládá. DNS therunekeeper.com pro e-mail
+s kódem: DKIM Brevo (`brevo1`/`brevo2`) a DMARC `p=quarantine` nastavené; SPF obsahuje jen Google — Brevo na sdílených IP SPF
+nevyžaduje, DMARC projde přes DKIM. (Že kód zatím nikomu neodešel, řeší CODE-tune — BACKLOG 054a907.)
+**Opraveno rovnou:** supabase-js se načítal jako `@2` bez otisku → každé nové vydání 2.x se všem nahrálo samo a bez kontroly; teď
+pevná verze 2.117.3 + SRI v `runar-reader.html` i `runar-shrine.html` (bajtově tentýž soubor, co se servíroval). Povýšení:
+`node scripts/utils/supabase_js_pin.js` vypíše novou adresu a otisk — opravy z nových vydání už nepřijdou samy. **Pro ownera:** nic.
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
