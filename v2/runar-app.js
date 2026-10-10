@@ -837,7 +837,7 @@ function updateUIText() {
   // reader-card1-lbl and reader-note are set by _updateReadingForm() — not here
   _updateDobLabel();
   _updateAreaSeekLabels();
-  setText('begin-btn', t('begin_btn'));
+  // begin-btn nastavuje _updateReadingForm (návštěvník má jiný text, 2026-10-10)
   setRuneText('draw-lbl', t('draw_lbl'));   // popisky s runou → setRuneText (naše SVG, bod 11, 2026-10-10)
   setText('draw-note', t('draw_note'));
   setRuneText('btn-random', t('random_btn'));
@@ -942,11 +942,10 @@ function showAppTab(tab) {
   } else {
     // Owner request: reset stale spread output/label/mode to clean single on tab entry
     if (typeof _resetReadingTab === 'function') _resetReadingTab();
-    // Restore hero only if no reading is in progress. Mřížka návštěvníka (data-host, _syncVisitorDraw) je jeho úvodní obrazovka, ne
-    // rozdělané čtení — do 2026-10-10 se kvůli ní po návratu do záložky Rúnarova fotka nevrátila (KUKY: „kde je Rúnarova fotka?“).
-    const _rc = document.getElementById('reader-rune-card');
+    // Restore hero only if no reading is in progress
+    // (2026-10-10 večer: výjimka pro mřížku návštěvníka `data-host` pryč spolu s _syncVisitorDraw — návštěvník má zase formulář.)
     const inReading = document.getElementById('reader-output')?.style.display !== 'none'
-                   || (_rc?.style.display !== 'none' && _rc?.getAttribute('data-host') !== '1');
+                   || document.getElementById('reader-rune-card')?.style.display !== 'none';
     if (!inReading) document.getElementById('reader-hero').classList.remove('hidden');
     // Update reading form mode/state when switching to reading tab
     if (typeof _updateReadingForm === 'function') _updateReadingForm();

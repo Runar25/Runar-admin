@@ -3151,8 +3151,9 @@ Podklad: `docs/archive/2026-09-23-audit-obrazu.md`. Owner je potřebuje vysvětl
    výklady. V prohlížeči ověřeno ve všech čtyřech výkladech: po přepnutí jazyka „DRAW YOUR RUNES“/„ADD RUNE“ místo „HEAR RÚNAR SPEAK“;
    bez přepínání, u plného výkladu i u návštěvníka beze změny.)* ~~**§14 u tlačítka tahu:**~~ `updateUIText` při každém přepnutí jazyka
    nastaví `btn-speak` na `speak_btn` („HEAR RÚNAR SPEAK“) — ve spreadu, kde ještě chybí runy, má stát `speak_btn_draw` („DRAW YOUR RUNES“).
-5. ✅ *(CODE-tune 2026-10-10, DECISIONS 2026-10-10 (18): owner „rovnou tah runy“ → _syncVisitorDraw)* ~~**Formulář návštěvníka:**~~ návštěvník čtení nedostane, formulář se ho přesto ptá na jméno a „jak tě má Rúnar
-   oslovovat“ (oblast/hledání/záměr má zamčené). Nechat jako ukázku, nebo mu ukázat rovnou tah runy?
+5. ↩ *(2026-10-10 večer VRÁCENO, DECISIONS 2026-10-10 (30): návštěvník má zase formulář — 2a3f03b „rovnou k tahu“ owner chtěl
+   vrátit celé, CODE-tune opravil jen Norny a fotku.)* **Formulář návštěvníka:** návštěvník čtení nedostane, formulář se ho přesto ptá
+   na jméno a „jak tě má Rúnar oslovovat“ (oblast/hledání/záměr má zamčené). Dál otevřené jen spolu s bodem 8 (čtení pro návštěvníka).
 6. ⚪ **Shrine: runy písmem.** `teach_select_lbl` „ᚠ SELECT RUNE“, `teach_next_btn` „ᚠ TEACH ANOTHER RUNE“ a tlačítko hlasu v učení
    (`voice_btn*`, v `runar-shrine.html` přes `textContent`) mají runu dál písmem. Admin, nespěchá; oprava = `setRuneText` na těch
    místech a shrine přidat do smoke ㉻ (dnes ho záměrně vynechává).

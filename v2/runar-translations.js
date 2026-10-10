@@ -135,6 +135,7 @@ const UI_TEXT = {
     draw_note:        'Close your eyes. Hold your question. Then choose the rune that calls to you.',
     random_btn:       'ᚲ LET THE RUNES DECIDE',
     speak_btn:        'HEAR RÚNAR SPEAK',
+    begin_btn_visitor: 'DRAW A RUNE',        // 2026-10-10: návštěvník čtení nedostane — tlačítko ho neslibuje (_updateReadingForm); vráceno s formulářem návštěvníka
     speak_btn_visitor: 'DRAW THIS RUNE',     // 2026-10-10: návštěvník čtení nedostane — tlačítko tahu ho neslibuje (_updateReadingForm)
     speak_btn_add:    'ADD RUNE',
     speak_btn_draw:   'DRAW YOUR RUNES',
@@ -621,6 +622,7 @@ const UI_TEXT = {
     draw_note:        'Lokaðu augunum um stund. Haltu spurningunni í huga. Veldu síðan rúnina sem kallar til þín.',
     random_btn:       'ᚲ LÁTTU RÚNIRNAR VELJA',
     speak_btn:        'HEYRA RÚNAR TALA',
+    begin_btn_visitor: 'DRAGA RÚN',          // 2026-10-10: viz EN; „draga rún“ korpus 4× (jako DRAGA AÐRA RÚN)
     speak_btn_visitor: 'DRAGA ÞESSA RÚN',    // 2026-10-10: „draga þessa“ 928×, „þessa rún“ 6×
     speak_btn_add:    'BÆTA VIÐ RÚNU',
     speak_btn_draw:   'DRAGÐU RÚNIRNAR',

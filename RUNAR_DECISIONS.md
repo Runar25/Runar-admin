@@ -9672,3 +9672,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   vrácen na tuto verzi. Prodloužení kořenů podle úhlu (× 1 + 0,4 × sinus) a ohnutí u povrchu z (28) se nepoužívají. Pravidlo z (28) „kořen se smí
   ohnout a prodloužit, nikdy se neruší ani neotáčí celý“ platí dál; tři větvičky Berkanina kořene nad zemí zůstávají (`RUNAR_BACKLOG.md`).
 - Affected doc(s): `RUNAR_BACKLOG.md` (položka pokusu) — v témže commitu.
+
+## 2026-10-10 (31) — Návštěvník zase s formulářem: 2a3f03b vrácen celý (opravuje (18), bod „rovnou k tahu“)
+
+- **Rozhodl:** KUKY. Po 2a3f03b napsal *„neopravuješ dvě věci, vracíš, co jsi zkurvil“* — CODE-tune ale v (19) opravil jen Norny a fotku
+  a návštěvníka nechal bez formuláře. Ve 21:55 se snímkem návštěvníka bez formuláře vedle přihlášeného s formulářem: *„znova se vracíme
+  k tomu, co jsi rozjebal a nenapravil“*.
+- **Co:** návštěvník má zase formulář jako před 2a3f03b (jméno, oslovení, zamčené volby, tlačítko „DRAW A RUNE“ / „DRAGA RÚN“); pět
+  výkladů a 25 run se mu ukážou po něm, jako přihlášenému po „BEGIN THE READING“. Zůstává z (19): Norny pro všechny; zůstává text
+  tlačítka tahu podle stavu (`_speakBtnKey`).
+- **Ověřeno:** snímek návštěvníka shodný se stavem před 2a3f03b; cesta formulář → tah → výzva k registraci → Safn rúna a zpět →
+  Start over (fotka i formulář zpět); smoke ㉼ hlídá i tah návštěvníka (11 stavů).
+- **Neplatí:** (18) „návštěvník rovnou k tahu runy (bez formuláře)“.
+- Affected doc(s): `RUNAR_BACKLOG.md` („Kontrola návštěvníka“ bod 5) — v témže commitu.

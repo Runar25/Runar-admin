@@ -6,7 +6,8 @@
 // appka z pracovního stromu na 127.0.0.1, čistý profil = návštěvník. Základ (rozšiřovat jen sem, jedno místo):
 //   · Rúnarova fotka (#reader-hero s Runar_portrait, ne .hidden) · čtyři záložky (Lífsrúnin, Spá, Lestrar, Safn rúna)
 //   · všech pět výkladů (Ein rún, Nornir, Áttaviti, Skeifa, Yggdrasil) · 25 run v mřížce tahu · 25 run v Safn rúna
-// Stavy: po načtení · po návratu do Spá z každé záložky · Start over (resetReader) · další tah (drawAnother) · přepnutí jazyka ·
+// Stavy: po načtení · po návratu do Spá z každé záložky · Start over (resetReader) · tah návštěvníka (startReading) · další tah
+// (drawAnother) · přepnutí jazyka v tahu i na začátku ·
 // simulovaný přihlášený (currentUser podvržený jen v prohlížeči testu; nic se nenačítá ani neukládá): Spá s fotkou, po startu tahu
 // všech pět výkladů. Samotest na konci: kontrola sama rozbije Norny a fotku a musí to poznat.
 // Chyby JS za běhu (od 2026-10-10): každá nezachycená výjimka během celého běhu — i při načítání stránky, v setTimeout a v promise
@@ -103,7 +104,9 @@ async function main() {
     let pripraveno = false;
     for (let i = 0; i < 120 && !pripraveno; i++) {
       await cekej(250);
-      try { pripraveno = await ev("document.readyState === 'complete' && typeof showAppTab === 'function' && document.querySelectorAll('#reader-grid .rb').length > 0"); } catch (e) {}
+      // Připraveno = skripty načtené a formulář na místě. Do 2026-10-10 večer se čekalo na mřížku run — tu měl návštěvník hned jen
+      // po 2a3f03b (bez formuláře); s vráceným formulářem se mřížka staví až po „DRAW A RUNE“.
+      try { pripraveno = await ev("document.readyState === 'complete' && typeof showAppTab === 'function' && typeof startReading === 'function' && !!document.getElementById('reader-setup')"); } catch (e) {}
     }
     if (!pripraveno) throw new Error('appka v prohlížeči nenaběhla do 30 s (síť? chyba skriptu?) — ' + url);
     await cekej(800);
@@ -117,8 +120,17 @@ async function main() {
       await krok('Spá po návratu z ' + tab, "showAppTab('" + tab + "'); await new Promise(function(r){setTimeout(r,500)}); showAppTab('reading');");
     }
     await krok('Start over', 'resetReader();');
-    await krok('další tah', 'drawAnother();');
-    await krok('po přepnutí jazyka', "setLang(lang === 'is' ? 'en' : 'is');");
+    // Návštěvník má formulář (2026-10-10 večer, 2a3f03b vráceno): výklady a 25 run v tahu se u něj ukážou až po „DRAW A RUNE“
+    // (startReading). Během tahu fotku schovává startReading záměrně — jako u přihlášeného, proto filtr.
+    const tahKrok = async (popis, js) => {
+      await ev('(async function(){ ' + js + ' })()');
+      await cekej(700);
+      (await ev(ZAKLAD + '(' + JSON.stringify(popis) + ')')).filter((c) => !/Rúnarova fotka skrytá/.test(c)).forEach((c) => chyby.push(c));
+    };
+    await tahKrok('návštěvník: tah', 'resetReader(); startReading();');
+    await tahKrok('další tah', 'drawAnother();');
+    await tahKrok('tah po přepnutí jazyka', "setLang(lang === 'is' ? 'en' : 'is');");
+    await krok('po přepnutí jazyka', "resetReader(); setLang(lang === 'is' ? 'en' : 'is');");
     // Safn rúna: všech 25 run (zamčené návštěvníkovi taky — jsou vidět, jen se nedají otevřít)
     const kol = await ev("(async function(){ showAppTab('collection'); for (var i=0;i<40;i++){ if (document.querySelectorAll('.coll-cell').length) break; await new Promise(function(r){setTimeout(r,250)}); } var n=document.querySelectorAll('.coll-cell').length; showAppTab('reading'); return n; })()");
     if (kol !== 25) chyby.push('Safn rúna má ' + kol + ' run, ne 25');
@@ -128,7 +140,7 @@ async function main() {
     await cekej(500);
     (await ev(ZAKLAD + '("přihlášený: tah")')).filter((c) => !/Rúnarova fotka skrytá/.test(c)).forEach((c) => chyby.push(c));   // tah přihlášeného fotku schovává záměrně (startReading)
     // Samotest: kontrola musí poznat skryté Norny i skrytou fotku (jinak by mlčela, i kdyby byly pryč)
-    const sabot = await ev("(function(){ resetReader(); currentUser = null; _syncVisitorDraw(); document.getElementById('mode-btn-norns').style.display = 'none'; document.getElementById('reader-hero').classList.add('hidden'); return 1; })()");
+    const sabot = await ev("(function(){ resetReader(); currentUser = null; startReading(); document.getElementById('mode-btn-norns').style.display = 'none'; document.getElementById('reader-hero').classList.add('hidden'); return 1; })()");
     await cekej(300);
     const st = await ev(ZAKLAD + '("samotest")');
     if (!sabot || !st.some((c) => /mode-btn-norns/.test(c)) || !st.some((c) => /fotka skrytá/.test(c))) chyby.push('SAMOTEST: kontrola nepoznala skryté Norny nebo fotku — ' + JSON.stringify(st));
@@ -146,6 +158,6 @@ async function main() {
     console.log('FAIL  základ produkce: ' + chyby.length + ' vad — fotka, záložky, výklady a runy nesmí z appky zmizet a appka nesmí padat (KUKY 2026-10-10)');
     process.exit(1);
   }
-  console.log('OK    základ produkce v prohlížeči: fotka, 4 záložky, 5 výkladů, 25 run (tah i Safn rúna), žádná chyba JS za běhu — 9 stavů návštěvníka i přihlášeného, samotest chytá skryté Norny, fotku i chybu JS');
+  console.log('OK    základ produkce v prohlížeči: fotka, 4 záložky, 5 výkladů, 25 run (tah i Safn rúna), žádná chyba JS za běhu — 11 stavů návštěvníka i přihlášeného, samotest chytá skryté Norny, fotku i chybu JS');
 }
 main().catch((e) => { console.log('FAIL  základ produkce: ' + e.message); process.exit(1); });
