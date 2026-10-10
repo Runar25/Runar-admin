@@ -1226,7 +1226,7 @@ Každý nový prompt musí žít v mytologickém světě.
 Rúnar není asistent. Je průvodce na cestě Rune Seekera.
 
 ## Image pool — register obrazů (D/E/P)
-*(kritéria vlastní Cowork — handoff 2026-08-23; CODE jen ukládá; hodnoty hlídá smoke ㊱,
+*(kritéria vlastní Cowork — handoff 2026-08-23; CODE jen ukládá; hodnoty hlídá smoke ㉠ — `verify_image_register.js`; do 2026-10-10 tu stálo „㊱“, ale smoke od ㉟ pokračuje znaky ㉠, ㉡… a „㊱“ ve výpisu nenajdeš,
 sloupec 7 v `RUNE_IMAGES`)*
 - **D = DOMÁCÍ/INTIMNÍ:** uvnitř, lidské ruce, krb, malé (káva, chléb, lampa, ponk, klíče, hodiny, telefon, pletení).
 - **E = ŽIVELNÉ/VELKÉ:** syrová příroda, počasí, obloha, velké (ledovec, kroupy, láva, hver, fjord, půlnoční slunce).
