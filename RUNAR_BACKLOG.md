@@ -2116,6 +2116,22 @@ _randomRegister/_randomPlacement` + jejich pooly (ve `runar-utils.js`, „NEVER 
   triggers“, nic z toho nepostaveno a nic ho nečte → buď „rezervováno pro detectPatterns“, nebo pryč; CLAUDE.md ho vede mezi daty, která
   „čtou obě session“.
 
+### Část 22 — edge funkce: tajné proměnné a kopie hodnot z configu (2026-10-10)
+**Platí:** všech 7 proměnných, které funkce berou přes `Deno.env.get`, je v Supabase nastavených (`supabase secrets list`, jen jména).
+Každou kopii configu v edge funkcích hlídá kontrola: `MONTHLY_LIMITS`, `ASKS_PER_READING`, `VOICE_MONTHLY_LIMIT`, `NAME_LORE_LIMIT` (⑨
+`verify_monthly_limits.js`), seznam adminů (㉪), skládání uloženého textu (`verify_compose_mirror.js`).
+**Známé, nic nového:** `spread_cost` (kolik jednotek se strhne) dál posílá klient, server ho jen ořízne na 1–9 → upravený klient může
+zaplatit méně = „Proxy Fáze 2“ #4 (výš v BACKLOGu; pokus 2026-08-03 vrácen). Skutečná oprava = skládat prompt/typ čtení na serveru —
+táž položka jako „Kam s databází, promptem a hostingem“.
+
+### Část 23 — styly bez prvku (`runar-reader.css`, 2026-10-10)
+Metoda: každá `.třída`/`#id` z CSS, jejíž jméno se nevyskytuje v žádném `v2/*.js|html` (ani jako skládaný prefix `'x-' +` / `x-${}`).
+- ⚪ **Pro CODE-tune (h):** ~34 mrtvých selektorů — celý starý blok deníku `.journal-*` (33 řádků od ~768: section/header/count/toggle/
+  body/entry/rune-glyph/meta/date/excerpt/area-tag/expand-btn/deep*/life-rune), starý boční panel `.sp-row`, `.sp-account-label`,
+  `.sp-tier-sub`, `.sp-path-gift-note`, `.sp-higher-path-lbl`, `.signout`, `.dd-item`, `.btn-outline`, strom `.tree-or-sep`,
+  `.tree-upgrade-block`, `.tree-upgrade-note`, `.tree-lifelens` (čočka odešla 2026-09-25), `.badge-meta-lbl`, `.badge-name`, `.rs-link`.
+  Napřed v náhledu ověřit, že se nic nerozbije (§32 základ), pak smazat.
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
