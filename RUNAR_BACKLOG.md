@@ -1310,19 +1310,20 @@ a 2 z 10 rozborů s ruským slovem v češtině. `tree-update` přepnut na Haiku
 ✅ **Rozhodnuto 2026-10-09 (KUKY):** rozbor čtení *„zrušit úplně“* (luna se nepoužívá, Haiku místo ní nebude) — tlačítko i edge fn
 `gpt-review` pryč, DECISIONS 2026-10-09 (8). Třídění hlášení modelem *„ok, neřešit“*. Zůstává: `tree-update` na Haiku 5.5.
 
-### Životní runa: „stín runy“ jako samostatná část — ČEKÁ NA OWNERA, probrat (report 048c14c1, CODE-tune 2026-10-09)
+### Životní runa: element „Shadow“ splývá s významy runy — ČEKÁ NA OWNERA, probrat (report 048c14c1, CODE-tune 2026-10-09)
 KUKY (report z testu životní runy na solu, 2026-10-09 23:21): *„Shadow má být oddělené, ať jde poznat, že jde o něco jiného. … Mě by
 se líbilo rune Shadow. Musíme to probrat. … Co zůstává za hranicí klidu a pozornosti? … jiný pohled na význam runy, na runu. Na její
 stín. Co stojí za runou.“* K tomu: *„4. čtení je dobré, potřebuje jen menší úpravu.“*
-**Dnes:** část 2 promptu (`RP_LIFE.*.p2`, runar-character.js) končí *„Then its other side: what the same rune becomes when it goes too
-far or when it is missing, and what it does not promise.“* — v textu to splyne s výkladem (Fehu: *„Overdone, the same rune becomes
-hoarding… Absent or reversed, it reads as loss…“*).
-**Co rozhodnout:** (1) **oddělit** = třetí část čtení se svým nadpisem v appce; nadpis z UI_TEXT (model dál píše bez nadpisů, appka
-rozdělí podle značky). Jméno: EN *„Fehu's shadow“* / *„The rune's shadow“* (anglické „rune Shadow“ zní cize), IS ověřit korpusem
-(*„skuggi rúnarinnar“*?). (2) **obsah**: dnes „přehnaná / chybějící“ (blízko tradičního merkstave); owner chce spíš „co stojí za
-runou, mimo pozornost“. ⚠️ §23: bez kánonu stínových významů si je model vymyslí — buď kánon stínu pro každou runu (Cowork, ze
-zdrojů), nebo instrukce držet se významů z MEANINGS a jen je obrátit. Hranice: týká se jen čtení životní runy (single a spready
-stín nemají).
+**Co se stalo (ověřeno v DB — ownerova životní runa Isa, sol):** prompt (`buildLifeRuneBase`, runar-character.js) nese řádek
+`ELEMENT: Shadow` hned nad `MEANINGS: ice, stillness…` a model z elementu udělal další význam: *„Shadow belongs here as the part that
+remains out of sight while the light is scarce.“* Element Shadow mají Hagalaz, Isa, Eihwaz (Earth + Shadow), Perth a Blank (Water +
+Shadow) — `RUNES[].elements`; v designu = studené / skryté runy (`RUNAR_DESIGN.md`, „5 elementů“). ⚠️ Navíc: islandský prompt nese
+jména elementů anglicky (`FRUMEFNI: Shadow`) — §2, opravit s tímhle.
+**Co rozhodnout:** (1) oddělit: element jako samostatná věc ve čtení (*„Isa is a Shadow rune — …“*), ne jako další význam — nebo
+element z promptu životní runy vyndat; (2) co „Shadow“ u runy znamená — owner: *„co zůstává za hranicí klidu a pozornosti, co stojí
+za runou, její stín“* → definice do kánonu (`RUNAR_DESIGN.md`), pak jedna věta v promptu. Jméno: EN „a Shadow rune“, IS ověřit
+korpusem (skuggi / skuggarún?). §23: definici dává owner a kánon, ne model. *(Do 00:30 tu stál výklad, že jde o „druhou stranu
+runy“ v části 2 — to bylo špatně přečtené hlášení, opraveno po přečtení ownerova čtení v DB.)*
 
 ### Podoby oblastí psané jako vedlejší věta se opisují doslova — návrh přepisu: owner NEDĚLAT, SLEDOVAT (CODE-tune, 2026-10-09)
 ⏸ **KUKY 2026-10-09:** *„14. nej to zapis. budeme dal testovat a pokud to nejak vyskoci tak na to zareagujeme.“* → přepis se nedělá;
