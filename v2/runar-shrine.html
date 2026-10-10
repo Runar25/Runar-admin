@@ -462,8 +462,8 @@ textarea::placeholder{color:var(--dim);}
     #pane-voice .vc-empty{color:#8a94a6;font-size:0.85em;}
   </style>
   <div class="card">
-    <div class="card-lbl">🔊 HLAS — ELEVENLABS</div>
-    <button class="btn" onclick="loadVoice()">Obnovit</button>
+    <div class="card-lbl">🔊 VOICE — ELEVENLABS</div>
+    <button class="btn" onclick="loadVoice()">↻ Refresh</button>
     <div class="status" id="st-voice"></div>
     <div id="voice-box"></div>
   </div>
@@ -522,21 +522,22 @@ textarea::placeholder{color:var(--dim);}
       <span id="rd-count" style="font-size:0.78em;color:#6f7c92;margin-left:8px;"></span>
       <button class="rd-act" style="margin-left:auto;" onclick="loadReadings()">↻ Refresh</button>
     </div>
+    <!-- 2026-10-10 §31: popisky záložek READINGS a VOICE anglicky (shrine čtou oba admini, společná řeč se Sigrún); do té doby česky. -->
     <!-- 2026-10-05 DATABÁZE ČTENÍ (KUKY): vyber runu → přehled jejích obrazů (kolikrát padl, význam, tvoje poznámky, ✦); klik na obraz = všechna jeho čtení -->
     <div class="pills" style="margin-top:6px;align-items:center;gap:6px;flex-wrap:wrap;">
-      <select id="rd-rune" onchange="setRdRune(this.value)"><option value="">Všechny runy (posledních 100)</option></select>
-      <select id="rd-img" onchange="setRdFilter('img', this.value)"><option value="">Všechny obrazy</option></select>
-      <select id="rd-kws" onchange="setRdFilter('kws', this.value)"><option value="">Všechny významy</option></select>
-      <select id="rd-model" onchange="setRdFilter('model', this.value)"><option value="">Všechny modely</option></select>
+      <select id="rd-rune" onchange="setRdRune(this.value)"><option value="">All runes (last 100)</option></select>
+      <select id="rd-img" onchange="setRdFilter('img', this.value)"><option value="">All images</option></select>
+      <select id="rd-kws" onchange="setRdFilter('kws', this.value)"><option value="">All meanings</option></select>
+      <select id="rd-model" onchange="setRdFilter('model', this.value)"><option value="">All models</option></select>
       <!-- 2026-10-05 (KUKY „přidej filtr oblasti a hledání“): týž obraz × táž oblast × hledání — jak ho model řekne pokaždé -->
-      <select id="rd-area" onchange="setRdFilter('area', this.value)"><option value="">Všechny oblasti</option></select>
-      <select id="rd-seek" onchange="setRdFilter('seek', this.value)"><option value="">Všechna hledání</option></select>
+      <select id="rd-area" onchange="setRdFilter('area', this.value)"><option value="">All areas</option></select>
+      <select id="rd-seek" onchange="setRdFilter('seek', this.value)"><option value="">All seekings</option></select>
       <!-- 2026-10-06 (KUKY „do shrine v reading chci ještě přidat angle, essence line“): výběr čtení podle úhlu a esenčního řádku -->
-      <select id="rd-angle" onchange="setRdFilter('angle', this.value)"><option value="">Všechny úhly</option></select>
-      <select id="rd-ess" onchange="setRdFilter('ess', this.value)"><option value="">Všechny esenční řádky</option></select>
-      <div class="pill" id="rd-f-notes" onclick="toggleRdFilter('notes')">💬 S poznámkou</div>
-      <div class="pill" id="rd-f-keep" onclick="toggleRdFilter('keep')">✦ Uloženo</div>
-      <input id="rd-q" type="search" placeholder="Hledat v textu, Ascích a poznámkách…" oninput="setRdFilter('q', this.value)">
+      <select id="rd-angle" onchange="setRdFilter('angle', this.value)"><option value="">All angles</option></select>
+      <select id="rd-ess" onchange="setRdFilter('ess', this.value)"><option value="">All essence lines</option></select>
+      <div class="pill" id="rd-f-notes" onclick="toggleRdFilter('notes')">💬 With notes</div>
+      <div class="pill" id="rd-f-keep" onclick="toggleRdFilter('keep')">✦ Keep</div>
+      <input id="rd-q" type="search" placeholder="Search text, Asks and notes…" oninput="setRdFilter('q', this.value)">
     </div>
     <div id="rd-summary"></div>
     <div class="status" id="st-readings"></div>

@@ -434,7 +434,7 @@ async function persistJournal(
           { p_reading_id: rid, p_user_id: userId, p_entry: entry });
         if (fuErr) console.error("follow_up append failed:", fuErr.message);
         else if (st === "appended" || st === "duplicate") askSaved = true;   // duplicate = už uloženo → idempotentní úspěch
-        else console.error("follow_up append: čtení nenalezeno", rid);
+        else console.error("follow_up append: reading not found", rid);   // 2026-10-10 §31: log čtou admini → anglicky
       }
     } else {
       const isSpread = journal.kind === "spread";

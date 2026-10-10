@@ -18,7 +18,9 @@
 // Pole: name · g (m/f/u) · norse · root (ON kořen) · en / is (význam) · myth_en / myth_is
 //       · nick[] (přezdívky) · origin (u neseverských) · note
 const NORSE_NAMES = [
-  { name: 'Óðinn', g: 'm', norse: true, root: "ON óðr 'zuřivost, básnické vytržení'", en: 'fury / inspiration', is: 'óður, andagift', myth_en: 'Allfather; god of wisdom, war and poetry; won the runes hanging nine nights on Yggdrasil', myth_is: 'Alfaðir; guð visku, stríðs, skáldskapar og rúnanna', nick: [] },
+  // 2026-10-10 §31: kořen měl českou glosu „zuřivost, básnické vytržení“ a ta šla modelu do promptu; teď islandsky jako ostatní
+  // (æði = zuřivost, viz is-vazba „það rennur á hana æði“; andagift je i v poli is).
+  { name: 'Óðinn', g: 'm', norse: true, root: "ON óðr 'æði, andagift'", en: 'fury / inspiration', is: 'óður, andagift', myth_en: 'Allfather; god of wisdom, war and poetry; won the runes hanging nine nights on Yggdrasil', myth_is: 'Alfaðir; guð visku, stríðs, skáldskapar og rúnanna', nick: [] },
   { name: 'Þór', g: 'm', norse: true, root: "ON Þórr 'þruma'", en: 'thunder', is: 'þruma', myth_en: 'Thunder god, protector of Midgard, wields Mjölnir', myth_is: 'Þrumuguð, verndari Miðgarðs, ber Mjölni', nick: [] },
   { name: 'Freyr', g: 'm', norse: true, root: "ON 'dróttinn, herra'", en: 'lord', is: 'dróttinn', myth_en: 'Vanir god of fertility, prosperity, fair weather', myth_is: 'Vanaguð frjósemi og árgæsku', nick: ['Freysi'] },
   { name: 'Freyja', g: 'f', norse: true, root: "ON 'frú, húsfreyja'", en: 'lady', is: 'frú', myth_en: 'Goddess of love, fertility, war and seiðr', myth_is: 'Gyðja ástar, frjósemi, stríðs og seiðs', nick: [] },
@@ -140,7 +142,8 @@ const NORSE_NAMES = [
   { name: 'Ríkharður', g: 'm', norse: false, root: 'germ. ríkr + harðr', en: 'strong ruler', is: 'ríkur + harður', myth_en: '', myth_is: '', nick: ['Rikki'], origin: 'Germanic (Richard)', origin_is: 'germanskra mála (Richard)', note: 'germánské, ne severské' },
   { name: 'Vilhjálmur', g: 'm', norse: false, root: 'germ. vilja + helm', en: 'will-helmet', is: 'vilji + hjálmur', myth_en: '', myth_is: '', nick: ['Villi'], origin: 'Germanic (William)', origin_is: 'germanskra mála (William)', note: 'germánské, hraniční' },
   { name: 'Karl', g: 'm', norse: false, root: "germ. 'frjáls maður'", en: 'free man', is: 'frjáls maður', myth_en: '', myth_is: '', nick: ['Kalli'], origin: 'Germanic', origin_is: 'germanskra mála', note: "v ON 'karl' = maður/bóndi — hraniční, ověřit" },
-  { name: 'Zdeněk', g: 'm', norse: false, root: 'slov. (ze Zdislav)', en: '(Slavic)', is: '(slavneskt)', myth_en: '', myth_is: '', nick: [], origin: 'Slavic (Czech)', origin_is: 'slavneskra mála (tékknesku)' },
+  // 2026-10-10 §31: kořen byl česky „slov. (ze Zdislav)“ a šel do promptu; „af“ jako u „kvenkynsmynd af Þór“.
+  { name: 'Zdeněk', g: 'm', norse: false, root: 'slav. (af Zdislav)', en: '(Slavic)', is: '(slavneskt)', myth_en: '', myth_is: '', nick: [], origin: 'Slavic (Czech)', origin_is: 'slavneskra mála (tékknesku)' },
   { name: 'Petra', g: 'f', norse: false, root: "gr. 'klettur' (kvk)", en: 'rock (f)', is: 'klettur', myth_en: '', myth_is: '', nick: [], origin: 'Greek', origin_is: 'grísku' },
   { name: 'Sofía', g: 'f', norse: false, root: "gr. 'viska'", en: 'wisdom', is: 'viska', myth_en: '', myth_is: '', nick: [], origin: 'Greek', origin_is: 'grísku' },
 ];

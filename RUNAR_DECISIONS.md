@@ -9324,3 +9324,24 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno:** nápověda EN i IS v prohlížeči; IS řádku v e-mailu korpusem („ekki svara þessum“ 95, „svara þessum pósti“ 213).
   Šablonu v Supabase musí owner vložit znovu (zdroj `supabase/templates/prihlaseni-kod.html`).
 - Odvolává se na: 2026-10-10 (6).
+
+## 2026-10-10 (8) — Jazyk komunikace: veřejně i pro adminy jen IS a EN, česky jen owner ↔ Claude; hlídá smoke ㉹
+
+- **Rozhodl:** KUKY 2026-10-10: *„komunikace všude veřejně a pro adminy bude IS a EN. Jen já a ty komunikujeme česky. Štítky musí
+  být EN, jelikož to je náš společný jazyk se Sigrún. Zapiš, vytvoř kontrolu, cokoliv, ale tohle už nechci řešit.“* **Provedl:** CODE-tune.
+- **Co:** pravidlo `CLAUDE.md` §31 + kontrola smoke ㉹ (`scripts/verify_jazyk_ui.js`: UI_TEXT, stránky v2/, jejich JS, edge funkce,
+  šablony e-mailů). Při zavedení našla: admin záložky shrine (prohlížeč čtení, VOICE) celé česky · popisek inspekce větve stromu
+  natvrdo česky („pořadí run“ → UI_TEXT `tree_insp_rank`) · dvě hlášky v konzoli a logu (claude-proxy, strom — ta druhá česky bez
+  diakritiky) · dva kořeny jmen v `runar-names.js`, které šly modelu do promptu rozboru jména (Óðinn „zuřivost, básnické vytržení“ →
+  „æði, andagift“; Zdeněk „slov. (ze Zdislav)“ → „slav. (af Zdislav)“). Vše přeloženo; claude-proxy nasazen (v79, stažená verze = repo).
+- **Rozhodnuto podle pravidla, bez ptaní:** štítek verze promptu (`RUNAR_PROMPT_VERSION`) vidí admin u čtení →
+  od příští verze anglicky. Dnešní `v5.08-bez-elementu` má v kontrole výjimku (s ním se od rána ukládají čtení; přejmenovat = rozdělit
+  čtení téže verze do dvou skupin); s příští verzí výjimka zmizí, mrtvou kontrola shodí. Interní klíče (spread `KRIZ` v DB, sáček
+  `'vyznam'`) zůstávají — admin u spreadu vidí jeho jméno přes `spreadLabel`.
+- **Co kontrola neumí:** českou větu bez háčků, bez slova ze seznamu a s jediným krátkým slovem (při zavedení minula „HLAS“,
+  „S poznámkou“, „2 z 4“ a „ulozit se nepodarilo“ — našly je lidský průchod a smoke ㉵; slova a 4. síto jsou teď v ní). Data v DB
+  ani Gmail nevidí.
+- **Opravuje 2026-10-10 (7):** štítky schránky runar@therunekeeper.com nejsou české, ale **Testers · Login · Bugs · Ideas · Other**
+  (přejmenováno v Gmailu); koncepty odpovědí v IS a EN.
+- Affected doc(s): `CLAUDE.md` §31 · memory `schranka-runar-gmail`.
+- Odvolává se na: 2026-10-10 (7).

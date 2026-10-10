@@ -823,6 +823,20 @@ radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola textu natvrdo probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# ㉹ Jazyk komunikace (CODE-tune 2026-10-10, KUKY „komunikace všude veřejně a pro adminy bude IS a EN… tohle už nechci řešit“,
+# CLAUDE.md §31): v textu pro uživatele, admina nebo model není čeština. Při zavedení našla české admin záložky shrine
+# a českou glosu kořene Óðinn v promptu rozboru jména.
+print('\n' + chr(0x3279) + ' JAZYK KOMUNIKACE (verify_jazyk_ui.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_jazyk_ui.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+r2 = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_jazyk_ui.js'), '--test'],
+                    capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0 and r2.returncode == 0
+output = (r2.stdout + r.stdout + r.stderr + r2.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola jazyka komunikace probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

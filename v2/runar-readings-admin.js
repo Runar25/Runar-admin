@@ -18,6 +18,9 @@
   var _f = { img: '', kws: '', model: '', area: '', seek: '', angle: '', ess: '', notes: false, keep: false, q: '' };
   var _rows = [];
   var SPREADY = ['NORNS', 'KRIZ', 'HORSESHOE', 'YGGDRASIL'];
+  // 2026-10-10 §31: popisky anglicky — shrine čtou oba admini a společná řeč se Sigrún je angličtina (do té doby česky).
+  // Spread má v DB interní kind (KRIZ…); admin vidí jeho jméno přes spreadLabel (runar-utils.js, jeden zdroj, §18).
+  function jmeno(n) { return (SPREADY.indexOf(n) >= 0 && typeof spreadLabel === 'function') ? spreadLabel(n, 'en') : n; }
   var REP_IKONA = { keep: '✦', other: '🚩', visual: '🎨', replace: '✏️', rephrase: '✏️', pattern: '🔁', grammar: '🔤', crash: '💥' };   // grammar: hlášení testerů 2026-10-09
 
   // Shared escapeHtml is loaded (runar-utils.js); fall back to identity-safe if not.
@@ -47,10 +50,10 @@
   function obraz(r) {
     var d = r.prompt_draws || {};
     var t = bezTecky(d.image);
-    if (!t) return { key: '', label: '(obraz nezaznamenán)', title: '' };
+    if (!t) return { key: '', label: '(image not recorded)', title: '' };
     var hit = banka()[t];
     if (hit) return { key: 'IMG#' + hit.i, label: hit.row[3] || t, title: hit.row[2] || '' };
-    return { key: 'RAW#' + t, label: t, title: 'mimo dnešní banku obrazů' };
+    return { key: 'RAW#' + t, label: t, title: 'not in the current image bank' };
   }
   function model(r) { return (r.usage && r.usage.model) || '—'; }
   function vyznam(r) { return (r.prompt_draws && r.prompt_draws.kws) || ''; }
@@ -78,7 +81,7 @@
   function esence(r) { var d = r.prompt_draws || {}; return _je(d.essence) ? 'E' + d.essence + (_je(d.verb) ? '·' + d.verb : '') : ''; }
   function esencePopis(r) {
     var d = r.prompt_draws || {};
-    if (d.essence === 'blank') return 'prázdná runa (vlastní rámec)';
+    if (d.essence === 'blank') return 'blank rune (own frame)';
     var fr = (typeof ESSENCE_FRAMES !== 'undefined' && ESSENCE_FRAMES[d.essence]) || '';
     var m = /one short line that ([^—.,]+)/.exec(fr);
     var sl = (_je(d.verb) && typeof ESSENCE_VERBS_SOL !== 'undefined') ? ESSENCE_VERBS_SOL[d.verb] : '';
@@ -191,8 +194,8 @@
     var el = document.getElementById('rd-rune');
     if (!el || el.options.length > 1) { if (el) el.value = _rune; return; }
     var runy = (typeof RUNES !== 'undefined') ? RUNES.map(function (r) { return r.n; }) : [];
-    el.innerHTML = '<option value="">Všechny runy (posledních 100)</option>' +
-      runy.concat(SPREADY).map(function (n) { return '<option value="' + esc(n) + '">' + esc(n) + '</option>'; }).join('');
+    el.innerHTML = '<option value="">All runes (last 100)</option>' +
+      runy.concat(SPREADY).map(function (n) { return '<option value="' + esc(n) + '">' + esc(jmeno(n)) + '</option>'; }).join('');
     el.value = _rune;
   }
 
@@ -214,8 +217,8 @@
     });
     var radky = Object.keys(g).map(function (k) { return g[k]; }).sort(function (a, b) { return b.n - a.n; });
     _souhrnKlice = radky.map(function (x) { return x.key; });
-    box.innerHTML = '<table class="rd-sum"><thead><tr><th>Obraz (' + esc(_rune) + ')</th><th>Význam</th><th>Čtení</th>' +
-      '<th>Naposled</th><th>💬</th><th>✦</th></tr></thead><tbody>' + radky.map(function (x, i) {
+    box.innerHTML = '<table class="rd-sum"><thead><tr><th>Image (' + esc(jmeno(_rune)) + ')</th><th>Meaning</th><th>Readings</th>' +
+      '<th>Last</th><th>💬</th><th>✦</th></tr></thead><tbody>' + radky.map(function (x, i) {
         var kws = Object.keys(x.kws).map(function (k) { return k + (x.kws[k] > 1 ? ' ×' + x.kws[k] : ''); }).join(' · ');   // ' · ': starší čtení mají ve významu víc slov s čárkou
         return '<tr class="' + (_f.img === x.key ? 'on' : '') + '" onclick="pickRdImageIdx(' + i + ')" title="' + esc(x.title) + '">' +
           '<td>' + esc(x.label) + '</td><td>' + esc(kws) + '</td><td>' + x.n + '</td><td>' + esc((x.last || '').slice(0, 10)) + '</td>' +
@@ -225,13 +228,13 @@
 
   function renderAll() {
     naplnRuny();
-    naplnVyber('rd-img', 'Všechny obrazy', 'img', function (r) { return obraz(r).label; });
-    naplnVyber('rd-kws', 'Všechny významy', 'kws', vyznam);
-    naplnVyber('rd-model', 'Všechny modely', 'model', model);
-    naplnVyber('rd-area', 'Všechny oblasti', 'area', oblast);   // oblast a hledání při změně runy zůstávají — srovnání napříč runami
-    naplnVyber('rd-seek', 'Všechna hledání', 'seek', hledani);
-    naplnVyber('rd-angle', 'Všechny úhly', 'angle', uhelPopis);
-    naplnVyber('rd-ess', 'Všechny esenční řádky', 'ess', esencePopis);
+    naplnVyber('rd-img', 'All images', 'img', function (r) { return obraz(r).label; });
+    naplnVyber('rd-kws', 'All meanings', 'kws', vyznam);
+    naplnVyber('rd-model', 'All models', 'model', model);
+    naplnVyber('rd-area', 'All areas', 'area', oblast);   // oblast a hledání při změně runy zůstávají — srovnání napříč runami
+    naplnVyber('rd-seek', 'All seekings', 'seek', hledani);
+    naplnVyber('rd-angle', 'All angles', 'angle', uhelPopis);
+    naplnVyber('rd-ess', 'All essence lines', 'ess', esencePopis);
     renderSouhrn();
     render(_rows.filter(function (r) { return prosel(r); }));
   }
@@ -240,7 +243,7 @@
     var list = document.getElementById('readings-list');
     if (!list) return;
     var countEl = document.getElementById('rd-count');
-    if (countEl) countEl.textContent = _rows.length ? (rows.length + ' z ' + _rows.length) : '';
+    if (countEl) countEl.textContent = _rows.length ? (rows.length + ' of ' + _rows.length) : '';   // 2026-10-10 §31: do té doby „2 z 4“
     if (!rows.length) { list.innerHTML = '<div class="empty">No readings.</div>'; return; }
     function inRow(lbl, val) {
       return val ? '<div class="rd-in"><span class="rd-in-l">' + lbl + '</span> ' + esc(val) + '</div>' : '';
@@ -275,11 +278,11 @@
       var d = r.prompt_draws || {}, o = obraz(r);
       var skladba = [
         model(r) !== '—' ? '<span class="rd-tag">' + esc(model(r)) + '</span>' : '',
-        vyznam(r) ? '<span class="rd-tag">význam: ' + esc(vyznam(r)) + '</span>' : '',
-        uhel(r) ? '<span class="rd-tag" title="' + esc(uhelPopis(r)) + '">úhel ' + esc(uhelPopis(r).length > 64 ? uhelPopis(r).slice(0, 64) + '…' : uhelPopis(r)) + '</span>' : '',
-        esence(r) ? '<span class="rd-tag" title="esenční řádek">esence ' + esc(esencePopis(r)) + '</span>' : '',
-        d.area_face !== undefined ? '<span class="rd-tag">podoba ' + esc(d.area_face) + '</span>' : '',
-        d.pin ? '<span class="rd-tag" title="obraz zvolil admin (2026-10-06) — nebyl to los">📌 obraz zvolen</span>' : '',
+        vyznam(r) ? '<span class="rd-tag">meaning: ' + esc(vyznam(r)) + '</span>' : '',
+        uhel(r) ? '<span class="rd-tag" title="' + esc(uhelPopis(r)) + '">angle ' + esc(uhelPopis(r).length > 64 ? uhelPopis(r).slice(0, 64) + '…' : uhelPopis(r)) + '</span>' : '',
+        esence(r) ? '<span class="rd-tag" title="essence line">essence ' + esc(esencePopis(r)) + '</span>' : '',
+        d.area_face !== undefined ? '<span class="rd-tag">area face ' + esc(d.area_face) + '</span>' : '',
+        d.pin ? '<span class="rd-tag" title="image chosen by an admin (2026-10-06), not drawn">📌 image chosen</span>' : '',
       ].filter(Boolean).join('');
       var skladbaHtml = (o.key || skladba) ? '<div class="rd-skladba">' +
         (o.key ? '<div class="rd-obraz" title="' + esc(o.title) + '">🖼 ' + esc(o.label) + '</div>' : '') + skladba + '</div>' : '';
@@ -294,7 +297,7 @@
 
       // 2026-10-05: ownerovy reporty a ✦ Keep k tomuto čtení (bug_reports podle „reading <uuid>“).
       var reps = reporty(r);
-      var repHtml = reps.length ? '<div class="rd-reps"><div class="rd-fu-lbl">💬 POZNÁMKY A ✦ KEEP</div>' + reps.map(function (x) {
+      var repHtml = reps.length ? '<div class="rd-reps"><div class="rd-fu-lbl">💬 NOTES &amp; ✦ KEEP</div>' + reps.map(function (x) {
         var ik = REP_IKONA[x.type] || '•';
         var zprava = String(x.message || '').trim();
         var vyber = String(x.flagged || '').trim();

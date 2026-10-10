@@ -137,7 +137,7 @@ function _inspShow(m) {
   // nescreenují. Kdyby sem někdy šel text od uživatele, musí projít escapeHtml.
   var poradi = (m.ord != null) ? (' <span class="ti-dim">· ' + (m.ord + 1) + '.</span>') : '';
   var dalsi  = (m.rank && m.rank.length > 1)
-      ? ('<br><span class="ti-dim">pořadí run: ' + m.rank.join(' › ') + '</span>') : '';
+      ? ('<br><span class="ti-dim">' + t('tree_insp_rank') + ' ' + m.rank.join(' › ') + '</span>') : '';   // 2026-10-10 §31: do té doby natvrdo česky
   box.innerHTML =
     '<span class="ti-glyph">' + m.g + '</span><b>' + (m.name || '') + '</b>' + poradi +
     '<br>' + m.el + ' <span class="ti-dim">·</span> ' + m.aett +
@@ -810,7 +810,7 @@ async function generateNameLore() {
   _nameLoreText  = res.text;
   _nameLoreFor   = res.name_lore_for || jm;
   _nameLoreCount = (typeof res.name_lore_count === 'number') ? res.name_lore_count : (_nameLoreCount + 1);
-  if (res.name_lore_saved === false) console.warn('name lore: server text vratil, ale ulozit se nepodarilo');
+  if (res.name_lore_saved === false) console.warn('name lore: the server returned the text, but saving it failed');   // 2026-10-10 §31: do té doby česky bez diakritiky
   _renderNameLore();
 }
 

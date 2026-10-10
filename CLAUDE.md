@@ -337,6 +337,18 @@ musí to buď **udělat skript samo**, nebo **zastavit práci**, když se to vyn
   vrací se, až se vada objeví v nových čteních a owner na ni upozorní.
 Najdeš nové pravidlo, které se porušilo podruhé? Nepiš ho jen do paměti — přidej mechanismus (hook, kontrola ve smoke, krok skriptu).
 
+### §31 — Jazyk komunikace: veřejně i pro adminy jen IS a EN, česky jen owner ↔ Claude (platí pro VŠECHNY session)
+KUKY 2026-10-10: *„komunikace všude veřejně a pro adminy bude IS a EN. Jen já a ty komunikujeme česky. Štítky musí být EN,
+jelikož to je náš společný jazyk se Sigrún. Zapiš, vytvoř kontrolu, cokoliv, ale tohle už nechci řešit.“*
+- **IS + EN:** co uvidí uživatel, tester nebo model — appka, nápověda, soukromí, e-maily, odpovědi testerům (koncepty v Gmailu).
+- **EN:** co je pro adminy — shrine, štítky schránky runar@therunekeeper.com, logy edge funkcí, štítek verze promptu
+  (`RUNAR_PROMPT_VERSION`, admin ho vidí u čtení). Angličtina je společná řeč se Sigrún.
+- **Česky jen owner ↔ Claude:** chat, docs (`RUNAR_*.md`, `CLAUDE.md`), komentáře v kódu, commity, paměť, výstup skriptů
+  v `scripts/`, laby (`tree-lab-*`). Že je repo veřejné, z nich veřejnou komunikaci nedělá.
+- **Hlídá stroj — smoke ㉹** (`scripts/verify_jazyk_ui.js`): UI_TEXT, stránky v2/, jejich JS, edge funkce, šablony e-mailů.
+  Co neumí (česká věta bez háčků a bez slova ze seznamu), stojí v její hlavičce — minutou češtinu oprav a slovo přidej do
+  `CZ_SLOVA`. Gmail nevidí: štítky a postup → memory `schranka-runar-gmail`. Proč a co našla → `RUNAR_DECISIONS.md` 2026-10-10.
+
 ---
 
 ## Tier systém
