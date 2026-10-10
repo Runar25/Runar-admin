@@ -3135,8 +3135,11 @@ Podklad: `docs/archive/2026-09-23-audit-obrazu.md`. Owner je potřebuje vysvětl
 6. ⚪ **Shrine: runy písmem.** `teach_select_lbl` „ᚠ SELECT RUNE“, `teach_next_btn` „ᚠ TEACH ANOTHER RUNE“ a tlačítko hlasu v učení
    (`voice_btn*`, v `runar-shrine.html` přes `textContent`) mají runu dál písmem. Admin, nespěchá; oprava = `setRuneText` na těch
    místech a shrine přidat do smoke ㉻ (dnes ho záměrně vynechává).
-7. ⚪ **Toast při odhlášení natvrdo anglicky:** `showToast('YOU HAVE LEFT THE CIRCLE')` (`runar-app.js`, `onAuthStateChange`
-   → `SIGNED_OUT`) — i v islandské appce. Patří do UI_TEXT (§10) s ověřenou IS.
+7. ✅ *(CODE-tune 2026-10-10: UI_TEXT `signed_out_toast`, IS „ÞÚ HEFUR STIGIÐ ÚT ÚR HRINGNUM“ — korpus „stigið út úr“ 427,
+   „út úr hringnum“ 116; bez rodu.)* ~~**Toast při odhlášení natvrdo anglicky:**~~ `showToast('YOU HAVE LEFT THE CIRCLE')` i v islandské appce.
+   ⚪ **Dlužná kontrola Yfirlestur:** 2026-10-10 byla služba nedostupná (is-grammar-qa „NEZKONTROLOVÁNO“) pro dvě nové islandské věty —
+   `signed_out_toast` a `journal_load_err` („Ekki tókst að sækja spárnar þínar — athugaðu nettenginguna og reyndu aftur.“). Ověřeny jen
+   korpusem a vzorem nasazené `err_save_failed`. Pustit `python -X utf8 is-grammar-qa.py --text "…"` znovu; flag = přepsat.
 8. ❓ **Čtení pro návštěvníka (čeká na ownera):** owner 2026-10-10 *„text je pro nás v pohodě, ať dostane čuchnout bez registrace…
    ASK bude zobrazen taky jen jako teaser“*. Vrací rozhodnutí 2026-08-02 „Fáze 1“ (proxy pro nepřihlášené zavřená: anonym posílal
    modelu libovolný prompt bez omezení — „nechci to mít děravé“), tedy jen očištěně (§26). Varianty:

@@ -39,6 +39,7 @@ const UI_TEXT = {
     reading_mode_mine:    'MY READING',
     reading_mode_someone: 'FOR SOMEONE',
     sign_out:             'SIGN OUT',
+    signed_out_toast:     'YOU HAVE LEFT THE CIRCLE',   // 2026-10-10: dřív natvrdo v runar-app.js (SIGNED_OUT), i v islandské appce
     auth_or:              'or',
     auth_modal_sub_google: 'No password needed — continue with Google.',
     // 2026-10-09: přihlášení e-mailem kódem (runar-auth.js sendLoginCode) — viditelné až s AUTH_EMAIL_ENABLED.
@@ -529,6 +530,7 @@ const UI_TEXT = {
     reading_mode_mine:    'MÍN SPÁ',
     reading_mode_someone: 'FYRIR AÐRA',
     sign_out:             'SKRÁ ÚT',
+    signed_out_toast:     'ÞÚ HEFUR STIGIÐ ÚT ÚR HRINGNUM',   // 2026-10-10: korpus „stigið út úr“ 427, „út úr hringnum“ 116; bez rodu
     auth_or:              'eða',
     auth_modal_sub_google: 'Það þarf ekkert lykilorð — haltu áfram með Google.',   // 2026-10-10: „Ekkert lykilorð þarf“ korpus 0×
     // 2026-10-09: kód místo odkazu. Korpus (Risamálheild): „sex stafa“ 116 · „kóða í tölvupósti“ 10 · „var sendur á“ 1430 ·
