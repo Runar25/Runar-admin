@@ -1857,7 +1857,7 @@ Rune Seekera = posledních 5 (`TIER_LIMITS.rune_seeker.journal_entries`).
 
 **PRO OWNERA:**
 12. 🟠 **Stránky slibují, co už neplatí — obojí patří k už otevřeným rozhodnutím, nic nového nerozhoduj zvlášť:**
-    - `runar-help.html` „VISITOR — 1 reading, no account needed“ (EN 2×, IS 1×) → po rozhodnutí bodu 3 (co návštěvník po tahu uvidí).
+    - ✅ *(CODE-tune 2026-10-10, 32e3d74)* `runar-help.html` „VISITOR“ už čtení neslibuje (EN 2×, IS 1×) — „draw one… joining is free“.
     - ✅ *(CODE-tune 2026-10-09, owner „8. doplň“)* `runar-privacy.html` jmenuje OpenAI a USA (text A + OpenAI, obě kopie EN) a FAQ
       `runar-help.html` „Is Rúnar an AI?“ říká GPT od OpenAI, Claude jen při výpadku (EN i IS). Zbývá jen zásady na agndofa.is
       (znění B v `RUNAR_PRIVACY.md` — doplnit OpenAI stejně jako A; publikuje owner).

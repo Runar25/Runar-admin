@@ -397,7 +397,7 @@ neměl vstup, `RUNAR_DECISIONS.md` 2026-09-28 (1)); nová podoba čeká na `dete
 
 **Gating:** blokuje se jen **Visitor** (nepřihlášený) — živé čtení ani hlas nemá, proxy ho odmítne (401, DECISIONS 2026-08-02);
 má jen statickou kolekci run a životní runu (výpočet). Do 2026-10-09 tu stálo „Visitor má Single 1×“ — neplatí od 2026-08-02;
-appka mu tah ale pořád dovolí a ukáže obecnou chybu → `RUNAR_BACKLOG.md` „Kontrola architektury“. Každý přihlášený dosáhne
+po tahu runy mu appka ukáže výzvu k registraci a proxy nevolá (od 2026-10-10, DECISIONS 2026-10-10 (1)). Každý přihlášený dosáhne
 na všechno; Rune Seeker platí kredity, předplatitelé to berou z měsíčních jednotek.
 ⭐ **Yggdrasil = KDYKOLIV, KDOKOLIV přihlášený. Žádná brána na datum.** Zimní slunovrat = větší
 **síla ve stromě**, ne podmínka přístupu (rituální čtení; bude jich víc). KUKY 2026-07-18, po páté
