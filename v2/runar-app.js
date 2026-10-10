@@ -849,7 +849,8 @@ function updateUIText() {
   // Hlavičky čtení (single i výklady) kreslí _paintReadingHeader() — nese stav (tažené runy + volby),
   // takže do updateUIText nepatří (§14). Do 2026-09-23 se tu přepisovaly a glyf po přepnutí jazyka mizel.
   setPH('redeem-input', t('redeem_ph'));
-  setText('btn-speak', t('speak_btn'));
+  // btn-speak nese stav výkladu (§14): text určuje _speakBtnKey (runar-reading.js), nastaví ho _updateReadingForm níž. Do 2026-10-10
+  // tu stálo natvrdo speak_btn — ve výkladu s chybějícími runami pak tlačítko po přepnutí jazyka slibovalo „HEAR RÚNAR SPEAK“.
   setText('badge-life-note', t('badge_life_note'));
   if (typeof _paintReadingHeader === 'function') _paintReadingHeader();
   setText('layer2-lbl', t('layer2_lbl'));

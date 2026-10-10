@@ -3101,8 +3101,10 @@ Podklad: `docs/archive/2026-09-23-audit-obrazu.md`. Owner je potřebuje vysvětl
    ⚪ **Počet v deníku pro 1 čtení:** „1 lestrar“ / „1 nýlegastir“ / „1 readings“ (`journal_count_*`) — islandsky i anglicky špatně;
    `vn()` umí jen jednotné číslo pro 1 (ne 21, 31… — islandská shoda s číslovkou končící na 1, napřed ověřit korpusem). Oprava = tvar
    podle čísla, IS ověřená `is-vazba.py`.
-4. ⚪ **§14 u tlačítka tahu:** `updateUIText` při každém přepnutí jazyka nastaví `btn-speak` na `speak_btn` („HEAR RÚNAR SPEAK“) —
-   ve spreadu, kde ještě chybí runy, má stát `speak_btn_draw` („DRAW YOUR RUNES“). Stavový text patří do funkce stavu.
+4. ✅ *(CODE-tune 2026-10-10: text tlačítka určuje `_speakBtnKey()` podle stavu výkladu, volá ji `_updateReadingForm` pro všechny
+   výklady. V prohlížeči ověřeno ve všech čtyřech výkladech: po přepnutí jazyka „DRAW YOUR RUNES“/„ADD RUNE“ místo „HEAR RÚNAR SPEAK“;
+   bez přepínání, u plného výkladu i u návštěvníka beze změny.)* ~~**§14 u tlačítka tahu:**~~ `updateUIText` při každém přepnutí jazyka
+   nastaví `btn-speak` na `speak_btn` („HEAR RÚNAR SPEAK“) — ve spreadu, kde ještě chybí runy, má stát `speak_btn_draw` („DRAW YOUR RUNES“).
 5. ✅ *(CODE-tune 2026-10-10, DECISIONS 2026-10-10 (18): owner „rovnou tah runy“ → _syncVisitorDraw)* ~~**Formulář návštěvníka:**~~ návštěvník čtení nedostane, formulář se ho přesto ptá na jméno a „jak tě má Rúnar
    oslovovat“ (oblast/hledání/záměr má zamčené). Nechat jako ukázku, nebo mu ukázat rovnou tah runy?
 6. ⚪ **Shrine: runy písmem.** `teach_select_lbl` „ᚠ SELECT RUNE“, `teach_next_btn` „ᚠ TEACH ANOTHER RUNE“ a tlačítko hlasu v učení

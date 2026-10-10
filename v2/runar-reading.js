@@ -538,6 +538,16 @@ function _spreadRunesNow() {
 function _spreadCount(arr) {
   var c = 0; for (var i = 0; i < arr.length; i++) { if (arr[i]) c++; } return c;
 }
+// Text tlačítka tahu podle stavu (§14). Do 2026-10-10 ho přepnutí jazyka (updateUIText) přepsalo na speak_btn i uprostřed výkladu —
+// „HEAR RÚNAR SPEAK“ na vypnutém tlačítku, když runy ještě chyběly (BACKLOG „Kontrola návštěvníka“ bod 4, ověřeno ve všech čtyřech
+// výkladech). Přechody (_setSpreadMode, klik do mřížky, readRune) text nastavují samy; tahle funkce musí vracet totéž.
+function _speakBtnKey() {
+  if (_spreadMode === 'single') return currentUser ? 'speak_btn' : 'speak_btn_visitor';
+  var cfg = SPREAD_CONFIG[_SPREAD_COST_KEY[_spreadMode]];
+  var n = _spreadCount(_spreadRunesNow());
+  if (cfg && n >= cfg.rune_count) return 'speak_btn';
+  return (n > 0 || readerRune) ? 'speak_btn_add' : 'speak_btn_draw';
+}
 function _spreadAdd(arr, n, rune) {
   for (var i = 0; i < n; i++) { if (!arr[i]) { arr[i] = rune; return true; } }
   return false;
@@ -1505,8 +1515,9 @@ function _updateReadingForm() {
 
   // Návštěvník čtení nedostane (proxy ho odmítá, 401) — tlačítko tahu mu ho neslibuje (KUKY 2026-10-10: „nechal jsem si udělat čtení
   // a tohle jsem dostal… bez jakékoliv zprávy“); do té doby i jemu „HEAR RÚNAR SPEAK“. Stavový text patří sem, ne do updateUIText
-  // (§14); tam btn-speak zůstává jako výchozí (spready mění text samy). Formulář s begin-btn návštěvník nevidí (_syncVisitorDraw).
-  if (_spreadMode === 'single') setText('btn-speak', t(currentUser ? 'speak_btn' : 'speak_btn_visitor'));
+  // (§14). Od 2026-10-10 pro všechny výklady (_speakBtnKey) — dřív jen single a spready zůstaly po přepnutí jazyka na speak_btn.
+  // Formulář s begin-btn návštěvník nevidí (_syncVisitorDraw).
+  setText('btn-speak', t(_speakBtnKey()));
   _syncVisitorDraw();
 }
 
