@@ -9880,3 +9880,18 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Nasazeno (git nevidí):** `delete-account` verze 8 (mazání e-mailu z `allowed_emails`, 656a739). Před nasazením stažena běžící verze —
   shodná s repem před změnou; po nasazení stažena znovu — shodná s HEAD; `verify_jwt` zůstává vypnuté; bez přihlášení 401.
 - Affected doc(s): `CLAUDE.md` §2 (nástroje) — v témže commitu; odvolává se na (39).
+
+## 2026-10-10 (44) — Strom (lab): ZAPNUTO — živý tvar větví (délka podle čtení místa, seeking tvaruje celou větev), silnější než nanečisto
+
+- **Rozhodl:** KUKY 2026-10-10 k nanečisto (41): *„6. ano, zapni a) a b) v labu. asi větší rozdíl tvarování. přijde mi to pořád stejné. ale strom
+  sám o sobě vypadá lépe, ještě kořeny doděláme, ale jinak dobrý.“* **Provedl:** CODE-tree, LAB (aplikace beze změny).
+- **Co je v labu:** a) délka ramene = praxe jeho místa (rameno + vedlejší) × patro × náběh pramene, vrchol × 0,75; b) převažující seeking čtení
+  větve ohne páteř celé větve před větvičkami (Clarity vzhůru, Reflection dolů, Confirmation napůl rovně, Insight lokty), vedlejší od skutečného
+  směru ohnutého ramene. **Silněji než nanečisto** (owner: větší rozdíl): síla od podílu 15 procent (plná od 45, dřív od 20 a plná od 70), ohyb
+  až 1,0 rad (dřív 0,75), lokty 0,6 rad (dřív 0,45). Souběhů na jeho stromě 3 (jako bez živého tvaru), tentýž strom s jedním seekingem 3–5.
+- **Smoke ㉳:** nové (r) — tentýž log se samým Clarity proti Reflection: druhé půlky větví míří výš (0,76 proti −0,10). (m) měří stranu větvičky
+  od báze ke špičce, ne z prvních 5 bodů: mladé větvičky na zahnutém konci ramene se tam stočily přes větev, i když jako celek rostly střídavě
+  (minulost po 20, Mannaz: v bodě 1 B A B A B, v bodě 4 vše A, v bodě 8 A B A B A — chybu vyvolala už samotná délka a), ne ohyb). Mutace
+  „větvičky vždy na jednu stranu“ chycena 178×. Celý smoke 67/67.
+- **Zbývá (owner):** kořeny dodělat. Odvolává se na (34), (38), (41).
+- Affected doc(s): `RUNAR_TREE.md` §4 (seeking) · `RUNAR_TREE_MAP.md` §5, §7, §8, §12 · `RUNAR_BACKLOG.md` — v témže commitu.

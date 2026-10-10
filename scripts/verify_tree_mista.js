@@ -36,6 +36,8 @@
 //       rustu ve stejne vysce (do 2026-10-10 vysku vedla casova smycka podle zon cteni a ramena se posouvala).
 //   (p) KAPACITA: na rameni Urd a Verdandi nejvys 3 vedlejsi, na Skuld 2, na vrcholu 2; vedlejsi nese jiny zivel nez rameno a zadny dvakrat.
 //   (q) KAZDA VETEV MA KOREN (DECISIONS 2026-10-10 (26)): kazda vedlejsi vetev ma svuj koren (klikatelny), ramena ho maji ve svem tahu.
+//   (r) SEEKING TVARUJE CELOU VETEV (2026-10-10, KUKY "aby se cela vetev tvarovala"): tentyz log jednou se samym Clarity, jednou s Reflection ->
+//       ramena a vedlejsi s Clarity v druhe pulce delky mireji vys. Hlida, ze lab seeking vetvim preda a pater opravdu ohne.
 //   (m) VETVICKY KOLEM VETVE (2026-10-09, KUKY: "vetvicky by se stridaly kolem vetve na obe strany, protoze stranu vetve uz urcila
 //       oblast"): zadna hlavni vetev s aspon 3 primymi vetvickami nema vsechny na jedne strane (strana = kam vetvicka miri od smeru
 //       rodice v miste uchyceni). Drive strana podle oblasti -> na leve vetvi skoro jen nitro -> KUKYho strom 4 jednostranne vetve.
@@ -137,7 +139,8 @@ LOGS.forEach(([nm, log]) => NS.forEach(n => {
     const cnt = {}, seenT = new Set();
     r.allPicks.forEach(p => { const m = p.meta; if (!m || !m.twig || m.plevel !== 0 || !p.pts || p.pts.length < 2) return; const pa = par[m.parentKey]; if (!pa) return;
       const id = m.parentKey + '|' + m.slot + '|' + m.name + '|' + m.born; if (seenT.has(id)) return; seenT.add(id);   /* slot: dve vetvicky z tehoz cteni (rozklad) maji tentyz born */
-      const s0 = p.pts[0], s1 = p.pts[Math.min(4, p.pts.length - 1)]; let bi = 0, bd = 1e18;
+      const s0 = p.pts[0], s1 = p.pts[p.pts.length - 1]; let bi = 0, bd = 1e18;   /* strana = kam vetvicka miri od baze ke spicce (cela). Do 2026-10-10 z prvnich 5 bodu:
+         mlade vetvicky na zahnutem konci ramene se tam stocily pres vetev, i kdyz jako celek rostly stridave (minulost po 20: Mannaz, v bode 1 B A B A B, v bode 4 vse A, v bode 8 A B A B A) */
       pa.pts.forEach((q, i) => { const d = (q.x - s0.x) ** 2 + (q.y - s0.y) ** 2; if (d < bd) { bd = d; bi = i; } });
       const a = pa.pts[Math.max(0, bi - 1)], b = pa.pts[Math.min(pa.pts.length - 1, bi + 1)], cr = (b.x - a.x) * (s1.y - s0.y) - (b.y - a.y) * (s1.x - s0.x);
       const o = cnt[m.parentKey] = cnt[m.parentKey] || { name: pa.name, A: 0, B: 0 }; if (cr >= 0) o.A++; else o.B++; });
@@ -197,5 +200,14 @@ let kMsg = '', lMsg = '';
   const lc = upLab(mk('clarity')), lr = upLab(mk('reflection'));
   if (!(lc > lr + 0.05)) fails.push('(l) lab: konce vetvicek s Clarity nejsou vys nez s Reflection (' + lc.toFixed(2) + ' vs ' + lr.toFixed(2) + ') — preda lab seekTip?');
   else lMsg = 'konce vetvicek: Clarity ' + lc.toFixed(2) + ' > Reflection ' + lr.toFixed(2); }
+/* (r) seeking tvaruje celou vetev: smer druhe pulky vetvi (ramena + vedlejsi), Clarity vys nez Reflection */
+let rMsg = '';
+{ const L60 = LOGS[0][1].slice(0, 120), mk = sk => L60.map(rd => Object.assign({}, rd, { seeking: sk }));
+  const upHalf = lg => { let sum = 0, cnt = 0; labRun(lg, html, null).allPicks.forEach(p => { if (typeof p.k !== 'number' || !p.meta || p.meta.twig || p.meta.root || p.meta.idx === 0) return;
+    const P = (p.meta.tp != null) ? p.pts.slice(p.meta.tp) : p.pts; if (P.length < 6) return; const a = P[Math.floor(P.length / 2)], b = P[P.length - 1], L = Math.hypot(b.x - a.x, b.y - a.y);
+    if (L > 0) { sum += -(b.y - a.y) / L; cnt++; } }); return cnt ? sum / cnt : 0; };
+  const rc = upHalf(mk('clarity')), rr = upHalf(mk('reflection'));
+  if (!(rc > rr + 0.05)) fails.push('(r) vetve se Clarity nemiri vys nez s Reflection (' + rc.toFixed(2) + ' vs ' + rr.toFixed(2) + ') — preda lab seeking ramenum?');
+  else rMsg = 'vetve: Clarity ' + rc.toFixed(2) + ' > Reflection ' + rr.toFixed(2); }
 if (fails.length) { fails.slice(0, 12).forEach(f => console.log('   ' + f)); console.log('strom: ' + fails.length + ' poruseni (vetve ze stejneho mista / pod podlahou / cteni mimo sve misto / vetvi nad strop / neklikatelne / prameny navic / inspekce neodpovida logu)'); process.exit(1); }
-console.log('strom (lab): ' + runs + ' stromu — vystupy ramen na stejne strane aspon ' + worstE.toFixed(0) + ' px, levo-pravo aspon ' + worstLR.toFixed(0) + ' px, zadne pod podlahou, kazde cteni na svem miste strana × zona (jako vetvicka na plnem rameni jineho zivlu nejvys ' + (worstForeign * 100).toFixed(0) + ' %), nejvys ' + maxBr + ' vetvi, kapacita ramen drzi, kazda vedlejsi ma koren, ' + oMsg + ', vetve na rodici aspon ' + worstS.toFixed(1) + ' px, vse klikatelne, inspekce = log, nejvys ' + maxStr + ' pramenu v kmeni, ' + iMsg + ', ' + jMsg + ', ' + kMsg + ', ' + lMsg);
+console.log('strom (lab): ' + runs + ' stromu — vystupy ramen na stejne strane aspon ' + worstE.toFixed(0) + ' px, levo-pravo aspon ' + worstLR.toFixed(0) + ' px, zadne pod podlahou, kazde cteni na svem miste strana × zona (jako vetvicka na plnem rameni jineho zivlu nejvys ' + (worstForeign * 100).toFixed(0) + ' %), nejvys ' + maxBr + ' vetvi, kapacita ramen drzi, kazda vedlejsi ma koren, ' + oMsg + ', vetve na rodici aspon ' + worstS.toFixed(1) + ' px, vse klikatelne, inspekce = log, nejvys ' + maxStr + ' pramenu v kmeni, ' + iMsg + ', ' + jMsg + ', ' + kMsg + ', ' + lMsg + ', ' + rMsg);

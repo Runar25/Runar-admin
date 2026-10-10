@@ -84,7 +84,7 @@ Do 2026-10-09 tu stála **„diagonála příběhu“** (nitro ke kořenům, sv�
 | **area** | STRANA (dovnitř vlevo / ven vpravo) |
 | **element** | BARVA + mikro-výška + úhel (šířka) |
 | **runa** | TVAR / silueta — ✅ ŽIVÉ od 2026-07-19 · hystereze prahu 2 (2026-07-21) proti blikání kolem remízy · **tvar konce** větvičky (vidlička / tupý / zúžený / nahoru) |
-| **seeking** | **KAM MÍŘÍ KONEC** větvičky (lab, 2026-10-09; KUKY: *„by se mohl projevit na každé runě, u které bude“*): Clarity nahoru · Reflection dolů ke kořenům · Confirmation rovně ve směru větve · Insight into Challenge zalomený konec · General jeden z těch čtyř (stálý pro větvičku). Na ramena ne. |
+| **seeking** | **KAM MÍŘÍ KONEC** větvičky (lab, 2026-10-09; KUKY: *„by se mohl projevit na každé runě, u které bude“*): Clarity nahoru · Reflection dolů ke kořenům · Confirmation rovně ve směru větve · Insight into Challenge zalomený konec · General jeden z těch čtyř (stálý pro větvičku). ⭐ **Od 2026-10-10 tvaruje i CELOU větev** (ramena a vedlejší, KUKY *„aby se celá větev tvarovala“*): převažující seeking čtení větve ji po délce stočí vzhůru (Clarity), skloní (Reflection), narovná (Confirmation) nebo zalomí (Insight); síla roste s podílem a počtem čtení — strom se s čteními mění (DECISIONS 2026-10-10 (44)). |
 | **strana větvičky** | střídavě kolem větve (lab, 2026-10-09; KUKY: *„větvičky by se střídaly kolem větve na obě strany, protože stranu větve už určila oblast“*) |
 | **ætt** | sekundární charakter růstu |
 | **spread** | KOMPLEXITA (single=uzel · Norns=3 kořeny · Kříž=větev+4 · Horseshoe=větvená · Yggdrasil=roční prsten) |

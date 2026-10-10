@@ -494,7 +494,8 @@
   (strana × zóna) + vrchol, vedlejší = další živly (kapacita 3 / 3 / 2, vrchol 2), další živel jako větvičky na rameni, bez strany na lehčí stranu.
   Na jeho stromě 25 větví, 19 % tažení jako větvičky na rameni jiného živlu, výšky stálé od 30 čtení. **Další kroky:** ownerův pohled → přepsat
   smoke ㉳ na nová pravidla → zapnout v labu → port do aplikace. DECISIONS 2026-10-10 (34).
-- [ ] ⭐ **Strom (lab): živý tvar ramen — strom se má měnit, ne stát od začátku stejně** (KUKY 2026-10-10: *„strom by neměl zůstávat úplně statický.
+- [x] ✅ **Strom (lab): živý tvar ramen — ZAPNUTO v labu 2026-10-10 (DECISIONS (44)): délka podle čtení místa, seeking tvaruje celou větev.** Zbývá
+  od ownera: kořeny dodělat. Původně: ⭐ **živý tvar ramen — strom se má měnit, ne stát od začátku stejně** (KUKY 2026-10-10: *„strom by neměl zůstávat úplně statický.
   měli jsme tam ty věci, kdy seeking nebo co to bylo tvarovalo větve určitým způsobem, by to mělo platit i pro hlavní větve, jinak bude strom
   vypadat stejně od začátku, ale je to živý organismus, který se mění a tvaruje“*). S rameny strana × zóna dává výšku, úhel a délku ramene jeho
   místo — posuvníky tíha, natočení za oblastí, čas → výška a max ramen teď ramena neovlivní (`RUNAR_TREE_MAP.md` §5, §13). Návrh ownerovi
