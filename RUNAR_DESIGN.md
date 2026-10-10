@@ -718,7 +718,7 @@ Strom: větev → kmen. Zakládací rituál.
 5  před tebou — kam situace směřuje
 ```
 IS pozice: Miðja/Kjarni · Of an/Á leit · Undir/Rót · Að baki/Fortíð · Framar/Stefna
-Strom: větev s centrálním uzlem a čtyřmi výhonky. Standard+.
+Strom: větev s centrálním uzlem a čtyřmi výhonky. (Do 2026-10-10 tu stálo „Standard+“ — přístup vlastní CLAUDE.md „Gating“.)
 
 ### Horseshoe (7 run)
 ```
@@ -734,7 +734,7 @@ Strom: větev s centrálním uzlem a čtyřmi výhonky. Standard+.
 ```
 IS pozice: hotové v produkci — zdroj pravdy `RP_HORSESHOE.is.positions` (`v2/runar-character.js`),
 doc je NEOPISUJE (§20).
-Strom: větvená větev se sedmi body → sezónní rituál kmene. Standard+.
+Strom: větvená větev se sedmi body → sezónní rituál kmene. (Do 2026-10-10 tu stálo „Standard+“ — přístup vlastní CLAUDE.md „Gating“.)
 
 ### Yggdrasil (9 run) — všichni přihlášení, KDYKOLIV
 ```
@@ -904,7 +904,7 @@ SIGNED_IN toast odstraněn — žádné uvítací okno při přihlášení.
 | Faktor | Role | Viditelnost |
 |--------|------|-------------|
 | tažená runa | **předmět** | popředí, pojmenovaná |
-| životní runa | **čočka** — tvaruje *jak* se tažená runa čte | podtext; nepojmenovává se, leda organicky |
+| ~~životní runa~~ | ~~**čočka**~~ — **od 2026-09-25 ve čtení NENÍ** (KUKY: jen na vyžádání v Asku, `_askLifeContext`); `_lensContext` zůstal jen pro laboratoř | — |
 | area (AREAS) | **doména** — čtení musí přistát | přes obraz, nikdy jako štítek |
 | seeking (SEEKS) | **rejstřík** — mód výkladu (Confirmation = potvrzuje · Challenge = pojmenuje tření · Reflection = zrcadlo …) | v tónu, nevyslovuje se |
 | intention (INTENTIONS) | **Norns čas** (teď / vpřed / zpět) | v čase sloves |
@@ -912,7 +912,7 @@ SIGNED_IN toast odstraněn — žádné uvítací okno při přihlášení.
 
 **Pravidlo priority** (proti přeplácanosti i mizení): když se faktory neslijí do jednoho obrazu → tažená runa vepředu, drž rejstřík + doménu, čočka klidně ustoupí — nikdy nenutit, nikdy nevršit jako oddělené věty. **Délka se tím nemění.**
 
-Zdroj pravdy = helpery v `runar-character.js` (`_lensContext` / `_domainContext` / `_registerContext` + `RP_SINGLE.priority`). Rozhodnutí + validace naživo → RUNAR_DECISIONS.md (2026-07-09). Zatím **single**; spready stejný vzor (TODO). Měření = IS-first eval (TODO).
+Zdroj pravdy = helpery v `runar-character.js` (`_domainContext` / `_registerContext` / `_intentionContext`, u spreadů navíc `_priorityContext`). Rozhodnutí + validace naživo → RUNAR_DECISIONS.md (2026-07-09). Single i všechny spready už je berou. ⚠️ Do 2026-10-10 tu stálo „`RP_SINGLE.priority`, zatím jen single, spready TODO“ — pole `priority` v kódu není a spready doménu i rejstřík mají; čočka odešla (řádek výš).
 
 ---
 
