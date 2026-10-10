@@ -489,7 +489,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .tn-compact .tn-counter{margin-bottom:0;}
 /* 2026-10-10 (KUKY: „plus není zarovnané s textem, je trochu pod“): „+“ je v Cormorant 1.1em, počet v Cinzel 0.62em — flex
    centruje řádkové boxy, ne inkoust; změřeno: střed „+“ o 2,3 px (0,13em) níž než střed textu → posun o totéž nahoru. */
-.tn-compact .tree-toggle-arrow{margin-left:0;position:relative;top:-0.13em;}
+/* Barva = barva počtu (KUKY 2026-10-10: „plus nemá stejnou barvu“): .tree-toggle-arrow je šedý (--muted) pro rozbalovací hlavičky
+   stromu, tady ale „+“ patří k zlatému počtu (.tn-counter: --gold, opacity 0.9) — do té doby stál šedý vedle zlatého. */
+.tn-compact .tree-toggle-arrow{margin-left:0;position:relative;top:-0.13em;color:var(--gold);opacity:0.9;}
 .tn-compact .tn-text{margin:12px 0 0;}
 .tn-btn{font-size:0.58em;padding:10px 24px;}
 .tier-notice.curious .tn-btn{border-color:rgba(255,191,0,0.35);}
