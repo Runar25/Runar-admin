@@ -45,5 +45,5 @@ for (const f of fs.readdirSync(DIR).filter((x) => x.endsWith('.js')).sort()) {
 }
 if (nizsi.length) console.log('ℹ  ubylo (sniž BASELINE ve scripts/verify_lang_ternary.js): ' + nizsi.join(' · '));
 console.log(fail ? 'FAIL  text natvrdo podle jazyka přibyl (§10)'
-  : 'OK    text natvrdo podle jazyka nepřibyl (§10, ráčna): ' + souhrn.join(' · '));
+  : 'OK    text natvrdo podle jazyka nepřibyl (§10, ráčna): ' + (souhrn.length ? souhrn.join(' · ') : 'žádný v žádném souboru'));
 process.exit(fail ? 1 : 0);
