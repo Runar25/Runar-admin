@@ -2237,6 +2237,14 @@ Ověřeno: poddotaz dá 564 = 564 (nikdo odhlášený) a při předstíraném od
   Drive“ · (2) zálohy jen v EHP — při přesunu na Hetzner Storage Box (Německo) a Drive kopii vypnout. Doporučení: teď (1), s Hetznerem (2).
   Mezera vznikla rozhodnutím (9) — zásady se tehdy neřešily.
 
+### Část 34 — co stránky načítají samy od cizích serverů (2026-10-10)
+**Platí:** odkazy na openai.com, elevenlabs.io, anthropic.com, supabase.com, agndofa.is jsou jen klikací (zásady) — nic se z nich samo
+nenačítá · obrázek Rúnara jde z našeho Supabase úložiště (Irsko) · písma od 2026-10-10 u nás (DECISIONS (32)).
+- 🟡 **PRO OWNERA:** knihovna `supabase-js` se v readeru i shrine načítá z `cdn.jsdelivr.net` → stejně jako dřív písma od Googlu dostane
+  jsDelivr IP každého návštěvníka a zásady ho nejmenují. Navíc: když jsDelivr nejede, appka se nespustí, a SW knihovnu nepředukládá.
+  Doporučení CODE-read: hostovat u nás jako písma — TENTÝŽ soubor 2.117.3, ověřený stávajícím otiskem SRI (`v2/vendor/supabase.min.js`),
+  + do precache `sw.js`; `scripts/utils/supabase_js_pin.js` upravit, ať při povýšení stáhne soubor k nám.
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
