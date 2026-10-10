@@ -30,6 +30,9 @@ opt-outu (ne opt-in brána). Výslovný souhlas jen u testerů — a ti CHTĚJÍ
 3. **Special-category `question` neváž na identitu** v analýze (nebo jen s tester souhlasem).
 4. **Respektuj opt-out**: user s `analytics_opt_out=true` → jeho čtení se NEzahrnou do vieweru/evalu. Skripty ve `scripts/` čtou čtení k analýze jen přes `scripts/utils/cteni_analyza.sql` (bez odhlášených), hlídá smoke ㉾ (2026-10-10; do té doby filtr měl jen `list-readings` a export, 11 skriptů ne — odhlášených bylo 0).
 5. **Data v EU** (Supabase eu-west-1) — nikdy nesypat osobní čtení mimo EU (Slack/US = jen anonymizované).
+   **Výjimka (KUKY 2026-10-10, DECISIONS 2026-10-10 (32)):** šifrovaná denní záloha DB na Google Drive (7z AES-256, heslo jen u nás) —
+   Drive umístění v EHP nezaručuje, proto stojí v zásadách mezi zpracovateli (`v2/runar-privacy.html`, EN i IS). S přechodem na Hetzner
+   zálohy jen v EHP a kopie na Drive se vypne. Jak dlouho se zálohy drží, zatím rozhodnuto není → `RUNAR_BACKLOG.md` část 33.
 6. **'someone' čtení (třetí osoba) = JEN u testerů.** Čtení „FOR SOMEONE" nese jméno třetí osoby v textu a ta nic neodsouhlasila → u testera testovací data krytá souhlasem; u běžného usera se NEUKLÁDÁ vůbec. Journal usera je nikdy nezobrazí (`reading_mode='someone'`).
 
 ---

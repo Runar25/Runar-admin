@@ -2231,7 +2231,11 @@ Ověřeno: poddotaz dá 564 = 564 (nikdo odhlášený) a při předstíraném od
   → prohlížeč KAŽDÉHO návštěvníka pošle Googlu svou IP; stránka soukromí Google nejmenuje. Německý soud (LG München I, 2022-01-20)
   tohle uznal za porušení GDPR. Písma jsou pod licencí OFL → dají se hostovat u nás (`v2/fonts/` + `@font-face`, + do precache `sw.js`).
   Doporučení CODE-read: hostovat u sebe (CODE-tune), stáhnout soubory písem = s ownerovým ano.
-- ✅ *(KUKY 2026-10-10 „teď a, s Hetznerem b“, DECISIONS (32); text do zásad EN + IS → CODE-tune)* **(b) — záloha DB na Google Drive** (zavedená 2026-10-10, DECISIONS (9), CODE-read): stránka slibuje „What we store stays
+- ⚪ **Pro ownera — jak dlouho držet zálohy (nález CODE-tune 2026-10-10 při psaní zásad):** `zaloha_db.js` staré archivy nemaže (lokálně
+  ani na Drive) → data smazaného účtu (e-mail, čtení) v zálohách zůstanou natrvalo, zatímco zásady slibují „Delete your account… Everything
+  goes“ a u e-mailu i čtení „Until account deleted“. Potřeba: lhůta (návrh CODE-tune 30 dní) + mazání starších archivů ve skriptu + věta
+  do zásad („zálohy držíme N dní; smazaný účet z nich zmizí nejpozději za N dní“). Do té doby zásady lhůtu neuvádějí.
+- ✅ *(KUKY 2026-10-10 „teď a, s Hetznerem b“, DECISIONS (32); text do zásad EN + IS → CODE-tune, hotovo 2026-10-10)* **(b) — záloha DB na Google Drive** (zavedená 2026-10-10, DECISIONS (9), CODE-read): stránka slibuje „What we store stays
   in the EEA“ a Google mezi zpracovateli není; Google Drive umístění v EHP nezaručuje. Archiv je šifrovaný (AES-256, heslo jen u nás) —
   jestli to z pohledu GDPR přenos osobních údajů je, CODE nerozhodne (§23). Možnosti: (1) doplnit do zásad „šifrované zálohy na Google
   Drive“ · (2) zálohy jen v EHP — při přesunu na Hetzner Storage Box (Německo) a Drive kopii vypnout. Doporučení: teď (1), s Hetznerem (2).
@@ -3167,9 +3171,11 @@ Podklad: `docs/archive/2026-09-23-audit-obrazu.md`. Owner je potřebuje vysvětl
    místech a shrine přidat do smoke ㉻ (dnes ho záměrně vynechává).
 7. ✅ *(CODE-tune 2026-10-10: UI_TEXT `signed_out_toast`, IS „ÞÚ HEFUR STIGIÐ ÚT ÚR HRINGNUM“ — korpus „stigið út úr“ 427,
    „út úr hringnum“ 116; bez rodu.)* ~~**Toast při odhlášení natvrdo anglicky:**~~ `showToast('YOU HAVE LEFT THE CIRCLE')` i v islandské appce.
-   ⚪ **Dlužná kontrola Yfirlestur:** 2026-10-10 byla služba nedostupná (is-grammar-qa „NEZKONTROLOVÁNO“) pro dvě nové islandské věty —
-   `signed_out_toast` a `journal_load_err` („Ekki tókst að sækja spárnar þínar — athugaðu nettenginguna og reyndu aftur.“). Ověřeny jen
-   korpusem a vzorem nasazené `err_save_failed`. Pustit `python -X utf8 is-grammar-qa.py --text "…"` znovu; flag = přepsat.
+   ⚪ **Dlužná kontrola Yfirlestur:** 2026-10-10 byla služba nedostupná (is-grammar-qa „NEZKONTROLOVÁNO“) pro nové islandské věty —
+   `signed_out_toast`, `journal_load_err` („Ekki tókst að sækja spárnar þínar — athugaðu nettenginguna og reyndu aftur.“) a v zásadách
+   soukromí věty o záloze na Google Drive (Supabase „…að undanskildu öryggisafritinu sem lýst er hér að neðan“ a celý odstavec Google).
+   Ověřeny jen korpusem (obraty s doklady v komentáři patche) a vzorem nasazených vět. Pustit `python -X utf8 is-grammar-qa.py --text "…"`
+   znovu; flag = přepsat.
 8. ❓ **Čtení pro návštěvníka (čeká na ownera):** owner 2026-10-10 *„text je pro nás v pohodě, ať dostane čuchnout bez registrace…
    ASK bude zobrazen taky jen jako teaser“*. Vrací rozhodnutí 2026-08-02 „Fáze 1“ (proxy pro nepřihlášené zavřená: anonym posílal
    modelu libovolný prompt bez omezení — „nechci to mít děravé“), tedy jen očištěně (§26). Varianty:
