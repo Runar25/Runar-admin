@@ -219,9 +219,11 @@ async function syncFreeBalance(userId) {
 // pauzy, zlatý průběh ve stopě a ztlumení jen u čtení. Teď jeden tvar i jeden kód; hlas čtení má prefix 'cap'.
 // prefix = unique string (e.g. 'cap', 'coll', 'j0')
 var _CAP_PLAY = '&#9654;&#xFE0E;', _CAP_PAUSE = '&#9646;&#9646;';   // FE0E: ▶ jako znak, ne barevné emoji (iOS)
+// preload="metadata" (2026-10-10, KUKY: „není vidět, jak dlouhá je stopa hlasu, vypadá to, že tam žádný hlas není“): délka se načte hned
+// a ukáže se vpravo. Do té doby preload="none" → 0:00 až do přehrání. Celý zvuk se nestahuje, jen hlavička.
 function _makeCapPlayer(prefix, src, autoplay) {
   // bez src žádný atribut: src="" by prohlížeč načítal stránku jako zvuk
-  return '<audio id="' + prefix + '-a"' + (src ? ' src="' + src + '"' : '') + ' preload="none"' + (autoplay ? ' autoplay' : '') + '></audio>'
+  return '<audio id="' + prefix + '-a"' + (src ? ' src="' + src + '"' : '') + ' preload="metadata"' + (autoplay ? ' autoplay' : '') + '></audio>'
        + '<div class="cap" style="margin-top:0;">'
        + '<button class="cap-btn" id="' + prefix + '-pb" onclick="_capPlay(\'' + prefix + '\')" title="Play / Pause">' + _CAP_PLAY + '</button>'
        + '<span class="cap-time" id="' + prefix + '-ct">0:00</span>'
@@ -268,9 +270,10 @@ function _capWire(p, doPlay) {
     if (ct) ct.textContent = _capFmt(a.currentTime);
     if (sk && a.duration) { sk.value = (a.currentTime / a.duration) * 100; _capPct(p, sk.value); }
   });
-  a.addEventListener('loadedmetadata', function() {
-    if (dr) dr.textContent = _capFmt(a.duration);
-  });
+  // Délka stopy (viz _makeCapPlayer): durationchange ji u MP3 někdy zpřesní; NaN/Infinity (prázdný přehrávač) se nevypisuje.
+  function _dr() { if (dr && isFinite(a.duration) && a.duration > 0) dr.textContent = _capFmt(a.duration); }
+  a.addEventListener('loadedmetadata', _dr);
+  a.addEventListener('durationchange', _dr);
   a.addEventListener('play',  function() { if (pb) pb.innerHTML = _CAP_PAUSE; });
   a.addEventListener('pause', function() { if (pb) pb.innerHTML = _CAP_PLAY; });
   a.addEventListener('ended', function() { _capReset(p); });

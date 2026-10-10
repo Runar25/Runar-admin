@@ -536,7 +536,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .num{background:#080e18;border:1px solid var(--border);color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1.05em;padding:10px 12px;width:100%;outline:none;}
 .num:focus{border-color:var(--gold);}
 .num::placeholder{color:var(--dim);}
-.dob-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:4px;}
+/* 2026-10-10 (KUKY: „datum není vycentrované“): od 2026-10-09 jen den a měsíc (rok pryč) — ve třísloupcové mřížce zůstal prázdný
+   třetí sloupec a pole se natlačila doleva. Dva sloupce v šířce tlačítka pod nimi (max-width 300px), na střed, text v polích taky. */
+.dob-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:300px;margin:4px auto 0;}
+.dob-row .num{text-align:center;}
 
 /* ── PILLS ── */
 .pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;}
