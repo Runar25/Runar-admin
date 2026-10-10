@@ -2186,6 +2186,13 @@ podezřele čisté číslo → ověřeno protipříkladem: podstrčené dvě nev
 - ⚪ **Pro ownera / Cowork (obsah, nespěchá):** hlavička píše „Společný tvar… pozorování, ne pravidlo — pravidlo vznikne, až jich bude
   25+“. Popisů je teď 25 — spouštěč nastal, pravidlo nikdo nesepsal. Jen připomínka; CODE do obsahu nesahá.
 
+### Část 29 — ㉸ slepé místo: jazyková větev přes zkratku (2026-10-10; nález CODE-tune)
+`isIs ? '…' : '…'` (zkratka `var isIs = lang === 'is'`) a jiná jména jazykové proměnné (`L`, `_lifeRuneLang`) ㉸ neviděla — tři živé
+UI texty prošly zeleně (CODE-tune je přesunul, e9c1e96). **Opraveno (CODE-read, 15a5103):** zkratky si kontrola najde sama; hodnota CSS,
+jméno klíče ani locale se nepočítají (samotest).
+- ⚪ **Pro CODE-tune (i):** ráčna drží 25 větví — `runar-auth.js` 2 (návod k instalaci Safari/Chrome, UI) · `runar-config.js` 1 („Allt sem …
+  hefur“ ve výpisu tierů, UI) · `runar-character.js` 15 + `runar-utils.js` 7 (text a značky promptu → jazykové balíčky). Po přesunu snížit BASELINE.
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
