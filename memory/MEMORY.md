@@ -1,14 +1,10 @@
 # Claude Memory Index
 # Zkukula (Kuky) — Agndofa / Rúnar project
 
-⚠️ **Tenhle soubor je INDEX, ne sklad faktů.** Vlastní jen dvě věci: **Session Start Protocol**
-a **rozcestník** (kde co bydlí). Žádná čísla, žádné SW verze, žádné commit hashe, žádné stavy
-„hotovo/TODO", žádné tier tabulky. Všechno tohle má vlastníka jinde — viz tabulka níž.
+⚠️ **Tenhle soubor je INDEX, ne sklad faktů.** Vlastní jen **Session Start Protocol** a **rozcestník** (kde co bydlí).
+Žádná čísla, SW verze, commit hashe, stavy ani tier tabulky — všechno má vlastníka jinde (tabulka níž).
 
-**Proč tak přísně:** do 2026-07-18 tady ta fakta byla, zastarala a **odporovala si navzájem**
-(ř. 33 tvrdila „enforcement limitu = TODO", ř. 46 popisovala, jak ten enforcement funguje — obojí  <!-- check-docs:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
-četla každá session a hodila si mincí). Audit našel 97 rozporů nad ~12 fakty. Detail a pravidlo §20
-→ `RUNAR_DECISIONS.md` 2026-07-18.
+**Proč tak přísně:** do 2026-07-18 tu fakta zastarala a odporovala si (audit: 97 rozporů nad ~12 fakty) — §20, `RUNAR_DECISIONS.md` 2026-07-18.
 
 **Přidáváš sem fakt? Nepřidávej.** Patří k vlastníkovi. Sem nanejvýš jednořádkový odkaz.
 
@@ -60,10 +56,8 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 ---
 
 ## Vrstvy pravdy
-- **Kanonická (pravda):** root `RUNAR_*.md` · `memory/*.md` · `CLAUDE.md` — ukazuje sem index.
-- **Supersedovaná (živá historie):** `memory/snapshots/` · `docs/archive/` · `RUNAR_DECISIONS.md` (append-only).
-- **Neklasifikováno (intake, chaos OK):** `docs/inbox/` — Cowork vysává, třídí při dotyku. NENÍ pravda.
-- **Mrtvá (scratch / slepé uličky):** mimo index; smí být v chaosu.
+Kanonická: root `RUNAR_*.md` · `memory/*.md` · `CLAUDE.md` · Historie: `memory/snapshots/` · `docs/archive/` · `RUNAR_DECISIONS.md` (append-only)
+Intake (NENÍ pravda): `docs/inbox/` · Mrtvá (scratch): mimo index.
 
 ---
 
@@ -114,6 +108,7 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [rozkaz-a-studene-cteni-hranice.md](rozkaz-a-studene-cteni-hranice.md) — „Look…" jako vstup do obrazu ani fyzický důsledek dřiny („knuckles have learned") NEJSOU porušení kánonu; porušení = rada do života / tvrzení o nitru
 - [gpt-rozbor-neni-zavazny.md](gpt-rozbor-neni-zavazny.md) — rozbor od GPT byl jen podnět (tlačítko zrušeno 2026-10-09); princip platí pro každého soudce
 - [nacti-cteni-a-reporty.md](nacti-cteni-a-reporty.md) — owner řekne „načti čtení a reporty“ → `node scripts/nacti_cteni.js` (čtení + monitor ozvěn + hlášení); ⚠ a hlášení ohlas s textem
+- [schranka-runar-gmail.md](schranka-runar-gmail.md) — schránka runar@therunekeeper.com: třídit přes Gmail konektor do štítků, odpovědi jen jako koncepty, nic neodeslat bez ownerova ano
 - [always-show-reading-samples.md](always-show-reading-samples.md) — ownerovi vždy ukázat konkrétní TEXT čtení a k němu instrukce, které do čtení vstoupily
 - [testovani-jedne-runy-je-zamer.md](testovani-jedne-runy-je-zamer.md) — owner testuje jednu runu opakovaně schválně; jeho „pořád stejné X“ nevysvětluj jeho metodou, dohledej konkrétní případ
 - [write-for-owner-not-process.md](write-for-owner-not-process.md) — ownerovi piš důležité/výsledek, ne proces „co jsi řekl / co budu hledat"
@@ -127,39 +122,17 @@ Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
 - [read-design-before-voice-work.md](read-design-before-voice-work.md) — než sáhneš na hlas/prompt: RUNAR_DESIGN.md „Kdo je Rúnar" + nálady; vstup promptu / tip Asku → sekce „Slova, která dáváme modelu"
 - [prompt-map-artifact.md](prompt-map-artifact.md) — vizuální reference mapa Rúnarova promptu (artifact URL); snapshot, pravda = kód
 - [cowork-handoff-quality-bar.md](cowork-handoff-quality-bar.md) — standard pro Cowork content/research/eval handoffy: 12 návyků (závěr napřed, živé ověření, značka původu, přiznané mezery)
-- [runar-project.md](runar-project.md) — vyprázdněno 2026-07-18, jen rozcestník
 - [review-everything-first-pass.md](review-everything-first-pass.md) — revize textů: přečti VŠE v obou jazycích napoprvé, jeden seznam, opravy jako hotové věty
 - [runar-not-public-yet.md](runar-not-public-yet.md) — Rúnar není veřejně spuštěný; návrhy pro agndofa.is nesmí posílat zákazníky do appky
 - [is-grammar-adjective-gender.md](is-grammar-adjective-gender.md) — nejdřív rod podstatného, pak skloňuj přídavné
 - [en-formulace-overit-zdrojem.md](en-formulace-overit-zdrojem.md) — anglickou formulaci (sloveso u runy) ověř korpusem textů o runách jako IS; „Fehu exposes“ prošlo bez ověření, v korpusu 0×
 - [is-vazba-check.md](is-vazba-check.md) — islandskou vazbu (rekce/pád/kolokace/idiom) ověř `is-vazba.py` (nútímamálsorðabók API + korpus), vrstva nad BÍN, nehádej
-- [runar-tree-engine-lab.md](runar-tree-engine-lab.md) — historie iterací enginu (boughs přestavba = regrese)
-- [runar-trunk-incremental-rule.md](runar-trunk-incremental-rule.md) — schválenou verzi měnit přírůstkově + snapshot
-- [runar-tree-living-movement.md](runar-tree-living-movement.md) — živý pohyb větví, Founding Ritual lab
-- [tree-roots-rebuild.md](tree-roots-rebuild.md) — přestavba kořenů (1 pramen=1 runa=větev+kořen, max 25); NIKDY neshlukovat větve
+- Strom (CODE-tree): [runar-tree-engine-lab.md](runar-tree-engine-lab.md) historie enginu · [runar-trunk-incremental-rule.md](runar-trunk-incremental-rule.md) měnit přírůstkově + snapshot · [runar-tree-living-movement.md](runar-tree-living-movement.md) živý pohyb větví · [tree-roots-rebuild.md](tree-roots-rebuild.md) kořeny 1 pramen = 1 runa, NIKDY neshlukovat větve
 
 ## Index snapshots (nejnovější = poslední)
 Snapshot = **historický záznam ke svému datu**, ne popis dneška. Nikdy z něj nepřebírej aktuální stav.
-- _Starší (2026-05-30 → 2026-06-16): složka `snapshots/`._
-- [snapshots/2026-07-05-s18-drift-cleanup.md](snapshots/2026-07-05-s18-drift-cleanup.md)
-- [snapshots/2026-07-12-tree-production-admin-beta.md](snapshots/2026-07-12-tree-production-admin-beta.md)
-- [snapshots/2026-08-16-direct-registr-a-pricina.md](snapshots/2026-08-16-direct-registr-a-pricina.md)
-- [snapshots/2026-08-17-audit-promptu-bloky.md](snapshots/2026-08-17-audit-promptu-bloky.md)
-- [snapshots/2026-08-17-first-static-readings-may-old-voice.md](snapshots/2026-08-17-first-static-readings-may-old-voice.md) — prvotní statická čtení (kveten) + jak vznikala (sonnet-4-5); „starý hlas"
-- [snapshots/2026-08-17-sonnet5-drop-deployed.md](snapshots/2026-08-17-sonnet5-drop-deployed.md) — sonnet-5 pryč z proxy MODELS + deploy v59; pozor: main checkout pozadu za origin/main
-- [snapshots/2026-08-17-hlas-model-audit-rune-character-plan.md](snapshots/2026-08-17-hlas-model-audit-rune-character-plan.md) — hlas × model (náklady, drop sonnet-5), keep/drop/invest mapa promptu, plán „charakteristika runy místo vloženého obrazu" + test délky
-- [snapshots/2026-08-18-audit-promptu-dokoncen.md](snapshots/2026-08-18-audit-promptu-dokoncen.md) — audit systémového promptu DOKONČEN (13 bloků + 5 zbylých položek); nové nástroje gen_direct.js a measure_sameness.js ← NEJNOVĚJŠÍ
-- [snapshots/2026-08-18-tree-kura-a-silueta.md](snapshots/2026-08-18-tree-kura-a-silueta.md) — CODE-tree: kůra (4 pokusy), WebGL režim, těžiště se přesunulo na siluetu („palma")
-- [snapshots/2026-08-19-rune-imagery-voice-engine.md](snapshots/2026-08-19-rune-imagery-voice-engine.md) — engine runové obraznosti+hlasu (6 os pestrosti), CODE-read×Cowork; dávka 3/3 + 3 opravy (hvalreki/need-fire/landvættir) visí
-- [snapshots/2026-08-20-identita-session-a-uhly.md](snapshots/2026-08-20-identita-session-a-uhly.md) — ㉛ identita session OSTRÁ (3/3, generický podpis blokuje push) · Stop-hook hlídá i neverzované `memory/` · úhly ověřené měřením
-- [snapshots/2026-08-26-vegvisir-pouti-a-p1.md](snapshots/2026-08-26-vegvisir-pouti-a-p1.md) — Vegvísir: tři plné pouti (mechaničnost systematická) + rozdělaný TEST P1 pozitivního učení
-- [snapshots/2026-09-18-kratke-obrazy-a-vstupy-cteni.md](snapshots/2026-09-18-kratke-obrazy-a-vstupy-cteni.md) — CODE-read: rozbíjení povedeného Raidha jednou změnou, krátké obrazy, esenční řádek, konce; co čeká na ownera ← NEJNOVĚJŠÍ
-- [snapshots/2026-09-22-tree-panel-palma-zaloha.md](snapshots/2026-09-22-tree-panel-palma-zaloha.md) — CODE-tree: kůra odložena, panel TVAR/VZHLED/ODLOŽENO, palma = počet větví; crown composer zálohován v gitu
-- [snapshots/2026-09-26-tune-konce-oblast-obrazy.md](snapshots/2026-09-26-tune-konce-oblast-obrazy.md) — CODE-tune: po resetu tokenů konce (6/7/9), obrazy od GPT, slova oblasti (CODE-read) ← NEJNOVĚJŠÍ
-- [snapshots/2026-09-25-modely-opus5-sol-naklady.md](snapshots/2026-09-25-modely-opus5-sol-naklady.md) — CODE-read: Opus 5 nasazen, sol kroky 1–3 (čeká krok 4 = slepé srovnání), stats.js náklady, korekce, sobotní test korektoru
-- [snapshots/2026-09-26-slova-esence-islandstina.md](snapshots/2026-09-26-slova-esence-islandstina.md) — CODE-read: „work“ odloženo, esence N3 (EN), Blank rune, Ask aspekt, korektor s bránou, stats.js hlas, IS úhel nechán, korekce þig vantar
+- _Starší (2026-05-30 → 2026-09-26): složka `snapshots/` — sbaleno 2026-10-10, index se blížil limitu 200 řádků._
 - [snapshots/2026-10-05-vegvisir-odlozen.md](snapshots/2026-10-05-vegvisir-odlozen.md) — CODE-read: Vegvísir ODLOŽEN; rozhodnuto (cesta, bez středu, Ask nese vazbu, IS dělá CODE-read), změřeno 2026-09-27, co visí
 - [snapshots/2026-10-05-lab-co-uz-vime.md](snapshots/2026-10-05-lab-co-uz-vime.md) — CODE-read: LAB přestavby promptu — výtah všeho, co už bylo změřeno k bodům 4/5/6/8 a přemýšlení, s odkazy ← NEJNOVĚJŠÍ
-- [snapshots/2026-09-26-tree-diagnoza-po-castech.md](snapshots/2026-09-26-tree-diagnoza-po-castech.md) — CODE-tree: diagnóza stromu po částech (owner chce po jedné!), část 1 semínko hotová + opravená; další = Norny
 - [snapshots/2026-10-05-tree-proporce-strany-spicka.md](snapshots/2026-10-05-tree-proporce-strany-spicka.md) — CODE-tree: koště a oprava (obrázek 4), kmen roste s rozpětím ramen, čtení jeho stromu z dat (strany 9:4, Raidho nahoře) ← NEJNOVĚJŠÍ
 - [snapshots/2026-10-07-tune-audit-zaloha.md](snapshots/2026-10-07-tune-audit-zaloha.md) — CODE-tune: §30 „nic na paměti“ (hooky), v5.04 otázka runy, lab otázky na oblast v Asku; co čeká na ownera ← NEJNOVĚJŠÍ
