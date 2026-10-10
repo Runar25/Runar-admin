@@ -1877,10 +1877,10 @@ z klienta · `ledger_user_profiles` zapisuje do `credit_ledger` i smazání úč
     (bez stropu velikosti i typu). Zneužití zatím žádné (55 + 1 souborů, poslední nahrání v květnu). Politika je zbytečná:
     jediné nahrávání (`elevenlabs-static`) jde přes service role, která RLS obchází. SQL pro ownera:
     `drop policy "service_role_upload 1rtepqd_0" on storage.objects;`
-14. ⚪ **Smazání verze audia ve shrine nesmaže soubor** (`deleteVersion` → `storage.remove`): na `storage.objects` není pravidlo DELETE,
+14. ⚪ **Smazání verze audia ve shrine nesmaže soubor** ➜ ✅ 2026-10-10 owner „smaž sirotky ručně“: `static/en/jera.mp3` a `static/is/ingwaz.mp3` (květen, bez záznamu ani odkazu v kódu) smazány přes `supabase storage rm`; sirotků 0 z 53. Pravidlo pro mazání nepřidáno — další smazaná verze zase nechá soubor. (`deleteVersion` → `storage.remove`): na `storage.objects` není pravidlo DELETE,
     chyba skončí v konzoli a soubor zůstane. Dnes 2 soubory v `runar-audio` bez záznamu v `runar_static_audio`. Volba: pravidlo
     „admin smí mazat v `runar-audio`“, nebo sirotky smazat ručně.
-15. ⚪ **Stará kopie repa v `.claude/worktrees/modest-murdock-d57976`** (větev z 2026-08-17, plně sloučená do `main`, bez vlastních
+15. ⚪ **Stará kopie repa v `.claude/worktrees/modest-murdock-d57976`** ➜ ✅ odstraněna 2026-10-10 (owner „spusť úklid“, `git worktree remove`; větev zůstává, je sloučená). (větev z 2026-08-17, plně sloučená do `main`, bez vlastních
     commitů, jen dočasný `supabase/.temp`). Neškodí, ale grep přes repo z ní vrací zastaralý kód (2026-10-09 tak vyskočil
     `buildSysPromptV2` ve „volajících“). Nástroj appky na úklid ji nebere za svou. Úklid (spustí owner nebo Code se souhlasem):
     `git -C C:/Users/zkuku/Downloads/Runar-admin worktree remove --force .claude/worktrees/modest-murdock-d57976`.
