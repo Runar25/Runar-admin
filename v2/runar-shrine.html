@@ -769,8 +769,12 @@ function initCodesTab() {
 
 // Safe charset: no 0/O, no 1/I/l  (32 chars)
 const CODE_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+// 2026-10-10 (kontrola architektury): crypto.getRandomValues místo Math.random() — kód je peníz a Math.random() není kryptograficky
+// bezpečný (z vydaných kódů jde v principu dopočítat další z téže dávky). 32 znaků dělí 2^32 → modulo bez zkreslení.
 function randChars(n) {
-  return Array.from({ length: n }, () => CODE_CHARS[Math.floor(Math.random() * CODE_CHARS.length)]).join('');
+  const buf = new Uint32Array(n);
+  crypto.getRandomValues(buf);
+  return Array.from(buf, (x) => CODE_CHARS[x % CODE_CHARS.length]).join('');
 }
 function makeCode(prefix) {
   return `${prefix}-${randChars(4)}-${randChars(4)}`;

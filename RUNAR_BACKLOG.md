@@ -1861,7 +1861,8 @@ Rune Seekera = posledních 5 (`TIER_LIMITS.rune_seeker.journal_entries`).
 **Platí:** volá jen nasazené funkce, všechny s přihlášením kromě jedné (níž) · po zrušeném rozboru GPT nezůstaly zbytky ·
 zápisy do `gift_codes`, `runar_corrections`, `runar_character`, `runar_static_audio` kryje admin politika v DB.
 **Opraveno rovnou:** náhled hlasu (teach) volal `elevenlabs-proxy` bez přihlášení → proxy ho od 2026-08-02 odmítal (401) a tlačítko
-nefungovalo; teď posílá token jako sousední generování statického audia. **Pro ownera:** nic.
+nefungovalo; teď posílá token jako sousední generování statického audia. 2026-10-10: dárkové kódy se losovaly přes
+`Math.random()` (není kryptograficky bezpečné) → `crypto.getRandomValues` (32 znaků, rozložení ověřeno 32 000 losy). **Pro ownera:** nic.
 
 ### Část 10 — úložiště, přihlašování, git hooky, pomocné skripty (2026-10-10)
 **Platí:** hook `hook_before_user_created` pustí registraci jen e-mailům z `allowed_emails` (uzavřený test) · trigger
