@@ -2177,6 +2177,15 @@ Každé číslo kontroly, na které se docs odvolávají („hlídá smoke ⑩/�
 **Opraveno (CODE-read):** `RUNAR_DESIGN.md` psal „smoke ㊱“ (kroužkové 36), smoke ale od ㉟ pokračuje znaky ㉠, ㉡… (`chr(0x3260)`…)
 a register obrazu tiskne jako ㉠ → ve výpisu nedohledatelné. Opraveno na ㉠ + jméno skriptu. (Zápisy v DECISIONS nechány, append-only.)
 
+### Část 27 — inline JavaScript ve stránkách (`runar-shrine.html`, nápověda, soukromí; 2026-10-10)
+**Platí:** žádná funkce ani konstanta v inline `<script>` stránek není mrtvá (shrine 110 definic, nápověda 15, soukromí 7). Nula je
+podezřele čisté číslo → ověřeno protipříkladem: podstrčené dvě nevolané definice sken našel, volanou vynechal.
+
+### Část 28 — popisy run (`RUNAR_POPISY_RUN.md`, 2026-10-10)
+**Platí:** data run neopisuje (odkazuje na `runar-runes.js`), texty jsou ownerovy doslovné; má všech 25 run v pořadí `RUNES` včetně Blank.
+- ⚪ **Pro ownera / Cowork (obsah, nespěchá):** hlavička píše „Společný tvar… pozorování, ne pravidlo — pravidlo vznikne, až jich bude
+  25+“. Popisů je teď 25 — spouštěč nastal, pravidlo nikdo nesepsal. Jen připomínka; CODE do obsahu nesahá.
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
