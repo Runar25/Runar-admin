@@ -3,7 +3,8 @@
 // Proč: `supabase backups list` 2026-10-10 vrátil prázdný seznam — Free plán nezálohuje (RUNAR_BACKLOG.md „Zálohy / DR“). Pro by
 // zálohoval denně 7 dní, ale i pak chceme kopii nezávislou na účtu u Supabase a delší historii.
 // Co dělá (bez Dockeru — `supabase db dump` ho vyžaduje, tady není):
-//   1. každá tabulka public + auth.users (id, e-mail, časy) jako JSON, schéma (sloupce, politiky, funkce, triggery, cizí klíče,
+//   1. každá tabulka public + auth.users (id, e-mail, časy) jako JSON, schéma (sloupce, politiky, funkce + kdo je smí spustit, RLS,
+//      granty tabulek, indexy, rozšíření — od 2026-10-10; triggery, cizí klíče,
 //      granty, buckety, seznam souborů) — přes `supabase db query --linked`, jen čtení;
 //   2. kontrola: každá tabulka, která v databázi má řádky, je má i v exportu (jinak konec s chybou, archiv nevznikne);
 //   3. 7z AES-256 se šifrovanými názvy (-mhe=on), heslo ze souboru MIMO repo i cíl (~/.claude/runar-zaloha-heslo.txt —
@@ -94,6 +95,13 @@ async function main() {
       triggery: q("select event_object_table t, trigger_name, action_timing, event_manipulation, action_statement from information_schema.triggers where trigger_schema='public' order by 1,2"),
       cizi_klice: q("select conrelid::regclass::text tabulka, conname, pg_get_constraintdef(oid) def from pg_constraint where connamespace='public'::regnamespace order by 1,2"),
       granty_sloupcu: q("select table_name, grantee, privilege_type, string_agg(column_name, ',' order by column_name) cols from information_schema.column_privileges where table_schema='public' and grantee in ('anon','authenticated') group by 1,2,3 order by 1,2,3"),
+      // 2026-10-10 (CODE-read): bez těchhle by obnova byla tichá díra — add_credits/use_credit smí dnes spustit JEN service_role,
+      // nová funkce má výchozí EXECUTE pro PUBLIC; RLS a granty tabulek se při ručním CREATE TABLE taky nevezmou samy.
+      opravneni_funkci: q("select p.proname, pg_get_function_identity_arguments(p.oid) args, r.rolname from pg_proc p cross join pg_roles r where p.pronamespace='public'::regnamespace and r.rolname in ('anon','authenticated','service_role') and has_function_privilege(r.oid, p.oid, 'EXECUTE') order by 1,3"),
+      rls: q("select c.relname t, c.relrowsecurity rls, c.relforcerowsecurity force from pg_class c where c.relnamespace='public'::regnamespace and c.relkind='r' order by 1"),
+      granty_tabulek: q("select table_name, grantee, string_agg(privilege_type, ',' order by privilege_type) prava from information_schema.role_table_grants where table_schema='public' and grantee in ('anon','authenticated','service_role') group by 1,2 order by 1,2"),
+      indexy: q("select schemaname, tablename, indexname, indexdef from pg_indexes where schemaname in ('public','storage') order by 1,2,3"),
+      rozsireni: q('select extname, extversion from pg_extension order by 1'),
       buckety: q('select id, public, file_size_limit from storage.buckets'),
       soubory: q("select bucket_id, name, (metadata->>'size') bajtu, created_at from storage.objects order by 1,2"),
     }));

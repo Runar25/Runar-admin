@@ -2143,6 +2143,26 @@ Metoda: každá `.třída`/`#id` z CSS, jejíž jméno se nevyskytuje v žádné
   `.tree-upgrade-block`, `.tree-upgrade-note`, `.tree-lifelens` (čočka odešla 2026-09-25), `.badge-meta-lbl`, `.badge-name`, `.rs-link`.
   Napřed v náhledu ověřit, že se nic nerozbije (§32 základ), pak smazat.
 
+### Část 24 — pomocné skripty a paměť: odkazy na to, co už neexistuje (2026-10-10)
+**Platí:** žádný skript ve `scripts/` nevolá funkci ani konstantu, která z `v2/` zmizela (jediný nález `SEASON_LABELS` ve
+`verify_contract_wiring.js` je záměrný — hlídá, že se smazaná věc nevrátí). Cesty v `memory/*.md` existují; chybějící jména jsou
+záměrně negitované (sloty `_patch*.py`, místní data stromu) nebo šablona názvu.
+
+### Část 25 — schéma databáze v repu × v databázi; co nese záloha (2026-10-10, jen čtení)
+**Platí:** RLS zapnuté na všech 15 tabulkách · každá funkce `SECURITY DEFINER`, která hýbe penězi nebo daty (`add_credits`, `use_credit`,
+`use_free_balance`, `append_follow_up`, `check_rate_limit`…), smí spustit JEN `service_role`; dvě spustitelné pro `anon/authenticated`
+(`guard_life_rune_immutable`, `ledger_user_profiles`) jsou triggerové — přímo zavolat nejdou · všech 7 `.rpc()` volání míří na
+existující funkci.
+**Zjištěno:** repo databázi **neumí postavit znovu**. Bez `CREATE TABLE` v `sql/` jsou hlavní tabulky (`user_profiles`, `readings`,
+`gift_codes`, `runar_corrections`, `runar_static_audio`, `runar_character`, `rate_limits`, `knowledge_base` — vznikly v dashboardu)
+a bez `CREATE FUNCTION` `add_credits`, `check_rate_limit`, `update_updated_at`. Pravdu o schématu nese jen databáze — a záloha.
+**Opraveno (CODE-read):** `scripts/utils/zaloha_db.js` nesl sloupce/politiky/funkce/triggery/omezení, ale **ne** oprávnění k funkcím,
+zapnuté RLS, granty tabulek, indexy ani rozšíření. Obnova by `add_credits` (připíše kredity komukoli) vytvořila s výchozím EXECUTE pro
+PUBLIC a nikdo by to nepoznal. Doplněno; ověřeno ostrým během + rozbalením archivu (`schema.json`: oprávnění 21, RLS 15, granty 41,
+indexy 53, rozšíření 6; `add_credits` → jen `service_role`).
+- ⚪ **Při přesunu databáze (Hetzner, „Kam s databází…“ výš):** napřed `pg_dump --schema-only` z produkce do `sql/` jako výchozí schéma
+  (tam už Docker netřeba) — teprve pak bude repo schopné databázi postavit. Do té doby obnova = data z JSON + struktura podle `schema.json`.
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
