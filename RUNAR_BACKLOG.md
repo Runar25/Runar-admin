@@ -1840,6 +1840,10 @@ ownera, stojí tady pod **PRO OWNERA**. Pořadí: claude-proxy → ostatní edge
 ⭐ **Kolo 2 a další (KUKY 2026-10-10):** *„až projedeme celou kontrolu, tak ji pojedeme znova, dokud všechno nevychytáme.“* — po poslední
 části projít znovu od části 1 (stejné otázky, čerstvé grepy, nic nepřebírat z kola 1 bez ověření); konec, až kolo nenajde nic nového.
 Doklad, proč: 2026-10-10 se v kole 1 vrátila chyba „5 hlasů měsíčně pro Rune Seekera“, kterou owner opravoval opakovaně (DECISIONS (42)).
+**Rozšíření metody (KUKY 2026-10-10: „svoji kontrolu musíš ještě rozšiřovat“):** kolo 1 ověřovalo hlavně DOKUMENTY × kód. Kolo 2 přidává
+**SLIBY APPKY × TOK KÓDU** — každý text pro uživatele s počtem, nárokem, „zdarma/jednou/měsíčně/navždy“ (UI_TEXT EN i IS, `TIER_FEATURES`,
+nápověda, soukromí) projít tokem: co tier opravdu má (`free_balance`, `monthly_readings`, kredity) → co appka nabídne → strop serveru.
+Nárok = nejmenší z nich (memory `strop-serveru-neni-narok`). První průchod = část 39.
 
 ### Část 1 — claude-proxy (`supabase/functions/claude-proxy/index.ts`, 958 ř., přečteno celé 2026-10-09)
 **Platí (ověřeno v kódu):** anonym → 401 před voláním modelu · rate limit 10/60 s na uživatele · admin z JWT (e-mail, kopie hlídá
@@ -2313,6 +2317,17 @@ psala ostatním. `hooks/pre-push.py` pouští `smoke.py` přímo nad pracovním 
   čtení i hlas. Hlas na libovolný text je známý (#2b „Proxy Fáze 2“), levnější placení přes `spread_cost`
   taky (#4). Navíc zvážit **CAPTCHA při registraci** (Supabase umí Cloudflare Turnstile / hCaptcha přímo v Auth — přepínač + klíč, v appce
   jeden token u přihlášení). Útratu dnes drží stropy u poskytovatelů (část 15) a rate limity.
+
+### Část 39 — sliby appky uživateli × tok kódu (nový typ kontroly, 2026-10-10)
+Prošlo: `TIER_FEATURES` všech tierů + 28 textů UI_TEXT s počtem/nárokem (EN i IS se shodují).
+**Platí:** Rune Seeker jedno volné čtení (`free_balance = 1`, bez obnovení), další z karty, kredity bez expirace, deník posledních 5 ·
+Standard 50/měsíc, celý deník, 1 Ask · Premium 75/měsíc, 2 Asky (`ASKS_PER_READING` = config, smoke ⑨) · návštěvník 5 run v kolekci
+(Fehu, Isa, Tiwaz, Sowilo, Ansuz) a u všech pěti namluvené audio EN i IS („listen to the ancient stones“ sedí) · zakládací Norny „zdarma,
+jen text“ (rituál v proxy, appka hlas nenabízí) · Ask teaser („open with {tier}“) i rozbor jména bez slibovaného počtu sedí.
+**Nesedí:** (1) hlas Rune Seekera „až 5 měsíčně“ → DECISIONS (42), u CODE-tune. (2) ⚪ **pro CODE-tune (l):** `auth_consent_txt` (EN + IS,
+okno přihlášení) „We store only what is needed to remember your readings“ — zásady uvádějí i analýzu kvality (s možností odhlášení)
+a tabulka údajů má 14 řádků; věta to zužuje. Srovnat se zásadami (žádné nové rozhodnutí). Drobnost: `journal_teaser` „Every reading you
+have ever taken is kept“ — čtení „pro někoho“ se u běžného uživatele neukládá.
 
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
