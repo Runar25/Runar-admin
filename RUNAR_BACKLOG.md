@@ -3085,8 +3085,15 @@ Podklad: `docs/archive/2026-09-23-audit-obrazu.md`. Owner je potřebuje vysvětl
    owner 2026-10-10 vytkl v Safn rúna (§5: glyf jen z RUNE_SVGS, výjimka jen ᚱ). Rozhodnout: naše SVG malé, nebo glyf z popisku pryč.
 2. ⚪ **Deník: chyba načtení ukáže přihlášenému bránu návštěvníka.** `loadJournal` v `catch` volá `hideJournal()` → „You walk here
    as a Visitor… It opens when you become a Rune Seeker“ i Rune Seekerovi, kterému jen spadlo spojení (`runar-journal.js`).
-3. ⚪ **§10 v bočním panelu:** `updateSidePanel` má natvrdo `is ? '✦ LESTRAR MÍNIR' : '✦ MY JOURNAL'` a `'× EYÐA REIKNINGI' :
-   '× DELETE ACCOUNT'` (`runar-app.js`) — patří do UI_TEXT.
+3. ✅ *(CODE-tune 2026-10-10: UI_TEXT `sp_journal_link`, `sp_delete_account`; po cestě i počet v deníku `journal_count_*`
+   a věta `tree_carry_life_rune` — znění beze změny, vykreslení před a po v EN i IS shodné. Všechny tři utekly smoke ㉸: ta hledá
+   jen `lang === 'is' ?`, ne zkratku `isIs ?`/`is ?` → předáno CODE-read (jeho kontrola). Zbývá takových míst: text promptu
+   v `runar-character.js` (měsíc narození na hraně, ~ř. 1492–1498) a značky promptu, podle kterých admin rozkládá složení čtení
+   (`runar-utils.js` ~ř. 321–407 — opisují text builderu, při jeho změně se rozpad tiše rozbije).)* ~~**§10 v bočním panelu:**~~
+   `updateSidePanel` má natvrdo `is ? '✦ LESTRAR MÍNIR' : '✦ MY JOURNAL'` a `'× EYÐA REIKNINGI' : '× DELETE ACCOUNT'` (`runar-app.js`).
+   ⚪ **Počet v deníku pro 1 čtení:** „1 lestrar“ / „1 nýlegastir“ / „1 readings“ (`journal_count_*`) — islandsky i anglicky špatně;
+   `vn()` umí jen jednotné číslo pro 1 (ne 21, 31… — islandská shoda s číslovkou končící na 1, napřed ověřit korpusem). Oprava = tvar
+   podle čísla, IS ověřená `is-vazba.py`.
 4. ⚪ **§14 u tlačítka tahu:** `updateUIText` při každém přepnutí jazyka nastaví `btn-speak` na `speak_btn` („HEAR RÚNAR SPEAK“) —
    ve spreadu, kde ještě chybí runy, má stát `speak_btn_draw` („DRAW YOUR RUNES“). Stavový text patří do funkce stavu.
 5. ✅ *(CODE-tune 2026-10-10, DECISIONS 2026-10-10 (18): owner „rovnou tah runy“ → _syncVisitorDraw)* ~~**Formulář návštěvníka:**~~ návštěvník čtení nedostane, formulář se ho přesto ptá na jméno a „jak tě má Rúnar

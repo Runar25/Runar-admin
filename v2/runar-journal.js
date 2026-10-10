@@ -98,9 +98,8 @@ function renderJournal(entries) {
   const titleEl = document.getElementById('journal-pane-title');
   const countEl = document.getElementById('journal-pane-count');
   if (titleEl) titleEl.textContent = t('journal_title');
-  if (countEl) countEl.textContent = entries.length === 0 ? '' : isStandard
-    ? (isIs ? `${entries.length} lestrar` : `${entries.length} readings`)
-    : (isIs ? `${entries.length} nýlegastir` : `last ${entries.length}`);
+  // 2026-10-10 z UI_TEXT (dřív `isIs ? … : …` natvrdo, ㉸ alias neviděl); znění beze změny
+  if (countEl) countEl.textContent = entries.length === 0 ? '' : tp(isStandard ? 'journal_count_all' : 'journal_count_recent', { n: entries.length });
 
   // Filter bar
   const filterBar = document.getElementById('journal-filter-bar');

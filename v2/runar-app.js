@@ -606,7 +606,6 @@ function updateSidePanel() {
   const accEl = document.getElementById('sp-account');
   if (!accEl) return;
   _updateInstallBtn();
-  const isIs = lang === 'is';
   setText('sp-tier-header', t('sp_account_title'));
   // Side panel navigation links — switch with language
   setText('sp-guide-link',   t('sp_guide_link'));
@@ -637,8 +636,6 @@ function updateSidePanel() {
   if (sessionEl) sessionEl.style.display = 'block';
   if (dangerEl)  dangerEl.style.display  = 'block';
 
-  const is = isIs;
-
   // Admin link
   const adminLink = document.getElementById('sp-admin-link');
   if (adminLink) adminLink.style.display = isAdmin(currentUser.email) ? 'block' : 'none';
@@ -646,7 +643,7 @@ function updateSidePanel() {
   // Journal link
   const journalLink = document.getElementById('sp-journal-link');
   if (journalLink) {
-    setText('sp-journal-link', is ? '✦ LESTRAR MÍNIR' : '✦ MY JOURNAL');
+    setText('sp-journal-link', t('sp_journal_link'));   // 2026-10-10 z UI_TEXT (dřív `is ? … : …` natvrdo, ㉸ alias neviděl)
     setText('sp-names-btn', t('sp_names_btn'));
   }
 
@@ -655,7 +652,7 @@ function updateSidePanel() {
   const hide   = userTier === 'standard' || userTier === 'premium';
   if (giftEl) giftEl.style.display = hide ? 'none' : 'block';
   setText('sp-gift', '+ ' + vl('card', lang));
-  setText('sp-delete-account', is ? '× EYÐA REIKNINGI' : '× DELETE ACCOUNT');
+  setText('sp-delete-account', t('sp_delete_account'));
 
   // Topbar dropdown (logged-in only)
   updateDropdown();

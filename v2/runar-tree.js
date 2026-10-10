@@ -521,7 +521,7 @@ function _showTreeReading(rune, runeName, isIs) {
   var lbl = document.getElementById('tree-rune-label-exists');
   // Header: 'You carry life rune Gebo ᵏ' — label hidden, name carries full phrase
   if (lbl) lbl.style.display = 'none';
-  if (nm) nm.textContent = (isIs ? 'Þú ber lífsrún ' : 'You carry life rune ') + runeName;
+  if (nm) nm.textContent = tp('tree_carry_life_rune', { rune: runeName });   // 2026-10-10 z UI_TEXT (dřív `isIs ? …` natvrdo)
   // Glyf zivotni runy je klikaci jako ve cteni (KUKY 2026-09-13: „runa jde videt [v single]
   // a chtel bych aby sla videt i v zivotni rune") — popup + data-lore zapina meaning-tap
   // (klik na vyznam zvyrazni misto v textu; runar-rune-popup.js). Jmeno i klice jdou v JAZYCE

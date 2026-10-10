@@ -196,6 +196,8 @@ const UI_TEXT = {
     cancel_btn:         'CANCEL',
     deleting_btn:       'DELETING...',
     journal_title:      '\u2726 YOUR RUNE READINGS',
+    journal_count_all:    '{n} readings',   // 2026-10-10: dřív natvrdo v runar-journal.js (isIs ? … — ㉸ alias neviděl); znění beze změny
+    journal_count_recent: 'last {n}',
     journal_empty:      'No rune readings recorded yet.<br>Draw your first rune.',
     life_rune_short:    'Life rune',
     jcard_audio_btn:    "\u266a R\u00danar'S VOICE",
@@ -241,6 +243,7 @@ const UI_TEXT = {
     life_rune_free:   'Free',
     tree_rs_balance:    'your rune readings:',
     tree_rs_free_line:  '{casts} available for regular draws',   // 2026-10-10: dřív natvrdo v runar-tree.js (ráčna ㉸)
+    tree_carry_life_rune: 'You carry life rune {rune}',   // 2026-10-10: dřív natvrdo v runar-tree.js (isIs ? … — ㉸ alias neviděl)
     tree_name_label:    'NAME YOUR TREE',
     tree_hist_all:      'whole tree · {casts}',
     tree_hist_at:       'reading {k} of {n}',
@@ -479,6 +482,8 @@ const UI_TEXT = {
     name_modal_call_norse: 'NORSE NAME',
     name_modal_call_name:  'NAME',
     sp_names_btn:          '✎ MY NAMES',
+    sp_journal_link:       '✦ MY JOURNAL',      // 2026-10-10: dřív natvrdo v updateSidePanel (is ? … — ㉸ alias neviděl)
+    sp_delete_account:     '× DELETE ACCOUNT',
     name_modal_skip:  'Continue without a name',
     name_modal_btn:   'LET THE RUNE READING BEGIN',
     name_modal_ph:    'Your name or nickname',
@@ -675,6 +680,8 @@ const UI_TEXT = {
     cancel_btn:         'H\u00c6TTA VI\u00d0',
     deleting_btn:       'EY\u00d0IR...',
     journal_title:      '\u2726 SP\u00c1R \u00de\u00cdNAR',
+    journal_count_all:    '{n} lestrar',   // 2026-10-10: viz EN; znění beze změny
+    journal_count_recent: '{n} nýlegastir',
     journal_empty:      'Engar skr\u00e1\u00f0ar sp\u00e1r enn.<br>Dragðu fyrstu r\u00fanina þ\u00edna.',
     life_rune_short:    'L\u00edfsr\u00fan',
     jcard_audio_btn:    '\u266a HLUSTA \u00c1 R\u00daNAR',
@@ -718,6 +725,7 @@ const UI_TEXT = {
     life_rune_free:   'Fr\u00edtt',
     tree_rs_balance:    'spár:',
     tree_rs_free_line:  '{casts} fyrir venjulegar dregnar rúnir',   // 2026-10-10: viz EN; znění beze změny
+    tree_carry_life_rune: 'Þú ber lífsrún {rune}',   // 2026-10-10: viz EN; znění beze změny
     tree_name_label:    'NAFN TRÉSINS ÞÍNS',
     tree_hist_all:      'allt tréð · {casts}',
     tree_hist_at:       '{k}. spá af {n}',
@@ -937,6 +945,8 @@ const UI_TEXT = {
     name_modal_call_norse: 'NORRÆNA NAFNINU',
     name_modal_call_name:  'NAFNINU ÞÍNU',
     sp_names_btn:          '✎ NÖFNIN MÍN',
+    sp_journal_link:       '✦ LESTRAR MÍNIR',   // 2026-10-10: viz EN; znění beze změny
+    sp_delete_account:     '× EYÐA REIKNINGI',
     name_modal_skip:  'Halda \u00e1fram \u00e1n nafns',
     name_modal_btn:   'L\u00c1TA SP\u00c1NA HEFJAST',
     name_modal_ph:    'Nafn \u00feitt e\u00f0a g\u00e6lunafn',
