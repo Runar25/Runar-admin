@@ -9544,3 +9544,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   seznamu ve skriptu.
 - Affected doc(s): `CLAUDE.md` (§32) — v témže commitu.
 - Odvolává se na: 2026-10-10 (19).
+
+## 2026-10-10 (21) — Strom: kořeny = skoro kopie koruny (stejná šířka, mělčí, bez mezery uprostřed); pokus „2 × (4+4+3) + 3 vrchol“ nanečisto
+
+- **Rozhodl:** KUKY 2026-10-10 k pokusu 4 / 3 / 2 z (17): *„změň na 4+4+3+3“*, na dotaz (strom má jen 25 větví) vybral „4 ramena střídavě + zbytek
+  nahoru“ a upřesnil *„2x(4+4+3)+3 vrchol“*. Ke kořenům: *„kořeny jsi udělal ještě hůř, než byly. co ta čára uprostřed a nic kolem ní? … normálně je
+  rozprostři, žádná mezera kolem prostřední!! má to být skoro kopie koruny, jen nepůjde tak hluboko! šířka bude stejná jako koruna.“* **Provedl:** CODE-tree,
+  jen nanečisto.
+- **Směr (nahrazuje kořenovou část (17)):** kořeny = skoro kopie koruny pod zemí — tatáž ramena, vedlejší větve i větvičky, stejně široké jako koruna,
+  jen mělčí. ✖ **Nevracet:** kořeny po jednom na rameno pod týmž úhlem + osamělý kůlový kořen uprostřed (pokus z (17)) — *„čára uprostřed a nic kolem“*.
+  Do 2026-10-10 v `RUNAR_TREE.md` §2 stálo „zrcadlo ve VELIKOSTI/mohutnosti, ne aby dole vypadalo stejně jako nahoře“ — přepsáno.
+- **Pokus nanečisto** (patch `docs/archive/tree/2026-10-10_nanecisto_ramena.patch`; pokus 4 / 3 / 2 zůstává jako historie v `…_patra.patch`): 25 větví →
+  6 ramen střídavě vlevo a vpravo, každé ve své výšce (26–76 % kmene); na každé straně rameno + 3, rameno + 3, rameno + 2 vedlejší (2 × (4+4+3) = 22),
+  vrchol = vůdčí větev + 2 vedlejší (větve s nejvyšší zónou čtení). Délky ramen ×1,33 → ×1,0 odspodu. Kořeny: každý tah koruny zrcadlený pod zem,
+  x beze změny (šířka = koruna), hloubka = výška nad zemí × 0,5 (kmen pod nejnižším ramenem × 0,2), mírné vlnění, ať to není přesná kopie;
+  ověřeno v labu v prohlížeči. Čeká na ownerův pohled.
+- Affected doc(s): `RUNAR_TREE.md` §2 (kořeny), `RUNAR_BACKLOG.md` (položka pokusu) — v témže commitu.
