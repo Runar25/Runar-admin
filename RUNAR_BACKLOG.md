@@ -2165,10 +2165,10 @@ indexy 53, rozšíření 6; `add_credits` → jen `service_role`).
   (tam už Docker netřeba) — teprve pak bude repo schopné databázi postavit. Do té doby obnova = data z JSON + struktura podle `schema.json`. <!-- doc-links:ok 2026-10-10 schema.json je soubor uvnitř šifrovaného archivu zálohy, ne v repu -->
 
 ### Část 26 — mechanismy §30: hooky a čísla kontrol (2026-10-10)
-**Platí:** všechny hooky, které CLAUDE.md a paměť jmenují, existují a jsou zapojené (`~/.claude/settings.json`): API guard (PreToolUse
+**Platí:** všechny hooky, které CLAUDE.md a paměť jmenují, existují a jsou zapojené (`~/.claude/settings.json`): API guard (PreToolUse <!-- doc-links:ok 2026-10-10 uživatelský soubor v ~/.claude, mimo repo -->
 Bash|PowerShell — zablokoval naostro i můj vlastní testovací příkaz s `gen_direct.js`; neškodný příkaz pustí; pokusy jdou do logu),
 Stop přes `tree-guard.sh` → záloha čtení z pokusů (běží, exit 0) + kontrola zprávy ownerovi + hlášení bez zápisu (§29, čte
-`~/.claude/runar-hlaseni-k-zapisu.json`), SessionStart → kontext po compactu, PreCompact → záloha.
+`~/.claude/runar-hlaseni-k-zapisu.json`), SessionStart → kontext po compactu, PreCompact → záloha. <!-- doc-links:ok 2026-10-10 uživatelský soubor v ~/.claude, mimo repo -->
 Každé číslo kontroly, na které se docs odvolávají („hlídá smoke ⑩/㉛/㉧…“), ve smoke existuje — kromě jednoho.
 **Opraveno (CODE-read):** `RUNAR_DESIGN.md` psal „smoke ㊱“ (kroužkové 36), smoke ale od ㉟ pokračuje znaky ㉠, ㉡… (`chr(0x3260)`…)
 a register obrazu tiskne jako ㉠ → ve výpisu nedohledatelné. Opraveno na ㉠ + jméno skriptu. (Zápisy v DECISIONS nechány, append-only.)
