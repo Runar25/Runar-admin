@@ -1,7 +1,8 @@
 <!--
   Šablona e-mailu s přihlašovacím kódem — vkládá se ručně do Supabase (dashboard → Authentication → Emails → Templates),
   do OBOU šablon: „Magic Link“ (přihlášení existujícího účtu) i „Confirm signup“ (první přihlášení nového účtu).
-  Appka přihlašuje šestimístným kódem (signInWithOtp + verifyOtp, DECISIONS 2026-10-09 (6)) — šablona proto MUSÍ nést {{ .Token }},
+  Appka přihlašuje kódem (signInWithOtp + verifyOtp, DECISIONS 2026-10-09 (6)) — šablona proto MUSÍ nést {{ .Token }},
+  délku kódu určuje Supabase (Email OTP Length; 2026-10-10 posílá 8 číslic, appka bere 6–10),
   odkaz {{ .ConfirmationURL }} se nepoužívá (aplikace na ploše iPhonu nesdílí úložiště se Safari).
   Předmět (Subject): Rúnar · kóðinn þinn / your code
   Odesílatel: noreply@therunekeeper.com přes Brevo SMTP (doména therunekeeper.com ověřená v Brevu 2026-10-10).

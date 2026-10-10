@@ -43,8 +43,9 @@ const UI_TEXT = {
     sign_out:             'SIGN OUT',
     auth_or:              'or',
     auth_modal_sub_google: 'No password needed — continue with Google.',
-    // 2026-10-09: přihlášení e-mailem šestimístným kódem (runar-auth.js sendLoginCode) — viditelné až s AUTH_EMAIL_ENABLED
-    auth_modal_sub_code:  'No password needed — you will get a six-digit code by email.',
+    // 2026-10-09: přihlášení e-mailem kódem (runar-auth.js sendLoginCode) — viditelné až s AUTH_EMAIL_ENABLED.
+    // 2026-10-10: bez počtu číslic — Supabase posílá 8, ne 6, a délka je nastavení v dashboardu, ne vlastnost appky.
+    auth_modal_sub_code:  'No password needed — you will get a code by email.',
     auth_email_lbl:       'YOUR EMAIL',
     auth_code_send:       'SEND CODE',
     auth_code_sent:       'A code is on its way to {email}. Enter it here.',
@@ -557,7 +558,7 @@ const UI_TEXT = {
     // 2026-10-09: kód místo odkazu. Korpus (Risamálheild): „sex stafa“ 116 · „kóða í tölvupósti“ 10 · „var sendur á“ 1430 ·
     // „inn kóðann“ 130 · „sláðu inn“ 432 · „annað netfang“ 80 · „virkaði ekki“ 9918 · „biðja um nýjan“ 58 · „enn í prófun“ 13 ·
     // „ekki á listanum“ 1460 · „of margar tilraunir“ 11 · „bíddu aðeins“ 671 · „hér fyrir ofan“ 15011 · „ganga inn“ 8694.
-    auth_modal_sub_code:  'Ekkert lykilorð þarf — þú færð sex stafa kóða í tölvupósti.',
+    auth_modal_sub_code:  'Ekkert lykilorð þarf — þú færð kóða í tölvupósti.',   // 2026-10-10 bez „sex stafa“: kód má 8 číslic
     auth_email_lbl:       'NETFANGIÐ ÞITT',
     auth_code_send:       'SENDA KÓÐA',
     auth_code_sent:       'Kóði var sendur á {email}. Sláðu inn kóðann hér.',

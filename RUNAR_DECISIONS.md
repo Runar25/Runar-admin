@@ -9362,3 +9362,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Hranice:** běží jen když je počítač ownera zapnutý a Drive pro počítač přihlášený; obnova do živé DB nanečisto nevyzkoušena (jen
   rozbalení a kontrola dat). Heslo si owner musí uložit i jinam — bez něj jsou zálohy k ničemu.
 - Affected doc(s): `RUNAR_BACKLOG.md` (C „Zálohy / DR“) — v témže commitu.
+
+## 2026-10-10 (10) — Přihlašovací kód má tolik číslic, kolik pošle Supabase (dnes 8); appka bere 6–10
+
+- **Proč:** owner 2026-10-10 po opravě SMTP (host měl překlep `smtp-replay`, ověřeno DNS) dostal kód `5339…` s **osmi** číslicemi.
+  Appka přitom měla pole `maxlength="6"` a kontrolu `code.length !== 6` → osmimístný kód by uřízla a odmítla. Doklad v DB:
+  `auth.users.recovery_sent_at` 13:31:11, `last_sign_in_at` beze změny (11:11). **Provedl:** CODE-tune.
+- **Co:** pole a kontrola berou 6–10 číslic (rozsah nastavení „Email OTP Length“ v Supabase); texty počet číslic neuvádějí
+  (EN „you will get a code by email“, IS „þú færð kóða í tölvupósti“ — „kóða í tölvupósti“ v korpusu 10×).
+- **Opravuje:** 2026-10-10 (6) a 2026-10-09 (6) psaly „šestimístný kód“ — délku určuje Supabase, ne appka.
+- Affected doc(s): `supabase/templates/prihlaseni-kod.html` (hlavička).
+- Odvolává se na: 2026-10-10 (6).

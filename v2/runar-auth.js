@@ -478,7 +478,9 @@ async function sendLoginCode() {
 }
 async function verifyLoginCode() {
   var code = (document.getElementById('auth-code').value || '').replace(/\D/g, '');
-  if (!_authCodeEmail || code.length !== 6) { setSt('st-auth', t('auth_code_bad'), 'err'); return; }
+  // 2026-10-10: Supabase posílá 8 číslic (Email OTP Length, nastavitelné 6–10); do té doby tu stálo natvrdo 6 a osmimístný kód
+  // appka odmítla (owner 13:31: kód dorazil, přihlášení žádné). Délka se hlídá jen rozsahem, ne jedním číslem.
+  if (!_authCodeEmail || code.length < 6 || code.length > 10) { setSt('st-auth', t('auth_code_bad'), 'err'); return; }
   setSt('st-auth', t('auth_checking'));
   var res = await sb.auth.verifyOtp({ email: _authCodeEmail, token: code, type: 'email' });
   if (res.error) {
