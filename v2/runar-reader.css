@@ -575,6 +575,16 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .btn-random:hover:not(:disabled){border-color:var(--gold);opacity:1;background:rgba(255,191,0,0.06);}
 .btn-random:disabled{opacity:0.3;cursor:not-allowed;}
 .rune-svg{vertical-align:middle;}
+/* Runa v popisku a v oknech (setRuneText, runar-utils.js): naše holá linka místo znaku písma — KUKY 2026-10-10 (bod 11: „nahradit
+   našimi glyfy“; Cormorant runy nemá, prohlížeč půjčoval cizí písmo, §5). Barva = barva popisku (currentColor; v SVG je natvrdo
+   #D6A85C), aby runa v šedém tlačítku hlasu nesvítila zlatě vedle šedého textu. Výška ověřena v náhledu proti písmu popisku. */
+/* viewBox = inkoust runy (_runeInkBox), takže výška SVG = výška runy u každé runy stejná. Velká písmena Cinzelu mají 0,71em (změřeno);
+   runa 0,82em je o kousek vyšší jako runa v písmu a spodek o 0,055em pod účařím ji staví na střed velkých písmen. */
+.lbl-rune{display:inline-block;line-height:0;vertical-align:-0.055em;margin-right:0.5em;}
+.lbl-rune .rune-svg{display:block;height:0.82em;width:auto;}
+.lbl-rune .rune-svg path{fill:currentColor;}
+.modal-rune .lbl-rune{margin-right:0;}
+.modal-rune .lbl-rune .rune-svg{height:1em;}
 .rune-svg-fb{color:var(--gold);font-size:1.5em;line-height:1;}
 /* Frameless (bare-line) rune: height tracks the container font-size (~old glyph, slightly larger). */
 .rune-svg-fl{height:1.1em;width:auto;}

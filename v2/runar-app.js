@@ -395,9 +395,9 @@ function showCachedReading(l) {
   setSt('st-voice', '');
   const vBtn = document.getElementById('btn-generate-voice');
   if (voiceGenerated[l]) {
-    vBtn.textContent = t('voice_btn_done'); vBtn.disabled = true;
+    setRuneText(vBtn, t('voice_btn_done')); vBtn.disabled = true;
   } else {
-    vBtn.textContent = t('voice_btn'); vBtn.disabled = false;
+    setRuneText(vBtn, t('voice_btn')); vBtn.disabled = false;
   }
 }
 
@@ -846,9 +846,9 @@ function updateUIText() {
   _updateDobLabel();
   _updateAreaSeekLabels();
   // begin-btn nastavuje _updateReadingForm (návštěvník má jiný text, 2026-10-10)
-  setText('draw-lbl', t('draw_lbl'));
+  setRuneText('draw-lbl', t('draw_lbl'));   // popisky s runou → setRuneText (naše SVG, bod 11, 2026-10-10)
   setText('draw-note', t('draw_note'));
-  setText('btn-random', t('random_btn'));
+  setRuneText('btn-random', t('random_btn'));
   setText('mode-btn-single',    t('spread3_mode_single'));
   setText('mode-btn-norns',     t('spread_mode_norns'));
   setText('mode-btn-kriz',      t('spread_mode_kriz'));
@@ -874,11 +874,11 @@ function updateUIText() {
   if (typeof _paintAskHints === 'function') _paintAskHints();   // rozbalena napoveda do nove reci
   if (typeof _refreshAskTeaser === 'function') _refreshAskTeaser();
   const vBtn = document.getElementById('btn-generate-voice');
-  if (vBtn && !vBtn.disabled) vBtn.textContent = t('voice_btn');
+  if (vBtn && !vBtn.disabled) setRuneText(vBtn, t('voice_btn'));
   // Re-render auth UI + side panel vždy — zajistí správné texty i pro odhlášeného uživatele při změně jazyka
   setText('free-redeem-link', '+ ' + vl('card', lang));
   setText('redeem-link', '+ ' + vl('card', lang));
-  setText('redeem-lbl', tp('redeem_card_code', { card: vl('card', lang).toUpperCase() }));
+  setRuneText('redeem-lbl', tp('redeem_card_code', { card: vl('card', lang).toUpperCase() }));
   const shopLink = document.getElementById('redeem-shop-link');
   if (shopLink) shopLink.textContent = tp('shop_buy_more', { card: vlp('card', lang) });
   updateAuthUI();
@@ -1459,6 +1459,11 @@ window.addEventListener('DOMContentLoaded', () => {
   // na #runar-audio a `if (!a) return` by při chybějícím přehrávači přeskočil i zbytek téhle funkce.
   const capHost = document.getElementById('cap-host');
   if (capHost) { capHost.innerHTML = _makeCapPlayer('cap', '', false); _capWire('cap'); }
+  // Runy v oknech (souhlas testera ᛏ, smazání účtu ᚾ): naše SVG místo znaku písma — týmž setRuneText (bod 11, 2026-10-10).
+  document.querySelectorAll('[data-rune-glyph]').forEach(function (el) {
+    var r = RUNES.find(function (x) { return x.n === el.getAttribute('data-rune-glyph'); });
+    if (r) setRuneText(el, r.g);
+  });
   // ── Close topbar dropdown on outside click ──
   document.addEventListener('click', function(e) {
     const wrap = document.getElementById('auth-dropdown-wrap');

@@ -284,7 +284,7 @@ async function _generateReading() {
   if (!currentUser) { _showVisitorJoin(); return; }   // návštěvník: výzva k registraci, ne volání proxy (2026-10-10, viz _showVisitorJoin)
   _hideAllSpreadOutputs();  // isolate: no stale spread pane lingers over a single reading
   const vBtn = document.getElementById('btn-generate-voice');
-  vBtn.disabled = true; vBtn.textContent = t('voice_btn');
+  vBtn.disabled = true; setRuneText(vBtn, t('voice_btn'));
   document.getElementById('audio-player').classList.remove('visible');
   _capStop('cap'); setSt('st-voice', '');
   document.getElementById('out-short').innerHTML = '';
@@ -1226,7 +1226,7 @@ async function generateVoice() {
   if (!voiceText) return;
   const deepText = voiceText;
   const btn = document.getElementById('btn-generate-voice');
-  btn.disabled = true; btn.textContent = t('voice_btn_loading');
+  btn.disabled = true; setRuneText(btn, t('voice_btn_loading'));
   setSt('st-voice', '');
   document.getElementById('audio-player').classList.remove('visible');
   try {
@@ -1250,12 +1250,12 @@ async function generateVoice() {
         ? t('err_rate_limited')
         : t('voice_resting');
       setSt('st-voice', msg, 'err');
-      btn.textContent = t('voice_btn'); btn.disabled = false; return;
+      setRuneText(btn, t('voice_btn')); btn.disabled = false; return;
     }
     const data = await res.json();
     if (data.error) {
       setSt('st-voice', data.error, 'err');
-      btn.textContent = t('voice_btn'); btn.disabled = false; return;
+      setRuneText(btn, t('voice_btn')); btn.disabled = false; return;
     }
     if (!data.audio_url) throw new Error('No audio_url');
     const blob = await fetch(data.audio_url).then(r => r.blob());
@@ -1264,12 +1264,12 @@ async function generateVoice() {
     _capReset('cap');
     document.getElementById('audio-player').classList.add('visible');
     voiceGenerated[lang] = true;
-    btn.textContent = t('voice_btn_done');
+    setRuneText(btn, t('voice_btn_done'));
     btn.disabled = true;
     setSt('st-voice', '');
   } catch (err) {
     setSt('st-voice', `Voice error: ${err.message}`, 'err');
-    btn.textContent = t('voice_btn'); btn.disabled = false;
+    setRuneText(btn, t('voice_btn')); btn.disabled = false;
   }
 }
 
@@ -1283,7 +1283,7 @@ async function _generateSpreadReading(o) {
   if (o.runes.length < o.min) return;
 
   var vBtn = document.getElementById('btn-generate-voice');
-  if (vBtn) { vBtn.disabled = true; vBtn.textContent = t('voice_btn'); }
+  if (vBtn) { vBtn.disabled = true; setRuneText(vBtn, t('voice_btn')); }
   document.getElementById('audio-player').classList.remove('visible');
   _capStop('cap');
   setSt('st-voice', '');

@@ -946,6 +946,48 @@ function rworld(r) {
 // ─── setText() ─────────────────────────────────────────
 function setText(id, v)   { const el = document.getElementById(id); if (el && v !== undefined) el.textContent = v; }
 
+// ─── setRuneText() ───────────────────────────────────
+// Popisek s runou na začátku („ᚠ DRAW YOUR RUNE“, „ᚲ LET THE RUNES DECIDE“, „ᚢ HEAR RÚNAR SPEAK“…) → runa jako NAŠE SVG (holá
+// linka), ne znak písma. KUKY 2026-10-10 (bod 11: „nahradit našimi glyfy“): Cormorant runy nemá, prohlížeč půjčil cizí písmo a runa
+// vypadala divně (§5: glyf jen z RUNE_SVGS). Kterou runu popisek nese, říká dál znak v UI_TEXT (jedno místo); barvu bere z textu
+// (.lbl-rune v CSS). ᚱ je značka a zůstává písmem (§5). Bez runy na začátku = totéž co setText. Smoke ㉻ hlídá, že se klíče
+// s runou jinudy nesázejí.
+function setRuneText(idOrEl, v) {
+  var el = typeof idOrEl === 'string' ? document.getElementById(idOrEl) : idOrEl;
+  if (!el || v === undefined) return;
+  var m = /^([\u16A0-\u16FF])\s*/.exec(v);
+  var r = (m && m[1] !== '\u16B1' && typeof RUNES !== 'undefined') ? RUNES.find(function (x) { return x.g === m[1]; }) : null;
+  if (!r) { el.textContent = v; return; }
+  var svg = runeSvg(r, { frame: false }), ink = _runeInkBox(r);
+  if (ink) svg = svg.replace(/viewBox="[^"]*"/, 'viewBox="' + ink + '"');
+  // Text za runou escapovaný v innerHTML, ne createTextNode: vm-fixtury smoke (㉣) DOM API nemají a smoke kvůli tomu padal (2026-10-10).
+  el.innerHTML = '<span class="lbl-rune" aria-hidden="true">' + svg + '</span>' + escapeHtml(v.slice(m[0].length));
+}
+// Inkoust holé linky runy (viewBox „x y š v“), aby byla runa v popisku stejně vysoká jako jiná runa — holá linka má viewBox celého kamene
+// a každá runa v něm zabírá jinou plochu (2026-10-10, změřeno: Fehu 9 px, Kenaz 11,2 px při stejném písmu). Měří se jednou na runu, mimo
+// obrazovku (getBBox skrytého prvku vrací nuly). Bez DOM (vm-fixtury smoke) null → zůstane viewBox kamene.
+var _runeInk = {};
+function _runeInkBox(r) {
+  var k = r && r.svg;
+  if (!k) return null;
+  if (_runeInk.hasOwnProperty(k)) return _runeInk[k];
+  var box = null;
+  try {
+    var d = document.createElement('div');
+    d.style.cssText = 'position:absolute;left:-9999px;top:0;visibility:hidden;';
+    d.innerHTML = runeSvg(r, { frame: false });
+    document.body.appendChild(d);
+    var b = d.firstChild.getBBox();
+    document.body.removeChild(d);
+    if (b && b.width > 0 && b.height > 0) {
+      var p = b.height * 0.02;   // okraj na vyhlazení hran
+      box = [b.x - p, b.y - p, b.width + 2 * p, b.height + 2 * p].map(function (n) { return +n.toFixed(2); }).join(' ');
+    }
+  } catch (e) { box = null; }
+  _runeInk[k] = box;
+  return box;
+}
+
 // ─── setPH() ─────────────────────────────────────────
 function setPH(id, v)     { const el = document.getElementById(id); if (el && v) el.placeholder = v; }
 

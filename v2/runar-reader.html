@@ -80,7 +80,7 @@
 <div class="modal-overlay" id="tester-consent-modal">
   <div class="modal" style="max-width:420px;">
     <button class="modal-close" onclick="closeTesterConsent()">✕</button>
-    <div class="modal-rune" style="font-size:2em;color:var(--gold);margin-bottom:12px;opacity:0.7;">ᛏ</div>
+    <div class="modal-rune" data-rune-glyph="Tiwaz" style="font-size:2em;color:var(--gold);margin-bottom:12px;opacity:0.7;"></div>
     <div class="modal-title" id="tcm-title"></div>
     <p class="modal-sub" id="tcm-body" style="margin:16px 0 24px;line-height:1.8;"></p>
     <button class="btn-full" id="tcm-agree" onclick="acceptTesterConsent()"></button>
@@ -90,7 +90,7 @@
 <!-- ═══ DELETE ACCOUNT MODAL ═══ -->
 <div class="modal-overlay" id="delete-account-modal" onclick="if(event.target===this)closeDeleteModal()">
   <div class="modal" style="text-align:center;max-width:340px;">
-    <div class="modal-rune" style="font-size:2em;color:var(--gold);margin-bottom:16px;opacity:0.5;">ᚾ</div>
+    <div class="modal-rune" data-rune-glyph="Nauthiz" style="font-size:2em;color:var(--gold);margin-bottom:16px;opacity:0.5;"></div>
     <div class="modal-title" id="dam-title">DELETE YOUR ACCOUNT?</div>
     <p class="modal-sub" id="dam-body" style="margin:16px 0 24px;line-height:1.8;"></p>
     <div class="btn-row">
@@ -210,7 +210,7 @@
   <!-- REDEEM SECTION (collapsible) -->
   <div class="redeem-section" id="redeem-section" style="display:none;">
     <button class="redeem-close" onclick="toggleRedeem()">✕</button>
-    <div class="redeem-lbl" id="redeem-lbl">ᚠ ENTER RUNE READING CARD CODE</div>
+    <div class="redeem-lbl" id="redeem-lbl"></div>
     <div class="redeem-row">
       <input class="redeem-input" id="redeem-input" type="text" placeholder="e.g. FEHU-7K3M-P9QX" maxlength="20" oninput="this.value=this.value.toUpperCase()">
       <button class="redeem-btn" id="redeem-btn" onclick="redeemCode()">REDEEM</button>
@@ -404,7 +404,7 @@
       </div>
       <!-- Cena tohoto typu čtení (2026-09-29, reporty ownera) — plní _paintSpreadCost() v runar-reading.js. -->
       <p class="note spread-cost" id="spread-cost" style="display:none;"></p>
-      <div class="card-lbl" id="draw-lbl">ᚠ DRAW YOUR RUNE</div>
+      <div class="card-lbl" id="draw-lbl"></div>
       <p class="note" id="draw-note">Close your eyes. Hold your question. Then choose the rune that calls to you.</p>
       <div class="rune-grid" id="reader-grid"></div>
       <div class="rune-info" id="reader-rune-info"></div>
@@ -415,7 +415,7 @@
         <select class="journal-filter-select" id="img-pin-img" onchange="setImgPin()"></select>
         <select class="journal-filter-select" id="img-pin-vyz" onchange="setImgPin()" style="display:none;"></select>
       </div>
-      <button class="btn-random" id="btn-random" onclick="drawRandomRune()">ᚲ LET THE RUNES DECIDE</button>
+      <button class="btn-random" id="btn-random" onclick="drawRandomRune()"></button>
       <button class="btn-full" id="btn-speak" onclick="readRune()" disabled>HEAR RÚNAR SPEAK</button>
     </div>
 
@@ -480,7 +480,8 @@
         <div class="out-txt" id="s9-out"></div>
       </div>
       <!-- Voice -->
-      <button class="btn-voice" id="btn-generate-voice" onclick="generateVoice()" disabled>ᚢ HEAR RÚNAR SPEAK</button>
+      <!-- 2026-10-10: popisky s runou (draw-lbl, btn-random, hlas, redeem-lbl) plní setRuneText — runa jako naše SVG, ne písmo (bod 11) -->
+      <button class="btn-voice" id="btn-generate-voice" onclick="generateVoice()" disabled></button>
       <div class="audio-player" id="audio-player">
         <div class="audio-player-lbl" id="audio-player-lbl">♪ RÚNAR SPEAKS</div>
         <!-- 2026-10-10: přehrávač staví _makeCapPlayer('cap') v runar-app.js — jediný přehrávač appky (KUKY „jen jeden typ“);
