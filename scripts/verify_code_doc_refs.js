@@ -2,7 +2,7 @@
 //
 // Proč (2026-10-10, kontrola architektury, CODE-read; owner: „jak jsi našel README, možná najdeš víc míst… tohle bude náš nesvár
 // z dřívějška, pozor na to“): smoke ⑯ (verify_doc_links.js) hlídá odkazy jen v dokumentech. V kódu hlavička runar-reporter.js
-// odkazovala na „spec runar_reporter_spec_CODE.md“, který v repu nikdy nebyl — a nic to nechytilo. Komentář s odkazem na doc je
+// odkazovala na „spec runar_reporter_spec_CODE.md“, který v repu nikdy nebyl — a nic to nechytilo. Komentář s odkazem na doc je  // doc-links:ok 2026-10-10 záměrně: příklad v popisu / samotestu této kontroly
 // slib „podrobnosti jsou tam“; když tam nic není, čtenář hledá náhradu a najde zastaralou kopii.
 // Co dělá: v2/*.js|html|css, supabase/functions/**/*.ts, scripts/*.js|py, scripts/utils/*.js, hooks/*.py, smoke.py, check-*.py —
 // každé jméno *.md v komentáři musí existovat v gitu (stačí shoda jména souboru). Záměrná zmínka smazaného/zástupného docu =
@@ -32,10 +32,10 @@ function nalezy(text, existuje) {
 if (process.argv.includes('--test')) {
   const ex = (b) => b === 'CLAUDE.md';
   const ok = nalezy('// viz CLAUDE.md §20', ex).length === 0
-    && nalezy('// Spec: neexistuje_spec.md', ex).length === 1
+    && nalezy('// Spec: neexistuje_spec.md', ex).length === 1  // doc-links:ok 2026-10-10 záměrně: příklad v popisu / samotestu této kontroly
     && nalezy('// smazaný stary.md  doc-links:ok 2026-10-10 záměrně historie', ex).length === 0
     && nalezy("const x = 'neni_komentar.md';", ex).length === 0
-    && nalezy('# python komentář chybi.md', ex).length === 1;
+    && nalezy('# python komentář chybi.md', ex).length === 1;  // doc-links:ok 2026-10-10 záměrně: příklad v popisu / samotestu této kontroly
   console.log(ok ? 'OK    samotest: chybějící doc v komentáři se pozná, existující a značený ne' : 'FAIL  samotest');
   process.exit(ok ? 0 : 1);
 }
