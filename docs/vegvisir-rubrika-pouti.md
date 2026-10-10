@@ -1,6 +1,6 @@
 # Vegvísir — absolutní rubrika pouti (standard souzení)
 
-> ⏸ **Vegvísir je ODLOŽENÝ od 2026-10-05** (owner: „zatím odkládáme, vrátíme se k tomu“). Tenhle soubor je pracovní podklad pro návrat, ne platný plán. Stav a co visí → `RUNAR_BACKLOG.md` sekce „Vegvísir“; rozhodnutí → DECISIONS 2026-09-27 (3) (4) (6). *(Řádka doplněna 2026-10-10, kontrola architektury.)*
+> ⏸ **Vegvísir je na pár dní odložený** (od 2026-10-05; owner 2026-10-10: „na Vegvísiru se pořád pracuje, ale teď je doopravdy odložený na pár dní“). Soubor je živý pracovní podklad. Stav a co visí → `RUNAR_BACKLOG.md` sekce „Vegvísir“; rozhodnutí → DECISIONS 2026-09-27 (3) (4) (6). *(Řádka doplněna 2026-10-10, kontrola architektury.)*
 
 **Vznik:** owner 2026-08-25 („párový soudce neskóruje, on řadí — udělej co je potřeba") ·
 osy dle návrhu GPT, zpřísněné o to, co se dosud změřilo (TESTy 31–46).

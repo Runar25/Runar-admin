@@ -2197,7 +2197,7 @@ jméno klíče ani locale se nepočítají (samotest).
 **Platí:** `docs/monitor/ozveny.md` živý · `docs/runar-prompt-map.html` nese banner snímku (část 17) · `docs/TREE_BRIEF_CODE_2026-07-04.md`
 vede `RUNAR_TREE.md` výslovně jako historickou poznámku (strom = CODE-tree, nesahám).
 **Opraveno (CODE-read, doména Vegvísir):** šest pracovních dokumentů `docs/vegvisir-*.md` leželo jako živé a ani jeden neříkal, že je
-Vegvísir od 2026-10-05 odložený — kdo by je otevřel bez BACKLOGu, četl by je jako plán. Každý dostal pod nadpis řádku s odkazem
+Vegvísir je na pár dní odložený (owner 2026-10-10: „pořád se na něm pracuje… odložený na pár dní“). Každý dostal pod nadpis řádku s odkazem
 na vlastníka stavu (sekce „Vegvísir“ výš) a na DECISIONS 2026-09-27 (3) (4) (6); u krajin a momentů i dřívější odložení (3).
 Do archivu nejdou — jsou podklad pro návrat (§26).
 
@@ -2226,7 +2226,7 @@ k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s �
 
 ## Vegvísir (Cowork návrh 2026-08-15 · konsolidace 2026-08-22 · ⏸ ODLOŽENO 2026-10-05)
 
-⏸ **ODLOŽENO 2026-10-05 (owner: „zatím odkládáme, vrátíme se k tomu").** Kde jsme skončili a co visí (neposouzená EN čtení
+⏸ **ODLOŽENO 2026-10-05 (owner: „zatím odkládáme, vrátíme se k tomu").** Upřesněno 2026-10-10 (owner): *„na Vegvísiru se pořád pracuje, ale teď je doopravdy odložený na pár dní.“* — pauza, ne konec. Kde jsme skončili a co visí (neposouzená EN čtení
 z testu hranic, živel runy ve scéně, IS definice runy, prompt v3) → `memory/snapshots/2026-10-05-vegvisir-odlozen.md`;
 rozhodnutí DECISIONS 2026-09-27 (3) (4) (6); měření EVAL_LOG 2026-09-27 (1)–(4).
 

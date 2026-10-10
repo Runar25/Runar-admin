@@ -1,6 +1,6 @@
 # Vegvísir — TEXTY prvních dvou plných poutí (8 ramen)
 
-> ⏸ **Vegvísir je ODLOŽENÝ od 2026-10-05** (owner: „zatím odkládáme, vrátíme se k tomu“). Tenhle soubor je pracovní podklad pro návrat, ne platný plán. Stav a co visí → `RUNAR_BACKLOG.md` sekce „Vegvísir“; rozhodnutí → DECISIONS 2026-09-27 (3) (4) (6). *(Řádka doplněna 2026-10-10, kontrola architektury.)*
+> ⏸ **Vegvísir je na pár dní odložený** (od 2026-10-05; owner 2026-10-10: „na Vegvísiru se pořád pracuje, ale teď je doopravdy odložený na pár dní“). Soubor je živý pracovní podklad. Stav a co visí → `RUNAR_BACKLOG.md` sekce „Vegvísir“; rozhodnutí → DECISIONS 2026-09-27 (3) (4) (6). *(Řádka doplněna 2026-10-10, kontrola architektury.)*
 
 **Proč tady:** do 2026-08-26 ležely v repu jen VÝSLEDKY měření, ne texty — owner se právem ptal,
 kde jsou. Měření → RUNAR_EVAL_LOG.md (TESTy 49, 50). Korpusy → `~/runar-eval/pout8*.jsonl`.
