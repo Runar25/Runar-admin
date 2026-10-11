@@ -66,6 +66,14 @@ PRIPADY = [
  ('chyti', 'verify_ending_angle.js', 'v2/runar-utils.js', 'regex',
   r"(var pool = lang === 'is' \? ESSENCE_FRAMES_IS : ESSENCE_FRAMES;\r?\n\s*return pool\[Math\.floor\(Math\.random\(\) \* )pool\.length", r'\g<1>(pool.length - 1)'),
  ('chyti', 'verify_ask_teaser.js', 'v2/runar-utils.js', 'replace', "return (pad && T['label_is_' + pad]) || T.label_is;", 'return T.label_is;'),
+ # kolo 3 / 4d (2026-10-11): kontroly, které hlídají, že něco CHYBÍ (propustí-li, nikdo si nevšimne)
+ ('chyti', 'verify_question_injection.js', 'v2/runar-character.js', 'replace', """.replace(/"/g, "'")""", ''),
+ ('chyti', 'verify_question_injection.js', 'v2/runar-character.js', 'replace', r".replace(/[\r\n\t\u2028\u2029]+/g, ' ')", ''),
+ ('obchazka', 'verify_question_injection.js', 'v2/runar-character.js', 'replace', r"/[\r\n\t\u2028\u2029]+/g", r"/[\r\n\t]+/g"),
+ ('chyti', 'verify_journal_glyphs.js', 'v2/runar-journal.js', 'replace',
+  "runeSvg(r, { frame: true, cls: 'badge-stone' }) + ' ' + escapeHtml(jm)", "escapeHtml(k)"),
+ ('chyti', 'verify_tier_features.js', 'v2/runar-config.js', 'replace', 'if (v !== null && v !== undefined) out.push(', 'out.push('),
+ ('chyti', 'verify_new_duplicates.js', 'RUNAR_PRIVACY.md', 'append', '', '\n**Dvě kopie nejsou riziko rozporu; jsou rozpor s odloženou splatností.**\n'),
  # strom ㉳ (CODE-tree 2026-10-11): mutace z hlavičky verify_tree_mista převedené na opakované útoky. Kontrola si lab staví z builderu
  # do dočasné složky, takže útok míří na build_crown_composer.py. (a) dvě ramena v jedné výšce — přes výšky zón XLF, ne exitMinPx
  # (exitMinPx 30→5 kontrola propustila: rozestup na jejích 12 stromech drží výšky zón, min. 49 px i s 5 px); (s) seeking koření;

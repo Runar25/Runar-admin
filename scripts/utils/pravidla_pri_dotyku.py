@@ -333,10 +333,35 @@ def pasti(cmd):
 
 
 # ---------- rozhodnutí ----------
+def neviditelne(inp):
+    # Proč (2026-10-11, CODE-read, podruhé): `\u2028` napsané v parametru Edit/Write se už při předání (JSON) změní na SKUTEČNÝ znak.
+    # Do scripts/protipriklady.py se tak dostaly znaky místo textu (útok pak nic nenašel) a do regexu v JS znak U+2028, který JS bere
+    # jako konec řádku (SyntaxError). Dřív totéž v runar-translations.js (memory edit-tool-escapes-new-text). Neviditelný znak, který
+    # v cílovém souboru ještě není, se proto zastaví.
+    novy = inp.get('new_string') or inp.get('content') or ''
+    novy += ''.join((e or {}).get('new_string', '') for e in (inp.get('edits') or []))
+    stary = inp.get('old_string') or ''
+    p = inp.get('file_path') or ''
+    try: stary += cti(p) if p and os.path.isfile(p) else ''
+    except Exception: pass
+    out = []
+    for ch in sorted(set(novy)):
+        kat = unicodedata.category(ch)
+        if (kat in ('Zl', 'Zp', 'Cf') or (kat == 'Cc' and ch not in '\t\n\r')) and ch not in stary:
+            out.append('U+%04X' % ord(ch))
+    return out
+
+
 def rozhodni(vstup):
     tool = vstup.get('tool_name', '')
     inp = vstup.get('tool_input') or {}
     if tool in PISE:
+        nv = neviditelne(inp)
+        if nv:
+            return ('⛔ Zápis vkládá neviditelný znak (' + ', '.join(nv) + '), který v souboru ještě není. Skoro jistě vznikl z `\\uXXXX`\n'
+                    'v parametru nástroje — escape se změní na skutečný znak už při předání. Chceš-li v souboru TEXT `\\u2028`, poskládej ho\n'
+                    'skriptem (chr(92) + "u2028"); chceš-li opravdu ten znak, vlož ho skriptem výslovně (chr(0x2028)).\n\n'
+                    '(Hook pravidla_pri_dotyku.py — neviditelné znaky)')
         # Sdílený doc nástrojem Edit (nebo Write přes EXISTUJÍCÍ soubor) by šel zapsat, ale ne commitnout: commit_vlastni bere jen zápisy
         # ze zapis() a pre-commit jinou cestu nepustí (CODE-read 2026-10-11, kolo 3 — rozpor dvou mechanismů). Zastavit hned, ne až při commitu.
         r0 = rel(inp.get('file_path') or inp.get('notebook_path'))
@@ -541,6 +566,10 @@ def samotest():
     chk('33. Write nového souboru v memory/ projde k pravidlům (ne zákaz)', (lambda d: d is None or 'nástrojem Write nepiš' not in d)(V('Write', sid='e2', file_path=R + '/memory/novy-soubor-test-xyz.md')))
     chk('29. grep -q ^OK && commit projde', V('Bash', sid='p4', command='node x.js | grep -q "^OK" && git commit -m x') is None)
     chk('24. cesta jen v komentáři skriptu se jako zápis nebere', V('Bash', sid='s9', command='node "' + sc3.replace('\\', '/') + '"') is None)
+    LS = chr(0x2028)
+    chk('41. Edit vkládá U+2028, který v souboru není → zastaví', (lambda d: d and 'U+2028' in d)(V('Edit', sid='z1', file_path=R + '/docs/x.txt', old_string='a', new_string='a' + LS + 'b')))
+    chk('42. Edit, kde týž znak už je ve starém textu → projde', V('Edit', sid='z1', file_path=R + '/docs/x.txt', old_string='a' + LS, new_string='b' + LS) is None)
+    chk('43. běžný text s diakritikou a tabulátorem → projde', V('Edit', sid='z1', file_path=R + '/docs/x.txt', old_string='a', new_string='žluťoučký\tkůň\n') is None)
     for jm, v in ok: print(('OK    ' if v else 'FAIL  ') + jm)
     return 0 if all(v for _, v in ok) else 1
 
