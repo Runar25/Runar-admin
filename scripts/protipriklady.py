@@ -17,6 +17,8 @@
 #   python -X utf8 scripts/protipriklady.py --vse      všechny
 #   python -X utf8 scripts/protipriklady.py verify_x.js   jen případy té kontroly
 # Podstrčení se neprojevilo (cílový text se změnil) → FAIL s pokynem: uprav případ tady, ne kontrolu.
+# Text útoku skládej z kousků (`'…xyz' + '.md'`), když nese vzor, který některá kontrola hledá i v scripts/ — jinak smoke chytí tenhle
+# soubor (2026-10-11: odkaz na neexistující doc, pevná cesta k repu a výčet nástrojů IS v případech kola 3 / 4g zastavily push).
 import hashlib, io, json, os, re, shutil, subprocess, sys, tempfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__))).replace('\\', '/')
