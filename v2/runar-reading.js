@@ -556,6 +556,21 @@ function _speakBtnKey() {
   if (cfg && n >= cfg.rune_count) return 'speak_btn';
   return (n > 0 || readerRune) ? 'speak_btn_add' : 'speak_btn_draw';
 }
+// Tlačítko tahu po přidání runy do spreadu: text z _speakBtnKey(), vypnuté, dokud nejsou plné sloty (počet = SPREAD_CONFIG.rune_count).
+// 2026-10-11: dřív čtyři kopie v readRune() s počtem natvrdo (5/7/9/3) a pravidlo „nový spread musí přepnout text tlačítka“ jen
+// v paměti (§30, nález CODE-read). Nový spread teď potřebuje jen data: SPREAD_CONFIG + _SPREAD_COST_KEY + pole v _spreadRunesNow().
+// Počet run aktuálního spreadu (SPREAD_CONFIG.rune_count) — jediné místo, odkud ho readRune() bere (2026-10-11).
+function _spreadN() {
+  var cfg = SPREAD_CONFIG[_SPREAD_COST_KEY[_spreadMode]];
+  return cfg ? cfg.rune_count : 0;
+}
+function _syncSpeakBtn() {
+  var b = document.getElementById('btn-speak');
+  if (!b) return;
+  var cfg = SPREAD_CONFIG[_SPREAD_COST_KEY[_spreadMode]];
+  b.disabled = !!cfg && _spreadCount(_spreadRunesNow()) < cfg.rune_count;
+  b.textContent = t(_speakBtnKey());
+}
 function _spreadAdd(arr, n, rune) {
   for (var i = 0; i < n; i++) { if (!arr[i]) { arr[i] = rune; return true; } }
   return false;
@@ -637,7 +652,7 @@ async function readRune() {
       showToast(t('signin_spread_kriz'));   // 2026-10-10: texty toastů z UI_TEXT (ráčna ㉸)
       _setSpreadMode('single'); return;
     }
-    if (_spreadCount(_spread5Runes) === 5 && !readerRune) {
+    if (_spreadCount(_spread5Runes) === _spreadN() && !readerRune) {
       document.getElementById('reader-rune-card').style.display = 'none';
       document.getElementById('reader-output').style.display = 'block';
       readerTexts = {}; voiceGenerated = {};
@@ -645,14 +660,10 @@ async function readRune() {
       return;
     }
     if (!readerRune) return;
-    _spreadAdd(_spread5Runes, 5, readerRune);
+    _spreadAdd(_spread5Runes, _spreadN(), readerRune);
     readerRune = null;
     _updateSpread5Slots();
-    var speakBtn5 = document.getElementById('btn-speak');
-    if (speakBtn5) {
-      speakBtn5.disabled = (_spreadCount(_spread5Runes) < 5);
-      if (_spreadCount(_spread5Runes) >= 5) speakBtn5.textContent = t('speak_btn');
-    }
+    _syncSpeakBtn();
     return;
   }
   if (_spreadMode === 'horseshoe') {
@@ -661,7 +672,7 @@ async function readRune() {
       showToast(t('signin_spread_horseshoe'));
       _setSpreadMode('single'); return;
     }
-    if (_spreadCount(_spread7Runes) === 7 && !readerRune) {
+    if (_spreadCount(_spread7Runes) === _spreadN() && !readerRune) {
       document.getElementById('reader-rune-card').style.display = 'none';
       document.getElementById('reader-output').style.display = 'block';
       readerTexts = {}; voiceGenerated = {};
@@ -669,14 +680,10 @@ async function readRune() {
       return;
     }
     if (!readerRune) return;
-    _spreadAdd(_spread7Runes, 7, readerRune);
+    _spreadAdd(_spread7Runes, _spreadN(), readerRune);
     readerRune = null;
     _updateSpread7Slots();
-    var speakBtn7 = document.getElementById('btn-speak');
-    if (speakBtn7) {
-      speakBtn7.disabled = (_spreadCount(_spread7Runes) < 7);
-      if (_spreadCount(_spread7Runes) >= 7) speakBtn7.textContent = t('speak_btn');
-    }
+    _syncSpeakBtn();
     return;
   }
   if (_spreadMode === 'yggdrasil') {
@@ -692,7 +699,7 @@ async function readRune() {
     if (!(_ygM === 12 && _ygD >= 14 && _ygD <= 28) && !isAdmin(currentUser.email)) {
       showToast(t('yggdrasil_power_toast'));
     }
-    if (_spreadCount(_spread9Runes) === 9 && !readerRune) {
+    if (_spreadCount(_spread9Runes) === _spreadN() && !readerRune) {
       document.getElementById('reader-rune-card').style.display = 'none';
       document.getElementById('reader-output').style.display = 'block';
       readerTexts = {}; voiceGenerated = {};
@@ -700,14 +707,10 @@ async function readRune() {
       return;
     }
     if (!readerRune) return;
-    _spreadAdd(_spread9Runes, 9, readerRune);
+    _spreadAdd(_spread9Runes, _spreadN(), readerRune);
     readerRune = null;
     _updateSpread9Slots();
-    var speakBtn9 = document.getElementById('btn-speak');
-    if (speakBtn9) {
-      speakBtn9.disabled = (_spreadCount(_spread9Runes) < 9);
-      if (_spreadCount(_spread9Runes) >= 9) speakBtn9.textContent = t('speak_btn');
-    }
+    _syncSpeakBtn();
     return;
   }
   if (_spreadMode === 'norns') {
@@ -716,7 +719,7 @@ async function readRune() {
       showToast(t('signin_spread_norns'));
       _setSpreadMode('single'); return;
     }
-    if (_spreadCount(_spread3Runes) === 3 && !readerRune) {
+    if (_spreadCount(_spread3Runes) === _spreadN() && !readerRune) {
       document.getElementById('reader-rune-card').style.display = 'none';
       document.getElementById('reader-output').style.display = 'block';
       readerTexts = {}; voiceGenerated = {};
@@ -724,14 +727,10 @@ async function readRune() {
       return;
     }
     if (!readerRune) return;
-    _spreadAdd(_spread3Runes, 3, readerRune);
+    _spreadAdd(_spread3Runes, _spreadN(), readerRune);
     readerRune = null;
     _updateSpread3Slots();
-    var speakBtnN = document.getElementById('btn-speak');
-    if (speakBtnN) {
-      speakBtnN.disabled = (_spreadCount(_spread3Runes) < 3);
-      if (_spreadCount(_spread3Runes) >= 3) speakBtnN.textContent = t('speak_btn');
-    }
+    _syncSpeakBtn();
     return;
   }
   // Single rune mode (original)
