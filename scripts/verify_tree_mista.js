@@ -69,9 +69,13 @@ const MAX_BR = 25, MIN_LR = 0.75, CAPB = { '-1': 3, '0': 3, '1': 2 }, CAP_TOP = 
 const MIN_EXIT = 29, MIN_EXIT_LR = 14, MIN_SIB = 4, MAX_STRANDS = 7, FLOOR = 0.215;   // FLOOR: vychozi exitFloor 0,22 minus zaokrouhleni; MIN_EXIT: KUKY 2026-10-03 "30px min." (drive 10 — mene nez sirka kmene); MIN_EXIT_LR: levo-pravo = polovina (obrazek 4)
 const sideOf = m => (m.idx === 0) ? 0 : (Math.cos(m.ang) >= 0 ? 1 : -1);   // strana = kam rameno skutecne miri (nakresleny uhel), vudci 0
 let html = process.env.TREE_LAB_HTML || null;
-if (!html) {   // lab neni v gitu (generuje ho builder) -> postavit cerstvy
-  const r = cp.spawnSync('python', ['-X', 'utf8', path.join(ROOT, 'build_crown_composer.py')], { encoding: 'utf8' });
+if (!html) {   // lab neni v gitu (generuje ho builder) -> postavit cerstvy do DOCASNE slozky (CODE-read 2026-10-11: kontrola dřív přepisovala
+               // v2/tree-lab-crown-composer/ ve sdileném stromě — lab, ktery owner prave prohlizi; dve soubezne smoke psaly tentyz soubor)
+  const tmp = fs.mkdtempSync(path.join(require('os').tmpdir(), 'tree-mista-'));
+  process.on('exit', () => { try { fs.rmSync(tmp, { recursive: true, force: true }); } catch (e) {} });
+  const r = cp.spawnSync('python', ['-X', 'utf8', path.join(ROOT, 'build_crown_composer.py')], { encoding: 'utf8', env: Object.assign({}, process.env, { RUNAR_LAB_DST: tmp }) });
   if (r.status !== 0) { console.log('❌ build_crown_composer.py spadl: ' + (r.stderr || r.stdout).slice(-300)); process.exit(1); }
+  html = path.join(tmp, 'crown-composer.html');
 }
 const { labRun } = require('./utils/tree_diag.js');
 const B = labRun.branch;

@@ -759,6 +759,8 @@ atomický upsert, úklid starších než hodina; stejně tak `use_credit` (atomi
 - [ ] **§18 debt:** lab i prod drží kompozici stromu 2× (`build_tree_production.py`) → vytáhnout `runar-tree-core.js`. Prod navíc načítá enginy z `tree-lab-*` cest. *(soubor zatím neexistuje — je to cíl toho refaktoru)*  <!-- doc-links:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
 - [x] ~~Strom se **neaktualizuje po čtení** (`renderLivingTree` jen při otevření tabu).~~ **Není vada — KUKY 2026-09-26:** strom se nemusí překreslit hned, změnu může člověk vidět klidně až druhý den. (Owner říká, že to už někde stojí; v `RUNAR_DECISIONS/TREE/DESIGN` jsem to nenašel, proto to píšu sem.)
 - [ ] `tree_state`/`tree_readings` — `sql/tree_state.sql` je STARÉ schéma (Vrstva A) pro tree-update; produkční strom čte z `readings` → rozhodnout: rozšířit / nahradit / zahodit.
+  ⚠️ Než z `tree_state` začne cokoli číst server: politika UPDATE pro vlastníka nemá omezené sloupce — zúžit jako `user_profiles` (granty
+  sloupců, smoke ⑩); nález CODE-read 2026-10-11 (položka „Pro CODE-tree“ (a)).
 - [ ] `detectPatterns()` — motor Gatheringu, neimplementováno (čeká na patterns doc + tree_state).
 - [ ] **Nahradit `runar-gathering.js`** <!-- doc-links:ok 2026-09-28 soubor záměrně smazán, odkaz je historie --> — ✅ *mrtvý kód smazán 2026-09-28* (modul, `<script>`, sw.js, výběr karet v deníku, CSS, klíče
   překladů; DECISIONS 2026-09-28 (1)); stará logika je v gitu (`git log -- v2/runar-gathering.js`). Zbývá **nová podoba** (čeká na `detectPatterns()` výš).
@@ -2470,8 +2472,10 @@ kola 1 (`cc0ca7f`) plní statický text, config, `t()/tp()` nebo `esc()`/`escape
 - ⚪ **Pro CODE-tune (drobnost):** §12 „NIKDY `email.split('@')[0]`“ — `runar-shrine.html` ~561 tak plní hlavičku admina (který admin je přihlášený).
   Účel plní, pravidlo porušuje; celý e-mail, nebo `displayName()`.
 - ⚪ **Pro CODE-tree (předáno 2026-10-11):** (a) `tree_state` má politiku UPDATE pro vlastníka bez omezení sloupců — dnes neškodí (vrstvy A/B/C
-  vypnuté), až z něj začne číst server, zúžit jako `user_profiles` (granty sloupců, smoke ⑩); (b) smoke ㉳ (`verify_tree_mista.js`) při běhu
-  přegeneruje `v2/tree-lab-crown-composer/crown-composer.html` — kontrola zapisuje do stromu; (c) `tree-update` před novým nasazením: rate limit,
+  vypnuté), až z něj začne číst server, zúžit jako `user_profiles` (granty sloupců, smoke ⑩); ~~(b) smoke ㉳ (`verify_tree_mista.js`) při běhu
+  přegeneruje `v2/tree-lab-crown-composer/crown-composer.html` — kontrola zapisuje do stromu;~~ ✅ *(CODE-tree 2026-10-11: builder bere cíl
+  z `RUNAR_LAB_DST`, ㉳ staví lab do dočasné složky a po sobě ji smaže)*; (a) a (c) jsou podmínky budoucí práce — (a) visí i u položky
+  `tree_state`/`tree_readings`, (c) stojí v hlavičce `supabase/functions/tree-update/index.ts`; (c) `tree-update` před novým nasazením: rate limit,
   strop textu, `credits_used` na serveru (části 2, 15).
 
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků

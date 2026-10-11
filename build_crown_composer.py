@@ -19,7 +19,7 @@
 import io, os, time
 
 V2 = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'v2')
-DST = os.path.join(V2, 'tree-lab-crown-composer')
+DST = os.environ.get('RUNAR_LAB_DST') or os.path.join(V2, 'tree-lab-crown-composer')   # RUNAR_LAB_DST: kontrola (smoke ㉳) staví do dočasné složky, ne do labu ve sdíleném stromě (CODE-read 2026-10-11)
 os.makedirs(DST, exist_ok=True)
 
 HTML = r"""<!DOCTYPE html>
