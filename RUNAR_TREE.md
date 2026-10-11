@@ -298,7 +298,7 @@ Ostatní (později, decentně): pulzy dominance (element/ætt), bloom fáze, lis
 | **RUNAR_TREE.md** (tenhle) | duše + zóny + model + signály + stavba + Gathering | **★ KANONICKÝ — čti první** |
 | **RUNAR_TREE_RENDER.md** | materiál / vzhled (jak strom vypadá, art direction) | ŽIVÝ (foundation) |
 | RUNAR_DESIGN.md (tree části) | příběh, mytologie, „co část znamená" | ŽIVÝ pro příběh |
-| RUNAR_BACKLOG.md | pozastavené tree úkoly (váha polí · živé kořeny · prahy Gatheringu · katalog motivů) | ŽIVÝ (fronta) |
+| RUNAR_BACKLOG.md | pozastavené tree úkoly (váha polí · kořeny: Norny → 3 kořeny a port živých kořenů do aplikace · prahy Gatheringu · katalog motivů) | ŽIVÝ (fronta) |
 | `docs/archive/tree/` | vstřebané / odložené / historické tree doky | ARCHIV (reference) |
 
 **Konsolidováno do `docs/archive/tree/` 2026-07-30:** `RUNAR_TREE_BUILD.md` · `runar-tree-placement.md` · `RUNAR_TREE_TODO.md` · `RUNAR_TREE_SPECIALS.md` · `runar-tree-forces.md` · `tree-of-life.md` · `runar-patterns.md`. Živý obsah přenesen **sem** (model, signály, Gathering) nebo do **RUNAR_BACKLOG** (úkoly, prahy, katalog motivů). Dřív archivováno (2026-07-04): `RUNAR_TREE_BOUGHS` · `RUNAR_TREE_GROWTH_MAP` · `RUNAR_TREE_HANDOFF` · `RUNAR_TREE_LAB`. Nic se neztratilo — jen uklizeno.

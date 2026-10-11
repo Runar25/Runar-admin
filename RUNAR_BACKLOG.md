@@ -1461,7 +1461,9 @@ Od 1. 10. 23 čtení přes gpt-6-sol: `cache_write_tokens` 30 855 ze 30 924 vstu
 *„2026-09-24: primární claude-opus-5, fallback claude-opus-4-8“*. Kód je správně, první odstavec lže. Opravit při příštím deployi proxy
 (změna jen komentáře; v repu ji neprovádím samostatně, ať se repo a nasazená proxy nerozcházejí bez deploye).
 
-### Smoke `verify_decisions_followthrough.js` trvá ~30 minut — brzdí každý push (2026-10-03, CODE-tree)
+### ✅ VYŘEŠENO — Smoke `verify_decisions_followthrough.js` trvá ~30 minut — brzdí každý push (2026-10-03, CODE-tree)
+✅ **Vyřešila CODE-read 2026-10-10** přesně tímhle návrhem (jeden blame, jeden průchod historií): 575 s → 5 s, výstup shodný — odstavec
+„Smoke zrychlen“ níž. Zavřeno CODE-tree 2026-10-11. Původně:
 Lokální smoke 2026-10-03 běžel 17:33–18:05, skoro celou dobu v téhle kontrole: pro každý řádek `Affected doc(s)` volá zvlášť
 `git blame --line-porcelain -L n,n -- RUNAR_DECISIONS.md` a každé volání prochází historii souboru, který se mění skoro
 v každém commitu (8 000+ řádků). Čím víc rozhodnutí a commitů, tím pomaleji (pre-push hook to pouští při každém pushi).
@@ -2076,7 +2078,9 @@ z léta, „SW v109“, formát bez ✦) a jednorázová předávka `DOCSYNC_HAN
 ✅ **Hotovo CODE-tune 2026-10-10 (c81b4da, nasazeno):** zbytky „magic link“ po přechodu na kód — shrine teď jen Google (oba admini ho mají), nápověda EN+IS kódem, výchozí text okna z UI_TEXT, `weekly_drip` pryč. Původně: **shrine přihlášení e-mailem nefungovalo** (posílá kód, pole na kód nemá;
 Google funguje), nápověda slibuje odkaz (EN 2×, IS 1×), výchozí text okna v `runar-reader.html`; mrtvé pole `weekly_drip` v `TIER_LIMITS`.
 **Bez nálezu:** odkazy v `memory/` (zástupná jména, gitignorované sloty, historie stromu); `docs/findings/` jsou datované záznamy běhů.
-Nepřezkoumáno: `docs/TREE_BRIEF_CODE_2026-07-04.md` a `RUNAR_TREE_RENDER.md` (strom = CODE-tree).
+~~Nepřezkoumáno: `docs/TREE_BRIEF_CODE_2026-07-04.md` a `RUNAR_TREE_RENDER.md` (strom = CODE-tree).~~ ✅ **Přezkoumala CODE-tree 2026-10-11:**
+brief dostal hlavičku historické předávky (odkazy na přesunuté dokumenty a zaniklý lab), `RUNAR_TREE_RENDER.md` tvrdil „nic z toho není
+v kódu“ — kůra má v labu dva odložené pokusy, opraveno.
 **Mechanismus (§30), aby to nehlídala pozornost:** nová smoke ㉺ `scripts/verify_code_doc_refs.js` — komentář v kódu nesmí odkazovat
 na `*.md`, který v repu není (⑯ hlídá jen dokumenty). Záměrné zmínky nesou `doc-links:ok <datum> <důvod>`. Cestou opraveno `CLAUDE.md` §16:
 „RUNAR_DOC_SYNC.md je v docs/archive/“ — není, archiv má jen `RUNAR_DOC_SYNC_CODE.md`.

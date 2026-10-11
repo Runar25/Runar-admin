@@ -2,6 +2,11 @@
 # Od: Cowork (po designové session s KUKYm). Pro: Code.
 # STATUS: krok 1 = jasné zadání · boughs = korekce směru · specials = ke zvážení (NAPŘED probrat s KUKYm)
 
+> ⚠️ **Historická předávka z 2026-07-04 — dnes neplatí jako zadání** (CODE-tree 2026-10-11 po kontrole zastaralých míst, CODE-read
+> `RUNAR_BACKLOG.md` část 17). Krok 1 je postavený dávno, boughs jsou mimo hru (`RUNAR_TREE.md` §1) a strom od 2026-10-10 stojí na
+> ramenech strana × zóna (`RUNAR_TREE.md` §3). Odkazované dokumenty SPECIALS, BOUGHS, TODO a patterns leží v `docs/archive/tree/`;
+> lab „tree-lab-ritual“ už není, dnes je to `v2/tree-lab-crown-composer/`. Stav vlastní `RUNAR_TREE.md` a `git log`.
+
 ## TL;DR
 1. **Postav krok 1** — element z reálných čtení do crown-composeru. Engine-safe, přesný recept níž.
 2. **NEstav boughs přestavbu** — zregresovala (viz korekce). Zóna = jen jemný posun výšky, ne destruktivní blend.

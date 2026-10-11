@@ -41,7 +41,9 @@ Stejná deterministická STRUKTURA (limby / cesty) → dva render-cíle:
 **Foto kůry / diffusion = reference, NIKDY render stromu.**
 
 ## 5. Stav + další krok
-STATUS: **foundation / úvaha.** Nic z toho není spec ani v kódu.
+STATUS: **foundation / úvaha**, ne spec. ⚠️ Do 2026-10-11 tu stálo „nic z toho není v kódu“ — neplatí: kůra má v labu dva pokusy
+(režim „kůže“ a „WebGL kůra“, srpen 2026, `memory/snapshots/2026-08-18-tree-kura-a-silueta.md`), oba odložené v panelu ODLOŽENO
+(`build_crown_composer.py`: „není to ono“). Listy ani druhá kůže pro laser v kódu nejsou.
 Další praktický krok: zadat Gemini **2–3 art-direction studie jasanu** (různé směry — akvarel / rytina / realismus), vybrat vzhled, teprve pak konstanty.
 
 ---
