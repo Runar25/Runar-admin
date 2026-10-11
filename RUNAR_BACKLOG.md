@@ -2569,6 +2569,22 @@ jsou dál jen ta záměrná z kola 1 (`buildSysPromptV2`, `_lensContext`, `_rand
   *(CODE-tune 2026-10-11: přesunut jako `v2/assets/runar-app-icon.svg`; vektor to není, co to je → `v2/assets/README.md`. Veřejně
   se nasazuje dál jako všechny podklady (část 19), nic ho ale nenačítá.)*
 
+#### Kolo 2 / 15 — mechanismy §30 a čísla kontrol, po dnešních změnách hooků (2026-10-11)
+**Platí:** každý mechanismus, který §30 jmenuje, je zapojený — PreToolUse: API guard, pravidla při dotyku · Stop (`tree-guard.sh stop`):
+záloha čtení, kontrola zprávy ownerovi i nezapsaných hlášení (§29, zastaví jen session, která hlášení načetla) · SessionStart: kontext
+· PreCompact: záloha přepisu · noční úloha: záloha DB + konverzací. Všech 18 odkazů na čísla smoke v CLAUDE.md a paměti míří na existující
+kontrolu (71 čísel ve `smoke.py`); měřeno šíře než jen „smoke ⑩“, podstrčené ㊿ chyceno.
+
+#### Kolo 2 / 16 — edge funkce: proměnné a kopie hodnot z configu, znovu (2026-10-11)
+**Platí:** všech 7 proměnných, které funkce čtou, je na serveru nastavených. Kopie `VOICE_MONTHLY_LIMIT(_TESTER)`, `VOICE_SAFE_SHARE`,
+`NAME_LORE_LIMIT`, `ADMIN_EMAILS` hlídají kontroly. `spread_cost` od klienta (Proxy Fáze 2 #4) dál otevřené — známé, nic nového.
+- ⚪ **Pro CODE-tune (nízká priorita, §20) — hlas a model ElevenLabs na víc místech bez kontroly:** ID hlasu `2UI8…` stojí v `v2/runar-config.js`
+  (`EL_VOICE_ID_EN/IS`), `elevenlabs-proxy` (`EL_VOICE_ID`) a `elevenlabs-static` (`EL_VOICE_ID_EN`), ve static navíc mrtvé `EL_VOICE_ID_IS`
+  s JINOU hodnotou `4E6W…`; modely `EL_MODEL_EN/IS` v configu, proxy i static. Rozhodují jen edge funkce — kopie v configu (`elVoiceId()`,
+  `elModel()`) čte jen shrine a posílá je proxy, která je ignoruje (kolo 1 část 4: „neškodí“). Škodí až změna hlasu: kdo ji udělá v configu,
+  nezmění nic; kdo v proxy, zapomene static. Návrh: jedno místo na serveru (`supabase/functions/_shared/`, jako `voice_usage.ts`), kopie
+  v configu a pole ve shrine pryč, mrtvé `EL_VOICE_ID_IS` pryč — nebo aspoň kontrola shody (jako `verify_monthly_limits.js`).
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
