@@ -890,7 +890,7 @@ const UI_TEXT = {
     // ── Dynamic banner strings — notaðar með tp(), breytur: {casts}, {casts_month}, {units}, {card}, {n}, {rune}, {bal}, {UNITS}
     rs_banner_desc:     'Þú gengur sem <strong>Leitandi</strong> \u2014 {casts_month} til að byrja, allar tuttugu og fimm rúnirnar opnar, Rúnar hlustandi.<br><br>Þegar hún er gengin og steinarnir eiga enn eftir að segja, opnar {card} dyrnar. Eitt kort. Jafn margar spár og þú berð. Enginn gildistími, engin áskrift.',
     rs_credits_counter: '{units} eftir',
-    voice_left:        'Rúnar getur enn lesið {casts} upphátt í þessum mánuði.',   // 2026-10-11: is-greynir + is-gpt-check OK, „lesið upphátt“ 90× v korpusu
+    voice_left:        'Rúnar getur enn lesið {casts} upphátt í þessum mánuði.',   // 2026-10-11: ověřeno nástroji z CLAUDE.md §2 (gramatika OK, „lesið upphátt“ 90× v korpusu)
     rs_credits_desc:    'Þú hefur notað ókeypis spána þína. Næsta spá verður greidd af inneign þinni.',   // 2026-10-10: „frjáls“ = kalk z EN „free“; spá se platí z inneign, nebere se z ní (is-gpt-check)
     // 2026-10-10: „frjáls“ = svobodný, zdarma = „ókeypis“ (kalk z EN „free“); „dregið/gengið … spána“ → „notað“ („hefur notað allar“ 16×).
     rs_exhausted_one:   'Þú hefur notað ókeypis spána þína. Opnaðu dyrnar með <b>{card}</b> \u2014 eitt kort, enginn gildistími, engin áskrift.',
