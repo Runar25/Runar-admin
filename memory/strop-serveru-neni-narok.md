@@ -17,4 +17,7 @@ další jen s kreditem. KUKY: *„takhle chyba už tu byla několikrát, takže 
   teprve pak strop. Nejmenší z toho je nárok.
 - `uz_vime.js` na pojem (hlas, Ask, čtení) PŘED tvrzením o nároku — pravidla ownera tam bývají.
 - Předávka jiné session s tvrzením o nároku = napřed tohle ověřit; co předám, oni převezmou doslova.
+- **Totéž u slibů v zásadách:** interní `RUNAR_PRIVACY.md` (plán, právní základy) ≠ veřejná stránka `v2/runar-privacy.html`. Tvrzení
+  „zásady uvádějí X“ ověř na VEŘEJNÉ stránce (EN i IS). 2026-10-10 jsem napsal „zásady uvádějí analýzu kvality“ — stálo to jen
+  v interním plánu; CODE-tune to chytil a doplnil na stránku (DECISIONS 2026-10-10 (45)).
 - Souvisí: [[napred-dohledej-co-uz-je]], [[verify-agent-claims-about-code]], [[admin-ucty-nejsou-nalez]].
