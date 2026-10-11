@@ -89,7 +89,7 @@ Intake (NENÍ pravda): `docs/inbox/` · Mrtvá (scratch): mimo index.
 - [pathspec-nesmi-byt-prazdny.md](pathspec-nesmi-byt-prazdny.md) — pathspec v proměnné z padlého && řetězce = prázdný → commit vezme CELÝ index (i cizí staged)
 - [napred-dohledej-co-uz-je.md](napred-dohledej-co-uz-je.md) — před měřením/novou položkou/nástrojem prohledej PRICING/DECISIONS/BACKLOG a git log ostatních lane; paralelní session to často už udělaly
 - [parallel-code-sessions-collision.md](parallel-code-sessions-collision.md) — víc Code session ve sdíleném stromě; pathspec commit, sdílený soubor přes commit_vlastni.py, status před sáhnutím
-- [test-vstup-jako-v-produkci.md](test-vstup-jako-v-produkci.md) — test formulace přes API: napřed vytiskni jeden hotový prompt a porovnej s produkcí ([object Object] a ✦ z DB daly 2× týž den falešný vstup)
+- [test-vstup-jako-v-produkci.md](test-vstup-jako-v-produkci.md) — test formulace přes API: napřed vytiskni jeden hotový prompt a porovnej s produkcí ([object Object] a ✦ z DB daly 2× týž den falešný vstup; v prohlížeči podvrhuj stav tam, kam ho píše produkce, ne do kreslicí funkce)
 - [prompt-directive-makes-model-copy.md](prompt-directive-makes-model-copy.md) — "pouzij tenhle text" v promptu = model ho opise doslova; ramuj jako zdroj (12 % -> 56 %, p=0,002)
 - [falsify-by-reversing-the-lever.md](falsify-by-reversing-the-lever.md) — hypotezu "pridej X" testuj tak, ze X jeste UBERES; obracena predpoved musi platit (CLAUDE.md §25)
 - [loading-a-page-proves-existence-not-authenticity.md](loading-a-page-proves-existence-not-authenticity.md) — nacteni URL overi ze existuje, ne ze je prava; zjisti kdo ji vlastni a jestli jsou ucty skutecne

@@ -19,6 +19,10 @@ myšlenky ✦, který produkce Asku **neposílá** (`askRunar` → `readerTexts.
 „drawn“ měly jiný poslední řádek čtení než produkce; na jednom z nich stál bod zásad (most čtení → pojistka). Data z DB nejsou
 vstup produkce — **sleduj, co produkční funkce s daty udělá, než je pošle modelu.**
 
+**Potřetí, v prohlížeči (2026-10-11, opravil CODE-tune):** stav appky jsem podstrčil přímo kreslicí funkci, produkce ho ale čte
+z cache, kterou plní načítání — test tak ukázal vadu, která v produkci nebyla (co bylo skutečně, `RUNAR_DECISIONS.md` 2026-10-11 (71)).
+**Podvrhuj stav tam, kam ho píše produkce (cache, proměnná, kterou čte), ne až do funkce, která kreslí.**
+
 **How to apply:**
 1. Testovací skript má **pojistku v kódu**: `if (/\[object Object\]|undefined/.test(prompt)) throw` — vzor
    `docs/eval/2026-10-06-ask-otazky/ask_slova.js`.
