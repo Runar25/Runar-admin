@@ -33,6 +33,8 @@ const srv = http.createServer((req, res) => {
   const ws = new WebSocket(pg.webSocketDebuggerUrl); await new Promise((ok, err) => { ws.onopen = ok; ws.onerror = err; });
   let id = 0; const wait = {}; const exc = [];
   ws.onmessage = m => { const d = JSON.parse(m.data); if (d.id && wait[d.id]) { wait[d.id](d); delete wait[d.id]; } else if (d.method === 'Runtime.exceptionThrown') exc.push(d.params.exceptionDetails); };
+  // pojistky (2026-10-11): limit, spadlý Chrome, dialog — bez nich ㊺ visel v pre-pushi 48 minut (scripts/utils/prohlizec_pojistky.js)
+  const poj = require('./utils/prohlizec_pojistky').zabezpec({ ws, proc, jmeno: 'hlas v appce (㊹)', limitS: 180 });
   const cmd = (method, params) => new Promise(ok => { const i = ++id; wait[i] = ok; ws.send(JSON.stringify({ id: i, method, params: params || {} })); });
   const ev = async e => { const r = await cmd('Runtime.evaluate', { expression: e, awaitPromise: true, returnByValue: true }); if (r.result && r.result.exceptionDetails) return 'EXC: ' + (r.result.exceptionDetails.exception && r.result.exceptionDetails.exception.description || r.result.exceptionDetails.text); return r.result && r.result.result ? r.result.result.value : null; };
   await cmd('Page.enable'); await cmd('Runtime.enable');
@@ -137,6 +139,8 @@ const srv = http.createServer((req, res) => {
   ok('(F) menu: netester nevidí počet hlasů, tester ano', f && f.ne && !/<br>/i.test(f.ne) && /<br>/i.test(f.ano), JSON.stringify(f));
   ok('bez výjimek v appce', !exc.length, exc.map(x => (x.exception && x.exception.description || x.text || '').split('\n')[0]).join(' | ').slice(0, 300));
 
+  const dialogy = poj.hotovo();
+  ok('stránka neotevřela dialog (sám potvrzen, jinak by kontrolu zablokoval)', !dialogy.length, dialogy.join(' · '));
   for (const r of res) console.log(r);
   const zle = res.filter(r => r.startsWith('FAIL')).length;
   console.log(zle ? '\n' + zle + ' selhalo' : '\nOK  hlas v appce: uložené čtení id, neuložené podpis, jazyk na obrazovce, deník, menu');

@@ -2905,6 +2905,11 @@ naráz pushuje, zamítnutí „cannot lock ref“ dnes 3×, zatím vždy bez ztr
   ✅ **(1) hotovo 2026-10-11 (CODE-tree, c05fcb3):** ㊷ má hlídač 150 s → FAIL „visí“ s krokem, Chrome bez okna se zabije i při chybě,
   dialogy (alert / confirm) se samy potvrdí a ohlásí jako FAIL (zablokovaly by stránku navždy); ověřeno útokem — podstrčený alert
   (útok v `PRIPADY`) i nekonečné čekání. Zaseknutí z pre-pushe CODE-tune se u CODE-tree nezopakovalo. Zbývá (2) pro CODE-read.
+  ✅ **(2) hotovo 2026-10-11 (CODE-read, 39e91ca)** — limit 240 s na běh kontroly v protipříkladech.
+  ✅ **(3) CODE-tune 2026-10-11:** visela i kontrola mimo útoky — ㊺ `verify_wts.js` přímo ve smoke pre-pushe 48 minut (Chrome bez okna spadl
+  při souběhu, kontrola čekala na odpověď navždy; s pojistkou to teď skončí po 13 s jako FAIL „spojení se zavřelo“). Šest kontrol CODE-tune
+  v prohlížeči (㉼ ㊹ ㊺ ㊻ ㊼ ㊽) má jednu sdílenou pojistku `scripts/utils/prohlizec_pojistky.js`: limit, spadlý Chrome, dialog (samotest
+  `--test`, útok s dialogem v `PRIPADY`). Pád Chrome při souběhu dál shodí pre-push (push stačí pustit znovu), už ho ale nezablokuje.
 
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí

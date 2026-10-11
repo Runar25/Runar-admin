@@ -97,13 +97,14 @@ const srv = http.createServer((req, res) => {
   if (!EXE) { rekni(false, 'prohlížeč (Chrome/Edge) nenalezen'); srv.close(); return konec(); }
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'citel-'));
   const proc = cp.spawn(EXE, ['--headless=new', '--disable-gpu', '--no-first-run', '--remote-debugging-port=0', '--user-data-dir=' + dir, 'about:blank'], { stdio: 'ignore' });
-  const hlidac = setTimeout(() => { rekni(false, 'kontrola visí déle než 120 s'); try { proc.kill(); } catch (e) {} konec(); }, 120000);
+  let poj = null;   // pojistky prohlížeče (scripts/utils/prohlizec_pojistky.js) — do 2026-10-11 tu byl vlastní hlídač 120 s bez dialogů
   try {
     let dp = null; for (let i = 0; i < 100 && !dp; i++) { await sleep(100); try { dp = fs.readFileSync(path.join(dir, 'DevToolsActivePort'), 'utf8').split(/\r?\n/)[0]; } catch (e) {} }
     const pg = (await (await fetch('http://127.0.0.1:' + dp + '/json/list')).json()).find((x) => x.type === 'page');
     const ws = new WebSocket(pg.webSocketDebuggerUrl); await new Promise((ok, err) => { ws.onopen = ok; ws.onerror = err; });
     let id = 0; const wait = {};
     ws.onmessage = (m) => { const d = JSON.parse(m.data); if (d.id && wait[d.id]) { wait[d.id](d); delete wait[d.id]; } };
+    poj = require('./utils/prohlizec_pojistky').zabezpec({ ws, proc, jmeno: 'čitelnost (㊽)', limitS: 180 });
     const cmd = (method, params) => new Promise((ok) => { const i = ++id; wait[i] = ok; ws.send(JSON.stringify({ id: i, method, params: params || {} })); });
     const ev = async (e) => { const r = await cmd('Runtime.evaluate', { expression: e, awaitPromise: true, returnByValue: true });
       return r.result && r.result.result && !r.result.exceptionDetails ? r.result.result.value : null; };
@@ -226,7 +227,8 @@ const srv = http.createServer((req, res) => {
     rekni(!zasekle.length && porovnano > 50, '(B) islandská verze bez zaseklé angličtiny — reader, nápověda, zásady (' + porovnano + ' anglických textů)',
       zasekle.length + ' textů je v IS stejných jako v EN (§2, §10)');
   } catch (e) { rekni(false, 'prohlížeč spadl', String(e && e.message || e).slice(0, 200)); }
-  clearTimeout(hlidac);
+  const dialogy = poj ? poj.hotovo() : [];
+  if (dialogy.length) rekni(false, 'stránka otevřela dialog (sám potvrzen, jinak by kontrolu zablokoval)', dialogy.join(' · '));
   try { proc.kill(); } catch (e) {}
   srv.close();
   setTimeout(() => { try { fs.rmSync(dir, { recursive: true, force: true }); } catch (e) {} konec(); }, 300);

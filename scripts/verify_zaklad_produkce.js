@@ -61,7 +61,9 @@ async function prohlizec() {
     const i = ++id; cekaji.set(i, (m) => (m.error ? reject(new Error(method + ': ' + m.error.message)) : resolve(m.result)));
     ws.send(JSON.stringify({ id: i, method, params: params || {}, sessionId }));
   });
-  const zavri = () => { try { ws.close(); } catch (e) {} try { proc.kill(); } catch (e) {} try { fs.rmSync(dir, { recursive: true, force: true }); } catch (e) {} };
+  // pojistky (2026-10-11): limit, spadlý Chrome, dialog — scripts/utils/prohlizec_pojistky.js (㊺ visel v pre-pushi 48 minut). zavri() vrátí dialogy.
+  const poj = require('./utils/prohlizec_pojistky').zabezpec({ ws, proc, jmeno: 'základ produkce (㉼)', limitS: 200 });
+  const zavri = () => { const dialogy = poj.hotovo(); try { ws.close(); } catch (e) {} try { proc.kill(); } catch (e) {} try { fs.rmSync(dir, { recursive: true, force: true }); } catch (e) {} return dialogy; };
   return { posli, zavri, vyjimky };
 }
 const popisVyjimky = (d) => {
@@ -151,7 +153,7 @@ async function main() {
     if (!sam.length) chyby.push('SAMOTEST: kontrola nepoznala chybu JS za běhu (volání neexistující funkce v setTimeout)');
     b.vyjimky.filter((d) => !sam.includes(d)).forEach((d) => chyby.push('chyba JS za běhu: ' + popisVyjimky(d)));
   } finally {
-    b.zavri(); srv.close();
+    b.zavri().forEach((d) => chyby.push('stránka otevřela dialog (sám potvrzen, jinak by kontrolu zablokoval): ' + d)); srv.close();
   }
   if (chyby.length) {
     chyby.forEach((c) => console.log('  ' + c));

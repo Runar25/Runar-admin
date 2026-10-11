@@ -138,12 +138,14 @@ const srv = http.createServer((req, res) => {
   if (!EXE) { rekni(false, '(C) prohlížeč (Chrome/Edge) nenalezen'); srv.close(); return konecVse(); }
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'datum-'));
   const proc = cp.spawn(EXE, ['--headless=new', '--disable-gpu', '--no-first-run', '--remote-debugging-port=0', '--user-data-dir=' + dir, 'about:blank'], { stdio: 'ignore' });
+  let poj = null;   // pojistky prohlížeče (scripts/utils/prohlizec_pojistky.js, 2026-10-11)
   try {
     let dp = null; for (let i = 0; i < 100 && !dp; i++) { await sleep(100); try { dp = fs.readFileSync(path.join(dir, 'DevToolsActivePort'), 'utf8').split(/\r?\n/)[0]; } catch (e) {} }
     const pg = (await (await fetch('http://127.0.0.1:' + dp + '/json/list')).json()).find((x) => x.type === 'page');
     const ws = new WebSocket(pg.webSocketDebuggerUrl); await new Promise((ok, err) => { ws.onopen = ok; ws.onerror = err; });
     let id = 0; const wait = {}; const exc = [];
     ws.onmessage = (m) => { const d = JSON.parse(m.data); if (d.id && wait[d.id]) { wait[d.id](d); delete wait[d.id]; } else if (d.method === 'Runtime.exceptionThrown') exc.push(d.params.exceptionDetails); };
+    poj = require('./utils/prohlizec_pojistky').zabezpec({ ws, proc, jmeno: 'datum v jazyce uživatele (㊻)', limitS: 180 });
     const cmd = (method, params) => new Promise((ok) => { const i = ++id; wait[i] = ok; ws.send(JSON.stringify({ id: i, method, params: params || {} })); });
     const ev = async (e) => { const r = await cmd('Runtime.evaluate', { expression: e, awaitPromise: true, returnByValue: true }); return r.result && r.result.result ? r.result.result.value : null; };
     await cmd('Page.enable'); await cmd('Runtime.enable');
@@ -162,6 +164,8 @@ const srv = http.createServer((req, res) => {
     rekni(!!r && r.strom === r.datum, '(C) prohlížeč: strom = deník', JSON.stringify(r && r.strom));
     rekni(!exc.length, '(C) bez chyb JS', exc.map((x) => (x.exception && x.exception.description || x.text || '').split('\n')[0]).join(' | ').slice(0, 300));
   } catch (e) { rekni(false, '(C) prohlížeč spadl', String(e && e.message || e).slice(0, 200)); }
+  const dialogy = poj ? poj.hotovo() : [];
+  if (dialogy.length) rekni(false, 'stránka otevřela dialog (sám potvrzen, jinak by kontrolu zablokoval)', dialogy.join(' · '));
   try { proc.kill(); } catch (e) {}
   srv.close();
   setTimeout(() => { try { fs.rmSync(dir, { recursive: true, force: true }); } catch (e) {} konecVse(); }, 300);

@@ -72,12 +72,14 @@ const srv = http.createServer((req, res) => {
   if (!EXE) { rekni(false, '(B) prohlížeč (Chrome/Edge) nenalezen'); srv.close(); return konec(); }
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'verze-'));
   const proc = cp.spawn(EXE, ['--headless=new', '--disable-gpu', '--no-first-run', '--remote-debugging-port=0', '--user-data-dir=' + dir, 'about:blank'], { stdio: 'ignore' });
+  let poj = null;   // pojistky prohlížeče (scripts/utils/prohlizec_pojistky.js, 2026-10-11)
   try {
     let dp = null; for (let i = 0; i < 100 && !dp; i++) { await sleep(100); try { dp = fs.readFileSync(path.join(dir, 'DevToolsActivePort'), 'utf8').split(/\r?\n/)[0]; } catch (e) {} }
     const pg = (await (await fetch('http://127.0.0.1:' + dp + '/json/list')).json()).find((x) => x.type === 'page');
     const ws = new WebSocket(pg.webSocketDebuggerUrl); await new Promise((ok, err) => { ws.onopen = ok; ws.onerror = err; });
     let id = 0; const wait = {};
     ws.onmessage = (m) => { const d = JSON.parse(m.data); if (d.id && wait[d.id]) { wait[d.id](d); delete wait[d.id]; } };
+    poj = require('./utils/prohlizec_pojistky').zabezpec({ ws, proc, jmeno: 'verze v hlášení (㊼)', limitS: 180 });
     const cmd = (method, params) => new Promise((ok) => { const i = ++id; wait[i] = ok; ws.send(JSON.stringify({ id: i, method, params: params || {} })); });
     const ev = async (e) => { const r = await cmd('Runtime.evaluate', { expression: e, awaitPromise: true, returnByValue: true });
       return r.result && r.result.result && !r.result.exceptionDetails ? r.result.result.value : null; };
@@ -135,6 +137,8 @@ const srv = http.createServer((req, res) => {
     const r4 = await odesli();
     rekni(nove && r4 && r4.worker && r4.app_version === vN1, '(B) 4. worker aktualizovaný, okno znovu načtené: „' + vN1 + '“', JSON.stringify(r4));
   } catch (e) { rekni(false, '(B) prohlížeč spadl', String(e && e.message || e).slice(0, 200)); }
+  const dialogy = poj ? poj.hotovo() : [];
+  if (dialogy.length) rekni(false, 'stránka otevřela dialog (sám potvrzen, jinak by kontrolu zablokoval)', dialogy.join(' · '));
   try { proc.kill(); } catch (e) {}
   srv.close();
   setTimeout(() => { try { fs.rmSync(dir, { recursive: true, force: true }); } catch (e) {} konec(); }, 300);
