@@ -10809,3 +10809,21 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   obnoví. IS: is-greynir OK (12 i 1), is-gpt-check OK ($0.0011), korpus „lesið upphátt“ 90×, „getur enn“ 1 990×, „enn lesið“ 138×.
 - **Hranice:** přehled tarifů a nápověda dál píšou „až 5“ — patří k rozhodnutí o stropu hlasu pro produkci (BACKLOG, položka o hlasu).
 - Affected doc(s): `RUNAR_BACKLOG.md` („Co testerům napsat dopředu“, položka o hlase) — v témže commitu.
+
+## 2026-10-11 (57) — Založení stromu znovu funkční: tah zakládacích Noren má runy, cena „zdarma“, datum narození zůstává; smoke ㊷
+
+- **Proč:** KUKY 2026-10-11 v produkci (snímek obrazovky založení): *„neukážou se runy. je potřeba, abys to celé prošel, že to funguje.“*
+- **Co bylo špatně:** (1) tlačítko založení přepnulo do čtení Noren, ale mřížku run a čtenáře staví `startReading()`, který se při
+  založení přeskočí (formulář je schovaný) — tah byl bez run; (2) řádek ceny ukazoval „stojí 2 čtení“, ač zakládací Norny jsou zdarma
+  (proxy mode `founding`); (3) `startReading()` nuluje datum narození, takže by skok do stromu po založení skončil u formuláře na datum.
+  Rituál z 2026-07-19 se rozbil potichu a nic to nehlásilo.
+- **Co:** `startTreeFounding` nastaví tah sám (čtenář = já se životní runou, mřížka, karta tahu) bez kontroly kreditů a bez smazání data;
+  `_paintSpreadCost` při založení „zdarma“ (`founding_cost`, IS = ověřený konec `tree_founding_intro`).
+- **Hlídá stroj — smoke ㊷** (`scripts/verify_zalozeni_stromu.js`): celá cesta skutečnou appkou z pracovního stromu, klik po kliku —
+  tlačítko ve stromě → příběh, Norny, mřížka 25 run, „zdarma“, ostatní výklady zamčené → 3 runy → odeslání jako `founding` s cenou 0 →
+  po 4 s strom se zakládacími Nornami první, bez nabídky a bez formuláře na datum. Proxy i databáze podvržené jen v prohlížeči testu.
+  S původním tlačítkem padá na „mřížka 0 run“; útok v ㊵.
+- **Mezi session:** řádek ceny a `founding_cost` odešly do produkce už s commitem CODE-tune 4eb6905 (pathspec vzal můj necommitnutý kus);
+  útok na ㊷ omylem s 1c37d3e (CODE-read), opraven přes `RUNAR_CIZI_OK` a CODE-read to ví.
+- **Netvrdí:** nic o serveru (claude-proxy mode `founding` z 2026-07-19) — ten ověří až skutečné založení ownera.
+- Affected doc(s): žádný (oprava vady, rituál popisuje `RUNAR_DECISIONS.md` 2026-07-19 a `RUNAR_TREE.md` §2).
