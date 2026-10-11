@@ -104,6 +104,9 @@ PRIPADY = [
  # ㊽ čitelnost (2026-10-11, CODE-tune): upozornění zpět s průhledností 0,45 (2,41 : 1) · podnadpis úvodu barvou --dim (§5)
  ('chyti', 'verify_citelnost.js', 'v2/runar-reader.css', 'replace', ".q-teaser-txt{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--muted);margin:14px 0 6px;}", ".q-teaser-txt{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--muted);opacity:0.45;margin:14px 0 6px;}"),
  ('chyti', 'verify_citelnost.js', 'v2/runar-reader.css', 'replace', '.hero-sub{font-size:1.12em;color:var(--muted);', '.hero-sub{font-size:1.12em;color:var(--dim);'),
+ # ㊽ (B) zaseklá angličtina: buňka tierů zase bez id · anglická věta s „Rúnar“ (její „ú“ ji nesmí pustit jako islandskou)
+ ('chyti', 'verify_citelnost.js', 'v2/runar-help.html', 'replace', '<td id="tier-lbl-seeker">RUNE SEEKER</td>', '<td>RUNE SEEKER</td>'),
+ ('obchazka', 'verify_citelnost.js', 'v2/runar-help.html', 'replace', '</body>', '<p>Rúnar reads the runes for you.</p></body>'),
  # ㊼ verze v hlášení (2026-10-11, CODE-tune): verze rozjetá se sw.js, reportér zpět na nasazenou, worker zase chytá sw.js, soubor mimo precache
  ('chyti', 'verify_verze_hlaseni.js', 'v2/runar-verze.js', 'regex', r"RUNAR_VERZE = 'v\d+'", "RUNAR_VERZE = 'v1'"),
  ('chyti', 'verify_verze_hlaseni.js', 'v2/runar-reporter.js', 'replace', '      app_version: verzeHlaseni(),', "      app_version: VERZE_NASAZENA || 'unknown',"),

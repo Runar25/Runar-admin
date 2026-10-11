@@ -143,24 +143,24 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
           </thead>
           <tbody id="tier-tbody">
             <tr>
-              <td>VISITOR</td>
+              <td id="tier-lbl-visitor">VISITOR</td>
               <!-- 2026-10-10: „Five runes are open to you — draw one“ míchalo kolekci (pět otevřených run) s tahem (táhne se z 25 run). -->
               <td id="td-visitor">Draw a rune and see which comes to you; five runes in the Runes Collection and your life rune are open to you. Rúnar reads the runes for those who walk with him; joining is free.</td>
             </tr>
             <tr>
-              <td>RUNE SEEKER</td>
+              <td id="tier-lbl-seeker">RUNE SEEKER</td>
               <td id="td-seeker"></td>
             </tr>
             <tr>
-              <td>+ READING CARD</td>
+              <td id="tier-lbl-card">+ RUNE READING CARD</td>
               <td id="td-card">Credits never expire and follow your account across devices.</td>
             </tr>
             <tr>
-              <td><span id="tier-lbl-standard">RUNE WALKER</span> <span style="opacity:0.4;font-size:0.85em">soon</span></td>
+              <td><span id="tier-lbl-standard">RUNE WALKER</span> <span class="tier-soon" style="opacity:0.4;font-size:0.85em">soon</span></td>
               <td id="td-standard"></td>
             </tr>
             <tr>
-              <td><span id="tier-lbl-premium">RUNE WANDERER</span> <span style="opacity:0.4;font-size:0.85em">soon</span></td>
+              <td><span id="tier-lbl-premium">RUNE WANDERER</span> <span class="tier-soon" style="opacity:0.4;font-size:0.85em">soon</span></td>
               <td id="td-premium"></td>
             </tr>
           </tbody>
@@ -294,6 +294,7 @@ const CONTENT = {
     // 2026-10-10 (DECISIONS 2026-10-10 (1) bod 1): návštěvník čtení nedostává (od 2026-08-02) — „1 reading, no account needed“ pryč.
     'td-visitor':    'Draw a rune and see which comes to you; five runes in the Runes Collection and your life rune are open to you. Rúnar reads the runes for those who walk with him; joining is free.',
     'td-seeker':     tierFeatures('rune_seeker', 'en').join(' '),   // 2026-09-26: skládá se z configu (TIER_FEATURES), ne ručně
+    tier_soon:       'soon',   // 2026-10-11: štítek u předplatných v tabulce tierů (class tier-soon) — do té doby jen v HTML, v IS anglicky
     'td-card':       'Credits never expire and follow your account across devices.',   // 2026-10-10: hlas ke čtení z karty patří (od 2026-10-11 bez měsíčního stropu, DECISIONS 2026-10-11 (61)) — větu skládá TIER_FEATURES
     'td-standard':   tierFeatures('standard', 'en').join(' '),
     'td-premium':    tierFeatures('premium', 'en').join(' '),
@@ -347,6 +348,7 @@ const CONTENT = {
     'th-tier':       'STIG', 'th-what': 'HVAÐ FÆRÐ ÞÚ',
     'td-visitor':    'Dragðu rún og sjáðu hver kemur til þín; fimm rúnir í Safni rúna og lífsrúnin þín standa þér opnar. Rúnar les í rúnirnar fyrir þá sem ganga með honum — skráning er ókeypis.',
     'td-seeker':     tierFeatures('rune_seeker', 'is').join(' '),
+    tier_soon:       'brátt',   // 2026-10-11: jako „Brátt verður hægt…“ v téže nápovědě; příslovce — se jménem tieru se neshoduje v rodě
     'td-card':       'Inneignin rennur aldrei út og fylgir reikningnum þínum á milli tækja.',   // 2026-10-10: viz EN; inneign jako v appce a zásadách (vypůjčené kredit BÍN zná jen ve středním rodě)
     'td-standard':   tierFeatures('standard', 'is').join(' '),
     'td-premium':    tierFeatures('premium', 'is').join(' '),
@@ -418,10 +420,17 @@ function applyContent() {
       el.textContent = c[id];
     }
   });
-  var _tls = document.getElementById('tier-lbl-standard');
-  if (_tls) _tls.textContent = (lang === 'is' ? TIERS.standard.label_is : TIERS.standard.label).toUpperCase();
-  var _tlp = document.getElementById('tier-lbl-premium');
-  if (_tlp) _tlp.textContent = (lang === 'is' ? TIERS.premium.label_is : TIERS.premium.label).toUpperCase();
+  // Řádky tabulky tierů: jména z TIERS, karta z VOCAB jako položka menu appky ('+ ' + vl('card')), štítek „soon“ ze slovníku (§10).
+  // Do 2026-10-11 měly id jen předplatné; VISITOR, RUNE SEEKER, „+ READING CARD“ (VOCAB říká Rune Reading Card) a „soon“ zůstávaly
+  // v islandské nápovědě anglicky (procházka CODE-read). Zaseklou angličtinu hlídá smoke ㊽.
+  var _tiery = { 'tier-lbl-visitor': TIERS.free_trial, 'tier-lbl-seeker': TIERS.rune_seeker, 'tier-lbl-standard': TIERS.standard, 'tier-lbl-premium': TIERS.premium };
+  Object.keys(_tiery).forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = (lang === 'is' ? _tiery[id].label_is : _tiery[id].label).toUpperCase();
+  });
+  var _tlc = document.getElementById('tier-lbl-card');
+  if (_tlc) _tlc.textContent = '+ ' + _v.card.toUpperCase();
+  document.querySelectorAll('.tier-soon').forEach(function (el) { el.textContent = c.tier_soon; });
   // Balíčky kreditů z configu (CARD_PACKS) — jediné místo; € sloupec pryč, dokud owner € ceny neurčí (DECISIONS 2026-10-10 (22)).
   var _pb = document.getElementById('pt-body');
   if (_pb && typeof CARD_PACKS !== 'undefined') _pb.innerHTML = CARD_PACKS.map(function (p) {

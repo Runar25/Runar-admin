@@ -3664,7 +3664,9 @@ start“ (runa = naše SVG), šířka telefonu (bez vodorovného posunu, mříž
   „1 CREDIT“). Přihlášený, který po čtení přepne jazyk, dostane nadpis, text i obě tlačítka anglicky, i když appku používá islandsky,
   a text slibuje „uses one credit“ — předplatitel a tester platí jednotkami čtení. Kontroly to propustily: ㉹ hledá češtinu, ㉸ jen
   větvení `lang === 'is' ?`, anglický text v šabloně `…` nevidí nic → zvážit kontrolu „anglická věta v JS mimo UI_TEXT“.
-- [ ] **Pro CODE-tune — nápověda v islandštině: zaseklá angličtina** (`v2/runar-help.html` ř. 151 „RUNE SEEKER“, 155 „+ READING CARD“,
+- [x] ✅ *(CODE-tune 2026-10-11: buňky mají id, jména z `TIERS`, karta z `VOCAB` jako v menu appky („+ RUNE READING CARD“ / „+ RÚNAKORT“ —
+  „+ READING CARD“ bylo špatně i anglicky), štítek „soon“ / „brátt“; totéž i VISITOR / GESTUR. Zaseklou angličtinu na readeru, nápovědě a
+  zásadách hlídá smoke ㊽.)* ~~**Pro CODE-tune — nápověda v islandštině: zaseklá angličtina**~~ (`v2/runar-help.html` ř. 151 „RUNE SEEKER“, 155 „+ READING CARD“,
   159 a 163 „soon“): statické buňky bez `id`, JS je nepřekládá (Vegfarandi/Ferðalangur se přes `id` překládají). Jména tierů z `TIERS`
   (§10), karta z `VOCAB`.
 - [x] ✅ *(CODE-tune 2026-10-11: `.q-teaser-txt` bez průhlednosti → 7,7 : 1 jako `.credit-note`; táž vada v zásadách „Last updated“ (2,14 : 1)

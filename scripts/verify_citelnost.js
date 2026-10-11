@@ -7,6 +7,10 @@
 //  (A) kontrast: každý viditelný text — jeho barva × průhlednost předků proti prvnímu barevnému pozadí předků — má aspoň 3 : 1, tedy
 //      viditelně nad --dim (2,2 : 1). Neaktivní ovládání (zamčené pilulky a runy, „coming“, disabled) je výjimka: vybledlé je záměrně
 //      a WCAG ho nepočítá. Texty mezi 3 a 4,5 : 1 (doporučení WCAG pro malé písmo) jen vypíše — to je rozhodnutí o vzhledu, ne §5.
+//  (B) zaseklá angličtina: viditelný text, který je na stránce v EN i v IS stejný, je chyba (§2, §10). Výjimky: přepínač EN/IS, značky
+//      (RÚNAR, AGNDOFA…), jména run a služeb, adresy webů a e-mailů, název firmy, ceny v kr. Jména Rúnar/Agndofa/Óðinn se z textu napřed vyjmou, ať anglickou větu
+//      s „Rúnar“ nepustí jeho „ú“ (scripts/i18n-diff.js, ze kterého logika je, takovou větu přeskočí). Do 2026-10-11 to nehlídalo nic
+//      a islandská nápověda ukazovala VISITOR, RUNE SEEKER, „+ READING CARD“ a „soon“ anglicky (procházka CODE-read).
 // Neumí: text přes obrázek (bere barvu pozadí předků), stavy přihlášeného (čtení, menu), stín a obrys písma.
 // Útok: scripts/protipriklady.py → PRIPADY.
 //   node scripts/verify_citelnost.js            · --slabe vypíše i texty mezi 3 a 4,5 : 1 (podklad pro rozhodnutí o vzhledu)
@@ -46,11 +50,31 @@ const MER = `((NEAKTIVNI) => {
   return vysl;
 })(${JSON.stringify(NEAKTIVNI)})`;
 
+// Běží ve stránce: viditelné texty, které by mohly být anglické (zaseklá angličtina) — bez islandských, značek, run, adres a cen.
+const JAZYK = `(() => {
+  const POVOLENO = [/^(EN|IS)$/, /^(R[ÚU]NAR|AGNDOFA|THE GATHERING|YGGDRASIL)$/i, /^(Supabase|OpenAI|Anthropic|ElevenLabs|Google|GitHub|Slack)$/,
+    /^(Fehu|Uruz|Thurisaz|Ansuz|Raidho|Kenaz|Gebo|Wunjo|Hagalaz|Nauthiz|Isa|Jera|Eihwaz|Perth|Algiz|Sowilo|Tiwaz|Berkana|Ehwaz|Mannaz|Laguz|Ingwaz|Othila|Dagaz|Blank)$/i,
+    /^[\\w.-]+\\.(com|io|is|org|net|app)(\\/\\S*)?$/i, /^[\\w.+-]+@[\\w.-]+\\.[a-z]{2,}$/i, /^Agndofa ehf\\.?$/, /^ISK$/, /^[\\d.,\\s]+kr\\.?$/];
+  const out = [];
+  const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  for (let n = w.nextNode(); n; n = w.nextNode()) {
+    const t = n.nodeValue.trim().replace(/\\s+/g, ' ');
+    const bezJmen = t.replace(/R[úu]nar|R[ÚU]NAR|Agndofa|AGNDOFA|[ÓO]ðin/g, '');
+    if (t.length < 2 || !/[A-Za-z]{2,}/.test(bezJmen) || /[þðæöáíóúýéÞÐÆÖÁÍÓÚÝÉ]/.test(bezJmen) || POVOLENO.some((r) => r.test(t))) continue;
+    const el = n.parentElement; if (!el || el.closest('script, style, noscript')) continue;
+    let skryte = false;
+    for (let e = el; e; e = e.parentElement) { const cs = getComputedStyle(e); if (cs.display === 'none' || cs.visibility === 'hidden') { skryte = true; break; } }
+    const box = el.getBoundingClientRect(); if (skryte || !box.width || !box.height) continue;
+    out.push(t.slice(0, 80));
+  }
+  return out;
+})()`;
+
 const TYPY = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.png': 'image/png',
   '.jpg': 'image/jpeg', '.svg': 'image/svg+xml', '.json': 'application/json', '.webmanifest': 'application/manifest+json', '.woff2': 'font/woff2' };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 function konec() {
-  console.log(fail ? '\nFAIL  čitelnost: ' + fail + ' selhalo' : '\nOK    čitelnost: každý viditelný text má kontrast aspoň 3 : 1 (nad --dim, §5)' + (konec.info || ''));
+  console.log(fail ? '\nFAIL  čitelnost: ' + fail + ' selhalo' : '\nOK    čitelnost: kontrast každého viditelného textu aspoň 3 : 1 (nad --dim, §5), v IS žádná zaseklá angličtina' + (konec.info || ''));
   process.exit(fail ? 1 : 0);
 }
 const srv = http.createServer((req, res) => {
@@ -82,6 +106,8 @@ const srv = http.createServer((req, res) => {
     const BASE = 'http://127.0.0.1:' + srv.address().port + '/v2/';
     const stavy = [];
     const zmer = async (jm) => { const v = await ev(MER); stavy.push({ jm, v: Array.isArray(v) ? v : null }); };
+    const jazyk = {};   // stránka → { en: [...], is: [...] } viditelných textů pro (B)
+    const sber = async (str, l) => { const v = await ev(JAZYK); (jazyk[str] = jazyk[str] || {})[l] = Array.isArray(v) ? v : null; };
     const nacti = async (str, pripraven) => { await cmd('Page.navigate', { url: BASE + str }); await cekej(`document.readyState === 'complete' && (${pripraven})`); await sleep(600); };
 
     // reader: první návštěva (okno „Where to start“ naskočí samo, výchozí jazyk IS), pak bez okna EN a IS
@@ -90,12 +116,12 @@ const srv = http.createServer((req, res) => {
     await zmer('reader · první návštěva (okno Where to start)');
     await ev(`localStorage.setItem('runar_wts_seen', '1')`);
     await nacti('runar-reader.html', `typeof setLang === 'function'`);
-    await ev(`setLang('en')`); await sleep(400); await zmer('reader · návštěvník EN');
-    await ev(`setLang('is')`); await sleep(400); await zmer('reader · návštěvník IS');
+    await ev(`setLang('en')`); await sleep(400); await zmer('reader · návštěvník EN'); await sber('reader', 'en');
+    await ev(`setLang('is')`); await sleep(400); await zmer('reader · návštěvník IS'); await sber('reader', 'is');
     for (const str of ['runar-help.html', 'runar-privacy.html']) {
       await nacti(str, `typeof setLang === 'function'`);
-      await ev(`setLang('en')`); await sleep(300); await zmer(str + ' EN');
-      await ev(`setLang('is')`); await sleep(300); await zmer(str + ' IS');
+      await ev(`setLang('en')`); await sleep(300); await zmer(str + ' EN'); await sber(str, 'en');
+      await ev(`setLang('is')`); await sleep(300); await zmer(str + ' IS'); await sber(str, 'is');
     }
 
     // (A) kontrast
@@ -115,6 +141,18 @@ const srv = http.createServer((req, res) => {
     rekni(!pod.length && textu > 50, '(A) kontrast aspoň 3 : 1 — ' + textu + ' textů v ' + stavy.length + ' stavech', pod.length + ' textů pod 3 : 1 (§5: --dim nikdy pro text)');
     if (slabe.size) konec.info = ' · slabší než 4,5 : 1 (doporučení WCAG, rozhodnutí o vzhledu): ' + slabe.size + ' — ' +
       [...new Set(slabe.values())].join(', ');
+
+    // (B) zaseklá angličtina
+    const zasekle = []; let porovnano = 0;
+    for (const str of Object.keys(jazyk)) {
+      const { en, is } = jazyk[str];
+      if (!en || !is) { rekni(false, '(B) ' + str + ': sběr textů selhal'); continue; }
+      const enS = new Set(en); porovnano += en.length;
+      [...new Set(is)].filter((t) => enS.has(t)).forEach((t) => zasekle.push(str + ': „' + t + '“'));
+    }
+    zasekle.forEach((p) => console.log('  ' + p));
+    rekni(!zasekle.length && porovnano > 50, '(B) islandská verze bez zaseklé angličtiny — reader, nápověda, zásady (' + porovnano + ' anglických textů)',
+      zasekle.length + ' textů je v IS stejných jako v EN (§2, §10)');
   } catch (e) { rekni(false, 'prohlížeč spadl', String(e && e.message || e).slice(0, 200)); }
   clearTimeout(hlidac);
   try { proc.kill(); } catch (e) {}
