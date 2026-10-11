@@ -472,9 +472,12 @@
      Ownerův záměr byl „třeba 120 hlasů“ ≈ 21–29 tis. kreditů (při dnešních 448 zn. na hlas), tedy zhruba kredity tarifu. Plné využití
      vyčerpá převod během cyklu; pak je limit 30 000 + R + 13 800 a hladina přeteče do dobití, kdykoli převod R < 2 200. Návrh: brzdit
      `character_count` (spotřeba od resetu) proti kreditům tarifu, ne proti `character_limit` — varianta podle ownera (níž).
-  2. **Nejhorší cyklus** (příznak tester má **5 účtů = 3 testeři + 2 admin**, ne 7): 5 × 30 hlasů přes hranici měsíce × Yggdrasil
-     (≤ 1 661 zn. ≈ 664 kreditů) = 99 600 kreditů; zarovnaně 49 800; běžný Single (~179 kreditů) 26 900 / 13 400. Proti 30 000 drží jen
-     hladina z bodu 1 — po její opravě stačí; klíč cyklu EL u osobního stropu je pak jen přesnost.
+  2. **Nejhorší cyklus.** Lidí je 7 (5 testerů + 2 admini, owner). Účtů se stropem 15 bude po registraci **9**: 2 admin + 2 ownerovy účty
+     na test slabšího Rune Seekera (příznak tester, nejsou na seznamu povolených) + 5 testerů z `allowed_emails` (dnes registrovaný 1;
+     zbylí 4 dostanou premium + příznak triggerem při registraci, DECISIONS 2026-10-09 (6)). 9 × 15 × Yggdrasil (≤ 1 661 zn. ≈ 664 kreditů)
+     = 89 600 kreditů zarovnaně, 179 300 přes hranici měsíce; běžný Single (~179 kreditů) 24 200 / 48 300 — i běžný plný měsíc je ~80 %
+     tarifu, takže s variantou (a) níž může testerům ke konci cyklu hlas utichnout. Proti tomu drží jen hladina z bodu 1. (Do 2026-10-11
+     tu stálo „5 účtů, ne 7“ — počítal jsem jen dnes registrované účty, ne lidi ani nezaregistrované testery.)
   3. **Selže-li dotaz na stav účtu, hlas se pustí** (`elevenlabs-proxy` ř. 103, fail open) a EL zastaví až na limitu včetně dobití. Malé
      riziko (jednotlivé hlasy), jen vědět.
   4. **`scripts/utils/stats.js` ř. ~291–295** (oprava 03bf490 nechytila): snímek vypisuje „X z Y znaků“ — jsou to kredity; „přečerpání …
