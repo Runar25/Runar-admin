@@ -30,7 +30,16 @@ const rest = s.slice(start + 1);
 const nextFn = rest.search(/\nfunction \w+/);
 const body = nextFn < 0 ? rest : rest.slice(0, nextFn);
 
-const owned = body.indexOf('_lifeRuneText');
+// 2026-10-11 (kolo 3 kontroly, protipříklad naostro): „owned“ byl PRVNÍ výskyt `_lifeRuneText` — a to je `!_lifeRuneText` (opak),
+// takže `if (_lifeRuneText && isStdPlus)` (vlastnictví za tierem, táž třída chyby jiným tvarem) prošlo zeleně. Teď: první KLADNÝ
+// test vlastnictví `if (… _lifeRuneText …)` bez `!` — musí být před větvením podle tieru a jeho podmínka nesmí tier obsahovat.
+const kladne = [...body.matchAll(/if\s*\(([^)]*)\)/g)].find((m) => /(^|[^!\w])_lifeRuneText\b/.test(m[1]));
+const owned = kladne ? kladne.index : -1;
+if (kladne && /isStdPlus|userTier|isAdmin|\btier\b/.test(kladne[1])) {
+  console.log('FAIL  runar-tree.js  updateTreeTab(): test hotového čtení je podmíněný tierem: if (' + kladne[1].trim() + ')');
+  console.log('      Rune Seeker svou životní runu neuvidí. Tier smí rozhodovat, jak se čtení NABÍZÍ, ne jestli hotové čtení uvidí.');
+  process.exit(1);
+}
 const tier  = body.indexOf('isStdPlus');
 
 if (owned < 0 || tier < 0) {

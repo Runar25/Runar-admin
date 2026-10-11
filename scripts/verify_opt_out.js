@@ -11,12 +11,20 @@
 'use strict';
 const fs = require('fs'), path = require('path'), cp = require('child_process');
 const R = path.resolve(__dirname, '..');
-const RE = /\bfrom\s+(public\.)?readings\b/i;
+// 2026-10-11 (kolo 3 kontroly, protipříklad naostro): hledalo se po řádcích, takže `from` a `readings` na dvou řádcích (víceřádkové
+// SQL v šabloně) i `from "readings"` prošly zeleně. Teď celý soubor najednou (\s+ i přes konec řádku, uvozovky volitelné);
+// nález se hlásí na řádku `from`, značka platí na řádku `from` i na řádku `readings`.
+const RE = /\bfrom\s+(public\s*\.\s*)?["`]?readings["`]?(?![\w])/gi;
 const ZNACKA = /opt-out:ok\s+\d{4}-\d{2}-\d{2}\s+\S{3,}/;
 
 function nalezy(text) {
   const out = [];
-  text.split('\n').forEach((l, i) => { if (RE.test(l) && !ZNACKA.test(l)) out.push(i + 1); });
+  const radky = text.split('\n'), radek = (i) => text.slice(0, i).split('\n').length;
+  for (const m of text.matchAll(RE)) {
+    const a = radek(m.index), b = radek(m.index + m[0].length);
+    if (ZNACKA.test(radky[a - 1] || '') || ZNACKA.test(radky[b - 1] || '')) continue;
+    if (out.indexOf(a) === -1) out.push(a);
+  }
   return out;
 }
 
@@ -28,7 +36,9 @@ if (process.argv.includes('--test')) {
     && nalezy("q('select sum(c) from readings'); // opt-out:ok 2026-10-10 náklady").length === 0
     && nalezy("q('select sum(c) from readings'); // opt-out:ok").length === 1
     && nalezy("q('select * from bug_reports');").length === 0
-    && nalezy("q('select * from readings_archive');").length === 0;
+    && nalezy("q('select * from readings_archive');").length === 0
+    && nalezy('q(`select text\n  from\n  readings where x`)').length === 1
+    && nalezy("q('select text from \"readings\" where x')").length === 1;
   console.log(ok ? 'OK    samotest: přímé čtení readings se pozná; poddotaz, značka s důvodem a jiná tabulka ne; holá značka neplatí' : 'FAIL  samotest');
   process.exit(ok ? 0 : 1);
 }

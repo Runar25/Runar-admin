@@ -77,6 +77,18 @@ PRIPADY = [
  ('chyti', 'verify_fresh_dates.js', 'RUNAR_DECISIONS.md', 'append', '', '\n## 2026-10-01 (99) — podstrčený záznam se starým datem\n\n- test\n'),
  ('chyti', 'verify_shared_tree.js', 'v2/sw.js', 'stage', 'HEAD~40', ''),
  ('chyti', 'verify_commit_identity.js', '(historie)', 'commit', 'Runar Admin', ''),
+ # kolo 3 / 4f (2026-10-11): peníze, soukromí, jazyk
+ ('chyti', 'verify_founding_flag.js', 'v2/runar-reading.js', 'replace', "var _isFounding = (o.kind === 'NORNS'", "var _isFounding = (o.mode === 'norns'"),
+ ('chyti', 'verify_owned_before_tier.js', 'v2/runar-tree.js', 'regex', r'(\n  if \(_lifeRuneText)\) \{(\r?\n)', r'\g<1> && isStdPlus) {\g<2>'),
+ ('chyti', 'verify_reading_cost.js', 'v2/runar-utils.js', 'replace', 'ca * o[1]', 'ca * o[0]'),
+ # kontrola bere jen verzované skripty (git ls-files) — nový necommitnutý nevidí; v praxi ho chytí pre-push v čisté kopii commitu
+ ('chyti', 'verify_opt_out.js', 'scripts/utils/stats.js', 'append', '', "\nconst _protiQ = 'select text from readings where lang = $1';\n"),   # opt-out:ok 2026-10-11 podstrčená chyba pro útok na verify_opt_out, nic nečte
+ ('obchazka', 'verify_opt_out.js', 'scripts/utils/stats.js', 'append', '', "\nconst _protiQ2 = `select text\n  from\n  readings where lang = $1`;\n"),   # opt-out:ok 2026-10-11 podstrčená chyba pro útok na verify_opt_out, nic nečte
+ ('obchazka', 'verify_opt_out.js', 'scripts/utils/stats.js', 'append', '', "\nconst _protiQ3 = 'select text from \"readings\" where lang = $1';\n"),   # opt-out:ok 2026-10-11 podstrčená chyba pro útok na verify_opt_out, nic nečte
+ ('chyti', 'verify_jazyk_ui.js', 'v2/runar-translations.js', 'replace', "'Read with Opus 5 (test)'", "'Čtení s Opusem 5 (zkouška)'"),
+ ('chyti', 'verify_edge_imports.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'regex', r'npm:@supabase/supabase-js@[0-9.]+', 'npm:@supabase/supabase-js@2'),
+ ('chyti', 'verify_rune_glyphs.js', 'v2/runar-help.html', 'replace', '</body>', '<p>ᚠ</p></body>'),
+ ('chyti', 'verify_lang_ternary.js', 'v2/runar-app.js', 'append', '', "\nvar _protiTern = lang === 'is' ? 'halló' : 'hello';\n"),
  # strom ㉳ (CODE-tree 2026-10-11): mutace z hlavičky verify_tree_mista převedené na opakované útoky. Kontrola si lab staví z builderu
  # do dočasné složky, takže útok míří na build_crown_composer.py. (a) dvě ramena v jedné výšce — přes výšky zón XLF, ne exitMinPx
  # (exitMinPx 30→5 kontrola propustila: rozestup na jejích 12 stromech drží výšky zón, min. 49 px i s 5 px); (s) seeking koření;
