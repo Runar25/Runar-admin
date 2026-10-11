@@ -153,8 +153,25 @@ async function fetchUserProfile(userId) {
   updateAuthUI();
   showTopbarGreeting();
   if (typeof _updateReadingForm === 'function') _updateReadingForm();
+  _renewalNotice();   // až tady: tarif i jazyk účtu jsou načtené (jazyk se z DB obnovuje výš)
   // Ask for name if not set yet (delay so UI settles first)
   if (!userName) setTimeout(showNamePrompt, DELAY_NAME_PROMPT);
+}
+
+// Upozornění na obnovu měsíčních čtení (owner 2026-10-11: „apka by mohla dát vědět jednou po otevření, že se čtení obnovila“ →
+// „2. ok“ = varianta a). Jednou na zařízení a účet, pamatuje si to prohlížeč — bez SQL; na druhém zařízení se ukáže znovu jednou.
+// Jen předplatitel: Rune Seeker měsíční čtení nemá (TIERS.*.monthly_readings). Měsíc = UTC jako server (claude-proxy monthKey).
+// První otevření na zařízení (žádný záznam) jen zapíše měsíc — nový předplatitel ani nové zařízení nic neobnovilo.
+function _renewalNotice() {
+  var T = TIERS[userTier];
+  if (!currentUser || !T || !(T.monthly_readings > 0)) return;
+  var k = 'runar_renew_' + currentUser.id, m = new Date().toISOString().slice(0, 7);
+  try {
+    var pred = localStorage.getItem(k);
+    if (pred === m) return;
+    localStorage.setItem(k, m);
+    if (pred) showToast(t('renew_toast'), 5000);
+  } catch (e) {}
 }
 
 async function upsertProfile() {

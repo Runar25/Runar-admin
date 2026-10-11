@@ -428,6 +428,7 @@ const UI_TEXT = {
     ask_teaser_more:    'Another question opens with {tier}.',   // 2026-09-30 KUKY: po poslední otázce tarifu (Standard → Premium)
     err_no_credits:     'No readings remain. Use a {card} to continue.',
     err_monthly_limit: 'This month\u2019s readings are all drawn. They return with the new month.',
+    renew_toast:       'Your readings have returned with the new month.',   // 2026-10-11: _renewalNotice (runar-app.js), dvojice s err_monthly_limit
     err_voice_month:   'The voice has spoken {n} times this month. It returns with the new month.',
     err_voice_quota:   'The voice is resting for now, but the words of the reading stay with you.',   // 2026-10-11: bezpečná hladina kvóty ElevenLabs (VOICE_SAFE_SHARE)
     err_generic:        'R\u00fanar is resting \u2014 please try again in a moment.',
@@ -902,6 +903,7 @@ const UI_TEXT = {
     ask_teaser_more:    'Önnur spurning opnast með {tier}.',   // {tier} v 3. pádě (tierLabel); is-grammar-qa čisté, „önnur spurning“ 1572
     err_no_credits:     'Þú átt enga spá eftir. Notaðu {card} til að halda áfram.',
     err_monthly_limit: '\u00de\u00fa hefur nota\u00f0 alla lestrana \u00fe\u00edna \u00ed \u00feessum m\u00e1nu\u00f0i. \u00deeir koma aftur me\u00f0 n\u00fdjum m\u00e1nu\u00f0i.',
+    renew_toast:       'Lestrarnir þínir eru komnir aftur með nýjum mánuði.',
     err_voice_month:   'Röddin hefur talað {n} sinnum í þessum mánuði. Hún kemur aftur með nýjum mánuði.',
     err_voice_quota:   'Röddin hvílir um sinn, en orð spárinnar eru áfram hjá þér.',   // 2026-10-11: kontroly IS čisté (CLAUDE.md §2)
     err_generic:        'Rúnar hvílist — reyndu aftur eftir andartak.',
