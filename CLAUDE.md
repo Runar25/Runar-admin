@@ -458,7 +458,7 @@ nikdy nebyl. Dvě mapy téhož = přesně to, co §20 zakazuje.
 - **1 téma = 1 vlastník doc.** Žádné nové samostatné docs — když téma patří jinam, jinde jen odkaz.
 - **Délka doku ~200 řádků** (250 OK, když to fakt pomáhá). Nad = rozdělit nebo přesunout detail.
   ⚠️ **`CLAUDE.md` je z toho limitu VYŇATÝ** (KUKY 2026-08-17, po měření): samotná pravidla
-  §1–§28 **přesahují 200 řádků** a jsou důvod, proč ten soubor existuje — pod 200 se nedostane, aniž
+  §1+ **přesahují 200 řádků** (do 2026-10-11 tu stálo „§1–§28“ — pravidla mezitím přibyla, pevné číslo by zase ujelo) a jsou důvod, proč ten soubor existuje — pod 200 se nedostane, aniž
   by přišel o to, co vlastní. Platí pro něj jen ten přísnější test o řádek výš: *způsobí jeho
   chybění chybu?* Pokud ne → smazat.
   ⚠️ **Přesný počet řádků tu schválně NESTOJÍ.** Do 2026-08-18 tu bylo „248 řádků" a za jediný
