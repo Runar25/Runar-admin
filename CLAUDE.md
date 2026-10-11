@@ -411,9 +411,10 @@ měnila dvakrát a každá opsaná tabulka to přežila jako zastaralá.
 DB hodnoty (neměnné): `free_trial` · `rune_seeker` · `standard` · `premium`.
 Identita: **všichni registrovaní jsou Rune Seeker**; standard/premium nejsou hodnosti, jen víc čtení.
 ADMIN → `isAdmin()` v `runar-utils.js`, seznam `ADMIN_EMAILS` v `runar-config.js`. **VŽDY testovat i jako visitor/rune_seeker.**
-**Účty (KUKY 2026-10-11, musel to opakovat):** testeři = **5 lidí** ze seznamu `allowed_emails` (role `tester` → premium + `is_tester`
-při registraci). Další **4 účty jsou týmu — ownera a Sigrún:** 2 admin (`ADMIN_EMAILS`) a 2 na test slabšího Rune Seekera (`is_tester`,
-mimo `allowed_emails`). Kapacitu a brzdy testerů (čtení, hlas) počítej **jen pro těch 5**. U každého ownerova pokynu dohledej, **o kom**
+**Účty (KUKY 2026-10-11, musel to opakovat):** testeři = **lidé ze seznamu** `allowed_emails` (role `tester` → premium + `is_tester` při registraci; kolik jich je,
+řekne DB: `select count(*) from public.allowed_emails where role = 'tester'` — číslo se sem nepíše, owner přidává další).
+Další **4 účty jsou týmu — ownera a Sigrún:** 2 admin (`ADMIN_EMAILS`) a 2 na test slabšího Rune Seekera (`is_tester`,
+mimo `allowed_emails`). Kapacitu a brzdy testerů (čtení, hlas) počítej **jen pro ně**; účty týmu mají strop testera taky a do nejhoršího cyklu se počítají. U každého ownerova pokynu dohledej, **o kom**
 mluví (testeři / produkce / tým) — pokyn pro testery se 2026-09-11 i 2026-10-11 omylem vztáhl na všechny (DECISIONS 2026-10-11 (49)).
 
 ---
