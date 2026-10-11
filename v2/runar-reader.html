@@ -517,12 +517,6 @@
   <!-- ═ TREE OF LIFE PANE ═ -->
   <div id="apane-tree" style="display:none;">
 
-    <!-- TESTER BAR — jen pro tester ucty (is_tester), skryte vsem ostatnim.
-         Resetuje strom, aby sel rituál otestovat znovu. -->
-    <div id="tree-tester-bar" style="display:none;">
-      <button class="tree-tester-btn" id="tree-tester-reset" onclick="resetTreeTester()"></button>
-    </div>
-
     <!-- Bez životní runy: nabídka ji vyložit (KUKY 2026-10-11 — cesta k založení; do té doby tu po resetu nebylo nic). Tvar = tree-founding-cta. -->
     <div id="tree-need-rune" style="display:none;">
       <p class="tree-reveal-intro" id="tree-need-rune-text"></p>
@@ -530,16 +524,18 @@
     </div>
 
     <!-- LIVING TREE (free-solo: grows from your readings) -->
-    <div id="tree-living" style="display:none; text-align:center; margin:8px 0 4px;">
+    <div id="tree-living" style="display:none; text-align:center; margin:0 0 4px;">
       <!-- Scéna stromu (2026-10-11, KUKY „12. ano · 13. ano · plná šířka“): strom na plnou šířku, přiblížení dvěma prsty,
-           dvojitým ťuknutím i tlačítky; „celý strom“ jen když je přiblížený. Logika → runar-tree.js „OVLÁDÁNÍ STROMU“. -->
+           dvojitým ťuknutím i tlačítky; „celý strom“ jen když je přiblížený. Logika → runar-tree.js „OVLÁDÁNÍ STROMU“.
+           Týž den (KUKY): výška scény = strom (plátno oříznuté na obal, posuvník hned pod kořeny, roste se stromem);
+           „celý strom“ se objeví NAD +, ať se + a − nehnou. -->
       <div class="tree-stage" id="tree-stage">
         <canvas id="tree-living-canvas"></canvas>
         <div class="tree-aim" id="tree-aim"></div>
         <div class="tree-zoom">
+          <button class="tree-zbtn" id="tree-zoom-all" type="button" onclick="treeZoomAll()" style="display:none;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10"/></svg></button>
           <button class="tree-zbtn" id="tree-zoom-in" type="button" onclick="treeZoom(1)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3v10M3 8h10"/></svg></button>
           <button class="tree-zbtn" id="tree-zoom-out" type="button" onclick="treeZoom(-1)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10"/></svg></button>
-          <button class="tree-zbtn" id="tree-zoom-all" type="button" onclick="treeZoomAll()" style="display:none;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10"/></svg></button>
         </div>
       </div>
       <!-- Přehrávání růstu: posuvník po JEDNOM čtení zpět až k zakládacímu stavu.
@@ -616,6 +612,13 @@
         Each rune you draw is already here.<br>
         Come back. The tree remembers."</em>
       </div>
+    </div>
+
+    <!-- TESTER BAR — jen pro tester ucty (is_tester), skryte vsem ostatnim.
+         Resetuje strom, aby sel rituál otestovat znovu. Dole pod stromem (KUKY 2026-10-11: „tlačítko reset může být někde dole“ —
+         nahoře odsouvalo strom od lišty záložek). -->
+    <div id="tree-tester-bar" style="display:none;">
+      <button class="tree-tester-btn" id="tree-tester-reset" onclick="resetTreeTester()"></button>
     </div>
 
   </div><!-- /apane-tree -->

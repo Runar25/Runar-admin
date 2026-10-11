@@ -107,6 +107,7 @@ var _treeRkey = null;    // klíč životní runy pro renderer
 var _treeDob  = null;
 var _treeSeekWired = false;
 var _treeFrameSh = null;         // svislý rám celého stromu (renderer) — přehrávání historie ho drží, ať strom při růstu neposkakuje
+var _treeFrameH = null;          // výška plátna celého stromu (plátno je oříznuté na strom) — přehrávání ji drží, ať posuvník neposkakuje
 var _foundingReadingId = null;   // id zakládacích Norn (user_profiles.founding_reading_id, píše server) — jdou ve stromě první
 
 // ── OVLÁDÁNÍ STROMU (2026-10-11, KUKY „12. ano · 13. ano · plná šířka“; strom zatím vidí jen admin) ──
@@ -129,8 +130,10 @@ function _drawTreeAt(n) {
   var view = full ? _treeLog : _treeLog.slice(0, n);
   _treeViewN = n;
   _treePick = window.RunarTreeProd.render(cv, { log: view, rune: _treeRkey, dob: _treeDob, view: _tv, sel: _treeSelK,
-                                                frameSh: full ? null : _treeFrameSh }) || null;
-  if (full && _treePick) _treeFrameSh = _treePick.frameSh;   // rám z celého stromu (2026-10-11, KUKY „strom je nepřirozeně nízko“)
+                                                frameSh: full ? null : _treeFrameSh, frameH: full ? null : _treeFrameH }) || null;
+  // Rám z celého stromu (2026-10-11, KUKY „strom je nepřirozeně nízko“; týž den „posuvník mnohem blíže kořenům … posouvat dynamicky
+  // s tím, jak roste strom“): plátno je oříznuté na strom, posuvník pod ním roste se stromem; přehrávání drží rám celku.
+  if (full && _treePick) { _treeFrameSh = _treePick.frameSh; _treeFrameH = _treePick.H; }
   cv.style.transform = '';   // náhled gesta pryč až s hotovým ostrým stromem — v témže snímku, bez probliknutí
   _treeHighlight(cv);
   _treeZoomUi();

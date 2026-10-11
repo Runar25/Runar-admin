@@ -10914,3 +10914,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - Affected doc(s): `RUNAR_PRICING.md` (náklad, marže, projekce a tarify EL s hlasem ke každému čtení), `RUNAR_PRIVACY.md` (uložený hlas),
   `RUNAR_BACKLOG.md` (strop pro produkci, #2b, nové položky) — v témže commitu.
 - Odvolává se na: 2026-08-03 (#2b a jeho vrácení), 2026-10-10 (42), 2026-10-11 (48), (49), (56).
+
+## 2026-10-11 (62) — Záložka stromu: plátno oříznuté na strom (koruna hned pod lištou, posuvník hned pod kořeny), RESET dole, „celý strom“ nad +
+
+- **Proč:** KUKY 2026-10-11 (snímek z produkce): *„pořád může jít výš. na mobilu to bude problém. má být hned pod lajnou rune reading
+  deník collection. rozumně pod ní. tlačítko reset může být někde dole. posuvník mnohem blíže kořenům. a měl by se posouvat dynamicky
+  s tím, jak roste strom. reset button zoom by se měl objevit nad + a ne pod mínus a posouvat obě tlačítka nahoru.“*
+- **Mění (59) bod 3** (strom svisle vystředěný v plátně 560×900): vystředění nechávalo prázdno nad korunou i pod kořeny. Teď se plátno
+  ořízne na obal stromu: výška plátna = výška stromu (koruna 10 px pod horním okrajem, kořeny 10 px nad dolním), měřítko beze změny;
+  posuvník je hned pod scénou a s rostoucím stromem jde níž. Přehrávání historie drží rám celého stromu (posun i výšku), ať strom ani
+  posuvník neposkakují; mladší strom, který by se do rámu nevešel, rám jen zvětší. Lab beze změny (rám vypnutý, drží zem kvůli porovnávání).
+- **Dál:** scéna bez vlastního horního okraje (pod lištou jen běžná mezera záložek); tester bar (RESET TREE) na konec záložky;
+  „celý strom“ se při přiblížení objeví NAD + a + s − zůstanou na místě (do té doby se objevil pod − a obě tlačítka posunul nahoru).
+- **Ověřeno:** smoke ㊷ (18 kroků) měří nakreslené pixely — první a poslední řádek kresby 10 px od okrajů plátna, posuvník 12 px pod
+  scénou, výška při přehrávání stejná, + se při zobrazení „celý strom“ nehne, tester bar pod stromem; snímky z prohlížeče na telefonu
+  (390 px) i počítači s logem 388 čtení (tlačítka kořeny nezakrývají).
+- Affected doc(s): `RUNAR_TREE.md` §8 (AUTO-FIT, poznámka o rámu aplikace) — v témže commitu.
