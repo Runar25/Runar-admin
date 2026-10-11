@@ -2817,7 +2817,11 @@ v sekci session (příkaz s podpisem i „Commit ÚZCE“) uváděl pathspec com
   ✅ 2026-10-11 převedeno čtyři z pěti (c3dfd49: `verify_ask_teaser`, `verify_ending_angle`, `verify_image_aspect_key`,
   `verify_image_pin`; dva první pokusy byly vadné útoky, ne slepé kontroly — pin se uplatňuje dvakrát, rozpočet délky má jednu variantu);
   `verify_tree_mista` (lab, prohlížeč) předán CODE-tree. CODE-tune přidal útoky na brzdu kreditů ve smoke ⑨ — celkem 28 útoků / 19 kontrol).
-  Pak ty, které hledají NEPŘÍTOMNOST (propustí-li, nikdo si
+  ✅ 2026-10-11 dávka „nepřítomnost“: `verify_question_injection` (obcházka přes U+2028/U+2029 prošla → kontrola doplněna),
+  `verify_journal_glyphs`, `verify_tier_features`, `verify_new_duplicates`, `verify_fresh_dates`, `verify_shared_tree` (nový režim
+  `stage` — index), `verify_commit_identity` (nový režim `commit` — historie). `verify_prelaunch_open` útok nemá: záměrně jen vypisuje.
+  Stav: 42 útoků / 27 kontrol. Zbývající kontroly bez útoku: `python -X utf8 scripts/protipriklady.py --vse` ukáže pokryté, ostatní ze smoke.
+  Původně: pak ty, které hledají NEPŘÍTOMNOST (propustí-li, nikdo si
   nevšimne): `verify_question_injection`, `verify_journal_glyphs`, `verify_shared_tree`, `verify_commit_identity`, `verify_prelaunch_open`,
   `verify_fresh_dates`, `verify_new_duplicates`, `verify_tier_features`. Postup: případ do `PRIPADY` v `scripts/protipriklady.py`,
   `python -X utf8 scripts/protipriklady.py <kontrola>`.
