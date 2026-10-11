@@ -33,10 +33,16 @@ for (const t of targets) {
 }
 
 // ── 2. nothing under memory/ is untracked ────────────────────────────────────
+// Čerstvý neverzovaný soubor (mladší než CERSTVE_H) je rozdělaná práce některé session, ne zapomenutý soubor — jen varování.
+// 2026-10-11: rozepsaná migrace CODE-tune (pár minut) tu zastavila push všem třem session; pre-push tuhle kontrolu pouští nad
+// SDÍLENÝM stromem. Starší než CERSTVE_H = zapomenutý → FAIL jako dřív.
+const CERSTVE_H = 2;
+const cerstvy = (f) => { try { return (Date.now() - require('fs').statSync(require('path').join(R, f)).mtimeMs) < CERSTVE_H * 3600e3; } catch (e) { return false; } };
 // Only '??' — a staged or modified file is normal mid-work and must not fail the run.
 const porcelain = execSync('git status --porcelain -- memory/', { cwd: R }).toString();
 for (const line of porcelain.split('\n')) {
   if (!line.startsWith('??')) continue;
+  if (cerstvy(line.slice(3).trim())) { console.log('⚠  untracked in memory/ (younger than ' + CERSTVE_H + ' h — work in progress?): ' + line.slice(3).trim()); continue; }
   fail++;
   console.log('FAIL  untracked in memory/: ' + line.slice(3).trim());
   console.log('      -> memory is versioned by git (§17); untracked means it is not in the repo.');

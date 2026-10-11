@@ -35,6 +35,11 @@ const CLASSES = [
   },
 ];
 
+// Čerstvý neverzovaný soubor (mladší než CERSTVE_H) je rozdělaná práce některé session, ne zapomenutý soubor — jen varování.
+// 2026-10-11: rozepsaná migrace CODE-tune (pár minut) tu zastavila push všem třem session; pre-push tuhle kontrolu pouští nad
+// SDÍLENÝM stromem. Starší než CERSTVE_H = zapomenutý → FAIL jako dřív.
+const CERSTVE_H = 2;
+const cerstvy = (f) => { try { return (Date.now() - require('fs').statSync(require('path').join(R, f)).mtimeMs) < CERSTVE_H * 3600e3; } catch (e) { return false; } };
 let fail = 0;
 let tracked = 0;
 
@@ -50,6 +55,7 @@ for (const c of CLASSES) {
   }
   const untracked = (out ? out.split('\n') : []).map(s => s.trim()).filter(Boolean);
   for (const f of untracked) {
+    if (cerstvy(f)) { console.log('⚠  ' + c.label + ' not in git yet (younger than ' + CERSTVE_H + ' h — work in progress?): ' + f); continue; }
     fail++;
     console.log('FAIL  ' + c.label + ' is NOT in git: ' + f);
     console.log('      ' + c.why);
@@ -59,6 +65,6 @@ for (const c of CLASSES) {
 }
 
 if (!fail) {
-  console.log('OK    canonical files: ' + tracked + ' tracked (docs + SQL), none untracked');
+  console.log('OK    canonical files: ' + tracked + ' tracked (docs + SQL), none untracked for longer than ' + CERSTVE_H + ' h');
 }
 process.exit(fail ? 1 : 0);
