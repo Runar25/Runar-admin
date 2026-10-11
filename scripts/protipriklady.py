@@ -74,6 +74,9 @@ PRIPADY = [
   "runeSvg(r, { frame: true, cls: 'badge-stone' }) + ' ' + escapeHtml(jm)", "escapeHtml(k)"),
  ('chyti', 'verify_tier_features.js', 'v2/runar-config.js', 'replace', 'if (v !== null && v !== undefined) out.push(', 'out.push('),
  ('chyti', 'verify_new_duplicates.js', 'RUNAR_PRIVACY.md', 'append', '', '\n**Dvě kopie nejsou riziko rozporu; jsou rozpor s odloženou splatností.**\n'),
+ ('chyti', 'verify_fresh_dates.js', 'RUNAR_DECISIONS.md', 'append', '', '\n## 2026-10-01 (99) — podstrčený záznam se starým datem\n\n- test\n'),
+ ('chyti', 'verify_shared_tree.js', 'v2/sw.js', 'stage', 'HEAD~40', ''),
+ ('chyti', 'verify_commit_identity.js', '(historie)', 'commit', 'Runar Admin', ''),
  # strom ㉳ (CODE-tree 2026-10-11): mutace z hlavičky verify_tree_mista převedené na opakované útoky. Kontrola si lab staví z builderu
  # do dočasné složky, takže útok míří na build_crown_composer.py. (a) dvě ramena v jedné výšce — přes výšky zón XLF, ne exitMinPx
  # (exitMinPx 30→5 kontrola propustila: rozestup na jejích 12 stromech drží výšky zón, min. 49 px i s 5 px); (s) seeking koření;
@@ -116,6 +119,18 @@ def klic(pripad, ja):
 
 def podstrc(W, rel, mode, a, b):
     p = W + '/' + rel
+    # stage (2026-10-11): do INDEXU kopie dá verzi souboru z revize `a` (kontroly stavu sdíleného stromu čtou index, ne soubor)
+    if mode == 'stage':
+        g = lambda *x: subprocess.run(['git', '-C', W] + list(x), capture_output=True, text=True, env=ENV)
+        stary, novy = g('rev-parse', a + ':' + rel).stdout.strip(), g('rev-parse', 'HEAD:' + rel).stdout.strip()
+        if not stary or stary == novy:
+            return 'verze z ' + a + ' chybí nebo je stejná jako v HEAD'
+        return '' if g('update-index', '--cacheinfo', '100644,' + stary + ',' + rel).returncode == 0 else 'update-index selhal'
+    # commit (2026-10-11): prázdný commit pod jménem `a` v kopii (kontroly historie čtou git log); úklid ho vrátí
+    if mode == 'commit':
+        r = subprocess.run(['git', '-C', W, '-c', 'user.name=' + a, '-c', 'user.email=protipriklad@local', 'commit', '-q', '--allow-empty',
+                            '-m', 'protipříklad (scripts/protipriklady.py)'], capture_output=True, text=True, encoding='utf-8', env=ENV)
+        return '' if r.returncode == 0 else 'commit selhal: ' + (r.stdout + r.stderr)[-120:]
     if mode == 'create':
         if os.path.exists(p):
             return 'soubor už existuje'
@@ -139,7 +154,12 @@ def podstrc(W, rel, mode, a, b):
     return ''
 
 
-def vrat(W, rel):
+def vrat(W, rel, mode=''):
+    if mode == 'commit':
+        subprocess.run(['git', '-C', W, 'reset', '-q', '--soft', 'HEAD~1'], check=True, env=ENV)
+        return
+    if mode == 'stage':
+        subprocess.run(['git', '-C', W, 'reset', '-q', '--', rel], check=True, env=ENV)   # index ← HEAD
     r = subprocess.run(['git', '-C', W, 'ls-files', '--error-unmatch', '--', rel], capture_output=True, env=ENV)
     if r.returncode == 0:
         subprocess.run(['git', '-C', W, 'checkout', '-q', '--', rel], check=True, env=ENV)
@@ -151,7 +171,9 @@ def beh(W, sk):
     env = dict(ENV, RUNAR_ROOT=W)
     r = subprocess.run(['node', W + '/scripts/' + sk], cwd=W, env=env, capture_output=True, text=True, encoding='utf-8')
     out = r.stdout + r.stderr
-    radek = next((l.strip() for l in out.split('\n') if re.match(r'\s*(FAIL|CHYBA|✗)', l)), '')
+    neprazdne = [l.strip() for l in out.split('\n') if l.strip()]
+    # řádek s důvodem: FAIL/CHYBA/✗, jinak poslední neprázdný (některé kontroly hlásí chybu jinak — fresh_dates, commit_identity)
+    radek = next((l for l in neprazdne if re.match(r'(FAIL|CHYBA|✗)', l)), neprazdne[-1] if neprazdne and r.returncode else '')
     return r.returncode, radek
 
 
@@ -191,10 +213,10 @@ def main():
             if proc:
                 chyby.append('FAIL  %s [%s]: podstrčení se neprojevilo (%s) — cílový text se změnil; uprav případ v scripts/protipriklady.py'
                              % (sk, rel, proc))
-                vrat(W, rel)
+                if mode != 'commit': vrat(W, rel, mode)   # nepovedený commit nic nevytvořil — reset by sebral skutečný HEAD kopie
                 continue
             k1, r1 = beh(W, sk)
-            vrat(W, rel)
+            vrat(W, rel, mode)
             spravne = (k1 == 0) if typ == 'nesmi' else (k1 != 0)
             if spravne:
                 cache[klic(p, ja)] = 'ok'
