@@ -485,9 +485,16 @@
   5. **`RUNAR_PRICING.md` „ElevenLabs Plan“:** kromě Creatoru i Pro / Scale / Business podle ceníku API 1 238 000 / 3 738 000 / 12 375 000 zn.
      (tabulka má 990 000 / 2 990 000 / 9 900 000) → uživatelé a hladiny přechodu × 1,25; chybí řádek Starter ($6, 75 000); „Overage rate =
      plan rate“ pro Starter neplatí (viz výš).
-  **Owner — jednou větou:** „limit zdarma“ pro brzdu z bodu 1 je (a) měsíčních 30 000 kreditů tarifu (≈ jeho „120 hlasů“; převod zůstane
-  rezervou na spuštění) — **doporučuji**; nebo (b) vše kromě dobití (převod se smí čerpat — po dvou měsících stejně propadá; cyklus pak
-  spotřebuje až ~90 000).
+  **ROZHODNUTO ownerem (DECISIONS 2026-10-11 (48)):** převod se smí vyčerpat, dobití ne; bez převodu sama 30 000. Zadání:
+  - [ ] **Brzda** (`elevenlabs-proxy`, `elevenlabs-static`): hlas jen když `character_count + ceil(znaky × kredity_na_znak) ≤ character_limit −
+    EL_DOBITI_KREDITY` (13 800; konstanta v configu se zrcadlem v obou funkcích pod smoke ⑨, sazba na znak v `_shared/el_voice.ts`).
+    `VOICE_SAFE_SHARE` pryč i s komentářem (nahrazuje body 1 a 2 výš).
+  - [ ] **Owner to musí vidět** (*„potřebuju to hlídat!“*): (1) shrine VOICE — místo „chars“ kredity, rozpad tarif 30 000 / převod /
+    dobití, hladina brzdy a kolik zbývá do ní, datum resetu; (2) snímek stavu ukládat při hlasu nejvýš 1× denně místo týdně (proxy stav
+    stejně čte kvůli brzdě) a při každém zastavení brzdou (`voice_quota_rest`) — dnes je poslední snímek z 2026-10-05; (3) rozšířit řádek
+    „hlas“ v `scripts/utils/plytvani.js` (ten už pouští „načti čtení a reporty“ přes `nacti_cteni.js`, nový řádek jinde nezakládat):
+    spotřeba v cyklu v kreditech, zůstatek převodu, ⚠ když převod klesne pod jeden cyklus spotřeby, když brzda za poslední dny zastavila
+    hlas a když je snímek starší než 2 dny.
 
 ## Multijazyčnost
 
@@ -2523,10 +2530,11 @@ dvojího odečtu. **Z dat (30 dní):** 0 záloh, 0 dvojích generování; dat po
 
 ### Část 43 — limity a kvóty placených služeb (2026-10-11, jen čtení)
 **Platí (měřeno 2026-10-11):** Supabase Free daleko od limitů — databáze 15 MB (limit 500 MB), úložiště 23 MB (1 GB; statické audio 53 souborů
-21 MB + Rúnarův portrét) · ElevenLabs plán `starter`, poslední týdenní snímek 2026-10-05: 13 919 / 103 807 znaků za měsíc.
-- ⚪ **Před veřejným spuštěním — kapacita hlasu:** jeden namluvený výklad ≈ 600 znaků → plán `starter` unese **zhruba 170 hlasů měsíčně**
+21 MB + Rúnarův portrét) · ElevenLabs plán `starter`, poslední týdenní snímek 2026-10-05: 13 919 / 103 807 kreditů (do 2026-10-11 tu stálo „znaků“, DECISIONS (43)).
+- ⚪ **Před veřejným spuštěním — kapacita hlasu:** plán `starter` = 30 000 kreditů = 75 000 znaků ≈ **177 IS / 200 EN Single měsíčně** (DECISIONS 2026-10-11 (43); do 2026-10-11 tu stálo
+  „výklad ≈ 600 znaků → ~170 hlasů“, což spolu nesedí — 75 000 / 600 = 125)
   (každý nový účet 1 hlas k volnému čtení + čtení z karet + předplatné nejvýš `VOICE_MONTHLY_LIMIT`). Při desítkách aktivních lidí s hlasem
-  plán nestačí — rozhodnout předem: vyšší plán, nebo co se stane po vyčerpání (navazuje na „Limit v účtu ElevenLabs“ výš: zjistit, jestli má
+  plán nestačí — rozhodnout předem: vyšší plán, nebo co se stane po vyčerpání (navazuje na „Limit v účtu ElevenLabs“ výš — zjištěno 2026-10-11: placení nad kvótu účet nemá, `can_extend_character_limit=false`; původně: zjistit, jestli má
   plán zapnuté placení nad kvótu). Hlídá `voice-usage` ve shrine (snímek kvóty) + `plytvani.js`.
   ✅ **Rozhodnuto 2026-10-11 (KUKY):** *„máme 5 testerů, tak jim dejme 15 hlasů Rúnara… ale budeme hlídat, ať nepřekročíme bezpečnou
   hladinu, třeba 120 hlasů.“* Výklad CODE-read (ownerovi napsán): každý tester 15/měsíc, celkový strop 120/měsíc vynucený serverem

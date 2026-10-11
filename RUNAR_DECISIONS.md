@@ -10655,3 +10655,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno:** 11 stavů v Chrome bez okna (admin bez runy, s runou, založeno · běžný uživatel · návštěvník · rituál · IS), smoke 72/72;
   kód 985a5b2.
 - Affected doc(s): `RUNAR_TREE.md` §2 (odkaz u založení) — v témže commitu.
+
+## 2026-10-11 (48) — Brzda hlasu: převod kreditů ElevenLabs se smí vyčerpat, dobití ne; bez převodu sama 30 000 tarifu — a owner ji musí vidět
+
+- **Owner:** *„mame hodne kreditu tak je muze vycerpat, ale potrebuju to hlidat! jakmile vycerpame nebo vyprsi jejich platnost tak omezime
+  na 30.000“* — po kontrole CODE-read, která ukázala, že dnešní hladina `VOICE_SAFE_SHARE` 0,7 × `character_limit` (~72,7 tis.) při malém
+  převodu sáhne do dobití a že testerských účtů se stropem 15 bude po registraci 9 (BACKLOG, položka „Pro CODE-tune — ElevenLabs po
+  kontrole CODE-read“).
+- **Co platí:** hlas (čtení i Kolekce) se generuje, dokud spotřeba v cyklu EL (`character_count`, kredity) + nový hlas v kreditech nepřesáhne
+  `character_limit − kredity dobití`. `character_limit` = tarif 30 000 + převod + dobití a EL čerpá dobití až nakonec (DECISIONS (43)), takže:
+  s převodem se čerpá i převod; když se vyčerpá nebo propadne, limit klesne a brzda je SAMA na 30 000 tarifu — žádné ruční přepnutí (§30).
+  Dobití (dnes 13 800 kreditů, $2.76) zůstává nedotčené.
+- **Slabé místo (pojmenované):** velikost dobití EL v odpovědi neposílá → konstanta v configu (zrcadlo v edge funkcích, smoke ⑨). Koupí-li
+  owner další dobití nebo zapne automatické, konstantu je třeba zvýšit, jinak by brzda nové dobití čerpala.
+- **Hlídání:** owner musí stav vidět bez otevírání ElevenLabs — zůstatek převodu, spotřebu v cyklu, kdy se brzda přepne na 30 000 a kdy
+  zastavila hlas. Zadání pro CODE-tune: BACKLOG, táž položka.
+- Affected doc(s): `RUNAR_BACKLOG.md` (položka ElevenLabs) — v témže commitu; komentář `VOICE_SAFE_SHARE` v configu s implementací (CODE-tune).
