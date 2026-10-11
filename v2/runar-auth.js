@@ -127,7 +127,8 @@ function updateBanners() {
     // ── Logged in ──
     banner.style.display = 'none';
 
-    // ── Rune Walker / Rune Wanderer — unlimited ──
+    // ── Předplatitelé (standard / premium) — měsíční jednotky hlídá server (TIERS.*.monthly_readings), nad formulářem nic.
+    //    Kolik zbývá, ukazuje menu pod jménem (updateDropdown, 2026-10-11). Do 2026-10-11 tu stálo „unlimited“ — od stropu neplatí.
     if (userTier === 'standard' || userTier === 'premium') {
       freeBanner.style.display    = 'none';
       creditsBanner.style.display = 'none';

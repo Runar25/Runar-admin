@@ -18,6 +18,8 @@ let currentUser    = null;
 let userTier       = 'free';    // DB: free_trial | rune_seeker | standard | premium ('free' = výchozí před načtením profilu; 2026-10-09 opraven výčet)
 let userCredits    = 0;         // credits_balance from user_profiles
 let userFreeBalance = 0;        // free_balance: 1 at registration, no replenish (model B)
+let userMonthUnits  = 0;        // month_units — jednotky předplatného spotřebované v měsíci month_key (píše jen server; počítadlo v menu)
+let userMonthKey    = '';       // month_key — 'YYYY-MM' v UTC jako server (claude-proxy monthKey), ke kterému month_units patří
 let readerUser     = {};
 let userGender     = 'hk';   // kk | kvk | hk (han, default) — how Runar addresses the seeker (IS)
 let greetingShown  = false;     // show topbar greeting only once per session
@@ -62,7 +64,7 @@ async function fetchUserProfile(userId) {
   profileLoaded = false;
   try {
     const { data } = await sb.from('user_profiles')
-      .select('tier, credits_balance, free_balance, name, norse_name, address_pref, lang, life_rune_number, life_rune_text, life_rune_lang, dob_day, dob_month, dob_year, tree_name, tree_founded_at, founding_reading_id')
+      .select('tier, credits_balance, free_balance, month_units, month_key, name, norse_name, address_pref, lang, life_rune_number, life_rune_text, life_rune_lang, dob_day, dob_month, dob_year, tree_name, tree_founded_at, founding_reading_id')
       .eq('id', userId)
       .maybeSingle();
     if (data) {
@@ -82,6 +84,8 @@ async function fetchUserProfile(userId) {
       // POTOM — jinak zustanou skryte i tomu, kdo ji ma.
       if (typeof _syncNornsGate === 'function') _syncNornsGate();
       userFreeBalance = data.free_balance != null ? data.free_balance : 0;
+      userMonthUnits  = data.month_units || 0;
+      userMonthKey    = data.month_key   || '';
       // Load life rune reading if stored
       if (data.life_rune_text) {
         _lifeRuneText = data.life_rune_text;
@@ -213,14 +217,17 @@ function recordTreeReading(spreadKind, runeObjs, area, intention) {
 // Sync monthly count from DB → localStorage (accurate, multi-device)
 // Refresh userFreeBalance z DB (free_balance: 1 při registraci, žádné doplnění — model B).
 // Název zachován kvůli stabilitě call-sites; už není měsíční.
+// 2026-10-11: čte i month_units/month_key — po čtení předplatitele tak počítadlo v menu (updateDropdown) ukáže nový zůstatek.
 async function syncFreeBalance(userId) {
   try {
     const { data } = await sb.from('user_profiles')
-      .select('free_balance')
+      .select('free_balance, month_units, month_key')
       .eq('id', userId)
       .maybeSingle();
     if (data) {
       userFreeBalance = data.free_balance != null ? data.free_balance : 0;
+      userMonthUnits  = data.month_units || 0;
+      userMonthKey    = data.month_key   || '';
       updateAuthUI();
     }
   } catch(e) { console.warn('syncFreeBalance:', e.message); }
@@ -1403,12 +1410,26 @@ function updateDropdown() {
   if (tierEl)  tierEl.textContent  = tierNames[userTier] || userTier.toUpperCase();
   if (emailEl) emailEl.textContent = currentUser.email;
   if (balEl) {
-    if (normalizeTier(userTier) === 'rune_seeker') {
+    if (!profileLoaded) {
+      // 2026-10-11: před načtením profilu je userTier 'free' (→ rune_seeker) a zůstatky nulové — menu by ukázalo „0 remaining“
+      // i předplatiteli. Nalezeno při zavádění počítadla pro předplatitele; fetchUserProfile po doběhnutí menu překreslí.
+      balEl.style.display = 'none';
+    } else if (normalizeTier(userTier) === 'rune_seeker') {
       // 2026-10-10 (KUKY, hlášení e9b05776: „Pokud je free reading pryč, tak je pryč a není potřeba ho uvádět… 9 rune readings
       // remain“): jedno číslo — kolik čtení zbývá celkem (volné + kredity), stejně jako počítadlo nad formulářem (updateBanners).
       // Texty z UI_TEXT + VOCAB (§10, §15); do té doby natvrdo „0 free readings remaining · 9 credits“ / „frjáls lestur“.
       const celkem = Math.max(0, userFreeBalance) + Math.max(0, userCredits);
       balEl.textContent = tp('rs_credits_counter', { units: vn('unit', celkem, lang) });
+      balEl.style.display = '';
+    } else if (TIERS[userTier] && TIERS[userTier].monthly_readings > 0) {
+      // 2026-10-11 (KUKY: „měl bych to vidět stejně jako rune seeker nahoře u svého jména. platí i pro ostatní účty.“): předplatitel
+      // (a admin, který se počítá jako premium) vidí, kolik jednotek mu v tomto měsíci zbývá — do té doby nic a o stropu se dozvěděl až
+      // hláškou err_monthly_limit. Strop z TIERS (§10), spotřebu píše server; jiný měsíc než month_key = nic nespotřebováno (server
+      // počítadlo v novém měsíci začne znovu, claude-proxy). Text je týž jako u Rune Seekera — rs_credits_counter, žádná druhá kopie.
+      const mesic  = new Date().toISOString().slice(0, 7);
+      const pouzito = userMonthKey === mesic ? Math.max(0, userMonthUnits) : 0;
+      const zbyva  = Math.max(0, TIERS[userTier].monthly_readings - pouzito);
+      balEl.textContent = tp('rs_credits_counter', { units: vn('unit', zbyva, lang) });
       balEl.style.display = '';
     } else {
       balEl.style.display = 'none';
