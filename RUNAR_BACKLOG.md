@@ -3683,6 +3683,17 @@ start“ (runa = naše SVG), šířka telefonu (bez vodorovného posunu, mříž
 - [ ] **Návrh pro design (ne chyba)** — klik návštěvníka na zamčenou runu v Kolekci nedělá nic (`if (!locked) cell.onclick`); výzva
   nahoře vysvětluje pět odemčených run, ale krátká nápověda po kliknutí by předešla dojmu „nefunguje“.
 
+**Přihlášená část** (CODE-read 2026-10-11, appka z pracovního stromu na localhostu, podvržený tester s premium jen v prohlížeči, deník
+z vymyšlených řádků, volání databáze zablokovaná): postranní panel, formulář čtení a deník v EN i IS, šířka telefonu (bez vodorovného posunu),
+konzole bez chyb. Islandské věty panelu is-greynir: „lestrunum“ korpus dokládá (20×), E001 jen proto, že popisek nemá podmět.
+- [ ] **Pro CODE-tune — přepnutí jazyka na záložce Deník nechá deník v původní řeči.** Po IS → EN zůstane nadpis „✦ SPÁR ÞÍNAR“, počet
+  „2 lestrar“, u rozbalené karty „~ DÝPRI HUGLEIÐING“ a „HLUSTA Á LESTURINN“ a datum v islandském tvaru (filtry se přeloží). Příčina:
+  `setLang` (`v2/runar-app.js` ~ř. 334–346) po přepnutí znovu kreslí Kolekci a Životní runu, Deník ne; jeho texty kreslí jen `renderJournal`
+  (do updateUIText nepatří, §14). Stačí znovu vykreslit uložené `_jEntries` (s aktivním filtrem), když je otevřená záložka Deník.
+  Smoke ㊽ zaseklou angličtinu hledá, opačný směr (islandština v EN po přepnutí na Deníku) neprochází.
+- [ ] **Návrh pro design (ne chyba)** — na telefonu leží vlajka hlášení (`#br-btn`, z-index 99998) a „?“ (`#hb-btn`) i nad otevřeným
+  postranním panelem (z-index 151); vlajka stojí v řádku „× DELETE ACCOUNT“. Text dnes nezakryje, ale panel působí neuzavřeně.
+
 ## Ověřit naživo, než rozešleš odkaz
 
 - [ ] jedno čtení na přihlášeném účtu — dokáže, že klíče modelu čtení jsou nastavené (sol: `OPENAI_API_KEY`, záložní Claude: `ANTHROPIC_API_KEY`;
