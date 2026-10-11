@@ -10713,3 +10713,20 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Zbývá:** owner pustí `sql/2026-10-11_voice_quota_snapshots_zdroje.sql` (nové zdroje snímků `daily` a `brake`), pak nasadit
   `elevenlabs-proxy`, `elevenlabs-static` a `voice-usage` (ownerovo ano).
 - Affected doc(s): `RUNAR_BACKLOG.md` (položka ElevenLabs po kontrole CODE-read), `RUNAR_PRICING.md` (ElevenLabs Plan) — v témže commitu.
+
+## 2026-10-11 (51) — Pre-commit zastaví commit, který maže řádky, jež za posledních 24 h přidala jiná session
+
+- **Proč:** c3dfd49 (CODE-read) smazal čtyři útoky CODE-tune z `scripts/protipriklady.py`. Commit „jen svého bloku“ přes dočasný index
+  sestavil soubor z pracovního stromu bez cizího bloku, který mezitím už byl v HEAD (8f0bf93). Nepushnuto, vráceno 80240e9; všiml jsem si
+  jen díky „5 deletions“ ve statistice. Táž třída jako tři pathspec commity z (23) — práce jedné session zmizí v commitu druhé — jenže
+  u kódu a u COMMITNUTÝCH řádků, kam pravidlo (23) nesahá.
+- **Co:** `hooks/pre-commit.py` porovná řádky, které commit maže nebo mění, s řádky, které do téhož souboru za 24 h přidaly commity jiného
+  autora (`-c user.name`); řádek, který za 24 h přidal i autor commitu (třeba ho vracel), cizí není. Shoda = stop s výpisem (soubor, commit,
+  autor, řádek). Vědomá úprava cizího čerstvého řádku: `RUNAR_CIZI_OK="<důvod>"` (log `.git/runar-cizi.log`, `commit_vlastni` ho předá) —
+  a říct to té session. Jeden `git log -p` na soubor s mazáním, ne `git blame` (ten je na velkých docích pomalý, BACKLOG 2026-10-03).
+- **Ověřeno:** dočasný index a klon na 8f0bf93 — přehraný omyl c3dfd49 zastaví; CODE-tune smí mazat své čerstvé řádky; commit, který jen
+  přidává, projde; třetí session mazající řádky obou zastaví; výjimka projde a zaloguje. Nalezená vlastní vada: bez e-mailu v configu
+  `git var` jméno nevrátí → náhradně `GIT_AUTHOR_NAME` / `user.name`.
+- **Mez:** porovnává obsah řádků (≥ 20 znaků); kratší řádky a přesuny pod jiným textem nevidí. Platí hned pro všechny session (hook běží
+  z pracovního stromu). Vlastní pojistka, appka beze změny — bez ptaní (2026-10-11 (15)).
+- Affected doc(s): `CLAUDE.md` §30 — v témže commitu.

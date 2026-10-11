@@ -363,6 +363,8 @@ musí to buď **udělat skript samo**, nebo **zastavit práci**, když se to vyn
   Nástroj Edit (a Write přes existující) na sdílený doc zastaví hook hned — změna by nešla commitnout; náhrada:
   `commit_vlastni.py uprav <lane> <soubor> <stary.txt> <novy.txt>` (DECISIONS 2026-10-11 (42)).
   (KUKY 2026-10-11, DECISIONS 2026-10-11 (23).)
+  Týž pre-commit zastaví i commit (jakéhokoli souboru), který maže řádky, jež za 24 h přidala jiná session; vědomě jen s
+  `RUNAR_CIZI_OK="<důvod>"` (DECISIONS 2026-10-11 (51)).
 - **Pravidla při dotyku** → PreToolUse hook (`scripts/utils/pravidla_pri_dotyku.py`): když session poprvé sáhne na soubor z mapy
   `scripts/utils/pravidla_mapa.json`, úpravu jednou zastaví a vypíše AKTUÁLNÍ znění pravidel pro tu oblast (živě z CLAUDE.md, docs,
   paměti); dlouhou sekci pustí až po Read; zápis do CLAUDE.md, `memory/` a `RUNAR_*.md` až po `uz_vime.js` puštěném po poslední
