@@ -589,14 +589,15 @@ var _SPREAD_SLOT_CFG = {
   norns:     { slotsId: 'spread3-slots', mode: 'norns',     get: function() { return _spread3Runes; }, id: function(i) { return 'slot' + (i + 1); },   n: 3 },
   kriz:      { slotsId: 'spread5-slots', mode: 'kriz',      get: function() { return _spread5Runes; }, id: function(i) { return 's5slot' + (i + 1); }, n: 5 },
   horseshoe: { slotsId: 'spread7-slots', mode: 'horseshoe', display: 'grid', get: function() { return _spread7Runes; }, id: function(i) { return 's7slot' + (i + 1); }, n: 7 },
-  yggdrasil: { slotsId: 'spread9-slots', mode: 'yggdrasil', get: function() { return _spread9Runes; }, id: function(i) { return 's9slot' + (i + 1); }, n: 9 },
+  yggdrasil: { slotsId: 'spread9-slots', mode: 'yggdrasil', display: 'grid', get: function() { return _spread9Runes; }, id: function(i) { return 's9slot' + (i + 1); }, n: 9 },
 };
 var _SLOT_GLYPHS = ['①','②','③','④','⑤','⑥','⑦','⑧','⑨'];
 
 function _updateSpreadSlots(cfg) {
   var slotEl = document.getElementById(cfg.slotsId);
   if (!slotEl) return;
-  // 2026-10-11: Horseshoe je mřížka do tvaru podkovy (cfg.display 'grid', CSS .spread7-slots); ostatní řady zůstávají flex.
+  // 2026-10-11: Horseshoe a Yggdrasil jsou mřížky se stejným rozestupem (cfg.display 'grid', CSS .spread7-slots / .spread9-slots);
+  // Norny zůstávají řada (flex), Cross má mřížku uvnitř rámečku (.s5-cross).
   slotEl.style.display = (_spreadMode === cfg.mode) ? (cfg.display || 'flex') : 'none';
   var runes = cfg.get();
   for (var i = 0; i < cfg.n; i++) {
