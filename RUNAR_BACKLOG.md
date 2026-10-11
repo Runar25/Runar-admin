@@ -2517,6 +2517,24 @@ rate limit 5 / 15 min na IP, „použitý“ = `used_by` NEBO `used_at`, označe
   s pevnou verzí (DECISIONS 2026-10-10 (33)). Návrh: připnout přesnou verzi (stejnou jako `v2/vendor/`), ideálně `npm:` specifikátorem,
   a hlídat ve smoke, že žádný import edge funkce není plovoucí. Projeví se až dalším nasazením (owner).
 
+#### Kolo 2 / 10 — duplicity v pravidlech: CLAUDE.md, MEMORY.md, working-style.md a paměť (2026-10-11)
+KUKY 2026-10-11: *„žádné místo by nemělo mít duplikáty, pokud to není potřeba … jestli jsou pravidla správně seřazena, jestli se
+neduplikují, jestli jich není moc, jestli se nedají spojit nebo jestli pořád mají své místo.“* Metoda: nástroj na doslovné kopie
+(slovní čtveřice napříč 79 soubory) + čtení `working-style.md` celého + dva čtecí agenti nad 75 soubory paměti; každý nález ověřen.
+**Opraveno** (a774bad, 0eae678): kopie uvnitř CLAUDE.md (§2/§9/§19.2/§20/§16, lanes × §7/§30) · `working-style.md` opisoval
+§1/§2/§4/§5/§7/§8/§16/§20 a měl druhý rozcestník · 20 paměťových souborů (kopie → odkaz, zastaralá fakta) · smazán
+`fix-or-log-duplicates-and-errors` (celý kopie §22).
+**Předáno CODE-tree:** zákon „1 pramen = 1 runa, max 25“ v SessionStart hooku a v `tree-roots-rebuild` proti `RUNAR_TREE.md`
+(pramen = element od 2026-09-28) + tři zastaralé stromové paměti. **Předáno CODE-tune:** mapa promptu stojí na v4.15 a opus-4-8;
+konvence tlačítka spreadu → komentář do `readRune()`.
+**Nechávám (překryv je detail, ne kopie):** `attack-the-metric` (rozvádí §27 čísly, která v CLAUDE.md nejsou), `one-patch-script-path`
+(proč u §1), `nacti-cteni-a-reporty` a `napred-dohledej-co-uz-je` (provozní postup k §29/§30). **Nejisté, neslučoval jsem:**
+`rozkaz-a-studene-cteni-hranice` × `you-neni-prohresek`, `work-efficiently-ask-if-simpler` × `cheapest-deciding-measurement-first`.
+**Čeká na ownera:** pořadí a slučování pravidel (přečíslovat nejde — odkazů na § jsou stovky ve 179 souborech kódu), dlouhé doklady
+v CLAUDE.md × paměť, rozpor „NIKDY nezačít bez schváleného plánu“ (MEMORY.md, working-style) × §16 „Code sám opraví“ a
+`find-a-gap-close-it-now`; znění stromového zákona v hooku. Drobnost: §1 tvrdí, že každý patch slot má vlastní řádek v allowlistu —
+v `~/.claude/settings.json` je jen `scripts/_patch.py` (neověřeno, jestli to vadí). <!-- doc-links:ok 2026-10-11 uživatelský soubor mimo repo -->
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
