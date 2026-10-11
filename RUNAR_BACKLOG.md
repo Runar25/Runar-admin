@@ -142,7 +142,8 @@
     je hlas"*. Flash ani v3 pro EN se nezkouší. (Islandština: `v3_conversational` nezkoušeno, nikdo nechtěl.)
   - ⚠️ **Ceník počítá anglický hlas jako Flash, kód používá `eleven_multilingual_v2`** (`v2/runar-config.js`, `elevenlabs-proxy`,
     `elevenlabs-static`) → EN hlas je v ceníku podhodnocený 2×. Model je zapsaný na 3 místech — při změně sáhnout na všechna.
-    **Po rozhodnutí 2026-09-26 zbývá opravit ceník** (`RUNAR_PRICING.md`: EN = Multilingual $0,10/1k, ne Flash $0,05) — CODE-tune `[pricing]`.
+    ✅ ~~**Po rozhodnutí 2026-09-26 zbývá opravit ceník**~~ (`RUNAR_PRICING.md`: EN = Multilingual $0,10/1k, ne Flash $0,05) — *hotovo 2026-10-11
+    při přepočtu na sol (`scripts/utils/pricing_tabulka.js` bere model hlasu z elevenlabs-proxy a sazbu z `EL_PRECERPANI`).*
   - **Skutečná spotřeba a kdy na vyšší tarif** → handoff CODE-tune 2026-09-24 (položka níž).
 - [ ] **Sledování nákladů na hlas (handoff CODE-tune 2026-09-24, owner „udělej, jak říkáš")** — (1) admin funkce, která zavolá
   `GET https://api.elevenlabs.io/v1/user/subscription` (klíč `ELEVENLABS_API_KEY`) a vrátí `character_count`, `character_limit`,
@@ -396,7 +397,13 @@
 ## Profil / personalizace
 
 - [x] **Gender field** — HOTOVO (kód, SW v118): selektor Hann/Hún/Hán (kk/kvk/hk=hán default) v side panelu, jen IS; ÁVARP do všech 5 IS builderů; rule#5 skloňuje dle rodu. **Čeká jen DB sloupec:** `alter table user_profiles add column if not exists address_gender text default 'hk';` (owner v SQL editoru). Do té doby jede přes localStorage.
-- [ ] **RUNAR_PRICING.md — model ref na Opus** — model čtení přepnut sonnet-4-5 → opus-4-8; cenový model může zmiňovat starý (delta zanedbatelný, hlas dominuje). Aktualizovat referenci.
+- [ ] **RUNAR_PRICING.md — příjem na uživatele stojí dvakrát jinak** (nalezeno 2026-10-11 při přepočtu na sol, CODE-tune): projekce zisku
+  počítá ~$24 na uživatele (10 uživatelů ~$240), „Operating costs“ ~$28.5 (3.518 ISK; mix 70/30 tarifů, 60 % ročně). Rozdíl je ve vstupu, ne
+  v nákladech. Rozhodne owner, který mix platí; druhé místo pak převést na odkaz (§20).
+- [ ] **Upozornění na obnovu měsíčních čtení** (owner 2026-10-11: *„apka by mohla dát vědět jednou po otevření, že se čtení obnovila“*) —
+  plán předložen ownerovi 2026-10-11 (CODE-tune), čeká na ano. Do té doby slib z nápovědy pryč (DECISIONS 2026-10-11 (20)); až vznikne,
+  věta se do FAQ vrátí.
+- [x] *(hotovo 2026-10-11: pricing přepočten na GPT-6 sol z dat produkce — `node scripts/utils/pricing_tabulka.js`)* **RUNAR_PRICING.md — model ref na Opus** — model čtení přepnut sonnet-4-5 → opus-4-8; cenový model může zmiňovat starý (delta zanedbatelný, hlas dominuje). Aktualizovat referenci.
   ⚠️ 2026-10-10 (CODE-read, kontrola architektury): od 2026-10-09 čte GPT-6 sol (`SOL_MODEL`), Opus je jen záloha — položka platí dál, ale cíl je sol, ne Opus. Totéž → část 17 níž (štítky „Claude API“ v tabulkách).
 
 ## Multijazyčnost
@@ -1039,7 +1046,7 @@ atomický upsert, úklid starších než hodina; stejně tak `use_credit` (atomi
     EN: *Dagaz lives at the border between night and day. It rarely comes as a blaze. More often the same thing simply turns, and you see it from its other side. Then the world no longer looks quite as it did. Perhaps there is no new door to look for. Perhaps you already stand on its threshold.*
     IS: *Dagaz býr á mörkunum milli nætur og dags. Hún kemur sjaldnast eins og leiftur. Oftar snýst sami hluturinn einfaldlega við, og þú sérð hann frá hinni hliðinni. Heimurinn lítur þá ekki lengur alveg eins út og áður. Kannski þarf ekki að leita að nýjum dyrum. Kannski stendur þú nú þegar á þröskuldinum.*
 - [x] **VYŘEŠENO 2026-09-27 (DECISIONS 2026-09-27 (10))** ~~**Obraz se může zopakovat napříč zařízeními**~~ (dnes sáček i „poslední obraz“ žijí v localStorage = per zařízení). **Doklad:** KUKY report 2026-09-23 18:42 *„podruhé za sebou rebarbora“* — Berkana 22. 9. 14:24 a 23. 9. 18:39 (UTC), obě s rebarborou. Oprava „nikdy tentýž obraz hned po sobě“ šla ven 18:36 UTC, druhé čtení přišlo o 3 minuty později — skoro jistě ještě na starém kódu (nasazení + cache); a i po opravě platí jen na jednom zařízení. V září má Berkana 5 kandidátů, takže z jiného zařízení je to 1 : 5. **Levné řešení bez serveru:** před losem načíst poslední čtení téže runy z journalu (`readings.prompt_draws` nese obraz) a vyřadit ho stejnou cestou jako `seasonlast_` (`_seasonBagPick(…, exclude)`). Jen pro přihlášené; návštěvník zůstává u localStorage. (CODE-tune 2026-09-23)
-- [ ] A/B/C re-enable · EN polish pass · Fáze 4 (podmíněné) · sigil cut-out export · RUNAR_PRICING model ref (Sonnet→Opus 4.8) · smoke shorthand-check (chybí blocklist).
+- [ ] A/B/C re-enable · EN polish pass · Fáze 4 (podmíněné) · sigil cut-out export · ~~RUNAR_PRICING model ref (Sonnet→Opus 4.8)~~ (2026-10-11 přepočteno na sol) · smoke shorthand-check (chybí blocklist).
 - [x] **Kříž má jiný formát position-bloku než ostatní 3 spready** — SJEDNOCENO v4.7-mynd 2026-08-23 (LABEL:
 Runa — klíče; inline větev _spreadBlock odstraněna, golden = jen 4 kříž buildery). Původně: (`label: Runa\nklíčová slova` vs `label\nRuna — klíčová slova`). Vzniklo při unifikaci builderu (`70cc33c`), nikde není zdůvodněno. Dedup na `_spreadBlock` (character.js) rozdíl DRŽÍ přes parametr `inlineLabel`, aby refaktor nezměnil prompt (§18.3). Sjednotit = změna promptu → vlastní tag + eval, ne tichý tune.
 - [x] **VYŘEŠENO 2026-09-27 (DECISIONS 2026-09-27 (12), v4.70) — 22 vět přepsáno, 4 skutečné chyby opraveny; zbývají jen štítky/seznamy/JSON, otázka runy v uvozovkách a ÁVARP (záměrně).** ~~**IS: dlouhé víceklauzové věty promptu nejdou rozparsovat (E001, §19.2)**~~ — týká se tie-breakeru `_priorityContext` (character.js) **i řádků `VOICE_PROFILES.focused.is`** (config.js) — GreynirCorrect neuparsuje větu, která začíná „Ef þetta rennur ekki saman í eina náttúrlega mynd: Haltu … fremst…". **Změřeno 2026-08-08:** E001 má i PŮVODNÍ shipnutá věta i varianta bez dvojtečky (`skaltu halda`); samotná druhá půlka parsuje čistě → vinu nese úvodní podmínková klauzule, ne úprava z commitu C (žádná regrese). Přepsat, dokud nástroj nerozumí = změna promptu → vlastní tag + golden. (`rúnunum`→`rútunum` je false-pos.) **D6 2026-08-08:** týž závěr u profilu — E001 na dotčených řádcích bylo 2/2 před změnou i po ní. Společný jmenovatel: dlouhá věta s dvojtečkou a několika středníky. Řešení = rozsekat na kratší věty (změna promptu → vlastní tag + golden).
@@ -1195,6 +1202,7 @@ Detail nálezu, který tu chybí, se dá dohledat v `RUNAR_DECISIONS.md` téhož
 7. **`RUNAR_PRICING.md:37` tvrdí model Sonnet 4-5**, proxy jede Opus 4.8
    (`claude-proxy/index.ts:654`). Sloupec „Claude" v tabulce `:43-49` je pak počítaný na ceně
    jiného modelu → **break-even je špatně**. [O] přeměřit nebo označit datem + modelem.
+   ✅ 2026-10-11: přeměřeno na GPT-6 sol z dat produkce (`scripts/utils/pricing_tabulka.js`); break-even zůstává ~8.
 8. **Pozice spreadů opsané v `RUNAR_DESIGN.md`** se rozešly s produkcí: `:394,:404`
    **Múspellsheim** — v kódu 0 výskytů (produkce má `Svartalfheim`) · `:371` hodnota ze zálohy
    z 6. 6. · `:386` „IS pozice: navrhnout" — jsou v produkci.
@@ -2070,7 +2078,7 @@ který nic neopisuje a odkazuje na vlastníky (§20).
 
 **PRO OWNERA:**
 19. ✅ *(KUKY 2026-10-11: „nech jako historii“ — obě zůstávají, nic se nemaže. Obsah prošel CODE-read: knowledge_base = 3 výklady ve starém
-    hlasu (nepoužitelné jako text; jediná stopa: Fehu ↔ Gullveig podle Susan Gitlin-Emmer, v kánonu není); gpt_reviews = 6 rozborů luny ke
+    hlasu (nepoužitelné jako text; jediná stopa: Fehu ↔ Gullveig podle Susan Gitlin-Emmer, v kánonu není — owner 2026-10-11 „to asi řešit nebudeme“, nenavrhovat znovu); gpt_reviews = 6 rozborů luny ke
     starým verzím promptu v4.58–v4.94, dnes jen historie.)* **Dvě tabulky bez kódu:** `knowledge_base` (3 výklady run z května, záložka Teach už do ní nepíše) a `gpt_reviews` (6 rozborů
     GPT z adminových čtení; funkce zrušena 2026-10-09, zápis v `RUNAR_PRIVACY.md`). Nic na nich nevisí; smazat nebo nechat jako historii
     rozhodne owner (data maže owner). Obě jsou v denní záloze.
@@ -2094,10 +2102,13 @@ na `*.md`, který v repu není (⑯ hlídá jen dokumenty). Záměrné zmínky n
 **Pokračování 2026-10-10:** `CLAUDE.md` „Stack: … Claude API“ → model čtení přes `claude-proxy` (`SOL_MODEL`, záloha `MODELS`); rozcestník
 `MEMORY.md` totéž · `RUNAR_DESIGN.md` sekce tarifů odporovala kódu ve 4 bodech (Kříž/Podkova „ani za kredity“, Norny „za kredity“,
 rozbor jména „pouze Premium“, tabulka stromu podle tarifů) → opraveno s odkazem na vlastníky a s vyznačením, co tam stálo.
-Pro CODE-tune (⚪): ~~`buildLifeRuneBase(…, isPremium)` parametr nepoužívá — mrtvý (nebo chybějící) rozdíl Premium~~ *(hotovo 2026-10-11,
-DECISIONS 2026-10-11 (22): parametr i nečinný režim `life_rune_premium` pryč, golden beze změny; zbývá komentář clampu v `claude-proxy`
-ř. ~540, který ten režim jmenuje — opravit s příštím nasazením proxy)*; `RUNAR_PRICING.md`
-tabulky nákladů nesou štítek „Claude API“, čte ale GPT-6 sol (levnější) — přepočet a štítky patří k pricingu.
+~~Pro CODE-tune (⚪)~~: ~~`buildLifeRuneBase(…, isPremium)` parametr nepoužívá — mrtvý (nebo chybějící) rozdíl Premium~~ *(hotovo 2026-10-11,
+DECISIONS 2026-10-11 (22): parametr i nečinný režim `life_rune_premium` pryč, golden beze změny)*; ~~`RUNAR_PRICING.md`
+tabulky nákladů nesou štítek „Claude API“, čte ale GPT-6 sol (levnější) — přepočet a štítky patří k pricingu.~~ *(hotovo 2026-10-11:
+přepočteno na sol z dat produkce, `scripts/utils/pricing_tabulka.js`)*
+Pro CODE-tune (⚪, s příštím nasazením `claude-proxy`): komentář clampu `max_tokens` (ř. ~540) jmenuje zrušený režim `life_rune_premium`
+„2000“ jako největší legitimní čtení — dnes je největší `life_rune_standard` 1200 (`RUNAR_MODES`). Strop 2500 zůstává správně; jen
+komentář. Samostatně nasazovat nestojí za to — commit funkce bez nasazení by rozdělil repo a produkci.
 `RUNAR_DESIGN.md`: „Standard+“ u Kříže a Horseshoe pryč; tabulka faktorů čtení vedla životní runu jako čočku (odešla 2026-09-25)
 a „spready TODO / `RP_SINGLE.priority`“ (spready doménu i rejstřík mají, pole v kódu není) · `memory/README.md` přepsán na rozcestník
 („dvě session“ s prohozenými rolemi, `runar-project.md` jako sklad) · BACKLOG: položka „PRICING model na Opus“ → cíl je sol; hotový
@@ -2586,6 +2597,13 @@ kontrolu (71 čísel ve `smoke.py`); měřeno šíře než jen „smoke ⑩“, 
   `elModel()`) čte jen shrine a posílá je proxy, která je ignoruje (kolo 1 část 4: „neškodí“). Škodí až změna hlasu: kdo ji udělá v configu,
   nezmění nic; kdo v proxy, zapomene static. Návrh: jedno místo na serveru (`supabase/functions/_shared/`, jako `voice_usage.ts`), kopie
   v configu a pole ve shrine pryč, mrtvé `EL_VOICE_ID_IS` pryč — nebo aspoň kontrola shody (jako `verify_monthly_limits.js`).
+
+#### Kolo 2 / 17 — Service Worker, překlady, schéma DB naostro (části 18, 20, 25; 2026-10-11, DB jen čtením)
+**Platí:** precache úplný proti readeru (32 položek, `verify_sw_shell.js`), ikony v manifestu existují i po přesunu `favicon.svg` ·
+EN a IS mají stejných 345 klíčů, mrtvý klíč 0 (㉽) · RLS zapnuté na všech tabulkách včetně nové `reading_locks` · `SECURITY DEFINER`
+spustitelné pro uživatele jen dvě triggerové (`guard_life_rune_immutable`, `ledger_user_profiles`), nové `acquire/release_reading_lock`
+jen server · všech 8 volání `.rpc()` míří na existující funkci. Nic nového; „repo databázi neumí postavit znovu“ dál platí (část 25,
+pokrývá to záloha se schématem — kolo 2 / 12).
 
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
