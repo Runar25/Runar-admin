@@ -98,8 +98,9 @@ function _jThoughtHtml(th) { return th ? `<div class="jcard-thought">\u2726 ${es
 
 // Hlas čtení v deníku (2026-10-11, owner: „vytvoří se čtení, uloží do databáze a může přehrát znova v deníku ne?“; DECISIONS (61)).
 // Rúnar čtení přečte jednou a server hlas uloží — další přehrání (tady i ve čtení) je zdarma. Zakládací Norny hlas nemají (textový
-// rituál, runar-reading.js; server je odmítne taky). Tlačítko je totéž jako u čtení (voice_btn), hláška chyby z téže funkce
-// (_voiceErrMsg, runar-reading.js). Statické tlačítko níž (jcard_audio_btn) pouští Rúnarova slova o RUNĚ z Kolekce, ne čtení.
+// rituál, runar-reading.js; server je odmítne taky). Popisek vlastní (jcard_voice_btn — owner: „hear the reading by znělo líp“), stavy
+// a hláška chyby jako u čtení (_voiceErrMsg, runar-reading.js). Tlačítko s Rúnarovými slovy o RUNĚ z Kolekce (jcard_audio_btn,
+// playJournalAudio) z deníku pryč 2026-10-11 — owner: „z kolekce? to je určitě špatně. ty mají být jen v kolekci“.
 var _jEntries = [];
 function _jHlas(e, i) {
   if (!e || !e.id || (typeof _foundingReadingId !== 'undefined' && e.id === _foundingReadingId)) return '';
@@ -124,7 +125,7 @@ async function playReadingVoice(i) {
     if (!res.ok || !data.audio_url) {
       console.error('journal voice failed:', res.status, (data && data.error) || '');
       if (data && data.error === 'voice_used') { setRuneText(btn, t('voice_btn_done')); return; }
-      setRuneText(btn, t('voice_btn')); btn.disabled = false;
+      setRuneText(btn, t('jcard_voice_btn')); btn.disabled = false;
       if (typeof showToast === 'function') showToast(_voiceErrMsg(data, res.status));
       return;
     }
@@ -135,7 +136,7 @@ async function playReadingVoice(i) {
     if (!data.stored && typeof syncFreeBalance === 'function') syncFreeBalance(currentUser.id);   // menu testera: počet hlasů
   } catch (err) {
     console.error('journal voice error:', err && err.message);
-    setRuneText(btn, t('voice_btn')); btn.disabled = false;
+    setRuneText(btn, t('jcard_voice_btn')); btn.disabled = false;
   }
 }
 
@@ -195,8 +196,6 @@ function renderJournal(entries) {
     const d       = new Date(e.drawn_at);
     const locale  = isIs ? 'is-IS' : 'en-GB';
     const dateStr = d.toLocaleDateString(locale, { day:'numeric', month:'short', year:'numeric' });
-    const safeRune = jsAttr(e.rune_name);   // JS-string-in-HTML-attr safe (audio onclick)
-    const safeLang = jsAttr(e.lang);
     const isSpread = e.area === 'spread';
 
     // Every field below is user free text (question/area) or model text — escape before it
@@ -250,13 +249,11 @@ function renderJournal(entries) {
         <div class="jcard-text">${deepT}</div>` : ''}
         ${_jDetail(e)}
         ${_jHlas(e, i)}
-        <button class="jcard-audio-btn" id="jaudio-btn-${i}" onclick="playJournalAudio('${safeRune}','${safeLang}',${i})">${t('jcard_audio_btn')}</button>
-        <div class="jcard-audio-player" id="jaudio-${i}"></div>
       </div>
     </div>`;
   }).join('');
   // runa popisku = naše SVG (§5); kontroly ㉭ ㉮ ㉱ pouštějí deník ve zjednodušeném DOM bez querySelectorAll
-  if (typeof list.querySelectorAll === 'function') list.querySelectorAll('.jvoice-btn').forEach(function (b) { setRuneText(b, t('voice_btn')); });
+  if (typeof list.querySelectorAll === 'function') list.querySelectorAll('.jvoice-btn').forEach(function (b) { setRuneText(b, t('jcard_voice_btn')); });
 
 }
 
@@ -330,33 +327,4 @@ function toggleJournalEntry(i) {
   if (arrow) arrow.classList.toggle('open', !open);
 }
 
-async function playJournalAudio(runeName, eLang, i) {
-  const btn    = document.getElementById(`jaudio-btn-${i}`);
-  const player = document.getElementById(`jaudio-${i}`);
-  if (!btn || !player) return;
-  btn.disabled = true;
-  const isIs = lang === 'is';
-  btn.textContent = t('audio_loading');
-  try {
-    const { data: rows } = await sb.from('runar_static_audio')
-      .select('audio_url, version')
-      .eq('rune_name', runeName)
-      .eq('lang', eLang.toLowerCase())
-      .eq('ready', true);
-    if (!rows || rows.length === 0) {
-      btn.textContent = t('audio_none');
-      btn.disabled = false;
-      return;
-    }
-    const pick = rows[Math.floor(Math.random() * rows.length)];
-    var jprefix = 'j' + i;
-    player.innerHTML = _makeCapPlayer(jprefix, pick.audio_url, true);
-    _capWire(jprefix, true);
-    btn.textContent  = t('audio_playing');
-    btn.style.opacity = '0.45';
-  } catch {
-    btn.textContent = t('audio_error');
-    btn.disabled = false;
-  }
-}
 

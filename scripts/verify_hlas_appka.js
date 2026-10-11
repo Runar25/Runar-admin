@@ -113,14 +113,18 @@ const srv = http.createServer((req, res) => {
       { id: 'fnd1', rune_name: 'NORNS', rune_glyph: '', lang: 'en', short_text: 'ᚠ FEHU · ᚢ URUZ · ᚦ THURISAZ', deep_text: 'Zakládací Norny.', area: 'spread', drawn_at: new Date().toISOString() },
     ]);
     const tl = [0, 1, 2].map(i => !!document.getElementById('jvoice-btn-' + i));
+    const kolekce = document.querySelectorAll('[id^="jaudio-btn-"]').length, popisek = (document.getElementById('jvoice-btn-0') || {}).textContent || '';
     window.__odpoved = { status: 200, body: { audio_url: 'data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA', stored: true } };
     const n0 = window.__hlas.length; await playReadingVoice(1); window.__odpoved = null;
     const body = window.__hlas.slice(n0)[0] || null, btn = document.getElementById('jvoice-btn-1');
-    return { tl, body, btn: btn && btn.textContent, prehravac: !!(document.getElementById('jvoice-1') || {}).innerHTML };
+    return { tl, body, btn: btn && btn.textContent, prehravac: !!(document.getElementById('jvoice-1') || {}).innerHTML, kolekce, popisek };
   })()`);
   ok('(E) deník: tlačítko hlasu u single i výkladu, u zakládacích Noren ne', e && e.tl && e.tl[0] && e.tl[1] && !e.tl[2], JSON.stringify(e && e.tl));
   ok('(E) deník: ťuknutí pošle id své karty a jazyk čtení', e && e.body && e.body.reading_id === 'j-spread' && e.body.lang === 'is', JSON.stringify(e && e.body));
   ok('(E) deník: uložený hlas se pustí (přehrávač, tlačítko „promluvil“)', e && e.prehravac && String(e.btn).trim() === String(done).trim(), JSON.stringify(e));
+  // owner 2026-10-11: „z kolekce? to je určitě špatně. ty mají být jen v kolekci“ · „něco ‚hear the reading‘ by znělo asi lépe“
+  ok('(E) deník: Rúnarova slova o runě z Kolekce v deníku nejsou, tlačítko hlasu čtení zní „hear the reading“', e && e.kolekce === 0 && /HEAR THE READING/.test(e.popisek),
+     JSON.stringify({ kolekce: e && e.kolekce, popisek: e && e.popisek }));
 
   // (F) menu: počet hlasů jen tester
   const f = await ev(`(() => {

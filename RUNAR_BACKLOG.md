@@ -469,7 +469,8 @@
 - [ ] **Teach ve shrine platí statický hlas dvakrát** (nalezeno 2026-10-11 CODE-tune při mapování cest hlasu, DECISIONS 2026-10-11 (61)):
   náhled jde přes elevenlabs-proxy, „SAVE VOICE TO MEMORY“ ho přes elevenlabs-static vygeneruje znovu → 2× kredity ElevenLabs za každé
   audio Kolekce. Uložení může vzít audio z náhledu (funkce je jen pro admina; upload místo nového volání EL).
-- [ ] **Deník: dvě tlačítka hlasu u single — popisky rozhodne owner** (2026-10-11, DECISIONS (61)): nové „ᚢ HEAR RÚNAR SPEAK“ (hlas
+- ✅ *(CODE-tune 2026-10-11, DECISIONS 2026-10-11 (64): tlačítko Kolekce z deníku pryč, hlas čtení „ᚢ HEAR THE READING“ /
+  „ᚢ HLUSTA Á LESTURINN“)* **Deník: dvě tlačítka hlasu u single — popisky rozhodne owner** (2026-10-11, DECISIONS (61)): nové „ᚢ HEAR RÚNAR SPEAK“ (hlas
   čtení, jako ve čtení) a staré „♪ RÚNAR'S VOICE“ (`jcard_audio_btn` — Rúnarova slova o RUNĚ z Kolekce, ne čtení). Druhé jméno mate:
   přejmenovat (a ověřit IS), nebo ho z deníku vynechat (Kolekce ho má)? Čeká na ownera.
 - [ ] **Pro CODE-tune — ElevenLabs po kontrole CODE-read (2026-10-11)** · psáno proti 96002fd. Už zapsané v položce „Hlas: v produkci

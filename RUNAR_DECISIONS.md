@@ -10941,3 +10941,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   z DB ověří `voice_tickets` (cesta k souboru) a `voice_usage` (jeden hlas na čtení).
 - S nasazením claude-proxy šla i oprava komentáře clampu `max_tokens` (BACKLOG, položka „s příštím nasazením claude-proxy“).
 - Odvolává se na: 2026-10-11 (61).
+
+## 2026-10-11 (64) — Deník: jen hlas čtení („Hear the reading“); Rúnarova slova o runě patří jen do Kolekce
+
+- **Rozhodl:** owner 2026-10-11 k otázce o dvou tlačítkách hlasu v deníku: *„5. vyndat z deníku · něco ‚hear the reading‘ by znělo asi
+  lépe · z kolekce? to je určitě špatně. ty mají být jen v kolekci.“*
+- **Co:** z deníku pryč tlačítko „♪ RÚNAR'S VOICE“ (statické audio Kolekce, `playJournalAudio`) i jeho klíče `jcard_audio_btn`,
+  `audio_loading/none/playing/error`. Tlačítko hlasu čtení má vlastní popisek `jcard_voice_btn`: EN *„ᚢ HEAR THE READING“*, IS
+  *„ᚢ HLUSTA Á LESTURINN“* (greynir a gpt-check bez nálezu, korpus „hlusta á lesturinn“ 17×). Ve čtení zůstává „ᚢ HEAR RÚNAR SPEAK“.
+- **Ověřeno:** owner naživo (čtení → hlas → totéž čtení v deníku → přehrání); v DB 1 zámek s uloženým souborem (432 kB, 27 s) a od
+  nasazení 1 hlas z ElevenLabs (334 znaků) — zaplaceno jednou, přehrání z úložiště. Tím je ověřené i (63). Smoke ㊹ hlídá, že deník
+  tlačítko Kolekce nemá a popisek zní „hear the reading“.
+- Affected doc(s): `RUNAR_BACKLOG.md` (položka „Deník: dvě tlačítka hlasu“) — v témže commitu.
+- **Bod 6 záznamu (61) („tlačítko Kolekce u single zůstává“) tím neplatí.**
+- Odvolává se na: 2026-10-11 (61), (63).

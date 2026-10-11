@@ -202,11 +202,9 @@ const UI_TEXT = {
     journal_empty:      'No rune readings recorded yet.<br>Draw your first rune.',
     journal_load_err:   'Could not load your rune readings — check your connection and try again.',   // 2026-10-10: chyba načtení deníku (dřív brána návštěvníka / prázdný deník)
     life_rune_short:    'Life rune',
-    jcard_audio_btn:    "\u266a R\u00danar'S VOICE",
-    audio_loading:      '\u266a LOADING\u2026',
-    audio_none:         '\u2014 No audio available',
-    audio_playing:      '\u266a NOW PLAYING',
-    audio_error:        '\u2014 Error',
+    // 2026-10-11: hlas čtení v deníku (owner „hear the reading by znělo líp“); tlačítko Kolekce z deníku pryč i s klíči jcard_audio_btn,
+    // audio_loading/none/playing/error (owner: „ty mají být jen v kolekci“)
+    jcard_voice_btn:    'ᚢ HEAR THE READING',
     gift_card_btn:      '+ GET A {card}',
     become_rs_btn:      'BECOME A RUNE SEEKER \u2192',
     install_title:      'INSTALL R\u00daNAR',
@@ -701,11 +699,7 @@ const UI_TEXT = {
     journal_empty:      'Engar skr\u00e1\u00f0ar sp\u00e1r enn.<br>Dragðu fyrstu r\u00fanina þ\u00edna.',
     journal_load_err:   'Ekki tókst að sækja spárnar þínar — athugaðu nettenginguna og reyndu aftur.',   // 2026-10-10: vzor err_save_failed; korpus viz runar-journal.js
     life_rune_short:    'L\u00edfsr\u00fan',
-    jcard_audio_btn:    '\u266a HLUSTA \u00c1 R\u00daNAR',
-    audio_loading:      '\u266a HLE\u00d0UR\u2026',
-    audio_none:         '\u2014 Ekkert hljó\u00f0 tiltækt',
-    audio_playing:      '\u266a SPILANDI',
-    audio_error:        '\u2014 Villa',
+    jcard_voice_btn:    'ᚢ HLUSTA Á LESTURINN',   // 2026-10-11: greynir + gpt-check OK, korpus „hlusta á lesturinn“ 17×
     gift_card_btn:      '+ {card}',
     become_rs_btn:      'GERAST LEITANDI \u2192',
     install_title:      'SETJA INN R\u00daNAR',
