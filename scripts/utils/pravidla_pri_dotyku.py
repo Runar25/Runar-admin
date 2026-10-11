@@ -12,12 +12,13 @@
 # 2. Při PRVNÍM dotyku oblasti v session (a znovu po compactu) úpravu jednou zastaví a jako důvod vypíše AKTUÁLNÍ znění pravidel —
 #    čte je živě z CLAUDE.md, docs a paměti, nic neopisuje. Druhý pokus projde.
 # 3. Dlouhou sekci (nad LIMIT znaků) nevloží celou: dá začátek + rozsah řádků a pustí až poté, co session ten soubor přečetla (Read).
-# 4. Oblast s "uz_vime": zápis projde, jen když v session (od posledního compactu) běžel `node scripts/utils/uz_vime.js <pojmy>` —
-#    dohledání, jestli to pravidlo / rozhodnutí už neexistuje.
+# 4. Oblast s "uz_vime": zápis projde, jen když PO POSLEDNÍ ZPRÁVĚ OWNERA běžel `node scripts/utils/uz_vime.js <pojmy>` —
+#    dohledání, jestli to pravidlo / rozhodnutí už neexistuje (do 2026-10-11 stačil jeden běh kdykoli v session).
+#    Navíc u zápisu skriptem hook sám prohledá kánon vzácnými slovy NOVÉHO textu ze skriptu a podobná místa ukáže (jednou na obsah).
 # Mez (pojmenovaná): Bash vidí jen cesty v příkazu a v obsahu spouštěného skriptu ze scratchpadu nebo scripts/_patch*.py; zápis jiným
 # nástrojem, který cestu v textu nemá, neuvidí. Chyba hooku = projde (fail-open) a zapíše se do chyby.log — hook nesmí zastavit práci.
 #   python -X utf8 scripts/utils/pravidla_pri_dotyku.py --test      (samotest všech stavů)
-import io, json, os, re, sys
+import hashlib, io, json, os, re, sys
 
 R = os.environ.get('RUNAR_ROOT', 'C:/Users/zkuku/Downloads/Runar-admin').replace('\\', '/').rstrip('/')
 STAV = os.environ.get('PRAVIDLA_STATE_DIR', os.path.join(os.path.expanduser('~'), '.claude', 'pravidla-dotyk'))
@@ -77,6 +78,10 @@ def cil_z_prikazu(cmd):
     """Text, ve kterém se hledají cesty: jen CÍLE zápisu (přesměrování, cp/mv/rm/sed -i/tee…, PowerShell zápis) + obsah spouštěných
     patch/scratch skriptů. Celý příkaz ne — commit s `> msg.txt` by jinak „zapisoval“ do všech souborů v pathspecu."""
     c = cmd.replace(chr(92), '/')
+    # Proměnné z téhož příkazu (`S=<scratchpad>; python $S/x.py`) rozvést: do 2026-10-11 hook skript za `$S/` neviděl, takže každý zápis
+    # do docs spuštěný takhle prošel bez gate i bez kontroly kánonu (CODE-read tak zapsal DECISIONS (44) i (46) — zjištěno na (46)).
+    for jm, _, hod in re.findall(r"(?:^|[;&|\s])([A-Za-z_]\w*)=(['\"]?)([^\s;'\"&|]+)\2", c):
+        c = re.sub(r'\$(?:\{' + jm + r'\}|' + jm + r'(?!\w))', lambda m, h=hod: h, c)
     c2 = re.sub(r'\d?>&\d|\d?>\s*/dev/null|\b2>\S*', ' ', c)
     kusy = re.findall(r"""(?<![0-9&=-])>>?\s*["']?([^\s"';|&)]+)""", c2)
     for seg in re.split(r'&&|\|\||;|\|', c2):
@@ -95,7 +100,12 @@ def cil_z_prikazu(cmd):
             try:
                 obsah = cti(p, 300000)
                 # Bez komentářů: 2026-10-11 skript jen ZMÍNIL RUNAR_PRIVACY.md v komentáři a hook ho vzal jako zápis do docs.
-                kod = chr(10).join(l for l in obsah.split(chr(10)) if not re.match(r'\s*(//|#)', l))
+                # Jen MIMO víceřádkové řetězce: nadpis „## 2026-…“ uvnitř """…""" je zapisovaný text, ne komentář (2026-10-11).
+                kod, uvnitr = [], False
+                for l in obsah.split(chr(10)):
+                    if uvnitr or not re.match(r'\s*(//|#)', l): kod.append(l)
+                    if (l.count('"""') + l.count("'''")) % 2: uvnitr = not uvnitr
+                kod = chr(10).join(kod)
                 if ZAPISUJE.search(kod): text += chr(10) + kod.replace(chr(92), '/')
             except Exception: pass
     return text
@@ -191,7 +201,7 @@ def text_ownera(line):
     if not t or t.startswith('<') or t.startswith('Stop hook feedback'): return None
     return t
 
-def kanon_hity(km, maxn=8):
+def kanon_radky():
     soubory = ['CLAUDE.md'] + sorted(f for f in os.listdir(KANON) if re.match(r'^RUNAR_.*\.md$', f))
     try: soubory += ['memory/' + f for f in sorted(os.listdir(KANON + '/memory')) if f.endswith('.md')]
     except Exception: pass
@@ -199,6 +209,51 @@ def kanon_hity(km, maxn=8):
     for f in soubory:
         try: radky += [(f, i + 1, l, bezd(l)) for i, l in enumerate(cti(KANON + '/' + f).split('\n'))]
         except Exception: continue
+    return radky
+
+
+# ---------- nový text zapisovaný skriptem: nestojí už v kánonu? ----------
+# Proč (owner 2026-10-11: „zapsal jsi do souboru a zkontroloval jsi, že to tam už není?“): gate uz_vime pouštěl zápis po JAKÉMKOLI hledání
+# — session si zvolila úzká slova („protipříklady samotest“) a zapsala DECISIONS (44) s čísly, která opravovala až (45): kontroly svoje útoky
+# popisují slovy „mutace“ a „podstrčená“. Hook teď vezme z zapisujícího skriptu dlouhé řetězce, které v kánonu ještě nejsou (= nový text),
+# a kánon prohledá JEJICH vzácnými slovy — nezáleží na tom, co session napadne hledat.
+def novy_text(kod, radky):
+    # kod tu má zpětná lomítka nahrazená '/' (cil_z_prikazu), takže escape \n je '/n'; porovnává se bez bílých znaků
+    cele = re.sub(r'\s+', '', '\n'.join(l for _, _, l, _ in radky))
+    lit = re.findall(r'"""(.*?)"""', kod, re.S) + re.findall(r"'''(.*?)'''", kod, re.S)
+    lit += [m.group(2) for m in re.finditer(r'(["\'])((?:(?!\1)[^\n/]|/.){120,})\1', kod)]
+    novy = []
+    for t in lit:
+        kusy = [re.sub(r'\s+', '', k) for k in re.split(r'/n|\n', t) if len(k.strip()) > 40]
+        if kusy and not all(k in cele for k in kusy): novy.append(t)   # celý už v kánonu = kotva / starý text, ne nový
+    return '\n'.join(novy)
+
+def novy_text_hity(text, radky, maxn=8):
+    # Po VĚTÁCH, ne za celý text: dlouhý zápis má desítky vzácných slov a s dlouhými řádky kánonu sdílí 7–11 kmenů náhodou (změřeno
+    # 2026-10-11 na skutečném skriptu DECISIONS (44): osm nálezů, všechny šum). Věta zasáhne řádek, když s ním sdílí aspoň polovinu svých
+    # vzácných slov (nejméně 3). Kód v `backtickách` a cesty se do slov nepočítají (`scrip`, `pytho`, `updat` nic neříkají).
+    n = max(1, len(radky)); cetnost = {}
+    def vz(k): return re.compile(r'(?<![^\W\d_])' + re.escape(k))
+    nejlepsi = {}
+    for veta in re.split(r'(?<=[.!?;])\s+|\n|\s—\s', re.sub(r'`[^`]*`|\S+/\S+', ' ', text)):
+        km = kmeny(veta)
+        for k in km:
+            if k not in cetnost:
+                r_ = vz(k); cetnost[k] = (r_, sum(1 for _, _, _, b in radky if r_.search(b)))
+        vzacne = [k for k in km if 0 < cetnost[k][1] <= max(3, 0.01 * n)]
+        if len(vzacne) < 4: continue
+        potreba = max(3, -(-len(vzacne) // 2))
+        for f, c, l, b in radky:
+            shoda = [k for k in vzacne if cetnost[k][0].search(b)]
+            if len(shoda) >= potreba:
+                skore = len(shoda) / len(vzacne)
+                if skore > nejlepsi.get((f, c), (0,))[0]: nejlepsi[(f, c)] = (skore, f, c, shoda, l.strip())
+    hity = sorted(nejlepsi.values(), key=lambda h: -h[0])
+    return [(round(h[0] * 100), h[1], h[2], h[3], h[4]) for h in hity[:maxn]]
+
+
+def kanon_hity(km, maxn=8):
+    radky = kanon_radky()
     vzor = {k: re.compile(r'(?<![^\W\d_])' + re.escape(k)) for k in km}
     # Obecná slova podle četnosti v kánonu, ne pevným seznamem (2026-10-11): kmen, který stojí ve víc než 1 % řádků, nic nerozliší
     # („kontrola“, „čtení“, „strom“, „proto“). Doloženo týž den: shody „proto, kontrola, nestačí“ i „uživatel, případ, smazat“ byly jen šum;
@@ -232,22 +287,24 @@ def projdi_prepis(tp, s):
         f.seek(s['scanned']); data = f.read()
     konec = data.rfind(b'\n')
     if konec < 0: return
+    pos = s['scanned']   # bajtová pozice řádku v přepisu — rostoucí, takže jde porovnat „uz_vime běžel PO zprávě ownera“
     for raw in data[:konec + 1].split(b'\n'):
+        pos += len(raw) + 1
         if not raw: continue
         line = raw.decode('utf-8', 'replace')
         if 'compact_boundary' in line and re.search(r'"subtype"\s*:\s*"compact_boundary"', line):
-            s['uz_vime'] = False; s['shown'] = {}; s['need_read'] = {}; s['reads'] = []; s['kanon_pro'] = None
+            s['uz_vime'] = False; s['uz_vime_at'] = -1; s['shown'] = {}; s['need_read'] = {}; s['reads'] = []; s['kanon_pro'] = None
             continue
         if 'queued_command' in line or re.search(r'"type"\s*:\s*"user"', line):
             t = text_ownera(line)
-            if t: s['owner'] = {'text': t[:4000], 'id': s['scanned'] + len(raw)}
+            if t: s['owner'] = {'text': t[:4000], 'id': s['scanned'] + len(raw), 'pos': pos}
         if '"tool_use"' not in line: continue
         try: msg = json.loads(line).get('message', {})
         except Exception: continue
         for c in msg.get('content') or []:
             if not isinstance(c, dict) or c.get('type') != 'tool_use': continue
             inp = c.get('input') or {}
-            if c.get('name') in SHELL and 'uz_vime.js' in str(inp.get('command', '')): s['uz_vime'] = True
+            if c.get('name') in SHELL and 'uz_vime.js' in str(inp.get('command', '')): s['uz_vime'] = True; s['uz_vime_at'] = pos
             if c.get('name') == 'Read' and inp.get('file_path'):
                 r = rel(inp['file_path'])
                 if r and r not in s['reads']: s['reads'].append(r)
@@ -318,11 +375,25 @@ def rozhodni(vstup):
                               'Hledáno slovy z jeho zprávy (' + ', '.join(km[:10]) + '…), řádky s nejvíc shodami:\n'
                               + '\n'.join('  ' + f + ':' + str(n) + '  [' + ', '.join(sh) + ']  ' + l[:150] for _, f, n, sh, l in hh)
                               + '\nJe-li to totéž: odkaž na to místo, nepiš znovu. Je-li to nové nebo jiné: zápis zopakuj (ukáže se jednou na zprávu).')
+    if any(o.get('uz_vime') for o in hit) and tool in SHELL and volny:
+        radky = kanon_radky()
+        nt = novy_text(volny, radky)
+        klic_nt = hashlib.sha1(nt.encode('utf-8')).hexdigest()[:12] if nt else ''   # hash() je náhodný pro každý proces
+        if nt and klic_nt not in s.setdefault('novy_ukazan', []):
+            hh = novy_text_hity(nt, radky)
+            if hh:
+                s['novy_ukazan'] = (s['novy_ukazan'] + [klic_nt])[-50:]
+                zpravy.append('⛔ TEXT, KTERÝ ZAPISUJEŠ, MÁ PODOBNÁ MÍSTA V KÁNONU — napřed ověř, že nepíšeš podruhé, a co tam stojí, ať nepíšeš proti tomu (§20).\n'
+                              'Hledáno vzácnými slovy z nového textu ve skriptu, řádky s nejvíc shodami:\n'
+                              + '\n'.join('  ' + f + ':' + str(n) + '  [' + ', '.join(sh) + ']  ' + l[:150] for _, f, n, sh, l in hh)
+                              + '\nJe-li to totéž: odkaž, nepiš znovu; doplňuje-li to, uprav text. Jinak zápis zopakuj (ukáže se jednou na obsah skriptu).')
+    uz_ok = s.get('uz_vime_at', -1 if not s['uz_vime'] else 0) > (s.get('owner') or {}).get('pos', -1)
     for o in hit:
         jm = o['oblast']
-        if o.get('uz_vime') and not s['uz_vime']:
-            zpravy.append('⛔ „' + jm + '“: zápis projde, až v téhle session poběží `node scripts/utils/uz_vime.js <pojmy>` — dohledej, jestli to, co '
-                          'píšeš, už neexistuje (pravidlo, rozhodnutí, položka). Jedno místo pro jednu informaci (CLAUDE.md §20).')
+        if o.get('uz_vime') and not uz_ok:
+            zpravy.append('⛔ „' + jm + '“: zápis projde, až PO poslední zprávě ownera poběží `node scripts/utils/uz_vime.js <pojmy>` — dohledej, jestli '
+                          'to, co píšeš, už neexistuje (pravidlo, rozhodnutí, položka). Hledej i slovy, kterými by to popsal někdo jiný. '
+                          'Jedno místo pro jednu informaci (CLAUDE.md §20). (Od 2026-10-11 nestačí běh kdykoli dřív v session.)')
         if jm not in s['shown']:
             kusy, cist = [], []
             for nad, t, soubor, a, b in polozky(o):
@@ -419,22 +490,48 @@ def samotest():
     p2({'type': 'user', 'message': {'content': 'je to jednoduchý proces: založení NORNS v produkci a strom bude obsahovat čtení z deníku'}})
     d = Wz('k1', 'RUNAR_BACKLOG.md', lambda t, sid, **k: V2(t, sid, **k))
     chk('18. nová zpráva ownera s pokynem → první zápis do docs ukáže, kde to už stojí', d and 'RUNAR_TREE.md:2' in d and 'KÁNONU' in d)
-    chk('19. druhý zápis k téže zprávě projde', Wz('k1', 'RUNAR_BACKLOG.md', lambda t, sid, **k: V2(t, sid, **k)) is None)
-    p2({'type': 'user', 'message': {'content': 'pokračuj v kontrole dalších částí'}})
+    chk('34. uz_vime z doby PŘED zprávou ownera nestačí', (lambda d: d and 'PO poslední zprávě ownera' in d)(Wz('k1', 'RUNAR_BACKLOG.md', lambda t, sid, **k: V2(t, sid, **k))))
+    UZ = tu('Bash', command='node scripts/utils/uz_vime.js neco')
+    p2(UZ)
+    chk('19. po novém uz_vime druhý zápis k téže zprávě projde', Wz('k1', 'RUNAR_BACKLOG.md', lambda t, sid, **k: V2(t, sid, **k)) is None)
+    p2({'type': 'user', 'message': {'content': 'pokračuj v kontrole dalších částí'}}); p2(UZ)
     chk('20. „pokračuj v kontrole“ kánon nehledá', Wz('k1', 'RUNAR_BACKLOG.md', lambda t, sid, **k: V2(t, sid, **k)) is None)
-    p2({'type': 'attachment', 'attachment': {'type': 'queued_command', 'prompt': 'strom bude obsahovat čtení z deníku po založení', 'origin': {'kind': 'human'}}})
+    p2({'type': 'attachment', 'attachment': {'type': 'queued_command', 'prompt': 'strom bude obsahovat čtení z deníku po založení', 'origin': {'kind': 'human'}}}); p2(UZ)
     d = Wz('k1', 'memory/x.md', lambda t, sid, **k: V2(t, sid, **k))
     chk('21. zpráva poslaná během práce (queued_command) se počítá taky', d and 'RUNAR_TREE.md:2' in d)
     p2({'type': 'attachment', 'attachment': {'type': 'queued_command', 'prompt': 'strom bude obsahovat čtení z deníku po založení znovu', 'origin': {'kind': 'peer'}}})
     chk('22. zpráva jiné session (peer) se jako ownerova nebere', Wz('k1', 'memory/x.md', lambda t, sid, **k: V2(t, sid, **k)) is None)
     io.open(kd + '/RUNAR_BACKLOG.md', 'w', encoding='utf-8').write('- uživatel případ obecně\n- jiný uživatel obnova\n')
-    p2({'type': 'user', 'message': {'content': 'jinak 30 dní na smazání je dobré, třeba bude chtít uživatel svůj účet obnovit? jak se postupuje v takových případech?'}})
+    p2({'type': 'user', 'message': {'content': 'jinak 30 dní na smazání je dobré, třeba bude chtít uživatel svůj účet obnovit? jak se postupuje v takových případech?'}}); p2(UZ)
     chk('23. shoda jen ve 2 obecných slovech z dlouhé zprávy = šum, nezastaví', Wz('k1', 'memory/x.md', lambda t, sid, **k: V2(t, sid, **k)) is None)
+    # 35–38: nový text zapisovaný skriptem (2026-10-11: DECISIONS (44) zapsán s úzkým hledáním, opraven až (45))
+    io.open(kd + '/RUNAR_DECISIONS.md', 'w', encoding='utf-8').write(
+        '- **Ověřeno:** útok obrácenou pákou — chyba podstrčená do čisté kopie (mrtvý klíč UI_TEXT) smoke shodí, sdílený strom ne.\n')
+    def skript(sid, obsah):
+        sk = os.path.join(STAV, 'Temp', 'claude', 'nt_' + sid + '.py')
+        io.open(sk, 'w', encoding='utf-8').write(obsah)
+        return V2('Bash', 'k1', command='python -X utf8 "' + sk.replace(chr(92), '/') + '"')   # k1 oblast už viděl (jinak první dotyk = pravidla)
+    novy = ('s = cv.cti("RUNAR_DECISIONS.md", R)' + chr(10) + 's += """' + chr(10) +
+            '## (44) Kontroly pod útokem: chyba podstrčená do čisté kopie repa musí kontrolu shodit, smoke ji pouští sám při změně kontroly.' + chr(10) +
+            '"""' + chr(10) + 'cv.zapis("RUNAR_DECISIONS.md", s, "CODE-read", R)' + chr(10))
+    d = skript('n1', novy)
+    chk('35. nový text podobný řádku v kánonu → ukáže to místo', d and 'PODOBNÁ MÍSTA' in d and 'RUNAR_DECISIONS.md:1' in d)
+    chk('36. týž skript podruhé projde', skript('n1', novy) is None)
+    kotva = ('a = "- **Ověřeno:** útok obrácenou pákou — chyba podstrčená do čisté kopie (mrtvý klíč UI_TEXT) smoke shodí, sdílený strom ne.' +
+             chr(92) + 'n"' + chr(10) + 's = cv.cti("RUNAR_DECISIONS.md", R)' + chr(10) + 'cv.zapis("RUNAR_DECISIONS.md", s.replace(a, a + "x"), "CODE-read", R)' + chr(10))
+    chk('37. kotva, která už v kánonu stojí, se za nový text nebere', skript('n2', kotva) is None)
+    jiny = ('s = cv.cti("RUNAR_DECISIONS.md", R)' + chr(10) + 's += """' + chr(10) +
+            '## (46) Islandské skloňování přídavných jmen v nápovědě zkontrolováno korpusem; tři tvary opraveny podle Risamálheild.' + chr(10) +
+            '"""' + chr(10) + 'cv.zapis("RUNAR_DECISIONS.md", s, "CODE-read", R)' + chr(10))
+    chk('38. nový text bez podobného místa projde', skript('n3', jiny) is None)
     sc3 = os.path.join(STAV, 'Temp', 'claude', 'kom.js')
     io.open(sc3, 'w', encoding='utf-8').write("// Postup → RUNAR_PRIVACY.md\nfs.writeFileSync(os.tmpdir() + '/x.txt', 'a')\n")
     sc4 = os.path.join(STAV, 'Temp', 'claude', 'cvz.py')
     io.open(sc4, 'w', encoding='utf-8').write("s = cv.cti('memory/x.md', R)" + chr(10) + "cv.zapis('memory/x.md', s + 'a', 'CODE-read', R)" + chr(10))
     chk('25. zápis přes cv.zapis (commit_vlastni) hook vidí', V('Bash', sid='s10', command='python -X utf8 "' + sc4.replace(chr(92), '/') + '"') is not None)
+    sd, sn = os.path.split(sc4.replace(chr(92), '/'))
+    chk('39. skript za proměnnou (S=…; python $S/x.py) hook vidí taky', V('Bash', sid='s11', command='S=' + sd + '; python -X utf8 $S/' + sn + ' C:/x') is not None)
+    chk('40. ${S} a S="…" taky', V('Bash', sid='s12', command='S="' + sd + '"; python -X utf8 ${S}/' + sn) is not None)
     chk('26. heredoc s \\n v těle → past', V('Bash', sid='p1', command='python - <<' + chr(39) + 'EOF' + chr(39) + chr(10) + 'print("a' + chr(92) + 'nb")' + chr(10) + 'EOF') is not None)
     chk('27. heredoc bez zpětného lomítka projde', V('Bash', sid='p2', command='cat <<EOF' + chr(10) + 'ahoj' + chr(10) + 'EOF') is None)
     chk('28. grep OK|FAIL && commit → past', V('Bash', sid='p3', command='node x.js | grep -E "^(OK|FAIL)" && git commit -m x') is not None)
