@@ -469,9 +469,20 @@ HTML = r"""<!DOCTYPE html>
     var N=function(v,d){ return (v==null||isNaN(v))?'?':(+v).toFixed(d); };      /* nikdy nespadnout na chybejicim poli */
     var A=function(pk,txt){ return pk?('<a href="#" data-pick="'+pk+'" style="color:#e8dfc0;text-decoration:underline dotted;cursor:pointer">'+txt+'</a>'):txt; };
     var P=function(v){ return (v==null||isNaN(v))?'?':((+v)*100).toFixed(0)+'%'; };
+    var KOR=function(ki){ if(!ki) return D('(udaje korene chybi)')+'<br>'; var s9='', NM={ urd:'Urd', verdandi:'Verdandi', skuld:'Skuld' };   /* KOREN JAKO CELEK (2026-10-11) */
+      if(ki.norna) s9+='<b>hlavni koren</b> '+D('&middot; Norna '+NM[ki.norna]+' ze zakladaciho cteni: 1,4&times; delsi a strmejsi')+'<br>';
+      s9+=D(ki.side ? 'vyrusta z korene matky tam, kde se vetev odstepuje; smer zrcadli odbocku' : ((ki.dev==null || Math.abs(ki.dev)<0.01) ? 'smer: rovne dolu (vrchol)'
+        : ('smer: podle strany a patra ramene, '+Math.round(Math.abs(ki.dev)*180/Math.PI)+'&deg; od svislice')))+'<br>';
+      s9+=D('navraty runy: ')+'<b>'+(ki.navraty||0)+'&times;</b>'+D(ki.navraty ? (' (z toho '+(ki.navratyMin||0)+'&times; ve cteni o minulosti nebo nitru) &middot; kazdy navrat koren prodlouzi a stoci hloubeji, nad polovinu z minulosti/nitra jeste vic')
+        : ' &middot; runa se po vzniku vetve zatim nevratila')+'<br>';
+      if(ki.sh) s9+=D('seeking vetve ohyba i koren: ')+'<b>'+ki.sh.m+'</b>'+D(' (sila '+N(ki.sh.s,2)+')')+'<br>';
+      var RL=ki.retl||[]; if(RL.length){ s9+='<br><b style="color:var(--gold)">KOREN JAKO CELEK</b><br>'+D('cteni, ve kterych se runa vratila'+(RL.length>12?(' (poslednich 12 z '+RL.length+')'):'')+':')+'<br>';
+        RL.slice(-12).forEach(function(r){ s9+=D('#'+(r.i+1)+' &middot; '+(r.sp||'single')+' &middot; '+(r.a||'-')+' &middot; '+(r.it||'-')+' &middot; '+(r.sk||'-'))+(r.p?' <b>&#10022;</b>':'')+'<br>'; });
+        s9+=D('&#10022; = cteni o minulosti nebo nitru')+'<br>'; }
+      return s9; };
     var typ = m.root ? 'KORENOVY VYBEZEK' : (m.twig ? (m.grad?'GRADUOVANA SUB-VETEV':'ODBOCKA') : ('HLAVNI VETEV'+(m.idx!=null?(' #'+(m.idx+1)):'')));
     var H='<b style="font-size:1.3em;color:var(--gold)">'+m.g+'</b> <b>'+m.name+'</b> '+D(typ)+'<br>'+
-          'element <b>'+m.el+'</b> &middot; aett <b>'+m.aett+'</b> &middot; world <b>'+m.world+'</b><br>';
+          'element <b>'+m.el+'</b>'+(m.aett?(' &middot; aett <b>'+m.aett+'</b>'):'')+(m.world?(' &middot; world <b>'+m.world+'</b>'):'')+'<br>';   /* koren vedlejsi vetve aett/world nema — do 2026-10-11 psalo „undefined“ */
     /* INSPEKCE PODLE DNESNIHO MODELU (2026-10-03, KUKY: "proc se informace nemeni?"). Drive: "tuhle runu jsi tahl Nx" bral u vetvicky
        pocet cteni NA vetvicce (u listu vzdy 1x) a u ramene vzdy "poradi v elementu: 1." (ord je od zon vzdy 0). */
     if(!m.twig && !m.root){
@@ -514,9 +525,8 @@ HTML = r"""<!DOCTYPE html>
         Object.keys(rc9).sort(function(a,b){ return rc9[b]-rc9[a]; }).slice(0,3).forEach(function(rk9){ var R9=RBK[rk9]||{}, kw9=KW[R9.g];
           H+='&nbsp;<b>'+(R9.name||rk9)+'</b> '+rc9[rk9]+'&times; '+D(kw9 ? ('— '+kw9.k) : '')+'<br>'; });
       }
-      H+='<br><b style="color:var(--gold)">KOREN</b><br>'+D(m.gradOf ? ('sdili pramen i koren matky ('+m.gradOf+') — matka je az k mistu odstepeni tlustsi') : m.rootDev==null
-          ? 'smer z world+element runy + strana ze seedu pramene (rozevreni = 0)'
-          : 'rizene rozevreni podle polohy pramene (dev '+N(m.rootDev,2)+')')+'<br>';
+      H+='<br><b style="color:var(--gold)">KOREN</b><br>'+(m.gradOf ? (D('vlastni koren vyrusta z korene matky ('+m.gradOf+') tam, kde se vetev odstepuje — klikni na nej pod zemi')+'<br>')
+          : KOR(m.koren));   /* do 2026-10-11: „sdili pramen i koren matky“ (od 2026-10-10 (26) neplati) a smer „podle polohy pramene“ */
     } else if(m.twig){                          /* ODBOCKA / GRADUANT */
       var ZW=function(z){ return (z==null)?'?':(z<-1/3?'urd (minulost)':(z>1/3?'skuld (budoucnost)':'verdandi (ted)')); };
       var SW=function(sd){ return sd>0?'svet (vpravo od rodice)':(sd<0?'nitro (vlevo od rodice)':'stred'); };
@@ -529,9 +539,7 @@ HTML = r"""<!DOCTYPE html>
       if(m.kids&&m.kids.length) H+=D('nese vlastni odbocky: ')+m.kids.map(function(x){ return A(x.pick,x.name); }).join(', ')+'<br>';
     } else {                                    /* KORENOVY VYBEZEK */
       if(m.mirror) H+='<br>'+D('ZRCADLO KORUNY &middot; tataz runa jako odbocka nahore, ve stejne vzdalenosti od kmene (u '+N(m.mirrorU,2)+')')+'<br>';
-      H+='<br>'+D('pramen #'+((m.strand||0)+1)+' &middot; '+(m.rootDev==null
-          ? 'smer z world+element runy + strana ze seedu'
-          : 'rizene rozevreni (dev '+N(m.rootDev,2)+')'))+'<br>';
+      H+='<br>'+D('pramen #'+((m.strand||0)+1))+'<br>'+KOR(m.koren);
     }
     if(mean) H+='<br>'+D('vyznam: '+mean);
     document.getElementById('inspect').innerHTML=H;
@@ -1976,7 +1984,14 @@ HTML = r"""<!DOCTYPE html>
          proti 450 u korenu hornich ramen). Silnejsi n2 (1,6×) owner nechtel; strana zustava podle ramene (bod 7 "ne"). */
       if(_SL && !dirO && be && be.nornName){ rTT.length*=1.4; if(rSpec.dev!=null){ rSpec.dev*=0.35; rdevUsed=rSpec.dev; } }
       var rG=B.buildBranch(rSpec, rTT);   /* KROK 2: koren = vlastni runa pramene (runeK), rovne dolu */
-      if(_SL) bendRootPaths(rG.paths, seekShapeOf(_RDL[k], k));   /* seeking tvaruje cely koren (zrcadlove k vetvi) */
+      var kSh=_SL ? seekShapeOf(_RDL[k], k) : null;
+      if(_SL) bendRootPaths(rG.paths, kSh);   /* seeking tvaruje cely koren (zrcadlove k vetvi) */
+      /* KOREN JAKO CELEK (KUKY 2026-10-11 "vyjimecnych udalosti bude vic … abychom meli data, z kterych to pak poskladame — to je to stejne jako cteni pro
+         vetev"): cteni, ve kterych se runa korene vratila po vzniku jeho vetve (oblast, zamer, seeking, minulost/nitro). Z nich se pozdeji skladaji vyjimecne
+         udalosti (napr. vsechny tri korenove runy v jednom cteni, RUNAR_DESIGN.md); ted je jen ukazuje inspekce. */
+      var kRet=[]; if(_SL){ (_RI[runeK]||[]).forEach(function(ii){ if(ii<=bornR) return; var rd9=vlog[ii]||{};
+        kRet.push({ i:ii, sp:rd9.spread||'single', a:rd9.area||null, it:rd9.intention||null, sk:rd9.seeking||null, p:!!((_RP[runeK]||{})[ii]) }); }); }
+      var kInfo={ navraty:rRet, navratyMin:rPast, norna:(!dirO && be && be.nornName)||null, retl:kRet, sh:kSh, dev:rdevUsed, side:!!dirO };
       var rspine=rG.paths[0].pts, rf=rbase.w/((rspine[0].w)||1), rdepth=rbase.depth+0.0007*k;
       for(var ri=0;ri<rspine.length;ri++){ var rtt=rspine[ri].t;
         rspine[ri].w*=rf*(1+(rootsT.junctionThick-1)*Math.pow(1-rtt,2)); rspine[ri].depth=rbase.depth; rspine[ri].ct=lerp(rootsT.ctNear,rootsT.ctFar,rtt); }
@@ -1985,9 +2000,9 @@ HTML = r"""<!DOCTYPE html>
         for(var tj=0;tj<tp.length;tj++){ tp[tj].w*=rf; tp[tj].depth=rdepth-0.05; tp[tj].ct=lerp(rootsT.ctNear,rootsT.ctFar,tp[tj].t); }
         roots.push({ pts:tp, el:rG.info.el, depth:rdepth-0.05, src:'koren', rune:runeK, k:k, pi:rp2, age01:_curAge01 });
         _pick.push({ k:'r'+k+'_'+rp2, pts:tp, meta:{ el:rG.info.el, aett:be.aett, world:be.world, name:runeName,
-          g:(RBK[runeK]?RBK[runeK].g:null), count:'-', root:true, strand:k, rootDev:rdevUsed, navraty:rRet, navratyMin:rPast, norna:(be&&be.nornName)||null,
+          g:(RBK[runeK]?RBK[runeK].g:null), count:'-', root:true, strand:k, rootDev:rdevUsed, navraty:rRet, navratyMin:rPast, norna:(be&&be.nornName)||null, koren:kInfo,
           runeN:(be.runeCnt&&be.runeCnt[runeK])||null } }); }
-      return { rspine:rspine, rdepth:rdepth, rdevUsed:rdevUsed, rf:rf };
+      return { rspine:rspine, rdepth:rdepth, rdevUsed:rdevUsed, rf:rf, info:kInfo };
     }
     var mainInfo={};   /* verze B: co graduant potrebuje od rodice (patef vetve, vystup z kmene) */
     var _usedFrac=[];  /* vysky vystupu STARSICH pramenu (pravidlo 5) */
@@ -2146,7 +2161,7 @@ HTML = r"""<!DOCTYPE html>
               exitX:ex.x, exitY:ex.y, tp:trunkPart.length, fanPart:ang-angLP,   /* tp = kolik bodu v pts je koren+kmen (detektor prekryvu bere jen vetev) */
               secN:be.count, ownN:be.ownN, bendMag:LP.mag, bendZ:LP.z, bendN0:mag0,
               runeTot:_runeTot[brune.k]||null, bornRd:be.bornIdx, rdl:_RDL[k]||[], nGrad:gradStrands.filter(function(G){ return G.p===k; }).length,
-              born:born, strandAge:strandAge, domV:domV, sizeF:sizeF, lenF:lenF, rootDev:rdevUsed, seekShape:mcfg._seekShape,
+              born:born, strandAge:strandAge, domV:domV, sizeF:sizeF, lenF:lenF, rootDev:rdevUsed, seekShape:mcfg._seekShape, koren:_R.info||null,
               tw:twRunes.map(function(t){ return { name:(RBK[t.k]?RBK[t.k].name:t.k), n:t.n||0, g:t.g, grad:!!t.grad, rep:t.rep||0, pick:('t'+k+'_'+t.k+(t.id!=null?('_'+t.id):(t.rep?('_'+t.rep):''))),
                 born:(t.born!=null?t.born:null),
                 kids:(t.kids||[]).map(function(x){ return { name:(RBK[x.k]?RBK[x.k].name:x.k), pick:('t'+k+'_'+x.k+(x.id!=null?('_'+x.id):'')) }; }) }; }) } }); }
@@ -2264,7 +2279,7 @@ HTML = r"""<!DOCTYPE html>
         var sRt=buildRootFor({ pts:[{ x:rp.x, y:rp.y, w:rp.w*0.85, depth:rp.depth, ct:rp.ct, t:rp.t }], depth:rp.depth }, 0, GS.rune, GS.name, par.be, k, gPf, gEmg,
                              clamp((crownT.gradStrandW!=null) ? crownT.gradStrandW : 0.65, 0.15, 1), { baseAng:rAng, dev:dvR });
         if(sRt.rspine && sRt.rspine.length>1){ roots.push({ pts:sRt.rspine, el:par.el, depth:sRt.rdepth, src:'koren', rune:GS.rune, k:k, pi:0, age01:clamp(gAge/Math.max(1,trunkT.matureDays),0,1) });
-          _pick.push({ k:'rs'+k, pts:sRt.rspine, meta:{ el:par.el, name:GS.name, root:true, sideRoot:true, strand:GS.p, g:(RBK[GS.rune]?RBK[GS.rune].g:null), count:'-', runeN:null } }); } }
+          _pick.push({ k:'rs'+k, pts:sRt.rspine, meta:{ el:par.el, name:GS.name, root:true, sideRoot:true, strand:GS.p, koren:sRt.info||null, g:(RBK[GS.rune]?RBK[GS.rune].g:null), count:'-', runeN:null } }); } }
     };
     if(crownT.gradStrand && !seed && gradStrands.length){
       var gwS=clamp((crownT.gradStrandW!=null)?crownT.gradStrandW:0.65, 0.15, 1), byM={};
