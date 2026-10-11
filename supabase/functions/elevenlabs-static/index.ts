@@ -4,7 +4,7 @@
 // Používá service_role pro zápis do runar_static_audio a Storage
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
+import { createClient } from "npm:@supabase/supabase-js@2.117.3"
 import { logVoice, fetchQuota } from "../_shared/voice_usage.ts"
 
 const EL_API_KEY     = Deno.env.get('ELEVENLABS_API_KEY')

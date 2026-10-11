@@ -7,7 +7,7 @@
 // Deploy: supabase functions deploy list-readings --project-ref pmitxjvkeovijreepror --no-verify-jwt
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { createClient } from "npm:@supabase/supabase-js@2.117.3";
 
 const ADMIN_EMAILS = ["kukula@agndofa.is", "info@agndofa.is"];
 
