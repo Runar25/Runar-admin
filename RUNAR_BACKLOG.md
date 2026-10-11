@@ -406,7 +406,11 @@
   „GPT 8 $“ (předplatné, nebo API) · skutečná měsíční útrata Anthropic API a OpenAI API · plán ElevenLabs při spuštění · používá se ještě
   Hetzner · doména therunekeeper.com a schránka runar@ (Workspace?) · úložiště Google Drive pro zálohy · kolik ze Shopify nese Rúnar ·
   kdy Apple a Google Play. Pak přepočítat break-even (`RUNAR_PRICING.md`) a hlídat, ať čísla bydlí na jednom místě.
-- [ ] **Upozornění na obnovu měsíčních čtení** (owner 2026-10-11: *„apka by mohla dát vědět jednou po otevření, že se čtení obnovila“*) —
+  **Výstup jako kalkulačka s posuvníky** (owner 2026-10-11: *„měli jsme udělanou krásnou tabulku s posuvníky, kde bylo vidět, kdy bych měl
+  přejít na jiný subscription kvůli nákladům… i s tím, kolik potřebuju uživatelů pro návratnost“*). Původní (pricing ji uvádí jako
+  „interactive calculator, 2026-06-15“) se nenašla v repu, v artifactech ani v přepisech konverzací (červnové už nejsou) — nejspíš artifact
+  v chatu na claude.ai; má-li ho owner, navázat na něj, jinak postavit znovu nad čísly z `scripts/utils/pricing_tabulka.js`.
+- [x] *(hotovo 2026-10-11: owner „2. ok“ → varianta a, commit 7077816, DECISIONS 2026-10-11 (27); FAQ slib vrácen)* **Upozornění na obnovu měsíčních čtení** (owner 2026-10-11: *„apka by mohla dát vědět jednou po otevření, že se čtení obnovila“*) —
   plán předložen ownerovi 2026-10-11 (CODE-tune), čeká na ano. Do té doby slib z nápovědy pryč (DECISIONS 2026-10-11 (20)); až vznikne,
   věta se do FAQ vrátí.
 - [x] *(hotovo 2026-10-11: pricing přepočten na GPT-6 sol z dat produkce — `node scripts/utils/pricing_tabulka.js`)* **RUNAR_PRICING.md — model ref na Opus** — model čtení přepnut sonnet-4-5 → opus-4-8; cenový model může zmiňovat starý (delta zanedbatelný, hlas dominuje). Aktualizovat referenci.

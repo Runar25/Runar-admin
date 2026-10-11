@@ -10328,3 +10328,18 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   její pomoci. Samotest 22 stavů (vč. „pokračuj“ = nic, zpráva během práce = ano, zpráva jiné session = ne).
 - **Hranice:** hledá shodu slov, ne význam — pokyn vyslovený úplně jinými slovy, než jak stojí v kánonu, nenajde.
 - Affected doc(s): `CLAUDE.md` §30 — v témže commitu.
+
+## 2026-10-11 (27) — Upozornění na obnovu měsíčních čtení: jednou po otevření appky v novém měsíci, na každém zařízení
+
+- **Rozhodl:** KUKY 2026-10-11: *„apka by mohla dát vědět jednou po otevření, že se čtení obnovila“* → po návrhu CODE-tune *„2. ok“*
+  (varianta a: pamatuje si to prohlížeč, bez SQL; varianta b — jednou na účet přes DB — zamítnuta jako zbytečně těžká).
+- **Co:** `_renewalNotice()` (`v2/runar-app.js`) na konci `fetchUserProfile` — tam už je načtený tarif i jazyk účtu. Jen předplatitel
+  (`TIERS.*.monthly_readings` > 0; Rune Seeker měsíční čtení nemá). Měsíc = UTC jako server (`monthKey` v claude-proxy). Klíč
+  `runar_renew_<id účtu>` v localStorage; první otevření na zařízení měsíc jen zapíše (nový předplatitel ani nové zařízení nic neobnovilo).
+  Text `UI_TEXT.renew_toast` je dvojice s `err_monthly_limit` („vrátí se s novým měsícem“ → „vrátily se“), toast 5 s. FAQ nápovědy
+  upozornění znovu slibuje — ráno ubráno, protože ho appka neuměla (DECISIONS 2026-10-11 (20)).
+- **Hranice:** na druhém zařízení se ukáže znovu jednou; kdo appku v daném měsíci neotevře, nedozví se nic (e-mail ani push není).
+- **Ověřeno:** v prohlížeči na skutečné funkci šest stavů — nový měsíc EN i IS → text; druhé otevření, první otevření na zařízení,
+  Rune Seeker, nepřihlášený → nic; toast na šířce telefonu (375 px). IS: is-greynir 2/2, is-gpt-check 2/2 ($0.0042), korpus
+  („lætur þig vita“ 225×, „næst þegar þú“ 2573×).
+- Affected doc(s): `RUNAR_BACKLOG.md` (položka „Upozornění na obnovu měsíčních čtení“) — v témže commitu.
