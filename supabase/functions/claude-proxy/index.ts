@@ -508,6 +508,7 @@ serve(async (req: Request) => {
       spread_cost = 1,     // reading units to deduct (SPREAD_COSTS — Yggdrasil 9 runes costs 5; sanitised below)
       journal     = null,  // reading meta to persist server-side (null = do not save)
       engine      = "",    // 'opus' = admin chce Claude místo solu (od 2026-10-09; do té doby 'sol' = admin chtěl sol). Ne-adminovi se ignoruje.
+      eval: evalFlag = false,   // true = nástroj (gen_batch.js, shrine teach), ne čtení v appce — mimo počítadlo JEN pro admina (bezPocitani níž)
     } = body;
     // life_rune_reset (2026-09-14) nevola Clauda, prompt nema — stejna vyjimka jako resave.
     // Nalezeno sondou na zivem endpointu: reset s prazdnym promptem koncil 400 pred auth.
@@ -565,7 +566,7 @@ serve(async (req: Request) => {
         userId = user.id;
         if (user.email && ADMIN_EMAILS.includes(user.email.toLowerCase())) {
           userTier = "premium";
-          isAdmin  = true;   // premium is how the owner gets full access — not a subscription to meter
+          isAdmin  = true;   // admin = premium; od 2026-10-11 se i počítá (75 jednotek, obnova) — výjimka jen pro nástroje, viz bezPocitani
         } else {
           const { data: profile } = await sb()
             .from("user_profiles")
@@ -712,12 +713,17 @@ serve(async (req: Request) => {
     }
 
     const countsAsCast = !legitAsk && !isRitual;
+    // 2026-10-11 (owner „předěláme admin. bude mít přesně to co má premium, takže 75 čtení a pak automatickou obnovu, ať to vidím, jak
+    // to vypadá“): admin se v appce počítá jako premium — zámek, měsíční strop i odečet jednotek. Do té doby se neúčtoval vůbec. Mimo
+    // počítadlo zůstávají jen nástroje, které jdou adminovým tokenem — gen_batch.js (evaly a pokusy by jinak jedly jeho 75 jednotek
+    // a souběžné volání by narazilo na zámek) a shrine teach. Ohlásí se eval:true; ne-adminovi se příznak ignoruje, strop si nikdo nevypne.
+    const bezPocitani = isAdmin && evalFlag === true;
 
     // ── Zámek: jedno účtované čtení naráz na účet (2026-10-11, BACKLOG část 40 — nález CODE-read (m)) ──────────────
     // Bere se PŘED čtením zůstatku: kdyby se bral až po něm, požadavek, který zůstatek přečetl před cizím odečtem a zámek
     // dostal až po jeho uvolnění, by prošel podruhé. Rituály a Ask k vlastnímu čtení se neúčtují a mají vlastní ochranu (CAS,
-    // trigger, strop Asků) — zámek je neblokuje. Admin se neúčtuje vůbec.
-    if (countsAsCast && !isAdmin && userId &&
+    // trigger, strop Asků) — zámek je neblokuje. Admin se od 2026-10-11 účtuje jako premium; nástroje s eval:true ne (bezPocitani).
+    if (countsAsCast && !bezPocitani && userId &&
         (userTier === "rune_seeker" || userTier === "standard" || userTier === "premium")) {
       const token = crypto.randomUUID();
       const { data: vzat, error: zErr } = await sb().rpc("acquire_reading_lock",
@@ -733,7 +739,7 @@ serve(async (req: Request) => {
         zamek = { user: userId, token };
       }
     }
-    if ((userTier === "standard" || userTier === "premium") && userId && countsAsCast && !isAdmin) {
+    if ((userTier === "standard" || userTier === "premium") && userId && countsAsCast && !bezPocitani) {
       const limit = MONTHLY_LIMITS[userTier];
       const mKey = monthKey();
       const { data: prof, error: mErr } = await sb()

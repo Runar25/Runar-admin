@@ -1218,7 +1218,8 @@ async function callProxy(system, prompt, max_tokens = 500) {
     const res = await fetch(PROXY, {
       method: 'POST',
       headers,
-      body: JSON.stringify({ system, prompt, max_tokens, lang })
+      // eval:true (2026-10-11): teach je nástroj adminu, ne čtení — admin se v appce počítá jako premium a teach by mu jinak ubíral jednotky
+      body: JSON.stringify({ system, prompt, max_tokens, lang, eval: true })
     });
     const data = await res.json();
     if (data.error) return { error: data.error };
