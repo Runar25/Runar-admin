@@ -2669,6 +2669,12 @@ it“ i IS „appið lætur þig vita næst þegar þú opnar það“ teď plat
 400 s**; **request idle timeout 150 s pro všechny tarify** (kdo do té doby nepošle odpověď, dostane 504). Nejhorší cesta čtení ≈ 105 s se
 vejde. Pro budoucnost: placený tarif delší čtení bez průběžně posílané odpovědi nespasí — limit nečinnosti zůstává 150 s.
 
+#### Kolo 2 / 22 — přihlašování, sliby appky, souhlas testera (části 38, 39, 36; 2026-10-11, DB jen čtením)
+**Platí:** `/auth/v1/settings` beze změny (Google + e-mailový kód, potvrzení e-mailu, registrace otevřená záměrně; CAPTCHA dál „před
+spuštěním“) · sliby tierů: `verify_tier_features.js`, `verify_monthly_limits.js`, `verify_reading_cost.js` OK; nápověda bere balíčky
+z `CARD_PACKS` (žádná velikost natvrdo) · testerů 5, souhlas 4 — pátý (ne admin, účet 2026-05-20) nemá ani jedno čtení, souhlas si appka
+vyžádá při přihlášení; odhlášených z analýzy 0. Nic k opravě.
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
