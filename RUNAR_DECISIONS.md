@@ -10159,3 +10159,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   „oprav sám“. Platí: plán schvaluje owner u nových funkcí a změn chování; rozpory, duplikáty, chyby, vlastní kontroly a paměť se opravují
   bez ptaní. Vlastník znění = `memory/working-style.md`.
 - Affected doc(s): `CLAUDE.md`, `memory/working-style.md`, `memory/MEMORY.md` — v témže commitu.
+
+## 2026-10-11 (16) — Mapa promptu zrušena a archivována; rozpis ceny promptu zůstal jako výstup nástroje
+
+- **Rozhodl:** KUKY 2026-10-11: *„3. zrušit a archivovat.“* (na návrh CODE-tune po nálezu CODE-read).
+- **Proč:** mapa „jak a z čeho Rúnar mluví“ (`docs/runar-prompt-map.html` + publikovaný artifact) byla z větší části ruční kopie toho,
+  co dělá kód. Pravidlo z 2026-08-08 („měníš prompt → překresli mapu ve stejném tahu“) se nedodržovalo: publikovaná stála na v4.36,
+  repo na v4.15, produkce je na v5.08 a čte GPT-6 sol. Neudržovaná mapa je zdroj nepravdy (§20); ruční překreslení by zastaralo znovu.
+- **Co:** novější (publikovaná) verze v4.36 s pruhem „ARCHIVOVÁNO“ → `docs/archive/runar-prompt-map.html`, stará repo kopie zmizela;
+  artifact nese týž pruh (verze 22). Pravidlo o překreslování zrušeno. Rozpis ceny promptu po slotech zůstal:
+  `node scripts/utils/lint_prompts.js --map` bez cesty ho vypíše jako text z aktuálního kódu.
+- Affected doc(s): memory `prompt-map-artifact` + index `MEMORY.md` · `RUNAR_BACKLOG.md` (části 17 a 30) — v témže commitu.

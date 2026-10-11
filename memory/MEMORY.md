@@ -123,7 +123,7 @@ Intake (NENÍ pravda): `docs/inbox/` · Mrtvá (scratch): mimo index.
 - [fix-substance-not-shape.md](fix-substance-not-shape.md) — security/metering: oprav podstatu ne tvar; ověř, že díra nejde obejít jinudy (2× stejná chyba)
 - [copy-always-in-runar-voice.md](copy-always-in-runar-voice.md) — veškerá copy VŽDY hlasem Rúnara (přečti charakter), nikdy slepé generické vymýšlení; spíš stručně
 - [read-design-before-voice-work.md](read-design-before-voice-work.md) — než sáhneš na hlas/prompt: RUNAR_DESIGN.md „Kdo je Rúnar" + nálady; vstup promptu / tip Asku → sekce „Slova, která dáváme modelu"
-- [prompt-map-artifact.md](prompt-map-artifact.md) — vizuální reference mapa Rúnarova promptu (artifact URL); snapshot, pravda = kód
+- [prompt-map-artifact.md](prompt-map-artifact.md) — mapa promptu ZRUŠENA a archivována 2026-10-11; nepřekreslovat, pravda = kód
 - [cowork-handoff-quality-bar.md](cowork-handoff-quality-bar.md) — standard pro Cowork content/research/eval handoffy: 12 návyků (závěr napřed, živé ověření, značka původu, přiznané mezery)
 - [review-everything-first-pass.md](review-everything-first-pass.md) — revize textů: přečti VŠE v obou jazycích napoprvé, jeden seznam, opravy jako hotové věty
 - [runar-not-public-yet.md](runar-not-public-yet.md) — Rúnar není veřejně spuštěný; návrhy pro agndofa.is nesmí posílat zákazníky do appky

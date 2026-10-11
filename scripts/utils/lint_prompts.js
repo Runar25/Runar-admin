@@ -193,6 +193,8 @@ function langLeak() {
 // se z kodu ODVODIT DA — a prave ta cast se rozchazela: za dva dny ctyri rucni
 // prekresleni a jednou uplny rozchod (14/14 citaci radku mimo).
 // Tenhle prepis sahne JEN mezi znacky, zbytek souboru necha byt.
+// 2026-10-11: mapa promptu ARCHIVOVÁNA (owner „zrušit a archivovat“; docs/archive/runar-prompt-map.html) — ruční část se rozcházela
+// s kódem. Bez cesty k souboru se rozpis vypíše jako text (výstup nástroje, ne doc).
 function mapSection(file) {
   const ver = G('typeof RUNAR_PROMPT_VERSION !== "undefined" ? RUNAR_PROMPT_VERSION : "?"');
   const rows = [];
@@ -219,6 +221,16 @@ function mapSection(file) {
       h += '<tr><td>' + esc(x.t.slice(0, 96)) + '</td><td class="num">' + x.w +
            '</td><td class="num">' + Math.round(x.w / r.read * 100) + '</td></tr>';
     h += '</tbody></table></div>';
+  }
+  if (!file) {
+    console.log('\n  Rozpis promptu po slotech (' + ver + ', ' + all.length + ' postavených kombinací):');
+    for (const r of rows) {
+      console.log('  ' + r.lg.toUpperCase() + ': systémový ' + r.sys + ' slov · čtecí ' + r.read + ' · celkem ' + (r.sys + r.read) +
+        ' (systémový ' + Math.round(r.sys / (r.sys + r.read) * 100) + ' %)');
+      for (const x of r.lines.slice(0, 10))
+        console.log('    ' + String(x.w).padStart(3) + ' slov ' + String(Math.round(x.w / r.read * 100)).padStart(3) + ' %  ' + x.t.slice(0, 90));
+    }
+    return;
   }
   const A = '<!-- AUTO-ROZPIS:start -->', B = '<!-- AUTO-ROZPIS:end -->';
   let src;

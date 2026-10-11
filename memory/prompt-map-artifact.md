@@ -1,52 +1,19 @@
 ---
 name: prompt-map-artifact
-description: Vizuální reference mapa Rúnarova reading-promptu (jak a z čeho mluví) — artifact URL + pravidlo překreslování
-metadata: 
+description: Mapa Rúnarova promptu je od 2026-10-11 ZRUŠENÁ a archivovaná — nepřekresluje se, nečte se jako stav; pravda o promptu = kód
+metadata:
   node_type: memory
   type: reference
   originSessionId: 12b7cce8-c1bb-4d60-afe0-c53fe2a58d0b
-  modified: 2026-08-16T20:47:06.305Z
 ---
 
-Vizuální mapa **„jak a z čeho Rúnar mluví"** — 3 vrstvy (systémový prompt/charakter · reading stack · korekce → model → JSON → jeden odstavec; který model čte, vlastní `SOL_MODEL` v claude-proxy — do 2026-10-11 tu stálo `claude-opus-4-8`), + tabulka „kde ladit nuanci" + seznam „co je mrtvé/nehoň to".
+⛔ **ZRUŠENO A ARCHIVOVÁNO 2026-10-11** (owner: *„zrušit a archivovat“*). Mapa „jak a z čeho Rúnar mluví“ byla z větší části ruční
+kopie toho, co dělá kód, a nikdo ji neudržoval: v době zrušení stála na v4.36 (publikovaná) a v4.15 (repo), produkce na v5.08 a GPT-6 sol.
+Pravidlo „měníš prompt → překresli mapu ve stejném tahu“ (KUKY 2026-08-08) tím **neplatí**.
 
-**URL:** https://claude.ai/code/artifact/e32dbd2b-5277-414a-a187-8277efe99f69
-(privátní, jen owner; galerie `claude.ai/code/artifacts`.)
-
-⛔ **ARCHIVOVÁNO 2026-08-22 — „Engine pestrosti" (návrhová mapa 4 pák) SKONČIL.** Vznikl
-2026-08-20, aby se návrh nepletl s produkcí; o dva dny později produkce tytéž problémy vyřešila
-jinak (řada v4.0–v4.5-mynd) a owner tu exploraci ukončil: *„s pole končíme, nikdo na tom nedělá."*
-Zdroj přesunut do `docs/archive/runar-engine-map.html`; artifact
-https://claude.ai/code/artifact/5c527b2d-15f0-4f00-a6c7-a593c4b6118a zůstává jako **historický
-snímek k 20. 8.**, NEpřekresluje se a nečte se jako stav. Proč která páka padla → `RUNAR_DECISIONS.md`
-2026-08-22. **Živá je jen jedna mapa — ta produkční nahoře.**
-
-⚠️ **Je to SNAPSHOT.** Pravda = KÓD: `v2/runar-character.js` (buildSysPrompt · RP_* · buildReadingPrompt · helpery) · `runar-config.js` (VOICE_PROFILES.focused · RUNAR_MODES) · `supabase/functions/claude-proxy/index.ts` (MODELS). NEdělat z toho repo doc (§20 — duplikoval by kód a zastarával).
-
-⭐ **SEKCE „co prompt stojí" SE NEEDITUJE RUČNĚ — generuje se z kódu:**
-`node scripts/utils/lint_prompts.js --map <cesta-k-html>` přepíše obsah mezi značkami
-`<!-- AUTO-ROZPIS:start -->` a `:end` (postaví 2100 kombinací a spočítá slova na slot).
-Bez cesty k souboru jen vypíše „soubor mapy nenalezen". Vzniklo proto, že právě tahle část
-driftovala nejvíc — čtyři ruční překreslení za dva dny a jednou 14 ze 14 chybných čísel řádků.
-**Spusť to jako první**; razítko `v2.x` se tím aktualizuje samo.
-
-⭐ **PRAVIDLO (KUKY 2026-08-08): měníš-li prompt / hlas → překresli mapu ve STEJNÉM tahu.** Jinak se
-rozejde a příští session z ní čte nepravdu. Mapa má nahoře **razítko** (datum + `RUNAR_PROMPT_VERSION`)
-a krátký changelog „co se změnilo" — obojí aktualizovat. Překreslení: HTML zdroj mapy **JE v repu**
-(`docs/runar-prompt-map.html`, git-tracked); uprav ho a publikuj **na tutéž URL** (`Artifact`
-s `url:`). ⚠️ Do 2026-08-20 tu stálo „není v repu, leží ve scratchpadu session" — prokazatelně
-nepravda (`git ls-files` ho vrací, 45 427 B) a návod tím vyráběl scratchpad-sirotky. Ověřeno CODE-read.
-✅ **Rozkol repo × publikovaná mapa SROVNÁN 2026-09-06.** Repo kopie byla starší (v2.0) než
-publikovaná (v2.1) — nová verze se proto postavila NA STAŽENÉ publikované, ne na repo souboru,
-a tou se repo přepsalo. ⚠️ **2026-10-11: mapa stojí pořád na `v4.15-ask90` a opus-4-8, produkce je dál** (`RUNAR_PROMPT_VERSION`
-v configu, model `SOL_MODEL`) — pravidlo „překresli ve stejném tahu“ se nedodržuje; zapsáno v `RUNAR_BACKLOG.md`. **Postup, který to spravil,
-je zároveň ten správný pro příště:** `Artifact action:"read"` → publikovanou verzi si nech uložit
-→ edituj TU → publikuj → zkopíruj do repa. Publikace se odmítne, dokud živou verzi nepřečteš
-celou (nestačí `read`, chce to `Read` celého uloženého souboru). Z jiné session než
-té, co ji vydala, se URL MUSÍ předat explicitně, jinak vznikne nová. Před publikací WebFetch aktuální
-verzi (guard hlídá, že nepřepíšeš cizí změnu) + zkontroluj párování tagů.
-
-✅ **Uzavřeno 2026-08-07:** `select id, active from public.runar_character where active=true` → **0 řádků**,
-takže **file `DEF_CHAR` je živý hlas** a mapa je v tomhle přesná. Loader `runar_character` v `runar-app.js` je ale pořád
-zadrátovaný (editor charakteru = shrine Rúnar lab je mrtvý) → neškodí, dokud tabulka nemá aktivní řádek,
-ale zaslouží smazat. Kdyby se tam někdy řádek objevil, přebil by file DEF_CHAR potichu.
+- **Archiv:** `docs/archive/runar-prompt-map.html` (publikovaná verze v4.36 s pruhem „ARCHIVOVÁNO“); artifact
+  https://claude.ai/code/artifact/e32dbd2b-5277-414a-a187-8277efe99f69 nese týž pruh. Nečíst jako stav, nepřekreslovat.
+- **Pravda o promptu = kód:** `v2/runar-character.js`, `v2/runar-utils.js`; model `SOL_MODEL` v `supabase/functions/claude-proxy/index.ts`.
+- **Rozpis ceny promptu po slotech** zůstal jako výstup nástroje: `node scripts/utils/lint_prompts.js --map` (bez cesty vypíše text).
+- Starší „Engine pestrosti“ mapa (archiv 2026-08-22) → `docs/archive/runar-engine-map.html`.
+- Proč → `RUNAR_DECISIONS.md` 2026-10-11 („Mapa promptu zrušena a archivována“).

@@ -2078,7 +2078,8 @@ Hledáno strojem, ne náhodou: (a) jména souborů v komentářích kódu, kter�
 (c) stopy po změněných věcech (přihlášení odkazem, staré modely, týdenní příděl); (d) odkazy v `memory/`.
 **Opraveno rovnou:** hlavička `runar-reporter.js` odkazovala na spec, který v repu nikdy nebyl · `RUNAR_SEGMENTATION_SPEC.md` (plán
 z léta, „SW v109“, formát bez ✦) a jednorázová předávka `DOCSYNC_HANDOFF_2026-07-04.md` → `docs/archive/` s hlavičkou ·
-`docs/runar-prompt-map.html` (stav v4.15, zmiňuje Opus 4.8/Sonnet) dostala viditelné „snímek k 2026-09-06, pravda je kód“.
+mapa promptu (stav v4.15, zmiňuje Opus 4.8/Sonnet) dostala viditelné „snímek k 2026-09-06, pravda je kód“ — 2026-10-11 zrušena
+a archivována (`docs/archive/runar-prompt-map.html`, owner „zrušit a archivovat“).
 ✅ **Hotovo CODE-tune 2026-10-10 (c81b4da, nasazeno):** zbytky „magic link“ po přechodu na kód — shrine teď jen Google (oba admini ho mají), nápověda EN+IS kódem, výchozí text okna z UI_TEXT, `weekly_drip` pryč. Původně: **shrine přihlášení e-mailem nefungovalo** (posílá kód, pole na kód nemá;
 Google funguje), nápověda slibuje odkaz (EN 2×, IS 1×), výchozí text okna v `runar-reader.html`; mrtvé pole `weekly_drip` v `TIER_LIMITS`.
 **Bez nálezu:** odkazy v `memory/` (zástupná jména, gitignorované sloty, historie stromu); `docs/findings/` jsou datované záznamy běhů.
@@ -2242,7 +2243,7 @@ jméno klíče ani locale se nepočítají (samotest).
   hefur“ ve výpisu tierů, UI) · `runar-character.js` 15 + `runar-utils.js` 7 (text a značky promptu → jazykové balíčky). Po přesunu snížit BASELINE.
 
 ### Část 30 — kořen `docs/`: co tam leží jako živé (2026-10-10)
-**Platí:** `docs/monitor/ozveny.md` živý · `docs/runar-prompt-map.html` nese banner snímku (část 17) · `docs/TREE_BRIEF_CODE_2026-07-04.md`
+**Platí:** `docs/monitor/ozveny.md` živý · mapa promptu od 2026-10-11 v `docs/archive/` (zrušena, owner) · `docs/TREE_BRIEF_CODE_2026-07-04.md`
 vede `RUNAR_TREE.md` výslovně jako historickou poznámku (strom = CODE-tree, nesahám).
 **Opraveno (CODE-read, doména Vegvísir):** šest pracovních dokumentů `docs/vegvisir-*.md` leželo jako živé a ani jeden neříkal, že je
 Vegvísir je na pár dní odložený (owner 2026-10-10: „pořád se na něm pracuje… odložený na pár dní“). Každý dostal pod nadpis řádku s odkazem
