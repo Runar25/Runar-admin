@@ -10190,3 +10190,25 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Mimo repo (git nevidí):** zapojení hooku v uživatelském nastavení Claude Code; stará mapa v SessionStart hooku `runar-context.py`
   nahrazena odkazem (záloha `.pred-pravidla-2026-10-11`).
 - Affected doc(s): `CLAUDE.md` §30, `memory/MEMORY.md` (rozcestník) — v témže commitu.
+
+## 2026-10-11 (18) — Strom: výjimečné události se skládají z dat, nestaví se po jedné; lab drží „Kořen jako celek“ a inspekce kořene ho ukáže
+
+- **Rozhodl:** KUKY 2026-10-11: *„5. ano … 3. výjimečná událost. výjimečných událostí bude víc, nemusíme je teď stavět, spíš jde o to, abychom
+  měli data, z kterých to pak poskládáme. to je to stejné jako čtení pro větev, kterou jsme zkoušeli nedávno.“* **Provedl:** CODE-tree, LAB.
+- **Platí:** výjimečné události (z kánonu např. „všechny tři kořenové runy v jednom čtení“, `RUNAR_DESIGN.md`) se nestaví jako samostatné kusy
+  enginu. Strom drží data po částech a události se z nich později poskládají ve vrstvě Gathering (`RUNAR_TREE.md` §7, `detectPatterns`).
+- **V labu (b7e719f):** kořen nese „Kořen jako celek“ — čtení, ve kterých se jeho runa vrátila po vzniku větve (druh výkladu, oblast, záměr,
+  seeking, minulost/nitro), počet návratů, Nornu, seeking a směr; protějšek „Větve jako celku“ (2026-10-09 (14)). Inspekce to vypíše u hlavní
+  větve i u kořene; dřív ukazovala zastaralý směr („podle polohy pramene“) a u vedlejší větve „sdílí pramen i kořen matky“ (od 2026-10-10 (26)
+  neplatí). Ověřeno v prohlížeči na jeho stromě, konzole bez chyb.
+- Affected doc(s): `RUNAR_TREE.md` §7, §8 · `RUNAR_BACKLOG.md` („Kořeny = minulost/základ“ bod (a), „Katalog speciálních motivů“) — v témže commitu.
+
+## 2026-10-11 (19) — Start session vypíše otevřené úkoly „Pro CODE-…“ z backlogu (SessionStart hook)
+
+- **Rozhodl:** KUKY 2026-10-11 *„6. ano“* — po otázce *„nedali ti ostatní session něco, co je potřeba opravit?“* (CODE-read mi nechala dva
+  dokumenty stromu, owner se musel ptát). **Provedl:** CODE-tree (uživatelský soubor mimo repo, git změnu nevidí — proto tenhle záznam).
+- **Co:** `~/.claude/runar-context.py` přidá oddíl „ÚKOLY OD OSTATNÍCH SESSION“: otevřené položky backlogu, které adresátem „Pro CODE-tune |
+  tree | read“ začínají, po lanes, číslo řádku a začátek textu. Hotové = ✅, `[x]` nebo přeškrtnuté „~~Pro CODE-…~~“ — kdo úkol udělá, takhle
+  ho označí. Text úkolů se neopisuje, bydlí v backlogu. První verze chytala i odkaz „Pro CODE-tree“ uprostřed textu → adresát jen na začátku
+  položky. Záloha hooku: `runar-context.py.pred-ukoly-2026-10-11`.
+- Affected doc(s): žádný.
