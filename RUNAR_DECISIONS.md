@@ -10773,3 +10773,27 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   dotaz do DB týmž dělením (2026-10-11): testeři 1 člověk, 5 čtení, 5 hlasů, $0.20. Živá data záložky owner uvidí po otevření (CODE se jako
   admin nepřihlásí).
 - Affected doc(s): žádný jiný — kdo jsou testeři a tým, stojí v `CLAUDE.md` „Tier systém“.
+
+## 2026-10-11 (55) — Port nového stromu do aplikace: strom v aplikaci = kód labu; založení jako brána
+
+- **Proč:** KUKY 2026-10-11 *„8. nasadíme, chci to vidět na mých čteních. úprav ještě bude určitě pár. ale to už můžeme ladit s produkcí
+  dohromady.“* Plán (24) bod 3: aplikační strom ze stejného kódu jako lab (§18).
+- **Co:**
+  1. `build_tree_production.py` bere skript labu doslova (lab postaví do dočasné složky) a v aplikaci ho spouští v pískovišti: falešný DOM
+     pro ovládací prvky labu, plátno aplikace přes proxy. API `RunarTreeProd.render` zůstalo, přibylo `toModel`/`toCanvas`/`scale`.
+     Stará ruční kopie skladby stromu (září 2026) je pryč — s labem se rozešla.
+  2. Most `runar-tree.js` mluví jazykem labu: záměr jako slug (`TREE_INT_SLUG`: past/present/decision; dřív osa Noren), runy jako klíče
+     labu (+ glyf pro popisek), id čtení.
+  3. Založení (kánon `RUNAR_TREE.md` §2): bez založení semínko; po něm všechna čtení a zakládací Norny (`founding_reading_id`) první.
+     Kdo má založení smazané resetem (owner), vidí semínko, dokud strom nezaloží.
+  4. Vybranou větev kreslí lab sám, ťuknutí jde přes auto-fit labu, inspekce bez prázdných polí.
+  5. Smoke ⑬ hlídá slug záměru a tabulku `TREE_INT_SLUG`; ㉹ má výjimku pro generovaný soubor (důvod u výjimky); nová ㊶ hlídá, že
+     strom v aplikaci = výstup generátoru z aktuálního labu (útok v ㊵).
+- **Pro práci:** commitnutá změna labu musí jít s novým `v2/runar-tree-prod.js` (jinak ㊶ zčervená) — ladí se rovnou s produkcí, jak
+  owner chtěl. Strom v aplikaci dál vidí jen admin.
+- **Výkon:** jedno nakreslení ~2 s při 400 čteních na středním telefonu (29); kreslení na pozadí a uložený obrázek (35) je další krok.
+- **Ověřeno:** 20 kontrol ovládání, 11 stavů založení, 5 útoků na port (semínko bez založení, zakládací Norny první i z poloviny
+  deníku, klíče a slugy, žádná chyba JS), smoke 73/73; kód 80e7923 + b21db41.
+- **Otevřené:** posuvník při pozdním založení (Norny jdou první, takže datum u kroku 2 skočí zpět před založení) · zlaté obtažení
+  větvičky čtení na posuvníku (nový strom větvičky po čteních má) → `RUNAR_BACKLOG.md`.
+- Affected doc(s): `RUNAR_TREE.md` §2, §3 (tabulka), §5, §8 · `RUNAR_BACKLOG.md` (port) — v témže commitu.
