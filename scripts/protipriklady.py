@@ -105,6 +105,18 @@ PRIPADY = [
  ('obchazka', 'verify_runar_root.js', 'scripts/utils/stats.js', 'append', '', "\nconst _protiCesta2 = 'C:" + chr(92) * 2 + "Users" + chr(92) * 2 + "zkuku" + chr(92) * 2 + "Downloads" + chr(92) * 2 + "Runar-admin';\n"),
  ('obchazka', 'verify_code_doc_refs.js', 'v2/runar-reader.css', 'append', '', '\n/* podrobnosti viz docs/neexistuje-protipriklad-css' + '.md */\n'),
  ('chyti', 'verify_tree_signals.js', 'v2/runar-tree.js', 'replace', '(row.aol || null)', 'null'),
+ # kolo 3 / 4i (2026-10-11): Ask nápověda, kolekce, páky promptu, databáze čtení. Bez útoku: verify_open_reports (čte hlášení
+ # z produkční DB), verify_inbox_freshness (stáří z historie gitu) — podstrčit by šlo jen zápisem do DB / commitem se zfalšovaným datem.
+ ('chyti', 'verify_ask_hints.js', 'v2/runar-reading.js', 'replace', 'var many = dr.length > 1, life = u.lifeRune;', 'var many = true, life = u.lifeRune;'),
+ ('chyti', 'verify_coll_shape.js', 'v2/runar-app.js', 'replace', "document.getElementById('cd-shape').textContent    = (_tv && typeof _tv === 'object' && _tv[r.n]) || '';", "document.getElementById('cd-shape').textContent    = '';"),
+ ('chyti', 'verify_prompt_levers.js', 'v2/runar-character.js', 'regex', r'    _addressContext\(lang\),(\r?\n    // _describeRule)', r'\g<1>'),
+ ('chyti', 'verify_readings_db.js', 'v2/runar-readings-admin.js', 'replace', "var rows = (typeof RUNE_IMAGES !== 'undefined') ? RUNE_IMAGES : [];", 'var rows = [];'),
+ # kolo 3 / 4j (2026-10-11). Bez útoku zůstávají jen kontroly, které ho mít nemůžou nebo ho nesou samy: verify_prelaunch_open (jen
+ # vypisuje), verify_decisions_followthrough (necommitnuté řádky přeskakuje), verify_open_reports + verify_inbox_freshness (DB / historie
+ # gitu), verify_zaklad_produkce + verify_liferune_states (chybu si podstrčí samy v každém běhu).
+ ('chyti', 'verify_pill_lang.js', 'v2/runar-app.js', 'replace', 'function _syncPillLang() {', 'function _syncPillLang() { return;'),
+ ('chyti', 'verify_prompt_rules_registry.js', 'v2/runar-character.js', 'replace', 'Never name the life rune.', 'Never mention the life rune.'),
+ ('chyti', 'verify_pravidla_mapa.js', 'scripts/utils/pravidla_mapa.json', 'replace', '"pravidla": ["§30"],', '"pravidla": ["§99"],'),
  # kolo 3 / 4h (2026-10-11): obrazy, kalendář, myšlenka ✦, zrcadlo parseru
  ('chyti', 'verify_compose_mirror.js', 'v2/runar-character.js', 'replace', "var reading = segs.map(function (x) { return x.text; }).join(' ').trim();", "var reading = segs.map(function (x) { return x.text; }).join('  ').trim();"),
  ('chyti', 'verify_icelandic_calendar.js', 'v2/runar-character.js', 'replace', "if (doZimy <= 90) return 'heyannir';", "if (doZimy <= 120) return 'heyannir';"),

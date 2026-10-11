@@ -2824,7 +2824,7 @@ v sekci session (příkaz s podpisem i „Commit ÚZCE“) uváděl pathspec com
 **Metoda:** čistá kopie repa (`git worktree`), do souboru podstrčená skutečná chyba, kontrola s `RUNAR_ROOT` na kopii musí spadnout.
 **Výsledek:** 19 útoků / 15 kontrol, 16 chyceno hned. Slepé: `verify_db_write_checked` (alias `_db = sb`) a `verify_write_surface`
 (`from("user_profiles")`, `update(p)`) → opraveno, obcházky zůstávají jako útoky. Smoke ㊵ je pouští samo při změně (DECISIONS (44)).
-- [ ] **Doplnit opakované útoky pro zbývajících 46 kontrol** (61 − 15; opravou (45): pět z nich prošlo jednorázovou mutací při vzniku —
+- [x] **HOTOVO 2026-10-11 — útok má každá kontrola ve smoke, která ho mít může; kterým chybí a proč, stojí u případů v `scripts/protipriklady.py` (kolo 3 / 4j). Původně: Doplnit opakované útoky pro zbývajících 46 kontrol** (61 − 15; opravou (45): pět z nich prošlo jednorázovou mutací při vzniku —
   ✅ 2026-10-11 převedeno čtyři z pěti (c3dfd49: `verify_ask_teaser`, `verify_ending_angle`, `verify_image_aspect_key`,
   `verify_image_pin`; dva první pokusy byly vadné útoky, ne slepé kontroly — pin se uplatňuje dvakrát, rozpočet délky má jednu variantu);
   `verify_tree_mista` (lab, prohlížeč) předán CODE-tree. CODE-tune přidal útoky na brzdu kreditů ve smoke ⑨ — celkem 28 útoků / 19 kontrol).
