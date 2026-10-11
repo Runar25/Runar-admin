@@ -2617,6 +2617,14 @@ spustitelné pro uživatele jen dvě triggerové (`guard_life_rune_immutable`, `
 jen server · všech 8 volání `.rpc()` míří na existující funkci. Nic nového; „repo databázi neumí postavit znovu“ dál platí (část 25,
 pokrývá to záloha se schématem — kolo 2 / 12).
 
+#### Kolo 2 / 18 — smazání účtu, cizí servery, plýtvání, kvóty (části 32, 34, 41, 43; 2026-10-11, DB jen čtením)
+**Platí:** nová `reading_locks` se maže s účtem kaskádou (`ON DELETE CASCADE`); zbytek jako v kole 1 (`credit_ledger` bez vazby a
+`bug_reports` zdůvodněné v `RUNAR_PRIVACY.md`) · stránky ve `v2/` nenačítají nic z cizích serverů, cizí adresy jsou jen odkazy na zásady
+poskytovatelů; klient ElevenLabs nevolá · plýtvání za poslední den žádné (7 volání sol, 6 hlasů) · kvóta ElevenLabs (snímek 2026-10-05,
+starter): 13 919 / 103 807 znaků = 13 %, bezpečná hladina 70 % ≈ 72 600; 15 hlasů × 5 testerů ≈ 28 000 znaků se vejde.
+- **Zlepšeno:** `plytvani.js` píše u varování „naposledy <datum>“ — 30denní okno hlásilo přemýšlení 6.1 a zápis do cache, které opravy
+  zastavily 2026-10-05; přehled nerozlišil historii od trvajícího.
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
