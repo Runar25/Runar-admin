@@ -26,6 +26,10 @@ souboru dvěma session neřeší nic než worktree.
   ale index zůstal naložený → další commit kterékoli lane by je sebral.
 
 **How to apply:**
+- ⭐ **Commit je ve sdíleném repu hned venku — cizí push ho vynese dřív, než proběhne můj pre-push.** Kontroly, kterých se moje změna týká,
+  pusť PŘED commitem: u docs a memory `node scripts/verify_doc_links.js`, u stromu ㉳. **Proč:** 2026-10-11 `1c418ae` (CODE-tree) měl v memory
+  odkaz do prázdna; můj push zastavil pre-push, ale commit už na server vynesl push jiné session a smoke tam padal všem, dokud
+  `571674d` neopravil. Že push „prošel“, ověřuj `git status -sb` (ahead 0) a výpisem pre-pushe, ne jen tím, že je commit na origin.
 - ⭐ **Sdílený trackovaný soubor (DECISIONS, BACKLOG, DESIGN, memory) zapisuj a commituj přes `scripts/utils/commit_vlastni.py`** (od
   2026-10-11): `cv.cti()` + `cv.zapis(soubor, text, '<lane>')` místo vlastního zápisu, pak `python -X utf8 scripts/utils/commit_vlastni.py
   commit <lane> <zprava.txt>` a push. Commitne jen tvoje kusy z dočasného indexu (trojcestně proti HEAD), cizí necommitnuté zůstanou ve
