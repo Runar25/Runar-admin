@@ -11079,3 +11079,13 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Hlídá smoke ㊽ (D):** Deník se dvěma ukázkovými čteními, otevřená karta, přepnutí IS → EN přímo na záložce — žádný text rozhraní nezůstane
   stejný (oba směry naráz, i islandština v anglické appce), karta zůstane otevřená a filtr jazykem drží (1 čtení ze 2). Útoky v protipříkladech.
 - Affected doc(s): `RUNAR_BACKLOG.md` (položka CODE-read odškrtnutá s upřesněnou příčinou) — v témže commitu.
+
+## 2026-10-11 (72) — Rozevření kořenů 0,8 jako výchozí (v produkci)
+
+- **Proč:** KUKY 2026-10-11 po ladění v labu na svých čteních: *„rozevření kořenů 0.8, dej to do produkce“* (cíl „víc jako varianta 5“,
+  rozhodnutí o kořenech beze změny — 2026-10-11 (66)).
+- **Co:** výchozí `rootsT.fan` 0 → 0,8 v `build_crown_composer.py`; aplikace bere výchozí hodnoty z labu. Otočí celý kořen kolem paty:
+  odklon × 1,8, strop 63°, stavba kořene a relativní stočení (3), (13) zůstávají.
+- **Změřeno (jeho strom z produkce, 471 čtení):** kořeny 0,45 → 0,58 šířky koruny (šířka 592 → 772, hloubka 651 → 570), žádný kořen nad
+  zemí; semínko (strom bez čtení) bod po bodu stejné — rozevření se ho netýká.
+- Affected doc(s): `RUNAR_TREE_MAP.md` §10 (výchozí hodnota); `RUNAR_BACKLOG.md` (položka o rovné větvi a kořenech uzavřena) — v témže commitu.

@@ -101,7 +101,8 @@ Směr ramene se po délce mění — **tohle rozhoduje, jestli se ramena potkaj�
   **Norny = tři hlavní kořeny** (od 2026-10-11, DECISIONS 2026-10-11 (13)): kořen pramene s `nornName` (zakládací urð / verðandi / skuld)
   délka × 1,4, hlavní kořen `dev` × 0,35; strana podle ramene. Meta `norna`.
   **Rozevření** (posuvník `fan`, od 2026-10-11, DECISIONS 2026-10-11 (66)): v režimu ramen po všech pravidlech otočí celý kořen kolem paty
-  (s výběžky; zrcadlení až potom) — odklon tětivy × (1 + fan), strop 63°; 0 = beze změny. Do té doby byl posuvník od ramen mrtvý.
+  (s výběžky; zrcadlení až potom) — odklon tětivy × (1 + fan), strop 63°; 0 = beze změny, výchozí 0,8 (KUKY, DECISIONS 2026-10-11 (72)).
+  Do té doby byl posuvník od ramen mrtvý.
 
 ## 11. Co lab ukazuje
 - **Inspekce** (klik): rameno (kolikrát runa padla, kolik čtení nese, kdy vzniklo, místo, výška, směr, tíha), větvička (ze kterého čtení, na čem roste, kolik nese), kořen. **Přehled větví**: čtení, délka, tloušťka, větvičky, povýšené. **RŮST**: věk, čtení, prameny, ramena, sousední zóna, mix, expanze (⚠️ viz §2).
