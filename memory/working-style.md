@@ -107,12 +107,6 @@ placeholdery · `vn('cast')` → renderují „reading". SERVER `countsAsCast` /
 ztratilo by to smysl. **Owner 2026-08-03 potvrdil: JEN user-facing; neviditelný interní kód
 (VOCAB klíč, `{casts}`, server pojem) NECHAT — nerozbíjet.** Viz [[decisions-are-directions-not-locks]].
 
-## Nový spread s víc runami = zkontrolovat text tlačítka
-Každý spread s víc runami musí v `readRune()` po přidání runy zkontrolovat, jestli jsou sloty plné
-(`_spreadCount(_spreadXRunes) >= N` → `speakBtnX.textContent = t('speak_btn')`, jinak tlačítko vypnuté).
-Bez toho zůstane tlačítko na „ADD RUNE“ i po poslední runě. Vzor = stávající spready v `readRune()` (runar-reading.js).
-(Do 2026-10-11 tu stál vzor s `.length` a spreadem „trojice“, který v kódu není; nadpisy „§13–§15“ kolidovaly s čísly v CLAUDE.md.)
-
 ## JS unicode escapes v souborech = problém pro Python pattern matching
 Soubory mohou mít mix: literální UTF-8 (`RÚNAKORT`) i JS escape sekvence (`RÚNAKORT`).
 Python čte `Ú` jako 6 ASCII znaků (ne jako Ú). Bezpečný přístup při opravě neznámé řádky:
