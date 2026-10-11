@@ -422,6 +422,16 @@
   `TIERS.*.monthly_readings`) a menu ukazuje zůstatek jen Rune Seekerovi (`balEl` v `v2/runar-app.js`). O stropu se předplatitel dozví
   až hláškou `err_monthly_limit`; klient `month_units`/`month_key` ani nenačítá (`fetchUserProfile`). **Čeká na ownera:** chce počítadlo
   i pro předplatitele? Komentář „unlimited“ opravit v témže zásahu (když řekne ne, samostatně).
+- [ ] **Hlas: premium ke každému čtení? Testeři 15 hlasů na cyklus ElevenLabs?** Čeká na ownera. Owner 2026-10-11: *„u premium by každé
+  čtení mělo mít možnost být s hlasem!“* · *„potřebuju napřed zjistit, jestli mi 5 testerů nespálí účet na ElevenLabs… asi jim budu muset
+  dát limit jen na 15 čtení na měsíc od resetu elevenlabs tokenů“*. Dnes: `VOICE_MONTHLY_LIMIT` (5) pro všechny kromě testerů
+  (`VOICE_MONTHLY_LIMIT_TESTER`, 15), počítá se kalendářní měsíc; bezpečná hladina kvóty EL (`VOICE_SAFE_SHARE`) zastaví hlas všem, takže
+  účet nepřečerpá, ale ztichne. Tier features slibují předplatiteli „až N čtení hlasem“ a `RUNAR_PRICING.md` s tím stropem počítá.
+  Návrh CODE-tune: premium hlas ke každému čtení (tarif EL roste s uživateli), testeři 75 jednotek čtení + 15 hlasů na cyklus EL
+  (kalendářní měsíc pustí přes hranici dvojnásobek). Napřed ověřit dnešní limit EL — poslední snímek je z doby před resetem 2026-10-10
+  (`voice_quota_snapshots`, tarif „starter“). Spočítáno 2026-10-11 z `scripts/utils/pricing_tabulka.js`: ownerův scénář 3 single
+  + 1 Norny týdně, 1 Kříž + 1 Podkova měsíčně = ~29 jednotek (~19 čtení), hlas ~9 tis. znaků, model + hlas ~$1 měsíčně; při limitu
+  103 807 a hladině 70 % se vejde ~8 takových uživatelů.
 
 ## Multijazyčnost
 

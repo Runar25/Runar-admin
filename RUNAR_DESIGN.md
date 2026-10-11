@@ -748,12 +748,15 @@ Strom: větvená větev se sedmi body → sezónní rituál kmene. (Do 2026-10-1
 
 ### Yggdrasil (9 run) — všichni přihlášení, KDYKOLIV
 ```
-              [Ásgarðr]
-      [Álfheimr]   [Vanaheimr]
-[Jötunheimr] [Miðgarðr] [Niðavellir]
-      [Niflheimr]  [Svartalfheimr]
-              [Hel]
+          [1]            koruna (1 = Ásgarðr)
+      [2]     [3]        koruna
+      [4]     [5]        kmen
+  [6]     [7]     [8]    kořeny
+          [9]            kořeny (9 = Hel)
 ```
+Strom v appce od 2026-10-11 (KUKY: *„to má být podle toho, jak je yggdrasil spread vykládán… ok udělej strom“*, `RUNAR_DECISIONS.md`
+2026-10-11 (40)): tradiční rozložení neexistuje, runové weby kladou Ásgarðr nahoru a Hel dolů; patra jsou patra výkladu. Do té doby
+tu stál kosočtverec světů z června (Niðavellir v řadě s Miðgarðrem, původně Múspellsheimr) a appka kreslila řady 3/2/4.
 **Významy pozic vlastní `RP_YGGDRASIL` v `v2/runar-character.js` — doc je NEOPISUJE** (§20;
 táž poznámka jako u Horseshoe níž). Do 2026-08-23 tu stál opis a rozešel se v 5 z 9 světů
 (nalezl Cowork handoff #35) — který směr je kánon, řeší RUNAR_BACKLOG.md, verdikt owner.

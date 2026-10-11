@@ -10540,3 +10540,25 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Navíc:** runa v inspekci kresbou místo písma (§5) · islandské datum: Chrome na Windows islandská data nemá (`toLocaleDateString('is-IS')`
   → „May 21, 2026“), strom proto ukáže číselné „21.5.2026“; táž vada v deníku → `RUNAR_BACKLOG.md` (i18n).
 - Affected doc(s): `RUNAR_TREE.md` §8 (řádek o zoomu) · `RUNAR_BACKLOG.md` (port, i18n) — v témže commitu.
+
+## 2026-10-11 (40) — Yggdrasil jako strom 1-2-2-3-1: Ásgarðr sám nahoře, Hel sám dole; kosočtverec v DESIGN nahrazen
+
+- **Rozhodl:** KUKY 2026-10-11 na otázku, jestli kosočtverec z `RUNAR_DESIGN.md`, nebo řady 3/2/4 z appky: *„to má být podle toho, jak
+  je yggdrasil spread vykládán. podle toho má být rozmístěný, to stejné vlastně platí i pro horseshoe.“* Po návrhu stromu: *„ok udělej strom“*.
+- **Zdroj:** tradiční rozložení neexistuje — Seveřané neměli jednu mapu devíti světů a dnešní obrázky jsou dohady (norse-mythology.org).
+  Runové weby kladou Yggdrasil buď do tří pater 3×3, nebo jako strom s Ásgarðrem nahoře, Miðgarðrem uprostřed a Hel dole (mysticryst.com).
+  Náš výklad čte tři patra shora dolů: `RP_YGGDRASIL` koruna 1–3, kmen 4–5, kořeny 6–9, „od Ásgarðru dolů k Hel“.
+- **Co** (`v2/runar-reader.css` `.spread9-slots`, commit 62a6016): Ásgarðr (1) sám nahoře, pod ním 2-3, kmen 4-5, kořeny 6-7-8, Hel (9) sám
+  dole; tahá se dál shora dolů, stejné rozestupy jako ostatní rozklady (31). Pořadí světů na pozicích se nemění (vlastní `RP_YGGDRASIL`).
+- **Ověřeno v prohlížeči:** řady na jednom středu, v řadě i pod sebou 56 px (telefon 48), šikmo 62,6 (53,7); prázdné pozice i kameny
+  uvnitř rámečku.
+- **Kosočtverec** z `RUNAR_DESIGN.md` (od 1da0244, 2026-06-03) měl Niðavellir v řadě s Miðgarðrem, ačkoli ho výklad čte mezi kořeny,
+  a původně Múspellsheimr místo Svartálfaheimru; appka ho nikdy nekreslila (měla 3/2/4). Nahrazen nákresem stromu.
+- Affected doc(s): `RUNAR_DESIGN.md` (Yggdrasil) — v témže commitu.
+
+## 2026-10-11 (41) — Oprava (38): ownerův hlas byl 1 z 15, ne z 5 — oba admin účty mají příznak tester
+
+- **Co bylo špatně:** v (38) i ve zprávě ownerovi stálo „hlas 1 z 5“. Oba admin účty mají `is_tester`, takže jejich strop je
+  `VOICE_MONTHLY_LIMIT_TESTER` (15), ne `VOICE_MONTHLY_LIMIT` (5). Ověřeno v DB 2026-10-11 (příznak a `voice_month_count`).
+- **Proč se to stalo:** strop jsem odvodil z tarifu (premium → 5) místo z příznaku, podle kterého ho `elevenlabs-proxy` volí.
+- Affected doc(s): žádný jiný.
