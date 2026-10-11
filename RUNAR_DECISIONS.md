@@ -10300,3 +10300,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   (400) a 98 kB (800); 800 = jeho čtení zdvojená, ne skutečný strom. **Telefon nezměřen** — odhad ze starého měření ~4× pomaleji, tedy
   ≈ 1–1,5 s na překreslení při 400 → před portem změřit na telefonu.
 - Affected doc(s): `RUNAR_TREE.md` §3 (seeking v aplikaci) · `RUNAR_BACKLOG.md` (port) — v témže commitu.
+
+## 2026-10-11 (25) — Strom na telefonu změřen (emulace): pomalý a brzdí VÝPOČET, ne pixely — port potřebuje „spočti jednou, ulož“
+
+- **Proč:** KUKY 2026-10-11 *„ale ono se to bude načítat na mobilu!“* — v (24) stálo jen „telefon nezměřen, odhad 4×“. **Měřil:** CODE-tree.
+- **Jak:** Chrome bez okna přes DevTools protokol (vzor smoke ㉼), obrazovka telefonu 390×844 s hustotou 3×, procesor zpomalený 4× (střední
+  telefon, standard Lighthouse) a 6× (slabší); lab se 400 čteními (jeho 388 doplněných jeho čteními). Emulace, ne skutečný telefon.
+- **Výsledek (400 čtení):** bez zpomalení načtení stránky se stromem 0,7 s, překreslení 0,30 s · **střední telefon 3,4 s a 1,9 s** · slabší
+  6,4 s a 3,6–4,4 s. **Obrácená páka:** hustota 1× místo 3× (9× méně pixelů) dala překreslení 1,8–2,0 s, tedy totéž → brzdí výpočet stromu
+  a ~270 000 úseků cest, ne malování; snížení rozlišení nepomůže.
+- **Co z toho plyne pro port:** výpočet zkrátit — směr už stojí v `RUNAR_TREE.md` §8 („Produkční princip“: polohu a charakter větve spočítat
+  jednou při čtení, uložit, renderer jen kreslí). Jak, rozhodne owner před portem.
+- Affected doc(s): `RUNAR_TREE.md` §8 (odkaz u ceny překreslení) · `RUNAR_BACKLOG.md` (port) — v témže commitu.
