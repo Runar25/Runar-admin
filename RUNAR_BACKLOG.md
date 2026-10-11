@@ -3549,7 +3549,7 @@ Co dělá CODE, tady NENÍ — tohle je jen to, na co já nedosáhnu.
       Podmínka až před prvním CIZÍM přihlášením, ne teď: dnešní čtyři účty jsou vlastní,
       žádný tester zatím neexistuje. V dashboardu na úrovni ORGANIZACE (ne projektu),
       v sekci s právními dokumenty.
-- [ ] **Zásady soukromí živé na webu** — vlastní položku má tenhle doc už výš (sekce o GDPR);
+- [x] **HOTOVO (ověřeno 2026-10-11: runar25.github.io/Runar-admin/v2/runar-privacy.html → HTTP 200) · Zásady soukromí živé na webu** — vlastní položku má tenhle doc už výš (sekce o GDPR);
       sem patří jen tím, že blokuje spuštění. Záměrně se tu NEOPISUJE (§20).
 - [ ] **Vyřešit doručení přihlášení.** ⚠️ **Je to BLOCKER pro e-mailové přihlášení, ne „často nedoručí".**
       Ověřeno 2026-09-12 v dokumentaci Supabase: vestavěný mailer *„will refuse to deliver messages to
@@ -3578,7 +3578,7 @@ Co dělá CODE, tady NENÍ — tohle je jen to, na co já nedosáhnu.
       Supabase funguje, zdarma 300 e-mailů denně. Pro Rúnara je to čistší volba. Resend nastavení došlo
       jen k přidání domény, takže přechod nic nestojí — **jeho DNS záznamy výš proto NEPŘIDÁVAT**, Brevo
       má vlastní.
-- [ ] **Limit v účtu ElevenLabs — NENÍ blocker pro testery, je to pojistka proti skriptu.**
+- [x] **NAHRAZENO 2026-10-11 brzdou kreditů (DECISIONS 2026-10-11 (48), nasazeno (52)) · Limit v účtu ElevenLabs — NENÍ blocker pro testery, je to pojistka proti skriptu.**
       Owner 2026-09-12: *„limit 5 je jen kvůli testerům… kdokoliv si udělá Google účet, tak dostane co?"*
       **Ověřeno v DB a kódu, co nový účet dostane:** řádek s `tier = 'free'` (DB default) — klient
       (`runar-config.js` `TIERS.free = TIERS.rune_seeker`) i proxy (`claude-proxy` „free → rune_seeker")
@@ -3608,7 +3608,8 @@ Co dělá CODE, tady NENÍ — tohle je jen to, na co já nedosáhnu.
 - [ ] **Hlášení pro běžné uživatele bude úplně jiné — probrat před spuštěním** (KUKY 2026-10-09: *„čistě z uživatelského pohledu to, co
       může trápit běžného uživatele. Teď nevím, co se do takového reportu obyčejně dává. To probereme před spuštěním.“*). Dnes vidí každý
       ne-admin typy pro testery.
-- [ ] **Přihlášení bez Gmailu a uzavřený test — KÓD A SQL HOTOVÉ 2026-10-09, ČEKÁ NA OWNERA** (DECISIONS 2026-10-09 (6)). V appce:
+- [ ] **Přihlášení bez Gmailu a uzavřený test — KÓD A SQL HOTOVÉ 2026-10-09, ČEKÁ NA OWNERA** (DECISIONS 2026-10-09 (6); stav 2026-10-11: krok (4)
+  hotový — 5 e-mailů testerů v `allowed_emails`, 1 zaregistrovaný; kroky 1–3 a 5 (Brevo, SMTP, šablony) odsud ověřit nejde). V appce:
       e-mail → šestimístný kód (proč kód: aplikace na ploše iPhonu nesdílí úložiště se Safari, WebKit bug 181849), hláška pro účet mimo
       seznam (e-mail i návrat z Google). V DB (puštěno 2026-10-09): `allowed_emails`, `hook_before_user_created`, trigger tester → premium.
       **Owner, v tomhle pořadí:** (1) účet Brevo, doména agndofa.is, DNS záznamy od Brevo u ISNIC (viz „Vyřešit doručení přihlášení“ výš)
@@ -3644,7 +3645,8 @@ Co dělá CODE, tady NENÍ — tohle je jen to, na co já nedosáhnu.
 
 ## Ověřit naživo, než rozešleš odkaz
 
-- [ ] jedno čtení na přihlášeném účtu — dokáže, že `ANTHROPIC_API_KEY` je nastavený
+- [ ] jedno čtení na přihlášeném účtu — dokáže, že klíče modelu čtení jsou nastavené (sol: `OPENAI_API_KEY`, záložní Claude: `ANTHROPIC_API_KEY`;
+  do 2026-10-11 tu stál jen `ANTHROPIC_API_KEY` — čtení od 2026-10-09 jde přes sol)
 - [ ] jedno přehrání hlasu — `ELEVENLABS_API_KEY`
 - [ ] jedno hlášení z reporteru → **přišlo do Slacku?** (řádky v DB nedokazují, že webhook běží)
 - [ ] po pushi zkontrolovat verzi: `curl -s https://runar25.github.io/Runar-admin/v2/sw.js | head -1`
