@@ -2186,7 +2186,7 @@ _randomRegister/_randomPlacement` + jejich pooly (ve `runar-utils.js`, „NEVER 
   `?reset_trial=1` — druhá kopie `t()` v `runar-app.js` (přebíjela stejnou z utils) a zastaralé hlavičky závislostí v reading/auth.
   (6) `AETTY` ponecháno jako rezervované pro `detectPatterns` (komentář u definice, jako `PATTERN_WINDOW`); CLAUDE.md ho omylem vedl
   pod configem, opraveno. Smoke ㉼ teď chytá i chybu JS za běhu — bez toho by prošlo vrácené volání smazané funkce při startu appky.)*
-  ⚪ **Zbývá ze (4):** nastavení hlasu (`voice_settings`) stojí dvakrát na serveru — `elevenlabs-proxy` a `elevenlabs-static`. Oprava =
+  ✅ *(hotovo 2026-10-11: `_shared/el_voice.ts`, nasazeno proxy v37 + static v16, DECISIONS 2026-10-11 (28))* ~~**Zbývá ze (4):**~~ nastavení hlasu (`voice_settings`) stojí dvakrát na serveru — `elevenlabs-proxy` a `elevenlabs-static`. Oprava =
   přesun do `supabase/functions/_shared/` (vzor `voice_usage.ts`) a nasazení obou funkcí; do té doby se změna hlasu musí udělat na obou.
 - ~~**Pro CODE-tune (g):**~~ (1) `runar-app.js` `FREE_TRIAL_LIMIT`, `DELAY_TRIAL_END` — zkušební čtení návštěvníka zrušené (od 2026-08-02,
   `TIER_LIMITS.free_trial.onboarding` sám říká „historické“); hlavičky `runar-auth.js:6` a `runar-reading.js:7–8` je dál vypisují.
@@ -2601,7 +2601,9 @@ kontrolu (71 čísel ve `smoke.py`); měřeno šíře než jen „smoke ⑩“, 
 #### Kolo 2 / 16 — edge funkce: proměnné a kopie hodnot z configu, znovu (2026-10-11)
 **Platí:** všech 7 proměnných, které funkce čtou, je na serveru nastavených. Kopie `VOICE_MONTHLY_LIMIT(_TESTER)`, `VOICE_SAFE_SHARE`,
 `NAME_LORE_LIMIT`, `ADMIN_EMAILS` hlídají kontroly. `spread_cost` od klienta (Proxy Fáze 2 #4) dál otevřené — známé, nic nového.
-- ⚪ **Pro CODE-tune (nízká priorita, §20) — hlas a model ElevenLabs na víc místech bez kontroly:** ID hlasu `2UI8…` stojí v `v2/runar-config.js`
+- ✅ **Pro CODE-tune (nízká priorita, §20) — hlas a model ElevenLabs na víc místech bez kontroly:** *(hotovo 2026-10-11, owner „3. ano“:
+  první varianta — `supabase/functions/_shared/el_voice.ts`, kopie v configu a pole ve shrine pryč, nepoužité ID pryč; nasazeno proxy v37
+  + static v16, DECISIONS 2026-10-11 (28))* ID hlasu `2UI8…` stojí v `v2/runar-config.js`
   (`EL_VOICE_ID_EN/IS`), `elevenlabs-proxy` (`EL_VOICE_ID`) a `elevenlabs-static` (`EL_VOICE_ID_EN`), ve static navíc mrtvé `EL_VOICE_ID_IS`
   s JINOU hodnotou `4E6W…`; modely `EL_MODEL_EN/IS` v configu, proxy i static. Rozhodují jen edge funkce — kopie v configu (`elVoiceId()`,
   `elModel()`) čte jen shrine a posílá je proxy, která je ignoruje (kolo 1 část 4: „neškodí“). Škodí až změna hlasu: kdo ji udělá v configu,

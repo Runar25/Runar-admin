@@ -10343,3 +10343,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   Rune Seeker, nepřihlášený → nic; toast na šířce telefonu (375 px). IS: is-greynir 2/2, is-gpt-check 2/2 ($0.0042), korpus
   („lætur þig vita“ 225×, „næst þegar þú“ 2573×).
 - Affected doc(s): `RUNAR_BACKLOG.md` (položka „Upozornění na obnovu měsíčních čtení“) — v témže commitu.
+
+## 2026-10-11 (28) — Hlas ElevenLabs na jednom místě (`_shared/el_voice.ts`); nasazeno elevenlabs-proxy v37 a elevenlabs-static v16
+
+- **Rozhodl:** KUKY 2026-10-11 *„3. ano“* (připravit a nasadit) na návrh CODE-tune po nálezu CODE-read (BACKLOG kolo 2 / 16). Ve stejném
+  nasazení i BACKLOG část 21 (`voice_settings` dvakrát na serveru) — stejná oprava, stejné dvě funkce.
+- **Proč:** ID hlasu stálo na čtyřech místech, modely na třech, nastavení hlasu na dvou a ve static navíc nepoužité ID pro IS s jinou
+  hodnotou. Změna hlasu v configu by nezměnila nic (rozhoduje server), změna v proxy by minula static.
+- **Co:** `supabase/functions/_shared/el_voice.ts` = jediné místo ID hlasu, modelů, nastavení hlasu a volby modelu podle jazyka (`elModel`);
+  obě funkce importují. Z `v2/runar-config.js` pryč `EL_VOICE_ID_EN/IS`, `EL_MODEL_EN/IS`, `elVoiceId()`, `elModel()`; shrine už neposílá
+  `voice_id`/`model_id` (server je ignoroval). Hodnoty beze změny. Commit 930c1a9.
+- **Nasazeno (git nevidí):** elevenlabs-proxy v37, elevenlabs-static v16, `verify_jwt` false jako dřív. Před nasazením stažené v36/v15 = repo
+  (žádný kód mimo git); po nasazení stažené = HEAD ve všech 4 souborech (obě index.ts, `el_voice.ts`, `voice_usage.ts`); živě s neplatným
+  tokenem proxy 401, static 403 — obě naběhnou, sdílený import funguje.
+- **Hranice:** skutečné vygenerování hlasu po nasazení neověřeno (stojí znaky z kvóty) — potvrdí ho první přehraný hlas ve čtení.
+- **Pravidlo:** změna hlasu = `_shared/el_voice.ts` a nasadit OBĚ funkce (stojí v hlavičce modulu).
+- Affected doc(s): `RUNAR_BACKLOG.md` (kolo 2 / 16, část 21) — v témže commitu.
