@@ -78,8 +78,10 @@ const VOICE_MONTHLY_LIMIT = 5;
 // hlasů.“ ZRCADLÍ elevenlabs-proxy (vynucuje); shodu hlídá smoke ⑨ (verify_monthly_limits.js).
 const VOICE_MONTHLY_LIMIT_TESTER = 15;
 // Bezpečná hladina kvóty ElevenLabs pro VEŠKERÝ hlas (čtení, Kolekce, admin): nad tímhle podílem počítadla EL se nový hlas nevygeneruje.
-// 0,7 ≈ 120 hlasů po ~600 znacích, jak owner chtěl — hlídá se ve znacích podle počítadla EL, protože počet hlasů kvótu neochrání (hlas
-// Yggdrasilu ~1 660 zn.; 120 takových ≈ 199 000 zn. při kvótě 103 807). ZRCADLÍ elevenlabs-proxy a elevenlabs-static (smoke ⑨).
+// ⚠️ Oprava 2026-10-11: počítadlo EL je v KREDITECH, ne ve znacích (1 kredit = $0.0002; v2/v3 = 0,4 kreditu na znak — doloženo proti
+// přehledu účtu ElevenLabs). Do té doby tu stálo „0,7 ≈ 120 hlasů po ~600 znacích“; ve skutečnosti 0,7 z limitu 103 807 kreditů
+// ≈ 180 000 znaků ≈ 430 single. Hladina tedy chrání zůstatek účtu, ne počet hlasů. Proxy navíc přičítá k kreditům znaky (nový hlas
+// počítá 2,5× — opatrně, ale nepřesně) → RUNAR_BACKLOG, s příštím nasazením hlasu. ZRCADLÍ elevenlabs-proxy a elevenlabs-static (smoke ⑨).
 const VOICE_SAFE_SHARE = 0.7;
 
 // Rozbor jmena od modelu: prvni rozbor + JEDNO precteni po zmene severskeho jmena

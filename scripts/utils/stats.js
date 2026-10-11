@@ -117,7 +117,10 @@ for (const r of usageRows) {
 // „hlas zatím nejde rozdělit — proxy neukládá znaky". PŘESNĚ: znaky jsou to, co EL účtuje. Peníze: dokud se nepřečerpá
 // limit, platí se jen předplatné (pevná částka) — za znak navíc se neplatí nic; přečerpání × sazba až nad limit.
 // Sazby přečerpání ověřeny 2026-09-24 na elevenlabs.io/pricing/api (RUNAR_BACKLOG „HLAS (ElevenLabs)"). Nový model → řádek sem.
-const EL_PRECERPANI = { 'eleven_multilingual_v2': 0.10, 'eleven_v3': 0.10, 'eleven_v3_conversational': 0.10, 'eleven_flash_v2_5': 0.05, 'eleven_flash_v2': 0.05 };   // USD / 1000 znaků
+// 2026-10-11 (CODE-tune): v2 a v3 zlevnily na $0.08 — ceník API v ownerově účtu ElevenLabs a naše voice_usage proti jejich přehledu
+// (v3 1 933 zn. = 773 kreditů, v2 1 651 zn. = 661 kreditů; kredit = $0.0002, tedy 0,4 kreditu na znak). 2026-09-25 ještě 0,5 kreditu
+// na znak ($0.10). v4 a v4 Turbo: běžná cena (do 2026-10-12 sleva 72 %); obě umějí islandsky (elevenlabs.io/docs/overview/models).
+const EL_PRECERPANI = { 'eleven_multilingual_v2': 0.08, 'eleven_v3': 0.08, 'eleven_v3_conversational': 0.04, 'eleven_v4': 0.08, 'eleven_v4_turbo': 0.04, 'eleven_flash_v2_5': 0.05, 'eleven_flash_v2': 0.05 };   // USD / 1000 znaků
 const EL_TARIF = { starter: 6, creator: 22, pro: 99, scale: 299, business: 990 };   // USD / měsíc, tamtéž
 const hlasRows = q("select v.source, coalesce(v.lang,'?') lang, v.model, case when u.email in (" + ADMINI.map(e => "'" + e + "'").join(',')
   + ") then 'admin' when coalesce(p.is_tester, false) then 'tester' else 'uzivatel' end skupina, count(*) n, sum(v.chars) chars"
