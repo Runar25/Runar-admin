@@ -10064,3 +10064,10 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   v produkci nebylo mimo git. `_shared/voice_usage.ts` shodný s repem.
 - **Po nasazení:** obě stažené znovu = HEAD b37beca; `verify_jwt` dál vypnuté.
 - **Zbývá ověřit živě:** jeden hlas od testera (owner pustí v appce) — hraje-li, prošel limit testera i dotaz na stav kvóty ElevenLabs.
+
+## 2026-10-11 (9) — Strom: „to nechci“ u čtyř modelových stromů z (7) uzavřeno — nic se nemění
+
+- **Rozhodl:** KUKY 2026-10-11 na upřesňující otázku: *„cože?? bože. neřeš to..“* **Provedl:** CODE-tree.
+- **Platí:** bod 10 zůstává v labu, jak je (2026-10-11 (7)); „Otevřené“ v (7) je tímto uzavřené. Modelové stromy ownerovi neposílat
+  (memory `modelove-stromy-neposilat`). Znovu se na to neptat.
+- Affected doc(s): žádný.

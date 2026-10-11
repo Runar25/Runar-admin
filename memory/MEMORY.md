@@ -113,6 +113,7 @@ Intake (NENÍ pravda): `docs/inbox/` · Mrtvá (scratch): mimo index.
 - [nacti-cteni-a-reporty.md](nacti-cteni-a-reporty.md) — owner řekne „načti čtení a reporty“ → `node scripts/nacti_cteni.js` (čtení + monitor ozvěn + hlášení); ⚠ a hlášení ohlas s textem
 - [schranka-runar-gmail.md](schranka-runar-gmail.md) — schránka runar@therunekeeper.com: třídit přes Gmail konektor do štítků, odpovědi jen jako koncepty, nic neodeslat bez ownerova ano
 - [always-show-reading-samples.md](always-show-reading-samples.md) — ownerovi vždy ukázat konkrétní TEXT čtení a k němu instrukce, které do čtení vstoupily
+- [modelove-stromy-neposilat.md](modelove-stromy-neposilat.md) — ownerovi jeho strom před/po; stromy vymyšlených lidí jen pro měření, okrajovou poznámku k obrázku nerozebírat otázkami
 - [testovani-jedne-runy-je-zamer.md](testovani-jedne-runy-je-zamer.md) — owner testuje jednu runu opakovaně schválně; jeho „pořád stejné X“ nevysvětluj jeho metodou, dohledej konkrétní případ
 - [write-for-owner-not-process.md](write-for-owner-not-process.md) — ownerovi piš důležité/výsledek, ne proces „co jsi řekl / co budu hledat"
 - [cheapest-deciding-measurement-first.md](cheapest-deciding-measurement-first.md) — ⛔ 2026-09-24 3× spálený limit ownera: obsah dělám SÁM, agenti max 3–5 a víc jen s odhadem tokenů a ownerovým ano; API nad ~50 volání jen s jeho ano (2026-10-06: 480 bez ptaní); před KAŽDÝM měřením záměr + předpoklad + proč tolik, vždy malý vzorek (2026-10-07); spadlý běh nepouštět znovu bez ptaní
