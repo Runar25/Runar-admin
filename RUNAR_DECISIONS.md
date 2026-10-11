@@ -10100,3 +10100,20 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   nástrojů na jedné řádce; popis vlastními slovy bez jmen nepozná.
 - Affected doc(s): `CLAUDE.md` §2 a §19.2 · memory `working-style`, `is-done-together-not-for-sigrun`, `read-design-before-voice-work`,
   `cowork-handoff-quality-bar`, `verify-agent-claims-about-code` · `RUNAR_POPISY_RUN.md` · `IS_NATIVE_CHECKLIST.md` — v témže commitu.
+
+## 2026-10-11 (12) — Strom: Norny → 3 hlavní kořeny nanečisto — kořeny zakládacích Noren delší a strmější
+
+- **Rozhodl:** KUKY 2026-10-11 *„ok, jdeme na Norny → 3 kořeny“*. **Provedl:** CODE-tree, nanečisto (lab beze změny).
+- **Kánon:** `RUNAR_DESIGN.md` „Tři Norny = tři kořeny Yggdrasilu… jedním čtením jsou zasazeny všechny tři“; DECISIONS 2026-07-30 (a) „3 zakládací
+  Norny → 3 hlavní kořeny“. Od 2026-10-10 (26) má kořen každá větev (25 kořenů), takže úkol = udělat z kořenů tří zakládacích pramenů HLAVNÍ kořeny.
+- **Dnes:** jeho zakládací Norny (Perth urð, Ingwaz verðandi, Dagaz skuld; čtení bez oblasti) mají kořeny do tří směrů (vpravo, vlevo, pod
+  vrcholem), ale ničím se neliší — hloubka 215–255 px proti 450 px u kořenů horních ramen, páteř 306–378 px proti 390 u Othily.
+- **Nanečisto** (patch `docs/archive/tree/2026-10-11_nanecisto_norny_hlavni_koreny.patch`): kořen pramene s Nornou se prodlouží a hlavní kořen stočí blíž
+  svislici — jen prodloužení a ohnutí, stavba kořene beze změny (2026-10-10 (23), (28)), tloušťka u kmene dál = kmen (2026-10-11). Dvě síly:
+  n2 = 1,6× delší, směr 0,6× (v patchi): tři kořeny Noren jsou tři nejvýraznější kořeny stromu (tloušťka × délka) a mají nejdelší páteře
+  (479–594 px proti nejvýš 390), šířka kořenů 70 → 95 procent koruny; n4 = 1,4×, směr 0,35×: páteře 421–522 px, šířka 81 procent, Dagaz
+  výrazností až čtvrtý. Hloubkou nejhlubší nejsou ani v jedné (kořeny horních ramen míří strměji) — hlavní = největší, ne nejhlubší.
+- **Otevřené pro ownera:** síla (n2 / n4); zakládací čtení S oblastí dá urð i verðandi na tutéž stranu — tři kořeny pak nejdou do tří směrů
+  (jeho strom se to netýká); barva a tvar podle Norny v kánonu nejsou; „všechny tři kořenové runy v jednom čtení → výjimečná událost“
+  (`RUNAR_DESIGN.md`) zvlášť, později.
+- Affected doc(s): `RUNAR_BACKLOG.md` („Kořeny = minulost/základ“ bod (a)) — v témže commitu.
