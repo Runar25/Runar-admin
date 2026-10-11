@@ -10753,3 +10753,23 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   při první žádosti; zápis do produkční DB pouští owner.
 - **Před spuštěním:** měkké smazání (co obnáší → BACKLOG, položka „měkké smazání účtu“). Staví CODE-tune, nasazuje owner.
 - Affected doc(s): `RUNAR_PRIVACY.md` (postup), `RUNAR_BACKLOG.md` (položka) — v témže commitu.
+
+## 2026-10-11 (54) — Shrine: záložka TESTERS (každý účet pod e-mailem, od 11. 10., součet) a rychlý odkaz z menu appky; nasazeno voice-usage v5
+
+- **Rozhodl:** owner 2026-10-11: *„kde můžu monitorovat, kolik testerů udělalo jaká čtení, spíš číselně… a hlas, kolik to stálo, jen jednoduchý
+  monitoring“* → po návrhu *„každý účet bude pod svým emailem, ať vím o koho jde a kolik udělal čtení. a pod tím součet… začneme už dneškem.“*
+  K přístupu: *„bylo by fajn, kdybych měl rychlejší přístup, než se proklikávat shrine. jak to udělat? na mobil i počítač.“* Nasazení: *„nasaď“*.
+- **Co** (commit 74ad59c): záložka 👥 TESTERS ve shrine (`v2/runar-testers-admin.js`) — každý účet pod e-mailem: čtení dnes a od
+  2026-10-11, typy, Asky, hlasy, cena; součet. Testeři = seznam `allowed_emails` (i nezaregistrovaní), pod nimi zvlášť účty týmu
+  (owner a Sigrún, CLAUDE.md „Tier systém“). Data: `voice-usage` s `{accounts:true}` (jen admin); z čtení a Asků jde ven jen `usage`,
+  texty ne. Cena modelu = `readingCostUsd` (týž výpočet jako cena u čtení v deníku), hlas = kredity × `EL_KREDIT_USD` (`_shared/voice_usage.ts`).
+- **Rychlý přístup:** odkaz 👥 TESTERS v menu appky (jen admin) otevře `runar-shrine.html#testers` rovnou na záložce. Proč odkaz a ne
+  samostatná stránka: v nainstalované appce na iPhonu má každá ikona na ploše vlastní úložiště, samostatná stránka by chtěla nové
+  přihlášení; odkaz z appky běží v jejím kontextu. Na počítači stačí záložka prohlížeče na tutéž adresu.
+- **Nasazeno (git nevidí):** voice-usage v4 → v5, `verify_jwt` false. Před nasazením stažená v4 = repo před změnou (index.ts i oba
+  `_shared`), po nasazení = HEAD; živě bez přihlášení 401. elevenlabs-proxy v38 a elevenlabs-static v17 mají v balíku `_shared/voice_usage.ts`
+  bez nové konstanty `EL_KREDIT_USD` — nepoužívají ji, chování stejné; srovná se při jejich příštím nasazení.
+- **Ověřeno:** záložka se vzorovými daty v prohlížeči (desktop i 375 px — tabulka se na telefonu posouvá do strany, stránka nepřetéká);
+  dotaz do DB týmž dělením (2026-10-11): testeři 1 člověk, 5 čtení, 5 hlasů, $0.20. Živá data záložky owner uvidí po otevření (CODE se jako
+  admin nepřihlásí).
+- Affected doc(s): žádný jiný — kdo jsou testeři a tým, stojí v `CLAUDE.md` „Tier systém“.
