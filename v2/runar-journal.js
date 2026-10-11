@@ -255,7 +255,8 @@ function renderJournal(entries) {
       </div>
     </div>`;
   }).join('');
-  list.querySelectorAll('.jvoice-btn').forEach(function (b) { setRuneText(b, t('voice_btn')); });   // runa popisku = naše SVG (§5)
+  // runa popisku = naše SVG (§5); kontroly ㉭ ㉮ ㉱ pouštějí deník ve zjednodušeném DOM bez querySelectorAll
+  if (typeof list.querySelectorAll === 'function') list.querySelectorAll('.jvoice-btn').forEach(function (b) { setRuneText(b, t('voice_btn')); });
 
 }
 
