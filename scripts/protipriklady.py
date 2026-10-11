@@ -21,7 +21,7 @@
 # `commit_vlastni.py commit`; pathspec commit a nástroj Edit zastaví hooky (DECISIONS 2026-10-11 (58)).
 # Text útoku skládej z kousků (`'…xyz' + '.md'`), když nese vzor, který některá kontrola hledá i v scripts/ — jinak smoke chytí tenhle
 # soubor (2026-10-11: odkaz na neexistující doc, pevná cesta k repu a výčet nástrojů IS v případech kola 3 / 4g zastavily push).
-import hashlib, io, json, os, re, shutil, subprocess, sys, tempfile
+import hashlib, io, json, os, re, shutil, subprocess, sys, tempfile, time
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__))).replace('\\', '/')
 # git bez proměnných, které nastaví hook (GIT_INDEX_FILE, GIT_DIR…): jinak by příkazy v kopii sahaly na index hlavního stromu.
@@ -58,6 +58,7 @@ PRIPADY = [
  ('obchazka', 'verify_write_surface.js', APP, 'append', '', "\nfunction _protiE(uid){ return sb.from(\"user_profiles\").update({ credits_balance: 999 }).eq('id', uid); }\n"),
  ('chyti', 'verify_model_labels.js', 'supabase/functions/claude-proxy/index.ts', 'regex', r'(const MODELS = \["claude-[a-z]+-)\d+', r'\g<1>77'),
  ('chyti', 'verify_canonical_files.js', 'RUNAR_PROTI.md', 'create', '', '# podstrčený neverzovaný kanonický doc\n'),
+ ('nesmi', 'verify_canonical_files.js', 'RUNAR_PROTI_CERSTVY.md', 'create_cerstvy', '', '# právě rozepsaný doc (rozdělaná práce)\n'),
  ('chyti', 'verify_doc_length.js', 'RUNAR_PRIVACY.md', 'append', '', ''.join('\nřádek %d navíc' % i for i in range(300))),
  # kolo 3 / 4c (2026-10-11): jednorázové mutace z hlaviček kontrol převedené na opakované útoky (oprava (45))
  ('chyti', 'verify_image_pin.js', 'v2/runar-reading.js', 'replace', 'IMG_PIN = admin ? _imgPinMapa() : null;', 'IMG_PIN = _imgPinMapa();'),
@@ -183,10 +184,15 @@ def podstrc(W, rel, mode, a, b):
         r = subprocess.run(['git', '-C', W, '-c', 'user.name=' + a, '-c', 'user.email=protipriklad@local', 'commit', '-q', '--allow-empty',
                             '-m', 'protipříklad (scripts/protipriklady.py)'], capture_output=True, text=True, encoding='utf-8', env=ENV)
         return '' if r.returncode == 0 else 'commit selhal: ' + (r.stdout + r.stderr)[-120:]
-    if mode == 'create':
+    # create = podstrčený ZAPOMENUTÝ soubor: datum o 3 dny zpět (2026-10-11: kontroly souborů mimo git berou čerstvý soubor mladší než
+    # 2 h jako rozdělanou práci a jen varují); create_cerstvy = soubor právě vytvořený
+    if mode in ('create', 'create_cerstvy'):
         if os.path.exists(p):
             return 'soubor už existuje'
         io.open(p, 'w', encoding='utf-8', newline='').write(b)
+        if mode == 'create':
+            stare = time.time() - 3 * 86400
+            os.utime(p, (stare, stare))
         return ''
     s = io.open(p, encoding='utf-8', newline='').read()
     if mode == 'append':
