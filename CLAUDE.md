@@ -357,6 +357,7 @@ musí to buď **udělat skript samo**, nebo **zastavit práci**, když se to vyn
 - **Konverzace se neztrácí** → přepisy se nemažou (`cleanupPeriodDays`), noční šifrovaná kopie `scripts/utils/zaloha_konverzaci.js`
   (krok noční zálohy DB), hledání `node scripts/utils/najdi_v_konverzacich.js "<text>"` (i zprávy ownera poslané během práce).
   Povinný snapshot zrušen — nic ho nevynucovalo a opakoval BACKLOG a DECISIONS. (KUKY 2026-10-11, DECISIONS 2026-10-11 (21).)
+  Osobní údaje v přepisech: výmaz na žádost a co session nevypisují → `RUNAR_PRIVACY.md` „Retence + práva“ (DECISIONS 2026-10-11 (30)).
 - **Sdílené docy commituje jen `scripts/utils/commit_vlastni.py`** → pre-commit (`hooks/pre-commit.py`) zastaví commit `RUNAR_*.md`,
   `CLAUDE.md` nebo `memory/` bez něj; pathspec commit bral i cizí necommitnuté kusy (3×). Výjimka `RUNAR_SDILENE_OK="<důvod>"` se loguje.
   (KUKY 2026-10-11, DECISIONS 2026-10-11 (23).)

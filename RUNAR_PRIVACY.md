@@ -102,6 +102,18 @@ a souhlasí na pravdivém textu. Detail → `RUNAR_DECISIONS.md` 2026-09-11 (8).
   model, id čtení a admin; cizí čtení v nich nejsou. Smazáním účtu admina zmizí (`on delete cascade`). Klient tabulku nečte ani nepíše.
   Migrace: `sql/2026-09-25_gpt_reviews.sql`.
 
+- **Přepisy konverzací s Claudem (vývoj, od 2026-10-11 se nemažou — DECISIONS 2026-10-11 (30)):** pracovní přepisy session (CODE i Cowork)
+  a jejich noční šifrovaná kopie (`~/runar-eval/zaloha-konverzaci`, 7z AES, jen na počítači ownera, ne na Drive) mohou nést osobní údaje
+  uživatelů — výpisy z DB, texty čtení a hlášení, jména. Účel: aby se rozhodnutí a pokyny neztrácely (oprávněný zájem). Doba: bez lhůty,
+  ALE při žádosti o výmaz se údaje začerní (slib „Everything goes — from our encrypted backups within 30 days“ platí i pro ně).
+  **Postup při žádosti o výmaz** (spolu se smazáním účtu, do 30 dní):
+  1. `node scripts/utils/vymaz_z_konverzaci.js "<e-mail>" "<jméno>" "<přezdívka>"` — jen spočítá výskyty (nic osobního nevypíše);
+  2. totéž s `--ostre` — nahradí `[VYMAZÁNO]` v přepisech, zálohách při compactu i šifrovaných archivech;
+  3. přepis běžící session (změna v poslední hodině) nástroj vynechá a vypíše — pustit znovu, až session skončí.
+  **Aby se údaje do přepisů vůbec nedostávaly:** session nevypisují e-maily uživatelů; jména, čtení a hlášení testerů jen když je úkol
+  potřebuje (vzorky čtení ownerovi dál ano — memory `always-show-reading-samples`), nikdy hromadně; data adminů smí. Strojem to
+  spolehlivě hlídat nejde (výstup je v přepisu dřív, než by ho cokoli posoudilo) — proto krok výmazu výš.
+
 ## Implementační checklist
 **DB (owner v SQL editoru — viz `sql/2026-07-13_privacy_columns.sql`):**
 - `user_profiles.is_tester boolean default false` — značka testera (souhlas + „zlatá data" filtr).

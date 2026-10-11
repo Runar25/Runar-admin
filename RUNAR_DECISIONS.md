@@ -10380,3 +10380,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   „nepostaveno“; postavena 2026-09-28 (krok 6) a posuvník `odbocky (twigy)` je z panelu pryč od 2026-10-03 → odstavce označeny jako historie.
 - Affected doc(s): `RUNAR_TREE.md` §8 (odkaz u ceny překreslení, Produkční princip, dva odstavce o větvičkách) · `RUNAR_BACKLOG.md` (port)
   — v témže commitu.
+
+## 2026-10-11 (30) — Osobní údaje v přepisech konverzací: výmaz na žádost + session je nevypisují; 30 dní na výmaz zůstává
+
+- **Rozhodl:** owner 2026-10-11 *„ok a) a c) jinak 30 dní na smazání je dobré“* (návrh CODE-read, BACKLOG kolo 2 / 20).
+- **Proč:** DECISIONS 2026-10-11 (21) přepisy nemaže a noční záloha je drží napořád, ale nesou i osobní údaje uživatelů; zásady slibují
+  výmaz včetně záloh do 30 dní. (a) přepisy zůstanou, při žádosti o výmaz se údaje začerní nástrojem `scripts/utils/vymaz_z_konverzaci.js`
+  (přepisy CODE i Cowork, zálohy při compactu, šifrované archivy; nic osobního nevypíše; běžící session vynechá) · (c) session nevypisují
+  e-maily uživatelů a data testerů jen podle potřeby úkolu (vzorky čtení ownerovi dál ano). Postup a pravidlo → `RUNAR_PRIVACY.md`.
+- **Upřesnění (c):** úplný zákaz textů čtení by odporoval memory `always-show-reading-samples`; strojem (c) hlídat spolehlivě nejde,
+  proto nese váhu krok (a). Samotest nástroje 7 stavů.
+- **Otevřené:** obnova účtu po smazání (ruční ze zálohy teď, „měkké smazání“ před spuštěním) → BACKLOG, čeká na ownera.
+- Affected doc(s): `RUNAR_PRIVACY.md` (Retence + práva), `CLAUDE.md` §30, `RUNAR_BACKLOG.md` — v témže commitu.

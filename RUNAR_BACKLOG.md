@@ -2638,13 +2638,19 @@ v zásadách chybí; dnes jen admin a nic nezapisuje → přidáno jako podmínk
 
 #### Kolo 2 / 20 — slib „data v EHP“ a výmaz × dnešní záloha konverzací (část 33; 2026-10-11)
 **Platí:** stránka soukromí uvádí šifrované zálohy DB na Google Drive mimo EHP (EN i IS) a věta o EHP má výjimku pro ně (DECISIONS 2026-10-10 (32)).
-- ⚪ **ČEKÁ NA OWNERA — rozpor, který jsem dnes vyrobil (CODE-read):** od DECISIONS 2026-10-11 (21) se přepisy konverzací nemažou
+- ✅ *(KUKY 2026-10-11 „ok a) a c)“ — DECISIONS 2026-10-11 (30): postup výmazu a pravidlo v `RUNAR_PRIVACY.md`, nástroj `vymaz_z_konverzaci.js`.)*
+  ~~**ČEKÁ NA OWNERA**~~ — rozpor, který jsem dnes vyrobil (CODE-read): od DECISIONS 2026-10-11 (21) se přepisy konverzací nemažou
   (`cleanupPeriodDays` 36500) a noční záloha je drží napořád. Přepisy ale nesou i osobní údaje uživatelů — výpisy z DB (e-maily testerů),
   texty jejich čtení, jména (např. 2026-10-11 jsem v konverzaci vypsal rozbory GPT se jmény testerek). Zásady slibují „ERASURE: Everything goes
   — from our encrypted backups within 30 days“. Dnes jen 5 testerů a appka není veřejná, ale před spuštěním to musí sedět. Možnosti:
   (a) přepisy nechat, ale při žádosti o výmaz je projít `najdi_v_konverzacich.js` (e-mail, jméno) a údaje začernit — postup do `RUNAR_PRIVACY.md`;
   (b) přepisy a jejich zálohy mazat po N měsících (pak „nic se neztratí“ platí jen N měsíců); (c) session nevypisují osobní údaje uživatelů
   (e-maily, jména mimo adminy, texty čtení) — pravidlo, které by šlo zčásti hlídat strojem. Doporučení CODE-read: (a) + (c).
+
+- ⚪ **Pro ownera (nespěchá, před spuštěním) — obnova účtu po smazání:** dnes `delete-account` maže okamžitě, data drží jen šifrované zálohy
+  30 dní; obnova = ruční ze zálohy, jen na žádost uživatele (nové ID účtu → přemapovat). Návrh CODE-read: teď ruční postup do
+  `RUNAR_PRIVACY.md`; před spuštěním „měkké smazání“ (30 dní skryté, přihlášení smazání zruší, pak skutečný výmaz) — sloupec, noční úloha,
+  hláška v appce, text zásad EN + IS (CODE-tune, nasazení owner). Owner 2026-10-11: „30 dní na smazání je dobré, třeba bude chtít účet obnovit?“
 
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
