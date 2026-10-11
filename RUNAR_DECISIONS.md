@@ -11036,3 +11036,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Hranice:** telefon neověřen (iOS a Android aktualizují worker po svém); když CDN vrátí část souborů novou a část starou, verze patří
   k `runar-verze.js`, ne ke každému souboru. Hook běží z pracovního stromu, takže pro commity všech session platí od zápisu.
 - Affected doc(s): `CLAUDE.md` (soubory a pořadí načítání), `RUNAR_BACKLOG.md` (položka odškrtnutá) — v témže commitu.
+
+## 2026-10-11 (69) — Žádná rovná větev rovně dolů: oprava přetečení úhlu v seekingu + pravidlo 45° (v produkci)
+
+- **Proč:** KUKY 2026-10-11 ke snímku z produkce: *„žádná větev by neměla jít jako rovný klacek rovně dolů. do strany klidně … když je
+  zakřivená, tak je to v pohodě“*; po ukázce nanečisto: *„8. ano, pusť opravu větve do produkce“*.
+- **Co:** (1) `bendSpine` a `bendRootPaths` počítají rozdíl úhlů přes ±180° — do té doby Confirmation stočila úsek větve mířící vlevo kolem
+  vodorovné až o 60° (povýšená Hagalaz z Eihwazu na jeho stromě 23° od svislice místo 83°) a průměr úhlů mohl obrátit „nahoru“;
+  (2) v `growBranch` se rovná větev (tětiva / délka ≥ 0,9) strmější než 45° od svislice dolů natočí kolem paty ven na 45° — ramena,
+  vedlejší i větvičky, větvičky rostou až z natočené; zakřivené ne, kořeny ne. Patch nanečisto `docs/archive/tree/2026-10-11_nanecisto_uhel_dolu.patch`
+  použit beze změny.
+- **Změřeno (jeho strom z produkce, 471 čtení):** rovných větví do 30° od svislice 35 → 0, do 44° 56 → 0; kořeny beze změny (šířka 591 → 592),
+  semínko bod po bodu stejné; snímek z aplikace bez rovné větve vlevo dole.
+- Affected doc(s): `RUNAR_TREE_MAP.md` §7 (bod 7); `RUNAR_BACKLOG.md` (položka o rovné větvi a kořenech, část větve hotová) — v témže commitu.
