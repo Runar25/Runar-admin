@@ -926,7 +926,7 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
    s mezerou --slot-gap vodorovně i svisle → sousední pozice jsou od sebe všude stejně daleko (střed–střed = buňka + mezera). Buňka unese
    kámen (.slot-stone, i větší střed Cross). Mřížka místo absolutních pozic, protože se pozice po tahu mění z čísla na kámen.
    Horseshoe ⊔ 3×3: levé rameno 1-2-3, dno 3-4-5, pravé rameno 5-6-7 (do té doby řada; první mřížka 5×4 vyšla jako V). Cross 3×3 jako
-   dřív, jen se stejnou mezerou (dřív svisle 4 px, vodorovně 20). Yggdrasil 3/2/4 na polovičních sloupcích, aby řady zůstaly na středu.
+   dřív, jen se stejnou mezerou (dřív svisle 4 px, vodorovně 20). Yggdrasil strom 1-2-2-3-1 (níž u jeho mřížky).
    Norny jsou jedna řada se stejnými mezerami už dřív. Zobrazení: _updateSpreadSlots (cfg.display 'grid' pro Horseshoe a Yggdrasil). */
 .spread7-slots, .s5-cross, .spread9-slots{--slot-cell:46px;--slot-gap:10px;}
 @media(max-width:480px){ .spread7-slots, .s5-cross, .spread9-slots{--slot-cell:40px;--slot-gap:8px;} }
@@ -941,10 +941,16 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 #s7slot4{transform:translateY(var(--s7-dip));}
 #spread7-slots{padding-bottom:calc(10px + var(--s7-dip));}
 @media(max-width:480px){ #spread7-slots{padding-bottom:calc(8px + var(--s7-dip));} }
-.spread9-slots{grid-template-columns:repeat(8,calc((var(--slot-cell) - var(--slot-gap)) / 2));grid-auto-rows:var(--slot-cell);gap:var(--slot-gap);justify-content:center;place-items:center;}
-#s9slot1{grid-area:1/2/2/4;} #s9slot2{grid-area:1/4/2/6;} #s9slot3{grid-area:1/6/2/8;}
-#s9slot4{grid-area:2/3/3/5;} #s9slot5{grid-area:2/5/3/7;}
-#s9slot6{grid-area:3/1/4/3;} #s9slot7{grid-area:3/3/4/5;} #s9slot8{grid-area:3/5/4/7;} #s9slot9{grid-area:3/7/4/9;}
+/* Yggdrasil jako strom 1-2-2-3-1 (2026-10-11, owner: „to má být podle toho, jak je yggdrasil spread vykládán… ok udělej strom“): Ásgarðr
+   sám nahoře, Hel sám dole, mezi nimi patra výkladu shora dolů — koruna 1–3, kmen 4–5, kořeny 6–9 (RP_YGGDRASIL.tiers). Tradiční rozklad
+   neexistuje; runové weby kladou Ásgarðr nahoru a Hel dolů, tak to drží i strom (RUNAR_DESIGN.md). Do té doby řady 3/2/4. Poloviční sloupce,
+   aby liché řady stály na středu; sousední pozice v řadě i pod sebou dál o buňku + mezeru. */
+.spread9-slots{grid-template-columns:repeat(6,calc((var(--slot-cell) - var(--slot-gap)) / 2));grid-auto-rows:var(--slot-cell);gap:var(--slot-gap);justify-content:center;place-items:center;}
+#s9slot1{grid-area:1/3/2/5;}
+#s9slot2{grid-area:2/2/3/4;} #s9slot3{grid-area:2/4/3/6;}
+#s9slot4{grid-area:3/2/4/4;} #s9slot5{grid-area:3/4/4/6;}
+#s9slot6{grid-area:4/1/5/3;} #s9slot7{grid-area:4/3/5/5;} #s9slot8{grid-area:4/5/5/7;}
+#s9slot9{grid-area:5/3/6/5;}
 /* Mezera přes id: starší mobilní .spread3-slots{gap:6px 4px} stojí v souboru níž a přebíjela ji (na 375 px vyšlo svisle 46, vodorovně 44). */
 #spread7-slots, #spread9-slots{gap:var(--slot-gap);}
 
