@@ -725,7 +725,9 @@ Strom: větev s centrálním uzlem a čtyřmi výhonky. (Do 2026-10-10 tu stálo
 
 ### Horseshoe (7 run)
 ```
-[1] [2] [3] [4] [5] [6] [7]
+[1]       [7]
+[2]       [6]
+[3] [4] [5]
 
 1  minulost
 2  přítomnost
@@ -737,6 +739,9 @@ Strom: větev s centrálním uzlem a čtyřmi výhonky. (Do 2026-10-10 tu stálo
 ```
 IS pozice: hotové v produkci — zdroj pravdy `RP_HORSESHOE.is.positions` (`v2/runar-character.js`),
 doc je NEOPISUJE (§20).
+Tvar podkovy ⊔ (levé rameno 1-2-3, dno 3-4-5, pravé rameno 5-6-7, sousední pozice stejně daleko) je v appce od 2026-10-11 —
+KUKY: *„4 runa mezi 3-5. ať jsou runy v podkově od sebe stejně vzdálené všemi směry“*, `RUNAR_DECISIONS.md` 2026-10-11 (31). Do té doby
+tu i v appce stála řada `[1] … [7]`.
 Strom: větvená větev se sedmi body → sezónní rituál kmene. (Do 2026-10-10 tu stálo „Standard+“ — přístup vlastní CLAUDE.md „Gating“.)
 
 ### Yggdrasil (9 run) — všichni přihlášení, KDYKOLIV

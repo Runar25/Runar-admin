@@ -415,6 +415,12 @@
   věta se do FAQ vrátí.
 - [x] *(hotovo 2026-10-11: pricing přepočten na GPT-6 sol z dat produkce — `node scripts/utils/pricing_tabulka.js`)* **RUNAR_PRICING.md — model ref na Opus** — model čtení přepnut sonnet-4-5 → opus-4-8; cenový model může zmiňovat starý (delta zanedbatelný, hlas dominuje). Aktualizovat referenci.
   ⚠️ 2026-10-10 (CODE-read, kontrola architektury): od 2026-10-09 čte GPT-6 sol (`SOL_MODEL`), Opus je jen záloha — položka platí dál, ale cíl je sol, ne Opus. Totéž → část 17 níž (štítky „Claude API“ v tabulkách).
+- [ ] **Předplatitel nevidí, kolik čtení mu zbývá** (CODE-tune 2026-10-11, při předělání admina na premium — `RUNAR_DECISIONS.md`
+  2026-10-11 (32)). Rune Seeker má počítadlo nad formulářem i v menu pod jménem (`rs_credits_counter`); standard a premium nemají nic —
+  banner je pro ně schovaný (`updateBanners` v `v2/runar-auth.js`, komentář tam ještě píše „unlimited“, ačkoli mají měsíční strop
+  `TIERS.*.monthly_readings`) a menu ukazuje zůstatek jen Rune Seekerovi (`balEl` v `v2/runar-app.js`). O stropu se předplatitel dozví
+  až hláškou `err_monthly_limit`; klient `month_units`/`month_key` ani nenačítá (`fetchUserProfile`). **Čeká na ownera:** chce počítadlo
+  i pro předplatitele? Komentář „unlimited“ opravit v témže zásahu (když řekne ne, samostatně).
 
 ## Multijazyčnost
 
@@ -1168,6 +1174,9 @@ K odstranění: `DEF_CHAR_V2_EN` + `buildSysPromptV2` + `getContextLine`/`v2Voic
 jiného konzumenta. Před smazáním ověřit grepem přes **`scripts/**` i `v2/*.html`** — `buildSysPromptV2` volají
 tři srovnávací skripty (`compare_horseshoe.js`, `compare_shrine_reader.js`,
 `compare_spreads_neutral.js`), takže „mrtvý" je jen vůči produkci, ne vůči repu.
+⚠️ **2026-10-11 (CODE-tune):** ty tři skripty — a s nimi `compare_seasonal.js` a `measure_reading_costs.js` — volají proxy veřejným
+klíčem místo přihlášeného uživatele; proxy takový požadavek odmítne (401, bez přihlášení se nečte od 2026-08-02). Nefungují tedy vůbec
+a smazání `buildSysPromptV2` nebrání. Ceny dnes počítá `scripts/utils/pricing_tabulka.js` z dat produkce.
 Mrtvý řetěz je navíc delší, než tu původně stálo: `_getLunarPhase`, `_getIcelandicSeason`,
 `_getTimeOfDay`, `getContextLine`, `buildLifeRuneContext` visí na témž kořeni.
 

@@ -10392,3 +10392,57 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   proto nese váhu krok (a). Samotest nástroje 7 stavů.
 - **Otevřené:** obnova účtu po smazání (ruční ze zálohy teď, „měkké smazání“ před spuštěním) → BACKLOG, čeká na ownera.
 - Affected doc(s): `RUNAR_PRIVACY.md` (Retence + práva), `CLAUDE.md` §30, `RUNAR_BACKLOG.md` — v témže commitu.
+
+## 2026-10-11 (31) — Formulář a přehrávač: Horseshoe do podkovy ⊔, pozice všech rozkladů se stejným rozestupem, cena rozkladu zlatě, posuvník od čárky do čárky
+
+- **Rozhodl:** KUKY 2026-10-11 (se screenshoty formuláře a přehrávače): *„1. horseshoe by měla být do tvaru podkovy, kolik stojí jaký
+  spread, by mělo být zlatým písmem, ať to jde vidět. platí pro všechny spready. 2. přehrávání nezačíná na začátku 0. a nekončí na konci,
+  ale můžeme ho udělat i trochu širší. jednou tolik?“* K první mřížce: *„tohle je spíš V ne U jako podkova. 4 runa mezi 3-5. ať jsou runy
+  v podkově od sebe stejně vzdálené všemi směry. platí i pro ostatní spready.“*
+- **Co** (`v2/runar-reader.css`; zobrazení přepíná `_updateSpreadSlots` v `v2/runar-reading.js`):
+  - Pozice rozkladů stojí v mřížce čtvercových buněk se stejnou mezerou vodorovně i svisle, takže sousední pozice jsou všude stejně daleko.
+    Horseshoe ⊔: levé rameno 1-2-3, dno 3-4-5, pravé rameno 5-6-7 (do té doby řada; první mřížka 5×4 vyšla jako V). Cross 3×3 jako dřív,
+    jen se stejnou mezerou (dřív svisle 4 px, vodorovně 20). Yggdrasil dál ve třech řadách 3/2/4 (koruna, kmen, kořeny), na polovičních
+    sloupcích, aby řady stály na jednom středu; tečky mezi pozicemi pryč. Norny jsou jedna řada se stejnými mezerami už dřív.
+  - Cena rozkladu (`.note.spread-cost`) zlatě, u všech rozkladů.
+  - Posuvník přehrávače: pruh je o polovinu jezdce kratší z každé strany, takže čárka v 0 % stojí na začátku pruhu a ve 100 % na konci
+    (dřív kus zlaté před ní a kus stopy za ní); stopa 5 → 10 px, čárka 16 → 22 px; WebKit i Firefox kreslí pruh jednou vrstvou.
+    „Širší“ jsem vzal jako tloušťku stopy (2×); šířka přehrávače se nezměnila.
+- **Ověřeno v prohlížeči:** sousední pozice v Horseshoe, Cross i Yggdrasilu všechny 56 px na desktopu a 48 px na 375 px (napoprvé 46/44 —
+  starší mobilní mezera `.spread3-slots` přebíjela, opraveno selektorem přes id); řady Yggdrasilu na jednom středu; nic nepřetéká do šířky;
+  prázdné pozice i kameny po tahu. Posuvník 0/50/100 % při zvětšení 2,3× i v opravdovém přehrávači. Commity 8511554, 51a6911.
+- **Hranice:** telefon jen emulací (375 px), ne na skutečném zařízení.
+- Affected doc(s): `RUNAR_DESIGN.md` (nákres Horseshoe) — v témže commitu.
+
+## 2026-10-11 (32) — Admin se počítá jako premium (jednotky, zámek, měsíční strop, obnova); nástroje adminovým tokenem mimo počítadlo; nasazeno claude-proxy v82
+
+- **Rozhodl:** KUKY 2026-10-11: *„předěláme admin. bude mít přesně to, co má premium, takže 75 čtení a pak automatickou obnovu, ať to
+  vidím, jak to vypadá.“*
+- **Proč:** proxy admina do té doby vyjímala ze zámku i z měsíčního stropu a čtení se mu neodečítala, takže owner neviděl, co zažije
+  předplatitel.
+- **Co** (`supabase/functions/claude-proxy/index.ts`, commit 2466b90): admin (e-mail z `ADMIN_EMAILS`, ověřený z JWT) dál dostane tarif
+  premium a od teď na něj platí i zámek jednoho čtení naráz, měsíční strop a odečet jednotek (`bump_month_units`) jako na předplatitele;
+  v novém měsíci se počítadlo začne znovu samo (klíč měsíce u počítadla). Mimo počítadlo jdou jen nástroje, které volají proxy adminovým
+  tokenem a pošlou `eval: true`: `scripts/utils/gen_batch.js` (evaly a pokusy by jinak jedly jeho jednotky a souběžná volání by narážela
+  na zámek) a výuka ve shrine (`callProxy` v `v2/runar-shrine.html`). Příznak platí jen pro admina; ne-adminovi se ignoruje, strop si
+  nikdo jiný nevypne. Hlas měl admin pod měsíčním stropem už dřív; rozbor jména a přepínač modelu (`engine`) zůstávají adminovi jako
+  nástroj. Klient admina bere jako premium (`fetchUserProfile`), takže se mu ukáže i upozornění na obnovu z (27).
+- **Nasazeno (git nevidí):** claude-proxy v82, `verify_jwt` false jako dřív. Před nasazením stažená v81 = repo (žádný kód mimo git);
+  po nasazení stažené = HEAD; živě s neplatným tokenem i bez tokenu 401. V DB (čteno) mají oba admin účty počítadlo na nule.
+- **Hranice:** odečet na živém čtení po nasazení neověřen (stálo by čtení z ownerova účtu) — ukáže ho první ownerovo čtení (počítadlo
+  v DB). Předplatitel, a tedy ani admin, v appce nevidí, kolik jednotek zbývá: o stropu se dozví až hláškou `err_monthly_limit` →
+  BACKLOG, otázka pro ownera. Jiné skripty, které volají proxy (`measure_reading_costs.js`, `compare_*.js`), posílají veřejný klíč —
+  proxy je odmítá (401) už od 2026-08-02, touhle změnou se pro ně nic nemění (→ BACKLOG „Mrtvý řetěz V2 charakteru“).
+- Affected doc(s): `RUNAR_BACKLOG.md` (počítadlo pro předplatitele; mrtvé skripty) — v témže commitu.
+
+## 2026-10-11 (33) — Yggdrasil: z úvodu promptu pryč „Once a year.“ / „Einu sinni á ári.“
+
+- **Proč:** věta zbyla z první implementace (a57bbd7, 2026-06-07), kdy byl Yggdrasil jen o slunovratu. Od 2026-07-18 je kdykoliv
+  (`CLAUDE.md` „Spread systém“; owner to opravoval pětkrát) a model větu dostával jako fakt o čtení, které uživatel právě dělá — co dáme
+  solu, objeví se ve výstupu (`RUNAR_DESIGN.md` „Slova, která dáváme modelu“, bod 1). Nalezl CODE-tune při zápisu (31); v kódu, docs
+  ani BACKLOGu to zapsané nebylo.
+- **Co:** `RP_YGGDRASIL.is.intro` a `.en.intro` (`v2/runar-character.js`) bez té věty; jen ubráno, nic nepřibývá (memory
+  `oprava-promptu-odebira-vadu`). Commit 7642186.
+- **Ověřeno:** golden — změněné 4 ze 40 builderů (Yggdrasil IS/EN, s čočkou i bez), v každém jen tahle věta; baseline obnovena.
+  check-is čistý. Na výstupu modelu neměřeno (věta se jen ubrala).
+- Affected doc(s): žádný jiný — rozhodnutí „kdykoliv“ už stojí v `CLAUDE.md` („Spread systém“) a v záznamu 2026-07-18.
