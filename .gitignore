@@ -35,3 +35,6 @@ _cowork_snap/
 
 # Vygenerovany snimek provozu (stats.js --html). Snimek ke dni, ne zdroj.
 runar-provoz.html
+
+# Supabase CLI — místní stav propojení (project-ref, verze, pooler bez hesla); ne obsah repa. 2026-10-11 kontrola architektury, CODE-read.
+supabase/.temp/
