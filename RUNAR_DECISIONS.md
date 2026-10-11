@@ -10446,3 +10446,13 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno:** golden — změněné 4 ze 40 builderů (Yggdrasil IS/EN, s čočkou i bez), v každém jen tahle věta; baseline obnovena.
   check-is čistý. Na výstupu modelu neměřeno (věta se jen ubrala).
 - Affected doc(s): žádný jiný — rozhodnutí „kdykoliv“ už stojí v `CLAUDE.md` („Spread systém“) a v záznamu 2026-07-18.
+
+## 2026-10-11 (34) — Vzorky čtení ownerovi bez údajů o uživateli: jména maskovaná, otázka jen pro rozbor
+
+- **Rozhodl:** owner 2026-10-11 *„já u vzorků čtení nepotřebuju vidět nic ohledně uživatele ani jeho jméno. jen čtení, jak je model udělá.“*
+- **Jak (stroj, ne paměť):** `scripts/utils/maskuj_jmena.js` (jména z `user_profiles.name/norse_name` a `bug_reports.tester`, i islandské
+  pády; Rúnar a runy ne) — `najdi_cteni.js` jím maskuje vypisované texty a otázku uživatele ukáže jen s `--otazka`; `nacti_cteni.js` maskuje
+  text hlášení. Bez jmen z DB texty nevypíše. Ověřeno na 40 skutečných čteních: 18× `[jméno]`, 0 nemaskovaných, 0 otázek.
+- **Mez:** jméno zadané jen do formuláře čtení, které nepatří žádnému profilu, DB u čtení neukládá → nezamaskuje se.
+- Zpřesňuje 2026-10-11 (30) bod (c); memory `always-show-reading-samples` už „jméno“ mezi ukazované instrukce nepočítá.
+- Affected doc(s): `memory/always-show-reading-samples.md`, `RUNAR_PRIVACY.md` — v témže commitu.

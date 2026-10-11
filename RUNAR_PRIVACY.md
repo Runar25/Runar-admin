@@ -111,7 +111,8 @@ a souhlasí na pravdivém textu. Detail → `RUNAR_DECISIONS.md` 2026-09-11 (8).
   2. totéž s `--ostre` — nahradí `[VYMAZÁNO]` v přepisech, zálohách při compactu i šifrovaných archivech;
   3. přepis běžící session (změna v poslední hodině) nástroj vynechá a vypíše — pustit znovu, až session skončí.
   **Aby se údaje do přepisů vůbec nedostávaly:** session nevypisují e-maily uživatelů; jména, čtení a hlášení testerů jen když je úkol
-  potřebuje (vzorky čtení ownerovi dál ano — memory `always-show-reading-samples`), nikdy hromadně; data adminů smí. Strojem to
+  potřebuje (vzorky čtení ownerovi dál ano, ale BEZ jména a otázky uživatele — `najdi_cteni.js` maskuje sám, DECISIONS 2026-10-11 (34)), nikdy hromadně;
+  data adminů smí. Strojem to
   spolehlivě hlídat nejde (výstup je v přepisu dřív, než by ho cokoli posoudilo) — proto krok výmazu výš.
 
 ## Implementační checklist

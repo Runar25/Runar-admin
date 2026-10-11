@@ -25,8 +25,13 @@ protože v repu dlouho leželo jen měření a owner se musel ptát „kde je te
 co všechno vstoupilo do čtení, pak nebudu mít blbé dotazy a uvidím přesně, co se děje. Takže mi vždy pošli, jaké
 instrukce přišly do tvorby čtení."* Doloženo téhož dne: owner se ptal, proč Rúnar „nacpal ROAD" — odpověď stála
 v promptu (`focus on: the road`), jen ji neviděl. **Jak:** user message celý (nebo aspoň to, co se losovalo: obraz,
-aspekt/focus, úhel, délka, konec, jméno, čočka) + u srovnání přesně ty řádky, které se liší. Systémový prompt
+aspekt/focus, úhel, délka, konec, čočka — jméno NE, viz níž) + u srovnání přesně ty řádky, které se liší. Systémový prompt
 stačí pojmenovat a říct, že je shodný.
 
 Souvisí: [[write-for-owner-not-process]] · [[measure-dont-eyeball]] (měř, ale výsledek měření
 ownerovi nikdy nepodávej bez toho, co bylo měřeno).
+
+⛔ **Ve vzorku NIC o uživateli — ani jméno, ani jeho otázku** (KUKY 2026-10-11): *„já u vzorků čtení nepotřebuju vidět nic ohledně
+uživatele ani jeho jméno. jen čtení, jak je model udělá.“* Nevisí na paměti: `najdi_cteni.js` jména maskuje `[jméno]` a otázku
+uživatele ukáže jen s `--otazka` (pro vlastní rozbor Asku, ne pro ownera); hlášení v `nacti_cteni.js` taky. Mez: jméno zadané jen
+do formuláře čtení, které nepatří žádnému profilu, DB neukládá → nezamaskuje se; ve vzorku ho přepiš ručně. DECISIONS 2026-10-11 (34).
