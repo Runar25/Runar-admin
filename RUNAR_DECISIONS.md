@@ -10743,3 +10743,13 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Hranice:** brzda se na živém hlasu ještě neprojevila (stojí kredity) — první hlas uloží i denní snímek stavu (poslední je z 2026-10-05),
   otevření VOICE ve shrine uloží snímek `admin` a ukáže stav v kreditech.
 - Affected doc(s): `RUNAR_BACKLOG.md` (položka ElevenLabs po kontrole CODE-read) — v témže commitu.
+
+## 2026-10-11 (53) — Obnova smazaného účtu: teď ruční ze zálohy na žádost, před spuštěním „měkké smazání“ na 30 dní
+
+- **Owner:** *„1. souhlas“* k návrhu CODE-read (BACKLOG „obnova účtu po smazání“; jeho otázka *„30 dní na smazání je dobré, třeba bude
+  chtít uživatel svůj účet obnovit? jak se postupuje v takových případech?“*).
+- **Teď:** `delete-account` maže hned; obnova = ruční ze šifrované zálohy, jen na žádost uživatele a jen do 30 dní (pak záloha zaniká).
+  Postup stojí v `RUNAR_PRIVACY.md` „Retence + práva“. Nástroj na obnovu zatím neexistuje — CODE ho napíše a vyzkouší na kopii
+  při první žádosti; zápis do produkční DB pouští owner.
+- **Před spuštěním:** měkké smazání (co obnáší → BACKLOG, položka „měkké smazání účtu“). Staví CODE-tune, nasazuje owner.
+- Affected doc(s): `RUNAR_PRIVACY.md` (postup), `RUNAR_BACKLOG.md` (položka) — v témže commitu.

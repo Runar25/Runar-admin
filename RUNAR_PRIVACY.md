@@ -101,6 +101,19 @@ a souhlasí na pravdivém textu. Detail → `RUNAR_DECISIONS.md` 2026-09-11 (8).
   k OpenAI) je od 2026-10-09 **zrušené** i s edge funkcí `gpt-review`; nové rozbory nevznikají. Uložené řádky zůstaly: text rozboru,
   model, id čtení a admin; cizí čtení v nich nejsou. Smazáním účtu admina zmizí (`on delete cascade`). Klient tabulku nečte ani nepíše.
   Migrace: `sql/2026-09-25_gpt_reviews.sql`.
+- **Obnova smazaného účtu (DECISIONS 2026-10-11 (53)):** jen na žádost uživatele z téhož e-mailu a jen do 30 dní
+  (pak archiv zálohy zaniká). Záloha (`scripts/utils/zaloha_db.js`) drží každou tabulku `public` a z `auth.users` jen id, e-mail a časy —
+  přihlašovací údaje ne, a nejsou potřeba (přihlášení e-mailovým kódem). Postup:
+  1. najít nejnovější archiv PŘED smazáním a v něm staré ID podle e-mailu (`auth.users`);
+  2. v uzavřeném testu vrátit e-mail do `allowed_emails` se stejnou rolí jako v záloze (`delete-account` ho maže);
+  3. uživatel se znovu přihlásí → nové ID;
+  4. z archivu přenést řádky starého ID pod nové: `user_profiles` (i tier a kredity — píše jen server, tedy SQL ownera), `readings`,
+     `tree_state`; `gift_codes.used_by` u kódů, které uplatnil (smazání je vynulovalo); `credit_ledger` přežil se starým ID → přepsat
+     na nové. `voice_usage` zůstává anonymní (`on delete set null`, mapování už není). Zámek životní runy hlídá jen roli klienta,
+     SQL ownera ho neblokuje;
+  5. začerněné přepisy konverzací (výmaz výš) se neobnovují.
+  Nástroj na kroky 1 a 4 zatím není — napsat a vyzkoušet na kopii při první žádosti; zápis do produkční DB pouští owner.
+  Před spuštěním to nahradí „měkké smazání“ → `RUNAR_BACKLOG.md`.
 
 - **Přepisy konverzací s Claudem (vývoj, od 2026-10-11 se nemažou — DECISIONS 2026-10-11 (30)):** pracovní přepisy session (CODE i Cowork)
   a jejich noční šifrovaná kopie (`~/runar-eval/zaloha-konverzaci`, 7z AES, jen na počítači ownera, ne na Drive) mohou nést osobní údaje

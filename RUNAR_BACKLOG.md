@@ -2744,7 +2744,8 @@ v zásadách chybí; dnes jen admin a nic nezapisuje → přidáno jako podmínk
   (b) přepisy a jejich zálohy mazat po N měsících (pak „nic se neztratí“ platí jen N měsíců); (c) session nevypisují osobní údaje uživatelů
   (e-maily, jména mimo adminy, texty čtení) — pravidlo, které by šlo zčásti hlídat strojem. Doporučení CODE-read: (a) + (c).
 
-- ⚪ **Pro ownera (nespěchá, před spuštěním) — obnova účtu po smazání:** dnes `delete-account` maže okamžitě, data drží jen šifrované zálohy
+- ⚪ **Pro CODE-tune (před spuštěním) — měkké smazání účtu; ROZHODNUTO ownerem 2026-10-11 („1. souhlas“, DECISIONS (53)),
+  ruční postup obnovy už stojí v `RUNAR_PRIVACY.md` · původně: obnova účtu po smazání:** dnes `delete-account` maže okamžitě, data drží jen šifrované zálohy
   30 dní; obnova = ruční ze zálohy, jen na žádost uživatele (nové ID účtu → přemapovat). Návrh CODE-read: teď ruční postup do
   `RUNAR_PRIVACY.md`; před spuštěním „měkké smazání“ (30 dní skryté, přihlášení smazání zruší, pak skutečný výmaz) — sloupec, noční úloha,
   hláška v appce, text zásad EN + IS (CODE-tune, nasazení owner). Owner 2026-10-11: „30 dní na smazání je dobré, třeba bude chtít účet obnovit?“
