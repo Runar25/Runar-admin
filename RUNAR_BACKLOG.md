@@ -2403,7 +2403,9 @@ dvojího odečtu. **Z dat (30 dní):** 0 záloh, 0 dvojích generování; dat po
   je přednes čtení.**
 
 ### Část 42 — nápověda (`runar-help.html`) × co appka opravdu dělá (pokračování části 39, 2026-10-10)
-- ⚪ **Pro CODE-tune (o) — 5 vět v nápovědě slibuje něco jiného, než appka dělá (EN statické + slovník, IS):**
+- ✅ **Pro CODE-tune (o) — 5 vět v nápovědě slibuje něco jiného, než appka dělá (EN statické + slovník, IS):**
+  *(CODE-tune 2026-10-11, DECISIONS 2026-10-11 (20): body 1–4 srovnány s appkou a se zásadami; z bodu 5 ubrán jen nepravdivý slib —
+  upozornění na nový měsíc appka nemá, postavit ho je dál ownerova volba)*
   1. „tap **+ Gift Card**“ / „ýttu á **+ Gjafakort**“ — položka v menu se jmenuje `'+ ' + vl('card')` = „+ Rune Reading Card“ / „+ Rúnakort“
      (`runar-app.js` ~654); vede správně na zadání kódu (`toggleRedeem`), jen jiné jméno. Text z `vl('card')`, ne natvrdo (§15).
   2. „Filterable by rune, area, and **time**“ / „sía eftir rún, svæði og **tíma**“ — filtry deníku jsou runa, oblast, **jazyk**

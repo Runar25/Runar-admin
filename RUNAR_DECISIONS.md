@@ -10212,3 +10212,21 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   ho označí. Text úkolů se neopisuje, bydlí v backlogu. První verze chytala i odkaz „Pro CODE-tree“ uprostřed textu → adresát jen na začátku
   položky. Záloha hooku: `runar-context.py.pred-ukoly-2026-10-11`.
 - Affected doc(s): žádný.
+
+## 2026-10-11 (20) — Nápověda: pět vět, které slibovaly něco jiného, než appka dělá, srovnáno s appkou a se zásadami
+
+- **Rozhodl:** CODE-tune podle §20 („při sporu vyhrává produkce“), úkol BACKLOG (o) z kontroly CODE-read (část 42). Bod 5 byl v BACKLOGu
+  označen jako ownerova volba („větu ubrat, nebo upozornění postavit“) — ubrán je jen nepravdivý slib; upozornění na nový měsíc
+  appka nemá a postavit ho zůstává na ownerovi (pak se věta vrátí).
+- **Proč:** nápověda tvrdila pět věcí, které appka nedělá: položka v menu „+ Gift Card“ / „+ Gjafakort“ (appka ukazuje
+  `'+ ' + vl('card')`), filtr deníku „podle času“ (filtry jsou runa, oblast, jazyk), data „jen v Evropě“ a „všechno smazáno hned“
+  (šifrované zálohy jsou na Google Drive a drží data dál — zásady to říkají), „appka dá vědět, až se čtení obnoví“ (nic takového
+  v kódu není, jen `err_monthly_limit` při vyčerpání). Uživatel, který nápovědě věří, hledá tlačítko, které neexistuje, nebo
+  spoléhá na smazání, které ještě neproběhlo.
+- **Co:** `v2/runar-help.html` — jméno položky z VOCAB (`{card}` v `_v`), filtry „language“ / „tungumáli“, věta o zálohách
+  u uložení i u smazání (jak dlouho → zásady, číslo se do nápovědy neopisuje), FAQ o obnově bez slibu upozornění. Islandský řetěz
+  kroků se šipkami přepsán do vět: GreynirCorrect ho nerozebral (E001), stejně jako fragment „Fyrsta dag hvers mánaðar.“;
+  „meðlimur í EES“ (korpus 0×, E006) → „aðili að EES-samningnum“.
+- **Ověřeno:** is-greynir 6/6 · is-gpt-check 6/6 (1 volání, $0.0095) · korpus („eftir tungumáli“ 22× × „eftir tungumál“ 0×,
+  „enn um sinn“ 3660×, „á fyrsta degi“ 6354×) · smoke ㊲ (HTML = slovník) · v prohlížeči EN i IS vykreslené, bez zbylých `{…}`.
+- Affected doc(s): `RUNAR_BACKLOG.md` (část 42, položka (o)) — v témže commitu.

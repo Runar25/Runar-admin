@@ -188,7 +188,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
     <div class="help-block">
       <div class="help-block-title" id="s3-redeem-title">HOW TO REDEEM</div>
       <div class="help-block-body" id="s3-redeem-body">
-        <p>Sign in → open the menu → tap <strong>+ Gift Card</strong> → enter your code → REDEEM. Credits are added instantly. They never expire. They follow your account, not your device.</p>
+        <p>Sign in → open the menu → tap <strong>+ {card}</strong> → enter your code → REDEEM. Credits are added instantly. They never expire. They follow your account, not your device.</p>
       </div>
     </div>
     <div class="help-block">
@@ -226,7 +226,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
     <div class="help-block">
       <div class="help-block-body" id="s5-body">
         <p>Every reading you take for yourself is remembered. As a {seeker}, your last {seeker_journal} readings wait in the journal — the rune drawn, the date, the area, the words spoken.</p>
-        <p>When you move to <strong>{standard}</strong>, the journal becomes a full chronicle. Every reading, going back to the beginning. Filterable by rune, area, and time.</p>
+        <p>When you move to <strong>{standard}</strong>, the journal becomes a full chronicle. Every reading, going back to the beginning. Filterable by rune, area, and language.</p>
       </div>
     </div>
   </div>
@@ -248,8 +248,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
     <div class="help-block">
       <div class="help-block-body" id="s7-body">
         <p>Sign in with a code sent to your email, or with Google — no password needed. Your readings are saved to your account.</p>
-        <p>Your data is stored in Europe (Ireland). Iceland is a member of the European Economic Area. GDPR applies.</p>
-        <p>To delete your account and all your data, open the menu and choose <strong>Delete Account</strong>. Everything is erased immediately. Read our full <a href="runar-privacy.html" style="color:var(--gold);opacity:0.85;">Privacy Policy</a>.</p>
+        <p>Your data is stored in Europe (Ireland). Only our encrypted backups may be kept elsewhere. Iceland is a member of the European Economic Area. GDPR applies.</p>
+        <p>To delete your account and all your data, open the menu and choose <strong>Delete Account</strong>. Everything is erased at once, though our encrypted backups keep the data for a while longer. Read our full <a href="runar-privacy.html" style="color:var(--gold);opacity:0.85;">Privacy Policy</a>.</p>
       </div>
     </div>
   </div>
@@ -303,7 +303,7 @@ const CONTENT = {
     's3-online-title':   'ONLINE PURCHASE',
     's3-online-body':    `<p>Credits will soon be available to purchase directly through the app, without a physical card.</p>`,
     's3-redeem-title':   'HOW TO REDEEM',
-    's3-redeem-body':    `<p>Sign in → open the menu → tap <strong>+ Gift Card</strong> → enter your code → REDEEM. Credits are added instantly. They never expire. They follow your account, not your device.</p>`,
+    's3-redeem-body':    `<p>Sign in → open the menu → tap <strong>+ {card}</strong> → enter your code → REDEEM. Credits are added instantly. They never expire. They follow your account, not your device.</p>`,
     's3-price-title':    'PRICING',
     'pt-card': 'CARD', 'pt-credits': 'CREDITS',
     's4-lbl':  'RÚNAR\'S VOICE',
@@ -312,14 +312,14 @@ const CONTENT = {
       <p>He reads aloud up to {voice_n} times a month. Without a subscription, he reads only your free reading and the readings you pay for with a Rune Reading Card.</p>`,
     's5-lbl':  'YOUR JOURNAL',
     's5-body': `<p>Every reading you take for yourself is remembered. As a {seeker}, your last {seeker_journal} readings wait in the journal — the rune drawn, the date, the area, the words spoken.</p>
-      <p>When you move to <strong>{standard}</strong>, the journal becomes a full chronicle. Every reading, going back to the beginning. Filterable by rune, area, and time.</p>`,
+      <p>When you move to <strong>{standard}</strong>, the journal becomes a full chronicle. Every reading, going back to the beginning. Filterable by rune, area, and language.</p>`,
     's6-lbl':  'LANGUAGE',
     's6-body': `<p>Rúnar speaks two languages — English and Icelandic. These are not translations of each other. Each carries its own imagery, its own rhythm. Icelandic is older here. The runes were carved first in that tongue.</p>
       <p>You can switch languages at any time from the menu. Your preference is remembered.</p>`,
     's7-lbl':  'YOUR ACCOUNT & PRIVACY',
     's7-body': `<p>Sign in with a code sent to your email, or with Google — no password needed. Your readings are saved to your account.</p>
-      <p>Your data is stored in Europe (Ireland). Iceland is a member of the European Economic Area. GDPR applies.</p>
-      <p>To delete your account and all your data, open the menu and choose <strong>Delete Account</strong>. Everything is erased immediately. Read our full <a href="runar-privacy.html" style="color:var(--gold);opacity:0.85;">Privacy Policy</a>.</p>`,
+      <p>Your data is stored in Europe (Ireland). Only our encrypted backups may be kept elsewhere. Iceland is a member of the European Economic Area. GDPR applies.</p>
+      <p>To delete your account and all your data, open the menu and choose <strong>Delete Account</strong>. Everything is erased at once, though our encrypted backups keep the data for a while longer. Read our full <a href="runar-privacy.html" style="color:var(--gold);opacity:0.85;">Privacy Policy</a>.</p>`,
     's8-lbl':     'FREQUENTLY ASKED',
     'contact-lbl':  'QUESTIONS & FEEDBACK',
     'contact-text': 'Something feels wrong, or you want to share something. We read everything.',
@@ -327,10 +327,10 @@ const CONTENT = {
       { q: 'Do credits expire?',                   a: 'Never. They are yours until you use them.' },
       { q: 'Can I use my credits on different devices?', a: 'Yes. Credits are tied to your account, not your phone or browser.' },
       { q: 'My code isn\'t working.',              a: 'Make sure you are signed in. Codes look like FEHU-XXXX-XXXX. If it still fails, write to runar@therunekeeper.com.' },
-      { q: 'When do my monthly readings reset?',   a: 'On the first day of every month. The app will let you know when they renew.' },
+      { q: 'When do my monthly readings reset?',   a: 'They reset on the first day of every month.' },
       // 2026-10-09: čtení píše GPT od OpenAI, Claude jen při výpadku (DECISIONS 2026-10-09 (13)); do té doby „shaped by Claude, made by Anthropic“.
       { q: 'Is Rúnar an AI?',                      a: 'Rúnar\'s words are shaped by GPT, made by OpenAI — or by Claude, made by Anthropic, when OpenAI is unavailable. His voice is rendered by ElevenLabs. His character — the imagery, the philosophy, the way he speaks — was written by the people behind Agndofa. The intelligence is artificial. The intention is not.' },
-      { q: 'How do I delete my account?',          a: 'Open the menu in Rúnar and choose Delete Account. Everything is removed instantly — account, readings, journal. This cannot be undone.' },
+      { q: 'How do I delete my account?',          a: 'Open the menu in Rúnar and choose Delete Account. Your account, readings and journal are removed at once. Our encrypted backups keep the data for a while longer; the Privacy Policy has the details. This cannot be undone.' },
     ],
   },
   is: {
@@ -356,7 +356,7 @@ const CONTENT = {
     's3-online-title':   'NETKAUP',
     's3-online-body':    `<p>Brátt verður hægt að kaupa inneign beint í appinu, án þess að kaupa kort.</p>`,
     's3-redeem-title':   'HVERNIG Á AÐ INNLEYSA',
-    's3-redeem-body':    `<p>Skráðu þig inn → opnaðu valmyndina → ýttu á <strong>+ Gjafakort</strong> → sláðu inn kóðann → INNLEYSA. Inneignin bætist við samstundis. Hún rennur aldrei út og fylgir reikningnum þínum.</p>`,
+    's3-redeem-body':    `<p>Skráðu þig inn, opnaðu valmyndina og ýttu á <strong>+ {card}</strong>. Sláðu svo inn kóðann og innleystu hann. Inneignin bætist við samstundis. Hún rennur aldrei út og fylgir reikningnum þínum.</p>`,
     's3-price-title':    'VERÐLISTI',
     'pt-card': 'KORT', 'pt-credits': 'INNEIGN',
     's4-lbl':  'RÖDD RÚNARS',
@@ -365,14 +365,14 @@ const CONTENT = {
       <p>Hann les upphátt allt að {voice_n} sinnum á mánuði. Án áskriftar les hann aðeins ókeypis spána þína og þær spár sem þú greiðir fyrir með Rúnakorti.</p>`,
     's5-lbl':  'DAGBÓK ÞÍN',
     's5-body': `<p>Rúnar man alla þína eigin lestra. Sem {seeker} geymir þú síðustu {seeker_journal} lestrana þína í dagbókinni. Þar sérðu rúnina sem var dregin, dagsetninguna, svæðið og orðin.</p>
-      <p>Þegar þú ferð yfir í <strong>{standard_acc}</strong> geymir dagbókin alla söguna þína — hvern lestur, allt aftur til upphafsins. Hægt er að sía eftir rún, svæði og tíma.</p>`,
+      <p>Þegar þú ferð yfir í <strong>{standard_acc}</strong> geymir dagbókin alla söguna þína — hvern lestur, allt aftur til upphafsins. Hægt er að sía eftir rún, svæði og tungumáli.</p>`,
     's6-lbl':  'TUNGUMÁL',
     's6-body': `<p>Rúnar talar tvö tungumál, ensku og íslensku. Annað er ekki þýðing á hinu; hvort ber sínar eigin myndir og sinn eigin takt. Íslenskan er eldri hér.</p>
       <p>Þú getur skipt um tungumál hvenær sem er í valmyndinni. Appið man valið þitt.</p>`,
     's7-lbl':  'REIKNINGUR ÞINN & PERSÓNUVERND',
     's7-body': `<p>Skráðu þig inn með kóða í tölvupósti eða með Google — það þarf ekkert lykilorð. Lestrarnir þínir eru geymdir á reikningnum þínum.</p>
-      <p>Gögnin þín eru geymd í Evrópu (Írland). Ísland er meðlimur í EES. GDPR gildir.</p>
-      <p>Til að eyða reikningnum þínum, opnaðu valmyndina og veldu <strong>Eyða reikningi</strong>. Allt er fjarlægt samstundis. Lestu fulla <a href="runar-privacy.html" style="color:var(--gold);opacity:0.85;">persónuverndarstefnu</a> okkar.</p>`,
+      <p>Gögnin þín eru geymd í Evrópu (Írland). Aðeins dulkóðuð öryggisafrit okkar kunna að vera geymd annars staðar. Ísland er aðili að EES-samningnum. GDPR gildir.</p>
+      <p>Til að eyða reikningnum þínum, opnaðu valmyndina og veldu <strong>Eyða reikningi</strong>. Allt er fjarlægt samstundis, en dulkóðuð öryggisafrit okkar geyma gögnin enn um sinn. Lestu fulla <a href="runar-privacy.html" style="color:var(--gold);opacity:0.85;">persónuverndarstefnu</a> okkar.</p>`,
     's8-lbl':     'ALGENGAR SPURNINGAR',
     'contact-lbl':  'SPURNINGAR & ENDURGJÖF',
     'contact-text': 'Skrifaðu okkur ef eitthvað er ekki eins og það á að vera eða ef þú vilt deila einhverju. Við lesum allt.',
@@ -380,9 +380,9 @@ const CONTENT = {
       { q: 'Rennur inneignin út?',                 a: 'Aldrei. Hún er þín þar til þú notar hana.' },
       { q: 'Get ég notað inneignina á mismunandi tækjum?', a: 'Já. Inneignin er bundin við reikninginn þinn, ekki tækið.' },
       { q: 'Kóðinn minn virkar ekki.',             a: 'Gakktu úr skugga um að þú sért skráður inn. Kóðar líta svona út: FEHU-XXXX-XXXX. Ef það virkar enn ekki, skrifaðu á runar@therunekeeper.com.' },
-      { q: 'Hvenær endurnýjast mánaðarlegir lestrar?', a: 'Fyrsta dag hvers mánaðar. Appið lætur þig vita þegar þeir endurnýjast.' },
+      { q: 'Hvenær endurnýjast mánaðarlegir lestrar?', a: 'Þeir endurnýjast á fyrsta degi hvers mánaðar.' },
       { q: 'Er Rúnar gervigreind?',                a: 'Orð Rúnars eru mótuð af GPT frá OpenAI — eða af Claude frá Anthropic þegar OpenAI svarar ekki. ElevenLabs ljær honum rödd. Persóna hans var skrifuð af fólkinu á bak við Agndofa. Greindin er gervi. Tilgangurinn er það ekki.' },
-      { q: 'Hvernig eyði ég reikningnum mínum?',   a: 'Opnaðu valmyndina í Rúnar og veldu Eyða reikningi. Allt er fjarlægt samstundis — reikningur, lestrar, dagbók. Þetta er óafturkræft.' },
+      { q: 'Hvernig eyði ég reikningnum mínum?',   a: 'Opnaðu valmyndina í Rúnar og veldu Eyða reikningi. Reikningur, lestrar og dagbók eru fjarlægð samstundis. Dulkóðuð öryggisafrit okkar geyma gögnin þó enn um sinn. Nánari upplýsingar eru í persónuverndarstefnunni. Þetta er óafturkræft.' },
     ],
   },
 };
@@ -403,6 +403,9 @@ function applyContent() {
   const _v = { voice_n: VOICE_MONTHLY_LIMIT, seeker_journal: TIERS.rune_seeker.journal,
     seeker:       lang === 'is' ? TIERS.rune_seeker.label_is : TIERS.rune_seeker.label,
     standard:     lang === 'is' ? TIERS.standard.label_is : TIERS.standard.label,
+    // 2026-10-11: jméno položky v menu, kterou se zadává kód karty — appka ji skládá '+ ' + vl('card') (runar-app.js); nápověda psala
+    // „+ Gift Card“ / „+ Gjafakort“, jméno, které appka nikde neukazuje (BACKLOG (o) 1). vl() tu není, stránka načítá jen config.
+    card:         lang === 'is' ? VOCAB.card.is : VOCAB.card.en,
     standard_acc: lang === 'is' ? TIERS.standard.label_is_acc : TIERS.standard.label };
   Object.keys(c).forEach(id => {
     if (id === 'faq') return;
