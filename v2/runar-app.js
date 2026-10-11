@@ -20,6 +20,8 @@ let userCredits    = 0;         // credits_balance from user_profiles
 let userFreeBalance = 0;        // free_balance: 1 at registration, no replenish (model B)
 let userMonthUnits  = 0;        // month_units — jednotky předplatného spotřebované v měsíci month_key (píše jen server; počítadlo v menu)
 let userMonthKey    = '';       // month_key — 'YYYY-MM' v UTC jako server (claude-proxy monthKey), ke kterému month_units patří
+let userVoiceCount  = 0;        // voice_month_count — hlasy v měsíci voice_month_key (píše jen elevenlabs-proxy; počítadlo hlasů v menu)
+let userVoiceKey    = '';       // voice_month_key — 'YYYY-MM' v UTC jako elevenlabs-proxy monthKey
 let readerUser     = {};
 let userGender     = 'hk';   // kk | kvk | hk (han, default) — how Runar addresses the seeker (IS)
 let greetingShown  = false;     // show topbar greeting only once per session
@@ -64,7 +66,7 @@ async function fetchUserProfile(userId) {
   profileLoaded = false;
   try {
     const { data } = await sb.from('user_profiles')
-      .select('tier, credits_balance, free_balance, month_units, month_key, name, norse_name, address_pref, lang, life_rune_number, life_rune_text, life_rune_lang, dob_day, dob_month, dob_year, tree_name, tree_founded_at, founding_reading_id')
+      .select('tier, credits_balance, free_balance, month_units, month_key, voice_month_count, voice_month_key, name, norse_name, address_pref, lang, life_rune_number, life_rune_text, life_rune_lang, dob_day, dob_month, dob_year, tree_name, tree_founded_at, founding_reading_id')
       .eq('id', userId)
       .maybeSingle();
     if (data) {
@@ -86,6 +88,8 @@ async function fetchUserProfile(userId) {
       userFreeBalance = data.free_balance != null ? data.free_balance : 0;
       userMonthUnits  = data.month_units || 0;
       userMonthKey    = data.month_key   || '';
+      userVoiceCount  = data.voice_month_count || 0;
+      userVoiceKey    = data.voice_month_key   || '';
       // Load life rune reading if stored
       if (data.life_rune_text) {
         _lifeRuneText = data.life_rune_text;
@@ -126,6 +130,7 @@ async function fetchUserProfile(userId) {
           testerConsentAt = r.data.tester_consent_at || null;
           if (typeof _syncPrivacyUI === 'function') _syncPrivacyUI();
           if (typeof _maybeShowTesterConsent === 'function') _maybeShowTesterConsent();
+          if (typeof updateDropdown === 'function') updateDropdown();   // 2026-10-11: strop hlasu v menu závisí na příznaku tester
         })
         .catch(function () {});
       // Restore language preference
@@ -221,13 +226,15 @@ function recordTreeReading(spreadKind, runeObjs, area, intention) {
 async function syncFreeBalance(userId) {
   try {
     const { data } = await sb.from('user_profiles')
-      .select('free_balance, month_units, month_key')
+      .select('free_balance, month_units, month_key, voice_month_count, voice_month_key')
       .eq('id', userId)
       .maybeSingle();
     if (data) {
       userFreeBalance = data.free_balance != null ? data.free_balance : 0;
       userMonthUnits  = data.month_units || 0;
       userMonthKey    = data.month_key   || '';
+      userVoiceCount  = data.voice_month_count || 0;   // 2026-10-11: po hlasu se obnoví i počítadlo hlasů v menu
+      userVoiceKey    = data.voice_month_key   || '';
       updateAuthUI();
     }
   } catch(e) { console.warn('syncFreeBalance:', e.message); }
@@ -1432,7 +1439,13 @@ function updateDropdown() {
       const mesic  = new Date().toISOString().slice(0, 7);
       const pouzito = userMonthKey === mesic ? Math.max(0, userMonthUnits) : 0;
       const zbyva  = Math.max(0, TIERS[userTier].monthly_readings - pouzito);
-      balEl.textContent = tp('rs_credits_counter', { units: vn('unit', zbyva, lang) });
+      // 2026-10-11 (owner: „říkáme testerům, že mají jenom 15 možností Rúnarova hlasu? měli bychom!“): druhý řádek = kolik čtení Rúnar
+      // ještě přečte nahlas. Strop vybírá server podle příznaku tester (elevenlabs-proxy); tady jeho zrcadla z configu (smoke ⑨).
+      const vLimit = isTester ? VOICE_MONTHLY_LIMIT_TESTER : VOICE_MONTHLY_LIMIT;
+      const vZbyva = Math.max(0, vLimit - (userVoiceKey === mesic ? Math.max(0, userVoiceCount) : 0));
+      // Při nule ověřená hláška o vyčerpaném hlasu (err_voice_month) — „can still read 0 rune readings“ by zněla divně.
+      const vText = vZbyva > 0 ? tp('voice_left', { casts: vn('cast', vZbyva, lang) }) : tp('err_voice_month', { n: vLimit });
+      balEl.innerHTML = escapeHtml(tp('rs_credits_counter', { units: vn('unit', zbyva, lang) })) + '<br>' + escapeHtml(vText);
       balEl.style.display = '';
     } else {
       balEl.style.display = 'none';

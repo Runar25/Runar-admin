@@ -299,6 +299,7 @@ const UI_TEXT = {
     founding_story_lbl:  '\u2726 THE ROOTING',
     founding_story_text: 'What comes now is the rooting. Three runes for the three who tend the well beneath the tree: Urður, who holds what has been. Verðandi, who holds what is becoming. Skuld, who holds what is still owed. Draw them, and the tree is yours. Every rune you draw after these makes it grow.',
     tree_founding_intro: 'Now your life rune is the seed your tree grows from. Next come the three Norns — Urður, Verðandi and Skuld — and the tree takes root. Free, and told in text alone.',
+    founding_cost:       'Free, and told in text alone.',
     tree_need_rune:      'Every tree begins as a seed in the soil. The seed of your tree is your life rune — the rune that has been with you since birth. Let Rúnar read it first; from it your tree will grow.',
     lr_plant_intro:      'Your life rune is more than a sign — it is a seed. From it your tree of life can grow.',
     tree_founding_btn:   'ROOT YOUR TREE',
@@ -401,6 +402,7 @@ const UI_TEXT = {
     // Rule §10: ALL user-visible strings here. tp() in logic files. Adding a language = add block here only.
     rs_banner_desc:     'You walk as <strong>Rune Seeker</strong> \u2014 {casts_month} to begin, all twenty-five runes open, R\u00fanar listening.<br><br>When it is drawn and the stones still have more to say, a {card} keeps the door open. One card. As many readings as you carry. No subscription, no expiry.',
     rs_credits_counter: '{units} remaining',
+    voice_left:        'Rúnar can still read {casts} aloud this month.',   // 2026-10-11: menu pod jménem, předplatitel a tester (strop hlasu)
     rs_credits_desc:    'Your free rune reading is used. R\u00fanar will draw from your {units} from here on.',
     rs_exhausted_one:   'You have drawn your free rune reading. Keep the door open with a <b>{card}</b> \u2014 one card, no expiry, no subscription.',
     rs_exhausted_many:  'You have drawn all {n} of your free rune readings. Keep the door open with a <b>{card}</b> \u2014 one card, no expiry, no subscription.',
@@ -794,6 +796,7 @@ const UI_TEXT = {
     founding_story_lbl:  '\u2726 RÆTURNAR',
     founding_story_text: 'Nú koma ræturnar. Þrjár rúnir fyrir þrjár sem sitja við brunninn undir trénu: Urður, sem geymir það sem var. Verðandi, sem geymir það sem er að verða. Skuld, sem geymir það sem á eftir að koma. Dragðu þær, og tréð er þitt. Hver rún sem þú dregur eftir þessa lætur það vaxa.',
     tree_founding_intro: 'Nú er lífsrúnin þín fræið sem tréð þitt vex upp af. Næst koma nornirnar þrjár — Urður, Verðandi og Skuld — og það festir rætur. Frítt, og aðeins í rituðu máli.',
+    founding_cost:       'Frítt, og aðeins í rituðu máli.',   // = ověřený konec tree_founding_intro
     tree_need_rune:      'Hvert tré byrjar sem fræ í moldinni. Fræ trésins þíns er lífsrúnin — rúnin sem hefur fylgt þér frá fæðingu. Láttu Rúnar lesa hana fyrst; upp af henni vex tréð þitt.',
     lr_plant_intro:      'Lífsrúnin þín er meira en tákn — hún er fræ. Upp af henni getur tréð þitt vaxið.',
     tree_founding_btn:   'FESTA RÆTUR TRÉSINS',
@@ -887,6 +890,7 @@ const UI_TEXT = {
     // ── Dynamic banner strings — notaðar með tp(), breytur: {casts}, {casts_month}, {units}, {card}, {n}, {rune}, {bal}, {UNITS}
     rs_banner_desc:     'Þú gengur sem <strong>Leitandi</strong> \u2014 {casts_month} til að byrja, allar tuttugu og fimm rúnirnar opnar, Rúnar hlustandi.<br><br>Þegar hún er gengin og steinarnir eiga enn eftir að segja, opnar {card} dyrnar. Eitt kort. Jafn margar spár og þú berð. Enginn gildistími, engin áskrift.',
     rs_credits_counter: '{units} eftir',
+    voice_left:        'Rúnar getur enn lesið {casts} upphátt í þessum mánuði.',   // 2026-10-11: is-greynir + is-gpt-check OK, „lesið upphátt“ 90× v korpusu
     rs_credits_desc:    'Þú hefur notað ókeypis spána þína. Næsta spá verður greidd af inneign þinni.',   // 2026-10-10: „frjáls“ = kalk z EN „free“; spá se platí z inneign, nebere se z ní (is-gpt-check)
     // 2026-10-10: „frjáls“ = svobodný, zdarma = „ókeypis“ (kalk z EN „free“); „dregið/gengið … spána“ → „notað“ („hefur notað allar“ 16×).
     rs_exhausted_one:   'Þú hefur notað ókeypis spána þína. Opnaðu dyrnar með <b>{card}</b> \u2014 eitt kort, enginn gildistími, engin áskrift.',

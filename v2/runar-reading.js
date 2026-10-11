@@ -529,6 +529,8 @@ function _paintSpreadCost() {
   var c = SPREAD_COSTS[_SPREAD_COST_KEY[_spreadMode] || 'single'];
   var navstevnik = !currentUser || userTier === 'free_trial';
   if (navstevnik || !c) { el.style.display = 'none'; return; }
+  // Zakládací Norny jsou zdarma (proxy mode 'founding' nic neúčtuje) — do 2026-10-11 tu při založení stálo „stojí 2 čtení“ (owner, snímek).
+  if (typeof _foundingPending !== 'undefined' && _foundingPending && _spreadMode === 'norns') { el.textContent = t('founding_cost'); el.style.display = ''; return; }
   el.textContent = tp('spread_cost', { casts: vn('cast', c.credits, lang) });
   el.style.display = '';
 }
@@ -1263,8 +1265,9 @@ async function generateVoice() {
       console.error('voice failed:', res.status, (data && data.error) || '');
       // Mesicni strop a minutovy rate limit chodi oba jako 429 — rozlisuje je kod chyby.
       // Bez toho by clovek, kterému doslo pet hlasu, cetl „pockej chvili" a cekal marne.
-      // 2026-10-11: počet hlasů posílá server (tester 15, ostatní VOICE_MONTHLY_LIMIT); voice_quota_rest = bezpečná hladina kvóty
-      // ElevenLabs (VOICE_SAFE_SHARE) — do té doby by člověk četl „počkej chvíli“ a čekal marně.
+      // 2026-10-11: počet hlasů posílá server (tester 15, ostatní VOICE_MONTHLY_LIMIT); voice_quota_rest = brzda kreditů ElevenLabs
+      // (brzdaHlasu v _shared/voice_usage.ts, DECISIONS 2026-10-11 (48); do té doby hladina VOICE_SAFE_SHARE) — jinak by člověk četl
+      // „počkej chvíli“ a čekal marně.
       const msg = (data && data.error === 'voice_monthly_limit')
         ? tp('err_voice_month', { n: (data.limit || (typeof VOICE_MONTHLY_LIMIT !== 'undefined' ? VOICE_MONTHLY_LIMIT : 5)) })
         : (data && data.error === 'voice_quota_rest')
@@ -1281,6 +1284,7 @@ async function generateVoice() {
       setRuneText(btn, t('voice_btn')); btn.disabled = false; return;
     }
     if (!data.audio_url) throw new Error('No audio_url');
+    if (currentUser && typeof syncFreeBalance === 'function') syncFreeBalance(currentUser.id);   // 2026-10-11: počítadlo hlasů v menu
     const blob = await fetch(data.audio_url).then(r => r.blob());
     const audio = document.getElementById('cap-a');   // přehrávač hlasu = _makeCapPlayer('cap') (runar-app.js)
     audio.src = URL.createObjectURL(blob);
