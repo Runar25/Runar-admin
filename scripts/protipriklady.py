@@ -105,6 +105,13 @@ PRIPADY = [
  ('obchazka', 'verify_runar_root.js', 'scripts/utils/stats.js', 'append', '', "\nconst _protiCesta2 = 'C:" + chr(92) * 2 + "Users" + chr(92) * 2 + "zkuku" + chr(92) * 2 + "Downloads" + chr(92) * 2 + "Runar-admin';\n"),
  ('obchazka', 'verify_code_doc_refs.js', 'v2/runar-reader.css', 'append', '', '\n/* podrobnosti viz docs/neexistuje-protipriklad-css' + '.md */\n'),
  ('chyti', 'verify_tree_signals.js', 'v2/runar-tree.js', 'replace', '(row.aol || null)', 'null'),
+ # kolo 3 / 4h (2026-10-11): obrazy, kalendář, myšlenka ✦, zrcadlo parseru
+ ('chyti', 'verify_compose_mirror.js', 'v2/runar-character.js', 'replace', "var reading = segs.map(function (x) { return x.text; }).join(' ').trim();", "var reading = segs.map(function (x) { return x.text; }).join('  ').trim();"),
+ ('chyti', 'verify_icelandic_calendar.js', 'v2/runar-character.js', 'replace', "if (doZimy <= 90) return 'heyannir';", "if (doZimy <= 120) return 'heyannir';"),
+ ('chyti', 'verify_image_area.js', 'v2/runar-character.js', 'replace', 'function _imgPodleOblasti(cand, area) {', 'function _imgPodleOblasti(cand, area) { return cand;'),
+ ('chyti', 'verify_image_motifs.js', 'v2/runar-character.js', 'replace', 'if (lastMotif) cand.forEach(', 'if (false) cand.forEach('),
+ ('chyti', 'verify_image_register.js', 'v2/runar-character.js', 'replace', "bigger than it was in spring.','auður','wealth','P']", "bigger than it was in spring.','auður','wealth','X']"),
+ ('chyti', 'verify_thought.js', 'v2/runar-reading.js', 'replace', "return !!(TIERS[isAdmin(currentUser.email) ? 'premium' : userTier] || {}).reading_thought;", 'return true;'),
  ('chyti', 'verify_is_kontrola_jedno_misto.js', 'memory/working-style.md', 'append', '', '\nKontrola IS: napřed check-' + 'is.py, pak is-' + 'greynir.py.\n'),
  # strom ㉳ (CODE-tree 2026-10-11): mutace z hlavičky verify_tree_mista převedené na opakované útoky. Kontrola si lab staví z builderu
  # do dočasné složky, takže útok míří na build_crown_composer.py. (a) dvě ramena v jedné výšce — přes výšky zón XLF, ne exitMinPx
