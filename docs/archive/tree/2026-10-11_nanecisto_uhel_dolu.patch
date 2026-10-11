@@ -1,0 +1,59 @@
+# NANECISTO 2026-10-11 (CODE-tree) — ceka na ownera (KUKY: „nanecisto tady a po schvaleni produkce“). Patch k build_crown_composer.py:
+# oprava preteceni uhlu v bendSpine/bendRootPaths + pravidlo „zadna rovna vetev rovne dolu“ (45°). Po schvaleni: git apply, pak
+# build_tree_production.py (strom v aplikaci) a smoke. Cisla a obrazky → RUNAR_BACKLOG.md (polozka o rovne vetvi a korenech).
+diff --git a/build_crown_composer.py b/build_crown_composer.py
+index 7157019..d87874c 100644
+--- a/build_crown_composer.py
++++ b/build_crown_composer.py
+@@ -1129,12 +1129,16 @@ HTML = r"""<!DOCTYPE html>
+     var s=clamp((share-0.15)/0.30, 0, 1)*grow; return (s>0.02) ? { m:best, s:s } : null; }
+   function bendSpine(pts, sh){ var n=pts.length; if(n<3 || !sh) return; var K=1.0, K2=0.6, seg=[];
+     for(var i=1;i<n;i++) seg.push({ L:Math.hypot(pts[i].x-pts[i-1].x, pts[i].y-pts[i-1].y), a:Math.atan2(pts[i].y-pts[i-1].y, pts[i].x-pts[i-1].x) });
+-    var a0=seg[0].a, aE=seg[seg.length-1].a, up=(Math.cos((a0+aE)/2)>=0) ? -1 : 1;   /* otoceni "nahoru" = ke svislici vzhuru: vpravo miri -> zaporne */
++    /* PRETECENI UHLU (2026-10-11, KUKY „zadna vetev by nemela jit jako rovny klacek rovne dolu“): atan2 vraci (-pi, pi], takze u vetve
++       mirici vlevo kolem vodorovne skace uhel useku mezi +179° a -179°. Rozdil bez prepoctu vysel ~360° misto 2° a Confirmation stocila
++       usek az o 60° (jeho strom: povysena Hagalaz z Eihwazu 23° od svislice misto 83°); prumer (a0+aE)/2 obratil i smer „nahoru“. */
++    var _wr=function(x){ while(x>Math.PI) x-=2*Math.PI; while(x<=-Math.PI) x+=2*Math.PI; return x; };   /* rozdil uhlu do (-pi, pi] — viz PRETECENI UHLU */
++    var a0=seg[0].a, aE=seg[seg.length-1].a, up=(Math.cos(a0+_wr(aE-a0)/2)>=0) ? -1 : 1;   /* otoceni "nahoru" = ke svislici vzhuru: vpravo miri -> zaporne */
+     var sm=function(x){ x=clamp(x,0,1); return x*x*(3-2*x); };
+     for(var j=0;j<seg.length;j++){ var u=(j+0.5)/seg.length, d=0;
+       if(sh.m==='clarity') d=up*K*sh.s*u;                                  /* cela vetev se stoci vzhuru */
+       else if(sh.m==='reflection') d=-up*K*sh.s*u;                         /* cela vetev se sklani dolu */
+-      else if(sh.m==='confirmation') d=-(seg[j].a-a0)*0.35*sh.s;            /* narovna se napul: s plnym narovnanim (0,7) bezela vedlejsi podel ramene — 15 soubehu misto 5 */
++      else if(sh.m==='confirmation') d=-_wr(seg[j].a-a0)*0.35*sh.s;            /* narovna se napul: s plnym narovnanim (0,7) bezela vedlejsi podel ramene — 15 soubehu misto 5 */
+       else if(sh.m==='insight') d=up*K2*sh.s*(sm((u-0.38)/0.10)-0.75*sm((u-0.66)/0.10));   /* zalomi se: loket nahoru, pak zpet */
+       seg[j].a+=d; }
+     for(var q=1;q<n;q++){ var sg=seg[q-1]; pts[q].x=pts[q-1].x+sg.L*Math.cos(sg.a); pts[q].y=pts[q-1].y+sg.L*Math.sin(sg.a); } }
+@@ -1147,13 +1151,14 @@ HTML = r"""<!DOCTYPE html>
+   function bendRootPaths(paths, sh){ if(!sh || !paths || !paths.length) return; var sp=paths[0].pts, n=sp.length; if(n<3) return;
+     var old=sp.map(function(q){ return { x:q.x, y:q.y }; }), seg=[], C=0.65, K2=0.6, M=Math.PI/2-0.12, cum=[0];
+     for(var i=1;i<n;i++) seg.push({ L:Math.hypot(sp[i].x-sp[i-1].x, sp[i].y-sp[i-1].y), a:Math.atan2(sp[i].y-sp[i-1].y, sp[i].x-sp[i-1].x) });
+-    var a0=seg[0].a, aE=seg[seg.length-1].a, out=(Math.cos((a0+aE)/2)>=0) ? 1 : -1;
++    var _wr=function(x){ while(x>Math.PI) x-=2*Math.PI; while(x<=-Math.PI) x+=2*Math.PI; return x; };   /* rozdil uhlu do (-pi, pi] — viz PRETECENI UHLU */
++    var a0=seg[0].a, aE=seg[seg.length-1].a, out=(Math.cos(a0+_wr(aE-a0)/2)>=0) ? 1 : -1;
+     var sm=function(x){ x=clamp(x,0,1); return x*x*(3-2*x); };
+-    for(var j=0;j<seg.length;j++){ var u=(j+0.5)/seg.length, dv=seg[j].a-Math.PI/2, d=0;   /* dv = odklon od svislice dolu (vpravo zaporny) */
++    for(var j=0;j<seg.length;j++){ var u=(j+0.5)/seg.length, dv=_wr(seg[j].a-Math.PI/2), d=0;   /* dv = odklon od svislice dolu (vpravo zaporny) */
+       if(sh.m==='clarity') d=-dv*C*sh.s*u;                                                  /* do hloubky: odklon se zmensi nasobkem */
+       else if(sh.m==='reflection'){ var dvs=-out*dv, room=M-dvs, add=(C*Math.max(0,dvs)+0.35)*sh.s*u;   /* do stran: pridat ven */
+         if(room>0.01) d=-out*room*Math.tanh(add/room); }                                     /* mekce: k vodorovne se blizi, nedosahne */
+-      else if(sh.m==='confirmation') d=-(seg[j].a-a0)*0.35*sh.s;                            /* narovna se napul (jako vetev) */
++      else if(sh.m==='confirmation') d=-_wr(seg[j].a-a0)*0.35*sh.s;                            /* narovna se napul (jako vetev) */
+       else if(sh.m==='insight') d=out*K2*sh.s*(sm((u-0.38)/0.10)-0.75*sm((u-0.66)/0.10));   /* lokty */
+       seg[j].a+=d; cum.push(d); }
+     for(var q=1;q<n;q++){ var sg=seg[q-1]; sp[q].x=sp[q-1].x+sg.L*Math.cos(sg.a); sp[q].y=sp[q-1].y+sg.L*Math.sin(sg.a); }
+@@ -1172,6 +1177,14 @@ HTML = r"""<!DOCTYPE html>
+                           seekTip:(level>=1 && selfInfo && selfInfo.seeking) ? selfInfo.seeking : undefined }, TT);   /* 2026-10-09 (zapnuto po obrazku, KUKY "zapni to v labu"; DECISIONS 2026-10-09 (12)): seeking -> konec vetvicky */
+     var pts=g.paths[0].pts;
+     if(level===0 && cfg._seekShape) bendSpine(pts, cfg._seekShape);   /* ZIVY TVAR: seeking ohne pater vetve PRED vetvickami — vetvicky i vedlejsi jdou s ni */
++    /* ZADNA ROVNA VETEV ROVNE DOLU (KUKY 2026-10-11 „do strany klidne … kdyz je zakrivena, tak je to v pohode“): rovna vetev (tetiva/delka
++       >= 0,9), jejiz tetiva miri bliz nez DOWN_LIM ke svislici dolu, se natoci kolem sve pate ven na DOWN_LIM — tvar zustava, meni se jen smer,
++       vetvicky vyrostou az z natocene. Koreny tudy nejdou (B.buildBranch primo). Jeho strom po oprave uhlu: 14 takovych -> 0. */
++    (function(){ var a=pts[0], b=pts[pts.length-1], dx=b.x-a.x, dy=b.y-a.y, ch=Math.hypot(dx,dy); if(ch<1 || dy<=0) return;
++      var L=0; for(var i=1;i<pts.length;i++) L+=Math.hypot(pts[i].x-pts[i-1].x, pts[i].y-pts[i-1].y);
++      if(ch/L<0.9) return; var off=Math.atan2(Math.abs(dx), dy), DOWN_LIM=Math.PI/4; if(off>=DOWN_LIM) return;
++      var rot=(DOWN_LIM-off)*((dx<0)?1:-1), c=Math.cos(rot), s=Math.sin(rot);   /* vlevo -> ven a nahoru po smeru hodin, vpravo proti */
++      for(var j=1;j<pts.length;j++){ var px=pts[j].x-a.x, py=pts[j].y-a.y; pts[j].x=a.x+px*c-py*s; pts[j].y=a.y+px*s+py*c; } })();
+     var f=w0Want/(pts[0].w||1);
+     for(var i=0;i<pts.length;i++){ pts[i].w*=f; pts[i].depth=depthZ; pts[i].ct=lerp(cfg.ctNear,cfg.ctFar,pts[i].t); }
+     var me={ pts:pts, el:g.info.el, depth:depthZ };
