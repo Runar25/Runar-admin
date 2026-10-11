@@ -1311,7 +1311,10 @@ async function generateVoice() {
     btn.disabled = true;
     setSt('st-voice', '');
   } catch (err) {
-    setSt('st-voice', `Voice error: ${err.message}`, 'err');
+    // 2026-10-11: dřív „Voice error: …“ natvrdo anglicky i v islandské appce (technická hláška, třeba výpadek sítě). Člověk dostane hlášku
+    // hlasu z UI_TEXT jako u chyby serveru, technický text jde do konzole. Našla ji ráčna ㊾ (anglický text natvrdo v JS readeru).
+    console.error('voice error:', err && err.message);
+    setSt('st-voice', _voiceErrMsg(null, 0), 'err');
     setRuneText(btn, t('voice_btn')); btn.disabled = false;
   }
 }

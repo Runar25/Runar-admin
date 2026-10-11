@@ -843,6 +843,18 @@ radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola citelnosti probehla'
 check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
 
+# ㊾ 2026-10-11 (CODE-tune; návrh CODE-read, owner „ano, udělej ty tři chyby“): anglický text natvrdo v JS readeru, který jde do stránky —
+# okno „SPEAK AGAIN IN …?“ a „Voice error: …“ psaly anglicky i v islandské appce a ㉹ ani ㉸ je neviděly. Ráčna, výjimky prázdné.
+print('\n' + chr(0x32BE) + ' ANGLICKÝ TEXT NATVRDO V JS READERU (verify_en_natvrdo.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_en_natvrdo.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+r2 = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_en_natvrdo.js'), '--test'],
+                    capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0 and r2.returncode == 0
+radky = [l for l in (r2.stdout + r.stdout + r.stderr + r2.stderr).strip().split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola anglickeho textu natvrdo probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ㉴ Štítek modelu v UI = model v edge funkci (CODE-tune 2026-10-05). KUKY (report 2026-10-05 07:40): „Pokud jsi změnil model
 # na sol6.1, proč jsi to taky neupravil… Tady v readeru. Což znamená, že nevíš, kde co je.“ Proxy běžela na gpt-6.1-sol, přepínač
 # admina hlásil „GPT-6 sol“ — dvě místa (edge funkce × překlady), která nikdo nehlídal.

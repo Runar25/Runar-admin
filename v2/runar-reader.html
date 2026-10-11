@@ -124,13 +124,14 @@
 <!-- ═══ LANG SWITCH MODAL ═══ -->
 <div class="modal-overlay" id="lang-switch-modal">
   <div class="modal">
-    <div class="modal-title" id="lsm-title">SPEAK AGAIN?</div>
+    <!-- texty i cenu skládá openLangSwitchModal z UI_TEXT a configu (2026-10-11; do té doby „SPEAK AGAIN?“ a „1 CREDIT“ natvrdo) -->
+    <div class="modal-title" id="lsm-title"></div>
     <div class="modal-sub" id="lsm-body"></div>
     <div class="btn-row" style="margin-top:20px;">
       <button class="btn-half" id="lsm-confirm" onclick="confirmLangSwitch()"></button>
       <button class="btn-half sec" id="lsm-cancel" onclick="cancelLangSwitch()"></button>
     </div>
-    <div class="credit-note">1 CREDIT</div>
+    <div class="credit-note" id="lsm-cost"></div>
   </div>
 </div>
 

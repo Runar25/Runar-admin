@@ -11,6 +11,9 @@
 //      (RÚNAR, AGNDOFA…), jména run a služeb, adresy webů a e-mailů, název firmy, ceny v kr. Jména Rúnar/Agndofa/Óðinn se z textu napřed vyjmou, ať anglickou větu
 //      s „Rúnar“ nepustí jeho „ú“ (scripts/i18n-diff.js, ze kterého logika je, takovou větu přeskočí). Do 2026-10-11 to nehlídalo nic
 //      a islandská nápověda ukazovala VISITOR, RUNE SEEKER, „+ READING CARD“ a „soon“ anglicky (procházka CODE-read).
+//  (C) okno „mluvit znovu v jiném jazyce“ po single čtení (přihlášený podvržený, čtení na obrazovce, setLang): mluví jazykem, ve kterém
+//      člověk čte, cenu bere z SPREAD_COSTS jednotkou VOCAB a zrušení jazyk nezmění. Do 2026-10-11 bylo natvrdo anglicky i v IS a slibovalo
+//      „uses one credit“ (předplatitel platí jednotkou čtení). Anglický text natvrdo v JS readeru obecně hlídá ráčna ㊾.
 // Neumí: text přes obrázek (bere barvu pozadí předků), stavy přihlášeného (čtení, menu), stín a obrys písma.
 // Útok: scripts/protipriklady.py → PRIPADY.
 //   node scripts/verify_citelnost.js            · --slabe vypíše i texty mezi 3 a 4,5 : 1 (podklad pro rozhodnutí o vzhledu)
@@ -74,7 +77,7 @@ const TYPY = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; cha
   '.jpg': 'image/jpeg', '.svg': 'image/svg+xml', '.json': 'application/json', '.webmanifest': 'application/manifest+json', '.woff2': 'font/woff2' };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 function konec() {
-  console.log(fail ? '\nFAIL  čitelnost: ' + fail + ' selhalo' : '\nOK    čitelnost: kontrast každého viditelného textu aspoň 3 : 1 (nad --dim, §5), v IS žádná zaseklá angličtina' + (konec.info || ''));
+  console.log(fail ? '\nFAIL  čitelnost: ' + fail + ' selhalo' : '\nOK    čitelnost: kontrast každého viditelného textu aspoň 3 : 1 (nad --dim, §5), v IS žádná zaseklá angličtina, okno přepnutí jazyka v jazyce čtenáře' + (konec.info || ''));
   process.exit(fail ? 1 : 0);
 }
 const srv = http.createServer((req, res) => {
@@ -118,6 +121,33 @@ const srv = http.createServer((req, res) => {
     await nacti('runar-reader.html', `typeof setLang === 'function'`);
     await ev(`setLang('en')`); await sleep(400); await zmer('reader · návštěvník EN'); await sber('reader', 'en');
     await ev(`setLang('is')`); await sleep(400); await zmer('reader · návštěvník IS'); await sber('reader', 'is');
+
+    // (C) okno přepnutí jazyka po single čtení: přihlášený (podvržený), čtení na obrazovce, bez textu v cílovém jazyce → setLang otevře okno
+    const okno = (cil) => ev(`(() => {
+      currentUser = { id: 'u1', email: 'tester@example.com' }; userTier = 'premium';
+      showAppTab('reading'); readerRune = RUNES[0]; readerTexts = {};
+      document.getElementById('reader-output').style.display = 'block';
+      setLang(${JSON.stringify(cil)});
+      const m = document.getElementById('lang-switch-modal'), g = (id) => (document.getElementById(id) || {}).textContent || '';
+      const v = { otevreno: m.classList.contains('open'), jazyk: lang, title: g('lsm-title'), body: g('lsm-body'), ok: g('lsm-confirm'),
+                  zpet: g('lsm-cancel'), cena: g('lsm-cost'), cekana: vn('cast', SPREAD_COSTS.single.credits, lang) };
+      cancelLangSwitch();
+      v.zavreno = !m.classList.contains('open'); v.jazykPo = lang;
+      readerRune = null; document.getElementById('reader-output').style.display = 'none';
+      return v;
+    })()`);
+    const o1 = await okno('en');                                   // appka v IS → okno islandsky
+    await ev(`setLang('en')`); await sleep(300);
+    const o2 = await okno('is');                                   // appka v EN → okno anglicky
+    await ev(`(() => { currentUser = null; setLang('is'); return true; })()`);
+    const anglicky = /\b(SPEAK|AGAIN|STAY|YES|credits?)\b/i;
+    rekni(!!o1 && o1.otevreno && o1.jazyk === 'is' && o1.zavreno && o1.jazykPo === 'is' && /ENSKU/.test(o1.title) && /ÍSLENSKU/.test(o1.zpet)
+          && ![o1.title, o1.body, o1.ok, o1.zpet, o1.cena].some((x) => anglicky.test(x)) && o1.cena === o1.cekana.toUpperCase()
+          && o1.body.indexOf(o1.cekana) !== -1,
+      '(C) okno po čtení v IS: islandsky, cena „' + (o1 && o1.cena) + '“ ze SPREAD_COSTS, zrušení jazyk nechá', JSON.stringify(o1));
+    rekni(!!o2 && o2.otevreno && o2.jazyk === 'en' && o2.zavreno && o2.jazykPo === 'en' && /ICELANDIC/.test(o2.title) && /ENGLISH/.test(o2.zpet)
+          && o2.cena === o2.cekana.toUpperCase() && o2.body.indexOf(o2.cekana) !== -1 && !!o1 && ['title', 'body', 'ok', 'zpet'].every((k) => o1[k] !== o2[k]),
+      '(C) okno po čtení v EN: anglicky, cena „' + (o2 && o2.cena) + '“ ze SPREAD_COSTS, texty jiné než v IS', JSON.stringify(o2));
     for (const str of ['runar-help.html', 'runar-privacy.html']) {
       await nacti(str, `typeof setLang === 'function'`);
       await ev(`setLang('en')`); await sleep(300); await zmer(str + ' EN'); await sber(str, 'en');

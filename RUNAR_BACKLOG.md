@@ -3662,7 +3662,9 @@ Co dělá CODE, tady NENÍ — tohle je jen to, na co já nedosáhnu.
 Prošlo bez vady: úvod, tah runy (výzva k registraci, žádné volání serveru), přepnutí jazyka po tahu (bez okna o kreditu), životní runa
 (výpočet bez serveru), Safn rúna (25 run, 5 odemčených, detail s kamenem a audiem), deník návštěvníka, nápověda, zásady, okno „Where to
 start“ (runa = naše SVG), šířka telefonu (bez vodorovného posunu, mřížka 4 sloupce), konzole bez chyb; islandské věty is-greynir OK.
-- [ ] **Pro CODE-tune — okno „SPEAK AGAIN IN …?“ natvrdo anglicky** (`v2/runar-app.js` ~ř. 393–400, `openLangSwitchModal`; v HTML
+- [x] ✅ *(CODE-tune 2026-10-11: okno z UI_TEXT v jazyce čtenáře — IS „VILTU AÐ RÚNAR TALI AFTUR Á ENSKU?“ —, cena z `SPREAD_COSTS` jednotkou
+  `VOCAB` („1 SPÁ“ / „1 RUNE READING“); táž vada „Voice error: …“ při výpadku hlasu opravena; ráčna ㊾ na anglický text natvrdo v JS readeru,
+  okno v ㊽ (C). DECISIONS 2026-10-11 (70).)* ~~**Pro CODE-tune — okno „SPEAK AGAIN IN …?“ natvrdo anglicky**~~ (`v2/runar-app.js` ~ř. 393–400, `openLangSwitchModal`; v HTML
   „1 CREDIT“). Přihlášený, který po čtení přepne jazyk, dostane nadpis, text i obě tlačítka anglicky, i když appku používá islandsky,
   a text slibuje „uses one credit“ — předplatitel a tester platí jednotkami čtení. Kontroly to propustily: ㉹ hledá češtinu, ㉸ jen
   větvení `lang === 'is' ?`, anglický text v šabloně `…` nevidí nic → zvážit kontrolu „anglická věta v JS mimo UI_TEXT“.

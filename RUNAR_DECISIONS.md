@@ -11049,3 +11049,22 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Změřeno (jeho strom z produkce, 471 čtení):** rovných větví do 30° od svislice 35 → 0, do 44° 56 → 0; kořeny beze změny (šířka 591 → 592),
   semínko bod po bodu stejné; snímek z aplikace bez rovné větve vlevo dole.
 - Affected doc(s): `RUNAR_TREE_MAP.md` §7 (bod 7); `RUNAR_BACKLOG.md` (položka o rovné větvi a kořenech, část větve hotová) — v témže commitu.
+
+## 2026-10-11 (70) — Čitelnost appky: tři nálezy z procházky CODE-read opravené a dva stroje, které je hlídají (smoke ㊽, ㊾)
+
+- **Proč:** owner *„ano, udělej ty tři chyby“* (nálezy CODE-read z procházky appky jako návštěvník, `RUNAR_BACKLOG.md`). Všechny tři prošly
+  kontrolami, protože pravidla (§5 „--dim nikdy pro text“, §2 a §10 „texty z UI_TEXT“) hlídal jen člověk očima.
+- **Co:** (1) upozornění „not professional advice“ bez průhlednosti → 7,7 : 1 (bylo 2,41 : 1 ≈ --dim, vzor `.credit-note`), stejně „Last updated“
+  v zásadách (2,14 : 1). (2) Islandská nápověda: jména v tabulce tierů z `TIERS`, karta z `VOCAB` jako v menu appky („+ RUNE READING CARD“ /
+  „+ RÚNAKORT“ — „+ READING CARD“ bylo špatně i anglicky), „soon“ / „brátt“. (3) Okno přepnutí jazyka po čtení z UI_TEXT v jazyce, ve kterém
+  člověk čte, cena z `SPREAD_COSTS` jednotkou `VOCAB` (dřív „uses one credit“ i předplatiteli a testerovi); hláška hlasu při výpadku z UI_TEXT
+  (dřív „Voice error: …“ anglicky). Islandština okna psaná islandsky a ověřená nástroji §2 (greynir, korpus, is-gpt-check bez nálezu).
+- **Stroje:** smoke ㊽ (`scripts/verify_citelnost.js`, skutečný prohlížeč, reader návštěvník + nápověda + zásady, EN i IS): (A) kontrast každého
+  viditelného textu aspoň **3 : 1** — rozhodnutí: §5 se čte jako „viditelně nad --dim“ (--dim samo 2,2 : 1), ne jako doporučení WCAG 4,5 : 1;
+  19 textů mezi 3 a 4,5 (hlavně popisky nápovědy a zásad) jen vypíše a čekají v BACKLOGu na ownera; neaktivní ovládání (zamčené pilulky a runy)
+  je výjimka. (B) zaseklá angličtina v IS (logika ručního `scripts/i18n-diff.js`, jména Rúnar a Agndofa se napřed vyjmou). (C) okno přepnutí
+  jazyka skutečnou cestou `setLang`. Smoke ㊾ (`scripts/verify_en_natvrdo.js`): ráčna na anglický text natvrdo v JS readeru, který jde do
+  stránky; na stavu před opravou chytí všech 5 míst, falešný poplach nemá. Útoky v protipříkladech na každou část.
+- **Hranice:** ㊽ prochází z přihlášené appky jen okno přepnutí jazyka. Deník po přepnutí jazyka (nález CODE-read 2026-10-11) zatím nehlídá
+  nic. ㊾ nevidí text složený do proměnné a zapsaný jinde.
+- Affected doc(s): `RUNAR_BACKLOG.md` (tři položky odškrtnuté, 19 slabších textů pro ownera) — v commitech oprav.

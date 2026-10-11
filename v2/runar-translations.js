@@ -139,6 +139,14 @@ const UI_TEXT = {
     speak_btn_visitor: 'DRAW THIS RUNE',     // 2026-10-10: návštěvník čtení nedostane — tlačítko tahu ho neslibuje (_updateReadingForm)
     speak_btn_add:    'ADD RUNE',
     speak_btn_draw:   'DRAW YOUR RUNES',
+    // Okno „mluvit znovu v jiném jazyce“ (openLangSwitchModal) — 2026-10-11, do té doby natvrdo anglicky v runar-app.js (procházka CODE-read).
+    // lang_in_<jazyk> = jak tenhle jazyk UI nazývá daný jazyk ve vazbě „in …“ (IS 3. pád po „á“); klíč skládá kód: t('lang_in_' + l).
+    lang_in_en:       'English',
+    lang_in_is:       'Icelandic',
+    lsm_title:        'SPEAK AGAIN IN {language}?',
+    lsm_body:         'Rúnar’s voice in {language} carries its own truth — not a translation, but a fresh reading of the same rune. This draws from Rúnar again and uses {casts}.',
+    lsm_confirm:      'YES — SPEAK IN {language}',
+    lsm_cancel:       'STAY IN {language}',
     spread_cost:      'This reading costs {casts}.',   // 2026-09-29 reporty ownera: cena čtení nikde nebyla
     life_rune_lbl:    'YOUR LIFE RUNE',
     badge_life_note:  'your life rune',
@@ -642,6 +650,14 @@ const UI_TEXT = {
     speak_btn_visitor: 'DRAGA ÞESSA RÚN',    // 2026-10-10: „draga þessa“ 928×, „þessa rún“ 6×
     speak_btn_add:    'BÆTA VIÐ RÚNU',
     speak_btn_draw:   'DRAGÐU RÚNIRNAR',
+    // 2026-10-11 okno přepnutí jazyka (viz EN): psáno islandsky, ne překladem — „upp á nýtt“ místo „fresh reading of the same rune“;
+    // greynir + is-gpt-check bez nálezu, korpus: „tali aftur“ 21, „aftur á ensku“ 83, „tala á ensku“ 114, „vera áfram á“ 1974, „upp á nýtt“ 25320.
+    lang_in_en:       'ensku',
+    lang_in_is:       'íslensku',
+    lsm_title:        'VILTU AÐ RÚNAR TALI AFTUR Á {language}?',
+    lsm_body:         'Á {language} les Rúnar rúnina upp á nýtt. Þetta er ekki þýðing heldur nýr lestur, og hann kostar {casts}.',
+    lsm_confirm:      'JÁ — TALA Á {language}',
+    lsm_cancel:       'VERA ÁFRAM Á {language}',
     spread_cost:      'Þessi lestur kostar {casts}.',   // 2026-09-29 viz EN; is-grammar-qa čisté (spá/spár = 4. pád)
     life_rune_lbl:    'LÍFSRÚNIN ÞÍN',
     badge_life_note:  'lífsrúnin þín',

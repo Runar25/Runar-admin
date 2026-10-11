@@ -390,13 +390,17 @@ function _updateGenderVisibility() {
   if (flbl) flbl.textContent = t('sp_gender_lbl');
 }
 
+// Okno „mluvit znovu v jiném jazyce“ — jen u single čtení (u výkladu je readerRune prázdný a setLang okno neotevře). 2026-10-11: texty
+// z UI_TEXT v jazyce, ve kterém člověk právě čte (do té doby natvrdo anglicky i v islandské appce), cena z SPREAD_COSTS jednotkou z VOCAB
+// (do té doby „uses one credit“ i pro předplatitele a testera, kteří platí jednotkou čtení) — procházka CODE-read. Hlídá smoke ㊽ a ㊾.
 function openLangSwitchModal(tl) {
-  const names = { en: 'English', is: 'Icelandic' };
-  document.getElementById('lsm-title').textContent   = `SPEAK AGAIN IN ${(names[tl]||tl).toUpperCase()}?`;
-  document.getElementById('lsm-body').textContent    =
-    `Rúnar's voice in ${names[tl]||tl} carries its own truth — not a translation, but a fresh reading of the same rune. This draws from Rúnar again and uses one credit.`;
-  document.getElementById('lsm-confirm').textContent = `YES — SPEAK IN ${(names[tl]||tl).toUpperCase()}`;
-  document.getElementById('lsm-cancel').textContent  = `STAY IN ${(names[lang]||lang).toUpperCase()}`;
+  const jmeno = (l) => t('lang_in_' + l);
+  const cena = vn('cast', SPREAD_COSTS.single.credits, lang);
+  document.getElementById('lsm-title').textContent   = tp('lsm_title', { language: jmeno(tl).toUpperCase() });
+  document.getElementById('lsm-body').textContent    = tp('lsm_body', { language: jmeno(tl), casts: cena });
+  document.getElementById('lsm-confirm').textContent = tp('lsm_confirm', { language: jmeno(tl).toUpperCase() });
+  document.getElementById('lsm-cancel').textContent  = tp('lsm_cancel', { language: jmeno(lang).toUpperCase() });
+  document.getElementById('lsm-cost').textContent    = cena.toUpperCase();
   document.getElementById('lang-switch-modal').classList.add('open');
 }
 function cancelLangSwitch() {
