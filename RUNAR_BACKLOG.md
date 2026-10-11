@@ -2689,6 +2689,23 @@ uloženými výstupy“, „první týden sledovat is-grammar-qa“, „Pustit i
 odkaz „kontroly IS podle CLAUDE.md §2“ s poznámkou do kdy co platilo. **Stroj:** `check-docs.py` nově zastaví příkaz
 `python … is-grammar-qa.py` v živém docu (měření a poznámky „do 2026-10-10“ pustí; ověřeno na 4 vzorcích).
 
+#### Kolo 2 / 24 — zbytek: inline JS, popisy run, ráčna ㉸, docs/, opt-out, pre-push, souběh (části 27–31, 37, 40; 2026-10-11)
+**Platí:** inline skripty bez mrtvé definice (shrine 125 — v kole 1 110, nápověda 16, soukromí 7; protipříklad sken našel) · popisy run:
+připomínka „pravidlo při 25+“ dál čeká na ownera/Cowork (obsah, nespěchá, nenavrhovat znovu) · ㉸ ráčna OK (character 15, utils 7) ·
+`docs/`: mapa promptu v archivu, bez odkazu na starou cestu; Vegvísir označený odložený · ㉾ opt-out OK · pre-push v čisté kopii se dnes
+prokázal sám (zastavil push s neopravenými docs, ač opravy ležely ve sdíleném stromě) · zámek čtení: bere se před čtením zůstatku (~ř. 729),
+uvolní se ve `finally` na každé cestě, selhání uvolnění = vyprší sám.
+
+#### ⭐ Kolo 2 uzavřeno (2026-10-11) — co našlo a co z toho hlídá stroj
+Části 1–44 znovu (kromě 6 = strom, CODE-tree) + nové typy: duplicity v pravidlech, sliby × tok kódu, peníze a plýtvání, nasazeno = repo,
+zkouška obnovy zálohy. **Nálezy:** redeem-code propadl kód při chybě kreditů · plovoucí supabase-js v 10 edge funkcích · nápověda HTML × JS ·
+favicon 3 MB · hlas ElevenLabs na 4 místech · tree_state v zásadách · přepisy konverzací × slib výmazu · 30denní plýtvání bez data ·
+pokyny k mrtvému is-grammar-qa · duplicity CLAUDE.md/working-style/paměť (32 → 25 pravidel) · sebrání cizích kusů commitem.
+**Nové stroje z kola 2:** pravidla při dotyku (+ kontrola proti kánonu po zprávě ownera, + pasti v příkazech) · pre-commit „sdílené docy jen
+přes commit_vlastni“ · záloha a hledání konverzací + výmaz · maskování jmen ve vzorcích · neověřené tvrzení ve zprávě · check-docs na
+mrtvý příkaz · smoke ㊲ ㊳ ㊴. **Kolo 3** (KUKY 2026-10-10: „pojedeme znova, dokud všechno nevychytáme“): napřed části, které se od kola 2
+měnily (git log), a nové typy: soulad mezi mechanismy (hook × hook, kontrola × kontrola), co stroje propouštějí (protipříklady naostro).
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
