@@ -5,16 +5,15 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from "npm:@supabase/supabase-js@2.117.3"
-import { logVoice, fetchQuota } from "../_shared/voice_usage.ts"
+import { logVoice, fetchQuota, saveQuota, brzdaHlasu } from "../_shared/voice_usage.ts"
 // ID hlasu, modely a nastavení hlasu: JEDINÉ místo je _shared/el_voice.ts (2026-10-11) — dřív tu stály vlastní kopie včetně
 // nepoužitého ID pro IS s jinou hodnotou (důvod tam).
-import { EL_VOICE_ID, EL_VOICE_SETTINGS, elModel } from "../_shared/el_voice.ts"
+import { EL_VOICE_ID, EL_VOICE_SETTINGS, elModel, kredityHlasu } from "../_shared/el_voice.ts"
 
 const EL_API_KEY     = Deno.env.get('ELEVENLABS_API_KEY')
 const SB_URL       = Deno.env.get('SUPABASE_URL')
 const SB_KEY       = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
-// Bezpečná hladina kvóty ElevenLabs — ZRCADLÍ v2/runar-config.js VOICE_SAFE_SHARE (důvod tam, 2026-10-11); hlídá verify_monthly_limits.js
-const VOICE_SAFE_SHARE = 0.7
+// Brzda kreditů ElevenLabs: brzdaHlasu v _shared/voice_usage.ts (2026-10-11, DECISIONS (48)) — do té doby VOICE_SAFE_SHARE 0,7 tady.
 
 const cors = {
   'Access-Control-Allow-Origin': '*',
@@ -55,14 +54,15 @@ serve(async (req) => {
     const resolvedVoiceId = EL_VOICE_ID       // týž hlas pro oba jazyky — eleven_v3 islandštinu pozná z textu
     const resolvedModel   = elModel(lang)     // rozhoduje server, klientovi se nevěří
 
-    // Bezpečná hladina kvóty (2026-10-11): audio Kolekce bere z téže kvóty jako hlas ve čtení, takže nad VOICE_SAFE_SHARE počítadla EL
-    // se negeneruje ani tady (owner: „hlídat, ať nepřekročíme bezpečnou hladinu“). Stav nezjištěn = pustit (fail open).
+    // Brzda kreditů (2026-10-11, DECISIONS (48)): audio Kolekce bere z téže kvóty jako hlas ve čtení — táž brzda jako elevenlabs-proxy
+    // (převod se smí vyčerpat, dobití ne; pravidlo v _shared/voice_usage.ts). Stav nezjištěn = pustit (fail open).
     const kvota = await fetchQuota(EL_API_KEY)
-    const kUsed = kvota && typeof kvota.character_count === 'number' ? kvota.character_count : null
-    const kLim  = kvota && typeof kvota.character_limit === 'number' ? kvota.character_limit : null
-    if (kUsed !== null && kLim && kUsed + text.length > kLim * VOICE_SAFE_SHARE)
-      return new Response(JSON.stringify({ error: 'voice_quota_rest', used: kUsed, safe: Math.round(kLim * VOICE_SAFE_SHARE) }),
+    const brzda = brzdaHlasu(kvota, kredityHlasu(resolvedModel, text.length))
+    if (!brzda.pustit) {
+      await saveQuota(createClient(SB_URL, SB_KEY), kvota!, 'brake')   // každé zastavení brzdou = snímek (48)
+      return new Response(JSON.stringify({ error: 'voice_quota_rest', used: brzda.spotreba, safe: brzda.hladina }),
         { status: 429, headers: { ...cors, 'Content-Type': 'application/json' } })
+    }
 
     // 1. Generuj audio přes ElevenLabs
     const elRes = await fetch(

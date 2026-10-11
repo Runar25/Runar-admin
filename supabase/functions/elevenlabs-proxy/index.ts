@@ -5,9 +5,9 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.117.3";
-import { logVoice, weeklyQuota, fetchQuota } from "../_shared/voice_usage.ts";
+import { logVoice, denniSnimek, fetchQuota, saveQuota, brzdaHlasu } from "../_shared/voice_usage.ts";
 // ID hlasu, modely a nastavení hlasu: JEDINÉ místo je _shared/el_voice.ts (2026-10-11) — dřív tu stály vlastní kopie (důvod tam).
-import { EL_VOICE_ID, EL_VOICE_SETTINGS, elModel } from "../_shared/el_voice.ts";
+import { EL_VOICE_ID, EL_VOICE_SETTINGS, elModel, kredityHlasu } from "../_shared/el_voice.ts";
 
 const EL_API_KEY     = Deno.env.get("ELEVENLABS_API_KEY");
 
@@ -17,10 +17,10 @@ const EL_API_KEY     = Deno.env.get("ELEVENLABS_API_KEY");
 // drzel JEN rate limit 5/minutu — tedy zadny mesicni strop vubec a premium ucet mohl ozvucit
 // vsech 75 ctení.
 const VOICE_MONTHLY_LIMIT = 5;
-// Testeři (is_tester) 15 hlasů měsíčně a bezpečná hladina kvóty ElevenLabs — ZRCADLÍ v2/runar-config.js VOICE_MONTHLY_LIMIT_TESTER
-// a VOICE_SAFE_SHARE (důvod tam; owner 2026-10-11, BACKLOG část 43). Shodu hlídá scripts/verify_monthly_limits.js.
+// Testeři (is_tester) 15 hlasů měsíčně — ZRCADLÍ v2/runar-config.js VOICE_MONTHLY_LIMIT_TESTER (důvod tam; owner 2026-10-11, BACKLOG
+// část 43). Shodu hlídá scripts/verify_monthly_limits.js. Hladinu kvóty VOICE_SAFE_SHARE 2026-10-11 nahradila brzda kreditů
+// (brzdaHlasu v _shared/voice_usage.ts, DECISIONS (48)).
 const VOICE_MONTHLY_LIMIT_TESTER = 15;
-const VOICE_SAFE_SHARE = 0.7;
 function monthKey(d = new Date()): string { return d.toISOString().slice(0, 7); }
 
 const cors = {
@@ -89,23 +89,20 @@ serve(async (req) => {
       return json({ error: "voice_monthly_limit", used: vUsed, limit }, 429);
     }
 
-    // ── Bezpečná hladina kvóty ElevenLabs (2026-10-11, VOICE_SAFE_SHARE) ──
-    // Podle JEJICH počítadla, které vidí i audio Kolekce a pokusy na webu EL, ne jen naši evidenci. Selže-li dotaz na stav, hlas se
-    // pustí (fail open): osobní strop výš platí dál a jeden hlas kvótu nepřetáhne.
-    const kvota = await fetchQuota(EL_API_KEY);
-    const kUsed = kvota && typeof kvota.character_count === "number" ? kvota.character_count : null;
-    const kLim  = kvota && typeof kvota.character_limit === "number" ? kvota.character_limit : null;
-    if (kUsed !== null && kLim) {
-      if (kUsed + text.length > kLim * VOICE_SAFE_SHARE) {
-        console.warn(`voice safe level reached: ${kUsed} + ${text.length} > ${Math.round(kLim * VOICE_SAFE_SHARE)}`);
-        return json({ error: "voice_quota_rest", used: kUsed, safe: Math.round(kLim * VOICE_SAFE_SHARE) }, 429);
-      }
-    } else {
-      console.error("ElevenLabs quota unknown — allowing voice (safe level not checked)");
-    }
-
-    // lang determines model — NEVER trust frontend for voice/model selection
+    // lang determines model — NEVER trust frontend for voice/model selection. Model je potřeba už pro brzdu (kredity na znak).
     const resolvedModel = elModel(lang);
+
+    // ── Brzda kreditů ElevenLabs (2026-10-11, DECISIONS (48): převod se smí vyčerpat, dobití ne) ──
+    // Podle JEJICH počítadla (vidí i audio Kolekce a pokusy na webu EL), v kreditech. Pravidlo a důvod: brzdaHlasu v _shared/voice_usage.ts.
+    // Stav nezjištěn → pustit (fail open); osobní strop výš platí dál.
+    const kvota = await fetchQuota(EL_API_KEY);
+    const brzda = brzdaHlasu(kvota, kredityHlasu(resolvedModel, text.length));
+    if (!brzda.pustit) {
+      console.warn(`voice brake: ${brzda.spotreba} + ${brzda.novych} > ${brzda.hladina}`);
+      await saveQuota(sb(), kvota!, "brake");   // každé zastavení brzdou = snímek — owner to musí vidět (48)
+      return json({ error: "voice_quota_rest", used: brzda.spotreba, safe: brzda.hladina }, 429);
+    }
+    if (brzda.hladina === null) console.error("ElevenLabs quota unknown — allowing voice (brake not checked)");
 
     // ── Call ElevenLabs ──
     const elRes = await fetch(
@@ -136,10 +133,10 @@ serve(async (req) => {
       .update({ voice_month_key: vKey, voice_month_count: vUsed + 1 }).eq("id", userId);
 
     // Evidence hlasu (2026-09-25, handoff CODE-read): znaky × model × jazyk × uživatel — bez ní nejde hlas rozdělit na
-    // admin / tester / uživatel ani ocenit podle modelu. Plus nejvýš jednou za 7 dní snímek předplatného EL (trend spotřeby).
-    // Obojí jen loguje chyby, hlas už se ozval. Tabulky: sql/2026-09-25_voice_usage.sql.
+    // admin / tester / uživatel ani ocenit podle modelu. Plus nejvýš jednou denně snímek stavu EL (od 2026-10-11, do té doby týdně —
+    // DECISIONS (48), owner to musí vidět); uloží se stav, který proxy přečetla kvůli brzdě. Obojí jen loguje chyby, hlas už se ozval.
     await logVoice(sb(), { user_id: userId, source: "dynamic", lang: lang === "is" ? "is" : "en", model: resolvedModel, chars: text.length });
-    await weeklyQuota(sb(), EL_API_KEY);
+    await denniSnimek(sb(), kvota);
 
     // Convert to base64
     const buf   = await elRes.arrayBuffer();

@@ -76,20 +76,61 @@ if (elHlas && !(/const limit = vprof\?\.is_tester \? VOICE_MONTHLY_LIMIT_TESTER 
 } else if (elHlas) {
   console.log('OK    hlas: strop (tester / ostatni) se v proxy opravdu porovnava (neni to mrtva konstanta)');
 }
-// Testeri 15 a bezpecna hladina kvoty (2026-10-11): tataz trida kopie — config (zdroj) × elevenlabs-proxy (× elevenlabs-static u hladiny).
+// Testeri 15 (2026-10-11): tataz trida kopie — config (zdroj) × elevenlabs-proxy. Brzda kreditu ElevenLabs (od 2026-10-11 misto hladiny
+// VOICE_SAFE_SHARE) zije jen v _shared/voice_usage.ts — hlida se nize, ze ji obe funkce volaji a ze dela, co owner rozhodl (48).
 {
   const elStatic = fs.readFileSync(R + 'supabase/functions/elevenlabs-static/index.ts', 'utf8');
   const cT = (cfg.match(/^const VOICE_MONTHLY_LIMIT_TESTER\s*=\s*(\d+)/m) || [])[1];
   const pT = (elProxy.match(/^const VOICE_MONTHLY_LIMIT_TESTER\s*=\s*(\d+)/m) || [])[1];
   if (!cT || !pT || cT !== pT) { fail++; console.log('FAIL  hlas testera: config ' + cT + ' × proxy ' + pT); }
   else console.log('OK    hlas testera: ' + cT + ' za mesic (config == proxy)');
-  const sh = (s) => (s.match(/^const VOICE_SAFE_SHARE\s*=\s*([\d.]+)/m) || [])[1];
-  const cS = sh(cfg), pS = sh(elProxy), sS = sh(elStatic);
-  if (!cS || cS !== pS || cS !== sS) { fail++; console.log('FAIL  bezpecna hladina: config ' + cS + ' × proxy ' + pS + ' × static ' + sS); }
-  // Hleda se samo POROVNANI — `kLim * VOICE_SAFE_SHARE` stoji i ve vypisu do logu, takze vypnuta podminka by prosla (utok 2026-10-11).
-  else if (!/kUsed \+ text\.length > kLim \* VOICE_SAFE_SHARE/.test(elProxy) || !/kUsed \+ text\.length > kLim \* VOICE_SAFE_SHARE/.test(elStatic)) {
-    fail++; console.log('FAIL  bezpecna hladina: VOICE_SAFE_SHARE je deklarovana, ale proxy/static s ni neporovnava');
-  } else console.log('OK    bezpecna hladina kvoty: ' + cS + ' (config == proxy == static, obe porovnavaji)');
+  // Brzda kreditu (2026-10-11, DECISIONS (48): prevod se smi vycerpat, dobiti ne; bez prevodu sama 30 000 tarifu). Hlida se:
+  // (a) VOICE_SAFE_SHARE nikde nezustala, (b) obe funkce brzdu volaji a podle ni vraceji (mrtva brzda by prosla zelene),
+  // (c) brzda na znamych vstupech dela, co owner rozhodl — spousti se doslova jeji kod z _shared (seed-and-assert §19, ne vlastni opis),
+  // (d) oba modely appky maji kredity na znak a sedi se sazbou EL_PRECERPANI ve stats.js (kredit = $0.0002).
+  const shared = fs.readFileSync(R + 'supabase/functions/_shared/voice_usage.ts', 'utf8');
+  const elVoice = fs.readFileSync(R + 'supabase/functions/_shared/el_voice.ts', 'utf8');
+  for (const [jm, s] of [['config', cfg], ['proxy', elProxy], ['static', elStatic]]) {
+    if (/^const VOICE_SAFE_SHARE/m.test(s)) { fail++; console.log('FAIL  brzda: VOICE_SAFE_SHARE zustala v ' + jm + ' (nahradila ji brzdaHlasu)'); }
+  }
+  for (const [jm, s] of [['proxy', elProxy], ['static', elStatic]]) {
+    if (!/const brzda = brzdaHlasu\(kvota, kredityHlasu\(resolvedModel, text\.length\)\)/.test(s) || !/if \(!brzda\.pustit\)/.test(s)) {
+      fail++; console.log('FAIL  brzda: ' + jm + ' ji nevola nebo podle ni nevraci');
+    }
+  }
+  const fnSrc = (shared.match(/export function brzdaHlasu\([\s\S]*?\n\}/) || [])[0];
+  const numSrc = (shared.match(/^const num = .*$/m) || [])[0];
+  const dob = Number((shared.match(/^export const EL_DOBITI_KREDITY = (\d+);/m) || [])[1]);
+  if (!fnSrc || !numSrc || !(dob > 0)) { fail++; console.log('FAIL  brzda: brzdaHlasu / num / EL_DOBITI_KREDITY nenalezeny v _shared/voice_usage.ts'); }
+  else {
+    const js = (numSrc + '\n' + fnSrc).replace(/export /g, '').replace(/:\s*(unknown|any|number)\b/g, '');
+    const brzdaHlasu = new Function('EL_DOBITI_KREDITY', js + '\nreturn brzdaHlasu;')(dob);
+    const lim = 30000 + 60000 + dob;   // tarif + prevod + dobiti → hladina 90 000
+    const pripady = [
+      ['prevod se smi cerpat', { character_count: 80000, character_limit: lim }, 200, true],
+      ['presne na hladine pusti', { character_count: 89800, character_limit: lim }, 200, true],
+      ['do dobiti ne', { character_count: 89801, character_limit: lim }, 200, false],
+      ['bez prevodu jen tarif', { character_count: 29900, character_limit: 30000 + dob }, 200, false],
+      ['bez prevodu pod tarifem pusti', { character_count: 29000, character_limit: 30000 + dob }, 200, true],
+      ['neznamy stav pusti (fail open)', null, 200, true],
+      ['chybi limit pusti (fail open)', { character_count: 5 }, 200, true],
+    ];
+    let zle = 0;
+    for (const [co, raw, nov, ceka] of pripady) {
+      const v = brzdaHlasu(raw, nov);
+      if (v.pustit !== ceka) { zle++; fail++; console.log('FAIL  brzda: ' + co + ' -> pustit=' + v.pustit + ', ceka se ' + ceka); }
+    }
+    if (!zle) console.log('OK    brzda kreditu: ' + pripady.length + ' stavu (prevod ano, dobiti ne, bez prevodu jen tarif, neznamy stav pusti); dobiti ' + dob);
+  }
+  const usd = fs.readFileSync(R + 'scripts/utils/stats.js', 'utf8').match(/const EL_PRECERPANI = (\{[^}]*\})/);
+  const sazba = usd ? JSON.parse(usd[1].replace(/'/g, '"')) : {};
+  for (const jmM of ['EL_MODEL_EN', 'EL_MODEL_IS']) {
+    const m = (elVoice.match(new RegExp('export const ' + jmM + ' = "([^"]+)"')) || [])[1];
+    const k = m ? (elVoice.match(new RegExp('\\b' + m + ':\\s*([\\d.]+)')) || [])[1] : null;
+    if (!m || !k) { fail++; console.log('FAIL  kredity na znak: model ' + (m || jmM) + ' nema sazbu v EL_KREDITY_NA_ZNAK (pocital by se 1 kredit na znak)'); }
+    else if (Math.abs(Number(k) * 0.2 - (sazba[m] || 0)) > 1e-9) { fail++; console.log('FAIL  kredity na znak: ' + m + ' ' + k + ' kreditu × $0.0002 ≠ EL_PRECERPANI ' + sazba[m] + ' $/1000 zn.'); }
+    else console.log('OK    kredity na znak: ' + m + ' ' + k + ' (= $' + sazba[m] + ' / 1000 zn. ve stats.js)');
+  }
 }
 
 // ── strop ROZBORU JMENA (2026-09-12): tataz trida kopie ──────────────────────

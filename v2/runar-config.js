@@ -77,12 +77,9 @@ const VOICE_MONTHLY_LIMIT = 5;
 // BACKLOG část 43): „máme 5 testerů, tak jim dejme 15 hlasů Rúnara… ale budeme hlídat, ať nepřekročíme bezpečnou hladinu, třeba 120
 // hlasů.“ ZRCADLÍ elevenlabs-proxy (vynucuje); shodu hlídá smoke ⑨ (verify_monthly_limits.js).
 const VOICE_MONTHLY_LIMIT_TESTER = 15;
-// Bezpečná hladina kvóty ElevenLabs pro VEŠKERÝ hlas (čtení, Kolekce, admin): nad tímhle podílem počítadla EL se nový hlas nevygeneruje.
-// ⚠️ Oprava 2026-10-11: počítadlo EL je v KREDITECH, ne ve znacích (1 kredit = $0.0002; v2/v3 = 0,4 kreditu na znak — doloženo proti
-// přehledu účtu ElevenLabs). Do té doby tu stálo „0,7 ≈ 120 hlasů po ~600 znacích“; ve skutečnosti 0,7 z limitu 103 807 kreditů
-// ≈ 180 000 znaků ≈ 430 single. Hladina tedy chrání zůstatek účtu, ne počet hlasů. Proxy navíc přičítá k kreditům znaky (nový hlas
-// počítá 2,5× — opatrně, ale nepřesně) → RUNAR_BACKLOG, s příštím nasazením hlasu. ZRCADLÍ elevenlabs-proxy a elevenlabs-static (smoke ⑨).
-const VOICE_SAFE_SHARE = 0.7;
+// Hladina kvóty ElevenLabs (VOICE_SAFE_SHARE 0,7) tu byla do 2026-10-11 — nahradila ji brzda kreditů (převod se smí vyčerpat, dobití ne,
+// DECISIONS (48)). Žije jen na serveru (brzdaHlasu v supabase/functions/_shared/voice_usage.ts), klient ji nepotřebuje — stav ukazuje
+// záložka VOICE ve shrine z edge funkce voice-usage.
 
 // Rozbor jmena od modelu: prvni rozbor + JEDNO precteni po zmene severskeho jmena
 // (KUKY 2026-09-12: dve kolonky na jmena). Vynucuje claude-proxy (ma ZRCADLO); tady je,
