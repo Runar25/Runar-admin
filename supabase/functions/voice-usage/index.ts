@@ -9,7 +9,8 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.117.3";
-import { fetchQuota, saveQuota } from "../_shared/voice_usage.ts";
+import { fetchQuota, saveQuota, EL_DOBITI_KREDITY, EL_TARIF_KREDITY } from "../_shared/voice_usage.ts";
+import { kredityHlasu } from "../_shared/el_voice.ts";
 
 // Kopie seznamu adminů (další: v2/runar-config.js a ostatní edge funkce). Shodu hlídá smoke ㉪ (scripts/verify_admin_emails.js).
 const ADMIN_EMAILS = ["kukula@agndofa.is", "info@agndofa.is"];
@@ -45,10 +46,25 @@ serve(async (req) => {
   const since = nextReset ? new Date(nextReset) : new Date(Date.now() - 30 * 24 * 3600 * 1000);
   if (nextReset) since.setUTCMonth(since.getUTCMonth() - 1);
 
-  // Naše evidence za období, rozdělená podle skupiny a modelu. Chyba evidence nesmí shodit živý stav z EL.
-  let byGroup: Record<string, { chars: number; n: number }> = {};
-  let byModel: Record<string, { chars: number; n: number }> = {};
-  let logged = { chars: 0, n: 0 };
+  // Kredity (2026-10-11, DECISIONS (43), (48)): počítadlo EL je v KREDITECH. Rozpad limitu na tarif / převod / dobití a hladina brzdy
+  // (brzdaHlasu v _shared/voice_usage.ts: limit − dobití). Owner: „potřebuju to hlídat!“
+  const cc = typeof raw.character_count === "number" ? raw.character_count : null;
+  const cl = typeof raw.character_limit === "number" ? raw.character_limit : null;
+  const tarif = typeof raw.tier === "string" ? (EL_TARIF_KREDITY[raw.tier.toLowerCase()] ?? null) : null;
+  const hladina = cl !== null ? cl - EL_DOBITI_KREDITY : null;
+  const credits = {
+    used: cc, limit: cl, plan: tarif, topup: EL_DOBITI_KREDITY,
+    rollover: cl !== null && tarif !== null ? Math.max(0, cl - tarif - EL_DOBITI_KREDITY) : null,
+    brake_at: hladina, left: hladina !== null && cc !== null ? hladina - cc : null,
+  };
+
+  // Naše evidence za období, rozdělená podle skupiny a modelu, ve znacích i kreditech. Chyba evidence nesmí shodit živý stav z EL.
+  // Skupiny (2026-10-11, owner: „počítáš jen pro těch 5 testerů, jelikož ty další 4 účty jsou naše! moje a Sigrún“): tester = příznak
+  // tester A e-mail na seznamu testerů (allowed_emails, role tester); tým = příznak tester mimo ten seznam (účty ownera a Sigrún na test
+  // slabšího Rune Seekera); admin = ADMIN_EMAILS. Do té doby se účty týmu počítaly mezi testery.
+  let byGroup: Record<string, { chars: number; credits: number; n: number }> = {};
+  let byModel: Record<string, { chars: number; credits: number; n: number }> = {};
+  let logged = { chars: 0, credits: 0, n: 0 };
   try {
     const { data: rows } = await sb.from("voice_usage").select("user_id, chars, model").gte("created_at", since.toISOString());
     const ids = [...new Set((rows ?? []).map((r: any) => r.user_id).filter(Boolean))];
@@ -57,24 +73,33 @@ serve(async (req) => {
       const { data: prof } = await sb.from("user_profiles").select("id, is_tester").in("id", ids);
       (prof ?? []).forEach((p: any) => { if (p.is_tester) testers.add(p.id); });
     }
-    const admins = new Set<string>();
+    const { data: al } = await sb.from("allowed_emails").select("email, role");
+    const naSeznamu = new Set((al ?? []).filter((a: any) => a.role === "tester").map((a: any) => String(a.email || "").toLowerCase()));
+    const admins = new Set<string>(), email = new Map<string, string>();
     const { data: lu } = await sb.auth.admin.listUsers({ page: 1, perPage: 1000 });
-    (lu?.users ?? []).forEach((u: any) => { if (u.email && ADMIN_EMAILS.includes(u.email.toLowerCase())) admins.add(u.id); });
+    (lu?.users ?? []).forEach((u: any) => {
+      const e = String(u.email || "").toLowerCase();
+      email.set(u.id, e);
+      if (e && ADMIN_EMAILS.includes(e)) admins.add(u.id);
+    });
     for (const r of (rows ?? []) as any[]) {
-      const g = !r.user_id ? "unknown" : admins.has(r.user_id) ? "admin" : testers.has(r.user_id) ? "tester" : "user";
-      (byGroup[g] ??= { chars: 0, n: 0 }).chars += r.chars; byGroup[g].n++;
-      (byModel[r.model] ??= { chars: 0, n: 0 }).chars += r.chars; byModel[r.model].n++;
-      logged.chars += r.chars; logged.n++;
+      const g = !r.user_id ? "unknown" : admins.has(r.user_id) ? "admin"
+        : testers.has(r.user_id) ? (naSeznamu.has(email.get(r.user_id) || "") ? "tester" : "team") : "user";
+      const k = kredityHlasu(r.model, r.chars);
+      const G = (byGroup[g] ??= { chars: 0, credits: 0, n: 0 }); G.chars += r.chars; G.credits += k; G.n++;
+      const M = (byModel[r.model] ??= { chars: 0, credits: 0, n: 0 }); M.chars += r.chars; M.credits += k; M.n++;
+      logged.chars += r.chars; logged.credits += k; logged.n++;
     }
   } catch (e) {
     console.error("voice-usage aggregate:", (e as Error).message);
   }
   const { data: snaps } = await sb.from("voice_quota_snapshots")
-    .select("taken_at, source, character_count, character_limit").order("taken_at", { ascending: false }).limit(10);
+    .select("taken_at, source, character_count, character_limit").order("taken_at", { ascending: false }).limit(14);
 
   return json({
     tier: raw.tier ?? null, status: raw.status ?? null,
     character_count: raw.character_count ?? null, character_limit: raw.character_limit ?? null,
+    credits,
     next_reset_at: nextReset ? nextReset.toISOString() : null,
     period_since: since.toISOString(),
     logged, by_group: byGroup, by_model: byModel,

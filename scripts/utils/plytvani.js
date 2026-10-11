@@ -8,6 +8,9 @@
 //   4. cache promptu — čtení z cache je levné; ZÁPIS do cache (Claude) se platí dráž než běžný vstup a vyplatí se, jen když se z cache
 //      pak čte (zhruba aspoň 0,3 × zapsaného) — jinak je to čistá přirážka
 //   5. hlas: počet a znaky; hlas bez uloženého čtení v předchozích 15 min (čtení „pro někoho“ se neukládá — nebo volání mimo appku, #2b)
+//   6. kredity ElevenLabs (2026-10-11, DECISIONS (48), owner „potřebuju to hlídat!“): z posledního snímku stavu účtu spotřeba v cyklu,
+//      hladina brzdy (limit − dobití), zbytek do ní, převod; ⚠ když převod nevydrží další cyklus, když brzda zastavila hlas, když hladina
+//      do resetu nevystačí a když je snímek starší než 2 dny. Konstanty (dobití, kredity tarifu) čte z _shared/voice_usage.ts — jedno místo.
 // Čísla jsou počty a podíly; ceny počítá stats.js (jedno místo cen, §20).
 //   node scripts/utils/plytvani.js                    # posledních 30 dní
 //   node scripts/utils/plytvani.js --dny 7
@@ -72,6 +75,36 @@ log('  dvojí generování (tentýž člověk, runa a jazyk do 20 s): ' + dvoj.n
 log('  hlas: ' + hlas.n + ' × (' + hlas.znaku + ' znaků, ' + hlas.lidi + ' lidí) · bez uloženého čtení v předchozích 15 min: ' + hlas.bez_cteni +
   (+hlas.bez_cteni ? ' (může být čtení „pro někoho“ — neukládá se; jinak volání mimo appku, #2b)' : ''));
 
+// ── 6. kredity ElevenLabs a brzda (2026-10-11, DECISIONS (48)) ──
+const SH = fs.readFileSync(path.join(ROOT, 'supabase', 'functions', '_shared', 'voice_usage.ts'), 'utf8');
+const DOBITI = Number((SH.match(/^export const EL_DOBITI_KREDITY = (\d+);/m) || [])[1]);
+const TARIFY = {};
+for (const [, k, v] of ((SH.match(/EL_TARIF_KREDITY[^{]*\{([^}]*)\}/) || [])[1] || '').matchAll(/(\w+)\s*:\s*(\d+)/g)) TARIFY[k] = Number(v);
+const sn = q("select taken_at, source, tier, character_count, character_limit, next_reset_at, " +
+  "(select count(*) from public.voice_quota_snapshots b where b.source = 'brake' and b.taken_at >= now() - interval '3 days') brzda_3d, " +
+  "(select max(taken_at) from public.voice_quota_snapshots b where b.source = 'brake') brzda_kdy " +
+  "from public.voice_quota_snapshots order by taken_at desc limit 1;")[0] || null;
+const el = { varovani: [], radek: null };
+if (!sn) el.varovani.push('kredity ElevenLabs: žádný snímek stavu účtu (voice_quota_snapshots)');
+else {
+  const used = Number(sn.character_count), lim = Number(sn.character_limit), tarif = TARIFY[String(sn.tier || '').toLowerCase()];
+  const hladina = lim - DOBITI, zbyva = hladina - used, prevod = tarif != null ? Math.max(0, lim - tarif - DOBITI) : null;
+  const reset = sn.next_reset_at ? new Date(sn.next_reset_at) : null, zacatek = reset ? new Date(reset) : null;
+  if (zacatek) zacatek.setUTCMonth(zacatek.getUTCMonth() - 1);
+  const stari = (Date.now() - Date.parse(sn.taken_at)) / 864e5;
+  // Odhad spotřeby celého cyklu z dosavadní (lineárně od začátku cyklu ke snímku). Méně než den dat = bez odhadu.
+  const ubehlo = zacatek ? (Date.parse(sn.taken_at) - zacatek.getTime()) / 864e5 : 0, cyklus = zacatek ? (reset - zacatek) / 864e5 : 30;
+  const odhad = ubehlo >= 1 ? Math.round(used / ubehlo * cyklus) : null;
+  el.radek = 'hlas EL (snímek ' + String(sn.taken_at).slice(0, 10) + ', ' + sn.source + ', ' + sn.tier + '): v cyklu ' + used + ' kreditů · brzda na ' + hladina +
+    ' (limit ' + lim + ' − dobití ' + DOBITI + ') · zbývá ' + zbyva + (prevod != null ? ' · převod ' + prevod + ' (tarif ' + tarif + ')' : '') +
+    (odhad != null ? ' · odhad cyklu ~' + odhad : '') + ' · reset ' + String(sn.next_reset_at).slice(0, 10);
+  if (stari > 2) el.varovani.push('kredity ElevenLabs: snímek stavu je ' + Math.floor(stari) + ' dní starý (' + String(sn.taken_at).slice(0, 10) + ') — stav brzdy nevíme jistě; otevři VOICE ve shrine');
+  if (+sn.brzda_3d > 0) el.varovani.push('brzda kreditů zastavila hlas ' + sn.brzda_3d + '× za 3 dny' + dat(sn.brzda_kdy));
+  if (odhad != null && zbyva < odhad - used) el.varovani.push('kredity ElevenLabs: podle dosavadní spotřeby (~' + odhad + ' za cyklus) nevystačí hladina brzdy do resetu ' + String(sn.next_reset_at).slice(0, 10));
+  if (prevod != null && odhad != null && prevod < odhad) el.varovani.push('převod kreditů ElevenLabs (' + prevod + ') nevydrží další cyklus (~' + odhad + ') — pak brzda sama spadne na tarif ' + tarif);
+}
+if (el.radek) log('  ' + el.radek);
+
 const varovani = [];
 const jm = (f) => m.filter(f).map((r) => r.model).join(', ');
 // „naposledy“ (2026-10-11): ať je vidět, jestli vzorec trvá, nebo ho oprava už zastavila — okno 30 dní nese i historii.
@@ -82,6 +115,8 @@ if (+dvoj.n > 0) varovani.push('dvojí generování ' + dvoj.n + '× — souběh
 if (jm((r) => +r.premysleni > 0.3 * +r.vystup)) varovani.push('přemýšlení nad 30 % výstupu (' + jm((r) => +r.premysleni > 0.3 * +r.vystup) + ') — platí se, čtenář ho nevidí' + kdy((r) => +r.premysleni > 0.3 * +r.vystup, 'prem_kdy'));
 if (jm((r) => +r.cache_zapis > 0 && +r.cache < 0.3 * +r.cache_zapis)) varovani.push('zápis do cache se nevrací (' + jm((r) => +r.cache_zapis > 0 && +r.cache < 0.3 * +r.cache_zapis) + ') — přirážka za zápis bez čtení z cache' + kdy((r) => +r.cache_zapis > 0 && +r.cache < 0.3 * +r.cache_zapis, 'cache_kdy'));
 if (+hlas.bez_cteni > 0) varovani.push('hlas bez uloženého čtení ' + hlas.bez_cteni + '× — ověř: čtení „pro někoho“, nebo volání mimo appku (#2b)' + dat(hlas.bez_cteni_kdy));
+varovani.push(...el.varovani);
 if (KRATCE) console.log('  ' + celkem + ' volání modelu · ' + hlas.n + ' × hlas · dvojí generování ' + dvoj.n);
+if (KRATCE && el.radek) console.log('  ' + el.radek);
 console.log((KRATCE ? '' : '\n') + (varovani.length ? '  ⚠ ' + varovani.join('\n  ⚠ ') : '  ✓ žádný vzorec plýtvání za období'));
 log('  (ceny: node scripts/utils/stats.js · podrobně: node scripts/utils/plytvani.js --dny N)\n');

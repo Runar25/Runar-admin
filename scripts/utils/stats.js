@@ -129,8 +129,10 @@ const hlasRows = q("select v.source, coalesce(v.lang,'?') lang, v.model, case wh
 const snimek = q('select taken_at, source, tier, status, character_count, character_limit, next_reset_at from public.voice_quota_snapshots order by taken_at desc limit 1;')[0] || null;
 // Naše znaky v AKTUÁLNÍM období EL (od posledního resetu) — k porovnání s čítačem EL: rozdíl = hlas mimo aplikaci
 // (EL web, testy) nebo generování z doby před voice_usage.
-const vObdobiEL = snimek && snimek.next_reset_at ? Number((q("select coalesce(sum(chars),0) c from public.voice_usage where created_at >= timestamptz '"
-  + snimek.next_reset_at + "' - interval '1 month';")[0] || { c: 0 }).c) : null;
+// 2026-10-11 (kontrola CODE-read bod 4): i v kreditech — počítadlo EL je v kreditech (kredit $0.0002 → kredity = znaky × sazba ÷ 0,2).
+const vObdobiEL = snimek && snimek.next_reset_at ? q("select model, coalesce(sum(chars),0) c from public.voice_usage where created_at >= timestamptz '"
+  + snimek.next_reset_at + "' - interval '1 month' group by 1;").reduce((a, r) => ({ znaky: a.znaky + Number(r.c),
+  kredity: a.kredity + Math.round(Number(r.c) * (EL_PRECERPANI[r.model] != null ? EL_PRECERPANI[r.model] : 0.2) / 0.2) }), { znaky: 0, kredity: 0 }) : null;
 const hlas = { podleSkupin: {}, podleModelu: {}, zdroj: {}, n: 0, znaky: 0, snimek, vObdobiEL, neznamy: [] };
 for (const r of hlasRows) {
   const n = Number(r.n), c = Number(r.chars);
@@ -290,9 +292,11 @@ else {
 if (hlas.snimek) {
   const s = hlas.snimek, pouz = Number(s.character_count), lim = Number(s.character_limit), tarif = EL_TARIF[String(s.tier || '').toLowerCase()];
   console.log('  předplatné EL (snímek ' + String(s.taken_at).slice(0, 16) + ', ' + s.source + '): ' + s.tier + (tarif != null ? ' $' + tarif + '/měsíc' : ' (cena tarifu neznámá)')
-    + ' · ' + s.status + ' · ' + pouz + ' z ' + lim + ' znaků (' + Math.round(pouz / (lim || 1) * 100) + ' %) · reset ' + String(s.next_reset_at).slice(0, 10));
-  console.log('  přečerpání: ' + (pouz > lim ? (pouz - lim) + ' znaků nad limit — platí se navíc podle modelu (EL_PRECERPANI)' : '0 — platí se jen předplatné'));
-  if (hlas.vObdobiEL != null) console.log('  z toho zapsáno ve voice_usage od resetu: ' + hlas.vObdobiEL + ' znaků (rozdíl = hlas mimo aplikaci nebo před 2026-09-25; snímek je starší než dnešek)');
+    + ' · ' + s.status + ' · ' + pouz + ' z ' + lim + ' kreditů (' + Math.round(pouz / (lim || 1) * 100) + ' %) · reset ' + String(s.next_reset_at).slice(0, 10));
+  // 2026-10-11 (kontrola CODE-read bod 4): počítadlo EL je v kreditech; „přečerpání… platí se navíc“ pryč — účet ho nemá
+  // (can_extend_character_limit = false, EL po vyčerpání hlas odmítne). Hladinu brzdy, převod a varování ukazuje scripts/utils/plytvani.js.
+  if (hlas.vObdobiEL != null) console.log('  z toho zapsáno ve voice_usage od resetu: ' + hlas.vObdobiEL.znaky + ' znaků ≈ ' + hlas.vObdobiEL.kredity
+    + ' kreditů (rozdíl = hlas mimo aplikaci nebo snímek starší než dnešek)');
 } else console.log('  předplatné EL: zatím žádný snímek (voice_quota_snapshots)');
 console.log('\n  ── cache: jak často přijde čtení včas ' + '─'.repeat(8));
 for (const [l, o] of Object.entries(naklady.odstupy)) if (o.n)
