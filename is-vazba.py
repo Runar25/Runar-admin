@@ -18,6 +18,9 @@ Priklady:
 Recept + zdroje: memory/is-vazba-check.md  (CLAUDE.md §2). Gotcha: islandska pismena
 jdou do URL vzdy jako UTF-8 %.. (resi urllib.parse.quote); doslovne znaky na Windows
 shellu se poslou jako Latin-1 a korpus vrati TISE PRAZDNO.
+Gotcha 2: slovo se SPOJOVNIKEM korpus jako n-gram nevidi — 0x tu NENI doklad proti
+(overeno 2026-10-11: aðili að EES-samningnum, að EES-samningnum i samotne EES-samningnum
+vse 0x, prestoze je to bezna fraze). Takovou frazi over dalsi kontrolou podle CLAUDE.md §2.
 """
 import sys, io, json, urllib.request, urllib.parse
 

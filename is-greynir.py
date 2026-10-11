@@ -17,6 +17,10 @@
 #   · Z001 „Evrópska efnahagssvæðið“ na malé „evrópska“ — korpus má velké 1505× proti 167×;
 #   · P_NT_FsMeðFallstjórn „þar til hún er notuð“ → hennar — „þar til“ je tu spojka „dokud“, ne předložka;
 #   · E001 u slepených buněk tabulky a dlouhých závorek (AES-256; …) — rozdělit na věty a pustit znovu.
+#   · E001 u řetězu kroků se šipkami (Skráðu þig inn → … → INNLEYSA), u popisku tlačítka jako předmětu (ýttu á INNLEYSA), u věty
+#     bez slovesa (Fyrsta dag hvers mánaðar.) a u závorky uprostřed věty (… (sjá persónuverndarstefnuna).) — přepsat do vět se
+#     slovesem (… og innleystu hann · Þeir endurnýjast á fyrsta degi hvers mánaðar · Nánari upplýsingar eru í …); nápověda
+#     2026-10-11: po přepisu 6 ze 6 OK.
 #
 #   python -X utf8 is-greynir.py --text "…"     · jeden text (i víc vět)
 #   python -X utf8 is-greynir.py <soubor>       · text na řádek
