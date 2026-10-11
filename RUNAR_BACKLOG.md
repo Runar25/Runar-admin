@@ -2832,8 +2832,11 @@ v sekci session (příkaz s podpisem i „Commit ÚZCE“) uváděl pathspec com
 `runar-utils.js` dřív než záložku) · brzda hlasu v kódu odpovídá DECISIONS (48) a (52), obě funkce volají `brzdaHlasu` · nasazení = repo (v UTC: `elevenlabs-proxy`/`-static` v38/v17 po 08b1e26,
 `voice-usage` v5 po 74ad59c; pozdější změna `_shared` jen konstanta pro `voice-usage`) · strom v appce jen admin (`renderLivingTree`) ·
 `tree_state` appka neukládá (`TREE_UPDATE` nikdo nevolá) → podmínka (d) z kola 2 platí.
-**Rozpracované (CODE-tune, „hlas ke každému čtení“, DECISIONS (61)):** `_shared/voice_ticket.ts` mimo git, `claude-proxy`,
-`elevenlabs-proxy`, `delete-account` změněné jen ve stromě, migrace `sql/2026-10-11_hlas_ke_cteni.sql` — projít po commitu a nasazení.
+**Hlas ke každému čtení (CODE-tune, 67b507d + opravy, DECISIONS (61)) — projito po commitu, bez nálezu:** lístek pro neuložené čtení
+ověřuje `crypto.subtle.verify` (konstantní čas) a váže uživatele + nonce + text; „jednou“ drží zámek ve `voice_tickets` (unikátní klíč) PŘED
+voláním ElevenLabs (souběžná ťuknutí nezaplatí dvakrát); text uloženého čtení bere server z DB (jen vlastní `user_id`); bucket
+`reading-voice` soukromý, `voice_tickets` RLS bez politik; `delete-account` maže audio po dávkách 100 (nejvýš 200 kol) — moje
+podezření „jen prvních 100“ vyvráceno; zásady o uloženém audiu EN i IS.
 **Opraveno cestou:** pre-push „soubory mimo git“ zastavil push všem kvůli minuty staré migraci CODE-tune → čerstvé (< 2 h) jen varování.
 
 #### Kolo 3 / 4 — protipříklady naostro: kontroly pod útokem (2026-10-11)
