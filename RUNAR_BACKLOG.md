@@ -3647,6 +3647,25 @@ Co dělá CODE, tady NENÍ — tohle je jen to, na co já nedosáhnu.
       (8. 10.) neslo `v564` a popisovalo chybu opravenou ve v564; owner 9. 10. po novém načtení: v pořádku. S testery by to mátlo diagnózu.
       Oprava: verzi zapsat přímo do kódu (pre-commit hook ji při bumpu `sw.js` přepíše i v reporteru) a do hlášení dávat obě.
 
+## Procházka appky jako návštěvník (CODE-read 2026-10-11, produkce v654, EN + IS, desktop i 375 px)
+Prošlo bez vady: úvod, tah runy (výzva k registraci, žádné volání serveru), přepnutí jazyka po tahu (bez okna o kreditu), životní runa
+(výpočet bez serveru), Safn rúna (25 run, 5 odemčených, detail s kamenem a audiem), deník návštěvníka, nápověda, zásady, okno „Where to
+start“ (runa = naše SVG), šířka telefonu (bez vodorovného posunu, mřížka 4 sloupce), konzole bez chyb; islandské věty is-greynir OK.
+- [ ] **Pro CODE-tune — okno „SPEAK AGAIN IN …?“ natvrdo anglicky** (`v2/runar-app.js` ~ř. 393–400, `openLangSwitchModal`; v HTML
+  „1 CREDIT“). Přihlášený, který po čtení přepne jazyk, dostane nadpis, text i obě tlačítka anglicky, i když appku používá islandsky,
+  a text slibuje „uses one credit“ — předplatitel a tester platí jednotkami čtení. Kontroly to propustily: ㉹ hledá češtinu, ㉸ jen
+  větvení `lang === 'is' ?`, anglický text v šabloně `…` nevidí nic → zvážit kontrolu „anglická věta v JS mimo UI_TEXT“.
+- [ ] **Pro CODE-tune — nápověda v islandštině: zaseklá angličtina** (`v2/runar-help.html` ř. 151 „RUNE SEEKER“, 155 „+ READING CARD“,
+  159 a 163 „soon“): statické buňky bez `id`, JS je nepřekládá (Vegfarandi/Ferðalangur se přes `id` překládají). Jména tierů z `TIERS`
+  (§10), karta z `VOCAB`.
+- [ ] **Pro CODE-tune — upozornění „not professional advice“ nečitelné** (`#reader-disclaimer`, `--muted` s průhledností 0,45 na pozadí
+  #0a0c12, písmo 9,6 px): kontrast 2,41 : 1 (pro text se chce aspoň 4,5). Výsledná barva ~#44515f ≈ `--dim`, které §5 na text zakazuje.
+- [ ] **Pro Cowork / ownera — statická čtení v Kolekci tvrdí, co se děje v nitru čtenáře** (Fehu IS: „Það sem þú hefur nært í kyrrðinni
+  er farið að taka rætur… krafturinn sem fer á hreyfingu þegar þú treystir því sem býr innra með þér“) — kánon to Rúnarovi zakazuje
+  (memory `rozkaz-a-studene-cteni-hranice`). Dosud zapsaný jen Dagaz (položka „Statické čtení Dagaz“); projít všech 25.
+- [ ] **Návrh pro design (ne chyba)** — klik návštěvníka na zamčenou runu v Kolekci nedělá nic (`if (!locked) cell.onclick`); výzva
+  nahoře vysvětluje pět odemčených run, ale krátká nápověda po kliknutí by předešla dojmu „nefunguje“.
+
 ## Ověřit naživo, než rozešleš odkaz
 
 - [ ] jedno čtení na přihlášeném účtu — dokáže, že klíče modelu čtení jsou nastavené (sol: `OPENAI_API_KEY`, záložní Claude: `ANTHROPIC_API_KEY`;
