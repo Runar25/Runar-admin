@@ -37,6 +37,6 @@ Bylo-li něco blokované dřív, je to důvod zkusit to **znovu**, ne důvod kon
 
 ⚠️ **Nezapisovat sem, CO zrovna nefunguje.** To je stav, ne pravidlo (§20.4), a zastará dřív, než
 ho někdo přečte — a přečte ho jako „ověřování se dá vynechat". Doloženo týž den: `is-vazba.py`
-i `is-grammar-qa.py` z prostředí CODE **fungují** (obojí toho dne prohnalo osm islandských vět
-a jednu vadnou vazbu chytilo). Kdo ověřit nemůže, **řekne to a označí text jako neověřený** —
+i tehdejší `is-grammar-qa.py` z prostředí CODE **fungovaly** (osm islandských vět, jedna vadná vazba chycena). A sama tahle věta
+pak zastarala: `is-grammar-qa.py` je od 2026-10-10 mrtvé (zaniklo API, CLAUDE.md §2) — přesně proto stav do paměti nepatří. Kdo ověřit nemůže, **řekne to a označí text jako neověřený** —
 ověření pak doplní ten, kdo na nástroje dosáhne. Nikdy „nešlo to, tak jsem to poslal tak."

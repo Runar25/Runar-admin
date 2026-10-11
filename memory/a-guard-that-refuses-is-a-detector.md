@@ -32,5 +32,5 @@ protože jsou v cestě práci, kterou zrovna děláš.
 3. Nález zapiš (§22) a **udělej z něj stálou kontrolu**, jestli to jde
    (`scripts/utils/test_*.js`), ať to nezáleží na tom, jestli se toho místa zas někdo dotkne.
 
-Souvisí: [[break-your-own-work-before-reporting]] · [[fix-or-log-duplicates-and-errors]] ·
+Souvisí: [[break-your-own-work-before-reporting]] · CLAUDE.md §22 ·
 [[one-patch-script-path]] · [[guard-test-the-lifecycle]].

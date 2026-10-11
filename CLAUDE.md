@@ -63,7 +63,7 @@ runar-config.js → runar-runes.js → [reader: runar-names.js → runar-names-r
 
 ### §1 — JS změny = Python skripty
 Edit tool kazí apostrofy `'` → curly quotes → SyntaxError.
-JS soubory: VŽDY přes Python patch skript. CSS + HTML (bez inline JS) + translations.js: Edit tool OK.
+JS soubory: VŽDY přes Python patch skript. CSS + HTML (bez inline JS) + translations.js: Edit tool OK — u translations.js ne na řádku s `\uXXXX` ([[edit-tool-escapes-new-text]]).
 
 **Patch skript = VLASTNÍ gitignored slot session, NIKDY sdílený** (2026-07-21, po přechodu na 3 session,
 dvě v `[tune]`): `scripts/_patch.py` = CODE-tree · `scripts/_patch_tune.py` = CODE-tune ·
@@ -222,7 +222,7 @@ přečte jako pravdu. **Dvě kopie nejsou riziko rozporu; jsou rozpor s odložen
 
 **Zakázaný druh dokumentu: „shrnutí všeho".** Nevlastní žádné téma, jen kopíruje cizí — a proto
 se NEMŮŽE nerozejít, nemá se čeho držet. Takhle umřel `memory/runar-project.md` (sám vygeneroval
-~15 nálezů auditu; 2026-07-18 vyprázdněn na rozcestník). Nový doc musí umět odpovědět: **co vlastní
+~15 nálezů auditu; 2026-07-18 vyprázdněn, zbyl jen důvod). Nový doc musí umět odpovědět: **co vlastní
 ten a žádný jiný?** Neumí-li, nevzniká.
 
 **Při sporu vyhrává PRODUKCE**, pak nejnovější datovaný záznam v `RUNAR_DECISIONS.md`.
@@ -241,7 +241,7 @@ Detail → [[decisions-are-directions-not-locks]].
 KUKY 2026-08-02: *„pokud narazíš na duplikát, chybu, tak budeme opravovat nebo zapsat, ať se nezapomene."*
 Narazíš při práci na **duplikát** (§20) nebo **chybu/bug** — i mimo zadání: buď to **hned oprav** (malé
 + v rozsahu úkolu), nebo **zapiš do `RUNAR_BACKLOG.md`** (příp. spawn_task chip) s dost kontextem, aby
-to šlo vyřešit bez téhle konverzace. Nikdy jen zmínit a nechat být. Detail → [[fix-or-log-duplicates-and-errors]].
+to šlo vyřešit bez téhle konverzace. Nikdy jen zmínit a nechat být. (Do 2026-10-11 tu stál odkaz na paměť, která byla jen kopií tohohle odstavce.)
 
 ### §23 — Nevymýšlej fakta ani lore → zastav a flagni (platí pro VŠECHNY session, Code i Cowork)
 Chybí-li v kánonu 🔒 **fakt** (etymologie, IS gramatika, čísla, DB) nebo 📜 **lore** (Rúnar, mytologie,

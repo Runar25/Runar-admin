@@ -68,7 +68,7 @@ Intake (NENÍ pravda): `docs/inbox/` · Mrtvá (scratch): mimo index.
 - [runar-api-key-file.md](runar-api-key-file.md) — Anthropic klíč bydlí v `~/.claude/runar-api-key.txt`, generátor si ho vezme sám; ownera nežádat
 - [cteni-generuj-tady-ne-pres-api.md](cteni-generuj-tady-ne-pres-api.md) — testovací čtení piš SÁM v konverzaci, ne přes API; prompt dál stav produkční cestou a slepé souzení dělej subagentem
 - [full-path-and-numbered-lists.md](full-path-and-numbered-lists.md) - uplna cesta k souboru + ⛔ VSECHNY body a otazky hlaseni ownerovi CISLOVANE prubezne (odpovida po cislech; tucny nadpis neni cislo)
-- [ask-owner-for-checks-you-cannot-run.md](ask-owner-for-checks-you-cannot-run.md) - co Code sam neoveri (prod DB, prihlasena appka), vyzadat po ownerovi, nededukovat
+- [ask-owner-for-checks-you-cannot-run.md](ask-owner-for-checks-you-cannot-run.md) - co Code sam neoveri (logy edge funkci, prihlasena appka; prod DB umi), napred zkusit, pak vyzadat po ownerovi
 - [dont-invent-fact-critical.md](dont-invent-fact-critical.md) — 🔒 fakt / 📜 lore chybějící v kánonu → zastav a flagni, nikdy nedomýšlej
 - [function-not-ceremony.md](function-not-ceremony.md) — nestavět proces pro uspokojení; nepomůže-li reálně, říct to a vynechat
 - [proceed-dont-ask.md](proceed-dont-ask.md) — dohodnutý plán odjeď celý; neptej se „souhlas?" mezi kroky
@@ -85,7 +85,7 @@ Intake (NENÍ pravda): `docs/inbox/` · Mrtvá (scratch): mimo index.
 - [read-the-check-before-push.md](read-the-check-before-push.md) — pipe do grepu zahodí exit kód; přečti verdikt, teprve pak push
 - [pathspec-nesmi-byt-prazdny.md](pathspec-nesmi-byt-prazdny.md) — pathspec v proměnné z padlého && řetězce = prázdný → commit vezme CELÝ index (i cizí staged)
 - [napred-dohledej-co-uz-je.md](napred-dohledej-co-uz-je.md) — před měřením/novou položkou/nástrojem prohledej PRICING/DECISIONS/BACKLOG a git log ostatních lane; paralelní session to často už udělaly
-- [parallel-code-sessions-collision.md](parallel-code-sessions-collision.md) — víc Code session ve sdíleném stromě; pathspec commit, patch do scratchpadu, status před sáhnutím
+- [parallel-code-sessions-collision.md](parallel-code-sessions-collision.md) — víc Code session ve sdíleném stromě; pathspec commit, sdílený soubor přes commit_vlastni.py, status před sáhnutím
 - [test-vstup-jako-v-produkci.md](test-vstup-jako-v-produkci.md) — test formulace přes API: napřed vytiskni jeden hotový prompt a porovnej s produkcí ([object Object] a ✦ z DB daly 2× týž den falešný vstup)
 - [prompt-directive-makes-model-copy.md](prompt-directive-makes-model-copy.md) — "pouzij tenhle text" v promptu = model ho opise doslova; ramuj jako zdroj (12 % -> 56 %, p=0,002)
 - [falsify-by-reversing-the-lever.md](falsify-by-reversing-the-lever.md) — hypotezu "pridej X" testuj tak, ze X jeste UBERES; obracena predpoved musi platit (CLAUDE.md §25)
@@ -118,7 +118,6 @@ Intake (NENÍ pravda): `docs/inbox/` · Mrtvá (scratch): mimo index.
 - [cheapest-deciding-measurement-first.md](cheapest-deciding-measurement-first.md) — ⛔ 2026-09-24 3× spálený limit ownera: obsah dělám SÁM, agenti max 3–5 a víc jen s odhadem tokenů a ownerovým ano; API nad ~50 volání jen s jeho ano (2026-10-06: 480 bez ptaní); před KAŽDÝM měřením záměr + předpoklad + proč tolik, vždy malý vzorek (2026-10-07); spadlý běh nepouštět znovu bez ptaní
 - [work-efficiently-ask-if-simpler.md](work-efficiently-ask-if-simpler.md) — než spustíš těžký nástroj, zeptej se, jestli to nejde jednodušeji; dlouhý běh protlačí compactem a zabije úkol
 - [decisions-are-directions-not-locks.md](decisions-are-directions-not-locks.md) — rozhodnutí = směr + varování při rozporu, ne zámek navždy
-- [fix-or-log-duplicates-and-errors.md](fix-or-log-duplicates-and-errors.md) — duplikát/chyba → hned opravit, nebo zapsat do BACKLOGu; netiše přejít
 - [find-a-gap-close-it-now.md](find-a-gap-close-it-now.md) — najdeš díru → zavři ji v témže tahu; na vylepšení vlastních kontrol a paměti souhlas nepotřebuješ
 - [fix-substance-not-shape.md](fix-substance-not-shape.md) — security/metering: oprav podstatu ne tvar; ověř, že díra nejde obejít jinudy (2× stejná chyba)
 - [copy-always-in-runar-voice.md](copy-always-in-runar-voice.md) — veškerá copy VŽDY hlasem Rúnara (přečti charakter), nikdy slepé generické vymýšlení; spíš stručně

@@ -16,7 +16,7 @@ repo mezitím měnily dvě další session.
 **How to apply:** Před měřením, novou položkou, novým nástrojem nebo odpovědí „co zbývá": (1) `git log --since=<2 dny> --oneline`
 všech lane; (2) grep tématu v `RUNAR_PRICING.md`, `RUNAR_DECISIONS.md`, `RUNAR_BACKLOG.md`, `scripts/`; (3) teprve pak dělej —
 a jen to, co tam chybí. CLAUDE.md to říká („Před prací si přečti git log druhé lane"); tohle je připomínka, že to platí i
-uprostřed dlouhé session, ne jen na začátku. Souvisí [[parallel-code-sessions-collision]], [[fix-or-log-duplicates-and-errors]].
+uprostřed dlouhé session, ne jen na začátku. Souvisí [[parallel-code-sessions-collision]], CLAUDE.md §22.
 
 ⛔ **Než navrhneš pokus přes API: napřed data, která už máme** (KUKY 2026-10-07: *„já ti teď řekl zkus tohle, což bylo prakticky
 zadarmo, ale ty za nějakou dobu stejně budeš hledat pokus někde jinde na API, i když ho máš přímo pod nosem“*). Navrhl jsem 18 volání

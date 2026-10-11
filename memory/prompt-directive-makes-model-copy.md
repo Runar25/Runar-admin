@@ -32,9 +32,7 @@ ať v ní stojí cokoli (měřeno 2/2). Tady navíc: i pouhá výzva „použij"
 
 **Co to NENÍ: délka promptu (vyvráceno 2026-08-14).** Nabízelo se, že islandský prompt
 opisuje, protože zhubl. Test byl obrácený a levný: je-li viník délka, **další zkrácení musí
-opisování zvednout**. Zkrátil jsem IS čtecí prompt o 509 znaků (−17 %) → 32 % **→ 24 %**,
-Fisher **p = 0,75**, navíc opačným směrem. A EN má skoro stejně dlouhý čtecí prompt
-(321 vs 307 slov) i **kratší** systémový (681 vs 781), přesto opisuje 9 % proti 32 %.
+opisování zvednout**. Výsledek (opisování kleslo, ne stouplo) a čísla → CLAUDE.md §25. Navíc EN (kratší systémový prompt) opisuje míň než IS.
 
 Metoda, kterou to padlo, má vlastní záznam → [[falsify-by-reversing-the-lever]].
 

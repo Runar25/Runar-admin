@@ -32,7 +32,7 @@ generování dávek, které se pak stejně vyhodnocovaly jen zběžně.
 heather, yellow birch leaf, September night* — prompt nic z toho nenese. Owner se na tyhle výrazy opakovaně ptal. **Do zadání
 pisatele vždy: „You do not know today's date or the season."** Jinak test měří artefakt, ne Rúnara.
 
-⭐ **VÝJIMKA (KUKY 2026-09-19: „ano"): testy PODEZŘELÝCH vstupů jedou na PRODUKČNÍM modelu přes API** (`claude-opus-4-8`,
+⭐ **VÝJIMKA (KUKY 2026-09-19: „ano"): testy PODEZŘELÝCH vstupů jedou na PRODUKČNÍM modelu přes API** (tehdy `claude-opus-4-8`; dnes čte model ze `SOL_MODEL` v claude-proxy, GPT klíč viz [[runar-api-key-file]];
 klíč `~/.claude/runar-api-key.txt`, generátor `docs/eval/2026-09-19-produkcni-model/skripty/api_gen.js` volá jako claude-proxy).
 Důvod: subagent Claude Opus 5 produkční vady nereprodukoval (Raidho volba 0/3 vs produkce 4/4; Ask tvrzení 0/3 vs 3/3) —
 test podezřelého s ním nic nerozhodne. Obecné pokusy o tvar/obsah dál můžou jet na subagentech; hon na produkční vadu ne.

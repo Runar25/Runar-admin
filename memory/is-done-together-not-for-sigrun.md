@@ -13,7 +13,4 @@ Leave NOTHING for Sigrún. Not "IS draft → Sigrún", not "noted for Sigrún", 
 
 **How to apply:** After any IS work, run the IS checks in the order `CLAUDE.md` §2 gives („Kontrola IS“ — the tools and their order live only there); for each flag, investigate (lemma lookup, declension) and CLOSE it with a verdict in the response — never with "for Sigrún". A tool false-positive (e.g. it confuses `lestur`=reading with `lest`=train) is closed by confirming the correct form, not by deferring. Related: [[working-style]], [[paste-sql-explicitly]].
 
-**Ani Coworku.** KUKY 2026-08-14: *IS zvládáš, není potřeba takové věci posílat Coworku.*
-Islandské znění instrukce v promptu si CODE napíše a ověří SÁM kontrolami IS (`CLAUDE.md` §2). Cowork vlastní OBSAH (co se má říct: lore, scény,
-rozhodnutí o hlasu); formulaci islandské věty v promptu ne. Posílat mu ji znamená čekat kolo
-navíc na něco, co se dá ověřit tady a hned.
+**Dělba IS mezi CODE a Cowork** (obsah × znění instrukcí) → [[cowork-handoff-quality-bar]] bod 7. Do 2026-10-11 stála i tady.

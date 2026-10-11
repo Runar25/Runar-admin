@@ -1,6 +1,6 @@
 ---
 name: ask-owner-for-checks-you-cannot-run
-description: "Když ověření pomůže a Code se k němu sám nedostane (produkční DB, přihlášená appka), vyžádat si ho po Kukym — ne dedukovat"
+description: "Když ověření pomůže a Code se k němu sám nedostane (logy edge funkcí, přihlášená appka, mimo Supabase), napřed zkusit, pak vyžádat po Kukym — ne dedukovat; produkční DB Code umí"
 metadata:
   node_type: memory
   type: feedback

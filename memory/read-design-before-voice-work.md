@@ -12,7 +12,7 @@ Než sáhneš na `VOICE_PROFILES`, `DEF_CHAR`, buildery v `runar-character.js` n
 co určuje **jak Rúnar mluví**, přečti **napřed**:
 
 1. `RUNAR_DESIGN.md` sekce **„Kdo je Rúnar"** (zhruba ř. 14–152) — kánon hlasu
-2. `RUNAR_BACKLOG.md` **„Nálady — specifikaci PŘEPSALY důkazy"** (~ř. 251–263)
+2. `RUNAR_BACKLOG.md` **„Nálady — specifikaci PŘEPSALY důkazy"**
 3. `RUNAR_DECISIONS.md` — `grep -n "nálad\|hlas\|voice" RUNAR_DECISIONS.md`
 4. Píšeš **vstup do promptu nebo tip Asku** (pokyn, štítek, rámec, otázku)? → `RUNAR_DESIGN.md` sekce
    **„Slova, která dáváme modelu"** — co model se slovy udělá (sol je vrací doslova, sloveso přichází z pokynu,
@@ -20,13 +20,13 @@ co určuje **jak Rúnar mluví**, přečti **napřed**:
 
 **Why:** KUKY 2026-08-16, po tom, co jsem během jednoho dne **čtyřikrát** navrhl něco už
 rozhodnutého: *„jak tě mám donutit si nastudovat projekt Rúnar???"* Konkrétně:
-- napsal jsem `direct` jako „krátké věty" — `RUNAR_BACKLOG.md:258` říká doslova
+- napsal jsem `direct` jako „krátké věty" — `RUNAR_BACKLOG.md` (sekce Nálady) říká doslova
   **„`direct` NENÍ kratší věty… je to méně úkolů na jedno čtení"**
-- ptal jsem se, jestli je povolený **postoj** — `RUNAR_DESIGN.md:124` odpovídá
+- ptal jsem se, jestli je povolený **postoj** — `RUNAR_DESIGN.md` („Cold reading: pojmenovaný anti-vzor“) odpovídá
   **„postoj ano, radu ne"**
 - navrhl jsem slít `DEF_CHAR` a `VOICE_PROFILES` — datované rozhodnutí 2026-08-14 je
   drží oddělené schválně (*„profil je čistý tón a nic víc"*)
-- tvrdil jsem, že obecnost = Barnum = vada — `RUNAR_DESIGN.md:47` říká opak
+- tvrdil jsem, že obecnost = Barnum = vada — `RUNAR_DESIGN.md` („Rúnarův rejstřík — zrcadlo, ne orákulum“) říká opak
   (*„to není slabina, je to základ poctivého pozicování"*); čára vede mezi
   **zrcadlem a orákulem**, ne mezi obecným a konkrétním
 

@@ -7,7 +7,8 @@ metadata:
 
 Klíč k `api.anthropic.com` leží v `C:\Users\zkuku\.claude\runar-api-key.txt`.
 `scripts/utils/gen_direct.js` ho čte sám, když není `ANTHROPIC_API_KEY` v env — takže
-generování dávky **nevyžaduje žádnou akci ownera**.
+generování dávky **nevyžaduje žádnou akci ownera**. Klíč pro GPT modely (produkce čte GPT-6 sol) leží vedle,
+`C:\Users\zkuku\.claude\runar-openai-key.txt`; `gen_direct.js` ho čte stejně (doplněno 2026-10-11).
 
 **Why:** KUKY 2026-08-20: *„proč jsi ho neuložil? teď se mě na to budeš pořád ptát?"*
 Klíč jsem po doběhnutí dávky smazal ze scratchpadu jako hygienu — a za dvacet minut ho

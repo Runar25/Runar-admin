@@ -8,7 +8,7 @@ metadata:
   modified: 2026-08-16T20:47:06.305Z
 ---
 
-Vizuální mapa **„jak a z čeho Rúnar mluví"** — 3 vrstvy (systémový prompt/charakter · reading stack · korekce → `claude-opus-4-8` → JSON → jeden odstavec), + tabulka „kde ladit nuanci" + seznam „co je mrtvé/nehoň to".
+Vizuální mapa **„jak a z čeho Rúnar mluví"** — 3 vrstvy (systémový prompt/charakter · reading stack · korekce → model → JSON → jeden odstavec; který model čte, vlastní `SOL_MODEL` v claude-proxy — do 2026-10-11 tu stálo `claude-opus-4-8`), + tabulka „kde ladit nuanci" + seznam „co je mrtvé/nehoň to".
 
 **URL:** https://claude.ai/code/artifact/e32dbd2b-5277-414a-a187-8277efe99f69
 (privátní, jen owner; galerie `claude.ai/code/artifacts`.)
@@ -38,7 +38,8 @@ s `url:`). ⚠️ Do 2026-08-20 tu stálo „není v repu, leží ve scratchpadu
 nepravda (`git ls-files` ho vrací, 45 427 B) a návod tím vyráběl scratchpad-sirotky. Ověřeno CODE-read.
 ✅ **Rozkol repo × publikovaná mapa SROVNÁN 2026-09-06.** Repo kopie byla starší (v2.0) než
 publikovaná (v2.1) — nová verze se proto postavila NA STAŽENÉ publikované, ne na repo souboru,
-a tou se repo přepsalo. Obojí je teď totéž, razítko `v4.15-ask90`. **Postup, který to spravil,
+a tou se repo přepsalo. ⚠️ **2026-10-11: mapa stojí pořád na `v4.15-ask90` a opus-4-8, produkce je dál** (`RUNAR_PROMPT_VERSION`
+v configu, model `SOL_MODEL`) — pravidlo „překresli ve stejném tahu“ se nedodržuje; zapsáno v `RUNAR_BACKLOG.md`. **Postup, který to spravil,
 je zároveň ten správný pro příště:** `Artifact action:"read"` → publikovanou verzi si nech uložit
 → edituj TU → publikuj → zkopíruj do repa. Publikace se odmítne, dokud živou verzi nepřečteš
 celou (nestačí `read`, chce to `Read` celého uloženého souboru). Z jiné session než
@@ -46,6 +47,6 @@ té, co ji vydala, se URL MUSÍ předat explicitně, jinak vznikne nová. Před 
 verzi (guard hlídá, že nepřepíšeš cizí změnu) + zkontroluj párování tagů.
 
 ✅ **Uzavřeno 2026-08-07:** `select id, active from public.runar_character where active=true` → **0 řádků**,
-takže **file `DEF_CHAR` je živý hlas** a mapa je v tomhle přesná. Loader v `runar-app.js:1380` je ale pořád
+takže **file `DEF_CHAR` je živý hlas** a mapa je v tomhle přesná. Loader `runar_character` v `runar-app.js` je ale pořád
 zadrátovaný (editor charakteru = shrine Rúnar lab je mrtvý) → neškodí, dokud tabulka nemá aktivní řádek,
 ale zaslouží smazat. Kdyby se tam někdy řádek objevil, přebil by file DEF_CHAR potichu.
