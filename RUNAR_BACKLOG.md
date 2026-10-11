@@ -2363,6 +2363,10 @@ odečtu; sol: prázdná odpověď → `null` → Claude cesta se stejnými kontr
   10 min, jen service_role), odečet dál až po úspěchu. Souběžný požadavek → 429 „čtení už běží“. Zabitá funkce nestojí nic a zámek
   vyprší sám. Potřeba: SQL (owner), proxy, nasazení s jeho ano, živé E2E na NEadmin účtu s kreditem (admin se neúčtuje). (n) z části 41
   (`cache_control`, ~$0.0004 na volání Claude) přibalit k tomuhle nasazení, samostatně nenasazovat.
+  **Upřesnění (CODE-read souhlasí, 2026-10-11):** zámek jen pro čtení, která se účtují (volné / kredit / měsíční) — rituály
+  (`isRitual`) a Ask k vlastnímu čtení mají vlastní ochranu a blokovat je nesmí. **Pořadí:** zámek → TEPRVE PAK číst zůstatek →
+  model → odečet → uvolnit; jinak by požadavek, který zůstatek přečetl před cizím odečtem a zámek vzal až po něm, prošel znovu.
+  Dnes se `credits_balance` čte už při ověření přihlášení (ř. ~560), před zámkem — po zámku ho přečíst znovu. E2E ověří i Ask hned po čtení.
 
 ### Část 41 — plýtvání voláními, která stojí peníze; levnější modely mimo čtení (2026-10-10)
 KUKY: *„budeme ještě chtít hlídat případné plýtvání voláním, což nás stojí peníze“* + *„případně pokud na něco můžeme použít levnější
