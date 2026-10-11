@@ -44,14 +44,19 @@ const m = q("select usage->>'model' model, count(*) n, " +   // opt-out:ok 2026-
   "coalesce(sum(coalesce((usage->'completion_tokens_details'->>'reasoning_tokens')::int, (usage->'output_tokens_details'->>'thinking_tokens')::int)),0) premysleni, " +
   "coalesce(sum(coalesce((usage->'prompt_tokens_details'->>'cached_tokens')::int, (usage->>'cache_read_input_tokens')::int)),0) cache, " +
   "coalesce(sum((usage->>'cache_creation_input_tokens')::int),0) cache_zapis, " +
-  "round(avg((usage->>'ms')::int) filter (where usage->'tries' ? 'sol:fail')) ms_zaloha " +
+  "round(avg((usage->>'ms')::int) filter (where usage->'tries' ? 'sol:fail')) ms_zaloha, " +
+  "max(drawn_at) filter (where usage->'tries' ? 'sol:fail') zaloha_kdy, " +
+  "max(drawn_at) filter (where coalesce((usage->'completion_tokens_details'->>'reasoning_tokens')::int, (usage->'output_tokens_details'->>'thinking_tokens')::int, 0) > 0) prem_kdy, " +
+  "max(drawn_at) filter (where coalesce((usage->>'cache_creation_input_tokens')::int, 0) > 0) cache_kdy " +
   "from public.readings where usage is not null and drawn_at >= " + OD + " group by 1 order by 2 desc;");   // opt-out:ok 2026-10-10 náklady/plýtvání
-const dvoj = q("select count(*) n from public.readings a join public.readings b on a.user_id = b.user_id and a.rune_name = b.rune_name " +   // opt-out:ok 2026-10-10 náklady/plýtvání
+const dvoj = q("select count(*) n, max(b.drawn_at) kdy from public.readings a join public.readings b on a.user_id = b.user_id and a.rune_name = b.rune_name " +   // opt-out:ok 2026-10-10 náklady/plýtvání
   "and a.lang = b.lang and a.id <> b.id and b.drawn_at > a.drawn_at and b.drawn_at - a.drawn_at < interval '20 seconds' " +
   "where a.drawn_at >= " + OD + ";")[0];
 const hlas = q("select count(*) n, coalesce(sum(chars),0) znaku, count(distinct user_id) lidi, " +
   "count(*) filter (where not exists (select 1 from public.readings r where r.user_id = v.user_id " +   // opt-out:ok 2026-10-10 náklady/plýtvání
-  "and r.drawn_at between v.created_at - interval '15 minutes' and v.created_at)) bez_cteni " +
+  "and r.drawn_at between v.created_at - interval '15 minutes' and v.created_at)) bez_cteni, " +
+  "max(v.created_at) filter (where not exists (select 1 from public.readings r where r.user_id = v.user_id " +   // opt-out:ok 2026-10-11 náklady/plýtvání
+  "and r.drawn_at between v.created_at - interval '15 minutes' and v.created_at)) bez_cteni_kdy " +
   "from public.voice_usage v where v.source = 'dynamic' and v.created_at >= " + OD + ";")[0];
 
 log('\n  ══ RÚNAR — plýtvání voláními, posledních ' + DNY + ' dní (jen čtení DB) ══\n');
@@ -69,11 +74,14 @@ log('  hlas: ' + hlas.n + ' × (' + hlas.znaku + ' znaků, ' + hlas.lidi + ' lid
 
 const varovani = [];
 const jm = (f) => m.filter(f).map((r) => r.model).join(', ');
-if (jm((r) => +r.zaloha > 0)) varovani.push('zálohy na Claude (' + jm((r) => +r.zaloha > 0) + ') — u každé mohl platit i sol; při opakování zkontroluj limit 50 s a stav OpenAI');
-if (+dvoj.n > 0) varovani.push('dvojí generování ' + dvoj.n + '× — souběh/dvojklik (BACKLOG část 40)');
-if (jm((r) => +r.premysleni > 0.3 * +r.vystup)) varovani.push('přemýšlení nad 30 % výstupu (' + jm((r) => +r.premysleni > 0.3 * +r.vystup) + ') — platí se, čtenář ho nevidí');
-if (jm((r) => +r.cache_zapis > 0 && +r.cache < 0.3 * +r.cache_zapis)) varovani.push('zápis do cache se nevrací (' + jm((r) => +r.cache_zapis > 0 && +r.cache < 0.3 * +r.cache_zapis) + ') — přirážka za zápis bez čtení z cache');
-if (+hlas.bez_cteni > 0) varovani.push('hlas bez uloženého čtení ' + hlas.bez_cteni + '× — ověř: čtení „pro někoho“, nebo volání mimo appku (#2b)');
+// „naposledy“ (2026-10-11): ať je vidět, jestli vzorec trvá, nebo ho oprava už zastavila — okno 30 dní nese i historii.
+const dat = (d) => d ? ' (naposledy ' + String(d).slice(0, 10) + ')' : '';
+const kdy = (f, pole) => dat(m.filter(f).map((r) => r[pole]).filter(Boolean).sort().pop());
+if (jm((r) => +r.zaloha > 0)) varovani.push('zálohy na Claude (' + jm((r) => +r.zaloha > 0) + ') — u každé mohl platit i sol; při opakování zkontroluj limit 50 s a stav OpenAI' + kdy((r) => +r.zaloha > 0, 'zaloha_kdy'));
+if (+dvoj.n > 0) varovani.push('dvojí generování ' + dvoj.n + '× — souběh/dvojklik (BACKLOG část 40)' + dat(dvoj.kdy));
+if (jm((r) => +r.premysleni > 0.3 * +r.vystup)) varovani.push('přemýšlení nad 30 % výstupu (' + jm((r) => +r.premysleni > 0.3 * +r.vystup) + ') — platí se, čtenář ho nevidí' + kdy((r) => +r.premysleni > 0.3 * +r.vystup, 'prem_kdy'));
+if (jm((r) => +r.cache_zapis > 0 && +r.cache < 0.3 * +r.cache_zapis)) varovani.push('zápis do cache se nevrací (' + jm((r) => +r.cache_zapis > 0 && +r.cache < 0.3 * +r.cache_zapis) + ') — přirážka za zápis bez čtení z cache' + kdy((r) => +r.cache_zapis > 0 && +r.cache < 0.3 * +r.cache_zapis, 'cache_kdy'));
+if (+hlas.bez_cteni > 0) varovani.push('hlas bez uloženého čtení ' + hlas.bez_cteni + '× — ověř: čtení „pro někoho“, nebo volání mimo appku (#2b)' + dat(hlas.bez_cteni_kdy));
 if (KRATCE) console.log('  ' + celkem + ' volání modelu · ' + hlas.n + ' × hlas · dvojí generování ' + dvoj.n);
 console.log((KRATCE ? '' : '\n') + (varovani.length ? '  ⚠ ' + varovani.join('\n  ⚠ ') : '  ✓ žádný vzorec plýtvání za období'));
 log('  (ceny: node scripts/utils/stats.js · podrobně: node scripts/utils/plytvani.js --dny N)\n');
