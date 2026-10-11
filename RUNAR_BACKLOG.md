@@ -2477,6 +2477,14 @@ kola 1 (`cc0ca7f`) plní statický text, config, `t()/tp()` nebo `esc()`/`escape
   z `RUNAR_LAB_DST`, ㉳ staví lab do dočasné složky a po sobě ji smaže)*; (a) a (c) jsou podmínky budoucí práce — (a) visí i u položky
   `tree_state`/`tree_readings`, (c) stojí v hlavičce `supabase/functions/tree-update/index.ts`; (c) `tree-update` před novým nasazením: rate limit,
   strop textu, `credits_used` na serveru (části 2, 15).
+  ✅ (b) zpětně ověřeno CODE-read 2026-10-11: ㉳ proběhla, `v2/tree-lab-crown-composer/crown-composer.html` ve stromě nezměněn, v temp nic nepřibylo.
+
+#### Kolo 2 / 5 — prompt: tvrzení CLAUDE.md §2 a „Reading systém“ (2026-10-11)
+**Platí:** tři vrstvy na VŠECH cestách generování — `getCorrPrompt` mají buildery single, Kříž, Norny (i zakládací), Horseshoe, Yggdrasil,
+životní runa, rozbor jména a Ask, a všichni volající předávají `corrections` (`runar-reading.js` ~322, ~885, spready přes
+`_generateSpreadReading` ~1342; `runar-tree.js` ~799, ~854; shrine ~889) · hranici DB → prompt cvičí `golden_contracts.js` (smoke ⑥) ·
+**obraznost přeměřena znovu:** 25 run × 6 období = 150 dvojic, žádná bez kandidáta z `RUNE_IMAGES`, období pro všech 12 měsíců → `SEASON_POOLS`
+se do čtení dál nedostane; filtr podle oblasti (`_imgPodleOblasti`, od 2026-10-03) nikdy nevrátí prázdno (`ok.length ? ok : cand`), takže to nemění.
 
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
