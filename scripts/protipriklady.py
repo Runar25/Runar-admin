@@ -89,6 +89,17 @@ PRIPADY = [
  ('chyti', 'verify_edge_imports.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'regex', r'npm:@supabase/supabase-js@[0-9.]+', 'npm:@supabase/supabase-js@2'),
  ('chyti', 'verify_rune_glyphs.js', 'v2/runar-help.html', 'replace', '</body>', '<p>ᚠ</p></body>'),
  ('chyti', 'verify_lang_ternary.js', 'v2/runar-app.js', 'append', '', "\nvar _protiTern = lang === 'is' ? 'halló' : 'hello';\n"),
+ # kolo 3 / 4g (2026-10-11): soulad kódu s docy a cesty dat. verify_decisions_followthrough útok nemá — čte git blame a necommitnuté
+ # řádky záměrně přeskakuje (memory guard-test-the-lifecycle); útok by potřeboval commit s obsahem, ne jen prázdný (režim commit).
+ ('chyti', 'verify_code_doc_refs.js', 'v2/runar-app.js', 'append', '', '\n// podrobnosti viz docs/neexistuje-protipriklad-xyz.md\n'),
+ ('chyti', 'verify_contract_wiring.js', 'v2/runar-character.js', 'replace', 'function _registerContext(seeking, lang) {', "function _registerContext(seeking, lang) { return '';"),
+ ('chyti', 'verify_page_copies.js', 'v2/runar-help.html', 'replace', 'id="s1-lbl">HOW A READING WORKS', 'id="s1-lbl">HOW A READING WORKED'),
+ ('chyti', 'verify_ui_text_used.js', 'v2/runar-translations.js', 'replace', "    opus_toggle:      'Read with Opus 5 (test)',", "    opus_toggle:      'Read with Opus 5 (test)',\n    zz_protipriklad_mrtvy: 'dead key',"),
+ ('chyti', 'verify_runar_root.js', 'scripts/utils/stats.js', 'append', '', "\nconst _protiCesta = 'C:/Users/zkuku/Downloads/Runar-admin/v2';\n"),
+ ('obchazka', 'verify_runar_root.js', 'scripts/utils/stats.js', 'append', '', "\nconst _protiCesta2 = 'C:" + chr(92) * 2 + "Users" + chr(92) * 2 + "zkuku" + chr(92) * 2 + "Downloads" + chr(92) * 2 + "Runar-admin';\n"),
+ ('obchazka', 'verify_code_doc_refs.js', 'v2/runar-reader.css', 'append', '', '\n/* podrobnosti viz docs/neexistuje-protipriklad-css.md */\n'),
+ ('chyti', 'verify_tree_signals.js', 'v2/runar-tree.js', 'replace', '(row.aol || null)', 'null'),
+ ('chyti', 'verify_is_kontrola_jedno_misto.js', 'memory/working-style.md', 'append', '', '\nKontrola IS: napřed check-is.py, pak is-greynir.py.\n'),
  # strom ㉳ (CODE-tree 2026-10-11): mutace z hlavičky verify_tree_mista převedené na opakované útoky. Kontrola si lab staví z builderu
  # do dočasné složky, takže útok míří na build_crown_composer.py. (a) dvě ramena v jedné výšce — přes výšky zón XLF, ne exitMinPx
  # (exitMinPx 30→5 kontrola propustila: rozestup na jejích 12 stromech drží výšky zón, min. 49 px i s 5 px); (s) seeking koření;
