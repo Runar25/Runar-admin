@@ -92,7 +92,9 @@ def cil_z_prikazu(cmd):
             # „JS ve v2“, ač nic neměnil — zmínka cesty ≠ zápis.
             try:
                 obsah = cti(p, 300000)
-                if ZAPISUJE.search(obsah): text += chr(10) + obsah.replace(chr(92), '/')
+                # Bez komentářů: 2026-10-11 skript jen ZMÍNIL RUNAR_PRIVACY.md v komentáři a hook ho vzal jako zápis do docs.
+                kod = chr(10).join(l for l in obsah.split(chr(10)) if not re.match(r'\s*(//|#)', l))
+                if ZAPISUJE.search(kod): text += chr(10) + kod.replace(chr(92), '/')
             except Exception: pass
     return text
 
@@ -192,7 +194,9 @@ def kanon_hity(km, maxn=8):
     try: soubory += ['memory/' + f for f in sorted(os.listdir(KANON + '/memory')) if f.endswith('.md')]
     except Exception: pass
     hity = []
-    potreba = 2 if len(km) >= 2 else 1
+    # Aspoň 40 % slov ze zprávy (min. 2). Doloženo 2026-10-11: práh „2 shody“ u zprávy s 8 slovy vrátil jen šum z obecných slov
+    # (uživatel, případ, smazat); pokyn ke stromu (10 slov → potřeba 4) má na RUNAR_TREE.md:34 shod 9, chytí se dál.
+    potreba = max(2, -(-len(km) * 2 // 5)) if len(km) >= 2 else 1
     for f in soubory:
         try: radky = cti(KANON + '/' + f).split('\n')
         except Exception: continue
@@ -376,6 +380,12 @@ def samotest():
     chk('21. zpráva poslaná během práce (queued_command) se počítá taky', d and 'RUNAR_TREE.md:2' in d)
     p2({'type': 'attachment', 'attachment': {'type': 'queued_command', 'prompt': 'strom bude obsahovat čtení z deníku po založení znovu', 'origin': {'kind': 'peer'}}})
     chk('22. zpráva jiné session (peer) se jako ownerova nebere', V2('Edit', 'k1', file_path=R + '/memory/x.md') is None)
+    io.open(kd + '/RUNAR_BACKLOG.md', 'w', encoding='utf-8').write('- uživatel případ obecně\n- jiný uživatel obnova\n')
+    p2({'type': 'user', 'message': {'content': 'jinak 30 dní na smazání je dobré, třeba bude chtít uživatel svůj účet obnovit? jak se postupuje v takových případech?'}})
+    chk('23. shoda jen ve 2 obecných slovech z dlouhé zprávy = šum, nezastaví', V2('Edit', 'k1', file_path=R + '/memory/x.md') is None)
+    sc3 = os.path.join(STAV, 'Temp', 'claude', 'kom.js')
+    io.open(sc3, 'w', encoding='utf-8').write("// Postup → RUNAR_PRIVACY.md\nfs.writeFileSync(os.tmpdir() + '/x.txt', 'a')\n")
+    chk('24. cesta jen v komentáři skriptu se jako zápis nebere', V('Bash', sid='s9', command='node "' + sc3.replace('\\', '/') + '"') is None)
     for jm, v in ok: print(('OK    ' if v else 'FAIL  ') + jm)
     return 0 if all(v for _, v in ok) else 1
 
