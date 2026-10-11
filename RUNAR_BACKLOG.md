@@ -2407,6 +2407,9 @@ dvojího odečtu. **Z dat (30 dní):** 0 záloh, 0 dvojích generování; dat po
   (každý nový účet 1 hlas k volnému čtení + čtení z karet + předplatné nejvýš `VOICE_MONTHLY_LIMIT`). Při desítkách aktivních lidí s hlasem
   plán nestačí — rozhodnout předem: vyšší plán, nebo co se stane po vyčerpání (navazuje na „Limit v účtu ElevenLabs“ výš: zjistit, jestli má
   plán zapnuté placení nad kvótu). Hlídá `voice-usage` ve shrine (snímek kvóty) + `plytvani.js`.
+  ✅ **Rozhodnuto 2026-10-11 (KUKY):** *„máme 5 testerů, tak jim dejme 15 hlasů Rúnara… ale budeme hlídat, ať nepřekročíme bezpečnou
+  hladinu, třeba 120 hlasů.“* Výklad CODE-read (ownerovi napsán): každý tester 15/měsíc, celkový strop 120/měsíc vynucený serverem
+  (≈ 72 000 znaků ≈ 70 % kvóty; počítat i static a admina; měsíc podle cyklu ElevenLabs). Implementace + DECISIONS → CODE-tune.
 
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
