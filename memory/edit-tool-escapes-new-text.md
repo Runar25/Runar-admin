@@ -15,3 +15,8 @@ doslova). Řádek, kde se obě podoby míchají (`Engar skráðar … Dragðu`),
 **How to apply:** po každém Edit v souboru s `\uXXXX` přečti diff (`git diff -U0`) a hledej nové `\u0` v přidaných řádcích;
 kotvu se smíšenými escape vlož patch skriptem (raw string `r"…✦…"` pro kotvu, nový text literálním UTF-8, §11).
 Souvisí: [[heredoc-mangles-backslash-escapes]], [[one-patch-script-path]].
+
+**Opačný směr, 2026-10-11 (CODE-read, třikrát za hodinu):** `\u2028` napsané v parametru Edit/Write se už při předání (JSON) změní na
+SKUTEČNÝ znak — v `scripts/protipriklady.py` útok pak hledal znak místo textu, v regexu JS byl U+2028 konec řádku (SyntaxError), a jednou
+v komentáři, který tu vadu popisoval. Text `\uXXXX` do souboru jen skriptem: `chr(92) + 'u2028'`.
+🔒 **Od 2026-10-11 to hlídá stroj:** hook `pravidla_pri_dotyku.py` zastaví Edit/Write, který vkládá neviditelný znak, jenž v souboru ještě není.

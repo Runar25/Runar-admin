@@ -372,7 +372,8 @@ musí to buď **udělat skript samo**, nebo **zastavit práci**, když se to vyn
   hlídá smoke ㊴. Nové pravidlo k souborům → řádek do mapy, ne opis do hooku. (KUKY 2026-10-11, DECISIONS 2026-10-11 (17).)
   Týž hook před prvním zápisem do docs/paměti po NOVÉ zprávě ownera prohledá kánon (CLAUDE.md, všechny RUNAR_*.md, memory/) slovy
   z té zprávy a ukáže, kde už to stojí — pokyn se nezapíše jako nový, když platí. (KUKY 2026-10-11, DECISIONS 2026-10-11 (26).)
-- **Pasti v příkazech** → týž PreToolUse hook zastaví heredoc se zpětným lomítkem v těle a `grep … OK|FAIL … &&` jako podmínku
+- **Pasti v příkazech** → týž PreToolUse hook zastaví heredoc se zpětným lomítkem v těle, `grep … OK|FAIL … &&` jako podmínku
+  a zápis Edit/Write, který do souboru vkládá neviditelný znak (escape `\uXXXX` v parametru se změní na znak už při předání)
   (obojí padlo 2026-10-11 znovu, ač stálo v paměti). **Neověřené tvrzení** → Stop-hook zprávy (`~/.claude/runar-zprava-check.py` <!-- doc-links:ok 2026-10-11 uživatelský hook mimo repo -->
   pravidlo 4): věta s „nejspíš/pravděpodobně/zřejmě“ o kódu nebo souboru projde jen s „neověřeno“. (KUKY 2026-10-11, DECISIONS 2026-10-11 (36).)
 - **Kontroly pod útokem** → smoke ㊵ (`scripts/protipriklady.py`): podstrčená chyba v čisté kopii repa musí kontrolu shodit; pouští

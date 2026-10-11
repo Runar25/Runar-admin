@@ -2988,9 +2988,9 @@ celý den. **Viditelnost sama nestačí; je to slabší nástroj, než jsem tvrd
 ## 2026-08-16 — Tři měřidla lhala stejnou chybou; islandská čísla z dneška přeměřena
 
 - **Typ:** oprava nástrojů · **Scope:** `measure_readings.js`, `test_no_planted_bans.js`, `is-vazba.py`
-- **Co se změnilo:** JS `` je definovaná na `[A-Za-z0-9_]`, takže mezi mezerou a `þ` **hranice
+- **Co se změnilo:** JS `\b` je definovaná na `[A-Za-z0-9_]`, takže mezi mezerou a `þ` **hranice
   slova není**. Na třech místech to dělalo tichou chybu: mrtvá větev v detektoru, falešný zápor
-  (`ekki` sedne uvnitř `þekki`) a EN-only hlídač, který islandský sloupec nekontroloval vůbec.
+  (`\bekki\b` sedne uvnitř `þekki`) a EN-only hlídač, který islandský sloupec nekontroloval vůbec.
   Čtvrtá, opačná chyba: `finnur` = i **najít**, nadhodnocovalo.
   **Platná islandská čísla: produkce 18 %, čerstvá dávka 2 %** (dřívější hodnoty z dneška neplatí).
 - ⭐ **`is-vazba.py --freq` vracelo 0 místo skutečné četnosti** — ngram API bere nejvýš 10 termů
