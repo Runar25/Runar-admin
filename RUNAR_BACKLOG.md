@@ -2661,6 +2661,14 @@ v zásadách chybí; dnes jen admin a nic nezapisuje → přidáno jako podmínk
   `RUNAR_PRIVACY.md`; před spuštěním „měkké smazání“ (30 dní skryté, přihlášení smazání zruší, pak skutečný výmaz) — sloupec, noční úloha,
   hláška v appce, text zásad EN + IS (CODE-tune, nasazení owner). Owner 2026-10-11: „30 dní na smazání je dobré, třeba bude chtít účet obnovit?“
 
+#### Kolo 2 / 21 — nápověda × appka a časový rozpočet čtení (části 42, 44; 2026-10-11)
+**Platí:** položka (o) je hotová — body 1–4 v textu srovnané (u 1 zbyl jen komentář v kódu, 4 nese výjimku pro zálohy); bod 5 CODE-tune
+nevyřešil ubráním, ale postavil upozornění na obnovu měsíčních čtení (7077816), takže věta EN „the app lets you know the next time you open
+it“ i IS „appið lætur þig vita næst þegar þú opnar það“ teď platí. Časové konstanty `claude-proxy` beze změny (sol 50 s, pokus 55 s).
+**Ověřeno (v kole 1 „z paměti, neověřeno“):** dokumentace Supabase „Edge Functions limits“ 2026-10-11 — wall clock **Free 150 s, placené
+400 s**; **request idle timeout 150 s pro všechny tarify** (kdo do té doby nepošle odpověď, dostane 504). Nejhorší cesta čtení ≈ 105 s se
+vejde. Pro budoucnost: placený tarif delší čtení bez průběžně posílané odpovědi nespasí — limit nečinnosti zůstává 150 s.
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
