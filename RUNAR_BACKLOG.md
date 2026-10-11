@@ -432,6 +432,11 @@
   (`voice_quota_snapshots`, tarif „starter“). Spočítáno 2026-10-11 z `scripts/utils/pricing_tabulka.js`: ownerův scénář 3 single
   + 1 Norny týdně, 1 Kříž + 1 Podkova měsíčně = ~29 jednotek (~19 čtení), hlas ~9 tis. znaků, model + hlas ~$1 měsíčně; při limitu
   103 807 a hladině 70 % se vejde ~8 takových uživatelů.
+  ⚠️ **Tabulka ElevenLabs v `RUNAR_PRICING.md` („When to Upgrade“) má zahrnuté znaky špatně:** počítá je jako cenu ÷ sazbu přečerpání
+  (Creator 220 000), ElevenLabs ale uvádí kredity (1 kredit ≈ 1 znak): Starter $6 = 30 tis., Creator $22 = 121 tis., Pro $99 = 600 tis.,
+  Scale $299 = 1,8 mil., Business $990 = 6 mil.; nevyčerpané se převádějí nejvýš 2 měsíce, zůstatek nejvýš 3× měsíční kvóta
+  (elevenlabs.io/pricing, staženo 2026-10-11). Na Starteru se 5 testerů × 15 hlasů (~37 tis. zn.) vejde jen díky převodu; trvale 30 tis.
+  × 70 % = 21 tis. Přepočítat tabulku i kapacitu spolu s rozhodnutím o hlasu (CODE-tune, nalezeno 2026-10-11).
 
 ## Multijazyčnost
 
