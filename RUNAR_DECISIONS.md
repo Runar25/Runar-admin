@@ -10730,3 +10730,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Mez:** porovnává obsah řádků (≥ 20 znaků); kratší řádky a přesuny pod jiným textem nevidí. Platí hned pro všechny session (hook běží
   z pracovního stromu). Vlastní pojistka, appka beze změny — bez ptaní (2026-10-11 (15)).
 - Affected doc(s): `CLAUDE.md` §30 — v témže commitu.
+
+## 2026-10-11 (52) — Nasazeno: brzda kreditů ElevenLabs a hlídání — elevenlabs-proxy v38, elevenlabs-static v17, voice-usage v4
+
+- **Rozhodl:** owner 2026-10-11 *„nasaď“* (po SQL, které pustil sám: *„sql je tam“*). Kód: (50), commity 08b1e26 a df93dd8.
+- **SQL (owner):** `sql/2026-10-11_voice_quota_snapshots_zdroje.sql` — ověřeno čtením `pg_constraint`: zdroje snímků `weekly`, `admin`,
+  `daily`, `brake`.
+- **Nasazeno (git nevidí):** elevenlabs-proxy v37 → v38, elevenlabs-static v16 → v17, voice-usage v3 → v4, `verify_jwt` false jako dřív.
+  Před nasazením stažené běžící verze = repo před změnou (39bbac0) ve všech 5 souborech (tři index.ts, `_shared/el_voice.ts`,
+  `_shared/voice_usage.ts`) — žádný kód mimo git; po nasazení stažené = HEAD ve všech 9 kombinacích. Živě: neplatný token proxy 401,
+  static 403, voice-usage 401; bez tokenu odmítnutí — všechny tři naběhnou a sdílené moduly se načtou.
+- **Hranice:** brzda se na živém hlasu ještě neprojevila (stojí kredity) — první hlas uloží i denní snímek stavu (poslední je z 2026-10-05),
+  otevření VOICE ve shrine uloží snímek `admin` a ukáže stav v kreditech.
+- Affected doc(s): `RUNAR_BACKLOG.md` (položka ElevenLabs po kontrole CODE-read) — v témže commitu.
