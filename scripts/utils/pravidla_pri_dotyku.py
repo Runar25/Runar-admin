@@ -115,7 +115,12 @@ def cil_z_prikazu(cmd):
                     # Cíle zápisu, když jsou všechna zápisová volání s DOSLOVNOU cestou — jinak celý kód (2026-10-11: skript s útoky
                     # jmenoval v2/runar-character.js jen jako TEXT útoku a zapisoval cv.zapis('scripts/protipriklady.py', …); hook mu
                     # ukázal pravidla promptu a stromu a chtěl Read 400 řádků docs). Zmínka cesty v datech ≠ zápis.
-                    vse = len(ZAPISUJE.findall(kod))
+                    # počítat volání jen v KÓDU, ne v textu, který skript zapisuje (2026-10-11: záznam DECISIONS s „io.open(…,'w')“
+                    # v """…""" se počítal jako zápis → celý kód → falešná oblast). Krátké literály ('w', 'a') zůstávají — jinak by
+                    # open(p, 'w') s cílem v proměnné zmizel z počtu a hook by ho přehlédl.
+                    bez_textu = re.sub(r'"""[\s\S]*?"""|\'\'\'[\s\S]*?\'\'\'', '', kod)
+                    bez_textu = re.sub(r'"[^"\n]{4,}"|\'[^\'\n]{4,}\'', '""', bez_textu)
+                    vse = len(ZAPISUJE.findall(bez_textu))
                     doslovne = re.findall(r"""(?:\.zapis|writeFileSync|appendFileSync)\(\s*['"]([^'"]+)['"]|open\(\s*['"]([^'"]+)['"]\s*,\s*['"][wa]""", kod)
                     cile = [a or b for a, b in doslovne]
                     text += chr(10) + (' '.join(cile) if cile and len(cile) == vse else kod.replace(chr(92), '/'))
@@ -348,8 +353,9 @@ def pasti(cmd):
 def sdileny(rel):
     # Vzor sdílených souborů vlastní hooks/pre-commit.py (`_SDILENE`) — tady se jen čte, ať nejsou dva seznamy (2026-10-11).
     try:
-        m = re.search(r"_SDILENE = re\.compile\(r'([^']+)'\)", cti(R + '/hooks/pre-commit.py'))
-        if m: return bool(re.match(m.group(1), rel))
+        # vzor může stát na víc řádcích jako spojené r'…' r'…' (2026-10-11) — spojit všechny kusy až po uzavírací závorku
+        m = re.search(r"_SDILENE = re\.compile\(((?:\s*r'[^']*')+)\s*\)", cti(R + '/hooks/pre-commit.py'))
+        if m: return bool(re.match(''.join(re.findall(r"r'([^']*)'", m.group(1))), rel))
     except Exception: pass
     return bool(re.match(r'^(CLAUDE\.md|RUNAR_[^/]*\.md|memory/.+\.md)$', rel))   # záloha, kdyby se tvar v pre-commitu změnil
 
@@ -602,6 +608,17 @@ def samotest():
     sk6 = os.path.join(STAV, 'Temp', 'claude', 'promenna.py')
     io.open(sk6, 'w', encoding='utf-8').write("f = 'v2/runar-character.js'" + chr(10) + "s = cv.cti(f, R)" + chr(10) + "cv.zapis(f, s + 'x', 'CODE-read', R)" + chr(10))
     chk('46. cíl zápisu v proměnné → celý kód jako dřív (pravidla promptu ano)', (lambda d: d and 'prompt a hlas' in d)(V('Bash', sid='s21', command='python -X utf8 "' + sk6.replace(chr(92), '/') + '"')))
+    chk('47. Edit na v2/runar-reader.css (sdílený soubor appky) → zastaví s návodem uprav',
+        (lambda d: d and 'commit_vlastni.py uprav' in d)(V('Edit', sid='e4', file_path=R + '/v2/runar-reader.css', old_string='a', new_string='b')))
+    chk('48. Edit na nesdílený soubor appky (runar-auth.js) zákaz sdíleného nedostane',
+        (lambda d: d is None or 'commit_vlastni.py uprav' not in d)(V('Edit', sid='e5', file_path=R + '/v2/runar-auth.js', old_string='a', new_string='b')))
+    sk7 = os.path.join(STAV, 'Temp', 'claude', 'text_s_open.py')
+    io.open(sk7, 'w', encoding='utf-8').write("s = cv.cti('RUNAR_BACKLOG.md', R)" + chr(10) + 's += """' + chr(10) + "skript místo io.open(p, 'w') volá cv.zapis; v2/runar-character.js" + chr(10) + '"""' + chr(10) + "cv.zapis('RUNAR_BACKLOG.md', s, 'CODE-read', R)" + chr(10))
+    d = V('Bash', sid='s22', command='python -X utf8 "' + sk7.replace(chr(92), '/') + '"')
+    chk('49. „io.open(…, w)“ jen v zapisovaném textu se za zápis nepočítá → oblast promptu NE', d is None or 'prompt a hlas' not in d)
+    sk8 = os.path.join(STAV, 'Temp', 'claude', 'open_promenna.py')
+    io.open(sk8, 'w', encoding='utf-8').write("p = 'v2/runar-character.js'" + chr(10) + "io.open(p, 'w').write('x')" + chr(10) + "cv.zapis('RUNAR_BACKLOG.md', 'y', 'CODE-read', R)" + chr(10))
+    chk('50. open(p, w) s cílem v proměnné se počítá dál → celý kód (oblast promptu ano)', (lambda d: d and 'prompt a hlas' in d)(V('Bash', sid='s23', command='python -X utf8 "' + sk8.replace(chr(92), '/') + '"')))
     for jm, v in ok: print(('OK    ' if v else 'FAIL  ') + jm)
     return 0 if all(v for _, v in ok) else 1
 
