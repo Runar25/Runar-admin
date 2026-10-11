@@ -2356,7 +2356,7 @@ Statické kopie obou textů v `runar-reader.html` pryč — JS je přepíše dř
 ✅ *(CODE-tune 2026-10-10, DECISIONS (46): (a) nápověda sjednocena na „inneign“ — „kreditarnir“ korpus 0×, „inneign“ 9567×; (b)–(d)
 hotové; GPT na všech 30 textech našel navíc „HVAÐ FÆR ÞÚ“, „Báðar eru velkomnar“, kalky v úvodu a kontaktu; v appce „frjáls spá“.
 Zbývající E001 jen u kroků se šipkami a jednoslovné odpovědi „Aldrei.“ — nejsou to věty.)*
-**Pro CODE-tune — zbytek islandské nápovědy (nález 2026-10-10 při (l), is-greynir na všech 30 IS textech `runar-help.html`):** oddíly
+**~~Pro CODE-tune~~ — zbytek islandské nápovědy (nález 2026-10-10 při (l), is-greynir na všech 30 IS textech `runar-help.html`):** oddíly
 s4–s6 opravené (DECISIONS (45)); zbývá (a) **slovo pro kredity nejednotné** — nápověda „kreditar“ (BÍN ho nezná, U001), zásady a appka
 „inneign“ → sjednotit na jedno (ověřit korpusem, „inneign“ je domácí slovo); (b) s3 „Innleysið í appinu“ = množné/vykání, appka jinde tyká
 („Innleystu“); (c) s1 věta „spyr Rúnar nokkurra hluta: nafns þíns, þess sviðs lífsins…“ nerozebraná (E001) → přepsat, ať jí nástroj
