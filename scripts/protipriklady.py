@@ -335,7 +335,10 @@ def uklid_opustenych():
 def main():
     argy = [x for x in sys.argv[1:] if not x.startswith('--')]
     vse = '--vse' in sys.argv
-    ja = cti_bin(os.path.abspath(__file__))
+    # Otisk KÓDU nástroje bez seznamu PRIPADY (2026-10-11): s ním přidání jediného útoku kteroukoli session zneplatnilo cache všech
+    # a další pre-push pouštěl všech ~100 útoků (push přes 10 min). Změnu případu pozná klíč sám — nese json případu.
+    cely = cti_bin(os.path.abspath(__file__))
+    ja = re.sub(rb'\nPRIPADY = \[.*?\n\]\n', b'\nPRIPADY = []\n', cely, count=1, flags=re.S)
     try:
         cache = json.load(open(CACHE, encoding='utf-8'))
     except (OSError, ValueError):
