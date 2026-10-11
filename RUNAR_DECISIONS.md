@@ -10606,3 +10606,32 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Hranice:** útoky kryjí 15 z 61 kontrol; zbytek se doplňuje postupně (BACKLOG kolo 3 / 4). Číslo 50/75 v docích `verify_doc_values`
   záměrně jen vypisuje (ℹ), nehlásí jako chybu — beze změny.
 - Affected doc(s): `CLAUDE.md` §30, `RUNAR_BACKLOG.md` kolo 3 / 4 — v témže commitu.
+
+## 2026-10-11 (45) — Oprava (44): „46 kontrol bez útoku“ bylo nadsazené — počítal jsem jen přepínač `--test`
+
+- **Co platí:** 61 kontrol ve smoke, `--test` má 11, útok v `scripts/protipriklady.py` 15. Mimo to pět kontrol prošlo jednorázovou mutací
+  při vzniku a mají ji zapsanou v hlavičce (`verify_ask_teaser`, `verify_ending_angle`, `verify_image_aspect_key`, `verify_image_pin`,
+  `verify_tree_mista`; dál ㉴ a ㉦ v DECISIONS 2026-10-09 (13), (20)) a dvě si chybu podstrčí v každém běhu (`verify_zaklad_produkce`,
+  `verify_liferune_states`). Chybí jim tedy útok, který se OPAKUJE, ne útok vůbec. Princip (44) beze změny.
+- **Jak se to stalo:** před zápisem (44) jsem dohledával jen slovy „protipříklady samotest“; slova „mutace“ a „podstrčit“, kterými
+  kontroly svoje útoky popisují, jsem nezkusil. Ověřeno až na ownerovu otázku „zkontroloval jsi, že to tam už není?“.
+- Affected doc(s): `RUNAR_BACKLOG.md` kolo 3 / 4 — v témže commitu.
+
+## 2026-10-11 (46) — Zápis do docs: hook sám hledá v kánonu slova NOVÉHO textu; uz_vime musí běžet po poslední zprávě ownera
+
+- **Proč:** owner se zeptal, jestli jsem před zápisem (44) ověřil, že to tam už není. Gate pustil zápis po jediném běhu `uz_vime` kdykoli
+  v session a s jakýmikoli slovy; já hledal „protipříklady samotest“, kontroly ale svoje útoky popisují slovy „mutace“ a „podstrčená“.
+  Odtud oprava (45) a předchůdce, kterého jsem minul: (40) z 2026-10-10 (chyba podstrčená do čisté kopie musí smoke shodit).
+- **Co:** `pravidla_pri_dotyku.py` (1) pustí zápis do CLAUDE.md, `memory/` a `RUNAR_*.md` jen po `uz_vime.js` puštěném PO poslední zprávě
+  ownera; (2) u zápisu skriptem vezme dlouhé řetězce, které v kánonu ještě nestojí, a po větách hledá řádky, se kterými věta sdílí aspoň
+  polovinu svých vzácných slov (nejméně 3). Nálezy ukáže jednou na obsah skriptu. Výběr slov tak nezávisí na session.
+  Totéž, co (26) dělá se slovy ze zprávy ownera, tady se slovy toho, co session zapisuje.
+- **Díra nalezená při tom:** hook neviděl skript spuštěný přes shellovou proměnnou (`S=<scratchpad>; python $S/x.py`) — takový zápis
+  do docs prošel bez gate i bez kontroly kánonu; tak jsem zapsal i (44) a první verzi tohohle záznamu. Hook teď přiřazení z téhož
+  příkazu rozvede (samotest 39, 40; bez rozvedení vidí 0 znaků skriptu, s ním celý).
+- **Změřeno:** první verze (celý text najednou) dala na skutečném skriptu (44) osm nálezů, všechny šum. Verze po větách dala jako první
+  nález přesně (40) a druhý původ §25 B; skripty bez předchůdce (kolo 3 / 3, oprava (45)) nevypíšou nic. Trvá ~3 s (limit hooku 15 s).
+  Samotest 40 stavů (nové: starý uz_vime nestačí, podobný text ukáže, totéž podruhé projde, kotva z kánonu není nový text, cizí téma projde).
+- **Mez:** vidí jen text ve skriptu ze scratchpadu nebo `scripts/_patch*.py`; zápis nástrojem `commit_vlastni.py uprav` se dvěma soubory
+  zatím ne. Vlastní kontrola, appka beze změny — bez ptaní (2026-10-11 (15)).
+- Affected doc(s): `CLAUDE.md` §30 — v témže commitu.

@@ -2768,7 +2768,9 @@ v sekci session (příkaz s podpisem i „Commit ÚZCE“) uváděl pathspec com
 **Metoda:** čistá kopie repa (`git worktree`), do souboru podstrčená skutečná chyba, kontrola s `RUNAR_ROOT` na kopii musí spadnout.
 **Výsledek:** 19 útoků / 15 kontrol, 16 chyceno hned. Slepé: `verify_db_write_checked` (alias `_db = sb`) a `verify_write_surface`
 (`from("user_profiles")`, `update(p)`) → opraveno, obcházky zůstávají jako útoky. Smoke ㊵ je pouští samo při změně (DECISIONS (44)).
-- [ ] **Doplnit útoky pro zbývajících 46 kontrol bez útoku** (61 − 15; část z nich má aspoň `--test`) — přednost mají ty, které hledají NEPŘÍTOMNOST (propustí-li, nikdo si
+- [ ] **Doplnit opakované útoky pro zbývajících 46 kontrol** (61 − 15; opravou (45): pět z nich prošlo jednorázovou mutací při vzniku —
+  ty převeď do `PRIPADY` první, útok je už vymyšlený v hlavičce: `verify_ask_teaser`, `verify_ending_angle`, `verify_image_aspect_key`,
+  `verify_image_pin`, `verify_tree_mista`). Pak ty, které hledají NEPŘÍTOMNOST (propustí-li, nikdo si
   nevšimne): `verify_question_injection`, `verify_journal_glyphs`, `verify_shared_tree`, `verify_commit_identity`, `verify_prelaunch_open`,
   `verify_fresh_dates`, `verify_new_duplicates`, `verify_tier_features`. Postup: případ do `PRIPADY` v `scripts/protipriklady.py`,
   `python -X utf8 scripts/protipriklady.py <kontrola>`.

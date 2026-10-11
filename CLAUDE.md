@@ -365,7 +365,8 @@ musí to buď **udělat skript samo**, nebo **zastavit práci**, když se to vyn
   (KUKY 2026-10-11, DECISIONS 2026-10-11 (23).)
 - **Pravidla při dotyku** → PreToolUse hook (`scripts/utils/pravidla_pri_dotyku.py`): když session poprvé sáhne na soubor z mapy
   `scripts/utils/pravidla_mapa.json`, úpravu jednou zastaví a vypíše AKTUÁLNÍ znění pravidel pro tu oblast (živě z CLAUDE.md, docs,
-  paměti); dlouhou sekci pustí až po Read; zápis do CLAUDE.md, `memory/` a `RUNAR_*.md` až po `uz_vime.js`. Znovu po compactu. Mapu
+  paměti); dlouhou sekci pustí až po Read; zápis do CLAUDE.md, `memory/` a `RUNAR_*.md` až po `uz_vime.js` puštěném po poslední
+  zprávě ownera, a nový text ze zapisujícího skriptu sám porovná s kánonem (DECISIONS 2026-10-11 (46)). Znovu po compactu. Mapu
   hlídá smoke ㊴. Nové pravidlo k souborům → řádek do mapy, ne opis do hooku. (KUKY 2026-10-11, DECISIONS 2026-10-11 (17).)
   Týž hook před prvním zápisem do docs/paměti po NOVÉ zprávě ownera prohledá kánon (CLAUDE.md, všechny RUNAR_*.md, memory/) slovy
   z té zprávy a ukáže, kde už to stojí — pokyn se nezapíše jako nový, když platí. (KUKY 2026-10-11, DECISIONS 2026-10-11 (26).)
