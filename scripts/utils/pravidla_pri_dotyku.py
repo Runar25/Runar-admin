@@ -280,6 +280,18 @@ def rozhodni(vstup):
     tool = vstup.get('tool_name', '')
     inp = vstup.get('tool_input') or {}
     if tool in PISE:
+        # Sdílený doc nástrojem Edit (nebo Write přes EXISTUJÍCÍ soubor) by šel zapsat, ale ne commitnout: commit_vlastni bere jen zápisy
+        # ze zapis() a pre-commit jinou cestu nepustí (CODE-read 2026-10-11, kolo 3 — rozpor dvou mechanismů). Zastavit hned, ne až při commitu.
+        r0 = rel(inp.get('file_path') or inp.get('notebook_path'))
+        if r0 and re.match(r'^(CLAUDE\.md|RUNAR_[^/]*\.md|memory/.+\.md)$', r0) and (tool != 'Write' or os.path.exists(R + '/' + r0)):
+            return ('⛔ Sdílený doc ' + r0 + ' nástrojem ' + tool + ' nepiš — taková změna nejde commitnout (pre-commit pouští sdílené docy jen\n'
+                    'přes commit_vlastni, ten bere jen zápisy ze zapis()). Místo toho:\n'
+                    '  • napiš nástrojem Write dva soubory do scratchpadu (starý text, nový text) a pusť\n'
+                    '    python -X utf8 scripts/utils/commit_vlastni.py uprav <CODE-lane> ' + r0 + ' <stary.txt> <novy.txt>\n'
+                    '  • nebo v Python skriptu: s = cv.cti(soubor); …; cv.zapis(soubor, s, "<CODE-lane>")\n'
+                    'Nový soubor smí vzniknout nástrojem Write, pak commit_vlastni.py pridej <lane> <soubor>.\n\n'
+                    '(Hook pravidla_pri_dotyku.py — sdílené docy)')
+    if tool in PISE:
         r = rel(inp.get('file_path') or inp.get('notebook_path'))
         cesty, volny = ([r] if r else []), ''
     elif tool in SHELL:
@@ -363,17 +375,21 @@ def samotest():
     ok = []
     def chk(jm, podminka): ok.append((jm, bool(podminka)))
     js = R + '/v2/runar-app.js'
+    def Wz(sid, relp, vol=None):
+        sk = os.path.join(STAV, 'Temp', 'claude', 'cvz_' + sid + '.py'); os.makedirs(os.path.dirname(sk), exist_ok=True)
+        io.open(sk, 'w', encoding='utf-8').write("s = cv.cti('" + relp + "', R)" + chr(10) + "cv.zapis('" + relp + "', s + 'a', 'CODE-read', R)" + chr(10))
+        return (vol or V)('Bash', sid, command='python -X utf8 "' + sk.replace(chr(92), '/') + '"')
     chk('1. první dotyk v2/*.js zastaví a vypíše §1', (lambda d: d and 'PRAVIDLA PRO OBLAST „JS ve v2“' in d and '### §1' in d)(V('Edit', file_path=js)))
     chk('2. druhý dotyk projde', V('Edit', file_path=js) is None)
     chk('3. soubor mimo mapu projde', V('Edit', file_path=R + '/docs/x.txt') is None)
     chk('4. jiná session dostane pravidla znovu', V('Edit', sid='s2', file_path=js) is not None)
     prepis({'type': 'system', 'subtype': 'compact_boundary'})
     chk('5. po compactu znovu', V('Edit', file_path=js) is not None)
-    d = V('Edit', file_path=R + '/memory/x.md')
+    d = Wz('s1', 'memory/x.md')
     chk('6. paměť bez uz_vime: zastaví s požadavkem uz_vime', d and 'uz_vime.js' in d and '§20' in d)
-    chk('7. paměť dál bez uz_vime: pořád zastaví', (lambda d: d and 'uz_vime.js' in d)(V('Edit', file_path=R + '/memory/x.md')))
+    chk('7. paměť dál bez uz_vime: pořád zastaví', (lambda d: d and 'uz_vime.js' in d)(Wz('s1', 'memory/x.md')))
     prepis(tu('Bash', command='node scripts/utils/uz_vime.js pravidla'))
-    chk('8. po uz_vime projde', V('Edit', file_path=R + '/memory/x.md') is None)
+    chk('8. po uz_vime projde', Wz('s1', 'memory/x.md') is None)
     d = V('Edit', file_path=R + '/v2/runar-character.js')
     chk('9. dlouhá sekce: chce Read a vypíše rozsah', d and 'Read RUNAR_DESIGN.md' in d)
     chk('10. bez Read pořád zastaví', (lambda d: d and 'napřed si přečti' in d)(V('Edit', file_path=R + '/v2/runar-character.js')))
@@ -401,19 +417,19 @@ def samotest():
         with io.open(tp2, 'a', encoding='utf-8') as f: f.write(json.dumps(o, ensure_ascii=False) + '\n')
     p2(tu('Bash', command='node scripts/utils/uz_vime.js neco'))
     p2({'type': 'user', 'message': {'content': 'je to jednoduchý proces: založení NORNS v produkci a strom bude obsahovat čtení z deníku'}})
-    d = V2('Edit', 'k1', file_path=R + '/RUNAR_BACKLOG.md')
+    d = Wz('k1', 'RUNAR_BACKLOG.md', lambda t, sid, **k: V2(t, sid, **k))
     chk('18. nová zpráva ownera s pokynem → první zápis do docs ukáže, kde to už stojí', d and 'RUNAR_TREE.md:2' in d and 'KÁNONU' in d)
-    chk('19. druhý zápis k téže zprávě projde', V2('Edit', 'k1', file_path=R + '/RUNAR_BACKLOG.md') is None)
+    chk('19. druhý zápis k téže zprávě projde', Wz('k1', 'RUNAR_BACKLOG.md', lambda t, sid, **k: V2(t, sid, **k)) is None)
     p2({'type': 'user', 'message': {'content': 'pokračuj v kontrole dalších částí'}})
-    chk('20. „pokračuj v kontrole“ kánon nehledá', V2('Edit', 'k1', file_path=R + '/RUNAR_BACKLOG.md') is None)
+    chk('20. „pokračuj v kontrole“ kánon nehledá', Wz('k1', 'RUNAR_BACKLOG.md', lambda t, sid, **k: V2(t, sid, **k)) is None)
     p2({'type': 'attachment', 'attachment': {'type': 'queued_command', 'prompt': 'strom bude obsahovat čtení z deníku po založení', 'origin': {'kind': 'human'}}})
-    d = V2('Edit', 'k1', file_path=R + '/memory/x.md')
+    d = Wz('k1', 'memory/x.md', lambda t, sid, **k: V2(t, sid, **k))
     chk('21. zpráva poslaná během práce (queued_command) se počítá taky', d and 'RUNAR_TREE.md:2' in d)
     p2({'type': 'attachment', 'attachment': {'type': 'queued_command', 'prompt': 'strom bude obsahovat čtení z deníku po založení znovu', 'origin': {'kind': 'peer'}}})
-    chk('22. zpráva jiné session (peer) se jako ownerova nebere', V2('Edit', 'k1', file_path=R + '/memory/x.md') is None)
+    chk('22. zpráva jiné session (peer) se jako ownerova nebere', Wz('k1', 'memory/x.md', lambda t, sid, **k: V2(t, sid, **k)) is None)
     io.open(kd + '/RUNAR_BACKLOG.md', 'w', encoding='utf-8').write('- uživatel případ obecně\n- jiný uživatel obnova\n')
     p2({'type': 'user', 'message': {'content': 'jinak 30 dní na smazání je dobré, třeba bude chtít uživatel svůj účet obnovit? jak se postupuje v takových případech?'}})
-    chk('23. shoda jen ve 2 obecných slovech z dlouhé zprávy = šum, nezastaví', V2('Edit', 'k1', file_path=R + '/memory/x.md') is None)
+    chk('23. shoda jen ve 2 obecných slovech z dlouhé zprávy = šum, nezastaví', Wz('k1', 'memory/x.md', lambda t, sid, **k: V2(t, sid, **k)) is None)
     sc3 = os.path.join(STAV, 'Temp', 'claude', 'kom.js')
     io.open(sc3, 'w', encoding='utf-8').write("// Postup → RUNAR_PRIVACY.md\nfs.writeFileSync(os.tmpdir() + '/x.txt', 'a')\n")
     sc4 = os.path.join(STAV, 'Temp', 'claude', 'cvz.py')
@@ -424,6 +440,8 @@ def samotest():
     chk('28. grep OK|FAIL && commit → past', V('Bash', sid='p3', command='node x.js | grep -E "^(OK|FAIL)" && git commit -m x') is not None)
     chk('30. holý cat > /dev/null → past', V('Bash', sid='p5', command='X=1; cat > /dev/null; echo a') is not None)
     chk('31. cat se souborem a cat <<EOF projdou', V('Bash', sid='p6', command='cat soubor.txt | head') is None and V('Bash', sid='p7', command='cat <<EOF' + chr(10) + 'ahoj' + chr(10) + 'EOF') is None)
+    chk('32. Edit na existující sdílený doc → zastaví s návodem uprav', (lambda d: d and 'commit_vlastni.py uprav' in d)(V('Edit', sid='e1', file_path=R + '/CLAUDE.md')))
+    chk('33. Write nového souboru v memory/ projde k pravidlům (ne zákaz)', (lambda d: d is None or 'nástrojem Write nepiš' not in d)(V('Write', sid='e2', file_path=R + '/memory/novy-soubor-test-xyz.md')))
     chk('29. grep -q ^OK && commit projde', V('Bash', sid='p4', command='node x.js | grep -q "^OK" && git commit -m x') is None)
     chk('24. cesta jen v komentáři skriptu se jako zápis nebere', V('Bash', sid='s9', command='node "' + sc3.replace('\\', '/') + '"') is None)
     for jm, v in ok: print(('OK    ' if v else 'FAIL  ') + jm)

@@ -10562,3 +10562,12 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   `VOICE_MONTHLY_LIMIT_TESTER` (15), ne `VOICE_MONTHLY_LIMIT` (5). Ověřeno v DB 2026-10-11 (příznak a `voice_month_count`).
 - **Proč se to stalo:** strop jsem odvodil z tarifu (premium → 5) místo z příznaku, podle kterého ho `elevenlabs-proxy` volí.
 - Affected doc(s): žádný jiný.
+
+## 2026-10-11 (42) — Sdílený doc nástrojem Edit hook zastaví hned; náhrada `commit_vlastni.py uprav`
+
+- **Proč:** rozpor dvou mechanismů z téhož dne — pre-commit (23) pouští sdílené docy jen přes `commit_vlastni`, ten bere jen zápisy ze
+  `zapis()`; úprava nástrojem Edit se tak dala udělat, ale ne commitnout (uvízla by ve stromě). Nalezeno kolem 3 kontroly (soulad mechanismů).
+- **Co:** hook `pravidla_pri_dotyku.py` zastaví Edit/MultiEdit a Write přes EXISTUJÍCÍ `RUNAR_*.md`, `CLAUDE.md`, `memory/**.md` s návodem;
+  `commit_vlastni.py uprav` = Edit přes `zapis()`. Rozhodnutí ownera není potřeba — vlastní kontrola a nástroj, chování appky beze změny
+  (2026-10-11 (15): opravy rozporů a vlastních kontrol bez ptaní). Úprava `commit_vlastni.py` (CODE-tree) oznámena.
+- Affected doc(s): `CLAUDE.md` §30, `RUNAR_BACKLOG.md` kolo 3 / 1 — v témže commitu.

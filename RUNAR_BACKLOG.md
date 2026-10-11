@@ -2721,6 +2721,14 @@ přes commit_vlastni“ · záloha a hledání konverzací + výmaz · maskován
 mrtvý příkaz · smoke ㊲ ㊳ ㊴. **Kolo 3** (KUKY 2026-10-10: „pojedeme znova, dokud všechno nevychytáme“): napřed části, které se od kola 2
 měnily (git log), a nové typy: soulad mezi mechanismy (hook × hook, kontrola × kontrola), co stroje propouštějí (protipříklady naostro).
 
+#### Kolo 3 / 1 — soulad mechanismů: pre-commit × nástroj Edit (nový typ kontroly; 2026-10-11)
+**Nalezeno (rozpor, který jsem vyrobil týž den, CODE-read):** pre-commit pouští sdílené docy jen přes `commit_vlastni` a ten commitne jen
+zápisy ze `zapis()` (ověřeno v `commit()`); změna nástrojem Edit by uvízla — necommitnutelná bez výjimky `RUNAR_SDILENE_OK`.
+**Opraveno:** hook pravidel zastaví Edit/MultiEdit a Write přes existující sdílený doc hned s návodem; `commit_vlastni.py uprav <lane>
+<soubor> <stary.txt> <novy.txt>` dělá totéž co Edit přes `zapis()` (texty v souborech, ne v argumentech). Testy: hook 33 stavů (testy
+uz_vime a kánonu teď zapisují skutečnou cestou cv.zapis), `uprav` 3 stavy v dočasném repu (nahradí · commitne · dvojznačný odmítne),
+původní samotest `commit_vlastni` beze změny. Nový soubor nástrojem Write dál smí (pak `pridej`).
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.

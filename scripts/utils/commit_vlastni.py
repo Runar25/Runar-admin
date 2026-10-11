@@ -75,6 +75,20 @@ def zapis(path, text, lane, R=None):
     _CETL[rel] = new
     z.append({ 'path': rel, 'i': i, 'novy': old is None }); _save(d, z)
 
+def uprav(path, lane, stary_soubor, novy_soubor, R=None):
+    """Jako nástroj Edit, ale přes zapis(): nahradí PRÁVĚ JEDEN výskyt textu ze `stary_soubor` textem z `novy_soubor`.
+    Proč (CODE-read 2026-10-11): změna nástrojem Edit se nedá commitnout (commit bere jen zápisy ze zapis(), pre-commit jiné nepustí);
+    texty se předávají soubory (napiš je nástrojem Write), ne argumenty — víceřádkový text v příkazu se rozbíjí."""
+    stary = io.open(stary_soubor, encoding='utf-8').read().replace('\r\n', '\n')
+    novy = io.open(novy_soubor, encoding='utf-8').read().replace('\r\n', '\n')
+    if stary.endswith('\n') and not novy.endswith('\n'): stary = stary[:-1]   # Write přidá konec řádku jen jednomu z nich
+    s = cti(path, R)
+    n = s.count(stary)
+    if n != 1: raise SystemExit('❌ ' + path + ': starý text tam je ' + str(n) + '× (musí právě 1×) — nic nezměněno')
+    zapis(path, s.replace(stary, novy), lane, R)
+    print(lane + ': ' + path + ' upraveno (1 nahrazení), commit: commit_vlastni.py commit ' + lane + ' <zprava.txt>')
+
+
 def pridej(path, lane, R=None):
     """Nový (netrackovaný) soubor, který vytvořil jiný nástroj (Write, builder): celý je můj. Trackovaný odmítne — tam by
     „celý rozdíl proti HEAD“ mohl nést cizí necommitnuté řádky; ten se zapisuje přes zapis()."""
@@ -209,7 +223,8 @@ if __name__ == '__main__':
     a = sys.argv[1:]
     if a[:1] == ['--test']: _test()
     elif len(a) >= 3 and a[0] == 'pridej': [pridej(f, a[1]) for f in a[2:]]; print(a[1] + ': přidáno ' + str(len(a) - 2) + ' nových souborů')
+    elif len(a) == 5 and a[0] == 'uprav': uprav(a[2], a[1], a[3], a[4])
     elif len(a) >= 2 and a[0] == 'stav': stav(a[1])
     elif len(a) >= 2 and a[0] == 'zahod': zahod(a[1])
     elif len(a) >= 3 and a[0] == 'commit': commit(a[1], a[2])
-    else: print('pouziti: pridej <lane> <soubor>... | stav <lane> | commit <lane> <zprava.txt> | zahod <lane> | --test'); sys.exit(2)
+    else: print('pouziti: uprav <lane> <soubor> <stary.txt> <novy.txt> | pridej <lane> <soubor>... | stav <lane> | commit <lane> <zprava.txt> | zahod <lane> | --test'); sys.exit(2)
