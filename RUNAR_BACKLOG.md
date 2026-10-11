@@ -2498,7 +2498,7 @@ Obě stránky mají EN text ve statickém HTML (záloha, než naběhne JS) i ve 
 `s3-online-title`: HTML „ONLINE PURCHASE — coming soon“ × JS „ONLINE PURCHASE“ (obojí z 1c6b9d8, 2026-05-20, rozešlé od začátku; JS
 po načtení přepíše, dovětek tak vidí jen ten, komu JS nenaběhne). Pravdivé je obojí — online nákup dál není, tělo bloku říká „soon“ v obou kopiích.
 **Mechanismus:** `scripts/verify_page_copies.js` (samotest `--test`) najde každý rozešlý prvek. **Předáno CODE-tune** (copy = jeho lane):
-sjednotit `s3-online-title` a v témže commitu zapojit kontrolu do smoke — dřív ne, jinak by padala všem.
+sjednotit `s3-online-title` a v témže commitu zapojit kontrolu do smoke — dřív ne, jinak by padala všem. ✅ *(CODE-tune 2026-10-11: nadpis bez „— coming soon“ — JS verze, kterou lidé vidí; kontrola zapojená jako smoke ㊲)*
 
 #### Kolo 2 / 9 — shrine: co zapisuje z klienta a jestli to brání server (2026-10-11, DB jen čtením)
 **Platí:** shrine píše z prohlížeče do `gift_codes` (insert), `runar_corrections` (insert), `runar_static_audio` (delete) a čte
