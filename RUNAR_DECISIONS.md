@@ -10359,3 +10359,24 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Hranice:** skutečné vygenerování hlasu po nasazení neověřeno (stojí znaky z kvóty) — potvrdí ho první přehraný hlas ve čtení.
 - **Pravidlo:** změna hlasu = `_shared/el_voice.ts` a nasadit OBĚ funkce (stojí v hlavičce modulu).
 - Affected doc(s): `RUNAR_BACKLOG.md` (kolo 2 / 16, část 21) — v témže commitu.
+
+## 2026-10-11 (29) — Oprava (25): strom na telefonu brzdí KRESLENÍ, ne výpočet; „spočti jednou, ulož“ telefon nezrychlí
+
+- **Proč:** při přípravě návrhu, jak strom zrychlit pro telefon (KUKY *„4. ano“*), ukázal profil překreslení, že (25) se mýlilo v hlavním
+  slově. (25) z toho, že 9× méně pixelů dalo stejný čas, usoudilo „brzdí výpočet stromu“ — stejný čas ale vylučuje jen pixely, výpočet
+  od kreslicích příkazů neoddělil. **Měřil:** CODE-tree.
+- **Měřeno** (400 čtení, obrazovka telefonu @3×, procesor 4× = střední telefon, Chrome bez okna, medián z 5):
+  - profil překreslení: výpočet, kam a jak větve rostou (`slotAssign`, kmen, `growBranch`, kořeny), **2–4 %** (dva profily) · těla větví
+    (`paintLimb`) **57 %** · objem, tedy stín přes obrys (`paintAura`), **28 %**.
+  - obrácená páka na objem: `objem` 0 → překreslení 1,96 s → 1,37 s (−30 %), zpět 0,6 → 1,93 s; sedí s profilem.
+  - příkazy plátna vypnuté → z 1,87 s zbude 0,97 s. Jedno překreslení = 71 828 výplní + 15 295 tahů (272 239 úseček), 70 111 z nich průhledných.
+  - útok na nástroj: vynucené vyčtení pixelu přidá 2–12 % (rasterizace se do měření vejde); hustota 1× místo 3× ušetří 6–10 %.
+  - cena roste s počtem čtení: 50 → 0,6 s · 100 → 0,85 s · 200 → 1,5 s · 400 → 2,0 s.
+- **Co z toho plyne:** „Produkční princip“ (`RUNAR_TREE.md` §8, spočítat jednou a uložit) má svůj důvod — obraz se nesmí měnit bez nového
+  čtení — ale telefon nezrychlí, ušetří 2–4 %. Zrychlit jde jen kreslení: kreslit méně často (hotový obraz si nechat), nebo levněji.
+  Návrh dostal owner 2026-10-11; jak, rozhodne on.
+- **Hranice:** emulace, ne skutečný telefon — ten kreslí plátno grafickým čipem a může vyjít jinak; log = jeho 388 čtení doplněných kopiemi.
+- **Navíc nalezeno:** `RUNAR_TREE.md` §8 psal o ozdobných větvičkách (63 % větviček bez runy) jako o dnešku a opravu vedl jako
+  „nepostaveno“; postavena 2026-09-28 (krok 6) a posuvník `odbocky (twigy)` je z panelu pryč od 2026-10-03 → odstavce označeny jako historie.
+- Affected doc(s): `RUNAR_TREE.md` §8 (odkaz u ceny překreslení, Produkční princip, dva odstavce o větvičkách) · `RUNAR_BACKLOG.md` (port)
+  — v témže commitu.
