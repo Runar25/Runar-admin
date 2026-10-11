@@ -127,7 +127,7 @@ def main():
         if need not in s:
             raise SystemExit('ve skriptu labu chybí ' + need + ' — smoke ⑬ by nevěděl, čemu strom rozumí')
     out = HEAD + s.strip('\n') + FOOT
-    p = os.path.join(V2, 'runar-tree-prod.js')
+    p = os.environ.get('RUNAR_PROD_DST') or os.path.join(V2, 'runar-tree-prod.js')   # RUNAR_PROD_DST: smoke ㊶ porovnává bez zápisu do stromu
     with io.open(p, 'w', encoding='utf-8', newline='\n') as f:
         f.write(out)
     print('written', p, len(out), 'chars')

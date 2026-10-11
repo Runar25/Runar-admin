@@ -86,6 +86,8 @@ PRIPADY = [
  ('chyti', 'verify_tree_mista.js', 'build_crown_composer.py', 'replace', 'rTT.length*=1+0.5*fR+0.8*exMax;', 'rTT.length*=1+0.8*exMax;'),
  ('chyti', 'verify_tree_mista.js', 'build_crown_composer.py', 'replace', 'rTT.length*=1+0.5*fR+0.8*exMax;', 'rTT.length*=1+0.5*fR;'),
  ('chyti', 'verify_tree_mista.js', 'build_crown_composer.py', 'replace', 'if(_SL && !dirO && be && be.nornName){ rTT.length*=1.4;', 'if(false){ rTT.length*=1.4;'),
+ # strom v aplikaci = lab (㊶, CODE-tree 2026-10-11): změna labu bez nového v2/runar-tree-prod.js musí kontrolu shodit
+ ('chyti', 'verify_tree_prod_sync.js', 'build_crown_composer.py', 'replace', 'var XLF=[0.26, 0.36, 0.46, 0.56, 0.66, 0.76]', 'var XLF=[0.27, 0.36, 0.46, 0.56, 0.66, 0.76]'),
 ]
 
 

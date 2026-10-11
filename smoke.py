@@ -764,6 +764,15 @@ radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola mist vetvi probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# ㊶ 2026-10-11 (CODE-tree, port stromu do aplikace): strom v aplikaci = kód labu (build_tree_production.py bere skript labu doslova).
+# Změna labu bez nového výstupu by produkci tiše nechala na staré verzi — owner by na svých čteních viděl jiný strom než v labu.
+print('\n' + chr(0x32B6) + ' STROM V APLIKACI = LAB (verify_tree_prod_sync.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_tree_prod_sync.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola stromu v aplikaci probehla'
+check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
+
 # ㉴ Štítek modelu v UI = model v edge funkci (CODE-tune 2026-10-05). KUKY (report 2026-10-05 07:40): „Pokud jsi změnil model
 # na sol6.1, proč jsi to taky neupravil… Tady v readeru. Což znamená, že nevíš, kde co je.“ Proxy běžela na gpt-6.1-sol, přepínač
 # admina hlásil „GPT-6 sol“ — dvě místa (edge funkce × překlady), která nikdo nehlídal.
