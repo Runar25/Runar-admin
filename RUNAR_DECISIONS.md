@@ -10571,3 +10571,22 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   `commit_vlastni.py uprav` = Edit přes `zapis()`. Rozhodnutí ownera není potřeba — vlastní kontrola a nástroj, chování appky beze změny
   (2026-10-11 (15): opravy rozporů a vlastních kontrol bez ptaní). Úprava `commit_vlastni.py` (CODE-tree) oznámena.
 - Affected doc(s): `CLAUDE.md` §30, `RUNAR_BACKLOG.md` kolo 3 / 1 — v témže commitu.
+
+## 2026-10-11 (43) — ElevenLabs: počítadlo účtu je v kreditech, ne ve znacích; tarif je ElevenAPI Starter; sazba v2/v3 $0.08 (oprava mých čísel)
+
+- **Proč:** owner poslal přehled a ceník ze svého účtu ElevenLabs (*„nejde to z kreditu starter, jestli tomu rozumím dobře. voláme API, jde
+  to z API účtu? kde se stala chyba?“*). Chyba byla moje: plány jsem vzal z ceníku aplikace (ElevenCreative), ne z API, a počítadlo účtu jsem
+  četl jako znaky.
+- **Ověřeno (naše `voice_usage` proti jejich přehledu):** 2026-10-11 v3 1 933 zn. = 773 kreditů, Multilingual v2 1 651 zn. = 661 kreditů;
+  2026-10-05 v3 624 zn. = 250 kreditů; 7 dní 4 208 zn. = „Character Usage 4.21K“, 1 683 kreditů = „1.68K credits“. Tedy 0,4 kreditu na znak,
+  kredit = $0.0002, sazba v2 i v3 $0.08 / 1000 znaků (2026-09-25 ještě 0,5 kreditu = $0.10). Snímky `voice_quota_snapshots`
+  (`character_count` / `character_limit`) jsou v kreditech: limit 103 807 = strop převodu Starteru 90 000 (3× měsíční kvóta) + dobití $2.76.
+  ElevenLabs čerpá napřed kredity tarifu, dobití až po nich (help center „How does credit rollover work?“).
+- **Co platí:** ElevenAPI Starter $6/měsíc = 30 000 kreditů = 75 000 znaků v2/v3 ≈ 177 IS / 200 EN single měsíčně (ownerův odhad „~170“ sedí).
+  Bezpečná hladina `VOICE_SAFE_SHARE` 0,7 je ze zůstatku kreditů (dnes ≈ 430 single), ne „120 hlasů“, jak stálo v komentáři configu.
+- **Opraveno hned:** `EL_PRECERPANI` ve `scripts/utils/stats.js` $0.10 → $0.08 (+ v4 $0.08, v4 Turbo $0.04 — obě umějí islandsky; nižší
+  cena v4 je jen sleva do 2026-10-12); komentář `VOICE_SAFE_SHARE` v `v2/runar-config.js`; v BACKLOGu stažené mé tvrzení „tabulka
+  ElevenLabs v PRICING počítá znaky špatně“ — metoda je správně, jen sazba klesla.
+- **Zbývá (BACKLOG, položka „Hlas: premium ke každému čtení?“):** přepočet `RUNAR_PRICING.md` se sazbou $0.08 spolu s rozhodnutím o hlasu;
+  převod znaků na kredity v bezpečné hladině `elevenlabs-proxy` a `elevenlabs-static` s příštím nasazením hlasu.
+- Affected doc(s): `RUNAR_BACKLOG.md` — v témže commitu.

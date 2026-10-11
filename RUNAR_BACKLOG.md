@@ -429,14 +429,17 @@
   účet nepřečerpá, ale ztichne. Tier features slibují předplatiteli „až N čtení hlasem“ a `RUNAR_PRICING.md` s tím stropem počítá.
   Návrh CODE-tune: premium hlas ke každému čtení (tarif EL roste s uživateli), testeři 75 jednotek čtení + 15 hlasů na cyklus EL
   (kalendářní měsíc pustí přes hranici dvojnásobek). Napřed ověřit dnešní limit EL — poslední snímek je z doby před resetem 2026-10-10
-  (`voice_quota_snapshots`, tarif „starter“). Spočítáno 2026-10-11 z `scripts/utils/pricing_tabulka.js`: ownerův scénář 3 single
-  + 1 Norny týdně, 1 Kříž + 1 Podkova měsíčně = ~29 jednotek (~19 čtení), hlas ~9 tis. znaků, model + hlas ~$1 měsíčně; při limitu
-  103 807 a hladině 70 % se vejde ~8 takových uživatelů.
-  ⚠️ **Tabulka ElevenLabs v `RUNAR_PRICING.md` („When to Upgrade“) má zahrnuté znaky špatně:** počítá je jako cenu ÷ sazbu přečerpání
-  (Creator 220 000), ElevenLabs ale uvádí kredity (1 kredit ≈ 1 znak): Starter $6 = 30 tis., Creator $22 = 121 tis., Pro $99 = 600 tis.,
-  Scale $299 = 1,8 mil., Business $990 = 6 mil.; nevyčerpané se převádějí nejvýš 2 měsíce, zůstatek nejvýš 3× měsíční kvóta
-  (elevenlabs.io/pricing, staženo 2026-10-11). Na Starteru se 5 testerů × 15 hlasů (~37 tis. zn.) vejde jen díky převodu; trvale 30 tis.
-  × 70 % = 21 tis. Přepočítat tabulku i kapacitu spolu s rozhodnutím o hlasu (CODE-tune, nalezeno 2026-10-11).
+  (`voice_quota_snapshots`, tarif „starter“). Ownerův scénář (3 single + 1 Norny týdně, 1 Kříž + 1 Podkova měsíčně) = ~29 jednotek
+  (~19 čtení), hlas ~9 tis. znaků ≈ 3,8 tis. kreditů, model + hlas ~$0.8–0.9 měsíčně (`scripts/utils/pricing_tabulka.js`, sazba $0.08).
+  **Fakta o účtu (2026-10-11, ověřeno proti přehledu ElevenLabs, DECISIONS 2026-10-11):** ElevenAPI Starter $6/měsíc = 30 000 kreditů;
+  kredit = $0.0002, v2/v3 = 0,4 kreditu na znak → 75 000 znaků ≈ 177 IS / 200 EN single měsíčně. Počítadlo a limit v `voice_quota_snapshots`
+  jsou kredity (103 807 = strop převodu 90 000 + dobití $2.76); nejdřív se čerpá tarif, dobití až po něm. 5 testerů × 15 hlasů ≈ 15 tis.
+  kreditů měsíčně → vejde se i bez převodu (70 % z 30 tis. = 21 tis.); hlas ke každému čtení testera (nejhůř 75 single IS ≈ 12,7 tis.
+  kreditů na testera) potřebuje Creator API ($22 = 110 tis. kreditů). ⚠️ Do 2026-10-11 tu stálo, že tabulka ElevenLabs v `RUNAR_PRICING.md`
+  počítá znaky špatně (Creator 121 tis.) — to bylo MOJE chybné tvrzení z ceníku aplikace ElevenLabs (jiný produkt). Metoda tabulky (cena
+  tarifu ÷ sazba) je správně, jen sazba klesla z $0.10 na $0.08 (Creator 275 000 znaků v3/v2) — přepočítat spolu s rozhodnutím o hlasu.
+  **S příštím nasazením hlasu:** `elevenlabs-proxy` a `elevenlabs-static` přičítají ke kreditům znaky (`kUsed + text.length`) → převést
+  znaky na kredity podle modelu (nový hlas teď počítají 2,5× — opatrně, ale nepřesně).
 
 ## Multijazyčnost
 
