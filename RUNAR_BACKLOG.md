@@ -2353,6 +2353,12 @@ odečtu; sol: prázdná odpověď → `null` → Claude cesta se stejnými kontr
   a předplatitel přetáhne měsíční strop. **Závěr z kódu, naostro neověřeno** (stálo by peníze a zápisy do produkce). Oprava: REZERVOVAT na
   začátku (atomicky odečíst / zvýšit čítač) a při chybě VRÁTIT — slib „chyba nestojí kredit“ zůstane. Money-critical → E2E test všech
   cest (čtení, spready, Ask, životní runa, rozbor jména) PŘED nasazením (poučení z #2b 2026-08-03); nasazení pouští owner.
+  ⚠️ **CODE-tune 2026-10-11 — diagnóza sedí, oprava ne (čeká na ownera):** rezervace na začátku má vlastní díru. Čtení smí trvat déle,
+  než edge funkce žije (sol 50 s + Claude 3 × 55 s na model, dva modely), a funkce zabitá PO rezervaci by kredit vzala bez čtení —
+  slib „chyba nestojí kredit“ by bez uklízeče rezervací padl. **Návrh:** zámek „jedno čtení naráz na účet“ (CAS na řádku s expirací
+  10 min, jen service_role), odečet dál až po úspěchu. Souběžný požadavek → 429 „čtení už běží“. Zabitá funkce nestojí nic a zámek
+  vyprší sám. Potřeba: SQL (owner), proxy, nasazení s jeho ano, živé E2E na NEadmin účtu s kreditem (admin se neúčtuje). (n) z části 41
+  (`cache_control`, ~$0.0004 na volání Claude) přibalit k tomuhle nasazení, samostatně nenasazovat.
 
 ### Část 41 — plýtvání voláními, která stojí peníze; levnější modely mimo čtení (2026-10-10)
 KUKY: *„budeme ještě chtít hlídat případné plýtvání voláním, což nás stojí peníze“* + *„případně pokud na něco můžeme použít levnější
