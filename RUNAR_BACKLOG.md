@@ -397,9 +397,15 @@
 ## Profil / personalizace
 
 - [x] **Gender field** — HOTOVO (kód, SW v118): selektor Hann/Hún/Hán (kk/kvk/hk=hán default) v side panelu, jen IS; ÁVARP do všech 5 IS builderů; rule#5 skloňuje dle rodu. **Čeká jen DB sloupec:** `alter table user_profiles add column if not exists address_gender text default 'hk';` (owner v SQL editoru). Do té doby jede přes localStorage.
-- [ ] **RUNAR_PRICING.md — příjem na uživatele stojí dvakrát jinak** (nalezeno 2026-10-11 při přepočtu na sol, CODE-tune): projekce zisku
+- [x] *(hotovo 2026-10-11: owner „nevím, odkud je to číslo… spočítej to“ → příjem 3 518 ISK ≈ $28.49 ze vzorce v pricingu, projekce
+  přepočtena i s DPH a poplatky)* **RUNAR_PRICING.md — příjem na uživatele stojí dvakrát jinak** (nalezeno 2026-10-11 při přepočtu na sol, CODE-tune): projekce zisku
   počítá ~$24 na uživatele (10 uživatelů ~$240), „Operating costs“ ~$28.5 (3.518 ISK; mix 70/30 tarifů, 60 % ročně). Rozdíl je ve vstupu, ne
   v nákladech. Rozhodne owner, který mix platí; druhé místo pak převést na odkaz (§20).
+- [ ] **Náklady — zmapovat pořádně** (owner 2026-10-11: *„tohle by si zasloužilo větší rozbor a trochu lépe zmapovat. takže teď na hrubo
+  a později to uděláme pořádně“*). Hrubá tabulka stojí v `RUNAR_PRICING.md` („Fixed monthly costs“). Dohledat z faktur a účtů: co kryje
+  „GPT 8 $“ (předplatné, nebo API) · skutečná měsíční útrata Anthropic API a OpenAI API · plán ElevenLabs při spuštění · používá se ještě
+  Hetzner · doména therunekeeper.com a schránka runar@ (Workspace?) · úložiště Google Drive pro zálohy · kolik ze Shopify nese Rúnar ·
+  kdy Apple a Google Play. Pak přepočítat break-even (`RUNAR_PRICING.md`) a hlídat, ať čísla bydlí na jednom místě.
 - [ ] **Upozornění na obnovu měsíčních čtení** (owner 2026-10-11: *„apka by mohla dát vědět jednou po otevření, že se čtení obnovila“*) —
   plán předložen ownerovi 2026-10-11 (CODE-tune), čeká na ano. Do té doby slib z nápovědy pryč (DECISIONS 2026-10-11 (20)); až vznikne,
   věta se do FAQ vrátí.

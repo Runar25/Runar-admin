@@ -263,26 +263,27 @@ Model dnes tvoří třetinu až dvě třetiny horní meze (35–68 %; hlas má s
 
 Standard and Premium margins stay equal and healthy (~93–95% IS / ~96% EN). Prices remain balanced — no change needed.
 
-⚠️ Fixed infra is **~$202/month**, not ~$30 — the full breakdown (Claude, Shopify, Supabase,
-ElevenLabs, Apple, Hetzner, domain) is in „Operating costs, taxes & break-even" below, and
-**break-even is ~8 users, not 2**. This paragraph counted only Hetzner + Supabase and contradicted
-its own document; corrected 2026-07-18. Do not restate the number here — that section owns it.
+⚠️ Fixní náklady i break-even stojí jen v „Operating costs, taxes & break-even“ níž (§20). Do 2026-07-18 tu stálo ~$30 (jen Hetzner
++ Supabase) a break-even 2 uživatelé; do 2026-10-11 tu stálo ~$202 — teď je tu jen odkaz, číslo by tu zase zastaralo.
 
-### Revenue & profit projections (realistic mix: 70% Standard / 30% Premium, 60% annual / 40% monthly, 50% IS / 50% EN)
+### Revenue & profit projections (mix: 70 % Standard / 30 % Premium, 60 % ročně / 40 % měsíčně, 50 % IS / 50 % EN)
 
-Náklad modelu + hlasu = horní mez, blend **≈ $1.43 / uživatel** (do 2026-10-11 $1.66). Fixní náklady = **~$202** podle „Operating costs“ níž
-(do 2026-10-11 tu stálo $30 — sekce níž to opravila už 2026-07-18, tahle tabulka ne). Bez DPH, poplatků za platby a daní → „Operating costs“.
+**Hrubě** (owner 2026-10-11: *„teď na hrubo a později to uděláme pořádně“*). Příjem = **3 518 ISK ≈ $28.49 na uživatele** včetně DPH
+(vzorec v „Operating costs“ níž). DPH 24 % až nad ~47 uživatelů (obrat 2 000 000 ISK/rok), poplatky za platby $0.96, model + hlas horní
+mez $1.43 na uživatele, fixní náklady po spuštění („Operating costs“). Zisk = zisk firmy před mzdou a daní z příjmu. Hlas je v nákladech
+na uživatele a plán ElevenLabs ve fixních jako základ — dvojí započtení do výše plánu pro hrubý odhad nevadí.
 
-| Users | Revenue/month | Model + hlas | Fixní | Net profit | Margin |
-|-------|---------------|-----------|-------|-----------|--------|
-| 10 | ~$240 | ~$14 | ~$202 | ~$23 | 10% |
-| 50 | ~$1.200 | ~$72 | ~$202 | ~$926 | 77% |
-| 100 | ~$2.400 | ~$143 | ~$202 | ~$2.054 | 86% |
-| 200 | ~$4.800 | ~$287 | ~$202 | ~$4.311 | 90% |
-| 500 | ~$12.000 | ~$717 | ~$202 | ~$11.081 | 92% |
+| Users | Příjem | DPH | Platby | Model + hlas | Fixní | Zisk firmy | % příjmu |
+|-------|--------|-----|--------|-----------|-------|-----------|--------|
+| 10 | ~$285 | – | ~$10 | ~$14 | ~$230 | ~$31 | 11% |
+| 50 | ~$1.424 | ~$276 | ~$48 | ~$72 | ~$230 | ~$799 | 56% |
+| 100 | ~$2.849 | ~$551 | ~$96 | ~$143 | ~$230 | ~$1.828 | 64% |
+| 200 | ~$5.697 | ~$1.103 | ~$192 | ~$286 | ~$230 | ~$3.886 | 68% |
+| 500 | ~$14.243 | ~$2.757 | ~$480 | ~$715 | ~$230 | ~$10.061 | 71% |
 
-⚠️ Sloupec Revenue počítá ~$24 na uživatele, „Operating costs“ níž ~$28.5 (3.518 ISK) — rozpor ve vstupu, ne v nákladech; nechán, zapsán
-do `RUNAR_BACKLOG.md` (rozhodne owner, který mix platí).
+Do 2026-10-11 tu tabulka počítala ~$24 příjmu na uživatele — výpočet k tomu v dokumentu nebyl (owner: *„nevím, odkud je to číslo“*;
+po odečtení DPH vychází ~$23, takže to mohl být příjem po DPH — ověřit nejde), bez DPH a poplatků a s fixními $30, pak $202 →
+uváděné marže 77–92 % byly nadsazené.
 
 ---
 
@@ -312,20 +313,26 @@ na uživatele v horní mezi).
 > Rates change yearly and depend on company form. Sources at the end of this section.
 > All listed costs are tax-deductible business expenses (reduce taxable profit).
 
-### Fixed monthly costs (USD)
+### Fixed monthly costs (USD) — hrubě
 
-| Item | $/month | Note |
-|------|---------|------|
-| Claude (dev / Max) | 100.00 | development cost — drops once the app is built |
-| Shopify (Basic plan) | 39.00 | online store / gift cards / credits |
-| Supabase Pro | 25.00 | DB + edge functions |
-| ElevenLabs (Creator base) | 22.00 | voice; steps up to Pro $99 (~50 users), Scale $299 (~170) |
-| Apple Developer ($99/yr) | 8.25 | amortized |
-| Hetzner server | 6.00 | |
-| Domain agndofa.is | 1.50 | amortized |
-| Google Play ($25 one-time) | 0.70 | amortized over ~36 mo |
-| Resend (email) | 0.00 | free tier at launch volume |
-| **Total fixed** | **~$202.45** | |
+Owner 2026-10-11: *„předplatné pro Claude, co teď používám, 100 $ měsíčně, GPT 8 $, ElevenLabs, Supabase až půjdeme ven 25 $ a další,
+co si nepamatuju… teď na hrubo a později to uděláme pořádně“*. Pořádný rozbor (faktury, co která položka přesně kryje) →
+`RUNAR_BACKLOG.md` („Náklady — zmapovat pořádně“).
+
+| Item | Dnes | Po spuštění | Note |
+|------|------|-------------|------|
+| Claude (Max, vývoj) | 100 | 100 | vývoj — po dostavění appky odpadne nebo klesne |
+| GPT (OpenAI) | 8 | 8 | owner; jestli je to předplatné, nebo útrata API, upřesnit |
+| Anthropic API (záloha čtení + testy) | ≤ 20 | ≤ 20 | strop útraty (owner 2026-10-10); skutečná útrata nižší |
+| ElevenLabs | 6 | 22 | dnes Starter (snímek předplatného 2026-10-05, `voice_quota_snapshots`), po spuštění Creator („ElevenLabs Plan“ výš) |
+| Supabase | 0 | 25 | dnes Free, Pro „až půjdeme ven“ (owner) |
+| Shopify (Basic) | 39 | 39 | e-shop Agndofa — sdílený s obchodem; kolik nese Rúnar, rozhodnout |
+| Apple Developer ($99/rok) | 0 | 8.25 | až nativní appka |
+| Google Play ($25 jednou) | 0 | 0.70 | až nativní appka, rozpočteno na ~36 měsíců |
+| Hetzner server | 6 ? | 6 ? | používá se ještě? ověřit |
+| Domény | 1.50 + ? | 1.50 + ? | agndofa.is; therunekeeper.com (schránka runar@) doplnit |
+| Resend (e-mail) | 0 | 0 | free tier |
+| **Celkem (hrubě)** | **~$180** | **~$230** | Hetzner započten, therunekeeper.com ne; do 2026-10-11 ~$202 (bez GPT, Anthropic API, Supabase Free/Pro rozlišení) |
 
 One-time: Google Play $25. Annual: Apple Developer $99.
 
@@ -337,7 +344,9 @@ One-time: Google Play $25. Annual: Apple Developer $99.
 | Payment processing (Shopify ~2.9% + ~$0.30/txn) | ~0.96 | on gross revenue |
 | **Total variable** | **~$1.88** | do 2026-10-11 ~$1.81 (Claude + hlas ~0.85) |
 
-Revenue per paying user ≈ 3.518 ISK/mo (~$28.5), blended 70% Standard / 30% Premium, 60% annual / 40% monthly.
+Revenue per paying user ≈ **3 518 ISK/měsíc (~$28.49)** včetně DPH — vzorec (spočítáno 2026-10-11, owner *„spočítej to“*):
+Standard 0,6 × 2 900 + 0,4 × 3 490 = 3 136 ISK · Premium 0,6 × 4 083 + 0,4 × 4 900 = 4 410 ISK · mix 0,7 × 3 136 + 0,3 × 4 410 = 3 518 ISK
+(ceny „Subscription Pricing“ výš, kurz $1 = 123,5 ISK). Po DPH 2 837 ISK (~$22.97).
 
 ### Icelandic taxes & mandatory contributions
 
@@ -352,17 +361,18 @@ Model: revenue − VAT − payment fees − operating costs = company money; −
 
 | Net take-home / month | Paying users needed |
 |-----------------------|---------------------|
-| Break-even (covers all costs) | **~8** (přepočteno 2026-10-11: 202,45 ÷ (28,5 − 1,88) = 7,6) |
-| 200.000 ISK | ~147 |
-| 350.000 ISK | ~250 |
-| **500.000 ISK** (solid Icelandic living) | **~353** |
-| 700.000 ISK | ~490 |
+| Break-even (covers all costs) | **~9** (fixní ~$230 = 28 461 ISK ÷ (3 518 − 232 ISK na uživatele) = 8,7; do 2026-10-11 ~8) |
+| 200.000 ISK | ~149 |
+| 350.000 ISK | ~252 |
+| **500.000 ISK** (solid Icelandic living) | **~355** |
+| 700.000 ISK | ~493 |
 
 - Mandatory contributions (both layers) roughly **double** the user count vs a naive gross model.
 - **Claude $100 is a temporary dev cost** → drops post-launch → break-even falls to ~5 and the curve lifts.
 - Margins on revenue stay high (~93–96 %); the wedge to *personal net* is what raises the counts.
-- 2026-10-11 (sol): variabilní náklad +$0.07/uživatel proti červnu — řádky „living wage“ se tím hýbou pod zaokrouhlení (<0,3 % příspěvku
-  na uživatele), proto zůstávají.
+- 2026-10-11: přepočteno týmž modelem — ověřeno, že s červnovými vstupy (fixní $202.45, variabilní $1.81) dá přesně 147 / 250 / 353 /
+  490 a break-even 7,6. Nové vstupy: fixní ~$230 po spuštění, variabilní $1.88 → +1 až +3 uživatelé na řádek. Výpočet: potřebné peníze
+  firmy = čistá mzda ÷ 0,67 × 1,20 (~33 % osobní daně a odvody, ~20 % odvody zaměstnavatele); příspěvek uživatele po DPH 2 837 − 232 ISK.
 
 ### Sources (verified 2026-06-15)
 - Employer social security (tryggingagjald 6.35 %) — Rivermate / PwC Tax Summaries
