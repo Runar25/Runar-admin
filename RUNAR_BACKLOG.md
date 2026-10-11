@@ -2486,6 +2486,18 @@ kola 1 (`cc0ca7f`) plní statický text, config, `t()/tp()` nebo `esc()`/`escape
 **obraznost přeměřena znovu:** 25 run × 6 období = 150 dvojic, žádná bez kandidáta z `RUNE_IMAGES`, období pro všech 12 měsíců → `SEASON_POOLS`
 se do čtení dál nedostane; filtr podle oblasti (`_imgPodleOblasti`, od 2026-10-03) nikdy nevrátí prázdno (`ok.length ? ok : cand`), takže to nemění.
 
+#### Kolo 2 / 7 — CLAUDE.md o sobě samém (2026-10-11)
+„§1–§28“ v CLAUDE.md (výjimka z délky), BACKLOGu a domácím `C:\Users\zkuku\CLAUDE.md` <!-- doc-links:ok 2026-10-11 domácí ukazatel mimo repo -->
+→ „§1+“: pravidel je dnes 32 a pevné číslo ujíždí s každým novým (commit 2db36c7).
+
+#### Kolo 2 / 8 — stránky pro uživatele: nápověda a soukromí drží angličtinu dvakrát (2026-10-11)
+Obě stránky mají EN text ve statickém HTML (záloha, než naběhne JS) i ve slovníku `CONTENT.en` v JS. Hlídalo to jen pravidlo v komentáři
+„měnit obojí“, tedy pravidlo na paměti (§30). Změřeno porovnáním po normalizaci: **soukromí 22/22 shodných · nápověda 26 prvků, 1 rozešlý** —
+`s3-online-title`: HTML „ONLINE PURCHASE — coming soon“ × JS „ONLINE PURCHASE“ (obojí z 1c6b9d8, 2026-05-20, rozešlé od začátku; JS
+po načtení přepíše, dovětek tak vidí jen ten, komu JS nenaběhne). Pravdivé je obojí — online nákup dál není, tělo bloku říká „soon“ v obou kopiích.
+**Mechanismus:** `scripts/verify_page_copies.js` (samotest `--test`) najde každý rozešlý prvek. **Předáno CODE-tune** (copy = jeho lane):
+sjednotit `s3-online-title` a v témže commitu zapojit kontrolu do smoke — dřív ne, jinak by padala všem.
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
