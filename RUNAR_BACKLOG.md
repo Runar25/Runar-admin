@@ -2437,8 +2437,9 @@ nepřebírat bez ověření, + typy, které kolo 1 nemělo: **sliby appky × tok
 CONCURRENCY zámek z části 40 — CODE-tune 4b7fc9e) · SQL zámku v databázi (`acquire/release_reading_lock`, `reading_locks`, jen `service_role`)
 · **nasazeno = repo** (`claude-proxy` v80 i `delete-account` v8 staženy a porovnány bajtově) · zámek se uvolní ve `finally` přes token,
 rituály a Ask nezamyká · `cache_control` pryč (n).
-- ⚪ **Pro CODE-tune (drobnost):** `reading_in_progress` (429 od zámku) klient ukáže jako `err_generic`; přesnější hláška („čtení už se tahá“,
-  EN + IS) by pomohla — nastane jen u dvou oken/zařízení, tlačítko je během čtení vypnuté.
+- ~~drobnost: `reading_in_progress` → `err_generic`~~ **OPRAVA (CODE-tune 2026-10-11):** `callProxy` (`runar-app.js` ~1310) mapuje každé 429 na
+  `rate_limited` → `err_rate_limited` („Too many requests. Please wait a moment.“ / „Of margar beiðnir. Bíddu aðeins.“) — sedí, nechává se.
+  Moje chyba: `callProxy` jsem neprošel, tvrdil jsem z `_readingErrMsg`.
 
 #### Kolo 2 / 2 — ostatní edge funkce (2026-10-11)
 **Nasazeno = repo** (všech 10 nasazených staženo a porovnáno): shodné `claude-proxy`, `redeem-code`, `delete-account`, `notify-report`,
