@@ -3702,6 +3702,18 @@ konzole bez chyb. Islandské věty panelu is-greynir: „lestrunum“ korpus dok
   `setLang` (`v2/runar-app.js` ~ř. 334–346) po přepnutí znovu kreslí Kolekci a Životní runu, Deník ne; jeho texty kreslí jen `renderJournal`
   (do updateUIText nepatří, §14). Stačí znovu vykreslit uložené `_jEntries` (s aktivním filtrem), když je otevřená záložka Deník.
   Smoke ㊽ zaseklou angličtinu hledá, opačný směr (islandština v EN po přepnutí na Deníku) neprochází.
+- [ ] **Pro CODE-tune — islandský pád u Rúnakortu (dvě šablony).** `{card}` dostává vždy 1. pád z `vl('card')` („Rúnakort“):
+  1. `rs_exhausted_one/_many` (`v2/runar-translations.js` ~ř. 922; Rune Seeker po vyčerpání čtení zdarma): „Opnaðu dyrnar með
+     <b>Rúnakort</b>“. Nástrojové „með“ chce 3. pád — korpus „greiða með korti“ 77×, „greiða með kort“ 0×; „dyrnar með lykli“ 5×,
+     „með lykil“ 0×. Tvar je hotový ve `VOCAB.card.is_dat` („Rúnakorti“), `v2/runar-auth.js` ~ř. 194 ho jen nepoužívá. Greynir navíc
+     chápe výčet za pomlčkou jako závislý na „með“ („engin“ → „engri“) — ověřená podoba: „Opnaðu dyrnar með <b>{card}</b>. Eitt kort,
+     enginn gildistími og engin áskrift.“ (is-greynir OK).
+  2. `redeem_card_code` (~ř. 960): „ᚠ SLÁÐU INN {card} KÓÐA“ je slovo od slova anglické „ENTER {card} CODE“ — dvě podstatná jména vedle
+     sebe bez složeniny a bez 2. pádu (§2: IS jako překlad EN). Ověřené podoby (is-greynir OK): „Sláðu inn kóðann á Rúnakortinu“
+     (potřebuje 3. pád určitý, ve VOCAB zatím není), nebo bez nového tvaru „{card}: sláðu inn kóðann“. Korpus na tyhle obraty mlčí
+     (0× i u „gjafakort“) a Greynir propustí i kalk „Sláðu inn gjafakort kóða“ — rozhodla tu gramatika, ne nástroj.
+  Ostatní IS šablony s `{card}` sedí („Notaðu Rúnakort“, „Kaupa fleiri Rúnakort“, „Rúnakort opnar allt“). Vzor pádů jako dat už existuje
+  (`TIERS.*.label_is_dat`, `tierLabel`, DECISIONS 2026-09-30 (6)).
 - [ ] **Návrh pro design (ne chyba)** — na telefonu leží vlajka hlášení (`#br-btn`, z-index 99998) a „?“ (`#hb-btn`) i nad otevřeným
   postranním panelem (z-index 151); vlajka stojí v řádku „× DELETE ACCOUNT“. Text dnes nezakryje, ale panel působí neuzavřeně.
 
