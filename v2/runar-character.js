@@ -2685,7 +2685,9 @@ var RP_YGGDRASIL = {
     seeker:'Leitandi', lifeRune:'LífsRúna', area:'Svið', seeking:'Leitin', seekJoin:' og ', question:'Spurning', langInstr:'',
     tiers:['── KRÓNA — það sem sýnir sig ──','── STOFN — það sem ber ──','── RÆTUR — það sem nærir ──'],
     positions:['RÚNIN 1 — Ásgarðr (hásætið sem sér yfir heima alla):','RÚNIN 2 — Vanaheimr (gull sem liggur í dagsljósi, ekki grafið upp):','RÚNIN 3 — Álfheimr (birta sem sólin sjálf er borin saman við):','RÚNIN 4 — Miðgarðr (girðing gerð úr brám jötuns):','RÚNIN 5 — Jötunheimr (veður sem engin girðing var reist til að halda):','RÚNIN 6 — Svartálfaheimr (hendur sem vinna í leyni og móta það sem hinir bera):','RÚNIN 7 — Niðavellir (auður sem fannst, ekki var ræktaður):','RÚNIN 8 — Niflheimr (ein uppspretta sem elur ellefu ár, og engin elur hana):','RÚNIN 9 — Hel (þögnin sem ræturnar nærast á):'],
-    intro:'Leitandinn dregur níu rúnir — Yggdrasil, níu heimar. Einu sinni á ári.',
+    // 2026-10-11: konec „Einu sinni á ári.“ pryč — zbytek z doby, kdy byl Yggdrasil jen o slunovratu (a57bbd7); od 2026-07-18 je
+    // kdykoliv (CLAUDE.md „Spread systém“) a model větu bral jako fakt o čtení, které uživatel právě dělá. Totéž EN níž.
+    intro:'Leitandinn dregur níu rúnir — Yggdrasil, níu heimar.',
     landing:'NIÐURLAGIÐ — síðasta setningin svarar einu: hvað er orðið sýnilegt nú þegar myndin sést öll í senn. Settu breyttu myndina við hlið þess sem leitandinn spurði um. Ef ekkert var spurt, settu hana við hlið þess sem myndin sjálf ber. Segðu það með orðum myndarinnar. Engin spurning í lokin, enginn boðskapur, ekkert „þetta þýðir", engin huggun.',
     beats:[
       'Þetta eru ekki níu aðskildir lestrar — þetta er eitt líf séð í gegnum níu glugga.',
@@ -2704,7 +2706,7 @@ var RP_YGGDRASIL = {
     seeker:'Seeker', lifeRune:'Life rune', area:'Area', seeking:'Seeking', seekJoin:' & ', question:'Question', langInstr:'Respond in English.',
     tiers:['── CROWN — what shows itself ──','── TRUNK — what carries ──','── ROOTS — what feeds ──'],
     positions:['RUNE 1 — Asgard (the seat high enough to see every other world from):','RUNE 2 — Vanaheim (gold that lies in daylight, not dug from under it):','RUNE 3 — Alfheim (a brightness the sun itself is measured against):','RUNE 4 — Midgard (a fence built from a giant\u2019s brows):','RUNE 5 — Jotunheim (weather no fence was ever built to hold):','RUNE 6 — Svartalfheim (hands working unseen, shaping what the others carry):','RUNE 7 — Nidavellir (wealth that was found, not grown):','RUNE 8 — Niflheim (one spring, feeding eleven rivers, fed by none):','RUNE 9 — Hel (the quiet the roots feed on):'],
-    intro:'The seeker draws nine runes — the Yggdrasil, nine worlds. Once a year.',
+    intro:'The seeker draws nine runes — the Yggdrasil, nine worlds.',   // 2026-10-11: „Once a year.“ pryč — důvod u IS výš
     landing:'THE LANDING — the last sentence answers one thing: what has become visible now that the whole image is seen at once. Set the changed image down beside what the seeker brought (or, if nothing was asked, beside what the image itself carries). Say it in the words of the image. Not a question, no moral, no "this means", no comfort added.',
     beats:[
       'This is not nine separate readings — it is one life seen through nine windows.',
