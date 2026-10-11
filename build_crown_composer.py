@@ -233,7 +233,8 @@ HTML = r"""<!DOCTYPE html>
   var KW={}; try{ (typeof RUNES!=='undefined'?RUNES:[]).forEach(function(r){ KW[r.g]={k:r.k, k_is:r.k_is, n:r.n}; }); }catch(e){}
   /* ZOOM/POSUN uzivatele. Lezi NAD auto-fitem: obraz = _uz*(auto-fit obraz) + (_ux,_uy).
      _uz=1 & _u=0 => presne stav bez zoomu, takze vypnuty zoom nic nemeni. */
-  var _uz=1, _ux=0, _uy=0, _shY=0;   /* _shY = svisly ram aplikace (state.frame, viz AUTO-FIT); v labu 0 */
+  var _uz=1, _ux=0, _uy=0, _shY=0, _Hc=H;   /* _shY = svisly ram aplikace (state.frame, viz AUTO-FIT); v labu 0. _Hc = vyska platna: v aplikaci orizla na strom, v labu H */
+  var FRAME_TOP=10, FRAME_BOT=10;   /* ram aplikace: mezera nad korunou a pod koreny (px platna pred zoomem), viz AUTO-FIT */
   /* Stari prave stavaneho pramene 0..1. MUSI byt tady, ne uvnitr draw() -- cte to i
      `mirrorTwig`, ktera je definovana mimo draw() (jinak ReferenceError). */
   var _curAge01=null;
@@ -2327,11 +2328,21 @@ HTML = r"""<!DOCTYPE html>
     if(by0<_ay) _fit=Math.min(_fit, (_ay-_pad)/(_ay-by0));
     if(by1>_ay) _fit=Math.min(_fit, (H-_pad-_ay)/(by1-_ay));
     _fit=clamp(_fit, 0.25, 1);
-    /* RAM APLIKACE (state.frame; 2026-10-11 KUKY „strom je neprirozene nizko na obrazovce“): pata kmene stoji pevne na groundY
-       (660 z 900), nad stromem zustavala prazdna tretina platna. V aplikaci se strom svisle vystredi podle skutecneho obalu po
-       auto-fitu; state.frameSh = pevny ram (prehravani historie drzi ram celeho stromu, at strom pri rustu neposkakuje). Lab: vypnuto. */
-    _shY=0;
-    if(state.frame){ _shY=(state.frameSh!=null) ? state.frameSh : Math.round((H-((_ay+_fit*(by0-_ay))+(_ay+_fit*(by1-_ay))))/2); }
+    /* RAM APLIKACE (state.frame; lab vypnuto — drzi zem kvuli porovnavani). Pata kmene stoji v labu pevne na groundY (660 z 900).
+       2026-10-11 KUKY „strom je neprirozene nizko na obrazovce“ -> strom svisle vystredeny podle obalu. Tyz den znovu: „porad muze
+       jit vys … ma byt hned pod lajnou … posuvnik mnohem blize korenum a mel by se posouvat dynamicky s tim, jak roste strom“ —
+       vystredeni nechavalo prazdno nad korunou i pod koreny (platno pevne 900). Ted se platno ORIZNE na obal stromu: koruna FRAME_TOP
+       pod hornim okrajem, platno konci FRAME_BOT pod koreny, vyska platna _Hc = vyska stromu; meritko (auto-fit proti W×H) se nemeni.
+       Prehravani historie drzi ram celeho stromu (state.frameSh posun, state.frameH vyska), at strom ani posuvnik pod nim
+       neposkakuji; mladsi strom, ktery se do ramu nevejde (vyssi koruna pri mensim zmenseni), ram jen zvetsi. */
+    _shY=0; _Hc=H;
+    if(state.frame){
+      var _t0=_ay+_fit*(by0-_ay), _t1=_ay+_fit*(by1-_ay);   /* obal stromu na platne po auto-fitu, pred ramem */
+      if(state.frameSh==null){ _shY=Math.round(FRAME_TOP-_t0); _Hc=Math.ceil(_t1-_t0)+FRAME_TOP+FRAME_BOT; }
+      else { _shY=Math.max(state.frameSh, Math.round(FRAME_TOP-_t0)); _Hc=Math.max(state.frameH||0, Math.ceil(_t1+_shY)+FRAME_BOT); }
+      var _hpx=Math.round(_Hc*dpr); if(cv.height!==_hpx) cv.height=_hpx;   /* nova vyska platno vymaze a vrati transformaci */
+      ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,W,_Hc);
+    }
     ctx.strokeStyle='rgba(140,130,110,0.10)'; ctx.lineWidth=1;   /* cara zeme (drive na zacatku draw) — az tady, at sedi s ramem */
     var _gy=groundScreenY();
     ctx.beginPath(); ctx.moveTo(W*0.06,_gy); ctx.lineTo(W*0.94,_gy); ctx.stroke();

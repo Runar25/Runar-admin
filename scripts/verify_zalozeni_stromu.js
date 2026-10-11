@@ -6,7 +6,8 @@
 // admin s datem a životní runou, strom nezaložen → záložka stromu → FESTA RÆTUR TRÉSINS → příběh, Norny, mřížka 25 run, cena „zdarma“,
 // ostatní výklady zamčené → 3 runy (klik na runu + PŘIDAT) → TÁHNI → proxy (podvržená v prohlížeči testu: zaznamená režim a cenu, vrátí
 // text a id; „DB“ zapíše zakládací čtení) → příběh zůstává nad čtením, pod ním tlačítko do stromu, appka sama neskáče (KUKY 2026-10-11)
-// → tlačítko → strom: založeno, zakládací Norny první, větve, text založení, rám (ne přilepený dolů), žádná nabídka; START OVER a další
+// → tlačítko → strom: založeno, zakládací Norny první, větve, text založení, žádná nabídka; plátno oříznuté na strom (posuvník hned pod
+// kořeny), přehrávání drží rám celku, „celý strom“ nad + (a + se nehne), tester bar pod stromem (KUKY 2026-10-11); START OVER a další
 // čtení nesmažou datum narození. Nic se neodesílá ani neúčtuje (proxy i databáze jsou podvržené jen v prohlížeči testu).
 // Netvrdí nic o serveru (claude-proxy mode founding) ani o vzhledu. Útok: scripts/protipriklady.py → PRIPADY.
 //   node scripts/verify_zalozeni_stromu.js
@@ -99,7 +100,28 @@ const srv = http.createServer((req, res) => {
              fcta: vis('tree-founding-cta'), need: vis('tree-need-rune'), nodob: vis('tree-no-dob'), d: readerUser.d, sh: _treePick && _treePick.frameSh }; })()`);
   ok('tlačítko → strom: založeno, zakládací Norny první, větve, text založení', tr && tr.tab === 'tree' && tr.first === 'fnd1' && tr.n === 41 && tr.mains >= 3 && tr.living && tr.fread, JSON.stringify(tr));
   ok('ve stromě žádná nabídka ani formulář na datum', tr && !tr.fcta && !tr.need && !tr.nodob && tr.d === 14, JSON.stringify(tr));
-  ok('strom svisle v rámu (ne přilepený dolů)', tr && typeof tr.sh === 'number' && tr.sh < 0, 'posun ' + (tr && tr.sh));
+  // Rám = plátno oříznuté na strom (KUKY 2026-10-11 „pořád může jít výš … posuvník mnohem blíže kořenům … dynamicky s tím, jak roste
+  // strom“). Měří se nakreslené pixely, ne čísla rendereru: první a poslední řádek s kresbou proti okrajům plátna (px modelu).
+  const ram = await ev(`(() => { const cv = document.getElementById('tree-living-canvas'), c = cv.getContext('2d'), w = cv.width, h = cv.height;
+    const d = c.getImageData(0, 0, w, h).data; let top = -1, bot = -1;
+    for (let y = 0; y < h && top < 0; y++) for (let x = 0; x < w; x++) if (d[(y * w + x) * 4 + 3] > 8) { top = y; break; }
+    for (let y = h - 1; y >= 0 && bot < 0; y--) for (let x = 0; x < w; x++) if (d[(y * w + x) * 4 + 3] > 8) { bot = y; break; }
+    const k = w / _treePick.W, st = document.getElementById('tree-stage').getBoundingClientRect(), sk = document.getElementById('tree-seek-bar').getBoundingClientRect();
+    return { H: _treePick.H, top: Math.round(top / k), mez: Math.round((h - 1 - bot) / k), stageH: Math.round(st.height),
+             cssH: Math.round(cv.getBoundingClientRect().height), seekGap: Math.round(sk.top - st.bottom) }; })()`);
+  ok('plátno oříznuté na strom: koruna těsně pod horním okrajem, kořeny těsně nad dolním', ram && ram.H < 900 && ram.top >= 2 && ram.top <= 16 && ram.mez >= 2 && ram.mez <= 16, JSON.stringify(ram));
+  ok('posuvník hned pod scénou (scéna = výška plátna)', ram && ram.seekGap >= 0 && ram.seekGap <= 24 && Math.abs(ram.stageH - ram.cssH) <= 1, JSON.stringify(ram));
+  const hist = await ev(`(() => { const H0 = _treePick.H, s0 = document.getElementById('tree-stage').getBoundingClientRect().height;
+    _drawTreeAt(1); const H1 = _treePick.H, s1 = document.getElementById('tree-stage').getBoundingClientRect().height;
+    _drawTreeAt(null); return { H0, H1, H2: _treePick.H, s0: Math.round(s0), s1: Math.round(s1) }; })()`);
+  ok('přehrávání historie drží rám celého stromu (posuvník neposkakuje)', hist && hist.H1 >= hist.H0 && hist.H2 === hist.H0 && hist.s1 >= hist.s0, JSON.stringify(hist));
+  const lay = await ev(`(() => { const all = document.getElementById('tree-zoom-all'), tb = document.getElementById('tree-tester-bar'), tl = document.getElementById('tree-living');
+    const p0 = document.getElementById('tree-zoom-in').getBoundingClientRect().top; treeZoom(1);
+    const p1 = document.getElementById('tree-zoom-in').getBoundingClientRect().top, a = all.getBoundingClientRect(), allVis = all.style.display !== 'none'; treeZoomAll();
+    return { allNadPlus: !!all.nextElementSibling && all.nextElementSibling.id === 'tree-zoom-in', p0: Math.round(p0), p1: Math.round(p1), allTop: Math.round(a.top), allVis,
+             testerDole: !!tb && !!(tl.compareDocumentPosition(tb) & Node.DOCUMENT_POSITION_FOLLOWING), okraj: getComputedStyle(tl).marginTop }; })()`);
+  ok('přiblížení: „celý strom“ se objeví nad + a + se nehne', lay && lay.allNadPlus && lay.allVis && lay.p0 === lay.p1 && lay.allTop < lay.p1, JSON.stringify(lay));
+  ok('tester bar pod stromem, scéna bez horního okraje', lay && lay.testerDole && lay.okraj === '0px', JSON.stringify(lay));
   // datum narození po START OVER a po začátku dalšího čtení (do 2026-10-11 se nulovalo → Životní runa ukázala formulář na datum)
   const dob = await ev(`(async () => { showAppTab('reading'); resetReader(); const d1 = readerUser.d; startReading(); const d2 = readerUser.d;
     showAppTab('liferune'); updateTreeTab(); const vis = i => { const e = document.getElementById(i); return !!e && e.style.display !== 'none'; };
