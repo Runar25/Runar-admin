@@ -46,6 +46,9 @@ function kanon() {
   return out.sort();
 }
 
+// Základ srovnání: při pushi RUNAR_BASE = co už má server (pre-push), jinak HEAD (ruční běh před commitem). 2026-10-10: bez toho byla
+// kontrola při pushi slepá — commitnutá práce = HEAD — a 3× zdvojený odstavec v BACKLOGu prošel.
+const BASE = process.env.RUNAR_BASE || 'HEAD';
 function git(args) {
   try {
     return execSync('git ' + args, { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
@@ -87,7 +90,7 @@ for (const rel of kanon()) {
     if (!ted.has(k)) ted.set(k, []);
     for (let i = 0; i < n; i++) ted.get(k).push(rel);
   }
-  const head = git('show HEAD:"' + rel + '"');
+  const head = git('show ' + BASE + ':"' + rel + '"');
   if (head !== null) {
     bezGitu = false;
     for (const [k, n] of tucne(head)) drive.set(k, (drive.get(k) || 0) + n);

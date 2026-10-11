@@ -9931,3 +9931,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   appka i zásady říkají „inneign“ (9567×) → nápověda sjednocena na inneign, štítek „lesturarkort“ → Rúnakort (VOCAB.card). V appce
   `rs_credits_desc` ještě nesl kalk „frjáls spá“. Chybné tvary do `BAD_PATTERNS`.
 - Affected doc(s): `RUNAR_BACKLOG.md` část 39 (zbytek islandské nápovědy) — v témže commitu.
+
+## 2026-10-11 (1) — Pre-push: kontroly „co přibylo“ měří proti tomu, co už má server (RUNAR_BASE)
+
+- **Proč:** `verify_new_duplicates.js` a `verify_fresh_dates.js` srovnávaly pracovní strom s HEAD — u commitnuté práce (= při pushi) prázdný
+  rozdíl, kontrola slepá (i před 2026-10-10 (40), ne jeho vinou). Doloženo 2026-10-10: moje commity částí 41/42 přibalily 3× týž odstavec
+  do `RUNAR_BACKLOG.md` a nic to nechytilo.
+- **Co:** `hooks/pre-push.py` předá `RUNAR_BASE` = sha, kterou má server (u nové větve `merge-base` s `origin/main`); obě kontroly srovnávají
+  proti ní, bez proměnné beze změny. Datum záznamu smí při pushi nést i den vzniku pushovaných commitů (commit z 23:59 pushnutý po půlnoci).
+- **Ověřeno:** dočasná kopie commitu se zdvojeným odstavcem + základ před ním → hook zablokoval („3×, v základu 1×“); záznam s datem
+  2026-10-08 → FAIL, se dnem vzniku commitu → OK; bez proměnné obě kontroly beze změny. **Provedl:** CODE-read.
+- Affected doc(s): žádný jiný (mechanika je v hlavičce hooku).

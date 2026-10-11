@@ -31,15 +31,23 @@ def git(*a, **kw):
     return subprocess.run(['git', '-C', REPO] + list(a), capture_output=True, text=True, **kw)
 
 # Co se pushuje: stdin nese „<local ref> <local sha> <remote ref> <remote sha>“; mazání větve má local sha samé nuly.
-shas = []
+shas, zaklady = [], []
 try:
     for line in sys.stdin.read().splitlines():
         p = line.split()
         if len(p) >= 2 and p[1].strip('0'):
             shas.append(p[1])
+            if len(p) >= 4 and p[3].strip('0'):
+                zaklady.append(p[3])
 except Exception:
     pass
 cil = shas[-1] if shas else git('rev-parse', 'HEAD').stdout.strip()
+# Základ = co už má server (remote sha ze stdin); u nové větve merge-base s origin/main. Kontroly „co přibylo“ (verify_new_duplicates,
+# verify_fresh_dates) srovnávají proti němu — proti HEAD by při pushi viděly prázdný rozdíl (commitnutá práce = HEAD). 2026-10-10:
+# tím prošel 3× zdvojený odstavec v BACKLOGu. Když základ nejde zjistit, proměnná se nenastaví a kontroly běží postaru.
+zaklad = zaklady[-1] if zaklady else git('merge-base', cil, 'origin/main').stdout.strip()
+if zaklad and git('cat-file', '-e', zaklad + '^{commit}').returncode != 0:
+    zaklad = ''
 
 def postaru(duvod):
     print('[pre-push] ' + duvod + ' — smoke nad sdíleným stromem (postaru).')
@@ -59,6 +67,9 @@ ok = True
 try:
     print('[pre-push] smoke v čisté kopii commitu ' + cil[:7] + ' (cizí rozdělaná práce ve sdíleném stromě se nepočítá)…')
     env = dict(os.environ, RUNAR_ROOT=tmp.replace('\\', '/'))
+    if zaklad:
+        env['RUNAR_BASE'] = zaklad
+        print('[pre-push] „co přibylo“ se měří proti ' + zaklad[:7] + ' (co už má server)')
     r = subprocess.run(PY + [os.path.join(tmp, 'smoke.py')], cwd=tmp, env=env)
     ok = r.returncode == 0
     print('[pre-push] soubory zapomenuté mimo git (sdílený strom)…')

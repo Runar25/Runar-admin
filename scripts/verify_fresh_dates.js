@@ -40,14 +40,21 @@ const d = new Date();
 const DNES = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0')
   + '-' + String(d.getDate()).padStart(2, '0');
 
+// Základ srovnání: při pushi RUNAR_BASE = co už má server (pre-push), jinak HEAD. 2026-10-10: bez toho kontrola při pushi
+// nic neviděla (commitnutý záznam = HEAD).
+const BASE = process.env.RUNAR_BASE || 'HEAD';
+// Při pushi (RUNAR_BASE) platí i den vzniku pushovaných commitů: commit z 23:59 pushnutý po půlnoci nese včerejšek právem.
+// Doloženo 2026-10-11 testem hooku po půlnoci — bez toho by spadl každý push práce z předchozího večera.
+const POVOLENO = new Set([DNES].concat(process.env.RUNAR_BASE
+  ? (git('log --format=%cd --date=short ' + BASE + '..HEAD') || '').split('\n').map((x) => x.trim()).filter(Boolean) : []));
 const nalezy = [];
 
 // ── 1. nové nadpisy v RUNAR_DECISIONS.md ────────────────────────────────
-const diff = git('diff HEAD -U0 -- ' + DEC);
+const diff = git('diff ' + BASE + ' -U0 -- ' + DEC);
 for (const ln of diff.split('\n')) {
   if (!ln.startsWith('+') || ln.startsWith('+++')) continue;
   const m = NADPIS.exec(ln.slice(1));
-  if (m && m[1] !== DNES) {
+  if (m && !POVOLENO.has(m[1])) {
     nalezy.push(DEC + ': nový záznam datovaný ' + m[1] + ', ale dnes je ' + DNES
       + '\n    „' + ln.slice(1).trim().slice(0, 76) + '"');
   }
@@ -56,13 +63,15 @@ for (const ln of diff.split('\n')) {
 // ── 2. nové snapshoty ───────────────────────────────────────────────────
 // `-uall` je nutné: kdyby byla celá složka neverzovaná, git vypíše JEN ji („?? memory/snapshots/")
 // a jednotlivé soubory zamlčí — nový snapshot by prošel. Odhalil to stav D rozbíjecího testu.
-const nove = git('status --porcelain -uall -- ' + SNAP).split('\n')
-  .map((l) => l.trim())
-  .filter((l) => l.startsWith('??') || l.startsWith('A '))
-  .map((l) => path.basename(l.replace(/^(\?\?|A )\s*/, '').replace(/"/g, '')));
+const nove = (process.env.RUNAR_BASE
+  ? git('diff --name-only --diff-filter=A ' + BASE + ' -- ' + SNAP).split('\n').map((l) => l.trim()).filter(Boolean).map((l) => path.basename(l))
+  : git('status --porcelain -uall -- ' + SNAP).split('\n')
+      .map((l) => l.trim())
+      .filter((l) => l.startsWith('??') || l.startsWith('A '))
+      .map((l) => path.basename(l.replace(/^(\?\?|A )\s*/, '').replace(/"/g, ''))));
 for (const jm of nove) {
   const m = SOUBOR.exec(jm);
-  if (m && m[1] !== DNES) {
+  if (m && !POVOLENO.has(m[1])) {
     nalezy.push(SNAP + '/' + jm + ': nový snapshot datovaný ' + m[1] + ', ale dnes je ' + DNES);
   }
 }
@@ -76,7 +85,7 @@ for (const jm of nove) {
 if (diff.trim()) {
   const nadpisy = (txt) => txt.split('\n').map((l) => NADPIS.exec(l)).filter(Boolean).map((m) => m[1]);
   const cesta = path.join(ROOT, DEC);
-  const vHead = git('show HEAD:"' + DEC + '"');
+  const vHead = git('show ' + BASE + ':"' + DEC + '"');
   if (vHead && fs.existsSync(cesta)) {
     const pred = nadpisy(vHead);
     const ted = nadpisy(fs.readFileSync(cesta, 'utf8'));
