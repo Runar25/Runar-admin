@@ -68,7 +68,9 @@ if bad:
 # (c81b4da CODE-tune ← CODE-read, b4c3f4a CODE-tree ← CODE-tune, dfac200 CODE-read ← CODE-tune) a pravidlo v paměti to nezastavilo
 # → CLAUDE.md §30: dělá to stroj. commit_vlastni.py commitne jen vlastní kusy a nastaví RUNAR_VLASTNI=1.
 # Výjimka (smazání souboru, které commit_vlastni neumí; vědomý případ): RUNAR_SDILENE_OK="<důvod>" — zapíše se do .git/runar-sdilene.log.
-_SDILENE = re.compile(r'^(CLAUDE\.md|RUNAR_[^/]*\.md|memory/.+\.md)$')
+# scripts/protipriklady.py od 2026-10-11: píšou do něj všechny tři session; za den dvě kolize (c3dfd49 smazal cizí útoky, 1c37d3e přibalil
+# cizí necommitnutý útok). JEDINÉ místo vzoru — hook pravidla_pri_dotyku.py si ho odsud čte (zastaví na nich nástroj Edit).
+_SDILENE = re.compile(r'^(CLAUDE\.md|RUNAR_[^/]*\.md|memory/.+\.md|scripts/protipriklady\.py)$')
 _sd = [p for p in staged if _SDILENE.match(p)]
 if _sd and os.environ.get('RUNAR_VLASTNI') != '1':
     _duvod = os.environ.get('RUNAR_SDILENE_OK', '').strip()

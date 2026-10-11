@@ -333,6 +333,15 @@ def pasti(cmd):
 
 
 # ---------- rozhodnutí ----------
+def sdileny(rel):
+    # Vzor sdílených souborů vlastní hooks/pre-commit.py (`_SDILENE`) — tady se jen čte, ať nejsou dva seznamy (2026-10-11).
+    try:
+        m = re.search(r"_SDILENE = re\.compile\(r'([^']+)'\)", cti(R + '/hooks/pre-commit.py'))
+        if m: return bool(re.match(m.group(1), rel))
+    except Exception: pass
+    return bool(re.match(r'^(CLAUDE\.md|RUNAR_[^/]*\.md|memory/.+\.md)$', rel))   # záloha, kdyby se tvar v pre-commitu změnil
+
+
 def neviditelne(inp):
     # Proč (2026-10-11, CODE-read, podruhé): `\u2028` napsané v parametru Edit/Write se už při předání (JSON) změní na SKUTEČNÝ znak.
     # Do scripts/protipriklady.py se tak dostaly znaky místo textu (útok pak nic nenašel) a do regexu v JS znak U+2028, který JS bere
@@ -365,8 +374,8 @@ def rozhodni(vstup):
         # Sdílený doc nástrojem Edit (nebo Write přes EXISTUJÍCÍ soubor) by šel zapsat, ale ne commitnout: commit_vlastni bere jen zápisy
         # ze zapis() a pre-commit jinou cestu nepustí (CODE-read 2026-10-11, kolo 3 — rozpor dvou mechanismů). Zastavit hned, ne až při commitu.
         r0 = rel(inp.get('file_path') or inp.get('notebook_path'))
-        if r0 and re.match(r'^(CLAUDE\.md|RUNAR_[^/]*\.md|memory/.+\.md)$', r0) and (tool != 'Write' or os.path.exists(R + '/' + r0)):
-            return ('⛔ Sdílený doc ' + r0 + ' nástrojem ' + tool + ' nepiš — taková změna nejde commitnout (pre-commit pouští sdílené docy jen\n'
+        if r0 and sdileny(r0) and (tool != 'Write' or os.path.exists(R + '/' + r0)):
+            return ('⛔ Sdílený soubor ' + r0 + ' nástrojem ' + tool + ' nepiš — taková změna nejde commitnout (pre-commit pouští sdílené docy jen\n'
                     'přes commit_vlastni, ten bere jen zápisy ze zapis()). Místo toho:\n'
                     '  • napiš nástrojem Write dva soubory do scratchpadu (starý text, nový text) a pusť\n'
                     '    python -X utf8 scripts/utils/commit_vlastni.py uprav <CODE-lane> ' + r0 + ' <stary.txt> <novy.txt>\n'
@@ -570,6 +579,8 @@ def samotest():
     chk('41. Edit vkládá U+2028, který v souboru není → zastaví', (lambda d: d and 'U+2028' in d)(V('Edit', sid='z1', file_path=R + '/docs/x.txt', old_string='a', new_string='a' + LS + 'b')))
     chk('42. Edit, kde týž znak už je ve starém textu → projde', V('Edit', sid='z1', file_path=R + '/docs/x.txt', old_string='a' + LS, new_string='b' + LS) is None)
     chk('43. běžný text s diakritikou a tabulátorem → projde', V('Edit', sid='z1', file_path=R + '/docs/x.txt', old_string='a', new_string='žluťoučký\tkůň\n') is None)
+    chk('44. Edit na scripts/protipriklady.py (sdílený soubor z pre-commitu) → zastaví s návodem uprav',
+        (lambda d: d and 'commit_vlastni.py uprav' in d)(V('Edit', sid='e3', file_path=R + '/scripts/protipriklady.py', old_string='a', new_string='b')))
     for jm, v in ok: print(('OK    ' if v else 'FAIL  ') + jm)
     return 0 if all(v for _, v in ok) else 1
 
