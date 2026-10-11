@@ -773,6 +773,15 @@ radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola stromu v aplikaci probehla'
 check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
 
+# ㊷ 2026-10-11 (CODE-tree; owner: „neukážou se runy. je potřeba, abys to celé prošel, že to funguje“): rituál založení stromu klik po
+# kliku skutečnou appkou — tah zakládacích Noren byl bez run a nic to nehlásilo. Proxy i DB podvržené jen v prohlížeči testu.
+print('\n' + chr(0x32B7) + ' ZALOŽENÍ STROMU KLIK PO KLIKU (verify_zalozeni_stromu.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_zalozeni_stromu.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola zalozeni probehla'
+check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
+
 # ㉴ Štítek modelu v UI = model v edge funkci (CODE-tune 2026-10-05). KUKY (report 2026-10-05 07:40): „Pokud jsi změnil model
 # na sol6.1, proč jsi to taky neupravil… Tady v readeru. Což znamená, že nevíš, kde co je.“ Proxy běžela na gpt-6.1-sol, přepínač
 # admina hlásil „GPT-6 sol“ — dvě místa (edge funkce × překlady), která nikdo nehlídal.

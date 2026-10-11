@@ -1186,6 +1186,19 @@ async function startTreeFounding() {
   _foundingPending = true;
   if (typeof showAppTab === 'function') showAppTab('reading');
   if (typeof _setSpreadMode === 'function') _setSpreadMode('norns');
+  // TAH ZAKLÁDACÍCH NOREN (2026-10-11, owner: „neukážou se runy“): mřížku run a čtenáře nastavuje startReading(), který se při
+  // založení přeskočí (formulář je schovaný, rituál je daný) → karta tahu byla bez run. Totéž tady, ale bez kontroly kreditů
+  // (založení je zdarma, startReading by člověka bez kreditů zastavil) a BEZ smazání data narození: startReading ho nuluje a strom
+  // podle něj hledá životní runu, takže skok do stromu po založení by skončil u formuláře na datum.
+  if (typeof _readingMode !== 'undefined') _readingMode = 'mine';
+  readerUser = Object.assign({}, readerUser || {}, {
+    name: (typeof userName !== 'undefined' && userName) || t('name_you'),
+    lifeRune: _lifeRuneNum ? RUNES[_lifeRuneNum - 1] : null,
+    area: '', seeking: '', intention: '', question: '' });
+  var _hero = document.getElementById('reader-hero'); if (_hero) _hero.classList.add('hidden');
+  var _out = document.getElementById('reader-output'); if (_out) _out.style.display = 'none';
+  if (typeof buildGrid === 'function') buildGrid();
+  if (typeof _paintSpreadCost === 'function') _paintSpreadCost();
   if (typeof showToast === 'function') showToast(t('tree_founding_toast'));
 }
 
