@@ -81,7 +81,10 @@ def uprav(path, lane, stary_soubor, novy_soubor, R=None):
     texty se předávají soubory (napiš je nástrojem Write), ne argumenty — víceřádkový text v příkazu se rozbíjí."""
     stary = io.open(stary_soubor, encoding='utf-8').read().replace('\r\n', '\n')
     novy = io.open(novy_soubor, encoding='utf-8').read().replace('\r\n', '\n')
-    if stary.endswith('\n') and not novy.endswith('\n'): stary = stary[:-1]   # Write přidá konec řádku jen jednomu z nich
+    # Konec řádku jen u jednoho z textů (Write) → ubrat ho tomu jednomu, ať se řádek nepřidá ani neztratí. Do 2026-10-11 odpoledne
+    # jen u starého textu: nový s koncem řádku navíc přidal do docu prázdný řádek (CODE-tree, samotest níž).
+    if stary.endswith('\n') and not novy.endswith('\n'): stary = stary[:-1]
+    elif novy.endswith('\n') and not stary.endswith('\n'): novy = novy[:-1]
     s = cti(path, R)
     n = s.count(stary)
     if n != 1: raise SystemExit('❌ ' + path + ': starý text tam je ' + str(n) + '× (musí právě 1×) — nic nezměněno')
@@ -215,6 +218,21 @@ def _test():
         except SystemExit as e:
             check('od mého čtení' in str(e), 'zastaralé čtení: zápis odmítnut')
         check(rd('a.md').endswith('F3\n'), 'cizí zápis po mém čtení nepřepsán')
+        # 8) uprav: právě jeden výskyt se nahradí a commitne; žádný nebo dva → odmítne a nic nezmění; konec řádku oběma směry
+        st, nv = os.path.join(R, '.git', 'st.txt'), os.path.join(R, '.git', 'nv.txt')
+        wt('u.md', 'U1\nU2\nU3\nU2x U2x\n'); sh('add', 'u.md'); sh('commit', '-q', '-m', 'u')
+        io.open(st, 'w', encoding='utf8').write('U1\n'); io.open(nv, 'w', encoding='utf8').write('V1')   # starý s koncem řádku, nový bez
+        uprav('u.md', 'T', st, nv, R); commit('T', msg, R)
+        check(head('u.md') == 'V1\nU2\nU3\nU2x U2x\n', 'uprav: jeden výskyt nahrazen a commitnut, řádek se neslil')
+        io.open(st, 'w', encoding='utf8').write('U3'); io.open(nv, 'w', encoding='utf8').write('V3\n')   # nový s koncem řádku, starý bez
+        uprav('u.md', 'T', st, nv, R); commit('T', msg, R)
+        check(head('u.md') == 'V1\nU2\nV3\nU2x U2x\n', 'uprav: nový text s koncem řádku nepřidá prázdný řádek')
+        for stary_t, co in (('NENI', 'žádný'), ('U2x', 'dva')):
+            io.open(st, 'w', encoding='utf8').write(stary_t); io.open(nv, 'w', encoding='utf8').write('Z')
+            try:
+                uprav('u.md', 'T', st, nv, R); check(False, 'uprav měl odmítnout (' + co + ' výskyt)')
+            except SystemExit as e:
+                check('nic nezměněno' in str(e) and rd('u.md') == 'V1\nU2\nV3\nU2x U2x\n', 'uprav: ' + co + ' výskyt → odmítnut, soubor beze změny')
     finally:
         shutil.rmtree(R, ignore_errors=True)
     print('✅ commit_vlastni --test: ' + str(len(ok)) + ' kontrol' + NL_ + NL_.join('   · ' + x for x in ok))
