@@ -15,7 +15,7 @@ vlastní `RUNAR_TREE.md` §3 a kód (`slotAssign` v `build_crown_composer.py`) �
 - **Neřezat ani nezakrývat symptom** místo opravy příčiny.
 - **Kořen z `buildBranch` s `dev:0` vyšel v létě 2026 jako svislý prut** (per-runa tvar se zploštil, všechny kořeny stejné; dny hledaný bug).
   Kořen vrcholu má dnes směr rovně dolů — vypadal-li by jako prut, hledej nejdřív tady.
-- **Po rebuildu labu tvrdý reload (Ctrl+Shift+R)** — `crown-composer.html` se necachebustuje a owner jinak vidí starou verzi („pořád je to
+- **Po rebuildu labu tvrdý reload (Ctrl+Shift+R)** — stránka labu se necachebustuje a owner jinak vidí starou verzi („pořád je to
   stejné“). Debug: tlačítko „DEBUG zdroj“ obarví kusy podle zdroje.
 
 Jak měnit: [[runar-trunk-incremental-rule]] · měřit, ne od oka: [[measure-dont-eyeball]].
