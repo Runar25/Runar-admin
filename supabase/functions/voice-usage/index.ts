@@ -9,7 +9,7 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.117.3";
-import { fetchQuota, saveQuota, EL_DOBITI_KREDITY, EL_TARIF_KREDITY } from "../_shared/voice_usage.ts";
+import { fetchQuota, saveQuota, EL_DOBITI_KREDITY, EL_TARIF_KREDITY, EL_KREDIT_USD } from "../_shared/voice_usage.ts";
 import { kredityHlasu } from "../_shared/el_voice.ts";
 
 // Kopie seznamu adminů (další: v2/runar-config.js a ostatní edge funkce). Shodu hlídá smoke ㉪ (scripts/verify_admin_emails.js).
@@ -33,6 +33,8 @@ serve(async (req) => {
   const { data: { user }, error: authErr } = await sb.auth.getUser(authHeader.replace("Bearer ", ""));
   if (authErr || !user) return json({ error: "Invalid session" }, 401);
   if (!user.email || !ADMIN_EMAILS.includes(user.email.toLowerCase())) return json({ error: "Forbidden" }, 403);
+  let body: any = {};
+  try { body = await req.json(); } catch { /* prázdné tělo = jen stav EL (záložka VOICE) */ }
 
   const key = Deno.env.get("ELEVENLABS_API_KEY");
   if (!key) return json({ error: "no_key" }, 503);
@@ -93,6 +95,66 @@ serve(async (req) => {
   } catch (e) {
     console.error("voice-usage aggregate:", (e as Error).message);
   }
+  // ── Účty pro záložku TESTERS (2026-10-11, owner: „každý účet bude pod svým emailem, ať vím o koho jde a kolik udělal čtení. a pod tím
+  // součet… začneme už dneškem“). Jen s {accounts:true}. Testeři = allowed_emails role tester (i nezaregistrovaní); tým = příznak tester
+  // mimo seznam (účty ownera a Sigrún na test slabšího Rune Seekera) a admini (ADMIN_EMAILS). Čtení od `since` podle typu, Asky, hlasy
+  // a kredity; z čtení a Asků jde ven jen `usage` (cenu modelu spočítá shrine týmž readingCostUsd jako deník — ceník je v klientském
+  // configu, §20), texty NE. Den = UTC (Island).
+  let accounts: any = null;
+  if (body?.accounts === true) {
+    try {
+      const sinceDay = typeof body.since === "string" && /^\d{4}-\d{2}-\d{2}$/.test(body.since) ? body.since : "2026-10-11";
+      const today = new Date().toISOString().slice(0, 10);
+      const { data: lu2 } = await sb.auth.admin.listUsers({ page: 1, perPage: 1000 });
+      const users = (lu2?.users ?? []).map((u: any) => ({ id: u.id as string, email: String(u.email || "").toLowerCase() }));
+      const { data: al2 } = await sb.from("allowed_emails").select("email, role");
+      const testerEmails = (al2 ?? []).filter((a: any) => a.role === "tester").map((a: any) => String(a.email || "").toLowerCase());
+      const { data: tp } = await sb.from("user_profiles").select("id").eq("is_tester", true);
+      const flag = new Set((tp ?? []).map((p: any) => p.id));
+      const idPodleEmailu = new Map(users.map((u) => [u.email, u.id]));
+      const ucty: any[] = testerEmails.map((e: string) => ({ email: e, group: "tester", id: idPodleEmailu.get(e) ?? null }));
+      for (const u of users) {
+        if (ADMIN_EMAILS.includes(u.email)) ucty.push({ email: u.email, group: "admin", id: u.id });
+        else if (flag.has(u.id) && !testerEmails.includes(u.email)) ucty.push({ email: u.email, group: "team", id: u.id });
+      }
+      const podleId = new Map<string, any>();
+      const list = ucty.map((a) => {
+        const o = { email: a.email, group: a.group, registered: !!a.id,
+          today: { readings: 0, voices: 0 },
+          total: { readings: 0, types: {} as Record<string, number>, asks: 0, voices: 0, credits: 0, usage: [] as any[] } };
+        if (a.id) podleId.set(a.id, o);
+        return o;
+      });
+      const ids = [...podleId.keys()];
+      const TYP: Record<string, string> = { NORNS: "Norns", KRIZ: "Cross", HORSESHOE: "Horseshoe", YGGDRASIL: "Yggdrasil" };
+      if (ids.length) {
+        const { data: rd } = await sb.from("readings").select("user_id, drawn_at, rune_name, usage, follow_up")
+          .gte("drawn_at", sinceDay + "T00:00:00Z").in("user_id", ids).limit(20000);
+        for (const r of (rd ?? []) as any[]) {
+          const a = podleId.get(r.user_id); if (!a) continue;
+          const typ = TYP[r.rune_name] || "Single";
+          a.total.readings++; a.total.types[typ] = (a.total.types[typ] || 0) + 1;
+          if (String(r.drawn_at).slice(0, 10) === today) a.today.readings++;
+          if (r.usage && r.usage.model) a.total.usage.push(r.usage);
+          for (const f of (Array.isArray(r.follow_up) ? r.follow_up : [])) {
+            a.total.asks++;
+            if (f && f.usage && f.usage.model) a.total.usage.push(f.usage);
+          }
+        }
+        const { data: vu } = await sb.from("voice_usage").select("user_id, created_at, chars, model")
+          .gte("created_at", sinceDay + "T00:00:00Z").in("user_id", ids).eq("source", "dynamic").limit(20000);
+        for (const v of (vu ?? []) as any[]) {
+          const a = podleId.get(v.user_id); if (!a) continue;
+          a.total.voices++; a.total.credits += kredityHlasu(v.model, v.chars);
+          if (String(v.created_at).slice(0, 10) === today) a.today.voices++;
+        }
+      }
+      accounts = { since: sinceDay, today, credit_usd: EL_KREDIT_USD, list };
+    } catch (e) {
+      console.error("voice-usage accounts:", (e as Error).message);
+    }
+  }
+
   const { data: snaps } = await sb.from("voice_quota_snapshots")
     .select("taken_at, source, character_count, character_limit").order("taken_at", { ascending: false }).limit(14);
 
@@ -104,5 +166,6 @@ serve(async (req) => {
     period_since: since.toISOString(),
     logged, by_group: byGroup, by_model: byModel,
     snapshots: snaps ?? [],
+    accounts,
   });
 });

@@ -261,6 +261,7 @@ textarea::placeholder{color:var(--dim);}
   <button class="tab"     id="tab-reports-btn"  onclick="showTab('reports')">⚑ REPORTS</button>
   <button class="tab"     id="tab-readings-btn" onclick="showTab('readings')">📜 READINGS</button>
   <button class="tab"     id="tab-voice-btn"    onclick="showTab('voice')">🔊 VOICE</button>
+  <button class="tab"     id="tab-testers-btn"  onclick="showTab('testers')">👥 TESTERS</button>
   <a class="tab" href="runar-reader.html" style="text-decoration:none;">👁 USER VIEW</a>
 </div>
 
@@ -442,6 +443,28 @@ textarea::placeholder{color:var(--dim);}
   </div>
 </div>
 
+<!-- TESTERS (2026-10-11, owner: „každý účet bude pod svým emailem… a pod tím součet… začneme už dneškem“). Maluje runar-testers-admin.js.
+     Přímý odkaz runar-shrine.html#testers je v menu appky (jen admin). -->
+<div class="pane" id="pane-testers">
+  <style>
+    #pane-testers h4{color:var(--gold);font-size:0.8em;letter-spacing:1.5px;margin:18px 0 6px;text-transform:uppercase;}
+    #pane-testers .ts-wrap{overflow-x:auto;}
+    #pane-testers .ts-tab{border-collapse:collapse;font-size:0.85em;color:#e6e9f0;font-variant-numeric:tabular-nums;width:100%;}
+    #pane-testers .ts-tab td,#pane-testers .ts-tab th{padding:4px 12px 4px 0;text-align:left;white-space:nowrap;}
+    #pane-testers .ts-tab th{color:#8a94a6;font-weight:normal;}
+    #pane-testers .ts-sum td{color:var(--gold);border-top:1px solid var(--border);}
+    #pane-testers .ts-off td{color:#8a94a6;font-style:italic;}
+    #pane-testers .ts-tag{font-size:0.75em;color:#c9b77a;border:1px solid var(--border);padding:0 4px;margin-left:4px;}
+    #pane-testers .ts-meta,#pane-testers .ts-empty{color:#b9c4d6;font-size:0.85em;margin:6px 0;}
+  </style>
+  <div class="card">
+    <div class="card-lbl">👥 TESTERS — READINGS, VOICE, COST</div>
+    <button class="btn" onclick="loadTesters()">↻ Refresh</button>
+    <div class="status" id="st-testers"></div>
+    <div id="testers-box"></div>
+  </div>
+</div>
+
 <div class="pane" id="pane-readings">
   <style>
     #pane-readings .rd-item{border:1px solid var(--border);border-left:3px solid var(--gold);padding:10px 12px;margin-bottom:8px;background:#0d1220;}
@@ -522,6 +545,7 @@ textarea::placeholder{color:var(--dim);}
 <script src="runar-reports-admin.js"></script>
 <script src="runar-readings-admin.js"></script>
 <script src="runar-voice-admin.js"></script>
+<script src="runar-testers-admin.js"></script>
 <script>
 const sb = supabase.createClient(SB_URL, SB_KEY);
 
@@ -622,6 +646,9 @@ window.addEventListener('DOMContentLoaded', async () => {
   buildGrid('teach-grid', false);
   await loadChar();
   loadCorrections();
+  // 2026-10-11: přímý odkaz na záložku (runar-shrine.html#testers z menu appky) — owner chtěl rychlejší přístup než proklikávat shrine.
+  const _hashTab = (location.hash || '').slice(1);
+  if (_hashTab && document.getElementById('pane-' + _hashTab) && currentUser && isAdmin(currentUser.email)) showTab(_hashTab);
 });
 
 // ─── HELPERS ────────────────────────────────────────────
@@ -668,7 +695,7 @@ function updateUIText() {
 
 // ─── TABS ───────────────────────────────────────────────
 function showTab(name) {
-  ['teach','progress','correct','codes','reports','readings','voice'].forEach(n => {
+  ['teach','progress','correct','codes','reports','readings','voice','testers'].forEach(n => {
     document.getElementById('pane-' + n)?.classList.remove('on');
     document.getElementById('tab-' + n + '-btn')?.classList.remove('on');
   });
@@ -680,6 +707,7 @@ function showTab(name) {
   if (name === 'reports') { window.initReportsTab(); window.loadReports(); }
   if (name === 'readings') { window.initReadingsTab(); window.loadReadings(); }
   if (name === 'voice')    window.loadVoice();   // 2026-09-25: živý stav ElevenLabs (runar-voice-admin.js)
+  if (name === 'testers')  window.loadTesters(); // 2026-10-11: účty testerů a týmu (runar-testers-admin.js)
 }
 
 // ─── GIFT CODES ─────────────────────────────────────────

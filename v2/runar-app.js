@@ -667,6 +667,9 @@ function updateSidePanel() {
   // Admin link
   const adminLink = document.getElementById('sp-admin-link');
   if (adminLink) adminLink.style.display = isAdmin(currentUser.email) ? 'block' : 'none';
+  // 2026-10-11: rychlý odkaz na záložku TESTERS ve shrine (owner chtěl rychlejší přístup) — jen admin, jako odkaz na shrine výš.
+  const testersLink = document.getElementById('sp-testers-link');
+  if (testersLink) testersLink.style.display = isAdmin(currentUser.email) ? 'block' : 'none';
 
   // Journal link
   const journalLink = document.getElementById('sp-journal-link');

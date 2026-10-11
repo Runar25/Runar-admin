@@ -44,6 +44,9 @@ export const EL_DOBITI_KREDITY = 13800;
 export const EL_TARIF_KREDITY: Record<string, number> = {
   starter: 30000, creator: 110000, pro: 495000, scale: 1495000, business: 4950000,
 };
+// Cena kreditu v USD — u všech tarifů API táž ($6 / 30 000 = $22 / 110 000 = $0.0002; DECISIONS 2026-10-11 (43)). Pro cenu hlasu
+// v záložce TESTERS (voice-usage); sazba za 1000 znaků ve scripts/utils/stats.js je kredity na znak × tohle × 1000 (hlídá smoke ⑨).
+export const EL_KREDIT_USD = 0.0002;
 
 // novych = kredity nového hlasu (kredityHlasu v el_voice.ts). Stav účtu neznámý → pustit (fail open): osobní strop testera platí dál
 // a jde o jednotlivé hlasy (CODE-read 2026-10-11 bod 3). Smoke ⑨ tuhle funkci spouští na známých vstupech — měň ji i s kontrolou.
