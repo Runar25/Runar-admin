@@ -10515,3 +10515,28 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   podkova odečetla 4 jednotky (`credit_ledger` +4, důvod reading), dva Asky nic, hlas 1 z 5 v měsíci.
 - **Hranice:** přihlášená appka neověřena (CODE se nepřihlásí) — první otevření menu po nasazení ukáže 71. Zbývající hlasy menu neukazuje.
 - Affected doc(s): `RUNAR_BACKLOG.md` (položka „Předplatitel nevidí, kolik čtení mu zbývá“) — v témže commitu.
+
+## 2026-10-11 (39) — Ovládání stromu v aplikaci: plná šířka, přiblížení gesty i tlačítky, posuvník kreslí po puštění, šipky po jednom čtení
+
+- **Proč:** s novým stromem trvá nakreslení na telefonu ~2 s (29), takže strom se nesmí kreslit při každém pohybu prstu; KUKY: *„při 400
+  bude hodně přeskakovat … zoom může být taky pomocí + − … a jedno tlačítko zpět na default … udělat to jednoduché, přehledné, intuitivní,
+  čisté“*. Návrh ovládání (CODE-tree) owner schválil.
+- **Rozhodl:** KUKY 2026-10-11 — *„10. souhlas. plná šířka · 11. ano · 12. ano · 13. ano · 14. ano“* (ovládání podle návrhu, styl jako zbytek
+  appky, postavit hned v aplikaci, kde strom vidí jen admin, strom na telefonu na plnou šířku). Tlačítka ±10 nejsou: posuvník udělá hrubý
+  skok, podržená šipka zbytek (návrh, owner bez námitky).
+- **Co je v aplikaci (kód 1388123, `runar-tree.js` „OVLÁDÁNÍ STROMU“):**
+  1. Strom na plnou šířku (dřív nejvýš 300 px).
+  2. Posuvník historie: při tažení jen popisek (kolikáté čtení, datum, runy toho čtení), strom se nakreslí po puštění.
+  3. Šipky ‹ › u posuvníku: přesně o jedno čtení, podržením rychle; strom se kreslí až po puštění.
+  4. Přiblížení: dva prsty, dvojité ťuknutí, tažení přiblíženého; tlačítka + − a „celý strom“ (jen když je přiblížený). Během gesta se
+     jen zvětší obraz, ostrý strom se nakreslí po něm (renderer kreslí přímo ve zvětšení, `opts.view` v `build_tree_production.py`).
+  5. Ťuknutí na strom ukáže zlatý kroužek a tam míří +; nepřiblížený strom nechytá prst, stránka se dá posouvat.
+  6. Popisky tlačítek IS + EN; IS ověřeno: „þysja inn/út“ je ustálené sloveso (Íslensk nútímamálsorðabók, korpus 48 / 7).
+- **Ověřeno:** Chrome bez okna, telefon 390×844 @3×, podvržený admin se 400 čteními — 20 kontrol (posuvník nekreslí při tažení, jedno
+  nakreslení po puštění, šipky, podržení, klávesnice, tlačítka, kroužek, dvojité ťuknutí, sevření jen s náhledem, posun, inspekce i
+  v přiblížení, IS popisky, žádná chyba JS) + smoke 71/71. Na skutečném telefonu ověří owner.
+- **Co přijde s portem:** zlaté obtažení větvičky, kterou čtení na posuvníku přidalo — starý strom větvičky po čteních nemá (návrh bod 4);
+  kreslení na pozadí a uložený obrázek (35).
+- **Navíc:** runa v inspekci kresbou místo písma (§5) · islandské datum: Chrome na Windows islandská data nemá (`toLocaleDateString('is-IS')`
+  → „May 21, 2026“), strom proto ukáže číselné „21.5.2026“; táž vada v deníku → `RUNAR_BACKLOG.md` (i18n).
+- Affected doc(s): `RUNAR_TREE.md` §8 (řádek o zoomu) · `RUNAR_BACKLOG.md` (port, i18n) — v témže commitu.
