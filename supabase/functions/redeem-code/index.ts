@@ -80,7 +80,16 @@ serve(async (req) => {
       p_user_id: user.id,
       p_amount:  gift.credits,
     });
-    if (creditErr) return json({ error: "Failed to add credits: " + creditErr.message }, 500);
+    if (creditErr) {
+      // Kompenzace (2026-10-11, nález CODE-read kolo 2 / 9): kód se výš označil jako použitý a kredity se připisují až tady. Bez
+      // vrácení by zaplacená karta propadla — kód spotřebovaný, kredity žádné a další pokus by četl „already used“. Vrací se jen
+      // označení tohohle uživatele (CAS na used_by), ať jde zkusit znovu. Selže-li i to, zůstane to v logu s kódem.
+      const { error: undoErr } = await sb().from("gift_codes")
+        .update({ used_by: null, used_at: null })
+        .eq("code", normalized).eq("used_by", user.id);
+      if (undoErr) console.error("redeem compensation failed — code stays used without credits:", normalized, undoErr.message);
+      return json({ error: "Failed to add credits: " + creditErr.message }, 500);
+    }
 
     // ── Upgrade tier to 'rune_seeker' if still on free/trial ──
     await sb().from("user_profiles")
