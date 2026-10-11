@@ -38,6 +38,11 @@
 //   (q) KAZDA VETEV MA KOREN (DECISIONS 2026-10-10 (26)): kazda vedlejsi vetev ma svuj koren (klikatelny), ramena ho maji ve svem tahu.
 //   (r) SEEKING TVARUJE CELOU VETEV (2026-10-10, KUKY "aby se cela vetev tvarovala"): tentyz log jednou se samym Clarity, jednou s Reflection ->
 //       ramena a vedlejsi s Clarity v druhe pulce delky mireji vys. Hlida, ze lab seeking vetvim preda a pater opravdu ohne.
+//   (s) SEEKING TVARUJE KOREN (2026-10-11, KUKY "8. seeking i pro koreny" a "9. ano, zapni v labu"; DECISIONS 2026-10-11 (2)): tentyz log
+//       se samym Clarity a se samym Reflection -> druha pulka korenu s Clarity mire vic dolu. Hlida, ze lab seeking korenum preda.
+//   (t) NAVRAT RUNY PROHLOUBI KOREN (2026-10-11, kanon RUNAR_TREE.md §2): 60 cteni + 30 cteni se zakladaci runou Urd proti 30 tymz ctenim
+//       s jinou runou tehoz zivlu — stavba stromu je v obou stejna (misto urci zivel, oblast a zamer), lisi se jen pocet navratu. Koren
+//       zakladaci runy ma v inspekci presne o 30 navratu vic a jeho vybezky jsou delsi.
 //   (m) VETVICKY KOLEM VETVE (2026-10-09, KUKY: "vetvicky by se stridaly kolem vetve na obe strany, protoze stranu vetve uz urcila
 //       oblast"): zadna hlavni vetev s aspon 3 primymi vetvickami nema vsechny na jedne strane (strana = kam vetvicka miri od smeru
 //       rodice v miste uchyceni). Drive strana podle oblasti -> na leve vetvi skoro jen nitro -> KUKYho strom 4 jednostranne vetve.
@@ -209,5 +214,25 @@ let rMsg = '';
   const rc = upHalf(mk('clarity')), rr = upHalf(mk('reflection'));
   if (!(rc > rr + 0.05)) fails.push('(r) vetve se Clarity nemiri vys nez s Reflection (' + rc.toFixed(2) + ' vs ' + rr.toFixed(2) + ') — preda lab seeking ramenum?');
   else rMsg = 'vetve: Clarity ' + rc.toFixed(2) + ' > Reflection ' + rr.toFixed(2); }
+/* (s) seeking tvaruje koren: smer druhe pulky korenovych tahu (bez zrcadlovych korinku), Clarity vic dolu nez Reflection */
+let sMsg = '';
+{ const L120 = LOGS[0][1].slice(0, 120), mk = sk => L120.map(rd => Object.assign({}, rd, { seeking: sk }));
+  const downHalf = lg => { let sum = 0, cnt = 0; labRun(lg, html, null).allPicks.forEach(p => { if (!p.meta || !p.meta.root || p.meta.mirror || !p.pts || p.pts.length < 6) return;
+    const a = p.pts[Math.floor(p.pts.length / 2)], b = p.pts[p.pts.length - 1], L = Math.hypot(b.x - a.x, b.y - a.y); if (L > 0) { sum += (b.y - a.y) / L; cnt++; } }); return cnt ? sum / cnt : 0; };
+  const sc = downHalf(mk('clarity')), sr = downHalf(mk('reflection'));
+  if (!(sc > sr + 0.1)) fails.push('(s) koreny se Clarity nemiri hloubeji nez s Reflection (' + sc.toFixed(2) + ' vs ' + sr.toFixed(2) + ') — preda lab seeking korenum?');
+  else sMsg = 'koreny: Clarity ' + sc.toFixed(2) + ' hloubeji nez Reflection ' + sr.toFixed(2); }
+/* (t) navrat runy prohloubi koren: Y = jina runa tehoz zivlu jako X (zakladaci Urd) -> tataz mista; koren X porovnany na TEMZ prameni */
+let tMsg = '';
+{ const base = LOGS[0][1].slice(0, 60), X = base[0].runes[0], Y = RB.find(r => r.el === X.el && r.k !== X.rune), nmX = (B.RUNES.find(z => z.k === X.rune) || {}).name;
+  const add = rr => base.concat(Array.from({ length: 30 }, () => ({ spread: 'single', runes: [rr], area: 'career', intention: 'decision', seeking: null })));
+  const meas = (lg, kFix) => { let k = kFix, nav = null, len = 0; labRun(lg, html, null).allPicks.forEach(p => { const m = p.meta || {}; if (!m.root || m.mirror || m.name !== nmX || m.navraty == null) return;
+      if (k == null) k = m.strand; if (m.strand !== k) return; nav = m.navraty; for (let i = 1; i < p.pts.length; i++) len += Math.hypot(p.pts[i].x - p.pts[i - 1].x, p.pts[i].y - p.pts[i - 1].y); });
+    return { k, nav, len }; };
+  const A = meas(add({ rune: Y.k, el: Y.el }), null), Bx = meas(add(X), A.k);
+  if (A.nav == null || Bx.nav == null) fails.push('(t) koren zakladaci runy ' + nmX + ' nema v inspekci pocet navratu');
+  else if (Bx.nav - A.nav !== 30) fails.push('(t) navraty korene ' + nmX + ': ' + A.nav + ' -> ' + Bx.nav + ' (ocekavano +30)');
+  else if (!(Bx.len > A.len * 1.10)) fails.push('(t) koren ' + nmX + ' se s 30 navraty neprodlouzil (' + A.len.toFixed(0) + ' -> ' + Bx.len.toFixed(0) + ' px)');
+  else tMsg = 'navrat prohloubi koren (' + nmX + ' +30 navratu: ×' + (Bx.len / A.len).toFixed(2) + ')'; }
 if (fails.length) { fails.slice(0, 12).forEach(f => console.log('   ' + f)); console.log('strom: ' + fails.length + ' poruseni (vetve ze stejneho mista / pod podlahou / cteni mimo sve misto / vetvi nad strop / neklikatelne / prameny navic / inspekce neodpovida logu)'); process.exit(1); }
-console.log('strom (lab): ' + runs + ' stromu — vystupy ramen na stejne strane aspon ' + worstE.toFixed(0) + ' px, levo-pravo aspon ' + worstLR.toFixed(0) + ' px, zadne pod podlahou, kazde cteni na svem miste strana × zona (jako vetvicka na plnem rameni jineho zivlu nejvys ' + (worstForeign * 100).toFixed(0) + ' %), nejvys ' + maxBr + ' vetvi, kapacita ramen drzi, kazda vedlejsi ma koren, ' + oMsg + ', vetve na rodici aspon ' + worstS.toFixed(1) + ' px, vse klikatelne, inspekce = log, nejvys ' + maxStr + ' pramenu v kmeni, ' + iMsg + ', ' + jMsg + ', ' + kMsg + ', ' + lMsg + ', ' + rMsg);
+console.log('strom (lab): ' + runs + ' stromu — vystupy ramen na stejne strane aspon ' + worstE.toFixed(0) + ' px, levo-pravo aspon ' + worstLR.toFixed(0) + ' px, zadne pod podlahou, kazde cteni na svem miste strana × zona (jako vetvicka na plnem rameni jineho zivlu nejvys ' + (worstForeign * 100).toFixed(0) + ' %), nejvys ' + maxBr + ' vetvi, kapacita ramen drzi, kazda vedlejsi ma koren, ' + oMsg + ', vetve na rodici aspon ' + worstS.toFixed(1) + ' px, vse klikatelne, inspekce = log, nejvys ' + maxStr + ' pramenu v kmeni, ' + iMsg + ', ' + jMsg + ', ' + kMsg + ', ' + lMsg + ', ' + rMsg + ', ' + sMsg + ', ' + tMsg);

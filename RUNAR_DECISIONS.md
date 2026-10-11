@@ -9967,3 +9967,20 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Čeká:** ownerův pohled; do labu až na jeho slovo. Se zapnutím: `RUNAR_TREE.md` §2 (kořeny jsou živé — postaveno), `RUNAR_TREE_MAP.md` §10
   a kontrola kořenů do smoke ㉳ (seeking, návrat). Odvolává se na (23), (26), (30), (44).
 - Affected doc(s): `RUNAR_BACKLOG.md` (Berkanin kořen zavřen; „Kořeny = minulost/základ“ bod b nanečisto) — v témže commitu.
+
+## 2026-10-11 (3) — Strom (lab): ZAPNUTO — kořeny: seeking tvaruje kořen, víc se proplétají, návrat runy kořen prohloubí; zesílení z (2) se neprojevilo
+
+- **Rozhodl:** KUKY 2026-10-11 k nanečisto (2): *„9. ano, zapni v labu 10. ano.“* **Provedl:** CODE-tree, LAB (aplikace beze změny).
+- **Co je v labu:** totéž co nanečisto (2) a obrázky — seeking tvaruje celý kořen zrcadlově k větvi (bez slití do jednoho úhlu), vlnění × 1,6
+  a spirála 0,25, návrat runy kořen prodlouží (až +50 procent) a hlavní kořen natočí strměji (až o 35 procent); plný účinek po 40 návratech.
+  Lab dává na jeho stromě táž čísla jako nanečisto: kořeny 95 procent šířky koruny, hloubka 54 procent výšky koruny, kořínek nad zemí 1.
+- **Oprava (2):** „tloušťka až +25“ se neprojevila — engine šířku kořene přepočítá na šířku pramene u země (`rf` v `buildRootFor`); změřeno:
+  průměrná tloušťka kořenových tahů 3,25 s návraty i bez nich. Řádek do zapnutého kódu nešel, obrázky schválené ownerem ho tedy neobsahovaly.
+  Návrat kořen prodlužuje a stáčí hlouběji, nezesiluje.
+- **Smoke ㉳:** (s) tentýž log se samým Clarity proti Reflection — kořeny s Clarity míří v druhé půlce víc dolů (0,53 proti 0,25 po 120 čteních);
+  (t) 60 čtení + 30 čtení se zakládací runou Urð proti 30 týmž čtením s jinou runou téhož živlu (stavba stromu stejná) — kořen má v inspekci
+  přesně o 30 návratů víc a výběžky 1,22× delší. Mutace: seeking kořenům nepředán → (s) 0,41 proti 0,39; návrat nic neprodlouží → (t) 116 → 116 px;
+  návraty se nepočítají → (t) 0 → 0. Každou chytila jen kontrola, která na ni míří.
+- **Bod 10** (čtení o minulosti a nitru prohlubují víc): staví se nanečisto, vlastní záznam.
+- Affected doc(s): `RUNAR_TREE.md` §2 (kořeny jsou živé; zastaralé „zatím nanečisto“ u (23), (26) a ohnutí z (28), které (30) nechal stranou),
+  §4 (seeking) · `RUNAR_TREE_MAP.md` §10, §12 · `RUNAR_BACKLOG.md` — v témže commitu.
