@@ -3715,6 +3715,12 @@ konzole bez chyb. Islandské věty panelu is-greynir: „lestrunum“ korpus dok
      (0× i u „gjafakort“) a Greynir propustí i kalk „Sláðu inn gjafakort kóða“ — rozhodla tu gramatika, ne nástroj.
   Ostatní IS šablony s `{card}` sedí („Notaðu Rúnakort“, „Kaupa fleiri Rúnakort“, „Rúnakort opnar allt“). Vzor pádů jako dat už existuje
   (`TIERS.*.label_is_dat`, `tierLabel`, DECISIONS 2026-09-30 (6)).
+- [ ] **Pro CODE-tune (nízká priorita) — selhané načtení profilu vypadá jako „appka zapomněla moji runu“.** `fetchUserProfile`
+  (`v2/runar-app.js` ~ř. 63–159) při chybě sítě nastaví `profileLoaded = true` a překreslí Lífsrúnin bez dat → záložka se zeptá
+  „When were you born?“ i člověka, který datum i hotové čtení uložené má; žádná hláška, žádný druhý pokus. Ověřeno produkční funkcí
+  se zablokovanou sítí. Platba nehrozí: druhé vygenerování životní runy server odmítne (409, `claude-proxy` ~ř. 688), uživatel
+  ale dostane „The runes are quiet“. Tutéž podobu „zapomenuté runy“ řeší komentář u ř. 107 (Sigrún, iPhone, 3×) pro pomalý profil —
+  pro neúspěšný ne. Návrh: při chybě jeden opakovaný pokus a jinak hláška místo formuláře.
 - [ ] **Návrh pro design (ne chyba)** — na telefonu leží vlajka hlášení (`#br-btn`, z-index 99998) a „?“ (`#hb-btn`) i nad otevřeným
   postranním panelem (z-index 151); vlajka stojí v řádku „× DELETE ACCOUNT“. Text dnes nezakryje, ale panel působí neuzavřeně.
 
