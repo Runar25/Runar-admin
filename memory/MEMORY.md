@@ -78,6 +78,7 @@ Intake (NENÍ pravda): `docs/inbox/` · Mrtvá (scratch): mimo index.
 - [propose-content-not-code.md](propose-content-not-code.md) — Cowork dodává obsah a strukturu POPÍŠE; hotová funkce od něj nikdy neprošla guardem
 - [bash-no-cd-prefix.md](bash-no-cd-prefix.md) — NIKDY `cd … &&` ani `| tail` na Bash; boří allowlist
 - [heredoc-mangles-backslash-escapes.md](heredoc-mangles-backslash-escapes.md) — heredoc tu udělá z `\n` konec řádku; skript s escape sekvencemi piš nástrojem Write
+- [api-guard-py-false-positive.md](api-guard-py-false-positive.md) — hlídač API blokuje i příkaz bez API, když v něm stojí dvě jména `.py` za sebou; cesty přes `--pathspec-from-file`
 - [edit-tool-escapes-new-text.md](edit-tool-escapes-new-text.md) — Edit na řádku s `\uXXXX` zapíše i nový text jako escape; smíšený řádek nenajde — patch skriptem, diff zkontrolovat
 - [ceske-nazvy-spreadu-v-kodu.md](ceske-nazvy-spreadu-v-kodu.md) — ve v2/ (i v komentářích) názvy spreadů anglicky; „Podkova“ zastaví check-is a commit
 - [guard-test-the-lifecycle.md](guard-test-the-lifecycle.md) — novou kontrolu testuj proti VŠEM stavům toho, co hlídá, ne jen dobrý/špatný případ
