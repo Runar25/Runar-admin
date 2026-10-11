@@ -2505,13 +2505,13 @@ sjednotit `s3-online-title` a v témže commitu zapojit kontrolu do smoke — d�
 `runar_character`. Živé RLS u všech čtyř pouští zápis jen e-mailům adminů = `ADMIN_EMAILS` (shoda ověřena; kopie v 6 edge funkcích hlídá
 `verify_admin_emails.js`, živé politiky ne — zapsáno v kole 2 / 3, čeká na `is_admin()`). Uplatnění kódu (`redeem-code`): ověří JWT,
 rate limit 5 / 15 min na IP, „použitý“ = `used_by` NEBO `used_at`, označení atomicky přes `.is(null)`, kredity přes RPC `add_credits`.
-- **Pro CODE-tune (peníze, vzácné):** `redeem-code` ~79 kód nejdřív označí jako použitý a teprve pak volá `add_credits`. Selže-li RPC,
+- ✅ *(CODE-tune 2026-10-11, 2e5f217, nasazeno v11: při chybě `add_credits` se označení vrátí — DECISIONS 2026-10-11)* **Pro CODE-tune (peníze, vzácné):** `redeem-code` ~79 kód nejdřív označí jako použitý a teprve pak volá `add_credits`. Selže-li RPC,
   vrátí 500 — kód je spotřebovaný a kredity nepřibyly; uživatel nemá jak to napravit sám (opakování → „already used“). Návrh: při chybě
   `add_credits` vrátit `used_by`/`used_at` na null (kompenzace), nebo obojí v jedné SQL funkci.
 - **Drobnost, žádný únik:** politika `admins_select_static_audio` se jmenuje „admins“, ale má `qual = true` pro každého přihlášeného.
   Tabulka nese jen veřejné texty a zvuky run (53 řádků, všechny `ready`), takže nic neuniká — jen jméno lže. Až se bude sahat na RLS
   (`is_admin()`), přejmenovat nebo zúžit.
-- **Pro CODE-tune (dodavatelský řetězec, nový nález):** všech 10 edge funkcí importuje `https://esm.sh/@supabase/supabase-js@2` — plovoucí
+- ✅ *(CODE-tune 2026-10-11, 584c9f2: `npm:@supabase/supabase-js@2.117.3`, smoke ㊳; nasazeno 9 funkcí — DECISIONS 2026-10-11)* **Pro CODE-tune (dodavatelský řetězec, nový nález):** všech 10 edge funkcí importuje `https://esm.sh/@supabase/supabase-js@2` — plovoucí
   major z cizího CDN. Každé nasazení si vezme, co je zrovna nejnovější 2.x, takže dvě funkce nasazené v jiný den běží na jiné knihovně
   a výpadek nebo podvržení esm.sh dopadne na nasazení. Táž třída rizika, kvůli které klient od 2026-10-10 hostuje knihovnu u nás
   s pevnou verzí (DECISIONS 2026-10-10 (33)). Návrh: připnout přesnou verzi (stejnou jako `v2/vendor/`), ideálně `npm:` specifikátorem,

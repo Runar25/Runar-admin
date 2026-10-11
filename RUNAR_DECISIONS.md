@@ -10130,3 +10130,20 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   bez nich 0,87–1,24 podle logu). Mutace „Norny bez prodloužení“ chycena na dvou ze tří logů (4 porušení), nic jiného nespadlo.
 - **Zbývá:** „všechny tři kořenové runy v jednom čtení → výjimečná událost“ (`RUNAR_DESIGN.md`), port do aplikace.
 - Affected doc(s): `RUNAR_TREE.md` §2 · `RUNAR_TREE_MAP.md` §10, §12 · `RUNAR_BACKLOG.md` — v témže commitu.
+
+## 2026-10-11 (14) — Edge funkce na pevné supabase-js 2.117.3 (npm:) a redeem-code vrací kód, když se kredity nepřipíšou; nasazeno
+
+- **Rozhodl:** owner 2026-10-11 *„7. a 8. připrav a pak nasaď“* (nálezy CODE-read, BACKLOG kolo 2 / 9).
+- **redeem-code (2e5f217):** kód se označí jako použitý a kredity se připisují až potom. Když `add_credits` selhal, zaplacená karta
+  propadla (kód spotřebovaný, kredity žádné, další pokus „already used“). Teď se při chybě označení vrátí (jen tomuhle uživateli, CAS
+  na `used_by`) a jde to zkusit znovu. Jedna SQL funkce pro obojí by byla čistší, ale chtěla by migraci ownerem — kompenzace stačí.
+- **Připnutí (584c9f2):** všech 10 funkcí bralo plovoucí `https://esm.sh/@supabase/supabase-js@2` — každé nasazení jiná knihovna, cizí CDN
+  v cestě. Teď `npm:@supabase/supabase-js@2.117.3` (= klient `v2/vendor/`, DECISIONS 2026-10-10 (33); npm latest). Smoke ㊳
+  (`verify_edge_imports.js`) odmítne import bez přesné verze (zkoušeno: vrácené `@2` padá).
+- **Nasazeno (git nevidí):** claude-proxy v81, delete-account v9, elevenlabs-proxy v36, elevenlabs-static v15, list-readings v11,
+  list-reports v4, redeem-code v11, reset-tree v5, voice-usage v3. `tree-update` nenasazena (v produkci není), `notify-report` knihovnu nemá.
+  Před nasazením všech devět stažených = repo před změnou (žádný drift); po nasazení = HEAD 584c9f2.
+- **Ověřeno živě:** každá funkce s neplatným přihlášením odpověděla 401 (elevenlabs-static 403) — naběhla, nová knihovna volá přihlášení;
+  redeem-code navíc prošel dotazem na rate limit do databáze. **Hranice:** přihlášená cesta (čtení, hlas, admin) živě po tomhle nasazení
+  nevyzkoušená; kompenzace v redeem-code živě nevyzkoušená (chybu add_credits nejde vyvolat bez zásahu do DB).
+- Affected doc(s): `RUNAR_BACKLOG.md` kolo 2 / 9 — v témže commitu.
