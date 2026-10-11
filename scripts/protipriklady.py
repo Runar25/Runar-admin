@@ -101,6 +101,9 @@ PRIPADY = [
  ('chyti', 'verify_datum_ui.js', 'v2/runar-journal.js', 'replace', "    const dateStr = datumUI(e.drawn_at, isIs ? 'is' : 'en');", "    const dateStr = new Date(e.drawn_at).toLocaleDateString(isIs ? 'is-IS' : 'en-GB', { day:'numeric', month:'short', year:'numeric' });"),
  ('chyti', 'verify_datum_ui.js', 'v2/runar-utils.js', 'replace', "    return d.getDate() + '.' + (d.getMonth() + 1) + '.' + d.getFullYear();", "    return d.toLocaleDateString('is-IS', { day: 'numeric', month: 'short', year: 'numeric' });"),
  ('chyti', 'verify_datum_ui.js', 'v2/runar-tree.js', 'replace', '  return datumUI(iso, lang);', "  return new Date(iso).toLocaleDateString('en-GB');"),
+ # ㊽ čitelnost (2026-10-11, CODE-tune): upozornění zpět s průhledností 0,45 (2,41 : 1) · podnadpis úvodu barvou --dim (§5)
+ ('chyti', 'verify_citelnost.js', 'v2/runar-reader.css', 'replace', ".q-teaser-txt{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--muted);margin:14px 0 6px;}", ".q-teaser-txt{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--muted);opacity:0.45;margin:14px 0 6px;}"),
+ ('chyti', 'verify_citelnost.js', 'v2/runar-reader.css', 'replace', '.hero-sub{font-size:1.12em;color:var(--muted);', '.hero-sub{font-size:1.12em;color:var(--dim);'),
  # ㊼ verze v hlášení (2026-10-11, CODE-tune): verze rozjetá se sw.js, reportér zpět na nasazenou, worker zase chytá sw.js, soubor mimo precache
  ('chyti', 'verify_verze_hlaseni.js', 'v2/runar-verze.js', 'regex', r"RUNAR_VERZE = 'v\d+'", "RUNAR_VERZE = 'v1'"),
  ('chyti', 'verify_verze_hlaseni.js', 'v2/runar-reporter.js', 'replace', '      app_version: verzeHlaseni(),', "      app_version: VERZE_NASAZENA || 'unknown',"),

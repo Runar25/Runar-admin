@@ -833,6 +833,16 @@ radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola verze v hlaseni probehla'
 check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
 
+# ㊽ 2026-10-11 (CODE-tune; nález CODE-read, owner „ano, udělej ty tři chyby“): co člověk na obrazovce opravdu přečte — upozornění
+# „not professional advice“ mělo 2,41 : 1 (--muted přes průhlednost ≈ --dim, které §5 na text zakazuje) a nic to nehlídalo. Skutečný
+# prohlížeč: reader jako návštěvník, nápověda, zásady, EN i IS; každý viditelný text aspoň 3 : 1, slabší než 4,5 jen vypíše.
+print('\n' + chr(0x32BD) + ' ČITELNOST (verify_citelnost.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_citelnost.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola citelnosti probehla'
+check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
+
 # ㉴ Štítek modelu v UI = model v edge funkci (CODE-tune 2026-10-05). KUKY (report 2026-10-05 07:40): „Pokud jsi změnil model
 # na sol6.1, proč jsi to taky neupravil… Tady v readeru. Což znamená, že nevíš, kde co je.“ Proxy běžela na gpt-6.1-sol, přepínač
 # admina hlásil „GPT-6 sol“ — dvě místa (edge funkce × překlady), která nikdo nehlídal.

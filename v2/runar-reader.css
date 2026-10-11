@@ -535,7 +535,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 #setup-gender-row{margin-top:16px;}
 #setup-gender-lbl{text-transform:uppercase;}
 .opt{opacity:0.45;font-size:0.85em;}
-.q-teaser-txt{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--muted);opacity:0.45;margin:14px 0 6px;}
+/* 2026-10-11 bez opacity 0.45: --muted přes průhlednost vycházelo ≈ --dim (#445160, kontrast 2,41 : 1), které §5 na text zakazuje — upozornění
+   „not professional advice“ nešlo přečíst (procházka CODE-read). Vzor .credit-note (Cinzel, malé písmo, --muted bez průhlednosti, 7,7 : 1). Smoke ㊽. */
+.q-teaser-txt{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--muted);margin:14px 0 6px;}
 .note{font-size:0.9em;color:var(--muted);font-style:italic;line-height:1.7;margin-bottom:14px;}
 .txt{width:100%;background:transparent;border:none;border-bottom:1px solid var(--border2);color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1.1em;padding:10px 0;}
 .txt:focus{outline:none;border-bottom-color:var(--gold);}

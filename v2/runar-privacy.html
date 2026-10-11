@@ -73,7 +73,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 .contact-card a:hover{opacity:1;}
 
 /* UPDATED DATE */
-.updated{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--muted);opacity:0.4;text-align:center;margin-top:48px;}
+/* 2026-10-11 bez opacity 0.4: vycházelo 2,14 : 1, pod --dim, které §5 na text zakazuje (našla kontrola ㊽); vzor .credit-note v appce. */
+.updated{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--muted);text-align:center;margin-top:48px;}
 
 @media(max-width:600px){
   .topbar-inner{padding:12px 18px;}

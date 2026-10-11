@@ -3667,8 +3667,12 @@ start“ (runa = naše SVG), šířka telefonu (bez vodorovného posunu, mříž
 - [ ] **Pro CODE-tune — nápověda v islandštině: zaseklá angličtina** (`v2/runar-help.html` ř. 151 „RUNE SEEKER“, 155 „+ READING CARD“,
   159 a 163 „soon“): statické buňky bez `id`, JS je nepřekládá (Vegfarandi/Ferðalangur se přes `id` překládají). Jména tierů z `TIERS`
   (§10), karta z `VOCAB`.
-- [ ] **Pro CODE-tune — upozornění „not professional advice“ nečitelné** (`#reader-disclaimer`, `--muted` s průhledností 0,45 na pozadí
+- [x] ✅ *(CODE-tune 2026-10-11: `.q-teaser-txt` bez průhlednosti → 7,7 : 1 jako `.credit-note`; táž vada v zásadách „Last updated“ (2,14 : 1)
+  opravena; hlídá smoke ㊽ `verify_citelnost.js`.)* ~~**Pro CODE-tune — upozornění „not professional advice“ nečitelné**~~ (`#reader-disclaimer`, `--muted` s průhledností 0,45 na pozadí
   #0a0c12, písmo 9,6 px): kontrast 2,41 : 1 (pro text se chce aspoň 4,5). Výsledná barva ~#44515f ≈ `--dim`, které §5 na text zakazuje.
+- [ ] **Pro ownera — 19 textů s kontrastem 3–4,5 : 1** (pod doporučením WCAG pro malé písmo, nad `--dim`, takže §5 neporušují): hlavně popisky
+  sekcí a hlavičky tabulek nápovědy (průhlednost 0,5, ~3,6 : 1), „GUIDE & FAQ“, štítek „soon“ a pár popisků v readeru a zásadách. Smoke ㊽ je
+  jen vypisuje. Rozhodnutí o vzhledu: zvednout na 4,5 : 1, nebo nechat. Seznam: `node scripts/verify_citelnost.js --slabe`. (CODE-tune 2026-10-11)
 - [ ] **Pro Cowork / ownera — statická čtení v Kolekci tvrdí, co se děje v nitru čtenáře** (Fehu IS: „Það sem þú hefur nært í kyrrðinni
   er farið að taka rætur… krafturinn sem fer á hreyfingu þegar þú treystir því sem býr innra með þér“) — kánon to Rúnarovi zakazuje
   (memory `rozkaz-a-studene-cteni-hranice`). Dosud zapsaný jen Dagaz (položka „Statické čtení Dagaz“); projít všech 25.
