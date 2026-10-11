@@ -464,7 +464,9 @@ function startReading() {
   if (!name) name = t('name_you');   // §12; 2026-10-10 z UI_TEXT
   // Life rune from DB (own reading) or null (reading for someone else)
   var lifeRune = (isMine && _lifeRuneNum) ? RUNES[_lifeRuneNum - 1] : null;
-  readerUser = { name, d: null, m: null, y: null, lifeRune,
+  // Datum narození (profil účtu) zůstává: čte ho záložka Životní runa a strom, příprava čtení ne (životní runa jde zvlášť v lifeRune).
+  // Do 2026-10-11 se tu nulovalo → po každém čtení ukázala Životní runa formulář na datum a strom zmizel (ověřeno v prohlížeči).
+  readerUser = { name, d: readerUser.d || null, m: readerUser.m || null, y: readerUser.y || null, lifeRune,
     area: readerUser.area || '', seeking: readerUser.seeking || '',
     intention: readerUser.intention || '',
     question: document.getElementById('r-question').value.trim() };
@@ -486,6 +488,7 @@ var _spread9Runes = [];   // Yggdrasil (9 worlds)
 // ─── SPREAD MODE ─────────────────────────────────────────
 function _setSpreadMode(mode) {
   _clearThought();   // 2026-09-30 (§13)
+  _konecZalozeni();
   _spreadMode   = mode;
   _spread3Runes = [];
   _spread5Runes = [];
@@ -1161,6 +1164,7 @@ async function askRunar() {
 
 function drawAnother() {
   _clearThought();   // 2026-09-30: myšlenka ✦ patří jen k čtení, které ji neslo (§13)
+  _konecZalozeni();
   // Restore layer2 + reset layer1 label for next reading
   var _daL2 = document.getElementById('single-layer2');
   var _daLbl = document.getElementById('layer1-lbl');
@@ -1184,6 +1188,7 @@ function drawAnother() {
 // Owner request: on (re)entering the Rune Reading tab, clear any STALE spread output /
 // label / mode from a previous reading, so a spread result never lingers over a new single.
 function _resetReadingTab() {
+  _konecZalozeni();
   _spreadMode = 'single';
   _spread3Runes = []; _spread5Runes = []; _spread7Runes = []; _spread9Runes = [];
   readerRune = null; readerTexts = {}; voiceGenerated = {};
@@ -1207,7 +1212,9 @@ function resetReader() {
   _updateSpread3Slots(); _updateSpread5Slots(); _updateSpread7Slots(); _updateSpread9Slots();
   _hideAllSpreadOutputs();
   ['single','kriz','norns','horseshoe','yggdrasil'].forEach(function(m){ var _b = document.getElementById('mode-btn-' + m); if (_b) _b.classList.toggle('active', m === 'single'); });
-  readerUser = {}; readerRune = null; readerTexts = {}; voiceGenerated = {};
+  readerUser = { d: readerUser.d, m: readerUser.m, y: readerUser.y };   // datum narození zůstává (viz startReading, 2026-10-11)
+  readerRune = null; readerTexts = {}; voiceGenerated = {};
+  _konecZalozeni();
   document.getElementById('reader-hero').classList.remove('hidden');
   document.getElementById('reader-output').style.display = 'none';
   document.getElementById('reader-rune-card').style.display = 'none';
@@ -1427,17 +1434,14 @@ async function _generateSpreadReading(o) {
   if (_isFounding && !res.error) {
     _foundingPending = false;
     userTreeFounded  = true;
-    _syncFoundingLock();          // odemknout ostatni spready
-    // Vyusteni ritualu patri do STROMU, ne do ctecky (KUKY 2026-07-19: „kdyz na to
-    // koukam, tak by se to tam neveslo"). Ctecka uz nese vyklad, hlas a dve tlacitka;
-    // treti potvrzovaci blok se tam necpe. Ve strome na uzivatele ceka text
-    // zakladacich Norn, ktery tam zustane naporad — to je to potvrzeni.
+    // 2026-10-11 (KUKY po založení v produkci: „this is rooting před čtením zůstane celou dobu… až si to přečtu a jsem spokojený,
+    // tak kliknu na zobrazit strom… a pak teprve se ukáže strom“): příběh zůstává nad čtením, do stromu vede tlačítko pod čtením.
+    // Do té doby příběh se čtením zmizel a appka za 4 s sama skočila do stromu (DELAY_FOUNDING_TO_TREE) — čtení nešlo dočíst.
+    _foundingDone = true;
+    _syncFoundingLock();          // odemknout ostatni spready; pribeh a tlacitko drzi _foundingDone
     if (currentUser && typeof _loadFoundingReading === 'function' && res.reading_id) {
       await _loadFoundingReading(res.reading_id);
     }
-    setTimeout(function () {
-      if (typeof showAppTab === 'function') showAppTab('tree');
-    }, DELAY_FOUNDING_TO_TREE);
   }
 }
 
@@ -1567,9 +1571,12 @@ function _syncFoundingLock() {
       if (!_mid) setup.style.display = '';
     }
   }
+  var hotovo = (typeof _foundingDone !== 'undefined') && _foundingDone;   // po založení příběh zůstává nad čtením (2026-10-11)
+  var ftt = document.getElementById('founding-to-tree');
+  if (ftt) { ftt.style.display = hotovo ? '' : 'none'; if (hotovo) ftt.textContent = t('atab_tree'); }
   if (story) {
-    story.style.display = lock ? 'block' : 'none';
-    if (lock) {
+    story.style.display = (lock || hotovo) ? 'block' : 'none';
+    if (lock || hotovo) {
       var sl = document.getElementById('founding-story-lbl');
       var stx = document.getElementById('founding-story-text');
       if (sl)  sl.textContent  = t('founding_story_lbl');
@@ -1583,6 +1590,11 @@ function _syncFoundingLock() {
     b.style.opacity = lock ? '0.35' : '';
     b.style.pointerEvents = lock ? 'none' : '';
   });
+}
+
+// Konec pohledu po založení (příběh + tlačítko do stromu): jakmile člověk jde dál — jiný výklad, další tah, START OVER, návrat do záložky.
+function _konecZalozeni() {
+  if (typeof _foundingDone !== 'undefined' && _foundingDone) { _foundingDone = false; _syncFoundingLock(); }
 }
 
 function _syncNornsGate() {

@@ -18,6 +18,7 @@ var _nameLoreCount = 0;     // kolik rozboru od modelu uz probehlo (pise server,
 var _nameLoreText  = null;  // rozbor jmena — SAMOSTATNA volba vedle zivotni runy (2026-09-11)
 var userTreeFounded = false;   // z DB (tree_founded_at) — server-only sloupec
 var _foundingPending = false;  // uzivatel klikl na zalozeni; ceka se na Norny
+var _foundingDone = false;     // po zakladacich Nornach: pribeh zustava nad ctenim, pod nim tlacitko do stromu (2026-10-11)
 var _foundingText = null;      // text zakladacich Norn (z readings)
 var _lifeRuneLang  = null;  // lang of stored reading
 var _lifeRuneNum   = null;  // rune number 1-24
@@ -105,6 +106,7 @@ var _treeLog  = [];      // všechna čtení, chronologicky
 var _treeRkey = null;    // klíč životní runy pro renderer
 var _treeDob  = null;
 var _treeSeekWired = false;
+var _treeFrameSh = null;         // svislý rám celého stromu (renderer) — přehrávání historie ho drží, ať strom při růstu neposkakuje
 var _foundingReadingId = null;   // id zakládacích Norn (user_profiles.founding_reading_id, píše server) — jdou ve stromě první
 
 // ── OVLÁDÁNÍ STROMU (2026-10-11, KUKY „12. ano · 13. ano · plná šířka“; strom zatím vidí jen admin) ──
@@ -126,7 +128,9 @@ function _drawTreeAt(n) {
   var full = (n == null || n >= _treeLog.length);
   var view = full ? _treeLog : _treeLog.slice(0, n);
   _treeViewN = n;
-  _treePick = window.RunarTreeProd.render(cv, { log: view, rune: _treeRkey, dob: _treeDob, view: _tv, sel: _treeSelK }) || null;
+  _treePick = window.RunarTreeProd.render(cv, { log: view, rune: _treeRkey, dob: _treeDob, view: _tv, sel: _treeSelK,
+                                                frameSh: full ? null : _treeFrameSh }) || null;
+  if (full && _treePick) _treeFrameSh = _treePick.frameSh;   // rám z celého stromu (2026-10-11, KUKY „strom je nepřirozeně nízko“)
   cv.style.transform = '';   // náhled gesta pryč až s hotovým ostrým stromem — v témže snímku, bez probliknutí
   _treeHighlight(cv);
   _treeZoomUi();

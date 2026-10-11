@@ -5,8 +5,9 @@
 // z 2026-07-19 se rozbil potichu, nejspíš s pozdější úpravou čtení). Kontrola protlačí celou cestu skutečnou appkou z pracovního stromu:
 // admin s datem a životní runou, strom nezaložen → záložka stromu → FESTA RÆTUR TRÉSINS → příběh, Norny, mřížka 25 run, cena „zdarma“,
 // ostatní výklady zamčené → 3 runy (klik na runu + PŘIDAT) → TÁHNI → proxy (podvržená v prohlížeči testu: zaznamená režim a cenu, vrátí
-// text a id; „DB“ zapíše zakládací čtení) → po 4 s strom: založeno, zakládací Norny první, větve, text založení, žádná nabídka, datum
-// narození zachované. Nic se neodesílá ani neúčtuje (proxy i databáze jsou podvržené jen v prohlížeči testu).
+// text a id; „DB“ zapíše zakládací čtení) → příběh zůstává nad čtením, pod ním tlačítko do stromu, appka sama neskáče (KUKY 2026-10-11)
+// → tlačítko → strom: založeno, zakládací Norny první, větve, text založení, rám (ne přilepený dolů), žádná nabídka; START OVER a další
+// čtení nesmažou datum narození. Nic se neodesílá ani neúčtuje (proxy i databáze jsou podvržené jen v prohlížeči testu).
 // Netvrdí nic o serveru (claude-proxy mode founding) ani o vzhledu. Útok: scripts/protipriklady.py → PRIPADY.
 //   node scripts/verify_zalozeni_stromu.js
 const fs = require('fs'), path = require('path'), http = require('http'), os = require('os'), cp = require('child_process');
@@ -86,13 +87,24 @@ const srv = http.createServer((req, res) => {
     unlocked: ['single','kriz','horseshoe','yggdrasil'].every(m => !document.getElementById('mode-btn-' + m).disabled), err: (document.getElementById('st-reader') || {}).textContent })`);
   ok('odesláno jako založení (režim founding, cena 0, bez kreditu)', after && after.proxy && after.proxy.mode === 'founding' && after.proxy.credits === 0 && after.proxy.useCredit === false, JSON.stringify(after));
   ok('po čtení: založeno, výklady odemčené, výklad vidět', after && after.founded && !after.pending && after.out === 'block' && after.unlocked, JSON.stringify(after));
-  await sleep(4300);
+  const fin = await ev(`({ story: document.getElementById('founding-story').style.display, btn: document.getElementById('founding-to-tree').style.display,
+    btnTxt: document.getElementById('founding-to-tree').textContent })`);
+  ok('po čtení: příběh zůstává nad čtením a pod ním tlačítko do stromu', fin && fin.story === 'block' && fin.btn !== 'none' && /TREE|TRÉ/.test(fin.btnTxt), JSON.stringify(fin));
+  await sleep(4500);
+  ok('žádný samovolný skok do stromu (čtení jde dočíst)', (await ev(`activeAppTab`)) === 'reading');
+  await ev(`document.getElementById('founding-to-tree').click()`);
   const tr = await ev(`(async () => { await new Promise(r => setTimeout(r, 300)); const mains = (_treePick && _treePick.pick || []).filter(p => typeof p.k === 'number');
     const vis = i => { const e = document.getElementById(i); return !!e && e.style.display !== 'none'; };
     return { tab: activeAppTab, first: _treeLog[0] && _treeLog[0].id, n: _treeLog.length, mains: mains.length, living: vis('tree-living'), fread: vis('tree-founding-reading'),
-             fcta: vis('tree-founding-cta'), need: vis('tree-need-rune'), nodob: vis('tree-no-dob'), d: readerUser.d }; })()`);
-  ok('po 4 s strom: založeno, zakládací Norny první, větve, text založení', tr && tr.tab === 'tree' && tr.first === 'fnd1' && tr.n === 41 && tr.mains >= 3 && tr.living && tr.fread, JSON.stringify(tr));
+             fcta: vis('tree-founding-cta'), need: vis('tree-need-rune'), nodob: vis('tree-no-dob'), d: readerUser.d, sh: _treePick && _treePick.frameSh }; })()`);
+  ok('tlačítko → strom: založeno, zakládací Norny první, větve, text založení', tr && tr.tab === 'tree' && tr.first === 'fnd1' && tr.n === 41 && tr.mains >= 3 && tr.living && tr.fread, JSON.stringify(tr));
   ok('ve stromě žádná nabídka ani formulář na datum', tr && !tr.fcta && !tr.need && !tr.nodob && tr.d === 14, JSON.stringify(tr));
+  ok('strom svisle v rámu (ne přilepený dolů)', tr && typeof tr.sh === 'number' && tr.sh < 0, 'posun ' + (tr && tr.sh));
+  // datum narození po START OVER a po začátku dalšího čtení (do 2026-10-11 se nulovalo → Životní runa ukázala formulář na datum)
+  const dob = await ev(`(async () => { showAppTab('reading'); resetReader(); const d1 = readerUser.d; startReading(); const d2 = readerUser.d;
+    showAppTab('liferune'); updateTreeTab(); const vis = i => { const e = document.getElementById(i); return !!e && e.style.display !== 'none'; };
+    return { d1, d2, nodob: vis('tree-no-dob'), runa: vis('tree-reading-exists'), story: document.getElementById('founding-story').style.display }; })()`);
+  ok('START OVER a další čtení: datum narození zůstává, Životní runa ukáže runu', dob && dob.d1 === 14 && dob.d2 === 14 && !dob.nodob && dob.runa && dob.story === 'none', JSON.stringify(dob));
   ok('žádná chyba JS za běhu', exc.length === 0, exc.slice(0, 3).map(e => (e.exception && e.exception.description || e.text || '').slice(0, 200)).join(' | '));
   const okAll = res.every(x => x.startsWith('OK'));
   if (!okAll) { res.filter(x => !x.startsWith('OK')).forEach(x => console.log('      ' + x));
