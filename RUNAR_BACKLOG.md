@@ -438,13 +438,14 @@
   **Fakta o účtu (2026-10-11, ověřeno proti přehledu ElevenLabs, DECISIONS 2026-10-11):** ElevenAPI Starter $6/měsíc = 30 000 kreditů;
   kredit = $0.0002, v2/v3 = 0,4 kreditu na znak → 75 000 znaků ≈ 177 IS / 200 EN single měsíčně. Počítadlo a limit v `voice_quota_snapshots`
   jsou kredity (103 807 = strop převodu 90 000 + dobití $2.76); nejdřív se čerpá tarif, dobití až po něm. 5 testerů × 15 hlasů ≈ 15 tis.
-  kreditů měsíčně → vejde se i bez převodu (70 % z 30 tis. = 21 tis.); hlas ke každému čtení testera (nejhůř 75 single IS ≈ 12,7 tis.
+  kreditů měsíčně běžně (nejhůř ~50 tis. zarovnaně, ~100 tis. přes hranici měsíce — položka CODE-read níž; do 2026-10-11 tu stálo „vejde
+  se i bez převodu (70 % z 30 tis. = 21 tis.)“, hladina je ale 70 % z celého `character_limit` ≈ 72,7 tis.); hlas ke každému čtení testera (nejhůř 75 single IS ≈ 12,7 tis.
   kreditů na testera) potřebuje Creator API ($22 = 110 tis. kreditů). ⚠️ Do 2026-10-11 tu stálo, že tabulka ElevenLabs v `RUNAR_PRICING.md`
   počítá znaky špatně (Creator 121 tis.) — to bylo MOJE chybné tvrzení z ceníku aplikace ElevenLabs (jiný produkt). Metoda tabulky (cena
   tarifu ÷ sazba) je správně, jen sazba klesla z $0.10 na $0.08 (Creator 275 000 znaků v3/v2) — přepočítat spolu s rozhodnutím o hlasu.
   **S příštím nasazením hlasu:** `elevenlabs-proxy` a `elevenlabs-static` přičítají ke kreditům znaky (`kUsed + text.length`) → převést
   znaky na kredity podle modelu (nový hlas teď počítají 2,5× — opatrně, ale nepřesně).
-- [ ] **Pro CODE-read — ElevenLabs: zkontrolovat opravu cen a brzdy celé jednou a pořádně** (owner 2026-10-11: *„zadej nález oprav cen
+- [x] **HOTOVO 2026-10-11 (CODE-read), nálezy v položce níž · Pro CODE-read — ElevenLabs: zkontrolovat opravu cen a brzdy celé jednou a pořádně** (owner 2026-10-11: *„zadej nález oprav cen
   code read, ať to ještě zkontroluje celé jednou a pořádně!“*). Kontext: `RUNAR_DECISIONS.md` 2026-10-11 (43) a položka o hlasu výš.
   Teď se testuje a nesmí se platit nic navíc — Starter a nepřekročit, co je v něm zdarma; testeři zůstávají premium s brzdou 15 hlasů.
   (a) **Jednotky a sazby:** počítadlo i limit v `voice_quota_snapshots` jsou kredity; v2 i v3 0,4 kreditu na znak ($0.08 / 1000 zn.),
@@ -460,6 +461,30 @@
   (sazba opravena 03bf490).
   (e) **Výstup:** nálezy jako „Pro CODE-tune“ (kód a nasazení dělá CODE-tune), co chce ownera zvlášť. Nic negenerovat přes ElevenLabs —
   stojí kredity; stav účtu ze snímků nebo od ownera.
+- [ ] **Pro CODE-tune — ElevenLabs po kontrole CODE-read (2026-10-11)** · psáno proti 96002fd. Už zapsané v položce „Hlas: v produkci
+  premium…“ výš se tu neopakuje (cyklus EL místo kalendářního měsíce, jednotky `kUsed + text.length`, Creator 275 000) — kontrola to potvrdila.
+  **Sedí:** sazba v2/v3 $0.08 / 1000 zn. = 0,4 kreditu na znak (ceník API elevenlabs.io/pricing/api: Starter 75 000 zn. = 30 000 kreditů)
+  i naše evidence od resetu 10. 10. (8 hlasů, 3 584 zn. ≈ 1 434 kreditů = 773 + 661 z ownerova přehledu).
+  **Zaplatit navíc za hlas z appky nejde:** snímky EL nesou `can_extend_character_limit=false`, `max_character_limit_extension=0` — po
+  vyčerpání EL hlas odmítne, účtování nad limit účet nemá; s vypnutým automatickým dobíjením je jediné riziko ruční dobití. Brzdy chrání
+  kredity tarifu a dobití $2.76 (a to, aby testerům hlas neztichl), ne účet před fakturou.
+  1. **Hladina `VOICE_SAFE_SHARE` 0,7 × `character_limit` = ~72,7 tis. kreditů na cyklus (2,4× měsíčních 30 000), ne „70 % z 30 tis.“.**
+     Ownerův záměr byl „třeba 120 hlasů“ ≈ 21–29 tis. kreditů (při dnešních 448 zn. na hlas), tedy zhruba kredity tarifu. Plné využití
+     vyčerpá převod během cyklu; pak je limit 30 000 + R + 13 800 a hladina přeteče do dobití, kdykoli převod R < 2 200. Návrh: brzdit
+     `character_count` (spotřeba od resetu) proti kreditům tarifu, ne proti `character_limit` — varianta podle ownera (níž).
+  2. **Nejhorší cyklus** (příznak tester má **5 účtů = 3 testeři + 2 admin**, ne 7): 5 × 30 hlasů přes hranici měsíce × Yggdrasil
+     (≤ 1 661 zn. ≈ 664 kreditů) = 99 600 kreditů; zarovnaně 49 800; běžný Single (~179 kreditů) 26 900 / 13 400. Proti 30 000 drží jen
+     hladina z bodu 1 — po její opravě stačí; klíč cyklu EL u osobního stropu je pak jen přesnost.
+  3. **Selže-li dotaz na stav účtu, hlas se pustí** (`elevenlabs-proxy` ř. 103, fail open) a EL zastaví až na limitu včetně dobití. Malé
+     riziko (jednotlivé hlasy), jen vědět.
+  4. **`scripts/utils/stats.js` ř. ~291–295** (oprava 03bf490 nechytila): snímek vypisuje „X z Y znaků“ — jsou to kredity; „přečerpání …
+     platí se navíc“ na tomhle účtu nastat nemůže; „zapsáno ve voice_usage od resetu“ srovnává naše znaky s jejich kredity (× 0,4).
+  5. **`RUNAR_PRICING.md` „ElevenLabs Plan“:** kromě Creatoru i Pro / Scale / Business podle ceníku API 1 238 000 / 3 738 000 / 12 375 000 zn.
+     (tabulka má 990 000 / 2 990 000 / 9 900 000) → uživatelé a hladiny přechodu × 1,25; chybí řádek Starter ($6, 75 000); „Overage rate =
+     plan rate“ pro Starter neplatí (viz výš).
+  **Owner — jednou větou:** „limit zdarma“ pro brzdu z bodu 1 je (a) měsíčních 30 000 kreditů tarifu (≈ jeho „120 hlasů“; převod zůstane
+  rezervou na spuštění) — **doporučuji**; nebo (b) vše kromě dobití (převod se smí čerpat — po dvou měsících stejně propadá; cyklus pak
+  spotřebuje až ~90 000).
 
 ## Multijazyčnost
 
