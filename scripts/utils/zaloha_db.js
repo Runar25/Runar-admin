@@ -175,14 +175,19 @@ if (process.argv.includes('--test-lhuta')) {
   console.log((ok ? 'OK    ' : 'FAIL  ') + 'lhůta ' + LHUTA_DNI + ' dní k ' + dnes + ': smazáno ' + JSON.stringify(smazano) + '; zůstalo ' + zbylo[0]);
   process.exit(ok ? 0 : 1);
 }
-// Krok 7 (2026-10-11, KUKY „pravidelná záloha z konverzace… ať se nic neztratí“, DECISIONS 2026-10-11): po úspěšné záloze DB šifrovaná
-// kopie všech konverzací a hooků (zaloha_konverzaci.js). Selže-li jen ona, záloha DB platí → exit 2 (ne 1), ať je selhání rozlišitelné.
-main().then(() => {
+// Krok 7 (2026-10-11, KUKY „pravidelná záloha z konverzace… ať se nic neztratí“, DECISIONS 2026-10-11): šifrovaná kopie všech konverzací
+// a hooků (zaloha_konverzaci.js). Běží VŽDY, i když záloha DB selže — do kola 3 kontroly (2026-10-11) jela jen po úspěchu DB, takže výpadek
+// Supabase CLI by zastavil i zálohu konverzací, se kterou nesouvisí. Výsledek: DB selhala → exit 1; jen konverzace → exit 2.
+function konverzace() {
   try {
     const out = execFileSync(process.execPath, [path.join(__dirname, 'zaloha_konverzaci.js')], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
     log('konverzace: ' + out.trim().replace(/^OK\s+/, ''));
+    return true;
   } catch (e) {
     log('CHYBA konverzace: ' + String((e.stdout || '') + (e.message || '')).trim().slice(0, 300));
-    process.exitCode = 2;
+    return false;
   }
-}).catch((e) => { log('CHYBA: ' + e.message); process.exit(1); });
+}
+if (process.env.RUNAR_ZALOHA_TEST_DB_SELZE) main = async () => { throw new Error('test: záloha DB selhala'); };   // jen samotest kroku 7
+main().then(() => { if (!konverzace()) process.exitCode = 2; })
+  .catch((e) => { log('CHYBA: ' + e.message); konverzace(); process.exit(1); });

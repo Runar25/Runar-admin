@@ -2729,6 +2729,13 @@ zápisy ze `zapis()` (ověřeno v `commit()`); změna nástrojem Edit by uvízla
 uz_vime a kánonu teď zapisují skutečnou cestou cv.zapis), `uprav` 3 stavy v dočasném repu (nahradí · commitne · dvojznačný odmítne),
 původní samotest `commit_vlastni` beze změny. Nový soubor nástrojem Write dál smí (pak `pridej`).
 
+#### Kolo 3 / 2 — soulad mechanismů: API guard × `uprav`, noční záloha DB × konverzace (2026-10-11)
+**Bez nálezu:** API guard nechá projít `commit_vlastni.py uprav` i s textovým souborem, který mluví o klíčích a API (naostro, exit 0) —
+k zablokování úpravy docu nedojde (Edit zastavený + guard by blokoval i náhradu).
+**Opraveno:** záloha konverzací běžela jen po ÚSPĚŠNÉ záloze DB (`.then()`), takže výpadek Supabase CLI by zastavil i ji, ačkoli spolu
+nesouvisí. Teď běží vždy; výsledek dál rozliší, co selhalo (DB → 1, jen konverzace → 2). Ověřeno simulovaným selháním DB v kopii
+s logem mimo skutečný (`RUNAR_ZALOHA_TEST_DB_SELZE`): CHYBA DB + konverzace proběhla, exit 1; samotest lhůty 30 dní beze změny.
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
