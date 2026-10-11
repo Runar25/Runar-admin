@@ -143,7 +143,7 @@ PRIPADY = [
  # cizí čtení, deník bez hlasu u single → musí spadnout; komentář navíc nesmí
  ('chyti', 'verify_hlas_ke_cteni.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'replace', '    if (text === null) return json({ error: "voice_unbound" }, 403);', '    if (text === null) text = typeof body?.text === "string" ? body.text : "";'),
  ('chyti', 'verify_hlas_ke_cteni.js', 'supabase/functions/_shared/voice_ticket.ts', 'replace', '  return ok ? nonce : null;', '  return nonce;'),
- ('chyti', 'verify_hlas_ke_cteni.js', 'supabase/functions/_shared/voice_ticket.ts', 'regex', r'const i = s\.indexOf\("\\u2726"\);', 'const i = -1;'),
+ ('chyti', 'verify_hlas_ke_cteni.js', 'supabase/functions/_shared/voice_ticket.ts', 'replace', 'const i = s.indexOf("\u2726");', 'const i = -1;'),
  ('chyti', 'verify_hlas_ke_cteni.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'replace', '.eq("id", reading_id).eq("user_id", userId)', '.eq("id", reading_id)'),
  ('chyti', 'verify_hlas_ke_cteni.js', 'v2/runar-journal.js', 'regex', r'        \$\{_jHlas\(e, i\)\}\r?\n', ''),
  ('nesmi', 'verify_hlas_ke_cteni.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'append', '', '\n// komentář navíc — správný kód\n'),

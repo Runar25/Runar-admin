@@ -103,7 +103,8 @@ function _jThoughtHtml(th) { return th ? `<div class="jcard-thought">\u2726 ${es
 var _jEntries = [];
 function _jHlas(e, i) {
   if (!e || !e.id || (typeof _foundingReadingId !== 'undefined' && e.id === _foundingReadingId)) return '';
-  return '<button class="jcard-audio-btn" id="jvoice-btn-' + i + '" onclick="playReadingVoice(' + i + ')">' + escapeHtml(t('voice_btn')) + '</button>' +
+  // popisek začíná runou (ᚢ) → do tlačítka ho dá setRuneText v renderJournal (naše SVG, ne písmo — §5, smoke ㉻)
+  return '<button class="jcard-audio-btn jvoice-btn" id="jvoice-btn-' + i + '" onclick="playReadingVoice(' + i + ')"></button>' +
          '<div class="jcard-audio-player" id="jvoice-' + i + '"></div>';
 }
 async function playReadingVoice(i) {
@@ -254,6 +255,7 @@ function renderJournal(entries) {
       </div>
     </div>`;
   }).join('');
+  list.querySelectorAll('.jvoice-btn').forEach(function (b) { setRuneText(b, t('voice_btn')); });   // runa popisku = naše SVG (§5)
 
 }
 
