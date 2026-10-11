@@ -195,17 +195,23 @@ def kanon_hity(km, maxn=8):
     soubory = ['CLAUDE.md'] + sorted(f for f in os.listdir(KANON) if re.match(r'^RUNAR_.*\.md$', f))
     try: soubory += ['memory/' + f for f in sorted(os.listdir(KANON + '/memory')) if f.endswith('.md')]
     except Exception: pass
-    hity = []
-    # Aspoň 40 % slov ze zprávy (min. 2). Doloženo 2026-10-11: práh „2 shody“ u zprávy s 8 slovy vrátil jen šum z obecných slov
-    # (uživatel, případ, smazat); pokyn ke stromu (10 slov → potřeba 4) má na RUNAR_TREE.md:34 shod 9, chytí se dál.
-    potreba = max(2, -(-len(km) * 2 // 5)) if len(km) >= 2 else 1
+    radky = []
     for f in soubory:
-        try: radky = cti(KANON + '/' + f).split('\n')
+        try: radky += [(f, i + 1, l, bezd(l)) for i, l in enumerate(cti(KANON + '/' + f).split('\n'))]
         except Exception: continue
-        for i, l in enumerate(radky):
-            b = bezd(l)
-            shoda = [k for k in km if re.search(r'(?<![^\W\d_])' + re.escape(k), b)]
-            if len(shoda) >= potreba: hity.append((len(shoda), f, i + 1, shoda, l.strip()))
+    vzor = {k: re.compile(r'(?<![^\W\d_])' + re.escape(k)) for k in km}
+    # Obecná slova podle četnosti v kánonu, ne pevným seznamem (2026-10-11): kmen, který stojí ve víc než 1 % řádků, nic nerozliší
+    # („kontrola“, „čtení“, „strom“, „proto“). Doloženo týž den: shody „proto, kontrola, nestačí“ i „uživatel, případ, smazat“ byly jen šum;
+    # pokyn ke stromu se dál chytí na vzácných slovech (založení, deník, obsahovat).
+    n = max(1, len(radky))
+    vzacne = [k for k in km if sum(1 for _, _, _, b in radky if vzor[k].search(b)) <= max(3, 0.01 * n)]
+    if len(vzacne) < 2: return []
+    # Aspoň 40 % vzácných slov, a když jich je ≥ 4, aspoň 3 (2026-10-11: dvě shody „kritika, nestačí“ byly šum).
+    potreba = max(3 if len(vzacne) >= 4 else 2, -(-len(vzacne) * 2 // 5))
+    hity = []
+    for f, c, l, b in radky:
+        shoda = [k for k in vzacne if vzor[k].search(b)]
+        if len(shoda) >= potreba: hity.append((len(shoda), f, c, shoda, l.strip()))
     hity.sort(key=lambda h: -h[0])
     return hity[:maxn]
 
@@ -248,6 +254,23 @@ def projdi_prepis(tp, s):
     s['scanned'] += konec + 1
 
 
+# ---------- pasti v příkazech (opakovaně porušená pravidla, poznatelná z textu příkazu) ----------
+# Proč (KUKY 2026-10-11): „kritika musí být vyřešena. proto se necháváš kontrolovat, aby se ti nestávalo.“ Obě pasti stály jen v paměti
+# a padly znovu týž den: heredoc s \\n / \\\\ 2× (memory heredoc-mangles-backslash-escapes) a grep na OK|FAIL jako podmínka commitu
+# (memory read-the-check-before-push; commit prošel i při FAIL).
+def pasti(cmd):
+    out = []
+    m = re.search(r"<<-?\s*['\"]?([A-Za-z_]\w*)['\"]?", cmd)
+    telo = cmd[cmd.find('\n', m.end()) + 1:] if (m and '\n' in cmd[m.end():]) else ''
+    if telo and chr(92) in telo:
+        out.append('⛔ PAST: heredoc se zpětným lomítkem v těle — tady se z \\n stane konec řádku a escapování se rozbije (memory '
+                   'heredoc-mangles-backslash-escapes; 2026-10-11 se to stalo 2×). Skript napiš nástrojem Write do scratchpadu a spusť ho.')
+    if re.search(r'grep\b[^|;&\n]*OK\|FAIL[^|;&\n]*&&', cmd):
+        out.append('⛔ PAST: `grep … OK|FAIL … &&` pustí další krok i při FAIL (grep najde řádek FAIL a skončí úspěšně). Jako podmínku '
+                   'použij `| grep -q "^OK"` nebo exit kód kontroly (memory read-the-check-before-push; 2026-10-11 tak prošel commit při FAIL).')
+    return out
+
+
 # ---------- rozhodnutí ----------
 def rozhodni(vstup):
     tool = vstup.get('tool_name', '')
@@ -256,6 +279,8 @@ def rozhodni(vstup):
         r = rel(inp.get('file_path') or inp.get('notebook_path'))
         cesty, volny = ([r] if r else []), ''
     elif tool in SHELL:
+        pp = pasti(str(inp.get('command', '')))
+        if pp: return '\n\n'.join(pp) + '\n\n(Hook pravidla_pri_dotyku.py — pasti v příkazech)'
         cesty, volny = [], cil_z_prikazu(str(inp.get('command', '')))
         if not volny: return None
     else:
@@ -390,6 +415,10 @@ def samotest():
     sc4 = os.path.join(STAV, 'Temp', 'claude', 'cvz.py')
     io.open(sc4, 'w', encoding='utf-8').write("s = cv.cti('memory/x.md', R)" + chr(10) + "cv.zapis('memory/x.md', s + 'a', 'CODE-read', R)" + chr(10))
     chk('25. zápis přes cv.zapis (commit_vlastni) hook vidí', V('Bash', sid='s10', command='python -X utf8 "' + sc4.replace(chr(92), '/') + '"') is not None)
+    chk('26. heredoc s \\n v těle → past', V('Bash', sid='p1', command='python - <<' + chr(39) + 'EOF' + chr(39) + chr(10) + 'print("a' + chr(92) + 'nb")' + chr(10) + 'EOF') is not None)
+    chk('27. heredoc bez zpětného lomítka projde', V('Bash', sid='p2', command='cat <<EOF' + chr(10) + 'ahoj' + chr(10) + 'EOF') is None)
+    chk('28. grep OK|FAIL && commit → past', V('Bash', sid='p3', command='node x.js | grep -E "^(OK|FAIL)" && git commit -m x') is not None)
+    chk('29. grep -q ^OK && commit projde', V('Bash', sid='p4', command='node x.js | grep -q "^OK" && git commit -m x') is None)
     chk('24. cesta jen v komentáři skriptu se jako zápis nebere', V('Bash', sid='s9', command='node "' + sc3.replace('\\', '/') + '"') is None)
     for jm, v in ok: print(('OK    ' if v else 'FAIL  ') + jm)
     return 0 if all(v for _, v in ok) else 1
