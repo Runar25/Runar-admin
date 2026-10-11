@@ -26,6 +26,13 @@ souboru dvěma session neřeší nic než worktree.
   ale index zůstal naložený → další commit kterékoli lane by je sebral.
 
 **How to apply:**
+- ⭐ **Sdílený trackovaný soubor (DECISIONS, BACKLOG, DESIGN, memory) zapisuj a commituj přes `scripts/utils/commit_vlastni.py`** (od
+  2026-10-11): `cv.cti()` + `cv.zapis(soubor, text, '<lane>')` místo vlastního zápisu, pak `python -X utf8 scripts/utils/commit_vlastni.py
+  commit <lane> <zprava.txt>` a push. Commitne jen tvoje kusy z dočasného indexu (trojcestně proti HEAD), cizí necommitnuté zůstanou ve
+  stromě; při překryvu s cizí změnou necommitne nic a řekne to (počkej, až ta session commitne). Nový soubor od jiného nástroje: `pridej`.
+  **Proč:** 2026-10-11 `b4c3f4a` (CODE-tree) vzal záznam CODE-tune 2026-10-11 (5) a dvě jejich odškrtnutí v BACKLOGu, přestože pravidlo
+  „kontrola a commit v jednom příkazu“ níž už stálo — porušeno podruhé (poprvé `c81b4da`) → CLAUDE.md §30: dělá to stroj. Test:
+  `commit_vlastni.py --test` (16 stavů: cizí změna před i po mé, překryv, nový soubor, zastaralé čtení, cizí commit vzal i moje řádky).
 - **Commit VŽDY úzce přes pathspec** (`git commit -F - -- <cesty>`), NIKDY holý `git commit` / `git add -A`
   / `commit -a` — berou celý index včetně cizí lane. Když nevíš, co je staged: `git diff --cached
   --name-only` a porovnej s tím, cos psal.
