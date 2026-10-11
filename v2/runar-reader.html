@@ -522,12 +522,27 @@
 
     <!-- LIVING TREE (free-solo: grows from your readings) -->
     <div id="tree-living" style="display:none; text-align:center; margin:8px 0 4px;">
-      <canvas id="tree-living-canvas" style="width:min(300px,78vw); height:auto; display:block; margin:0 auto;"></canvas>
+      <!-- Scéna stromu (2026-10-11, KUKY „12. ano · 13. ano · plná šířka“): strom na plnou šířku, přiblížení dvěma prsty,
+           dvojitým ťuknutím i tlačítky; „celý strom“ jen když je přiblížený. Logika → runar-tree.js „OVLÁDÁNÍ STROMU“. -->
+      <div class="tree-stage" id="tree-stage">
+        <canvas id="tree-living-canvas"></canvas>
+        <div class="tree-aim" id="tree-aim"></div>
+        <div class="tree-zoom">
+          <button class="tree-zbtn" id="tree-zoom-in" type="button" onclick="treeZoom(1)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3v10M3 8h10"/></svg></button>
+          <button class="tree-zbtn" id="tree-zoom-out" type="button" onclick="treeZoom(-1)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10"/></svg></button>
+          <button class="tree-zbtn" id="tree-zoom-all" type="button" onclick="treeZoomAll()" style="display:none;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10"/></svg></button>
+        </div>
+      </div>
       <!-- Přehrávání růstu: posuvník po JEDNOM čtení zpět až k zakládacímu stavu.
            Není to ozdoba — bez něj nejde poznat, jestli změna v umístění větví
            vůbec něco udělala (2026-07-19: osy mlčely dva měsíce a nikdo to neviděl). -->
+      <!-- Šipky ‹ › = přesně o jedno čtení, podržením rychle (KUKY 2026-10-11: posuvník při 400 čteních přeskakuje). -->
       <div class="tree-seek-bar" id="tree-seek-bar" style="display:none;">
-        <input type="range" class="cap-seek" id="tree-seek" min="0" max="0" step="1" value="0">
+        <div class="cap">
+          <button class="cap-btn tree-step" id="tree-step-prev" type="button"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 2.5L4 7l4.5 4.5"/></svg></button>
+          <input type="range" class="cap-seek" id="tree-seek" min="0" max="0" step="1" value="0">
+          <button class="cap-btn tree-step" id="tree-step-next" type="button"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.5 2.5L10 7l-4.5 4.5"/></svg></button>
+        </div>
         <div class="tree-seek-lbl" id="tree-seek-lbl"></div>
       </div>
       <!-- INSPEKCE (admin): klepnutí na větev řekne, co ta větev je. Aby owner

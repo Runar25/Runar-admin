@@ -342,19 +342,40 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 /* ── ADMIN BAR ── */
 /* Přehrávání růstu stromu. Posuvník sám je .cap-seek (týž, co audio seek) —
    jeden vizuál, ne druhá skoro stejná kopie (§18). Tady jen obal a popisek. */
-.tree-seek-bar{display:flex;flex-direction:column;gap:7px;width:min(300px,78vw);margin:12px auto 0;}
+.tree-seek-bar{display:flex;flex-direction:column;gap:7px;width:100%;max-width:560px;margin:12px auto 0;}
 .tree-seek-lbl{font-family:'Cinzel',serif;font-size:0.5em;letter-spacing:2px;color:var(--gold);opacity:0.55;text-align:center;}
+/* Ovládání stromu (2026-10-11, KUKY „12. ano · 13. ano · plná šířka“; logika → runar-tree.js „OVLÁDÁNÍ STROMU“). Strom na plnou šířku
+   (do 2026-10-11 nejvýš 300 px — na telefonu malý). Náhled gesta = CSS transform plátna od levého horního rohu, ostrý strom se kreslí
+   po gestu; scéna ořízne, co při náhledu přeteče. Nepřiblížený strom nechytá prst (pan-y), přiblížený přepne skript na none.
+   Tlačítka = tón nástrojového .tree-export-btn (rámeček, bez výplně, bez zaoblení), šipky = .cap-btn přehrávače, jen větší plocha pro prst. */
+.tree-stage{position:relative;width:100%;max-width:560px;margin:0 auto;overflow:hidden;}
+.tree-stage canvas{display:block;width:100%;height:auto;transform-origin:0 0;touch-action:pan-y;}
+.tree-zoom{position:absolute;right:8px;bottom:8px;display:flex;flex-direction:column;gap:6px;}
+.tree-zbtn{width:36px;height:36px;display:flex;align-items:center;justify-content:center;padding:0;
+  background:transparent;border:1px solid rgba(255,191,0,0.35);color:var(--gold);opacity:0.6;cursor:pointer;transition:opacity 0.2s;}
+.tree-zbtn:hover{opacity:1;}
+.tree-zbtn:disabled{opacity:0.2;cursor:default;}
+.tree-zbtn svg{display:block;}
+.tree-aim{position:absolute;left:0;top:0;width:18px;height:18px;margin:-9px 0 0 -9px;border:1.5px solid var(--gold);border-radius:50%;opacity:0;pointer-events:none;}
+.tree-aim.on{animation:treeAim 0.9s ease-out;}
+@keyframes treeAim{0%{opacity:0.9;transform:scale(0.6);}100%{opacity:0;transform:scale(1.5);}}
+.tree-seek-bar .cap{gap:2px;}   /* šipky u konců pruhu (s 12 px přehrávače stály ~40 px od pruhu, jako by k němu nepatřily) */
+.tree-seek-bar .tree-step{width:36px;height:36px;}
+.tree-seek-bar .tree-step svg{margin:0 auto;}
+.tree-seek-lbl .tsl-runes{white-space:nowrap;}
+.tree-seek-lbl .tsl-rune{height:18px;width:auto;vertical-align:-5px;margin-left:5px;}
 /* Inspekce větve (admin diagnostika). Rámeček i tón převzaty z .tree-admin-bar —
    je to nástroj, ne obsah, a má tak i vypadat. */
-.tree-insp{width:min(300px,78vw);margin:12px auto 0;padding:10px 12px;text-align:left;
+.tree-insp{width:100%;max-width:560px;margin:12px auto 0;padding:10px 12px;text-align:left;
   border:1px solid rgba(255,191,0,0.18);background:rgba(255,191,0,0.03);
   font-family:'Cinzel',serif;font-size:0.55em;letter-spacing:1px;line-height:2;color:var(--gold);opacity:0.75;}
 .tree-insp b{opacity:1;}
 .tree-insp .ti-glyph{font-size:2.2em;line-height:1;vertical-align:-0.15em;margin-right:8px;}
+.tree-insp .ti-rune{height:1em;width:auto;vertical-align:-0.1em;}   /* runa kresbou z RUNE_SVGS (§5), 2026-10-11 — dřív písmo */
 .tree-insp .ti-dim{color:var(--gold);opacity:0.45;}
 /* Export stavu stromu (admin diagnostika). Tón převzatý ze zrušeného .tree-admin-btn —
    je to nástroj, ne obsah. Textarea je záloha pro případ, že schránka selže. */
-.tree-export{width:min(300px,78vw);margin:10px auto 0;text-align:center;}
+.tree-export{width:100%;max-width:560px;margin:10px auto 0;text-align:center;}
 .tree-export-btn{font-family:'Cinzel',serif;font-size:0.55em;letter-spacing:2px;padding:6px 14px;
   background:transparent;border:1px solid rgba(255,191,0,0.35);color:var(--gold);
   opacity:0.6;cursor:pointer;transition:opacity 0.2s;white-space:nowrap;}

@@ -89,7 +89,8 @@ function readingsToTreeLog(rows) {
     if (!isSpread) runes = [runes[0]];
     var area = (row.area && row.area !== 'spread') ? row.area : (row.aol || null);
     out.push({ spread: isSpread ? name.toLowerCase() : 'single', runes: runes,
-               area: _areaSlug(area), intention: _intentionNorn(row.intention), seeking: _seekSlug(row.seeking) });
+               area: _areaSlug(area), intention: _intentionNorn(row.intention), seeking: _seekSlug(row.seeking),
+               at: row.drawn_at || null });   // at = kdy čtení vzniklo, jen pro popisek posuvníku (2026-10-11); renderer ho nečte
   });
   return out;
 }
@@ -100,6 +101,16 @@ var _treeRkey = null;    // klíč životní runy pro renderer
 var _treeDob  = null;
 var _treeSeekWired = false;
 
+// ── OVLÁDÁNÍ STROMU (2026-10-11, KUKY „12. ano · 13. ano · plná šířka“; strom zatím vidí jen admin) ──
+// Proč: s novým stromem trvá jedno nakreslení na středním telefonu ~2 s (DECISIONS 2026-10-11 (29)), takže se strom nesmí kreslit
+// při každém pohybu prstu. Posuvník při tažení mění jen popisek a kreslí po puštění; šipky ‹ › posunou přesně o jedno čtení
+// (posuvník při 400 čteních přeskakuje — KUKY) a podržením jedou rychle. Přiblížení: dva prsty, dvojité ťuknutí, tažení přiblíženého,
+// tlačítka + − a „celý strom“; během gesta se jen zvětší obraz (CSS transform), ostrý strom se nakreslí po něm (KUKY „8. to je dobrý“).
+// Nepřiblížený strom nechytá prst (touch-action: pan-y) — jinak by se na telefonu nedalo odjet pod strom.
+var _tv = { z: 1, x: 0, y: 0 };   // pohled: zvětšení a posun v souřadnicích modelu (W×H rendereru)
+var TREE_ZMAX = 6;
+var _treeAim = null;               // místo posledního ťuknutí (model) — tam míří tlačítko +
+
 // Vykreslí strom ve stavu „po n čteních". n === null nebo n === délka logu = celý strom.
 // Renderer počítá věk z délky logu, takže kratší log = MLADŠÍ strom, ne jen chudší.
 // Na nule se rozsvítí zakládací stav (founding), tedy tři kořeny bez koruny.
@@ -109,14 +120,41 @@ function _drawTreeAt(n) {
   var full = (n == null || n >= _treeLog.length);
   var view = full ? _treeLog : _treeLog.slice(0, n);
   _treeViewN = n;
-  _treePick = window.RunarTreeProd.render(cv, { log: view, rune: _treeRkey, dob: _treeDob }) || null;
+  _treePick = window.RunarTreeProd.render(cv, { log: view, rune: _treeRkey, dob: _treeDob, view: _tv }) || null;
+  cv.style.transform = '';   // náhled gesta pryč až s hotovým ostrým stromem — v témže snímku, bez probliknutí
   _treeHighlight(cv);
+  _treeZoomUi();
+  _treeSeekLabel(n);
+}
 
+// Runa z glyfu jako holá linka z RUNE_SVGS (§5: kresba, ne písmo — písmo se na zařízeních liší). Blank se hledá podle příznaku:
+// v datech větví má glyf '◇', v runar-runes.js '○'.
+function _treeRuneSvg(g, blank, cls) {
+  var rr = RUNES.filter(function (q) { return blank ? q.n === 'Blank' : q.g === g; })[0];
+  return rr ? runeSvg(rr, { frame: false, cls: cls }) : '';
+}
+// Datum čtení jako v deníku (den, zkrácený měsíc, rok). Prohlížeč bez islandských dat (Chrome bez okna 2026-10-11: Intl 'is-IS'
+// chybí → „May 21, 2026“) dostane islandské číselné datum 21.5.2026, ne anglický měsíc.
+function _treeDatum(iso) {
+  if (!iso) return '';
+  var d = new Date(iso);
+  if (isNaN(d.getTime())) return '';
+  if (lang === 'is' && !(Intl.DateTimeFormat.supportedLocalesOf && Intl.DateTimeFormat.supportedLocalesOf(['is-IS']).length))
+    return d.getDate() + '.' + (d.getMonth() + 1) + '.' + d.getFullYear();
+  return d.toLocaleDateString(lang === 'is' ? 'is-IS' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+// Popisek posuvníku: kolikáté čtení, kdy vzniklo a jeho runy (holá linka, §5). U celého stromu jen souhrn.
+function _treeSeekLabel(n) {
   var lbl = document.getElementById('tree-seek-lbl');
   if (!lbl) return;
-  if (full)            lbl.textContent = tp('tree_hist_all', { casts: vn('cast', _treeLog.length, lang) });
-  else if (view.length === 0) lbl.textContent = t('tree_hist_seed');
-  else                 lbl.textContent = tp('tree_hist_at', { k: view.length, n: _treeLog.length });
+  var total = _treeLog.length;
+  if (n == null || n >= total) { lbl.textContent = tp('tree_hist_all', { casts: vn('cast', total, lang) }); return; }
+  if (n <= 0) { lbl.textContent = t('tree_hist_seed'); return; }
+  var r = _treeLog[n - 1] || {}, datum = _treeDatum(r.at);
+  var runy = (r.runes || []).map(function (x) { return _treeRuneSvg(x.rune, x.blank, 'tsl-rune'); }).join('');
+  lbl.innerHTML = escapeHtml(tp('tree_hist_at', { k: n, n: total })) + (datum ? ' · ' + escapeHtml(datum) : '') +
+    (runy ? '<span class="tsl-runes">' + runy + '</span>' : '');
 }
 
 // ── INSPEKCE VĚTVE (admin diagnostika) ────────────────────────────────────
@@ -141,7 +179,7 @@ function _inspShow(m) {
   var dalsi  = (m.rank && m.rank.length > 1)
       ? ('<br><span class="ti-dim">' + t('tree_insp_rank') + ' ' + m.rank.join(' › ') + '</span>') : '';   // 2026-10-10 §31: do té doby natvrdo česky
   box.innerHTML =
-    '<span class="ti-glyph">' + m.g + '</span><b>' + (m.name || '') + '</b>' + poradi +
+    '<span class="ti-glyph">' + (_treeRuneSvg(m.g, m.blank, 'ti-rune') || m.g) + '</span><b>' + (m.name || '') + '</b>' + poradi +   // §5 kresba (2026-10-11; dřív písmo)
     '<br>' + m.el + ' <span class="ti-dim">·</span> ' + m.aett +
     ' <span class="ti-dim">·</span> ' + m.world +
     '<br>' + tp('tree_insp_count', { casts: vn('cast', m.count || 0, lang) }) +
@@ -159,7 +197,7 @@ function _treeHighlight(cv) {
   var ctx = cv.getContext('2d');
   ctx.save();
   ctx.strokeStyle = 'rgba(255,191,0,0.75)';
-  ctx.lineWidth = 2;
+  ctx.lineWidth = 2 / ((_treePick.view && _treePick.view.z) || 1);   // kreslí se v modelu → při přiblížení by linka tloustla
   ctx.beginPath();
   for (var j = 0; j < sel.pts.length; j++) {
     var q = sel.pts[j];
@@ -217,21 +255,16 @@ function exportTreeState() {
   } catch (e) { nouzovka(); }
 }
 
-// Klik/tap -> nejbližší bod větve do 22 px. Souřadnice jsou v prostoru plátna
-// (W×H z rendereru), ne v CSS pixelech — proto přepočet přes getBoundingClientRect.
-function _inspHit(ev) {
+// Ťuknutí -> nejbližší bod větve do 22 px plátna. Klient → plátno (W×H rendereru přes obdélník scény) → model (odečte přiblížení).
+// Volá ji ovládání po jednom ťuknutí (_tUp), ne samostatný 'click': dvojité ťuknutí by ji pustilo dvakrát (2026-10-11).
+function _inspHitAt(px, py) {
   if (!_treePick || !_treePick.pick || !_treePick.pick.length) return;
-  var cv = document.getElementById('tree-living-canvas');
-  if (!cv) return;
-  var r = cv.getBoundingClientRect();
-  // Skryty panel -> rect 0x0 -> deleni nulou -> Infinity -> trefovani mlcky nefunguje.
-  // Radsi nahlas nic nedelat nez tise pocitat s nekonecnem.
-  if (!r.width || !r.height || !_treePick.W || !_treePick.H) return;
-  var px = (ev.touches && ev.touches[0]) ? ev.touches[0].clientX : ev.clientX;
-  var py = (ev.touches && ev.touches[0]) ? ev.touches[0].clientY : ev.clientY;
-  var mx = (px - r.left) * (_treePick.W / r.width);
-  var my = (py - r.top)  * (_treePick.H / r.height);
-  var best = null, bd = 22;
+  var B = _treeBox();
+  if (!B) return;
+  var v = _treePick.view || { z: 1, x: 0, y: 0 };
+  var mx = ((px - B.left) * B.k - v.x) / v.z;
+  var my = ((py - B.top)  * B.k - v.y) / v.z;
+  var best = null, bd = 22 / v.z;   // dosah ťuknutí na obrazovce stejný i v přiblížení
   for (var i = 0; i < _treePick.pick.length; i++) {
     var p = _treePick.pick[i];
     for (var j = 0; j < p.pts.length; j++) {
@@ -240,8 +273,12 @@ function _inspHit(ev) {
       if (d < bd) { bd = d; best = p; }
     }
   }
-  if (best) { _treeSelK = best.k; _drawTreeAt(_treeViewN); }
-  else { _treeSelK = null; _drawTreeAt(_treeViewN); _inspHint(); }
+  var k = best ? best.k : null;
+  // Výběr se nezměnil → nepřekreslovat: ťuknutí slouží i jako cíl pro +, a překreslení stojí s novým stromem na telefonu ~2 s.
+  if (k === _treeSelK) return;
+  _treeSelK = k;
+  _drawTreeAt(_treeViewN);
+  if (k == null) _inspHint();
 }
 
 // Zlatá výplň dráhy — týž mechanismus jako audio seek (_capPct v runar-app.js; do 2026-10-11 tu stál odkaz na runar-reading.js:625).
@@ -249,6 +286,182 @@ function _inspHit(ev) {
 function _treeSeekPaint(el) {
   var max = +el.max || 1;
   el.style.setProperty('--p', Math.min(1, Math.max(0, +el.value / max)).toFixed(4));
+}
+
+// ── Ovládání stromu: scéna, pohled, gesta, šipky (proč → OVLÁDÁNÍ STROMU výš) ──
+// Obdélník scény (#tree-stage), ne plátna: plátno má během gesta CSS transform a jeho obdélník by lhal.
+function _treeBox() {
+  var st = document.getElementById('tree-stage');
+  if (!st) return null;
+  var r = st.getBoundingClientRect();
+  if (!r.width || !r.height) return null;   // skrytá záložka → 0×0 → dělení nulou; radši nic
+  var W = (_treePick && _treePick.W) || 560;
+  return { left: r.left, top: r.top, width: r.width, height: r.height, k: W / r.width };
+}
+function _tvClamp(v) {   // strom nesmí z plátna odjet: okraj modelu nejvýš na okraj plátna
+  var W = (_treePick && _treePick.W) || 560, H = (_treePick && _treePick.H) || 900;
+  var z = Math.max(1, Math.min(TREE_ZMAX, v.z));
+  if (z <= 1.001) return { z: 1, x: 0, y: 0 };
+  return { z: z, x: Math.min(0, Math.max(W - W * z, v.x)), y: Math.min(0, Math.max(H - H * z, v.y)) };
+}
+// Přiblížit na z1 tak, aby bod pod (cx, cy) zůstal na místě (dvojité ťuknutí, tlačítka).
+function _tvZoomAt(cx, cy, z1) {
+  var B = _treeBox();
+  if (!B) return;
+  var mx = ((cx - B.left) * B.k - _tv.x) / _tv.z, my = ((cy - B.top) * B.k - _tv.y) / _tv.z;
+  z1 = Math.max(1, Math.min(TREE_ZMAX, z1));
+  _tv = _tvClamp({ z: z1, x: (cx - B.left) * B.k - mx * z1, y: (cy - B.top) * B.k - my * z1 });
+  _drawTreeAt(_treeViewN);
+}
+function treeZoom(dir) {   // tlačítka + a − (onclick v runar-reader.html)
+  var B = _treeBox();
+  if (!B) return;
+  var cx = B.left + B.width / 2, cy = B.top + B.height / 2;
+  if (dir > 0 && _treeAim) {   // + míří tam, kam se naposled ťuklo (KUKY) — jen když je to místo pořád vidět, po posunu může být mimo
+    var px = B.left + (_treeAim.x * _tv.z + _tv.x) / B.k, py = B.top + (_treeAim.y * _tv.z + _tv.y) / B.k;
+    if (px >= B.left && px <= B.left + B.width && py >= B.top && py <= B.top + B.height) { cx = px; cy = py; }
+  }
+  _tvZoomAt(cx, cy, dir > 0 ? _tv.z * 2 : _tv.z / 2);
+}
+function treeZoomAll() { _tv = { z: 1, x: 0, y: 0 }; _treeAim = null; _drawTreeAt(_treeViewN); }
+function _treeZoomUi() {
+  var zoomed = _tv.z > 1;
+  var cv = document.getElementById('tree-living-canvas');
+  if (cv) cv.style.touchAction = zoomed ? 'none' : 'pan-y';
+  var all = document.getElementById('tree-zoom-all'), zin = document.getElementById('tree-zoom-in'), zout = document.getElementById('tree-zoom-out');
+  if (all) all.style.display = zoomed ? '' : 'none';   // „celý strom“ jen když je co vracet (KUKY)
+  if (zin) zin.disabled = _tv.z >= TREE_ZMAX;
+  if (zout) zout.disabled = !zoomed;
+}
+function _treeCtlLabels() {   // popisky tlačítek (title + čtečka) z UI_TEXT, IS i EN (§31)
+  [['tree-zoom-in', 'tree_zoom_in'], ['tree-zoom-out', 'tree_zoom_out'], ['tree-zoom-all', 'tree_zoom_all'],
+   ['tree-step-prev', 'tree_step_prev'], ['tree-step-next', 'tree_step_next']].forEach(function (p) {
+    var b = document.getElementById(p[0]);
+    if (b) { b.title = t(p[1]); b.setAttribute('aria-label', t(p[1])); }
+  });
+}
+
+// Gesta. Náhled = CSS transform plátna z pohledu, ve kterém je strom nakreslený, do pohledu pod prsty; ostrý strom až po gestu.
+var _tp = {}, _tg = null, _tPrev = null, _tMoved = false, _tLastTap = null, _tTapTimer = null;
+function _tPair() { var ids = Object.keys(_tp); return ids.length >= 2 ? [_tp[ids[0]], _tp[ids[1]]] : null; }
+function _tPreview() {
+  var cv = document.getElementById('tree-living-canvas'), B = _treeBox();
+  if (!cv || !B || !_tPrev) return;
+  var vd = (_treePick && _treePick.view) || { z: 1, x: 0, y: 0 }, s = _tPrev.z / vd.z;
+  cv.style.transform = 'translate(' + ((_tPrev.x - vd.x * s) / B.k) + 'px,' + ((_tPrev.y - vd.y * s) / B.k) + 'px) scale(' + s + ')';
+}
+function _tDown(ev) {
+  if (ev.pointerType === 'mouse' && ev.button !== 0) return;
+  try { ev.currentTarget.setPointerCapture(ev.pointerId); } catch (e) {}
+  _tp[ev.pointerId] = { x: ev.clientX, y: ev.clientY };
+  var pr = _tPair();
+  if (pr) {   // druhý prst = sevření; navazuje na náhled, kdyby už běžel posun
+    _tg = { kind: 'pinch', d0: Math.hypot(pr[0].x - pr[1].x, pr[0].y - pr[1].y) || 1,
+            m0: { x: (pr[0].x + pr[1].x) / 2, y: (pr[0].y + pr[1].y) / 2 }, v0: _tPrev || _tv };
+    _tMoved = true;
+  } else {
+    _tg = { kind: 'one', x0: ev.clientX, y0: ev.clientY, v0: _tv };
+    _tMoved = false;
+  }
+}
+function _tMove(ev) {
+  if (!_tp[ev.pointerId] || !_tg) return;
+  _tp[ev.pointerId] = { x: ev.clientX, y: ev.clientY };
+  var B = _treeBox();
+  if (!B) return;
+  if (_tg.kind === 'pinch') {
+    var pr = _tPair();
+    if (!pr) return;
+    var m = { x: (pr[0].x + pr[1].x) / 2, y: (pr[0].y + pr[1].y) / 2 };
+    var z1 = Math.max(1, Math.min(TREE_ZMAX, _tg.v0.z * Math.hypot(pr[0].x - pr[1].x, pr[0].y - pr[1].y) / _tg.d0));
+    var mx = ((_tg.m0.x - B.left) * B.k - _tg.v0.x) / _tg.v0.z, my = ((_tg.m0.y - B.top) * B.k - _tg.v0.y) / _tg.v0.z;
+    _tPrev = _tvClamp({ z: z1, x: (m.x - B.left) * B.k - mx * z1, y: (m.y - B.top) * B.k - my * z1 });
+    _tPreview();
+  } else {
+    var dx = ev.clientX - _tg.x0, dy = ev.clientY - _tg.y0;
+    if (!_tMoved && Math.abs(dx) + Math.abs(dy) > 8) _tMoved = true;
+    if (_tMoved && _tg.v0.z > 1) {   // nepřiblížený strom se nehýbe — stránku posouvá prohlížeč (pan-y)
+      _tPrev = _tvClamp({ z: _tg.v0.z, x: _tg.v0.x + dx * B.k, y: _tg.v0.y + dy * B.k });
+      _tPreview();
+    }
+  }
+}
+function _tUp(ev) {
+  if (!_tp[ev.pointerId]) return;
+  delete _tp[ev.pointerId];
+  var zbyva = Object.keys(_tp);
+  if (zbyva.length) {   // sevření skončilo a jeden prst zůstal → pokračuje jako posun od svého místa, bez skoku
+    if (_tg && _tg.kind === 'pinch') { var p = _tp[zbyva[0]]; _tg = { kind: 'one', x0: p.x, y0: p.y, v0: _tPrev || _tv }; }
+    return;
+  }
+  var g = _tg;
+  _tg = null;
+  if (_tPrev) { _tv = _tPrev; _tPrev = null; _drawTreeAt(_treeViewN); return; }   // konec gesta → ostrý strom
+  if (!g || g.kind !== 'one' || _tMoved || ev.type !== 'pointerup') return;
+  var cx = ev.clientX, cy = ev.clientY, now = Date.now();
+  if (_tLastTap && now - _tLastTap.t < 320 && Math.abs(cx - _tLastTap.x) + Math.abs(cy - _tLastTap.y) < 30) {
+    clearTimeout(_tTapTimer);
+    _tLastTap = null;
+    _tvZoomAt(cx, cy, _tv.z * 2);   // dvojité ťuknutí = přiblížit na tom místě
+    return;
+  }
+  _tLastTap = { t: now, x: cx, y: cy };
+  // Jedno ťuknutí počká, jestli nepřijde druhé: inspekce překresluje strom (s novým stromem na telefonu ~2 s)
+  // a druhé ťuknutí by pak nestihlo okno dvojitého.
+  clearTimeout(_tTapTimer);
+  _tTapTimer = setTimeout(function () { _treeAimAt(cx, cy); _inspHitAt(cx, cy); }, 330);
+}
+function _treeAimAt(cx, cy) {   // místo pro tlačítko + a zlatý kroužek, ať je vidět, kam + povede
+  var B = _treeBox();
+  if (!B) return;
+  _treeAim = { x: ((cx - B.left) * B.k - _tv.x) / _tv.z, y: ((cy - B.top) * B.k - _tv.y) / _tv.z };
+  var ring = document.getElementById('tree-aim');
+  if (!ring) return;
+  ring.style.left = (cx - B.left) + 'px';
+  ring.style.top  = (cy - B.top) + 'px';
+  ring.classList.remove('on'); void ring.offsetWidth; ring.classList.add('on');   // znovu spustit animaci kroužku
+}
+
+// Šipky u posuvníku: krok o jedno čtení; podržení po 0,42 s jede po 70 ms. Strom se kreslí až po puštění, s odstupem 0,3 s, aby
+// rychlé ťukání nespustilo kreslení po každém ťuknutí. Klávesnice (Enter / mezerník → click bez ukazatele) kreslí hned.
+var _tStep = { held: false, ptr: false, t1: null, t2: null, dr: null };
+function _treeSeekSet(v, draw) {
+  var seek = document.getElementById('tree-seek');
+  if (!seek) return;
+  v = Math.max(0, Math.min(+seek.max || 0, v));
+  seek.value = v;
+  _treeSeekPaint(seek);
+  _treeSeekLabel(v);
+  if (draw) _treeDrawIfMoved(v);
+}
+function _treeDrawIfMoved(v) {   // stejná poloha jako nakreslená → nekreslit znovu (stojí ~2 s na telefonu)
+  var drawn = (_treeViewN == null) ? _treeLog.length : _treeViewN;
+  if (+v !== drawn) _drawTreeAt(+v);
+}
+function _treeStepWire(btn, d) {
+  var seek = document.getElementById('tree-seek');
+  if (!btn || !seek) return;
+  btn.addEventListener('pointerdown', function (ev) {
+    if (ev.pointerType === 'mouse' && ev.button !== 0) return;
+    _tStep.held = true; _tStep.ptr = true;
+    clearTimeout(_tStep.dr); clearTimeout(_tStep.t1); clearInterval(_tStep.t2);
+    _treeSeekSet(+seek.value + d, false);
+    _tStep.t1 = setTimeout(function () { _tStep.t2 = setInterval(function () { _treeSeekSet(+seek.value + d, false); }, 70); }, 420);
+  });
+  var pust = function () {
+    if (!_tStep.held) return;
+    _tStep.held = false;
+    clearTimeout(_tStep.t1); clearInterval(_tStep.t2);
+    _tStep.dr = setTimeout(function () { _treeDrawIfMoved(+seek.value); }, 300);
+    setTimeout(function () { _tStep.ptr = false; }, 400);   // click hned po puštění už nic nedělá — krok udělal ukazatel
+  };
+  btn.addEventListener('pointerup', pust);
+  btn.addEventListener('pointerleave', pust);
+  btn.addEventListener('pointercancel', pust);
+  btn.addEventListener('click', function () {
+    if (_tStep.ptr) return;
+    _treeSeekSet(+seek.value + d, true);   // klávesnice
+  });
 }
 
 async function renderLivingTree(rune) {
@@ -288,25 +501,28 @@ async function renderLivingTree(rune) {
       _treeSeekPaint(seek);
       if (!_treeSeekWired) {
         _treeSeekWired = true;
-        seek.addEventListener('input', function () {
-          _treeSeekPaint(seek);
-          _drawTreeAt(+seek.value);
-        });
+        // Při tažení jen popisek, strom až po puštění (change) — proč → OVLÁDÁNÍ STROMU výš.
+        seek.addEventListener('input', function () { _treeSeekPaint(seek); _treeSeekLabel(+seek.value); });
+        seek.addEventListener('change', function () { _treeDrawIfMoved(+seek.value); });
+        _treeStepWire(document.getElementById('tree-step-prev'), -1);
+        _treeStepWire(document.getElementById('tree-step-next'), +1);
       }
     }
     var exp = document.getElementById('tree-export');
     var expBtn = document.getElementById('tree-export-btn');
     if (exp && expBtn) { exp.style.display = 'block'; expBtn.textContent = t('tree_export_btn'); }
     var insp = document.getElementById('tree-insp');
-    if (insp) {
-      insp.style.display = 'block';
-      _inspHint();
-      if (!_treeInspWired) {
-        _treeInspWired = true;
-        cv.style.cursor = 'pointer';
-        cv.addEventListener('click', _inspHit);
-      }
+    if (insp) { insp.style.display = 'block'; _inspHint(); }
+    _treeCtlLabels();
+    if (!_treeInspWired) {   // gesta + ťuknutí (inspekce, cíl pro +) na jednom místě
+      _treeInspWired = true;
+      cv.style.cursor = 'pointer';
+      cv.addEventListener('pointerdown', _tDown);
+      cv.addEventListener('pointermove', _tMove);
+      cv.addEventListener('pointerup', _tUp);
+      cv.addEventListener('pointercancel', _tUp);
     }
+    _tv = { z: 1, x: 0, y: 0 }; _treeAim = null;   // otevření stromu = vždy celý strom
     _drawTreeAt(null);
   } catch(e) {}
 }

@@ -34,7 +34,13 @@ function render(canvas, opts) {
   var skin = (opts.skin !== false);
   var W = 560, H = 900, dpr = global.devicePixelRatio || 1;
   canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
-  var ctx = canvas.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  var ctx = canvas.getContext('2d');
+  /* PRIBLIZENI (2026-10-11, KUKY "12. ano, 13. ano" — ovladani stromu v aplikaci): opts.view = {z, x, y} = zvetseni
+     a posun v souradnicich modelu (W x H). Strom se kresli rovnou ve zvetseni, takze je ostry, ne roztazeny obrazek;
+     bez view cely strom jako dosud. Cara zeme i vsechno ostatni se kresli v modelu, takze jde se stromem. */
+  var vw = opts.view || null, vz = (vw && vw.z > 1) ? vw.z : 1;
+  var vx = (vz > 1) ? (+vw.x || 0) : 0, vy = (vz > 1) ? (+vw.y || 0) : 0;
+  ctx.setTransform(dpr * vz, 0, 0, dpr * vz, dpr * vx, dpr * vy);
 
   /* ---- tuning (fresh copies = default lab values) ---- */
   var trunkT = { lean:1, wobble:1, wobFreq:1.0, thickness:8, bundleSpread:0.22, contour:0.6, twist:0.4,
@@ -342,7 +348,7 @@ function render(canvas, opts) {
   all.forEach(function(L){ paintLimb(L.pts, L.el||el, crownT.textura); });
   /* Ven pro inspekci: souradnice jsou v prostoru PLATNA (W x H), ne CSS pixelu,
      proto se W/H vraci taky — klik se musi prepocitat pres getBoundingClientRect. */
-  render.lastPick = { pick:pick, W:W, H:H };
+  render.lastPick = { pick:pick, W:W, H:H, view:{ z:vz, x:vx, y:vy } };   /* view: klik se musi prepocitat i pres priblizeni */
   return render.lastPick;
 }
 
