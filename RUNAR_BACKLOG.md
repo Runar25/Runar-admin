@@ -2411,6 +2411,14 @@ dvojího odečtu. **Z dat (30 dní):** 0 záloh, 0 dvojích generování; dat po
   hladinu, třeba 120 hlasů.“* Výklad CODE-read (ownerovi napsán): každý tester 15/měsíc, celkový strop 120/měsíc vynucený serverem
   (≈ 72 000 znaků ≈ 70 % kvóty; počítat i static a admina; měsíc podle cyklu ElevenLabs). Implementace + DECISIONS → CODE-tune.
 
+### Část 44 — časový rozpočet čtení × limit edge funkce (`claude-proxy`, 2026-10-11, čtení kódu)
+**Platí:** sol 50 s (AbortController) → Claude `claude-opus-5`, pokus 55 s; po VYPRŠENÍ se neopakuje ani nepřechází na další model
+(kód to výslovně vylučuje — pomalé generování by vypršelo znovu), opakuje se jen po rychlé chybě (429/5xx) s krátkým backoffem
+a teprve přetížení pošle čtení na `claude-opus-4-8`. Nejhorší běžná cesta ≈ 105 s; limit edge funkce na Free je podle dokumentace
+Supabase 150 s (z paměti, neověřeno). Výjimka: několik POMALÝCH 5xx za sebou (např. 529 po 50 s) by se opakovalo a limit přetáhlo —
+vzácné. Pozn. k (m): argument CODE-tune pro zámek místo rezervace (zabitá funkce = propadlá rezervace) platí jen pro tuhle výjimku
+a pro výpadek platformy, ne pro běžnou cestu — zámek je i tak bezpečnější volba.
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
