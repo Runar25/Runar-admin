@@ -748,7 +748,7 @@ atomický upsert, úklid starších než hodina; stejně tak `use_credit` (atomi
 - [ ] **Obohatit řádek: pořadí tažených run + char_count** — ALTER už NEPOTŘEBUJE (2026-08-10). Řádek `readings` má sloupec `prompt_draws jsonb`, do kterého se dá přidat cokoli bez migrace; dnes v něm jede úhel, obraz, klíčová slova, tvar konce a umístění jména. Pořadí run je navíc jediné, co ještě chybí — model může sloty přeskládat, takže se musí ukládat strukturovaně.
 - [ ] **Readings viewer: flag/annotate** — dnes view-only (`initReadingsTab` = prázdný stub). Potřebuje review tabulku (owner ALTER).
 - [~] **R1 ledger -> i KOSTRY** — konkretni dolozena vada je OPRAVENA (jmenny slot `[klauze], Kuky, [obraz]` -> pooled placement, commit 7dd1b9f + ending shape 1cf115c/57e8324). Zustava vlastni ask: rozsirit no-repeat LEDGER i na KOSTRY vet — dnes je kostra nahodna, bez pameti mezi ctenimi.
-- [ ] **is-grammar-qa nad uloženými IS výstupy** → E001 do pojmenované fronty (§19.2 žádné tiché zelené). Korpus existuje.
+- [ ] **Kontrola IS nad uloženými IS výstupy** (nástroje CLAUDE.md §2; do 2026-10-10 tu stálo is-grammar-qa) → E001 do pojmenované fronty (§19.2 žádné tiché zelené). Korpus existuje.
 - [x] *(CODE-tune 2026-10-10, DECISIONS 2026-10-10 (39): Málstaður veřejné API nemá — jen editor (zdarma 400 znaků) a předplatné;
   náhrada `is-gpt-check.py` (GPT, KUKY „GPT dělá dobrou IS“), obhájený samotestem; `is-grammar-qa.py` hned odkáže na náhradu.)*
   **⚠️ `is-grammar-qa.py` je mrtvý: API Yfirlestur přestěhované** (2026-10-10, CODE-tune, §22). `https://yfirlestur.is/correct.api`
@@ -802,7 +802,7 @@ atomický upsert, úklid starších než hodina; stejně tak `use_credit` (atomi
   ⏸ **Owner 2026-09-24: „připravit pomalu, až zase řeknu" — nezačínat bez pokynu.** Co musí být hotové (CODE-read, měřeno —
   EVAL_LOG 2026-09-22 (1)–(3), 2026-09-23 (6)–(9)): (1) glosa v IS hlavičce — oprava ke zdroji `RUNES[].is_n` (položka „GLOSA
   V ISLANDSKÉ HLAVIČCE"); (2) opis obrazu — věta „one detail" u solu pomohla (převyprávění 20 → 12 z 28); (3) Norns identita
-  potřebuje seznamy klíčových slov (nechat); (4) klíč `OPENAI_API_KEY` a volání OpenAI už jsou (edge fn `gpt-review`), ale
+  potřebuje seznamy klíčových slov (nechat); (4) klíč `OPENAI_API_KEY` a volání OpenAI už jsou (tehdy edge fn `gpt-review`, zrušená 2026-10-09), ale
   čtecí `claude-proxy` volá jen Anthropic — čtení na sol napojit tam; (5) várka IS + Ask + Norns proti Opus 5.
   **Postup odsouhlasen 2026-09-24 (DECISIONS (17)):** krok 1 glosa jen v promptu (otestováno, handoff) → kroky 2+3 spojené
   (admin čte přes sol v appce + věta „one detail" jen pro sol, handoff po nasazení kroku 1) → krok 4 slepé srovnání s Opus 5
@@ -822,7 +822,7 @@ atomický upsert, úklid starších než hodina; stejně tak `use_credit` (atomi
   dat API) ověřit v jejich aktuální dokumentaci — neodhadovat; (b) **krok 4** dělá owner sám (čte v appce přes sol), viz výš;
   (c) **technicky** je přepnutí jedna podmínka v `claude-proxy`
   (dnes `isAdmin` → všichni / po jazyce / po typu); fallback na Claude při chybě nebo 50 s timeoutu už existuje; IS čtení přes sol
-  od uživatelů zatím 0 — první týden sledovat is-grammar-qa na živých IS textech.
+  od uživatelů zatím 0 — první týden sledovat islandštinu na živých IS textech kontrolami podle CLAUDE.md §2 (do 2026-10-10 tu stálo is-grammar-qa).
   **Rešerše Cowork HOTOVÁ 2026-09-30** → `docs/inbox/2026-09-30-cowork-soukromi-openai.md` (fakta se zdroji; IS návrhy neověřené).
   Odpovědi CODE na její otázky (ověřeno v kódu): Q1 záložní Anthropic ZŮSTÁVÁ (sol selže → Opus přes MODELS) → souhlas musí
   jmenovat OBA; Q2 prompt životní runy posílá CELÉ datum narození („BORN: den měsíc rok“, runar-character.js), runa se počítá jen
@@ -2676,6 +2676,14 @@ spuštěním“) · sliby tierů: `verify_tier_features.js`, `verify_monthly_lim
 z `CARD_PACKS` (žádná velikost natvrdo) · testerů 5, souhlas 4 — pátý (ne admin, účet 2026-05-20) nemá ani jedno čtení, souhlas si appka
 vyžádá při přihlášení; odhlášených z analýzy 0. Nic k opravě.
 
+#### Kolo 2 / 23 — zastaralá místa v živých docích (část 17; 2026-10-11)
+Zkušební průchod pěti kandidátů na mrtvé pojmy <!-- doc-links:ok 2026-10-11 výčet mrtvých pojmů, soubor záměrně smazán --> (`runar-gathering.js`, `icons/favicon.svg`, `is-grammar-qa`, `gpt-review`, opus-4-8 jako
+produkční) našel 56 výskytů — většina historie (měření ke svému dni, hotové položky, eval README) a ta smí zůstat. Zastaralé byly jen
+**pokyny k použití mrtvého nástroje**: `RUNAR_EVAL_LOG.md` ř. 33, 225, 333 a `RUNAR_BACKLOG.md` (otevřená položka „is-grammar-qa nad
+uloženými výstupy“, „první týden sledovat is-grammar-qa“, „Pustit is-grammar-qa.py“) + `gpt-review` popsaný jako živý → opraveno na
+odkaz „kontroly IS podle CLAUDE.md §2“ s poznámkou do kdy co platilo. **Stroj:** `check-docs.py` nově zastaví příkaz
+`python … is-grammar-qa.py` v živém docu (měření a poznámky „do 2026-10-10“ pustí; ověřeno na 4 vzorcích).
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
@@ -3607,7 +3615,7 @@ Podklad: `docs/archive/2026-09-23-audit-obrazu.md`. Owner je potřebuje vysvětl
    soukromí věty o záloze na Google Drive (Supabase „…að undanskildu öryggisafritinu sem lýst er hér að neðan“ a celý odstavec Google,
    lhůta „Hverju afriti er eytt eftir 30 daga…“, výmaz „…úr dulkóðuðu öryggisafritunum okkar innan 30 daga“) a celá tabulka „Hvað er
    geymt“ (úvod + 6 nových řádků + opravené Fjöldi lestra / Inneign / gert nafnlaust).
-   Ověřeny jen korpusem (obraty s doklady v komentáři patche) a vzorem nasazených vět. Pustit `python -X utf8 is-grammar-qa.py --text "…"`
+   Ověřeny jen korpusem (obraty s doklady v komentáři patche) a vzorem nasazených vět. Pustit kontroly IS podle CLAUDE.md §2 (do 2026-10-10 tu stálo is-grammar-qa — API zaniklo, DECISIONS 2026-10-10 (39))
    znovu; flag = přepsat.
 8. ❓ **Čtení pro návštěvníka (čeká na ownera):** owner 2026-10-10 *„text je pro nás v pohodě, ať dostane čuchnout bez registrace…
    ASK bude zobrazen taky jen jako teaser“*. Vrací rozhodnutí 2026-08-02 „Fáze 1“ (proxy pro nepřihlášené zavřená: anonym posílal

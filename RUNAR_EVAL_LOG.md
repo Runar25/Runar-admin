@@ -30,7 +30,7 @@ SLABÝ účinek — proto „přepiš voice profil" většinou nehne jehlou; sá
 
 **⛔ NEMĚNIT tuningem (kánon / fakt / architektura):**
 - Kdo Rúnar je · osobnost · filozofie · zákazy (`never`) = 📜 kánon → RUNAR_DESIGN.md (mění rozhodnutí o kontinuitě)
-- IS gramatika = 🔒 (musí být správně, ne stylová volba) — enforcement přes korekce + is-grammar-qa
+- IS gramatika = 🔒 (musí být správně, ne stylová volba) — enforcement přes korekce + kontroly IS podle CLAUDE.md §2 (do 2026-10-10 tu stálo is-grammar-qa — API zaniklo, DECISIONS 2026-10-10 (39))
 - Data run + význam pozic spreadů = 🔒/📜 (runar-runes.js / RUNAR_DESIGN.md)
 - Struktura pipeline + JSON kontrakt = 🏛 architektura (CLAUDE.md „Reading systém — stav")
 
@@ -222,7 +222,7 @@ ad-hoc skripty, které nikde nezůstaly. Metoda proto bydlí v repu, ne tady:
 ```
 node scripts/utils/measure_readings.js <dávka.jsonl>   # tvar · délka · papouškování · definice
 node scripts/utils/lint_readings.js    <dávka.jsonl>     # zákazy na VÝSTUPU (tahá si je z promptu)
-python -X utf8 is-grammar-qa.py <čtení.txt>              # IS gramatika (E001 = nerozparsováno ≠ OK)
+# IS gramatika: kontroly podle CLAUDE.md §2 (E001 = nerozparsováno ≠ OK) (do 2026-10-10 tu stálo is-grammar-qa — API zaniklo, DECISIONS 2026-10-10 (39))
 ```
 
 ⚠️ **Srovnávej jen srovnatelné.** Probe dávka = jeden druh čtení + jedna verze. Export z produkce
@@ -330,7 +330,7 @@ Postup na jednu dávku:
 node scripts/utils/export_readings.js --testers-only --since <datum>   # ven z repa
 node scripts/utils/measure_readings.js --balance <dávka.jsonl>         # rozložení pák
 node scripts/utils/lint_readings.js <dávka.jsonl>                      # zákazy na výstupu
-python -X utf8 is-grammar-qa.py <dávka.readings.txt>                   # IS gramatika
+# IS gramatika: kontroly podle CLAUDE.md §2 (do 2026-10-10 tu stálo is-grammar-qa — API zaniklo, DECISIONS 2026-10-10 (39))
 ```
 
 ⚠️ **Co dávka neunese, to `--balance` řekne nahlas** místo mlčky vytištěné nuly: čtení bez
