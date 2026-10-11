@@ -17,7 +17,7 @@ if (!email || !/^[^'\s]+@[^'\s]+$/.test(email)) { console.error('Nevím, čí č
 const sql = `select json_build_object(
   'rows', (select coalesce(json_agg(json_build_object('id', r.id, 'rune_name', r.rune_name, 'rune_glyph', r.rune_glyph, 'short_text', r.short_text,
             'area', r.area, 'aol', r.aol, 'intention', r.intention, 'seeking', r.seeking, 'drawn_at', r.drawn_at) order by r.drawn_at), '[]'::json)
-           from public.readings r join auth.users u on u.id = r.user_id where u.email = '${email}'),
+           from public.readings r join auth.users u on u.id = r.user_id where u.email = '${email}'),   -- opt-out:ok 2026-10-11 jen účet ownera (ADMIN_EMAILS[0]) pro jeho vlastní strom v labu, žádná analýza uživatelů
   'prof', (select json_build_object('f', p.founding_reading_id, 'ft', p.tree_founded_at, 'd', p.dob_day, 'm', p.dob_month, 'y', p.dob_year, 'lr', p.life_rune_number)
            from public.user_profiles p join auth.users u on u.id = p.id where u.email = '${email}'))::text as j`;
 const tmp = path.join(os.tmpdir(), 'lab_moje_cteni_' + process.pid + '.sql');
