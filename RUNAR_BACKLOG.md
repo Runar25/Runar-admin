@@ -2634,6 +2634,16 @@ starter): 13 919 / 103 807 znaků = 13 %, bezpečná hladina 70 % ≈ 72 600; 15
 nese jen `user_id`, token a čas zámku (provozní, s účtem se maže). **Nový nález (budoucí):** `tree_state` s odvozenými údaji o člověku —
 v zásadách chybí; dnes jen admin a nic nezapisuje → přidáno jako podmínka (d) k nasazení `tree-update` (položka „Pro CODE-tree“ výš).
 
+#### Kolo 2 / 20 — slib „data v EHP“ a výmaz × dnešní záloha konverzací (část 33; 2026-10-11)
+**Platí:** stránka soukromí uvádí šifrované zálohy DB na Google Drive mimo EHP (EN i IS) a věta o EHP má výjimku pro ně (DECISIONS 2026-10-10 (32)).
+- ⚪ **ČEKÁ NA OWNERA — rozpor, který jsem dnes vyrobil (CODE-read):** od DECISIONS 2026-10-11 (21) se přepisy konverzací nemažou
+  (`cleanupPeriodDays` 36500) a noční záloha je drží napořád. Přepisy ale nesou i osobní údaje uživatelů — výpisy z DB (e-maily testerů),
+  texty jejich čtení, jména (např. 2026-10-11 jsem v konverzaci vypsal rozbory GPT se jmény testerek). Zásady slibují „ERASURE: Everything goes
+  — from our encrypted backups within 30 days“. Dnes jen 5 testerů a appka není veřejná, ale před spuštěním to musí sedět. Možnosti:
+  (a) přepisy nechat, ale při žádosti o výmaz je projít `najdi_v_konverzacich.js` (e-mail, jméno) a údaje začernit — postup do `RUNAR_PRIVACY.md`;
+  (b) přepisy a jejich zálohy mazat po N měsících (pak „nic se neztratí“ platí jen N měsíců); (c) session nevypisují osobní údaje uživatelů
+  (e-maily, jména mimo adminy, texty čtení) — pravidlo, které by šlo zčásti hlídat strojem. Doporučení CODE-read: (a) + (c).
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
