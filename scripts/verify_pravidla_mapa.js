@@ -5,7 +5,7 @@
 // smazanou paměť, hook by tiše ukázal „nenalezeno“ — tahle kontrola to zastaví dřív. Dřívější mapa v SessionStart hooku stejně tiše
 // zastarala (mrtvý is-grammar-qa, „BACKLOG ~ř. 251–263“), protože ji nic nehlídalo.
 // Hlídá: každé § v CLAUDE.md existuje a není jen odkaz po sloučení („→ §…“) · každý nadpis docu existuje · každá paměť a hlavička existuje ·
-// každá cesta v mapě odpovídá aspoň jednomu verzovanému souboru · samotest hooku (16 stavů) projde.
+// každá cesta v mapě odpovídá aspoň jednomu verzovanému souboru · samotest hooku (všechny stavy) projde.
 //   node scripts/verify_pravidla_mapa.js
 'use strict';
 const fs = require('fs'), path = require('path'), cp = require('child_process');

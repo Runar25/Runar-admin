@@ -67,6 +67,9 @@ PISICI = {'cp', 'mv', 'rm', 'tee', 'touch', 'install', 'set-content', 'out-file'
 SKRIPT = re.compile(r"""(?<![\w.-])(?:python3?|py|node)(?:\s+-X\s+\S+|\s+-\S+)*\s+["']?([^\s"']+\.(?:py|js))""", re.I)
 
 
+ZAPISUJE = re.compile(r"""writeFileSync|appendFileSync|copyFileSync|renameSync|rmSync|unlinkSync|createWriteStream|\.write\(|open\([^)]*['"][wa]['"]|shutil\.|os\.remove|os\.rename|Path\([^)]*\)\.write_""")
+
+
 def cil_z_prikazu(cmd):
     """Text, ve kterém se hledají cesty: jen CÍLE zápisu (přesměrování, cp/mv/rm/sed -i/tee…, PowerShell zápis) + obsah spouštěných
     patch/scratch skriptů. Celý příkaz ne — commit s `> msg.txt` by jinak „zapisoval“ do všech souborů v pathspecu."""
@@ -84,7 +87,11 @@ def cil_z_prikazu(cmd):
         lo = s.lower()
         if '/temp/claude/' in lo or re.search(r'scripts/_patch[^/]*\.py$', lo):
             p = s if re.match(r'^([a-z]:|/)', s, re.I) else R + '/' + s
-            try: text += chr(10) + cti(p, 300000).replace(chr(92), '/')
+            # Jen skript, který opravdu zapisuje. Doloženo 2026-10-11: čtecí měřicí skript s cestami `v2/…` v textu dostal pravidla
+            # „JS ve v2“, ač nic neměnil — zmínka cesty ≠ zápis.
+            try:
+                obsah = cti(p, 300000)
+                if ZAPISUJE.search(obsah): text += chr(10) + obsah.replace(chr(92), '/')
             except Exception: pass
     return text
 
@@ -274,7 +281,10 @@ def samotest():
     chk('12. Bash jen čte (grep, 2>/dev/null) → projde', V('Bash', sid='s3', command='grep -n x supabase/functions/a/index.ts 2>/dev/null | head') is None)
     chk('13. Bash zapisuje do sql/ → zastaví', V('Bash', sid='s3', command='echo x > sql/2026-10-11_x.sql') is not None)
     sc = os.path.join(STAV, 'Temp', 'claude', 'p.py'); os.makedirs(os.path.dirname(sc), exist_ok=True)
-    io.open(sc, 'w', encoding='utf-8').write("patch('v2/runar-reader.css', [])\n")
+    io.open(sc, 'w', encoding='utf-8').write("s = 'x'\nio.open('v2/runar-reader.css', 'w').write(s)\n")
+    sc2 = os.path.join(STAV, 'Temp', 'claude', 'cti.js')
+    io.open(sc2, 'w', encoding='utf-8').write("const t = fs.readFileSync('v2/runar-app.js', 'utf8'); console.log(t.length)\n")
+    chk('17. čtecí skript ze scratchpadu s cestou v2/ → projde', V('Bash', sid='s7', command='node "' + sc2.replace('\\', '/') + '"') is None)
     chk('14. patch skript ze scratchpadu → najde cestu v obsahu', (lambda d: d and 'UI readeru' in d)(V('Bash', sid='s4', command='python -X utf8 "' + sc.replace('\\', '/') + '" "' + R + '"')))
     chk('16. commit s > msg.txt a pathspecem CLAUDE.md projde', V('Bash', sid='s6', command='printf x > /tmp/m.txt && git commit -F /tmp/m.txt -- CLAUDE.md memory/MEMORY.md') is None)
     chk('15. Read/Grep se nehlídá', rozhodni({'tool_name': 'Read', 'tool_input': {'file_path': js}, 'session_id': 's5', 'transcript_path': tp}) is None)
