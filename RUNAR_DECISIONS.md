@@ -10930,3 +10930,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   scénou, výška při přehrávání stejná, + se při zobrazení „celý strom“ nehne, tester bar pod stromem; snímky z prohlížeče na telefonu
   (390 px) i počítači s logem 388 čtení (tlačítka kořeny nezakrývají).
 - Affected doc(s): `RUNAR_TREE.md` §8 (AUTO-FIT, poznámka o rámu aplikace) — v témže commitu.
+
+## 2026-10-11 (63) — Nasazeno: hlas ke každému čtení (SQL + claude-proxy v83, elevenlabs-proxy v39, delete-account v10)
+
+- **Owner:** spustil `sql/2026-10-11_hlas_ke_cteni.sql` a napsal *„sql je tam. nasaď“*.
+- **Ověřeno:** v DB tabulka `voice_tickets` (RLS zapnuté, klient bez grantů) a soukromé úložiště `reading-voice` (limit 10 MB). Nasazené
+  funkce stažené zpět = HEAD 51e120f včetně `_shared/voice_ticket.ts`; před nasazením běželo totéž co repo před změnou (žádný drift).
+  Bez přihlášení odmítají: claude-proxy 401, elevenlabs-proxy `unauthorized`, delete-account `Not authenticated` / `Invalid session`.
+- **Naživo neověřeno:** hlas přihlášeného (čtení → hlas → totéž čtení v deníku) — přihlásit se Code nesmí, zkouší owner; po jeho zkoušce se
+  z DB ověří `voice_tickets` (cesta k souboru) a `voice_usage` (jeden hlas na čtení).
+- S nasazením claude-proxy šla i oprava komentáře clampu `max_tokens` (BACKLOG, položka „s příštím nasazením claude-proxy“).
+- Odvolává se na: 2026-10-11 (61).
