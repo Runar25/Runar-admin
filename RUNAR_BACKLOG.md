@@ -2437,6 +2437,16 @@ rituály a Ask nezamyká · `cache_control` pryč (n).
 - ⚪ **Pro CODE-tune (drobnost):** `reading_in_progress` (429 od zámku) klient ukáže jako `err_generic`; přesnější hláška („čtení už se tahá“,
   EN + IS) by pomohla — nastane jen u dvou oken/zařízení, tlačítko je během čtení vypnuté.
 
+#### Kolo 2 / 2 — ostatní edge funkce (2026-10-11)
+**Nasazeno = repo** (všech 10 nasazených staženo a porovnáno): shodné `claude-proxy`, `redeem-code`, `delete-account`, `notify-report`,
+`list-reports`, `list-readings`, `reset-tree`, `voice-usage`, `_shared/voice_usage.ts`. `elevenlabs-proxy` a `elevenlabs-static` se liší jen
+(a) komentáři z kontroly 2026-10-09 (nenasazovalo se, nevadí) a (b) necommitnutou rozdělanou prací CODE-tune (limit testerů 15, bezpečná
+hladina 70 %, část 43) — jejich fronta. `tree-update` v nasazení není (staženo 2026-10-10), kód v repu pro CODE-tree.
+**Platí:** každá funkce ověřuje uživatele (JWT) nebo tajný klíč webhooku; admin funkce kontrolují admina z JWT, `reset-tree` testera;
+rate limit mají ty, které stojí peníze (`claude-proxy`, `elevenlabs-proxy`, `redeem-code`).
+**Opraveno (CODE-read):** `supabase/.temp/` (místní stav CLI) do `.gitignore` — byl neverzovaný a neignorovaný, šel omylem commitnout.
+- ⚪ poznámka: `notify-report` je „fail open“ — bez `WEBHOOK_SECRET` pustí kohokoli (dnes nastaven, smoke ho nehlídá).
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
