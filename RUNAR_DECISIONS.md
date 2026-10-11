@@ -10635,3 +10635,23 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Mez:** vidí jen text ve skriptu ze scratchpadu nebo `scripts/_patch*.py`; zápis nástrojem `commit_vlastni.py uprav` se dvěma soubory
   zatím ne. Vlastní kontrola, appka beze změny — bez ptaní (2026-10-11 (15)).
 - Affected doc(s): `CLAUDE.md` §30 — v témže commitu.
+
+## 2026-10-11 (47) — Cesta k založení stromu v aplikaci zpět: nabídky v záložce stromu i Životní runa, semínko; jedna brána „kdo vidí strom“
+
+- **Proč:** KUKY 2026-10-11 po resetu stromu: *„smazal se na prázdno … pokud uživatel přijde do life tree, má se mu nabídnout, pokud nemá
+  životní runu, nech si vyložit životní runu pro založení stromu života … vyloží si life rune a má se mu nabídnout, jestli chce zasadit
+  strom … tohle všechno už bylo hotové v produkci a nevím, kam to zmizelo“*.
+- **Co se našlo:** rituál z 2026-07-19 (CODE-tune: založení = Norny zdarma, příběh místo formuláře, ostatní výklady zamčené, skok do
+  stromu) v kódu je a funguje (ověřeno). Zmizela **cesta k němu**: při oddělení záložky Životní runa (2026-09-11) zůstalo tlačítko
+  založení jen v záložce stromu a strom bez životní runy neukazoval nic.
+- **Co:** (1) v záložce stromu bez životní runy text o semínku a tlačítko do záložky Životní runa; (2) po vyložení runy v záložce Životní
+  runa nabídka zasadit strom → záložka stromu (jen dokud není založený); (3) text založení ve stromě začíná semínkem (KUKY *„teď máš svoji
+  životní runu jako semínko, ze kterého roste strom života“*); (4) `treeVisibleFor()` v `runar-tree.js` = jedna brána pro záložku,
+  kreslení i nabídky — nabídka nesmí vést do záložky, kterou člověk nevidí (dnes jen admin).
+- **Texty:** IS napřed, ověřeno korpusem a GreynirCorrect (klíče `tree_need_rune`, `lr_plant_intro`, `tree_founding_intro`).
+- **Blikání při ťuknutí na strom** (KUKY): telefon přebarví celé plátno (tap highlight) — vypnuto v CSS.
+- **Nezměněno:** během založení zůstávají ostatní výklady vidět, jen zamčené (§32 základ produkce); produkce dál kreslí strom ze všech
+  čtení i bez založení — brána přijde s portem (`RUNAR_TREE.md` §2).
+- **Ověřeno:** 11 stavů v Chrome bez okna (admin bez runy, s runou, založeno · běžný uživatel · návštěvník · rituál · IS), smoke 72/72;
+  kód 985a5b2.
+- Affected doc(s): `RUNAR_TREE.md` §2 (odkaz u založení) — v témže commitu.
