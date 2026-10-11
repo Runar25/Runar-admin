@@ -49,6 +49,7 @@ rozsah vlastní `working-style.md` („Explore → Plan → Implement“).
 | Strom života — duše, zóny, signály, Gathering | `RUNAR_TREE.md` | 📜 |
 | Otevřené úkoly, blockery, priority | `RUNAR_BACKLOG.md` | stav |
 | GDPR, privacy, tester consent | `RUNAR_PRIVACY.md` | 🔒 |
+| Která pravidla platí pro který soubor (ukáže je hook při prvním dotyku) | `scripts/utils/pravidla_mapa.json` | 🏛 |
 | Prófsteinn — test čtení při stížnosti (soudci svět·soulad·chlad + kam poslat zbytek) | `scripts/profsteinn.js` (hlavička = celý postup) | 🔄 |
 | Aktuální SW verze / commit / co je nasazené | `v2/sw.js` a `git log` — **nikdy ne v docu** | stav |
 

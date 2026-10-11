@@ -955,6 +955,16 @@ radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola importu edge funkci probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# ㊴ Pravidla při dotyku (CODE-read 2026-10-11; KUKY „žádná session nekontroluje, jestli to pravidlo existuje… ať je automaticky čtou,
+# jakmile se jich dotknou“): mapa scripts/utils/pravidla_mapa.json nesmí ukazovat do prázdna (sloučené §, přejmenovaný nadpis, mrtvá
+# paměť) a hook pravidla_pri_dotyku.py musí projít samotestem. DECISIONS 2026-10-11 (17).
+print('\n' + chr(0x32B4) + ' PRAVIDLA PŘI DOTYKU — MAPA A HOOK (verify_pravidla_mapa.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_pravidla_mapa.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola mapy pravidel probehla'
+check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

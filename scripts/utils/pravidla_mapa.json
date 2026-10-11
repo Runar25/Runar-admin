@@ -1,0 +1,75 @@
+{
+  "_proc": "Jediná mapa „sáhneš na tohle → platí tahle pravidla“. Čte ji hook pravidla_pri_dotyku.py (ukáže pravidla při prvním dotyku v session) a kontroluje smoke (verify_pravidla_mapa.js). Jen odkazy (§, nadpis, paměť, hlavička kontroly) — žádný opsaný text, ten hook čte živě. KUKY 2026-10-11: „žádná session nekontroluje, jestli to pravidlo existuje, takže si ty pravidla ani na začátku nečtou… ať je automaticky čtou, jakmile se jich dotknou.“ DECISIONS 2026-10-11.",
+  "oblasti": [
+    {
+      "oblast": "pravidla a docs",
+      "cesty": ["CLAUDE.md", "memory/**/*.md", "RUNAR_*.md"],
+      "pravidla": ["§20", "§16", "§28"],
+      "uz_vime": true
+    },
+    {
+      "oblast": "JS ve v2",
+      "cesty": ["v2/*.js"],
+      "pravidla": ["§1", "§10", "§13", "§18"]
+    },
+    {
+      "oblast": "překlady",
+      "cesty": ["v2/runar-translations.js"],
+      "pravidla": ["§2", "§31"],
+      "pamet": ["edit-tool-escapes-new-text"]
+    },
+    {
+      "oblast": "prompt a hlas",
+      "cesty": ["v2/runar-character.js"],
+      "pravidla": ["§2", "§25"],
+      "docs": [
+        {"soubor": "RUNAR_DESIGN.md", "nadpis": "Kdo je Rúnar"},
+        {"soubor": "RUNAR_DESIGN.md", "nadpis": "Slova, která dáváme modelu"}
+      ],
+      "pamet": ["oprava-promptu-odebira-vadu"]
+    },
+    {
+      "oblast": "config",
+      "cesty": ["v2/runar-config.js"],
+      "pravidla": ["§10"]
+    },
+    {
+      "oblast": "statické stránky",
+      "cesty": ["v2/runar-help.html", "v2/runar-privacy.html"],
+      "pravidla": ["§2", "§31"],
+      "hlavicky": ["scripts/verify_page_copies.js"]
+    },
+    {
+      "oblast": "UI readeru a shrine",
+      "cesty": ["v2/runar-reader.html", "v2/runar-reader.css", "v2/runar-shrine.html"],
+      "pravidla": ["§5", "§32", "§31"],
+      "pamet": ["match-existing-visual-first"]
+    },
+    {
+      "oblast": "edge funkce",
+      "cesty": ["supabase/functions/**"],
+      "pravidla": ["§31", "§19"],
+      "hlavicky": ["scripts/verify_edge_imports.js", "scripts/verify_admin_emails.js"]
+    },
+    {
+      "oblast": "SQL a databáze",
+      "cesty": ["sql/**"],
+      "docs": [{"soubor": "CLAUDE.md", "nadpis": "DB — user_profiles"}]
+    },
+    {
+      "oblast": "strom",
+      "cesty": ["v2/runar-tree-prod.js", "v2/runar-tree.js", "v2/tree-lab-*/**", "build_*composer.py", "build_tree_production.py"],
+      "docs": [
+        {"soubor": "RUNAR_TREE.md", "nadpis": "3. ZÓNY"},
+        {"soubor": "RUNAR_TREE.md", "nadpis": "8. STAVBA"}
+      ],
+      "pamet": ["runar-trunk-incremental-rule", "tree-roots-rebuild"]
+    },
+    {
+      "oblast": "kontroly a hooky",
+      "cesty": ["scripts/verify_*.js", "smoke.py", "hooks/**"],
+      "pravidla": ["§30"],
+      "pamet": ["guard-test-the-lifecycle", "read-the-check-before-push"]
+    }
+  ]
+}

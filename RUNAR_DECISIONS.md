@@ -10170,3 +10170,23 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   artifact nese týž pruh (verze 22). Pravidlo o překreslování zrušeno. Rozpis ceny promptu po slotech zůstal:
   `node scripts/utils/lint_prompts.js --map` bez cesty ho vypíše jako text z aktuálního kódu.
 - Affected doc(s): memory `prompt-map-artifact` + index `MEMORY.md` · `RUNAR_BACKLOG.md` (části 17 a 30) — v témže commitu.
+
+## 2026-10-11 (17) — Pravidla při dotyku: hook ukáže živé znění pravidel, když session poprvé sáhne na soubor
+
+- **Rozhodl:** owner 2026-10-11 *„stále dokola žádná session nekontroluje, jestli to pravidlo existuje, takže si ty pravidla ani na začátku
+  nečtou! jak to ošetřit, aby je automaticky četli, jakmile se jich dotknou. já to pořád hlídat nemůžu“* → na plán CODE-read *„pokud to
+  nejde udělat ještě lépe? tak ano, udělej to“*.
+- **Proč ne jinak:** pravidla jen přiložit (bez zastavení) = úprava proběhne dřív, než je session přečte; malé `CLAUDE.md` v podsložkách
+  Claude Code načte sám, ale nic nevynutí a po compactu se nevloží. Dosavadní mapa v SessionStart hooku se tiskla jen na začátku, nic
+  nevynutila a obsahovala opsané kusy pravidel a čísla řádků, které zastaraly (mrtvý is-grammar-qa, „BACKLOG ~ř. 251–263“).
+- **Jak:** mapa `scripts/utils/pravidla_mapa.json` (jen odkazy: §, nadpis docu, paměť, hlavička kontroly) · PreToolUse hook
+  `scripts/utils/pravidla_pri_dotyku.py` (Edit/Write/Bash/PowerShell): první dotyk oblasti v session → jednou zastaví a vypíše živé znění;
+  sekce nad 4000 znaků → začátek + rozsah řádků, pustí po Read; CLAUDE.md, `memory/`, `RUNAR_*.md` → zápis až po `uz_vime.js`; po compactu
+  znovu. Chyba hooku = projde (nesmí zastavit práci), zapíše se do `~/.claude/pravidla-dotyk/chyby.log`.
+- **Hlídá:** smoke ㊴ (`verify_pravidla_mapa.js`): každý odkaz v mapě živý, sloučené § odmítne, samotest hooku 16 stavů. Zkoušeno i rozbitou
+  mapou (sloučené §8, §99, chybějící nadpis, mrtvá paměť, cesta bez souboru) → všech 5 vad chyceno.
+- **Mez:** Bash vidí jen cíle zápisu v příkazu a obsah spouštěného skriptu ze scratchpadu / `scripts/_patch*.py`; zápis jiným nástrojem bez
+  cesty v textu neuvidí.
+- **Mimo repo (git nevidí):** zapojení hooku v uživatelském nastavení Claude Code; stará mapa v SessionStart hooku `runar-context.py`
+  nahrazena odkazem (záloha `.pred-pravidla-2026-10-11`).
+- Affected doc(s): `CLAUDE.md` §30, `memory/MEMORY.md` (rozcestník) — v témže commitu.
