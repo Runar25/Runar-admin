@@ -7,9 +7,10 @@ metadata:
   originSessionId: 174bab46-0d9e-4850-99aa-cc0917e4046f
 ---
 
-⭐ MASTER HANDOFF (čti první při pokračování): C:\Users\zkuku\Downloads\Runar-admin\
-RUNAR_TREE_HANDOFF.md — kompletní stav, laby, pravidla, defaulty, další kroky.
-Placement analýza: RUNAR_TREE_GROWTH_MAP.md. Vše standalone laby, nic v DB/readeru.
+> ⚠️ **Historický záznam enginu (červen–srpen 2026), ne stav.** Tehdejší master handoff a placement analýza leží v `docs/archive/tree/`
+> (`RUNAR_TREE_HANDOFF.md`, `RUNAR_TREE_GROWTH_MAP.md`); soubory liany v0.7 (model / render / lab a jejich builder) v repu už nejsou. Strom
+> v appce dnes vidí admin i tester (`isAdmin || isTester` v `runar-tree.js`). Stav vlastní `RUNAR_TREE.md` a `git log`. (Upraveno 2026-10-11
+> po nálezu CODE-read.)
 
 ⭐ CROWN-COMPOSER = READING-DRIVEN (2026-07-04, kroky 1–4, snapshoty crown-step1..step4
 v tree-snapshots/): crown-composer už NENÍ age-mock maketa — je řízený reálným logem čtení.
@@ -28,9 +29,9 @@ tlačítko ULOŽIT→Code → `_savestate.js` (helper 7798, v serve.bat) zapíš
 (krok 5: runa→dominantní aett→charakter růstu větve — freya fluid/vzhůru · heimdall těžký/ukotvený ·
 tyr přímý; slider `aettStr`; mění jen tvar, ne napojení). **Celý signálový řetězec kompletní**
 (element/spread/intention/area/aett + stabilní umístění, 0 skoků). **PRODUKCE: HOTOVO 2026-07-12**
-(admin-only beta, commit `bceec07`) — `renderLivingTree()` v runar-tree.js čte VŠECHNA čtení uživatele
+(tehdy admin-only beta, commit `bceec07`) — `renderLivingTree()` v runar-tree.js čte VŠECHNA čtení uživatele
 z DB `readings` → `readingsToTreeLog` → `RunarTreeProd.render` (modul `v2/runar-tree-prod.js`, generuje
-`build_tree_production.py`, §1). Admin gate `isAdmin`, non-admin skryté. Enginy trunk/branch z tree-lab-*
+`build_tree_production.py`, §1). Tehdy gate jen `isAdmin`. Enginy trunk/branch z tree-lab-*
 cest. Cowork localStorage `treeLog` = redundantní (strom čte z DB); jeho 2 DB opravy (intention sloupec +
 reálná spread-area) doplní signál. Zbývá: live-update po čtení · DB trvalost fáze 2 · per-runa sub-větve.
 realAge = počet čtení × readingEvery.
@@ -234,6 +235,6 @@ KUKY preference: nikdo nedělá 10 singles najednou — simulovat denní použí
 strom nesmí být symetrický, má vypadat jako strom; myslet dopředu na 300 čtení.
 
 **How to apply:** Další krok = vizuální schválení KUKYm, pak ladění tvarů a
-napojení na reálná čtení + DB. Nekomitováno — commit až po schválení. Bloom
+napojení na reálná čtení + DB. (Tehdy nekomitováno.) Bloom
 nikdy z Date.now(), jen ServerClock (server čas). Parent/child gating: child
 startuje až parent dokončí bloom (effectiveStart rekurzivně).

@@ -55,10 +55,12 @@ def _lf(b):
     return b.replace(b'\r\n', b'\n')   # core.autocrlf=true: pracovní kopie od gitu má CRLF, blob v repu LF
 
 def cti(path, R=None):
+    """Text souboru s konci řádků LF. Proč LF: core.autocrlf=true dá souborům vybaleným gitem CRLF, kdežto kotvy v patch skriptech se píšou
+    s chr(10) — víceřádková kotva pak nesedí (2026-10-11: memory/runar-tree-engine-lab.md, 239 × CRLF, kotva „0×“). Blob v repu je stejně LF."""
     R = R or root(); rel = _rel(R, path)
     b = io.open(os.path.join(R, rel), 'rb').read()
-    _CETL[rel] = b
-    return b.decode('utf8')
+    _CETL[rel] = b   # kontrola zastaralého čtení porovnává surové bajty
+    return _lf(b).decode('utf8')
 
 def zapis(path, text, lane, R=None):
     R = R or root(); rel = _rel(R, path); full = os.path.join(R, rel)
@@ -184,7 +186,12 @@ def _test():
             pridej('a.md', 'T', R); check(False, 'pridej měl trackovaný soubor odmítnout')
         except SystemExit as e:
             check('je v gitu' in str(e), 'pridej: trackovaný soubor odmítnut')
-        # 6) zastaralé čtení: cti, cizí zápis, zapis -> odmítnout
+        # 6) soubor s CRLF (jak ho vybalí git s autocrlf): cti vrátí LF, víceřádková kotva sedí, commit projde
+        io.open(os.path.join(R, 'crlf.md'), 'wb').write(b'X1\r\nX2\r\nX3\r\n'); sh('add', 'crlf.md'); sh('commit', '-q', '-m', 'crlf')
+        s = cti('crlf.md', R); check(s == 'X1' + NL_ + 'X2' + NL_ + 'X3' + NL_, 'cti vrací LF i ze souboru s CRLF')
+        zapis('crlf.md', s.replace('X1' + NL_ + 'X2', 'X1' + NL_ + 'Y2'), 'T', R); commit('T', msg, R)
+        check(head('crlf.md').replace(chr(13), '') == 'X1' + NL_ + 'Y2' + NL_ + 'X3' + NL_, 'víceřádková kotva v souboru s CRLF zapsána a commitnuta')
+        # 7) zastaralé čtení: cti, cizí zápis, zapis -> odmítnout
         s = cti('a.md', R); wt('a.md', rd('a.md') + 'F3\n')
         try:
             zapis('a.md', s + 'M2\n', 'T', R); check(False, 'zastaralé čtení mělo zápis odmítnout')

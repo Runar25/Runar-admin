@@ -129,7 +129,7 @@ Intake (NENÍ pravda): `docs/inbox/` · Mrtvá (scratch): mimo index.
 - [is-grammar-adjective-gender.md](is-grammar-adjective-gender.md) — nejdřív rod podstatného, pak skloňuj přídavné
 - [en-formulace-overit-zdrojem.md](en-formulace-overit-zdrojem.md) — anglickou formulaci (sloveso u runy) ověř korpusem textů o runách jako IS; „Fehu exposes“ prošlo bez ověření, v korpusu 0×
 - [is-vazba-check.md](is-vazba-check.md) — islandskou vazbu (rekce/pád/kolokace/idiom) ověř `is-vazba.py` (nútímamálsorðabók API + korpus), vrstva nad BÍN, nehádej
-- Strom (CODE-tree): [runar-tree-engine-lab.md](runar-tree-engine-lab.md) historie enginu · [runar-trunk-incremental-rule.md](runar-trunk-incremental-rule.md) měnit přírůstkově + snapshot · [runar-tree-living-movement.md](runar-tree-living-movement.md) živý pohyb větví · [tree-roots-rebuild.md](tree-roots-rebuild.md) kořeny 1 pramen = 1 runa, NIKDY neshlukovat větve
+- Strom (CODE-tree): [runar-tree-engine-lab.md](runar-tree-engine-lab.md) historie enginu · [runar-trunk-incremental-rule.md](runar-trunk-incremental-rule.md) celý strom měnit přírůstkově, engine nepředělávat, snapshot · [runar-tree-living-movement.md](runar-tree-living-movement.md) živý pohyb větví · [tree-roots-rebuild.md](tree-roots-rebuild.md) NIKDY neshlukovat větve, kořen s dev:0 = prut, po rebuildu tvrdý reload
 
 ## Index snapshots (nejnovější = poslední)
 Snapshot = **historický záznam ke svému datu**, ne popis dneška. Nikdy z něj nepřebírej aktuální stav.

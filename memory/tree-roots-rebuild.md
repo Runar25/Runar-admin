@@ -1,39 +1,24 @@
 ---
 name: tree-roots-rebuild
-description: CODE-tree úkol (léto 2026) — přestavba kořenů stromu v crown-composer labu; zákon + co NEDĚLAT
+description: Strom — větve nikdy neshlukovat (rozprostřené od začátku), symptom neschovávat; kořen s dev:0 byl svislý prut; po rebuildu labu tvrdý reload
 metadata: 
   node_type: memory
-  type: project
+  type: feedback
   originSessionId: 174bab46-0d9e-4850-99aa-cc0917e4046f
-  modified: 2026-08-05T22:13:15.559Z
 ---
 
-**MŮJ ÚKOL (CODE-tree, lane [tree]).** Vizuální engine Stromu života. Konkrétně teď: v labu
-`build_crown_composer.py` (→ crown-composer.html) přestavět KOŘENY tak, aby platil zákon:
+Co z léta 2026 (přestavba kořenů v labu) platí dál a nebydlí jinde. Stavbu stromu (ramena, vedlejší větve, prameny, kořeny a kolik čeho)
+vlastní `RUNAR_TREE.md` §3 a kód (`slotAssign` v `build_crown_composer.py`) — sem se neopisuje.
 
-> **1 pramen = 1 runa = větev nahoru + kořen dolů (kořen = zrcadlo větve). Max 25 = 25 run.**
+- **NIKDY neshlukovat větve.** Od začátku rozprostřené; shlukování rodin nebo elementů „vedle sebe“ je špatně. **Proč:** 2026-08-05 jsem to
+  zavedl, rozbilo to korunu a musel jsem vracet; owner kvůli tomu opakovaně zuřil.
+- **Neřezat ani nezakrývat symptom** místo opravy příčiny.
+- **Kořen z `buildBranch` s `dev:0` vyšel v létě 2026 jako svislý prut** (per-runa tvar se zploštil, všechny kořeny stejné; dny hledaný bug).
+  Kořen vrcholu má dnes směr rovně dolů — vypadal-li by jako prut, hledej nejdřív tady.
+- **Po rebuildu labu tvrdý reload (Ctrl+Shift+R)** — `crown-composer.html` se necachebustuje a owner jinak vidí starou verzi („pořád je to
+  stejné“). Debug: tlačítko „DEBUG zdroj“ obarví kusy podle zdroje.
 
-Kořen kreslí **branch-composer engine** (`buildBranch`, per-runa `RUNE_TUNE`), **vpletený do JEDNOHO tahu
-s kmenem** (bezešvé napojení jako větev). Postup **po krůčcích, každý ověřit**, teprve pak port do
-`build_tree_production.py` (produkce).
+Jak měnit: [[runar-trunk-incremental-rule]] · měřit, ne od oka: [[measure-dont-eyeball]].
 
-**Co KUKY NECHCE (opakovaně jsem porušil = velký vztek):**
-- **NIKDY neshlukovat větve.** Od začátku mají být **rozprostřené** (emergence spread). Shlukování
-  rodin/elementů „vedle sebe" = ŠPATNĚ. (2026-08-05 jsem to zavedl, rozbil korunu, musel revert.)
-- **Neřezat/nezakrývat** symptom místo opravy příčiny.
-- **Nerozbít, co funguje.** „Vezmi co funguje + přidej nové. Nic víc, nic míň."
-- Netvrdit „hotovo/vím" od oka — [[measure-dont-eyeball]].
-
-**Zjištěné mechaniky (držet):**
-- Kořen `buildBranch` **BEZ `dev`** — `dev:0` zplošťuje per-runa tvar na svislý prut (všechny stejné).
-  To byl dny hledaný bug.
-- **Krok 1:** `trunkT.strandMax = maxMains` před `buildTrunk` → prameny = větve = max 25, žádné random
-  „reinforce" prameny navíc. (Zapsáno v RUNAR_TREE.md §5.)
-- **Krok 3:** bázi hledat od VRCHU (backward scan) → trunk-engine vlastní kořen se vždy vyloučí;
-  composer kořen-spine reversed + kmen = jeden tah. + vypnuté minor floatery.
-- **Retence už funguje** (větve/kořeny přibývají s čtením do 25, born-visible) — nestavět znovu.
-- ⚠️ **Cache:** crown-composer.html se NEcachebustuje → po každém rebuildu **tvrdý reload
-  (Ctrl+Shift+R)**, jinak owner vidí STAROU verzi. Zdroj mnoha „je to pořád stejné".
-- Debug: tlačítko „DEBUG zdroj" obarví kusy podle zdroje (klik → zdroj + strand#).
-
-Souvisí: [[measure-dont-eyeball]] · [[runar-tree-living-movement]] · [[decisions-are-directions-not-locks]] · [[dont-invent-fact-critical]]
+**Proč zkráceno (2026-10-11, nález CODE-read):** stál tu „zákon 1 pramen = 1 runa, max 25 = 25 run“ a „můj úkol teď“. Zákon od 2026-09-28
+neplatí (stavbu vlastní `RUNAR_TREE.md` §3), úkol je dávno hotový a mechaniky kroků 1–3 drží `RUNAR_TREE.md`.

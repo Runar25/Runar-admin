@@ -23,3 +23,8 @@ jako opt-in slider default 0/nízko, aby base zůstala identická se schválenou
 verzí. (3) Když si nejsem jistý rozsahem, zeptej se "přidat na tuto verzi, nebo
 přestavět?" než sáhnu na hotový layout. Schválená verze kmene (lane-based one-body
 + per-element věk) je zálohovaná v v2/tree-snapshots/trunk-good/. Viz [[runar-tree-engine-lab]].
+
+**Platí pro celý strom, ne jen kmen** (sloučeno sem 2026-10-11 — stálo to i v [[runar-tree-living-movement]] a [[tree-roots-rebuild]]):
+engine kreslení (growBranch, spojitá limba, fraktál, paint) se nepředělává, nové chování se do něj přidává přírůstkově a před „hotovo“
+se ověří, že engine drží (spojité limby + fraktál, ne chumáč tenkých větví). Kořeny: natočit, ohnout, prodloužit — nikdy předělat
+(KUKY 2026-10-10, `RUNAR_TREE.md` §2). „Vezmi, co funguje, a přidej nové. Nic víc, nic míň.“
