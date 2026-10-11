@@ -265,6 +265,10 @@ def pasti(cmd):
     if telo and chr(92) in telo:
         out.append('⛔ PAST: heredoc se zpětným lomítkem v těle — tady se z \\n stane konec řádku a escapování se rozbije (memory '
                    'heredoc-mangles-backslash-escapes; 2026-10-11 se to stalo 2×). Skript napiš nástrojem Write do scratchpadu a spusť ho.')
+    # `cat` bez souboru čte vstup, který v neinteraktivním příkazu nikdy nepřijde → příkaz visí do vypršení (2026-10-11: zablokovalo
+    # zápis i commit na 10 minut). Heredoc (`cat <<EOF`) je v pořádku.
+    if re.search(r'(^|[;&|]\s*|\s)cat\s*(>|\||;|&&|$)', cmd, re.M):
+        out.append('⛔ PAST: `cat` bez souboru čte standardní vstup, který tu nikdy nepřijde — příkaz zůstane viset. Smaž ho, nebo mu dej soubor.')
     if re.search(r'grep\b[^|;&\n]*OK\|FAIL[^|;&\n]*&&', cmd):
         out.append('⛔ PAST: `grep … OK|FAIL … &&` pustí další krok i při FAIL (grep najde řádek FAIL a skončí úspěšně). Jako podmínku '
                    'použij `| grep -q "^OK"` nebo exit kód kontroly (memory read-the-check-before-push; 2026-10-11 tak prošel commit při FAIL).')
@@ -418,6 +422,8 @@ def samotest():
     chk('26. heredoc s \\n v těle → past', V('Bash', sid='p1', command='python - <<' + chr(39) + 'EOF' + chr(39) + chr(10) + 'print("a' + chr(92) + 'nb")' + chr(10) + 'EOF') is not None)
     chk('27. heredoc bez zpětného lomítka projde', V('Bash', sid='p2', command='cat <<EOF' + chr(10) + 'ahoj' + chr(10) + 'EOF') is None)
     chk('28. grep OK|FAIL && commit → past', V('Bash', sid='p3', command='node x.js | grep -E "^(OK|FAIL)" && git commit -m x') is not None)
+    chk('30. holý cat > /dev/null → past', V('Bash', sid='p5', command='X=1; cat > /dev/null; echo a') is not None)
+    chk('31. cat se souborem a cat <<EOF projdou', V('Bash', sid='p6', command='cat soubor.txt | head') is None and V('Bash', sid='p7', command='cat <<EOF' + chr(10) + 'ahoj' + chr(10) + 'EOF') is None)
     chk('29. grep -q ^OK && commit projde', V('Bash', sid='p4', command='node x.js | grep -q "^OK" && git commit -m x') is None)
     chk('24. cesta jen v komentáři skriptu se jako zápis nebere', V('Bash', sid='s9', command='node "' + sc3.replace('\\', '/') + '"') is None)
     for jm, v in ok: print(('OK    ' if v else 'FAIL  ') + jm)

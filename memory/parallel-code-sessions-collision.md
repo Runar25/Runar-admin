@@ -87,3 +87,8 @@ stromem, ne nad commitem. Mezistav ㉸ (falešně hlásil komentáře) shodil CO
 `setRuneText` shodil můj. **Úpravu skriptu ve `scripts/` nebo `smoke.py` dolaď v kopii ve scratchpadu** (`node <kopie> --test` +
 běh nad repem) a do stromu ji zapiš až hotovou, rovnou s commitem. Když tě shodí cizí rozdělaná práce: nepouštěj `--no-verify`,
 napiš té session s výpisem a počkej.
+
+**Nové pravidlo kontroly a jeho opravy = JEDEN commit** (2026-10-11, CODE-read): pravidlo do `check-docs.py` (2aa29c8) jsem commitnul zvlášť
+a opravy docs, které hlásilo, měly jít druhým commitem přes `commit_vlastni` — ten selhal. Můj pre-push push zastavil, ale commit se na
+server dostal jinou cestou (sdílené repo: cizí push vezme i mé lokální commity) a pak by pre-push padal VŠEM. **Jak:** soubor s kódem
+zapiš taky přes `cv.cti()` + `cv.zapis()` — `commit_vlastni` ho vezme spolu s docs do jednoho commitu.
