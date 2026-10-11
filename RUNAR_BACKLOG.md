@@ -2245,6 +2245,8 @@ přepočteno na sol z dat produkce, `scripts/utils/pricing_tabulka.js`)*
 Pro CODE-tune (⚪, s příštím nasazením `claude-proxy`): komentář clampu `max_tokens` (ř. ~540) jmenuje zrušený režim `life_rune_premium`
 „2000“ jako největší legitimní čtení — dnes je největší `life_rune_standard` 1200 (`RUNAR_MODES`). Strop 2500 zůstává správně; jen
 komentář. Samostatně nasazovat nestojí za to — commit funkce bez nasazení by rozdělil repo a produkci.
+✅ *(CODE-tune 2026-10-11, s nasazením hlasu ke čtení: hotovo — komentář jmenuje, kde největší požadavek bydlí: dnes výklad
+Yggdrasil (`SPREAD_CONFIG`, 1800), ne `life_rune_standard` 1200, jak stojí výš)*
 `RUNAR_DESIGN.md`: „Standard+“ u Kříže a Horseshoe pryč; tabulka faktorů čtení vedla životní runu jako čočku (odešla 2026-09-25)
 a „spready TODO / `RP_SINGLE.priority`“ (spready doménu i rejstřík mají, pole v kódu není) · `memory/README.md` přepsán na rozcestník
 („dvě session“ s prohozenými rolemi, `runar-project.md` jako sklad) · BACKLOG: položka „PRICING model na Opus“ → cíl je sol; hotový

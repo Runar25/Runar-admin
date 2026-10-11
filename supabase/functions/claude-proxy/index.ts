@@ -538,9 +538,9 @@ serve(async (req: Request) => {
         message: "That is more than the runes can hold at once. Try a shorter question." }, 400);
     }
 
-    // Clamp max_tokens (client-supplied, passed straight to Claude). Largest legit reading is
-    // life_rune_premium at 2000; 2500 is headroom. Stops a crafted request ordering an
-    // oversized, expensive generation.
+    // Clamp max_tokens (client-supplied, passed straight to Claude). Largest legit request = the highest `tokens` / `max_tokens`
+    // in v2/runar-config.js (today the Yggdrasil spread, SPREAD_CONFIG); 2500 is headroom above it. Stops a crafted request ordering
+    // an oversized, expensive generation. (Do 2026-10-11 tu stálo „life_rune_premium at 2000“ — režim zrušen, DECISIONS 2026-10-11 (22).)
     const cappedMaxTokens = Math.min(Math.max(1, Number(max_tokens) || 600), 2500);
 
     // spread_cost prichazi od KLIENTA a jde primo do stropu i odectu. NaN je tu zbran:
