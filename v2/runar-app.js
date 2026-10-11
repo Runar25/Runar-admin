@@ -214,7 +214,10 @@ async function syncFreeBalance(userId) {
 // přehrávač (statický HTML + capToggle/capSeek/capMute v runar-reading.js) a kolekce s deníkem tenhle — dva kódy, jiná ikona
 // pauzy, zlatý průběh ve stopě a ztlumení jen u čtení. Teď jeden tvar i jeden kód; hlas čtení má prefix 'cap'.
 // prefix = unique string (e.g. 'cap', 'coll', 'j0')
-var _CAP_PLAY = '&#9654;&#xFE0E;', _CAP_PAUSE = '&#9646;&#9646;';   // FE0E: ▶ jako znak, ne barevné emoji (iOS)
+// 2026-10-11: pauza zpět na úzké ⏸ (owner: „proč jsi změnil pauzu na tenhle široký nesmysl, co mění i pruh přehrávání“) — při
+// sjednocení přehrávačů 2026-10-10 (9eb5492) se převzalo ▮▮ z Kolekce, 44 px proti 24 px u ▶, takže pruh při pauze poskočil o 20 px.
+// Hlas ve čtení měl do té doby ⏸. Zbytek rozdílu (⏸ 26 px) srovnává pevná šířka .cap-btn v runar-reader.css.
+var _CAP_PLAY = '&#9654;&#xFE0E;', _CAP_PAUSE = '&#9208;&#xFE0E;';   // FE0E: znak, ne barevné emoji (iOS)
 // preload="metadata" (2026-10-10, KUKY: „není vidět, jak dlouhá je stopa hlasu, vypadá to, že tam žádný hlas není“): délka se načte hned
 // a ukáže se vpravo. Do té doby preload="none" → 0:00 až do přehrání. Celý zvuk se nestahuje, jen hlavička.
 function _makeCapPlayer(prefix, src, autoplay) {

@@ -707,7 +707,8 @@ input:autofill{filter:none;}
 .audio-player-lbl{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:3px;color:var(--gold);margin-bottom:12px;opacity:0.9;}
 /* ── PŘEHRÁVAČ — jediný v appce (hlas čtení, kolekce, deník; staví ho _makeCapPlayer v runar-app.js) ── */
 .cap{display:flex;align-items:center;gap:12px;}
-.cap-btn{background:none;border:none;color:var(--gold);font-size:1.15em;cursor:pointer;padding:2px 4px;line-height:1;flex-shrink:0;transition:opacity 0.15s;}
+/* 2026-10-11 pevná šířka: ▶ a ⏸ jsou různě široké, pruh přehrávání při přepnutí poskakoval (owner). */
+.cap-btn{background:none;border:none;color:var(--gold);font-size:1.15em;cursor:pointer;padding:2px 0;width:1.7em;text-align:center;line-height:1;flex-shrink:0;transition:opacity 0.15s;}
 .cap-btn:hover{opacity:0.75;}
 .cap-time{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:1px;color:var(--gold);flex-shrink:0;min-width:38px;}
 /* 2026-10-10 (KUKY: „kolečko posuvníku není vycentrované… uděláme svislou čáru velikosti kuličky přesně uprostřed čáry zvukové
