@@ -12,6 +12,7 @@
 //           --text <regex> (text výstupu) · --prompt <regex> (jen záznamy s uloženým promptem) · --zdroj <část cesty>
 //           --draws klic=regex (produkce: např. ending=2$) · --bez-db · --jen-db
 //   --dle    seskupení tabulky (výchozí zdroj,model,lang,typ; další: runa, verze, rameno)
+//   --vypis N vypíše N textů (jména uživatelů maskovaná [jméno]) · --cele celé · --otazka i otázku uživatele (jen pro rozbor Asku)
 //   Výstup jen do konzole: texty nesou jména a ownerova čtení, do repa nepatří (DECISIONS 2026-08-08).
 'use strict';
 const fs = require('fs'), path = require('path'), os = require('os'), cp = require('child_process');
@@ -131,7 +132,12 @@ console.log('záznamů: ' + C.length + (shoda ? ' · s textem /' + F.text + '/: 
 for (const k of Object.keys(sk).sort()) console.log('  ' + k.padEnd(60) + String(sk[k].n).padStart(5) + (shoda ? '   ' + sk[k].s + '/' + sk[k].n : ''));
 if (VYPIS) {
   const V = (shoda ? C.filter(shoda) : C).slice(0, VYPIS);
+  // Jen čtení, jak ho model napsal: jména uživatelů maskovaná, otázka uživatele jen s --otazka (KUKY 2026-10-11: „u vzorků čtení
+  // nepotřebuju vidět nic ohledně uživatele ani jeho jméno. jen čtení“; DECISIONS 2026-10-11 (30) bod c). Bez jmen z DB texty nevypíše.
+  const MJ = require('./maskuj_jmena.js'), JM = MJ.nacti(REPO);
   console.log('');
-  for (const x of V) console.log('— ' + [x.zdroj, x.model, x.lang, x.runa, x.verze, x.rameno, x.kdy].filter(Boolean).join(' · ')
-    + (x.otazka ? '\n  otázka: ' + x.otazka.slice(0, 200) : '') + '\n  ' + (ma('--cele') ? x.text : x.text.slice(0, 400) + (x.text.length > 400 ? '…' : '')));
+  if (!JM) console.log('  ⚠ jména z DB nejdou načíst → texty se nevypisují (nemaskovaný text by nesl jméno uživatele)');
+  else for (const x of V) console.log('— ' + [x.zdroj, x.model, x.lang, x.runa, x.verze, x.rameno, x.kdy].filter(Boolean).join(' · ')
+    + (x.otazka && ma('--otazka') ? '\n  otázka: ' + MJ.maskuj(x.otazka.slice(0, 200), JM) : '') + '\n  '
+    + MJ.maskuj(ma('--cele') ? x.text : x.text.slice(0, 400) + (x.text.length > 400 ? '…' : ''), JM));
 }

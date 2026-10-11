@@ -98,10 +98,13 @@ const rep = dotaz("select id, created_at, type, status, message, flagged_text, s
 const rozdelana = dotaz("select count(*) as n from bug_reports where status = 'triaged' and type <> 'keep'");
 console.log('\n══ HLÁŠENÍ NOVÁ (nepřečtená): ' + rep.length + ' · přečtená a nehotová: ' + ((rozdelana[0] && rozdelana[0].n) || 0)
   + ' (hotová: --hotovo, nehotová do BACKLOGu: --backlog)');
+// Jména testerů v textu hlášení maskovaná (KUKY 2026-10-11 „nepotřebuju vidět nic ohledně uživatele ani jeho jméno“; DECISIONS 2026-10-11 (30) c).
+const _MJ = require('./utils/maskuj_jmena.js'), _JM = rep.length ? _MJ.nacti(ROOT) : [];
+const _m = (t) => _JM ? _MJ.maskuj(t, _JM) : '(text skryt — jména z DB nejdou načíst)';
 for (const x of rep) {
   console.log('\n· ' + x.id.slice(0, 8) + ' · ' + String(x.created_at).slice(0, 16) + ' · ' + (x.type === 'keep' ? 'keep (nechat)' : x.type) + (x.locale ? ' · ' + x.locale : '') + (x.screen_context ? ' · ' + kratce(x.screen_context, 40) : ''));
-  if (x.message) console.log('  zpráva: ' + kratce(x.message, 400));
-  if (x.flagged_text) console.log('  označeno: ' + kratce(x.flagged_text, 300));
+  if (x.message) console.log('  zpráva: ' + _m(kratce(x.message, 400)));
+  if (x.flagged_text) console.log('  označeno: ' + _m(kratce(x.flagged_text, 300)));
   if (x.suggested_replacement) console.log('  návrh: ' + kratce(x.suggested_replacement, 200));
 }
 // Přečteno → „triaged“ (keep s poznámkou „nechat“). Zkušební běh (--bez-zapisu) nic neoznačí.
