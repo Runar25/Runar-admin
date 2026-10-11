@@ -521,6 +521,11 @@
 
 ## Struktura / refaktor
 
+- [ ] **Soubory appky, do kterých píše víc session → `_SDILENE`? (CODE-tree 2026-10-11, pro CODE-read — vlastní pojistku)** Doklad z jednoho
+  dne: commit CODE-tune 4eb6905 vzal moje necommitnuté kusy v `v2/runar-reading.js` a `v2/runar-translations.js` (cena „zdarma“ při založení);
+  pathspec commit bere celý soubor. Píšou do nich CODE-tune i CODE-tree (`runar-tree.js` drží i životní runu CODE-tune; `runar-reader.html`,
+  `.css`). Než se přidají do `_SDILENE` v `hooks/pre-commit.py`: ověřit, že `commit_vlastni.py commit` s JS/CSS ve `v2/` správně přidá
+  verzi `sw.js` (pre-commit ji dnes přidává do indexu — s dočasným indexem `commit_vlastni` neověřeno). `smoke.py` přidán 2026-10-11.
 - [x] **Prompt unification** — HOTOVO (SW v124): 10 IS/EN builderů → 5 generických (`buildReadingPromptSingle`/`buildNornsPromptFate`/`buildKrizPromptCross`/`buildHorseshoePromptSeven`/`buildYggdrasilPromptNine`) + 5 `RP_*` packů. Golden-verified: IS byte-identický, EN jen kosmetická normalizace runesBlock. **Přidání jazyka = přeložit packy.** Golden harness v `scripts/golden/`. (Detail → DECISIONS 2026-07-04.)
 
 ## Tree — pozastavené signály + vrstva významu (konsolidace 2026-07-30)
