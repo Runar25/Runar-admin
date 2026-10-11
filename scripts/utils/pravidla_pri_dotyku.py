@@ -340,8 +340,11 @@ def pasti(cmd):
         out.append('⛔ PAST: heredoc se zpětným lomítkem v těle — tady se z \\n stane konec řádku a escapování se rozbije (memory '
                    'heredoc-mangles-backslash-escapes; 2026-10-11 se to stalo 2×). Skript napiš nástrojem Write do scratchpadu a spusť ho.')
     # `cat` bez souboru čte vstup, který v neinteraktivním příkazu nikdy nepřijde → příkaz visí do vypršení (2026-10-11: zablokovalo
-    # zápis i commit na 10 minut). Heredoc (`cat <<EOF`) je v pořádku.
-    if re.search(r'(^|[;&|]\s*|\s)cat\s*(>|\||;|&&|$)', cmd, re.M):
+    # zápis i commit na 10 minut). Heredoc (`cat <<EOF`) je v pořádku — i za přesměrováním výstupu (`cat > f <<'EOF'`, falešný poplach
+    # 2026-10-11): vstup v témže kusu příkazu (`<`, `<<`) cat nakrmí.
+    holy = [m for m in re.finditer(r'(^|[;&|]\s*|\s)cat\s*(>|\||;|&&|$)', cmd, re.M)
+            if '<' not in re.split(r'[;&|\n]', cmd[m.end() - (1 if m.group(2) == '>' else 0):] + '\n', maxsplit=1)[0]]
+    if holy:
         out.append('⛔ PAST: `cat` bez souboru čte standardní vstup, který tu nikdy nepřijde — příkaz zůstane viset. Smaž ho, nebo mu dej soubor.')
     if re.search(r'grep\b[^|;&\n]*OK\|FAIL[^|;&\n]*&&', cmd):
         out.append('⛔ PAST: `grep … OK|FAIL … &&` pustí další krok i při FAIL (grep najde řádek FAIL a skončí úspěšně). Jako podmínku '
@@ -618,6 +621,8 @@ def samotest():
     chk('28. grep OK|FAIL && commit → past', V('Bash', sid='p3', command='node x.js | grep -E "^(OK|FAIL)" && git commit -m x') is not None)
     chk('30. holý cat > /dev/null → past', V('Bash', sid='p5', command='X=1; cat > /dev/null; echo a') is not None)
     chk('31. cat se souborem a cat <<EOF projdou', V('Bash', sid='p6', command='cat soubor.txt | head') is None and V('Bash', sid='p7', command='cat <<EOF' + chr(10) + 'ahoj' + chr(10) + 'EOF') is None)
+    chk('31b. cat > soubor <<EOF projde, cat > soubor; bez vstupu je past', V('Bash', sid='p6b', command="cat > s.py <<'EOF'" + chr(10) + 'x=1' + chr(10) + 'EOF') is None
+        and V('Bash', sid='p6c', command='cat > s.py; echo a') is not None)
     chk('32. Edit na existující sdílený doc → zastaví s návodem uprav', (lambda d: d and 'commit_vlastni.py uprav' in d)(V('Edit', sid='e1', file_path=R + '/CLAUDE.md')))
     chk('33. Write nového souboru v memory/ projde k pravidlům (ne zákaz)', (lambda d: d is None or 'nástrojem Write nepiš' not in d)(V('Write', sid='e2', file_path=R + '/memory/novy-soubor-test-xyz.md')))
     chk('29. grep -q ^OK && commit projde', V('Bash', sid='p4', command='node x.js | grep -q "^OK" && git commit -m x') is None)
