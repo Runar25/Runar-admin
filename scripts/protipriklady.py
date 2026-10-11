@@ -139,6 +139,11 @@ PRIPADY = [
  ('chyti', 'verify_tree_prod_sync.js', 'build_crown_composer.py', 'replace', 'var XLF=[0.26, 0.36, 0.46, 0.56, 0.66, 0.76]', 'var XLF=[0.27, 0.36, 0.46, 0.56, 0.66, 0.76]'),
  # rituál založení (㊷, CODE-tree 2026-10-11): tlačítko založení bez stavby mřížky = owner v produkci „neukážou se runy“
  ('chyti', 'verify_zalozeni_stromu.js', 'v2/runar-tree.js', 'replace', "if (typeof buildGrid === 'function') buildGrid();", 'if (false) buildGrid();'),
+ # rám záložky stromu (CODE-tree 2026-10-11, DECISIONS (62)): přehrávání bez výšky rámu (posuvník by skákal), plátno bez oříznutí,
+ # „celý strom“ vizuálně pod − (obě tlačítka by se posunula) → ㊷ musí spadnout
+ ('chyti', 'verify_zalozeni_stromu.js', 'v2/runar-tree.js', 'replace', 'frameH: full ? null : _treeFrameH', 'frameH: null'),
+ ('chyti', 'verify_zalozeni_stromu.js', 'v2/runar-tree-prod.js', 'replace', '_Hc=Math.ceil(_t1-_t0)+FRAME_TOP+FRAME_BOT;', '_Hc=H;'),
+ ('chyti', 'verify_zalozeni_stromu.js', 'v2/runar-reader.html', 'replace', 'id="tree-zoom-all" type="button" onclick="treeZoomAll()" style="display:none;"', 'id="tree-zoom-all" type="button" onclick="treeZoomAll()" style="display:none;order:3;"'),
  # hlas patří ke čtení (㊸, CODE-tune 2026-10-11, DECISIONS (61)): holý text pro každého, podpis bez kontroly textu, server čte i myšlenku ✦,
  # cizí čtení, deník bez hlasu u single → musí spadnout; komentář navíc nesmí
  ('chyti', 'verify_hlas_ke_cteni.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'replace', '    if (text === null) return json({ error: "voice_unbound" }, 403);', '    if (text === null) text = typeof body?.text === "string" ? body.text : "";'),
