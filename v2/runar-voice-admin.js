@@ -42,6 +42,9 @@
       box.innerHTML =
         '<div class="vc-big">' + num(used) + ' <span>/ ' + num(lim) + ' chars</span></div>' +
         (pct !== null ? '<div class="vc-bar"><div style="width:' + pct + '%"></div></div><div class="vc-pct">' + pct + '% of the period</div>' : '') +
+        // 2026-10-11: bezpečná hladina kvóty (VOICE_SAFE_SHARE v runar-config.js) — nad ní elevenlabs-proxy i -static nový hlas nevygenerují
+        ((lim && typeof VOICE_SAFE_SHARE !== 'undefined') ? '<div class="vc-meta">Safe level ' + Math.round(VOICE_SAFE_SHARE * 100) + '% = <b>' +
+          num(Math.round(lim * VOICE_SAFE_SHARE)) + '</b> chars — above it no new voice is generated (readings and Collection)</div>' : '') +
         '<div class="vc-meta">Plan <b>' + esc(d.tier || '—') + '</b> · status ' + esc(d.status || '—') +
         ' · resets <b>' + den(d.next_reset_at) + '</b></div>' +
         '<h4>Our records since ' + den(d.period_since) + '</h4>' +

@@ -1262,8 +1262,12 @@ async function generateVoice() {
       console.error('voice failed:', res.status, (data && data.error) || '');
       // Mesicni strop a minutovy rate limit chodi oba jako 429 — rozlisuje je kod chyby.
       // Bez toho by clovek, kterému doslo pet hlasu, cetl „pockej chvili" a cekal marne.
+      // 2026-10-11: počet hlasů posílá server (tester 15, ostatní VOICE_MONTHLY_LIMIT); voice_quota_rest = bezpečná hladina kvóty
+      // ElevenLabs (VOICE_SAFE_SHARE) — do té doby by člověk četl „počkej chvíli“ a čekal marně.
       const msg = (data && data.error === 'voice_monthly_limit')
-        ? tp('err_voice_month', { n: (typeof VOICE_MONTHLY_LIMIT !== 'undefined' ? VOICE_MONTHLY_LIMIT : 5) })
+        ? tp('err_voice_month', { n: (data.limit || (typeof VOICE_MONTHLY_LIMIT !== 'undefined' ? VOICE_MONTHLY_LIMIT : 5)) })
+        : (data && data.error === 'voice_quota_rest')
+        ? t('err_voice_quota')
         : res.status === 429
         ? t('err_rate_limited')
         : t('voice_resting');

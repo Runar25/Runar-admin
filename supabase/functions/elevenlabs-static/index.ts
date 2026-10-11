@@ -5,7 +5,7 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
-import { logVoice } from "../_shared/voice_usage.ts"
+import { logVoice, fetchQuota } from "../_shared/voice_usage.ts"
 
 const EL_API_KEY     = Deno.env.get('ELEVENLABS_API_KEY')
 const EL_VOICE_ID_EN = '2UI8v2ibbwQTijaYAte1'
@@ -14,6 +14,8 @@ const EL_MODEL_EN    = 'eleven_multilingual_v2'
 const EL_MODEL_IS    = 'eleven_v3'
 const SB_URL       = Deno.env.get('SUPABASE_URL')
 const SB_KEY       = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
+// Bezpečná hladina kvóty ElevenLabs — ZRCADLÍ v2/runar-config.js VOICE_SAFE_SHARE (důvod tam, 2026-10-11); hlídá verify_monthly_limits.js
+const VOICE_SAFE_SHARE = 0.7
 
 const cors = {
   'Access-Control-Allow-Origin': '*',
@@ -53,6 +55,15 @@ serve(async (req) => {
 
     const resolvedVoiceId = EL_VOICE_ID_EN  // same voice for both langs — eleven_v3 auto-detects IS
     const resolvedModel   = lang === 'is' ? EL_MODEL_IS : EL_MODEL_EN  // hardcoded — do not trust frontend
+
+    // Bezpečná hladina kvóty (2026-10-11): audio Kolekce bere z téže kvóty jako hlas ve čtení, takže nad VOICE_SAFE_SHARE počítadla EL
+    // se negeneruje ani tady (owner: „hlídat, ať nepřekročíme bezpečnou hladinu“). Stav nezjištěn = pustit (fail open).
+    const kvota = await fetchQuota(EL_API_KEY)
+    const kUsed = kvota && typeof kvota.character_count === 'number' ? kvota.character_count : null
+    const kLim  = kvota && typeof kvota.character_limit === 'number' ? kvota.character_limit : null
+    if (kUsed !== null && kLim && kUsed + text.length > kLim * VOICE_SAFE_SHARE)
+      return new Response(JSON.stringify({ error: 'voice_quota_rest', used: kUsed, safe: Math.round(kLim * VOICE_SAFE_SHARE) }),
+        { status: 429, headers: { ...cors, 'Content-Type': 'application/json' } })
 
     // 1. Generuj audio přes ElevenLabs
     const elRes = await fetch(

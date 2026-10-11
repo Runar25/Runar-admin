@@ -5,7 +5,7 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-import { logVoice, weeklyQuota } from "../_shared/voice_usage.ts";
+import { logVoice, weeklyQuota, fetchQuota } from "../_shared/voice_usage.ts";
 
 const EL_API_KEY     = Deno.env.get("ELEVENLABS_API_KEY");
 const EL_VOICE_ID    = "2UI8v2ibbwQTijaYAte1"; // same voice for both langs
@@ -18,6 +18,10 @@ const EL_MODEL_IS    = "eleven_v3";             // auto-detects Icelandic from t
 // drzel JEN rate limit 5/minutu — tedy zadny mesicni strop vubec a premium ucet mohl ozvucit
 // vsech 75 ctení.
 const VOICE_MONTHLY_LIMIT = 5;
+// Testeři (is_tester) 15 hlasů měsíčně a bezpečná hladina kvóty ElevenLabs — ZRCADLÍ v2/runar-config.js VOICE_MONTHLY_LIMIT_TESTER
+// a VOICE_SAFE_SHARE (důvod tam; owner 2026-10-11, BACKLOG část 43). Shodu hlídá scripts/verify_monthly_limits.js.
+const VOICE_MONTHLY_LIMIT_TESTER = 15;
+const VOICE_SAFE_SHARE = 0.7;
 function monthKey(d = new Date()): string { return d.toISOString().slice(0, 7); }
 
 const cors = {
@@ -78,11 +82,27 @@ serve(async (req) => {
     // nema prijit o jeden z peti kvuli cizi chybe.
     const vKey = monthKey();
     const { data: vprof } = await sb()
-      .from("user_profiles").select("voice_month_key, voice_month_count")
+      .from("user_profiles").select("voice_month_key, voice_month_count, is_tester")
       .eq("id", userId).maybeSingle();
     const vUsed = vprof?.voice_month_key === vKey ? (vprof?.voice_month_count ?? 0) : 0;
-    if (vUsed >= VOICE_MONTHLY_LIMIT) {
-      return json({ error: "voice_monthly_limit", used: vUsed, limit: VOICE_MONTHLY_LIMIT }, 429);
+    const limit = vprof?.is_tester ? VOICE_MONTHLY_LIMIT_TESTER : VOICE_MONTHLY_LIMIT;   // 2026-10-11: tester 15, ostatní 5
+    if (vUsed >= limit) {
+      return json({ error: "voice_monthly_limit", used: vUsed, limit }, 429);
+    }
+
+    // ── Bezpečná hladina kvóty ElevenLabs (2026-10-11, VOICE_SAFE_SHARE) ──
+    // Podle JEJICH počítadla, které vidí i audio Kolekce a pokusy na webu EL, ne jen naši evidenci. Selže-li dotaz na stav, hlas se
+    // pustí (fail open): osobní strop výš platí dál a jeden hlas kvótu nepřetáhne.
+    const kvota = await fetchQuota(EL_API_KEY);
+    const kUsed = kvota && typeof kvota.character_count === "number" ? kvota.character_count : null;
+    const kLim  = kvota && typeof kvota.character_limit === "number" ? kvota.character_limit : null;
+    if (kUsed !== null && kLim) {
+      if (kUsed + text.length > kLim * VOICE_SAFE_SHARE) {
+        console.warn(`voice safe level reached: ${kUsed} + ${text.length} > ${Math.round(kLim * VOICE_SAFE_SHARE)}`);
+        return json({ error: "voice_quota_rest", used: kUsed, safe: Math.round(kLim * VOICE_SAFE_SHARE) }, 429);
+      }
+    } else {
+      console.error("ElevenLabs quota unknown — allowing voice (safe level not checked)");
     }
 
     // lang determines model — NEVER trust frontend for voice/model selection

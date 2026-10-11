@@ -2412,6 +2412,9 @@ dvojího odečtu. **Z dat (30 dní):** 0 záloh, 0 dvojích generování; dat po
   ✅ **Rozhodnuto 2026-10-11 (KUKY):** *„máme 5 testerů, tak jim dejme 15 hlasů Rúnara… ale budeme hlídat, ať nepřekročíme bezpečnou
   hladinu, třeba 120 hlasů.“* Výklad CODE-read (ownerovi napsán): každý tester 15/měsíc, celkový strop 120/měsíc vynucený serverem
   (≈ 72 000 znaků ≈ 70 % kvóty; počítat i static a admina; měsíc podle cyklu ElevenLabs). Implementace + DECISIONS → CODE-tune.
+  ✅ *(CODE-tune 2026-10-11, DECISIONS 2026-10-11 — hlas testerů: `VOICE_MONTHLY_LIMIT_TESTER` 15 podle `is_tester` (testeři jsou v DB
+  rune_seeker, ne premium); hladina hlídaná ve ZNACÍCH podle počítadla ElevenLabs (`VOICE_SAFE_SHARE` 0,7) v elevenlabs-proxy i -static —
+  počet 120 by kvótu neochránil (hlas Yggdrasilu ~1 660 zn.). Hlídá smoke ⑨; nasazení obou funkcí s ownerovým ano.)*
 
 ### Část 44 — časový rozpočet čtení × limit edge funkce (`claude-proxy`, 2026-10-11, čtení kódu)
 **Platí:** sol 50 s (AbortController) → Claude `claude-opus-5`, pokus 55 s; po VYPRŠENÍ se neopakuje ani nepřechází na další model
@@ -3198,7 +3201,8 @@ Co dělá CODE, tady NENÍ — tohle je jen to, na co já nedosáhnu.
 
 - [ ] **Tree of Life nemají** — ikona je skrytá, protože strom není hotový. Životní runu mají
       ve vlastní záložce.
-- [ ] **Hlas je ochutnávka: 5 za měsíc.**
+- [ ] **Hlas: tester 15 za měsíc** (`VOICE_MONTHLY_LIMIT_TESTER`, KUKY 2026-10-11; ostatní `VOICE_MONTHLY_LIMIT`). Nad bezpečnou hladinou
+      kvóty ElevenLabs (`VOICE_SAFE_SHARE`) hlas odpočívá pro všechny — appka to řekne, není to chyba.
 - [ ] **Režim „pro někoho jiného" testovat smí** — je to záměr, ne chyba.
 - [ ] Až budou mít premium, musí si appku **znovu načíst** — tier i `is_tester` se čtou jen při
       startu. Že to sedlo, pozná se podle **„(tester)" / „(prófari)"** za jménem tieru v panelu.

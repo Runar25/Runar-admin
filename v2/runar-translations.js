@@ -429,6 +429,7 @@ const UI_TEXT = {
     err_no_credits:     'No readings remain. Use a {card} to continue.',
     err_monthly_limit: 'This month\u2019s readings are all drawn. They return with the new month.',
     err_voice_month:   'The voice has spoken {n} times this month. It returns with the new month.',
+    err_voice_quota:   'The voice is resting for now, but the words of the reading stay with you.',   // 2026-10-11: bezpečná hladina kvóty ElevenLabs (VOICE_SAFE_SHARE)
     err_generic:        'R\u00fanar is resting \u2014 please try again in a moment.',
     err_save_failed:    'Could not save \u2014 check your connection and try again.',
     // 2026-10-10 (DECISIONS 2026-10-10 (1) bod 1): návštěvník čtení nedostane (proxy ho odmítá od 2026-08-02) — texty mu ho už
@@ -902,6 +903,7 @@ const UI_TEXT = {
     err_no_credits:     'Þú átt enga spá eftir. Notaðu {card} til að halda áfram.',
     err_monthly_limit: '\u00de\u00fa hefur nota\u00f0 alla lestrana \u00fe\u00edna \u00ed \u00feessum m\u00e1nu\u00f0i. \u00deeir koma aftur me\u00f0 n\u00fdjum m\u00e1nu\u00f0i.',
     err_voice_month:   'Röddin hefur talað {n} sinnum í þessum mánuði. Hún kemur aftur með nýjum mánuði.',
+    err_voice_quota:   'Röddin hvílir um sinn, en orð spárinnar eru áfram hjá þér.',   // 2026-10-11: is-greynir + is-gpt-check čisté
     err_generic:        'Rúnar hvílist — reyndu aftur eftir andartak.',
     err_save_failed:    'Ekki tókst að vista — athugaðu nettenginguna og reyndu aftur.',
     visitor_desc:       'Þú ert hér <strong>Gestur</strong>. Dragðu rún og sjáðu hver kemur til þín.<br><br>Rúnar les í rúnirnar fyrir þá sem ganga með honum. Gerðu þig að <strong>Leitanda</strong> — {onboarding} þegar þú skráir þig.',

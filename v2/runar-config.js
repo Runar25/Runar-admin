@@ -73,6 +73,14 @@ const RUNAR_PROMPT_VERSION = 'v5.08-bez-elementu';
 // Strop, NE nárok (DECISIONS 2026-10-10 (42)): Rune Seeker má hlas jen k volnému čtení a ke čtením z karty, nikdy „N měsíčně“ bez
 // čtení. Větu pro každý tier skládá TIER_FEATURES (klíč `voice`) a hlídá ji verify_tier_features.js.
 const VOICE_MONTHLY_LIMIT = 5;
+// Testeři (příznak is_tester — v DB jsou rune_seeker, testeři nejsou tier): 15 hlasů měsíčně každý. Owner 2026-10-11 (přes CODE-read,
+// BACKLOG část 43): „máme 5 testerů, tak jim dejme 15 hlasů Rúnara… ale budeme hlídat, ať nepřekročíme bezpečnou hladinu, třeba 120
+// hlasů.“ ZRCADLÍ elevenlabs-proxy (vynucuje); shodu hlídá smoke ⑨ (verify_monthly_limits.js).
+const VOICE_MONTHLY_LIMIT_TESTER = 15;
+// Bezpečná hladina kvóty ElevenLabs pro VEŠKERÝ hlas (čtení, Kolekce, admin): nad tímhle podílem počítadla EL se nový hlas nevygeneruje.
+// 0,7 ≈ 120 hlasů po ~600 znacích, jak owner chtěl — hlídá se ve znacích podle počítadla EL, protože počet hlasů kvótu neochrání (hlas
+// Yggdrasilu ~1 660 zn.; 120 takových ≈ 199 000 zn. při kvótě 103 807). ZRCADLÍ elevenlabs-proxy a elevenlabs-static (smoke ⑨).
+const VOICE_SAFE_SHARE = 0.7;
 
 // Rozbor jmena od modelu: prvni rozbor + JEDNO precteni po zmene severskeho jmena
 // (KUKY 2026-09-12: dve kolonky na jmena). Vynucuje claude-proxy (ma ZRCADLO); tady je,

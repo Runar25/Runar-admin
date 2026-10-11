@@ -70,10 +70,26 @@ else if (cfgHlas !== elHlas) {
 }
 // A jeste to, co uz kopie neuhlida: strop musi byt v proxy opravdu POUZITY, ne jen deklarovany.
 // Mrtva konstanta by prosla shodou cisel a neomezila nic.
-if (elHlas && !/vUsed\s*>=\s*VOICE_MONTHLY_LIMIT/.test(elProxy)) {
-  fail++; console.log('FAIL  hlas: VOICE_MONTHLY_LIMIT je v proxy deklarovany, ale nic se s nim neporovnava');
+// 2026-10-11: strop se vybira podle testera (VOICE_MONTHLY_LIMIT_TESTER, owner pres CODE-read) a porovnava se `limit`.
+if (elHlas && !(/const limit = vprof\?\.is_tester \? VOICE_MONTHLY_LIMIT_TESTER : VOICE_MONTHLY_LIMIT;/.test(elProxy) && /vUsed\s*>=\s*limit\b/.test(elProxy))) {
+  fail++; console.log('FAIL  hlas: VOICE_MONTHLY_LIMIT(_TESTER) je v proxy deklarovany, ale nic se s nim neporovnava');
 } else if (elHlas) {
-  console.log('OK    hlas: strop se v proxy opravdu porovnava (neni to mrtva konstanta)');
+  console.log('OK    hlas: strop (tester / ostatni) se v proxy opravdu porovnava (neni to mrtva konstanta)');
+}
+// Testeri 15 a bezpecna hladina kvoty (2026-10-11): tataz trida kopie — config (zdroj) × elevenlabs-proxy (× elevenlabs-static u hladiny).
+{
+  const elStatic = fs.readFileSync(R + 'supabase/functions/elevenlabs-static/index.ts', 'utf8');
+  const cT = (cfg.match(/^const VOICE_MONTHLY_LIMIT_TESTER\s*=\s*(\d+)/m) || [])[1];
+  const pT = (elProxy.match(/^const VOICE_MONTHLY_LIMIT_TESTER\s*=\s*(\d+)/m) || [])[1];
+  if (!cT || !pT || cT !== pT) { fail++; console.log('FAIL  hlas testera: config ' + cT + ' × proxy ' + pT); }
+  else console.log('OK    hlas testera: ' + cT + ' za mesic (config == proxy)');
+  const sh = (s) => (s.match(/^const VOICE_SAFE_SHARE\s*=\s*([\d.]+)/m) || [])[1];
+  const cS = sh(cfg), pS = sh(elProxy), sS = sh(elStatic);
+  if (!cS || cS !== pS || cS !== sS) { fail++; console.log('FAIL  bezpecna hladina: config ' + cS + ' × proxy ' + pS + ' × static ' + sS); }
+  // Hleda se samo POROVNANI — `kLim * VOICE_SAFE_SHARE` stoji i ve vypisu do logu, takze vypnuta podminka by prosla (utok 2026-10-11).
+  else if (!/kUsed \+ text\.length > kLim \* VOICE_SAFE_SHARE/.test(elProxy) || !/kUsed \+ text\.length > kLim \* VOICE_SAFE_SHARE/.test(elStatic)) {
+    fail++; console.log('FAIL  bezpecna hladina: VOICE_SAFE_SHARE je deklarovana, ale proxy/static s ni neporovnava');
+  } else console.log('OK    bezpecna hladina kvoty: ' + cS + ' (config == proxy == static, obe porovnavaji)');
 }
 
 // ── strop ROZBORU JMENA (2026-09-12): tataz trida kopie ──────────────────────

@@ -10021,3 +10021,21 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   odečty −1 „reading“. **Hranice:** živě neotestováno uvolnění po chybě modelu (402/503) — drží ho `finally`; předplatitel a volné čtení
   jdou toutéž cestou zámku, živě ověřen jen kredit. Typy: přísný režim 0 chyb před i po.
 - Affected doc(s): `RUNAR_BACKLOG.md` části 40 a 41 — v témže commitu.
+
+## 2026-10-11 (6) — Hlas testerů 15 za měsíc; bezpečná hladina kvóty ElevenLabs 70 % ve znacích pro veškerý hlas
+
+- **Rozhodl:** KUKY 2026-10-11 (přes CODE-read, BACKLOG část 43): *„máme 5 testerů, tak jim dejme 15 hlasů Rúnara… ale budeme hlídat,
+  ať nepřekročíme bezpečnou hladinu, třeba 120 hlasů.“* Výklad CODE-read (ownerovi napsán): každý tester 15 měsíčně, celkový strop
+  vynucený serverem. Hlídání ve znacích místo počtu napsal owner CODE-tune 2026-10-11 (bod 3) a odpověděl „mám, nasaď“ bez námitky.
+- **Co:** `VOICE_MONTHLY_LIMIT_TESTER = 15` podle příznaku `is_tester` — všichni 4 testeři jsou v DB `rune_seeker`, ne premium, tier by je
+  nezachytil; ostatní dál `VOICE_MONTHLY_LIMIT`. Bezpečná hladina `VOICE_SAFE_SHARE = 0.7` počítadla ElevenLabs (jejich
+  character_count / character_limit, ne naše evidence — vidí i audio Kolekce a pokusy na webu EL): nad ní elevenlabs-proxy ani
+  elevenlabs-static nový hlas nevygenerují. Uživatel uvidí `err_voice_quota` (EN + IS, ověřeno is-greynir + is-gpt-check), admin
+  hladinu v záložce VOICE ve shrine. Selže-li dotaz na stav EL, hlas se pustí (osobní strop platí dál). Okno = cyklus ElevenLabs.
+- **Proč znaky, ne počet:** 120 hlasů × ~600 zn. ≈ 72 000 ≈ 70 % kvóty (103 807 zn.), jenže hlas Yggdrasilu má ~1 660 zn. — 120 takových
+  by kvótu přetáhlo. Změřeno 2026-10-11: v naší evidenci 2 hlasy ve čtení, průměr 487 zn.; poslední snímek EL 13 919 / 103 807.
+- **Mechanismus (§30):** smoke ⑨ (`verify_monthly_limits.js`) hlídá shodu config × proxy × static a že se s hodnotami opravdu porovnává.
+  Zaútočeno 6 mutacemi (jiný počet testera, jiná hladina ve static, mrtvý strop, vypnuté porovnání v proxy i ve static) — všechny padají;
+  první verze kontroly vypnuté porovnání nepoznala (hledala jen výskyt, který stál i ve výpisu do logu), opraveno.
+- **Nasazení:** elevenlabs-proxy a elevenlabs-static čekají na ownerovo „nasaď“; klient (hláška, počet ze serveru) jde s commitem.
+- Affected doc(s): `RUNAR_BACKLOG.md` část 43 a „Co testerům napsat dopředu“ — v témže commitu.
