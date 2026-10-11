@@ -84,6 +84,11 @@ RULES = [
     (r'\bStripe\b',
      'Stripe se nikde nepoužívá (platby = Shopify)',
      ('not Stripe', 'ne Stripe', 'is not used', 'nepoužívá')),
+    # 2026-10-11 (CODE-read, kolo 2 / 23): pokyny „pusť is-grammar-qa.py“ přežily zánik API (2026-10-10) v EVAL_LOGu i BACKLOGu.
+    # Hlídá se jen PŘÍKAZ ke spuštění — zapsaná měření „is-grammar-qa 0 nálezů“ jsou historie ke svému dni a smí zůstat.
+    (r'python[^\n`]*is-grammar-qa\.py',
+     'is-grammar-qa je mrtvé od 2026-10-10 (API zaniklo) — kontroly IS a jejich pořadí: CLAUDE.md §2',
+     ('Do 2026-10-10', 'do 2026-10-10', 'mrtv', 'MRTV')),
     (r'enforcement.{0,24}TODO|TODO.{0,24}enforcement',
      'měsíční cap běží a je vynucovaný od 2026-07-16',
      ('už NENÍ', 'běží')),
