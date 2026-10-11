@@ -447,6 +447,16 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .hint-tgl:focus-visible{outline:1px solid var(--gold);outline-offset:3px;}
 .form-hint{margin:-2px 0 10px;}
 .guide{margin-top:14px;}
+/* „Where to start“ (2026-10-11, DECISIONS (65)) — okno appky (.modal); zavření ho zmenší a zasune do „How a reading works“
+   (transform z closeWhereToStart v runar-app.js), závoj zmizí a popisek se dvakrát rozzáří. Bez animací (prefers-reduced-motion) jen rozzáření. */
+.wts-rune{font-size:2em;color:var(--gold);margin-bottom:12px;opacity:0.7;}
+.wts-note{font-size:0.8em;color:var(--muted);margin:2px 0 6px;line-height:1.6;}
+#wts-modal{transition:background-color .45s ease;}
+#wts-modal.wts-out{background-color:rgba(0,0,0,0);}
+.wts-card{transition:transform .7s cubic-bezier(.55,.06,.3,1),opacity .7s ease;transform-origin:center center;}
+.guide-lbl.guide-glow{animation:guideGlow 1.4s ease-out 2;}
+@keyframes guideGlow{0%,100%{text-shadow:0 0 0 rgba(255,191,0,0);}40%{text-shadow:0 0 10px rgba(255,191,0,.9),0 0 22px rgba(255,191,0,.45);}}
+@media (prefers-reduced-motion:reduce){#wts-modal,.wts-card{transition:none;}.guide-lbl.guide-glow{animation-iteration-count:1;}}
 /* Text runy v Kolekci (2026-09-23): stejné písmo jako návod, ale plná barva — je to obsah, ne nápověda. */
 /* 2026-09-24 (KUKY: „jiný font, mělo by být odděleno výrazněji“): stejné písmo jako Rúnarovo učení (.coll-audio-text),
    oddělení nese vlastní nadpis a větší mezera nad ním. */

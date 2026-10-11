@@ -800,6 +800,16 @@ radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola hlasu v appce probehla'
 check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
 
+# ㊺ 2026-10-11 (CODE-tune; owner: „pop up… poprvé… viditelně se tam musí nějakým hezkým efektem zasunout, zajet“): okno „Where to start“
+# skutečnou appkou — jednou, EN i IS, let do „How a reading works“ na telefonu i počítači, tlačítko do Kolekce, bez animací. První verze
+# let neměla (popisek uprostřed obrazovky = tam, kde stojí okno), proto se let MĚŘÍ. DECISIONS 2026-10-11 (65).
+print('\n' + chr(0x32BA) + ' OKNO WHERE TO START (verify_wts.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_wts.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola okna where to start probehla'
+check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
+
 # ㉴ Štítek modelu v UI = model v edge funkci (CODE-tune 2026-10-05). KUKY (report 2026-10-05 07:40): „Pokud jsi změnil model
 # na sol6.1, proč jsi to taky neupravil… Tady v readeru. Což znamená, že nevíš, kde co je.“ Proxy běžela na gpt-6.1-sol, přepínač
 # admina hlásil „GPT-6 sol“ — dvě místa (edge funkce × překlady), která nikdo nehlídal.

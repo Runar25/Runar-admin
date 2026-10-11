@@ -162,6 +162,12 @@ PRIPADY = [
  ('chyti', 'verify_hlas_appka.js', 'v2/runar-reading.js', 'replace', 'reading_id: _rt.id || undefined,', 'reading_id: _lastReadingId || undefined,'),
  ('chyti', 'verify_hlas_appka.js', 'v2/runar-journal.js', 'replace', "if (!e || !e.id || (typeof _foundingReadingId !== 'undefined' && e.id === _foundingReadingId)) return '';", "if (!e || !e.id) return '';"),
  ('chyti', 'verify_hlas_appka.js', 'v2/runar-app.js', 'regex', r'if \(isTester\) \{(\r?\n\s+const vLimit = VOICE_MONTHLY_LIMIT_TESTER;)', r'if (true) {\1'),
+ # okno „Where to start“ (㊺, CODE-tune 2026-10-11, DECISIONS (65)): popisek doprostřed obrazovky (let není vidět — první verze), appka si
+ # nepamatuje, že okno viděl, okno se při startu vůbec neukáže → musí spadnout; komentář navíc nesmí
+ ('chyti', 'verify_wts.js', 'v2/runar-app.js', 'replace', 'chci = vyska * 0.2;', 'chci = vyska * 0.5 - 10;'),
+ ('chyti', 'verify_wts.js', 'v2/runar-app.js', 'replace', "  try { localStorage.setItem(WTS_KLIC, '1'); } catch (e) {}", ''),
+ ('chyti', 'verify_wts.js', 'v2/runar-app.js', 'replace', '  setTimeout(maybeShowWhereToStart, 1800);', ''),
+ ('nesmi', 'verify_wts.js', 'v2/runar-app.js', 'append', '', '\n// komentář navíc — správný kód\n'),
 ]
 
 

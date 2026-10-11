@@ -856,6 +856,7 @@ function updateUIText() {
   setText('atab-collection', t('atab_collection'));
   setText('atab-tree',       t('atab_tree'));
   setText('atab-liferune',   t('atab_liferune'));
+  _wtsPaint();   // okno „Where to start“ — statické texty (§14), přepnutí jazyka je přepíše i v otevřeném okně
   setText('hero-eyebrow',    t('hero_eyebrow'));
   setText('hero-eyebrow-m',  t('hero_eyebrow'));
   setText('ui-title',   'Rúnar');
@@ -1127,6 +1128,77 @@ function toggleFormHint(k) {
   var lbl = document.getElementById(k + '-lbl'), b = lbl && lbl.querySelector('.hint-tgl');
   if (b) b.setAttribute('aria-expanded', otevrit ? 'true' : 'false');
 }
+// ─── „WHERE TO START“ — jednou pro každého, i návštěvníka (KUKY 2026-10-11, DECISIONS 2026-10-11 (65)) ───────────────────────────
+// Proč: číst runy, a hlavně to, co Rúnar říká, není napoprvé samozřejmé; vysvětlení stojí v Kolekci pod každou runou („How Rúnar sees the
+// rune“) a v „How a reading works“. Okno se ukáže jednou (pamatuje si prohlížeč, ne účet — owner schválil), jen na obrazovce čtení a nikdy
+// přes jiné okno; zavření ho zasune do „How a reading works“, ať je vidět, kde to příště najít (owner: „viditelně se tam musí nějakým hezkým
+// efektem zasunout, zajet“). Není to pozdrav při přihlášení — RUNAR_DESIGN.md „žádné uvítací okno při přihlášení“ platí dál.
+var WTS_KLIC = 'runar_wts_seen', _wtsPokusu = 0;
+function _wtsVidel() { try { return localStorage.getItem(WTS_KLIC) === '1'; } catch (e) { return true; } }   // bez úložiště radši nikdy než pokaždé
+function _wtsPaint() {
+  if (!document.getElementById('wts-title')) return;
+  setText('wts-title', t('wts_title')); setText('wts-l1', t('wts_l1')); setText('wts-l2', t('wts_l2'));
+  setText('wts-note', tp('wts_note', { guide: t('guide_title') }));
+  setText('wts-open', t('wts_open')); setText('wts-later', t('wts_later'));
+}
+function _wtsEsc(ev) { if (ev.key === 'Escape') closeWhereToStart(false); }
+function maybeShowWhereToStart() {
+  var m = document.getElementById('wts-modal');
+  if (!m || _wtsVidel() || m.classList.contains('open')) return;
+  // jen na obrazovce čtení (tam je „How a reading works“) a nikdy přes jiné okno (přihlášení, souhlas testera) — jinak to zkusí za chvíli
+  if (activeAppTab !== 'reading' || document.querySelector('.modal-overlay.open')) {
+    if (++_wtsPokusu < 40) setTimeout(maybeShowWhereToStart, 1500);
+    return;
+  }
+  _wtsPaint();
+  m.classList.add('open');
+  document.addEventListener('keydown', _wtsEsc);
+  var b = document.getElementById('wts-open'); if (b) b.focus();
+}
+function closeWhereToStart(doKolekce) {
+  var m = document.getElementById('wts-modal'), card = document.getElementById('wts-card'), cil = document.getElementById('read-guide-lbl');
+  try { localStorage.setItem(WTS_KLIC, '1'); } catch (e) {}
+  document.removeEventListener('keydown', _wtsEsc);
+  if (!m || !m.classList.contains('open')) return;
+  var hotovo = false;
+  var dokonci = function () {
+    if (hotovo) return; hotovo = true;
+    m.classList.remove('open', 'wts-out');
+    if (card) { card.style.transform = ''; card.style.opacity = ''; }
+    if (cil) { cil.classList.remove('guide-glow'); void cil.offsetWidth; cil.classList.add('guide-glow'); }
+    if (doKolekce) setTimeout(function () { showAppTab('collection'); }, 600);
+  };
+  var klid = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  if (!card || !cil || !cil.getBoundingClientRect().width) { dokonci(); return; }
+  if (klid) {   // bez animací: žádný let ani plynulý posun — jen skok k popisku, ať je rozzáření vidět
+    var rk = cil.getBoundingClientRect();
+    if (rk.top < 56 || rk.bottom > (window.innerHeight || 0) - 40) window.scrollTo(0, Math.max(0, window.scrollY + rk.top - (window.innerHeight || 0) * 0.2));
+    dokonci(); return;
+  }
+  // Cíl = TEXT popisku, ne tlačítko přes celou šířku karty (s ním by měřítko vyšlo 1 a okno by se nezmenšilo).
+  var cilText = function () {
+    try { var rg = document.createRange(); rg.selectNodeContents(cil); var tr = rg.getBoundingClientRect(); if (tr.width) return tr; } catch (e) {}
+    return cil.getBoundingClientRect();
+  };
+  var zasun = function () {
+    var c = card.getBoundingClientRect(), r = cilText();
+    var dx = (r.left + r.width / 2) - (c.left + c.width / 2), dy = (r.top + r.height / 2) - (c.top + c.height / 2);
+    var sk = Math.max(0.06, Math.min(1, r.width / c.width));
+    m.classList.add('wts-out');
+    card.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(' + sk + ')';
+    card.style.opacity = '0';
+    card.addEventListener('transitionend', dokonci, { once: true });
+    setTimeout(dokonci, 900);   // pojistka, kdyby transitionend nepřišel
+  };
+  // Cíl musí být vidět, jinak by zasunutí nikdo neviděl — na telefonu je „How a reading works“ pod Rúnarovou fotkou. A nesmí stát uprostřed
+  // obrazovky: tam stojí okno, nebylo by kam letět (ověřeno v prohlížeči 2026-10-11) → popisek do horní třetiny.
+  var r0 = cil.getBoundingClientRect(), vyska = window.innerHeight || 0, chci = vyska * 0.2;
+  if (r0.top < 56 || r0.top > vyska * 0.35) {
+    window.scrollTo({ top: Math.max(0, window.scrollY + r0.top - chci), behavior: 'smooth' });
+    setTimeout(zasun, 550);
+  } else zasun();
+}
+
 function toggleGuide() {
   var lbl = document.getElementById('read-guide-lbl'), box = document.getElementById('read-guide');
   if (!lbl || !box) return;
@@ -1520,6 +1592,7 @@ window.addEventListener('DOMContentLoaded', () => {
     var r = RUNES.find(function (x) { return x.n === el.getAttribute('data-rune-glyph'); });
     if (r) setRuneText(el, r.g);
   });
+  setTimeout(maybeShowWhereToStart, 1800);   // „Where to start“ — jednou, až se appka usadí (DECISIONS 2026-10-11 (65))
   // ── Close topbar dropdown on outside click ──
   document.addEventListener('click', function(e) {
     const wrap = document.getElementById('auth-dropdown-wrap');

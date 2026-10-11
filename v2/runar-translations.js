@@ -323,6 +323,13 @@ const UI_TEXT = {
     coll_audio_missing: 'Audio file missing.',
     // 2026-10-10: „draw one“ → „choose one“ — v Safn rúna se runa vybírá, netáhne.
     vcn_text:           'You walk here as a <strong>Visitor</strong>. Five runes await you — choose one, and listen to the ancient stones.<br><br>Should you want all twenty-five, and a reading that speaks to you alone, become a <strong>Rune Seeker</strong>. Free to join.',
+    // Okno „Where to start“ — jednou pro každého (2026-10-11, DECISIONS (65)); {guide} = guide_title. Text schválil owner.
+    wts_title:          'WHERE TO START',
+    wts_l1:             'I speak in images, not in plain answers. Each reading is a picture with a rune inside it.',
+    wts_l2:             'Begin in the Runes Collection. Under every rune I tell you how I see it, and what to look for when it comes to you.',
+    wts_note:           'You will find this again under “{guide}”.',
+    wts_open:           'OPEN THE RUNES COLLECTION',
+    wts_later:          'LATER',
     guide_title:        'How a reading works',
     // 2026-09-29 (report KUKY 10:04 „mělo by být: you bring the question… in area of life, pak pojmenovat seeking a intention“):
     // první řádek nahrazen čtyřmi o tom, co člověk volí a co to ve čtení dělá (oblast · tón · čas · volitelné).
@@ -813,6 +820,15 @@ const UI_TEXT = {
     coll_audio_missing: 'Hljóðskrá vantar.',
     // 2026-10-10: „dragðu eina“ → „veldu eina“ (korpus 0× / 16×) — v Safn rúna se runa vybírá, netáhne.
     vcn_text:           'Þú ert hér <strong>Gestur</strong>. Fimm rúnir bíða þín — veldu eina og hlustaðu á fornu steinana.<br><br>Viljir þú allar tuttugu og fimm rúnirnar, og lestur sem á aðeins við þig, gerðu þig að <strong>Leitanda</strong>. Skráning er ókeypis.',
+    // „Where to start“ (2026-10-11): psáno islandsky, greynir + gpt-check bez nálezu; korpus „tala í gegnum“ 207 · „í gegnum myndir“ 187 ·
+    // „svara ekki beint“ 8 · „í henni býr“ 411 · „taka eftir þegar“ 73 · „kemur til þín“ 454. „Opna Safn rúna“ greynir četl jako sloveso
+    // „rúna“ → rozkaz „Opnaðu“, tak jako v EN.
+    wts_title:          'HVAR Á AÐ BYRJA?',
+    wts_l1:             'Ég svara ekki beint, ég tala í gegnum myndir. Hver lestur er mynd og í henni býr rún.',
+    wts_l2:             'Byrjaðu í Safni rúna. Undir hverri rún segi ég þér hvernig ég sé hana og hverju þú skalt taka eftir þegar hún kemur til þín.',
+    wts_note:           'Þetta finnurðu aftur þar sem stendur „{guide}“.',
+    wts_open:           'OPNAÐU SAFN RÚNA',
+    wts_later:          'SEINNA',
     guide_title:        'Hvernig lestur verður til',
     // 2026-09-29 viz EN; psáno islandsky, is-grammar-qa čisté.
     guide_lines:        ['Þú kemur með spurninguna og velur hvar hún á heima, það svið lífsins sem lesturinn snýr að.',

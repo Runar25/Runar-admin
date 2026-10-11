@@ -466,6 +466,10 @@
   (sazba opravena 03bf490).
   (e) **Výstup:** nálezy jako „Pro CODE-tune“ (kód a nasazení dělá CODE-tune), co chce ownera zvlášť. Nic negenerovat přes ElevenLabs —
   stojí kredity; stav účtu ze snímků nebo od ownera.
+- [ ] **Zásady soukromí: výčet toho, co drží úložiště prohlížeče, není úplný** (nalezeno 2026-10-11 CODE-tune u okna „Where to start“,
+  DECISIONS 2026-10-11 (65)): `v2/runar-privacy.html` bod 6 (EN i IS) jmenuje jazyk, jméno, počet čtení a přihlášení — chybí oslovení
+  (`runar_gender`) a příznak „okno Where to start už viděl“ (`runar_wts_seen`); osobní údaj ani jedno nenese. Doplnit větou EN + IS
+  (IS ověřit, CLAUDE.md §2), nebo výčet nahradit popisem druhu („nastavení appky“).
 - [ ] **Teach ve shrine platí statický hlas dvakrát** (nalezeno 2026-10-11 CODE-tune při mapování cest hlasu, DECISIONS 2026-10-11 (61)):
   náhled jde přes elevenlabs-proxy, „SAVE VOICE TO MEMORY“ ho přes elevenlabs-static vygeneruje znovu → 2× kredity ElevenLabs za každé
   audio Kolekce. Uložení může vzít audio z náhledu (funkce je jen pro admina; upload místo nového volání EL).

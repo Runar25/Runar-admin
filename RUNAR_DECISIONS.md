@@ -10955,3 +10955,30 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - Affected doc(s): `RUNAR_BACKLOG.md` (položka „Deník: dvě tlačítka hlasu“) — v témže commitu.
 - **Bod 6 záznamu (61) („tlačítko Kolekce u single zůstává“) tím neplatí.**
 - Odvolává se na: 2026-10-11 (61), (63).
+
+## 2026-10-11 (65) — Okno „Where to start“: jednou pro každého, i návštěvníka; ukáže Kolekci a zasune se do „How a reading works“
+
+- **Rozhodl:** owner 2026-10-11: *„chci udělat pop up window pro všechny uživatele od visitora. where to start, to learn about runes and
+  how to understand the reading… najdete v rune collection pod každou runou… pop up, které se objeví poprvé… tak by se to okno viditelně
+  schovalo do How a reading works. viditelně se tam musí nějakým hezkým efektem zasunout, zajet, aby ukázalo, kde se má uživatel koukat.“*
+  K plánu CODE-tune (text, runa Ansuz, paměť v prohlížeči): *„ano, udělej to“*.
+- **Proč:** číst runy, a hlavně to, co Rúnar říká, není napoprvé samozřejmé; vysvětlení stojí v Kolekci pod každou runou („How Rúnar sees
+  the rune“) a v „How a reading works“ — ale kdo tam nezabloudí, nenajde ho.
+- **Co:**
+  1. Okno se ukáže jednou (pamatuje si to prohlížeč, `runar_wts_seen`, ne účet), každému včetně návštěvníka, ~1,8 s po otevření appky,
+     jen na obrazovce čtení a nikdy přes jiné okno (zkouší to znovu, dokud je jiné otevřené).
+  2. Texty (`wts_*` v UI_TEXT, EN schválil owner; IS psáno islandsky a ověřeno — greynir, gpt-check, korpus): *„I speak in images, not
+     in plain answers…“* / *„Ég svara ekki beint, ég tala í gegnum myndir…“*; tlačítka *„OPEN THE RUNES COLLECTION“* · *„LATER“*.
+  3. Vzhled = okna appky (`.modal`, `.btn-full`), nahoře runa Ansuz naší kresbou (`data-rune-glyph`).
+  4. Zavření (obě tlačítka, ✕, Esc): appka posune „How a reading works“ do horní třetiny obrazovky, karta k němu letí a zmenší se na šířku
+     jeho textu, závoj zmizí a popisek se dvakrát rozzáří; „Open the Runes Collection“ pak otevře Kolekci. Bez animací
+     (prefers-reduced-motion) jen skok k popisku a rozzáření.
+- **Nalezeno při ověřování:** první verze let neměla — appka posunula popisek doprostřed obrazovky, kde stojí i okno, a popisek je tlačítko
+  přes celou šířku karty; okno jen zprůhlednělo na místě. Proto se cílí na text popisku a smoke ㊺ let MĚŘÍ (střed karty doletí na text
+  popisku: telefon 246 → 0 px, šířka 350 → 166 px; počítač 233 → 0 px, 420 → 166 px).
+- **Hranice:** na novém zařízení (nebo po smazání dat prohlížeče) se okno ukáže znovu. Ostatní kontroly v prohlížeči (㉼ ㊷ ㊹) s oknem
+  procházejí. Neověřeno naživo na skutečném telefonu (owner).
+- **Vztah k dřívějšímu:** `RUNAR_DESIGN.md` „žádné uvítací okno při přihlášení“ (2026-06-07) platí dál — tohle není pozdrav při
+  přihlášení, ale jednorázový ukazatel; doc dostal odkaz sem.
+- Affected doc(s): `RUNAR_DESIGN.md` (odkaz u „žádné uvítací okno“), `RUNAR_BACKLOG.md` (zásady: seznam toho, co drží úložiště
+  prohlížeče) — v témže commitu.

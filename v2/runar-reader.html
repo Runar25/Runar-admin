@@ -81,6 +81,22 @@
 </div>
 
 <!-- ═══ TESTER CONSENT MODAL ═══ -->
+<!-- „Where to start“ — jednou pro každého, i návštěvníka (KUKY 2026-10-11, DECISIONS 2026-10-11 (65)): kde se učit číst runy a to, co
+     Rúnar říká (Kolekce, pod každou runou). Zavření okno zasune do „How a reading works“. Texty UI_TEXT wts_*, řídí maybeShowWhereToStart /
+     closeWhereToStart v runar-app.js. Stojí PŘED oknem souhlasu testera — kdyby byla otevřená obě, souhlas je nahoře. -->
+<div class="modal-overlay" id="wts-modal" role="dialog" aria-modal="true" aria-labelledby="wts-title">
+  <div class="modal wts-card" id="wts-card">
+    <button class="modal-close" type="button" onclick="closeWhereToStart(false)">✕</button>
+    <div class="modal-rune wts-rune" data-rune-glyph="Ansuz"></div>
+    <div class="modal-title" id="wts-title"></div>
+    <p class="modal-sub" id="wts-l1"></p>
+    <p class="modal-sub" id="wts-l2"></p>
+    <p class="wts-note" id="wts-note"></p>
+    <button class="btn-full" type="button" id="wts-open" onclick="closeWhereToStart(true)"></button>
+    <button class="btn-full sec" type="button" id="wts-later" onclick="closeWhereToStart(false)"></button>
+  </div>
+</div>
+
 <div class="modal-overlay" id="tester-consent-modal">
   <div class="modal" style="max-width:420px;">
     <button class="modal-close" onclick="closeTesterConsent()">✕</button>

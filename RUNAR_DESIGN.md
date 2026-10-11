@@ -907,6 +907,8 @@ Note (`reader-note`) — obě situace (MY READING / FOR SOMEONE):
 
 Name field label: "NAME" (ne "THEIR NAME") — platí pro oba módy.
 SIGNED_IN toast odstraněn — žádné uvítací okno při přihlášení.
+Jednorázové okno „Where to start“ (první otevření appky, ne přihlášení; ukáže Kolekci a zasune se do „How a reading works“) →
+`RUNAR_DECISIONS.md` 2026-10-11 (65).
 
 ⚠️ Heading a note řídí výhradně `_updateReadingForm()`. `updateUIText()` tyto prvky NESMÍ nastavovat.
 
