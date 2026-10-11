@@ -156,6 +156,8 @@ PRIPADY = [
  # rám záložky stromu (CODE-tree 2026-10-11, DECISIONS (62)): přehrávání bez výšky rámu (posuvník by skákal), plátno bez oříznutí,
  # „celý strom“ vizuálně pod − (obě tlačítka by se posunula) → ㊷ musí spadnout
  ('chyti', 'verify_zalozeni_stromu.js', 'v2/runar-tree.js', 'replace', 'frameH: full ? null : _treeFrameH', 'frameH: null'),
+ # dialog v rituálu (CODE-tree 2026-10-11): blokoval by stránku i kontrolu navždy — ㊷ ho teď potvrdí a ohlásí jako FAIL, nezasekne se
+ ('chyti', 'verify_zalozeni_stromu.js', 'v2/runar-tree.js', 'replace', "if (typeof showToast === 'function') showToast(t('tree_founding_toast'));", "alert('x'); if (typeof showToast === 'function') showToast(t('tree_founding_toast'));"),
  ('chyti', 'verify_zalozeni_stromu.js', 'v2/runar-tree-prod.js', 'replace', '_Hc=Math.ceil(_t1-_t0)+FRAME_TOP+FRAME_BOT;', '_Hc=H;'),
  ('chyti', 'verify_zalozeni_stromu.js', 'v2/runar-reader.html', 'replace', 'id="tree-zoom-all" type="button" onclick="treeZoomAll()" style="display:none;"', 'id="tree-zoom-all" type="button" onclick="treeZoomAll()" style="display:none;order:3;"'),
  # hlas patří ke čtení (㊸, CODE-tune 2026-10-11, DECISIONS (61)): holý text pro každého, podpis bez kontroly textu, server čte i myšlenku ✦,

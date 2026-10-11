@@ -2900,6 +2900,9 @@ naráz pushuje, zamítnutí „cannot lock ref“ dnes 3×, zatím vždy bez ztr
   `subprocess.run` bez `timeout=` a zabití node na Windows nechá žít Chrome pod ním. Oprava: (1) CODE-tree — celkový limit v kontrole
   (FAIL „visí“); (2) CODE-read — limit na útok v `beh()`, při vypršení zabít strom procesů (`taskkill /T /F`) a hlásit FAIL „visí“, ne
   „chyceno“ (zabitý node = exit ≠ 0, útok typu chyti by se uložil do cache jako úspěch). Oběma session posláno 2026-10-11.
+  ✅ **(1) hotovo 2026-10-11 (CODE-tree, c05fcb3):** ㊷ má hlídač 150 s → FAIL „visí“ s krokem, Chrome bez okna se zabije i při chybě,
+  dialogy (alert / confirm) se samy potvrdí a ohlásí jako FAIL (zablokovaly by stránku navždy); ověřeno útokem — podstrčený alert
+  (útok v `PRIPADY`) i nekonečné čekání. Zaseknutí z pre-pushe CODE-tune se u CODE-tree nezopakovalo. Zbývá (2) pro CODE-read.
 
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
