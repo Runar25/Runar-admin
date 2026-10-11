@@ -10055,3 +10055,12 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Otevřené:** „to nechci“ u čtyř modelových stromů — zeptáno, jestli jde o obrázky, nebo o tak hluboké kořeny u člověka, který čte skoro jen
   o minulosti (strom minulosti: hloubka 58 → 76 procent). Odvolává se na (2), (3), (4).
 - Affected doc(s): `RUNAR_TREE.md` §2 · `RUNAR_TREE_MAP.md` §10, §12 · `RUNAR_BACKLOG.md` — v témže commitu.
+
+## 2026-10-11 (8) — Nasazeno: elevenlabs-proxy v35 a elevenlabs-static v14 (hlas testerů 15, bezpečná hladina kvóty)
+
+- **Rozhodl:** owner 2026-10-11 *„8. ano, nasaď“* — k záznamu 2026-10-11 (6).
+- **Před nasazením:** stažené běžící verze se od repa před změnou lišily JEN komentáři z 2026-10-09 (hlavička elevenlabs-proxy „anonymous
+  is rejected“ / „Auth required“, poznámka „NEPOUŽITO“ u EL_VOICE_ID_IS ve static), které se tehdy nenasadily — funkčně shodné, nic
+  v produkci nebylo mimo git. `_shared/voice_usage.ts` shodný s repem.
+- **Po nasazení:** obě stažené znovu = HEAD b37beca; `verify_jwt` dál vypnuté.
+- **Zbývá ověřit živě:** jeden hlas od testera (owner pustí v appce) — hraje-li, prošel limit testera i dotaz na stav kvóty ElevenLabs.
