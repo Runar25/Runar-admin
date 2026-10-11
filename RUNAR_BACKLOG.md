@@ -2536,6 +2536,24 @@ v CLAUDE.md × paměť, rozpor „NIKDY nezačít bez schváleného plánu“ (M
 `find-a-gap-close-it-now`; znění stromového zákona v hooku. Drobnost: §1 tvrdí, že každý patch slot má vlastní řádek v allowlistu —
 v `~/.claude/settings.json` je jen `scripts/_patch.py` (neověřeno, jestli to vadí). <!-- doc-links:ok 2026-10-11 uživatelský soubor mimo repo -->
 
+#### Kolo 2 / 11 — tajné klíče a veřejné repo, znovu (2026-10-11)
+**Platí:** ve verzovaných souborech pořád jen dva JWT, oba role `anon` (`v2/runar-config.js`, `show_corrections.py`); historie od 2026-10-10
+(všechny větve) bez tvaru klíče Anthropic, OpenAI, Supabase přístupového tokenu, webhooku ani `service_role` v base64. Nové dnešní
+soubory (hook pravidel při dotyku, kontroly) žádné tajemství nenesou; stav hooku leží mimo repo.
+
+#### Kolo 2 / 12 — zálohy: běží, a jdou otevřít (2026-10-11, jen čtení)
+**Platí:** úloha „Runar - zaloha databaze“ dnes 3:30 výsledek 0; archiv lokálně i na Drive; mazání po 30 dnech v kódu.
+**Nově změřeno — zkouška obnovy nanečisto** (dosud „nevyzkoušena“, DECISIONS 2026-10-10 (9)): nejnovější archiv se rozšifroval (19
+souborů), záloha má všech 16 tabulek `public` + `auth.users` + schéma; počty řádků se s živou DB shodují přesně, když se počítají jen řádky
+starší než čas zálohy (čtení 565, ledger 48, hlasy 3, profily 4, účty 4); rozdíly jsou jen dnešní přírůstky a průběžně se přepisující
+`rate_limits`. Rozbalená data hned smazána. **Hranice:** do databáze se neobnovovalo (chce druhou DB) — ověřeno, že záloha je úplná
+a čitelná, ne že import proběhne. Běh jen při zapnutém počítači je známý a zapsaný (tamtéž), mění se s Hetznerem / Supabase Pro.
+
+#### Kolo 2 / 13 — nasazené funkce = repo (2026-10-11, jen čtení)
+**Platí:** od nasazení (584c9f2) se `supabase/functions` nezměnilo; verze na serveru sedí se záznamem DECISIONS 2026-10-11 (14).
+Hlasové funkce s 15 hlasy pro testery (b37beca) byly nasazené už předtím s ownerovým „8. ano, nasaď“ (DECISIONS 2026-10-11 (8)); dnešní
+nasazení s pevnou knihovnou je vzalo znovu — nic nešlo do produkce bez souhlasu.
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
