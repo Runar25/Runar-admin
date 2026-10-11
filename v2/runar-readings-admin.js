@@ -251,7 +251,9 @@
     list.innerHTML = rows.map(function (r) {
       var isSpread = r.area === 'spread';
       var when  = (r.drawn_at || '').replace('T', ' ').slice(0, 16);
-      var glyph = esc(r.rune_glyph || '◻');
+      // Runa čtení naší kresbou, ne písmem (§5, 2026-10-11) — i Blank (v RUNES má ○, runeSvg ho kreslí jako obrys); výklad bez jedné runy ◻.
+      var _rr = (typeof RUNES !== 'undefined' && r.rune_glyph) ? RUNES.find(function (x) { return x.g === r.rune_glyph; }) : null;
+      var glyph = _rr ? runeSvg(_rr, { frame: false }) : esc(r.rune_glyph || '◻');
       var name  = esc(isSpread ? spreadLabel(r.rune_name, r.lang) : (r.rune_name || '').toUpperCase());
       var lng   = esc((r.lang || '').toUpperCase());
       var who   = esc(r.user_name || (r.user_id ? r.user_id.slice(0, 8) : '—'));

@@ -19,6 +19,10 @@
 <script src="runar-svgs.js"></script>
 
 <style>
+/* Runa v popisku přes setRuneText (runar-utils.js) — ZRCADLO .lbl-rune z runar-reader.css (shrine ho nenačítá); 2026-10-11, §5. */
+.lbl-rune{display:inline-block;line-height:0;vertical-align:-0.055em;margin-right:0.5em;}
+.lbl-rune .rune-svg{display:block;height:0.82em;width:auto;}
+.lbl-rune .rune-svg path{fill:currentColor;}
 :root{
   --bg:#0a0c12;--card:#12161f;--card2:#171b26;
   --border:#2E4A70;--border2:#3a5a85;
@@ -257,7 +261,7 @@ textarea::placeholder{color:var(--dim);}
   <button class="tab on"  id="tab-teach-btn"    onclick="showTab('teach')">TEACH RÚNAR</button>
   <button class="tab"     id="tab-progress-btn" onclick="showTab('progress')">PROGRESS</button>
   <button class="tab"     id="tab-correct-btn"  onclick="showTab('correct')">WORD CORRECTIONS</button>
-  <button class="tab"     id="tab-codes-btn"    onclick="showTab('codes')">ᚠ GIFT CODES</button>
+  <button class="tab"     id="tab-codes-btn"    onclick="showTab('codes')"><span data-rune-glyph="Fehu"></span>GIFT CODES</button>
   <button class="tab"     id="tab-reports-btn"  onclick="showTab('reports')">⚑ REPORTS</button>
   <button class="tab"     id="tab-readings-btn" onclick="showTab('readings')">📜 READINGS</button>
   <button class="tab"     id="tab-voice-btn"    onclick="showTab('voice')">🔊 VOICE</button>
@@ -268,7 +272,7 @@ textarea::placeholder{color:var(--dim);}
 <!-- ═══ TEACH ═══ -->
 <div class="pane on" id="pane-teach">
   <div class="card">
-    <div class="card-lbl" id="teach-select-lbl">ᚠ SELECT RUNE</div>
+    <div class="card-lbl" id="teach-select-lbl">SELECT RUNE</div>
     <p class="note" id="teach-select-note">Select a rune. Rúnar will speak directly to whoever draws it — in the current language.</p>
     <div class="rune-grid" id="teach-grid"></div>
     <div class="rune-info" id="teach-rune-info">No rune selected.</div>
@@ -286,7 +290,7 @@ textarea::placeholder{color:var(--dim);}
       <textarea id="teach-edit" rows="5" oninput="teachText = this.value; onTeachTextEdit();"></textarea>
     </div>
     <div class="status" id="st-invoke"></div>
-    <button class="btn-voice" id="btn-teach-voice" onclick="generateStaticVoice()" disabled style="display:none;">ᚢ GENERATE RÚNAR'S VOICE</button>
+    <button class="btn-voice" id="btn-teach-voice" onclick="generateStaticVoice()" disabled style="display:none;">GENERATE RÚNAR'S VOICE</button>
     <!-- TEACH AUDIO PREVIEW -->
     <div class="audio-player" id="teach-audio-player">
       <div class="audio-player-lbl" id="teach-audio-lbl">♪ RÚNAR SPEAKS — PREVIEW</div>
@@ -296,7 +300,7 @@ textarea::placeholder{color:var(--dim);}
     </div>
     <button class="btn-full" id="btn-save-voice" onclick="saveStaticVoice()" disabled style="display:none;margin-top:8px;background:var(--teal);color:#000;">SAVE VOICE TO MEMORY</button>
     <div class="status" id="st-teach-voice"></div>
-    <button class="btn" id="btn-next-rune" onclick="resetTeach()" style="display:none;margin-top:8px;width:100%;">ᚠ TEACH ANOTHER RUNE</button>
+    <button class="btn" id="btn-next-rune" onclick="resetTeach()" style="display:none;margin-top:8px;width:100%;">TEACH ANOTHER RUNE</button>
   </div>
 </div>
 
@@ -323,7 +327,7 @@ textarea::placeholder{color:var(--dim);}
 <div class="pane" id="pane-codes">
   <!-- Generator -->
   <div class="card">
-    <div class="card-lbl">ᚠ GENERATE GIFT CODES</div>
+    <div class="card-lbl"><span data-rune-glyph="Fehu"></span>GENERATE GIFT CODES</div>
     <p class="note">Generate a batch of unique codes for physical Rúnar cards. Each code gives the holder N credits when redeemed.</p>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px;">
       <div>
@@ -470,6 +474,7 @@ textarea::placeholder{color:var(--dim);}
     #pane-readings .rd-item{border:1px solid var(--border);border-left:3px solid var(--gold);padding:10px 12px;margin-bottom:8px;background:#0d1220;}
     #pane-readings .rd-head{display:flex;align-items:center;gap:8px;font-size:0.88em;flex-wrap:wrap;}
     #pane-readings .rd-glyph{color:var(--gold);font-size:1.15em;}
+    #pane-readings .rd-glyph svg{height:1em;width:auto;vertical-align:-0.15em;}   /* runa čtení naší kresbou (§5, 2026-10-11) */
     #pane-readings .rd-lang{font-size:0.68em;letter-spacing:1px;color:#c9b77a;}
     #pane-readings .rd-who{color:#8a94a6;font-size:0.82em;}
     #pane-readings .rd-tier{font-size:0.64em;text-transform:uppercase;letter-spacing:1px;color:#6f7c92;border:1px solid var(--border);padding:1px 5px;border-radius:3px;}
@@ -611,6 +616,11 @@ function handleAuthBtn() {
 
 // ─── INIT ───────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', async () => {
+  // Runy v popiscích shrine (záložka a karta dárkových kódů): naše SVG místo písma — týmž setRuneText jako appka (§5, 2026-10-11).
+  document.querySelectorAll('[data-rune-glyph]').forEach(function (el) {
+    var r = RUNES.find(function (x) { return x.n === el.getAttribute('data-rune-glyph'); });
+    if (r) setRuneText(el, r.g);
+  });
   // ── Návrat z přihlášení přes Google ─────────────────────
   // Supabase po přihlášení přes Google vrací sem s ?code=XXXX (PKCE). Do 2026-10-10 sem vedl i odkaz z e-mailu.
   // Show a visual cue immediately so the user knows something is happening.
@@ -689,14 +699,14 @@ function updateUIText() {
   setText('tab-progress-btn', tUI('tab_progress'));
   setText('progress-lbl', tUI('progress_lbl'));
   // Teach tab
-  setText('teach-select-lbl', tUI('teach_select_lbl')); setText('teach-select-note', tUI('teach_select_note'));
+  setRuneText('teach-select-lbl', tUI('teach_select_lbl')); setText('teach-select-note', tUI('teach_select_note'));
   setText('teach-speak-lbl', tUI('teach_speak_lbl')); setText('btn-invoke', tUI('invoke_btn'));
   setText('teach-runar-box-lbl', tUI('runar_speaks')); setText('teach-edit-lbl-el', tUI('teach_edit_lbl'));
   setText('teach-audio-lbl', tUI('teach_audio_lbl'));
-  setText('btn-save-voice', tUI('teach_save_btn')); setText('btn-next-rune', tUI('teach_next_btn'));
+  setText('btn-save-voice', tUI('teach_save_btn')); setRuneText('btn-next-rune', tUI('teach_next_btn'));
   setText('teach-rune-info', tUI('rune_none'));
   if (document.getElementById('btn-teach-voice').textContent.trim() !== '')
-    setText('btn-teach-voice', tUI('voice_btn'));
+    setRuneText('btn-teach-voice', tUI('voice_btn'));
 }
 
 // ─── TABS ───────────────────────────────────────────────
@@ -726,7 +736,7 @@ function initCodesTab() {
     RUNES.forEach(r => {
       if (r.n === 'Blank') return;
       const o = document.createElement('option');
-      o.value = r.n.toUpperCase(); o.textContent = `${r.g}  ${r.n.toUpperCase()}`;
+      o.value = r.n.toUpperCase(); o.textContent = r.n.toUpperCase();   // <option> SVG neunese a runa písmem by porušila §5 — stačí jméno (2026-10-11)
       sel.appendChild(o);
     });
   }
@@ -846,7 +856,7 @@ function buildGrid(gridId, isReader) {
     const svgData = (typeof RUNE_SVGS !== 'undefined') ? RUNE_SVGS[r.svg] : null;
     const inner = svgData
       ? `<svg viewBox="${svgData.vb}" xmlns="http://www.w3.org/2000/svg" class="rb-svg">${svgData.paths}</svg>`
-      : `<span class="rb-g">${r.g}</span>`;
+      : runeSvg(r, { frame: false, cls: 'rb-svg' });   // záloha bez RUNE_SVGS — runeSvg si poradí, písmem nic (§5)
     btn.innerHTML = inner + `<span class="rb-n">${r.n}</span>`;
     btn.onclick = () => {
       if (isReader && _spreadMode === 'spread3') {
@@ -868,14 +878,14 @@ function buildGrid(gridId, isReader) {
             // Single mode: fill the slot
             var _s1r = document.getElementById('s1-rune-0');
             var _s1s = document.getElementById('s1-slot-0');
-            if (_s1r) _s1r.textContent = r.g + ' ' + rn(r);
+            if (_s1r) setRuneText(_s1r, r.g + ' ' + rn(r));
             if (_s1s) { _s1s.classList.add('filled'); _s1s.onclick = function() { _clearSingleSlot(); }; }
           } else {
-            document.getElementById('reader-rune-info').textContent = `${r.g} ${rn(r)} — ${rk(r)}`;
+            setRuneText('reader-rune-info', `${r.g} ${rn(r)} — ${rk(r)}`);
           }
           document.getElementById('btn-speak').disabled = false;
         }
-        else          { teachRune  = r; document.getElementById('teach-rune-info').textContent  = `${r.g} ${rn(r)} — ${rk(r)}`; checkTeach(); loadRuneVersionCount(); }
+        else          { teachRune  = r; setRuneText('teach-rune-info', `${r.g} ${rn(r)} — ${rk(r)}`); checkTeach(); loadRuneVersionCount(); }
       }
     };
     grid.appendChild(btn);
@@ -896,7 +906,7 @@ function onTeachTextEdit() {
   document.getElementById('teach-audio-player').classList.remove('visible');
   document.getElementById('teach-audio').src = '';
   document.getElementById('btn-save-voice').style.display = 'none';
-  document.getElementById('btn-teach-voice').textContent = tUI('voice_btn');
+  setRuneText('btn-teach-voice', tUI('voice_btn'));
   setSt('st-teach-voice', '');
 }
 
@@ -943,7 +953,7 @@ async function invokeRunar() {
   // Show voice button — admin can preview, edit, then save
   document.getElementById('btn-teach-voice').style.display = 'block';
   document.getElementById('btn-teach-voice').disabled = false;
-  document.getElementById('btn-teach-voice').textContent = tUI('voice_btn');
+  setRuneText('btn-teach-voice', tUI('voice_btn'));
 
   setSt('st-invoke', tUI('st_spoken'), 'ok');
 }
@@ -953,7 +963,7 @@ async function generateStaticVoice() {
   if (!teachText || !teachRune) return;
   const btn = document.getElementById('btn-teach-voice');
   btn.disabled = true;
-  btn.textContent = tUI('voice_btn_loading');
+  setRuneText(btn, tUI('voice_btn_loading'));
   setSt('st-teach-voice', '');
   document.getElementById('teach-audio-player').classList.remove('visible');
 
@@ -982,14 +992,14 @@ async function generateStaticVoice() {
     document.getElementById('teach-audio').src = teachBlobUrl;
     document.getElementById('teach-audio-player').classList.add('visible');
 
-    btn.textContent = tUI('voice_btn_regen');
+    setRuneText(btn, tUI('voice_btn_regen'));
     btn.disabled = false;
     document.getElementById('btn-save-voice').style.display = 'block';
     document.getElementById('btn-save-voice').disabled = false;
     setSt('st-teach-voice', tUI('teach_voice_ready'), 'ok');
   } catch (err) {
     setSt('st-teach-voice', `Voice error: ${err.message}`, 'err');
-    btn.textContent = tUI('voice_btn');
+    setRuneText(btn, tUI('voice_btn'));
     btn.disabled = false;
   }
 }
@@ -1032,7 +1042,7 @@ async function saveStaticVoice() {
     const data = await res.json();
     if (data.error) throw new Error(data.error);
 
-    setSt('st-teach-voice', `✓ ${teachRune.n} (${teachRune.g}) Version ${teachVersion} saved. Rune is ready.`, 'ok');
+    setSt('st-teach-voice', `✓ ${teachRune.n} — version ${teachVersion} saved. Rune is ready.`, 'ok');
     btn.textContent = 'SAVED ✓';
     btn.disabled = true;
     document.getElementById('btn-next-rune').style.display = 'block';
@@ -1050,7 +1060,7 @@ async function loadRuneVersionCount() {
     sb.from('runar_static_audio').select('*', { count: 'exact', head: true }).eq('rune_name', teachRune.n).eq('lang', 'is').eq('ready', true),
   ]);
   const vInfo = `EN: ${enC || 0} · IS: ${isC || 0}`;
-  document.getElementById('teach-rune-info').textContent = `${teachRune.g} ${rn(teachRune)} — ${rk(teachRune)}  [${vInfo}]`;
+  setRuneText('teach-rune-info', `${teachRune.g} ${rn(teachRune)} — ${rk(teachRune)}  [${vInfo}]`);
 }
 
 function resetTeach() {
@@ -1064,7 +1074,7 @@ function resetTeach() {
   teachRune = null; teachText = ''; teachAudioUrl = null; teachVersion = null;
   document.getElementById('btn-invoke').disabled = true;
   document.getElementById('btn-teach-voice').style.display = 'none';
-  document.getElementById('btn-teach-voice').textContent = tUI('voice_btn');
+  setRuneText('btn-teach-voice', tUI('voice_btn'));
   document.getElementById('btn-save-voice').style.display = 'none';
   document.getElementById('btn-save-voice').textContent = 'SAVE VOICE TO MEMORY';
   document.getElementById('btn-save-voice').disabled = true;
@@ -1115,7 +1125,7 @@ async function loadProgress() {
     const svgData = typeof RUNE_SVGS !== 'undefined' ? RUNE_SVGS[r.svg] : null;
     const glyph = svgData
       ? `<svg viewBox="${svgData.vb}" xmlns="http://www.w3.org/2000/svg" style="width:32px;height:40px;display:block;margin:0 auto;">${svgData.paths}</svg>`
-      : `<span style="font-size:1.4em;color:var(--gold);">${r.g}</span>`;
+      : runeSvg(r, { frame: false });   // záloha bez RUNE_SVGS — písmem nic (§5, 2026-10-11)
     cell.innerHTML = `${glyph}<div class="prog-name">${r.n}</div><div class="prog-langs"><span class="prog-badge ${enV.length > 0 ? 'has' : 'none'}">${enV.length > 0 ? 'EN·' + enV.length : 'EN'}</span><span class="prog-badge ${isV.length > 0 ? 'has' : 'none'}">${isV.length > 0 ? 'IS·' + isV.length : 'IS'}</span></div>`;
     cell.onclick = () => openRuneDetail(r, cell);
     grid.appendChild(cell);
@@ -1133,7 +1143,7 @@ async function openRuneDetail(r, cell) {
   cell.classList.add('active-detail');
   detail.dataset.rune = r.n;
   detail.classList.add('open');
-  document.getElementById('detail-rune-name').textContent = `${r.g}  ${r.n}`;
+  setRuneText('detail-rune-name', `${r.g}  ${r.n}`);
   document.getElementById('detail-body').innerHTML = '<div class="detail-empty">Loading…</div>';
   detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 

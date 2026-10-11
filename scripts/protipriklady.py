@@ -93,6 +93,11 @@ PRIPADY = [
  ('chyti', 'verify_jazyk_ui.js', 'v2/runar-translations.js', 'replace', "'Read with Opus 5 (test)'", "'Čtení s Opusem 5 (zkouška)'"),
  ('chyti', 'verify_edge_imports.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'regex', r'npm:@supabase/supabase-js@[0-9.]+', 'npm:@supabase/supabase-js@2'),
  ('chyti', 'verify_rune_glyphs.js', 'v2/runar-help.html', 'replace', '</body>', '<p>ᚠ</p></body>'),
+ # ㉻ hlídá od 2026-10-11 i shrine a runu z DB (CODE-tune, owner „jeď ty tři chyby“): návrat každé ze tří opravených vad musí shodit
+ ('chyti', 'verify_rune_glyphs.js', 'v2/runar-shrine.html', 'replace', '<span data-rune-glyph="Fehu"></span>GENERATE GIFT CODES', 'ᚠ GENERATE GIFT CODES'),
+ ('chyti', 'verify_rune_glyphs.js', 'v2/runar-shrine.html', 'replace', "setRuneText(btn, tUI('voice_btn_loading'));", "btn.textContent = tUI('voice_btn_loading');"),
+ ('chyti', 'verify_rune_glyphs.js', 'v2/runar-shrine.html', 'replace', '.lbl-rune .rune-svg{display:block;height:0.82em;width:auto;}', '.lbl-rune .rune-svg{display:block;height:1.4em;width:auto;}'),
+ ('chyti', 'verify_rune_glyphs.js', 'v2/runar-readings-admin.js', 'replace', "var glyph = _rr ? runeSvg(_rr, { frame: false }) : esc(r.rune_glyph || '◻');", "var glyph = esc(r.rune_glyph || '◻');"),
  ('chyti', 'verify_lang_ternary.js', 'v2/runar-app.js', 'append', '', "\nvar _protiTern = lang === 'is' ? 'halló' : 'hello';\n"),
  # kolo 3 / 4g (2026-10-11): soulad kódu s docy a cesty dat. Texty útoků jsou poskládané z kousků (`'…' + '.md'`), aby tenhle
  # soubor sám nenesl vzor, který ty kontroly hlídají — smoke ho na tom 2026-10-11 chytil.
