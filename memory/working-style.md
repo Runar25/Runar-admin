@@ -1,8 +1,8 @@
 # Working Style — Kuky / Rúnar sessions
 
 ## Jazyk
-- Konverzace: česky nebo anglicky (mix OK)
-- Kód: vždy anglicky
+Kdo s kým mluví jakým jazykem → CLAUDE.md §31. Identifikátory v kódu anglicky.
+(Do 2026-10-11 tu stálo „Kód: vždy anglicky“ — odporovalo §31, podle kterého jsou komentáře v kódu česky.)
 
 ---
 
@@ -48,7 +48,7 @@ zjistím grepem, a neukazuje *proč* — což je jediné, co mi po compactu chyb
 2. Claude ukáže co to znamená v praxi — kde to sáhne, co ovlivní, co je nejdřív
 3. Ty doplníš / upřesníš / zamítneš
 4. Teprve pak implementace — jeden krok najednou
-5. Po implementaci: snapshot + update CLAUDE.md + RUNAR_DESIGN.md
+5. Po implementaci: zápis k vlastníkovi (CLAUDE.md §16, §20) + snapshot rozdělané práce
 
 ### Verifikační mechanismus — VŽDY
 Claude zastaví když to "vypadá hotově" — bez verifikace se stáváš verifikační smyčkou sám.
@@ -73,48 +73,31 @@ Co platí pořád a co CLAUDE.md nemá: **historie „Hotovo" patří do snapsho
 ---
 
 ## Implementační pravidla
+Vlastní je CLAUDE.md: §1 (JS přes Python skript), §4 (SW verze), §7 (commit a push). Co tam není:
+- Apostrofy v Python: přeformulovat string, aby apostrof nebyl potřeba.
 
-- **JS změny = Python skripty** (Edit tool kazí apostrofy `'` → curly quotes → SyntaxError)
-- **CSS + HTML (bez inline JS) + translations.js = Edit tool OK**
-- **Po každé JS/CSS změně = bump SW verze v sw.js** (auto-bump: git hook hooks/pre-commit.py)
-- Jeden commit = jedna věc, push hned po commitu
-- Nikdy commitovat bez pushnutí
-- Apostrofy v Python: přeformulovat string aby apostrof nebyl potřeba
-
-## §11 — IS text v Python = literální znaky (NIKDY \\uXXXX)
+## Detail k CLAUDE.md §11 — IS text v Pythonu = literální znaky (NIKDY \\uXXXX)
 `\\u00faN` → JS `úN`. Velká písmena za hex sekvencí zůstanou. Vždy: `python -X utf8` + literální IS znaky.
 
-## §12 — Name fallback = "you" / "þú"
+## Detail k CLAUDE.md §12 — jméno, když chybí
 Přihlášený bez jména → `'you'`/`'þú'`. Visitor (anonymous) → `'Visitor'`/`'Gestur'`. NIKDY `email.split('@')[0]`.
 
-## §13 — Po přejmenování VOCAB vždy ruční grep na staré termíny
+## Po přejmenování VOCAB vždy ruční grep na staré termíny (k CLAUDE.md §13 „Migrace“)
 Smoke test §10 chytí jen typické patterny. Po změně VOCAB (nebo jiném přejmenování termínu) spustit:
 ```
-grep -n "\bold_term\b" runar-app.js runar-auth.js runar-reading.js runar-tree.js runar-gathering.js runar-reader.html
+grep -n "\bold_term\b" runar-app.js runar-auth.js runar-reading.js runar-tree.js runar-reader.html
 ```
 Hardcoded výskyty mimo translations.js / VOCAB nejsou smoke testem zachyceny — kromě větví `lang === 'is' ? '…' : '…'`:
 ty od 2026-10-09 hlídá ráčna smoke ㉸ (`scripts/verify_lang_ternary.js`, počet na soubor nesmí stoupnout; stav tam v BASELINE).
 
-## Vocab/tier termíny natvrdo — known offenders (to fix)
-Pravidlo: CLAUDE.md §15 — název karty/jednotky/spá + tier jména VŽDY z VOCAB/TIERS
-přes vl()/vlp()/vn()/tp({card})/TIERS[x].label. Níže zbývající hardcoded místa
-(stav 2026-06-12, po opravě card + tier names + gift_card_btn + redeem-link).
-
-Rychlý audit:
+## Vocab/tier termíny natvrdo — jak je najít (k CLAUDE.md §15)
+Seznam „zbývajících míst“ se tu nevede: stav vlastní kód (§20.4). Do 2026-10-11 tu stál seznam ze 2026-06-12 a ze tří čtvrtin
+neplatil (`tree_rs_cost` neexistuje, `tree_rs_balance` už starou jednotku neříká, `visitor_exhausted` je pryč). Aktuální stav dá audit:
 ```
 grep -nE "rune stones?|rúnastein|Rune (Seeker|Walker|Keeper)|rune reading" v2/*.js v2/*.html  <!-- check-docs:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
 ```
 
-**VOCAB.unit ('rune stone(s)' / 'rúnasteinn/ar') — štítky → templatovat {unit}:**  <!-- check-docs:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
-- translations.js: tree_rs_cost '3 rune stones', tree_rs_balance 'your rune stones:'  <!-- check-docs:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
-- translations.js: rs_credits_desc (EN + IS 'rúnastein')  <!-- check-docs:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
-- config.js panely: 'then rune stones' / 'síðan rúnasteinar'  <!-- check-docs:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
-
-**Tier jména v próze ('Rune Seeker/Walker/Keeper', 'Vegfarandi') — POLICY:**
-v dlouhých marketingových větách OK nechat, jinde → TIERS[x].label:
-- app.js gate texty (~612–631, 764), journal.js upgrade (~152–153)
-- auth.js upgrade modal (~323–324)
-- translations.js: become_rs_btn, rs_banner_desc, visitor_desc, visitor_exhausted
+**Tier jména v próze — POLICY:** v dlouhých marketingových větách OK nechat, jinde → `TIERS[x].label` (CLAUDE.md §15).
 
 **„cast" → „reading" — OBRÁCENO (owner 2026-08-03).** Reading→cast (2026-06-06) zrušeno.
 User-facing „cast" je PRYČ: config panely + name_modal → „rune reading" (de90bb2, ověřeno).
@@ -124,25 +107,13 @@ placeholdery · `vn('cast')` → renderují „reading". SERVER `countsAsCast` /
 ztratilo by to smysl. **Owner 2026-08-03 potvrdil: JEN user-facing; neviditelný interní kód
 (VOCAB klíč, `{casts}`, server pojem) NECHAT — nerozbíjet.** Viz [[decisions-are-directions-not-locks]].
 
-**Fallback (no-JS), nízká priorita:**
-- reader.html:194 statický 'ENTER RUNE READING CARD CODE' (app.js:684 přepíše přes tp())
+## Nový spread s víc runami = zkontrolovat text tlačítka
+Každý spread s víc runami musí v `readRune()` po přidání runy zkontrolovat, jestli jsou sloty plné
+(`_spreadCount(_spreadXRunes) >= N` → `speakBtnX.textContent = t('speak_btn')`, jinak tlačítko vypnuté).
+Bez toho zůstane tlačítko na „ADD RUNE“ i po poslední runě. Vzor = stávající spready v `readRune()` (runar-reading.js).
+(Do 2026-10-11 tu stál vzor s `.length` a spreadem „trojice“, který v kódu není; nadpisy „§13–§15“ kolidovaly s čísly v CLAUDE.md.)
 
-## §15 — Nový multi-rune spread = vždy zkontrolovat btn-speak text
-Každý spread s více runami (trojice=3, norns=3, kriz=5, horseshoe=7, yggdrasil=9 ...) musí v `readRune()`:
-1. po `_spreadXRunes.push(readerRune)` zkontrolovat délku
-2. pokud slots jsou plné → `speakBtn.textContent = t('speak_btn')` (HEAR RÚNAR SPEAK)
-3. pokud není plné → `speakBtn.disabled = true`
-Bez toho zůstane tlačítko na "ADD RUNE" i po zadání poslední runy.
-
-Vzor (viz runar-reading.js `readRune()` — kriz/norns/trojice sekce):
-```js
-if (speakBtn) {
-  speakBtn.disabled = (_spreadXRunes.length < N);
-  if (_spreadXRunes.length >= N) speakBtn.textContent = t('speak_btn');
-}
-```
-
-## §14 — JS unicode escapes v souborech = problém pro Python pattern matching
+## JS unicode escapes v souborech = problém pro Python pattern matching
 Soubory mohou mít mix: literální UTF-8 (`RÚNAKORT`) i JS escape sekvence (`RÚNAKORT`).
 Python čte `Ú` jako 6 ASCII znaků (ne jako Ú). Bezpečný přístup při opravě neznámé řádky:
 ```python
@@ -182,25 +153,15 @@ Bash mount v Coworku občas **uřízne repo soubor při čtení** (podstrčí kr
 - `show_corrections.py` — živá data korekcí
 Ověřovací skripty (volané ze smoke) žijí v `scripts/verify_*.js`.
 
-**Patch skript = vlastní gitignored slot session** (viz §1) — přepisuje se; NIKDY čerstvé jméno per patch, NIKDY nearchivovat. Detail → [[one-patch-script-path]].
-
 ### Naming conventions
-- Patch skript: **vlastní gitignored slot session** (viz §1), ne per-patch jméno.
 - Refactor skript: `refactor-popis.py`  <!-- doc-links:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
 - Utility: `název.py` bez prefixu (např. `smoke.py`)
-- SQL: `YYYY-MM-DD_popis.sql`
 - Dokumentace: `RUNAR_NAZEV.md` (velká písmena)  <!-- doc-links:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
 
 ---
 
-## Cowork sync — ZRUŠENO (§17, 2026-07-04)
-
-**Nic se nikam nekopíruje.** `memory/` žije v repu a obě platformní složky na ni míří junctionem,
-takže Cowork i Code čtou a píší TYTÉŽ soubory. Zrcadlo v `Claude\Projects\` bylo 2026-07-18
-vyřazeno — ověřilo se, že se od repa rozešlo OBĚMA směry a nešlo slít automaticky.
-
-Cowork do repa nezapisuje vůbec a čte výhradně přes `git show HEAD:<path>`; do repa jde jeho
-výstup VÝHRADNĚ přes CODE. Detail → CLAUDE.md §17 + sekce „N paralelních session".
+## Cowork sync — ZRUŠENO
+Nic se nikam nekopíruje; jak paměť a Cowork fungují, vlastní CLAUDE.md §17 a sekce „N paralelních session“.
 
 ---
 
@@ -225,41 +186,17 @@ a večer tenhle příkaz na generování dávky. První byla výjimka v pravidle
 ## Co NIKDY nedělat
 - HTML mockupy (žerou tokeny, nevypadají jako originál)
 - Přidávat "vylepšení" která nebyla zadána
-- Měnit víc věcí najednou v jednom commitu
-- Edit tool na JS soubory
 - Nechávat patch skripty v rootu `Runar-admin/`
-- Kopírovat CLAUDE.md nebo RUNAR_PRICING.md do Cowork složky
-- Editovat soubor bez předchozího čtení (Edit tool to vyžaduje i technicky)
+(Commit po jedné věci → §7 · Edit na JS → §1 · kopie do Cowork → §17.)
 
 ## Testování
-- Vždy testovat jako visitor a rune_seeker, ne jako admin
-- Admin má premium automaticky → nepředstavuje reálný stav
+Jako visitor a rune_seeker (CLAUDE.md „Tier systém“) — admin má premium automaticky, reálný stav nepředstavuje.
 
 ---
 
 ## ⚡ IS JE PRIMÁRNÍ JAZYK
-Rúnar vzniká na Islandu, pro Islanďany. IS musí být vždy perfektní.
-EN je vedlejší — secondary priority. NIKDY nepřistupovat k IS jako k "překladu" EN.
-
-Každé místo kde Claude generuje IS text MUSÍ mít 3 vrstvy:
-
-```js
-// 1. System prompt v IS charakteru
-var sys = buildSysPrompt(activeChar, lang);
-
-// 2. User prompt psán přímo v IS + korekce připojeny
-var prompt = buildXxxPromptIS(...);
-var corrBlock = getCorrPrompt(lang, corrections);
-if (corrBlock) prompt = prompt + '\n' + corrBlock;
-
-// ⚠️ ŽÁDNÁ další vrstva: post-processor na výstup NEEXISTUJE (odstraněn 2026-08-09).
-// Korekce se aplikují v promptu (výše), kde je model umí ohnout podle kontextu.
-// Pravidlo a proč → CLAUDE.md §2.
-```
-
-Pravidla:
-- NIKDY "Respond entirely in Icelandic" jako jediná IS instrukce
-- Nová korekce → přidat přes shrine do runar_corrections DB → platí všude
+Pravidlo, tři vrstvy generování a kontrola IS → CLAUDE.md §2 (do 2026-10-11 tu stála kopie i s blokem kódu). Co tam není:
+- NIKDY „Respond entirely in Icelandic“ jako jediná IS instrukce.
 
 ### Korekce = frázová (nese kontext) > jednoslovná (slepá) — lekce 2026-07-07
 Korekce X→Y se aplikuje VŠUDE naslepo. V silně flektivní IS: Y správné v jednom pádu/osobě/čase může být
@@ -273,44 +210,13 @@ Co tam není a patří sem: plochy se nezaměňují — kontrola zdrojového kó
 **E001 = nerozparsováno → přepsat, dokud tomu nástroj nerozumí** (fronta „NATIVE EYE“ zrušena 2026-07-18, §19.2).
 (Do 2026-10-11 tu stál vlastní seznam se zaniklým `is-grammar-qa.py` a s „E001 → NATIVE EYE“ — obojí neplatilo.)
 
-### Islandská gramatika — shoda přídavného jména (lekce 2026-06-14, KUKY ověřil)
-Moje chyby v sezónních obrazech byly VŠECHNY špatný ROD podstatného → špatný tvar přídavného.
-**Postup: nejdřív urči rod podstatného (kk/kvk/hk), AŽ POTOM skloňuj přídavné.** Rod NEodhadovat
-z koncovky ani z angličtiny.
-- **frost = hvorugkyn (hk)** → „hart frost" (sterk), „fyrsta harða frostið" (veik — po určitém
-  členu -ið + řadovce). NE „harður" (to je kk).
-- **Past — stejný kořen, jiný rod:** frostbiti = kk → „harður frostbiti" ✅, ale frost = hk → „hart frost".
-  Koncovka -i bývá kk; holé slovo na souhlásku může být jakýkoli rod.
-- **súld = kvenkyn (kvk)** → „grá súld". NE „grátt" (hk).
-- **Určitý člen (-ið / -inn / -in) spouští VEIK (slabé) skloňování** přídavného: „fyrsta harða frostið".
-
-Mini-slovník rodu (příroda — Rúnar jí je plný):
-`frost` hk · `súld` kvk · `þoka` kvk · `vindur` kk · `regn` hk · `él` hk · `snjór` kk · `hríð` kvk ·
-`gola` kvk · `hret` hk · `frostbiti` kk · `bylur` kk · `gufa` kvk · `ljós` hk · `nótt` kvk
+### Islandská gramatika — rod podstatného před přídavným
+→ [[is-grammar-adjective-gender]] (postup, ověřené případy, slovník rodu). Do 2026-10-11 stálo totéž i tady.
 
 ---
 
-## Tier hodnoty = config, NIKDY natvrdo (Rule §8)
-
-```js
-// runar-config.js — hodnota I text label na jednom místě
-rune_seeker: {
-  onboarding: 1,
-  onboarding_label_en: 'one free reading',
-  onboarding_label_is: 'einn frjáls lestur',
-}
-// runar-app.js
-TIER_LIMITS.rune_seeker.onboarding_label_en  // ✅
-'five readings each month'                    // ❌ NIKDY
-```
-
-Při změně tier hodnoty: grep runar-app.js, runar-reader.html, runar-translations.js.
-
----
-
-## ᚱ runa v UI
-- Vždy zlatá: `color:var(--gold)`
-- Nikdy s ozdobami kolem (◌ ᚱ ◌ — zakázáno)
+## Tier hodnoty (k CLAUDE.md §8)
+Při změně tier hodnoty: grep runar-app.js, runar-reader.html, runar-translations.js. (ᚱ v UI → CLAUDE.md §5.)
 
 ---
 
@@ -338,7 +244,7 @@ popis jeho reader UI (`#reader-setup`, `#reader-rune-card`, `#reader-output`) a 
 čtení se testují nejdřív v shrine". Ta tři ID v souboru **nejsou ani jednou** — pět týdnů to
 posílalo čtenáře testovat do smazaného kódu.
 
-Shrine má šest tabů: `codes` · `correct` · `progress` · `readings` · `reports` · **`teach`**.
+Které taby shrine má, říká `showTab(` v `runar-shrine.html` (do 2026-10-11 tu stálo „šest“ — mezitím přibyl `voice`).
 
 ⭐ **`teach` NENÍ testovací plocha — píše do produkce.** `invokeRunar()` vygeneruje statické čtení
 runy a uloží ho do `runar_static_audio`; produkční reader i journal je pak servírují uživatelům
@@ -400,23 +306,8 @@ rozdělané **k tomu dni**. Aktuální stav vlastní produkce, `git log` a doky 
 - **Jméno bez vazby se maže.** Každý pojem v docích/designu = 1 věta významu + vazba na systém. „Orel", „skuld", „Gathering" nejsou nálepky — musí být jasné, co to JE a na co se to váže. Prázdný pojem → dohledat význam, nebo smazat.
 - **Rúnar reflektuje, nikdy nepředpovídá.** Zrcadlo pozornosti, ne věštba. V hlase: přítomný čas o vzorcích a směřování („pořád se vracíš k…", „táhne tě k…"), NIKDY „stane se ti…". Pozn.: **skuld = záměr / k čemu se táhneš**, ne budoucí události.
 
-## Two-output rule (2026-07-03)
-
-Každý task = dva výstupy, ne jeden:
-- **Output A** — samotná práce (kód, analýza, rozhodnutí)
-- **Output B** — znalostní delta (co musí vědět příští Code session, co by nenašla čtením kódu)
-
-Task bez Output B je **nedokončený**, pokud změnil rozhodnutí nebo chování.
-
-**Kde je Output B:**
-- Rozhodnutí s „proč" → `RUNAR_DECISIONS.md` (append-only) — **a oprav doc jmenovaný
-  v `Affected doc(s)` VE STEJNÉM COMMITU.** Nesplněný `Affected doc(s)` je přesně ten mechanismus,
-  který 2026-07-18 vygeneroval 97 rozporů v dokumentaci.
-- Workflow pravidlo → tenhle soubor · Design → `RUNAR_DESIGN.md`
-- **Technický stav NIKAM** — vlastní ho kód a `git log` (§20). Do docu nepatří.
-
-**Reconciliation check** → vlastník je `CLAUDE.md` §16 (tady se neopisuje — do 2026-10-09 tu stála kopie „Code nikdy neopravuje
-autonomně“, která po ownerově změně postupu odporovala §16; DECISIONS 2026-10-09 (15)).
+## Two-output rule a Reconciliation
+Vlastník = CLAUDE.md §16 (do 2026-10-09 tu stála kopie, která po změně postupu §16 odporovala; DECISIONS 2026-10-09 (15)).
 
 ---
 
@@ -424,37 +315,9 @@ autonomně“, která po ownerově změně postupu odporovala §16; DECISIONS 20
 
 Při každé změně systému (příběh, design, pricing, code, workflow) — tato tabulka říká KAM.
 
-### Typ změny → KDO to vlastní (§20: jedna informace, jedno místo)
-
-⚠️ Tahle tabulka do 2026-07-18 přikazovala psát tytéž fakty do 3–4 souborů naráz
-(„CLAUDE.md + MEMORY.md + runar-project.md + snapshot"). **Tím ten nepořádek vznikal.**
-Nová verze říká JEDNOHO vlastníka. Ostatní místa nanejvýš odkazují.
-
-| Typ změny | Jediný vlastník |
-|-----------|-----------------|
-| Cena, kredit, limit, kapacita, tier jméno, VOCAB | `v2/runar-config.js` — **žádný doc to neopisuje** |
-| Délka čtení, struktura promptu | buildery v `v2/runar-character.js` |
-| Model + fallback chain | `claude-proxy/index.ts` MODELS |
-| Business model, marže, break-even, fyzické produkty | `RUNAR_PRICING.md` |
-| Příběh, mytologie, význam částí | `RUNAR_DESIGN.md` |
-| Strom — duše, zóny, signály, Gathering | `RUNAR_TREE.md` |
-| Architektura, pravidla §N, DB sloupce, lanes | `CLAUDE.md` |
-| Workflow, jak spolu pracujeme | tenhle soubor |
-| Rozhodnutí + PROČ (datované) | `RUNAR_DECISIONS.md` (append-only) |
-| Otevřené úkoly, blockery, priority | `RUNAR_BACKLOG.md` |
-| **Stav** — co je hotové, SW verze, commit, co je nasazené | **kód + `git log`. Do docu NEPATŘÍ.** |
-
-### Pravidla
-
-- **Než někam napíšeš fakt, zeptej se: kde už bydlí?** Bydlí-li v kódu → odkaž, neopisuj.
-  Bydlí-li v jiném docu → odkaz, ne převyprávění (převyprávění je taky kopie, jen ho grep nenajde).
-- **`MEMORY.md` = JEN index a rozcestník.** Žádná fakta, žádný stav, žádná SW verze ani commit hash.
-  (Do 2026-07-18 to byl sklad faktů a odporoval si sám se sebou — ř. 33 „enforcement = TODO"  <!-- check-docs:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
-  vs ř. 46 popis toho, jak enforcement funguje. Obojí četla každá session.)
-- **`snapshots/` = historie ke svému datu.** Nikdy z nich nepřebírej aktuální stav; nikdy nemazat.
-- **`memory/runar-project.md` je prázdný záměrně** — byl to duplikát CLAUDE.md a sám vyrobil ~15 rozporů.
-- **Při sporu vyhrává PRODUKCE**, pak nejnovější datovaný záznam v `RUNAR_DECISIONS.md`.
-  (KUKY 2026-07-18: „produkce je nejblíž tomu, jak to má být.")
+Kdo co vlastní → **rozcestník v `MEMORY.md`** (jediná mapa). Jak psát, aby informace žila na jednom místě, a kdo vyhrává při
+sporu → CLAUDE.md §20. Do 2026-10-11 tu stála druhá mapa a kopie §20 — přesně to, co §20 zakazuje (CLAUDE.md svůj rozcestník
+zrušil ze stejného důvodu 2026-08-17).
 
 ### Trigger: kdy zapsat
 

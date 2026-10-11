@@ -15,7 +15,12 @@ Ověřené korekce (2026-06-14, KUKY potvrdil):
 - Past: stejný kořen, jiný rod — `frostbiti` (kk) = „harður frostbiti" ✅, ale `frost` (hk) = „hart frost".
 - Určitý člen (-ið/-inn/-in) spouští VEIK (slabé) skloňování přídavného.
 
-Plný slovník rodu přírodních slov + detail je v Rúnar `working-style.md` (§ Islandská gramatika). **Proč:** Rúnar je IS-primární a hodně o islandštině; čím lepší moje IS, tím lepší produkt (KUKY). **Jak aplikovat:** před napsáním každého IS jmenného spojení pojmenuj rod, pak vyber tvar přídavného.
+Past: koncovka -i bývá kk, holé slovo na souhlásku může být jakýkoli rod.
+
+Slovník rodu (příroda — Rúnar jí je plný; do 2026-10-11 stál ve `working-style.md`, teď jen tady):
+`frost` hk · `súld` kvk · `þoka` kvk · `vindur` kk · `regn` hk · `él` hk · `snjór` kk · `hríð` kvk ·
+`gola` kvk · `hret` hk · `frostbiti` kk · `bylur` kk · `gufa` kvk · `ljós` hk · `nótt` kvk
+ **Proč:** Rúnar je IS-primární a hodně o islandštině; čím lepší moje IS, tím lepší produkt (KUKY). **Jak aplikovat:** před napsáním každého IS jmenného spojení pojmenuj rod, pak vyber tvar přídavného.
 
 **Velký IS audit (2026-07-05, KUKY potvrdil) — 58 nálezů opraveno + 2 drift kopie chycené guardem. Trvalá pravidla:**
 - `rún` = kvk, SILNÁ deklinace: **sg `rún` (EIN RÚN, ne rúna), pl `rúnir` (ne `rúnar` ani `rúnur`)**. „dregur X rúnar" → „X rúnir". Ověř: def pl = „rúnirnar". (Pozn.: pár starých stringů má slabé „rúnur" — neflagováno, nechat.)

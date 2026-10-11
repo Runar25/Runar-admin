@@ -22,9 +22,7 @@ Po přečtení potvrdit: „Mám kontext — jsem připraven."
 
 ⚠️ **NIKDY nezačít implementovat bez toho, aby uživatel schválil plán.**
 
-⭐ **Když se dva zdroje rozejdou: vyhrává PRODUKCE**, pak nejnovější datovaný záznam
-v `RUNAR_DECISIONS.md`. (KUKY 2026-07-18: „produkce je nejblíž tomu, jak to má být.")
-Na už rozhodnutou a datovanou věc se neptej — dohledej ji.
+⭐ **Rozejdou-li se zdroje, nebo jde-li o už rozhodnutou věc → CLAUDE.md §20** (vyhrává produkce; neptat se, dohledat).
 
 ---
 

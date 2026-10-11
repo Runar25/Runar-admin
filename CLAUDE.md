@@ -44,8 +44,7 @@ runar-shrine.html     — admin app      ← Edit tool OK pro HTML
 sw.js                 — Service Worker (auto-bump via git hook · hooks/pre-commit.py)
 ```
 
-**Kam ukládat nové soubory:** SQL migrace → `sql/` jako `YYYY-MM-DD_popis.sql` · archivní nebo
-dočasné dokumenty a POC/experiment HTML → `docs/archive/` · patch skript → **viz §1** (vlastní gitignored slot session).
+**Kam ukládat nové soubory** → `working-style.md`, „Kde ukládat soubory“ (patch skript → §1).
 
 ### Load order
 ```
@@ -77,18 +76,20 @@ IS musí být vždy perfektní. EN je vedlejší. NIKDY IS jako "překlad" EN.
 **Mysli islandsky od začátku** (Code i Cowork) — začni islandským obrazem, ne anglickou frází
 k přeložení; kalk z EN (vazba, slovosled, obraz) je vada, ne východisko. IS se **VYMÝŠLÍ**, ne
 překládá. „Líp to neumím" NENÍ přípustná odpověď: styl a hlas je řemeslo — udělá se a ověří (níže).
-Flaguje se **jen chybějící 🔒 fakt / 📜 lore** (§23), NIKDY vlastní formulace; Sigrún není fronta
-na nedodělky (§19.2).
-**Platí pro Code i Cowork:** IS se dělá **hotová a ověřená**, nikdy odhadem ani odkladem na rodilého mluvčího (§19.2). → [[is-done-together-not-for-sigrun]]
+Flaguje se **jen chybějící 🔒 fakt / 📜 lore** (§23), NIKDY vlastní formulace. IS se dělá **hotová a ověřená** (Code i Cowork),
+nikdy odhadem ani odkladem na rodilého mluvčího: ⚠️ **fronta „NATIVE EYE / Sigrún“ je ZRUŠENÁ (KUKY 2026-07-18)** — nesrozumitelný
+výstup se přepíše, dokud mu nástroj nerozumí (§19.2). Ruší to odkládání nedodělané IS na Sigrún, NE sbírání native oprav z živého
+testování do pravidel (opačný směr, `IS_NATIVE_CHECKLIST.md`). → [[is-done-together-not-for-sigrun]]
+(Do 2026-10-11 stála tahle věta v §2 dvakrát a potřetí v §19.2.)
 **Kontrola IS — nástroje a pořadí (JEDINÉ místo, kde to stojí; paměť a docs sem odkazují, §20):**
-1. `python -X utf8 check-is.py` — ZDROJ (kód): známé chyby z `BAD_PATTERNS`, běží i v pre-commitu. Výstup modelu nevidí.
+1. `python -X utf8 check-is.py` — ZDROJ (kód): známé chyby z `BAD_PATTERNS`, běží i v pre-commitu. Výstup modelu nevidí. Nová známá chyba → do `BAD_PATTERNS`.
 2. `python -X utf8 is-greynir.py --text "…"` (nebo soubor, text na řádek) — GreynirCorrect lokálně, zdarma, text neodchází ven. Překlepy a neznámá
    slova přesně; `E001` = věta nerozebraná → přepsat, ať jí nástroj rozumí. Falešné poplachy u vzácných slov (seznam v hlavičce nástroje).
 3. `is-gpt-check.py` — GPT korektor: shoda, pád, rod, kalky. Volá API → hlídač chce `RUNAR_API_ANO` + `RUNAR_API_ZAMER` (§30); náklady
    každého volání zapisuje sám, souhrn `node scripts/utils/is_gpt_naklady.js`. Idiomy nevidí (`--samotest` to dokládá).
 4. `python -X utf8 is-vazba.py --freq "<obrat>"` — korpus Risamálheild: idiomy, vazby, kolokace (0× = podezřelé); `is-vazba.py <slovo>` = slovník.
 Korekce v DB: `is-corr-qa.py` (BÍN). Do 2026-10-10 Yfirlestur přes is-grammar-qa — API zaniklo (DECISIONS 2026-10-10 (39), (43)).
-**Vazba ≠ tvar — rekci/pád/kolokaci/idiom NEHÁDEJ (vrstva NAD BÍN).** BÍN dá jen tvary; vazbu ověř nástrojem `python -X utf8 is-vazba.py <slovo>` (Íslensk nútímamálsorðabók JSON API + Risamálheild korpus), nikdy odhadem, z Wiktionary ani „pohledem". Recept + limity + zdroje → [[is-vazba-check]].
+**Vazba ≠ tvar — rekci/pád/kolokaci/idiom NEHÁDEJ (vrstva NAD BÍN).** BÍN dá jen tvary; vazbu ověř nástrojem 4 výš (`is-vazba.py`), nikdy odhadem, z Wiktionary ani „pohledem". Recept + limity + zdroje → [[is-vazba-check]].
 Každé Claude generování v IS má **3 vrstvy** (všechny v promptu — korekce se řeší v kontextu):
 ```js
 var sys    = buildSysPrompt(activeChar, lang);        // 1. IS system prompt
@@ -129,7 +130,7 @@ TIER_LIMITS.rune_seeker.onboarding_label_en  // ✅
 ```
 
 ### §9 — IS text = zkontrolovat před commitem
-`python -X utf8 check-is.py`  — known-bad IS fráze. Nová → přidat do BAD_PATTERNS.
+→ §2, „Kontrola IS“ bod 1 (`check-is.py` pouští pre-commit sám). Číslo zůstává kvůli odkazům; do 2026-10-11 tu stála kopie bodu 1.
 
 ### §10 — NULA hardcoded strings v logice
 ```
@@ -163,11 +164,12 @@ Porušení způsobí přepsání personalizovaného textu při přepnutí jazyka
 Název karty/jednotky/spá a tier jména: přes `vl()`/`vlp()`/`vn()`/`tp({card})` / `TIERS[x].label`.
 Štítky a tlačítka templatuj s `{card}`/`{unit}` placeholderem; v dlouhé marketingové próze je brand jméno OK.
 Platí i pro hodnoty v translations.js (ne jen logiku) — gift_card_btn, panely atd.
-Seznam zbývajících hardcoded míst k vyčištění → working-style.md.
+Jak zbývající místa najít (audit) → working-style.md; seznam stavu se nevede (§20.4).
 
 ### §16 — Two-output rule + Reconciliation (doc sync)
 Task měnící chování/rozhodnutí (ne refactor/CSS) = Output A (práce) + Output B = 1 záznam do
-`RUNAR_DECISIONS.md` (append-only) + oprav špatnou sekci dotčeného docu ve stejném turnu.
+`RUNAR_DECISIONS.md` (append-only) + oprav špatnou sekci dotčeného docu **v tomtéž commitu**. Output B není formalita: nesplněný
+řádek `Affected doc(s)` je přesný mechanismus, který vyrobil 97 rozporů (§20).
 Reconciliation (owner-triggered): „Reconciliation: `<doc|modul>`" → Code každý rozpor (doc/komentář vs kód) ověří a **sám opraví**;
 co potřebuje ownera (rozhodnutí, nasazení, produkční DB), zapíše do seznamu a **pokračuje dál** — owner to vyřeší najednou
 (KUKY 2026-10-09, kontrola architektury: *„ověříš si, že to máš všechno správně, a opravíš; pokud potřebuje můj zásah, zapíšeme
@@ -198,7 +200,7 @@ Kořen měsíce oprav = duplikace + rozsypané řetězce („všechno všude a n
 ### §19 — Ověřuj VÝSLEDEK, ne tvar kódu (anti-tichá-chyba)
 Měsíc tichých chyb (korekce běžely mrtvé, check-is skenoval špatnou plochu, `láta séð` prošlo) měl JEDEN kořen: každá kontrola ověřovala **tvar kódu** (parsuje? string existuje ve zdroji? builder dává stejné byty?), ale nic neprotlačilo známý vstup **reálnou cestou** a neověřilo **výsledek**. Rozsypání (§18) chyby jen schovalo.
 1. **Seed-and-assert na hranici.** Kde data přechází hranici (DB→kód, zdroj→prompt, stav→reset), měj JEDEN drobný fixture co protlačí známý vstup skrz produkční funkce a ověří výsledek (očekávané JE přítomno / špatné NENÍ). Vzor = `golden_contracts.js` (smoke.py kontrola ⑥): seed raw DB řádku → `normalizeCorrections`→`getCorrPrompt` → replacement přežil až do promptu, žádné „undefined". Fixture musí sám cvičit pravou hranici (ne test-double se špatnými klíči).  <!-- check-docs:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
-2. **Žádné tiché zelené.** Co nástroj **prokazatelně neposoudí** (subtilní IS gramatika — kauzativa, vazby) NESMÍ projít zeleně. Filtrovaný signál = **viditelný žlutý, ne zahozený** (`E001` = „nerozparsováno" ≠ „v pořádku"; nástroje v §2). ⚠️ **Fronta „NATIVE EYE / Sigrún" ZRUŠENA (KUKY 2026-07-18).** Nesrozumitelný výstup se **přepíše, dokud mu nástroj nerozumí** (přesně tak byl vyřešen E001 2026-07-17 — přepsáním na plné věty), ne odloží na někoho jiného. IS děláme rovnou hotovou a ověřenou → [[is-done-together-not-for-sigrun]]. ⚠️ Ruší **odkládání nedodělané IS** na Sigrún — NE **sbírání native oprav z živého testování do pravidel** (opačný směr, viz `IS_NATIVE_CHECKLIST.md`).
+2. **Žádné tiché zelené.** Co nástroj **prokazatelně neposoudí** (subtilní IS gramatika — kauzativa, vazby) NESMÍ projít zeleně. Filtrovaný signál = **viditelný žlutý, ne zahozený** (`E001` = „nerozparsováno" ≠ „v pořádku"; nástroje v §2). Nesrozumitelný výstup se **přepíše, dokud mu nástroj nerozumí** (přesně tak byl vyřešen E001 2026-07-17 — přepsáním na plné věty), ne odloží na někoho jiného (zrušená fronta „NATIVE EYE / Sigrún“ → §2).
 3. **Kontrola běží na TÉ PLOŠE, kde bug žije.** Dynamický model-output ≠ zdrojový string; DOM stav ≠ builder output. Kontrola na proxy ploše se nepočítá jako pokrytí.
 
 ### §20 — Jedna informace = jedno místo. Nikdy dvě.
@@ -225,9 +227,7 @@ ten a žádný jiný?** Neumí-li, nevzniká.
 
 **Při sporu vyhrává PRODUKCE**, pak nejnovější datovaný záznam v `RUNAR_DECISIONS.md`.
 Na rozhodnutou a datovanou věc se ownera neptej — dohledej ji (KUKY 2026-07-18).
-
-**§16 output B není formalita.** Když záznam řekne `Affected doc(s): X`, oprav X **v tomtéž commitu**.
-Nesplněný řádek `Affected doc(s)` je přesný mechanismus, který tenhle nepořádek vyrobil.
+(„§16 output B není formalita“ odtud přešlo do §16 — do 2026-10-11 tu stálo podruhé.)
 
 ### §21 — Ownerův nápad = směr k dopracování, ne hotové zadání (platí pro VŠECHNY session)
 KUKY 2026-08-02: *„mám myšlenku, ale ta potřebuje korekci."* Když owner přinese nápad nebo rozhodnutí,
@@ -450,8 +450,7 @@ Hlídá smoke ⑬ (`verify_tree_signals.js`), ale tahle věta je důvod, proč o
 Kanonický vstupní bod = `RUNAR_TREE.md`. `RUNAR_TREE_LAB.md` = historie (docs/archive/tree/).
 
 ## Word Corrections
-Živá data: `python show_corrections.py`
-Nová korekce → přidat do BAD_PATTERNS v check-is.py + do DB přes shrine.
+Živá data: `python show_corrections.py` · nová korekce do DB přes shrine (ověří `is-corr-qa.py`, §2); známá chyba ve zdroji → `BAD_PATTERNS` (§2 bod 1).
 
 ---
 
@@ -527,9 +526,7 @@ SÁM — bez ownera.
   jen pro to, co git NEVIDÍ: deploy, SQL puštěné ownerem, rozhodnutí. (Logovat každý commit dvakrát = práce navíc.)
 - Nejde commitnout — ŽIVÝ zámek (běží git proces / mladší 10 min) → čekat, nesahat. **SIROTEK** (starší, bez procesů) → `python -X utf8 scripts/git_zamek.py <lane>` — smaže ho s auditem do `.git/runar-zamky.log` (čte smoke ㉞). KUKY 2026-08-23: „musí se vynucovat odemčení" (2 sirotčí zámky za den blokovaly všechny). Kdo zámek VYTVOŘIL, git nezapisuje — session, které git spadl, se pozná sama (příští commit jí selže) a MUSÍ se ohlásit. Jiný důvod (přístup) → NESAHAT, jen ohlásit; neviditelná změna je horší než žádná.
 - Handoff má sekci `ZMĚNĚNO:` (co jsem změnil), i prázdnou.
-- ⭐ **Pravidlo, které musí hlídat člověk, dřív nebo později spadne na ownera → kde to jde, udělej
-  z pravidla KONTROLU ve smoke.** Vzory: ⑩ zapisovatelná plocha (klient vs granty), ⑪ memory index
-  (odkazy + neverzované soubory). Obojí vzniklo z chyby, kterou žádné pravidlo nechytilo.
+- ⭐ Pravidlo, které musí hlídat člověk → udělej z něj kontrolu (§30; vzory smoke ⑩ zapisovatelná plocha, ⑪ memory index).
 
 **Hranice:**
 - **Sdílená sémantická vrstva (runa → růst).** Kanonická data run (`runar-runes.js`: aett/world/element/keywords, AETTY, INTENTIONS) + config (SPREAD_CONFIG.norns_axis) čtou OBĚ session (do 2026-10-10 tu AETTY a INTENTIONS stály pod configem — bydlí v `runar-runes.js`). TREE růstové/tvarové mapování drž ve VLASTNÍM souboru (`runar-branch.js`). Když MUSÍŠ sáhnout do runar-runes.js/config kvůli růstu: **jen ADITIVNĚ** (přidej pole, neměň existující reading-pole), `[tree]` malý commit, push HNED + řádek do MEMORY.md (MAIN to musí vidět — sdílená data mění i výklad). Změna existujícího aett/element/world runy ovlivní i čtení → napřed flagni.
@@ -538,10 +535,8 @@ SÁM — bez ownera.
 - CLAUDE.md: každá session edituje JEN svou sekci. Tree sekce = krátký ukazatel (detail v RUNAR_TREE.md). MAIN ho nepřepisuje.
 
 **Komunikace (session spolu nemluví → přes git + soubory):**
-- `git pull` PŘED prací · `git push` IHNED po commitu · malé commity.
+- `git pull` PŘED prací (push ihned a malé commity → §7).
 - **Commit ÚZCE: `git commit -F <msg> -- <cesty>`** (pathspec NA COMMITU, ne jen na `git add`). Holý `git commit` / `git add -A` bere CELÝ index — vč. cizí STALE staged změny jiné session. **2026-08-02: holý commit sebral cizí staged `sw.js` → downgrade v249→v248** (klienti by servírovali staré čtení). Pre-commit má teď guard proti sw.js downgrade, ale disciplína je levnější. Detail → memory `parallel-code-sessions-collision`.
-- Commit prefix = LANE (`[tune]` · `[read]` · `[tree]` · `[cowork]`, volitelně + téma) → čitelná
-  historie. Autora ale nese **jméno v podpisu**, ne prefix — viz úvod sekce.
 - Musíš sáhnout do cizí domény? Drž změnu minimální + zapiš „co a proč" do svého doc (RUNAR_TREE.md / snapshot) + push hned.
 - sw.js: git hook auto-bumpuje; když oba commitnou JS, vyšší číslo vyhrává (jen cache-buster, ne konflikt obsahu).
 - Git konflikt? Neforcuj — pull, vyřeš ručně JEN svou doménu.
