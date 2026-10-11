@@ -231,9 +231,10 @@ function _makeCapPlayer(prefix, src, autoplay) {
        + '</div>';
 }
 function _capFmt(s) { var m = Math.floor(s / 60); return m + ':' + String(Math.floor(s % 60)).padStart(2, '0'); }
-function _capPct(p, pct) {   // zlatý průběh ve stopě: --pct čte ::-webkit-slider-runnable-track (Firefox má ::-moz-range-progress)
+function _capPct(p, pct) {   // zlatý průběh ve stopě: --p (0–1) čte ::-webkit-slider-runnable-track (Firefox má ::-moz-range-progress)
+  // 2026-10-11: číslo místo procent — výplň končí na středu jezdce, a ten se z procent spočítat nedal (vysvětlení u .cap-seek v CSS).
   var sk = document.getElementById(p + '-sk');
-  if (sk) sk.style.setProperty('--pct', (+pct || 0).toFixed(1) + '%');
+  if (sk) sk.style.setProperty('--p', Math.min(1, Math.max(0, (+pct || 0) / 100)).toFixed(4));
 }
 function _capPlay(p) {
   var a = document.getElementById(p + '-a');

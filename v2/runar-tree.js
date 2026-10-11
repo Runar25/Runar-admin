@@ -242,10 +242,11 @@ function _inspHit(ev) {
   else { _treeSelK = null; _drawTreeAt(_treeViewN); _inspHint(); }
 }
 
-// Zlatá výplň dráhy — týž mechanismus jako audio seek (runar-reading.js:625).
+// Zlatá výplň dráhy — týž mechanismus jako audio seek (_capPct v runar-app.js; do 2026-10-11 tu stál odkaz na runar-reading.js:625).
+// 2026-10-11: --p (0–1) místo --pct — výplň teď končí na středu jezdce (vysvětlení u .cap-seek v CSS).
 function _treeSeekPaint(el) {
   var max = +el.max || 1;
-  el.style.setProperty('--pct', ((+el.value / max) * 100).toFixed(1) + '%');
+  el.style.setProperty('--p', Math.min(1, Math.max(0, +el.value / max)).toFixed(4));
 }
 
 async function renderLivingTree(rune) {
