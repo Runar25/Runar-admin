@@ -415,7 +415,8 @@
   věta se do FAQ vrátí.
 - [x] *(hotovo 2026-10-11: pricing přepočten na GPT-6 sol z dat produkce — `node scripts/utils/pricing_tabulka.js`)* **RUNAR_PRICING.md — model ref na Opus** — model čtení přepnut sonnet-4-5 → opus-4-8; cenový model může zmiňovat starý (delta zanedbatelný, hlas dominuje). Aktualizovat referenci.
   ⚠️ 2026-10-10 (CODE-read, kontrola architektury): od 2026-10-09 čte GPT-6 sol (`SOL_MODEL`), Opus je jen záloha — položka platí dál, ale cíl je sol, ne Opus. Totéž → část 17 níž (štítky „Claude API“ v tabulkách).
-- [ ] **Předplatitel nevidí, kolik čtení mu zbývá** (CODE-tune 2026-10-11, při předělání admina na premium — `RUNAR_DECISIONS.md`
+- [x] *(hotovo 2026-10-11: owner „měl bych to vidět stejně jako rune seeker nahoře u svého jména. platí i pro ostatní účty“ → menu pod
+  jménem, commit 70b375c, DECISIONS 2026-10-11 (38); komentář „unlimited“ opraven)* **Předplatitel nevidí, kolik čtení mu zbývá** (CODE-tune 2026-10-11, při předělání admina na premium — `RUNAR_DECISIONS.md`
   2026-10-11 (32)). Rune Seeker má počítadlo nad formulářem i v menu pod jménem (`rs_credits_counter`); standard a premium nemají nic —
   banner je pro ně schovaný (`updateBanners` v `v2/runar-auth.js`, komentář tam ještě píše „unlimited“, ačkoli mají měsíční strop
   `TIERS.*.monthly_readings`) a menu ukazuje zůstatek jen Rune Seekerovi (`balEl` v `v2/runar-app.js`). O stropu se předplatitel dozví

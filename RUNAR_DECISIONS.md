@@ -10488,3 +10488,30 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Co stroj nechytí:** sebejisté nepravdivé tvrzení bez zaváhání (případ přepínače) — tam zůstává ověření cesty kódu (volající, přepínač).
 - **Testy:** hook pravidel 29 stavů; pravidlo 4 pět případů (zastaví · s „neověřeno“ projde · citace projde · bez kódu projde · server zastaví).
 - Affected doc(s): `CLAUDE.md` §30, `memory/heredoc-mangles-backslash-escapes.md`, `memory/read-the-check-before-push.md` — v témže commitu.
+
+## 2026-10-11 (37) — Horseshoe jako U: čtyřka o půl kroužku níž než 3 a 5 (oprava ⊔ z (31))
+
+- **Rozhodl:** KUKY 2026-10-11 k ⊔ z (31): *„udělej to jako U, takže 4. mírně, asi na půl velikosti čísla v kroužku, pod 3-5.“* K tomu
+  u Yggdrasilu: *„to stejné vlastně platí i pro horseshoe“* — rozložení podle toho, jak se výklad skutečně rozkládá. Runová podkova
+  (jediný runový zdroj, který jsem našel, mysticryst.com) má 1 nahoře vlevo, 4 dole uprostřed, 7 nahoře vpravo — to U splňuje.
+- **Co** (`v2/runar-reader.css`): mřížka a stejné rozestupy z (31) zůstávají, čtyřka je o čtvrtinu buňky níž (= asi půl kroužku:
+  11,5 px při kroužku 22,4 px, na telefonu 10 px při 18,4 px), spodní okraj rámečku o týž kus vyšší. Commit f023b0b.
+- **Ověřeno v prohlížeči:** 3 a 5 v jedné výšce, 4 uprostřed mezi nimi níž; ramena 56 / 48 px, dno 57,2 / 49 px; s kameny zůstane pod
+  čtyřkou 12 / 10 px rámečku; na 375 px nic nepřetéká.
+- Affected doc(s): `RUNAR_DESIGN.md` (nákres Horseshoe) — v témže commitu.
+
+## 2026-10-11 (38) — Zbývající čtení v menu pod jménem i pro předplatitele (standard, premium, admin)
+
+- **Rozhodl:** KUKY 2026-10-11 na otázku z (32): *„měl bych to vidět stejně jako rune seeker nahoře u svého jména. platí i pro ostatní
+  účty.“* a *„7. ano“*.
+- **Proč:** počítadlo měl jen Rune Seeker; předplatitel (a od (32) i admin) se o měsíčním stropu dozvěděl až hláškou `err_monthly_limit`.
+- **Co** (`v2/runar-app.js`, commit 70b375c): `updateDropdown` ukáže předplatiteli `rs_credits_counter` se zbývajícími jednotkami
+  měsíce — strop z `TIERS.*.monthly_readings`, spotřeba z `month_units` (píše jen server), jiný měsíc než `month_key` = plný strop
+  (server v novém měsíci počítá znovu). Klient sloupce načte v `fetchUserProfile` a po každém čtení v `syncFreeBalance` (authenticated
+  je smí číst, ne psát — ověřeno v DB). Zůstatek se ukáže až po načtení profilu: do té doby by předplatiteli svítilo „0 remaining“.
+  Nad formulářem předplatitel dál nic nemá — owner chtěl jen menu. Komentář „unlimited“ v `v2/runar-auth.js` opraven.
+- **Ověřeno** na skutečné `updateDropdown` v prohlížeči: premium se 4 použitými → „71 rune readings remaining“ / „71 spá eftir“; minulý
+  měsíc i nikdy → 75; standard vyčerpaný i přečerpaný → 0; Rune Seeker beze změny; nenačtený profil → skryto. Živá data: ownerova
+  podkova odečetla 4 jednotky (`credit_ledger` +4, důvod reading), dva Asky nic, hlas 1 z 5 v měsíci.
+- **Hranice:** přihlášená appka neověřena (CODE se nepřihlásí) — první otevření menu po nasazení ukáže 71. Zbývající hlasy menu neukazuje.
+- Affected doc(s): `RUNAR_BACKLOG.md` (položka „Předplatitel nevidí, kolik čtení mu zbývá“) — v témže commitu.
