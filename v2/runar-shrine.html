@@ -241,8 +241,8 @@ textarea::placeholder{color:var(--dim);}
     </div>
     <div class="topbar-right">
       <div class="lang-toggle">
-        <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
-        <button class="lang-btn" id="btn-is" onclick="setLang('is')">IS</button>
+        <button class="lang-btn" id="btn-en" onclick="setLang('en')" title="Language of readings and voice in Teach — labels stay in English">EN</button>
+        <button class="lang-btn" id="btn-is" onclick="setLang('is')" title="Language of readings and voice in Teach — labels stay in English">IS</button>
       </div>
       <span class="auth-user" id="auth-user-label" style="display:none;"></span>
       <button class="auth-btn" id="auth-action-btn" onclick="handleAuthBtn()">SIGN IN</button>
@@ -642,6 +642,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   });
   checkAdminAccess();
 
+  applyLangToggle(lang);   // 2026-10-11: přepínač ukazuje skutečný jazyk obsahu (od 2026-10-10 výchozí IS), ne natvrdo EN z HTML
   updateUIText();
   buildGrid('teach-grid', false);
   await loadChar();
@@ -656,6 +657,11 @@ window.addEventListener('DOMContentLoaded', async () => {
 function setFlbl(id, val)         { const el = document.getElementById(id); if (el && val && el.firstChild) el.firstChild.textContent = val + ' '; }
 function setFlblOpt(id, val, opt) { const el = document.getElementById(id); if (!el) return; el.innerHTML = val + ' <span class="opt">' + opt + '</span>'; }
 // ─── LANGUAGE ───────────────────────────────────────────
+// 2026-10-11 (owner: „ve shrine trochu zlobí IS s EN, zkontroluj to a proč?“): popisky shrine jsou VŽDY anglicky (§31 — shrine čtou oba
+// admini, společná řeč se Sigrún je angličtina). `lang` řídí jen jazyk OBSAHU: čtení a hlas v Teach, jména run v mřížce. Do té doby
+// popisky braly t() podle `lang`, který od 2026-10-10 startuje na IS (APP.default_lang), zatímco přepínač v HTML svítil na EN — tři
+// záložky byly islandsky a Teach generoval islandsky pod rozsvíceným EN.
+function tUI(key) { return (UI_TEXT.en && UI_TEXT.en[key]) || key; }
 function setLang(l) {
   if (l === lang) return;
   lang = l;
@@ -671,26 +677,26 @@ function applyLangToggle(l) {
 
 
 function updateUIText() {
-  setText('ui-brand', t('brand')); setText('ui-title', t('title')); setText('ui-sub', t('sub'));
-  setText('tab-teach-btn', t('tab_teach'));
-  setText('tab-correct-btn', t('tab_correct'));
-  setText('corr-card-lbl', t('corr_lbl')); setText('corr-note', t('corr_note'));
-  setFlbl('orig-lbl', t('orig_lbl')); setPH('corr-from', t('orig_ph'));
-  setFlbl('repl-lbl', t('repl_lbl')); setPH('corr-to', t('repl_ph'));
-  setFlblOpt('ctx-lbl', t('ctx_lbl'), t('opt')); setFlbl('applies-lbl', t('applies_lbl')); setPH('corr-ctx', t('ctx_ph'));
-  setText('scope-both', t('scope_both')); setText('scope-en', t('scope_en')); setText('scope-is', t('scope_is'));
-  setText('save-corr-btn', t('save_corr')); setText('saved-corr-lbl', t('saved_corr_lbl'));
-  setText('tab-progress-btn', t('tab_progress'));
-  setText('progress-lbl', t('progress_lbl'));
+  setText('ui-brand', tUI('brand')); setText('ui-title', tUI('title')); setText('ui-sub', tUI('sub'));
+  setText('tab-teach-btn', tUI('tab_teach'));
+  setText('tab-correct-btn', tUI('tab_correct'));
+  setText('corr-card-lbl', tUI('corr_lbl')); setText('corr-note', tUI('corr_note'));
+  setFlbl('orig-lbl', tUI('orig_lbl')); setPH('corr-from', tUI('orig_ph'));
+  setFlbl('repl-lbl', tUI('repl_lbl')); setPH('corr-to', tUI('repl_ph'));
+  setFlblOpt('ctx-lbl', tUI('ctx_lbl'), tUI('opt')); setFlbl('applies-lbl', tUI('applies_lbl')); setPH('corr-ctx', tUI('ctx_ph'));
+  setText('scope-both', tUI('scope_both')); setText('scope-en', tUI('scope_en')); setText('scope-is', tUI('scope_is'));
+  setText('save-corr-btn', tUI('save_corr')); setText('saved-corr-lbl', tUI('saved_corr_lbl'));
+  setText('tab-progress-btn', tUI('tab_progress'));
+  setText('progress-lbl', tUI('progress_lbl'));
   // Teach tab
-  setText('teach-select-lbl', t('teach_select_lbl')); setText('teach-select-note', t('teach_select_note'));
-  setText('teach-speak-lbl', t('teach_speak_lbl')); setText('btn-invoke', t('invoke_btn'));
-  setText('teach-runar-box-lbl', t('runar_speaks')); setText('teach-edit-lbl-el', t('teach_edit_lbl'));
-  setText('teach-audio-lbl', t('teach_audio_lbl'));
-  setText('btn-save-voice', t('teach_save_btn')); setText('btn-next-rune', t('teach_next_btn'));
-  setText('teach-rune-info', t('rune_none'));
+  setText('teach-select-lbl', tUI('teach_select_lbl')); setText('teach-select-note', tUI('teach_select_note'));
+  setText('teach-speak-lbl', tUI('teach_speak_lbl')); setText('btn-invoke', tUI('invoke_btn'));
+  setText('teach-runar-box-lbl', tUI('runar_speaks')); setText('teach-edit-lbl-el', tUI('teach_edit_lbl'));
+  setText('teach-audio-lbl', tUI('teach_audio_lbl'));
+  setText('btn-save-voice', tUI('teach_save_btn')); setText('btn-next-rune', tUI('teach_next_btn'));
+  setText('teach-rune-info', tUI('rune_none'));
   if (document.getElementById('btn-teach-voice').textContent.trim() !== '')
-    setText('btn-teach-voice', t('voice_btn'));
+    setText('btn-teach-voice', tUI('voice_btn'));
 }
 
 // ─── TABS ───────────────────────────────────────────────
@@ -890,7 +896,7 @@ function onTeachTextEdit() {
   document.getElementById('teach-audio-player').classList.remove('visible');
   document.getElementById('teach-audio').src = '';
   document.getElementById('btn-save-voice').style.display = 'none';
-  document.getElementById('btn-teach-voice').textContent = t('voice_btn');
+  document.getElementById('btn-teach-voice').textContent = tUI('voice_btn');
   setSt('st-teach-voice', '');
 }
 
@@ -904,7 +910,7 @@ async function invokeRunar() {
   document.getElementById('teach-audio').src = '';
   document.getElementById('teach-output').style.display = 'block';
   document.getElementById('teach-txt').innerHTML = '<span class="stream-cur"></span>';
-  setSt('st-invoke', t('st_traversing'));
+  setSt('st-invoke', tUI('st_traversing'));
   setSt('st-teach-voice', '');
 
   const sys = buildSysPrompt(activeChar, lang);
@@ -937,9 +943,9 @@ async function invokeRunar() {
   // Show voice button — admin can preview, edit, then save
   document.getElementById('btn-teach-voice').style.display = 'block';
   document.getElementById('btn-teach-voice').disabled = false;
-  document.getElementById('btn-teach-voice').textContent = t('voice_btn');
+  document.getElementById('btn-teach-voice').textContent = tUI('voice_btn');
 
-  setSt('st-invoke', t('st_spoken'), 'ok');
+  setSt('st-invoke', tUI('st_spoken'), 'ok');
 }
 
 // ─── STATIC VOICE ───────────────────────────────────────
@@ -947,7 +953,7 @@ async function generateStaticVoice() {
   if (!teachText || !teachRune) return;
   const btn = document.getElementById('btn-teach-voice');
   btn.disabled = true;
-  btn.textContent = t('voice_btn_loading');
+  btn.textContent = tUI('voice_btn_loading');
   setSt('st-teach-voice', '');
   document.getElementById('teach-audio-player').classList.remove('visible');
 
@@ -976,14 +982,14 @@ async function generateStaticVoice() {
     document.getElementById('teach-audio').src = teachBlobUrl;
     document.getElementById('teach-audio-player').classList.add('visible');
 
-    btn.textContent = t('voice_btn_regen');
+    btn.textContent = tUI('voice_btn_regen');
     btn.disabled = false;
     document.getElementById('btn-save-voice').style.display = 'block';
     document.getElementById('btn-save-voice').disabled = false;
-    setSt('st-teach-voice', t('teach_voice_ready'), 'ok');
+    setSt('st-teach-voice', tUI('teach_voice_ready'), 'ok');
   } catch (err) {
     setSt('st-teach-voice', `Voice error: ${err.message}`, 'err');
-    btn.textContent = t('voice_btn');
+    btn.textContent = tUI('voice_btn');
     btn.disabled = false;
   }
 }
@@ -992,7 +998,7 @@ async function saveStaticVoice() {
   if (!teachText || !teachRune) return;
   const btn = document.getElementById('btn-save-voice');
   btn.disabled = true;
-  setSt('st-teach-voice', t('teach_voice_saving'));
+  setSt('st-teach-voice', tUI('teach_voice_saving'));
 
   try {
     // Determine version — use committed version or query max existing + 1
@@ -1058,7 +1064,7 @@ function resetTeach() {
   teachRune = null; teachText = ''; teachAudioUrl = null; teachVersion = null;
   document.getElementById('btn-invoke').disabled = true;
   document.getElementById('btn-teach-voice').style.display = 'none';
-  document.getElementById('btn-teach-voice').textContent = t('voice_btn');
+  document.getElementById('btn-teach-voice').textContent = tUI('voice_btn');
   document.getElementById('btn-save-voice').style.display = 'none';
   document.getElementById('btn-save-voice').textContent = 'SAVE VOICE TO MEMORY';
   document.getElementById('btn-save-voice').disabled = true;
@@ -1214,11 +1220,11 @@ function setScope(s) { corrScope = s; ['both','en','is'].forEach(x => document.g
 
 async function saveCorrection() {
   const from = document.getElementById('corr-from').value.trim(), to = document.getElementById('corr-to').value.trim();
-  if (!from || !to) { setSt('st-corr', t('st_fill_fields'), 'err'); return; }
-  setSt('st-corr', t('st_saving'));
+  if (!from || !to) { setSt('st-corr', tUI('st_fill_fields'), 'err'); return; }
+  setSt('st-corr', tUI('st_saving'));
   const rec = { original_phrase: from, replacement_phrase: to, context: document.getElementById('corr-ctx').value.trim() || null, lang_scope: corrScope, created_at: new Date().toISOString() };
-  try { const { error } = await sb.from('runar_corrections').insert([rec]); if (error) throw error; setSt('st-corr', t('st_saved'), 'ok'); }
-  catch (e) { const saved = JSON.parse(localStorage.getItem('runar_corr') || '[]'); saved.push(rec); localStorage.setItem('runar_corr', JSON.stringify(saved)); setSt('st-corr', t('st_saved_local'), 'ok'); }
+  try { const { error } = await sb.from('runar_corrections').insert([rec]); if (error) throw error; setSt('st-corr', tUI('st_saved'), 'ok'); }
+  catch (e) { const saved = JSON.parse(localStorage.getItem('runar_corr') || '[]'); saved.push(rec); localStorage.setItem('runar_corr', JSON.stringify(saved)); setSt('st-corr', tUI('st_saved_local'), 'ok'); }
   document.getElementById('corr-from').value = ''; document.getElementById('corr-to').value = ''; document.getElementById('corr-ctx').value = '';
   loadCorrections();
 }
@@ -1230,7 +1236,7 @@ async function loadCorrections() {
   // Normalize to shared correction format for getCorrPrompt()
   corrections = normalizeCorrections(items);
   const list = document.getElementById('corr-list');
-  if (!items.length) { list.innerHTML = '<div class="empty">' + t('no_corr') + '</div>'; return; }
+  if (!items.length) { list.innerHTML = '<div class="empty">' + tUI('no_corr') + '</div>'; return; }
   list.innerHTML = '';
   items.forEach(it => { const d = document.createElement('div'); d.className = 'corr-item'; d.innerHTML = `<div><div class="corr-from">"${it.original_phrase}"</div><div class="corr-to">→ "${it.replacement_phrase}"</div>${it.context ? `<div class="corr-ctx">${it.context}</div>` : ''}</div><div class="corr-scope">${(it.lang_scope || 'both').toUpperCase()}</div>`; list.appendChild(d); });
 }
