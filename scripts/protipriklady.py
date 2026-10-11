@@ -268,14 +268,66 @@ def vrat(W, rel, mode=''):
         os.remove(W + '/' + rel)
 
 
+# Limit na jeden běh kontroly (2026-10-11, nahlásil CODE-tune): útok na ㊷ nechal node bez výstupu 15 min a pre-push čekal napořád.
+# Po vypršení se zabije CELÝ strom procesů (na Windows by jinak žil Chrome pod node) a beh vrátí kód None — vypršení se NIKDY nesmí
+# počítat jako „chyceno“ (zabitý node = exit ≠ 0 by útok typu chyti tiše uznal a uložil do cache).
+LIMIT_S = int(os.environ.get('RUNAR_PROTI_LIMIT_S', '240'))
+
+
+def _zabij_strom(p):
+    if os.name == 'nt':
+        subprocess.run(['taskkill', '/T', '/F', '/PID', str(p.pid)], capture_output=True)
+    else:
+        try: os.killpg(p.pid, 9)
+        except Exception: p.kill()
+
+
 def beh(W, sk):
     env = dict(ENV, RUNAR_ROOT=W)
-    r = subprocess.run(['node', W + '/scripts/' + sk], cwd=W, env=env, capture_output=True, text=True, encoding='utf-8')
-    out = r.stdout + r.stderr
+    p = subprocess.Popen(['node', W + '/scripts/' + sk], cwd=W, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                         text=True, encoding='utf-8', **({} if os.name == 'nt' else {'start_new_session': True}))
+    try:
+        out, _ = p.communicate(timeout=LIMIT_S)
+    except subprocess.TimeoutExpired:
+        _zabij_strom(p)
+        try: p.communicate(timeout=10)
+        except Exception: pass
+        return None, 'visí — bez výsledku po ' + str(LIMIT_S) + ' s, proces zabit'
+    out = out or ''
+    class _V: pass
+    r = _V(); r.returncode = p.returncode
     neprazdne = [l.strip() for l in out.split('\n') if l.strip()]
     # řádek s důvodem: FAIL/CHYBA/✗, jinak poslední neprázdný (některé kontroly hlásí chybu jinak — fresh_dates, commit_identity)
     radek = next((l for l in neprazdne if re.match(r'(FAIL|CHYBA|✗)', l)), neprazdne[-1] if neprazdne and r.returncode else '')
     return r.returncode, radek
+
+
+def _bezi(pid):
+    try:
+        if os.name == 'nt':
+            r = subprocess.run(['tasklist', '/FI', 'PID eq ' + str(pid), '/NH'], capture_output=True, text=True)
+            return str(pid) in r.stdout
+        os.kill(pid, 0); return True
+    except Exception:
+        return False
+
+
+def uklid_opustenych():
+    # 2026-10-11: běh zabitý zvenku (CODE-tune zabil visící pre-push) nestihne finally — kopie proti-* zůstane na disku i v `git worktree
+    # list` (prune ji nevezme, složka existuje). Smaže se, když její běh už neběží (pid.txt), nebo bez pid.txt po 2 h (starší běhy).
+    out = subprocess.run(['git', '-C', ROOT, 'worktree', 'list', '--porcelain'], capture_output=True, text=True, env=ENV).stdout
+    for l in out.split('\n'):
+        if not l.startswith('worktree ') or '/proti-' not in l.replace('\\', '/'): continue
+        w = l[9:].strip().replace('\\', '/'); rodic = os.path.dirname(w)
+        try:
+            pid = int(open(rodic + '/pid.txt').read().strip())
+            mrtvy = not _bezi(pid)
+        except (OSError, ValueError):
+            mrtvy = (not os.path.exists(rodic)) or (time.time() - os.path.getmtime(rodic) > 7200)
+        if mrtvy:
+            subprocess.run(['git', '-C', ROOT, 'worktree', 'remove', '--force', w], capture_output=True, env=ENV)
+            shutil.rmtree(rodic, ignore_errors=True)
+            print('  úklid: opuštěná kopie ' + w)
 
 
 def main():
@@ -293,8 +345,10 @@ def main():
               % (len(PRIPADY), len({p[1] for p in PRIPADY})))
         return 0
 
+    uklid_opustenych()
     subprocess.run(['git', '-C', ROOT, 'worktree', 'prune'], capture_output=True, env=ENV)
     W = tempfile.mkdtemp(prefix='proti-').replace('\\', '/') + '/w'
+    open(os.path.dirname(W) + '/pid.txt', 'w').write(str(os.getpid()))   # podle něj pozná úklid příštího běhu, že tahle kopie žije
     subprocess.run(['git', '-C', ROOT, 'worktree', 'add', '--detach', '-q', W, 'HEAD'], check=True, env=ENV)
     chyby = []
     try:
@@ -307,6 +361,9 @@ def main():
             if sk not in cista:
                 cista[sk] = beh(W, sk)
             k0, r0 = cista[sk]
+            if k0 is None:
+                chyby.append('FAIL  %s: na čisté kopii %s — útok nemá smysl' % (sk, r0))
+                continue
             if k0 != 0:
                 chyby.append('FAIL  %s: už na čisté kopii exit %d (%s) — útok nemá smysl, nejdřív oprav strom' % (sk, k0, r0[:90]))
                 continue
@@ -318,6 +375,9 @@ def main():
                 continue
             k1, r1 = beh(W, sk)
             vrat(W, rel, mode)
+            if k1 is None:
+                chyby.append('FAIL  %s [%s]: s podstrčenou chybou %s — nepočítá se jako chycený' % (sk, rel, r1))
+                continue
             spravne = (k1 == 0) if typ == 'nesmi' else (k1 != 0)
             if spravne:
                 cache[klic(p, ja)] = 'ok'
