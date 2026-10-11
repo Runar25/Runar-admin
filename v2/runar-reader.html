@@ -520,6 +520,12 @@
       <button class="tree-tester-btn" id="tree-tester-reset" onclick="resetTreeTester()"></button>
     </div>
 
+    <!-- Bez životní runy: nabídka ji vyložit (KUKY 2026-10-11 — cesta k založení; do té doby tu po resetu nebylo nic). Tvar = tree-founding-cta. -->
+    <div id="tree-need-rune" style="display:none;">
+      <p class="tree-reveal-intro" id="tree-need-rune-text"></p>
+      <button class="vcn-btn btn-gold" id="tree-need-rune-btn" onclick="showAppTab('liferune')"></button>
+    </div>
+
     <!-- LIVING TREE (free-solo: grows from your readings) -->
     <div id="tree-living" style="display:none; text-align:center; margin:8px 0 4px;">
       <!-- Scéna stromu (2026-10-11, KUKY „12. ano · 13. ano · plná šířka“): strom na plnou šířku, přiblížení dvěma prsty,
@@ -698,6 +704,11 @@
           <div id="tree-reading-body">
             <div class="tree-static-open" id="tree-static-open"></div>
             <div class="tree-reading-text" id="tree-reading-text"></div>
+            <!-- Po vyložení runy: zasadit strom (KUKY 2026-10-11; nabídka chyběla od oddělení záložky 2026-09-11). Tvar = tree-founding-cta. -->
+            <div id="lr-plant" style="display:none;">
+              <p class="tree-reveal-intro" id="lr-plant-text"></p>
+              <button class="vcn-btn btn-gold" id="lr-plant-btn" onclick="showAppTab('tree')"></button>
+            </div>
             <!-- 2026-10-06 (KUKY „ze stromu ji smažeme“): citát „The runes do not predict your fate…“ pryč — týž stojí nad čtením. -->
             <!-- 2026-09-25: přepínač čočky životní runy odešel — životní runa do čtení nezasahuje, jen na dotaz v Asku (KUKY). -->
             <!-- ADMIN reset (KUKY 2026-09-14; navrat tlacitka z 2026-07-19 pres server, viz DECISIONS 2026-09-14 (5)) -->

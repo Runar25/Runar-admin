@@ -349,7 +349,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
    po gestu; scéna ořízne, co při náhledu přeteče. Nepřiblížený strom nechytá prst (pan-y), přiblížený přepne skript na none.
    Tlačítka = tón nástrojového .tree-export-btn (rámeček, bez výplně, bez zaoblení), šipky = .cap-btn přehrávače, jen větší plocha pro prst. */
 .tree-stage{position:relative;width:100%;max-width:560px;margin:0 auto;overflow:hidden;}
-.tree-stage canvas{display:block;width:100%;height:auto;transform-origin:0 0;touch-action:pan-y;}
+.tree-stage canvas{display:block;width:100%;height:auto;transform-origin:0 0;touch-action:pan-y;
+  -webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;}
+/* ↑ 2026-10-11 (owner: „když kliknu na strom, celý jako by obrázek problikne“): telefon při ťuknutí přebarví celý prvek s posluchačem
+   (tap highlight) — u plátna přes celý strom. Vypnuto jako u .badge-life; callout a výběr kvůli dlouhému podržení na iPhonu. */
 .tree-zoom{position:absolute;right:8px;bottom:8px;display:flex;flex-direction:column;gap:6px;}
 .tree-zbtn{width:36px;height:36px;display:flex;align-items:center;justify-content:center;padding:0;
   background:transparent;border:1px solid rgba(255,191,0,0.35);color:var(--gold);opacity:0.6;cursor:pointer;transition:opacity 0.2s;}

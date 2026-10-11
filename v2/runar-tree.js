@@ -464,13 +464,20 @@ function _treeStepWire(btn, d) {
   });
 }
 
+// Kdo vidí strom: záložku (runar-auth.js updateTabVisibility), kreslení (renderLivingTree) i nabídky, které do stromu vedou.
+// JEDNO místo (§18) — do 2026-10-11 stála táž podmínka zvlášť v záložce a v kreslení a nabídka založení by vedla do záložky,
+// kterou člověk nevidí. Dnes jen admin (KUKY 2026-10-11: „strom by testeři vidět neměli, aspoň zatím“).
+function treeVisibleFor() {
+  return !!(currentUser && typeof isAdmin === 'function' && isAdmin(currentUser.email));
+}
+
 async function renderLivingTree(rune) {
   try {
     var wrap = document.getElementById('tree-living');
     var cv   = document.getElementById('tree-living-canvas');
     // ZIVY STROM JEN PRO ADMINA (KUKY 2026-10-11: "strom by testeri videt nemeli, aspon zatim. dam jim ho, az se seznami s Runarem.").
     // Do 2026-10-11 i testeri (is_tester). Az je owner pusti, vrati se sem `|| isTester` — nic jineho na tom nevisi.
-    if (!wrap || !cv || !window.RunarTreeProd || !rune || !currentUser || !isAdmin(currentUser.email)) {
+    if (!wrap || !cv || !window.RunarTreeProd || !rune || !treeVisibleFor()) {
       if (wrap) wrap.style.display = 'none'; return;
     }
     var log = [];
@@ -550,13 +557,21 @@ function updateTreeTab() {
   // Hide all states
   // 'tree-founding-cta' tu 2026-07-19 CHYBELO -> jednou zobrazene uz se neskrylo
   // a prosakovalo i do stavu bez zivotni runy (pod formular na datum narozeni).
-  var states = ['tree-no-dob','tree-rs-teaser','tree-reveal-cta','tree-loading','tree-reading-exists','tree-founding-cta'];
+  var states = ['tree-no-dob','tree-rs-teaser','tree-reveal-cta','tree-loading','tree-reading-exists','tree-founding-cta',
+                'tree-need-rune','lr-plant'];
   states.forEach(function(id){ var el=document.getElementById(id); if(el) el.style.display='none'; });
   // 2026-09-27: odkud runa je (půlměsíc narození, moderní rozdělení roku) — pod runou ve všech stavech, kde se runa ukazuje;
   // statický text, ale plní se tady, protože prvky existují jen v téhle záložce (DECISIONS 2026-09-27 (5)).
   document.querySelectorAll('.tree-lr-origin').forEach(function (el) { el.textContent = t('tree_lr_origin'); });
   var _gsec = document.getElementById('tree-growth-section');
   if (_gsec) _gsec.style.display = 'block';
+  // CESTA K ZALOŽENÍ (KUKY 2026-10-11): kdo strom vidí a životní runu ještě nemá, dostane v záložce stromu nabídku ji vyložit —
+  // do té doby tam po resetu nebylo nic („smazal se na prázdno“). Až po načtení profilu, jinak by nabídka bliknula i tomu, kdo runu má.
+  var _treeMine = !!currentUser && treeVisibleFor() && (typeof profileLoaded === 'undefined' || profileLoaded);
+  if (_treeMine && !_lifeRuneText) {
+    var _nr = document.getElementById('tree-need-rune');
+    if (_nr) { _nr.style.display = 'block'; setText('tree-need-rune-text', t('tree_need_rune')); setText('tree-need-rune-btn', t('atab_liferune')); }
+  }
   // PRED vetvenim: `updateTreeTab` ma nekolik `return`u a sekce se ma chovat spravne
   // ve vsech (navstevnik ji nema videt, prihlaseny se jmenem ano).
   _renderNameLore();
@@ -655,6 +670,14 @@ function updateTreeTab() {
       var fb = document.getElementById('tree-founding-btn');
       if (fi) fi.textContent = t('tree_founding_intro');
       if (fb) fb.textContent = t('tree_founding_btn');
+    }
+    // Krok 1→2 v záložce Životní runa (oddělená od stromu 2026-09-11; nabídka zasadit strom tam od té doby chyběla): po vyložení
+    // runy cesta do stromu, kde čeká založení. Jen tomu, kdo strom vidí — jinak by vedla do skryté záložky.
+    var lrp = document.getElementById('lr-plant');
+    if (lrp && !userTreeFounded && _treeMine) {
+      lrp.style.display = 'block';
+      setText('lr-plant-text', t('lr_plant_intro'));
+      setText('lr-plant-btn', t('atab_tree'));
     }
     return;
   }

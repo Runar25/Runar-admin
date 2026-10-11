@@ -73,9 +73,9 @@ function updateTabVisibility() {
   if (journalTabBtn) journalTabBtn.style.display = '';
   // Tree tab — ADMINum. Strom neni hotovy a testeri ho mit nemaji (KUKY 2026-09-11);
   // schovava se ZAMERNE jen ikona, ne cela cesta — testeri jsou znami lide.
+  // Brána bydlí v treeVisibleFor() (runar-tree.js) — jedno místo pro záložku, kreslení i nabídky založení (2026-10-11).
   const treeTabBtn = document.getElementById('atab-tree');
-  if (treeTabBtn) treeTabBtn.style.display =
-    (currentUser && typeof isAdmin === 'function' && isAdmin(currentUser.email)) ? '' : 'none';
+  if (treeTabBtn) treeTabBtn.style.display = (typeof treeVisibleFor === 'function' && treeVisibleFor()) ? '' : 'none';
   // Life rune tab — VSEM, i nepřihlášeným (KUKY 2026-09-11: „ma byt pro vsechny").
   // Zivotni runa je ciste vypocet z data narozeni, zadny server ani ucet — navstevnik
   // tedy muze zjistit, KTEROU nese; za prihlasenim zustava jen CTENI. Vzor je journal:
