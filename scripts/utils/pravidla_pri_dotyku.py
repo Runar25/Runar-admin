@@ -611,7 +611,8 @@ def samotest():
     chk('47. Edit na v2/runar-reader.css (sdílený soubor appky) → zastaví s návodem uprav',
         (lambda d: d and 'commit_vlastni.py uprav' in d)(V('Edit', sid='e4', file_path=R + '/v2/runar-reader.css', old_string='a', new_string='b')))
     chk('48. Edit na nesdílený soubor appky (runar-auth.js) zákaz sdíleného nedostane',
-        (lambda d: d is None or 'commit_vlastni.py uprav' not in d)(V('Edit', sid='e5', file_path=R + '/v2/runar-auth.js', old_string='a', new_string='b')))
+        (lambda d: d is None or '⛔ Sdílený soubor' not in d)(V('Edit', sid='e5', file_path=R + '/v2/runar-auth.js', old_string='a', new_string='b')))
+    # (48 hledalo „commit_vlastni.py uprav“ — to ale od 2026-10-11 stojí i v textu §1, který hook u JS vypíše; zákaz poznat podle jeho zprávy)
     sk7 = os.path.join(STAV, 'Temp', 'claude', 'text_s_open.py')
     io.open(sk7, 'w', encoding='utf-8').write("s = cv.cti('RUNAR_BACKLOG.md', R)" + chr(10) + 's += """' + chr(10) + "skript místo io.open(p, 'w') volá cv.zapis; v2/runar-character.js" + chr(10) + '"""' + chr(10) + "cv.zapis('RUNAR_BACKLOG.md', s, 'CODE-read', R)" + chr(10))
     d = V('Bash', sid='s22', command='python -X utf8 "' + sk7.replace(chr(92), '/') + '"')
