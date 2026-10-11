@@ -172,7 +172,7 @@ function updateBanners() {
         cntEl.className = 'tn-counter';
       }
       const txtEl = document.getElementById('free-user-text');
-      if (txtEl) txtEl.innerHTML = tp('rs_credits_desc', { units: VOCAB.unit.en_pl });
+      if (txtEl) txtEl.innerHTML = tp('rs_credits_desc', { units: vlp('unit', lang) });
       const btnEl2 = document.getElementById('tn-curious-btn');
       if (btnEl2) btnEl2.style.display = 'none'; // má kredity — nepotřebuje gift card button
       upgradeGate.style.display = 'none';
@@ -191,7 +191,7 @@ function updateBanners() {
       const txtEl = document.getElementById('free-user-text');
       if (txtEl) txtEl.innerHTML = tp(FREE_REGISTERED_LIMIT === 1 ? 'rs_exhausted_one' : 'rs_exhausted_many', {
           n:    FREE_REGISTERED_LIMIT,
-          card: vl('card', lang)
+          card: vl('card', lang, 'dat')   // IS „Opnaðu dyrnar með <b>{card}</b>“ — po „með“ 3. pád (2026-10-11, dřív „með Rúnakort“)
         });
       const btnEl = document.getElementById('tn-curious-btn');
       if (btnEl) { btnEl.textContent = tp('gift_card_btn', { card: vl('card', lang).toUpperCase() }); btnEl.style.display = ''; }

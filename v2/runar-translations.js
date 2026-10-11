@@ -919,8 +919,9 @@ const UI_TEXT = {
     voice_left:        'Rúnar getur enn lesið {casts} upphátt í þessum mánuði.',   // 2026-10-11: ověřeno nástroji z CLAUDE.md §2 (gramatika OK, „lesið upphátt“ 90× v korpusu)
     rs_credits_desc:    'Þú hefur notað ókeypis spána þína. Næsta spá verður greidd af inneign þinni.',   // 2026-10-10: „frjáls“ = kalk z EN „free“; spá se platí z inneign, nebere se z ní (is-gpt-check)
     // 2026-10-10: „frjáls“ = svobodný, zdarma = „ókeypis“ (kalk z EN „free“); „dregið/gengið … spána“ → „notað“ („hefur notað allar“ 16×).
-    rs_exhausted_one:   'Þú hefur notað ókeypis spána þína. Opnaðu dyrnar með <b>{card}</b> \u2014 eitt kort, enginn gildistími, engin áskrift.',
-    rs_exhausted_many:  'Þú hefur notað allar {n} ókeypis spárnar þínar. Opnaðu dyrnar með <b>{card}</b> \u2014 eitt kort, enginn gildistími, engin áskrift.',
+    // 2026-10-11: {card} v 3. pádě (vl('card', lang, 'dat')) a výčet ve vlastní větě — Greynir ho za pomlčkou bral jako závislý na „með“ (CODE-read)
+    rs_exhausted_one:   'Þú hefur notað ókeypis spána þína. Opnaðu dyrnar með <b>{card}</b>. Eitt kort, enginn gildistími og engin áskrift.',
+    rs_exhausted_many:  'Þú hefur notað allar {n} ókeypis spárnar þínar. Opnaðu dyrnar með <b>{card}</b>. Eitt kort, enginn gildistími og engin áskrift.',
     err_rate_limited:   'Of margar beiðnir. Bíddu aðeins.',
     ask_lbl:            'Spyrðu Rúnar um þennan lestur',
     ask_placeholder:    'Hvað vakti athygli þína?',
@@ -957,7 +958,7 @@ const UI_TEXT = {
     visitor_join_note:  'Sem <strong>Gestur</strong> sérðu hvaða rún kom til þín. Lesturinn sjálfur er fyrir <strong>Leitendur</strong> — {onboarding} þegar þú skráir þig.<br><br>Á meðan bíður þín Safn rúna.',
     redeem_ok_msg:      '\u2746 {units} bætt við{rune} \u2014 staða: {bal}',
     redeem_toast_msg:   '\u2746 {UNITS} BÆTT VIÐ',
-    redeem_card_code:   'ᚠ SLÁÐU INN {card} KÓÐA',
+    redeem_card_code:   'ᚠ SLÁÐU INN KÓÐANN Á {card}',   // 2026-10-11: dřív kalk „SLÁÐU INN {card} KÓÐA“; {card} = vl('card', lang, 'dat_def')
     // 2026-10-09 (kontrola architektury, smoke ㉸): texty dřív natvrdo v runar-auth.js / runar-tree.js — beze změny znění.
     redeem_checking:      'Athuga kóða…',
     redeem_err_not_found: 'Kóði fannst ekki.',

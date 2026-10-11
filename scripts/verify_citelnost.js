@@ -18,6 +18,8 @@
 //      stejný — oba směry naráz, i islandština v anglické appce — a otevřená karta zůstane otevřená. Obsah čtení (jméno runy, text, otázka,
 //      myšlenka) zůstává v jazyce čtení, proto se nepočítá. Aktivní filtr po přepnutí zůstane. Do 2026-10-11 Deník překresloval updateUIText
 //      celý — bez filtru a se zaklapnutými kartami (§14); nález procházky přihlášené appky, CODE-read.
+//  (E) Rúnakort islandsky ve správném pádu: po vyčerpání volného čtení „með“ + 3. pád (VOCAB.card.is_dat) a popisek zadání kódu „sláðu
+//      inn kóðann á …“ s určitým 3. pádem (is_dat_def), ne kalk „SLÁÐU INN RÚNAKORT KÓÐA“ (nález CODE-read 2026-10-11).
 // Neumí: text přes obrázek (bere barvu pozadí předků), stavy přihlášeného (čtení, menu), stín a obrys písma.
 // Útok: scripts/protipriklady.py → PRIPADY.
 //   node scripts/verify_citelnost.js            · --slabe vypíše i texty mezi 3 a 4,5 : 1 (podklad pro rozhodnutí o vzhledu)
@@ -81,7 +83,7 @@ const TYPY = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; cha
   '.jpg': 'image/jpeg', '.svg': 'image/svg+xml', '.json': 'application/json', '.webmanifest': 'application/manifest+json', '.woff2': 'font/woff2' };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 function konec() {
-  console.log(fail ? '\nFAIL  čitelnost: ' + fail + ' selhalo' : '\nOK    čitelnost: kontrast každého viditelného textu aspoň 3 : 1 (nad --dim, §5), v IS žádná zaseklá angličtina, okno přepnutí jazyka v jazyce čtenáře, Deník po přepnutí v novém jazyce' + (konec.info || ''));
+  console.log(fail ? '\nFAIL  čitelnost: ' + fail + ' selhalo' : '\nOK    čitelnost: kontrast každého viditelného textu aspoň 3 : 1 (nad --dim, §5), v IS žádná zaseklá angličtina, okno přepnutí jazyka v jazyce čtenáře, Deník po přepnutí v novém jazyce, Rúnakort ve správném pádu' + (konec.info || ''));
   process.exit(fail ? 1 : 0);
 }
 const srv = http.createServer((req, res) => {
@@ -183,6 +185,20 @@ const srv = http.createServer((req, res) => {
       '(D) Deník po přepnutí IS → EN na záložce: rozhraní anglicky (' + (Array.isArray(d1) ? d1.length : 0) + ' textů), otevřená karta zůstala otevřená',
       stejne ? 'v EN zůstalo: ' + stejne.map((t) => '„' + t + '“').join(', ') + (d2 && !d2.otevrena ? ' · karta zaklapla' : '') : JSON.stringify({ d1, d2 }).slice(0, 300));
     rekni(!!df && df.pred === 1 && df.po === 1, '(D) Deník po přepnutí jazyka drží filtr (jazyk IS: 1 čtení ze 2)', JSON.stringify(df));
+
+    // (E) Rúnakort v pádu: Rune Seeker po vyčerpání volného čtení (updateBanners) a popisek zadání kódu karty (updateUIText), islandsky
+    const k = await ev(`(() => {
+      currentUser = { id: 'u1', email: 'tester@example.com' }; userTier = 'rune_seeker'; userFreeBalance = 0; userCredits = 0;
+      setLang('is'); updateBanners(); updateUIText();
+      const v = { volne: (document.getElementById('free-user-text') || {}).textContent || '', kod: (document.getElementById('redeem-lbl') || {}).textContent || '',
+                  nom: VOCAB.card.is, dat: VOCAB.card.is_dat, datDef: VOCAB.card.is_dat_def };
+      currentUser = null; userTier = 'free'; updateBanners(); updateUIText();
+      return v;
+    })()`);
+    rekni(!!k && k.volne.indexOf('með ' + k.dat) !== -1 && !new RegExp('með ' + k.nom + '(?![a-záéíóúýþæöð])', 'i').test(k.volne),
+      '(E) po vyčerpání volného čtení „með ' + (k && k.dat) + '“ (3. pád), ne „með ' + (k && k.nom) + '“', JSON.stringify(k && k.volne));
+    rekni(!!k && k.datDef && k.kod.indexOf('KÓÐANN Á ' + k.datDef.toUpperCase()) !== -1 && k.kod.indexOf(k.nom.toUpperCase() + ' KÓÐA') === -1,
+      '(E) popisek kódu karty „SLÁÐU INN KÓÐANN Á ' + (k && k.datDef ? k.datDef.toUpperCase() : '?') + '“, ne kalk', JSON.stringify(k && k.kod));
     const anglicky = /\b(SPEAK|AGAIN|STAY|YES|credits?)\b/i;
     rekni(!!o1 && o1.otevreno && o1.jazyk === 'is' && o1.zavreno && o1.jazykPo === 'is' && /ENSKU/.test(o1.title) && /ÍSLENSKU/.test(o1.zpet)
           && ![o1.title, o1.body, o1.ok, o1.zpet, o1.cena].some((x) => anglicky.test(x)) && o1.cena === o1.cekana.toUpperCase()

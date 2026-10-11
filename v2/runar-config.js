@@ -490,7 +490,7 @@ const MODEL_PRICES = {
 const VOCAB = {
   unit: { en: 'rune reading', en_pl: 'rune readings', is: 'spá', is_pl: 'spár' },
   cast: { en: 'rune reading', en_pl: 'rune readings', is: 'sp\u00e1',      is_pl: 'sp\u00e1r', is_dat_pl: 'sp\u00e1m', is_acc_def: 'spána' },   // is_dat_pl: TIER_FEATURES (2026-09-26); is_acc_def: hlas Rune Seekera tamtéž (2026-10-10)
-  card: { en: 'Rune Reading Card', en_pl: 'Rune Reading Cards', is: 'R\u00fanakort', is_pl: 'R\u00fanakort', is_dat: 'Rúnakorti' },   // is_dat: „með …“ v TIER_FEATURES (2026-10-10)
+  card: { en: 'Rune Reading Card', en_pl: 'Rune Reading Cards', is: 'R\u00fanakort', is_pl: 'R\u00fanakort', is_dat: 'Rúnakorti', is_dat_def: 'Rúnakortinu' },   // is_dat: „með …“ v TIER_FEATURES a po vyčerpání volného čtení (2026-10-10, -11) · is_dat_def: „kóðann á …“ (redeem, 2026-10-11)
   reading: { en: 'reading', en_pl: 'readings', is: 'lestur', is_pl: 'lestrar' },   // počet v deníku (2026-10-10); korpus „einn lestur“ 15×, „tveir lestrar“ 3×
 };
 // ─── SPREAD CONFIG — single source of truth ──────────────

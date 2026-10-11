@@ -183,10 +183,12 @@ function vn(key, n, lang) {
 }
 // vl('card', 'en')  =>  'Rune Reading Card'
 // vl('card', 'is')  =>  'R\u00fanakort'
-function vl(key, lang) {
+// vl('card', 'is', 'dat')  =>  'Rúnakorti' — islandský pád do věty (VOCAB.<klíč>.is_<pád>), bez pádu 1. pád; angličtina pád nemá. Volající
+// ho vybírá podle islandské šablony (vzor tierLabel). 2026-10-11: šablona „með {card}“ dostávala 1. pád „með Rúnakort“ (nález CODE-read).
+function vl(key, lang, pad) {
   var v = VOCAB && VOCAB[key];
   if (!v) return key;
-  return lang === 'is' ? (v.is || v.en) : v.en;
+  return lang === 'is' ? ((pad && v['is_' + pad]) || v.is || v.en) : v.en;
 }
 // vlp('card', 'en')  =>  'Rune Reading Cards' (plural label, bez cisla)
 function vlp(key, lang) {

@@ -914,7 +914,8 @@ function updateUIText() {
   // Re-render auth UI + side panel vždy — zajistí správné texty i pro odhlášeného uživatele při změně jazyka
   setText('free-redeem-link', '+ ' + vl('card', lang));
   setText('redeem-link', '+ ' + vl('card', lang));
-  setRuneText('redeem-lbl', tp('redeem_card_code', { card: vl('card', lang).toUpperCase() }));
+  // IS „ᚠ SLÁÐU INN KÓÐANN Á {card}“ — určitý 3. pád (2026-10-11; dřív kalk „SLÁÐU INN RÚNAKORT KÓÐA“ z „ENTER {card} CODE“, CODE-read)
+  setRuneText('redeem-lbl', tp('redeem_card_code', { card: vl('card', lang, 'dat_def').toUpperCase() }));
   const shopLink = document.getElementById('redeem-shop-link');
   if (shopLink) shopLink.textContent = tp('shop_buy_more', { card: vlp('card', lang) });
   updateAuthUI();

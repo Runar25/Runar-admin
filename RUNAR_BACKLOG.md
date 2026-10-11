@@ -3703,7 +3703,10 @@ konzole bez chyb. Islandské věty panelu is-greynir: „lestrunum“ korpus dok
   `setLang` (`v2/runar-app.js` ~ř. 334–346) po přepnutí znovu kreslí Kolekci a Životní runu, Deník ne; jeho texty kreslí jen `renderJournal`
   (do updateUIText nepatří, §14). Stačí znovu vykreslit uložené `_jEntries` (s aktivním filtrem), když je otevřená záložka Deník.
   Smoke ㊽ zaseklou angličtinu hledá, opačný směr (islandština v EN po přepnutí na Deníku) neprochází.
-- [ ] **Pro CODE-tune — islandský pád u Rúnakortu (dvě šablony).** `{card}` dostává vždy 1. pád z `vl('card')` („Rúnakort“):
+- [x] ✅ *(CODE-tune 2026-10-11: `vl(key, lang, pad)` umí islandský pád jako `tierLabel`; po vyčerpání čtení „með <b>Rúnakorti</b>“ a výčet
+  ve vlastní větě, popisek „ᚠ SLÁÐU INN KÓÐANN Á RÚNAKORTINU“ (`VOCAB.card.is_dat_def`); greynir, korpus a is-gpt-check bez nálezu; hlídá smoke
+  ㊽ (E). Cestou `rs_credits_desc` dostává `vlp('unit', lang)` místo napevno anglického `VOCAB.unit.en_pl`.)* ~~**Pro CODE-tune — islandský
+  pád u Rúnakortu (dvě šablony).**~~ `{card}` dostává vždy 1. pád z `vl('card')` („Rúnakort“):
   1. `rs_exhausted_one/_many` (`v2/runar-translations.js` ~ř. 922; Rune Seeker po vyčerpání čtení zdarma): „Opnaðu dyrnar með
      <b>Rúnakort</b>“. Nástrojové „með“ chce 3. pád — korpus „greiða með korti“ 77×, „greiða með kort“ 0×; „dyrnar með lykli“ 5×,
      „með lykil“ 0×. Tvar je hotový ve `VOCAB.card.is_dat` („Rúnakorti“), `v2/runar-auth.js` ~ř. 194 ho jen nepoužívá. Greynir navíc
