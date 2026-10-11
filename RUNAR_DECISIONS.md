@@ -10838,3 +10838,25 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   v dočasném indexu → stop, s `RUNAR_VLASTNI=1` → projde; samotest hooku 44 stavů.
 - **Obecně:** další soubor, do kterého píše víc session, přidej do `_SDILENE` — jinde se seznam nevede. Vlastní pojistka — bez ptaní.
 - Affected doc(s): `CLAUDE.md` §30 — v témže commitu.
+
+## 2026-10-11 (59) — Po založení: příběh zůstává nad čtením, do stromu tlačítkem; strom v aplikaci svisle v rámu; datum narození se po čtení nemaže
+
+- **Proč:** KUKY 2026-10-11 po skutečném založení v produkci: *„objevila se zpráva this is rooting atd. a zmizela během 2 s a je tu čtení.
+  začnu číst a pár s a je pryč. 1. this is rooting před čtením zůstane celou dobu, ať si ho může uživatel přečíst. jak se objeví čtení,
+  tak normálně pod touhle zprávou. 2. až si to přečtu a jsem spokojený, tak kliknu na zobrazit strom nebo něco takového. a pak teprve
+  se ukáže strom. pokud chce uživatel dohledat čtení stromu, tak je v deníku. 3. strom je nepřirozeně nízko na obrazovce.“*
+- **Mění** 2026-07-19 „Vyústění rituálu patří do stromu, ne do čtečky“ (313562c: po založení appka za 4 s sama přepnula do stromu).
+  Vrací důvod z téhož dne „Automatický skok do stromu ZRUŠEN — vytrhával by uživatele z výkladu“ (4b1a21f). Očištěno o důvod
+  tehdejšího odchodu (§21): blok `founding-done` (text + tlačítko) odešel, protože se třetí potvrzovací blok do čtečky nevešel — teď
+  žádný blok nepřibyl, zůstává příběh, který už na obrazovce je, a pod čtením jediné tlačítko.
+- **Co:** (1) příběh „The Rooting“ zůstává nad čtením, čtení pod ním; (2) pod čtením tlačítko ◈ TREE OF LIFE / ◈ TRÉ LÍFSINS, žádný
+  samovolný skok (`DELAY_FOUNDING_TO_TREE` pryč); pohled končí jiným výkladem, dalším tahem, START OVER nebo návratem do záložky;
+  (3) strom v aplikaci svisle vystředěný podle skutečného obalu (lab `state.frame` vypnutý — drží zem kvůli porovnávání), kroky historie
+  drží rám celého stromu, ať strom při přehrávání neposkakuje. Zamčené ostatní výklady během založení zůstávají — (47) „Nezměněno“,
+  owner potvrdil (*„8. nechat jak je. to je dobrý.“*).
+- **Datum narození:** (57) obešla nulování data jen v založení; kořen byl obecný — `startReading()` a `resetReader()` nulovaly datum při
+  každém čtení, takže záložka Životní runa po čtení ukázala formulář na datum a strom zmizel (do obnovení stránky, všichni přihlášení;
+  ověřeno v prohlížeči). Příprava čtení datum nečte → zůstává.
+- **Hlídá:** smoke ㊷ — místo skoku „po 4 s“ z (57) ověřuje příběh a tlačítko, že appka ani po 4,5 s nikam neskočí, tlačítko → strom
+  v rámu, a datum po START OVER a dalším čtení (14 kroků). Kód 76f8b0f (rám) + d264031 (dokončení, datum).
+- Affected doc(s): `RUNAR_TREE.md` §8 (AUTO-FIT: v aplikaci svislý rám) — v témže commitu.
