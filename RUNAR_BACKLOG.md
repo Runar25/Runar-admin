@@ -2813,8 +2813,10 @@ v sekci session (příkaz s podpisem i „Commit ÚZCE“) uváděl pathspec com
 **Výsledek:** 19 útoků / 15 kontrol, 16 chyceno hned. Slepé: `verify_db_write_checked` (alias `_db = sb`) a `verify_write_surface`
 (`from("user_profiles")`, `update(p)`) → opraveno, obcházky zůstávají jako útoky. Smoke ㊵ je pouští samo při změně (DECISIONS (44)).
 - [ ] **Doplnit opakované útoky pro zbývajících 46 kontrol** (61 − 15; opravou (45): pět z nich prošlo jednorázovou mutací při vzniku —
-  ty převeď do `PRIPADY` první, útok je už vymyšlený v hlavičce: `verify_ask_teaser`, `verify_ending_angle`, `verify_image_aspect_key`,
-  `verify_image_pin`, `verify_tree_mista`). Pak ty, které hledají NEPŘÍTOMNOST (propustí-li, nikdo si
+  ✅ 2026-10-11 převedeno čtyři z pěti (c3dfd49: `verify_ask_teaser`, `verify_ending_angle`, `verify_image_aspect_key`,
+  `verify_image_pin`; dva první pokusy byly vadné útoky, ne slepé kontroly — pin se uplatňuje dvakrát, rozpočet délky má jednu variantu);
+  `verify_tree_mista` (lab, prohlížeč) předán CODE-tree. CODE-tune přidal útoky na brzdu kreditů ve smoke ⑨ — celkem 28 útoků / 19 kontrol).
+  Pak ty, které hledají NEPŘÍTOMNOST (propustí-li, nikdo si
   nevšimne): `verify_question_injection`, `verify_journal_glyphs`, `verify_shared_tree`, `verify_commit_identity`, `verify_prelaunch_open`,
   `verify_fresh_dates`, `verify_new_duplicates`, `verify_tier_features`. Postup: případ do `PRIPADY` v `scripts/protipriklady.py`,
   `python -X utf8 scripts/protipriklady.py <kontrola>`.
