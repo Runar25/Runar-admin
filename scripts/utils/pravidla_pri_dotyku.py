@@ -68,7 +68,9 @@ PISICI = {'cp', 'mv', 'rm', 'tee', 'touch', 'install', 'set-content', 'out-file'
 SKRIPT = re.compile(r"""(?<![\w.-])(?:python3?|py|node)(?:\s+-X\s+\S+|\s+-\S+)*\s+["']?([^\s"']+\.(?:py|js))""", re.I)
 
 
-ZAPISUJE = re.compile(r"""writeFileSync|appendFileSync|copyFileSync|renameSync|rmSync|unlinkSync|createWriteStream|\.write\(|open\([^)]*['"][wa]['"]|shutil\.|os\.remove|os\.rename|Path\([^)]*\)\.write_""")
+# cv.zapis / commit_vlastni: od 2026-10-11 je to JEDINÁ povolená cesta zápisu sdílených docs (pre-commit) — bez ní hook neviděl
+# skoro žádný zápis do docs (doloženo týž den: zápis paměti přes cv.zapis prošel bez pravidel i bez kontroly kánonu).
+ZAPISUJE = re.compile(r"""\.zapis\(|commit_vlastni\.py\s+pridej|writeFileSync|appendFileSync|copyFileSync|renameSync|rmSync|unlinkSync|createWriteStream|\.write\(|open\([^)]*['"][wa]['"]|shutil\.|os\.remove|os\.rename|Path\([^)]*\)\.write_""")
 
 
 def cil_z_prikazu(cmd):
@@ -385,6 +387,9 @@ def samotest():
     chk('23. shoda jen ve 2 obecných slovech z dlouhé zprávy = šum, nezastaví', V2('Edit', 'k1', file_path=R + '/memory/x.md') is None)
     sc3 = os.path.join(STAV, 'Temp', 'claude', 'kom.js')
     io.open(sc3, 'w', encoding='utf-8').write("// Postup → RUNAR_PRIVACY.md\nfs.writeFileSync(os.tmpdir() + '/x.txt', 'a')\n")
+    sc4 = os.path.join(STAV, 'Temp', 'claude', 'cvz.py')
+    io.open(sc4, 'w', encoding='utf-8').write("s = cv.cti('memory/x.md', R)" + chr(10) + "cv.zapis('memory/x.md', s + 'a', 'CODE-read', R)" + chr(10))
+    chk('25. zápis přes cv.zapis (commit_vlastni) hook vidí', V('Bash', sid='s10', command='python -X utf8 "' + sc4.replace(chr(92), '/') + '"') is not None)
     chk('24. cesta jen v komentáři skriptu se jako zápis nebere', V('Bash', sid='s9', command='node "' + sc3.replace('\\', '/') + '"') is None)
     for jm, v in ok: print(('OK    ' if v else 'FAIL  ') + jm)
     return 0 if all(v for _, v in ok) else 1
