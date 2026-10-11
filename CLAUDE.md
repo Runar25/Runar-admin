@@ -364,6 +364,8 @@ musí to buď **udělat skript samo**, nebo **zastavit práci**, když se to vyn
   `scripts/utils/pravidla_mapa.json`, úpravu jednou zastaví a vypíše AKTUÁLNÍ znění pravidel pro tu oblast (živě z CLAUDE.md, docs,
   paměti); dlouhou sekci pustí až po Read; zápis do CLAUDE.md, `memory/` a `RUNAR_*.md` až po `uz_vime.js`. Znovu po compactu. Mapu
   hlídá smoke ㊴. Nové pravidlo k souborům → řádek do mapy, ne opis do hooku. (KUKY 2026-10-11, DECISIONS 2026-10-11 (17).)
+  Týž hook před prvním zápisem do docs/paměti po NOVÉ zprávě ownera prohledá kánon (CLAUDE.md, všechny RUNAR_*.md, memory/) slovy
+  z té zprávy a ukáže, kde už to stojí — pokyn se nezapíše jako nový, když platí. (KUKY 2026-10-11, DECISIONS 2026-10-11 (26).)
 Najdeš nové pravidlo, které se porušilo podruhé? Nepiš ho jen do paměti — přidej mechanismus (hook, kontrola ve smoke, krok skriptu).
 
 ### §31 — Jazyk komunikace: veřejně i pro adminy jen IS a EN, česky jen owner ↔ Claude (platí pro VŠECHNY session)

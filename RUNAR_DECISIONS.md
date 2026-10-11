@@ -10312,3 +10312,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Co z toho plyne pro port:** výpočet zkrátit — směr už stojí v `RUNAR_TREE.md` §8 („Produkční princip“: polohu a charakter větve spočítat
   jednou při čtení, uložit, renderer jen kreslí). Jak, rozhodne owner před portem.
 - Affected doc(s): `RUNAR_TREE.md` §8 (odkaz u ceny překreslení) · `RUNAR_BACKLOG.md` (port) — v témže commitu.
+
+## 2026-10-11 (26) — Pokyn ownera se nezapíše jako nový, když už stojí v kánonu: hook ho dohledá sám
+
+- **Rozhodl:** owner 2026-10-11 (přes CODE-tree, relay) *„pokud něco řeknu, že se má nějak udělat, tak napřed vždy každá session
+  zkontroluje, jestli to tak už není a jak to vlastně je! já jen opakuju to, co vím, ale ty si to nepamatuješ… dej ať to code read vyřeší“*.
+- **Případ:** CODE-tree zapsal ownerův postup ke stromu („založení NORNS v produkci, strom bude obsahovat čtení z deníku“) do DECISIONS
+  2026-10-11 (24) a BACKLOGu jako nový; stál v `RUNAR_TREE.md` §2 ř. 34. `uz_vime` běžel, ale (a) s vlastními pojmy, ne se slovy
+  ownera, (b) `RUNAR_TREE.md` vůbec neprohledával (ani PRICING, POPISY_RUN, PRIVACY), (c) „zalozeni“ nenašlo „založení“.
+- **Teď:** (1) `uz_vime.js` prohledá všechny kanonické `RUNAR_*.md` (seznam se odvozuje) bez ohledu na diakritiku; (2) hook
+  `pravidla_pri_dotyku.py` si v přepisu drží poslední zprávu ownera (i poslanou během práce; zprávy jiných session ne) a před prvním
+  zápisem do docs/paměti po ní prohledá kánon jejími slovy (pětiznakové kmeny, bez obecných slov typu „pokračuj“, aspoň 3 slova) —
+  najde-li řádky s ≥ 2 shodami, zápis jednou zastaví a ukáže je. Na ownerově větě z případu je první `RUNAR_TREE.md:34` (9 shod z 10).
+- **Proč ne povinné „uz_vime s jeho slovy“:** session by volila pojmy zase sama (přesně to selhalo); hook bere slova ze zprávy bez
+  její pomoci. Samotest 22 stavů (vč. „pokračuj“ = nic, zpráva během práce = ano, zpráva jiné session = ne).
+- **Hranice:** hledá shodu slov, ne význam — pokyn vyslovený úplně jinými slovy, než jak stojí v kánonu, nenajde.
+- Affected doc(s): `CLAUDE.md` §30 — v témže commitu.
