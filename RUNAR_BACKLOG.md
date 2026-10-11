@@ -2554,6 +2554,15 @@ a čitelná, ne že import proběhne. Běh jen při zapnutém počítači je zn�
 Hlasové funkce s 15 hlasy pro testery (b37beca) byly nasazené už předtím s ownerovým „8. ano, nasaď“ (DECISIONS 2026-10-11 (8)); dnešní
 nasazení s pevnou knihovnou je vzalo znovu — nic nešlo do produkce bez souhlasu.
 
+#### Kolo 2 / 14 — mrtvé soubory, jména a styly, přeměřeno (části 19, 21, 23; 2026-10-11)
+**Platí:** styly bez prvku 0 (CODE-tune je 2026-10-10 vyčistil; čtyři „nálezy“ skenu byly barvy `#b38a00`, ne id) · mrtvá top-level jména
+jsou dál jen ta záměrná z kola 1 (`buildSysPromptV2`, `_lensContext`, `_random*`, `TREE_UPDATE`, `PATTERN_WINDOW`, `TRANSFORMATION_PAIRS`,
+`AETTY`) + `VOICE_MONTHLY_LIMIT_TESTER` v configu — záměrná kopie hodnoty serveru, shodu hlídá `verify_monthly_limits.js`.
+- **Opraveno:** CLAUDE.md „Sdílená sémantická vrstva“ tvrdila, že `AETTY` čtou obě session — nečte ho nic (rezervované pro Gathering).
+- **Pro CODE-tune (nový nález):** `v2/icons/favicon.svg` (3,1 MB) se od 2026-09-11 nenačítá (komentář v `runar-reader.html`), ale dál
+  se veřejně nasazuje. Je to nejspíš vektorová předloha ikony → podle ownerova pravidla pro designové podklady (2026-10-10) přesunout
+  do `v2/assets/` s řádkem v jeho README, ne smazat. `v2/runar-portrait.png` zůstává (ownerovo „nemazat“, README to uvádí).
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
