@@ -13,7 +13,9 @@
 // Sazby ani ceník se tu NEOPISUJÍ (§20): model čtení `SOL_MODEL` (claude-proxy), ceník `MODEL_PRICES` + výpočet `readingCostUsd`
 // (v2/), model hlasu `EL_MODEL_EN/IS` (elevenlabs-proxy), sazba hlasu `EL_PRECERPANI` (scripts/utils/stats.js), jednotky
 // `SPREAD_COSTS`, měsíční jednotky a Asky `TIERS`, strop hlasu `VOICE_MONTHLY_LIMIT`, prompty buildery přes golden dump.
-// Jen agregáty — žádný text čtení ani user_id (repo je veřejné, RUNAR_PRIVACY.md).
+// Jen agregáty — žádný text čtení ani user_id (repo je veřejné, RUNAR_PRIVACY.md). Čte VŠECHNA čtení včetně odhlášených z analýzy:
+// je to výpočet nákladů, ne analýza kvality textu — tatáž výjimka jako stats.js a naklady.py (hlavička scripts/utils/cteni_analyza.sql);
+// na řádku dotazu značka opt-out:ok, kterou chce smoke ㉾.
 //
 //   node scripts/utils/pricing_tabulka.js            # čtení za posledních 30 dní
 //   node scripts/utils/pricing_tabulka.js --dny 90
@@ -72,7 +74,7 @@ const vetyCil = (t) => { const p = G[t.g + '_en'] || ''; const m = [...p.matchAl
 // ── data z produkce ───────────────────────────────────────────────────────────
 const rows = q(`select area, rune_name, lang, usage, follow_up,
     case when area = 'spread' then char_length(coalesce(deep_text,'')) else char_length(coalesce(short_text,'')) end as zn
-  from readings where usage->>'model' = '${SOL}' and drawn_at >= now() - interval '${DNY} days'`);
+  from readings where usage->>'model' = '${SOL}' and drawn_at >= now() - interval '${DNY} days'`);  // opt-out:ok 2026-10-11 náklady (cena a délka čtení po typech), ne analýza kvality textu
 const bezPremysleni = (u) => !(((u && u.completion_tokens_details) || {}).reasoning_tokens > 0);
 const D = {};   // D[typ][lang] = { usd:[], zn:[], vstup:[], vystup:[] }
 const ASK = { en: [], is: [] };
