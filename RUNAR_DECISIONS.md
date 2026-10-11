@@ -11000,3 +11000,18 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Produkce beze změny:** výchozí rozevření 0; otisk stromu ownera, stromu z labu i semínka stejný před a po (kód dfc44f7). Rozevření do
   produkce až s hodnotou, kterou owner v labu na svých čteních schválí.
 - Affected doc(s): `RUNAR_TREE_MAP.md` §10 (rozevření) a §11 (posuvníky, čtení do labu) — v témže commitu.
+
+## 2026-10-11 (67) — Datum v deníku islandsky i v prohlížeči bez islandských dat: jeden pomocník `datumUI` pro deník i strom
+
+- **Proč:** chyba od CODE-read, owner *„ok, jeď ty tři chyby“*. Deník psal islandskému uživateli „May 21, 2026“: Chrome na Windows islandská
+  data nemá (`Intl.DateTimeFormat.supportedLocalesOf(['is-IS'])` → `[]`) a `toLocaleDateString('is-IS')` pak vrátí angličtinu. Strom měl
+  zálohu ve vlastní kopii (CODE-tree, číselné datum), deník žádnou; CODE-tree v BACKLOGu navrhl jeden pomocník pro oba (§18).
+- **Co:** `datumUI(iso, lng)` v `v2/runar-utils.js` — s islandskými daty „21. maí 2026“, bez nich islandské číselné „21.5.2026“ (nikdy anglický
+  měsíc), anglicky „21 May 2026“, žádné nebo neplatné datum = prázdno. Deník ho volá, `_treeDatum` ve stromě na něj jen deleguje (řádky
+  CODE-tree z téhož dne, vědomě přes `RUNAR_CIZI_OK`, CODE-tree dostal zprávu).
+- **Hlídá smoke ㊻** (`scripts/verify_datum_ui.js`): produkční deník i strom s islandskými daty i bez nich, zdroj (mimo `datumUI` žádné
+  'is-IS' ani datum či číslo v jazyce uživatele) a skutečný Chrome bez okna — ten islandská data nemá a deník ukáže „21.5.2026“. Útoky
+  v protipříkladech (stará cesta deníku, záloha pryč, strom vlastní cestou).
+- **Hranice:** s daty a bez nich se formát liší („21. maí 2026“ / „21.5.2026“), obojí je islandsky správně; jeden formát všude by chtěl vlastní
+  seznam zkratek měsíců, tedy kopii dat, která má prohlížeč. Android a iPhone neověřeny — (C) pouští jen Chrome na Windows.
+- Affected doc(s): `RUNAR_BACKLOG.md` (položka „Deník: islandské datum…“ odškrtnutá) — v témže commitu.

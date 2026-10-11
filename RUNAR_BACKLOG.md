@@ -523,7 +523,7 @@
 
 ## i18n / prevence uvízlé angličtiny
 
-- [ ] **Deník: islandské datum v Chromu bez islandských dat** (CODE-tune; nalezl CODE-tree 2026-10-11 při ovládání stromu). `runar-journal.js`
+- [x] ✅ *(CODE-tune 2026-10-11: jeden pomocník `datumUI` v `runar-utils.js` pro deník i strom, smoke ㊻, DECISIONS 2026-10-11 (67).)* ~~**Deník: islandské datum v Chromu bez islandských dat**~~ (CODE-tune; nalezl CODE-tree 2026-10-11 při ovládání stromu). `runar-journal.js`
   (~ř. 153) formátuje `toLocaleDateString('is-IS', …)`; Chrome na Windows (měřeno bez okna) islandská data nemá
   (`Intl.DateTimeFormat.supportedLocalesOf(['is-IS'])` → `[]`) a vrátí anglické „May 21, 2026“. Strom má záložní číselné datum
   (`_treeDatum` v `runar-tree.js`: „21.5.2026“) — kandidát na jeden pomocník v `runar-utils.js` pro deník i strom (§18). Na Androidu

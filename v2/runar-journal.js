@@ -193,9 +193,8 @@ function renderJournal(entries) {
   };
   _jEntries = entries;   // playReadingVoice(i) — hlas čtení podle pořadí karty
   list.innerHTML = entries.map((e, i) => {
-    const d       = new Date(e.drawn_at);
-    const locale  = isIs ? 'is-IS' : 'en-GB';
-    const dateStr = d.toLocaleDateString(locale, { day:'numeric', month:'short', year:'numeric' });
+    // datumUI (runar-utils.js): islandsky i v prohlížeči bez islandských dat — do 2026-10-11 tu Chrome psal „May 21, 2026“.
+    const dateStr = datumUI(e.drawn_at, isIs ? 'is' : 'en');
     const isSpread = e.area === 'spread';
 
     // Every field below is user free text (question/area) or model text — escape before it

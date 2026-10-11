@@ -104,6 +104,19 @@ function escapeHtml(s) {
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
+// Datum pro UI (deník, strom): den, zkrácený měsíc, rok — „21. maí 2026“ / „21 May 2026“. Prohlížeč bez islandských dat (Chrome na
+// Windows, měřeno 2026-10-11: Intl.DateTimeFormat.supportedLocalesOf(['is-IS']) → []) by islandskému uživateli napsal anglické
+// „May 21, 2026“ — dostane proto islandské číselné datum 21.5.2026. JEDEN pomocník pro deník i strom (§18): do 2026-10-11 měl tuhle
+// zálohu jen strom (`_treeDatum`), deník ji neměl (našel CODE-tree, opravil CODE-tune). Jinde v appce se 'is-IS' nepíše — hlídá smoke ㊻.
+function datumUI(iso, lng) {
+  if (!iso) return '';
+  var d = new Date(iso);
+  if (isNaN(d.getTime())) return '';
+  if (lng === 'is' && !(typeof Intl !== 'undefined' && Intl.DateTimeFormat.supportedLocalesOf && Intl.DateTimeFormat.supportedLocalesOf(['is-IS']).length))
+    return d.getDate() + '.' + (d.getMonth() + 1) + '.' + d.getFullYear();
+  return d.toLocaleDateString(lng === 'is' ? 'is-IS' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
 // Safe for a JS single-quoted string that itself sits inside a double-quoted HTML attribute
 // (e.g. onclick="fn('<here>')"): escape backslash + JS-quote for the string, and HTML-encode
 // the double-quote/angle brackets so the attribute cannot be broken out of.

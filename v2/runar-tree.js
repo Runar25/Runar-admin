@@ -146,15 +146,10 @@ function _treeRuneSvg(g, blank, cls) {
   var rr = RUNES.filter(function (q) { return blank ? q.n === 'Blank' : q.g === g; })[0];
   return rr ? runeSvg(rr, { frame: false, cls: cls }) : '';
 }
-// Datum čtení jako v deníku (den, zkrácený měsíc, rok). Prohlížeč bez islandských dat (Chrome bez okna 2026-10-11: Intl 'is-IS'
-// chybí → „May 21, 2026“) dostane islandské číselné datum 21.5.2026, ne anglický měsíc.
+// Datum čtení jako v deníku — týmž pomocníkem datumUI (runar-utils.js), i se zálohou pro prohlížeč bez islandských dat. Do 2026-10-11
+// tu stála vlastní kopie té logiky (CODE-tree); deník zálohu neměl a CODE-tree v BACKLOGu navrhl jeden pomocník pro oba (§18).
 function _treeDatum(iso) {
-  if (!iso) return '';
-  var d = new Date(iso);
-  if (isNaN(d.getTime())) return '';
-  if (lang === 'is' && !(Intl.DateTimeFormat.supportedLocalesOf && Intl.DateTimeFormat.supportedLocalesOf(['is-IS']).length))
-    return d.getDate() + '.' + (d.getMonth() + 1) + '.' + d.getFullYear();
-  return d.toLocaleDateString(lang === 'is' ? 'is-IS' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  return datumUI(iso, lang);
 }
 
 // Popisek posuvníku: kolikáté čtení, kdy vzniklo a jeho runy (holá linka, §5). U celého stromu jen souhrn.

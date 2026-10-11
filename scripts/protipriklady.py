@@ -97,6 +97,10 @@ PRIPADY = [
  ('chyti', 'verify_rune_glyphs.js', 'v2/runar-shrine.html', 'replace', '<span data-rune-glyph="Fehu"></span>GENERATE GIFT CODES', 'ᚠ GENERATE GIFT CODES'),
  ('chyti', 'verify_rune_glyphs.js', 'v2/runar-shrine.html', 'replace', "setRuneText(btn, tUI('voice_btn_loading'));", "btn.textContent = tUI('voice_btn_loading');"),
  ('chyti', 'verify_rune_glyphs.js', 'v2/runar-shrine.html', 'replace', '.lbl-rune .rune-svg{display:block;height:0.82em;width:auto;}', '.lbl-rune .rune-svg{display:block;height:1.4em;width:auto;}'),
+ # ㊻ datum (2026-10-11, CODE-tune): návrat staré cesty deníku, záloha pryč z datumUI, strom vlastní cestou — každé musí shodit
+ ('chyti', 'verify_datum_ui.js', 'v2/runar-journal.js', 'replace', "    const dateStr = datumUI(e.drawn_at, isIs ? 'is' : 'en');", "    const dateStr = new Date(e.drawn_at).toLocaleDateString(isIs ? 'is-IS' : 'en-GB', { day:'numeric', month:'short', year:'numeric' });"),
+ ('chyti', 'verify_datum_ui.js', 'v2/runar-utils.js', 'replace', "    return d.getDate() + '.' + (d.getMonth() + 1) + '.' + d.getFullYear();", "    return d.toLocaleDateString('is-IS', { day: 'numeric', month: 'short', year: 'numeric' });"),
+ ('chyti', 'verify_datum_ui.js', 'v2/runar-tree.js', 'replace', '  return datumUI(iso, lang);', "  return new Date(iso).toLocaleDateString('en-GB');"),
  ('chyti', 'verify_rune_glyphs.js', 'v2/runar-readings-admin.js', 'replace', "var glyph = _rr ? runeSvg(_rr, { frame: false }) : esc(r.rune_glyph || '◻');", "var glyph = esc(r.rune_glyph || '◻');"),
  ('chyti', 'verify_lang_ternary.js', 'v2/runar-app.js', 'append', '', "\nvar _protiTern = lang === 'is' ? 'halló' : 'hello';\n"),
  # kolo 3 / 4g (2026-10-11): soulad kódu s docy a cesty dat. Texty útoků jsou poskládané z kousků (`'…' + '.md'`), aby tenhle

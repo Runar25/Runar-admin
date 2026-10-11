@@ -810,6 +810,19 @@ radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola okna where to start probehla'
 check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
 
+# ㊻ 2026-10-11 (CODE-tune; nalezl CODE-tree, owner „jeď ty tři chyby“): datum v deníku a ve stromě islandsky i v prohlížeči bez
+# islandských dat — Chrome na Windows je nemá a deník psal „May 21, 2026“. Jeden pomocník datumUI (runar-utils.js); kontrola tvrdí
+# výsledek produkčním deníkem a stromem, zdroj (jinde 'is-IS' nesmí) a skutečný Chrome bez okna. DECISIONS 2026-10-11 (67).
+print('\n' + chr(0x32BB) + ' DATUM V JAZYCE UŽIVATELE (verify_datum_ui.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_datum_ui.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+r2 = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_datum_ui.js'), '--test'],
+                    capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0 and r2.returncode == 0
+radky = [l for l in (r2.stdout + r.stdout + r.stderr + r2.stderr).strip().split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola data probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ㉴ Štítek modelu v UI = model v edge funkci (CODE-tune 2026-10-05). KUKY (report 2026-10-05 07:40): „Pokud jsi změnil model
 # na sol6.1, proč jsi to taky neupravil… Tady v readeru. Což znamená, že nevíš, kde co je.“ Proxy běžela na gpt-6.1-sol, přepínač
 # admina hlásil „GPT-6 sol“ — dvě místa (edge funkce × překlady), která nikdo nehlídal.
