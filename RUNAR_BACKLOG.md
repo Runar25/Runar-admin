@@ -2069,7 +2069,9 @@ post-processor je pryč od 2026-08-09, návody na jazyk a tarif neodpovídaly k�
 který nic neopisuje a odkazuje na vlastníky (§20).
 
 **PRO OWNERA:**
-19. ⚪ **Dvě tabulky bez kódu:** `knowledge_base` (3 výklady run z května, záložka Teach už do ní nepíše) a `gpt_reviews` (6 rozborů
+19. ✅ *(KUKY 2026-10-11: „nech jako historii“ — obě zůstávají, nic se nemaže. Obsah prošel CODE-read: knowledge_base = 3 výklady ve starém
+    hlasu (nepoužitelné jako text; jediná stopa: Fehu ↔ Gullveig podle Susan Gitlin-Emmer, v kánonu není); gpt_reviews = 6 rozborů luny ke
+    starým verzím promptu v4.58–v4.94, dnes jen historie.)* **Dvě tabulky bez kódu:** `knowledge_base` (3 výklady run z května, záložka Teach už do ní nepíše) a `gpt_reviews` (6 rozborů
     GPT z adminových čtení; funkce zrušena 2026-10-09, zápis v `RUNAR_PRIVACY.md`). Nic na nich nevisí; smazat nebo nechat jako historii
     rozhodne owner (data maže owner). Obě jsou v denní záloze.
 
