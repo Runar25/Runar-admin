@@ -2399,6 +2399,14 @@ dvojího odečtu. **Z dat (30 dní):** 0 záloh, 0 dvojích generování; dat po
   5. FAQ „The app will **let you know when they renew**“ / „Appið lætur þig vita…“ — žádné upozornění na nový měsíc v kódu není; appka jen při
      vyčerpání řekne „They return with the new month“ (`err_monthly_limit`). Buď větu ubrat, nebo upozornění postavit (to je rozhodnutí → owner).
 
+### Část 43 — limity a kvóty placených služeb (2026-10-11, jen čtení)
+**Platí (měřeno 2026-10-11):** Supabase Free daleko od limitů — databáze 15 MB (limit 500 MB), úložiště 23 MB (1 GB; statické audio 53 souborů
+21 MB + Rúnarův portrét) · ElevenLabs plán `starter`, poslední týdenní snímek 2026-10-05: 13 919 / 103 807 znaků za měsíc.
+- ⚪ **Před veřejným spuštěním — kapacita hlasu:** jeden namluvený výklad ≈ 600 znaků → plán `starter` unese **zhruba 170 hlasů měsíčně**
+  (každý nový účet 1 hlas k volnému čtení + čtení z karet + předplatné nejvýš `VOICE_MONTHLY_LIMIT`). Při desítkách aktivních lidí s hlasem
+  plán nestačí — rozhodnout předem: vyšší plán, nebo co se stane po vyčerpání (navazuje na „Limit v účtu ElevenLabs“ výš: zjistit, jestli má
+  plán zapnuté placení nad kvótu). Hlídá `voice-usage` ve shrine (snímek kvóty) + `plytvani.js`.
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
