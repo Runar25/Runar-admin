@@ -349,7 +349,7 @@ for (const f of files) {
   if (is.length) console.log('   IS „þegar" (často spojka „když" — ne nutně únik): ' +
     pct(is.filter(r => /\bþegar\b/i.test(r.reading_text)).length, is.length));
 }
-console.log('\n  (zákazy na výstupu měří `lint_readings.js`, IS gramatiku `is-grammar-qa.py`)\n');
+console.log('\n  (zákazy na výstupu měří `lint_readings.js`, IS gramatiku kontroly z CLAUDE.md §2)\n');
 
 // ── ROZLOŽENÍ LOSOVANÝCH PÁK ────────────────────────────────────────────────
 // Rovnoměrnost se neposuzuje okem: u N pozorování a K možností je očekávaná četnost

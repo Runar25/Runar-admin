@@ -914,6 +914,20 @@ radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola zakladu produkce probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# ㊱ Kontrola IS na jednom místě (CODE-tune 2026-10-11, KUKY „proč je těch míst několik? má být jedno. pro všechno, to má být
+# jednodušší na opravu po nějaké změně“): výčet nástrojů kontroly IS a jejich pořadí smí stát jen v CLAUDE.md §2, jinde odkaz.
+# Při zavedení našla 7 kopií mimo §2 (paměti, katalog nástrojů, Prófsteinn, komentář v check-is) — po zániku Yfirlestur zastaraly.
+print('\n' + chr(0x32B1) + ' KONTROLA IS NA JEDNOM MÍSTĚ (verify_is_kontrola_jedno_misto.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_is_kontrola_jedno_misto.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+r2 = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_is_kontrola_jedno_misto.js'), '--test'],
+                    capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0 and r2.returncode == 0
+output = (r2.stdout + r.stdout + r.stderr + r2.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola IS na jednom miste probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

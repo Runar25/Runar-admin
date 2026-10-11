@@ -2,7 +2,7 @@
 // RÚNAR · gen_batch.js — batch reading generator for OBJECTIVE eval
 //
 // Generates N readings through the REAL production prompt builders and the LIVE
-// claude-proxy, and writes them as JSONL for is-grammar-qa.py / analysis.
+// claude-proxy, and writes them as JSONL for analysis (+ a plain-text sidecar for the IS checks, CLAUDE.md §2).
 //
 // SCOPE (holds RUNAR_DECISIONS.md 2026-07-14 "NE syntetický eval"): defects,
 // hard Icelandic grammar, countable prompt behaviour. NOT a verdict on voice
@@ -447,7 +447,7 @@ async function main() {
     : path.join(REPO, 'eval_out', 'batch-' + genTs.replace(/[:.]/g, '-') + '.jsonl');
   fs.mkdirSync(path.dirname(outPath), { recursive: true });
 
-  // is-grammar-qa.py eats ONE READING PER LINE, not JSONL — so emit plain-text
+  // The IS checks (CLAUDE.md §2) eat ONE READING PER LINE, not JSONL — so emit plain-text
   // sidecars alongside it. Newlines inside a reading collapse to spaces, or the
   // checker would score one reading as several.
   const txtPath    = outPath.replace(/\.jsonl$/, '') + '.readings.txt';
@@ -836,7 +836,7 @@ async function main() {
 
   console.log('\n  done — ' + ok + ' ok, ' + failed + ' failed');
   console.log('  jsonl : ' + outPath);
-  if (fs.existsSync(txtPath))    console.log('  text  : ' + txtPath + '   (python -X utf8 is-grammar-qa.py <this>)');
+  if (fs.existsSync(txtPath))    console.log('  text  : ' + txtPath + '   (pro kontrolu IS — nástroje a pořadí v CLAUDE.md §2)');
   if (fs.existsSync(askTxtPath)) console.log('  ask   : ' + askTxtPath);
   console.log('');
 }

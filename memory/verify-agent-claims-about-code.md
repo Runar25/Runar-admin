@@ -29,7 +29,7 @@ Platí pro **jakýkoli** text, který tvrdí, jak kód funguje — handoff, krit
 **How to apply:** before touching anything a handoff asks for, run the cheap check that would falsify it — `grep` for the caller (is this code even live?), read the function it names, `ls`/`diff` the path it claims. Then check the ADJACENT facts the handoff did not state (tracked vs untracked, callers, who else touches it). State the finding with the evidence and, when the premise is false, say so instead of implementing it. A handoff should carry `psáno proti commitu <hash>`; if it does not, compare its assumptions against HEAD myself. Related: [[proceed-dont-ask]], [[match-existing-visual-first]], [[ask-owner-for-checks-you-cannot-run]].
 
 **⭐ Platí i pro tvrzení o VLASTNÍM přístupu (2026-08-16).** Cowork napsal „tohle bych měl ověřit
-`is-vazba`/`is-grammar-qa`, ale nemám k nim přístup" jako předpoklad zděděný z dřívějška
+islandskými nástroji, ale nemám k nim přístup" jako předpoklad zděděný z dřívějška
 v konverzaci — pro ten konkrétní obsah to nezkusil. **„Nemám přístup k X" je tvrzení stejné váhy
 jako tvrzení o kódu**, jen nespustí stejné podezření, protože zní jako fakt o mně, ne o projektu.
 Je levné ho vyvrátit, tak ho vyvrať — v téhle session, těsně před použitím, ne vzpomínkou.

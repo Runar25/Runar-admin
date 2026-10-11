@@ -11,7 +11,7 @@ gone. We write IS *finished and verified*; a native then corrects it *in the flo
 real reading*; we distil each correction into a rule so Rúnar says it right next time. The work
 stays ours — only the learning flows in. Same-looking as the old queue, opposite direction.
 
-**Why it's needed:** our automated tools (GreynirCorrect, BÍN) catch *words* — misspellings,
+**Why it's needed:** our automated checks (the list lives in `CLAUDE.md` §2) catch *words* — misspellings,
 non-words, unknown forms. They provably **miss subtle grammar and idiom**. A production reading
 said *„láta séð til þín"* and every tool passed it (GreynirCorrect only failed to *parse* the
 sentence — code `E001`, which is not an error message). Only a native ear caught it.

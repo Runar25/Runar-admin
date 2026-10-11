@@ -268,12 +268,10 @@ Korekce X→Y se aplikuje VŠUDE naslepo. V silně flektivní IS: Y správné v 
 - Validace: `is-corr-qa.py` — BÍN ověří, že Y je reálný tvar/kompozitum + flagne jednoslovné (offline, GDPR).
 - **Mrtvá korekce** (model už chybu nedělá / kryje ji grammar guard) → SMAZAT, neschovávat.
 
-**IS QC toolkit — tři plochy, tři nástroje (nezaměňovat; jména ověřena 2026-07-17):**
-- `check-is.py` — ZDROJ (kód): source-linter, pre-commit brána. Model-output chyby sem NEPATŘÍ.
-- `is-grammar-qa.py` — OUTPUT (čtení): GreynirCorrect nad CELÝMI větami, flag-only. **E001 = nerozparsováno
-  → NATIVE EYE**, nesmí projít tiše zeleně (§19.2).
-- `is-corr-qa.py` — KOREKCE: BÍN validuje Y (offline).
-- BÍN (`islenska`) — pevná slova (jména run, tier vocab); rozloží kompozita (lífs-rún) tam, kde GreynirCorrect selže.
+**IS QC toolkit — nástroje a jejich pořadí vlastní `CLAUDE.md` §2 („Kontrola IS“); tady se neopisují (§20).**
+Co tam není a patří sem: plochy se nezaměňují — kontrola zdrojového kódu nevidí výstup modelu a naopak (která je která, říká §2).
+**E001 = nerozparsováno → přepsat, dokud tomu nástroj nerozumí** (fronta „NATIVE EYE“ zrušena 2026-07-18, §19.2).
+(Do 2026-10-11 tu stál vlastní seznam se zaniklým `is-grammar-qa.py` a s „E001 → NATIVE EYE“ — obojí neplatilo.)
 
 ### Islandská gramatika — shoda přídavného jména (lekce 2026-06-14, KUKY ověřil)
 Moje chyby v sezónních obrazech byly VŠECHNY špatný ROD podstatného → špatný tvar přídavného.

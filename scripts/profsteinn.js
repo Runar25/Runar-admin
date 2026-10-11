@@ -19,7 +19,7 @@
 // CO NÁSTROJ NEUMÍ (a kam stížnost poslat dál):
 //   · vadný OBRAZ u runy      → slepý test obrazu (vzor docs/eval/2026-08-22-obrazy-blind/,
 //                               skript: obraz + 5 sad významů, 3 hlasy, šance 20 %)
-//   · islandská vazba/slovo   → python -X utf8 is-vazba.py <slovo> · check-is.py · korekce
+//   · islandská vazba/slovo   → kontroly IS (nástroje a pořadí: CLAUDE.md §2) · korekce
 //                               do DB přes shrine + BAD_PATTERNS
 //   · návrat OPRAVENÉ fráze   → python -X utf8 scripts/verify_no_recur.py (BAD_PATTERNS
 //                               + fixed reporty proti uloženým čtením a dávkám; síť)

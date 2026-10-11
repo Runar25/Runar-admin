@@ -1,4 +1,5 @@
-# is-grammar-qa.py — IS OUTPUT quality checker (dev / QA).
+# is-grammar-qa.py — MRTVÉ od 2026-10-10 (Yfirlestur API zaniklo); kontrola IS dnes: CLAUDE.md §2.
+# (Původně: IS OUTPUT quality checker (dev / QA).)
 # Runs GENERATED Icelandic readings through GreynirCorrect (Miðeind) via the public
 # Yfirlestur API and FLAGS suspected issues — spelling, unknown words (possible
 # neologisms), grammar. FLAG-ONLY: it never rewrites.
@@ -82,8 +83,7 @@ def read_inputs():
 
 def main():
     print('is-grammar-qa.py je mrtvý (Yfirlestur API zaniklo 2026-10, přesměrování na Málstaður bez API).\n'
-          'Použij: python -X utf8 is-greynir.py --text "…" (GreynirCorrect lokálně, zdarma) · python -X utf8 is-gpt-check.py --text "…"\n'
-          '(GPT) · idiomy a obraty: python -X utf8 is-vazba.py --freq "…"')
+          'Kontrola IS dnes: nástroje a pořadí v CLAUDE.md §2 („Kontrola IS“).')
     sys.exit(2)
     texts = read_inputs()
     if not texts:

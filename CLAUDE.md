@@ -79,7 +79,15 @@ k přeložení; kalk z EN (vazba, slovosled, obraz) je vada, ne východisko. IS 
 překládá. „Líp to neumím" NENÍ přípustná odpověď: styl a hlas je řemeslo — udělá se a ověří (níže).
 Flaguje se **jen chybějící 🔒 fakt / 📜 lore** (§23), NIKDY vlastní formulace; Sigrún není fronta
 na nedodělky (§19.2).
-**Platí pro Code i Cowork:** IS se dělá **hotová a ověřená** (`check-is` / `is-greynir.py` lokálně zdarma / `is-gpt-check.py` / `is-vazba.py --freq`; do 2026-10-10 Yfirlestur přes is-grammar-qa — jeho API zaniklo), nikdy odhadem ani odkladem na rodilého mluvčího (§19.2). → [[is-done-together-not-for-sigrun]]
+**Platí pro Code i Cowork:** IS se dělá **hotová a ověřená**, nikdy odhadem ani odkladem na rodilého mluvčího (§19.2). → [[is-done-together-not-for-sigrun]]
+**Kontrola IS — nástroje a pořadí (JEDINÉ místo, kde to stojí; paměť a docs sem odkazují, §20):**
+1. `python -X utf8 check-is.py` — ZDROJ (kód): známé chyby z `BAD_PATTERNS`, běží i v pre-commitu. Výstup modelu nevidí.
+2. `python -X utf8 is-greynir.py --text "…"` (nebo soubor, text na řádek) — GreynirCorrect lokálně, zdarma, text neodchází ven. Překlepy a neznámá
+   slova přesně; `E001` = věta nerozebraná → přepsat, ať jí nástroj rozumí. Falešné poplachy u vzácných slov (seznam v hlavičce nástroje).
+3. `is-gpt-check.py` — GPT korektor: shoda, pád, rod, kalky. Volá API → hlídač chce `RUNAR_API_ANO` + `RUNAR_API_ZAMER` (§30); náklady
+   každého volání zapisuje sám, souhrn `node scripts/utils/is_gpt_naklady.js`. Idiomy nevidí (`--samotest` to dokládá).
+4. `python -X utf8 is-vazba.py --freq "<obrat>"` — korpus Risamálheild: idiomy, vazby, kolokace (0× = podezřelé); `is-vazba.py <slovo>` = slovník.
+Korekce v DB: `is-corr-qa.py` (BÍN). Do 2026-10-10 Yfirlestur přes is-grammar-qa — API zaniklo (DECISIONS 2026-10-10 (39), (43)).
 **Vazba ≠ tvar — rekci/pád/kolokaci/idiom NEHÁDEJ (vrstva NAD BÍN).** BÍN dá jen tvary; vazbu ověř nástrojem `python -X utf8 is-vazba.py <slovo>` (Íslensk nútímamálsorðabók JSON API + Risamálheild korpus), nikdy odhadem, z Wiktionary ani „pohledem". Recept + limity + zdroje → [[is-vazba-check]].
 Každé Claude generování v IS má **3 vrstvy** (všechny v promptu — korekce se řeší v kontextu):
 ```js
@@ -190,7 +198,7 @@ Kořen měsíce oprav = duplikace + rozsypané řetězce („všechno všude a n
 ### §19 — Ověřuj VÝSLEDEK, ne tvar kódu (anti-tichá-chyba)
 Měsíc tichých chyb (korekce běžely mrtvé, check-is skenoval špatnou plochu, `láta séð` prošlo) měl JEDEN kořen: každá kontrola ověřovala **tvar kódu** (parsuje? string existuje ve zdroji? builder dává stejné byty?), ale nic neprotlačilo známý vstup **reálnou cestou** a neověřilo **výsledek**. Rozsypání (§18) chyby jen schovalo.
 1. **Seed-and-assert na hranici.** Kde data přechází hranici (DB→kód, zdroj→prompt, stav→reset), měj JEDEN drobný fixture co protlačí známý vstup skrz produkční funkce a ověří výsledek (očekávané JE přítomno / špatné NENÍ). Vzor = `golden_contracts.js` (smoke.py kontrola ⑥): seed raw DB řádku → `normalizeCorrections`→`getCorrPrompt` → replacement přežil až do promptu, žádné „undefined". Fixture musí sám cvičit pravou hranici (ne test-double se špatnými klíči).  <!-- check-docs:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
-2. **Žádné tiché zelené.** Co nástroj **prokazatelně neposoudí** (subtilní IS gramatika — kauzativa, vazby) NESMÍ projít zeleně. Filtrovaný signál = **viditelný žlutý, ne zahozený** (is-grammar-qa: `E001` = „nerozparsováno" ≠ „v pořádku"). ⚠️ **Fronta „NATIVE EYE / Sigrún" ZRUŠENA (KUKY 2026-07-18).** Nesrozumitelný výstup se **přepíše, dokud mu nástroj nerozumí** (přesně tak byl vyřešen E001 2026-07-17 — přepsáním na plné věty), ne odloží na někoho jiného. IS děláme rovnou hotovou a ověřenou → [[is-done-together-not-for-sigrun]]. ⚠️ Ruší **odkládání nedodělané IS** na Sigrún — NE **sbírání native oprav z živého testování do pravidel** (opačný směr, viz `IS_NATIVE_CHECKLIST.md`).
+2. **Žádné tiché zelené.** Co nástroj **prokazatelně neposoudí** (subtilní IS gramatika — kauzativa, vazby) NESMÍ projít zeleně. Filtrovaný signál = **viditelný žlutý, ne zahozený** (`E001` = „nerozparsováno" ≠ „v pořádku"; nástroje v §2). ⚠️ **Fronta „NATIVE EYE / Sigrún" ZRUŠENA (KUKY 2026-07-18).** Nesrozumitelný výstup se **přepíše, dokud mu nástroj nerozumí** (přesně tak byl vyřešen E001 2026-07-17 — přepsáním na plné věty), ne odloží na někoho jiného. IS děláme rovnou hotovou a ověřenou → [[is-done-together-not-for-sigrun]]. ⚠️ Ruší **odkládání nedodělané IS** na Sigrún — NE **sbírání native oprav z živého testování do pravidel** (opačný směr, viz `IS_NATIVE_CHECKLIST.md`).
 3. **Kontrola běží na TÉ PLOŠE, kde bug žije.** Dynamický model-output ≠ zdrojový string; DOM stav ≠ builder output. Kontrola na proxy ploše se nepočítá jako pokrytí.
 
 ### §20 — Jedna informace = jedno místo. Nikdy dvě.

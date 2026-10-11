@@ -3,7 +3,7 @@
 # ASCII-stripped text, Czech leftovers) a human could reintroduce while editing source.
 # It does NOT see model OUTPUT — and NOTHING checks model output live (overeno 2026-09-23,
 # EVAL_LOG 2026-09-23 (4)): gramatiku cteni drzi jen prompt (CLAUDE.md §2 vcetne runar_corrections).
-# is-grammar-qa.py je nastroj na vyzadani, ne za behu. Do 2026-09-23 tu stalo „+ Sigrún (native)" —
+# Vystup modelu a novou copy kontroluji jine nastroje na vyzadani, ne za behu — ktere a v jakem poradi: CLAUDE.md §2. Do 2026-09-23 tu stalo „+ Sigrún (native)" —
 # fronta Sigrún je zrusena od 2026-07-18 (§19.2) a veta budila dojem, ze vystup nekdo kontroluje.
 #
 # Usage: python -X utf8 check-is.py   |   new SOURCE-typo pattern -> BAD_PATTERNS below.
@@ -49,7 +49,7 @@ BAD_PATTERNS = [
     ('verið stað þar',   'verið staður þar', 'prisudek po vera = nominativ; „verið staður þar" 34× × „stað" 0× (Opus 5, 2026-09-24)'),
     ('þú vantar',        'þig vantar',       'vanta ma podmet v akuzativu (slovnik: þolfall); „sem þig vantar" 1700× × „sem þú vantar" 0× (Opus 5 u Nauthiz 3/24, 2026-09-26)'),
     # SOURCE-authorable typos/phrases = this checker's real job. Model-output errors
-    # (prose the model invents) belong to is-grammar-qa + runar_corrections, NOT here;
+    # (prose the model invents) belong to the IS checks in CLAUDE.md §2 + runar_corrections, NOT here;
     # the model-output entries below are kept only as living documentation for now.
     # Confirmed corrections from runar_corrections DB + manual review
     ('rúnarnar',         'rúnirnar',          'wrong plural'),
@@ -71,7 +71,7 @@ BAD_PATTERNS = [
     ('sína eigin myndir', 'sínar eigin myndir', 'myndir = ž. mn. č.; korpus 0 × 122'),
     ('fulla króniku',    'alla dagbókina',    'pravopis króníka + kalk „full chronicle“'),
     ('full kronika',     '(check context)',   'pravopis króníka'),
-    # 2026-10-10 zbytek nápovědy a appky (is-gpt-check + GreynirCorrect + korpus):
+    # 2026-10-10 zbytek nápovědy a appky (nálezy kontrol IS z CLAUDE.md §2 + korpus):
     ('frjáls spá',       'ókeypis spá',       'kalk z EN "free" (rs_credits_desc)'),
     ('kreditarn',        'inneign',           'kredit je v BÍN jen střední rod; korpus „kreditarnir“ 0 × „inneign“ 9567'),
     ('kreditan',         'inneignina',        'totéž ve 4. pádě'),
@@ -123,7 +123,7 @@ BAD_PATTERNS = [
 # Reading-prose grammar errors / invented words the MODEL generates — they never appear
 # in a source file, so scanning source for them is dead weight. Kept as documentation;
 # Not scanned. Model output nikdo za behu nekontroluje; ochrana = runar_corrections v promptu (vzdy doplnit
-# potvrzenou chybu, DECISIONS 2026-09-23 (6)) + is-grammar-qa.py na vyzadani.
+# potvrzenou chybu, DECISIONS 2026-09-23 (6)) + kontroly IS na vyzadani (CLAUDE.md §2).
 _MODEL_OUTPUT_ARCHIVE = [
     ('Þagninni',         'þögninni',          'wrong word (report 2026-07-09)'),
     ('tóm blað',         'tómt blað',         'gender: blað hk -> tómt (report 2026-07-09)'),

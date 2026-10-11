@@ -10,7 +10,7 @@
 # Co umí (změřeno 2026-10-10 při instalaci): překlepy přesně i s opravou (S004 — 4 ze 4); větu, kterou nerozebere, hlásí jako E001 =
 # „možná chyba“ (žlutá, ne zelená — §19.2), tak chytil i rod „ákveðin hlutir“ a „nafnlægt“. Na 6 správných větách z produkce 0 nálezů.
 # Co NEumí: shodu nebo pád, když je chybný tvar zároveň jiným platným tvarem („Fjöldi lestrar“, „1 lestrar“ — lestrar je i 2. p. j. č.),
-# a doslovné idiomy („ríður vindinum“). Na to is-gpt-check.py (GPT) a is-vazba.py --freq (korpus). Pořadí: tohle → GPT → korpus.
+# a doslovné idiomy („ríður vindinum“) — na to jsou další kontroly; které a v jakém pořadí, stojí jen v CLAUDE.md §2.
 # FALEŠNÉ POPLACHY na našich textech (změřeno 2026-10-10, 18 textů) — nález je PODEZŘENÍ, ne verdikt:
 #   · S004 „opraví“ vzácné složeniny appky na nesmysl: lífsrúnar → lífbrúnar (slovo nezná);
 #   · W001 u slov appky: prófari → prófar;  · Ý4Í lýst → líst („sem lýst er“ = popsaný, korpus 9546×);

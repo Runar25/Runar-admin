@@ -390,7 +390,7 @@ function cardPackName(p, lng) {
 // přibude, až budou postavené a budou mít ověřenou islandštinu.
 // Premium: řádky, které má stejné jako Standard, se složí do „Everything a Rune Walker has.“ (TIER_FEATURES_BASE).
 // IS šablony počítají s ženským „spá“ (VOCAB.cast, i `is_acc_def` + „þína“) — kdyby se slovo změnilo, přečíst znovu pády.
-// Ověřeno is-grammar-qa 2026-09-26; věty o hlasu 2026-10-10 is-greynir + is-gpt-check + korpus.
+// Ověřeno kontrolami IS 2026-09-26 a věty o hlasu 2026-10-10 (nástroje: CLAUDE.md §2).
 const _N_WORD = { en: ['', 'One', 'Two', 'Three', 'Four'], is_f: ['', 'Ein', 'Tvær', 'Þrjár', 'Fjórar'] };
 const TIER_FEATURES = [
   { key: 'month', hodnota: function (t) { return t.monthly_readings > 0 ? t.monthly_readings : null; },

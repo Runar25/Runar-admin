@@ -903,7 +903,7 @@ const UI_TEXT = {
     err_no_credits:     'Þú átt enga spá eftir. Notaðu {card} til að halda áfram.',
     err_monthly_limit: '\u00de\u00fa hefur nota\u00f0 alla lestrana \u00fe\u00edna \u00ed \u00feessum m\u00e1nu\u00f0i. \u00deeir koma aftur me\u00f0 n\u00fdjum m\u00e1nu\u00f0i.',
     err_voice_month:   'Röddin hefur talað {n} sinnum í þessum mánuði. Hún kemur aftur með nýjum mánuði.',
-    err_voice_quota:   'Röddin hvílir um sinn, en orð spárinnar eru áfram hjá þér.',   // 2026-10-11: is-greynir + is-gpt-check čisté
+    err_voice_quota:   'Röddin hvílir um sinn, en orð spárinnar eru áfram hjá þér.',   // 2026-10-11: kontroly IS čisté (CLAUDE.md §2)
     err_generic:        'Rúnar hvílist — reyndu aftur eftir andartak.',
     err_save_failed:    'Ekki tókst að vista — athugaðu nettenginguna og reyndu aftur.',
     visitor_desc:       'Þú ert hér <strong>Gestur</strong>. Dragðu rún og sjáðu hver kemur til þín.<br><br>Rúnar les í rúnirnar fyrir þá sem ganga með honum. Gerðu þig að <strong>Leitanda</strong> — {onboarding} þegar þú skráir þig.',

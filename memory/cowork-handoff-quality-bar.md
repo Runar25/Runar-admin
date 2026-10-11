@@ -65,7 +65,7 @@ něco v tom, co čtenář udělá dál? Ne → pryč.
    vznikly `RUNE_IMAGES` i islandské popisy světů v `rworld()` (viz `RUNAR_DECISIONS.md`:
    „obrazy jsou jen islandsky — Cowork EN verze nedodal" · „až Cowork dodá islandské popisy
    světů"). Co Coworku NEPATŘÍ, je formulace islandské **věty v promptu** (direktivy, pravidla)
-   — tu si CODE napíše a ověří sám (`is-vazba`, GreynirCorrect, BÍN); poslat mu ji = kolo navíc.
+   — tu si CODE napíše a ověří sám (kontroly IS, `CLAUDE.md` §2); poslat mu ji = kolo navíc.
    Ověření nástroji dělá CODE na všechno, co přijde.
    ⚠️ Do 2026-08-20 tu stálo holé „IS znění = CODE, ne Cowork" bez toho rozlišení. CODE-read podle
    toho napsal handoff, který Coworku **zakázal islandskou větev banky faset** — tedy jeho vlastní

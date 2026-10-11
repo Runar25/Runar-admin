@@ -10083,3 +10083,20 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   sousední body na hranici se liší o 0,4–0,5 procenta — žádný schod. Výchozí `rootsT.length` 95 → 65 podle ownera (kořeny na jeho stromě
   70 procent šířky koruny, hloubka 41 procent). Smoke ㉳ beze změny prošel (poměry v (s), (t), (u) na délce nezávisí).
 - Affected doc(s): `RUNAR_TREE_MAP.md` §9 (tloušťka matky) — v témže commitu.
+
+## 2026-10-11 (11) — Kontrola islandštiny: postup stojí jen v CLAUDE.md §2, jinde odkaz; hlídá smoke ㊱
+
+- **Rozhodl:** KUKY 2026-10-11: *„zapsal jsi všude, jak teď funguje IS kontrola?“* → *„proč je těch míst několik? má být jedno. pro
+  všechno, to má být jednodušší na opravu po nějaké změně.“*
+- **Co bylo:** výčet nástrojů a jejich pořadí stál na víc než sedmi místech — CLAUDE.md, working-style, tři další paměti, hlavičky nástrojů,
+  nápovědy skriptů, Prófsteinn. Po zániku Yfirlestur (2026-10-10) se opravila jen část: working-style dál radil mrtvý nástroj
+  a „E001 → NATIVE EYE“ (zrušeno 2026-07-18); `audit-is-yfirlestur.py` dál volal mrtvé API; katalog nástrojů (`tools.js`) řadil nové
+  nástroje do „ostatní“ a u souborů s CRLF nečetl popis.
+- **Co je:** postup (nástroje, pořadí, co který vidí, náklady GPT) stojí JEN v `CLAUDE.md` §2 „Kontrola IS“; všude jinde odkaz bez jmen
+  nástrojů, takže po další změně se opravuje jedno místo. Mrtvé nástroje odkazují tamtéž a skončí. Katalog řadí nástroje IS podle
+  začátku jména a čte popis i z docstringu a ze souborů s CRLF (122 nástrojů, všechny s popisem).
+- **Mechanismus (§30):** smoke ㊱ `verify_is_kontrola_jedno_misto.js` — řádka se dvěma a víc nástroji kontroly IS mimo CLAUDE.md je chyba
+  (historie: DECISIONS, EVAL_LOG, BACKLOG, docs/, snapshoty se nehlídají). Při zavedení našla 7 kopií. **Hranice:** hlídá jména našich
+  nástrojů na jedné řádce; popis vlastními slovy bez jmen nepozná.
+- Affected doc(s): `CLAUDE.md` §2 a §19.2 · memory `working-style`, `is-done-together-not-for-sigrun`, `read-design-before-voice-work`,
+  `cowork-handoff-quality-bar`, `verify-agent-claims-about-code` · `RUNAR_POPISY_RUN.md` · `IS_NATIVE_CHECKLIST.md` — v témže commitu.

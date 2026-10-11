@@ -28,7 +28,9 @@ const SKUPINY = [
   ['měření a hodnocení výstupu', ['measure_readings', 'lint_readings', 'measure_reading_costs', 'stats', 'find_seeds']],
   ['kontrola promptu a pravidel', ['lint_prompts', 'test_no_planted_bans', 'test_spine', 'test_lever_maps']],
   ['porovnání dávek', ['compare_']],
-  ['islandština', ['is-vazba', 'is-grammar-qa', 'is-corr-qa', 'check-is', 'check-translations']],
+  // 2026-10-11: podle začátku jména (^), ne výčtem — nové nástroje kontroly IS padaly do „ostatní“ a výčet by se musel opravovat
+  // po každé změně; které nástroje a v jakém pořadí, vlastní CLAUDE.md §2.
+  ['islandština', ['^is-', '^is_', '^check-is', '^check-translations']],
   ['kontroly ve smoke (verify_*)', ['verify_']],
   ['ostatní', []],
 ];
@@ -37,15 +39,22 @@ const SKUPINY = [
 function popis(soubor) {
   let txt = '';
   try { txt = fs.readFileSync(soubor, 'utf8'); } catch (e) { return '(nelze přečíst)'; }
-  for (const radka of txt.split('\n').slice(0, 14)) {
+  // 2026-10-11: \r?\n — u souborů s CRLF zůstalo \r na konci řádky, `.` ho nepojme a `$` nesedělo → „bez popisu“ (check-is.py).
+  let doc = false;   // 2026-10-11: popis v pythonovém docstringu (např. is-vazba.py) — do té doby „bez popisu v hlavičce“
+  for (let radka of txt.split(/\r?\n/).slice(0, 14)) {
+    const d0 = radka.trim();
+    if (d0.indexOf('"""') === 0) { doc = true; if (!d0.slice(3).trim()) continue; radka = '# ' + d0.slice(3).trim(); }
+    else if (doc) radka = '# ' + d0;
     const m = /^\s*(?:\/\/|#)\s?(.*)$/.exec(radka);
     if (!m) continue;
+    if (/^-\*- coding/.test(m[1].trim())) continue;   // dřív se testovalo až po oříznutí pomlček, „-*- coding“ prošlo jako popis
+    if (/^!/.test(m[1].trim())) continue;                // shebang (#!/usr/bin/env …) není popis
     const t = m[1].replace(/^[-=═─\s]+|[-=═─\s]+$/g, '').trim();
     if (!t || !/[A-Za-zÁ-ža-ž]/.test(t)) continue;
     if (/^-\*- coding/.test(t)) continue;
     // hlavicka casto zacina „RÚNAR · nazev.js — popis"; zajima nas ta cast za pomlckou
     const d = t.split(' — ');
-    return (d.length > 1 ? d.slice(1).join(' — ') : t).slice(0, 96);
+    return (d.length > 1 ? d.slice(1).join(' — ') : t).trim().slice(0, 96);
   }
   return '(bez popisu v hlavičce)';
 }
@@ -67,7 +76,7 @@ for (const d of ['scripts/utils', 'scripts', '.']) {
 
 function kam(f) {
   for (let i = 0; i < SKUPINY.length - 1; i++)
-    if (SKUPINY[i][1].some((k) => f.indexOf(k) !== -1)) return SKUPINY[i][0];
+    if (SKUPINY[i][1].some((k) => (k[0] === '^' ? f.indexOf(k.slice(1)) === 0 : f.indexOf(k) !== -1))) return SKUPINY[i][0];
   return 'ostatní';
 }
 

@@ -10,7 +10,7 @@
 #
 # BÍN is local + OFFLINE (no data leaves the machine) and domain-aware: it decomposes our
 # compounds (lífs-rún, Hermanns-andi) that GreynirCorrect mangles. Use THIS for correction
-# validity; use is-grammar-qa.py (GreynirCorrect) for OUTPUT quality over full readings.
+# validity; OUTPUT quality over full readings = the IS checks in CLAUDE.md §2 (the list lives only there).
 # NEVER auto-apply — this only flags; the human decides. Sigrún for the genuinely ambiguous.
 #
 # Usage: python -X utf8 is-corr-qa.py

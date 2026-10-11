@@ -4,7 +4,12 @@
 #
 # Pouziti: python audit-is-yfirlestur.py
 
-import re, json, urllib.request, urllib.parse, time, os
+import re, json, urllib.request, urllib.parse, time, os, sys
+
+# ⚠️ 2026-10-11 MRTVÉ: yfirlestur.is/correct.api od 2026-10 trvale přesměrovává na placený Málstaður bez API — skript by dostal
+# HTML místo výsledku. Kontrola IS dnes: CLAUDE.md §2. Kód níž zůstává kvůli historii.
+print('audit-is-yfirlestur.py je mrtvý (Yfirlestur API zaniklo). Kontrola IS dnes: CLAUDE.md §2.')
+sys.exit(2)
 
 BASE = r'C:\Users\zkuku\Downloads\Runar-admin\v2'
 OUT  = r'C:\Users\zkuku\Downloads\Runar-admin\is-audit-report.txt'

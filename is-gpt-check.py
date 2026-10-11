@@ -11,8 +11,7 @@
 # mluvčí nenapsal. Styl a vkus nehlásí. Odpověď je JSON (úsek → oprava, druh, jistota, proč).
 # Žádné tiché zelené (§19.2): když API selže nebo odpověď nejde přečíst, výsledek je „NEZKONTROLOVÁNO“ (exit 2), ne čistý.
 # Nástroj se obhájil 2026-10-10 na sadě známých chyb a správných vět z produkce — `--samotest` (1 volání).
-# Pořadí vrstev: is-greynir.py (GreynirCorrect lokálně, zdarma — překlepy přesně, ale falešné poplachy u vzácných slov) → tenhle
-# (shoda, pád, kalky podle smyslu) → is-vazba.py --freq (idiomy, které tenhle nevidí).
+# Kde stojí mezi ostatními kontrolami IS (pořadí, co vidí a co ne): jen CLAUDE.md §2.
 #
 #   python -X utf8 is-gpt-check.py --text "…"         · jeden text
 #   python -X utf8 is-gpt-check.py <soubor>           · text na řádek
