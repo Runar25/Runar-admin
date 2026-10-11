@@ -2559,9 +2559,11 @@ nasazení s pevnou knihovnou je vzalo znovu — nic nešlo do produkce bez souhl
 jsou dál jen ta záměrná z kola 1 (`buildSysPromptV2`, `_lensContext`, `_random*`, `TREE_UPDATE`, `PATTERN_WINDOW`, `TRANSFORMATION_PAIRS`,
 `AETTY`) + `VOICE_MONTHLY_LIMIT_TESTER` v configu — záměrná kopie hodnoty serveru, shodu hlídá `verify_monthly_limits.js`.
 - **Opraveno:** CLAUDE.md „Sdílená sémantická vrstva“ tvrdila, že `AETTY` čtou obě session — nečte ho nic (rezervované pro Gathering).
-- **Pro CODE-tune (nový nález):** `v2/icons/favicon.svg` (3,1 MB) se od 2026-09-11 nenačítá (komentář v `runar-reader.html`), ale dál
-  se veřejně nasazuje. Je to nejspíš vektorová předloha ikony → podle ownerova pravidla pro designové podklady (2026-10-10) přesunout
+- ✅ **Pro CODE-tune (nový nález):** v2/icons/favicon.svg (3,1 MB) se od 2026-09-11 nenačítá (komentář v `runar-reader.html`), ale dál
+  se veřejně nasazuje. ~~Je to nejspíš vektorová předloha ikony~~ → podle ownerova pravidla pro designové podklady (2026-10-10) přesunout
   do `v2/assets/` s řádkem v jeho README, ne smazat. `v2/runar-portrait.png` zůstává (ownerovo „nemazat“, README to uvádí).
+  *(CODE-tune 2026-10-11: přesunut jako `v2/assets/runar-app-icon.svg`; vektor to není, co to je → `v2/assets/README.md`. Veřejně
+  se nasazuje dál jako všechny podklady (část 19), nic ho ale nenačítá.)*
 
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
