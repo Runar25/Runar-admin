@@ -10266,3 +10266,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   verify_prompt_levers, verify_prompt_rules_registry, vzory EXIT 0. V prohlížeči appka naběhne, `RUNAR_MODES` má jediný režim životní runy,
   prompt v IS bez `undefined`, fotka a záložky na místě (§32).
 - Affected doc(s): `RUNAR_DESIGN.md` („Tree of Life per tier“) · `RUNAR_BACKLOG.md` (část 17) — v témže commitu.
+
+## 2026-10-11 (23) — Sdílené docy smí commitnout jen commit_vlastni.py (vynucuje pre-commit)
+
+- **Rozhodl:** owner 2026-10-11 *„5. ano. ostatní teď pracují tak, ať víš.“* na návrh CODE-read.
+- **Proč:** pathspec commit (`git commit -- RUNAR_BACKLOG.md`) bere celý soubor i s necommitnutou prací jiné session. Stalo se třikrát
+  (c81b4da, b4c3f4a, dfac200 — pokaždé jiná session) a `commit_vlastni.py` existoval, jen ho nic nevynucovalo (§30).
+- **Jak:** `hooks/pre-commit.py` zastaví commit, ve kterém je `RUNAR_*.md`, `CLAUDE.md` nebo `memory/**.md`, pokud nejde přes
+  `commit_vlastni.py` (ten nastaví `RUNAR_VLASTNI=1`). Napřed značka, pak zastavení — hook v `.git/hooks` čte soubor z pracovního
+  stromu, takže platí hned pro všechny session. Výjimka (smazání souboru, vědomý případ): `RUNAR_SDILENE_OK="<důvod>"`, loguje se do
+  `.git/runar-sdilene.log`. Mapa pravidel při dotyku ukazuje u sdílených docs hlavičku `commit_vlastni.py` (jak se používá).
+- **Ověřeno v provozu:** pathspec commit sdíleného docu zastaven; tentýž obsah přes `commit_vlastni.py` prošel (tento záznam).
+- Affected doc(s): `CLAUDE.md` §30, `memory/parallel-code-sessions-collision.md` — v témže commitu.

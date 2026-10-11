@@ -31,7 +31,7 @@ souboru dvěma session neřeší nic než worktree.
   odkaz do prázdna; můj push zastavil pre-push, ale commit už na server vynesl push jiné session a smoke tam padal všem, dokud
   `571674d` neopravil. Že push „prošel“, ověřuj `git status -sb` (ahead 0) a výpisem pre-pushe, ne jen tím, že je commit na origin.
 - ⭐ **Sdílený trackovaný soubor (DECISIONS, BACKLOG, DESIGN, memory) zapisuj a commituj přes `scripts/utils/commit_vlastni.py`** (od
-  2026-10-11): `cv.cti()` + `cv.zapis(soubor, text, '<lane>')` místo vlastního zápisu, pak `python -X utf8 scripts/utils/commit_vlastni.py
+  2026-10-11; od téhož dne to VYNUCUJE pre-commit — DECISIONS 2026-10-11 (23), třetí případ dfac200): `cv.cti()` + `cv.zapis(soubor, text, '<lane>')` místo vlastního zápisu, pak `python -X utf8 scripts/utils/commit_vlastni.py
   commit <lane> <zprava.txt>` a push. Commitne jen tvoje kusy z dočasného indexu (trojcestně proti HEAD), cizí necommitnuté zůstanou ve
   stromě; při překryvu s cizí změnou necommitne nic a řekne to (počkej, až ta session commitne). Nový soubor od jiného nástroje: `pridej`.
   **Proč:** 2026-10-11 `b4c3f4a` (CODE-tree) vzal záznam CODE-tune 2026-10-11 (5) a dvě jejich odškrtnutí v BACKLOGu, přestože pravidlo
