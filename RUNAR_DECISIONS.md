@@ -10039,3 +10039,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   první verze kontroly vypnuté porovnání nepoznala (hledala jen výskyt, který stál i ve výpisu do logu), opraveno.
 - **Nasazení:** elevenlabs-proxy a elevenlabs-static čekají na ownerovo „nasaď“; klient (hláška, počet ze serveru) jde s commitem.
 - Affected doc(s): `RUNAR_BACKLOG.md` část 43 a „Co testerům napsat dopředu“ — v témže commitu.
+
+## 2026-10-11 (7) — Strom (lab): ZAPNUTO — čtení o minulosti a nitru prohlubují kořen víc (nad polovinu návratů) + smoke ㉳ (u)
+
+- **Rozhodl:** KUKY 2026-10-11 k nanečisto (4): *„10. ano, zapni v labu. první dvoje obrázky je dobrá. nevím, co má být ta 4 obrázky pod ní, ale
+  to nechci.“* (První obrázek = jeho strom před a po, čtyři pod ním = modelové stromy svět/minulost.) **Provedl:** CODE-tree, LAB (aplikace
+  beze změny).
+- **Co je v labu:** totéž co nanečisto (4) — je-li víc než polovina návratů kořene ze čtení o minulosti (zóna v dolní třetině: záměr Past nebo
+  pozice urð) nebo o nitru (Healing, Family, Inner Growth), kořen se navíc prodlouží a hlavní kořen stočí strměji; nejvyšší dosažené v čase,
+  kořen se nezkrátí. Lab dává na jeho stromě táž čísla jako nanečisto: kořeny 100 procent šířky koruny, hloubka 60 procent výšky koruny.
+- **Smoke ㉳ (u):** jako (t), ale dvakrát — 30 návratů zakládací runy ze čtení o minulosti a nitru (Past + Healing) a 30 ze čtení o světě
+  (Decision + Career), každá dvojice proti týmž čtením s jinou runou téhož živlu. Kořen se u minulosti prodlouží 1,74×, u světa 1,21×; v inspekci
+  přesně +30 návratů o minulosti/nitru. Mutace: přídavek z minulosti vypnutý → 1,22× proti 1,22×; návraty o minulosti se nepočítají → 0 → 0.
+  Každou chytila jen (u).
+- **Otevřené:** „to nechci“ u čtyř modelových stromů — zeptáno, jestli jde o obrázky, nebo o tak hluboké kořeny u člověka, který čte skoro jen
+  o minulosti (strom minulosti: hloubka 58 → 76 procent). Odvolává se na (2), (3), (4).
+- Affected doc(s): `RUNAR_TREE.md` §2 · `RUNAR_TREE_MAP.md` §10, §12 · `RUNAR_BACKLOG.md` — v témže commitu.

@@ -43,6 +43,9 @@
 //   (t) NAVRAT RUNY PROHLOUBI KOREN (2026-10-11, kanon RUNAR_TREE.md §2): 60 cteni + 30 cteni se zakladaci runou Urd proti 30 tymz ctenim
 //       s jinou runou tehoz zivlu — stavba stromu je v obou stejna (misto urci zivel, oblast a zamer), lisi se jen pocet navratu. Koren
 //       zakladaci runy ma v inspekci presne o 30 navratu vic a jeho vybezky jsou delsi.
+//   (u) MINULOST A NITRO PROHLUBUJI VIC (2026-10-11, KUKY "10. ano, zapni v labu"; DECISIONS 2026-10-11 (4)): jako (t), ale dvakrat — 30 navratu
+//       ze cteni o minulosti a nitru (Past + Healing) a 30 ze cteni o svete a budoucnosti (Decision + Career). Kazda dvojice ma vlastni
+//       srovnani s jinou runou tehoz zivlu (stavba stejna); pomer delky korene musi byt u minulosti vetsi nez u sveta.
 //   (m) VETVICKY KOLEM VETVE (2026-10-09, KUKY: "vetvicky by se stridaly kolem vetve na obe strany, protoze stranu vetve uz urcila
 //       oblast"): zadna hlavni vetev s aspon 3 primymi vetvickami nema vsechny na jedne strane (strana = kam vetvicka miri od smeru
 //       rodice v miste uchyceni). Drive strana podle oblasti -> na leve vetvi skoro jen nitro -> KUKYho strom 4 jednostranne vetve.
@@ -234,5 +237,17 @@ let tMsg = '';
   else if (Bx.nav - A.nav !== 30) fails.push('(t) navraty korene ' + nmX + ': ' + A.nav + ' -> ' + Bx.nav + ' (ocekavano +30)');
   else if (!(Bx.len > A.len * 1.10)) fails.push('(t) koren ' + nmX + ' se s 30 navraty neprodlouzil (' + A.len.toFixed(0) + ' -> ' + Bx.len.toFixed(0) + ' px)');
   else tMsg = 'navrat prohloubi koren (' + nmX + ' +30 navratu: ×' + (Bx.len / A.len).toFixed(2) + ')'; }
+/* (u) minulost a nitro prohlubuji vic: pomer delky korene X (30 navratu X / 30 tychz cteni s Y) pro navraty o minulosti+nitru vs o svete */
+let uMsg = '';
+{ const base = LOGS[0][1].slice(0, 60), X = base[0].runes[0], Y = RB.find(r => r.el === X.el && r.k !== X.rune), nmX = (B.RUNES.find(z => z.k === X.rune) || {}).name;
+  const add = (rr, area, intention) => base.concat(Array.from({ length: 30 }, () => ({ spread: 'single', runes: [rr], area, intention, seeking: null })));
+  const lenX = (lg, kFix) => { let k = kFix, len = 0, np = null; labRun(lg, html, null).allPicks.forEach(p => { const m = p.meta || {}; if (!m.root || m.mirror || m.name !== nmX || m.navraty == null) return;
+      if (k == null) k = m.strand; if (m.strand !== k) return; np = m.navratyMin; for (let i = 1; i < p.pts.length; i++) len += Math.hypot(p.pts[i].x - p.pts[i - 1].x, p.pts[i].y - p.pts[i - 1].y); });
+    return { k, len, np }; };
+  const ratio = (area, it) => { const A = lenX(add({ rune: Y.k, el: Y.el }, area, it), null), Bx = lenX(add(X, area, it), A.k); return { r: Bx.len / Math.max(1, A.len), npA: A.np, npB: Bx.np }; };
+  const past = ratio('healing', 'past'), world = ratio('career', 'decision');
+  if (past.npB == null || past.npA == null || past.npB - past.npA !== 30) fails.push('(u) koren ' + nmX + ': navraty o minulosti/nitru ' + past.npA + ' -> ' + past.npB + ' (ocekavano +30)');
+  else if (!(past.r > world.r * 1.15)) fails.push('(u) navraty o minulosti a nitru neprohloubi koren vic nez navraty o svete (×' + past.r.toFixed(2) + ' vs ×' + world.r.toFixed(2) + ')');
+  else uMsg = 'minulost a nitro prohlubuji vic (' + nmX + ': ×' + past.r.toFixed(2) + ' vs svet ×' + world.r.toFixed(2) + ')'; }
 if (fails.length) { fails.slice(0, 12).forEach(f => console.log('   ' + f)); console.log('strom: ' + fails.length + ' poruseni (vetve ze stejneho mista / pod podlahou / cteni mimo sve misto / vetvi nad strop / neklikatelne / prameny navic / inspekce neodpovida logu)'); process.exit(1); }
-console.log('strom (lab): ' + runs + ' stromu — vystupy ramen na stejne strane aspon ' + worstE.toFixed(0) + ' px, levo-pravo aspon ' + worstLR.toFixed(0) + ' px, zadne pod podlahou, kazde cteni na svem miste strana × zona (jako vetvicka na plnem rameni jineho zivlu nejvys ' + (worstForeign * 100).toFixed(0) + ' %), nejvys ' + maxBr + ' vetvi, kapacita ramen drzi, kazda vedlejsi ma koren, ' + oMsg + ', vetve na rodici aspon ' + worstS.toFixed(1) + ' px, vse klikatelne, inspekce = log, nejvys ' + maxStr + ' pramenu v kmeni, ' + iMsg + ', ' + jMsg + ', ' + kMsg + ', ' + lMsg + ', ' + rMsg + ', ' + sMsg + ', ' + tMsg);
+console.log('strom (lab): ' + runs + ' stromu — vystupy ramen na stejne strane aspon ' + worstE.toFixed(0) + ' px, levo-pravo aspon ' + worstLR.toFixed(0) + ' px, zadne pod podlahou, kazde cteni na svem miste strana × zona (jako vetvicka na plnem rameni jineho zivlu nejvys ' + (worstForeign * 100).toFixed(0) + ' %), nejvys ' + maxBr + ' vetvi, kapacita ramen drzi, kazda vedlejsi ma koren, ' + oMsg + ', vetve na rodici aspon ' + worstS.toFixed(1) + ' px, vse klikatelne, inspekce = log, nejvys ' + maxStr + ' pramenu v kmeni, ' + iMsg + ', ' + jMsg + ', ' + kMsg + ', ' + lMsg + ', ' + rMsg + ', ' + sMsg + ', ' + tMsg + ', ' + uMsg);
