@@ -60,6 +60,7 @@
       "oblast": "strom",
       "cesty": ["v2/runar-tree-prod.js", "v2/runar-tree.js", "v2/tree-lab-*/**", "build_*composer.py", "build_tree_production.py"],
       "docs": [
+        {"soubor": "RUNAR_TREE.md", "nadpis": "2. IDENTITA"},
         {"soubor": "RUNAR_TREE.md", "nadpis": "3. ZÓNY"},
         {"soubor": "RUNAR_TREE.md", "nadpis": "8. STAVBA"}
       ],
