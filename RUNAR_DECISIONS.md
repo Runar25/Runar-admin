@@ -10982,3 +10982,21 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   přihlášení, ale jednorázový ukazatel; doc dostal odkaz sem.
 - Affected doc(s): `RUNAR_DESIGN.md` (odkaz u „žádné uvítací okno“), `RUNAR_BACKLOG.md` (zásady: seznam toho, co drží úložiště
   prohlížeče) — v témže commitu.
+
+## 2026-10-11 (66) — Lab stromu: „rozevření kořenů“ zase působí (směr, ne stavba), čtení ownera z produkce do labu, 8 mrtvých posuvníků do ODLOŽENO
+
+- **Proč:** KUKY 2026-10-11: *„ono nemusí měnit moje rozhodnutí o kořenech. potřebuju jim jen dodat jiný směr. měly by vypadat víc jako 5 … možná
+  nejlepší bude, když převedeš moje čtení do labu a tak to můžeme ladit?“* a *„tak jsou v labu mrtvé funkce. dole u kořenů …“*.
+- **Rozevření kořenů** (`rootsT.fan`) bylo od ramen (2026-10-10) mrtvé — směr kořene dává zrcadlo koruny (`_SL.rdev`) nebo kořen matky (`dirO`);
+  změřeno na jeho stromě: −1,6 i 1,6 = tytéž body. Teď v režimu ramen otočí celý kořen kolem paty, odklon tětivy od svislice × (1 + fan), až po
+  všech pravidlech (návraty, Norny, seeking), strop 63°. Mění jen směr, ne stavbu (2026-10-10 (23)); relativní stočení z (3) a (13) zůstává.
+  Jeho strom: 0 → kořeny 0,44 šířky koruny · 0,6 → 0,55 · 1,0 → 0,61 (varianta 5 bez stočení = 0,65), žádný kořen nad zemí.
+- **Čtení ownera do labu:** `node scripts/utils/lab_moje_cteni.js` (jeho účet z produkce, převod `readingsToTreeLog` jako aplikace, zakládací
+  Norny první) → v labu tlačítko MOJE ČTENÍ Z PRODUKCE. Lab měl starší vlastní log (388 čtení, staré Norny) a se stejným nastavením vypadal jinak
+  (koruna 879 × 1332). Soubor nese jen runy, oblast, záměr a seeking a je v `.gitignore` (repo je veřejné).
+- **Mrtvé posuvníky:** audit všech posuvníků na jeho stromě z produkce (výchozí hodnoty, min → max): `maxMains`, `exitFloor`, `intZone`,
+  `bendStr`, `bendK`, `bendN`, `exitMinPx`, `gradLen` 0,0 % — přebila je stavba ramen; jsou ve sbaleném ODLOŽENO, nic se nemaže. WebGL páky
+  žijí jen v režimu WebGL (beze změny).
+- **Produkce beze změny:** výchozí rozevření 0; otisk stromu ownera, stromu z labu i semínka stejný před a po (kód dfc44f7). Rozevření do
+  produkce až s hodnotou, kterou owner v labu na svých čteních schválí.
+- Affected doc(s): `RUNAR_TREE_MAP.md` §10 (rozevření) a §11 (posuvníky, čtení do labu) — v témže commitu.
