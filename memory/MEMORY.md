@@ -49,6 +49,7 @@ rozsah vlastní `working-style.md` („Explore → Plan → Implement“).
 | Strom života — duše, zóny, signály, Gathering | `RUNAR_TREE.md` | 📜 |
 | Otevřené úkoly, blockery, priority | `RUNAR_BACKLOG.md` | stav |
 | GDPR, privacy, tester consent | `RUNAR_PRIVACY.md` | 🔒 |
+| Co owner řekl / co se dělalo v dřívější konverzaci (CODE i Cowork) | `node scripts/utils/najdi_v_konverzacich.js "<text>"` | stav |
 | Která pravidla platí pro který soubor (ukáže je hook při prvním dotyku) | `scripts/utils/pravidla_mapa.json` | 🏛 |
 | Prófsteinn — test čtení při stížnosti (soudci svět·soulad·chlad + kam poslat zbytek) | `scripts/profsteinn.js` (hlavička = celý postup) | 🔄 |
 | Aktuální SW verze / commit / co je nasazené | `v2/sw.js` a `git log` — **nikdy ne v docu** | stav |
@@ -133,7 +134,7 @@ Intake (NENÍ pravda): `docs/inbox/` · Mrtvá (scratch): mimo index.
 - [is-vazba-check.md](is-vazba-check.md) — islandskou vazbu (rekce/pád/kolokace/idiom) ověř `is-vazba.py` (nútímamálsorðabók API + korpus), vrstva nad BÍN, nehádej
 - Strom (CODE-tree): [runar-tree-engine-lab.md](runar-tree-engine-lab.md) historie enginu · [runar-trunk-incremental-rule.md](runar-trunk-incremental-rule.md) celý strom měnit přírůstkově, engine nepředělávat, snapshot · [runar-tree-living-movement.md](runar-tree-living-movement.md) živý pohyb větví · [tree-roots-rebuild.md](tree-roots-rebuild.md) NIKDY neshlukovat větve, kořen s dev:0 = prut, po rebuildu tvrdý reload
 
-## Index snapshots (nejnovější = poslední)
+## Index snapshots (nejnovější = poslední) — od 2026-10-11 dobrovolné, konverzace se zálohují a dají prohledat
 Snapshot = **historický záznam ke svému datu**, ne popis dneška. Nikdy z něj nepřebírej aktuální stav.
 - _Starší (2026-05-30 → 2026-09-26): složka `snapshots/` — sbaleno 2026-10-10, index se blížil limitu 200 řádků._
 - [snapshots/2026-10-05-vegvisir-odlozen.md](snapshots/2026-10-05-vegvisir-odlozen.md) — CODE-read: Vegvísir ODLOŽEN; rozhodnuto (cesta, bez středu, Ask nese vazbu, IS dělá CODE-read), změřeno 2026-09-27, co visí

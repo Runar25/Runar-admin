@@ -51,7 +51,7 @@ plán se odjede celý bez ptaní mezi kroky ([[proceed-dont-ask]]). DECISIONS 20
 2. Claude ukáže co to znamená v praxi — kde to sáhne, co ovlivní, co je nejdřív
 3. Ty doplníš / upřesníš / zamítneš
 4. Teprve pak implementace — jeden krok najednou
-5. Po implementaci: zápis k vlastníkovi (CLAUDE.md §16, §20) + snapshot rozdělané práce
+5. Po implementaci: zápis k vlastníkovi (CLAUDE.md §16, §20)
 
 ### Verifikační mechanismus — VŽDY
 Claude zastaví když to "vypadá hotově" — bez verifikace se stáváš verifikační smyčkou sám.
@@ -71,7 +71,7 @@ Caveat: transientní toasty co vyblednou = false-positive; rune názvy/gender js
 **Vlastník = `CLAUDE.md`, sekce „Doc-owner pravidla".** Sem se nekopíruje.
 Do 2026-08-17 tu stála druhá verze („cíl pod 200 řádků") a rozešla se s tou v CLAUDE.md
 („~200, 250 OK") — dvě čísla pro totéž pravidlo ve dvou souborech.
-Co platí pořád a co CLAUDE.md nemá: **historie „Hotovo" patří do snapshotů, ne do doků.**
+Co platí pořád a co CLAUDE.md nemá: **historie „Hotovo" nepatří do doků** — vlastní ji `git log` a DECISIONS.
 
 ---
 
@@ -227,7 +227,6 @@ Když uživatel přinese soubor zvenku (@soubor nebo obsah vložen do chatu):
    - Tree (model, zóny, signály, Gathering) → RUNAR_TREE.md · vzhled → RUNAR_TREE_RENDER.md · úkoly → RUNAR_BACKLOG.md
    - Stack, soubory, DB, tier → CLAUDE.md („Soubory") + `runar-config.js` (runar-project.md je prázdný, §20)
    - Workflow, coding rules → working-style.md
-   - Snapshot co bylo uděláno → snapshots/YYYY-MM-DD-nazev.md
 4. Implementovat co jde BEZ stromu/DB — datové definice do kódu
 5. Označit co čeká — v CLAUDE.md nebo memory souboru
 6. Říct co bylo zapsáno kam a co čeká na implementaci
@@ -248,38 +247,26 @@ runy a uloží ho do `runar_static_audio`; produkční reader i journal je pak s
 (`runar-app.js:861`, `:1167`, `runar-journal.js:230`). Změna promptu se tedy v shrine neozkouší,
 ale **rovnou projeví** — a jen pro ty runy, které tam někdo znovu vygeneruje.
 
-## Pre-compact protokol
-**Průběžně, ne až „před compactem" — ten přijde bez ohlášení.** Claude musí:
-1. Uložit **rozdělanou práci** do `memory/snapshots/YYYY-MM-DD-nazev.md` — a **jen to, co nemá
-   vlastníka jinde**: čím jsme se zrovna zabývali a co je další krok. Rozhodnutí patří do
-   `RUNAR_DECISIONS.md`, otevřené úkoly do `RUNAR_BACKLOG.md`, měření do `RUNAR_EVAL_LOG.md`.
-   Snapshot, který je opisuje, je „shrnutí všeho" (CLAUDE.md §20) a nemá vzniknout.
-2. Aktualizovat MEMORY.md — přidat odkaz na nový snapshot
-3. Aktualizovat dotčené doky dle rozcestníku (tree → RUNAR_TREE.md; ne archivované suroviny)
-4. Teprve pak říct, že je hotovo
+## Konverzace se neztrácí — snapshot je dobrovolný (od 2026-10-11)
+**Povinnost snapshotu ZRUŠENA** (KUKY 2026-10-11 „11. zrušit povinnost“, DECISIONS 2026-10-11 (21)). Proč: hlídač blokoval „jednou za session“
+a session běží dny přes compacty → poslední snapshot byl 2026-10-07, pravidlo vypadalo platně a nic nevynucoval; snapshot je navíc
+převyprávění, které zastará a opakuje BACKLOG a DECISIONS (CLAUDE.md §20). Místo něj platí:
+- **Přepisy konverzací se nemažou** (`cleanupPeriodDays` 36500 v `~/.claude/settings.json`; do 2026-10-11 se mazaly po 30 dnech — <!-- doc-links:ok 2026-10-11 uživatelské nastavení Claude Code, mimo repo -->
+  z CODE session zbylo 12 přepisů, nejstarší 2026-08-15).
+- **Noční šifrovaná kopie** všech přepisů (CODE i Cowork) a hooků z `~/.claude` → `scripts/utils/zaloha_konverzaci.js`, pouští ji noční
+  záloha DB; jen lokálně `~/runar-eval/zaloha-konverzaci`, nic se nemaže.
+- **Hledání:** `node scripts/utils/najdi_v_konverzacich.js "<text>"` (`--kdo owner`, `--od`, `--zalohy`). Nevíš, co owner řekl nebo co se
+  rozhodlo, a v DECISIONS/BACKLOG to není? Napřed hledej tady, pak se ptej.
+- Rozhodnutí dál do `RUNAR_DECISIONS.md`, úkoly do `RUNAR_BACKLOG.md`, měření do `RUNAR_EVAL_LOG.md` — PRŮBĚŽNĚ, compact přijde bez ohlášení.
+- Snapshot smí vzniknout (rozdělaná práce, která nemá vlastníka jinde), ale nic ho nevyžaduje.
 
-## Compact — snapshot drží Claude, owner nedělá nic
-
-⭐ **Pravidlo (KUKY 2026-08-17):** *„jelikož děláš compact sám, tak já to nemusím vůbec stihnout.
-Proto je mi příjemnější, abys to dělal ty, když je správný čas."*
-
-**Claude drží `memory/snapshots/` čerstvý průběžně** — kdykoli přibude něco, co by nemělo přežít
-jen v hlavě (nález, rozhodnutí, změna směru), přepíše dnešní snapshot. Ne na vyžádání, ne před
-compactem, **průběžně**. Hook ho po compactu vypíše sám.
-
-⭐ **A od 2026-08-17 to nevisí na jeho paměti:** Stop-hook zablokuje konec tahu, když session
-commitla a na `memory/snapshots/` nesáhla. Blokne jednou za session — podruhé projde.
-
-⭐ **A od 2026-08-20 hlídá Stop-hook i neverzovaný soubor v `memory/`** — ten, který
-vznikl v TÉHLE session. Auto-paměť je zapisuje sama (junction do repa), takže session o tom
-často neví; smoke ⑪ je pak najde až u toho, kdo zrovna pushuje něco jiného. Teď se to řekne
-tomu, komu soubor vznikl. Blokne jednou za session.
+⭐ **Stop-hook dál hlídá neverzovaný soubor v `memory/`** (od 2026-08-20) — ten, který vznikl v TÉHLE session; blokne jednou za session.
 
 ⚠️ **NEVYPISOVAT ownerovi `/compact Zachovej: …` řádku k zkopírování — ANI na `/zabal`.**
 Do 2026-08-17 tu stála výjimka „na `/zabal` se vypisuje". Byla to vada: důvod zákazu (owner by
 ji musel držet v hlavě do okamžiku, který nikdo netrefí) platí na `/zabal` úplně stejně.
 KUKY 2026-08-17 na ni řekl: *„tohle mi dáváš k čemu?"* — **nemá konzumenta.** Co by nesla, už
-leží v **commitnutém snapshotu** a hook to po compactu vypíše sám; řádka je jen druhá kopie
+leží v přepisu konverzace (nemaže se, dá se prohledat) a v DECISIONS/BACKLOG; řádka je jen druhá kopie
 téhož přes kanál, který nefunguje (§20). Owner píše **holé `/compact`**, nic víc.
 
 ⚠️ **Automatický compact instruovat NELZE** — ověřeno v dokumentaci: `autoCompactEnabled` je
@@ -290,7 +277,7 @@ Zachovej: …` účinek má, ale jen když se stihne dřív. **Proto na něm nes
 `source: "compact"` a vypisuje poslední rozhodnutí, mapu „sáhneš na tohle → přečti tenhle doc",
 archiv čtení a pravidla, co se nejčastěji zapomínají.
 
-⚠️ **Snapshot NENÍ handoff a nikdy z něj neber aktuální stav** (MEMORY.md). Nese, co bylo
+⚠️ **Snapshot (je-li) NENÍ handoff a nikdy z něj neber aktuální stav** (MEMORY.md). Nese, co bylo
 rozdělané **k tomu dni**. Aktuální stav vlastní produkce, `git log` a doky dle rozcestníku.
 
 ## Post-compact / Session Start protokol

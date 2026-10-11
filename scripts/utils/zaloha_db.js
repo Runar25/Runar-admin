@@ -175,4 +175,14 @@ if (process.argv.includes('--test-lhuta')) {
   console.log((ok ? 'OK    ' : 'FAIL  ') + 'lhůta ' + LHUTA_DNI + ' dní k ' + dnes + ': smazáno ' + JSON.stringify(smazano) + '; zůstalo ' + zbylo[0]);
   process.exit(ok ? 0 : 1);
 }
-main().catch((e) => { log('CHYBA: ' + e.message); process.exit(1); });
+// Krok 7 (2026-10-11, KUKY „pravidelná záloha z konverzace… ať se nic neztratí“, DECISIONS 2026-10-11): po úspěšné záloze DB šifrovaná
+// kopie všech konverzací a hooků (zaloha_konverzaci.js). Selže-li jen ona, záloha DB platí → exit 2 (ne 1), ať je selhání rozlišitelné.
+main().then(() => {
+  try {
+    const out = execFileSync(process.execPath, [path.join(__dirname, 'zaloha_konverzaci.js')], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
+    log('konverzace: ' + out.trim().replace(/^OK\s+/, ''));
+  } catch (e) {
+    log('CHYBA konverzace: ' + String((e.stdout || '') + (e.message || '')).trim().slice(0, 300));
+    process.exitCode = 2;
+  }
+}).catch((e) => { log('CHYBA: ' + e.message); process.exit(1); });

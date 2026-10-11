@@ -354,6 +354,9 @@ musí to buď **udělat skript samo**, nebo **zastavit práci**, když se to vyn
   rozhodnutí projde, jen když v témže tahu běžel `node scripts/utils/uz_vime.js <pojmy>` (co už je hotové, zamítnuté, zapsané).
 - **Hlášení z appky** → §29 (`nacti_cteni.js` stav v DB; zápis hned po načtení hlídá týž Stop-hook). **Co je hotové, rozhodnuté nebo zapsané, se ownerovi znovu nepředkládá** —
   vrací se, až se vada objeví v nových čteních a owner na ni upozorní.
+- **Konverzace se neztrácí** → přepisy se nemažou (`cleanupPeriodDays`), noční šifrovaná kopie `scripts/utils/zaloha_konverzaci.js`
+  (krok noční zálohy DB), hledání `node scripts/utils/najdi_v_konverzacich.js "<text>"` (i zprávy ownera poslané během práce).
+  Povinný snapshot zrušen — nic ho nevynucovalo a opakoval BACKLOG a DECISIONS. (KUKY 2026-10-11, DECISIONS 2026-10-11 (21).)
 - **Pravidla při dotyku** → PreToolUse hook (`scripts/utils/pravidla_pri_dotyku.py`): když session poprvé sáhne na soubor z mapy
   `scripts/utils/pravidla_mapa.json`, úpravu jednou zastaví a vypíše AKTUÁLNÍ znění pravidel pro tu oblast (živě z CLAUDE.md, docs,
   paměti); dlouhou sekci pustí až po Read; zápis do CLAUDE.md, `memory/` a `RUNAR_*.md` až po `uz_vime.js`. Znovu po compactu. Mapu

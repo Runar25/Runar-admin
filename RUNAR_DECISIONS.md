@@ -10230,3 +10230,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno:** is-greynir 6/6 · is-gpt-check 6/6 (1 volání, $0.0095) · korpus („eftir tungumáli“ 22× × „eftir tungumál“ 0×,
   „enn um sinn“ 3660×, „á fyrsta degi“ 6354×) · smoke ㊲ (HTML = slovník) · v prohlížeči EN i IS vykreslené, bez zbylých `{…}`.
 - Affected doc(s): `RUNAR_BACKLOG.md` (část 42, položka (o)) — v témže commitu.
+
+## 2026-10-11 (21) — Konverzace se nemažou, noční šifrovaná kopie a hledání v nich; povinný snapshot zrušen
+
+- **Rozhodl:** owner 2026-10-11 *„pravidelná záloha z konverzace v jakékoliv session, ať se nic neztratí a popřípadě se dá najít, pokud
+  nějaká session zapomene“* → na návrh CODE-read *„10. ano. 11. zrušit povinnost“*.
+- **Změřeno předtím:** Claude Code mazal přepisy po 30 dnech (`cleanupPeriodDays` nenastaveno) — z CODE session zbylo 12, nejstarší
+  2026-08-15; záloha při compactu jen při compactu, max 30 session, ležely 3; snapshoty od 2026-10-07 žádné (hlídač „jednou za session“).
+- **Teď:** `cleanupPeriodDays` 36500 · `scripts/utils/zaloha_konverzaci.js` = krok noční zálohy DB (`zaloha_db.js`, selže-li jen on → exit 2):
+  každý přepis CODE i Cowork jako archiv 7z AES (heslo jako DB), přebalí se jen změněný, nic se nemaže; hooky a nastavení z `~/.claude`
+  když se změní (zavírá část položky BACKLOG 2026-08-17 „hooky mimo git“); jen lokálně — přepisy nesou výpisy z DB s e-maily testerů ·
+  `scripts/utils/najdi_v_konverzacich.js` hledá bez diakritiky, `--kdo owner|claude`, `--od`, `--zalohy`.
+- **Past, kterou hledání málem minulo:** zpráva ownera poslaná během práce session se ukládá jako `attachment`/`queued_command`
+  (origin `human`), ne jako `user` — první verze ownerovu dnešní větu nenašla. Zprávy jiných session (`peer`, `<cross-session-message>`)
+  se značí „session“, ne owner. Samotesty: záloha 6 stavů, hledání 8.
+- **Snapshot:** povinnost zrušena (blok ve Stop-hooku `tree-guard.sh` vypnut, záloha `.pred-snapshot-2026-10-11`); smí vzniknout dobrovolně.
+- Affected doc(s): `memory/working-style.md` (sekce compactu), `CLAUDE.md` §30, `memory/MEMORY.md` — v témže commitu.
