@@ -558,7 +558,8 @@ function checkAdminAccess() {
     // Admin confirmed — open the shrine
     gate.classList.add('hidden');
     label.style.display = 'block';
-    label.textContent   = currentUser.email.split('@')[0];
+    // 2026-10-11 celý e-mail (§12 zakazuje část před zavináčem; nález CODE-read kolo 2 / 4) — hlavička říká, KTERÝ admin je přihlášený
+    label.textContent   = currentUser.email;
     btn.textContent     = 'SIGN OUT'; btn.classList.remove('signin');
   }
 }
