@@ -66,6 +66,15 @@ PRIPADY = [
  ('chyti', 'verify_ending_angle.js', 'v2/runar-utils.js', 'regex',
   r"(var pool = lang === 'is' \? ESSENCE_FRAMES_IS : ESSENCE_FRAMES;\r?\n\s*return pool\[Math\.floor\(Math\.random\(\) \* )pool\.length", r'\g<1>(pool.length - 1)'),
  ('chyti', 'verify_ask_teaser.js', 'v2/runar-utils.js', 'replace', "return (pad && T['label_is_' + pad]) || T.label_is;", 'return T.label_is;'),
+ # strom ㉳ (CODE-tree 2026-10-11): mutace z hlavičky verify_tree_mista převedené na opakované útoky. Kontrola si lab staví z builderu
+ # do dočasné složky, takže útok míří na build_crown_composer.py. (a) dvě ramena v jedné výšce — přes výšky zón XLF, ne exitMinPx
+ # (exitMinPx 30→5 kontrola propustila: rozestup na jejích 12 stromech drží výšky zón, min. 49 px i s 5 px); (s) seeking koření;
+ # (t) návrat prohloubí kořen; (u) minulost a nitro prohlubují víc; (v) kořeny Noren hlavní.
+ ('chyti', 'verify_tree_mista.js', 'build_crown_composer.py', 'replace', 'var XLF=[0.26, 0.36, 0.46, 0.56, 0.66, 0.76]', 'var XLF=[0.26, 0.26, 0.46, 0.46, 0.66, 0.66]'),
+ ('chyti', 'verify_tree_mista.js', 'build_crown_composer.py', 'replace', '      if(_SL) bendRootPaths(rG.paths, kSh);', '      if(false) bendRootPaths(rG.paths, kSh);'),
+ ('chyti', 'verify_tree_mista.js', 'build_crown_composer.py', 'replace', 'rTT.length*=1+0.5*fR+0.8*exMax;', 'rTT.length*=1+0.8*exMax;'),
+ ('chyti', 'verify_tree_mista.js', 'build_crown_composer.py', 'replace', 'rTT.length*=1+0.5*fR+0.8*exMax;', 'rTT.length*=1+0.5*fR;'),
+ ('chyti', 'verify_tree_mista.js', 'build_crown_composer.py', 'replace', 'if(_SL && !dirO && be && be.nornName){ rTT.length*=1.4;', 'if(false){ rTT.length*=1.4;'),
 ]
 
 

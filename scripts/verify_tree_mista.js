@@ -66,6 +66,8 @@
 //       (rameno na 17 % kmene: rozestup se nevesel a podlaha ustoupila; ted misto toho povyroste kmen).
 //
 //   node scripts/verify_tree_mista.js            (TREE_LAB_HTML=<cesta> = jina kopie labu, napr. pro mutacni test)
+//   Utoky na tuhle kontrolu (podstrcene chyby v builderu, ktere ji musi shodit: vysky zon, seeking korene, navraty, minulost, Norny)
+//   bydli v scripts/protipriklady.py -> PRIPADY a pousti je smoke ㊵ pri kazde zmene kontroly nebo builderu (2026-10-11).
 const path = require('path'), cp = require('child_process'), fs = require('fs');
 const ROOT = path.resolve(__dirname, '..');
 const MAX_BR = 25, MIN_LR = 0.75, CAPB = { '-1': 3, '0': 3, '1': 2 }, CAP_TOP = 2;   // MIN_LR: (j) mensi : vetsi strana u stromu bez oblasti   // (h): 25 run = nejvys 25 hlavnich vetvi; pri stropu nejvys 5 % tazeni na vetvi vedle sveho mista
