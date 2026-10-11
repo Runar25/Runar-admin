@@ -2421,6 +2421,19 @@ Supabase 150 s (z paměti, neověřeno). Výjimka: několik POMALÝCH 5xx za seb
 vzácné. Pozn. k (m): argument CODE-tune pro zámek místo rezervace (zabitá funkce = propadlá rezervace) platí jen pro tuhle výjimku
 a pro výpadek platformy, ne pro běžnou cestu — zámek je i tak bezpečnější volba.
 
+### Kolo 1 uzavřeno (části 1–44, 2026-10-09 → 2026-10-11) · KOLO 2 (od 2026-10-11)
+Poslední kontrola kola 1: identifikátory kódu jmenované v `RUNAR_DESIGN.md`, `CLAUDE.md`, `RUNAR_PRICING.md`, `working-style.md` v kódu existují
+(4 „chybějící“ = záměrná historie / jiný strom / nastavení Claude Code). Kolo 2 = tytéž oblasti od začátku, čerstvé grepy, nic z kola 1
+nepřebírat bez ověření, + typy, které kolo 1 nemělo: **sliby appky × tok kódu**, **peníze a plýtvání**, **nasazeno = repo**.
+
+#### Kolo 2 / 1 — `claude-proxy` (2026-10-11)
+**Platí:** hlavička sedí s kódem (anonym 401, volné jen single, sol pro všechny + Claude záloha bez přechodu po vypršení, vrstvy A/B/C OFF,
+CONCURRENCY zámek z části 40 — CODE-tune 4b7fc9e) · SQL zámku v databázi (`acquire/release_reading_lock`, `reading_locks`, jen `service_role`)
+· **nasazeno = repo** (`claude-proxy` v80 i `delete-account` v8 staženy a porovnány bajtově) · zámek se uvolní ve `finally` přes token,
+rituály a Ask nezamyká · `cache_control` pryč (n).
+- ⚪ **Pro CODE-tune (drobnost):** `reading_in_progress` (429 od zámku) klient ukáže jako `err_generic`; přesnější hláška („čtení už se tahá“,
+  EN + IS) by pomohla — nastane jen u dvou oken/zařízení, tlačítko je během čtení vypnuté.
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
