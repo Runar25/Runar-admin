@@ -461,7 +461,8 @@ Stav vlastní `RUNAR_TREE.md` (duše · zóny · stavba · co je a co není post
 **Tady se neopisuje** — §20.4. Do 2026-08-18 tu stály čtyři řádky stavu, které týž fakt držely
 potřetí (vedle `RUNAR_TREE.md:222` a `RUNAR_BACKLOG.md`) a mezitím zastaraly: psalo se
 „admin-only beta / gating na `isAdmin()`", zatímco `renderLivingTree()` pouští i testery
-(`isAdmin(...) || isTester`). Nalezl CODE-tune; opravila si to CODE-tree ve své sekci.
+(`isAdmin(...) || isTester`). Nalezl CODE-tune; opravila si to CODE-tree ve své sekci. (To je historie — kdo strom vidí dnes, vlastní
+`renderLivingTree` v `runar-tree.js`; od 2026-10-11 zase jen admin, KUKY.)
 
 ⚠️ **Past pro lane `[tune]`:** strom se krmí regexem přes text čtení (glyfy 0x16A0–0x16FF
 z `rune_glyph + short_text`). Změníš formát skládaného textu → CODE-tree tiše přijde o větve.

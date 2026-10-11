@@ -8,8 +8,8 @@ metadata:
 ---
 
 > ⚠️ **Historický záznam enginu (červen–srpen 2026), ne stav.** Tehdejší master handoff a placement analýza leží v `docs/archive/tree/`
-> (`RUNAR_TREE_HANDOFF.md`, `RUNAR_TREE_GROWTH_MAP.md`); soubory liany v0.7 (model / render / lab a jejich builder) v repu už nejsou. Strom
-> v appce dnes vidí admin i tester (`isAdmin || isTester` v `runar-tree.js`). Stav vlastní `RUNAR_TREE.md` a `git log`. (Upraveno 2026-10-11
+> (`RUNAR_TREE_HANDOFF.md`, `RUNAR_TREE_GROWTH_MAP.md`); soubory liany v0.7 (model / render / lab a jejich builder) v repu už nejsou. Kdo strom
+> v appce vidí, vlastní `renderLivingTree` v `runar-tree.js`. Stav vlastní `RUNAR_TREE.md` a `git log`. (Upraveno 2026-10-11
 > po nálezu CODE-read.)
 
 ⭐ CROWN-COMPOSER = READING-DRIVEN (2026-07-04, kroky 1–4, snapshoty crown-step1..step4

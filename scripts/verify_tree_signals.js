@@ -44,9 +44,9 @@ var _INT_EN  = INTENTIONS.en[1];     // 'Decision ahead'
 var _BLANK   = RUNES.filter(function(r){ return r.n === 'Blank'; })[0].g;   // '○', mimo runový rozsah
 var _rows = [
   { rune_name: 'Fehu', rune_glyph: _g[0], short_text: '',
-    area: _AREA_IS, aol: _AREA_IS, intention: _INT_EN },
+    area: _AREA_IS, aol: _AREA_IS, intention: _INT_EN, seeking: SEEKS.is[4] },   // IS popisek seekingu (Reflection)
   { rune_name: 'NORNS', rune_glyph: '', short_text: _g[1] + ' ... ' + _g[2] + ' ... ' + _g[3],
-    area: 'spread', aol: _AREA_EN, intention: _INT_EN },
+    area: 'spread', aol: _AREA_EN, intention: _INT_EN, seeking: SEEKS.en[1] },   // EN popisek seekingu (Clarity)
   { rune_name: 'YGGDRASIL', rune_glyph: '', short_text: _g[4] + ' ' + _g[5],
     area: 'spread', aol: null,     intention: null },
   // Blank/Óðinn — zaplacené čtení, které se do 2026-07-19 celé ZAHODILO:
@@ -151,6 +151,15 @@ var AREA_KEYS = keysOf('AREA_LAT'), INT_KEYS = keysOf('INT_AXIS');
 function inCtx(expr) { try { return vm.runInContext(expr, sandbox); } catch (e) { return null; } }
 var nAreas = inCtx('typeof AREAS !== "undefined" ? AREAS.en.length : null');
 var nSlugs = inCtx('typeof TREE_AREA_SLUG !== "undefined" ? TREE_AREA_SLUG.length : null');
+// DRUH seekingu (2026-10-11): tabulka sedi na SEEKS a popisek EN i IS dojede jako druh (novy strom tvaruje vetve i koreny podle druhu;
+// do 2026-10-11 sla do logu jen osa Noren a Clarity/Confirmation, Insight/Reflection splyvaly).
+var nSeeks = inCtx('typeof SEEKS !== "undefined" ? SEEKS.en.length : null');
+var nSeekSlugs = inCtx('typeof TREE_SEEK_SLUG !== "undefined" ? TREE_SEEK_SLUG.length : null');
+assert('TREE_SEEK_SLUG nenalezen nebo se rozesel se SEEKS (pribyl seeking?)', nSeeks !== null && nSeeks === nSeekSlugs, 'SEEKS.en=' + nSeeks + ' vs TREE_SEEK_SLUG=' + nSeekSlugs);
+if (out && out.length === 4) {
+  assert('seeking z IS popisku nedojel jako druh', out[0].seeking === 'reflection', 'single.seeking=' + JSON.stringify(out[0].seeking));
+  assert('seeking z EN popisku nedojel jako druh', out[1].seeking === 'clarity', 'norns.seeking=' + JSON.stringify(out[1].seeking));
+}
 assert('TREE_AREA_SLUG nenalezen nebo se rozešel s AREAS (přibyla oblast života?)',
        nAreas !== null && nAreas === nSlugs,
        'AREAS.en=' + nAreas + ' vs TREE_AREA_SLUG=' + nSlugs);
@@ -171,4 +180,4 @@ if (fails.length) {
   fails.forEach(f => console.log('      · ' + f));
   process.exit(1);
 }
-console.log('OK    tree signals: area (i přes `spread` marker) · intention · runy · typ spreadu dojely');
+console.log('OK    tree signals: area (i přes `spread` marker) · intention · seeking jako druh · runy · typ spreadu dojely');

@@ -31,6 +31,8 @@ var _lifeRuneNum   = null;  // rune number 1-24
 // sám — proto slugy bydlí tady, ne ve sdílené vrstvě.
 // Pořadí MUSÍ sedět na AREAS.en/AREAS.is. Hlídá smoke ⑬ (porovnává délky).
 var TREE_AREA_SLUG = ['love', 'purpose', 'career', 'healing', 'spirituality', 'family', 'inner', 'crossroads'];
+// DRUH seekingu (2026-10-11): novy strom tvaruje vetev i koren podle druhu. Poradi MUSI sedet na SEEKS.en/SEEKS.is; hlida smoke ⑬.
+var TREE_SEEK_SLUG = ['general', 'clarity', 'confirmation', 'insight', 'reflection'];
 
 function _labelIndex(label, pack) {
   if (!label || typeof pack === 'undefined') return -1;
@@ -49,12 +51,12 @@ function _intentionNorn(label) {
   if (i < 0 || typeof INTENTIONS === 'undefined') return null;
   return (INTENTIONS.norns || [])[i] || null;
 }
-// Seeking (2026-10-03): aplikace ho u kazdeho cteni uklada (readings.seeking), strom ho dosud nedostaval.
-// Stejne jako zamer mluvi jazykem Noren — SEEKS.norns (General Guidance = null = neutralni).
-function _seekNorn(label) {
+// Seeking: aplikace ho u kazdeho cteni uklada (readings.seeking); do stromu jde DRUH (TREE_SEEK_SLUG). Do 2026-10-11 sem sla osa Noren
+// (SEEKS.norns: Clarity i Confirmation = verdandi, Insight i Reflection = urd) — pro stary strom (vyska) stacila, novy tvaruje vetve
+// a koreny podle druhu a ty by splynuly (KUKY 2026-10-11: "musi to byt driv, nez to posleme do produkce"). runar-tree-prod.js seeking necte.
+function _seekSlug(label) {
   var i = _labelIndex(label, typeof SEEKS !== 'undefined' ? SEEKS : null);
-  if (i < 0 || typeof SEEKS === 'undefined') return null;
-  return (SEEKS.norns || [])[i] || null;
+  return i >= 0 ? (TREE_SEEK_SLUG[i] || null) : null;
 }
 
 function readingsToTreeLog(rows) {
@@ -87,7 +89,7 @@ function readingsToTreeLog(rows) {
     if (!isSpread) runes = [runes[0]];
     var area = (row.area && row.area !== 'spread') ? row.area : (row.aol || null);
     out.push({ spread: isSpread ? name.toLowerCase() : 'single', runes: runes,
-               area: _areaSlug(area), intention: _intentionNorn(row.intention), seeking: _seekNorn(row.seeking) });
+               area: _areaSlug(area), intention: _intentionNorn(row.intention), seeking: _seekSlug(row.seeking) });
   });
   return out;
 }
@@ -253,9 +255,9 @@ async function renderLivingTree(rune) {
   try {
     var wrap = document.getElementById('tree-living');
     var cv   = document.getElementById('tree-living-canvas');
-    // BETA: living tree visible to ADMINS + TESTERS (is_tester) for now (owner test as rune_seeker)
-    if (!wrap || !cv || !window.RunarTreeProd || !rune || !currentUser ||
-        !(isAdmin(currentUser.email) || ((typeof isTester !== 'undefined') && isTester))) {
+    // ZIVY STROM JEN PRO ADMINA (KUKY 2026-10-11: "strom by testeri videt nemeli, aspon zatim. dam jim ho, az se seznami s Runarem.").
+    // Do 2026-10-11 i testeri (is_tester). Az je owner pusti, vrati se sem `|| isTester` — nic jineho na tom nevisi.
+    if (!wrap || !cv || !window.RunarTreeProd || !rune || !currentUser || !isAdmin(currentUser.email)) {
       if (wrap) wrap.style.display = 'none'; return;
     }
     var log = [];

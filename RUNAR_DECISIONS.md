@@ -10278,3 +10278,25 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   `.git/runar-sdilene.log`. Mapa pravidel při dotyku ukazuje u sdílených docs hlavičku `commit_vlastni.py` (jak se používá).
 - **Ověřeno v provozu:** pathspec commit sdíleného docu zastaven; tentýž obsah přes `commit_vlastni.py` prošel (tento záznam).
 - Affected doc(s): `CLAUDE.md` §30, `memory/parallel-code-sessions-collision.md` — v témže commitu.
+
+## 2026-10-11 (24) — Strom v aplikaci jen pro admina; port: seeking jako druh (hotovo), založení owner v appce, výkon změřen
+
+- **Rozhodl:** KUKY 2026-10-11 k plánu portu: *„2. strom by testeři vidět neměli, ale aspoň zatím. dám jim ho, až se seznámí s Rúnarem.
+  3. ok 4. to musí být dřív, než to pošleme do produkce. 5. je to jednoduchý proces. životní runa, založení NORNS v produkci. a strom bude
+  obsahovat čtení, která v ní už jsou v deníku. 6. určitě změřit. jak je velký? jak velký bude při 400 čtení? 7. ok“* **Provedl:** CODE-tree.
+- **(2) Živý strom v aplikaci jen admin** (`renderLivingTree` v `v2/runar-tree.js`; do teď admin i tester). Tlačítko testera beze změny.
+  Ověřeno vytaženou funkcí: tester strom nevidí ani nečte DB, admin ano, běžný uživatel ne; původní verze tentýž test nesplní.
+- **(3) Port = aplikační strom ze stejného kódu jako lab**, ne druhá ručně udržovaná kopie (§18).
+- **(4) Most aplikace → strom posílá DRUH seekingu** (`TREE_SEEK_SLUG`: general / clarity / confirmation / insight / reflection). Do teď šla
+  jen osa Noren (`SEEKS.norns`): Clarity i Confirmation jako „verdandi“, Insight i Reflection jako „urd“ — nový strom (živý tvar, kořeny)
+  by je nerozlišil. Smoke ⑬ hlídá délku tabulky i dekódovaný druh z EN i IS popisku; stará verze mostu spadne na všech třech. Produkční
+  engine (`runar-tree-prod.js`) seeking nečte → obraz aplikace dnes beze změny. ⚠️ V chatu jsem to nejdřív připsal CODE-tune — omyl, most
+  vlastní CODE-tree (psal jsem ho 2026-10-03, ca180f5).
+- **(5) Založení:** owner v produkci sám — životní runa → zakládací Norny; strom pak obsahuje i čtení, která už jsou v deníku (kánon
+  `RUNAR_TREE.md` §2). Bod „vrátit ownerovi záznam o založení v DB“ odpadá.
+- **(6) Výkon změřen v labu** (prohlížeč na počítači, každý bod 5×, medián a nejrychlejší běh — počítač vytížený souběžnými kontrolami,
+  proto rozpětí): 100 čtení 80 ms · 388 (jeho strom) 0,21–0,31 s · 400 0,24–0,46 s · 800 0,47–0,58 s. Plátno: 400 čtení = 87 000 cest a
+  272 000 úseků, 800 = 137 000 / 433 000 (roste pomaleji než počet čtení — větví je nejvýš 25, přibývají větvičky). Data stromu 49 kB
+  (400) a 98 kB (800); 800 = jeho čtení zdvojená, ne skutečný strom. **Telefon nezměřen** — odhad ze starého měření ~4× pomaleji, tedy
+  ≈ 1–1,5 s na překreslení při 400 → před portem změřit na telefonu.
+- Affected doc(s): `RUNAR_TREE.md` §3 (seeking v aplikaci) · `RUNAR_BACKLOG.md` (port) — v témže commitu.
