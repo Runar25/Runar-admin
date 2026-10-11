@@ -965,6 +965,15 @@ radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola mapy pravidel probehla'
 check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
 
+# ㊵ 2026-10-11 (CODE-read, kolo 3 kontroly): kontroly samy pod útokem — podstrčená chyba v čisté kopii musí kontrolu shodit.
+# Běží jen útoky na kontroly změněné od posledního úspěchu (cache ve společném .git), jinak ~1 s. Proč → hlavička nástroje.
+print('\n' + chr(0x32B5) + ' PROTIPŘÍKLADY — KONTROLY POD ÚTOKEM (scripts/protipriklady.py)')
+r = subprocess.run([sys.executable, '-X', 'utf8', os.path.join(ROOT, 'scripts', 'protipriklady.py')],
+                   capture_output=True, text=True, encoding='utf-8')
+radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'protipriklady probehly'
+check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

@@ -12,6 +12,9 @@
 //     within the following few lines, or
 //   - it ends in .then(cb) whose callback body mentions `error`.
 //
+// Receiver = ANY name before .from('<table>') (2026-10-11, kolo 3 kontroly: hledalo se jen `sb.from`, takže
+// `var _db = sb; _db.from('readings').update(...)` bez kontroly výsledku prošlo zeleně — podstrčeno naostro v kopii repa).
+//
 //   node scripts/verify_db_write_checked.js
 const fs = require('fs');
 const path = require('path');
@@ -28,7 +31,7 @@ for (const f of fs.readdirSync(V2).filter(n => n.endsWith('.js') && !SKIP.has(n)
   const lines = src.split('\n');
 
   for (let i = 0; i < lines.length; i++) {
-    if (!/\bsb\s*\.\s*from\s*\(/.test(lines[i])) continue;
+    if (!/\.\s*from\s*\(\s*['"`]/.test(lines[i])) continue;
 
     // A call can span lines — collect until the statement ends (';' at depth 0) or 12 lines.
     let stmt = '', j = i;
@@ -39,8 +42,9 @@ for (const f of fs.readdirSync(V2).filter(n => n.endsWith('.js') && !SKIP.has(n)
     if (!WRITE.test(stmt)) continue;   // a plain .select() — reads are not this check's job
     checked++;
 
-    const assigned = /\b(?:const|var|let)\s+\w+\s*=\s*await?\s*sb\s*\.\s*from/.test(stmt)
-                  || /\b\w+\s*=\s*await\s+sb\s*\.\s*from/.test(stmt);
+    // `const { error } = await …` je taky pozorovaný výsledek (dřív by ho kontrola vzala za nepozorovaný).
+    const assigned = /\b(?:const|var|let)\s+(?:\w+|\{[^}]*\})\s*=\s*(?:await\s+)?[\w$.]+\s*\.\s*from/.test(stmt)
+                  || /\b\w+\s*=\s*await\s+[\w$.]+\s*\.\s*from/.test(stmt);
     // widen the window a little: the error check usually sits just after the assignment
     const after = lines.slice(j, Math.min(j + 6, lines.length)).join('\n');
     const observed = (assigned && /\.error|\berror\b/.test(stmt + after))

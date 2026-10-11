@@ -1,0 +1,191 @@
+# -*- coding: utf-8 -*-
+# protipriklady.py — útok na kontroly: do čisté kopie repa (git worktree) podstrčí skutečnou chybu a ověří, že kontrola SPADNE.
+#
+# Proč (2026-10-11, CODE-read, kolo 3 kontroly architektury): ve smoke je 61 kontrol a samotest (--test) má jen 11. Kontrola, která
+# prošla jen tím, kvůli čemu vznikla, není ověřená (CLAUDE.md §25 B). Naostro: 18 podstrčených chyb → 16 chyceno, ale dvě kontroly
+# zápisů do DB propustily tutéž vadu v jiném tvaru (alias `_db = sb`, from("user_profiles"), update(p)) — opraveno týž den.
+# A protože kontrolu může kdokoli později upravit (rozšířit regex, přepsat), útoky se pouštějí znovu SAMY: smoke ㊵ spustí ty případy,
+# u kterých se od posledního úspěchu změnila kontrola, cílový soubor, případ nebo tenhle nástroj (cache .git/runar-protipriklady.json).
+#
+# Typy případů:  chyti    = kontrola MUSÍ spadnout (exit ≠ 0)
+#                obchazka = tatáž vada v jiném tvaru; musí spadnout taky (případ vznikl ze slepoty, která byla opravena)
+#                nesmi    = správný kód; kontrola NESMÍ spadnout (hlídá falešně červenou po rozšíření kontroly)
+# Podstrčení:    append (text na konec) · replace (přesný text, právě 1×) · regex (právě 1 shoda) · create (nový soubor)
+# Sdílený strom se nemění; do worktree se nakopírují kontroly z pracovního stromu (ať jde ověřit i necommitnutou opravu kontroly).
+#
+#   python -X utf8 scripts/protipriklady.py            jen změněné případy (jak ho volá smoke)
+#   python -X utf8 scripts/protipriklady.py --vse      všechny
+#   python -X utf8 scripts/protipriklady.py verify_x.js   jen případy té kontroly
+# Podstrčení se neprojevilo (cílový text se změnil) → FAIL s pokynem: uprav případ tady, ne kontrolu.
+import hashlib, io, json, os, re, shutil, subprocess, sys, tempfile
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__))).replace('\\', '/')
+# git bez proměnných, které nastaví hook (GIT_INDEX_FILE, GIT_DIR…): jinak by příkazy v kopii sahaly na index hlavního stromu.
+ENV = {k: v for k, v in os.environ.items() if not k.startswith('GIT_')}
+# Cache ve SPOLEČNÉM .git: pre-push pouští smoke v dočasném worktree, kde je .git soubor — cache v něm by nepřežila ani jeden push.
+_spol = subprocess.run(['git', '-C', ROOT, 'rev-parse', '--path-format=absolute', '--git-common-dir'],
+                       capture_output=True, text=True, env=ENV).stdout.strip()
+CACHE = (_spol or ROOT + '/.git').replace('\\', '/') + '/runar-protipriklady.json'
+APP = 'v2/runar-app.js'
+
+PRIPADY = [
+ # kolo 3 / 4a (2026-10-11)
+ ('chyti', 'verify_doc_links.js', 'RUNAR_DESIGN.md', 'append', '', '\n\nOdkaz do prázdna: `docs/neexistuje-xyz.md`\n'),
+ ('chyti', 'verify_escape_marks.js', 'RUNAR_DESIGN.md', 'append', '', '\n\nřádek s holou značkou <!-- doc-links:ok -->\n'),
+ ('chyti', 'verify_admin_emails.js', 'supabase/functions/list-reports/index.ts', 'regex', r'"[\w.+-]+@agndofa\.is"', '"jiny@agndofa.is"'),
+ ('chyti', 'verify_memory_index.js', 'memory/MEMORY.md', 'append', '', '\n- [neexistuje-xyz.md](neexistuje-xyz.md) — podstrčený odkaz\n'),
+ ('chyti', 'verify_decisions_numbers.js', 'RUNAR_DECISIONS.md', 'append', '', '\n## 2026-10-11 (1) — podstrčené zdvojené číslo\n\n- test\n'),
+ ('chyti', 'verify_spread_prices.js', 'v2/runar-config.js', 'regex', r'(yggdrasil:\s*\{\s*free:\s*null,\s*credits:\s*)\d+', r'\g<1>97'),
+ ('chyti', 'verify_sw_shell.js', 'v2/sw.js', 'regex', r"  '/Runar-admin/v2/runar-helper\.js',\r?\n", ''),
+ ('chyti', 'verify_monthly_limits.js', 'supabase/functions/claude-proxy/index.ts', 'regex', r'(standard\s*:\s*)\d+', r'\g<1>9999'),
+ # kolo 3 / 4b (2026-10-11)
+ ('chyti', 'verify_internal_tags.js', 'v2/runar-translations.js', 'append', '', '\n// [kánon] podstrčený interní tag\n'),
+ ('chyti', 'verify_doc_values.js', 'RUNAR_PRIVACY.md', 'append', '', '\nTier Rune Master dostane víc čtení.\n'),
+ ('chyti', 'verify_db_write_checked.js', APP, 'append', '', "\nfunction _protiA(){ sb.from('readings').update({ x: 1 }).eq('id', 1); }\n"),
+ ('obchazka', 'verify_db_write_checked.js', APP, 'append', '', "\nvar _db = sb;\nfunction _protiB(){ _db.from('readings').update({ x: 1 }).eq('id', 1); }\n"),
+ ('nesmi', 'verify_db_write_checked.js', APP, 'append', '', "\nasync function _protiF(){ const { error } = await sb.from('readings').update({ x: 1 }).eq('id', 1); if (error) console.warn(error); }\n"),
+ ('chyti', 'verify_write_surface.js', APP, 'append', '', "\nfunction _protiC(uid){ return sb.from('user_profiles').update({ credits_balance: 999 }).eq('id', uid); }\n"),
+ ('obchazka', 'verify_write_surface.js', APP, 'append', '', "\nfunction _protiD(uid){ var p = { credits_balance: 999 }; return sb.from('user_profiles').update(p).eq('id', uid); }\n"),
+ ('obchazka', 'verify_write_surface.js', APP, 'append', '', "\nfunction _protiE(uid){ return sb.from(\"user_profiles\").update({ credits_balance: 999 }).eq('id', uid); }\n"),
+ ('chyti', 'verify_model_labels.js', 'supabase/functions/claude-proxy/index.ts', 'regex', r'(const MODELS = \["claude-[a-z]+-)\d+', r'\g<1>77'),
+ ('chyti', 'verify_canonical_files.js', 'RUNAR_PROTI.md', 'create', '', '# podstrčený neverzovaný kanonický doc\n'),
+ ('chyti', 'verify_doc_length.js', 'RUNAR_PRIVACY.md', 'append', '', ''.join('\nřádek %d navíc' % i for i in range(300))),
+]
+
+
+def h(*casti):
+    m = hashlib.sha256()
+    for c in casti:
+        m.update(c if isinstance(c, bytes) else str(c).encode('utf-8'))
+        m.update(b'\0')
+    return m.hexdigest()[:16]
+
+
+def cti_bin(p):
+    # bez \r: core.autocrlf=true dá v kopii z checkoutu CRLF a ve sdíleném stromě bývá LF — týž obsah, jiný klíč
+    try:
+        return open(p, 'rb').read().replace(b'\r\n', b'\n')
+    except OSError:
+        return b''
+
+
+def v_head(rel):
+    # cíl z HEAD, ne z pracovního stromu: útočí se na kopii HEAD a cizí rozdělaná práce by klíč měnila (2026-10-11: z worktree pre-push
+    # se proto pustilo 12 útoků z 19, ač se nic nezměnilo)
+    r = subprocess.run(['git', '-C', ROOT, 'show', 'HEAD:' + rel], capture_output=True, env=ENV)
+    return r.stdout.replace(b'\r\n', b'\n') if r.returncode == 0 else b''
+
+
+def klic(pripad, ja):
+    typ, sk, rel, mode, a, b = pripad
+    return h(json.dumps(pripad, ensure_ascii=False), cti_bin(ROOT + '/scripts/' + sk), v_head(rel), ja)
+
+
+def podstrc(W, rel, mode, a, b):
+    p = W + '/' + rel
+    if mode == 'create':
+        if os.path.exists(p):
+            return 'soubor už existuje'
+        io.open(p, 'w', encoding='utf-8', newline='').write(b)
+        return ''
+    s = io.open(p, encoding='utf-8', newline='').read()
+    if mode == 'append':
+        t = s + b
+    elif mode == 'replace':
+        if s.count(a) != 1:
+            return 'přesný text je tam %d× (čekám 1×)' % s.count(a)
+        t = s.replace(a, b)
+    else:
+        n = len(re.findall(a, s))
+        if n < 1:
+            return 'regex nenašel nic'
+        t = re.sub(a, b, s, count=1)
+    if t == s:
+        return 'text se nezměnil'
+    io.open(p, 'w', encoding='utf-8', newline='').write(t)
+    return ''
+
+
+def vrat(W, rel):
+    r = subprocess.run(['git', '-C', W, 'ls-files', '--error-unmatch', '--', rel], capture_output=True, env=ENV)
+    if r.returncode == 0:
+        subprocess.run(['git', '-C', W, 'checkout', '-q', '--', rel], check=True, env=ENV)
+    elif os.path.exists(W + '/' + rel):
+        os.remove(W + '/' + rel)
+
+
+def beh(W, sk):
+    env = dict(ENV, RUNAR_ROOT=W)
+    r = subprocess.run(['node', W + '/scripts/' + sk], cwd=W, env=env, capture_output=True, text=True, encoding='utf-8')
+    out = r.stdout + r.stderr
+    radek = next((l.strip() for l in out.split('\n') if re.match(r'\s*(FAIL|CHYBA|✗)', l)), '')
+    return r.returncode, radek
+
+
+def main():
+    argy = [x for x in sys.argv[1:] if not x.startswith('--')]
+    vse = '--vse' in sys.argv
+    ja = cti_bin(os.path.abspath(__file__))
+    try:
+        cache = json.load(open(CACHE, encoding='utf-8'))
+    except (OSError, ValueError):
+        cache = {}
+    vybrane = [p for p in PRIPADY if not argy or p[1] in argy]
+    kspusteni = [p for p in vybrane if vse or argy or cache.get(klic(p, ja)) != 'ok']
+    if not kspusteni:
+        print('OK    protipříklady: %d útoků na %d kontrol, žádná kontrola se od posledního úspěchu nezměnila'
+              % (len(PRIPADY), len({p[1] for p in PRIPADY})))
+        return 0
+
+    subprocess.run(['git', '-C', ROOT, 'worktree', 'prune'], capture_output=True, env=ENV)
+    W = tempfile.mkdtemp(prefix='proti-').replace('\\', '/') + '/w'
+    subprocess.run(['git', '-C', ROOT, 'worktree', 'add', '--detach', '-q', W, 'HEAD'], check=True, env=ENV)
+    chyby = []
+    try:
+        for f in os.listdir(ROOT + '/scripts'):
+            if f.startswith('verify_') and f.endswith('.js'):
+                shutil.copyfile(ROOT + '/scripts/' + f, W + '/scripts/' + f)
+        cista = {}
+        for p in kspusteni:
+            typ, sk, rel, mode, a, b = p
+            if sk not in cista:
+                cista[sk] = beh(W, sk)
+            k0, r0 = cista[sk]
+            if k0 != 0:
+                chyby.append('FAIL  %s: už na čisté kopii exit %d (%s) — útok nemá smysl, nejdřív oprav strom' % (sk, k0, r0[:90]))
+                continue
+            proc = podstrc(W, rel, mode, a, b)
+            if proc:
+                chyby.append('FAIL  %s [%s]: podstrčení se neprojevilo (%s) — cílový text se změnil; uprav případ v scripts/protipriklady.py'
+                             % (sk, rel, proc))
+                vrat(W, rel)
+                continue
+            k1, r1 = beh(W, sk)
+            vrat(W, rel)
+            spravne = (k1 == 0) if typ == 'nesmi' else (k1 != 0)
+            if spravne:
+                cache[klic(p, ja)] = 'ok'
+                print('  ok   %-8s %s [%s]%s' % (typ, sk, rel, ('  | ' + r1[:90]) if r1 else ''))
+            elif typ == 'nesmi':
+                chyby.append('FAIL  %s [%s]: FALEŠNĚ ČERVENÁ na správném kódu (%s)' % (sk, rel, r1[:90]))
+            else:
+                chyby.append('FAIL  %s [%s]: kontrola PROPOUŠTÍ podstrčenou chybu (%s) — exit 0' % (sk, rel, typ))
+    finally:
+        subprocess.run(['git', '-C', ROOT, 'worktree', 'remove', '--force', W], capture_output=True, env=ENV)
+        shutil.rmtree(os.path.dirname(W), ignore_errors=True)
+        try:
+            json.dump(cache, open(CACHE, 'w', encoding='utf-8'), ensure_ascii=False, indent=0)
+        except OSError:
+            pass
+    for c in chyby:
+        print(c)
+    if chyby:
+        print('FAIL  protipříklady: %d z %d spuštěných útoků nesedí' % (len(chyby), len(kspusteni)))
+        return 1
+    print('OK    protipříklady: %d spuštěno (změněné kontroly), všechny sedí; celkem %d útoků na %d kontrol'
+          % (len(kspusteni), len(PRIPADY), len({p[1] for p in PRIPADY})))
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())

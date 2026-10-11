@@ -52,18 +52,23 @@ const CLIENT_FILES = fs.readdirSync(R + 'v2')
 // Matches .update({...}) / .insert({...}) / .upsert({...} , opts) after from('<table>').
 // Only the FIRST object literal is taken — upsert's second argument is options
 // (onConflict, ignoreDuplicates), not columns.
+// 2026-10-11 (kolo 3 kontroly, podstrčeno naostro v kopii repa): from("user_profiles") s dvojitými uvozovkami a
+// update(p) s objektem v proměnné prošly zeleně i se sloupcem credits_balance. Teď obojí uvozovky, a zápis, jehož
+// sloupce nejsou vidět (argument není objektový literál), je chyba — nesmí projít tiše (§19.2).
+const opaque = []; // "file:line" zápisů, jejichž sloupce z kódu nevyčteš
 function clientWrites() {
   const found = new Map(); // column -> "file:line"
   for (const rel of CLIENT_FILES) {
     const src = fs.readFileSync(R + rel, 'utf8');
     const re = new RegExp(
-      "from\\('" + TABLE + "'\\)[\\s\\S]{0,200}?\\.(update|insert|upsert)\\(\\s*\\{([^{}]*)\\}",
+      "from\\(\\s*['\"`]" + TABLE + "['\"`]\\s*\\)[\\s\\S]{0,200}?\\.(update|insert|upsert)\\(\\s*(\\{([^{}]*)\\})?",
       'g'
     );
     let m;
     while ((m = re.exec(src)) !== null) {
       const line = src.slice(0, m.index).split('\n').length;
-      for (const k of m[2].matchAll(/(\w+)\s*:/g)) {
+      if (m[2] === undefined) { opaque.push(rel + ':' + line); continue; }
+      for (const k of m[3].matchAll(/(\w+)\s*:/g)) {
         if (!found.has(k[1])) found.set(k[1], rel + ':' + line);
       }
     }
@@ -95,6 +100,13 @@ if (writes.size === 0) {
 if (granted.size === 0) {
   console.log('FAIL  no granted columns parsed from ' + GRANT_SQL);
   process.exit(1);
+}
+
+// 0. a write whose columns cannot be read from the code cannot be checked — red, not a silent green
+for (const where of opaque) {
+  fail++;
+  console.log('FAIL  ' + where + ' writes ' + TABLE + ' with a non-literal object — columns not visible to this check');
+  console.log('      -> write the object literal inline: .update({ col: v }), so the grant comparison can see it.');
 }
 
 // 1. every column the client writes must be granted, or production 403s in silence
