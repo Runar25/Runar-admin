@@ -10671,3 +10671,25 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Hlídání:** owner musí stav vidět bez otevírání ElevenLabs — zůstatek převodu, spotřebu v cyklu, kdy se brzda přepne na 30 000 a kdy
   zastavila hlas. Zadání pro CODE-tune: BACKLOG, táž položka.
 - Affected doc(s): `RUNAR_BACKLOG.md` (položka ElevenLabs) — v témže commitu; komentář `VOICE_SAFE_SHARE` v configu s implementací (CODE-tune).
+
+## 2026-10-11 (49) — Oprava: ownerova slova o stropu hlasu byla o testerech, CODE-tune je vztáhl na všechny účty (2026-09-11 i dnes)
+
+- **Owner 2026-10-11:** *„5 hlasů každému účtu měsíčně? co to je? kde se tohle tam vzalo? tohle je úplný nesmysl“* a po vysvětlení
+  *„to je pro testery!!! to jsem řekl pro testery! jak to, že to z toho nepoznáš? kam jsi to přidal?“*
+- **Co se stalo:** 2026-09-11 owner napsal *„musí být limit na hlas max 5 na měsíc! je to spíš ochutnávka pro ně, než aby to pořád využívali.
+  pojedou jako premium… ať nám to taky můžou otestovat“* (přepis konverzace) — o testerech. CODE-tune z toho udělal `VOICE_MONTHLY_LIMIT`
+  5 pro KAŽDÝ účet (dd6bfa9). Na tom stojí 2026-10-10 (42) („předplatitelé nejvýš `VOICE_MONTHLY_LIMIT`“), věta o hlasu v tarifech appky
+  (`TIER_FEATURES`, „up to 5 … aloud each month“), nápověda (`v2/runar-help.html`, „up to {voice_n} times a month“ EN i IS) a „hlas ×5“
+  v `RUNAR_PRICING.md`. 2026-10-11 (6) dostali testeři 15 a pětka zbyla jen netesterům — tedy přesně opačně, než owner myslel. Dnes jsem
+  znovu jeho *„u premium by každé čtení mělo mít možnost být s hlasem!“* (řečeno o testerech, kteří jsou premium) zapsal jako směr
+  pro produkci.
+- **Platí:** brzdy hlasu jsou pro testování (testeři premium, 15 hlasů; kredity podle (48)). Strop hlasu pro netestery v produkci
+  ownerovo rozhodnutí nemá — rozhodne se před spuštěním s cenovými hladinami (BACKLOG, položka o hlasu). Dnes netesterský účet žádný není
+  (všech 5 profilů má příznak tester), takže pětka teď nikoho neomezuje.
+- **Účty (owner téhož dne:** *„5 nových tester účtů jsou lidé, co pro nás budou testovat. + 2 admin účty + naše další 2 účty. takže počítáš
+  jen pro těch 5 testerů, jelikož ty další 4 účty jsou naše! moje a Sigrún… proč tohle musím stále dokola opakovat?“*): testeři = 5 lidí
+  z `allowed_emails` (role tester); 4 účty týmu (2 admin + 2 na test slabšího Rune Seekera, příznak tester, mimo `allowed_emails`) se do
+  kapacity testerů nepočítají. Zapsáno do `CLAUDE.md` „Tier systém“, který čte každá session na začátku. Do té doby stálo jen „čtyři
+  stávající účty zůstávají“ (BACKLOG, 2026-10-09) a CODE-read i CODE-tune počítali brzdy pro 7 a 9 účtů.
+- **Poučení:** u každého ownerova pokynu dohledat, o KOM mluví (testeři / produkce / tým) — v té zprávě to stálo o dvě věty dál.
+- Affected doc(s): `RUNAR_BACKLOG.md` (položka o hlasu), `CLAUDE.md` „Tier systém“ — v témže commitu.

@@ -422,16 +422,20 @@
   `TIERS.*.monthly_readings`) a menu ukazuje zůstatek jen Rune Seekerovi (`balEl` v `v2/runar-app.js`). O stropu se předplatitel dozví
   až hláškou `err_monthly_limit`; klient `month_units`/`month_key` ani nenačítá (`fetchUserProfile`). **Čeká na ownera:** chce počítadlo
   i pro předplatitele? Komentář „unlimited“ opravit v témže zásahu (když řekne ne, samostatně).
-- [ ] **Hlas: v produkci premium ke každému čtení; při testování Starter a brzda 15 hlasů na testera beze změny.** Owner 2026-10-11 k testování:
+- [ ] **Hlas: při testování Starter a brzda 15 hlasů na testera beze změny; strop hlasu pro produkci zatím nikdo nerozhodl.** Owner 2026-10-11 k testování:
   *„testujeme. nebudeme platit nic navíc… teď jdeme vyloženě Starter a nepřekročit limit zdarma!“* · k brzdě testerů *„nic se nemění“* ·
   *„testeři mají premium a řeším to, aby mi nepřekročili ElevenLabs… proto děláme tyhle brzdy“* · k v4 *„není to ono. potřebuje to víc práce.
-  přejdeme, až si budeme jistí“*. Zbývá: produkce (směr *„u premium by každé
-  čtení mělo mít možnost být s hlasem!“*) rozhodnout s cenovými hladinami před spuštěním; brzdy a ceny zkontroluje CODE-read (položka níž).
+  přejdeme, až si budeme jistí“*. ⚠️ Owner 2026-10-11: *„to je pro testery!!! to jsem řekl pro testery!“* — jeho
+  *„u premium by každé čtení mělo mít možnost být s hlasem!“* (2026-10-11) i *„musí být limit na hlas max 5 na měsíc! je to spíš ochutnávka
+  pro ně“* (2026-09-11, v téže zprávě *„pojedou jako premium… ať nám to taky můžou otestovat“*) byla o TESTERECH. CODE-tune obojí vztáhl
+  na všechny: 2026-09-11 (dd6bfa9) `VOICE_MONTHLY_LIMIT` 5 pro každý účet, 2026-10-11 tahle položka jako „v produkci premium ke každému
+  čtení“. Strop hlasu pro netestery v produkci (dnes 5 v `elevenlabs-proxy`, slib „až 5 hlasem měsíčně“ v tarifech appky a v nápovědě,
+  „hlas ×5“ v `RUNAR_PRICING.md`) proto ownerovo rozhodnutí NEMÁ → rozhodnout před spuštěním s cenovými hladinami; brzdy a ceny zkontroluje CODE-read (položka níž).
   Původní otázka: · *„potřebuju napřed zjistit, jestli mi 5 testerů nespálí účet na ElevenLabs… asi jim budu muset
   dát limit jen na 15 čtení na měsíc od resetu elevenlabs tokenů“*. Dnes: `VOICE_MONTHLY_LIMIT` (5) pro všechny kromě testerů
   (`VOICE_MONTHLY_LIMIT_TESTER`, 15), počítá se kalendářní měsíc; bezpečná hladina kvóty EL (`VOICE_SAFE_SHARE`) zastaví hlas všem, takže
   účet nepřečerpá, ale ztichne. Tier features slibují předplatiteli „až N čtení hlasem“ a `RUNAR_PRICING.md` s tím stropem počítá.
-  Návrh CODE-tune: premium hlas ke každému čtení (tarif EL roste s uživateli), testeři 75 jednotek čtení + 15 hlasů na cyklus EL
+  Návrh CODE-tune (padl — owner mluvil o testerech): premium hlas ke každému čtení (tarif EL roste s uživateli), testeři 75 jednotek čtení + 15 hlasů na cyklus EL
   (kalendářní měsíc pustí přes hranici dvojnásobek). Napřed ověřit dnešní limit EL — poslední snímek je z doby před resetem 2026-10-10
   (`voice_quota_snapshots`, tarif „starter“). Ownerův scénář (3 single + 1 Norny týdně, 1 Kříž + 1 Podkova měsíčně) = ~29 jednotek
   (~19 čtení), hlas ~9 tis. znaků ≈ 3,8 tis. kreditů, model + hlas ~$0.8–0.9 měsíčně (`scripts/utils/pricing_tabulka.js`, sazba $0.08).
@@ -472,7 +476,9 @@
      Ownerův záměr byl „třeba 120 hlasů“ ≈ 21–29 tis. kreditů (při dnešních 448 zn. na hlas), tedy zhruba kredity tarifu. Plné využití
      vyčerpá převod během cyklu; pak je limit 30 000 + R + 13 800 a hladina přeteče do dobití, kdykoli převod R < 2 200. Návrh: brzdit
      `character_count` (spotřeba od resetu) proti kreditům tarifu, ne proti `character_limit` — varianta podle ownera (níž).
-  2. **Nejhorší cyklus.** Lidí je 7 (5 testerů + 2 admini, owner). Účtů se stropem 15 bude po registraci **9**: 2 admin + 2 ownerovy účty
+  2. **Nejhorší cyklus.** ⚠️ Owner 2026-10-11: počítat **jen 5 testerů** — další 4 účty jsou týmu, jeho a Sigrún (`CLAUDE.md`
+     „Tier systém“): 5 × 15 × 664 = 49 800 kreditů nejhůř zarovnaně (99 600 přes hranici měsíce), běžný Single ~13 400. Původní text:
+     Lidí je 7 (5 testerů + 2 admini, owner). Účtů se stropem 15 bude po registraci **9**: 2 admin + 2 ownerovy účty
      na test slabšího Rune Seekera (příznak tester, nejsou na seznamu povolených) + 5 testerů z `allowed_emails` (dnes registrovaný 1;
      zbylí 4 dostanou premium + příznak triggerem při registraci, DECISIONS 2026-10-09 (6)). 9 × 15 × Yggdrasil (≤ 1 661 zn. ≈ 664 kreditů)
      = 89 600 kreditů zarovnaně, 179 300 přes hranici měsíce; běžný Single (~179 kreditů) 24 200 / 48 300 — i běžný plný měsíc je ~80 %
