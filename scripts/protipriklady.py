@@ -114,7 +114,7 @@ PRIPADY = [
  # strom v aplikaci = lab (㊶, CODE-tree 2026-10-11): změna labu bez nového v2/runar-tree-prod.js musí kontrolu shodit
  ('chyti', 'verify_tree_prod_sync.js', 'build_crown_composer.py', 'replace', 'var XLF=[0.26, 0.36, 0.46, 0.56, 0.66, 0.76]', 'var XLF=[0.27, 0.36, 0.46, 0.56, 0.66, 0.76]'),
  # rituál založení (㊷, CODE-tree 2026-10-11): tlačítko založení bez stavby mřížky = owner v produkci „neukážou se runy“
- ('chyti', 'verify_zalozeni_stromu.js', 'v2/runar-tree.js', 'replace', "  if (typeof buildGrid === 'function') buildGrid();\n", ''),
+ ('chyti', 'verify_zalozeni_stromu.js', 'v2/runar-tree.js', 'replace', "if (typeof buildGrid === 'function') buildGrid();", 'if (false) buildGrid();'),
 ]
 
 
