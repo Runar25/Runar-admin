@@ -22,7 +22,7 @@ runar-config.js       — TIERS, RUNAR_MODES, TIER_LIMITS, SPREAD_COSTS, SPREAD_
 runar-runes.js        — 25 Elder Futhark + calcLifeRune()
 runar-names.js        — severská jména: seznam, který rozhoduje o rozboru jména (ne model) · jen reader
 runar-names-registry.js — Mannanafnaskrá (GENEROVANÉ scripts/import_mannanafnaskra.js, needitovat) · jen reader
-runar-translations.js — UI_TEXT {en, is} + t()  ← Edit tool OK
+runar-translations.js — UI_TEXT {en, is} + t()  ← sdílený: cv.zapis / commit_vlastni.py uprav (§1)
 runar-character.js    — DEF_CHAR_EN/IS, buildSysPrompt(), RP_* packs + buildReadingPrompt()
                          + spread dispatchers, buildLifeRunePrompt(), getCorrPrompt()
 runar-utils.js        — t(), tp(), vn(), vl(), setText/setSt/showToast, stream, isAdmin() (seznam ADMIN_EMAILS v runar-config.js)
@@ -38,8 +38,8 @@ runar-readings-admin.js — shrine: prohlížeč čtení (edge fn list-readings)
 runar-reports-admin.js  — shrine: prohlížeč hlášení (edge fn list-reports)
 runar-voice-admin.js    — shrine: záložka VOICE, stav ElevenLabs (edge fn voice-usage)
 runar-help.html · runar-privacy.html — statické stránky (návod, zásady soukromí)
-runar-reader.html     — produkční app  ← Edit tool OK
-runar-reader.css      — styly          ← Edit tool OK
+runar-reader.html     — produkční app  ← sdílený: commit_vlastni.py uprav (§1)
+runar-reader.css      — styly          ← sdílený: commit_vlastni.py uprav (§1)
 runar-shrine.html     — admin app      ← Edit tool OK pro HTML
 sw.js                 — Service Worker (auto-bump via git hook · hooks/pre-commit.py)
 ```
@@ -68,6 +68,9 @@ z configu §10 · UI §5 §32 · islandština §2 §6 · jeden zdroj a dokumenty
 ### §1 — JS změny = Python skripty
 Edit tool kazí apostrofy `'` → curly quotes → SyntaxError.
 JS soubory: VŽDY přes Python patch skript. CSS + HTML (bez inline JS) + translations.js: Edit tool OK — u translations.js ne na řádku s `\uXXXX` ([[edit-tool-escapes-new-text]]).
+**Výjimka — sdílené soubory** (`_SDILENE` v `hooks/pre-commit.py`; z appky `runar-reading.js`, `runar-translations.js`, `runar-tree.js`,
+`runar-reader.html`, `runar-reader.css`): patch skript zapisuje přes `cv.zapis`, CSS/HTML/překlady přes `commit_vlastni.py uprav`,
+commit `commit_vlastni.py commit` — Edit a pathspec commit zastaví hooky (DECISIONS 2026-10-11 (60)).
 
 **Patch skript = VLASTNÍ gitignored slot session, NIKDY sdílený** (2026-07-21, po přechodu na 3 session,
 dvě v `[tune]`): `scripts/_patch.py` = CODE-tree · `scripts/_patch_tune.py` = CODE-tune ·

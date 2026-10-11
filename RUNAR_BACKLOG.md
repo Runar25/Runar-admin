@@ -521,7 +521,7 @@
 
 ## Struktura / refaktor
 
-- [ ] **Soubory appky, do kterých píše víc session → `_SDILENE`? (CODE-tree 2026-10-11, pro CODE-read — vlastní pojistku)** Doklad z jednoho
+- [x] **HOTOVO 2026-10-11 (CODE-read, DECISIONS (60)): pět souborů appky v `_SDILENE` · Soubory appky, do kterých píše víc session → `_SDILENE`? (CODE-tree 2026-10-11, pro CODE-read — vlastní pojistku)** Doklad z jednoho
   dne: commit CODE-tune 4eb6905 vzal moje necommitnuté kusy v `v2/runar-reading.js` a `v2/runar-translations.js` (cena „zdarma“ při založení);
   pathspec commit bere celý soubor. Píšou do nich CODE-tune i CODE-tree (`runar-tree.js` drží i životní runu CODE-tune; `runar-reader.html`,
   `.css`). Než se přidají do `_SDILENE` v `hooks/pre-commit.py`: ověřit, že `commit_vlastni.py commit` s JS/CSS ve `v2/` správně přidá

@@ -10,6 +10,9 @@ metadata:
 When Kuky has agreed a plan or direction, EXECUTE it to the end without asking for confirmation between steps. No "souhlas?", "mám do toho jít?", "pokračuju?", "chceš to?" — just do it and report what happened. Kuky interrupts if he disagrees; the asking is what slows him down.
 
 **Only stop and ask when:**
+- ⚠️ NE technická nebo procesní volba (jak hlídat, kterou variantu nástroje, které soubory pod pojistku) — tu rozhodni sám a jen ohlas
+  co a proč (owner 2026-10-11: *„to je vyloženě technická otázka, kterou bys měl vyřešit. já vám do toho nehrabu, jen říkám,
+  co bych jak chtěl, a vy to děláte nejlépe, jak to jde!“*)
 - it is a genuine product/design decision only he can make (which masters to drop, December vs year-round, tier names, retention period)
 - an action is destructive or outward-facing beyond the agreed scope (deleting data, publishing, pushing something not in the plan)
 - the request is ambiguous enough that guessing wrong wastes real work

@@ -10860,3 +10860,18 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Hlídá:** smoke ㊷ — místo skoku „po 4 s“ z (57) ověřuje příběh a tlačítko, že appka ani po 4,5 s nikam neskočí, tlačítko → strom
   v rámu, a datum po START OVER a dalším čtení (14 kroků). Kód 76f8b0f (rám) + d264031 (dokončení, datum).
 - Affected doc(s): `RUNAR_TREE.md` §8 (AUTO-FIT: v aplikaci svislý rám) — v témže commitu.
+
+## 2026-10-11 (60) — Soubory appky, do kterých píše víc session, jsou sdílené: jen `commit_vlastni`, nástroj Edit je nepíše
+
+- **Rozšíření (58)** (tam `scripts/protipriklady.py`) na soubory appky — tentýž mechanismus, další soubory.
+
+- **Proč:** commit CODE-tune 4eb6905 vzal necommitnuté kusy CODE-tree v `v2/runar-reading.js` a `v2/runar-translations.js` (nahlásil
+  CODE-tree, BACKLOG „Struktura / refaktor“); pathspec commit bere celý soubor. Owner k volbě rozsahu: *„to je vyloženě technická otázka,
+  kterou bys měl vyřešit… vy to děláte nejlépe, jak to jde“*.
+- **Co:** do `_SDILENE` (pre-commit, jediné místo) přibylo `v2/runar-reading.js`, `v2/runar-translations.js`, `v2/runar-tree.js`,
+  `v2/runar-reader.html`, `v2/runar-reader.css` — soubory, do kterých dnes píše víc lane. Zbytek appky dál pathspec (kolize tam nejsou).
+  Proč ne celá appka: změna pravidla pro všechny lane bez doložené potřeby; přidat další soubor = jeden řádek v `_SDILENE`.
+  Zápis: JS patch skript místo `io.open(…,'w')` volá `cv.zapis`, CSS/HTML/překlady `commit_vlastni.py uprav` (Edit na nich hook zastaví).
+- **Ověřeno:** `commit_vlastni` s JS ve v2/ dostane do commitu i zvýšenou `sw.js` a nechá čistý index (dočasný klon s hooky); pre-commit
+  pathspec commit `runar-reader.css` zastaví, `RUNAR_VLASTNI=1` pustí, `runar-auth.js` pustí; hook čte vzor i na víc řádcích (samotest 48).
+- Affected doc(s): `CLAUDE.md` §1 a seznam souborů — v témže commitu.
