@@ -14,4 +14,8 @@ Never write `smoke.py | grep …` followed by `git push` on the next line. The p
 
 **`| tail -1` ukáže verdikt, jen když je verdikt POSLEDNÍ** (2026-10-10, CODE-read, 2× po sobě): `verify_doc_links.js` při selhání
 končí nápovědou („…Záměrný případ: doc-links:ok“), ne řádkem FAIL — přečetl jsem ji jako „prošlo“ a push spadl na pre-push smoke.
-Verdikt vytahuj podle tvaru: `| grep -E "^OK|FAIL"`.
+Verdikt vytahuj podle tvaru: `| grep -E "^OK|FAIL"` — ale **jen na čtení, nikdy jako podmínka**.
+
+⛔ **`check | grep -E "^(OK|FAIL)" && git commit …` commitne i při FAIL** (2026-10-11, CODE-read): grep najde řádek FAIL, skončí
+úspěšně a `&&` pustí commit dál. Ten vzor jsem měl právě odsud. Jako podmínka slouží jen kladný verdikt:
+`node scripts/verify_x.js | grep -q "^OK" && git commit …` (nebo exit kód samotné kontroly, bez roury).
