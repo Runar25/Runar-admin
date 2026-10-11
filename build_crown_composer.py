@@ -1970,6 +1970,11 @@ HTML = r"""<!DOCTYPE html>
           var f2=Math.min(1, Math.log(1+rRet)/Math.log(41)), ex2=Math.max(0, (rPast/rRet-0.5)/0.5)*f2*Math.min(1, rRet/12); if(ex2>exMax) exMax=ex2; });
         var fR=Math.min(1, Math.log(1+rRet)/Math.log(41)); rTT.length*=1+0.5*fR+0.8*exMax;   /* koren se prohloubi: az +50 % delky, plny ucinek po 40 navratech, nic se nevraci zpet; minulost/nitro az +80 % navic */
         if(!dirO && rSpec.dev!=null){ rSpec.dev*=(1-0.35*fR-0.6*exMax); rdevUsed=rSpec.dev; } }   /* hlavni koren se s navraty stoci strmeji (hloubeji); sirka ne: rf ji prepocita na pramen u zeme */
+      /* NORNY = TRI HLAVNI KORENY (KUKY 2026-10-11 "ok, jdeme na Norny → 3 kořeny" a "6. n4, zapni v labu 7. ne."; kanon RUNAR_DESIGN.md "Tri Norny = tri koreny
+         Yggdrasilu", DECISIONS 2026-07-30 (a)): koren pramene zakladaci Norny se prodlouzi 1,4× a hlavni koren stoci 0,35× bliz svislici — jen prodlouzeni
+         a ohnuti, stavba korene beze zmeny (2026-10-10 (23), (28)), tloustka u kmene dal = kmen. Dnes se od ostatnich nelisily (jeho strom: hloubka 215–255 px
+         proti 450 u korenu hornich ramen). Silnejsi n2 (1,6×) owner nechtel; strana zustava podle ramene (bod 7 "ne"). */
+      if(_SL && !dirO && be && be.nornName){ rTT.length*=1.4; if(rSpec.dev!=null){ rSpec.dev*=0.35; rdevUsed=rSpec.dev; } }
       var rG=B.buildBranch(rSpec, rTT);   /* KROK 2: koren = vlastni runa pramene (runeK), rovne dolu */
       if(_SL) bendRootPaths(rG.paths, seekShapeOf(_RDL[k], k));   /* seeking tvaruje cely koren (zrcadlove k vetvi) */
       var rspine=rG.paths[0].pts, rf=rbase.w/((rspine[0].w)||1), rdepth=rbase.depth+0.0007*k;
@@ -1980,7 +1985,7 @@ HTML = r"""<!DOCTYPE html>
         for(var tj=0;tj<tp.length;tj++){ tp[tj].w*=rf; tp[tj].depth=rdepth-0.05; tp[tj].ct=lerp(rootsT.ctNear,rootsT.ctFar,tp[tj].t); }
         roots.push({ pts:tp, el:rG.info.el, depth:rdepth-0.05, src:'koren', rune:runeK, k:k, pi:rp2, age01:_curAge01 });
         _pick.push({ k:'r'+k+'_'+rp2, pts:tp, meta:{ el:rG.info.el, aett:be.aett, world:be.world, name:runeName,
-          g:(RBK[runeK]?RBK[runeK].g:null), count:'-', root:true, strand:k, rootDev:rdevUsed, navraty:rRet, navratyMin:rPast,
+          g:(RBK[runeK]?RBK[runeK].g:null), count:'-', root:true, strand:k, rootDev:rdevUsed, navraty:rRet, navratyMin:rPast, norna:(be&&be.nornName)||null,
           runeN:(be.runeCnt&&be.runeCnt[runeK])||null } }); }
       return { rspine:rspine, rdepth:rdepth, rdevUsed:rdevUsed, rf:rf };
     }

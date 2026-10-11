@@ -10117,3 +10117,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   (jeho strom se to netýká); barva a tvar podle Norny v kánonu nejsou; „všechny tři kořenové runy v jednom čtení → výjimečná událost“
   (`RUNAR_DESIGN.md`) zvlášť, později.
 - Affected doc(s): `RUNAR_BACKLOG.md` („Kořeny = minulost/základ“ bod (a)) — v témže commitu.
+
+## 2026-10-11 (13) — Strom (lab): ZAPNUTO — Norny = tři hlavní kořeny (síla n4); strana kořene dál podle ramene + smoke ㉳ (v)
+
+- **Rozhodl:** KUKY 2026-10-11 k nanečisto (12): *„6. n4, zapni v labu 7. ne.“* **Provedl:** CODE-tree, LAB (aplikace beze změny).
+- **Co je v labu:** kořen pramene zakládací Norny (urð, verðandi, skuld) se prodlouží 1,4× a hlavní kořen stočí 0,35× blíž svislici; stavba
+  kořene beze změny, tloušťka u kmene = kmen. Jeho strom: páteře kořenů Noren 421–522 px proti nejvýš 390 u ostatních ramen, šířka kořenů
+  81 procent koruny. Silnější n2 owner nechtěl.
+- **Bod 7 „ne“:** tři kořeny se do tří směrů nenutí — kořen jde na stranu svého ramene (zakládací čtení s oblastí dá urð i verðandi na tutéž
+  stranu).
+- **Smoke ㉳ (v):** po 150 a 300 čteních je páteř kořenů Noren v průměru aspoň 1,12× delší než medián ostatních ramen (s Nornami 1,20–1,82,
+  bez nich 0,87–1,24 podle logu). Mutace „Norny bez prodloužení“ chycena na dvou ze tří logů (4 porušení), nic jiného nespadlo.
+- **Zbývá:** „všechny tři kořenové runy v jednom čtení → výjimečná událost“ (`RUNAR_DESIGN.md`), port do aplikace.
+- Affected doc(s): `RUNAR_TREE.md` §2 · `RUNAR_TREE_MAP.md` §10, §12 · `RUNAR_BACKLOG.md` — v témže commitu.

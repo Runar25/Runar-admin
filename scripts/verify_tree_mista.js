@@ -46,6 +46,9 @@
 //   (u) MINULOST A NITRO PROHLUBUJI VIC (2026-10-11, KUKY "10. ano, zapni v labu"; DECISIONS 2026-10-11 (4)): jako (t), ale dvakrat — 30 navratu
 //       ze cteni o minulosti a nitru (Past + Healing) a 30 ze cteni o svete a budoucnosti (Decision + Career). Kazda dvojice ma vlastni
 //       srovnani s jinou runou tehoz zivlu (stavba stejna); pomer delky korene musi byt u minulosti vetsi nez u sveta.
+//   (v) TRI KORENY NOREN = HLAVNI (2026-10-11, KUKY "6. n4, zapni v labu"; DECISIONS 2026-10-11 (12) a zapnuti): po 150 a 300 ctenich je pater korenu
+//       zakladacich Noren (cast tahu ramene pod zemi) v prumeru aspon 1,12× delsi nez median ostatnich ramen. Zmereno pred prahem: s Nornami 1,20–1,82,
+//       bez nich 0,87–1,24 (podle logu); koren kazde Norny zvlast delsi byt nemusi (Isa ma kratky koren svou runou).
 //   (m) VETVICKY KOLEM VETVE (2026-10-09, KUKY: "vetvicky by se stridaly kolem vetve na obe strany, protoze stranu vetve uz urcila
 //       oblast"): zadna hlavni vetev s aspon 3 primymi vetvickami nema vsechny na jedne strane (strana = kam vetvicka miri od smeru
 //       rodice v miste uchyceni). Drive strana podle oblasti -> na leve vetvi skoro jen nitro -> KUKYho strom 4 jednostranne vetve.
@@ -93,7 +96,7 @@ const gen = (seed, sc, N, sa) => { let s = seed; const rnd = () => (s = (s * 110
 const LOGS = [['vsude', gen(3933, [1 / 3, 1 / 3, 1 / 3], 300)], ['minulost', gen(3000, [0.6, 0.2, 0.2], 300)],
   ['svet', gen(4111, [1 / 3, 1 / 3, 1 / 3], 300, [0.15, 0.15, 0.7])]];   // svet: viz (h) — povysena z vudci vetve na druhe strane
 const NS = [20, 60, 150, 300];
-const fails = []; let worstE = 1e9, worstLR = 1e9, worstS = 1e9, maxStr = 0, runs = 0, maxBr = 0, worstForeign = 0; const STAL = {};
+const fails = []; let worstV = 1e9, worstE = 1e9, worstLR = 1e9, worstS = 1e9, maxStr = 0, runs = 0, maxBr = 0, worstForeign = 0; const STAL = {};
 LOGS.forEach(([nm, log]) => NS.forEach(n => {
   const r = labRun(log.slice(0, n), html, null); runs++;
   const mains = r.picks.filter(m => !m.gradOf && m.exitX != null);
@@ -157,6 +160,15 @@ LOGS.forEach(([nm, log]) => NS.forEach(n => {
       const a = pa.pts[Math.max(0, bi - 1)], b = pa.pts[Math.min(pa.pts.length - 1, bi + 1)], cr = (b.x - a.x) * (s1.y - s0.y) - (b.y - a.y) * (s1.x - s0.x);
       const o = cnt[m.parentKey] = cnt[m.parentKey] || { name: pa.name, A: 0, B: 0 }; if (cr >= 0) o.A++; else o.B++; });
     Object.values(cnt).forEach(o => { if (o.A + o.B >= 3 && (o.A === 0 || o.B === 0)) fails.push(nm + ' po ' + n + ': vetev ' + o.name + ' ma vsech ' + (o.A + o.B) + ' primych vetvicek na jedne strane'); }); }
+  /* (v) tri koreny Noren = hlavni: prumer pateri korenu Noren proti medianu ostatnich ramen */
+  if (n >= 150) { const a0 = mains[0], b0 = mains.find(m => Math.abs(m.frac - a0.frac) > 0.1);
+    if (a0 && b0) { const GY = a0.exitY + a0.frac * (a0.exitY - b0.exitY) / (b0.frac - a0.frac), Ln = [], Lo = [];
+      r.allPicks.forEach(p => { const m = p.meta || {}; if (typeof p.k !== 'number' || p.k >= 100 || m.twig || m.root || !p.pts) return;
+        let i = 0, L = 0; while (i < p.pts.length && p.pts[i].y > GY) i++; for (let j = 1; j <= i && j < p.pts.length; j++) L += Math.hypot(p.pts[j].x - p.pts[j - 1].x, p.pts[j].y - p.pts[j - 1].y);
+        if (L > 0) (m.norn ? Ln : Lo).push(L); });
+      Lo.sort((x, y) => x - y); const med = Lo.length ? Lo[Math.floor(Lo.length / 2)] : 0, avg = Ln.length ? Ln.reduce((s2, x) => s2 + x, 0) / Ln.length : 0;
+      if (Ln.length !== 3) fails.push(nm + ' po ' + n + ': korenu zakladacich Noren ' + Ln.length + ' (ocekavano 3)');
+      else { worstV = Math.min(worstV, avg / Math.max(1, med)); if (!(avg > med * 1.12)) fails.push(nm + ' po ' + n + ': koreny Noren nejsou hlavni (pater v prumeru ' + Math.round(avg) + ' px, median ostatnich ' + Math.round(med) + ' px)'); } } }
   /* (e) inspekce proti logu */
   const tot = {}, nameOf = {}; B.RUNES.forEach(x => { nameOf[x.k] = x.name; });
   sub.forEach(rd => (rd.runes || []).forEach(x => { tot[nameOf[x.rune]] = (tot[nameOf[x.rune]] || 0) + 1; }));
@@ -254,4 +266,4 @@ let uMsg = '';
   else if (!(past.r > world.r * 1.15)) fails.push('(u) navraty o minulosti a nitru neprohloubi koren vic nez navraty o svete (×' + past.r.toFixed(2) + ' vs ×' + world.r.toFixed(2) + ')');
   else uMsg = 'minulost a nitro prohlubuji vic (' + nmX + ': ×' + past.r.toFixed(2) + ' vs svet ×' + world.r.toFixed(2) + ')'; }
 if (fails.length) { fails.slice(0, 12).forEach(f => console.log('   ' + f)); console.log('strom: ' + fails.length + ' poruseni (vetve ze stejneho mista / pod podlahou / cteni mimo sve misto / vetvi nad strop / neklikatelne / prameny navic / inspekce neodpovida logu)'); process.exit(1); }
-console.log('strom (lab): ' + runs + ' stromu — vystupy ramen na stejne strane aspon ' + worstE.toFixed(0) + ' px, levo-pravo aspon ' + worstLR.toFixed(0) + ' px, zadne pod podlahou, kazde cteni na svem miste strana × zona (jako vetvicka na plnem rameni jineho zivlu nejvys ' + (worstForeign * 100).toFixed(0) + ' %), nejvys ' + maxBr + ' vetvi, kapacita ramen drzi, kazda vedlejsi ma koren, ' + oMsg + ', vetve na rodici aspon ' + worstS.toFixed(1) + ' px, vse klikatelne, inspekce = log, nejvys ' + maxStr + ' pramenu v kmeni, ' + iMsg + ', ' + jMsg + ', ' + kMsg + ', ' + lMsg + ', ' + rMsg + ', ' + sMsg + ', ' + tMsg + ', ' + uMsg);
+console.log('strom (lab): ' + runs + ' stromu — vystupy ramen na stejne strane aspon ' + worstE.toFixed(0) + ' px, levo-pravo aspon ' + worstLR.toFixed(0) + ' px, zadne pod podlahou, kazde cteni na svem miste strana × zona (jako vetvicka na plnem rameni jineho zivlu nejvys ' + (worstForeign * 100).toFixed(0) + ' %), nejvys ' + maxBr + ' vetvi, kapacita ramen drzi, kazda vedlejsi ma koren, ' + oMsg + ', vetve na rodici aspon ' + worstS.toFixed(1) + ' px, vse klikatelne, inspekce = log, nejvys ' + maxStr + ' pramenu v kmeni, ' + iMsg + ', ' + jMsg + ', ' + kMsg + ', ' + lMsg + ', ' + rMsg + ', ' + sMsg + ', ' + tMsg + ', ' + uMsg + ', koreny Noren hlavni (pater aspon ' + worstV.toFixed(2) + '× medianu ostatnich)');
