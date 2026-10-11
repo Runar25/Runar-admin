@@ -23,9 +23,10 @@ let fail = 0;
 const rekni = (ok, popis, info) => { if (ok) console.log('OK    ' + popis); else { fail++; console.log('FAIL  ' + popis + (info ? ' — ' + info : '')); } };
 
 // ── (B) zdroj: islandské datum jen přes datumUI ────────────────────────────────────
-// Komentáře pryč (čísla řádků zůstanou); `//` za dvojtečkou nebo uvozovkou je adresa, ne komentář.
+// Komentáře pryč (čísla řádků zůstanou); `//` za dvojtečkou nebo uvozovkou je adresa, ne komentář. Konce řádků napřed na LF:
+// čistá kopie od gitu má CRLF a `.*$` znak \r nesežere — komentář by zůstal (2026-10-11, chyceno útokem na čisté kopii).
 function bezKomentaru(src, html) {
-  let s = src;
+  let s = src.replace(/\r\n/g, '\n');
   if (html) s = s.replace(/<!--[\s\S]*?-->/g, (x) => x.replace(/[^\n]/g, ' '));
   return s.replace(/\/\*[\s\S]*?\*\//g, (x) => x.replace(/[^\n]/g, ' ')).split('\n').map((r) => r.replace(/(^|[^:'"\\])\/\/.*$/, '$1'));
 }
@@ -57,6 +58,7 @@ if (process.argv.includes('--test')) {
     ["anglický literál projde ('en-GB')", kontrolaZdroje("  x = n.toLocaleString('en-GB');", 'a.js').length === 0],
     ['supportedLocalesOf mimo utils neprojde (nese is-IS)', kontrolaZdroje("  if (Intl.DateTimeFormat.supportedLocalesOf(['is-IS']).length) x = 1;", 'a.js').length === 1],
     ['v komentáři projde', kontrolaZdroje("  // toLocaleDateString('is-IS')\n  /* is-IS */", 'a.js').length === 0],
+    ['v komentáři s konci řádků CRLF projde', kontrolaZdroje("// supportedLocalesOf(['is-IS'])\r\nvar a = 1;\r\n", 'a.js').length === 0],
     ['HTML komentář projde', kontrolaZdroje("<!-- toLocaleDateString('is-IS') -->", 'a.html').length === 0],
     ['tělo datumUI v utils projde, is-IS jinde v utils padne', kontrolaZdroje("function datumUI(iso, lng) {\n  return d.toLocaleDateString(lng === 'is' ? 'is-IS' : 'en-GB');\n}\nvar x = 'is-IS';", 'runar-utils.js').length === 1],
     ['utils bez datumUI padne', kontrolaZdroje('var y = 1;', 'runar-utils.js').length === 1],
