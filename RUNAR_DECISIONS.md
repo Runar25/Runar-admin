@@ -10827,3 +10827,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   útok na ㊷ omylem s 1c37d3e (CODE-read), opraven přes `RUNAR_CIZI_OK` a CODE-read to ví.
 - **Netvrdí:** nic o serveru (claude-proxy mode `founding` z 2026-07-19) — ten ověří až skutečné založení ownera.
 - Affected doc(s): žádný (oprava vady, rituál popisuje `RUNAR_DECISIONS.md` 2026-07-19 a `RUNAR_TREE.md` §2).
+
+## 2026-10-11 (58) — `scripts/protipriklady.py` je sdílený soubor: commit jen přes `commit_vlastni`, nástroj Edit ho nepíše
+
+- **Proč:** píšou do něj všechny tři session (útoky na své kontroly) a za jeden den dvě kolize na témže souboru: c3dfd49 smazal čerstvé
+  útoky CODE-tune (odtud pojistka (51)) a 1c37d3e přibalil necommitnutý útok CODE-tree (nahlásil CODE-tree) — přibalení cizí rozdělané
+  práce pojistka (51) nevidí, ta hlídá jen mazání commitnutých řádků. Táž třída jako pathspec commity sdílených docs z (23).
+- **Co:** vzor `_SDILENE` v `hooks/pre-commit.py` (jediné místo) zahrnuje `scripts/protipriklady.py`; hook `pravidla_pri_dotyku.py` si vzor
+  odtud čte a nástroj Edit/Write na soubor zastaví s návodem (`cv.zapis` / `commit_vlastni.py uprav`). Ověřeno: pathspec commit souboru
+  v dočasném indexu → stop, s `RUNAR_VLASTNI=1` → projde; samotest hooku 44 stavů.
+- **Obecně:** další soubor, do kterého píše víc session, přidej do `_SDILENE` — jinde se seznam nevede. Vlastní pojistka — bez ptaní.
+- Affected doc(s): `CLAUDE.md` §30 — v témže commitu.

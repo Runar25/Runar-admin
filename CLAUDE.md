@@ -359,7 +359,7 @@ musí to buď **udělat skript samo**, nebo **zastavit práci**, když se to vyn
   Povinný snapshot zrušen — nic ho nevynucovalo a opakoval BACKLOG a DECISIONS. (KUKY 2026-10-11, DECISIONS 2026-10-11 (21).)
   Osobní údaje v přepisech: výmaz na žádost a co session nevypisují → `RUNAR_PRIVACY.md` „Retence + práva“ (DECISIONS 2026-10-11 (30)).
 - **Sdílené docy commituje jen `scripts/utils/commit_vlastni.py`** → pre-commit (`hooks/pre-commit.py`) zastaví commit `RUNAR_*.md`,
-  `CLAUDE.md` nebo `memory/` bez něj; pathspec commit bral i cizí necommitnuté kusy (3×). Výjimka `RUNAR_SDILENE_OK="<důvod>"` se loguje.
+  `CLAUDE.md`, `memory/` nebo jiného sdíleného souboru (seznam = `_SDILENE` v pre-commitu, od 2026-10-11 i `scripts/protipriklady.py`) bez něj; pathspec commit bral i cizí necommitnuté kusy (3×). Výjimka `RUNAR_SDILENE_OK="<důvod>"` se loguje.
   Nástroj Edit (a Write přes existující) na sdílený doc zastaví hook hned — změna by nešla commitnout; náhrada:
   `commit_vlastni.py uprav <lane> <soubor> <stary.txt> <novy.txt>` (DECISIONS 2026-10-11 (42)).
   (KUKY 2026-10-11, DECISIONS 2026-10-11 (23).)
