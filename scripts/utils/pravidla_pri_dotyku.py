@@ -360,6 +360,27 @@ def sdileny(rel):
     return bool(re.match(r'^(CLAUDE\.md|RUNAR_[^/]*\.md|memory/.+\.md)$', rel))   # záloha, kdyby se tvar v pre-commitu změnil
 
 
+def primy_zapis_sdileneho(kod):
+    # Proč (CODE-tree 2026-10-11, ověřeno jeho skriptem): Edit/Write na sdílený soubor hook zastaví, ale patch skript s io.open(P, 'w') prošel;
+    # vada se ukázala až při commitu a vracet ji `git checkout` maže cizí kusy. Cíl = první argument open(…, 'w'|'a') / writeFileSync(…):
+    # doslovný řetězec, poskládaný (R + '/v2/x.js') nebo proměnná, které skript přiřadil řetězec. kod má zpětná lomítka už jako '/'.
+    if not kod: return []
+    prirazeni = {}
+    for jm, rhs in re.findall(r'^\s*([A-Za-z_]\w*)\s*=\s*([^\n]+)$', kod, re.M):
+        prirazeni[jm] = re.findall(r"""['"]([^'"]+)['"]""", rhs)
+    out = []
+    for arg in re.findall(r"""(?:\bopen|writeFileSync|appendFileSync)\(\s*([^,\n]+?)\s*,\s*(?:['"][wa]|[^)\n]*\bmode\s*=\s*['"][wa])""", kod):
+        kusy = re.findall(r"""['"]([^'"]+)['"]""", arg)
+        for jm in re.findall(r'[A-Za-z_]\w*', arg):
+            kusy += prirazeni.get(jm, [])
+        for k in kusy:
+            rel = k.replace(chr(92), '/')
+            if rel.lower().startswith(R.lower()): rel = rel[len(R):]
+            rel = rel.lstrip('/')
+            if rel and sdileny(rel) and rel not in out: out.append(rel)
+    return out
+
+
 def neviditelne(inp):
     # Proč (2026-10-11, CODE-read, podruhé): `\u2028` napsané v parametru Edit/Write se už při předání (JSON) změní na SKUTEČNÝ znak.
     # Do scripts/protipriklady.py se tak dostaly znaky místo textu (útok pak nic nenašel) a do regexu v JS znak U+2028, který JS bere
@@ -409,6 +430,12 @@ def rozhodni(vstup):
         global KOD_SKRIPTU
         KOD_SKRIPTU = ''
         cesty, volny = [], cil_z_prikazu(str(inp.get('command', '')))
+        pz = primy_zapis_sdileneho(KOD_SKRIPTU)
+        if pz:
+            return ('⛔ Skript zapisuje přímo do sdíleného souboru (' + ', '.join(pz) + ') — taková změna nejde commitnout (pre-commit pouští\n'
+                    'sdílené soubory jen přes commit_vlastni, ten bere jen zápisy ze zapis()), a vracet ji `git checkout` by smazalo i cizí\n'
+                    'necommitnuté kusy. Místo open(…, "w") v skriptu: s = cv.cti(soubor, R); …; cv.zapis(soubor, s, "<CODE-lane>", R).\n\n'
+                    '(Hook pravidla_pri_dotyku.py — sdílené soubory; nahlásil CODE-tree 2026-10-11)')
         if not volny: return None
     else:
         return None
@@ -523,7 +550,7 @@ def samotest():
     chk('12. Bash jen čte (grep, 2>/dev/null) → projde', V('Bash', sid='s3', command='grep -n x supabase/functions/a/index.ts 2>/dev/null | head') is None)
     chk('13. Bash zapisuje do sql/ → zastaví', V('Bash', sid='s3', command='echo x > sql/2026-10-11_x.sql') is not None)
     sc = os.path.join(STAV, 'Temp', 'claude', 'p.py'); os.makedirs(os.path.dirname(sc), exist_ok=True)
-    io.open(sc, 'w', encoding='utf-8').write("s = 'x'\nio.open('v2/runar-reader.css', 'w').write(s)\n")
+    io.open(sc, 'w', encoding='utf-8').write("s = 'x'\nio.open('v2/runar-shrine.html', 'w').write(s)\n")
     sc2 = os.path.join(STAV, 'Temp', 'claude', 'cti.js')
     io.open(sc2, 'w', encoding='utf-8').write("const t = fs.readFileSync('v2/runar-app.js', 'utf8'); console.log(t.length)\n")
     chk('17. čtecí skript ze scratchpadu s cestou v2/ → projde', V('Bash', sid='s7', command='node "' + sc2.replace('\\', '/') + '"') is None)
@@ -620,6 +647,18 @@ def samotest():
     sk8 = os.path.join(STAV, 'Temp', 'claude', 'open_promenna.py')
     io.open(sk8, 'w', encoding='utf-8').write("p = 'v2/runar-character.js'" + chr(10) + "io.open(p, 'w').write('x')" + chr(10) + "cv.zapis('RUNAR_BACKLOG.md', 'y', 'CODE-read', R)" + chr(10))
     chk('50. open(p, w) s cílem v proměnné se počítá dál → celý kód (oblast promptu ano)', (lambda d: d and 'prompt a hlas' in d)(V('Bash', sid='s23', command='python -X utf8 "' + sk8.replace(chr(92), '/') + '"')))
+    def sk_(jm, obsah):
+        p = os.path.join(STAV, 'Temp', 'claude', jm); io.open(p, 'w', encoding='utf-8').write(obsah)
+        return V('Bash', sid='z_' + jm, command='python -X utf8 "' + p.replace(chr(92), '/') + '"')
+    B = chr(92)
+    chk('51. skript io.open(P, w) s P = r\'…\\v2\\runar-tree.js\' → zastaví (nahlásil CODE-tree)',
+        (lambda d: d and 'přímo do sdíleného' in d)(sk_('p1.py', "P = r'" + R.replace('/', B) + B + 'v2' + B + "runar-tree.js'" + chr(10) + "io.open(P, 'w', encoding='utf-8').write('x')" + chr(10))))
+    chk('52. open(R + \'/v2/runar-reader.css\', \'w\') → zastaví',
+        (lambda d: d and 'v2/runar-reader.css' in d)(sk_('p2.py', "open(R + '/v2/runar-reader.css', 'w').write('x')" + chr(10))))
+    chk('53. skript sdílený soubor jen čte a píše jinam → zákaz sdíleného nedostane',
+        (lambda d: d is None or 'přímo do sdíleného' not in d)(sk_('p3.py', "t = open('v2/runar-tree.js').read()" + chr(10) + "open('C:/tmp/vystup.txt', 'w').write(t)" + chr(10))))
+    chk('54. zápis přes cv.zapis do sdíleného → zákaz přímého zápisu nedostane',
+        (lambda d: d is None or 'přímo do sdíleného' not in d)(sk_('p4.py', "s = cv.cti('v2/runar-tree.js', R)" + chr(10) + "cv.zapis('v2/runar-tree.js', s + 'x', 'CODE-read', R)" + chr(10))))
     for jm, v in ok: print(('OK    ' if v else 'FAIL  ') + jm)
     return 0 if all(v for _, v in ok) else 1
 
