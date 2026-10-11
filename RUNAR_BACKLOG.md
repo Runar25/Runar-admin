@@ -2852,6 +2852,23 @@ voláním ElevenLabs (souběžná ťuknutí nezaplatí dvakrát); text uložené
 `reading-voice` soukromý, `voice_tickets` RLS bez politik; `delete-account` maže audio po dávkách 100 (nejvýš 200 kol) — moje
 podezření „jen prvních 100“ vyvráceno; zásady o uloženém audiu EN i IS.
 **Opraveno cestou:** pre-push „soubory mimo git“ zastavil push všem kvůli minuty staré migraci CODE-tune → čerstvé (< 2 h) jen varování.
+**Dávka 3, bez nálezu:** zakládací Norny zdarma drží server (jen s životní runou, jednou: `tree_founded_at` před voláním, zápis podmíněně
+`is null`; souběh nejvýš jedno textové volání ~$0.005, hlas se u zakládání nenabízí) · menu s počtem hlasů jen pro testera se stropem
+`VOICE_MONTHLY_LIMIT_TESTER` (strop 5 pro ostatní zmizel i z configu, DECISIONS (61)) · shrine anglicky hlídá ㉹ · zakládání na klientu
+hlídají ㊶ ㊷ CODE-tree s útoky.
+
+#### ⭐ Kolo 3 uzavřeno (2026-10-11) — co našlo a co z toho hlídá stroj
+**Soulad mechanismů:** Edit × pre-commit (`uprav`) · noční záloha DB × konverzace · pokyny k commitu × pre-commit · commit „jen svého
+bloku“ smazal čerstvé cizí útoky (c3dfd49, vráceno) a pathspec přibalil cizí rozdělanou práci (1c37d3e, 4eb6905) · pre-push nad sdíleným
+stromem zastavil push všem kvůli rozdělané migraci · hook ukazoval nesouvisející pravidla podle cest v datech skriptu.
+**Kontroly pod útokem:** útok má každá kontrola, která ho mít může (`scripts/protipriklady.py`, smoke ㊵); vadu jiným tvarem propustilo 6
+(zápis do DB přes alias / objekt v proměnné / dvojité uvozovky, otázka přes U+2028, SQL přes víc řádků a v uvozovkách, životní runa za
+tierem) — všechny opraveny.
+**Nové stroje z kola 3:** smoke ㊵ · pre-commit: mazání čerstvé cizí práce (51) a sdílené soubory včetně pěti souborů appky (58, 60) ·
+hook: nový text porovná s kánonem a `uz_vime` až po zprávě ownera (46), skript za `$S/`, neviditelné znaky, přímý zápis do sdíleného
+souboru, cíle zápisu podle doslovných cest · soubory mimo git: čerstvé = varování.
+**Kolo 4:** napřed části změněné od uzavření kola 3 (git log), pak nové typy — co navrhne owner, jinak zátěž a souběh (víc session
+naráz pushuje, zamítnutí „cannot lock ref“ dnes 3×, zatím vždy bez ztráty).
 
 #### Kolo 3 / 4 — protipříklady naostro: kontroly pod útokem (2026-10-11)
 **Metoda:** čistá kopie repa (`git worktree`), do souboru podstrčená skutečná chyba, kontrola s `RUNAR_ROOT` na kopii musí spadnout.
