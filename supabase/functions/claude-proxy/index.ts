@@ -9,6 +9,7 @@
 //     -> only error this path returns is no_credits (402); no weekly/monthly error
 //   standard / premium — monthly cast cap (MONTHLY_LIMITS); a follow-up (ask) does not count
 // Rate limit: 10 requests / 60s per logged-in user (anonymous never gets this far)
+//   + one METERED reading at a time per account (reading_locks, see CONCURRENCY below)
 // Vrstvy A/B/C (tree context, session state, voice scale) — OFF since 2026-07-04 (ENABLE_DYNAMIC_CONTEXT below);
 //   the code stays for a validated return. (Until 2026-10-09 this header described them as live — CODE-read copied
 //   that into an architecture overview the same day.)
@@ -17,6 +18,12 @@
 //   verified-successful reading. Eligibility is checked up front (402 if the
 //   seeker cannot afford it) but the actual deduction runs after the model returns
 //   real text — so a transient failure never costs a credit.
+// CONCURRENCY (2026-10-11): because the deduction runs AFTER the reading, parallel requests all passed the up-front check and
+//   each got a reading — several readings for one credit / one free reading, a subscriber past the monthly cap (found by
+//   CODE-read, BACKLOG part 40). A metered reading now takes a per-account lock (acquire_reading_lock, sql/2026-10-11_reading_lock.sql)
+//   BEFORE the balance is read, and releases it in the handler's finally. A concurrent request gets 429 reading_in_progress.
+//   Not a reservation on purpose: a function killed after reserving would keep the credit without a reading; the lock just
+//   expires (10 min). Rituals and an Ask on one's own reading are not metered and not locked.
 // RESILIENCE (2026-07-04): the Claude fetch has an AbortController timeout and
 //   retries transient upstream errors (429/5xx/529) with backoff, then returns a
 //   clean 503 with a friendly message instead of leaking a platform 503 or
@@ -487,6 +494,9 @@ serve(async (req: Request) => {
   if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
   if (req.method !== "POST")    return json({ error: "Method not allowed" }, 405);
 
+  // Zámek účtovaného čtení (2026-10-11, CONCURRENCY v hlavičce) — vezme se níž, uvolní ho `finally` na konci handleru.
+  let zamek: { user: string; token: string } | null = null;
+
   try {
     const body = await req.json();
     const {
@@ -702,6 +712,27 @@ serve(async (req: Request) => {
     }
 
     const countsAsCast = !legitAsk && !isRitual;
+
+    // ── Zámek: jedno účtované čtení naráz na účet (2026-10-11, BACKLOG část 40 — nález CODE-read (m)) ──────────────
+    // Bere se PŘED čtením zůstatku: kdyby se bral až po něm, požadavek, který zůstatek přečetl před cizím odečtem a zámek
+    // dostal až po jeho uvolnění, by prošel podruhé. Rituály a Ask k vlastnímu čtení se neúčtují a mají vlastní ochranu (CAS,
+    // trigger, strop Asků) — zámek je neblokuje. Admin se neúčtuje vůbec.
+    if (countsAsCast && !isAdmin && userId &&
+        (userTier === "rune_seeker" || userTier === "standard" || userTier === "premium")) {
+      const token = crypto.randomUUID();
+      const { data: vzat, error: zErr } = await sb().rpc("acquire_reading_lock",
+        { p_user_id: userId, p_token: token, p_ttl_seconds: 600 });
+      if (zErr) {
+        // Fail OPEN jako měsíční strop: výpadek DB (nebo proxy nasazená dřív než SQL) nesmí zastavit čtení — cena omylu je
+        // stav před 2026-10-11 bez zámku. Jde do logu.
+        console.error("reading lock unavailable (allowing):", zErr.message);
+      } else if (!vzat) {
+        // Klient každé 429 ukáže jako „počkej chvíli“ (err_rate_limited); po dokončení běžícího čtení projde.
+        return json({ error: "reading_in_progress", message: "A reading is already being drawn. Wait for it to finish." }, 429);
+      } else {
+        zamek = { user: userId, token };
+      }
+    }
     if ((userTier === "standard" || userTier === "premium") && userId && countsAsCast && !isAdmin) {
       const limit = MONTHLY_LIMITS[userTier];
       const mKey = monthKey();
@@ -733,6 +764,10 @@ serve(async (req: Request) => {
       if (use_credit || spreadCost > 1) {
         // ── Paid credit reading — spread_cost = reading units from SPREAD_COSTS (not runes) ──
         const cost = spreadCost;   // sanitizovano vys — NaN/zaporne/Infinity neprojde
+        // 2026-10-11: zůstatek znovu PO zámku — `creditsBalance` z ověření přihlášení se četl před ním a souběžný požadavek
+        // mohl mezitím odečíst. Selže-li čtení, platí původní hodnota (jako do té doby).
+        const { data: kp, error: kErr } = await sb().from("user_profiles").select("credits_balance").eq("id", userId).maybeSingle();
+        if (!kErr && kp) creditsBalance = kp.credits_balance ?? 0;
         if (creditsBalance < cost) {
           return json({ error: "no_credits", message: "Not enough credits. Redeem a reading gift card or upgrade." }, 402);
         }
@@ -801,10 +836,12 @@ serve(async (req: Request) => {
       }
     }
 
-    // ── Build system array: base (cacheable) + dynamic context ────────────────
+    // ── Build system array: base + dynamic context ────────────────
+    // 2026-10-11 bez cache_control (nález CODE-read (n), BACKLOG část 41): zápis do cache se platí 1,25× vstupu a skoro se z něj
+    // nečte (za 30 dní z cache 1 % vstupu u opus-4-8, 13 % u opus-5) — přirážka bez návratu. Claude je záloha za sol.
     const baseSystem = system || "";
-    const systemParts: Array<{ type: "text"; text: string; cache_control?: { type: "ephemeral" } }> = [];
-    if (baseSystem)      systemParts.push({ type: "text", text: baseSystem, cache_control: { type: "ephemeral" } });
+    const systemParts: Array<{ type: "text"; text: string }> = [];
+    if (baseSystem)      systemParts.push({ type: "text", text: baseSystem });
     if (dynamicContext)  systemParts.push({ type: "text", text: dynamicContext });
 
     // ── GPT-6 sol — od 2026-10-09 každé volání modelu (DECISIONS 2026-10-09 (13)); při chybě níž normální cesta přes Claude ──
@@ -960,5 +997,16 @@ serve(async (req: Request) => {
 
   } catch (e) {
     return json({ error: (e as Error).message }, 500);
+  } finally {
+    // Uvolnit zámek účtovaného čtení na KAŽDÉ cestě (čtení, 402, 503, výjimka). Selhání uvolnění nevadí — zámek vyprší sám;
+    // vlastní try, protože výjimka ve finally by přebila už hotovou odpověď.
+    if (zamek) {
+      try {
+        const { error: uErr } = await sb().rpc("release_reading_lock", { p_user_id: zamek.user, p_token: zamek.token });
+        if (uErr) console.error("reading lock release failed (expires on its own):", uErr.message);
+      } catch (e) {
+        console.error("reading lock release threw (expires on its own):", (e as Error).message);
+      }
+    }
   }
 });
