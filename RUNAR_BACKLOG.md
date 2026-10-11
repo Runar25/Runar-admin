@@ -2827,6 +2827,15 @@ s logem mimo skutečný (`RUNAR_ZALOHA_TEST_DB_SELZE`): CHYBA DB + konverzace pr
 (session by uvízla mezi dvěma hooky) → radí `commit_vlastni.py pridej` + `commit` (záloha `tree-guard.sh.pred-k3-2026-10-11`). CLAUDE.md
 v sekci session (příkaz s podpisem i „Commit ÚZCE“) uváděl pathspec commit pro všechno → doplněno, že sdílené docy jen přes `commit_vlastni`.
 
+#### Kolo 3 / 5 — části změněné od uzavření kola 2 (1627cbb; 35 commitů CODE-tune a CODE-tree; 2026-10-11, DB a nasazení jen čtením)
+**Bez nálezu:** záložka TESTERS ve shrine (data jen pro admina — `voice-usage` 401/403; e-maily přes `escapeHtml`, shrine načte
+`runar-utils.js` dřív než záložku) · brzda hlasu v kódu odpovídá DECISIONS (48) a (52), obě funkce volají `brzdaHlasu` · nasazení = repo (v UTC: `elevenlabs-proxy`/`-static` v38/v17 po 08b1e26,
+`voice-usage` v5 po 74ad59c; pozdější změna `_shared` jen konstanta pro `voice-usage`) · strom v appce jen admin (`renderLivingTree`) ·
+`tree_state` appka neukládá (`TREE_UPDATE` nikdo nevolá) → podmínka (d) z kola 2 platí.
+**Rozpracované (CODE-tune, „hlas ke každému čtení“, DECISIONS (61)):** `_shared/voice_ticket.ts` mimo git, `claude-proxy`,
+`elevenlabs-proxy`, `delete-account` změněné jen ve stromě, migrace `sql/2026-10-11_hlas_ke_cteni.sql` — projít po commitu a nasazení.
+**Opraveno cestou:** pre-push „soubory mimo git“ zastavil push všem kvůli minuty staré migraci CODE-tune → čerstvé (< 2 h) jen varování.
+
 #### Kolo 3 / 4 — protipříklady naostro: kontroly pod útokem (2026-10-11)
 **Metoda:** čistá kopie repa (`git worktree`), do souboru podstrčená skutečná chyba, kontrola s `RUNAR_ROOT` na kopii musí spadnout.
 **Výsledek:** 19 útoků / 15 kontrol, 16 chyceno hned. Slepé: `verify_db_write_checked` (alias `_db = sb`) a `verify_write_surface`
