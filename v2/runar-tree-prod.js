@@ -481,18 +481,16 @@ function _lab(document, window, localStorage, getComputedStyle, requestAnimation
      je to rozhodovani o modelu, ne o vzhledu. */
   makeTune('tune-crown', [
     /* gradFrac (prah povyseni) z panelu pryc: na KUKYho strome 0.33 i 0.6 dalo totez — brzdou je misto */
-    ['maxMains',3,14,1,'max ramen s vlastnim pramenem (mist element x pasmo je 14)'],['exitFloor',0.05,0.85,0.01,'kam nejniz smi vetev (proti palme)'],
-    ['intZone',0,0.6,0.02,'cas cteni (zamer/oblast/seeking) -> vyska ramene'],['areaSide',0,0.8,0.05,'nitro/svet -> natoceni ramene'],
+    /* 2026-10-11 (KUKY „v labu jsou mrtve funkce“): maxMains, exitFloor, intZone, bendStr, bendK, bendN a exitMinPx do ODLOZENO — audit na jeho
+       strome z produkce (vychozi hodnoty, min -> max) 0,0 % zmeny tvaru i barvy; vysku, uhel a rozestup ramen od 2026-10-10 urcuje pevna stavba
+       ramen (strana × zona), strop hlavnich vetvi je MAX_BR. */
+    ['areaSide',0,0.8,0.05,'nitro/svet -> natoceni ramene'],
     ['aettStr',0,1,0.05,'aett -> charakter'],
     ['twigMax',2,12,1,'max vetvi na jedne vetvi (pak o patro niz)'],
-    ['bendStr',0,1.5,0.05,'tiha cteni -> ohyb ramene (nahoru/do strany/dolu)'],['bendK',1,40,1,'kolik cteni ohne rameno napul'],
-    ['bendN',0.2,1.2,0.05,'neutralni poloha noveho ramene (od svislice)'],
-    ['exitMinPx',10,60,1,'rozestup ramen na stejne strane (px); levo-pravo polovina'],
     ['hwRatio',0.3,1.5,0.05,'vyska kmene : rozpeti ramen (kmen doroste, kdyz ramena zesiri)'] ], crownT);
   /* VZHLED — jak to vypada. Doladi se jednou a zapece; nema smysl u toho sedet. */
   makeTune('tune-crown-look', [
     ['length',30,160,1,'delka hlavni'],['curve',0,1.5,0.05,'gesto (ohyb)'],['variace',0,1,0.05,'variace vetvi'],
-    ['gradLen',1,5,0.05,'delka povysene vetve'],
     ['limbBendU',0.05,0.45,0.01,'napojeni ramene: po jake casti delky dojede na svuj uhel'],['limbTip',0,1.5,0.05,'zdvih spicky ramen (vetvicky beze zmeny)'],
     ['objem',0,1.5,0.05,'OBJEM: presah stinu pres obrys'],['tonPramene',0,0.6,0.02,'rozdil tonu mezi prameny'],
     ['zrod',0.05,1,0.05,'velikost NOVE vetvicky (jen cerstva cteni)'],['dorust',1,12,1,'za kolik cteni nova vetvicka doroste'] ], crownT);
@@ -504,6 +502,11 @@ function _lab(document, window, localStorage, getComputedStyle, requestAnimation
        childN, twigPer, diversity — jejich mechaniku nahradily kroky 1–5 (audit tree_diag sliders: 0 % zmeny). Zustava kura. */
     /* ryhy + kuraVek pryc (2026-10-03): v prohlizeci zmena 0,06 % / 0 % pixelu v rezimu kuze i WebGL */
     ['hrebeny',0,1.5,0.05,'HREBENY kury'],['textura',0,1,0.05,'textura kury'],
+    /* mrtve od ramen (2026-10-11, viz TVAR): delku vedlejsi vetve v rezimu ramen pocita _SL (gLen), gradLen ji neovlivni */
+    ['maxMains',3,14,1,'max ramen s vlastnim pramenem (mrtve od ramen)'],['exitFloor',0.05,0.85,0.01,'kam nejniz smi vetev (mrtve od ramen)'],
+    ['intZone',0,0.6,0.02,'cas cteni -> vyska ramene (mrtve od ramen)'],['bendStr',0,1.5,0.05,'tiha cteni -> ohyb ramene (mrtve od ramen)'],
+    ['bendK',1,40,1,'kolik cteni ohne rameno napul (mrtve od ramen)'],['bendN',0.2,1.2,0.05,'neutralni poloha ramene (mrtve od ramen)'],
+    ['exitMinPx',10,60,1,'rozestup ramen na strane (mrtve od ramen)'],['gradLen',1,5,0.05,'delka povysene vetve (mrtve od ramen)'],
     ['stylKury',0,1,1,'styl kury: 0 rytina / 1 malba'],
     ['glZrno',8,120,2,'WebGL: meritko kury podel vetve'],['glHloubka',0,1,0.05,'WebGL: hloubka prasklin'] ], crownT);
   (function(){ var h=document.getElementById('park-head'), b=document.getElementById('tune-crown-park');
@@ -591,6 +594,20 @@ function _lab(document, window, localStorage, getComputedStyle, requestAnimation
       .then(function(){ b.textContent='ulozeno pro Code'; setTimeout(function(){b.textContent=o;},1600); })
       .catch(function(){ b.textContent='helper 7798 nebezi'; setTimeout(function(){b.textContent=o;},2200); });
   });
+  /* MOJE CTENI Z PRODUKCE (2026-10-11, KUKY „mozna nejlepsi bude, kdyz prevedes moje cteni do labu a tak to muzeme ladit“): lab mel vlastni
+     starsi log (388 cteni, stare zakladaci Norny) a strom se STEJNYM nastavenim vypadal jinak nez v produkci (471 cteni, dnesni Norny
+     prvni: koruna 879 × 1332, koreny 0,88 × 0,44 sirky koruny). _moje_cteni.js vyrabi scripts/utils/lab_moje_cteni.js z produkce (jen runy,
+     oblast, zamer, seeking — zadny text cteni); tlacitko prepise log labu, zivotni runu a datum narozeni a ulozi je jako kazdy jiny log. */
+  if(window.RUNAR_MOJE_CTENI && window.RUNAR_MOJE_CTENI.log){ var MC=window.RUNAR_MOJE_CTENI, lpB=document.getElementById('load-prod');
+    lpB.style.display=''; lpB.textContent='MOJE CTENI Z PRODUKCE ('+MC.log.length+')';
+    lpB.addEventListener('click', function(){
+      if(!window.confirm('Prepsat log labu tvymi ctenimi z produkce ('+MC.log.length+' cteni, stav '+(MC.kdy||'?')+')? Posuvniky zustanou.')) return;
+      state.log=MC.log.map(function(r){ return { spread:r.spread, runes:r.runes, area:r.area||null, intention:r.intention||null, seeking:r.seeking||null }; });
+      if(MC.rune) state.rune=MC.rune; if(MC.dob && MC.dob.d){ state.d=MC.dob.d; state.m=MC.dob.m; state.y=(MC.dob.y==null) ? null : MC.dob.y; }
+      state._viewN=null; state.demo=false; saveLog(); renderHist();
+      document.getElementById('dob-d').value=state.d; document.getElementById('dob-m').value=state.m; document.getElementById('dob-y').value=(state.y==null) ? '' : state.y;
+      document.querySelectorAll('.rb').forEach(function(x){x.classList.toggle('on',x.dataset.k===state.rune);});
+      draw(); }); }
 
   /* KROK 1+signaly: cteni = objekt {spread, runes:[{rune,el}], area, intention}. Element ridi strom uz ted;
      spread (viceruna) = vic run/vetvi + expanze; area+intention se ukladaji a ukazuji v trace,
@@ -1813,7 +1830,7 @@ function _lab(document, window, localStorage, getComputedStyle, requestAnimation
          ze seedu. To vypadalo dobre, takze je to VYCHOZI. fan!=0 => rizene rozevreni podle polohy
          pramene ve svazku (plus = ven bez krizeni, minus = dovnitr/krizi). */
       var rdevUsed=null;
-      if(rootsT.fan!==0){ var rdx=rbase.x-trunkT.cx, rspan=Math.max(1, trunkT.w*0.22);
+      if(rootsT.fan!==0 && !_SL){ var rdx=rbase.x-trunkT.cx, rspan=Math.max(1, trunkT.w*0.22);   /* jen bez ramen; s rameny viz ROZEVRENI KORENU niz */
         /* POZOR na znamenko: baseAng=PI/2 miri DOLU, takze KLADNY dev otaci doLEVA.
            Aby se koren rozevrel VEN, musi mit pramen vpravo (rdx>0) dev ZAPORNY -> minus.
            (Bez toho se koreny krizily pod kmenem; puvodni test kontroloval jen znamenko dev,
@@ -1842,6 +1859,16 @@ function _lab(document, window, localStorage, getComputedStyle, requestAnimation
       var rG=B.buildBranch(rSpec, rTT);   /* KROK 2: koren = vlastni runa pramene (runeK), rovne dolu */
       var kSh=_SL ? seekShapeOf(_RDL[k], k) : null;
       if(_SL) bendRootPaths(rG.paths, kSh);   /* seeking tvaruje cely koren (zrcadlove k vetvi) */
+      /* ROZEVRENI KORENU v rezimu ramen (posuvnik „rozevreni korenu“ = rootsT.fan; 2026-10-11, KUKY „v labu jsou mrtve funkce … dole u korenu“
+         a „korenum potrebuju jen dodat jiny smer, meli by vypadat vic jako 5 … nemusi menit moje rozhodnuti“). Od ramen (2026-10-10) urcuje smer
+         korene zrcadlo koruny (_SL.rdev) nebo koren matky (dirO), takze posuvnik nedelal nic (zmereno na jeho strome: -1,6 i 1,6 = tytez body).
+         Ted otoci CELY koren kolem pate: odklon tetivy od svislice × (1 + fan), az po vsech pravidlech (navraty, Norny, seeking) — relativni
+         stoceni z rozhodnuti 2026-10-11 (3) a (13) zustava, meni se jen smer. 0 = beze zmeny (produkce), zaporne ke svislici a pres ni (kriz),
+         kladne do stran; strop 63° od svislice (vodorovnejsi koren se svym ohybem vylezl nad zem). Vybezky jdou s pateri, zrcadleni pozdeji. */
+      if(_SL && rootsT.fan){ var rozP=rG.paths[0].pts, rozA=rozP[0], rozE=rozP[rozP.length-1], rozD0=Math.atan2(rozE.x-rozA.x, rozE.y-rozA.y);
+        var rozD1=clamp(rozD0*(1+rootsT.fan), -1.10, 1.10), rozR=rozD0-rozD1, rozC=Math.cos(rozR), rozS=Math.sin(rozR), rozSeen=new Set();   /* otoceni o rozR posune odklon o -rozR */
+        rG.paths.forEach(function(Pq){ Pq.pts.forEach(function(q){ if(rozSeen.has(q)) return; rozSeen.add(q);
+          var dx=q.x-rozA.x, dy=q.y-rozA.y; q.x=rozA.x+dx*rozC-dy*rozS; q.y=rozA.y+dx*rozS+dy*rozC; }); }); }
       /* KOREN JAKO CELEK (KUKY 2026-10-11 "vyjimecnych udalosti bude vic … abychom meli data, z kterych to pak poskladame — to je to stejne jako cteni pro
          vetev"): cteni, ve kterych se runa korene vratila po vzniku jeho vetve (oblast, zamer, seeking, minulost/nitro). Z nich se pozdeji skladaji vyjimecne
          udalosti (napr. vsechny tri korenove runy v jednom cteni, RUNAR_DESIGN.md); ted je jen ukazuje inspekce. */

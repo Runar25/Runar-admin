@@ -12,6 +12,10 @@ __pycache__/
 readings_export.json
 readings_export.csv
 
+# Čtení ownera pro lab stromu (scripts/utils/lab_moje_cteni.js, 2026-10-11): runy, oblast, záměr a seeking z jeho účtu.
+# Osobní data a repo je veřejné → nikdy necommitovat. Local only.
+v2/tree-lab-crown-composer/_moje_cteni.js
+
 # Synthetic eval batches (scripts/utils/gen_batch.js). Generated, bulky, never
 # a source of truth — and must never be mistaken for real readings. Local only.
 eval_out/
