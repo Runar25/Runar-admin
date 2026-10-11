@@ -82,7 +82,8 @@ Směr ramene se po délce mění — **tohle rozhoduje, jestli se ramena potkaj�
 - **Od 2026-10-10:** matka = rameno téže strany a zóny (ne téhož živlu); vedlejší nese jiný živel než rameno. Místo podél ramene pevné podle pořadí a kapacity (`u` 0,25–0,80, na vrcholu 0,12–0,82); rozdělovač míst (`_KU`) je postaví napřed, větvičky se jim vyhnou.
 - **Směr:** od směru RAMENE střídavě nahoru / dolů (nahoru víc dole, nahoře méně); na vrcholu střídavě vlevo / vpravo (kreslená strana `_dsd`, data strana 0 = střed), dole širší, nahoře strmější. Ke svému úhlu se stočí přes 6 % délky. **Otočená dolů zvedá špičku jen 0,35 ×** (ona i její větvičky) — jinak se větvičky zespodu stočily nahoru a byly všechny navrchu.
 - **Délka:** u kmene delší, ke špičce kratší (podíl délky ramene), ale **aspoň 0,8 × své praxe** (F5) — krátká vedlejší s mnoha čteními měla větvičky 3–4 px od sebe.
-- Nemají vlastní pramen v kmeni: matka je od kořene po místo odštěpení tlustší (kmen jen o čtvrtinu, kořen jako dřív).
+- Nemají vlastní pramen v kmeni: matka je od kořene po místo odštěpení tlustší (kmen i kořen jen o čtvrtinu; do 2026-10-11 měl kořen původní zesílení a byl u země až
+  1,4× tlustší než kmen — KUKY *„mají být stejné“*, DECISIONS 2026-10-11 (10)).
 
 ## 10. Kořeny — `buildRootFor`, `mirrorTwig`
 - Každé rameno má kořen tvaru své runy (posuvníky KOŘENY); zrcadlo koruny = prvních `mirrorN` větviček ramene dolů. **Od 2026-10-10 má kořen i každá vedlejší větev** (DECISIONS 2026-10-10 (26)): téže stavby (`buildRootFor`, velikost `gradStrandW`), vyroste z kořene matky ve stejném místě a natočí se zrcadlově k odbočce (nejvýš 63° od svislice). Kořen se smí natočit, ohnout a prodloužit, **nepředělává se** (DECISIONS (23), (28)). Směr kořenů ramen: vrchol dolů, na straně podle patra 52° / 34° / 17° od svislice.

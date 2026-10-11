@@ -10071,3 +10071,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Platí:** bod 10 zůstává v labu, jak je (2026-10-11 (7)); „Otevřené“ v (7) je tímto uzavřené. Modelové stromy ownerovi neposílat
   (memory `modelove-stromy-neposilat`). Znovu se na to neptat.
 - Affected doc(s): žádný.
+
+## 2026-10-11 (10) — Strom (lab): kořen u země stejně tlustý jako kmen (oprava mé chyby z 5613d5c) · výchozí délka kořenů 65
+
+- **Rozhodl:** KUKY 2026-10-11: *„délku kořenů upravujeme, snížil jsem ji v labu z 95 na 65. nevím, proč jsi měnil tloušťku napojení na
+  kmen. kořeny jsou větší než kmen. nebylo to tak. mají být stejné.“* **Provedl:** CODE-tree, LAB.
+- **Příčina:** posuvník „tloušťka napojení na kmen“ změněný nebyl (stojí na 1). Zapnutí ramen 5613d5c (2026-10-10 (38)) zesílilo kmen matky
+  s vedlejšími jen o čtvrtinu (jinak kmen jako lyra), ale kořeni nechalo původní zesílení — pramen tak byl těsně pod zemí 1,21–1,40× tlustší
+  než nad zemí (jeho strom, všech 7 pramenů, průměr 1,30).
+- **Oprava:** kořen matky dostane totéž zesílení jako kmen: u země poměr 1,00 (o pár bodů níž 0,91–0,95, přirozené zúžení kořene),
+  sousední body na hranici se liší o 0,4–0,5 procenta — žádný schod. Výchozí `rootsT.length` 95 → 65 podle ownera (kořeny na jeho stromě
+  70 procent šířky koruny, hloubka 41 procent). Smoke ㉳ beze změny prošel (poměry v (s), (t), (u) na délce nezávisí).
+- Affected doc(s): `RUNAR_TREE_MAP.md` §9 (tloušťka matky) — v témže commitu.

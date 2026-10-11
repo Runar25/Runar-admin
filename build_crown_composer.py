@@ -568,7 +568,7 @@ HTML = r"""<!DOCTYPE html>
   /* roots = same engine, pointing DOWN: no up tip-lift, dark colour */
   /* F4: koren ma VLASTNI pravidlo - SAHA (min vybezku, ale DELSICH), nezahyba se jemne jako koruna.
      Tyhle paky jsou od F4 ZAPOJENE (drive byly natvrdo v rTT a rootFan nedelal nic). */
-  var rootsT={ length:95, width:6, curve:1, taper:1.0, wobble:0.5, tipLift:0.22, jitter:0.12, steer:1,
+  var rootsT={ length:65,   /* KUKY 2026-10-11 "delku korenu upravujeme, snizil jsem ji v labu z 95 na 65" */ width:6, curve:1, taper:1.0, wobble:0.5, tipLift:0.22, jitter:0.12, steer:1,
           mirrorN:4, mirrorLen:0.30,   /* F10: kolik korunnich odbocek zrcadlit do korene + jejich delka */
           ctNear:0.30, ctFar:0.18, twist:0.1, subScale:1, subLenMul:1, fan:0,
           attachN:3, childN:1, maxDepth:1, levelRatio:0.6, childWidth:0.6,
@@ -2267,9 +2267,9 @@ HTML = r"""<!DOCTYPE html>
       Object.keys(byM).forEach(function(pk){ var par=mainInfo[pk], lp=par.limb.pts, tp0=par.tp, nL=lp.length-tp0, lst=byM[pk];
         lst.forEach(function(it){ it.sidx=Math.max(1, Math.min(nL-2, Math.round(it.GS.u*(nL-1))));
           it.gAge=Math.max(1, realAge-(SEED_AGE + it.GS.at*crownT.readingEvery)); it.r=clamp(it.gAge/90, 0, 1); });
-        var R0=0; lst.forEach(function(it){ R0+=it.r; }); var R0o=R0; if(_SL) R0*=0.25;   /* RAMENA: kmen matky jen o ctvrtinu (se 4 vedlejsimi 1,9× tlustsi pramen = kmen jako lyra, pokus 25); koren matky beze zmeny */
-        var f0=Math.sqrt(1+gwS*R0), f0o=Math.sqrt(1+gwS*R0o);
-        for(var ti=0; ti<tp0; ti++){ var q0=lp[ti]; lp[ti]={ x:q0.x, y:q0.y, t:q0.t, ct:q0.ct, depth:q0.depth, w:q0.w*((ti<(par.rn||0)) ? f0o : f0) }; }   /* koren + kmen matky (RAMENA: koren s puvodnim zesilenim) */
+        var R0=0; lst.forEach(function(it){ R0+=it.r; }); if(_SL) R0*=0.25;   /* RAMENA: kmen matky jen o ctvrtinu (se 4 vedlejsimi 1,9× tlustsi pramen = kmen jako lyra, pokus 25); koren STEJNE jako kmen — KUKY 2026-10-11 "koreny jsou vetsi nez kmen. nebylo to tak. maji byt stejne." (5613d5c nechal koreni puvodni zesileni: pod zemi 1,21–1,40× tlustsi) */
+        var f0=Math.sqrt(1+gwS*R0);
+        for(var ti=0; ti<tp0; ti++){ var q0=lp[ti]; lp[ti]={ x:q0.x, y:q0.y, t:q0.t, ct:q0.ct, depth:q0.depth, w:q0.w*f0 }; }   /* koren + kmen matky, oboji stejne (KUKY 2026-10-11) */
         for(var tb=0; tb<nL; tb++){ var Rt=0; lst.forEach(function(it){ Rt+=it.r*clamp((it.sidx-tb)/3, 0, 1); }); if(_SL) Rt*=0.25;
           if(Rt>0){ var q1=lp[tp0+tb]; lp[tp0+tb]={ x:q1.x, y:q1.y, t:q1.t, ct:q1.ct, depth:q1.depth, w:q1.w*Math.sqrt(1+gwS*Rt) }; } }   /* rameno do odstepeni */
         lst.forEach(function(it){ growGrad(it.GS, it.j, par, it.sidx, it.gAge); });
