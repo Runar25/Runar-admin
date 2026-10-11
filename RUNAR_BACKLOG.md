@@ -2450,6 +2450,16 @@ rate limit mají ty, které stojí peníze (`claude-proxy`, `elevenlabs-proxy`, 
 **Opraveno (CODE-read):** `supabase/.temp/` (místní stav CLI) do `.gitignore` — byl neverzovaný a neignorovaný, šel omylem commitnout.
 - ⚪ poznámka: `notify-report` je „fail open“ — bez `WEBHOOK_SECRET` pustí kohokoli (dnes nastaven, smoke ho nehlídá).
 
+#### Kolo 2 / 3 — databáze naostro + celistvost peněz (nový typ, 2026-10-11, jen čtení)
+**Platí:** žádný záporný zůstatek, měsíční čítač nepřetáhl strop · **evidence peněz sedí:** poslední `balance_after` v `credit_ledger` =
+`credits_balance` u 4 ze 4 účtů; řetěz `předchozí + delta = nový` bez zlomu (35 přechodů) · trigger `trg_ledger_user_profiles` zapnutý a sleduje
+kredity, volná čtení i měsíční jednotky (záznamy `free`/`month_unit` chybí, protože od 2026-07-19 nikdo volné ani měsíční nečerpal — admin účty
+se neúčtují) · politiky RLS: vlastní data jen vlastníkovi, profil omezují granty sloupců (smoke ⑩), deník jen pro čtení.
+- ⚪ **Pro CODE-tune / ownera (nespěchá) — seznam adminů i v politikách DB:** `gift_codes`, `knowledge_base`, `runar_character`,
+  `runar_corrections`, `runar_static_audio` mají e-maily adminů natvrdo v RLS. Dnes = `ADMIN_EMAILS` (ověřeno), ale smoke ㉪ politiky výslovně
+  vynechává („SQL migrace = historie“) — živé politiky jsou přitom běžící kód. Změna `ADMIN_EMAILS` → admin tiše přijde o dárkové kódy,
+  korekce, audio. Trvalé řešení: DB funkce `is_admin()` (jedna tabulka adminů) a politiky ji volají — jeden zdroj v DB (§20).
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
