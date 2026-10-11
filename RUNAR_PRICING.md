@@ -289,21 +289,26 @@ uváděné marže 77–92 % byly nadsazené.
 
 ## ElevenLabs Plan — When to Upgrade
 
-Sazba hlasu `EL_PRECERPANI` (`stats.js`), EN i IS stejná. Overage rate = plan rate.
+Sazba hlasu `EL_PRECERPANI` (`stats.js`), EN i IS stejná. Zahrnuté znaky = cena tarifu ÷ sazba (ceník API v účtu ElevenLabs: v2 i v3
+$0.08 / 1000 zn.; počítadlo účtu je v kreditech, 1 kredit = $0.0002 = 2,5 znaku — `RUNAR_DECISIONS.md` 2026-10-11 (43)). Do 2026-10-11 tu
+stálo $0.10 (Creator 220 000), chyběl Starter a „Overage rate = plan rate“: **Starter přečerpání nemá** — po vyčerpání kreditů EL hlas
+odmítne (`can_extend_character_limit` false); u vyšších tarifů přečerpání ověřit před spuštěním (BACKLOG „Náklady — zmapovat“).
 Znaky hlasu na uživatele za měsíc mají strop (`VOICE_MONTHLY_LIMIT` čtení): **horní mez ~7 390** (strop × Yggdrasil IS*), **běžně ~2 115**
-(strop × Single IS). Do 2026-10-11 tu stálo 17 900 (50 Single, každé s hlasem).
+(strop × Single IS). Do 2026-10-11 tu stálo 17 900 (50 Single, každé s hlasem). ⚠️ Strop hlasu pro produkci nikdo nerozhodl — pětka byla
+ownerův pokyn pro testery (DECISIONS 2026-10-11 (49)); s hlasem ke každému čtení se sloupce uživatelů přepočítají.
 
 | Plan | $/month | Multilingual chars included | ~Users (horní mez) | ~Users (běžně) | Upgrade at (horní mez) |
 |------|---------|----------------------------|----------------|----------------|------------|
-| Creator | $22 | 220.000 | ~30 | ~104 | ~134 users |
-| Pro | $99 | 990.000 | ~134 | ~468 | ~405 users |
-| Scale | $299 | 2.990.000 | ~405 | ~1.414 | ~1.340 users |
-| Business | $990 | 9.900.000 | ~1.340 | ~4.681 | 1.340+ → Enterprise |
+| Starter | $6 | 75.000 | ~10 | ~35 | — (bez přečerpání: nad ~10 hlas stojí) |
+| Creator | $22 | 275.000 | ~37 | ~130 | ~167 users |
+| Pro | $99 | 1.237.500 | ~167 | ~585 | ~506 users |
+| Scale | $299 | 3.737.500 | ~506 | ~1.767 | ~1.675 users |
+| Business | $990 | 12.375.000 | ~1.675 | ~5.851 | 1.675+ → Enterprise |
 | Enterprise | Custom | Custom | — | — | Contact ElevenLabs |
 
 **Upgrade logic:** Stay on current plan until monthly overages + plan cost exceed next plan price (= cena dalšího plánu ÷ náklad hlasu
 na uživatele v horní mezi).
-**Start on Creator.** S hlasovým stropem stačí Creator do ~134 platících uživatelů i v horní mezi (do 2026-10-11: ~56).
+**Start on Creator.** S hlasovým stropem stačí Creator do ~167 platících uživatelů i v horní mezi (do 2026-10-11: ~134 při $0.10, předtím ~56). Testování běží na Starteru (owner 2026-10-11: *„nebudeme platit nic navíc“*) — brzda kreditů DECISIONS (48).
 
 ---
 

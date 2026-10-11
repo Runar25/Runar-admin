@@ -486,16 +486,18 @@
      tu stálo „5 účtů, ne 7“ — počítal jsem jen dnes registrované účty, ne lidi ani nezaregistrované testery.)
   3. **Selže-li dotaz na stav účtu, hlas se pustí** (`elevenlabs-proxy` ř. 103, fail open) a EL zastaví až na limitu včetně dobití. Malé
      riziko (jednotlivé hlasy), jen vědět.
-  4. **`scripts/utils/stats.js` ř. ~291–295** (oprava 03bf490 nechytila): snímek vypisuje „X z Y znaků“ — jsou to kredity; „přečerpání …
+  4. ✅ *(opraveno 2026-10-11, df93dd8: kredity, bez „přečerpání“, naše znaky převedené na kredity)* **`scripts/utils/stats.js` ř. ~291–295** (oprava 03bf490 nechytila): snímek vypisuje „X z Y znaků“ — jsou to kredity; „přečerpání …
      platí se navíc“ na tomhle účtu nastat nemůže; „zapsáno ve voice_usage od resetu“ srovnává naše znaky s jejich kredity (× 0,4).
-  5. **`RUNAR_PRICING.md` „ElevenLabs Plan“:** kromě Creatoru i Pro / Scale / Business podle ceníku API 1 238 000 / 3 738 000 / 12 375 000 zn.
+  5. ✅ *(opraveno 2026-10-11: ceník API $0.08, řádek Starter bez přečerpání, uživatelé × 1,25)* **`RUNAR_PRICING.md` „ElevenLabs Plan“:** kromě Creatoru i Pro / Scale / Business podle ceníku API 1 238 000 / 3 738 000 / 12 375 000 zn.
      (tabulka má 990 000 / 2 990 000 / 9 900 000) → uživatelé a hladiny přechodu × 1,25; chybí řádek Starter ($6, 75 000); „Overage rate =
      plan rate“ pro Starter neplatí (viz výš).
   **ROZHODNUTO ownerem (DECISIONS 2026-10-11 (48)):** převod se smí vyčerpat, dobití ne; bez převodu sama 30 000. Zadání:
-  - [ ] **Brzda** (`elevenlabs-proxy`, `elevenlabs-static`): hlas jen když `character_count + ceil(znaky × kredity_na_znak) ≤ character_limit −
+  - [ ] ⏳ *(kód hotový 2026-10-11, 08b1e26 + útoky ㊵ 8f0bf93; konstanta je jen v `_shared/voice_usage.ts` — klient ji nepotřebuje, kopie
+    v configu by byla navíc; NASAZENÍ čeká na SQL `sql/2026-10-11_voice_quota_snapshots_zdroje.sql` (owner) a ownerovo ano)* **Brzda** (`elevenlabs-proxy`, `elevenlabs-static`): hlas jen když `character_count + ceil(znaky × kredity_na_znak) ≤ character_limit −
     EL_DOBITI_KREDITY` (13 800; konstanta v configu se zrcadlem v obou funkcích pod smoke ⑨, sazba na znak v `_shared/el_voice.ts`).
     `VOICE_SAFE_SHARE` pryč i s komentářem (nahrazuje body 1 a 2 výš).
-  - [ ] **Owner to musí vidět** (*„potřebuju to hlídat!“*): (1) shrine VOICE — místo „chars“ kredity, rozpad tarif 30 000 / převod /
+  - [ ] ⏳ *(kód hotový 2026-10-11, df93dd8: VOICE v kreditech s rozpadem a skupinou „tým“, snímek denně + při brzdě, řádek „hlas EL“
+    v plytvani.js už běží; VOICE a snímky čekají na nasazení voice-usage / elevenlabs-proxy)* **Owner to musí vidět** (*„potřebuju to hlídat!“*): (1) shrine VOICE — místo „chars“ kredity, rozpad tarif 30 000 / převod /
     dobití, hladina brzdy a kolik zbývá do ní, datum resetu; (2) snímek stavu ukládat při hlasu nejvýš 1× denně místo týdně (proxy stav
     stejně čte kvůli brzdě) a při každém zastavení brzdou (`voice_quota_rest`) — dnes je poslední snímek z 2026-10-05; (3) rozšířit řádek
     „hlas“ v `scripts/utils/plytvani.js` (ten už pouští „načti čtení a reporty“ přes `nacti_cteni.js`, nový řádek jinde nezakládat):

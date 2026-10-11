@@ -10693,3 +10693,23 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   stávající účty zůstávají“ (BACKLOG, 2026-10-09) a CODE-read i CODE-tune počítali brzdy pro 7 a 9 účtů.
 - **Poučení:** u každého ownerova pokynu dohledat, o KOM mluví (testeři / produkce / tým) — v té zprávě to stálo o dvě věty dál.
 - Affected doc(s): `RUNAR_BACKLOG.md` (položka o hlasu), `CLAUDE.md` „Tier systém“ — v témže commitu.
+
+## 2026-10-11 (50) — Brzda kreditů ElevenLabs a hlídání podle (48): v kódu, nenasazeno (čeká na SQL a ownerovo ano)
+
+- **Podle:** (48) — owner *„máme hodně kreditů, tak je může vyčerpat, ale potřebuju to hlídat! jakmile vyčerpáme nebo vyprší jejich platnost,
+  tak omezíme na 30.000“*; zadání CODE-read v BACKLOGu.
+- **Brzda** (commit 08b1e26): hlas jen když spotřeba v cyklu + kredity nového hlasu ≤ `character_limit` − dobití. `brzdaHlasu` a
+  `EL_DOBITI_KREDITY` (13 800) v `supabase/functions/_shared/voice_usage.ts`, kredity na znak podle modelu v `_shared/el_voice.ts` — jedno
+  místo pro `elevenlabs-proxy` i `elevenlabs-static`. Odchylka od zadání: konstanta NENÍ v configu se zrcadly — klient ji nepotřebuje
+  (stav ukazuje VOICE z edge funkce), takže by to byla kopie navíc (§20); skripty ji čtou z `_shared`. `VOICE_SAFE_SHARE` pryč z configu
+  i obou funkcí. Smoke ⑨ brzdu spouští doslova na 7 stavech a hlídá kredity na znak proti sazbě ve `stats.js`; smoke ㊵ na ni útočí
+  4 podstrčenými chybami, všechny ji shodí (8f0bf93).
+- **Hlídání** (commit df93dd8): VOICE ve shrine v kreditech — spotřeba proti hladině brzdy, kolik zbývá, rozpad limitu na tarif / převod /
+  dobití, skupiny admin · tým (owner a Sigrún) · testeři; snímek stavu EL při hlasu nejvýš 1× denně a při každém zastavení brzdou;
+  řádek „hlas EL“ v `scripts/utils/plytvani.js` (pouští ho „načti čtení a reporty“) s ⚠ na starý snímek, zastavení brzdou, hladinu
+  nevystačující do resetu a převod, který nevydrží další cyklus — běží hned (čte DB). `stats.js` kredity místo „znaků“.
+- **Ověřeno:** smoke ⑨ a ㊵ zeleně; VOICE se vzorovými daty v prohlížeči; `plytvani.js --kratce` a `stats.js` nad ostrou DB (stav ze
+  snímku 2026-10-05: 13 919 / 103 807, brzda na 90 007, převod ~60 000, varování na 5 dní starý snímek). Funkce zatím nenasazené.
+- **Zbývá:** owner pustí `sql/2026-10-11_voice_quota_snapshots_zdroje.sql` (nové zdroje snímků `daily` a `brake`), pak nasadit
+  `elevenlabs-proxy`, `elevenlabs-static` a `voice-usage` (ownerovo ano).
+- Affected doc(s): `RUNAR_BACKLOG.md` (položka ElevenLabs po kontrole CODE-read), `RUNAR_PRICING.md` (ElevenLabs Plan) — v témže commitu.
