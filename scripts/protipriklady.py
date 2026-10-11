@@ -38,11 +38,6 @@ PRIPADY = [
  ('chyti', 'verify_spread_prices.js', 'v2/runar-config.js', 'regex', r'(yggdrasil:\s*\{\s*free:\s*null,\s*credits:\s*)\d+', r'\g<1>97'),
  ('chyti', 'verify_sw_shell.js', 'v2/sw.js', 'regex', r"  '/Runar-admin/v2/runar-helper\.js',\r?\n", ''),
  ('chyti', 'verify_monthly_limits.js', 'supabase/functions/claude-proxy/index.ts', 'regex', r'(standard\s*:\s*)\d+', r'\g<1>9999'),
- # brzda kreditů ElevenLabs ve smoke ⑨ (2026-10-11, CODE-tune, DECISIONS 2026-10-11 (48))
- ('chyti', 'verify_monthly_limits.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'replace', '    if (!brzda.pustit) {', '    if (false) {'),
- ('chyti', 'verify_monthly_limits.js', 'supabase/functions/_shared/voice_usage.ts', 'replace', '  const hladina = lim - EL_DOBITI_KREDITY;', '  const hladina = lim;'),
- ('chyti', 'verify_monthly_limits.js', 'supabase/functions/elevenlabs-static/index.ts', 'replace', '    const brzda = brzdaHlasu(kvota, kredityHlasu(resolvedModel, text.length))', '    const brzda = { pustit: true, spotreba: null, hladina: null, novych: 0 }'),
- ('chyti', 'verify_monthly_limits.js', 'scripts/utils/stats.js', 'regex', r"('eleven_v3': )0\.08", r"\g<1>0.10"),
  # kolo 3 / 4b (2026-10-11)
  ('chyti', 'verify_internal_tags.js', 'v2/runar-translations.js', 'append', '', '\n// [kánon] podstrčený interní tag\n'),
  ('chyti', 'verify_doc_values.js', 'RUNAR_PRIVACY.md', 'append', '', '\nTier Rune Master dostane víc čtení.\n'),
@@ -55,6 +50,17 @@ PRIPADY = [
  ('chyti', 'verify_model_labels.js', 'supabase/functions/claude-proxy/index.ts', 'regex', r'(const MODELS = \["claude-[a-z]+-)\d+', r'\g<1>77'),
  ('chyti', 'verify_canonical_files.js', 'RUNAR_PROTI.md', 'create', '', '# podstrčený neverzovaný kanonický doc\n'),
  ('chyti', 'verify_doc_length.js', 'RUNAR_PRIVACY.md', 'append', '', ''.join('\nřádek %d navíc' % i for i in range(300))),
+ # kolo 3 / 4c (2026-10-11): jednorázové mutace z hlaviček kontrol převedené na opakované útoky (oprava (45))
+ ('chyti', 'verify_image_pin.js', 'v2/runar-reading.js', 'replace', 'IMG_PIN = admin ? _imgPinMapa() : null;', 'IMG_PIN = _imgPinMapa();'),
+ # zvolený obraz začne čerpat sáček (pin se uplatňuje dvakrát — `cand = [pin.row]` i `hit = pin.row`; mutace jen `cand` chování nemění)
+ ('chyti', 'verify_image_pin.js', 'v2/runar-character.js', 'replace', 'var hit = pin ? pin.row : null;', 'var hit = null;'),
+ ('chyti', 'verify_image_aspect_key.js', 'v2/runar-runes.js', 'replace',
+  "k:    'water, flow, intuition, the unconscious, emotion, memory, dreams',",
+  "k:    'water, flow, intuition, the unconscious, emotion, memory, dreams, tides',"),
+ # poslední varianta esenčního rámce Opusu přestane padat (rozpočet délky má jen 1 variantu — tam by mutace nic nezměnila)
+ ('chyti', 'verify_ending_angle.js', 'v2/runar-utils.js', 'regex',
+  r"(var pool = lang === 'is' \? ESSENCE_FRAMES_IS : ESSENCE_FRAMES;\r?\n\s*return pool\[Math\.floor\(Math\.random\(\) \* )pool\.length", r'\g<1>(pool.length - 1)'),
+ ('chyti', 'verify_ask_teaser.js', 'v2/runar-utils.js', 'replace', "return (pad && T['label_is_' + pad]) || T.label_is;", 'return T.label_is;'),
 ]
 
 
