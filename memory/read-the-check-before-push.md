@@ -19,3 +19,5 @@ Verdikt vytahuj podle tvaru: `| grep -E "^OK|FAIL"` — ale **jen na čtení, ni
 ⛔ **`check | grep -E "^(OK|FAIL)" && git commit …` commitne i při FAIL** (2026-10-11, CODE-read): grep najde řádek FAIL, skončí
 úspěšně a `&&` pustí commit dál. Ten vzor jsem měl právě odsud. Jako podmínka slouží jen kladný verdikt:
 `node scripts/verify_x.js | grep -q "^OK" && git commit …` (nebo exit kód samotné kontroly, bez roury).
+
+🔒 **Od 2026-10-11 to hlídá stroj:** hook `pravidla_pri_dotyku.py` zastaví příkaz `grep … OK|FAIL … &&`. DECISIONS 2026-10-11 (36).

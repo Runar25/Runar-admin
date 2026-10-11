@@ -10476,3 +10476,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   přijde novým záznamem.
 - **Staví:** CODE-tree s portem (`RUNAR_BACKLOG.md`, port).
 - Affected doc(s): `RUNAR_TREE.md` §8 (odkaz u „Strom se nemusí překreslit hned po čtení“) · `RUNAR_BACKLOG.md` (port) — v témže commitu.
+
+## 2026-10-11 (36) — Sebekritika se řeší strojem: pasti v příkazech, neověřené tvrzení, méně šumu v kontrole kánonu
+
+- **Rozhodl:** owner 2026-10-11 *„kritika musí být vyřešena. proto se necháváš kontrolovat, aby se ti nestávalo.“*
+- **Dnešní sebekritika CODE-read a co ji teď hlídá:** (1) sebrání cizích kusů commitem → pre-commit (23); (2) hook pravidel nevidí zápis
+  přes cv.zapis / šum z komentářů → opraveno, testy; (3) heredoc se zpětným lomítkem 2× → **hook zastaví** (past); (4) `grep OK|FAIL &&`
+  jako podmínka commitu → **hook zastaví** (past); (5) tvrzení bez ověření („nejspíš vektorová předloha“, „server skládá prompt“ za
+  vypnutým přepínačem) → **Stop-hook zprávy pravidlo 4**: věta s nejspíš/pravděpodobně/zřejmě o kódu či souboru projde jen s „neověřeno“
+  (i v krátké odpovědi; citace v „…“ ne). (6) šum v kontrole kánonu → obecná slova podle četnosti v kánonu (kmen > 1 % řádků, min. 3).
+- **Co stroj nechytí:** sebejisté nepravdivé tvrzení bez zaváhání (případ přepínače) — tam zůstává ověření cesty kódu (volající, přepínač).
+- **Testy:** hook pravidel 29 stavů; pravidlo 4 pět případů (zastaví · s „neověřeno“ projde · citace projde · bez kódu projde · server zastaví).
+- Affected doc(s): `CLAUDE.md` §30, `memory/heredoc-mangles-backslash-escapes.md`, `memory/read-the-check-before-push.md` — v témže commitu.

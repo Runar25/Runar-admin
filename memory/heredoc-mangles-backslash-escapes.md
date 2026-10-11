@@ -18,3 +18,6 @@ smoke kontroly nenašla `'\n'.join` a první pokus nic nezapsal jen díky assert
 (do scratchpadu nebo do svého patch slotu, [[one-patch-script-path]]) a spustit soubor. Heredoc jen pro text bez
 zpětných lomítek (commit message, jednoduché SQL). Patch vždy s `rep()` a assertem na počet výskytů — ten tuhle
 vadu chytil dřív, než něco zapsal.
+
+🔒 **Od 2026-10-11 to hlídá stroj** (týž den se to stalo 2×, přestože to tu stálo): hook `pravidla_pri_dotyku.py` zastaví Bash
+s heredocem, jehož tělo obsahuje zpětné lomítko. DECISIONS 2026-10-11 (36).
