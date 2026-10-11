@@ -2507,6 +2507,10 @@ kola 1 (`cc0ca7f`) plní statický text, config, `t()/tp()` nebo `esc()`/`escape
   z `RUNAR_LAB_DST`, ㉳ staví lab do dočasné složky a po sobě ji smaže)*; (a) a (c) jsou podmínky budoucí práce — (a) visí i u položky
   `tree_state`/`tree_readings`, (c) stojí v hlavičce `supabase/functions/tree-update/index.ts`; (c) `tree-update` před novým nasazením: rate limit,
   strop textu, `credits_used` na serveru (části 2, 15).
+  (d) *(CODE-read 2026-10-11, kolo 2 / 19)* **soukromí před nasazením `tree-update`:** `tree_state` drží o člověku ODVOZENÉ údaje
+  (`recurring_pattern`, `emotional_arc`, `personal_symbols`) a `claude-proxy` z nich skládá část promptu (~ř. 72–107, 814). Veřejná
+  stránka soukromí ani `RUNAR_PRIVACY.md` o nich nemluví. Dnes je v tabulce jediný řádek (admin, 2026-06-06) a nic nezapisuje, takže slib
+  porušený není; s nasazením by byl. Před ním: řádek do tabulky údajů (EN + IS, CODE-tune) + účel a právní základ v `RUNAR_PRIVACY.md`.
   ✅ (b) zpětně ověřeno CODE-read 2026-10-11: ㉳ proběhla, `v2/tree-lab-crown-composer/crown-composer.html` ve stromě nezměněn, v temp nic nepřibylo.
 
 #### Kolo 2 / 5 — prompt: tvrzení CLAUDE.md §2 a „Reading systém“ (2026-10-11)
@@ -2624,6 +2628,11 @@ poskytovatelů; klient ElevenLabs nevolá · plýtvání za poslední den žádn
 starter): 13 919 / 103 807 znaků = 13 %, bezpečná hladina 70 % ≈ 72 600; 15 hlasů × 5 testerů ≈ 28 000 znaků se vejde.
 - **Zlepšeno:** `plytvani.js` píše u varování „naposledy <datum>“ — 30denní okno hlásilo přemýšlení 6.1 a zápis do cache, které opravy
   zastavily 2026-10-05; přehled nerozlišil historii od trvajícího.
+
+#### Kolo 2 / 19 — tabulka údajů v zásadách × databáze, znovu (část 35; 2026-10-11, jen čtení)
+**Platí:** sloupce `user_profiles`, `readings`, `voice_usage` pokrývá 14řádková tabulka zásad (doplněná 2026-10-10); nová `reading_locks`
+nese jen `user_id`, token a čas zámku (provozní, s účtem se maže). **Nový nález (budoucí):** `tree_state` s odvozenými údaji o člověku —
+v zásadách chybí; dnes jen admin a nic nezapisuje → přidáno jako podmínka (d) k nasazení `tree-update` (položka „Pro CODE-tree“ výš).
 
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
