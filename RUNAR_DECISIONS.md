@@ -10456,3 +10456,23 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Mez:** jméno zadané jen do formuláře čtení, které nepatří žádnému profilu, DB u čtení neukládá → nezamaskuje se.
 - Zpřesňuje 2026-10-11 (30) bod (c); memory `always-show-reading-samples` už „jméno“ mezi ukazované instrukce nepočítá.
 - Affected doc(s): `memory/always-show-reading-samples.md`, `RUNAR_PRIVACY.md` — v témže commitu.
+
+## 2026-10-11 (35) — Strom na telefonu: kreslí se na pozadí po čtení a obrázek se ukládá; posuvník historie kreslí po puštění
+
+- **Proč:** (29) ukázalo, že na telefonu brzdí kreslení (~2 s při 400 čteních na středním telefonu). KUKY 2026-10-11: *„vykreslení může
+  probíhat v pozadí, hned po čtení runy … samotné čtení zabere klidně i 1 minutu“*; platí i jeho pravidlo „změnu může člověk vidět klidně
+  až druhý den“ (2026-09-26, `RUNAR_TREE.md` §8).
+- **Rozhodl:** KUKY 2026-10-11 — *„10. ok“* (postavit s portem) · *„7. ano“*, *„11. ok“* (posuvník) · *„8. to je dobrý“* (přiblížení) ·
+  *„9. ok“* (změřit).
+- **Co:**
+  1. Po čtení se strom nakreslí na pozadí po kouskách, aby se nezadrhl text ani hlas, a hotový obrázek se uloží v telefonu — otevření
+     stromu je okamžité. Nestihne-li se (appka zavřená hned po čtení, čtení na jiném zařízení), ukáže se předchozí obrázek a nový se dokreslí potichu.
+  2. Posuvník historie kreslí strom až po puštění prstu; při tažení se mění jen popisek.
+  3. Přiblížení: obrázek se při gestu zvětší hned, ostrý se dokreslí po něm.
+  4. Při stavbě změřit v emulaci slabého telefonu, že kreslení na pozadí nezadrhne text čtení.
+  5. Kreslit levněji (objem, těla větví) ani „spočti jednou, ulož“ kvůli telefonu potřeba nejsou — záloha, kdyby skutečný telefon ukázal problém.
+- **Otevřené — ovládání:** KUKY *„při 400 bude hodně přeskakovat … zoom může být taky pomocí + − … a jedno tlačítko zpět na default …
+  udělat to jednoduché, přehledné, intuitivní, čisté. i moje řešení může být určitě uděláno lépe!“* Návrh dostal 2026-10-11; rozhodnutí
+  přijde novým záznamem.
+- **Staví:** CODE-tree s portem (`RUNAR_BACKLOG.md`, port).
+- Affected doc(s): `RUNAR_TREE.md` §8 (odkaz u „Strom se nemusí překreslit hned po čtení“) · `RUNAR_BACKLOG.md` (port) — v témže commitu.

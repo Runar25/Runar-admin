@@ -284,6 +284,7 @@ Ostatní (později, decentně): pulzy dominance (element/ætt), bloom fáze, lis
   čtení; nám to znemožňuje porovnávat obrazy. Detail → RUNAR_DECISIONS.md 2026-07-19.
 - **Strom se nemusí překreslit hned po čtení** — změnu může člověk vidět klidně až druhý den (KUKY 2026-09-26). Postupný růst nové
   větvičky → `RUNAR_TREE_MAP.md` §8. Do 2026-10-11 stálo jen v uzavřené položce `RUNAR_BACKLOG.md` (Dlouhý ocas), odkud by úklidem zmizelo.
+  V aplikaci se proto strom po čtení kreslí na pozadí a hotový obrázek se ukládá → `RUNAR_DECISIONS.md` 2026-10-11 (35).
 - 🔒 **PRODUKČNÍ PRINCIP (budoucí pravidlo, až vznikne DB).** Poloha + charakter větve se spočítá
   **JEDNOU při čtení** a uloží do `tree_readings.branch_data`; renderer pak už jen kreslí uložené,
   **NIKDY nepřepočítává z logu.** To je přímý lék na „obraz se mění bez nového čtení" výše — dnes
