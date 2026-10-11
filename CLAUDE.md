@@ -515,6 +515,8 @@ do repa píše výhradně přes svého CODE.
 git -c user.name='CODE-tune' commit -F <msg> -- <cesty>
 ```
 Per-commit, **ne `git config`** — strom je sdílený a session by si config přepisovaly.
+**Sdílené docy (`RUNAR_*.md`, `CLAUDE.md`, `memory/`) jen přes `commit_vlastni.py`** — pathspec commit pre-commit nepustí (§30);
+příkaz výš platí pro kód. (Doplněno 2026-10-11, kolo 3 kontroly: tady i níž stál jen pathspec commit pro všechno.)
 E-mail zůstává, takže atribuce na GitHubu se nemění. Hlídá to **smoke ㉛**.
 ⚠️ **Do 2026-08-18 tu stálo, že autora rozliší prefix.** Přestalo to platit ve chvíli, kdy
 přibyla třetí CODE session a začala commitovat pod `[tune]` — a nevšiml si toho nikdo,
@@ -565,7 +567,8 @@ SÁM — bez ownera.
 
 **Komunikace (session spolu nemluví → přes git + soubory):**
 - `git pull` PŘED prací (push ihned a malé commity → §7).
-- **Commit ÚZCE: `git commit -F <msg> -- <cesty>`** (pathspec NA COMMITU, ne jen na `git add`). Holý `git commit` / `git add -A` bere CELÝ index — vč. cizí STALE staged změny jiné session. **2026-08-02: holý commit sebral cizí staged `sw.js` → downgrade v249→v248** (klienti by servírovali staré čtení). Pre-commit má teď guard proti sw.js downgrade, ale disciplína je levnější. Detail → memory `parallel-code-sessions-collision`.
+- **Commit ÚZCE: `git commit -F <msg> -- <cesty>`** pro kód; sdílené docy jen `commit_vlastni.py` (pathspec bere celý soubor i s cizími
+  kusy — pre-commit ho u nich nepustí). (pathspec NA COMMITU, ne jen na `git add`). Holý `git commit` / `git add -A` bere CELÝ index — vč. cizí STALE staged změny jiné session. **2026-08-02: holý commit sebral cizí staged `sw.js` → downgrade v249→v248** (klienti by servírovali staré čtení). Pre-commit má teď guard proti sw.js downgrade, ale disciplína je levnější. Detail → memory `parallel-code-sessions-collision`.
 - Musíš sáhnout do cizí domény? Drž změnu minimální + zapiš „co a proč" do svého doc (RUNAR_TREE.md / snapshot) + push hned.
 - sw.js: git hook auto-bumpuje; když oba commitnou JS, vyšší číslo vyhrává (jen cache-buster, ne konflikt obsahu).
 - Git konflikt? Neforcuj — pull, vyřeš ručně JEN svou doménu.

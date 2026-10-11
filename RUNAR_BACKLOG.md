@@ -2739,6 +2739,11 @@ k zablokování úpravy docu nedojde (Edit zastavený + guard by blokoval i náh
 nesouvisí. Teď běží vždy; výsledek dál rozliší, co selhalo (DB → 1, jen konverzace → 2). Ověřeno simulovaným selháním DB v kopii
 s logem mimo skutečný (`RUNAR_ZALOHA_TEST_DB_SELZE`): CHYBA DB + konverzace proběhla, exit 1; samotest lhůty 30 dní beze změny.
 
+#### Kolo 3 / 3 — soulad mechanismů: pokyny k commitu × pre-commit (2026-10-11)
+**Nalezeno a opraveno:** Stop-hook `tree-guard.sh` radil pro nový soubor v `memory/` pathspec commit, který pre-commit u `memory/` nepustí
+(session by uvízla mezi dvěma hooky) → radí `commit_vlastni.py pridej` + `commit` (záloha `tree-guard.sh.pred-k3-2026-10-11`). CLAUDE.md
+v sekci session (příkaz s podpisem i „Commit ÚZCE“) uváděl pathspec commit pro všechno → doplněno, že sdílené docy jen přes `commit_vlastni`.
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
