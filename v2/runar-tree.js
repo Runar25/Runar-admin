@@ -44,12 +44,12 @@ function _areaSlug(label) {
   var i = _labelIndex(label, typeof AREAS !== 'undefined' ? AREAS : null);
   return i >= 0 ? (TREE_AREA_SLUG[i] || null) : null;
 }
-// Osa času mluví jazykem Noren (urd/verdandi/skuld) — týmž, jakým je psaná
-// RUNAR_TREE.md §3A. INTENTIONS.norns je index-paralelní tabulka v runar-runes.js.
-function _intentionNorn(label) {
+// Záměr jako slug labu (past / present / decision = INT_AXIS v runar-tree-prod.js), index-paralelní s INTENTIONS (Right now ·
+// Decision ahead · Understanding the past). Do 2026-10-11 (port) sem šla osa Noren (urd/verdandi/skuld) pro starý renderer.
+var TREE_INT_SLUG = ['present', 'decision', 'past'];
+function _intentionSlug(label) {
   var i = _labelIndex(label, typeof INTENTIONS !== 'undefined' ? INTENTIONS : null);
-  if (i < 0 || typeof INTENTIONS === 'undefined') return null;
-  return (INTENTIONS.norns || [])[i] || null;
+  return i >= 0 ? (TREE_INT_SLUG[i] || null) : null;
 }
 // Seeking: aplikace ho u kazdeho cteni uklada (readings.seeking); do stromu jde DRUH (TREE_SEEK_SLUG). Do 2026-10-11 sem sla osa Noren
 // (SEEKS.norns: Clarity i Confirmation = verdandi, Insight i Reflection = urd) — pro stary strom (vyska) stacila, novy tvaruje vetve
@@ -68,6 +68,11 @@ function readingsToTreeLog(rows) {
   // Přepisuje se TADY, ne ve sdílených datech — pořadí elementů čte i výklad čtení.
   var BLANK_G = null;
   RUNES.forEach(function(r){ if (r.n === 'Blank') { BLANK_G = r.g; byGlyph[r.g] = 'shadow'; } });
+  // Klíče run labu (runar-branch.js: k ↔ g); Blank je tam 'odinn' s jiným glyfem, proto podle příznaku. Bez RunarBranch (kontrola ⑬
+  // ve VM) zůstane glyf — strom ho tam nekreslí.
+  var keyOf = {}, ODINN = null;
+  ((typeof window !== 'undefined' && window.RunarBranch && window.RunarBranch.RUNES) || []).forEach(function (b) {
+    keyOf[b.g] = b.k; if (b.k === 'odinn') ODINN = b.k; });
   var out = [];
   (rows || []).forEach(function(row) {
     var name = (row.rune_name || '').toUpperCase();
@@ -82,15 +87,15 @@ function readingsToTreeLog(rows) {
     for (var i = 0; i < src.length; i++) {
       var g = src.charAt(i);
       if (!byGlyph[g]) continue;
-      runes.push(g === BLANK_G ? { rune: g, el: 'shadow', blank: true }
-                               : { rune: g, el: byGlyph[g] });
+      runes.push(g === BLANK_G ? { rune: ODINN || g, g: g, el: 'shadow', blank: true }
+                               : { rune: keyOf[g] || g, g: g, el: byGlyph[g] });
     }
     if (!runes.length) return;
     if (!isSpread) runes = [runes[0]];
     var area = (row.area && row.area !== 'spread') ? row.area : (row.aol || null);
     out.push({ spread: isSpread ? name.toLowerCase() : 'single', runes: runes,
-               area: _areaSlug(area), intention: _intentionNorn(row.intention), seeking: _seekSlug(row.seeking),
-               at: row.drawn_at || null });   // at = kdy čtení vzniklo, jen pro popisek posuvníku (2026-10-11); renderer ho nečte
+               area: _areaSlug(area), intention: _intentionSlug(row.intention), seeking: _seekSlug(row.seeking),
+               at: row.drawn_at || null, id: row.id || null });   // at = kdy čtení vzniklo, jen pro popisek posuvníku (2026-10-11); renderer ho nečte
   });
   return out;
 }
@@ -100,6 +105,7 @@ var _treeLog  = [];      // všechna čtení, chronologicky
 var _treeRkey = null;    // klíč životní runy pro renderer
 var _treeDob  = null;
 var _treeSeekWired = false;
+var _foundingReadingId = null;   // id zakládacích Norn (user_profiles.founding_reading_id, píše server) — jdou ve stromě první
 
 // ── OVLÁDÁNÍ STROMU (2026-10-11, KUKY „12. ano · 13. ano · plná šířka“; strom zatím vidí jen admin) ──
 // Proč: s novým stromem trvá jedno nakreslení na středním telefonu ~2 s (DECISIONS 2026-10-11 (29)), takže se strom nesmí kreslit
@@ -120,7 +126,7 @@ function _drawTreeAt(n) {
   var full = (n == null || n >= _treeLog.length);
   var view = full ? _treeLog : _treeLog.slice(0, n);
   _treeViewN = n;
-  _treePick = window.RunarTreeProd.render(cv, { log: view, rune: _treeRkey, dob: _treeDob, view: _tv }) || null;
+  _treePick = window.RunarTreeProd.render(cv, { log: view, rune: _treeRkey, dob: _treeDob, view: _tv, sel: _treeSelK }) || null;
   cv.style.transform = '';   // náhled gesta pryč až s hotovým ostrým stromem — v témže snímku, bez probliknutí
   _treeHighlight(cv);
   _treeZoomUi();
@@ -152,7 +158,7 @@ function _treeSeekLabel(n) {
   if (n == null || n >= total) { lbl.textContent = tp('tree_hist_all', { casts: vn('cast', total, lang) }); return; }
   if (n <= 0) { lbl.textContent = t('tree_hist_seed'); return; }
   var r = _treeLog[n - 1] || {}, datum = _treeDatum(r.at);
-  var runy = (r.runes || []).map(function (x) { return _treeRuneSvg(x.rune, x.blank, 'tsl-rune'); }).join('');
+  var runy = (r.runes || []).map(function (x) { return _treeRuneSvg(x.g || x.rune, x.blank, 'tsl-rune'); }).join('');
   lbl.innerHTML = escapeHtml(tp('tree_hist_at', { k: n, n: total })) + (datum ? ' · ' + escapeHtml(datum) : '') +
     (runy ? '<span class="tsl-runes">' + runy + '</span>' : '');
 }
@@ -178,33 +184,23 @@ function _inspShow(m) {
   var poradi = (m.ord != null) ? (' <span class="ti-dim">· ' + (m.ord + 1) + '.</span>') : '';
   var dalsi  = (m.rank && m.rank.length > 1)
       ? ('<br><span class="ti-dim">' + t('tree_insp_rank') + ' ' + m.rank.join(' › ') + '</span>') : '';   // 2026-10-10 §31: do té doby natvrdo česky
+  // Picky labu (od portu 2026-10-11) nemají u kořenů a větviček ætt, svět ani počet → jen to, co je (dřív by stálo „undefined“).
+  var radek = [m.el, m.aett, m.world].filter(function (x) { return x != null && x !== ''; }).join(' <span class="ti-dim">·</span> ');
+  var pocet = (typeof m.count === 'number') ? ('<br>' + tp('tree_insp_count', { casts: vn('cast', m.count, lang) })) : '';
   box.innerHTML =
-    '<span class="ti-glyph">' + (_treeRuneSvg(m.g, m.blank, 'ti-rune') || m.g) + '</span><b>' + (m.name || '') + '</b>' + poradi +   // §5 kresba (2026-10-11; dřív písmo)
-    '<br>' + m.el + ' <span class="ti-dim">·</span> ' + m.aett +
-    ' <span class="ti-dim">·</span> ' + m.world +
-    '<br>' + tp('tree_insp_count', { casts: vn('cast', m.count || 0, lang) }) +
-    dalsi;
+    '<span class="ti-glyph">' + (_treeRuneSvg(m.g, m.blank, 'ti-rune') || m.g || '') + '</span><b>' + (m.name || '') + '</b>' + poradi +   // §5 kresba (2026-10-11; dřív písmo)
+    (radek ? '<br>' + radek : '') + pocet + dalsi;
 }
 
 // Obtáhne vybranou větev zlatou linkou a zároveň obnoví panel — takže když
 // posuneš posuvník, VIDÍŠ, jestli ta samá větev změnila runu. To je celý smysl:
 // odlišit „strom se změnil, protože přibylo čtení" od „změnil se sám".
 function _treeHighlight(cv) {
+  // Zlatou linku kreslí od portu (2026-10-11) renderer sám (sel → lab, ve své transformaci s auto-fitem); tady jen panel.
   if (_treeSelK == null || !_treePick || !_treePick.pick) return;
   var sel = null, p = _treePick.pick;
-  for (var i = 0; i < p.length; i++) if (p[i].k === _treeSelK) sel = p[i];
+  for (var i = 0; i < p.length; i++) if (String(p[i].k) === String(_treeSelK)) sel = p[i];
   if (!sel) { _inspHint(); return; }   // vetev v tomhle stavu jeste neexistuje
-  var ctx = cv.getContext('2d');
-  ctx.save();
-  ctx.strokeStyle = 'rgba(255,191,0,0.75)';
-  ctx.lineWidth = 2 / ((_treePick.view && _treePick.view.z) || 1);   // kreslí se v modelu → při přiblížení by linka tloustla
-  ctx.beginPath();
-  for (var j = 0; j < sel.pts.length; j++) {
-    var q = sel.pts[j];
-    if (j) ctx.lineTo(q.x, q.y); else ctx.moveTo(q.x, q.y);
-  }
-  ctx.stroke();
-  ctx.restore();
   _inspShow(sel.meta);
 }
 
@@ -227,7 +223,7 @@ function exportTreeState() {
     // je jako 'odinn' s glyfem '◇' — mapovani jde pres priznak, ne pres glyf. Bez nej
     // by Odinn v rekonstrukci vypadl z poradi run a strom by se rozesel.
     // (Nalezeno zpatecni zkouskou 2026-07-19: 4 blank v originale, 0 v rekonstrukci.)
-    cols: ['spread', 'area', 'intention', 'runes[glyph,el,blank?1]'],
+    cols: ['spread', 'area', 'intention', 'runes[key,el,blank?1]'],   // od portu 2026-10-11 klíče run labu (dřív glyf)
     log: _treeLog.map(function (r) {
       return [ r.spread, r.area || '', r.intention || '',
                (r.runes || []).map(function (x) {
@@ -261,10 +257,10 @@ function _inspHitAt(px, py) {
   if (!_treePick || !_treePick.pick || !_treePick.pick.length) return;
   var B = _treeBox();
   if (!B) return;
-  var v = _treePick.view || { z: 1, x: 0, y: 0 };
-  var mx = ((px - B.left) * B.k - v.x) / v.z;
-  var my = ((py - B.top)  * B.k - v.y) / v.z;
-  var best = null, bd = 22 / v.z;   // dosah ťuknutí na obrazovce stejný i v přiblížení
+  var v = _treePick.view || { z: 1, x: 0, y: 0 }, cxp = (px - B.left) * B.k, cyp = (py - B.top) * B.k;
+  var mm = _treePick.toModel ? _treePick.toModel(cxp, cyp) : { x: (cxp - v.x) / v.z, y: (cyp - v.y) / v.z };   // lab: auto-fit + přiblížení
+  var mx = mm.x, my = mm.y;
+  var best = null, bd = 22 / (_treePick.scale || v.z);   // dosah ťuknutí na obrazovce stejný i v přiblížení
   for (var i = 0; i < _treePick.pick.length; i++) {
     var p = _treePick.pick[i];
     for (var j = 0; j < p.pts.length; j++) {
@@ -491,6 +487,14 @@ async function renderLivingTree(rune) {
       if (res && res.data) log = readingsToTreeLog(res.data);
     } catch(e) {}
     var bk = (window.RunarBranch && window.RunarBranch.RUNES.filter(function(x){ return x.g === rune.g; })[0]);
+    // ZALOŽENÍ (port 2026-10-11, kánon RUNAR_TREE.md §2): strom roste až po založení — bez něj semínko (prázdný log). Pak obsahuje
+    // VŠECHNA čtení, i ta před založením; zakládací Norny jdou první (dávají obrys), ostatní v čase. Lab sám bere první Norny za
+    // zakládací — tady se dopředu posune to skutečné (founding_reading_id), jinak by vzal nejstarší Norny z deníku.
+    if (!userTreeFounded) log = [];
+    else if (_foundingReadingId) {
+      var _fi = -1; for (var _q = 0; _q < log.length; _q++) if (log[_q].id === _foundingReadingId) { _fi = _q; break; }
+      if (_fi > 0) log = [log[_fi]].concat(log.slice(0, _fi), log.slice(_fi + 1));
+    }
     _treeLog  = log;
     _treeRkey = bk ? bk.k : 'berkano';
     // y = uložený rok starého účtu, nebo null — dobSeed v runar-tree-prod.js ho míchá do hashe, takže stávajícím stromům
@@ -803,7 +807,7 @@ async function adminResetLifeRune() {
   var res = await callProxy('', '', 1, false, 1, null, 'life_rune_reset');
   if (!res || res.error || !res.reset) { showToast(t('reading_error')); return; }
   _lifeRuneText = null; _lifeRuneNum = null; _lifeRuneLang = null;
-  _foundingText = null;
+  _foundingText = null; userTreeFounded = false; _foundingReadingId = null;   // reset maže i založení (RUNAR_TREE.md §2); do 2026-10-11 to klient nevěděl do obnovení
   if (readerUser) { readerUser.d = null; readerUser.m = null; readerUser.y = null; readerUser.lifeRune = null; }
   if (currentUser) currentUser.tree_name = '';
   if (typeof _renderTreeNameState === 'function') _renderTreeNameState();
@@ -1189,6 +1193,7 @@ async function startTreeFounding() {
 // SERVER (user_profiles.founding_reading_id). Klient si ho nevybira — jinak by si
 // do stromu mohl nechat zobrazit libovolne cizi cteni.
 async function _loadFoundingReading(id) {
+  _foundingReadingId = id || null;   // port 2026-10-11: strom podle něj řadí zakládací Norny první
   if (!currentUser || !id) return;
   var res = await sb.from('readings')
     .select('deep_text, short_text')
@@ -1233,7 +1238,7 @@ async function resetTreeTester() {
     if (!res.ok || !data.success) throw new Error(data.error || 'reset failed');
     // Vycistit lokalni stav + prenacist profil, at strom spadne na zacatek.
     _lifeRuneText = null; _lifeRuneLang = null; _lifeRuneNum = null;
-    _foundingText = null; userTreeFounded = false;
+    _foundingText = null; userTreeFounded = false; _foundingReadingId = null;
     if (readerUser) { readerUser.d = null; readerUser.m = null; readerUser.y = null; }
     if (typeof fetchUserProfile === 'function') await fetchUserProfile(currentUser.id);
     updateTreeTab();

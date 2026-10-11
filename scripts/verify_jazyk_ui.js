@@ -52,6 +52,13 @@ const VYJIMKY_HODNOTY = {
     + 'na dvě skupiny. Další verze už anglicky (§31) — s ní tahle výjimka zmizí.',
 };
 const VYJIMKY = { 'v2/runar-names.js': ['name', 'note'] };
+// Soubory, jejichž řetězce se nekontrolují vůbec — každý s datem a důvodem (§28); soubor, který v gitu už není, kontrolu shodí.
+const VYJIMKY_SOUBORY = {
+  'v2/runar-tree-prod.js': '2026-10-11 (CODE-tree, port stromu do aplikace): generovaný z labu (build_tree_production.py) — skript '
+    + 'labu doslova; jeho české popisky ovládání labu jdou v aplikaci jen do falešného DOM pískoviště, uživatel ani admin je nevidí '
+    + '(lab smí česky, §31). Text pro lidi strom v aplikaci nekreslí; kdyby začal (na plátno), patří do UI_TEXT.',
+};
+const mrtveSoubory = (vGitu) => Object.keys(VYJIMKY_SOUBORY).filter((p) => vGitu.indexOf(p) < 0);
 
 // Vrátí kousek textu kolem první češtiny, nebo '' když žádnou nenajde.
 function cesky(t) {
@@ -162,6 +169,7 @@ if (process.argv.includes('--test')) {
     ['Hledat v textu', 'Podle skupiny', 'Obraz (Fehu)', '🔊 HLAS — ELEVENLABS', '💬 S poznámkou', 'text vratil, ale ulozit se nepodarilo'].every((x) => cesky(x)),
     ["You've got a pro plan on the way", 'Þú ert á réttri leið og hún er þín', 'Refresh', 'All runes (last 100)'].every((x) => !cesky(x)),
     mrtveVyjimky(new Set(Object.keys(VYJIMKY_HODNOTY))).length === 0 && mrtveVyjimky(new Set()).length === Object.keys(VYJIMKY_HODNOTY).length,
+    mrtveSoubory(Object.keys(VYJIMKY_SOUBORY)).length === 0 && mrtveSoubory([]).length === Object.keys(VYJIMKY_SOUBORY).length,
   ];
   const ok = t.every(Boolean);
   console.log(ok ? 'OK    samotest: čeština s háčky i bez chycena; komentář, regex, CSS třída, islandština, angličtina a výjimky ne'
@@ -202,6 +210,7 @@ for (const p of git.filter((x) => /^v2\/[^/]+\.html$/.test(x))) {
 }
 // 3) JS a edge funkce
 for (const p of [...js, ...git.filter((x) => /^supabase\/functions\/.+\.ts$/.test(x))]) {
+  if (Object.prototype.hasOwnProperty.call(VYJIMKY_SOUBORY, p)) continue;   // důvod u výjimky
   retezce(fs.readFileSync(ROOT + p, 'utf8'), VYJIMKY[p]).forEach((x) => zkus(x.s, p + ':' + x.radek));
 }
 // 4) šablony e-mailů
@@ -209,7 +218,7 @@ for (const p of git.filter((x) => /^supabase\/templates\/[^/]+\.html$/.test(x)))
   htmlText(fs.readFileSync(ROOT + p, 'utf8')).forEach((t) => zkus(t, p));
 }
 
-const mrtve = mrtveVyjimky(potkane);
+const mrtve = mrtveVyjimky(potkane).concat(mrtveSoubory(git).map((p) => 'soubor ' + p));
 if (nalezy.length || mrtve.length) {
   if (nalezy.length) {
     console.log('FAIL  čeština v textu pro uživatele, admina nebo model (' + nalezy.length + '×) — veřejně i pro adminy jen IS a EN (CLAUDE.md §31):');

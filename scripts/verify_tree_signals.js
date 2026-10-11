@@ -57,7 +57,8 @@ var _rows = [
 ];
 var _out = readingsToTreeLog(_rows);
 // Očekáváme DEKÓDOVANÝ tvar: strom mluví slugy, ne popisky, které user naklikal.
-var _EXPECT = { single: 'love', spread: 'career', intention: 'skuld' };
+// intention: od portu 2026-10-11 slug labu (INT_AXIS: past/present/decision); do té doby osa Noren ('skuld') pro starý renderer.
+var _EXPECT = { single: 'love', spread: 'career', intention: 'decision' };
 `;
 
 vm.createContext(sandbox);
@@ -160,6 +161,10 @@ if (out && out.length === 4) {
   assert('seeking z IS popisku nedojel jako druh', out[0].seeking === 'reflection', 'single.seeking=' + JSON.stringify(out[0].seeking));
   assert('seeking z EN popisku nedojel jako druh', out[1].seeking === 'clarity', 'norns.seeking=' + JSON.stringify(out[1].seeking));
 }
+var nInts = inCtx('typeof INTENTIONS !== "undefined" ? INTENTIONS.en.length : null');
+var nIntSlugs = inCtx('typeof TREE_INT_SLUG !== "undefined" ? TREE_INT_SLUG.length : null');
+assert('TREE_INT_SLUG nenalezen nebo se rozešel s INTENTIONS (přibyl záměr?)', nInts !== null && nInts === nIntSlugs,
+       'INTENTIONS.en=' + nInts + ' vs TREE_INT_SLUG=' + nIntSlugs);
 assert('TREE_AREA_SLUG nenalezen nebo se rozešel s AREAS (přibyla oblast života?)',
        nAreas !== null && nAreas === nSlugs,
        'AREAS.en=' + nAreas + ' vs TREE_AREA_SLUG=' + nSlugs);
