@@ -933,8 +933,8 @@ dělá jinak (`readRune` blokuje jen nepřihlášeného; měsíční strop poč�
 ### Tree of Life per tier
 
 Stav vlastní `RUNAR_TREE.md` a kód. Ověřeno 2026-10-10: záložka Strom je jen pro admina (`runar-auth.js`, od 2026-09-11);
-životní runu (výpočet) vidí každý i bez účtu, její čtení až po přihlášení a pro všechny stejné (parametr `isPremium` builder
-přijme, ale nepoužije); zakládací Norny i rozbor jména jsou rituály — zdarma pro každého přihlášeného, jednou (`claude-proxy`
+životní runu (výpočet) vidí každý i bez účtu, její čtení až po přihlášení a pro všechny stejné (builder tarif nedostává —
+nepoužitý parametr `isPremium` a nečinný režim `life_rune_premium` zrušeny 2026-10-11, DECISIONS 2026-10-11 (22)); zakládací Norny i rozbor jména jsou rituály — zdarma pro každého přihlášeného, jednou (`claude-proxy`
 `isRitual`). ⚠️ Do 2026-10-10 tu stála tabulka podle tarifů (strom jako teaser pro Rune Seekera, životní runa „hlubší“ pro
 Premium, Norny za kredity) — nic z toho kód nedělá.
 

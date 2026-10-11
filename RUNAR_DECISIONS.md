@@ -10246,3 +10246,23 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   se značí „session“, ne owner. Samotesty: záloha 6 stavů, hledání 8.
 - **Snapshot:** povinnost zrušena (blok ve Stop-hooku `tree-guard.sh` vypnut, záloha `.pred-snapshot-2026-10-11`); smí vzniknout dobrovolně.
 - Affected doc(s): `memory/working-style.md` (sekce compactu), `CLAUDE.md` §30, `memory/MEMORY.md` — v témže commitu.
+
+## 2026-10-11 (22) — Životní runa: jeden režim pro všechny; mrtvý parametr `isPremium` a nečinný režim `life_rune_premium` pryč
+
+- **Rozhodl:** CODE-tune, úklid podle už rozhodnutého — `RUNAR_DESIGN.md` „Tree of Life per tier“ (2026-10-10): čtení životní runy je
+  pro všechny stejné · CLAUDE.md „Tier systém“: standard a premium nejsou hodnosti, jen víc čtení. Úkol BACKLOG část 17 (ř. 2095).
+- **Proč:** kód četl, jako by premium dostával jiné čtení — `buildLifeRunePrompt(…, isPremium, …)` a v `runar-tree.js` volba režimu
+  podle tarifu — a nedostával: builder parametr nepoužil a jediný rozdíl, strop 2000 místo 1200 tokenů, se nikdy nedotkl. Táž past jako
+  vypnutý post-processor, který se dál volal (CLAUDE.md §2): příští session by „premium rozdíl“ hledala nebo na něm stavěla.
+- **Změřeno:** golden PŘED — `liferune_prem_*` = `liferune_*` bajt po bajtu (EN 2150 zn, IS 2204 zn). DB: tři uložená čtení životní runy
+  1750 / 1230 / 1061 zn, všechna dokončená; sol dává 3,64 zn/token v EN (n = 14) a 2,60 v IS (n = 5) → nejdelší ≈ 480 tokenů, 40 % stropu
+  1200. Hranice: jen tři čtení; délku určuje builder, strop jen jistí.
+- **Co:** builder bez parametru (`v2/runar-character.js`), `generateLifeRuneReading` jeden režim (`v2/runar-tree.js`), `life_rune_premium`
+  z `RUNAR_MODES` pryč (`v2/runar-config.js`; jméno `life_rune_standard` zůstává, čtou ho dva datované evaly v `docs/eval/`, komentář říká,
+  že „standard“ není tarif). Volání v `golden_dump.js`, `measure_reading_costs.js`, `verify_contract_wiring.js`, `verify_prompt_levers.js`,
+  `verify_prompt_rules_registry.js`, `vzory.js`. Pilot `docs/eval/2026-09-27-zivotni-runa/cteni_pilot.js` jmenuje zrušený režim — záznam
+  pokusu, nepřepisuje se. Komentář clampu v `claude-proxy` (ř. ~540) ho jmenuje taky; opraví se s příštím nasazením proxy (BACKLOG).
+- **Ověřeno (§18.3):** golden PO — 40 klíčů, zmizely jen dva `liferune_prem_*`, změněných 0; baseline přegenerován. verify_contract_wiring,
+  verify_prompt_levers, verify_prompt_rules_registry, vzory EXIT 0. V prohlížeči appka naběhne, `RUNAR_MODES` má jediný režim životní runy,
+  prompt v IS bez `undefined`, fotka a záložky na místě (§32).
+- Affected doc(s): `RUNAR_DESIGN.md` („Tree of Life per tier“) · `RUNAR_BACKLOG.md` (část 17) — v témže commitu.

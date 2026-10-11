@@ -29,9 +29,8 @@ const jobs = vm.runInContext(`(function(){
   [2,7,12].forEach(function(o){ out.push({ type:'Horseshoe', sys:buildSysPrompt(DEF_CHAR_EN,'en'), prompt:buildHorseshoePrompt(u, pick(7,o), 'en', []) }); });
   // Yggdrasil (9) ×3
   [0,3,6].forEach(function(o){ out.push({ type:'Yggdrasil', sys:buildSysPrompt(DEF_CHAR_EN,'en'), prompt:buildYggdrasilPrompt(u, pick(9,o), 'en', []) }); });
-  // Life Rune standard + premium
-  out.push({ type:'LifeRune-std', sys:buildSysPrompt(DEF_CHAR_EN,'en'), prompt:buildLifeRunePrompt('Kuky', RUNES[18], 14,6,1985, 'en', false) });
-  out.push({ type:'LifeRune-prem', sys:buildSysPrompt(DEF_CHAR_EN,'en'), prompt:buildLifeRunePrompt('Kuky', RUNES[18], 14,6,1985, 'en', true) });
+  // Life Rune — jedna varianta (2026-10-11: premium měl týž prompt, parametr isPremium zrušen)
+  out.push({ type:'LifeRune', sys:buildSysPrompt(DEF_CHAR_EN,'en'), prompt:buildLifeRunePrompt('Kuky', RUNES[18], 14,6,1985, 'en') });
   return out;
 })()`, ctx);
 

@@ -835,7 +835,6 @@ async function generateLifeRuneReading() {
 
   var rune = calcLifeRune(readerUser.d, readerUser.m, readerUser.y);
   var isIs = lang === 'is';
-  var isPremium = userTier === 'premium' || (currentUser && isAdmin(currentUser.email));
 
   // Show loading
   ['tree-reveal-cta','tree-rs-teaser','tree-reading-exists'].forEach(function(id){
@@ -849,9 +848,11 @@ async function generateLifeRuneReading() {
   if (loadTxt) loadTxt.textContent = t('reading_loading');
 
   var name = _lifeRuneName();
-  var mode = isPremium ? RUNAR_MODES.life_rune_premium : RUNAR_MODES.life_rune_standard;
+  // 2026-10-11: jeden režim pro všechny. Premium a admin měli strop 2000 místo 1200 tokenů, ale týž prompt a strop se nikdy
+  // nedotkl (nejdelší uložené čtení ~480 tokenů, změřeno v DB) — premium je „jen víc čtení“, ne delší výklad (DECISIONS 2026-10-11).
+  var mode = RUNAR_MODES.life_rune_standard;
   // Korekce pridava DISPECER buildLifeRunePrompt (character.js) — tady uz ne (§18).
-  var prompt = buildLifeRunePrompt(name, rune, readerUser.d, readerUser.m, readerUser.y, lang, isPremium, corrections);
+  var prompt = buildLifeRunePrompt(name, rune, readerUser.d, readerUser.m, readerUser.y, lang, corrections);
   var sys = buildSysPrompt(activeChar, lang);
 
   // Zivotni runa je zdarma pro vsechny. O cene rozhoduje PROXY podle mode='life_rune',

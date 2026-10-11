@@ -122,6 +122,8 @@ const RUNAR_MODES = {
     steps:      [],       // populated when ceremonial mode is built (Layer 4)
     active:     false,    // not live yet
   },
+  // Jediný režim životní runy pro všechny tarify — „standard“ v názvu NENÍ tarif. life_rune_premium (strop 2000) zrušen
+  // 2026-10-11: měl týž prompt a strop se nedotkl; premium je „jen víc čtení“ (CLAUDE.md Tier systém).
   life_rune_standard: {
     label:      'Life Rune Reading',
     max_tokens: 1200,
@@ -135,13 +137,6 @@ const RUNAR_MODES = {
   name_lore: {
     label:      'Name Lore',
     max_tokens: 700,
-    voice:      false,
-    layers:     null,
-    active:     true,
-  },
-  life_rune_premium: {
-    label:      'Life Rune Reading',
-    max_tokens: 2000,
     voice:      false,
     layers:     null,
     active:     true,

@@ -153,7 +153,7 @@ const DATA = /^(PERSON|DRAWN|SEEKER|LIFE|AREA|SEEKING|INTENTION|QUESTION|REALM|E
     // ZIVOTNI RUNA a ROZBOR JMENA (2026-09-11): do dneska je registr NESKENOVAL vubec.
     // Projevilo se to tak, ze odpojeni celeho odstavce o jmenu z promptu zivotni runy
     // proslo bez jedine cervene — a prave ten odstavec u nesevrskeho jmena vynucoval vymysl.
-    S.buildLifeRunePrompt('Anna', RUNES[3], 24, 12, 1979, L, true, null)
+    S.buildLifeRunePrompt('Anna', RUNES[3], 24, 12, 1979, L, null)
       .split(String.fromCharCode(10))
       .forEach(r => { if (!DATA.test(r.trim())) pridej(L, 'liferune', r); });
     S.buildNameLorePrompt('Anna', L, null)

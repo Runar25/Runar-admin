@@ -1554,7 +1554,9 @@ var RP_LIFE = {
   },
 };
 
-function buildLifeRuneBase(name, rune, day, month, year, lang, isPremium) {
+// 2026-10-11: parametr isPremium pryč — builder ho nikdy nepoužil (golden: liferune_prem_* = liferune_* bajt po bajtu) a čtení
+// životní runy je pro všechny stejné: premium je „jen víc čtení“ (CLAUDE.md Tier systém, RUNAR_DESIGN.md „Tree of Life per tier“).
+function buildLifeRuneBase(name, rune, day, month, year, lang) {
   var L = (lang === 'is') ? 'is' : 'en';
   var S = RP_LIFE[L];
   var monthDesc = getBirthMonth(day, month, year, L);
@@ -1597,8 +1599,8 @@ function buildLifeRuneBase(name, rune, day, month, year, lang, isPremium) {
 // The life rune had none of them until 2026-07-19 — and it is the reading most exposed to
 // cold reading, because its whole subject is what the seeker has carried since birth.
 // getCorrPrompt is part of it: without it the IS path had only 2 of the 3 layers (§2).
-function buildLifeRunePrompt(name, rune, day, month, year, lang, isPremium, corrections) {
-  var base = buildLifeRuneBase(name, rune, day, month, year, lang, isPremium);
+function buildLifeRunePrompt(name, rune, day, month, year, lang, corrections) {
+  var base = buildLifeRuneBase(name, rune, day, month, year, lang);
   return [
     base,
     // ÁVARP: bez nej ukazuje bod 5 islandske gramatiky (system prompt) do prazdna — a bod 1

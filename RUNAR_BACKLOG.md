@@ -2092,7 +2092,9 @@ na `*.md`, který v repu není (⑯ hlídá jen dokumenty). Záměrné zmínky n
 **Pokračování 2026-10-10:** `CLAUDE.md` „Stack: … Claude API“ → model čtení přes `claude-proxy` (`SOL_MODEL`, záloha `MODELS`); rozcestník
 `MEMORY.md` totéž · `RUNAR_DESIGN.md` sekce tarifů odporovala kódu ve 4 bodech (Kříž/Podkova „ani za kredity“, Norny „za kredity“,
 rozbor jména „pouze Premium“, tabulka stromu podle tarifů) → opraveno s odkazem na vlastníky a s vyznačením, co tam stálo.
-Pro CODE-tune (⚪): `buildLifeRuneBase(…, isPremium)` parametr nepoužívá — mrtvý (nebo chybějící) rozdíl Premium; `RUNAR_PRICING.md`
+Pro CODE-tune (⚪): ~~`buildLifeRuneBase(…, isPremium)` parametr nepoužívá — mrtvý (nebo chybějící) rozdíl Premium~~ *(hotovo 2026-10-11,
+DECISIONS 2026-10-11 (22): parametr i nečinný režim `life_rune_premium` pryč, golden beze změny; zbývá komentář clampu v `claude-proxy`
+ř. ~540, který ten režim jmenuje — opravit s příštím nasazením proxy)*; `RUNAR_PRICING.md`
 tabulky nákladů nesou štítek „Claude API“, čte ale GPT-6 sol (levnější) — přepočet a štítky patří k pricingu.
 `RUNAR_DESIGN.md`: „Standard+“ u Kříže a Horseshoe pryč; tabulka faktorů čtení vedla životní runu jako čočku (odešla 2026-09-25)
 a „spready TODO / `RP_SINGLE.priority`“ (spready doménu i rejstřík mají, pole v kódu není) · `memory/README.md` přepsán na rozcestník

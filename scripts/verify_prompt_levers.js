@@ -86,7 +86,7 @@ const CESTY = [
   ['horseshoe', 'RP_HORSESHOE', (S, u, r, l) => S.buildHorseshoePrompt(u, r.slice(0, 7), l, null)],
   ['yggdrasil', 'RP_YGGDRASIL', (S, u, r, l) => S.buildYggdrasilPrompt(u, r.slice(0, 9), l, null)],
   ['ask',       'RP_ASK',       (S, u, r, l) => S.buildAskPrompt('Fyrri lestur.', 'Spurning?', r.slice(0, 1), l, null)],
-  ['liferune',  'RP_LIFE',      (S, u, r, l) => S.buildLifeRunePrompt(u.name, r[0], 14, 6, 1990, l, false, null)],
+  ['liferune',  'RP_LIFE',      (S, u, r, l) => S.buildLifeRunePrompt(u.name, r[0], 14, 6, 1990, l, null)],
 ];
 
 function zmer(lang) {

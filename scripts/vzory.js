@@ -74,7 +74,7 @@ for (const lang of ['en', 'is']) {
     run('buildHorseshoePromptSeven(' + c + ', RUNES.slice(' + (r % 18) + ', ' + (r % 18 + 7) + '), "' + lang + '", [])', 'horseshoe');
     run('buildYggdrasilPromptNine(' + c + ', RUNES.slice(' + (r % 16) + ', ' + (r % 16 + 9) + '), "' + lang + '", [])', 'yggdrasil');
     run('buildAskPrompt("«CTENI»", "«OTAZKA»", "Isa", "' + lang + '", [], ' + (seed % 2 ? 'RUNES[6]' : 'null') + ', ' + (seed % 3 ? '{}' : '{ area: AREAS.' + lang + '[1], question: "«OTAZKA»" }') + ', ' + (seed % 4 ? '{ mode: "single", runy: ["Isa"] }' : '{ mode: "kriz", runy: ["Isa","Fehu","Uruz","Kenaz","Gebo"] }') + ')', 'ask');
-    run('buildLifeRunePrompt("Kuky", RUNES[' + r + '], 12, ' + ((seed % 12) + 1) + ', 1980, "' + lang + '", ' + (seed % 2 ? 'true' : 'false') + ', [])', 'zivotni-runa');
+    run('buildLifeRunePrompt("Kuky", RUNES[' + r + '], 12, ' + ((seed % 12) + 1) + ', 1980, "' + lang + '", [])', 'zivotni-runa');
     run('buildNameLorePrompt("Kuky", null, "' + lang + '", [])', 'rozbor-jmena');
   }
 }

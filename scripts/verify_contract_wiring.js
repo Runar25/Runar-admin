@@ -63,7 +63,7 @@ var drawn = _R('Raidho');
   // Life rune — a PAID reading (3 credits) and the first one in the Tree. It carried none of
   // the gates until 2026-07-19, and it is the reading most exposed to cold reading: its whole
   // subject is what the seeker has carried since birth.
-  _OUT['liferune_'+L] = buildLifeRunePrompt('Anna', _R('Gebo'), 12, 5, 1990, L, false, []);
+  _OUT['liferune_'+L] = buildLifeRunePrompt('Anna', _R('Gebo'), 12, 5, 1990, L, []);
 });
 `;
 vm.createContext(sandbox);
