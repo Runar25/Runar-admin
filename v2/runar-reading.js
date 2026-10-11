@@ -338,11 +338,12 @@ async function _generateReading() {
     // nejde u reálného čtení říct, která páka za výsledek může — viz _promptDraws.
     draws: _drawsSPinem(prompt, lang)
   } : null;
-  _lastReadingId = null;
+  _lastReadingId = null; _voiceTicket = null;
   const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens, shouldUseCredit(), SPREAD_COSTS.single.credits, _journal);
   if (_lastGen && res && res.model) _lastGen.model = res.model;
   if (_lastGen && res && res.usage) _lastGen.usage = res.usage;   // 2026-09-29: cena čtení do reportu (costLabel)   // skutečný model (sol může spadnout na Opus) — složení v reportu
   _lastReadingId = (res && res.reading_id) || (_journal ? _journal.id : null);
+  _voiceTicket = (res && res.voice) || null;   // jen neuložené čtení; uložené hlas najde podle reading_id
   if (_journal && res && !res.error && res.text && !res.reading_id) _pendAdd('pendingReadings', { id: _journal.id, journal: _journal, model_text: res.text });
   _flushPending();
   if (res.error === 'rate_limited') {
@@ -378,7 +379,8 @@ async function _generateReading() {
   const reading = _th.reading;
   _lastSegs = _th.segs;
   _lastDrawn = [readerRune];
-  readerTexts[lang] = { short: reading, deep: '' };
+  // id a podpis hlasu patří k TOMUHLE textu: přepnutí jazyka vytvoří jiné čtení a hlas se musí vázat na to, které je vidět (DECISIONS 2026-10-11 (61)).
+  readerTexts[lang] = { short: reading, deep: '', id: _lastReadingId, voice: _voiceTicket };
 
   // Po čtení obnov panel; přihlášenému i strom, deník a zůstatek. Návštěvník sem nedojde — místo čtení dostane výzvu
   // k registraci (_showVisitorJoin, return před voláním proxy).
@@ -795,6 +797,7 @@ function _askResetThread() {
   else if (wrap && teaser && teaser.parentNode) teaser.parentNode.insertBefore(wrap, teaser);
 }
 var _lastReadingId = null;   // id of the last saved reading — links an Ask Runar follow-up to it
+var _voiceTicket = null;     // {text, ticket} — podpis NEuloženého čtení pro hlas z claude-proxy (2026-10-11, DECISIONS (61))
 var _askPhIdx = -1;
 // ── ROTACE UKAZEK FORMULACE (KUKY 8.9.) ───────────────────────────────────────
 // Cyklus 5 s: 1 s prichod · 3 s stani · 1 s odchod. Prolinani jde pres `::placeholder`
@@ -1234,6 +1237,17 @@ function resetReader() {
 // KUKY „jen jeden typ“). Tady do té doby stál vlastní (capToggle/capSeek/capMute/_capTrack) a ztlumení bylo jen u čtení.
 
 // ─── VOICE ───────────────────────────────────────────────
+// Hláška k chybě hlasu — JEDNO místo pro čtení i deník (§18; do 2026-10-11 stála jen v generateVoice). Měsíční strop a minutový rate
+// limit chodí oba jako 429 — rozlišuje je kód chyby; bez toho by tester, kterému došly hlasy, četl „počkej chvíli“ a čekal marně.
+// voice_quota_rest = brzda kreditů ElevenLabs (brzdaHlasu v _shared/voice_usage.ts, DECISIONS 2026-10-11 (48)). Strop hlasu má od
+// 2026-10-11 jen tester (DECISIONS (61)); počet posílá server, zrcadlo z configu jen pojistka.
+function _voiceErrMsg(data, status) {
+  if (data && data.error === 'voice_monthly_limit') return tp('err_voice_month', { n: data.limit || VOICE_MONTHLY_LIMIT_TESTER });
+  if (data && data.error === 'voice_quota_rest') return t('err_voice_quota');
+  if (status === 429) return t('err_rate_limited');
+  return t('voice_resting');
+}
+
 async function generateVoice() {
   var voiceText;
   if (_spreadMode === 'kriz') {
@@ -1261,28 +1275,23 @@ async function generateVoice() {
     const { data: { session: elSession } } = await sb.auth.getSession();
     const elHeaders = { 'Content-Type': 'application/json' };
     if (elSession?.access_token) elHeaders['Authorization'] = 'Bearer ' + elSession.access_token;
+    // 2026-10-11 (DECISIONS (61)): hlas patří ke čtení — uložené čtení server najde podle reading_id (text vezme z deníku a hlas uloží,
+    // další přehrání je zdarma), neuložené nese podpis z claude-proxy (_voiceTicket). `text` posílá appka dál jen kvůli staré verzi
+    // serveru, dokud se nová nenasadí; nová ho od ne-admina nebere.
+    const _rt = readerTexts[lang] || {};   // čtení, které je na obrazovce (po přepnutí jazyka to není _lastReadingId)
     const res = await fetch(EL_PROXY, {
       method: 'POST',
       headers: elHeaders,
-      body: JSON.stringify({ text: deepText, lang })
+      body: JSON.stringify({ text: deepText, lang, reading_id: _rt.id || undefined,
+                             ticket: _rt.voice ? _rt.voice.ticket : undefined, voice_text: _rt.voice ? _rt.voice.text : undefined })
     });
     if (!res.ok) {
       let data = {};
       try { data = await res.json(); } catch (_e) {}
       console.error('voice failed:', res.status, (data && data.error) || '');
-      // Mesicni strop a minutovy rate limit chodi oba jako 429 — rozlisuje je kod chyby.
-      // Bez toho by clovek, kterému doslo pet hlasu, cetl „pockej chvili" a cekal marne.
-      // 2026-10-11: počet hlasů posílá server (tester 15, ostatní VOICE_MONTHLY_LIMIT); voice_quota_rest = brzda kreditů ElevenLabs
-      // (brzdaHlasu v _shared/voice_usage.ts, DECISIONS 2026-10-11 (48); do té doby hladina VOICE_SAFE_SHARE) — jinak by člověk četl
-      // „počkej chvíli“ a čekal marně.
-      const msg = (data && data.error === 'voice_monthly_limit')
-        ? tp('err_voice_month', { n: (data.limit || (typeof VOICE_MONTHLY_LIMIT !== 'undefined' ? VOICE_MONTHLY_LIMIT : 5)) })
-        : (data && data.error === 'voice_quota_rest')
-        ? t('err_voice_quota')
-        : res.status === 429
-        ? t('err_rate_limited')
-        : t('voice_resting');
-      setSt('st-voice', msg, 'err');
+      // Tohle čtení už jednou zaznělo (neuložené čtení, nebo druhé ťuknutí) — není to chyba, hlas se jen neopakuje.
+      if (data && data.error === 'voice_used') { setRuneText(btn, t('voice_btn_done')); btn.disabled = true; return; }
+      setSt('st-voice', _voiceErrMsg(data, res.status), 'err');
       setRuneText(btn, t('voice_btn')); btn.disabled = false; return;
     }
     const data = await res.json();
@@ -1364,7 +1373,7 @@ async function _generateSpreadReading(o) {
     rune_display: _runeDisplay, prompt_version: RUNAR_PROMPT_VERSION, address: userGender,
     reading_mode: _readingMode, draws: _drawsSPinem(prompt, lang)
   } : null;
-  _lastReadingId = null;
+  _lastReadingId = null; _voiceTicket = null;
   // Zakladaci Norny: zdarma a BEZ HLASU (hlas = 95 % ceny cteni, proto se nekona).
   // Cenu vynucuje proxy podle mode='founding', ne tahle dve cisla.
   // `o.kind` je to, co _generateNornsReading() skutecne posila ('NORNS').
@@ -1378,6 +1387,7 @@ async function _generateSpreadReading(o) {
   if (_lastGen && res && res.model) _lastGen.model = res.model;
   if (_lastGen && res && res.usage) _lastGen.usage = res.usage;   // 2026-09-29: cena čtení do reportu (costLabel)
   _lastReadingId = (res && res.reading_id) || (_journalS ? _journalS.id : null);
+  _voiceTicket = (res && res.voice) || null;   // jen neuložené čtení; uložené hlas najde podle reading_id
   if (_journalS && res && !res.error && res.text && !res.reading_id) _pendAdd('pendingReadings', { id: _journalS.id, journal: _journalS, model_text: res.text });
   _flushPending();
 
@@ -1406,7 +1416,7 @@ async function _generateSpreadReading(o) {
   var text = _thX.reading;
   _lastSegs = _thX.segs;
   _lastDrawn = (o.runes || []).slice();
-  readerTexts[lang] = { short: text, deep: '' };
+  readerTexts[lang] = { short: text, deep: '', id: _lastReadingId, voice: _voiceTicket };   // hlas k tomuhle textu (viz single)
 
   var lbl = document.getElementById(o.lblId);
   _hdr = { lblId: o.lblId, outId: o.outId, runes: o.runes.slice(), single: false, cast: _castNowS };

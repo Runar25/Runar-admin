@@ -169,7 +169,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
         <p><strong>OpenAI</strong> (AI readings, United States) — to write your reading we send the details you enter (your name if you give one, your choices and your question) and the runes drawn; for your life rune, also your day and month of birth. OpenAI does not use them to train its models and keeps them for no more than 30 days to check for misuse, unless the law requires longer or they are flagged for misuse. <a href="https://openai.com/policies/privacy-policy/" target="_blank" style="color:var(--gold);opacity:0.8;">openai.com/policies/privacy-policy</a></p>
         <p><strong>Anthropic</strong> (AI readings, United States) — receives the same details only when OpenAI is unavailable. Anthropic does not use them to train its models and deletes them within 30 days, unless the law requires longer or they are flagged for misuse. <a href="https://www.anthropic.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">anthropic.com/privacy</a></p>
         <p>In both cases, the transfer to the United States rests on the EU standard contractual clauses.</p>
-        <p><strong>ElevenLabs</strong> (voice, United States) — the text of your reading is sent only when you play the voice. <a href="https://elevenlabs.io/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">elevenlabs.io/privacy</a></p>
+        <p><strong>ElevenLabs</strong> (voice, United States) — the text of your reading is sent only when Rúnar first reads it aloud. <a href="https://elevenlabs.io/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">elevenlabs.io/privacy</a></p>
         <p>No data is sold. No data is shared with advertisers or data brokers. Ever.</p>
       </div>
     </div>
@@ -260,9 +260,10 @@ const C = {
       ['Your life rune reading', 'So Rúnar can show it to you again',  'Until account deleted'],
       ['Your tree (its name and when it took root)', 'So your tree can grow', 'Until changed or account deleted'],
       ['Rune readings, with your Ask questions and Rúnar’s answers', 'Your journal — kept for your return', 'Until account deleted'],
+      ['Rúnar reading your readings aloud (audio)', 'So you can listen again in your journal', 'Until account deleted'],
       ['Language preference','Show Rúnar in your tongue',              'Until changed'],
       ['Reading count',      'Enforce fair monthly allowance',         'Resets monthly; deleted with account'],
-      ['How often the voice has spoken this month', 'So the voice stays within its monthly limit', 'Resets monthly; deleted with account'],
+      ['How often the voice has spoken this month', 'To know how often Rúnar reads aloud', 'Resets monthly; deleted with account'],
       ['Credits balance',    'Track gift card credits',                'Until spent or account deleted'],
       ['Gift code used',     'Prevent duplicate redemption',           'Kept for accounting (anonymised on account deletion)'],
       ['Your analysis choice and tester consent', 'To respect your choice', 'Until changed or account deleted'],
@@ -285,7 +286,7 @@ const C = {
              <p><strong>OpenAI</strong> (AI readings, United States) — to write your reading we send the details you enter (your name if you give one, your choices and your question) and the runes drawn; for your life rune, also your day and month of birth. OpenAI does not use them to train its models and keeps them for no more than 30 days to check for misuse, unless the law requires longer or they are flagged for misuse. <a href="https://openai.com/policies/privacy-policy/" target="_blank" style="color:var(--gold);opacity:0.8;">openai.com/policies/privacy-policy</a></p>
              <p><strong>Anthropic</strong> (AI readings, United States) — receives the same details only when OpenAI is unavailable. Anthropic does not use them to train its models and deletes them within 30 days, unless the law requires longer or they are flagged for misuse. <a href="https://www.anthropic.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">anthropic.com/privacy</a></p>
              <p>In both cases, the transfer to the United States rests on the EU standard contractual clauses.</p>
-             <p><strong>ElevenLabs</strong> (voice, United States) — the text of your reading is sent only when you play the voice. <a href="https://elevenlabs.io/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">elevenlabs.io/privacy</a></p>
+             <p><strong>ElevenLabs</strong> (voice, United States) — the text of your reading is sent only when Rúnar first reads it aloud. <a href="https://elevenlabs.io/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">elevenlabs.io/privacy</a></p>
              <p>No data is sold. No data is shared with advertisers or data brokers. Ever.</p>`,
 
     s5Lbl:   'YOUR RIGHTS',
@@ -341,9 +342,10 @@ const C = {
       ['Lestur lífsrúnar þinnar',  'Svo Rúnar geti sýnt þér hann aftur',          'Þar til reikningi er eytt'],
       ['Tréð þitt (nafn þess og hvenær það festi rætur)', 'Svo tréð þitt geti vaxið', 'Þar til breytt eða reikningi eytt'],
       ['Rúnalestrar, með spurningum þínum og svörum Rúnars', 'Dagbók þín — geymd fyrir endurkomu þína', 'Þar til reikningi er eytt'],
+      ['Upplestur Rúnars á spám þínum', 'Svo þú getir hlustað á hann aftur í dagbókinni', 'Þar til reikningi er eytt'],
       ['Tungumál',                 'Sýna Rúnar á máli þínu',                      'Þar til breytt'],
       ['Fjöldi lestra',            'Svo enginn fari yfir hámark á mánuði',         'Endurnýjast mánaðarlega; eytt með reikningi'],
-      ['Hve oft röddin hefur talað í mánuðinum', 'Svo röddin fari ekki yfir hámark á mánuði', 'Endurnýjast mánaðarlega; eytt með reikningi'],
+      ['Hve oft röddin hefur talað í mánuðinum', 'Til að vita hve oft Rúnar les upphátt', 'Endurnýjast mánaðarlega; eytt með reikningi'],
       ['Inneign',                  'Halda utan um inneign af Rúnakortum',         'Þar til hún er notuð eða reikningi eytt'],
       ['Notaður gjafakortskóði',   'Koma í veg fyrir tvítekna innlausn',           'Geymt vegna bókhalds (gert ópersónugreinanlegt þegar reikningi er eytt)'],
       ['Val þitt um greiningu og samþykki þitt sem prófari', 'Til að virða val þitt', 'Þar til breytt eða reikningi eytt'],
@@ -363,7 +365,7 @@ const C = {
              <p><strong>OpenAI</strong> (gervigreind, Bandaríkin) — til að semja lesturinn sendum við upplýsingarnar sem þú slærð inn (nafn þitt ef þú gefur það upp, val þitt og spurningu) og rúnirnar sem dregnar eru, og fyrir lífsrúnina einnig fæðingardag og mánuð. OpenAI notar þær ekki til að þjálfa gervigreind sína og geymir þær ekki lengur en í 30 daga til að fylgjast með misnotkun, nema lög krefjist lengri tíma eða þær séu merktar sem misnotkun. <a href="https://openai.com/policies/privacy-policy/" target="_blank" style="color:var(--gold);opacity:0.8;">openai.com/policies/privacy-policy</a></p>
              <p><strong>Anthropic</strong> (gervigreind, Bandaríkin) — fær sömu upplýsingar, aðeins ef OpenAI svarar ekki. Anthropic notar þær ekki til að þjálfa gervigreind sína og eyðir þeim innan 30 daga, nema lög krefjist lengri tíma eða þær séu merktar sem misnotkun. <a href="https://www.anthropic.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">anthropic.com/privacy</a></p>
              <p>Í báðum tilvikum byggist miðlun upplýsinganna til Bandaríkjanna á stöðluðum samningsskilmálum ESB.</p>
-             <p><strong>ElevenLabs</strong> (rödd, Bandaríkin) — texti lesturs þíns er aðeins sendur þegar þú spilar röddina. <a href="https://elevenlabs.io/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">elevenlabs.io/privacy</a></p>
+             <p><strong>ElevenLabs</strong> (rödd, Bandaríkin) — texti lesturs þíns er aðeins sendur þegar Rúnar les hann upphátt í fyrsta sinn. <a href="https://elevenlabs.io/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">elevenlabs.io/privacy</a></p>
              <p>Engin gögn eru seld. Engum gögnum er deilt með auglýsendum eða gagnasölum. Aldrei.</p>`,
 
     s5Lbl:   'RÉTTINDI ÞÍN',

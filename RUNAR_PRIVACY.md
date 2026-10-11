@@ -12,7 +12,8 @@
   volná otázka · u životní runy DEN a MĚSÍC narození a jméno islandského měsíce — **rok ne** (do promptu od 2026-09-30, minimalizace
   čl. 5 odst. 1 c, `RUNAR_DECISIONS.md` 2026-09-30 (11); **od 2026-10-09 se rok vůbec nezadává** — islandský měsíc se počítá bez něj,
   uložený rok starých účtů slouží jen jako semínko tvaru stromu, `RUNAR_DECISIONS.md` 2026-10-09 „Rok narození se nezadává“; ty staré účty jsou admin účty a rok u nich ZŮSTÁVÁ — KUKY 2026-10-10, `RUNAR_DECISIONS.md` 2026-10-10 (35), data admin účtů nejsou nález)
-  · u Asku jeho otázky a text čtení. Hlas: text čtení k ElevenLabs (USA).
+  · u Asku jeho otázky a text čtení. Hlas: text čtení k ElevenLabs (USA), jen při prvním přečtení — pak se pouští uložený
+  (DECISIONS 2026-10-11 (61)).
 
 ## Právní základy — KTERÝ na CO (klíč k „bez popupu")
 | Účel | Základ | UI dopad |
@@ -91,6 +92,12 @@ a souhlasí na pravdivém textu. Detail → `RUNAR_DECISIONS.md` 2026-09-11 (8).
   `user_id` má `on delete set null` → po smazání účtu zbude anonymní účetní řádek, stejná úvaha jako u `credit_ledger` výš.
   Klient tabulku nečte ani nepíše (RLS bez politik). Snímky předplatného (`voice_quota_snapshots`) osobní údaj nenesou.
   Migrace: `sql/2026-09-25_voice_usage.sql`.
+- **Uložený hlas čtení (úložiště `reading-voice`, od 2026-10-11, DECISIONS 2026-10-11 (61))** — když Rúnar uložené čtení přečte
+  nahlas, audio (mp3) se uloží k čtení, ať se dá v deníku pustit znovu bez dalšího volání ElevenLabs. Soukromé úložiště, přehrání jen
+  přes podepsaný odkaz z `elevenlabs-proxy` (hodina). Čtení pro někoho jiného, které se neukládá, se neukládá ani jako hlas. Záznam
+  „zaznělo“ (`voice_tickets`: id čtení nebo podpisu, `user_id`, čas, cesta k souboru) — žádný text. Retence: po dobu účtu (i u čtení,
+  která Rune Seeker v deníku už nevidí); `delete-account` maže soubory, `voice_tickets` padají kaskádou. Zásady (EN/IS) to uvádějí
+  v tabulce dat. Migrace: `sql/2026-10-11_hlas_ke_cteni.sql`.
 - **Hlášení testerů (`bug_reports`, zapsáno 2026-10-09 kontrolou architektury — do té doby tu nestálo nic):** typ, zpráva, označený
   výřez textu (u čtení začátek čtení, může nést jméno), kontext obrazovky, jazyk, verze appky, `user_agent` a pole `tester` =
   jméno, které si tester sám napsal (2026-10-09: 0 e-mailů z 241). **Žádná vazba na účet** (`user_id` tabulka nemá) → smazání účtu

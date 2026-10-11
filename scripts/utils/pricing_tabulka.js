@@ -2,7 +2,7 @@
 //
 // Proč (KUKY 2026-10-11, „6. a) ano, přepočítej pricing na sol“): pricing stál na ručním měření z června, sloupci „Claude“
 // (čte GPT-6 sol od 2026-10-09), anglickém hlasu za sazbu Flash (proxy mluví eleven_multilingual_v2) a nejhorším měsíci
-// „50 čtení, každé s hlasem“ — hlas má ale předplatitel nejvýš VOICE_MONTHLY_LIMIT za měsíc (DECISIONS 2026-10-10 (42)).
+// „50 čtení, každé s hlasem“ — tehdy platil měsíční strop hlasu; od 2026-10-11 má hlas zase každé čtení, jednou (DECISIONS 2026-10-11 (61)).
 // Každý přepočet se dělal ručně a zastaral; tenhle skript ho dělá stejně pokaždé.
 //
 // ZMĚŘENO vs ODHAD — skript to u každého čísla říká:
@@ -12,7 +12,8 @@
 //     znaky ÷ změřené znaky na token; vstup = Single + přírůstek na runu změřený na Nornách. Hlas = znaky × sazba hlasu.
 // Sazby ani ceník se tu NEOPISUJÍ (§20): model čtení `SOL_MODEL` (claude-proxy), ceník `MODEL_PRICES` + výpočet `readingCostUsd`
 // (v2/), model hlasu `EL_MODEL_EN/IS` (supabase/functions/_shared/el_voice.ts), sazba hlasu `EL_PRECERPANI` (scripts/utils/stats.js), jednotky
-// `SPREAD_COSTS`, měsíční jednotky a Asky `TIERS`, strop hlasu `VOICE_MONTHLY_LIMIT`, prompty buildery přes golden dump.
+// `SPREAD_COSTS`, měsíční jednotky a Asky `TIERS`, cena kreditu a kredity tarifů EL `EL_KREDIT_USD` / `EL_TARIF_KREDITY`
+// (supabase/functions/_shared/voice_usage.ts), prompty buildery přes golden dump. Hlas má každé čtení, jednou (DECISIONS 2026-10-11 (61)).
 // Jen agregáty — žádný text čtení ani user_id (repo je veřejné, RUNAR_PRIVACY.md). Čte VŠECHNA čtení včetně odhlášených z analýzy:
 // je to výpočet nákladů, ne analýza kvality textu — tatáž výjimka jako stats.js a naklady.py (hlavička scripts/utils/cteni_analyza.sql);
 // na řádku dotazu značka opt-out:ok, kterou chce smoke ㉾.
@@ -32,12 +33,15 @@ const SB = { console, Math, JSON, Date };
 vm.createContext(SB);
 for (const f of ['runar-config.js', 'runar-utils.js']) vm.runInContext(cti('v2/' + f), SB, { filename: f });
 const V = (x) => vm.runInContext(x, SB);
-const cena = V('readingCostUsd'), TIERS = V('TIERS'), SPREAD_COSTS = V('SPREAD_COSTS'), VOICE_CAP = V('VOICE_MONTHLY_LIMIT');
+const cena = V('readingCostUsd'), TIERS = V('TIERS'), SPREAD_COSTS = V('SPREAD_COSTS');
 const SOL = vytahni('supabase/functions/claude-proxy/index.ts', /const SOL_MODEL = "([^"]+)"/, 'SOL_MODEL');
 const EL_MODEL = {
   en: vytahni('supabase/functions/_shared/el_voice.ts', /export const EL_MODEL_EN\s*=\s*"([^"]+)"/, 'EL_MODEL_EN'),
   is: vytahni('supabase/functions/_shared/el_voice.ts', /export const EL_MODEL_IS\s*=\s*"([^"]+)"/, 'EL_MODEL_IS'),
 };
+const EL_KREDIT = Number(vytahni('supabase/functions/_shared/voice_usage.ts', /export const EL_KREDIT_USD = ([\d.]+);/, 'EL_KREDIT_USD'));
+const EL_TARIFY = Object.fromEntries([...vytahni('supabase/functions/_shared/voice_usage.ts', /export const EL_TARIF_KREDITY[^=]*=\s*\{([^}]*)\}/, 'EL_TARIF_KREDITY')
+  .matchAll(/(\w+):\s*(\d+)/g)].map((m) => [m[1], Number(m[2])]));
 const EL_SAZBA_1K = JSON.parse(vytahni('scripts/utils/stats.js', /const EL_PRECERPANI = (\{[^}]*\})/, 'EL_PRECERPANI').replace(/'/g, '"'));
 const sazbaHlasu = (l) => { const s = EL_SAZBA_1K[EL_MODEL[l]]; if (s == null) throw new Error('model hlasu ' + EL_MODEL[l] + ' nemá sazbu v EL_PRECERPANI'); return s / 1000; };
 // samotest výpočtu (§19.1) — týž příklad drží stats.js
@@ -125,7 +129,7 @@ for (const l of ['en', 'is']) { const k = K[l], zn = median(life.filter((x) => x
     usd: cena({ model: SOL, prompt_tokens: Math.round(((G['system_' + l] || '').length + (G['liferune_' + l] || '').length) / k.promptZnNaToken), completion_tokens: Math.round(zn / k.znNaToken) }) }; }
 
 console.log('Model čtení ' + SOL + ' (bez přemýšlení), čtení za ' + DNY + ' dní: ' + rows.length + (vynech ? ' (' + vynech + ' s přemýšlením vynecháno)' : '') +
-  ' · hlas EN ' + EL_MODEL.en + ' / IS ' + EL_MODEL.is + ' · strop hlasu VOICE_MONTHLY_LIMIT = ' + VOICE_CAP);
+  ' · hlas EN ' + EL_MODEL.en + ' / IS ' + EL_MODEL.is + ' · hlas ke každému čtení, jednou (strop jen testeři, VOICE_MONTHLY_LIMIT_TESTER)');
 console.log('\n| Čtení | Jazyk | n | Znaky (hlas) | Model | Hlas | Celkem s hlasem | Bez hlasu | Jednotky |');
 console.log('|---|---|---|---|---|---|---|---|---|');
 for (const o of RADKY) { const hv = o.odhad ? '*' : '';
@@ -139,23 +143,36 @@ console.log('\n* odhad (sol tenhle typ v datech nemá): znaky = cílový počet 
 for (const l of ['en', 'is']) { const s = RADKY.find((o) => o.t.k === 'single' && o.l === l); if (s && s.n < 10) console.log('⚠ Single ' + l.toUpperCase() + ' má jen n = ' + s.n + ' — medián je hrubý.'); }
 
 // ── tabulka 2: měsíc předplatitele ──────────────────────────────────────────
+// Hlas ke každému čtení, jednou (DECISIONS 2026-10-11 (61)): nejhorší měsíc = všechny jednotky na typ s nejvyšší cenou NA JEDNOTKU
+// (model + hlas + všechny Asky; dnes Single) — přesná horní mez, žádný strop hlasu. Vzor = ownerův příklad 2026-10-11: „3 single,
+// 1 norns za týden, 1 cross a jeden horseshoe za měsíc“ (týden = 30/7 v měsíci). Do 2026-10-11 tu stál „běžný měsíc“ s hlasem ×5.
 const radek = (k, l) => RADKY.find((o) => o.t.k === k && o.l === l);
-console.log('\n| Tarif | Jazyk | Běžný měsíc (vše Single, hlas ×' + VOICE_CAP + ') | Nejhorší měsíc (strop) | z toho model | z toho hlas |');
-console.log('|---|---|---|---|---|---|');
+const VZOR = { single: 3 * 30 / 7, norns: 30 / 7, cross: 1, horseshoe: 1 };
+const MES = {};   // tier → jazyk → kredity EL nejhoršího měsíce a vzoru (kapacita tarifů níž)
+console.log('\n| Tarif | Jazyk | Nejhorší měsíc | z toho hlas | kredity EL | Vzor (3 Single + 1 Norns týdně, 1 Kříž + 1 Horseshoe) | kredity EL vzoru |');
+console.log('|---|---|---|---|---|---|---|');
 for (const tier of ['standard', 'premium']) {
   const T = TIERS[tier], jednotek = T.monthly_readings, asky = T.asks_per_reading || 0;
+  MES[tier] = {};
   for (const l of ['en', 'is']) {
-    const ask = median(ASK[l]) || 0, s = radek('single', l);
-    const bezny = jednotek * (s.model + asky * ask) + Math.min(VOICE_CAP, jednotek) * s.hlas;
-    // strop: model z typu s nejvyšší cenou modelu na jednotku (vč. Asků) × všechny jednotky + hlas z nejdelšího čtení × strop
-    const naJedn = Math.max(...TYPY.map((t) => { const o = radek(t.k, l); return o && o.model != null ? (o.model + asky * ask) / SPREAD_COSTS[t.k].credits : 0; }));
-    const hlasMax = Math.max(...TYPY.map((t) => (radek(t.k, l) || {}).hlas || 0)) * VOICE_CAP;
-    console.log('| ' + (T.label || tier) + ' (' + jednotek + ' jedn., Ask ×' + asky + ') | ' + l.toUpperCase() + ' | ' + usd(bezny, 2) + ' | **' + usd(naJedn * jednotek + hlasMax, 2) + '** | ' +
-      usd(naJedn * jednotek, 2) + ' | ' + usd(hlasMax, 2) + ' |');
+    const ask = median(ASK[l]) || 0;
+    const naJedn = (t) => { const o = radek(t.k, l); return o && o.model != null ? (o.model + o.hlas + asky * ask) / SPREAD_COSTS[t.k].credits : 0; };
+    const nej = TYPY.reduce((a, t) => (naJedn(t) > naJedn(a) ? t : a), TYPY[0]), o = radek(nej.k, l), kolik = jednotek / SPREAD_COSTS[nej.k].credits;
+    let vzor = 0, vzorHlas = 0;
+    for (const [k, n] of Object.entries(VZOR)) { const r = radek(k, l); vzor += n * (r.model + r.hlas + asky * ask); vzorHlas += n * r.hlas; }
+    MES[tier][l] = { nej: kolik * o.hlas / EL_KREDIT, vzor: vzorHlas / EL_KREDIT };
+    console.log('| ' + (T.label || tier) + ' (' + jednotek + ' jedn., Ask ×' + asky + ') | ' + l.toUpperCase() + ' | **' + usd(kolik * naJedn(nej), 2) + '** (' + Math.round(kolik) + '× ' + nej.jm + ') | ' +
+      usd(kolik * o.hlas, 2) + ' | ' + Math.round(MES[tier][l].nej) + ' | ' + usd(vzor, 2) + ' | ' + Math.round(MES[tier][l].vzor) + ' |');
   }
 }
-console.log('\nNejhorší měsíc je HORNÍ MEZ: model jako by všechny jednotky šly na nejdražší typ na jednotku, hlas jako by strop padl na nejdelší čtení —');
-console.log('obojí naráz nastat nemůže. Hlas nad strop appka nepustí (elevenlabs-proxy), takže čtení navíc stojí jen model.');
+console.log('\nNejhorší měsíc = všechny jednotky na typ s nejvyšší cenou na jednotku (model + hlas + všechny Asky) — přesná horní mez. Hlas má každé');
+console.log('čtení jednou (elevenlabs-proxy); přehrání uloženého hlasu ElevenLabs nic nestojí. Kredit EL = $' + EL_KREDIT + ' (voice_usage.ts).');
+
+// ── kapacita tarifů ElevenLabs: kolik předplatitelů Premium (IS = dražší jazyk) unese měsíční kredit tarifu ──────────────────────────
+console.log('\n| Tarif EL | Kreditů / měsíc | Cena | Premium IS nejhorší měsíc | Premium IS vzor |');
+console.log('|---|---|---|---|---|');
+for (const [jm, kr] of Object.entries(EL_TARIFY)) console.log('| ' + jm + ' | ' + kr + ' | ' + usd(kr * EL_KREDIT, 0) + ' | ' +
+  Math.floor(kr / MES.premium.is.nej) + ' | ' + Math.floor(kr / MES.premium.is.vzor) + ' |');
 
 // ── Rune Seeker: kredit a volné čtení ───────────────────────────────────────
 console.log('\nRune Seeker — náklad na 1 kredit (čtení z karty s hlasem): ' + ['en', 'is'].map((l) => l.toUpperCase() + ' ' +

@@ -60,25 +60,26 @@ rekni((help.match(/tierFeatures\('(rune_seeker|standard|premium)', '(en|is)'\)/g
         'TIER_LIMITS už nemá ruční panel_props pro placené tiery / Rune Seekera');
 }
 
-// (6) Hlas podle tieru (DECISIONS 2026-10-10 (42)). Rune Seeker má hlas k volnému čtení a ke čtením z karty — NE „až N měsíčně“ jako
-//     předplatitel. Do 2026-10-10 dostaly všechny tiery tutéž větu se stropem serveru; owner: „1 hlas a jen jednou! jedno čtení a jeden
-//     hlas! pak je potřeba si koupit kredit… takhle chyba už tu byla několikrát“. Kontrola protlačí nastavení až do věty (§19) a obrací
-//     páky (§25): vypnutý hlas k volnému čtení / ke kartě / žádné volné čtení → věta to musí přestat slibovat.
+// (6) Hlas podle tieru (DECISIONS 2026-10-10 (42), 2026-10-11 (61)). Rúnar přečte KAŽDÉ čtení, jednou: předplatitel všechna, Rune Seeker
+//     volné čtení a čtení z karty — bez čtení nic (owner 2026-10-10: „1 hlas a jen jednou! jedno čtení a jeden hlas!“). Do 2026-10-11 tu
+//     kontrola chtěla „strop N za měsíc“ ve větě předplatitele; pětka byla ownerův pokyn pro testery (DECISIONS 2026-10-11 (49)) a věta ji
+//     teď slibovat NESMÍ. Kontrola protlačí nastavení až do věty (§19) a obrací páky (§25): vypnutý hlas k volnému čtení / ke kartě /
+//     žádné volné čtení → věta to musí přestat slibovat.
 {
   const veta = (S, id, L) => {
     const f = vm.runInContext('TIER_FEATURES', S).find((x) => x.key === 'voice');
     const v = f.hodnota(vm.runInContext('TIERS', S)[id], id);
     return v === null || v === undefined ? null : f[L](v);
   };
-  const S6 = nacti(), V = vm.runInContext('VOCAB', S6), N = String(vm.runInContext('VOICE_MONTHLY_LIMIT', S6));
-  const ZNAK = { en: { volne: /\bfree\b/, mesic: /each month/, karta: V.card.en },
-                 is: { volne: /ókeypis/, mesic: /á mánuði/, karta: V.card.is_dat } };
+  const S6 = nacti(), V = vm.runInContext('VOCAB', S6);
+  const ZNAK = { en: { volne: /\bfree\b/, kazde: /\bevery\b/, mesic: /each month|a month/, karta: V.card.en },
+                 is: { volne: /ókeypis/, kazde: /\bhverja\b/, mesic: /á mánuði/, karta: V.card.is_dat } };
   for (const L of ['en', 'is']) {
     const z = ZNAK[L], rs = veta(S6, 'rune_seeker', L), std = veta(S6, 'standard', L);
     rekni(!!rs && z.volne.test(rs), L + '  Rune Seeker: hlas k volnému čtení — „' + rs + '“');
-    rekni(!!rs && (!z.mesic.test(rs) || rs.indexOf(z.karta) !== -1), L + '  Rune Seeker: měsíční počet hlasů jen spolu s kartou');
+    rekni(!!rs && z.kazde.test(rs) && rs.indexOf(z.karta) !== -1, L + '  Rune Seeker: každé čtení z karty');
     rekni(rs !== std, L + '  Rune Seeker nemá tutéž větu o hlasu jako předplatitel');
-    rekni(!!std && std.indexOf(N) !== -1 && z.mesic.test(std), L + '  předplatitel: strop ' + N + ' za měsíc ve větě');
+    rekni(!!std && z.kazde.test(std) && !z.mesic.test(std) && !/\d/.test(std), L + '  předplatitel: každé čtení, bez měsíčního stropu — „' + std + '“');
   }
   rekni(vm.runInContext('TIERS.free_trial.voice_monthly', S6) === false, 'návštěvník živý hlas nemá (free_trial.voice_monthly = false)');
   // obrácené páky — každá musí větu změnit správným směrem
@@ -86,11 +87,11 @@ rekni((help.match(/tierFeatures\('(rune_seeker|standard|premium)', '(en|is)'\)/g
   for (const L of ['en', 'is']) {
     const z = ZNAK[L];
     const bezKarty = veta(s('TIERS.rune_seeker.voice_credits = false;'), 'rune_seeker', L);
-    rekni(!!bezKarty && z.volne.test(bezKarty) && !z.mesic.test(bezKarty) && bezKarty.indexOf(z.karta) === -1,
-          L + '  bez hlasu z karty: jen volné čtení, žádný měsíční počet ani karta');
+    rekni(!!bezKarty && z.volne.test(bezKarty) && !z.kazde.test(bezKarty) && bezKarty.indexOf(z.karta) === -1,
+          L + '  bez hlasu z karty: jen volné čtení, žádné „každé“ ani karta');
     const bezVolneho = veta(s('TIERS.rune_seeker.voice_monthly = false;'), 'rune_seeker', L);
-    rekni(!!bezVolneho && !z.volne.test(bezVolneho) && bezVolneho.indexOf(z.karta) !== -1 && z.mesic.test(bezVolneho),
-          L + '  bez hlasu k volnému čtení: jen karta se stropem');
+    rekni(!!bezVolneho && !z.volne.test(bezVolneho) && bezVolneho.indexOf(z.karta) !== -1 && z.kazde.test(bezVolneho),
+          L + '  bez hlasu k volnému čtení: jen každé čtení z karty');
     const bezOnb = veta(s('TIER_LIMITS.rune_seeker.onboarding = 0;'), 'rune_seeker', L);
     rekni(!!bezOnb && !z.volne.test(bezOnb), L + '  bez volného čtení se hlas k volnému čtení neslibuje');
     rekni(veta(s('TIERS.rune_seeker.voice_monthly = false; TIERS.rune_seeker.voice_credits = false;'), 'rune_seeker', L) === null,
@@ -98,10 +99,12 @@ rekni((help.match(/tierFeatures\('(rune_seeker|standard|premium)', '(en|is)'\)/g
   }
   const kartaRadek = vm.runInContext('tierFeatures', s('TIERS.rune_seeker.voice_credits = false;'))('rune_seeker', 'en').join(' ');
   rekni(kartaRadek.indexOf(V.card.en + ' opens') !== -1, 'řádek o kartě nezávisí na hlasu (voice_credits false → karta dál otevírá čtení)');
-  // nápověda: každý odstavec s počtem hlasů {voice_n} říká, že bez předplatného je hlas jen k volnému čtení a ke kartě
-  const odst = help.split('<p>').filter((p) => p.indexOf('{voice_n}') !== -1);
-  rekni(odst.length >= 3 && odst.every((p) => /subscription|áskrift/.test(p)),
-        'nápověda: ' + odst.length + '× {voice_n}, vždy s omezením bez předplatného');
+  // nápověda: oddíl o hlasu (EN obě kopie + IS) říká „každé čtení“, deník a omezení bez předplatného; počet hlasů {voice_n} je pryč
+  // (2026-10-11) — zůstal-li by v textu, ukázal by se doslova, _v ho už nedosazuje.
+  rekni(help.indexOf('{voice_n}') === -1, 'nápověda: žádný {voice_n} (počet hlasů zrušen 2026-10-11)');
+  const odst = help.split('<p>').filter((p) => /reads every one of your readings aloud|les hverja spá þína upphátt/.test(p));
+  rekni(odst.length >= 3 && odst.every((p) => /subscription|áskrift/.test(p) && /journal|dagbók/.test(p)),
+        'nápověda: ' + odst.length + '× věta o hlasu ke každému čtení, vždy s deníkem a omezením bez předplatného');
 }
 
 console.log(fail ? '\n' + fail + ' selhalo' : '\nOK  výpis featur tierů se skládá z nastavení');

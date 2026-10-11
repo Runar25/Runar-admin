@@ -96,6 +96,48 @@ function _jThought(txt) {
 }
 function _jThoughtHtml(th) { return th ? `<div class="jcard-thought">\u2726 ${escapeHtml(th)}</div>` : ''; }
 
+// Hlas čtení v deníku (2026-10-11, owner: „vytvoří se čtení, uloží do databáze a může přehrát znova v deníku ne?“; DECISIONS (61)).
+// Rúnar čtení přečte jednou a server hlas uloží — další přehrání (tady i ve čtení) je zdarma. Zakládací Norny hlas nemají (textový
+// rituál, runar-reading.js; server je odmítne taky). Tlačítko je totéž jako u čtení (voice_btn), hláška chyby z téže funkce
+// (_voiceErrMsg, runar-reading.js). Statické tlačítko níž (jcard_audio_btn) pouští Rúnarova slova o RUNĚ z Kolekce, ne čtení.
+var _jEntries = [];
+function _jHlas(e, i) {
+  if (!e || !e.id || (typeof _foundingReadingId !== 'undefined' && e.id === _foundingReadingId)) return '';
+  return '<button class="jcard-audio-btn" id="jvoice-btn-' + i + '" onclick="playReadingVoice(' + i + ')">' + escapeHtml(t('voice_btn')) + '</button>' +
+         '<div class="jcard-audio-player" id="jvoice-' + i + '"></div>';
+}
+async function playReadingVoice(i) {
+  const e = _jEntries[i];
+  const btn = document.getElementById('jvoice-btn-' + i), player = document.getElementById('jvoice-' + i);
+  if (!e || !btn || !player || !currentUser) return;
+  btn.disabled = true; setRuneText(btn, t('voice_btn_loading'));
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    const h = { 'Content-Type': 'application/json' };
+    if (session && session.access_token) h['Authorization'] = 'Bearer ' + session.access_token;
+    // `text` jen pro starou verzi serveru (do nasazení); nová si text vezme z deníku podle reading_id.
+    const txt = _jThought(e.area === 'spread' ? e.deep_text : e.short_text).text;
+    const res = await fetch(EL_PROXY, { method: 'POST', headers: h, body: JSON.stringify({ reading_id: e.id, lang: e.lang, text: txt }) });
+    let data = {};
+    try { data = await res.json(); } catch (_e) {}
+    if (!res.ok || !data.audio_url) {
+      console.error('journal voice failed:', res.status, (data && data.error) || '');
+      if (data && data.error === 'voice_used') { setRuneText(btn, t('voice_btn_done')); return; }
+      setRuneText(btn, t('voice_btn')); btn.disabled = false;
+      if (typeof showToast === 'function') showToast(_voiceErrMsg(data, res.status));
+      return;
+    }
+    const blob = await fetch(data.audio_url).then(function (r) { return r.blob(); });
+    player.innerHTML = _makeCapPlayer('jv' + i, URL.createObjectURL(blob), true);
+    _capWire('jv' + i, true);
+    setRuneText(btn, t('voice_btn_done'));
+    if (!data.stored && typeof syncFreeBalance === 'function') syncFreeBalance(currentUser.id);   // menu testera: počet hlasů
+  } catch (err) {
+    console.error('journal voice error:', err && err.message);
+    setRuneText(btn, t('voice_btn')); btn.disabled = false;
+  }
+}
+
 function renderJournal(entries) {
   const list = document.getElementById('journal-list');
   if (!list) return;
@@ -147,6 +189,7 @@ function renderJournal(entries) {
     }).join(' · ');
     return poznano ? html : escapeHtml(s);
   };
+  _jEntries = entries;   // playReadingVoice(i) — hlas čtení podle pořadí karty
   list.innerHTML = entries.map((e, i) => {
     const d       = new Date(e.drawn_at);
     const locale  = isIs ? 'is-IS' : 'en-GB';
@@ -183,7 +226,7 @@ function renderJournal(entries) {
           </div>
           <div class="jcard-arrow" id="jarr-${i}">▾</div>
         </div>
-        <div class="jcard-body" id="jbody-${i}" style="display:none;">${_jDetail(e)}</div>
+        <div class="jcard-body" id="jbody-${i}" style="display:none;">${_jDetail(e)}${_jHlas(e, i)}</div>
       </div>`;
     }
 
@@ -205,6 +248,7 @@ function renderJournal(entries) {
         <div class="jcard-layer-lbl">${t('layer2_lbl')}</div>
         <div class="jcard-text">${deepT}</div>` : ''}
         ${_jDetail(e)}
+        ${_jHlas(e, i)}
         <button class="jcard-audio-btn" id="jaudio-btn-${i}" onclick="playJournalAudio('${safeRune}','${safeLang}',${i})">${t('jcard_audio_btn')}</button>
         <div class="jcard-audio-player" id="jaudio-${i}"></div>
       </div>

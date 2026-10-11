@@ -41,6 +41,7 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.117.3";
+import { textKHlasu, normalizuj, podepis } from "../_shared/voice_ticket.ts";
 
 const cors = {
   "Access-Control-Allow-Origin":  "*",
@@ -956,6 +957,17 @@ serve(async (req: Request) => {
       askSaved  = r.askSaved;
     }
 
+    // ── Hlas ke čtení, které se neuložilo (2026-10-11, DECISIONS (61)) ──
+    // Uložené čtení si elevenlabs-proxy najde podle reading_id; tohle (pro někoho jiného, nebo když zápis selhal) dostane podpis —
+    // elevenlabs-proxy pak přečte jen PŘESNĚ tenhle text, jen tomuhle uživateli a jen jednou. Jen obyčejná čtení (mode ""):
+    // zakládací Norny se nečtou nahlas, Ask, životní runa a rozbor jména hlas nemají.
+    let voice: { text: string; ticket: string } | null = null;
+    if (userId && !readingId && mode === "") {
+      const vt = normalizuj(textKHlasu(composeReading(text)));
+      const tk = await podepis(Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "", userId, vt);
+      if (tk) voice = { text: vt, ticket: tk };
+    }
+
     // Evidence pohybu (credit_ledger) tu ZAMERNE neni: zapisuje ji DB trigger na
     // user_profiles (sql/2026-07-19_credit_ledger.sql) — chyti i rucni zasah, ktery
     // by kod nikdy nevidel. Proxy dodava jen DUVOD: p_reason/p_ref v odecitacich RPC
@@ -991,6 +1003,7 @@ serve(async (req: Request) => {
       // jestli sedá cache (`cache_read_input_tokens` > 0). Zadny obsah, jen cisla.
       ...(data?.usage ? { usage: { ...data.usage, model: data?.model ?? null } } : {}),
       ...(readingId ? { reading_id: readingId } : {}),
+      ...(voice ? { voice } : {}),
       ...(mode === "ask" ? { ask_saved: askSaved } : {}),
       ...(isNameLore && nameLorePrev
         ? { name_lore_for: nameLorePrev.name, name_lore_count: nameLorePrev.count + 1, name_lore_saved: nameLoreSaved }

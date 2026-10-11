@@ -10875,3 +10875,42 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno:** `commit_vlastni` s JS ve v2/ dostane do commitu i zvýšenou `sw.js` a nechá čistý index (dočasný klon s hooky); pre-commit
   pathspec commit `runar-reader.css` zastaví, `RUNAR_VLASTNI=1` pustí, `runar-auth.js` pustí; hook čte vzor i na víc řádcích (samotest 48).
 - Affected doc(s): `CLAUDE.md` §1 a seznam souborů — v témže commitu.
+
+## 2026-10-11 (61) — Hlas ke každému čtení, jednou: hlídá ho server a v deníku se dá pustit znovu (měsíční strop 5 pryč)
+
+- **Rozhodl:** owner 2026-10-11: *„žádný měsíční strop 5 hlasů není!!! … to bylo pro testery, když jsem tvořil jejich účty“*; k nabídce
+  CODE-tune (hlas jednou ke každému čtení, hlídá server — nebo 1 hlas za den): *„jo varianta 7 [je] dobře“*; k slovu „jednou“: *„vytvoří
+  se čtení, uloží do databáze a může přehrát znova v deníku ne? aha to tam nemáme. byl by to velký problém? … ok udělej, pokud to nejde
+  udělat lépe a je to nejlepší řešení“*.
+- **Proč:** čtení drží jednotky tarifu, takže hlas ke každému čtení má horní mez sám od sebe — nejhorší měsíc Premium IS (75 Single
+  s hlasem a všemi Asky) $4.09, Standard IS $2.40 (`scripts/utils/pricing_tabulka.js`); 1 hlas za den by ušetřil jen ~$1.4 a vzal slib
+  *„u premium by každé čtení mělo mít možnost být s hlasem“* (owner 2026-10-11). Ale elevenlabs-proxy do té doby přečetl JAKÝKOLI text do
+  3 000 znaků 5× za minutu — „jedno čtení = jeden hlas“ hlídalo jen tlačítko v prohlížeči; bez měsíčního stropu by jeden účet se skriptem
+  spálil 6 000 kreditů ElevenLabs za minutu. Proto server váže hlas na čtení.
+- **Co:**
+  1. Uložené čtení: appka posílá `reading_id`, server si text vezme z deníku (bez řádku ✦, jako appka) a čte jen vlastní čtení. Zazní
+     jednou (`voice_tickets`, zámek PŘED voláním ElevenLabs, při jeho selhání se uvolní) a audio se uloží do soukromého úložiště
+     `reading-voice`; další přehrání (ve čtení i v deníku) = uložený soubor přes podepsaný odkaz, ElevenLabs nic nestojí.
+  2. Neuložené čtení (pro někoho jiného u netestera, nebo když zápis selhal): claude-proxy přidá podpis (`_shared/voice_ticket.ts`, HMAC
+     z tajemství serveru); elevenlabs-proxy přečte jen přesně ten text, tomu uživateli, jednou. Text se neukládá.
+  3. Zakládací Norny hlas nemají ani na serveru (do té doby jen skryté tlačítko). Admin smí text bez čtení (Teach ve shrine).
+  4. `VOICE_MONTHLY_LIMIT` (5) zrušen všude (proxy, config, appka, nápověda, tarify, PRICING); testeři dál `VOICE_MONTHLY_LIMIT_TESTER`
+     15 + brzda kreditů, dokud jedeme Starter. Menu ukazuje počet hlasů jen testerovi.
+  5. Hlas patří ke čtení, které je NA OBRAZOVCE: id a podpis se drží u textu jazyka (přepnutí jazyka vytvoří nové čtení; bez toho by
+     po návratu zazněl jiný text — nalezeno při mapování cest, ověřeno v prohlížeči).
+  6. Deník: u single i výkladu tlačítko hlasu (kromě zakládacích Noren); tlačítko Kolekce u single zůstává.
+  7. Texty: tarify (*„Rúnar les hverja spá upphátt.“* / *„Rúnar’s voice reads every rune reading aloud.“*), nápověda, zásady soukromí
+     (řádek o uloženém hlasu; ElevenLabs dostane text jen při prvním přečtení) — IS ověřena (greynir, gpt-check, korpus; CLAUDE.md §2).
+     `delete-account` maže i soubory hlasu.
+- **Návrat k opuštěnému (CLAUDE.md §21):** táž brána (#2b) se 2026-08-03 nasadila a do hodiny vracela — stála jen na `_lastReadingId`,
+  takže čtení bez něj (tehdy strom / životní runa a „pro někoho jiného“) dostala „Rúnar odpočívá“, a nikdo ji neproklikal. Očištěno:
+  všechny cesty k hlasu zmapované (čtení a 4 výklady, deník, pro někoho jiného, přepnutí jazyka, zakládací Norny, Teach; životní runa
+  a rozbor jména hlas dnes nemají), neuložené čtení nese podpis, appku proklikává v prohlížeči smoke ㊹, server hlídá smoke ㊸.
+- **Hranice:** podpis dostane jen obyčejné čtení (claude-proxy mode ""), a to až po odečtení jednotky — víc hlasů než čtení nejde.
+  Přehrání uloženého hlasu je zdarma, ale jde přes minutový limit. Selže-li uložení souboru, hlas zazněl a podruhé už ne (`voice_used`) —
+  radši než platit znovu. Uložený hlas zůstává po dobu účtu, i u čtení, která Rune Seeker v deníku už nevidí. Naživo neověřeno (owner).
+- **Od ownera:** SQL `sql/2026-10-11_hlas_ke_cteni.sql`, nasazení claude-proxy, elevenlabs-proxy a delete-account; pak čtení → hlas →
+  totéž čtení v deníku znovu.
+- Affected doc(s): `RUNAR_PRICING.md` (náklad, marže, projekce a tarify EL s hlasem ke každému čtení), `RUNAR_PRIVACY.md` (uložený hlas),
+  `RUNAR_BACKLOG.md` (strop pro produkci, #2b, nové položky) — v témže commitu.
+- Odvolává se na: 2026-08-03 (#2b a jeho vrácení), 2026-10-10 (42), 2026-10-11 (48), (49), (56).

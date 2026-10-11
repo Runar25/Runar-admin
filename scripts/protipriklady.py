@@ -139,6 +139,24 @@ PRIPADY = [
  ('chyti', 'verify_tree_prod_sync.js', 'build_crown_composer.py', 'replace', 'var XLF=[0.26, 0.36, 0.46, 0.56, 0.66, 0.76]', 'var XLF=[0.27, 0.36, 0.46, 0.56, 0.66, 0.76]'),
  # rituál založení (㊷, CODE-tree 2026-10-11): tlačítko založení bez stavby mřížky = owner v produkci „neukážou se runy“
  ('chyti', 'verify_zalozeni_stromu.js', 'v2/runar-tree.js', 'replace', "if (typeof buildGrid === 'function') buildGrid();", 'if (false) buildGrid();'),
+ # hlas patří ke čtení (㊸, CODE-tune 2026-10-11, DECISIONS (61)): holý text pro každého, podpis bez kontroly textu, server čte i myšlenku ✦,
+ # cizí čtení, deník bez hlasu u single → musí spadnout; komentář navíc nesmí
+ ('chyti', 'verify_hlas_ke_cteni.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'replace', '    if (text === null) return json({ error: "voice_unbound" }, 403);', '    if (text === null) text = typeof body?.text === "string" ? body.text : "";'),
+ ('chyti', 'verify_hlas_ke_cteni.js', 'supabase/functions/_shared/voice_ticket.ts', 'replace', '  return ok ? nonce : null;', '  return nonce;'),
+ ('chyti', 'verify_hlas_ke_cteni.js', 'supabase/functions/_shared/voice_ticket.ts', 'regex', r'const i = s\.indexOf\("\\u2726"\);', 'const i = -1;'),
+ ('chyti', 'verify_hlas_ke_cteni.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'replace', '.eq("id", reading_id).eq("user_id", userId)', '.eq("id", reading_id)'),
+ ('chyti', 'verify_hlas_ke_cteni.js', 'v2/runar-journal.js', 'regex', r'        \$\{_jHlas\(e, i\)\}\r?\n', ''),
+ ('nesmi', 'verify_hlas_ke_cteni.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'append', '', '\n// komentář navíc — správný kód\n'),
+ # strop 5 pro všechny se nesmí vrátit; strop testera musí být živý (⑨, 2026-10-11)
+ ('chyti', 'verify_monthly_limits.js', 'v2/runar-config.js', 'append', '', '\nconst VOICE_MONTHLY_' + 'LIMIT = 5;\n'),
+ ('chyti', 'verify_monthly_limits.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'replace', 'if (vprof?.is_tester && vUsed >= VOICE_MONTHLY_LIMIT_TESTER) {', 'if (false) {'),
+ # věta o hlasu předplatitele nesmí slibovat měsíční počet (㉫, 2026-10-11)
+ ('chyti', 'verify_tier_features.js', 'v2/runar-config.js', 'replace', "if (v === 'month') return 'Rúnar les hverja ' + VOCAB.cast.is + ' upphátt.';", "if (v === 'month') return 'Rúnar les allt að 5 ' + VOCAB.cast.is_pl + ' upphátt á mánuði.';"),
+ # hlas v appce (㊹, CODE-tune 2026-10-11): hlas k poslednímu čtení místo k tomu na obrazovce · zakládací Norny s hlasem v deníku ·
+ # počet hlasů v menu i netesterovi → musí spadnout
+ ('chyti', 'verify_hlas_appka.js', 'v2/runar-reading.js', 'replace', 'reading_id: _rt.id || undefined,', 'reading_id: _lastReadingId || undefined,'),
+ ('chyti', 'verify_hlas_appka.js', 'v2/runar-journal.js', 'replace', "if (!e || !e.id || (typeof _foundingReadingId !== 'undefined' && e.id === _foundingReadingId)) return '';", "if (!e || !e.id) return '';"),
+ ('chyti', 'verify_hlas_appka.js', 'v2/runar-app.js', 'regex', r'if \(isTester\) \{(\r?\n\s+const vLimit = VOICE_MONTHLY_LIMIT_TESTER;)', r'if (true) {\1'),
 ]
 
 

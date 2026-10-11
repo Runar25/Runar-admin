@@ -54,27 +54,21 @@ else {
   if (!fail) console.log('OK    spread_cost sanitizace drzi (9 adversarialnich vstupu -> cele cislo 1..9)');
 }
 
-// ── strop HLASU (2026-09-11): tataz trida kopie, tentyz duvod ────────────────
-// VOICE_MONTHLY_LIMIT zije v config (zdroj pravdy) a v elevenlabs-proxy (vynucuje).
-// Deno klientsky config naimportovat neumi, takze kopie je nevyhnutelna — a tohle je to,
-// co ji drzi poctivou. Snizis strop v configu, zapomenes na proxy, a tester dal ozvucuje.
+// ── strop HLASU (2026-09-11 → 2026-10-11) ──────────────────────────────────
+// Mesicni strop 5 pro vsechny (VOICE_MONTHLY_LIMIT) ZRUSEN 2026-10-11: byl to owneruv pokyn pro testery, omylem pro vsechny (DECISIONS
+// 2026-10-11 (49)); hlas ted drzi cteni — jednou ke kazdemu cteni, hlida server (DECISIONS (61), kontrola verify_hlas_ke_cteni.js).
+// Vratit ho = nove rozhodnuti ownera; do te doby tahle kontrola spadne, kdyby se petka objevila znovu.
 const elProxy = fs.readFileSync(R + 'supabase/functions/elevenlabs-proxy/index.ts', 'utf8');
-const cfgHlas = (cfg.match(/^const VOICE_MONTHLY_LIMIT\s*=\s*(\d+)/m) || [])[1];
-const elHlas  = (elProxy.match(/^const VOICE_MONTHLY_LIMIT\s*=\s*(\d+)/m) || [])[1];
-if (!cfgHlas)      { fail++; console.log('FAIL  VOICE_MONTHLY_LIMIT chybi v runar-config.js'); }
-else if (!elHlas)  { fail++; console.log('FAIL  VOICE_MONTHLY_LIMIT chybi v elevenlabs-proxy'); }
-else if (cfgHlas !== elHlas) {
-  fail++; console.log('FAIL  hlas: config=' + cfgHlas + ' ale proxy vynucuje ' + elHlas);
-} else {
-  console.log('OK    hlas: ' + cfgHlas + ' prehrani/mesic (config == proxy)');
+for (const [jm, s] of [['config', cfg], ['elevenlabs-proxy', elProxy]]) {
+  if (/^const VOICE_MONTHLY_LIMIT\s*=/m.test(s)) {
+    fail++; console.log('FAIL  hlas: VOICE_MONTHLY_LIMIT je zpet v ' + jm + ' — mesicni strop pro vsechny owner zrusil (DECISIONS 2026-10-11 (61))');
+  }
 }
-// A jeste to, co uz kopie neuhlida: strop musi byt v proxy opravdu POUZITY, ne jen deklarovany.
-// Mrtva konstanta by prosla shodou cisel a neomezila nic.
-// 2026-10-11: strop se vybira podle testera (VOICE_MONTHLY_LIMIT_TESTER, owner pres CODE-read) a porovnava se `limit`.
-if (elHlas && !(/const limit = vprof\?\.is_tester \? VOICE_MONTHLY_LIMIT_TESTER : VOICE_MONTHLY_LIMIT;/.test(elProxy) && /vUsed\s*>=\s*limit\b/.test(elProxy))) {
-  fail++; console.log('FAIL  hlas: VOICE_MONTHLY_LIMIT(_TESTER) je v proxy deklarovany, ale nic se s nim neporovnava');
-} else if (elHlas) {
-  console.log('OK    hlas: strop (tester / ostatni) se v proxy opravdu porovnava (neni to mrtva konstanta)');
+// Strop testera musi byt v proxy opravdu POUZITY, ne jen deklarovany — mrtva konstanta by prosla shodou cisel a neomezila nic.
+if (!/if \(vprof\?\.is_tester && vUsed >= VOICE_MONTHLY_LIMIT_TESTER\)/.test(elProxy)) {
+  fail++; console.log('FAIL  hlas: VOICE_MONTHLY_LIMIT_TESTER je v proxy deklarovany, ale nic se s nim neporovnava');
+} else {
+  console.log('OK    hlas: strop testera se v proxy opravdu porovnava; strop 5 pro vsechny nikde (zrusen 2026-10-11)');
 }
 // Testeri 15 (2026-10-11): tataz trida kopie — config (zdroj) × elevenlabs-proxy. Brzda kreditu ElevenLabs (od 2026-10-11 misto hladiny
 // VOICE_SAFE_SHARE) zije jen v _shared/voice_usage.ts — hlida se nize, ze ji obe funkce volaji a ze dela, co owner rozhodl (48).

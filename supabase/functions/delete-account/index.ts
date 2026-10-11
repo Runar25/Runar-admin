@@ -54,7 +54,22 @@ serve(async (req) => {
       }
     }
 
-    // ── Delete user (CASCADE removes user_profiles + readings) ──
+    // ── Uložený hlas čtení (2026-10-11, DECISIONS (61)) ──
+    // Soubory v úložišti nejsou řádky databáze — CASCADE je nesmaže, a zásady slibují, že hlas čtení zmizí s účtem. Selže-li to, účet
+    // se nemaže (uživatel to zkusí znovu a slib platí) — jako u allowed_emails výš. Úložiště ještě není (SQL nespuštěno) = nic ke smazání.
+    for (let kolo = 0; kolo < 200; kolo++) {
+      const { data: soubory, error: lsErr } = await sb.storage.from("reading-voice").list(user.id, { limit: 100 });
+      if (lsErr) {
+        if (/not found/i.test(lsErr.message)) break;
+        return json({ error: "Failed to list voice files: " + lsErr.message }, 500);
+      }
+      if (!soubory || !soubory.length) break;
+      const { error: rmErr } = await sb.storage.from("reading-voice").remove(soubory.map((f) => `${user.id}/${f.name}`));
+      if (rmErr) return json({ error: "Failed to remove voice files: " + rmErr.message }, 500);
+      if (soubory.length < 100) break;
+    }
+
+    // ── Delete user (CASCADE removes user_profiles + readings + voice_tickets) ──
     const { error: deleteErr } = await sb.auth.admin.deleteUser(user.id);
     if (deleteErr) return json({ error: "Failed to delete account: " + deleteErr.message }, 500);
 
