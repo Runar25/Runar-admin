@@ -2464,6 +2464,16 @@ se neúčtují) · politiky RLS: vlastní data jen vlastníkovi, profil omezují
   vynechává („SQL migrace = historie“) — živé politiky jsou přitom běžící kód. Změna `ADMIN_EMAILS` → admin tiše přijde o dárkové kódy,
   korekce, audio. Trvalé řešení: DB funkce `is_admin()` (jedna tabulka adminů) a politiky ji volají — jeden zdroj v DB (§20).
 
+#### Kolo 2 / 4 — klient (`v2/`), pravidla CLAUDE.md + XSS v novém kódu (2026-10-11)
+**Platí:** §5 `--dim` jen placeholdery a ikona zavření (dovoleno) · §8 žádné číslo tieru natvrdo v textech · XSS: všechna `innerHTML` přidaná od
+kola 1 (`cc0ca7f`) plní statický text, config, `t()/tp()` nebo `esc()`/`escapeHtml`.
+- ⚪ **Pro CODE-tune (drobnost):** §12 „NIKDY `email.split('@')[0]`“ — `runar-shrine.html` ~561 tak plní hlavičku admina (který admin je přihlášený).
+  Účel plní, pravidlo porušuje; celý e-mail, nebo `displayName()`.
+- ⚪ **Pro CODE-tree (předáno 2026-10-11):** (a) `tree_state` má politiku UPDATE pro vlastníka bez omezení sloupců — dnes neškodí (vrstvy A/B/C
+  vypnuté), až z něj začne číst server, zúžit jako `user_profiles` (granty sloupců, smoke ⑩); (b) smoke ㉳ (`verify_tree_mista.js`) při běhu
+  přegeneruje `v2/tree-lab-crown-composer/crown-composer.html` — kontrola zapisuje do stromu; (c) `tree-update` před novým nasazením: rate limit,
+  strop textu, `credits_used` na serveru (části 2, 15).
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.
