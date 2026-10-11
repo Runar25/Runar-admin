@@ -1192,8 +1192,8 @@ async function startTreeFounding() {
   if (typeof _setSpreadMode === 'function') _setSpreadMode('norns');
   // TAH ZAKLÁDACÍCH NOREN (2026-10-11, owner: „neukážou se runy“): mřížku run a čtenáře nastavuje startReading(), který se při
   // založení přeskočí (formulář je schovaný, rituál je daný) → karta tahu byla bez run. Totéž tady, ale bez kontroly kreditů
-  // (založení je zdarma, startReading by člověka bez kreditů zastavil) a BEZ smazání data narození: startReading ho nuluje a strom
-  // podle něj hledá životní runu, takže skok do stromu po založení by skončil u formuláře na datum.
+  // (založení je zdarma, startReading by člověka bez kreditů zastavil). Datum narození zůstává — strom podle něj hledá životní runu
+  // (do 2026-10-11 ho startReading nuloval a strom pak ukázal formulář na datum — opraveno v startReading, RUNAR_DECISIONS.md 2026-10-11 (59)).
   if (typeof _readingMode !== 'undefined') _readingMode = 'mine';
   readerUser = Object.assign({}, readerUser || {}, {
     name: (typeof userName !== 'undefined' && userName) || t('name_you'),
