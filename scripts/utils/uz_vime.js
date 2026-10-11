@@ -5,7 +5,7 @@
 // Všechno to stálo v RUNAR_DECISIONS / RUNAR_BACKLOG; nikdo se tam před hlášením nepodíval. Stop-hook (~/.claude/runar-zprava-check.py)
 // proto zprávu s návrhem zastaví, když v témže tahu neběžel tenhle příkaz.
 //
-// Hledá pojmy (bez ohledu na velikost písmen) v RUNAR_DECISIONS.md, RUNAR_BACKLOG.md, RUNAR_EVAL_LOG.md, RUNAR_DESIGN.md, CLAUDE.md,
+// Hledá pojmy (bez ohledu na velikost písmen a diakritiku) ve všech kanonických RUNAR_*.md v kořeni, CLAUDE.md,
 // memory/*.md a v poznámkách ownerových hlášení v databázi (bug_reports.notes + stav). U každého nálezu ukáže, kam patří (datovaný
 // záznam / sekce backlogu) a značku stavu, je-li na řádku: ✅ hotovo · ✖ není vada · ⏸ odloženo · [ ] otevřené.
 //   node scripts/utils/uz_vime.js <pojem> [<pojem> …] [--bez-db] [--max 12]
@@ -18,7 +18,10 @@ const MAX = Number((argv[argv.indexOf('--max') + 1]) || 12) || 12;
 const pojmy = argv.filter((a, i) => !a.startsWith('--') && argv[i - 1] !== '--max');
 if (!pojmy.length) { console.log('použití: node scripts/utils/uz_vime.js <pojem> [<pojem> …] [--bez-db]'); process.exit(1); }
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-const RE = new RegExp(pojmy.map(esc).join('|'), 'i');
+// Bez diakritiky na obou stranách (2026-10-11): „zalozeni“ najde „založení“ a naopak.
+const bezd = (t) => String(t).normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+const RE0 = new RegExp(pojmy.map((p) => esc(bezd(p))).join('|'), 'i');
+const RE = { test: (t) => RE0.test(bezd(t)) };
 const stav = (t) => /✅|\[x\]|HOTOVO|opraveno|ZAVŘENO|NASAZENO/i.test(t) ? '✅' : /✖|NENÍ vada|není vada/i.test(t) ? '✖' : /⏸|ODLOŽ/i.test(t) ? '⏸' : /\[ \]|ČEKÁ|otevřen/i.test(t) ? '[ ]' : '  ';
 
 function hledej(soubor, nadpis) {
@@ -35,6 +38,10 @@ souhrn.push(['RUNAR_DECISIONS.md', hledej('RUNAR_DECISIONS.md', /^## \d{4}-\d{2}
 souhrn.push(['RUNAR_BACKLOG.md', hledej('RUNAR_BACKLOG.md', /^#{2,3} /)]);
 souhrn.push(['RUNAR_EVAL_LOG.md', hledej('RUNAR_EVAL_LOG.md', /^## \d{4}-\d{2}-\d{2}/)]);
 souhrn.push(['RUNAR_DESIGN.md', hledej('RUNAR_DESIGN.md', /^#{2,3} /)]);
+// Ostatní kanonické docy v kořeni — seznam se odvozuje, ne opisuje (2026-10-11: chyběly RUNAR_TREE, PRICING, POPISY_RUN, PRIVACY;
+// pokyn ownera ve RUNAR_TREE.md §2 tak uz_vime nenašel ani se správným pojmem).
+for (const f of fs.readdirSync(REPO).filter((x) => /^RUNAR_.*\.md$/.test(x)).sort())
+  if (!['RUNAR_DECISIONS.md', 'RUNAR_BACKLOG.md', 'RUNAR_EVAL_LOG.md', 'RUNAR_DESIGN.md'].includes(f)) souhrn.push([f, hledej(f, /^#{1,3} /)]);
 souhrn.push(['CLAUDE.md', hledej('CLAUDE.md', /^#{2,3} /)]);
 const mem = []; try { for (const f of fs.readdirSync(path.join(REPO, 'memory'))) if (/\.md$/.test(f)) mem.push(...hledej('memory/' + f, /^name:|^# /)); } catch (e) {}
 souhrn.push(['memory/', mem]);

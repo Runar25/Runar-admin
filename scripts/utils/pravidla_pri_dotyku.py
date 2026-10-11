@@ -22,6 +22,7 @@ import io, json, os, re, sys
 R = os.environ.get('RUNAR_ROOT', 'C:/Users/zkuku/Downloads/Runar-admin').replace('\\', '/').rstrip('/')
 STAV = os.environ.get('PRAVIDLA_STATE_DIR', os.path.join(os.path.expanduser('~'), '.claude', 'pravidla-dotyk'))
 MAPA = os.environ.get('PRAVIDLA_MAPA', R + '/scripts/utils/pravidla_mapa.json')
+KANON = os.environ.get('PRAVIDLA_KANON', R)   # kde se hledá, jestli ownerův pokyn už stojí (CLAUDE.md, RUNAR_*.md, memory/)
 LIMIT = 4000
 PISE = {'Edit', 'Write', 'NotebookEdit', 'MultiEdit'}
 SHELL = {'Bash', 'PowerShell'}
@@ -152,6 +153,57 @@ def polozky(o):
     return out
 
 
+# ---------- kontrola proti kánonu po nové zprávě ownera ----------
+# Proč (owner 2026-10-11 přes CODE-tree): session zapsala ownerův pokyn do DECISIONS a BACKLOGu jako nový, ačkoli stál v RUNAR_TREE.md §2;
+# uz_vime pustila, ale s vlastními pojmy, ne se slovy ownera. Teď hook před prvním zápisem do docs/paměti po nové zprávě ownera prohledá
+# kánon SLOVY Z TÉ ZPRÁVY a nálezy ukáže — session nemusí nic pamatovat ani volit pojmy.
+import unicodedata
+def bezd(t): return ''.join(c for c in unicodedata.normalize('NFD', t.lower()) if unicodedata.category(c) != 'Mn')
+STOP = set(bezd(w) for w in """pokracuj pokracujeme pokracovat kontrole kontrolu kontrola dalsich dalsi casti prosim dekuji udelej udelat
+zkontroluj napis myslim protoze ktery ktera ktere kterou takze jeste porad nejak vlastne session sessions rekni chci nechci budeme muzeme
+pokud kdyz jsem jsme jsou bude nebude neni tohle tento tato toto taky treba opravdu vsechno vsechny vsichni neco nekdo nikdo jinak potom
+takhle takto stale furt jenom proste samozrejme dobre jasne mozna aspon kazdy kazda kazde nejaky nejaka nejake jejich mame mate maji
+code tune tree read cowork owner ownera nemusis musis muzes kdyby abych abys tvoje tvuj moje muj""".split())
+def kmeny(text):
+    out = []
+    for w in re.findall(r'[^\W\d_]{5,}', bezd(text)):
+        if w in STOP: continue
+        k = w[:5]
+        if k not in out: out.append(k)
+    return out
+
+def text_ownera(line):
+    try: e = json.loads(line)
+    except Exception: return None
+    if e.get('type') == 'attachment':
+        a = e.get('attachment') or {}
+        o = a.get('origin')
+        if a.get('type') == 'queued_command' and isinstance(o, dict) and o.get('kind') == 'human': return str(a.get('prompt') or '')
+        return None
+    if e.get('type') != 'user' or e.get('isCompactSummary'): return None
+    c = (e.get('message') or {}).get('content')
+    if not isinstance(c, str): return None
+    t = c.strip()
+    if not t or t.startswith('<') or t.startswith('Stop hook feedback'): return None
+    return t
+
+def kanon_hity(km, maxn=8):
+    soubory = ['CLAUDE.md'] + sorted(f for f in os.listdir(KANON) if re.match(r'^RUNAR_.*\.md$', f))
+    try: soubory += ['memory/' + f for f in sorted(os.listdir(KANON + '/memory')) if f.endswith('.md')]
+    except Exception: pass
+    hity = []
+    potreba = 2 if len(km) >= 2 else 1
+    for f in soubory:
+        try: radky = cti(KANON + '/' + f).split('\n')
+        except Exception: continue
+        for i, l in enumerate(radky):
+            b = bezd(l)
+            shoda = [k for k in km if re.search(r'(?<![^\W\d_])' + re.escape(k), b)]
+            if len(shoda) >= potreba: hity.append((len(shoda), f, i + 1, shoda, l.strip()))
+    hity.sort(key=lambda h: -h[0])
+    return hity[:maxn]
+
+
 # ---------- stav session (z přepisu, inkrementálně) ----------
 def nacti_stav(sid):
     os.makedirs(STAV, exist_ok=True)
@@ -172,8 +224,11 @@ def projdi_prepis(tp, s):
         if not raw: continue
         line = raw.decode('utf-8', 'replace')
         if 'compact_boundary' in line and re.search(r'"subtype"\s*:\s*"compact_boundary"', line):
-            s['uz_vime'] = False; s['shown'] = {}; s['need_read'] = {}; s['reads'] = []
+            s['uz_vime'] = False; s['shown'] = {}; s['need_read'] = {}; s['reads'] = []; s['kanon_pro'] = None
             continue
+        if 'queued_command' in line or re.search(r'"type"\s*:\s*"user"', line):
+            t = text_ownera(line)
+            if t: s['owner'] = {'text': t[:4000], 'id': s['scanned'] + len(raw)}
         if '"tool_use"' not in line: continue
         try: msg = json.loads(line).get('message', {})
         except Exception: continue
@@ -205,6 +260,17 @@ def rozhodni(vstup):
     p, s = nacti_stav(vstup.get('session_id') or 'nosid')
     projdi_prepis(vstup.get('transcript_path'), s)
     zpravy = []
+    if any(o.get('uz_vime') for o in hit) and s.get('owner') and s['owner']['id'] != s.get('kanon_pro'):
+        s['kanon_pro'] = s['owner']['id']
+        km = kmeny(s['owner']['text'])
+        if len(km) >= 3:
+            hh = kanon_hity(km)
+            if hh:
+                zpravy.append('⛔ KE TVÉ POSLEDNÍ ZPRÁVĚ OD OWNERA UŽ V KÁNONU NĚCO STOJÍ — napřed ověř, že nezapisuješ jako nové to, co už platí\n'
+                              '(owner 2026-10-11: „pokud něco řeknu, že se má nějak udělat, tak napřed vždy každá session zkontroluje, jestli to tak už není“).\n'
+                              'Hledáno slovy z jeho zprávy (' + ', '.join(km[:10]) + '…), řádky s nejvíc shodami:\n'
+                              + '\n'.join('  ' + f + ':' + str(n) + '  [' + ', '.join(sh) + ']  ' + l[:150] for _, f, n, sh, l in hh)
+                              + '\nJe-li to totéž: odkaž na to místo, nepiš znovu. Je-li to nové nebo jiné: zápis zopakuj (ukáže se jednou na zprávu).')
     for o in hit:
         jm = o['oblast']
         if o.get('uz_vime') and not s['uz_vime']:
@@ -288,6 +354,28 @@ def samotest():
     chk('14. patch skript ze scratchpadu → najde cestu v obsahu', (lambda d: d and 'UI readeru' in d)(V('Bash', sid='s4', command='python -X utf8 "' + sc.replace('\\', '/') + '" "' + R + '"')))
     chk('16. commit s > msg.txt a pathspecem CLAUDE.md projde', V('Bash', sid='s6', command='printf x > /tmp/m.txt && git commit -F /tmp/m.txt -- CLAUDE.md memory/MEMORY.md') is None)
     chk('15. Read/Grep se nehlídá', rozhodni({'tool_name': 'Read', 'tool_input': {'file_path': js}, 'session_id': 's5', 'transcript_path': tp}) is None)
+    # 18–21: kontrola proti kánonu po zprávě ownera (falešný kánon v dočasné složce)
+    global KANON
+    kd = os.path.join(STAV, 'kanon'); os.makedirs(kd + '/memory', exist_ok=True)
+    io.open(kd + '/CLAUDE.md', 'w', encoding='utf-8').write('# x\n')
+    io.open(kd + '/RUNAR_TREE.md', 'w', encoding='utf-8').write('## 2. IDENTITA\n⛔ STROM NEROSTE BEZ ZALOŽENÍ — po založení obsahuje VŠECHNA čtení z deníku.\n')
+    KANON = kd
+    tp2 = os.path.join(STAV, 't2.jsonl'); io.open(tp2, 'w').close()
+    def V2(tool, sid, **inp): return rozhodni({'tool_name': tool, 'tool_input': inp, 'session_id': sid, 'transcript_path': tp2})
+    def p2(o):
+        with io.open(tp2, 'a', encoding='utf-8') as f: f.write(json.dumps(o, ensure_ascii=False) + '\n')
+    p2(tu('Bash', command='node scripts/utils/uz_vime.js neco'))
+    p2({'type': 'user', 'message': {'content': 'je to jednoduchý proces: založení NORNS v produkci a strom bude obsahovat čtení z deníku'}})
+    d = V2('Edit', 'k1', file_path=R + '/RUNAR_BACKLOG.md')
+    chk('18. nová zpráva ownera s pokynem → první zápis do docs ukáže, kde to už stojí', d and 'RUNAR_TREE.md:2' in d and 'KÁNONU' in d)
+    chk('19. druhý zápis k téže zprávě projde', V2('Edit', 'k1', file_path=R + '/RUNAR_BACKLOG.md') is None)
+    p2({'type': 'user', 'message': {'content': 'pokračuj v kontrole dalších částí'}})
+    chk('20. „pokračuj v kontrole“ kánon nehledá', V2('Edit', 'k1', file_path=R + '/RUNAR_BACKLOG.md') is None)
+    p2({'type': 'attachment', 'attachment': {'type': 'queued_command', 'prompt': 'strom bude obsahovat čtení z deníku po založení', 'origin': {'kind': 'human'}}})
+    d = V2('Edit', 'k1', file_path=R + '/memory/x.md')
+    chk('21. zpráva poslaná během práce (queued_command) se počítá taky', d and 'RUNAR_TREE.md:2' in d)
+    p2({'type': 'attachment', 'attachment': {'type': 'queued_command', 'prompt': 'strom bude obsahovat čtení z deníku po založení znovu', 'origin': {'kind': 'peer'}}})
+    chk('22. zpráva jiné session (peer) se jako ownerova nebere', V2('Edit', 'k1', file_path=R + '/memory/x.md') is None)
     for jm, v in ok: print(('OK    ' if v else 'FAIL  ') + jm)
     return 0 if all(v for _, v in ok) else 1
 
