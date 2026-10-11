@@ -9942,3 +9942,28 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno:** dočasná kopie commitu se zdvojeným odstavcem + základ před ním → hook zablokoval („3×, v základu 1×“); záznam s datem
   2026-10-08 → FAIL, se dnem vzniku commitu → OK; bez proměnné obě kontroly beze změny. **Provedl:** CODE-read.
 - Affected doc(s): žádný jiný (mechanika je v hlavičce hooku).
+
+## 2026-10-11 (2) — Strom: kořeny nanečisto — seeking tvaruje kořen, kořeny se proplétají víc, návrat runy kořen prohloubí; Berkanin kořen nechat
+
+- **Rozhodl:** KUKY 2026-10-10 k popisu kořenů (engine, tvar, umístění): *„8. seeking i pro kořeny. kořeny se obecně více proplétají než větve
+  v koruně. 9. ok 10. ano. zkusíme 11. asi mi to nevadí. 12. postavit!“* **Provedl:** CODE-tree, nanečisto (lab beze změny).
+- **Co nanečisto dělá** (patch `docs/archive/tree/2026-10-11_nanecisto_koreny.patch`), stavba kořene beze změny (2026-10-10 (23)):
+  1. **seeking tvaruje celý kořen** jako větev, zrcadlově, touž silou (`seekShapeOf` z čtení větve): Clarity do hloubky (odklon od svislice
+     se zmenší až o 65 procent), Reflection do stran u povrchu (přidá ven, k vodorovné se jen blíží), Confirmation se napůl narovná, Insight
+     lokty; výběžky kořene jdou s páteří (posunou se a otočí s místem, kde vyrůstají).
+  2. **proplétání:** vlnění kořene × 1,6 a spirála 0,25 — obojí engine větví už umí (`wobble`, `spec.twist`).
+  3. **návrat runy** (kánon `RUNAR_TREE.md` §2): každé čtení, kde runa kořene padla po vzniku jeho větve, kořen prohloubí — délka až +50
+     procent, tloušťka až +25, hlavní kořen až o 35 procent strměji; log(1 + návraty)/log(41), plný účinek po 40 návratech, nic se nevrací zpět.
+- **Změřeno na jeho stromě (388 čtení):** šířka kořenů 77 → 95 procent koruny, hloubka 33 → 54 procent výšky koruny (po 30 / 100 / 200 čteních
+  hloubka 29 → 32, 32 → 39, 34 → 49); návratů 10–25 na kořen, tj. 65–88 procent účinku. Kořínky nad zemí 3 → 1 (Perthin, 36 px; dnes až 85 px).
+  **Souběhy kořenů** (měřeno nově — `tree_overlap.js` bere jen větve s číselným klíčem, kořeny nevidí): dnes 38 (855 px, 113 px na 1000 px
+  kořene), nanečisto 39 (1 039 px, 98 px na 1000 px; kořeny jsou o 40 procent delší); protnutí 70 → 89. Samotné proplétání souběhy ubírá
+  (106 px na 1000 px) a protnutí přidává (11,1 proti 9,3 na 1000 px).
+- **Zahozeno:** první verze seekingu tahala úsek kořene k cílovému úhlu (Clarity svislice, Reflection vodorovná). Kořen, který cíle dosáhl,
+  měl přesně tentýž úhel jako soused a běžel s ním souběžně (strom se samým Clarity: 110 px souběhu na 1000 px, verze bez slití 86).
+  ✖ **Nevracet tah k cílovému úhlu** — odklon se násobí nebo přidává s měkkou brzdou, pořadí a rozestup kořenů zůstanou.
+- **Bod 11 (Berkana):** položka v backlogu zavřena, owner: *„asi mi to nevadí“*. Po zapnutí ramen strana × zóna (2026-10-10 (38)) to dnes
+  nejsou větvičky Berkanina kořene, ale Perthina (pramen 2: tři, až 85 px).
+- **Čeká:** ownerův pohled; do labu až na jeho slovo. Se zapnutím: `RUNAR_TREE.md` §2 (kořeny jsou živé — postaveno), `RUNAR_TREE_MAP.md` §10
+  a kontrola kořenů do smoke ㉳ (seeking, návrat). Odvolává se na (23), (26), (30), (44).
+- Affected doc(s): `RUNAR_BACKLOG.md` (Berkanin kořen zavřen; „Kořeny = minulost/základ“ bod b nanečisto) — v témže commitu.
