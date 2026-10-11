@@ -39,12 +39,13 @@ HOOK = (
 "  /* PRODUKCE (build_tree_production.py): vstupy z aplikace misto ovladacich prvku labu; uvodni draw() labu je pryc. */\n"
 "  window.__tree={ draw:function(o){\n"
 "    state.log=o.log||[]; state._viewN=null; state.demo=false; state.dbg=false; state.gl=false; state.skin=true;\n"
+"    state.frame=true; state.frameSh=(o.frameSh!=null)?o.frameSh:null;   /* ram aplikace (svisle vystredeni), viz AUTO-FIT v labu */\n"
 "    if(o.rune) state.rune=o.rune;\n"
 "    if(o.d!=null){ state.d=o.d; state.m=o.m; state.y=(o.y==null)?null:o.y; }\n"
 "    _uz=(o.vz>1)?o.vz:1; _ux=(_uz>1)?(o.vx||0):0; _uy=(_uz>1)?(o.vy||0):0;\n"
 "    _selK=(o.sel!=null)?o.sel:null; _solo=false; _hidden={};\n"
 "    draw();\n"
-"    return { pick:_pick.slice(), fit:_fit, ax:trunkT.cx, ay:trunkT.groundY, uz:_uz, ux:_ux, uy:_uy, W:W, H:H };\n"
+"    return { pick:_pick.slice(), fit:_fit, ax:trunkT.cx, ay:trunkT.groundY, uz:_uz, ux:_ux, uy:_uy, sh:_shY, W:W, H:H };\n"
 "  } };"
 )
 
@@ -100,13 +101,14 @@ function render(canvas, opts) {
   if (!global.RunarTrunk || !global.RunarBranch) { console.warn('RunarTreeProd: RunarTrunk/RunarBranch not loaded'); return null; }
   if (!_inst || _inst.cv !== canvas) { var api = _make(canvas); if (!api) return null; _inst = { cv: canvas, api: api }; }
   var v = opts.view || {}, dob = opts.dob || {};
-  var r = _inst.api.draw({ log: opts.log || [], rune: opts.rune, d: dob.d, m: dob.m, y: dob.y, vz: v.z, vx: v.x, vy: v.y, sel: opts.sel });
+  var r = _inst.api.draw({ log: opts.log || [], rune: opts.rune, d: dob.d, m: dob.m, y: dob.y, vz: v.z, vx: v.x, vy: v.y, sel: opts.sel,
+                           frameSh: opts.frameSh });
   var view = { z: r.uz, x: r.ux, y: r.uy };
-  /* obraz = posun + priblizeni × (auto-fit labu kolem paty kmene) — toModel vraci body do souradnic picku */
-  return { pick: r.pick, W: r.W, H: r.H, view: view, scale: view.z * r.fit,
-           toModel: function (cx, cy) { var fx = (cx - view.x) / view.z, fy = (cy - view.y) / view.z;
+  /* obraz = posun + priblizeni × (ram aplikace sh + auto-fit labu kolem paty kmene) — toModel vraci body do souradnic picku */
+  return { pick: r.pick, W: r.W, H: r.H, view: view, scale: view.z * r.fit, frameSh: r.sh,
+           toModel: function (cx, cy) { var fx = (cx - view.x) / view.z, fy = (cy - view.y) / view.z - r.sh;
              return { x: r.ax + (fx - r.ax) / r.fit, y: r.ay + (fy - r.ay) / r.fit }; },
-           toCanvas: function (mx, my) { return { x: view.x + view.z * (r.ax + r.fit * (mx - r.ax)), y: view.y + view.z * (r.ay + r.fit * (my - r.ay)) }; } };
+           toCanvas: function (mx, my) { return { x: view.x + view.z * (r.ax + r.fit * (mx - r.ax)), y: view.y + view.z * (r.sh + r.ay + r.fit * (my - r.ay)) }; } };
 }
 function _lab(document, window, localStorage, getComputedStyle, requestAnimationFrame, setTimeout, setInterval, alert, confirm, prompt, navigator) {
 """

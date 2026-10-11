@@ -233,7 +233,7 @@ HTML = r"""<!DOCTYPE html>
   var KW={}; try{ (typeof RUNES!=='undefined'?RUNES:[]).forEach(function(r){ KW[r.g]={k:r.k, k_is:r.k_is, n:r.n}; }); }catch(e){}
   /* ZOOM/POSUN uzivatele. Lezi NAD auto-fitem: obraz = _uz*(auto-fit obraz) + (_ux,_uy).
      _uz=1 & _u=0 => presne stav bez zoomu, takze vypnuty zoom nic nemeni. */
-  var _uz=1, _ux=0, _uy=0;
+  var _uz=1, _ux=0, _uy=0, _shY=0;   /* _shY = svisly ram aplikace (state.frame, viz AUTO-FIT); v labu 0 */
   /* Stari prave stavaneho pramene 0..1. MUSI byt tady, ne uvnitr draw() -- cte to i
      `mirrorTwig`, ktera je definovana mimo draw() (jinak ReferenceError). */
   var _curAge01=null;
@@ -244,7 +244,7 @@ HTML = r"""<!DOCTYPE html>
   function branchOf(key){ return String(key).replace(/^[a-z]+(\d+).*/, '$1'); }
   /* Kde je cara zeme NA PLATNE. Auto-fit se skaluje kolem groundY (mapuje ji samu na sebe),
      ale zoom/posun uzivatele s ni hne -- a cara se kresli MIMO tu transformaci. */
-  function groundScreenY(){ return _uy + _uz*trunkT.groundY; }
+  function groundScreenY(){ return _uy + _uz*(_shY + trunkT.groundY); }   /* _shY: ram aplikace (v labu 0) */
   function applySolo(){
     if(!_solo || _selK==null) return;
     var keep=branchOf(_selK); _hidden={};
@@ -1645,9 +1645,7 @@ HTML = r"""<!DOCTYPE html>
     trunkT.topY=trunkTopY(realAge, rt.big.h, _zt, _zn);   /* = hf, hExp, Ztree vyse (jedna rovnice) */
     trunkT.treeAge=realAge;
 
-    ctx.strokeStyle='rgba(140,130,110,0.10)'; ctx.lineWidth=1;
-    var _gy=groundScreenY();
-    ctx.beginPath(); ctx.moveTo(W*0.06,_gy); ctx.lineTo(W*0.94,_gy); ctx.stroke();
+    /* cara zeme se kresli az po AUTO-FITu (2026-10-11): ram aplikace (_shY) je znamy az z obalu stromu */
 
     /* F0b (2026-08-07): KOLIK RUN, TOLIK PRAMENU. mainsN se pocita PRED buildTrunk a rovnou
        nastavi strandMax -> zadny pramen bez runy. Drive: 25 pramenu vs 9 vetvi = 16 sirotku
@@ -2329,8 +2327,17 @@ HTML = r"""<!DOCTYPE html>
     if(by0<_ay) _fit=Math.min(_fit, (_ay-_pad)/(_ay-by0));
     if(by1>_ay) _fit=Math.min(_fit, (H-_pad-_ay)/(by1-_ay));
     _fit=clamp(_fit, 0.25, 1);
+    /* RAM APLIKACE (state.frame; 2026-10-11 KUKY „strom je neprirozene nizko na obrazovce“): pata kmene stoji pevne na groundY
+       (660 z 900), nad stromem zustavala prazdna tretina platna. V aplikaci se strom svisle vystredi podle skutecneho obalu po
+       auto-fitu; state.frameSh = pevny ram (prehravani historie drzi ram celeho stromu, at strom pri rustu neposkakuje). Lab: vypnuto. */
+    _shY=0;
+    if(state.frame){ _shY=(state.frameSh!=null) ? state.frameSh : Math.round((H-((_ay+_fit*(by0-_ay))+(_ay+_fit*(by1-_ay))))/2); }
+    ctx.strokeStyle='rgba(140,130,110,0.10)'; ctx.lineWidth=1;   /* cara zeme (drive na zacatku draw) — az tady, at sedi s ramem */
+    var _gy=groundScreenY();
+    ctx.beginPath(); ctx.moveTo(W*0.06,_gy); ctx.lineTo(W*0.94,_gy); ctx.stroke();
     ctx.save();
     ctx.translate(_ux,_uy); ctx.scale(_uz,_uz);           /* zoom/posun uzivatele (kolecko mysi) */
+    ctx.translate(0,_shY);                                /* ram aplikace (v labu 0) */
     ctx.translate(_ax,_ay); ctx.scale(_fit,_fit); ctx.translate(-_ax,-_ay);
 
     /* 1. pruchod = objem (stiny presahujici obrys), 2. pruchod = tela. Kdyby se to delalo
@@ -2401,7 +2408,7 @@ HTML = r"""<!DOCTYPE html>
     var rect=cv.getBoundingClientRect();
     var mx=(e.clientX-rect.left)*(W/rect.width), my=(e.clientY-rect.top)*(H/rect.height);
     /* zpetny prepocet: nejdriv zoom uzivatele, pak AUTO-FIT (body v _pick jsou v souradnicich MODELU) */
-    mx=(mx-_ux)/_uz; my=(my-_uy)/_uz;
+    mx=(mx-_ux)/_uz; my=(my-_uy)/_uz-_shY;   /* -_shY: ram aplikace (v labu 0) */
     mx=trunkT.cx+(mx-trunkT.cx)/_fit; my=trunkT.groundY+(my-trunkT.groundY)/_fit;
     if(state.dbg){ var gb=null,gbd=20; for(var gi=0;gi<_dbgAll.length;gi++){ var GL=_dbgAll[gi]; for(var gj=0;gj<GL.pts.length;gj++){ var gdx=GL.pts[gj].x-mx, gdy=GL.pts[gj].y-my, gd=Math.sqrt(gdx*gdx+gdy*gdy); if(gd<gbd){gbd=gd;gb=GL;} } }
       if(gb){ var gY2=trunkT.groundY, ab=false, be2=false; for(var gk=0;gk<gb.pts.length;gk++){ if(gb.pts[gk].y<gY2-3)ab=true; if(gb.pts[gk].y>gY2+3)be2=true; }
