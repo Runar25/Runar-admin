@@ -422,8 +422,12 @@
   `TIERS.*.monthly_readings`) a menu ukazuje zůstatek jen Rune Seekerovi (`balEl` v `v2/runar-app.js`). O stropu se předplatitel dozví
   až hláškou `err_monthly_limit`; klient `month_units`/`month_key` ani nenačítá (`fetchUserProfile`). **Čeká na ownera:** chce počítadlo
   i pro předplatitele? Komentář „unlimited“ opravit v témže zásahu (když řekne ne, samostatně).
-- [ ] **Hlas: premium ke každému čtení? Testeři 15 hlasů na cyklus ElevenLabs?** Čeká na ownera. Owner 2026-10-11: *„u premium by každé
-  čtení mělo mít možnost být s hlasem!“* · *„potřebuju napřed zjistit, jestli mi 5 testerů nespálí účet na ElevenLabs… asi jim budu muset
+- [ ] **Hlas: v produkci premium ke každému čtení; při testování Starter a brzda 15 hlasů na testera beze změny.** Owner 2026-10-11 k testování:
+  *„testujeme. nebudeme platit nic navíc… teď jdeme vyloženě Starter a nepřekročit limit zdarma!“* · k brzdě testerů *„nic se nemění“* ·
+  *„testeři mají premium a řeším to, aby mi nepřekročili ElevenLabs… proto děláme tyhle brzdy“* · k v4 *„není to ono. potřebuje to víc práce.
+  přejdeme, až si budeme jistí“*. Zbývá: produkce (směr *„u premium by každé
+  čtení mělo mít možnost být s hlasem!“*) rozhodnout s cenovými hladinami před spuštěním; brzdy a ceny zkontroluje CODE-read (položka níž).
+  Původní otázka: · *„potřebuju napřed zjistit, jestli mi 5 testerů nespálí účet na ElevenLabs… asi jim budu muset
   dát limit jen na 15 čtení na měsíc od resetu elevenlabs tokenů“*. Dnes: `VOICE_MONTHLY_LIMIT` (5) pro všechny kromě testerů
   (`VOICE_MONTHLY_LIMIT_TESTER`, 15), počítá se kalendářní měsíc; bezpečná hladina kvóty EL (`VOICE_SAFE_SHARE`) zastaví hlas všem, takže
   účet nepřečerpá, ale ztichne. Tier features slibují předplatiteli „až N čtení hlasem“ a `RUNAR_PRICING.md` s tím stropem počítá.
@@ -440,6 +444,22 @@
   tarifu ÷ sazba) je správně, jen sazba klesla z $0.10 na $0.08 (Creator 275 000 znaků v3/v2) — přepočítat spolu s rozhodnutím o hlasu.
   **S příštím nasazením hlasu:** `elevenlabs-proxy` a `elevenlabs-static` přičítají ke kreditům znaky (`kUsed + text.length`) → převést
   znaky na kredity podle modelu (nový hlas teď počítají 2,5× — opatrně, ale nepřesně).
+- [ ] **Pro CODE-read — ElevenLabs: zkontrolovat opravu cen a brzdy celé jednou a pořádně** (owner 2026-10-11: *„zadej nález oprav cen
+  code read, ať to ještě zkontroluje celé jednou a pořádně!“*). Kontext: `RUNAR_DECISIONS.md` 2026-10-11 (43) a položka o hlasu výš.
+  Teď se testuje a nesmí se platit nic navíc — Starter a nepřekročit, co je v něm zdarma; testeři zůstávají premium s brzdou 15 hlasů.
+  (a) **Jednotky a sazby:** počítadlo i limit v `voice_quota_snapshots` jsou kredity; v2 i v3 0,4 kreditu na znak ($0.08 / 1000 zn.),
+  kredit $0.0002, 2026-09-25 ještě 0,5. Ověřit proti `voice_usage` a ceníku API v ownerově účtu (CODE-tune ověřil 3 dny).
+  (b) **Tarif:** ElevenAPI Starter $6 = 30 000 kreditů měsíčně, reset 10. dne; převod nejvýš 2 měsíce, zůstatek nejvýš 90 000; dobití $2.76
+  (13 800 kreditů) se čerpá až po kreditech tarifu; automatické dobíjení vypnuté. Co z toho je „zdarma“ a co už placené.
+  (c) **Brzdy:** `VOICE_SAFE_SHARE` 0,7 se bere z `character_limit`, ve kterém je i dobití — může při malém převodu sáhnout do placeného?
+  `elevenlabs-proxy` a `elevenlabs-static` přičítají ke kreditům znaky (`kUsed + text.length`). Strop testera 15 hlasů na kalendářní
+  měsíc proti cyklu EL (reset 10.); příznak tester má 7 účtů včetně 2 admin; hlas Yggdrasilu ~590 kreditů. Spočítat nejhorší měsíc proti
+  30 000 kreditů bez převodu i s dnešním převodem.
+  (d) **Ceny:** `RUNAR_PRICING.md` (cena čtení, marže, „ElevenLabs Plan — When to Upgrade“ = cenové hladiny, podle kterých se v produkci
+  přejde na vyšší tarif) se sazbou $0.08 a v kreditech; nástroje `scripts/utils/pricing_tabulka.js` a `scripts/utils/stats.js`
+  (sazba opravena 03bf490).
+  (e) **Výstup:** nálezy jako „Pro CODE-tune“ (kód a nasazení dělá CODE-tune), co chce ownera zvlášť. Nic negenerovat přes ElevenLabs —
+  stojí kredity; stav účtu ze snímků nebo od ownera.
 
 ## Multijazyčnost
 
