@@ -2508,9 +2508,11 @@ kola 1 (`cc0ca7f`) plní statický text, config, `t()/tp()` nebo `esc()`/`escape
   `tree_state`/`tree_readings`, (c) stojí v hlavičce `supabase/functions/tree-update/index.ts`; (c) `tree-update` před novým nasazením: rate limit,
   strop textu, `credits_used` na serveru (části 2, 15).
   (d) *(CODE-read 2026-10-11, kolo 2 / 19)* **soukromí před nasazením `tree-update`:** `tree_state` drží o člověku ODVOZENÉ údaje
-  (`recurring_pattern`, `emotional_arc`, `personal_symbols`) a `claude-proxy` z nich skládá část promptu (~ř. 72–107, 814). Veřejná
+  (`recurring_pattern`, `emotional_arc`, `personal_symbols`) a `claude-proxy` z nich skládá část promptu (~ř. 72–107, 814; vypnuté přepínačem `ENABLE_DYNAMIC_CONTEXT = false` od 2026-07-04 — zásady
+  musí pokrýt i tohle použití, než se zapne; doplnil CODE-tree). Veřejná
   stránka soukromí ani `RUNAR_PRIVACY.md` o nich nemluví. Dnes je v tabulce jediný řádek (admin, 2026-06-06) a nic nezapisuje, takže slib
   porušený není; s nasazením by byl. Před ním: řádek do tabulky údajů (EN + IS, CODE-tune) + účel a právní základ v `RUNAR_PRIVACY.md`.
+  Odkaz na (d) stojí i v hlavičce `supabase/functions/tree-update/index.ts` u nasazení (CODE-tree 2026-10-11).
   ✅ (b) zpětně ověřeno CODE-read 2026-10-11: ㉳ proběhla, `v2/tree-lab-crown-composer/crown-composer.html` ve stromě nezměněn, v temp nic nepřibylo.
 
 #### Kolo 2 / 5 — prompt: tvrzení CLAUDE.md §2 a „Reading systém“ (2026-10-11)

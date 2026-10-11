@@ -4,6 +4,8 @@
 // runar-config.js je jen adresa) a volat ji mohl každý přihlášený bez rate limitu a stropu délky textu. Kód zůstává pro CODE-tree;
 // před novým nasazením doplnit rate limit, strop textu a nebrat credits_used od klienta (RUNAR_BACKLOG.md „Kontrola architektury“). Do 2026-10-09 tu stálo
 // „Called fire-and-forget from frontend after a reading is saved“.
+// ⚠️ A napřed ZÁSADY SOUKROMÍ — funkce zapisuje odvozené údaje o člověku, o kterých zásady mlčí → RUNAR_BACKLOG.md kolo 2 / 19 (d)
+// (nález CODE-read 2026-10-11).
 // Never blocks the user — errors are swallowed silently.
 //
 // Tree activation rules:
