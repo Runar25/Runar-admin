@@ -6,11 +6,10 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.117.3";
 import { logVoice, weeklyQuota, fetchQuota } from "../_shared/voice_usage.ts";
+// ID hlasu, modely a nastavení hlasu: JEDINÉ místo je _shared/el_voice.ts (2026-10-11) — dřív tu stály vlastní kopie (důvod tam).
+import { EL_VOICE_ID, EL_VOICE_SETTINGS, elModel } from "../_shared/el_voice.ts";
 
 const EL_API_KEY     = Deno.env.get("ELEVENLABS_API_KEY");
-const EL_VOICE_ID    = "2UI8v2ibbwQTijaYAte1"; // same voice for both langs
-const EL_MODEL_EN    = "eleven_multilingual_v2";
-const EL_MODEL_IS    = "eleven_v3";             // auto-detects Icelandic from text
 
 // Mesicni strop hlasu. ZRCADLI v2/runar-config.js VOICE_MONTHLY_LIMIT — Deno sem klientsky
 // config naimportovat neumi, takze je ta kopie nevyhnutelna a hlida ji scripts/verify_monthly_limits.js.
@@ -106,7 +105,7 @@ serve(async (req) => {
     }
 
     // lang determines model — NEVER trust frontend for voice/model selection
-    const resolvedModel = lang === "is" ? EL_MODEL_IS : EL_MODEL_EN;
+    const resolvedModel = elModel(lang);
 
     // ── Call ElevenLabs ──
     const elRes = await fetch(
@@ -120,12 +119,7 @@ serve(async (req) => {
         body: JSON.stringify({
           text,
           model_id: resolvedModel,
-          voice_settings: {
-            stability:        0.75,
-            similarity_boost: 0.85,
-            style:            0.35,
-            use_speaker_boost: true,
-          },
+          voice_settings: EL_VOICE_SETTINGS,
         }),
       },
     );

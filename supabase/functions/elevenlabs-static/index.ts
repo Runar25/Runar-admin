@@ -6,12 +6,11 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from "npm:@supabase/supabase-js@2.117.3"
 import { logVoice, fetchQuota } from "../_shared/voice_usage.ts"
+// ID hlasu, modely a nastavení hlasu: JEDINÉ místo je _shared/el_voice.ts (2026-10-11) — dřív tu stály vlastní kopie včetně
+// nepoužitého ID pro IS s jinou hodnotou (důvod tam).
+import { EL_VOICE_ID, EL_VOICE_SETTINGS, elModel } from "../_shared/el_voice.ts"
 
 const EL_API_KEY     = Deno.env.get('ELEVENLABS_API_KEY')
-const EL_VOICE_ID_EN = '2UI8v2ibbwQTijaYAte1'
-const EL_VOICE_ID_IS = '4E6WbDOme312uWJ8z4pv'   // NEPOUŽITO (2026-10-09 kontrola): oba jazyky mluví hlasem EN, viz resolvedVoiceId níž
-const EL_MODEL_EN    = 'eleven_multilingual_v2'
-const EL_MODEL_IS    = 'eleven_v3'
 const SB_URL       = Deno.env.get('SUPABASE_URL')
 const SB_KEY       = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
 // Bezpečná hladina kvóty ElevenLabs — ZRCADLÍ v2/runar-config.js VOICE_SAFE_SHARE (důvod tam, 2026-10-11); hlídá verify_monthly_limits.js
@@ -53,8 +52,8 @@ serve(async (req) => {
     if (!lang)       throw new Error('lang is required')
     if (!version)    throw new Error('version is required')
 
-    const resolvedVoiceId = EL_VOICE_ID_EN  // same voice for both langs — eleven_v3 auto-detects IS
-    const resolvedModel   = lang === 'is' ? EL_MODEL_IS : EL_MODEL_EN  // hardcoded — do not trust frontend
+    const resolvedVoiceId = EL_VOICE_ID       // týž hlas pro oba jazyky — eleven_v3 islandštinu pozná z textu
+    const resolvedModel   = elModel(lang)     // rozhoduje server, klientovi se nevěří
 
     // Bezpečná hladina kvóty (2026-10-11): audio Kolekce bere z téže kvóty jako hlas ve čtení, takže nad VOICE_SAFE_SHARE počítadla EL
     // se negeneruje ani tady (owner: „hlídat, ať nepřekročíme bezpečnou hladinu“). Stav nezjištěn = pustit (fail open).
@@ -77,12 +76,7 @@ serve(async (req) => {
         body: JSON.stringify({
           text,
           model_id: resolvedModel,
-          voice_settings: {
-            stability: 0.75,
-            similarity_boost: 0.85,
-            style: 0.35,
-            use_speaker_boost: true,
-          },
+          voice_settings: EL_VOICE_SETTINGS,
         }),
       }
     )

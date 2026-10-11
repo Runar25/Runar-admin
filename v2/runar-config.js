@@ -89,15 +89,8 @@ const VOICE_SAFE_SHARE = 0.7;
 const NAME_LORE_LIMIT = 2;
 
 // ─── ELEVENLABS ─────────────────────────────────────────
-const EL_VOICE_ID_EN = '2UI8v2ibbwQTijaYAte1'; // English — Rúnar EN
-const EL_VOICE_ID_IS = '2UI8v2ibbwQTijaYAte1'; // IS — stejný voice, eleven_v3 auto-detekuje islandštinu z textu
-
-const EL_MODEL_EN = 'eleven_multilingual_v2'; // EN model
-const EL_MODEL_IS = 'eleven_v3';              // IS model — detekuje islandštinu automaticky
-
-// Helpers — vrátí správný voice ID / model podle jazyka
-function elVoiceId(lang) { return lang === 'is' ? EL_VOICE_ID_IS : EL_VOICE_ID_EN; }
-function elModel(lang)   { return lang === 'is' ? EL_MODEL_IS    : EL_MODEL_EN; }
+// ID hlasu, modely a nastavení hlasu vlastní server — supabase/functions/_shared/el_voice.ts (2026-10-11, owner „3. ano“). Do té doby
+// tu stály kopie (EL_VOICE_ID_EN/IS, EL_MODEL_EN/IS, elVoiceId(), elModel()); četl je jen shrine a posílal je proxy, která je ignorovala.
 
 // 2026-10-10: EL_VOICE_SETTINGS pryč — nikdo je nečetl. Nastavení hlasu (stability, similarity_boost, style, speaker boost) platí
 // to v edge funkcích elevenlabs-proxy a elevenlabs-static; tady stála třetí stejná kopie (§20). Dvě kopie na serveru → BACKLOG část 21.

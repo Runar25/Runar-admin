@@ -925,13 +925,14 @@ async function generateStaticVoice() {
 
   try {
     // 2026-10-09 (kontrola architektury): bez tokenu proxy od 2026-08-02 vracel 401 a náhled hlasu nefungoval.
-    // voice_id/model_id server záměrně ignoruje (hlas a model volí podle jazyka sám) — posílají se jen ze zvyku.
+    // Hlas a model volí server podle jazyka (supabase/functions/_shared/el_voice.ts); do 2026-10-11 se tu posílaly voice_id/model_id,
+    // které server ignoroval.
     const { data: { session: _teachSession } } = await sb.auth.getSession();
     const res = await fetch(EL_PROXY, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json',
                  ...(_teachSession?.access_token ? { Authorization: 'Bearer ' + _teachSession.access_token } : {}) },
-      body: JSON.stringify({ text: teachText, lang: lang || 'en', voice_id: elVoiceId(lang), model_id: elModel(lang) })
+      body: JSON.stringify({ text: teachText, lang: lang || 'en' })
     });
 
     if (!res.ok) throw new Error(`HTTP ${res.status}`);

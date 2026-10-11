@@ -11,7 +11,7 @@
 //   · typ bez čtení (*) = odhad: znaky = cílový počet vět z promptu (golden dump) × změřené znaky na větu; výstupní tokeny =
 //     znaky ÷ změřené znaky na token; vstup = Single + přírůstek na runu změřený na Nornách. Hlas = znaky × sazba hlasu.
 // Sazby ani ceník se tu NEOPISUJÍ (§20): model čtení `SOL_MODEL` (claude-proxy), ceník `MODEL_PRICES` + výpočet `readingCostUsd`
-// (v2/), model hlasu `EL_MODEL_EN/IS` (elevenlabs-proxy), sazba hlasu `EL_PRECERPANI` (scripts/utils/stats.js), jednotky
+// (v2/), model hlasu `EL_MODEL_EN/IS` (supabase/functions/_shared/el_voice.ts), sazba hlasu `EL_PRECERPANI` (scripts/utils/stats.js), jednotky
 // `SPREAD_COSTS`, měsíční jednotky a Asky `TIERS`, strop hlasu `VOICE_MONTHLY_LIMIT`, prompty buildery přes golden dump.
 // Jen agregáty — žádný text čtení ani user_id (repo je veřejné, RUNAR_PRIVACY.md). Čte VŠECHNA čtení včetně odhlášených z analýzy:
 // je to výpočet nákladů, ne analýza kvality textu — tatáž výjimka jako stats.js a naklady.py (hlavička scripts/utils/cteni_analyza.sql);
@@ -35,8 +35,8 @@ const V = (x) => vm.runInContext(x, SB);
 const cena = V('readingCostUsd'), TIERS = V('TIERS'), SPREAD_COSTS = V('SPREAD_COSTS'), VOICE_CAP = V('VOICE_MONTHLY_LIMIT');
 const SOL = vytahni('supabase/functions/claude-proxy/index.ts', /const SOL_MODEL = "([^"]+)"/, 'SOL_MODEL');
 const EL_MODEL = {
-  en: vytahni('supabase/functions/elevenlabs-proxy/index.ts', /const EL_MODEL_EN\s*=\s*"([^"]+)"/, 'EL_MODEL_EN'),
-  is: vytahni('supabase/functions/elevenlabs-proxy/index.ts', /const EL_MODEL_IS\s*=\s*"([^"]+)"/, 'EL_MODEL_IS'),
+  en: vytahni('supabase/functions/_shared/el_voice.ts', /export const EL_MODEL_EN\s*=\s*"([^"]+)"/, 'EL_MODEL_EN'),
+  is: vytahni('supabase/functions/_shared/el_voice.ts', /export const EL_MODEL_IS\s*=\s*"([^"]+)"/, 'EL_MODEL_IS'),
 };
 const EL_SAZBA_1K = JSON.parse(vytahni('scripts/utils/stats.js', /const EL_PRECERPANI = (\{[^}]*\})/, 'EL_PRECERPANI').replace(/'/g, '"'));
 const sazbaHlasu = (l) => { const s = EL_SAZBA_1K[EL_MODEL[l]]; if (s == null) throw new Error('model hlasu ' + EL_MODEL[l] + ' nemá sazbu v EL_PRECERPANI'); return s / 1000; };
