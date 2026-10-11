@@ -436,7 +436,7 @@ function _lab(document, window, localStorage, getComputedStyle, requestAnimation
      Tyhle paky jsou od F4 ZAPOJENE (drive byly natvrdo v rTT a rootFan nedelal nic). */
   var rootsT={ length:65,   /* KUKY 2026-10-11 "delku korenu upravujeme, snizil jsem ji v labu z 95 na 65" */ width:6, curve:1, taper:1.0, wobble:0.5, tipLift:0.22, jitter:0.12, steer:1,
           mirrorN:4, mirrorLen:0.30,   /* F10: kolik korunnich odbocek zrcadlit do korene + jejich delka */
-          ctNear:0.30, ctFar:0.18, twist:0.1, subScale:1, subLenMul:1, fan:0,
+          ctNear:0.30, ctFar:0.18, twist:0.1, subScale:1, subLenMul:1, fan:0.8,   /* fan 0 -> 0,8: KUKY 2026-10-11 „rozevreni korenu 0.8, dej to do produkce“ (vyzkousel v labu na svych ctenich) */
           attachN:3, childN:1, maxDepth:1, levelRatio:0.6, childWidth:0.6,
           junctionThick:1, crownRatio:1 };   /* KUKY 2026-08-07: default 1 (bez zesileni napojeni) */
   /* defaults for RESET + registry of all sliders for re-sync */
@@ -1876,7 +1876,7 @@ function _lab(document, window, localStorage, getComputedStyle, requestAnimation
          a „korenum potrebuju jen dodat jiny smer, meli by vypadat vic jako 5 … nemusi menit moje rozhodnuti“). Od ramen (2026-10-10) urcuje smer
          korene zrcadlo koruny (_SL.rdev) nebo koren matky (dirO), takze posuvnik nedelal nic (zmereno na jeho strome: -1,6 i 1,6 = tytez body).
          Ted otoci CELY koren kolem pate: odklon tetivy od svislice × (1 + fan), az po vsech pravidlech (navraty, Norny, seeking) — relativni
-         stoceni z rozhodnuti 2026-10-11 (3) a (13) zustava, meni se jen smer. 0 = beze zmeny (produkce), zaporne ke svislici a pres ni (kriz),
+         stoceni z rozhodnuti 2026-10-11 (3) a (13) zustava, meni se jen smer. 0 = beze zmeny, vychozi 0,8 (KUKY), zaporne ke svislici a pres ni (kriz),
          kladne do stran; strop 63° od svislice (vodorovnejsi koren se svym ohybem vylezl nad zem). Vybezky jdou s pateri, zrcadleni pozdeji. */
       if(_SL && rootsT.fan){ var rozP=rG.paths[0].pts, rozA=rozP[0], rozE=rozP[rozP.length-1], rozD0=Math.atan2(rozE.x-rozA.x, rozE.y-rozA.y);
         var rozD1=clamp(rozD0*(1+rootsT.fan), -1.10, 1.10), rozR=rozD0-rozD1, rozC=Math.cos(rozR), rozS=Math.sin(rozR), rozSeen=new Set();   /* otoceni o rozR posune odklon o -rozR */
