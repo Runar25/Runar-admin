@@ -38,6 +38,11 @@ PRIPADY = [
  ('chyti', 'verify_spread_prices.js', 'v2/runar-config.js', 'regex', r'(yggdrasil:\s*\{\s*free:\s*null,\s*credits:\s*)\d+', r'\g<1>97'),
  ('chyti', 'verify_sw_shell.js', 'v2/sw.js', 'regex', r"  '/Runar-admin/v2/runar-helper\.js',\r?\n", ''),
  ('chyti', 'verify_monthly_limits.js', 'supabase/functions/claude-proxy/index.ts', 'regex', r'(standard\s*:\s*)\d+', r'\g<1>9999'),
+ # brzda kreditů ElevenLabs ve smoke ⑨ (2026-10-11, CODE-tune, DECISIONS 2026-10-11 (48))
+ ('chyti', 'verify_monthly_limits.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'replace', '    if (!brzda.pustit) {', '    if (false) {'),
+ ('chyti', 'verify_monthly_limits.js', 'supabase/functions/_shared/voice_usage.ts', 'replace', '  const hladina = lim - EL_DOBITI_KREDITY;', '  const hladina = lim;'),
+ ('chyti', 'verify_monthly_limits.js', 'supabase/functions/elevenlabs-static/index.ts', 'replace', '    const brzda = brzdaHlasu(kvota, kredityHlasu(resolvedModel, text.length))', '    const brzda = { pustit: true, spotreba: null, hladina: null, novych: 0 }'),
+ ('chyti', 'verify_monthly_limits.js', 'scripts/utils/stats.js', 'regex', r"('eleven_v3': )0\.08", r"\g<1>0.10"),
  # kolo 3 / 4b (2026-10-11)
  ('chyti', 'verify_internal_tags.js', 'v2/runar-translations.js', 'append', '', '\n// [kánon] podstrčený interní tag\n'),
  ('chyti', 'verify_doc_values.js', 'RUNAR_PRIVACY.md', 'append', '', '\nTier Rune Master dostane víc čtení.\n'),
