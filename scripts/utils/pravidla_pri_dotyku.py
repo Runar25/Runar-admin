@@ -74,6 +74,9 @@ SKRIPT = re.compile(r"""(?<![\w.-])(?:python3?|py|node)(?:\s+-X\s+\S+|\s+-\S+)*\
 ZAPISUJE = re.compile(r"""\.zapis\(|commit_vlastni\.py\s+pridej|writeFileSync|appendFileSync|copyFileSync|renameSync|rmSync|unlinkSync|createWriteStream|\.write\(|open\([^)]*['"][wa]['"]|shutil\.|os\.remove|os\.rename|Path\([^)]*\)\.write_""")
 
 
+KOD_SKRIPTU = ''   # celý kód zapisujících skriptů posledního příkazu — pro kontrolu nového textu proti kánonu
+
+
 def cil_z_prikazu(cmd):
     """Text, ve kterém se hledají cesty: jen CÍLE zápisu (přesměrování, cp/mv/rm/sed -i/tee…, PowerShell zápis) + obsah spouštěných
     patch/scratch skriptů. Celý příkaz ne — commit s `> msg.txt` by jinak „zapisoval“ do všech souborů v pathspecu."""
@@ -106,7 +109,16 @@ def cil_z_prikazu(cmd):
                     if uvnitr or not re.match(r'\s*(//|#)', l): kod.append(l)
                     if (l.count('"""') + l.count("'''")) % 2: uvnitr = not uvnitr
                 kod = chr(10).join(kod)
-                if ZAPISUJE.search(kod): text += chr(10) + kod.replace(chr(92), '/')
+                if ZAPISUJE.search(kod):
+                    global KOD_SKRIPTU
+                    KOD_SKRIPTU += chr(10) + kod.replace(chr(92), '/')
+                    # Cíle zápisu, když jsou všechna zápisová volání s DOSLOVNOU cestou — jinak celý kód (2026-10-11: skript s útoky
+                    # jmenoval v2/runar-character.js jen jako TEXT útoku a zapisoval cv.zapis('scripts/protipriklady.py', …); hook mu
+                    # ukázal pravidla promptu a stromu a chtěl Read 400 řádků docs). Zmínka cesty v datech ≠ zápis.
+                    vse = len(ZAPISUJE.findall(kod))
+                    doslovne = re.findall(r"""(?:\.zapis|writeFileSync|appendFileSync)\(\s*['"]([^'"]+)['"]|open\(\s*['"]([^'"]+)['"]\s*,\s*['"][wa]""", kod)
+                    cile = [a or b for a, b in doslovne]
+                    text += chr(10) + (' '.join(cile) if cile and len(cile) == vse else kod.replace(chr(92), '/'))
             except Exception: pass
     return text
 
@@ -388,6 +400,8 @@ def rozhodni(vstup):
     elif tool in SHELL:
         pp = pasti(str(inp.get('command', '')))
         if pp: return '\n\n'.join(pp) + '\n\n(Hook pravidla_pri_dotyku.py — pasti v příkazech)'
+        global KOD_SKRIPTU
+        KOD_SKRIPTU = ''
         cesty, volny = [], cil_z_prikazu(str(inp.get('command', '')))
         if not volny: return None
     else:
@@ -411,7 +425,7 @@ def rozhodni(vstup):
                               + '\nJe-li to totéž: odkaž na to místo, nepiš znovu. Je-li to nové nebo jiné: zápis zopakuj (ukáže se jednou na zprávu).')
     if any(o.get('uz_vime') for o in hit) and tool in SHELL and volny:
         radky = kanon_radky()
-        nt = novy_text(volny, radky)
+        nt = novy_text(KOD_SKRIPTU or volny, radky)
         klic_nt = hashlib.sha1(nt.encode('utf-8')).hexdigest()[:12] if nt else ''   # hash() je náhodný pro každý proces
         if nt and klic_nt not in s.setdefault('novy_ukazan', []):
             hh = novy_text_hity(nt, radky)
@@ -581,6 +595,13 @@ def samotest():
     chk('43. běžný text s diakritikou a tabulátorem → projde', V('Edit', sid='z1', file_path=R + '/docs/x.txt', old_string='a', new_string='žluťoučký\tkůň\n') is None)
     chk('44. Edit na scripts/protipriklady.py (sdílený soubor z pre-commitu) → zastaví s návodem uprav',
         (lambda d: d and 'commit_vlastni.py uprav' in d)(V('Edit', sid='e3', file_path=R + '/scripts/protipriklady.py', old_string='a', new_string='b')))
+    sk5 = os.path.join(STAV, 'Temp', 'claude', 'utoky.py')
+    io.open(sk5, 'w', encoding='utf-8').write("s = cv.cti('scripts/protipriklady.py', R)" + chr(10) + "s += \"('chyti', 'x.js', 'v2/runar-character.js', 'replace', 'a', 'b')\"" + chr(10) + "cv.zapis('scripts/protipriklady.py', s, 'CODE-read', R)" + chr(10))
+    d = V('Bash', sid='s20', command='python -X utf8 "' + sk5.replace(chr(92), '/') + '"')
+    chk('45. skript zapisuje doslova jen protipriklady.py, v2/runar-character.js má jen v datech → pravidla promptu NE', d is None or 'prompt a hlas' not in d)
+    sk6 = os.path.join(STAV, 'Temp', 'claude', 'promenna.py')
+    io.open(sk6, 'w', encoding='utf-8').write("f = 'v2/runar-character.js'" + chr(10) + "s = cv.cti(f, R)" + chr(10) + "cv.zapis(f, s + 'x', 'CODE-read', R)" + chr(10))
+    chk('46. cíl zápisu v proměnné → celý kód jako dřív (pravidla promptu ano)', (lambda d: d and 'prompt a hlas' in d)(V('Bash', sid='s21', command='python -X utf8 "' + sk6.replace(chr(92), '/') + '"')))
     for jm, v in ok: print(('OK    ' if v else 'FAIL  ') + jm)
     return 0 if all(v for _, v in ok) else 1
 
