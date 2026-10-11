@@ -101,6 +101,11 @@ PRIPADY = [
  ('chyti', 'verify_datum_ui.js', 'v2/runar-journal.js', 'replace', "    const dateStr = datumUI(e.drawn_at, isIs ? 'is' : 'en');", "    const dateStr = new Date(e.drawn_at).toLocaleDateString(isIs ? 'is-IS' : 'en-GB', { day:'numeric', month:'short', year:'numeric' });"),
  ('chyti', 'verify_datum_ui.js', 'v2/runar-utils.js', 'replace', "    return d.getDate() + '.' + (d.getMonth() + 1) + '.' + d.getFullYear();", "    return d.toLocaleDateString('is-IS', { day: 'numeric', month: 'short', year: 'numeric' });"),
  ('chyti', 'verify_datum_ui.js', 'v2/runar-tree.js', 'replace', '  return datumUI(iso, lang);', "  return new Date(iso).toLocaleDateString('en-GB');"),
+ # ㊼ verze v hlášení (2026-10-11, CODE-tune): verze rozjetá se sw.js, reportér zpět na nasazenou, worker zase chytá sw.js, soubor mimo precache
+ ('chyti', 'verify_verze_hlaseni.js', 'v2/runar-verze.js', 'regex', r"RUNAR_VERZE = 'v\d+'", "RUNAR_VERZE = 'v1'"),
+ ('chyti', 'verify_verze_hlaseni.js', 'v2/runar-reporter.js', 'replace', '      app_version: verzeHlaseni(),', "      app_version: VERZE_NASAZENA || 'unknown',"),
+ ('chyti', 'verify_verze_hlaseni.js', 'v2/sw.js', 'regex', r"  if \(url\.pathname\.endsWith\('/sw\.js'\)\) return;\r?\n", ''),
+ ('chyti', 'verify_verze_hlaseni.js', 'v2/sw.js', 'regex', r"  '/Runar-admin/v2/runar-verze\.js',\r?\n", ''),
  ('chyti', 'verify_rune_glyphs.js', 'v2/runar-readings-admin.js', 'replace', "var glyph = _rr ? runeSvg(_rr, { frame: false }) : esc(r.rune_glyph || '◻');", "var glyph = esc(r.rune_glyph || '◻');"),
  ('chyti', 'verify_lang_ternary.js', 'v2/runar-app.js', 'append', '', "\nvar _protiTern = lang === 'is' ? 'halló' : 'hello';\n"),
  # kolo 3 / 4g (2026-10-11): soulad kódu s docy a cesty dat. Texty útoků jsou poskládané z kousků (`'…' + '.md'`), aby tenhle

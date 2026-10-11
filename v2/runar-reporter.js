@@ -16,7 +16,18 @@
   function _jeAdmin() {
     return typeof currentUser !== 'undefined' && !!currentUser && typeof isAdmin === 'function' && isAdmin(currentUser.email);
   }
-  var APP_VERSION = 'unknown';
+  // Verze v hlášení (2026-10-11, CODE-tune, DECISIONS 2026-10-11 (68)): hlášení 24c6c548 neslo v564 a popisovalo chybu opravenou ve v564
+  // — verze se brala z čerstvého sw.js, tedy NASAZENÁ, kdežto okno jelo na JS ze staré cache service workeru (cache-first).
+  // BĚŽÍCÍ = RUNAR_VERZE z runar-verze.js (jde ze stejné cache jako ostatní JS; píše ho hook), NASAZENÁ = sw.js ze sítě.
+  // Liší-li se, hlášení nese obě: „v657 (now v659)“ = tester běží na starém kódu, stačí appku znovu načíst.
+  var VERZE_BEZI = (typeof RUNAR_VERZE === 'string' && /^v\d+$/.test(RUNAR_VERZE)) ? RUNAR_VERZE : null;
+  var VERZE_NASAZENA = null;
+  function verzeHlaseni() {
+    var b = VERZE_BEZI || VERZE_NASAZENA;
+    if (!b) return 'unknown';
+    return (VERZE_NASAZENA && VERZE_NASAZENA !== b) ? b + ' (now ' + VERZE_NASAZENA + ')' : b;
+  }
+  window._reportVersion = verzeHlaseni;   // jen čte — pro kontrolu ㊼ (verify_verze_hlaseni.js)
   var cap = { text: '', source: 'screen', key: '', ctx: '' };
   var curType = '';
   var btn, panel;
@@ -265,7 +276,7 @@
       i18n_key: cap.key || null,
       screen_context: cap.ctx || null,
       locale: (typeof lang !== 'undefined' ? lang : ''),
-      app_version: APP_VERSION,
+      app_version: verzeHlaseni(),
       user_agent: navigator.userAgent,
       reported_at: new Date().toISOString(),
       status: 'new'
@@ -299,8 +310,9 @@
 
   function init() {
     injectStyle(); buildUI(); paintReportBtn();
+    // Nasazená verze: sw.js ze sítě (worker ho od 2026-10-11 nechytá — do té doby ho vracel z cache jako JS, takže ani tohle nebyla nasazená).
     fetch('sw.js', { cache: 'no-store' }).then(function (r) { return r.text(); })
-      .then(function (txt) { var m = txt.match(/v(\d+)/); if (m) APP_VERSION = 'v' + m[1]; }).catch(function () {});
+      .then(function (txt) { var m = txt.match(/CACHE\s*=\s*'runar-(v\d+)'/); if (m) VERZE_NASAZENA = m[1]; }).catch(function () {});
     window.addEventListener('online', flush);
     flush();
   }

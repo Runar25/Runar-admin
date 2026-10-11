@@ -169,6 +169,28 @@ js_css = [f for f in staged
 if not js_css:
     sys.exit(0)  # Žádné JS/CSS změny → OK
 
+# ── Verze běžícího kódu (CODE-tune 2026-10-11, DECISIONS 2026-10-11 (68)): v2/runar-verze.js nese TUTÉŽ verzi jako sw.js ──────────
+# Proč: hlášení z appky bralo verzi z čerstvého sw.js, tedy NASAZENOU — ne tu, která v telefonu běží (JS jde ze cache service workeru,
+# cache-first; hlášení 24c6c548 neslo v564 a popisovalo chybu opravenou ve v564). runar-verze.js leží v precache s ostatním JS, takže okno
+# zná verzi kódu, který opravdu běží. Píše ho JEN tenhle hook (jako číslo v sw.js), takže commit nesebere cizí rozdělanou práci — to by
+# hrozilo, kdyby verze stála v runar-reporter.js (návrh BACKLOG 2026-10-09). Shodu se sw.js hlídá smoke ㊼ (verify_verze_hlaseni.js).
+VERZE_PATH = os.path.join(REPO, 'v2', 'runar-verze.js')
+def _sync_verze(v):
+    obsah = ('// GENEROVÁNO hooks/pre-commit.py při každém bumpu sw.js — ručně needitovat (shodu se sw.js hlídá smoke ㊼).\n'
+             '// Verze kódu, který v okně opravdu běží: soubor jde ze stejné cache service workeru jako ostatní JS, kdežto čerstvý sw.js\n'
+             '// říká jen nasazenou. Čte ji runar-reporter.js do hlášení. CODE-tune 2026-10-11, DECISIONS 2026-10-11 (68).\n'
+             "var RUNAR_VERZE = 'v%d';\n" % v)
+    try:
+        with open(VERZE_PATH, 'r', encoding='utf-8') as _f:
+            _stary = _f.read()
+    except Exception:
+        _stary = None
+    if _stary != obsah:
+        with open(VERZE_PATH, 'w', encoding='utf-8', newline='\n') as _f:
+            _f.write(obsah)
+        print('[hook] SW: runar-verze.js → v%d' % v)
+    subprocess.run(['git', 'add', VERZE_PATH], cwd=REPO)
+
 # Je sw.js už staged?
 sw_staged = any('sw.js' in f for f in staged)
 if sw_staged:
@@ -193,9 +215,16 @@ if sw_staged:
                 _f.write(_c)
             subprocess.run(['git', 'add', SW_PATH], cwd=REPO)
             print('[hook] SW: staged v%s <= HEAD v%s (DOWNGRADE) -> auto-fixed forward to v%s' % (_sv, _hv, _fix))
+            _sync_verze(_fix)
             sys.exit(0)
     except Exception as _e:
         print('[hook] SW: downgrade-guard skipped (%s)' % _e)
+    try:   # ručně staged sw.js: runar-verze.js dostane jeho verzi (jinak by rozdíl našel až smoke ㊼ v pre-push)
+        _sv2 = _swver(subprocess.run(['git', 'show', ':v2/sw.js'], cwd=REPO, capture_output=True, text=True).stdout)
+        if _sv2 is not None:
+            _sync_verze(_sv2)
+    except Exception as _e:
+        print('[hook] SW: runar-verze.js nesrovnán se sw.js (%s)' % _e)
     print('[hook] SW: sw.js already staged — skipping auto-bump')
     sys.exit(0)
 
@@ -239,6 +268,7 @@ with open(SW_PATH, 'w', encoding='utf-8') as f:
 
 # Stage sw.js
 subprocess.run(['git', 'add', SW_PATH], cwd=REPO)
+_sync_verze(new_v)
 
 print(f'[hook] SW: auto-bumped v{v} → v{new_v}  ({len(js_css)} JS/CSS file(s) staged)')
 sys.exit(0)

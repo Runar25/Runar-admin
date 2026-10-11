@@ -32,6 +32,7 @@ runar-auth.js         — updateAuthUI(), PWA, sign-in, redeem
 runar-reading.js      — startReading(), _generateReading(), generateVoice()
 runar-app.js          — state, DB init, fetchUserProfile(), showAppTab()
 runar-reporter.js     — in-app hlášení od testerů (bug_reports) · jen reader
+runar-verze.js        — verze běžícího kódu pro hlášení (GENEROVANÉ hooks/pre-commit.py při bumpu sw.js, needitovat) · jen reader
 runar-rune-popup.js   — ťuknutí na glyf runy ve čtení → popup se jménem a významem · jen reader
 runar-helper.js       — nápověda „?" (bublina: glyf-tap, Ask) + hesla zrcadla v UI_TEXT · jen reader
 runar-readings-admin.js — shrine: prohlížeč čtení (edge fn list-readings)
@@ -54,7 +55,7 @@ runar-config.js → runar-runes.js → [reader: runar-names.js → runar-names-r
             → tree-lab-trunk-composer/runar-trunk.js → tree-lab-branch-composer/runar-branch.js
             → runar-tree-prod.js → runar-tree.js
             → runar-auth.js → runar-reading.js → runar-app.js
-            → runar-reporter.js → runar-rune-popup.js → runar-helper.js
+            → runar-verze.js → runar-reporter.js → runar-rune-popup.js → runar-helper.js
 ```
 
 ---

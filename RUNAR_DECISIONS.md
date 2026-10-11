@@ -11015,3 +11015,24 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Hranice:** s daty a bez nich se formát liší („21. maí 2026“ / „21.5.2026“), obojí je islandsky správně; jeden formát všude by chtěl vlastní
   seznam zkratek měsíců, tedy kopii dat, která má prohlížeč. Android a iPhone neověřeny — (C) pouští jen Chrome na Windows.
 - Affected doc(s): `RUNAR_BACKLOG.md` (položka „Deník: islandské datum…“ odškrtnutá) — v témže commitu.
+
+## 2026-10-11 (68) — Hlášení z appky nese verzi kódu, který v okně běží (a nasazenou, když se liší)
+
+- **Proč:** chyba od CODE-read (BACKLOG 2026-10-09), owner *„ok, jeď ty tři chyby“*. Hlášení 24c6c548 (8. 10.) neslo `v564` a popisovalo
+  chybu opravenou ve v564: reportér bral verzi z čerstvě staženého `sw.js`, tedy nasazenou, kdežto okno jelo na JS ze staré cache service
+  workeru. Pod workerem nebyl nasazený ani ten `sw.js` — worker ho vracel z cache stejně jako JS.
+- **Co:** `v2/runar-verze.js` (`RUNAR_VERZE`) je v precache spolu s ostatním JS a reader ho načítá před reportérem, takže okno zná verzi
+  kódu, který opravdu běží. Píše ho jen `hooks/pre-commit.py` při bumpu `sw.js` (automatický bump, ručně staged `sw.js`, oprava downgradu).
+  Worker `sw.js` nechytá, reportér z něj čte nasazenou verzi ze sítě. `app_version` = běžící; liší-li se nasazená, obě: „v657 (now v659)“
+  (štítek pro adminy anglicky, §31; vejde se i do upozornění, `notify-report` stříhá na 16 znaků).
+- **Proč ne návrh z BACKLOGu** (verzi zapisovat přímo do `runar-reporter.js`): hook by při každém commitu stagoval soubor, do kterého píšou
+  session, a vzal by s ním cizí rozdělanou práci; soubor, který píše jen hook, to riziko nemá (jako číslo v `sw.js`). Dotaz na worker
+  (`postMessage`) taky ne: worker zná jen jméno své cache, ale do ní se na pozadí ukládají i novější soubory (cache-first s aktualizací),
+  takže okno může běžet na novém kódu pod starým jménem.
+- **Hlídá smoke ㊼** (`scripts/verify_verze_hlaseni.js`): `runar-verze.js` = `sw.js`, precache, pořadí v readeru; skutečný prohlížeč se
+  service workerem ve čtyřech stavech — první návštěva „v658“, pod workerem „v658“, nasazená v659 a okno na staré „v658 (now v659)“, po
+  aktualizaci workeru „v659“; hlášení odeslané skutečným panelem, databáze zablokovaná. Hook ověřen v dočasném repu (5 cest). Útoky
+  v protipříkladech.
+- **Hranice:** telefon neověřen (iOS a Android aktualizují worker po svém); když CDN vrátí část souborů novou a část starou, verze patří
+  k `runar-verze.js`, ne ke každému souboru. Hook běží z pracovního stromu, takže pro commity všech session platí od zápisu.
+- Affected doc(s): `CLAUDE.md` (soubory a pořadí načítání), `RUNAR_BACKLOG.md` (položka odškrtnutá) — v témže commitu.

@@ -3642,7 +3642,7 @@ Co dělá CODE, tady NENÍ — tohle je jen to, na co já nedosáhnu.
       („Error sending magic link email“, owner opravil); (2) Supabase posílá 8 číslic, appka brala 6 (DECISIONS 2026-10-10 (10)).
       E-mail s kódem jde v jazyce appky (DECISIONS 2026-10-10 (11)); šablonu owner vložil a všechny tři větve jsou ověřené: účet bez
       jazyka 16:56 (oba jazyky), EN 17:20 a IS 17:39 (owner: „oba přišly jen v jednom jazyce“).
-- [ ] **Hlášení nese verzi nasazenou, ne tu, která v telefonu běží** (2026-10-09, CODE-tune, §22). `runar-reporter.js` bere `app_version`
+- [x] ✅ *(CODE-tune 2026-10-11: běžící verze z `v2/runar-verze.js`, který píše hook; „v657 (now v659)“, když se liší; smoke ㊼, DECISIONS 2026-10-11 (68).)* ~~**Hlášení nese verzi nasazenou, ne tu, která v telefonu běží**~~ (2026-10-09, CODE-tune, §22). `runar-reporter.js` bere `app_version`
       z čerstvě staženého `sw.js`, ale stránka jede na JS ze staré cache, dokud se nenačte znovu (SW: JS cache-first). Doklad: hlášení 24c6c548
       (8. 10.) neslo `v564` a popisovalo chybu opravenou ve v564; owner 9. 10. po novém načtení: v pořádku. S testery by to mátlo diagnózu.
       Oprava: verzi zapsat přímo do kódu (pre-commit hook ji při bumpu `sw.js` přepíše i v reporteru) a do hlášení dávat obě.

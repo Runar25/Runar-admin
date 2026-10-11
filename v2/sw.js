@@ -1,8 +1,8 @@
-// Rúnar Service Worker — v658
+// Rúnar Service Worker — v659
 // HTML: network-first (always fresh). JS/CSS/icons: cache-first (fast, offline ok).
 // External (Supabase, ElevenLabs, fonts): pass-through, never intercepted.
 
-const CACHE = 'runar-v658';
+const CACHE = 'runar-v659';
 const JS_SHELL = [
   '/Runar-admin/v2/runar-reader.css',
   '/Runar-admin/v2/runar-utils.js',
@@ -27,6 +27,8 @@ const JS_SHELL = [
   '/Runar-admin/v2/tree-lab-trunk-composer/runar-trunk.js',
   '/Runar-admin/v2/tree-lab-branch-composer/runar-branch.js',
   '/Runar-admin/v2/runar-reporter.js',
+  // 2026-10-11: verze běžícího kódu pro hlášení (píše ji hook) — musí jít z TÉŽE cache jako ostatní JS, jinak by hlásila nasazenou.
+  '/Runar-admin/v2/runar-verze.js',
   '/Runar-admin/v2/runar-rune-popup.js',
   '/Runar-admin/v2/runar-helper.js',
   // 2026-10-10: písma u nás (dřív fonts.googleapis.com — externí, SW je nechytal); bez precache by offline padala na systémové písmo.
@@ -66,6 +68,8 @@ self.addEventListener('fetch', e => {
   // Never intercept: external origins (Supabase, ElevenLabs, CDN, fonts)
   if (url.hostname !== self.location.hostname) return;
   if (e.request.method !== 'GET') return;
+  // sw.js sám nikdy z cache: hlášení z něj čte NASAZENOU verzi (2026-10-11, runar-reporter.js); cache-first ho dřív vracel starý.
+  if (url.pathname.endsWith('/sw.js')) return;
 
   // ── HTML pages: network-first so user always gets latest code ──
   if (url.pathname.endsWith('.html') || url.pathname.endsWith('/')) {
