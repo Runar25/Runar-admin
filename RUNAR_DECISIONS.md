@@ -9984,3 +9984,40 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Bod 10** (čtení o minulosti a nitru prohlubují víc): staví se nanečisto, vlastní záznam.
 - Affected doc(s): `RUNAR_TREE.md` §2 (kořeny jsou živé; zastaralé „zatím nanečisto“ u (23), (26) a ohnutí z (28), které (30) nechal stranou),
   §4 (seeking) · `RUNAR_TREE_MAP.md` §10, §12 · `RUNAR_BACKLOG.md` — v témže commitu.
+
+## 2026-10-11 (4) — Strom: kořeny nanečisto — čtení o minulosti a nitru prohlubují kořen víc (nad polovinu návratů); co jednou prohloubila, zůstane
+
+- **Rozhodl:** KUKY 2026-10-11 *„10. ano“* k otázce, jestli k návratům přidat směr z backlogu (2026-07-30): čtení o minulosti (urð, léčení,
+  rodina, nitro) živí hloubku kořenů. **Provedl:** CODE-tree, nanečisto (lab beze změny).
+- **Co nanečisto dělá** (patch `docs/archive/tree/2026-10-11_nanecisto_koreny_minulost.patch`): návrat runy kořene ve čtení o minulosti (zóna čtení v dolní třetině
+  osy urð–skuld: záměr Past nebo pozice urð v rozkladu) nebo o nitru (oblast Healing, Family, Inner Growth) se počítá zvlášť. Je-li takových
+  návratů **víc než polovina**, kořen se navíc prodlouží a hlavní kořen stočí strměji: nadbytek nad polovinu × síla návratů × náběh (plný od
+  12 návratů, jako u seekingu); délka až +80 procent, směr až o 60 procent blíž svislici, obojí jen v krajním případě (všechny návraty takové).
+  Nadbytek je nejvyšší dosažený v čase — když podíl později klesne, kořen se nezkrátí (KUKY: *„ohýbat, prodlužovat, ale neničit“*).
+- **Proč práh polovina:** taková čtení má každý zhruba polovinu (3 z 8 oblastí jsou nitro, 1 ze 3 záměrů minulost; jeho strom 55 procent).
+  Prostý podíl bez prahu prohloubil kořeny všem: jeho strom šířka kořenů 95 → 106 procent koruny a kořeny s nejmenším a největším podílem
+  se prodloužily skoro stejně (1,12× a 1,17×). ✖ Prostý podíl bez prahu.
+- **Změřeno:** jeho strom šířka 95 → 100 procent koruny, hloubka 54 → 60; kořeny s podílem 62–69 procent 1,15× delší, s podílem 39–47 procent
+  1,04×. Modelové stromy (`scratchpad` logy z 2026-10-09): samá minulost (podíl 83 procent) hloubka 58 → 76, nitro 43 → 60, vyrovnaný 43 → 52,
+  svět (36 procent) 56 → 57. Souběh kořenů na jeho stromě 98 → 93 px na 1000 px kořene, na stromě minulosti 85 → 61; kořínek nad zemí dál 1.
+- **Čeká:** ownerův pohled; do labu až na jeho slovo. Odvolává se na (2), (3).
+- Affected doc(s): `RUNAR_BACKLOG.md` („Kořeny = minulost/základ“) — v témže commitu; `RUNAR_TREE.md` §2, `RUNAR_TREE_MAP.md` §10 a smoke
+  až se zapnutím.
+
+## 2026-10-11 (5) — claude-proxy: jedno účtované čtení naráz na účet (zámek); nasazeno a ověřeno živě · cache_control pryč
+
+- **Rozhodl:** owner 2026-10-11 *„9. ok“* (návrh zámku místo rezervace) a *„mám, nasaď“*; SQL `sql/2026-10-11_reading_lock.sql` spustil sám.
+- **Proč:** nárok se ověřoval na začátku a kredit strhával až po hotovém čtení, takže souběžné požadavky (rate limit pustí 10/min)
+  prošly všechny — víc čtení za jeden kredit nebo jedno volné čtení, předplatitel přes měsíční strop (nález CODE-read (m), BACKLOG část 40).
+  Rezervace kreditu na začátku zamítnuta: funkce ukončená platformou po rezervaci by kredit vzala bez čtení. Podle CODE-read je to
+  okrajový případ (vypršení se neopakuje, nejhorší běžná cesta ~105 s), ale zámek je jednodušší a slib „chyba nestojí kredit“ drží úplně.
+- **Co:** účtované čtení (Rune Seeker volné / z kreditu, předplatitel) vezme zámek na účet PŘED čtením zůstatku, uvolní ho `finally`
+  na každé cestě; souběžný požadavek → 429 `reading_in_progress` (klient ho ukáže jako „počkej chvíli“). Zámek vyprší sám za 10 min.
+  Rituály a Ask k vlastnímu čtení se neúčtují a zamčené nejsou; admin taky ne. Zůstatek kreditů se po zámku čte znovu. Bez SQL by proxy
+  selhala otevřeně (jako dřív). Navíc bez `cache_control` u Claude (nález CODE-read (n): zápis do cache 1,25× bez návratu).
+- **Nasazeno (git nevidí):** claude-proxy verze 80. Před nasazením stažená běžící verze = repo před změnou; po nasazení = 4b7fc9e.
+- **Ověřeno živě** (testovací Rune Seeker zkukula@gmail.com, ne admin; bez deníku): dva souběžné požadavky → jedno čtení + jedno 429
+  `reading_in_progress`, kredit 9 → 8; samostatné čtení hned potom prošlo, 8 → 7; zámků po obou testech 0; v `credit_ledger` přesně dva
+  odečty −1 „reading“. **Hranice:** živě neotestováno uvolnění po chybě modelu (402/503) — drží ho `finally`; předplatitel a volné čtení
+  jdou toutéž cestou zámku, živě ověřen jen kredit. Typy: přísný režim 0 chyb před i po.
+- Affected doc(s): `RUNAR_BACKLOG.md` části 40 a 41 — v témže commitu.
