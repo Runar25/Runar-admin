@@ -5,6 +5,7 @@
       "oblast": "pravidla a docs",
       "cesty": ["CLAUDE.md", "memory/**/*.md", "RUNAR_*.md"],
       "pravidla": ["§20", "§16", "§28"],
+      "hlavicky": ["scripts/utils/commit_vlastni.py"],
       "uz_vime": true
     },
     {

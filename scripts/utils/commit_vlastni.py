@@ -118,6 +118,9 @@ def commit(lane, msgfile, R=None):
                 cur = m.stdout
             res[pth] = cur
         env = dict(os.environ); env['GIT_INDEX_FILE'] = os.path.join(tmp, 'index')
+        # Značka pro pre-commit: sdílené docy (RUNAR_*.md, CLAUDE.md, memory/) smí commitnout jen tenhle nástroj — pathspec commit by
+        # vzal i cizí necommitnuté kusy (c81b4da, b4c3f4a, dfac200). Owner 2026-10-11 „5. ano“; hooks/pre-commit.py.
+        env['RUNAR_VLASTNI'] = '1'
         git(['read-tree', 'HEAD'], R, env=env)
         for pth, b in res.items():
             sha = git(['hash-object', '-w', '--no-filters', '--stdin'], R, inp=b).stdout.decode().strip()

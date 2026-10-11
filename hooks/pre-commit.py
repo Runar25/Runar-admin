@@ -63,6 +63,31 @@ if bad:
     print('[hook] Vědomě přesto (skutečně nový lab zdroj): git commit --no-verify')
     sys.exit(1)
 
+# ── Sdílené docy jen přes scripts/utils/commit_vlastni.py (owner 2026-10-11 „5. ano“, DECISIONS 2026-10-11) ──
+# Proč: pathspec commit (`git commit -- RUNAR_BACKLOG.md`) bere celý soubor i s necommitnutou prací jiné session. Stalo se třikrát
+# (c81b4da CODE-tune ← CODE-read, b4c3f4a CODE-tree ← CODE-tune, dfac200 CODE-read ← CODE-tune) a pravidlo v paměti to nezastavilo
+# → CLAUDE.md §30: dělá to stroj. commit_vlastni.py commitne jen vlastní kusy a nastaví RUNAR_VLASTNI=1.
+# Výjimka (smazání souboru, které commit_vlastni neumí; vědomý případ): RUNAR_SDILENE_OK="<důvod>" — zapíše se do .git/runar-sdilene.log.
+_SDILENE = re.compile(r'^(CLAUDE\.md|RUNAR_[^/]*\.md|memory/.+\.md)$')
+_sd = [p for p in staged if _SDILENE.match(p)]
+if _sd and os.environ.get('RUNAR_VLASTNI') != '1':
+    _duvod = os.environ.get('RUNAR_SDILENE_OK', '').strip()
+    if _duvod:
+        try:
+            _g = subprocess.run(['git', 'rev-parse', '--git-dir'], capture_output=True, text=True).stdout.strip()
+            import datetime
+            with open(os.path.join(_g, 'runar-sdilene.log'), 'a', encoding='utf-8') as _f:
+                _f.write(datetime.datetime.now().isoformat(timespec='seconds') + ' ' + ', '.join(_sd) + ' | ' + _duvod + '\n')
+        except Exception:
+            pass
+        print('[hook] sdílené docy bez commit_vlastni — výjimka: ' + _duvod)
+    else:
+        print('[hook] Sdílený doc (' + ', '.join(_sd) + ') commituj přes commit_vlastni.py, ne pathspec commitem —')
+        print('       ten by vzal i necommitnutou práci jiné session v tomtéž souboru (stalo se 3×).')
+        print('       Zápis: s = cv.cti(soubor); …; cv.zapis(soubor, s, "<lane>")  · commit: python -X utf8 scripts/utils/commit_vlastni.py commit <lane> <zprava.txt>')
+        print('       Nový soubor: …commit_vlastni.py pridej <lane> <soubor> · výjimka: RUNAR_SDILENE_OK="<důvod>" git commit …')
+        sys.exit(1)
+
 # ── IS source-linter gate (§9): block if a staged v2 source file has a bad IS literal ──
 is_src = [f for f in staged if f.startswith('v2/') and f.endswith(('.js', '.html'))]
 if is_src:
