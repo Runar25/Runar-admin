@@ -97,7 +97,10 @@ const gen = (seed, sc, N, sa) => { let s = seed; const rnd = () => (s = (s * 110
   return log; };
 const LOGS = [['vsude', gen(3933, [1 / 3, 1 / 3, 1 / 3], 300)], ['minulost', gen(3000, [0.6, 0.2, 0.2], 300)],
   ['svet', gen(4111, [1 / 3, 1 / 3, 1 / 3], 300, [0.15, 0.15, 0.7])]];   // svet: viz (h) — povysena z vudci vetve na druhe strane
-const NS = [20, 60, 150, 300];
+// NS 8 (2026-10-11): nejmladsi strom ma nejkratsi kmen, tedy nejtesnejsi rozestup ramen (ownerův log: stejna strana 39 px po 6–10 ctenich,
+// 101 px po 80). Rozestup drzi vysky zon XLF × vyska kmene; exitMinPx pusobi jen nahoru (30 i 5 da tytez px), takze pravidlo „30 px min.“
+// hlida tahle kontrola na vysledku — a do 2026-10-11 nemerila strom mladsi nez 20 cteni (dotaz CODE-read).
+const NS = [8, 20, 60, 150, 300];
 const fails = []; let worstV = 1e9, worstE = 1e9, worstLR = 1e9, worstS = 1e9, maxStr = 0, runs = 0, maxBr = 0, worstForeign = 0; const STAL = {};
 LOGS.forEach(([nm, log]) => NS.forEach(n => {
   const r = labRun(log.slice(0, n), html, null); runs++;
