@@ -912,6 +912,14 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 .spread7-slots{grid-template-columns:repeat(3,var(--slot-cell));grid-auto-rows:var(--slot-cell);gap:var(--slot-gap);justify-content:center;place-items:center;}
 #s7slot1{grid-area:1/1;} #s7slot2{grid-area:2/1;} #s7slot3{grid-area:3/1;} #s7slot4{grid-area:3/2;}
 #s7slot5{grid-area:3/3;} #s7slot6{grid-area:2/3;} #s7slot7{grid-area:1/3;}
+/* Dno podkovy jako U, ne ⊔ (2026-10-11, owner: „udělej to jako U, takže 4. mírně, asi na půl velikosti čísla v kroužku, pod 3-5“).
+   Čtyřka o čtvrtinu buňky níž ≈ půl kroužku (kroužek 1.4em ≈ 22 px → 11,5 px; na telefonu 1.15em ≈ 18 px → 10 px). Tvar runové podkovy:
+   1 nahoře vlevo, 4 dole uprostřed, 7 nahoře vpravo. Posun přes transform mřížku nemění, proto je o týž kus vyšší spodní okraj rámečku
+   (jinak by kámen po tahu seděl na jeho hraně). Spodní okraj přes id, protože mobilní .spread3-slots{padding} stojí v souboru níž. */
+.spread7-slots{--s7-dip:calc(var(--slot-cell) / 4);}
+#s7slot4{transform:translateY(var(--s7-dip));}
+#spread7-slots{padding-bottom:calc(10px + var(--s7-dip));}
+@media(max-width:480px){ #spread7-slots{padding-bottom:calc(8px + var(--s7-dip));} }
 .spread9-slots{grid-template-columns:repeat(8,calc((var(--slot-cell) - var(--slot-gap)) / 2));grid-auto-rows:var(--slot-cell);gap:var(--slot-gap);justify-content:center;place-items:center;}
 #s9slot1{grid-area:1/2/2/4;} #s9slot2{grid-area:1/4/2/6;} #s9slot3{grid-area:1/6/2/8;}
 #s9slot4{grid-area:2/3/3/5;} #s9slot5{grid-area:2/5/3/7;}
