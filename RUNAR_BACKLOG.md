@@ -3596,8 +3596,9 @@ Co dělá CODE, tady NENÍ — tohle je jen to, na co já nedosáhnu.
 
 - [ ] **Tree of Life nemají** — ikona je skrytá, protože strom není hotový. Životní runu mají
       ve vlastní záložce.
-- [ ] **Hlas: tester 15 za měsíc** (`VOICE_MONTHLY_LIMIT_TESTER`, KUKY 2026-10-11; ostatní `VOICE_MONTHLY_LIMIT`). Nad bezpečnou hladinou
-      kvóty ElevenLabs (`VOICE_SAFE_SHARE`) hlas odpočívá pro všechny — appka to řekne, není to chyba.
+- [ ] **Hlas: tester 15 za měsíc** (`VOICE_MONTHLY_LIMIT_TESTER`, KUKY 2026-10-11; ostatní `VOICE_MONTHLY_LIMIT`). Kolik zbývá, ukazuje
+      od 2026-10-11 menu pod jménem (DECISIONS 2026-10-11 (56)). Když dojdou kredity ElevenLabs (brzda, DECISIONS (48)), hlas odpočívá
+      pro všechny — appka to řekne, není to chyba. (Do 2026-10-11 tu stála hladina `VOICE_SAFE_SHARE`, kterou brzda nahradila.)
 - [ ] **Režim „pro někoho jiného" testovat smí** — je to záměr, ne chyba.
 - [ ] Až budou mít premium, musí si appku **znovu načíst** — tier i `is_tester` se čtou jen při
       startu. Že to sedlo, pozná se podle **„(tester)" / „(prófari)"** za jménem tieru v panelu.

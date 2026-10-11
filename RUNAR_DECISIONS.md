@@ -10797,3 +10797,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Otevřené:** posuvník při pozdním založení (Norny jdou první, takže datum u kroku 2 skočí zpět před založení) · zlaté obtažení
   větvičky čtení na posuvníku (nový strom větvičky po čteních má) → `RUNAR_BACKLOG.md`.
 - Affected doc(s): `RUNAR_TREE.md` §2, §3 (tabulka), §5, §8 · `RUNAR_BACKLOG.md` (port) — v témže commitu.
+
+## 2026-10-11 (56) — Menu pod jménem ukazuje i kolik čtení Rúnar ještě přečte nahlas (tester 15)
+
+- **Rozhodl:** owner 2026-10-11: *„říkáme testerům, že mají jenom 15 možností Rúnarova hlasu? měli bychom!“*
+- **Proč:** tester se o stropu dozvěděl až hláškou po patnáctém hlase; přehled tarifů a nápověda mu slibují „až 5“ (`VOICE_MONTHLY_LIMIT`,
+  strop pro netestery, který pro produkci nikdo nerozhodl — (49)).
+- **Co** (commit 4eb6905): v menu pod jménem u předplatitele (testeři jsou premium) druhý řádek pod zbývajícími čteními —
+  EN *„Rúnar can still read {casts} aloud this month.“*, IS *„Rúnar getur enn lesið {casts} upphátt í þessum mánuði.“*; při nule ověřená
+  `err_voice_month`. Strop podle příznaku tester jako `elevenlabs-proxy`; klient čte `voice_month_count` / `voice_month_key` a po hlasu je
+  obnoví. IS: is-greynir OK (12 i 1), is-gpt-check OK ($0.0011), korpus „lesið upphátt“ 90×, „getur enn“ 1 990×, „enn lesið“ 138×.
+- **Hranice:** přehled tarifů a nápověda dál píšou „až 5“ — patří k rozhodnutí o stropu hlasu pro produkci (BACKLOG, položka o hlasu).
+- Affected doc(s): `RUNAR_BACKLOG.md` („Co testerům napsat dopředu“, položka o hlase) — v témže commitu.
