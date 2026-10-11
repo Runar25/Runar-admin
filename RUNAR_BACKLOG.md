@@ -2744,6 +2744,15 @@ s logem mimo skutečný (`RUNAR_ZALOHA_TEST_DB_SELZE`): CHYBA DB + konverzace pr
 (session by uvízla mezi dvěma hooky) → radí `commit_vlastni.py pridej` + `commit` (záloha `tree-guard.sh.pred-k3-2026-10-11`). CLAUDE.md
 v sekci session (příkaz s podpisem i „Commit ÚZCE“) uváděl pathspec commit pro všechno → doplněno, že sdílené docy jen přes `commit_vlastni`.
 
+#### Kolo 3 / 4 — protipříklady naostro: kontroly pod útokem (2026-10-11)
+**Metoda:** čistá kopie repa (`git worktree`), do souboru podstrčená skutečná chyba, kontrola s `RUNAR_ROOT` na kopii musí spadnout.
+**Výsledek:** 19 útoků / 15 kontrol, 16 chyceno hned. Slepé: `verify_db_write_checked` (alias `_db = sb`) a `verify_write_surface`
+(`from("user_profiles")`, `update(p)`) → opraveno, obcházky zůstávají jako útoky. Smoke ㊵ je pouští samo při změně (DECISIONS (44)).
+- [ ] **Doplnit útoky pro zbývajících 46 kontrol bez útoku** (61 − 15; část z nich má aspoň `--test`) — přednost mají ty, které hledají NEPŘÍTOMNOST (propustí-li, nikdo si
+  nevšimne): `verify_question_injection`, `verify_journal_glyphs`, `verify_shared_tree`, `verify_commit_identity`, `verify_prelaunch_open`,
+  `verify_fresh_dates`, `verify_new_duplicates`, `verify_tier_features`. Postup: případ do `PRIPADY` v `scripts/protipriklady.py`,
+  `python -X utf8 scripts/protipriklady.py <kontrola>`.
+
 **Smoke zrychlen (2026-10-10, CODE-read):** `verify_decisions_followthrough.js` pouštěl `git blame` pro každý z ~340 řádků
 „Affected doc(s)“ a `show`/`log` pro každý doc zvlášť — smoke trval přes půl hodiny (hlášení CODE-tune) a pomalá kontrola svádí
 k `--no-verify`. Teď jeden blame a jeden průchod historií: změřeno 575 s → 5 s, výstup shodný.

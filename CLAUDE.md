@@ -372,6 +372,8 @@ musí to buď **udělat skript samo**, nebo **zastavit práci**, když se to vyn
 - **Pasti v příkazech** → týž PreToolUse hook zastaví heredoc se zpětným lomítkem v těle a `grep … OK|FAIL … &&` jako podmínku
   (obojí padlo 2026-10-11 znovu, ač stálo v paměti). **Neověřené tvrzení** → Stop-hook zprávy (`~/.claude/runar-zprava-check.py` <!-- doc-links:ok 2026-10-11 uživatelský hook mimo repo -->
   pravidlo 4): věta s „nejspíš/pravděpodobně/zřejmě“ o kódu nebo souboru projde jen s „neověřeno“. (KUKY 2026-10-11, DECISIONS 2026-10-11 (36).)
+- **Kontroly pod útokem** → smoke ㊵ (`scripts/protipriklady.py`): podstrčená chyba v čisté kopii repa musí kontrolu shodit; pouští
+  se znovu, kdykoli se kontrola změní. Nová kontrola = aspoň jeden útok v `PRIPADY`. (DECISIONS 2026-10-11 (44).)
 Najdeš nové pravidlo, které se porušilo podruhé? Nepiš ho jen do paměti — přidej mechanismus (hook, kontrola ve smoke, krok skriptu).
 
 ### §31 — Jazyk komunikace: veřejně i pro adminy jen IS a EN, česky jen owner ↔ Claude (platí pro VŠECHNY session)

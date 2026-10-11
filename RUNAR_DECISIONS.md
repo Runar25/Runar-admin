@@ -10590,3 +10590,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Zbývá (BACKLOG, položka „Hlas: premium ke každému čtení?“):** přepočet `RUNAR_PRICING.md` se sazbou $0.08 spolu s rozhodnutím o hlasu;
   převod znaků na kredity v bezpečné hladině `elevenlabs-proxy` a `elevenlabs-static` s příštím nasazením hlasu.
 - Affected doc(s): `RUNAR_BACKLOG.md` — v témže commitu.
+
+## 2026-10-11 (44) — Kontroly pod útokem: podstrčená chyba v čisté kopii repa musí kontrolu shodit (smoke ㊵)
+
+- **Proč:** ve smoke je 61 kontrol a samotest (`--test`) má jen 11 — zbytek prošel jen tím případem, kvůli kterému vznikl (§25 B). Kolo 3
+  kontroly je zaútočilo naostro: 19 podstrčených chyb proti 15 kontrolám, 16 chyceno hned. `verify_db_write_checked` propustila zápis
+  přes alias (`var _db = sb`), `verify_write_surface` `from("user_profiles")` a `update(p)` s objektem v proměnné — i se sloupcem
+  `credits_balance`. Dnes v kódu žádná taková cesta není (ověřeno grepem); stačil by ale jeden alias a nepovolený sloupec projde zeleně.
+- **Co:** obě kontroly opraveny (libovolný příjemce `.from('…')`, obojí uvozovky, zápis s neviditelnými sloupci = chyba, ne tiché zelené;
+  `const { error } = await …` projde). `scripts/protipriklady.py` drží útoky jako data (chyti / obchazka / nesmi); smoke ㊵ pouští jen ty,
+  u nichž se od posledního úspěchu změnila kontrola, cíl v HEAD, případ nebo nástroj — upravená kontrola se tak znovu zaútočí sama
+  (zkoušeno: kontrola dočasně rozbitá na `exit 0` → ㊵ červená). Cache ve společném `.git`, takže sedí i v kopii pre-push; jinak ~1 s.
+- **Nová kontrola → přidej do `PRIPADY` aspoň jeden útok `chyti`;** našla-li se obcházka, zůstává jako `obchazka`. Rozhodnutí ownera
+  není potřeba — vlastní kontroly, appka beze změny (2026-10-11 (15)).
+- **Hranice:** útoky kryjí 15 z 61 kontrol; zbytek se doplňuje postupně (BACKLOG kolo 3 / 4). Číslo 50/75 v docích `verify_doc_values`
+  záměrně jen vypisuje (ℹ), nehlásí jako chybu — beze změny.
+- Affected doc(s): `CLAUDE.md` §30, `RUNAR_BACKLOG.md` kolo 3 / 4 — v témže commitu.
