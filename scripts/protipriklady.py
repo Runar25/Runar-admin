@@ -111,6 +111,9 @@ PRIPADY = [
  ('chyti', 'verify_citelnost.js', 'v2/runar-app.js', 'replace', "  document.getElementById('lsm-title').textContent   = tp('lsm_title', { language: jmeno(tl).toUpperCase() });", "  document.getElementById('lsm-title').textContent   = 'SPEAK AGAIN IN ' + jmeno(tl).toUpperCase() + '?';"),
  ('chyti', 'verify_en_natvrdo.js', 'v2/runar-app.js', 'replace', "  document.getElementById('lsm-cost').textContent    = cena.toUpperCase();", "  document.getElementById('lsm-cost').textContent    = '1 CREDIT LEFT';"),
  ('obchazka', 'verify_en_natvrdo.js', 'v2/runar-reading.js', 'replace', "    setSt('st-voice', _voiceErrMsg(null, 0), 'err');", "    setSt('st-voice',\n      `Voice error: ${err && err.message}`, 'err');"),
+ # ㊽ (D) Deník po přepnutí jazyka: setLang ho nepřekreslí · překreslí bez aktivního filtru
+ ('chyti', 'verify_citelnost.js', 'v2/runar-app.js', 'replace', "  if (activeAppTab === 'journal' && typeof prekresliDenik === 'function') prekresliDenik();", "  // (útok: Deník se po přepnutí jazyka nepřekreslí)"),
+ ('obchazka', 'verify_citelnost.js', 'v2/runar-journal.js', 'replace', "  if (filtr) filterJournal(); else renderJournal(_journalCache);", "  renderJournal(_journalCache);"),
  # ㊼ verze v hlášení (2026-10-11, CODE-tune): verze rozjetá se sw.js, reportér zpět na nasazenou, worker zase chytá sw.js, soubor mimo precache
  ('chyti', 'verify_verze_hlaseni.js', 'v2/runar-verze.js', 'regex', r"RUNAR_VERZE = 'v\d+'", "RUNAR_VERZE = 'v1'"),
  ('chyti', 'verify_verze_hlaseni.js', 'v2/runar-reporter.js', 'replace', '      app_version: verzeHlaseni(),', "      app_version: VERZE_NASAZENA || 'unknown',"),

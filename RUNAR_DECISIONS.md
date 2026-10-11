@@ -11068,3 +11068,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Hranice:** ㊽ prochází z přihlášené appky jen okno přepnutí jazyka. Deník po přepnutí jazyka (nález CODE-read 2026-10-11) zatím nehlídá
   nic. ㊾ nevidí text složený do proměnné a zapsaný jinde.
 - Affected doc(s): `RUNAR_BACKLOG.md` (tři položky odškrtnuté, 19 slabších textů pro ownera) — v commitech oprav.
+
+## 2026-10-11 (71) — Deník po přepnutí jazyka: překreslí ho setLang se stejným filtrem a otevřenými kartami, ne updateUIText
+
+- **Proč:** nález CODE-read z procházky přihlášené appky — Deník po přepnutí jazyka zůstal v původní řeči. Ověřením se ukázalo, že v produkci
+  ho překresloval `_updateGateTexts` v `updateUIText` z `_journalCache` (ukázková čtení v jejich testu `_journalCache` neplnila), jenže celý:
+  zahodil aktivní filtr, zaklapl otevřené karty a stav v `updateUIText` porušoval §14.
+- **Co:** `prekresliDenik` (`v2/runar-journal.js`) volá `setLang` na záložce Deník: překreslí načtená čtení s aktivním filtrem (`filterJournal`),
+  otevřené karty znovu otevře a Rune Seekerovi obnoví pruh s počtem čtení; nic znovu nenačítá. Překreslení z `_updateGateTexts` je pryč.
+- **Hlídá smoke ㊽ (D):** Deník se dvěma ukázkovými čteními, otevřená karta, přepnutí IS → EN přímo na záložce — žádný text rozhraní nezůstane
+  stejný (oba směry naráz, i islandština v anglické appce), karta zůstane otevřená a filtr jazykem drží (1 čtení ze 2). Útoky v protipříkladech.
+- Affected doc(s): `RUNAR_BACKLOG.md` (položka CODE-read odškrtnutá s upřesněnou příčinou) — v témže commitu.

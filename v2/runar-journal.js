@@ -297,6 +297,23 @@ function filterJournal() {
   renderJournal(filtered);
 }
 
+// Přepnutí jazyka na záložce Deník (setLang v runar-app.js): texty karet kreslí jen renderJournal (§14 — do updateUIText nepatří), a tak
+// Deník zůstával v předchozí řeči — „✦ SPÁR ÞÍNAR“, „2 lestrar“, „~ DÝPRI HUGLEIÐING“, „HLUSTA Á LESTURINN“, islandské datum v anglické appce
+// (nález CODE-read 2026-10-11 při ukázkových čteních bez _journalCache; v produkci Deník překresloval _updateGateTexts v updateUIText, ale
+// celý — bez filtru a se zaklapnutými kartami, a proti §14). Překreslí načtená čtení se stejným filtrem, otevřené karty nechá otevřené
+// a obnoví pruh pro Rune Seekera; znovu nic nenačítá. Hlídá smoke ㊽ (D).
+function prekresliDenik() {
+  if (!currentUser || !_journalCache.length) return;
+  var otevrene = [];
+  document.querySelectorAll('[id^="jex-"]').forEach(function (el) {
+    if (el.classList.contains('jcard-excerpt--open')) otevrene.push(+el.id.slice(4));
+  });
+  var filtr = ['jf-rune', 'jf-area', 'jf-lang'].some(function (id) { var el = document.getElementById(id); return !!(el && el.value); });
+  if (filtr) filterJournal(); else renderJournal(_journalCache);
+  otevrene.forEach(function (i) { toggleJournalEntry(i); });
+  if (!(userTier === 'standard' || userTier === 'premium')) updateJournalTeaser();
+}
+
 // Populate filter selectors from journal data
 function populateJournalFilters(entries) {
   const runeEl = document.getElementById('jf-rune');

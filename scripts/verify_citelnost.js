@@ -14,6 +14,10 @@
 //  (C) okno „mluvit znovu v jiném jazyce“ po single čtení (přihlášený podvržený, čtení na obrazovce, setLang): mluví jazykem, ve kterém
 //      člověk čte, cenu bere z SPREAD_COSTS jednotkou VOCAB a zrušení jazyk nezmění. Do 2026-10-11 bylo natvrdo anglicky i v IS a slibovalo
 //      „uses one credit“ (předplatitel platí jednotkou čtení). Anglický text natvrdo v JS readeru obecně hlídá ráčna ㊾.
+//  (D) Deník po přepnutí jazyka přímo na záložce (přihlášený podvržený, dvě ukázková čtení, otevřená karta): žádný text rozhraní nezůstane
+//      stejný — oba směry naráz, i islandština v anglické appce — a otevřená karta zůstane otevřená. Obsah čtení (jméno runy, text, otázka,
+//      myšlenka) zůstává v jazyce čtení, proto se nepočítá. Aktivní filtr po přepnutí zůstane. Do 2026-10-11 Deník překresloval updateUIText
+//      celý — bez filtru a se zaklapnutými kartami (§14); nález procházky přihlášené appky, CODE-read.
 // Neumí: text přes obrázek (bere barvu pozadí předků), stavy přihlášeného (čtení, menu), stín a obrys písma.
 // Útok: scripts/protipriklady.py → PRIPADY.
 //   node scripts/verify_citelnost.js            · --slabe vypíše i texty mezi 3 a 4,5 : 1 (podklad pro rozhodnutí o vzhledu)
@@ -77,7 +81,7 @@ const TYPY = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; cha
   '.jpg': 'image/jpeg', '.svg': 'image/svg+xml', '.json': 'application/json', '.webmanifest': 'application/manifest+json', '.woff2': 'font/woff2' };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 function konec() {
-  console.log(fail ? '\nFAIL  čitelnost: ' + fail + ' selhalo' : '\nOK    čitelnost: kontrast každého viditelného textu aspoň 3 : 1 (nad --dim, §5), v IS žádná zaseklá angličtina, okno přepnutí jazyka v jazyce čtenáře' + (konec.info || ''));
+  console.log(fail ? '\nFAIL  čitelnost: ' + fail + ' selhalo' : '\nOK    čitelnost: kontrast každého viditelného textu aspoň 3 : 1 (nad --dim, §5), v IS žádná zaseklá angličtina, okno přepnutí jazyka v jazyce čtenáře, Deník po přepnutí v novém jazyce' + (konec.info || ''));
   process.exit(fail ? 1 : 0);
 }
 const srv = http.createServer((req, res) => {
@@ -140,6 +144,44 @@ const srv = http.createServer((req, res) => {
     await ev(`setLang('en')`); await sleep(300);
     const o2 = await okno('is');                                   // appka v EN → okno anglicky
     await ev(`(() => { currentUser = null; setLang('is'); return true; })()`);
+
+    // (D) Deník: přihlášený (podvržený), dvě ukázková čtení (IS a EN), první karta otevřená, přepnutí IS → EN přímo na záložce
+    const DENIK = `[...(function () {
+      const OBSAH = '.jcard-name, .jcard-excerpt, .jcard-text, .jcard-question, .jcard-thought, .jcard-gathering-runes, .jcard-srune, .jcard-glyph';
+      const pane = document.getElementById('apane-journal'), out = new Set();
+      if (!pane) return out;
+      const w = document.createTreeWalker(pane, NodeFilter.SHOW_TEXT);
+      for (let n = w.nextNode(); n; n = w.nextNode()) {
+        const t = n.nodeValue.trim().replace(/\\s+/g, ' ');
+        if (t.length < 2 || !/[A-Za-zÁÉÍÓÚÝÞÆÖÐáéíóúýþæöð]{2,}/.test(t)) continue;
+        const el = n.parentElement; if (!el || el.closest(OBSAH)) continue;
+        let skryte = false;
+        for (let e = el; e; e = e.parentElement) { const cs = getComputedStyle(e); if (cs.display === 'none' || cs.visibility === 'hidden') { skryte = true; break; } }
+        if (!skryte) out.add(t.slice(0, 80));
+      }
+      return out;
+    })()]`;
+    // druhé čtení v EN: filtr jazykem ho pak skryje (filtr runou výklady záměrně nefiltruje — filterJournal)
+    const ukazka = [
+      { id: 'd1', rune_name: 'Fehu', rune_glyph: 'ᚠ', lang: 'is', short_text: 'Fehu ber með sér gróður.', deep_text: 'Dýpri lestur rúnarinnar.', area: null,
+        seeking: null, intention: null, question: null, life_rune: 'Uruz', drawn_at: '2026-05-21T12:00:00Z', follow_up: [] },
+      { id: 'd2', rune_name: 'NORNS', rune_glyph: '', lang: 'en', short_text: 'ᚠ FEHU · ᚢ URUZ · ᚦ THURISAZ', deep_text: 'The Norns reading.', area: 'spread',
+        aol: null, seeking: null, intention: null, question: null, drawn_at: '2026-05-20T12:00:00Z', follow_up: [] }];
+    await ev(`(() => { currentUser = { id: 'u1', email: 'tester@example.com' }; userTier = 'premium'; showAppTab('journal'); return true; })()`);
+    await sleep(800);   // načtení z databáze spadne (zablokovaná) — ukázková čtení až potom
+    const d1 = await ev(`(() => { _journalCache = ${JSON.stringify(ukazka)}; renderJournal(_journalCache); toggleJournalEntry(0); return ${DENIK}; })()`);
+    await ev(`setLang('en')`); await sleep(400);
+    const d2 = await ev(`(() => { const o = document.getElementById('jex-0'); return { texty: ${DENIK}, otevrena: !!(o && o.classList.contains('jcard-excerpt--open')) }; })()`);
+    const df = await ev(`(() => { setLang('is'); populateJournalFilters(_journalCache); const sel = document.getElementById('jf-lang'); sel.value = 'is'; filterJournal();
+      const pred = document.querySelectorAll('#journal-list .jcard').length; setLang('en'); const po = document.querySelectorAll('#journal-list .jcard').length;
+      sel.value = ''; return { pred: pred, po: po, hodnota: sel.value }; })()`);
+    await ev(`(() => { setLang('is'); currentUser = null; _journalCache = []; showAppTab('reading'); return true; })()`);
+    const stejne = (Array.isArray(d1) && d2 && Array.isArray(d2.texty))
+      ? d1.filter((t) => d2.texty.indexOf(t) !== -1 && !/^(EN|IS)( \+ (EN|IS))?$/.test(t) && !/^(Fehu|Uruz|Thurisaz|NORNS)$/i.test(t)) : null;
+    rekni(!!stejne && !stejne.length && d1.length > 3 && d2.otevrena,
+      '(D) Deník po přepnutí IS → EN na záložce: rozhraní anglicky (' + (Array.isArray(d1) ? d1.length : 0) + ' textů), otevřená karta zůstala otevřená',
+      stejne ? 'v EN zůstalo: ' + stejne.map((t) => '„' + t + '“').join(', ') + (d2 && !d2.otevrena ? ' · karta zaklapla' : '') : JSON.stringify({ d1, d2 }).slice(0, 300));
+    rekni(!!df && df.pred === 1 && df.po === 1, '(D) Deník po přepnutí jazyka drží filtr (jazyk IS: 1 čtení ze 2)', JSON.stringify(df));
     const anglicky = /\b(SPEAK|AGAIN|STAY|YES|credits?)\b/i;
     rekni(!!o1 && o1.otevreno && o1.jazyk === 'is' && o1.zavreno && o1.jazykPo === 'is' && /ENSKU/.test(o1.title) && /ÍSLENSKU/.test(o1.zpet)
           && ![o1.title, o1.body, o1.ok, o1.zpet, o1.cena].some((x) => anglicky.test(x)) && o1.cena === o1.cekana.toUpperCase()

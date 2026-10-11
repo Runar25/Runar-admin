@@ -344,6 +344,8 @@ function setLang(l) {
   // Životní runa (od 2026-09-11 vlastní záložka): texty kreslí updateTreeTab, updateUIText je nepřepíše — po přepnutí jazyka tu
   // zůstávala předchozí řeč (2026-10-10, kontrola návštěvníka: v EN „Skráðu þig til að lesa hvað þessi rún ber.“ a tlačítko IS).
   if (activeAppTab === 'liferune' && typeof updateTreeTab === 'function') updateTreeTab();
+  // Deník (2026-10-11, procházka CODE-read): po přepnutí jazyka zůstával v předchozí řeči — prekresliDenik v runar-journal.js.
+  if (activeAppTab === 'journal' && typeof prekresliDenik === 'function') prekresliDenik();
 }
 
 function applyLangToggle(l) {
@@ -821,8 +823,8 @@ function _updateGateTexts() {
   const jgTxt = document.getElementById('journal-gate-txt');
   if (jgTxt) jgTxt.innerHTML = t('journal_gate_txt');
   setText('journal-gate-btn', t('become_rs_btn'));
-  // Re-render journal if it's open (picks up new lang labels)
-  if (activeAppTab === 'journal' && _journalCache.length > 0) renderJournal(_journalCache);
+  // Deník se tu do 2026-10-11 překresloval celý (updateUIText → stav, proti §14): zahodil aktivní filtr a zaklapl otevřené karty. Přepnutí
+  // jazyka na záložce Deník ho teď překreslí prekresliDenik v setLang (runar-journal.js) — filtr i otevřené karty zůstanou. Smoke ㊽ (D).
   // Single-source text updates for elements not covered elsewhere
   setText('redeem-btn', t('redeem_btn'));
   // Podnadpis slibuje e-mail jen tehdy, kdyz e-mailove prihlaseni opravdu je (AUTH_EMAIL_ENABLED). 2026-10-09: kód místo odkazu.
