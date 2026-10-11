@@ -10147,3 +10147,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   redeem-code navíc prošel dotazem na rate limit do databáze. **Hranice:** přihlášená cesta (čtení, hlas, admin) živě po tomhle nasazení
   nevyzkoušená; kompenzace v redeem-code živě nevyzkoušená (chybu add_credits nejde vyvolat bez zásahu do DB).
 - Affected doc(s): `RUNAR_BACKLOG.md` kolo 2 / 9 — v témže commitu.
+
+## 2026-10-11 (15) — Pravidla CLAUDE.md: přehled podle témat, pět sloučení, rozsah schvalování plánu
+
+- **Rozhodl:** owner 2026-10-11 *„8. ok 9. ok 10. ok“* na návrhy CODE-read z kontroly duplicit v pravidlech (BACKLOG kolo 2 / 10).
+- **Přehled podle témat** nahoře v „ABSOLUTNÍ PRAVIDLA“ (jen čísla). Přečíslovat nejde: odkazů na § jsou stovky ve 179 souborech kódu.
+- **Sloučeno (obsah přestěhovaný, nic smazané; staré číslo nese jen odkaz):** §8 a §15 → §10 (vše „texty a hodnoty z configu, nikdy natvrdo“) ·
+  §3 → §18 bod 6 (zvláštní případ jednoho zdroje) · §22 → §20 (praxe téhož pravidla) · §26 → §21 (obojí „rozhodnutí je směr, ne zámek“) ·
+  §27 → §25 B (obojí „napřed se sám vyvrať“). Živých pravidel 32 → 25.
+- **Rozsah schvalování plánu:** MEMORY.md a working-style říkaly „NIKDY nezačít bez schváleného plánu“, §16 a `find-a-gap-close-it-now`
+  „oprav sám“. Platí: plán schvaluje owner u nových funkcí a změn chování; rozpory, duplikáty, chyby, vlastní kontroly a paměť se opravují
+  bez ptaní. Vlastník znění = `memory/working-style.md`.
+- Affected doc(s): `CLAUDE.md`, `memory/working-style.md`, `memory/MEMORY.md` — v témže commitu.

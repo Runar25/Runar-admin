@@ -43,7 +43,10 @@ cesta, kudy to přišlo**.
 Krok 4 přitom zabil moji vlastní myšlenku postavit mapu vazeb: mapa ukazuje strukturu, kterou
 zjistím grepem, a neukazuje *proč* — což je jediné, co mi po compactu chybí.
 
-### Explore → Plan → Implement — nikdy přeskočit
+### Explore → Plan → Implement — nikdy přeskočit (u nových věcí)
+**Plán schvaluje owner u nových funkcí a změn chování** (co uživatel uvidí, co se počítá, prompt, data). **Bez ptaní** se opravují
+rozpory doc × kód, duplikáty a chyby (CLAUDE.md §16, §20), vlastní kontroly a paměť ([[find-a-gap-close-it-now]]) — a dohodnutý
+plán se odjede celý bez ptaní mezi kroky ([[proceed-dont-ask]]). DECISIONS 2026-10-11 (15).
 1. Ty popíšeš záměr (nemusí být technicky přesně)
 2. Claude ukáže co to znamená v praxi — kde to sáhne, co ovlivní, co je nejdřív
 3. Ty doplníš / upřesníš / zamítneš

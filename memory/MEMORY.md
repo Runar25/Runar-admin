@@ -20,7 +20,8 @@ Na začátku každé session PŘEČÍST V TOMTO POŘADÍ:
 
 Po přečtení potvrdit: „Mám kontext — jsem připraven."
 
-⚠️ **NIKDY nezačít implementovat bez toho, aby uživatel schválil plán.**
+⚠️ **Nová funkce nebo změna chování → napřed ownerem schválený plán.** Opravy rozporů, duplikátů a vlastních kontrol bez ptaní —
+rozsah vlastní `working-style.md` („Explore → Plan → Implement“).
 
 ⭐ **Rozejdou-li se zdroje, nebo jde-li o už rozhodnutou věc → CLAUDE.md §20** (vyhrává produkce; neptat se, dohledat).
 

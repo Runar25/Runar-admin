@@ -61,6 +61,10 @@ runar-config.js → runar-runes.js → [reader: runar-names.js → runar-names-r
 
 ## ABSOLUTNÍ PRAVIDLA
 
+**Podle témat** (čísla se nemění kvůli odkazům; sloučené číslo nese jen odkaz): kód §1 §4 §7 §11 §12 §13 §14 · texty a hodnoty
+z configu §10 · UI §5 §32 · islandština §2 §6 · jeden zdroj a dokumenty §16 §17 §18 §20 §28 · ověřování §19 §24 §25 · rozhodování
+§21 §23 · provoz §29 §30 §31. Sloučené: §3→§18 · §8, §15→§10 · §9→§2 · §22→§20 · §26→§21 · §27→§25.
+
 ### §1 — JS změny = Python skripty
 Edit tool kazí apostrofy `'` → curly quotes → SyntaxError.
 JS soubory: VŽDY přes Python patch skript. CSS + HTML (bez inline JS) + translations.js: Edit tool OK — u translations.js ne na řádku s `\uXXXX` ([[edit-tool-escapes-new-text]]).
@@ -104,7 +108,7 @@ a přitom neaplikovaly. **Post-processor na IS text už nikdy nezaváděj**; kor
 (vrstva 3), kde je model ohne podle kontextu.
 
 ### §3 — Sdílené moduly = automatický sync
-runar-character.js a runar-utils.js načítají reader i shrine. NIKDY neduplikovat do shrine.
+→ §18 bod 6 (sloučeno 2026-10-11, DECISIONS 2026-10-11 (15)). Číslo zůstává kvůli odkazům.
 
 ### §4 — SW verze
 Auto-bump: git pre-commit hook (hooks/pre-commit.py). Po fresh clone: `python -X utf8 hooks/install-hooks.py`
@@ -124,22 +128,24 @@ Jména tierů sem NEPIŠ — mají IS varianty a bydlí v `TIERS.*.label` / `.la
 Jeden commit = jedna věc. Push ihned. Použít smoke test: `python -X utf8 smoke.py`
 
 ### §8 — Tier hodnoty = vždy z configu
-```js
-TIER_LIMITS.rune_seeker.onboarding_label_en  // ✅
-'five readings each month'                    // ❌ NIKDY
-```
+→ §10 (sloučeno 2026-10-11, DECISIONS 2026-10-11 (15)). Číslo zůstává kvůli odkazům.
 
 ### §9 — IS text = zkontrolovat před commitem
 → §2, „Kontrola IS“ bod 1 (`check-is.py` pouští pre-commit sám). Číslo zůstává kvůli odkazům; do 2026-10-11 tu stála kopie bodu 1.
 
-### §10 — NULA hardcoded strings v logice
+### §10 — Texty, hodnoty a jména z UI_TEXT / VOCAB / TIERS / configu, NIKDY natvrdo
 ```
 t('key')          ← statický z UI_TEXT
 tp('key', {vars}) ← šablona: 'You have {casts} remaining'
 vn('cast', n, l)  ← plural z VOCAB: '3 casts' / '3 spár'
 vl('card', l)     ← label z VOCAB: 'Rune Card' / 'Rúnakort'
+TIER_LIMITS.rune_seeker.onboarding_label_en  // ✅   'five readings each month'  // ❌ NIKDY
 ```
 Přidání jazyka = jen nový blok v UI_TEXT + VOCAB. Žádné jiné soubory.
+**Hodnoty tierů** (limity, kapacity, štítky) jen z configu (do 2026-10-11 §8). **Název karty / jednotky / spá a jména tierů** přes
+`vl()`/`vlp()`/`vn()`/`tp({card})` / `TIERS[x].label`; štítky a tlačítka templatuj s `{card}`/`{unit}`, v dlouhé marketingové próze
+je brand jméno OK. Platí i pro hodnoty v translations.js (gift_card_btn, panely). Jak zbývající místa najít → working-style.md;
+seznam stavu se nevede (§20.4). (Do 2026-10-11 §15.)
 
 ### §11 — IS text v Python skriptech = VŽDY literální znaky
 Escape sekvence NIKDY — pouze literal UTF-8 s `python -X utf8`. (detaily + příklady → working-style.md)
@@ -161,10 +167,7 @@ Dynamický obsah patří do dedikovaných funkcí:
 Porušení způsobí přepsání personalizovaného textu při přepnutí jazyka.
 
 ### §15 — Vocab/tier termíny = z VOCAB/TIERS, NIKDY natvrdo
-Název karty/jednotky/spá a tier jména: přes `vl()`/`vlp()`/`vn()`/`tp({card})` / `TIERS[x].label`.
-Štítky a tlačítka templatuj s `{card}`/`{unit}` placeholderem; v dlouhé marketingové próze je brand jméno OK.
-Platí i pro hodnoty v translations.js (ne jen logiku) — gift_card_btn, panely atd.
-Jak zbývající místa najít (audit) → working-style.md; seznam stavu se nevede (§20.4).
+→ §10 (sloučeno 2026-10-11, DECISIONS 2026-10-11 (15)). Číslo zůstává kvůli odkazům.
 
 ### §16 — Two-output rule + Reconciliation (doc sync)
 Task měnící chování/rozhodnutí (ne refactor/CSS) = Output A (práce) + Output B = 1 záznam do
@@ -196,6 +199,7 @@ Kořen měsíce oprav = duplikace + rozsypané řetězce („všechno všude a n
 3. **Refaktor měnící generovaný výstup = golden-verify** (snapshot PŘED/PO přes `scripts/golden/`, diff = jen zamýšlené). Nikdy „přepiš a doufej".
 4. **Změny kvality čtení = MĚŘIT evalem** (Workflow: generuj → adversariální grader), ne hádat. Objektivní věci (IS gramatika) měř tvrdě; subjektivní styl = human judgment (auto-grader je moc přísný).
 5. **Nová věc → §13 full-path** (projít VŠECHNY cesty) PLUS zapsat do jednoho packu/configu, ne rozsypat po souborech.
+6. **Sdílené moduly:** `runar-character.js` a `runar-utils.js` načítají reader i shrine — NIKDY je neduplikovat do shrine (do 2026-10-11 §3).
 
 ### §19 — Ověřuj VÝSLEDEK, ne tvar kódu (anti-tichá-chyba)
 Měsíc tichých chyb (korekce běžely mrtvé, check-is skenoval špatnou plochu, `láta séð` prošlo) měl JEDEN kořen: každá kontrola ověřovala **tvar kódu** (parsuje? string existuje ve zdroji? builder dává stejné byty?), ale nic neprotlačilo známý vstup **reálnou cestou** a neověřilo **výsledek**. Rozsypání (§18) chyby jen schovalo.
@@ -229,6 +233,11 @@ ten a žádný jiný?** Neumí-li, nevzniká.
 Na rozhodnutou a datovanou věc se ownera neptej — dohledej ji (KUKY 2026-07-18).
 („§16 output B není formalita“ odtud přešlo do §16 — do 2026-10-11 tu stálo podruhé.)
 
+**Najdeš duplikát nebo chybu — i mimo zadání → hned oprav, nebo zapiš; nikdy tiše přejít** (do 2026-10-11 §22). KUKY 2026-08-02:
+*„pokud narazíš na duplikát, chybu, tak budeme opravovat nebo zapsat, ať se nezapomene."* Malé a v rozsahu úkolu → oprav hned;
+jinak **zapiš do `RUNAR_BACKLOG.md`** (příp. spawn_task chip) s dost kontextem, aby to šlo vyřešit bez téhle konverzace. Nikdy jen
+zmínit a nechat být.
+
 ### §21 — Ownerův nápad = směr k dopracování, ne hotové zadání (platí pro VŠECHNY session)
 KUKY 2026-08-02: *„mám myšlenku, ale ta potřebuje korekci."* Když owner přinese nápad nebo rozhodnutí,
 **NEjen souhlasit a stavět.** Nejdřív dát **kritický pohled + proveditelnost**: kde to drhne, co je slabé,
@@ -237,11 +246,20 @@ Souhlas bez kritiky ownerovi nepomáhá — výslovně ji chce slyšet. **Rozhod
 mění se novým datovaným záznamem v `RUNAR_DECISIONS.md`; při rozporu dej **VAROVÁNÍ**, ne tichý drift.
 Detail → [[decisions-are-directions-not-locks]].
 
-### §22 — Duplikát / chyba → hned oprav, nebo zapiš (nikdy tiše přejít) (platí pro VŠECHNY session)
-KUKY 2026-08-02: *„pokud narazíš na duplikát, chybu, tak budeme opravovat nebo zapsat, ať se nezapomene."*
-Narazíš při práci na **duplikát** (§20) nebo **chybu/bug** — i mimo zadání: buď to **hned oprav** (malé
-+ v rozsahu úkolu), nebo **zapiš do `RUNAR_BACKLOG.md`** (příp. spawn_task chip) s dost kontextem, aby
-to šlo vyřešit bez téhle konverzace. Nikdy jen zmínit a nechat být. (Do 2026-10-11 tu stál odkaz na paměť, která byla jen kopií tohohle odstavce.)
+**Opustit něco ≠ zavřít to navždy; návrat je povolený, ale JEN očištěný** (do 2026-10-11 §26). KUKY 2026-08-14: *„pokud od něčeho
+odejdeme má to v tu chvíli důvod, ale neznamená to že se k tomu nemůže v obměněné formě vrátit."* Když se od něčeho odejde, má to
+v tu chvíli **důvod**. Ten důvod nezaniká — ale ani nezakazuje návrat. Vracíš-li opuštěnou věc, **napřed dohledej, proč odešla**, a vrať
+ji tak, aby ta příčina byla odstraněná:
+1. Najdi datovaný záznam odchodu (`RUNAR_DECISIONS.md`, komentář u mrtvého kódu).
+2. Pojmenuj **konkrétní vadu**, kvůli které odešla.
+3. Vrať **očištěnou** verzi, kde ta vada prokazatelně není — ne kopii původního stavu.
+4. Zapiš nové datované rozhodnutí, které se na to staré odvolává.
+
+Návrat bez kroků 1–3 je recidiva, ne rozhodnutí. Mrtvý kód nechávaný „pro historii" je proto komentovaný důvodem odchodu —
+čti ten komentář dřív, než ho oživíš.
+
+### §22 — Duplikát / chyba → hned oprav, nebo zapiš (nikdy tiše přejít)
+→ §20, poslední odstavec (sloučeno 2026-10-11, DECISIONS 2026-10-11 (15)). Číslo zůstává kvůli odkazům.
 
 ### §23 — Nevymýšlej fakta ani lore → zastav a flagni (platí pro VŠECHNY session, Code i Cowork)
 Chybí-li v kánonu 🔒 **fakt** (etymologie, IS gramatika, čísla, DB) nebo 📜 **lore** (Rúnar, mytologie,
@@ -253,7 +271,8 @@ Než něco prohlásíš za nález/pravdu, **změř / protlač produkční cestou
 ani „vypadá to" se nepočítá. Kód: seed-and-assert na výsledek (§19). Obsah/data (Cowork): claim o
 datech/screenshotu opři o měření, ne o dojem; nejde-li změřit, řekni „nevím". Detail → [[measure-dont-eyeball]].
 
-### §25 — Vlastní domněnku zabij obrácenou pákou (platí pro VŠECHNY session, Code i Cowork)
+### §25 — Napřed se sám vyvrať: obrácená páka a útok na nástroj (platí pro VŠECHNY session, Code i Cowork)
+**A) Vlastní domněnku zabij obrácenou pákou.**
 Než začneš **přidávat** obsah, aby se hypotéza potvrdila, **hni pákou na opačnou stranu** a zkontroluj,
 jestli platí obrácená předpověď. Je to o řád levnější a zabíjí to i domněnky, které znějí rozumně.
 
@@ -266,25 +285,8 @@ jestli platí obrácená předpověď. Je to o řád levnější a zabíjí to i
 a ověřování. Místo toho zkrácení o dalších 509 znaků: 32 % → 24 %, **p = 0,75**, navíc opačným směrem.
 Hypotéza padla za tři minuty a jednu dávku. Detail → `RUNAR_DECISIONS.md` 2026-08-14, [[falsify-by-reversing-the-lever]].
 
----
-
-### §26 — Opustit něco ≠ zavřít to navždy; návrat je povolený, ale JEN očištěný (platí pro VŠECHNY session)
-Když se od něčeho odejde, má to v tu chvíli **důvod**. Ten důvod nezaniká — ale ani nezakazuje návrat.
-KUKY 2026-08-14: *„pokud od něčeho odejdeme má to v tu chvíli důvod, ale neznamená to že se k tomu
-nemůže v obměněné formě vrátit."*
-
-Vracíš-li opuštěnou věc, **napřed dohledej, proč odešla**, a vrať ji tak, aby ta příčina byla odstraněná:
-1. Najdi datovaný záznam odchodu (`RUNAR_DECISIONS.md`, komentář u mrtvého kódu).
-2. Pojmenuj **konkrétní vadu**, kvůli které odešla.
-3. Vrať **očištěnou** verzi, kde ta vada prokazatelně není — ne kopii původního stavu.
-4. Zapiš nové datované rozhodnutí, které se na to staré odvolává.
-
-Návrat bez kroků 1–3 je recidiva, ne rozhodnutí. Mrtvý kód nechávaný „pro historii" je právě proto
-komentovaný důvodem odchodu — čti ten komentář dřív, než ho oživíš. Souvisí: [[decisions-are-directions-not-locks]].
-
-### §27 — Nástroj se obhájí dřív než výsledek (platí pro VŠECHNY session, Code i Cowork)
-Než uvěříš číslu, **zaútoč na to, čím jsi ho naměřil**. Metrika, která prošla jen tím testem,
-kvůli kterému vznikla, není ověřená — je vybraná. Tři útoky, v tomhle pořadí:
+**B) Nástroj se obhájí dřív než výsledek** (do 2026-10-11 §27). Než uvěříš číslu, **zaútoč na to, čím jsi ho naměřil**. Metrika,
+která prošla jen tím testem, kvůli kterému vznikla, není ověřená — je vybraná. Tři útoky, v tomhle pořadí:
 
 1. **Půlka proti půlce** — rozděl JEDNU dávku na dvě a spočítej metriku zvlášť. Liší-li se
    půlky víc než dávky, které srovnáváš, je rozdíl šum.
@@ -298,6 +300,14 @@ odhalil, že **6 ze 7** samozřejmých signálů ukazovalo obráceně (měřily 
 stejnost) · útok 3 dokázal, že přeživší metrika nevidí rytmus (zamíchání slov uvnitř čtení
 změní číslo o **0,0000**). Detail → [[attack-the-metric-not-just-the-result]].
 **Párové metriky:** nikdy bootstrap s opakováním (duplikát = shoda 1,0), jen jackknife.
+
+---
+
+### §26 — Opustit něco ≠ zavřít to navždy; návrat je povolený, ale JEN očištěný
+→ §21, druhý odstavec (sloučeno 2026-10-11, DECISIONS 2026-10-11 (15)). Číslo zůstává kvůli odkazům.
+
+### §27 — Nástroj se obhájí dřív než výsledek
+→ §25 B (sloučeno 2026-10-11, DECISIONS 2026-10-11 (15)). Číslo zůstává kvůli odkazům.
 
 ### §28 — Každá změna nese svůj DŮVOD tam, kde bydlí (platí pro VŠECHNY session)
 KUKY 2026-08-16: *„každá změna musí být označena proč se to dělo."* **Diff ukazuje CO se změnilo;
