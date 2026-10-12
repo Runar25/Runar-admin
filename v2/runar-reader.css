@@ -538,7 +538,8 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
    navíc jako jediný popisek nebyl verzálkami — text z UI_TEXT je psaný malými. */
 #setup-gender-row{margin-top:16px;}
 #setup-gender-lbl{text-transform:uppercase;}
-.opt{opacity:0.45;font-size:0.85em;}
+/* 2026-10-12 (owner „ano“): „(OPTIONAL)“ měl 3,12 : 1 → průhlednost 0,45 → 0,65, ať drží 4,5 : 1 (WCAG). Hlídá smoke ㊽. */
+.opt{opacity:0.65;font-size:0.85em;}
 /* 2026-10-11 bez opacity 0.45: --muted přes průhlednost vycházelo ≈ --dim (#445160, kontrast 2,41 : 1), které §5 na text zakazuje — upozornění
    „not professional advice“ nešlo přečíst (procházka CODE-read). Vzor .credit-note (Cinzel, malé písmo, --muted bez průhlednosti, 7,7 : 1). Smoke ㊽. */
 .q-teaser-txt{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--muted);margin:14px 0 6px;}

@@ -171,6 +171,8 @@ PRIPADY = [
  ('chyti', 'verify_citelnost.js', 'v2/runar-translations.js', 'replace', "    seek_hint:        'This sets the tone.',", ''),
  # 2026-10-12 (CODE-tune): „+“ s upozorněním u otázky (DECISIONS 2026-10-12 (7)) zmizí z popisku — (G) to musí poznat.
  ('chyti', 'verify_citelnost.js', 'v2/runar-app.js', 'replace', "'</span>' + _tgl('qpriv');", "'</span>';"),
+ # 2026-10-12 (CODE-tune): práh (A) 4,5 : 1 — „(OPTIONAL)“ zpátky na průhlednost 0,45 (3,12 : 1) musí shodit kontrolu.
+ ('chyti', 'verify_citelnost.js', 'v2/runar-reader.css', 'replace', '.opt{opacity:0.65;', '.opt{opacity:0.45;'),
  ('obchazka', 'verify_ui_text_used.js', 'scripts/verify_ui_text_used.js', 'replace', " && !post.some((p) => k.endsWith(p))", ''),
  ('chyti', 'verify_pravidla_mapa.js', 'scripts/utils/pravidla_mapa.json', 'replace', '"pravidla": ["§30"],', '"pravidla": ["§99"],'),
  # kolo 3 / 4h (2026-10-11): obrazy, kalendář, myšlenka ✦, zrcadlo parseru

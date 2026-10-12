@@ -11194,3 +11194,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   hlášení a čtení po smazání účtu, DPIA — „před veřejným spuštěním“.
 - Affected doc(s): `RUNAR_BACKLOG.md` (sekce „Soukromí — kontrola GDPR 2026-10-12“: rozhodnutí → úkol CODE-tune, zbytek před spuštěním) —
   v témže commitu.
+
+## 2026-10-12 (9) — Text v appce, nápovědě a zásadách aspoň 4,5 : 1, velké písmo 3 : 1; hlídá smoke ㊽
+
+- *Číslo:* (8) nesou commity db39e0c, 3fdbcb0 a 62eba59 pro záznam, který CODE-web smazala — proto (9), ať odkazy nesplývají.
+- **Rozhodl:** owner 2026-10-12 *„ano“* na návrh z procházky appky (BACKLOG „Procházka appky“, předala CODE-read): slabé texty zvednout
+  na 4,5 : 1, styl zůstává.
+- **Proč:** 59 textů mělo 3,1–3,6 : 1, pod doporučením WCAG AA pro malé písmo: „(OPTIONAL)“ ve formuláři čtení, nadpisy sekcí a hlavičky
+  tabulek v nápovědě a zásadách, podtitul stránek, štítek „soon“. Kontrola ㊽ je jen vypisovala — padala až pod 3 : 1 (§5, --dim).
+- **Co (CODE-tune):** menší průhlednost těch stylů, přeměřeno — žádný text pod 4,5 : 1. ㊽ (A) od teď padá pod 4,5 : 1 (velké písmo
+  pod 3 : 1), ať se slabý text nevrátí s první novou průhledností; útok v protipříkladech („(OPTIONAL)“ zpátky na 0,45) ji shodí.
+- Affected doc(s): `RUNAR_BACKLOG.md` (položka „zvednout na 4,5 : 1“ odškrtnutá) — v témže commitu.

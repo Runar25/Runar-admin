@@ -4,9 +4,10 @@
 // --muted přes průhlednost 0,45 dalo barvu ≈ --dim, kterou §5 na text zakazuje (KUKY 2026-09-24). Pravidlo stálo jen v CLAUDE.md
 // a nic ho nehlídalo, porušení se našlo až okem (§30).
 // Co dělá (skutečný prohlížeč bez okna; reader jako návštěvník — s oknem „Where to start“ i bez, EN i IS —, nápověda a zásady EN i IS):
-//  (A) kontrast: každý viditelný text — jeho barva × průhlednost předků proti prvnímu barevnému pozadí předků — má aspoň 3 : 1, tedy
-//      viditelně nad --dim (2,2 : 1). Neaktivní ovládání (zamčené pilulky a runy, „coming“, disabled) je výjimka: vybledlé je záměrně
-//      a WCAG ho nepočítá. Texty mezi 3 a 4,5 : 1 (doporučení WCAG pro malé písmo) jen vypíše — to je rozhodnutí o vzhledu, ne §5.
+//  (A) kontrast: každý viditelný text — jeho barva × průhlednost předků proti prvnímu barevnému pozadí předků — má aspoň 4,5 : 1,
+//      velké písmo (24 px, tučné 18,66 px) aspoň 3 : 1 (WCAG AA). Neaktivní ovládání (zamčené pilulky a runy, „coming“, disabled) je
+//      výjimka: vybledlé je záměrně a WCAG ho nepočítá. Do 2026-10-12 padalo jen pod 3 : 1 (viditelně nad --dim, §5) a pásmo 3–4,5
+//      se jen vypisovalo — 59 slabých textů; owner „ano“ na 4,5 : 1, texty zesvětleny a práh zvednut, ať se to nevrátí.
 //  (B) zaseklá angličtina: viditelný text, který je na stránce v EN i v IS stejný, je chyba (§2, §10). Výjimky: přepínač EN/IS, značky
 //      (RÚNAR, AGNDOFA…), jména run a služeb, adresy webů a e-mailů, název firmy, ceny v kr. Jména Rúnar/Agndofa/Óðinn se z textu napřed vyjmou, ať anglickou větu
 //      s „Rúnar“ nepustí jeho „ú“ (scripts/i18n-diff.js, ze kterého logika je, takovou větu přeskočí). Od 2026-10-12 i zástupné texty polí
@@ -28,7 +29,7 @@
 //      Mezi nimi musí být „+“ u otázky (qpriv-hint): kam otázka jde a že se ukládá (DECISIONS 2026-10-12 (7)) — jeho zmizení nesmí projít.
 // Neumí: text přes obrázek (bere barvu pozadí předků), stavy přihlášeného (čtení, menu), stín a obrys písma.
 // Útok: scripts/protipriklady.py → PRIPADY.
-//   node scripts/verify_citelnost.js            · --slabe vypíše i texty mezi 3 a 4,5 : 1 (podklad pro rozhodnutí o vzhledu)
+//   node scripts/verify_citelnost.js
 'use strict';
 const fs = require('fs'), path = require('path'), http = require('http'), os = require('os'), cp = require('child_process');
 const ROOT = path.resolve(process.env.RUNAR_ROOT || path.join(__dirname, '..')).replace(/\\/g, '/');
@@ -98,7 +99,7 @@ const TYPY = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; cha
   '.jpg': 'image/jpeg', '.svg': 'image/svg+xml', '.json': 'application/json', '.webmanifest': 'application/manifest+json', '.woff2': 'font/woff2' };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 function konec() {
-  console.log(fail ? '\nFAIL  čitelnost: ' + fail + ' selhalo' : '\nOK    čitelnost: kontrast každého viditelného textu aspoň 3 : 1 (nad --dim, §5), v IS žádná zaseklá angličtina, okno přepnutí jazyka v jazyce čtenáře, Deník po přepnutí v novém jazyce, Rúnakort ve správném pádu, selhaný profil se nevydává za nový' + (konec.info || ''));
+  console.log(fail ? '\nFAIL  čitelnost: ' + fail + ' selhalo' : '\nOK    čitelnost: kontrast každého viditelného textu aspoň 4,5 : 1 (velké písmo 3 : 1), v IS žádná zaseklá angličtina, okno přepnutí jazyka v jazyce čtenáře, Deník po přepnutí v novém jazyce, Rúnakort ve správném pádu, selhaný profil se nevydává za nový' + (konec.info || ''));
   process.exit(fail ? 1 : 0);
 }
 const srv = http.createServer((req, res) => {
@@ -272,22 +273,17 @@ const srv = http.createServer((req, res) => {
     }
 
     // (A) kontrast
-    let textu = 0; const pod = [], slabe = new Map();
+    let textu = 0; const pod = [];
     for (const s of stavy) {
       if (!s.v) { rekni(false, '(A) ' + s.jm + ': měření ve stránce selhalo'); continue; }
       textu += s.v.length;
       for (const x of s.v) {
-        if (x.k < PRAH) pod.push(s.jm + ': ' + x.k + ' : 1  ' + x.kde + ' „' + x.txt + '“ (' + x.px + ' px, průhlednost ' + x.op + ')');
-        else if (x.k < (x.velky ? 3 : WCAG)) {
-          slabe.set(x.kde + ' ' + x.k, s.jm.split(' ')[0]);
-          if (process.argv.includes('--slabe')) console.log('  slabé  ' + s.jm + ': ' + x.k + ' : 1  ' + x.kde + ' „' + x.txt + '“ (' + x.px + ' px, průhlednost ' + x.op + ')');
-        }
+        if (x.k < (x.velky ? PRAH : WCAG)) pod.push(s.jm + ': ' + x.k + ' : 1  ' + x.kde + ' „' + x.txt + '“ (' + x.px + ' px, průhlednost ' + x.op + ')');
       }
     }
     pod.forEach((p) => console.log('  ' + p));
-    rekni(!pod.length && textu > 50, '(A) kontrast aspoň 3 : 1 — ' + textu + ' textů v ' + stavy.length + ' stavech', pod.length + ' textů pod 3 : 1 (§5: --dim nikdy pro text)');
-    if (slabe.size) konec.info = ' · slabší než 4,5 : 1 (doporučení WCAG, rozhodnutí o vzhledu): ' + slabe.size + ' — ' +
-      [...new Set(slabe.values())].join(', ');
+    rekni(!pod.length && textu > 50, '(A) kontrast aspoň 4,5 : 1, velké písmo 3 : 1 — ' + textu + ' textů v ' + stavy.length + ' stavech',
+      pod.length + ' textů pod prahem (WCAG AA; §5: --dim nikdy pro text)');
 
     // (B) zaseklá angličtina
     const zasekle = []; let porovnano = 0;

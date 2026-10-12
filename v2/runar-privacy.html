@@ -20,7 +20,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 .topbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(10,12,18,0.96);border-bottom:1px solid rgba(46,74,112,0.4);backdrop-filter:blur(16px);}
 .topbar-inner{max-width:760px;margin:0 auto;padding:13px 28px;display:flex;align-items:center;justify-content:space-between;}
 .brand{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:4px;color:var(--gold);opacity:0.85;}
-.topbar-sub{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:2px;color:var(--muted);opacity:0.6;}
+/* 2026-10-12 (owner „ano“): průhlednost zvednuta, ať text drží 4,5 : 1 (WCAG); dřív 3,4–3,6 : 1. Hlídá smoke ㊽. */
+.topbar-sub{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:2px;color:var(--muted);opacity:0.75;}
 .back-btn{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;color:var(--gold);opacity:0.7;text-decoration:none;transition:opacity 0.2s;padding:6px 14px;border:1px solid rgba(255,191,0,0.3);}
 .back-btn:hover{opacity:1;}
 
@@ -41,7 +42,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 
 /* SECTIONS */
 .help-section{margin-bottom:48px;}
-.help-section-label{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:4px;color:var(--gold);opacity:0.5;margin-bottom:24px;padding-bottom:10px;border-bottom:1px solid rgba(255,191,0,0.12);}
+.help-section-label{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:4px;color:var(--gold);opacity:0.6;margin-bottom:24px;padding-bottom:10px;border-bottom:1px solid rgba(255,191,0,0.12);}
 .help-block{margin-bottom:32px;}
 .help-block-title{font-family:'Cinzel',serif;font-size:0.78em;letter-spacing:2.5px;color:var(--white);margin-bottom:12px;opacity:0.9;}
 .help-block-body{font-size:1.05em;line-height:1.9;color:var(--muted);}
@@ -54,7 +55,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 
 /* DATA TABLE */
 .data-table{width:100%;border-collapse:collapse;margin-top:8px;font-size:0.9em;}
-.data-table th{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;color:var(--gold);opacity:0.5;padding:10px 12px;text-align:left;border-bottom:1px solid rgba(46,74,112,0.4);}
+.data-table th{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;color:var(--gold);opacity:0.6;padding:10px 12px;text-align:left;border-bottom:1px solid rgba(46,74,112,0.4);}
 .data-table td{padding:12px;border-bottom:1px solid rgba(46,74,112,0.2);color:var(--muted);vertical-align:top;line-height:1.6;}
 .data-table td:first-child{font-family:'Cinzel',serif;font-size:0.7em;letter-spacing:1.5px;color:var(--white);white-space:nowrap;}
 .data-table tr:last-child td{border-bottom:none;}
