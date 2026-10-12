@@ -1419,10 +1419,8 @@ async function loadCorrections() {
     const { data } = await sb.from('runar_corrections').select('*').order('created_at');
     raw = data || [];
   } catch { raw = []; }
-  const local = localStorage.getItem('runar_corrections');
-  if (local) {
-    try { raw = [...raw, ...JSON.parse(local)]; } catch {}
-  }
+  // 2026-10-12 (CODE-tune): pryč místní doplněk z localStorage `runar_corrections` (od bcfc1cd, 2026-05-16). Ten klíč v celé historii
+  // nic nezapsalo (shrine si při výpadku DB ukládá `runar_corr`, jiný klíč) — a cokoli by tam stálo, šlo by rovnou do promptu.
   // Gated by CORRECTIONS_IN_PROMPT (config): loaded for in-context prompt guidance (getCorrPrompt).
   corrections = (typeof CORRECTIONS_IN_PROMPT !== 'undefined' && !CORRECTIONS_IN_PROMPT)
     ? [] : normalizeCorrections(raw);
