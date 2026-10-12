@@ -79,10 +79,12 @@ const JAZYK = `(() => {
     const box = el.getBoundingClientRect(); if (skryte || !box.width || !box.height) continue;
     out.push(t.slice(0, 80));
   }
-  // zástupné texty viditelných polí (2026-10-12: „your@email.com“ v přihlášení stál natvrdo i v IS a text v prvcích ho neviděl)
+  // zástupné texty viditelných polí (2026-10-12: „your@email.com“ v přihlášení stál natvrdo i v IS a text v prvcích ho neviděl). Bez výjimky
+  // pro e-mail: ta je pro skutečné adresy v nápovědě a zásadách, příkladová adresa v poli se překládá (s ní útok „setPH pryč“ prošel).
+  const POVOLENO_POLE = POVOLENO.filter((r) => r.source.indexOf('@') === -1);
   document.querySelectorAll('input[placeholder], textarea[placeholder]').forEach((el) => {
     const t = (el.getAttribute('placeholder') || '').trim();
-    if (t.length < 2 || !/[A-Za-z]{2,}/.test(t) || /[þðæöáíóúýéÞÐÆÖÁÍÓÚÝÉ]/.test(t) || POVOLENO.some((r) => r.test(t))) return;
+    if (t.length < 2 || !/[A-Za-z]{2,}/.test(t) || /[þðæöáíóúýéÞÐÆÖÁÍÓÚÝÉ]/.test(t) || POVOLENO_POLE.some((r) => r.test(t))) return;
     for (let e = el; e; e = e.parentElement) { const cs = getComputedStyle(e); if (cs.display === 'none' || cs.visibility === 'hidden') return; }
     out.push('[pole] ' + t.slice(0, 74));
   });
