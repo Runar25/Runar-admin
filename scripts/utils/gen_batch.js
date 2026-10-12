@@ -8,6 +8,12 @@
 // hard Icelandic grammar, countable prompt behaviour. NOT a verdict on voice
 // quality — that needs real readings grouped by readings.prompt_version.
 //
+// TIER: builds the RUNE SEEKER prompt — WITHOUT the closing thought line ✦ that production adds for Standard/Premium
+// (`_thoughtFor` in v2/runar-reading.js, `TIERS.*.reading_thought`). Testers are premium, so batches here do NOT measure what
+// testers get. Decided 2026-10-12 (CODE-read, BACKLOG item by CODE-tune): test readings are now written in the conversation, not
+// via API, and the prompt is done — before using gen_batch for Standard/Premium, add the ✦ line first (the Ask sandbox already
+// calls `_thoughtFor`).
+//
 // Auth: proxy requires a JWT since FAZE 1 security (fd78a91) -> anon/publishable = 401.
 // The ADMIN token is read from env RUNAR_EVAL_TOKEN, or — if that is empty — from the file
 // ~/.runar-eval-token (outside the repo, so it can never be committed and nobody has to paste
