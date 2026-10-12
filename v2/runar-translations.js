@@ -46,6 +46,7 @@ const UI_TEXT = {
     // 2026-10-10: bez počtu číslic — Supabase posílá 8, ne 6, a délka je nastavení v dashboardu, ne vlastnost appky.
     auth_modal_sub_code:  'No password needed — you will get a code by email.',
     auth_email_lbl:       'YOUR EMAIL',
+    auth_email_ph:        'your@email.com',   // 2026-10-12: zástupný text pole — do té doby jen natvrdo v HTML, v IS anglicky (CODE-read)
     auth_code_send:       'SEND CODE',
     auth_code_sent:       'A code is on its way to {email}. Enter it here.',
     auth_code_lbl:        'CODE',
@@ -565,6 +566,7 @@ const UI_TEXT = {
     // „ekki á listanum“ 1460 · „of margar tilraunir“ 11 · „bíddu aðeins“ 671 · „hér fyrir ofan“ 15011 · „ganga inn“ 8694.
     auth_modal_sub_code:  'Það þarf ekkert lykilorð — þú færð kóða í tölvupósti.',   // 2026-10-10 bez „sex stafa“: kód má 8 číslic
     auth_email_lbl:       'NETFANGIÐ ÞITT',
+    auth_email_ph:        'nafn@dæmi.is',   // 2026-10-12: vzor příkladové adresy (jméno@příklad.is); „dæmi“ korpus 388 353
     auth_code_send:       'SENDA KÓÐA',
     auth_code_sent:       'Kóði var sendur á {email}. Sláðu inn kóðann hér.',
     auth_code_lbl:        'KÓÐINN',

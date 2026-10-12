@@ -868,6 +868,7 @@ function _updateGateTexts() {
   setText('auth-google-lbl',  t('auth_google_lbl'));
   // 2026-10-09: e-mailový blok z UI_TEXT (kód místo odkazu — runar-auth.js sendLoginCode); zelená plocha „MAGIC LINK SENT“ pryč.
   setText('auth-email-lbl',   t('auth_email_lbl'));
+  setPH('auth-email', t('auth_email_ph'));   // 2026-10-12: do té doby „your@email.com“ natvrdo v HTML i v IS (nález CODE-read)
   setText('auth-magic-btn',   t('auth_code_send'));
   setText('auth-code-lbl',    t('auth_code_lbl'));
   setText('auth-code-btn',    t('auth_code_enter'));

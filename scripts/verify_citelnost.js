@@ -9,7 +9,8 @@
 //      a WCAG ho nepočítá. Texty mezi 3 a 4,5 : 1 (doporučení WCAG pro malé písmo) jen vypíše — to je rozhodnutí o vzhledu, ne §5.
 //  (B) zaseklá angličtina: viditelný text, který je na stránce v EN i v IS stejný, je chyba (§2, §10). Výjimky: přepínač EN/IS, značky
 //      (RÚNAR, AGNDOFA…), jména run a služeb, adresy webů a e-mailů, název firmy, ceny v kr. Jména Rúnar/Agndofa/Óðinn se z textu napřed vyjmou, ať anglickou větu
-//      s „Rúnar“ nepustí jeho „ú“ (scripts/i18n-diff.js, ze kterého logika je, takovou větu přeskočí). Do 2026-10-11 to nehlídalo nic
+//      s „Rúnar“ nepustí jeho „ú“ (scripts/i18n-diff.js, ze kterého logika je, takovou větu přeskočí). Od 2026-10-12 i zástupné texty polí
+//      a otevřené přihlašovací okno („your@email.com“ tam stálo natvrdo i v IS, nález CODE-read). Do 2026-10-11 to nehlídalo nic
 //      a islandská nápověda ukazovala VISITOR, RUNE SEEKER, „+ READING CARD“ a „soon“ anglicky (procházka CODE-read).
 //  (C) okno „mluvit znovu v jiném jazyce“ po single čtení (přihlášený podvržený, čtení na obrazovce, setLang): mluví jazykem, ve kterém
 //      člověk čte, cenu bere z SPREAD_COSTS jednotkou VOCAB a zrušení jazyk nezmění. Do 2026-10-11 bylo natvrdo anglicky i v IS a slibovalo
@@ -78,6 +79,13 @@ const JAZYK = `(() => {
     const box = el.getBoundingClientRect(); if (skryte || !box.width || !box.height) continue;
     out.push(t.slice(0, 80));
   }
+  // zástupné texty viditelných polí (2026-10-12: „your@email.com“ v přihlášení stál natvrdo i v IS a text v prvcích ho neviděl)
+  document.querySelectorAll('input[placeholder], textarea[placeholder]').forEach((el) => {
+    const t = (el.getAttribute('placeholder') || '').trim();
+    if (t.length < 2 || !/[A-Za-z]{2,}/.test(t) || /[þðæöáíóúýéÞÐÆÖÁÍÓÚÝÉ]/.test(t) || POVOLENO.some((r) => r.test(t))) return;
+    for (let e = el; e; e = e.parentElement) { const cs = getComputedStyle(e); if (cs.display === 'none' || cs.visibility === 'hidden') return; }
+    out.push('[pole] ' + t.slice(0, 74));
+  });
   return out;
 })()`;
 
@@ -129,7 +137,9 @@ const srv = http.createServer((req, res) => {
     await ev(`localStorage.setItem('runar_wts_seen', '1')`);
     await nacti('runar-reader.html', `typeof setLang === 'function'`);
     await ev(`setLang('en')`); await sleep(400); await zmer('reader · návštěvník EN'); await sber('reader', 'en');
-    await ev(`setLang('is')`); await sleep(400); await zmer('reader · návštěvník IS'); await sber('reader', 'is');
+    await ev(`openAuthModal()`); await sleep(300); await sber('reader · přihlášení', 'en');
+    await ev(`setLang('is')`); await sleep(400); await sber('reader · přihlášení', 'is'); await ev(`closeAuthModal()`); await sleep(200);
+    await zmer('reader · návštěvník IS'); await sber('reader', 'is');
 
     // (C) okno přepnutí jazyka po single čtení: přihlášený (podvržený), čtení na obrazovce, bez textu v cílovém jazyce → setLang otevře okno
     const okno = (cil) => ev(`(() => {
