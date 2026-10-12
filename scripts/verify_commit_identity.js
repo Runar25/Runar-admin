@@ -8,7 +8,7 @@
 // KOŘEN nebyl prefix, ale to, že se všichni podepisují týmž jménem. Prefix nesl celou tíhu
 // sám a byl to slib, ne mechanismus. Oprava je o patro níž: **každá session commituje pod
 // svým jménem** — `git -c user.name='CODE-tune' commit …` (per-commit, NE `git config`,
-// protože všechny tři session sdílejí jeden pracovní strom a config by si přepisovaly).
+// protože všechny session sdílejí jeden pracovní strom a config by si přepisovaly).
 // E-mail zůstává stejný, takže atribuce na GitHubu se nemění.
 //
 // SAMOAKTIVACE — ta kontrola se nesmí zapnout dřív, než ji ostatní přijmou, jinak bych
@@ -27,7 +27,7 @@
 const { execSync } = require('child_process');
 
 const ROOT = process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin';
-const LANES = ['CODE-tune', 'CODE-read', 'CODE-tree'];
+const LANES = ['CODE-tune', 'CODE-read', 'CODE-tree', 'CODE-web'];   // CODE-web od 2026-10-12: veřejný web (DECISIONS 2026-10-12 (6))
 const GENERIC = 'Runar Admin';
 const KOLIK = 80;
 
@@ -66,7 +66,7 @@ console.log('  identitu už používá: ' + (prijali.length ? prijali.join(', ')
 if (prijali.length < LANES.length) {
   console.log('fáze 1 — ' + prijali.length + '/' + LANES.length
     + ' lane se podepisuje vlastním jménem; kontrola zatím NEBLOKUJE');
-  console.log('  Až se podepíšou všechny tři, přepne se sama na blokující.');
+  console.log('  Až se podepíšou všechny (' + LANES.length + '), přepne se sama na blokující.');
   console.log('  Jak: `git -c user.name=\'CODE-<lane>\' commit …` (per-commit, ne git config —'
     + ' strom je sdílený).');
   process.exit(0);
