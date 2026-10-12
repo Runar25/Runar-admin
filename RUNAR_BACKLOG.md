@@ -3694,6 +3694,9 @@ start“ (runa = naše SVG), šířka telefonu (bez vodorovného posunu, mříž
 **Přihlášená část** (CODE-read 2026-10-11, appka z pracovního stromu na localhostu, podvržený tester s premium jen v prohlížeči, deník
 z vymyšlených řádků, volání databáze zablokovaná): postranní panel, formulář čtení a deník v EN i IS, šířka telefonu (bez vodorovného posunu),
 konzole bez chyb. Islandské věty panelu is-greynir: „lestrunum“ korpus dokládá (20×), E001 jen proto, že popisek nemá podmět.
+2026-10-12 bez vady i obrazovka hotového čtení (`callProxy` podvržená v prohlížeči, zbytek produkční cestou; čtení „someone“, aby se nic
+neukládalo): Single i Norny v EN a IS, myšlenka ✦ zvlášť, kameny run, ťuknutí na glyf, Ask podle tarifu (premium 2 otázky, standard 1 +
+nabídka vyššího tarifu, Rune Seeker jen navržené otázky), formuláře všech pěti výkladů, Mé jméno, okno smazání (jen otevřeno), Rúnakort.
 - [x] ✅ *(CODE-tune 2026-10-11: `prekresliDenik` v `runar-journal.js`, volá ho `setLang` — Deník v novém jazyce se stejným filtrem a otevřenými
   kartami, obnoví i pruh pro Rune Seekera; hlídá smoke ㊽ (D) včetně islandštiny v EN. Upřesnění příčiny: v produkci Deník překresloval
   `_updateGateTexts` v `updateUIText` z `_journalCache` — ukázková čtení přes `renderJournal` ho neplní, proto nález v testu; skutečné vady byly
