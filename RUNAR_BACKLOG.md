@@ -45,28 +45,22 @@ v `docs/archive/RUNAR_BACKLOG_odlozene.md` jako ⏸ — nejsou to úkoly. Vrací
 - [ ] **`SEASON_POOLS` — 133 obrazů v kódu, do čtení se nedostanou** (`v2/runar-character.js`; ověřeno protlačením 2026-09-08,
   CLAUDE.md „Obraznost“): mrtvá data, udržovaná dvojjazyčně. S hotovým promptem spíš odstranit (CODE-tune). Zbytek původní položky
   (Sowilo zimní obraz, losy ve spreadech) je v archivu odložených.
-- [ ] **Drobné rozpory kód ↔ komentář (zbytek inventury 2026-09-08, ověřeno 2026-10-12 CODE-read)** — pro CODE-tune: zbývá (e)
-  laboratorní V2 řetěz → podsekce níž. ✅ *(CODE-tune 2026-10-12: (a)–(d) — strop Asku stojí v configu `RUNAR_MODES.ask`, čte ho
-  `runar-reading.js` i `gen_batch.js`; komentáře u `TREE_UPDATE` a u přepínače hlasu říkají pravdu; výchozí věta z HTML pryč, appka tam
-  dává text z UI_TEXT — ověřeno v prohlížeči EN i IS)* ~~(a) `TREE_UPDATE` v `v2/runar-config.js:14` nikdo nečte · (b) komentář
+- ✅ *(CODE-tune 2026-10-12: (a)–(d) — strop Asku stojí v configu `RUNAR_MODES.ask`, čte ho `runar-reading.js` i `gen_batch.js`;
+  komentáře u `TREE_UPDATE` a u přepínače hlasu říkají pravdu; výchozí věta z HTML pryč, appka tam dává text z UI_TEXT — ověřeno
+  v prohlížeči EN i IS · (e) V2 řetěz smazán, podsekce níž)* ~~**Drobné rozpory kód ↔ komentář (zbytek inventury 2026-09-08, ověřeno
+  2026-10-12 CODE-read)**~~ ~~(a) `TREE_UPDATE` v `v2/runar-config.js:14` nikdo nečte · (b) komentář
   `v2/runar-config.js` ~ř. 574 slibuje přepínač hlasu ve shrine (`shrine_voice_profile`), který neexistuje · (c) strop Asku natvrdo
   v `v2/runar-reading.js` (~ř. 1137), mimo config (§10) · (d) výchozí „Only your name is required…“ v `v2/runar-reader.html:297`
   (přepíše ho `_updateReadingForm`, uživatel ho nevidí)~~
 
-### Mrtvý řetěz V2 charakteru k odstranění (nalezeno 2026-08-15)
-`DEF_CHAR_V2_EN` (v2/runar-character.js) je **druhá úplná kopie popisu Rúnara** a už se rozešla —
-drží rejstřík, který z produkce odešel v `8e14f74`. Jediný čtenář je `buildSysPromptV2`, který
-**nikdo nevolá**; produkce jede `buildSysPrompt`. Lab záložka, kvůli které vznikl, byla odstraněna
-v `c6eb89c` (2026-07-10). Zatím jen označeno komentářem, aby to příští session nečetla jako pravdu.
-K odstranění: `DEF_CHAR_V2_EN` + `buildSysPromptV2` + `getContextLine`/`v2Voice`, pokud nemají
-jiného konzumenta. Před smazáním ověřit grepem přes **celé `scripts/` i `v2/*.html`** — `buildSysPromptV2` volají
-tři srovnávací skripty (`compare_horseshoe.js`, `compare_shrine_reader.js`,
-`compare_spreads_neutral.js`), takže „mrtvý" je jen vůči produkci, ne vůči repu.
-⚠️ **2026-10-11 (CODE-tune):** ty tři skripty — a s nimi `compare_seasonal.js` a `measure_reading_costs.js` — volají proxy veřejným
-klíčem místo přihlášeného uživatele; proxy takový požadavek odmítne (401, bez přihlášení se nečte od 2026-08-02). Nefungují tedy vůbec
-a smazání `buildSysPromptV2` nebrání. Ceny dnes počítá `scripts/utils/pricing_tabulka.js` z dat produkce.
-Mrtvý řetěz je navíc delší, než tu původně stálo: `_getLunarPhase`, `_getIcelandicSeason`,
-`_getTimeOfDay`, `getContextLine`, `buildLifeRuneContext` visí na témž kořeni.
+### ✅ Mrtvý řetěz V2 charakteru — smazán 2026-10-12 (CODE-tune; nalezeno 2026-08-15)
+`DEF_CHAR_V2_EN` (druhá úplná kopie popisu Rúnara, rozešlá s produkcí od `8e14f74`) a s ním `buildSysPromptV2`, `getContextLine`,
+`buildLifeRuneContext`, `_getLunarPhase`, `_getIcelandicSeason`, `_getTimeOfDay`. Produkce ani shrine je nevolaly; poslední volající,
+tři srovnávací skripty `compare_*` (nefunkční, 401), šly pryč s nimi. Prompty beze změny (golden); kontrola ㉦ přišla o krok, který
+hlídal jen V2 cestu.
+- [ ] **`compare_seasonal.js` a `measure_reading_costs.js` (`scripts/utils/`) volají proxy veřejným klíčem** → 401 od 2026-08-02,
+  nefungují (zjištěno 2026-10-11 CODE-tune). Opravit na admin token (vzor `gen_batch.js`), nebo smazat — ceny dnes počítá
+  `scripts/utils/pricing_tabulka.js`; `measure_reading_costs` stojí i v rejstříku `scripts/utils/tools.js`. CODE-tune.
 
 ## Profil / personalizace
 
@@ -540,7 +534,7 @@ Platí pro Supabase edge funkci i vlastní server (Hetzner) — viz „Kam s dat
 4. ⚠️ **Stav v prohlížeči — musí do DB, jinak se změní chování:** sáček obrazů `seasonbag_<bucket>_<druh>`, poslední motiv a obraz
    `seasonmotif_` / `seasonlast_<runa>` (localStorage, na zařízení), adminův výběr obrazu `runar_img_pin`. Na serveru stav na uživatele.
 5. **Náhoda a čas:** `Math.random` (úhel, délka, konec, jméno, obraz ze sáčku); `new Date().getMonth()` = sezóna obrazů — server běží
-   v UTC (Island = UTC; jinde se sezóna na přelomu měsíce posune o hodiny). `_getTimeOfDay` je jen v laboratorní V2 cestě.
+   v UTC (Island = UTC; jinde se sezóna na přelomu měsíce posune o hodiny).
 6. **Engine:** `READ_ENGINE` (sol/opus) mění variantu promptu, volí ji klient — model ale server; při výpadku solu dnes dostane Claude
    prompt psaný pro sol. Na serveru obojí na jednom místě.
 7. **Zpětné čtení losu:** `_promptDraws` dnes luští hotový prompt; na serveru jde zapsat přímo z losu.

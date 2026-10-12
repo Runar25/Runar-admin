@@ -128,8 +128,7 @@ rekni(key(undefined, 7, 1985) === null && key(NaN, NaN, NaN) === null, 'neplatn�
         '23. 7. bez roku: v promptu všechna tři možná období v pořadí roku; kalendář 2026: 21. 7. sólmánuður, 26. 7. heyannir');
   const nic = fn('buildLifeRunePrompt')('Thor', gebo, undefined, undefined, undefined, 'en', false, null);
   rekni(nic.indexOf('ICELANDIC MONTH: unknown month') !== -1, 'bez data → „unknown month", nic si nevymyslí');
-  const lab = fn('_getIcelandicSeason')();
-  rekni(Object.keys(BM).some((k) => lab.indexOf(BM[k].name + ' (') === 0), 'laboratorní V2 cesta bere jméno z téhož kalendáře');
+  // 2026-10-12: krok „laboratorní V2 cesta bere jméno z téhož kalendáře“ pryč — _getIcelandicSeason smazána s celým V2 řetězcem.
 }
 
 // 6) Měsíc BEZ ROKU (2026-10-09, report 58a0c728 — rok se nezadává). icelandicMonthKeysNoYear počítá přes 1980–2040; musí dát pro

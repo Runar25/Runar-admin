@@ -224,7 +224,7 @@ if (!fs.existsSync(REGISTR)) {
 // o tom nevedel — dira se neohlasila, protoze se neohlasovalo nic. Ticho neni zelena.
 // Od ted: pribude builder a nikdo ho nezapoji → tady zcervena a jmenuje ho.
 const VYJIMKY_BUILDERU = {
-  buildSysPromptV2:         'Lab, do produkce nevede — reader pouziva buildSysPrompt. Overeno 2026-09-11.',
+  // buildSysPromptV2: výjimka pryč 2026-10-12 — laboratorní V2 řetěz smazán (CODE-tune).
   buildReadingPromptSingle: 'Implementace za `buildReadingPrompt`, ktery SE skenuje — tataz cesta. 2026-09-11.',
   buildKrizPromptCross:     'Implementace za `buildKrizPrompt`. 2026-09-11.',
   buildNornsPromptFate:     'Implementace za `buildNornsPrompt`. 2026-09-11.',

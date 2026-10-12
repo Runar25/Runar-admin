@@ -456,7 +456,7 @@ runePhrase || …` po poolu nesáhne), a `_seasonBucket` vrací pool pro všech 
 ani ten guard nezabere. Padá s tím i los klíčových slov (`pickedKws`), který visí na téže
 podmínce. Sezónní **sáček** se přesto čerpá při každém čtení — to je jediný živý účinek poolů.
 Sáček proti opakování má klíč per SADA run; u spreadu se losuje ze všech tažených, ne z první pozice.
-KLÍČ: per-čtení user-prompt injekce model POSLECHNE, system prompt IGNORUJE → `buildSysPromptV2` REDUNDANTNÍ (jen lab). Reader = `buildSysPrompt`.
+KLÍČ: per-čtení user-prompt injekce model POSLECHNE, system prompt IGNORUJE. Reader i shrine = `buildSysPrompt`.
 
 ### Spread systém
 Kredity = **per typ čtení**, NE počet run. Počty run i ceny = `SPREAD_COSTS` / `SPREAD_CONFIG`
