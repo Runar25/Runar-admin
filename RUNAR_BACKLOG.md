@@ -45,7 +45,7 @@ v `docs/archive/RUNAR_BACKLOG_odlozene.md` jako ⏸ — nejsou to úkoly. Vrací
   produkce s 10 (`v2/runar-reading.js` ~ř. 894: navíc `_askSpread()`, `_askAspect()`, předchozí výměna). Dávky Asku přes gen_batch
   tedy měří jiný prompt, než dostane člověk. Znovu otevřeno 2026-10-12: v 89bc39c jsem to omylem uzavřel jako „gen_batch.js už v repu
   není“ — výpis grepu mi uřízl `head -3`. (CODE-read; nástroj evalu, nízká priorita — prompt hotový.)
-- [ ] **`gen_batch.js` staví čtení bez řádku ✦ (myšlenka na konec)** — produkce ho přidá Standard a Premium (`_thoughtFor`
+- [x] ✅ *(CODE-read 2026-10-12: rozhodnuto — vědomě prompt Rune Seekera, zapsáno v hlavičce `scripts/utils/gen_batch.js`; testovací čtení se dnes píšou v konverzaci a prompt je hotový, před použitím pro Standard/Premium napřed doplnit ✦.)* **`gen_batch.js` staví čtení bez řádku ✦ (myšlenka na konec)** — produkce ho přidá Standard a Premium (`_thoughtFor`
   v `v2/runar-reading.js`, `TIERS.*.reading_thought`), mimo builder; dávky tedy měří prompt Rune Seekera, ne testera (testeři jsou
   premium). Zjištěno 2026-10-12 CODE-tune u opravy Asku. Rozhodne ten, kdo eval pouští (CODE-read): volba tarifu v gen_batch
   (sandbox Asku už `_thoughtFor` umí), nebo vědomě jen Rune Seeker a napsat to do hlavičky.

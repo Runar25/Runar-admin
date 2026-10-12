@@ -78,6 +78,8 @@ Co je v pořádku → oddíl C. Smlouvy u poskytovatelů → oddíl D.
   příznak okna „Where to start“ (už zapsané, BACKLOG), **`treeLog`** (místní deník čtení pro strom: runy, oblast, záměr) a **`pendingReadings` /
   `pendingAsks`** (fronta čtení, která server nepotvrdil — text čtení, otázka, odpověď Asku). Nic z toho neodchází jinam než na vlastní účet.
 - **Návrh:** výčet nahradit popisem druhu („nastavení appky a dočasná kopie vašich čtení, dokud je server nepotvrdí“), nebo doplnit.
+- ➕ *2026-10-12 (CODE-tune, a2a17ad):* zápis `treeLog` zrušen — nic ho nečetlo (strom čte čtení z DB); appka ho při startu smaže
+  spolu se starým `runar_trial_count`. Do zásad z úložiště jde jen to, co appka opravdu drží.
 
 ### 8 🟡 Hlášení z appky
 - `bug_reports` nese zprávu, výřez textu (může být začátek čtení se jménem), `user_agent` a jméno, které si tester napsal. V tabulce „What is
