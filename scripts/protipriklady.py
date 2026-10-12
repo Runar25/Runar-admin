@@ -30,6 +30,9 @@ ENV = {k: v for k, v in os.environ.items() if not k.startswith('GIT_')}
 _spol = subprocess.run(['git', '-C', ROOT, 'rev-parse', '--path-format=absolute', '--git-common-dir'],
                        capture_output=True, text=True, env=ENV).stdout.strip()
 CACHE = (_spol or ROOT + '/.git').replace('\\', '/') + '/runar-protipriklady.json'
+# Výstup kontroly, která propustila útok typu chyti (2026-10-12): bez něj „exit 0“ neřekne, co kontrola viděla (souběh, jiná stránka…).
+PROPUSTENE = (_spol or ROOT + '/.git').replace('\\', '/') + '/runar-protipriklady-propustene'
+POSLEDNI_VYSTUP = ''
 APP = 'v2/runar-app.js'
 
 PRIPADY = [
@@ -319,6 +322,8 @@ def beh(W, sk):
         except Exception: pass
         return None, 'visí — bez výsledku po ' + str(LIMIT_S) + ' s, proces zabit'
     out = out or ''
+    global POSLEDNI_VYSTUP
+    POSLEDNI_VYSTUP = out   # celý výstup posledního běhu — při propuštěném útoku se uloží (main)
     class _V: pass
     r = _V(); r.returncode = p.returncode
     neprazdne = [l.strip() for l in out.split('\n') if l.strip()]
@@ -413,7 +418,11 @@ def main():
             elif typ == 'nesmi':
                 chyby.append('FAIL  %s [%s]: FALEŠNĚ ČERVENÁ na správném kódu (%s)' % (sk, rel, r1[:90]))
             else:
-                chyby.append('FAIL  %s [%s]: kontrola PROPOUŠTÍ podstrčenou chybu (%s) — exit 0' % (sk, rel, typ))
+                os.makedirs(PROPUSTENE, exist_ok=True)
+                soub = PROPUSTENE + '/' + time.strftime('%Y%m%d-%H%M%S') + '_' + re.sub(r'[^A-Za-z0-9_.-]', '_', sk + '_' + rel) + '.txt'
+                with open(soub, 'w', encoding='utf-8') as f: f.write(POSLEDNI_VYSTUP)
+                konec = ' | '.join([l.strip() for l in POSLEDNI_VYSTUP.split('\n') if l.strip()][-2:])[:160]
+                chyby.append('FAIL  %s [%s]: kontrola PROPOUŠTÍ podstrčenou chybu (%s) — exit 0; konec výstupu: %s · celý: %s' % (sk, rel, typ, konec, soub))
     finally:
         subprocess.run(['git', '-C', ROOT, 'worktree', 'remove', '--force', W], capture_output=True, env=ENV)
         shutil.rmtree(os.path.dirname(W), ignore_errors=True)
