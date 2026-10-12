@@ -864,6 +864,15 @@ radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola fronty neulozenych cteni probehla'
 check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
 
+# ㊀ 2026-10-12 (CODE-tune): prompt závisí jen na jazyku z parametru buildru, ne na globálním lang (rk/rn/rnPrompt/rworld četly globál —
+# spready s jiným globálem měly smíchané jazyky, 16 ze 40 otisků golden). ㊿ byl poslední kroužek v řadě ㊱–㊿; pokračuje se ㊀ (0x3280).
+print('\n' + chr(0x3280) + ' PROMPT JEN Z JAZYKA BUILDRU (verify_jazyk_parametr.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_jazyk_parametr.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola jazyka z parametru probehla'
+check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
+
 # ㉴ Štítek modelu v UI = model v edge funkci (CODE-tune 2026-10-05). KUKY (report 2026-10-05 07:40): „Pokud jsi změnil model
 # na sol6.1, proč jsi to taky neupravil… Tady v readeru. Což znamená, že nevíš, kde co je.“ Proxy běžela na gpt-6.1-sol, přepínač
 # admina hlásil „GPT-6 sol“ — dvě místa (edge funkce × překlady), která nikdo nehlídal.

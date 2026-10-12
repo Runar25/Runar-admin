@@ -472,7 +472,10 @@ a 2 z 10 rozborů s ruským slovem v češtině. `tree-update` přepnut na Haiku
 ✅ **Rozhodnuto 2026-10-09 (KUKY):** rozbor čtení *„zrušit úplně“* (luna se nepoužívá, Haiku místo ní nebude) — tlačítko i edge fn
 `gpt-review` pryč, DECISIONS 2026-10-09 (8). Třídění hlášení modelem *„ok, neřešit“*. Zůstává: `tree-update` na Haiku 5.5.
 
-### `rk()` / `rn()` čtou GLOBÁLNÍ `lang`, ne parametr (2026-08-15)
+### ✅ `rk()` / `rn()` čtou GLOBÁLNÍ `lang`, ne parametr (2026-08-15)
+✅ *(CODE-tune 2026-10-12: rk/rn/rnPrompt/rnPromptAcc/rworld berou jazyk 2. parametrem, buildery ho předávají — i spready přes
+`_spreadBlock`/`_kwBrief`, kde past opravdu sklapla: s opačným globálem mělo 16 ze 40 otisků golden smíchané jazyky. Teď 0 ze 40,
+otisky s globálem = parametrem beze změny. Hlídá smoke ㊀ `verify_jazyk_parametr.js`, útoky v protipříkladech.)*
 `v2/runar-utils.js:411` a `:414`: `function rk(r){ return lang === 'is' ? r.k_is : r.k; }`.
 Buildery přitom `lang` berou jako **parametr** (`buildReadingPrompt(u, drawn, lang, corrections)`).
 V produkci to vychází, protože `runar-reading.js:99` předává tutéž globální proměnnou — ale je to

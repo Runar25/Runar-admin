@@ -7,7 +7,7 @@
 //   READING_ANGLES / READING_ANGLES_IS / _randomAngle(lang)
 //   NAME_PLACEMENTS / NAME_PLACEMENTS_IS / _namePlacement(name, lang)
 //   ENDING_HEAVY / ENDING_OPEN (+_IS) / _endingShape(drawn, lang)
-//   rk(), rn(), rworld()  — rune data helpers (read global lang); relements() pryč 2026-10-10 (element do čtení nejde)
+//   rk(), rn(), rworld()  — rune data helpers (jazyk z 2. parametru, bez něj globální lang — 2026-10-12); relements() pryč 2026-10-10 (element do čtení nejde)
 //   setText(), setPH(), setSt()        — DOM helpers
 //   showToast()                        — toast notification
 //   stream(id, text)                   — word-by-word streaming display
@@ -899,7 +899,11 @@ const RUNE_PLACEMENTS = [
 function _randomPlacement(){ return RUNE_PLACEMENTS[Math.floor(Math.random() * RUNE_PLACEMENTS.length)]; }
 
 // ─── rk() ─────────────────────────────────────────
-function rk(r)  { return lang === 'is' ? r.k_is : r.k; }
+// 2026-10-12 (CODE-tune): rk/rn/rnPrompt/rnPromptAcc/rworld berou jazyk z druhého parametru; bez něj (rozhraní) dál globální `lang`.
+// Buildery promptu dostávají jazyk parametrem, ale tyhle pomocníky četly globál: spread postavený s jiným globálem než parametrem měl
+// smíchané jazyky („Fehu — wealth, cattle…“ v islandském promptu; golden 16 ze 40 otisků). V appce je dnes globál = parametr, skládání
+// promptu na serveru ani skripty ho ale nemají. Buildery proto předávají svůj jazyk; hlídá smoke (verify_jazyk_parametr.js).
+function rk(r, l)  { return (l || lang) === 'is' ? r.k_is : r.k; }
 
 // ─── READ_ENGINE (2026-09-24, DECISIONS 2026-09-24 (17); obráceno 2026-10-09, DECISIONS 2026-10-09 (13)) ───────────
 // Kdo píše čtení: 'sol' (všichni — KUKY „produkce se mění na SOL 6“) | 'opus' (jen admin, přepínač v readeru —
@@ -909,7 +913,7 @@ function rk(r)  { return lang === 'is' ? r.k_is : r.k; }
 var READ_ENGINE = 'sol';
 
 // ─── rn() ─────────────────────────────────────────
-function rn(r)  { return lang === 'is' ? r.is_n : r.n; }
+function rn(r, l)  { return (l || lang) === 'is' ? r.is_n : r.n; }
 
 // Glosa v závorce za islandským jménem („Þurs (Hlið)“) — JEDEN regex pro rnSplit i rnPrompt.
 var _GLOSA_RE = /^(.*?)\s*\(([^)]*)\)\s*$/;
@@ -923,14 +927,16 @@ function _bezGlosy(jmeno) { var m = _GLOSA_RE.exec(jmeno || ''); return m ? m[1]
 // 2026-09-26 (4)): „the blank rune“ → 3/3 čtení ho tak jmenuje. IS už má „Auða rúnin“. Jen PROMPT — rozhraní dál rn(). Data, ne větev (§18).
 // `is_acc` = tvar pro větve, kde jméno stojí v akuzativu („Nefndu … einu sinni“, „Láttu … svara“) — rnPromptAcc().
 var RUNE_PROMPT_NAME = { Blank: { en: 'the blank rune', is_acc: 'auðu rúnina' } };
-function rnPrompt(r) {
+function rnPrompt(r, l) {
+  var L = l || lang;
   var z = r && RUNE_PROMPT_NAME[r.n];
-  if (z && z[lang === 'is' ? 'is' : 'en']) return z[lang === 'is' ? 'is' : 'en'];
-  return _bezGlosy(rn(r));
+  if (z && z[L === 'is' ? 'is' : 'en']) return z[L === 'is' ? 'is' : 'en'];
+  return _bezGlosy(rn(r, L));
 }
-function rnPromptAcc(r) {
+function rnPromptAcc(r, l) {
+  var L = l || lang;
   var z = r && RUNE_PROMPT_NAME[r.n];
-  return (lang === 'is' && z && z.is_acc) ? z.is_acc : rnPrompt(r);
+  return (L === 'is' && z && z.is_acc) ? z.is_acc : rnPrompt(r, L);
 }
 
 // rnSplit() -- jmeno + (preklad) do dvou casti
@@ -948,7 +954,7 @@ function rnSplit(r) {
 // Jsou to FRÁZE, ne věty „X er Y" — plná věta by vrátila přesně ten opis, kvůli kterému
 // odešla rúnaþula. E001 u fragmentu je proto inherentní, ne vada (táž třída jako `k_is`).
 // IS obsah Cowork; `liggja + undir` a `á móti` + þágufall doloženo v is-vazba.
-function rworld(r) {
+function rworld(r, l) {
   const labels = {
     en: {
       Hel:      'the roots, what lies beneath',
@@ -965,7 +971,7 @@ function rworld(r) {
       Jotunheim:'hið ótamda, það sem streitist á móti forminu',
     },
   };
-  const set = labels[lang === 'is' ? 'is' : 'en'];
+  const set = labels[(l || lang) === 'is' ? 'is' : 'en'];
   return r.world ? (set[r.world] || '') : '';
 }
 

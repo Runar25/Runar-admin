@@ -40,6 +40,9 @@ sandbox._bagSave = () => JSON.stringify(bag);
 sandbox._bagLoad = (x) => { Object.keys(bag).forEach((k) => { delete bag[k]; }); Object.assign(bag, JSON.parse(x)); };
 
 let code = 'var lang="en"; var userGender="hk"; var corrections=[]; var currentUser=null; var userName="";\n';
+// 2026-10-12 (CODE-tune): GOLDEN_CIZI_LANG=1 postaví všechno s globálním `lang` schválně OPAČNÝM, než jaký dostane builder parametrem.
+// Otisky musí vyjít stejně — jinak prompt čte globál místo parametru (smoke ㊀ verify_jazyk_parametr.js; past rk/rn z 2026-08-15).
+code += 'var CIZI_LANG = ' + JSON.stringify(!!process.env.GOLDEN_CIZI_LANG) + ';\n';
 for (const f of files) code += '\n/* ===== ' + f + ' ===== */\n' + fs.readFileSync(DIR + f, 'utf8') + '\n;\n';
 
 code += `
@@ -63,7 +66,7 @@ var samplecorr = [{ from:'Arctic', to:'Norðurljós', lang:'both', context:'test
 // golden otisk pukal na kazde hranici islandskeho mesice.
 // 2026-09-20: pin _seasonLine odstranen spolu s radkem sezony (uz neni co pinovat).
 ['is','en'].forEach(function(L){
-  lang = L;
+  lang = CIZI_LANG ? (L === 'is' ? 'en' : 'is') : L;
   grab('system_'+L,      function(){ return buildSysPrompt(null, L); });
   // CELY pool uhlu, ne jen ten, ktery vybere pripnuta Math.random (=index 3).
   // Bez tohoto klice projde zmena uhlu [0]/[1] jako "0 zmen" (§19.2 tiche zelene).

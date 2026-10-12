@@ -164,6 +164,9 @@ PRIPADY = [
  # 2026-10-12 (CODE-tune): ㊿ — bez filtru účtu by fronta poslala cizí čtení / cizí Ask pod právě přihlášeným účtem.
  ('chyti', 'verify_fronta_ucet.js', 'v2/runar-utils.js', 'replace', "var reads = _pendGet('pendingReadings').filter(_mine);", "var reads = _pendGet('pendingReadings');"),
  ('chyti', 'verify_fronta_ucet.js', 'v2/runar-utils.js', 'replace', "var asks = _pendGet('pendingAsks').filter(_mine);", "var asks = _pendGet('pendingAsks');"),
+ # 2026-10-12 (CODE-tune): ㊀ — builder, který zapomene předat jazyk (spready), a pomocník, který parametr ignoruje.
+ ('chyti', 'verify_jazyk_parametr.js', 'v2/runar-character.js', 'replace', "return rk(r, lang).split(", "return rk(r).split("),
+ ('obchazka', 'verify_jazyk_parametr.js', 'v2/runar-utils.js', 'replace', "function rn(r, l)  { return (l || lang) === 'is'", "function rn(r, l)  { return lang === 'is'"),
  ('chyti', 'verify_pravidla_mapa.js', 'scripts/utils/pravidla_mapa.json', 'replace', '"pravidla": ["§30"],', '"pravidla": ["§99"],'),
  # kolo 3 / 4h (2026-10-11): obrazy, kalendář, myšlenka ✦, zrcadlo parseru
  ('chyti', 'verify_compose_mirror.js', 'v2/runar-character.js', 'replace', "var reading = segs.map(function (x) { return x.text; }).join(' ').trim();", "var reading = segs.map(function (x) { return x.text; }).join('  ').trim();"),

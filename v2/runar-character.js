@@ -1088,11 +1088,11 @@ function _lensContext(life, drawn, lang) {
   if (_lifeWasDrawn(life, list)) return '';
   var many = list.length > 1;
   if (lang === 'is') {
-    var subjIs = many ? 'rúnurnar sem dregnar voru' : rnPrompt(list[0]);
-    return 'LOKALINSA — lífsrúnin ' + rnPrompt(life) + ': Láttu hana móta AÐEINS síðustu setninguna eða spurninguna, ekkert á undan henni. Meginmálið fjallar um ' + subjIs + '. Nefndu lífsrúnuna aldrei. Ef hún kemur ekki af sjálfu sér í lokin, slepptu henni.';
+    var subjIs = many ? 'rúnurnar sem dregnar voru' : rnPrompt(list[0], lang);
+    return 'LOKALINSA — lífsrúnin ' + rnPrompt(life, lang) + ': Láttu hana móta AÐEINS síðustu setninguna eða spurninguna, ekkert á undan henni. Meginmálið fjallar um ' + subjIs + '. Nefndu lífsrúnuna aldrei. Ef hún kemur ekki af sjálfu sér í lokin, slepptu henni.';
   }
-  var subjEn = many ? 'the runes that were drawn' : rnPrompt(list[0]);
-  return 'CLOSING LENS — the life rune ' + rnPrompt(life) + ': let it shape ONLY the last sentence or question, nothing before it. The body of the reading is about ' + subjEn + '. Never name the life rune. If it does not come to the ending naturally, leave it out.';
+  var subjEn = many ? 'the runes that were drawn' : rnPrompt(list[0], lang);
+  return 'CLOSING LENS — the life rune ' + rnPrompt(life, lang) + ': let it shape ONLY the last sentence or question, nothing before it. The body of the reading is about ' + subjEn + '. Never name the life rune. If it does not come to the ending naturally, leave it out.';
 }
 
 // Tie-breaker when life rune + area + seeking do not gather into one image. Was duplicated
@@ -1108,10 +1108,10 @@ function _priorityContext(lensOn, drawn, lang) {
   if (!list.length) return '';
   var many = list.length > 1;
   if (lang === 'is') {
-    var subjIs = many ? 'rúnunum sem dregnar voru' : rnPrompt(list[0]);
+    var subjIs = many ? 'rúnunum sem dregnar voru' : rnPrompt(list[0], lang);
     return 'Stundum rennur þetta ekki saman í eina náttúrlega mynd. Haltu þá ' + subjIs + ' fremst og virtu leitina og sviðið. Settu þetta aldrei fram sem aðskildar staðhæfingar.';
   }
-  var subjEn = many ? 'the runes that were drawn' : rnPrompt(list[0]);
+  var subjEn = many ? 'the runes that were drawn' : rnPrompt(list[0], lang);
   return 'If these do not gather into one natural image: keep ' + subjEn + ' in front and honour the seeking and the area. Never stack them as separate statements.';
 }
 // Osm vlastnich vet, jedna na oblast — NE jedna veta s dosazenym `{area}`.
@@ -1547,9 +1547,9 @@ function _askLifeContext(life, lang) {
     // („Algiz is the rune drawn here: it speaks of protection, not of a bond fixed in ice“). Změřeno na solu přes API (docs/eval/
     // 2026-10-06-ask-zivotni-runa): ozvěna „drawn“ 6/12 → 0/12 u otázek bez obrazu; led doslova 1/12, seznam klíčů 0, vazba na obraz
     // tažené runy 10/12. Seznam významů životní runy navíc (varianty V2, V3) nic měřitelného nepřidal → nepřidán.
-    return 'LÍFSRÚNIN — leitandinn ber sjálfur ' + rnPrompt(life) + '. Nefndu hana ekki að fyrra bragði. Ef spurningin snýr '
+    return 'LÍFSRÚNIN — leitandinn ber sjálfur ' + rnPrompt(life, lang) + '. Nefndu hana ekki að fyrra bragði. Ef spurningin snýr '
       + 'að henni, svaraðu út frá henni í einni eða tveimur setningum.';   // 2026-09-27: dřív „máttu svara…, og snúa“ (E001)
-  return 'LIFE RUNE — the seeker carries ' + rnPrompt(life) + ' as their own. Do not bring it up on your own. If their question '
+  return 'LIFE RUNE — the seeker carries ' + rnPrompt(life, lang) + ' as their own. Do not bring it up on your own. If their question '
     + 'reaches for it, answer from it in a sentence or two.';
 }
 
@@ -1730,7 +1730,7 @@ function _thoughtLine(lng, rune) {
   var odst = UI_TEXT[L] && UI_TEXT[L].coll_rune && UI_TEXT[L].coll_rune[rune.n];
   var zdroj = odst && odst[THOUGHT_ODSTAVEC[rune.n] || 0];
   if (!zdroj) return '';
-  var jm = L === 'is' ? rnPrompt(rune) : (rune.n === 'Blank' ? 'the Blank rune' : rune.n);
+  var jm = L === 'is' ? rnPrompt(rune, L) : (rune.n === 'Blank' ? 'the Blank rune' : rune.n);
   return THOUGHT_LINE[L](jm, zdroj);
 }
 // Oddělí řádek ✦ od čtení pro ZOBRAZENÍ a HLAS. _parseSegments výš zůstává zrcadlem serverového composeReading (deník drží
@@ -1815,15 +1815,15 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
   // na nahodnych klicich (efekt tam zadny a nahoda drzi pestrost).
   var imgLine = _seasonalImagery(lang, drawn, u && u.area);
   if (_imgPostava) imgLine += '\n' + _postavaPokyn(lang, false);   // 2026-09-30: zvíře v hlavní roli → pojmenuj ho (IMG_POSTAVA)
-  var drawnKws = rk(drawn).split(',').map(function(s){ return s.trim(); }).filter(Boolean);
+  var drawnKws = rk(drawn, lang).split(',').map(function(s){ return s.trim(); }).filter(Boolean);
   // v4.0: vazba plati pro OBE reci (viz komentar u RUNE_IMAGES).
   var _imgAspekt = (lang === 'is') ? _imgAspektIS : _imgAspektEN;
   var pickedKws = _imgAspekt
     ? _imgAspekt
     : drawnKws.sort(function(){ return 0.5 - Math.random(); }).slice(0, Math.min(3, drawnKws.length)).join(', ');
-  var worldRef = rworld(drawn) || S.worldFb(pickedKws);
+  var worldRef = rworld(drawn, lang) || S.worldFb(pickedKws);
   var hasQ = !!(u.question && u.question.trim());
-  var drawnCtx = S.DRAWN + ': ' + rnPrompt(drawn) + ' — ' + S.focus + ': ' + pickedKws
+  var drawnCtx = S.DRAWN + ': ' + rnPrompt(drawn, lang) + ' — ' + S.focus + ': ' + pickedKws
     // 2026-09-25: SVĚT runy (World/Heimur) z hlavičky VEN — owner: „pojďme je vypnout… čím víc vstupů, tím větší guláš“.
     // Doklad: sol z Thurisaz (svět Hel „the roots, what lies beneath“) udělal kus obrazu „The roots below stay out of sight“
     // (report 2026-09-25 11:29). Přínos světa v hlavičce nikdy změřen nebyl (přibyl s otevírací větví, DECISIONS 2026-08-13).
@@ -1865,7 +1865,7 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     // stojí v hlavičce `DRAWN RUNE` a do 2026-08-13 se opakoval i tady (nález
     // `lint_prompts.js --dup`). Parametr zůstal, aby se neměnila signatura packu.
     // 2026-09-26: rnPromptAcc — IS větve mají jméno v akuzativu (u Blank „auðu rúnina“, ne „Auða rúnin“); EN = rnPrompt.
-    hasQ ? S.qBranch(rnPromptAcc(drawn), drawn.g, _questionSafe(u.question)) : S.noqBranch(rnPromptAcc(drawn), drawn.g, worldRef),
+    hasQ ? S.qBranch(rnPromptAcc(drawn, lang), drawn.g, _questionSafe(u.question)) : S.noqBranch(rnPromptAcc(drawn, lang), drawn.g, worldRef),
     // 2026-09-20: most bere REJSTRIK (tvar) a OBLAST (kam dosedne) misto uhlu — uhel
     // potreboval jen zrusena vyluka uhel[6] x open[1].
     // hasQ: 2026-09-26 návrat k otázce jen s otázkou. Otázka runy jako zdroj poslední věty (2026-09-24) — jen bez vlastní otázky tazatele
@@ -2192,7 +2192,7 @@ function buildAskPrompt(reading, question, runes, lang, corrections, life, cast,
       var h = _hola(n), r = null;
       for (var i = 0; i < RUNES.length; i++)
         if (RUNES[i].n === h || _hola(RUNES[i].is_n) === h
-            || rnPrompt(RUNES[i]).toLowerCase() === h.toLowerCase()) { r = RUNES[i]; break; }   // 2026-09-26: „the blank rune“ (i z JSON modelu s velkým T)
+            || rnPrompt(RUNES[i], lang).toLowerCase() === h.toLowerCase()) { r = RUNES[i]; break; }   // 2026-09-26: „the blank rune“ (i z JSON modelu s velkým T)
       if (!r) return n;
       var k = (lang === 'is') ? (r.k_is || r.k) : r.k;
       if (_asp && _jedna) {
@@ -2283,13 +2283,13 @@ var RP_KRIZ = {
 // `inlineLabel` = label a runa na JEDNOM radku — tvar, ktery ma Kriz od unifikace builderu
 // (70cc33c); ostatni tri davaji label na vlastni radek. Rozdil neni nikde zduvodneny, ale
 // drzi se PRESNE, aby tenhle dedup nezmenil zadny prompt (§18.3). Sjednoceni = zvlast, s merenim.
-function _kwBrief(r) {
-  return rk(r).split(',').map(function(s){ return s.trim(); }).filter(Boolean).slice(0, 4).join(', ');
+function _kwBrief(r, lang) {
+  return rk(r, lang).split(',').map(function(s){ return s.trim(); }).filter(Boolean).slice(0, 4).join(', ');
 }
-function _spreadBlock(r, label) {
+function _spreadBlock(r, label, lang) {
   // v4.7 (2026-08-23): inline vetev odstranena — kriz byl posledni, kdo ji volal
   // (sjednoceni formatu pozic, BACKLOG:226). Jeden tvar pro vsechny 4 spready.
-  return label + '\n' + rnPrompt(r) + ' — ' + _kwBrief(r);
+  return label + '\n' + rnPrompt(r, lang) + ' — ' + _kwBrief(r, lang);
 }
 
 function buildKrizPromptCross(u, runes, lang, corrections) {
@@ -2311,9 +2311,9 @@ function buildKrizPromptCross(u, runes, lang, corrections) {
   var runesBlock = [
     // v4.7 (2026-08-23): kriz sjednocen na tvar ostatnich tri spreadu (LABEL:\nRuna — klice).
     // Byl jedinym s inline tvarem (BACKLOG:226); dedup z drivejska na tohle cekal.
-    _spreadBlock(rCtr, P[0]), '', _spreadBlock(rAbo, P[1]), '', _spreadBlock(rBel, P[2]), '', _spreadBlock(rBeh, P[3]), '', _spreadBlock(rAhe, P[4]),
+    _spreadBlock(rCtr, P[0], lang), '', _spreadBlock(rAbo, P[1], lang), '', _spreadBlock(rBel, P[2], lang), '', _spreadBlock(rBeh, P[3], lang), '', _spreadBlock(rAhe, P[4], lang),
   ].join('\n');
-  var ctrName = rnPrompt(rCtr);
+  var ctrName = rnPrompt(rCtr, lang);
   return [
     ctx, '',
     S.intro, '',
@@ -2403,7 +2403,7 @@ function buildNornsPromptFate(u, runes, lang, corrections) {
     u.question ? S.question + ': ' + _questionSafe(u.question) : '',
   ].filter(Boolean).join('\n');
   var L = S.labels;
-  var runesBlock = [ _spreadBlock(rUrd, L[0]), '', _spreadBlock(rVerd, L[1]), '', _spreadBlock(rSkul, L[2]) ].join('\n');
+  var runesBlock = [ _spreadBlock(rUrd, L[0], lang), '', _spreadBlock(rVerd, L[1], lang), '', _spreadBlock(rSkul, L[2], lang) ].join('\n');
   return [
     ctx, '',
     S.intro, '',
@@ -2483,8 +2483,8 @@ function buildHorseshoePromptSeven(u, runes, lang, corrections) {
   ].filter(Boolean).join('\n');
   var P = S.positions;
   var runesBlock = [
-    _spreadBlock(runes[0], P[0]), '', _spreadBlock(runes[1], P[1]), '', _spreadBlock(runes[2], P[2]), '', _spreadBlock(runes[3], P[3]), '',
-    _spreadBlock(runes[4], P[4]), '', _spreadBlock(runes[5], P[5]), '', _spreadBlock(runes[6], P[6]),
+    _spreadBlock(runes[0], P[0], lang), '', _spreadBlock(runes[1], P[1], lang), '', _spreadBlock(runes[2], P[2], lang), '', _spreadBlock(runes[3], P[3], lang), '',
+    _spreadBlock(runes[4], P[4], lang), '', _spreadBlock(runes[5], P[5], lang), '', _spreadBlock(runes[6], P[6], lang),
   ].join('\n');
   return [
     ctx, '',
@@ -2577,11 +2577,11 @@ function buildYggdrasilPromptNine(u, runes, lang, corrections) {
   var T = S.tiers, P = S.positions;
   var runesBlock = [
     T[0],
-    _spreadBlock(runes[0], P[0]), '', _spreadBlock(runes[1], P[1]), '', _spreadBlock(runes[2], P[2]), '',
+    _spreadBlock(runes[0], P[0], lang), '', _spreadBlock(runes[1], P[1], lang), '', _spreadBlock(runes[2], P[2], lang), '',
     T[1],
-    _spreadBlock(runes[3], P[3]), '', _spreadBlock(runes[4], P[4]), '',
+    _spreadBlock(runes[3], P[3], lang), '', _spreadBlock(runes[4], P[4], lang), '',
     T[2],
-    _spreadBlock(runes[5], P[5]), '', _spreadBlock(runes[6], P[6]), '', _spreadBlock(runes[7], P[7]), '', _spreadBlock(runes[8], P[8]),
+    _spreadBlock(runes[5], P[5], lang), '', _spreadBlock(runes[6], P[6], lang), '', _spreadBlock(runes[7], P[7], lang), '', _spreadBlock(runes[8], P[8], lang),
   ].join('\n');
   return [
     ctx, '',
