@@ -42,6 +42,9 @@ const srv = http.createServer((req, res) => {
       ws.send(JSON.stringify({ id: ++id, method: 'Page.handleJavaScriptDialog', params: { accept: true } })); } };
   const cmd = (method, params) => new Promise(ok => { const i = ++id; wait[i] = ok; ws.send(JSON.stringify({ id: i, method, params: params || {} })); });
   const ev = async e => { const r = await cmd('Runtime.evaluate', { expression: e, awaitPromise: true, returnByValue: true }); if (r.result && r.result.exceptionDetails) return 'EXC: ' + (r.result.exceptionDetails.exception && r.result.exceptionDetails.exception.description || r.result.exceptionDetails.text); return r.result && r.result.result ? r.result.result.value : null; };
+  // Čekat na stav, ne pevný čas (2026-10-12, CODE-tune: pod souběžným pre-pushem nestačilo 1200 ms po TÁHNI — založení se dokončí až po
+  // await stream(...)). Vrátí poslední hodnotu; po limitu se pokračuje a kroky samy ohlásí FAIL (celkový hlídač LIMIT_S platí dál).
+  const cekej = async (expr, ms) => { const t0 = Date.now(); let v; while (Date.now() - t0 < ms) { v = await ev(expr); if (v === true) return v; await sleep(100); } return v; };
   await cmd('Page.enable'); await cmd('Runtime.enable');
   await cmd('Emulation.setDeviceMetricsOverride', { width: 390, height: 844, deviceScaleFactor: 3, mobile: true });
   krok = 'načtení appky';
@@ -78,7 +81,7 @@ const srv = http.createServer((req, res) => {
   ok('strom nezaložen: ve stromě tlačítko založení', prep && prep.fcta && prep.btn, JSON.stringify(prep));
   krok = 'klik na založení';
   // klik na založení
-  await ev(`document.getElementById('tree-founding-btn').click()`); await sleep(400);
+  await ev(`document.getElementById('tree-founding-btn').click()`); await cekej(`document.querySelectorAll('#reader-grid .rb').length === 25`, 8000);
   const st = await ev(`(() => { const g = document.querySelectorAll('#reader-grid .rb'), card = document.getElementById('reader-rune-card'), story = document.getElementById('founding-story');
     const dis = ['single','kriz','horseshoe','yggdrasil'].map(m => document.getElementById('mode-btn-' + m).disabled);
     return { tab: activeAppTab, mode: _spreadMode, runes: g.length, card: card.style.display, story: story.style.display, cost: document.getElementById('spread-cost').textContent,
@@ -95,7 +98,8 @@ const srv = http.createServer((req, res) => {
   const s3 = await ev(`({ n: _spreadCount(_spread3Runes), btn: document.getElementById('btn-speak').textContent, dis: document.getElementById('btn-speak').disabled })`);
   ok('tři runy v pozicích, tlačítko TÁHNI povolené', s3 && s3.n === 3 && !s3.dis, JSON.stringify(s3));
   krok = 'odeslání čtení';
-  await ev(`document.getElementById('btn-speak').click()`); await sleep(1200);
+  await ev(`document.getElementById('btn-speak').click()`);
+  await cekej(`userTreeFounded === true && !_foundingPending && document.getElementById('founding-to-tree').style.display !== 'none'`, 15000);
   const after = await ev(`({ proxy: window.__proxy, founded: userTreeFounded, pending: _foundingPending, out: document.getElementById('reader-output').style.display,
     unlocked: ['single','kriz','horseshoe','yggdrasil'].every(m => !document.getElementById('mode-btn-' + m).disabled), err: (document.getElementById('st-reader') || {}).textContent })`);
   ok('odesláno jako založení (režim founding, cena 0, bez kreditu)', after && after.proxy && after.proxy.mode === 'founding' && after.proxy.credits === 0 && after.proxy.useCredit === false, JSON.stringify(after));
@@ -107,7 +111,8 @@ const srv = http.createServer((req, res) => {
   ok('žádný samovolný skok do stromu (čtení jde dočíst)', (await ev(`activeAppTab`)) === 'reading');
   krok = 'tlačítko do stromu';
   await ev(`document.getElementById('founding-to-tree').click()`);
-  const tr = await ev(`(async () => { await new Promise(r => setTimeout(r, 300)); const mains = (_treePick && _treePick.pick || []).filter(p => typeof p.k === 'number');
+  await cekej(`activeAppTab === 'tree' && Array.isArray(_treeLog) && _treeLog.length === 41 && !!_treePick`, 10000);
+  const tr = await ev(`(async () => { const mains = (_treePick && _treePick.pick || []).filter(p => typeof p.k === 'number');
     const vis = i => { const e = document.getElementById(i); return !!e && e.style.display !== 'none'; };
     return { tab: activeAppTab, first: _treeLog[0] && _treeLog[0].id, n: _treeLog.length, mains: mains.length, living: vis('tree-living'), fread: vis('tree-founding-reading'),
              fcta: vis('tree-founding-cta'), need: vis('tree-need-rune'), nodob: vis('tree-no-dob'), d: readerUser.d, sh: _treePick && _treePick.frameSh }; })()`);
