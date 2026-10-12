@@ -853,7 +853,7 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
 ## Web therunekeeper.com (CODE-web, od 2026-10-12)
 - [ ] **Registrace před spuštěním** (owner 2026-10-12: *„ano sbíráme“*). Landing „coming soon“ sbírá e-maily; každý dostane jeden
   e-mail, až Rúnar půjde ven. Napřed plán ownerovi (kam se ukládá, dvojí potvrzení, text do zásad soukromí, smazání po spuštění).
-  API klíč Brevo účet má (owner 2026-10-12); v Supabase secrets ani u nás uložený NENÍ (ověřeno) — přijde jako nový secret.
+  API klíč Brevo zatím neexistuje (owner 2026-10-12 opravil své „máme“); vytvoří ho owner, uloží se jako secret v Supabase.
   Útok pro smoke ㉹ na `web/` (čeština v HTML) přidat do `scripts/protipriklady.py`, až bude ve `web/` první soubor v gitu — `create`
   netrackuje a kontrola čte jen git; ručně ověřeno 2026-10-12 přes `git add -N` (FAIL na „Tady je náhled stránky“).
 - [ ] **Pro OWNERA — Rapyd** *(owner 2026-10-12: totéž co Shopify — dodělá se, pak JEDEN souhrnný postup)*: smí účet Agndofy prodávat přes Rapyd Hosted Checkout / odkaz k platbě na therunekeeper.com, a jaký tarif
