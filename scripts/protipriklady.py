@@ -119,6 +119,9 @@ PRIPADY = [
  # ㊽ (E) Rúnakort: zase 1. pád po „með“ · zase kalk „SLÁÐU INN {card} KÓÐA“
  ('chyti', 'verify_citelnost.js', 'v2/runar-auth.js', 'replace', "card: vl('card', lang, 'dat')", "card: vl('card', lang)"),
  ('chyti', 'verify_citelnost.js', 'v2/runar-translations.js', 'replace', "'ᚠ SLÁÐU INN KÓÐANN Á {card}'", "'ᚠ SLÁÐU INN {card} KÓÐA'"),
+ # ㊽ (F) selhaný profil: chyba z databáze zase přejitá jako prázdný profil · pruh zase bez načteného profilu
+ ('chyti', 'verify_citelnost.js', 'v2/runar-app.js', 'replace', "    if (error) throw error;   // 2026-10-12", "    if (false) throw error;   // 2026-10-12"),
+ ('chyti', 'verify_citelnost.js', 'v2/runar-auth.js', 'replace', "    if (typeof profileLoaded !== 'undefined' && !profileLoaded) {", "    if (false) {"),
  # ㊼ verze v hlášení (2026-10-11, CODE-tune): verze rozjetá se sw.js, reportér zpět na nasazenou, worker zase chytá sw.js, soubor mimo precache
  ('chyti', 'verify_verze_hlaseni.js', 'v2/runar-verze.js', 'regex', r"RUNAR_VERZE = 'v\d+'", "RUNAR_VERZE = 'v1'"),
  ('chyti', 'verify_verze_hlaseni.js', 'v2/runar-reporter.js', 'replace', '      app_version: verzeHlaseni(),', "      app_version: VERZE_NASAZENA || 'unknown',"),

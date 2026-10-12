@@ -37,6 +37,7 @@ let analyticsOptOut = false;    // user_profiles.analytics_opt_out — user excl
                                 // Duvod + mereni (10/12 zaveru si brala cocka) -> RUNAR_EVAL_LOG.md 2026-09-10.
 let testerConsentAt = null;     // user_profiles.tester_consent_at — when the tester accepted consent
 let profileLoaded   = false;    // fetchUserProfile dobehl (data aplikovana) — Tree tab drzi loading dokud false
+let profileLoadFailed = false;  // načtení profilu selhalo i napodruhé — Životní runa a strom ukážou hlášku a „zkusit znovu“ (2026-10-12)
 let readerRune     = null;
 let readerTexts    = {};  // { en: {short,deep}, is: {short,deep} }
 let voiceGenerated = {};  // { en: bool, is: bool }
@@ -51,6 +52,7 @@ const FREE_REGISTERED_LIMIT = TIER_LIMITS.rune_seeker.onboarding;  // 1
 
 // ─── TIMING CONSTANTS ───────────────────────────────────
 const DELAY_NAME_PROMPT  = 1200; // ms after login before name prompt appears
+const DELAY_PROFILE_RETRY = 1500; // ms před druhým pokusem o načtení profilu, když první selže (2026-10-12)
 const DELAY_RELOAD       = 1200; // ms after sign-out before page reloads
 const DELAY_TOAST_IN     =  200; // ms before toast slides in
 const DURATION_TOAST     = 4700; // ms toast stays visible
@@ -60,13 +62,21 @@ const DELAY_ERROR_RESET  = 2000; // ms before error button text resets
 const DURATION_SAVED     = 2500; // ms "saved" indicator stays visible
 
 
-async function fetchUserProfile(userId) {
+// Selhání (2026-10-12, nález CODE-read, owner „udělej i tu položku s načtením profilu“): Supabase chybu sítě nevyhodí, vrátí { error },
+// a appka ji do té doby přešla jako prázdný profil — tvářila se, že je člověk nový: Životní runa se znovu ptala „When were you born?“
+// i toho, kdo datum i hotové čtení má, pruh nad formulářem hlásil vyčerpané volné čtení i předplatiteli a vyskočila výzva ke jménu.
+// Teď jeden druhý pokus; když selže i ten, hláška a „zkusit znovu“ (znovuNactiProfil) místo formulářů, bez výzvy ke jménu a bez
+// upozornění na obnovu; po návratu sítě se zkusí samo. Žádný řádek (nový účet) není chyba — tam onboarding zůstává. Hlídá smoke ㊽ (F).
+async function fetchUserProfile(userId, _pokus) {
   profileLoaded = false;
+  profileLoadFailed = false;
+  let chyba = null;
   try {
-    const { data } = await sb.from('user_profiles')
+    const { data, error } = await sb.from('user_profiles')
       .select('tier, credits_balance, free_balance, month_units, month_key, voice_month_count, voice_month_key, name, norse_name, address_pref, lang, life_rune_number, life_rune_text, life_rune_lang, dob_day, dob_month, dob_year, tree_name, tree_founded_at, founding_reading_id')
       .eq('id', userId)
       .maybeSingle();
+    if (error) throw error;   // 2026-10-12: dřív se chyba přešla jako prázdný profil (viz výš)
     if (data) {
       userTier    = data.tier            || 'rune_seeker';
       // Normalize legacy DB values → rune_seeker
@@ -153,7 +163,19 @@ async function fetchUserProfile(userId) {
       }
       _ulozJazykUctu(lang, true);   // jazyk, ve kterém appka po přihlášení běží → user_metadata (šablona e-mailu s kódem)
     }
-  } catch(e) { console.warn('fetchUserProfile:', e.message); }
+  } catch(e) { chyba = e; console.warn('fetchUserProfile:', e && e.message); }
+  if (chyba) {
+    if (!_pokus) {
+      await new Promise(function (ok) { setTimeout(ok, DELAY_PROFILE_RETRY); });
+      if (currentUser && currentUser.id === userId) return fetchUserProfile(userId, 1);
+      return;
+    }
+    profileLoadFailed = true;
+    if ((activeAppTab === 'tree' || activeAppTab === 'liferune') && typeof updateTreeTab === 'function') updateTreeTab();
+    updateAuthUI();
+    showToast(t('profile_load_err'));
+    return;
+  }
   profileLoaded = true;
   // Profil dobehl -> na Tree tabu prekresli (loading -> spravny stav: founding CTA / no-dob formular).
   if ((activeAppTab === 'tree' || activeAppTab === 'liferune') && typeof updateTreeTab === 'function') updateTreeTab();   // + Lífsrúnin (vlastní záložka od 2026-09-11; doplněno 2026-10-10)
@@ -164,6 +186,15 @@ async function fetchUserProfile(userId) {
   // Ask for name if not set yet (delay so UI settles first)
   if (!userName) setTimeout(showNamePrompt, DELAY_NAME_PROMPT);
 }
+
+// „Zkusit znovu“ po selhaném načtení profilu (tlačítko v záložce Životní runa / strom) a samo po návratu sítě. 2026-10-12, viz fetchUserProfile.
+function znovuNactiProfil() {
+  if (!currentUser) return;
+  profileLoadFailed = false;
+  if ((activeAppTab === 'tree' || activeAppTab === 'liferune') && typeof updateTreeTab === 'function') updateTreeTab();   // zpět načítání
+  fetchUserProfile(currentUser.id);
+}
+window.addEventListener('online', function () { if (profileLoadFailed && currentUser) znovuNactiProfil(); });
 
 // Upozornění na obnovu měsíčních čtení (owner 2026-10-11: „apka by mohla dát vědět jednou po otevření, že se čtení obnovila“ →
 // „2. ok“ = varianta a). Jednou na zařízení a účet, pamatuje si to prohlížeč — bez SQL; na druhém zařízení se ukáže znovu jednou.

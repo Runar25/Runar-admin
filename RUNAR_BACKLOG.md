@@ -3384,7 +3384,10 @@ nabídka vyššího tarifu, Rune Seeker jen navržené otázky), formuláře vš
      (0× i u „gjafakort“) a Greynir propustí i kalk „Sláðu inn gjafakort kóða“ — rozhodla tu gramatika, ne nástroj.
   Ostatní IS šablony s `{card}` sedí („Notaðu Rúnakort“, „Kaupa fleiri Rúnakort“, „Rúnakort opnar allt“). Vzor pádů jako dat už existuje
   (`TIERS.*.label_is_dat`, `tierLabel`, DECISIONS 2026-09-30 (6)).
-- [ ] **Pro CODE-tune (nízká priorita) — selhané načtení profilu vypadá jako „appka zapomněla moji runu“.** `fetchUserProfile`
+- [x] ✅ *(CODE-tune 2026-10-12, owner „udělej i tu položku s načtením profilu“: `fetchUserProfile` čte `error`, jednou zkusí znovu, pak
+  Životní runa a strom ukážou hlášku a „REYNDU AFTUR / TRY AGAIN“ místo formuláře; bez načteného profilu žádný pruh nad formulářem (ani
+  probliknutí „vyčerpáno“ při přihlášení) a žádná výzva ke jménu; po návratu sítě se profil načte sám. Hlídá smoke ㊽ (F). DECISIONS
+  2026-10-12 (2).)* ~~**Pro CODE-tune (nízká priorita) — selhané načtení profilu vypadá jako „appka zapomněla moji runu“.**~~ `fetchUserProfile`
   (`v2/runar-app.js` ~ř. 63–159) při chybě sítě nastaví `profileLoaded = true` a překreslí Lífsrúnin bez dat → záložka se zeptá
   „When were you born?“ i člověka, který datum i hotové čtení uložené má; žádná hláška, žádný druhý pokus. Ověřeno produkční funkcí
   se zablokovanou sítí. Platba nehrozí: druhé vygenerování životní runy server odmítne (409, `claude-proxy` ~ř. 688), uživatel

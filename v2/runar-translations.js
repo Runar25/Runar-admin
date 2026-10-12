@@ -208,6 +208,8 @@ const UI_TEXT = {
     journal_title:      '\u2726 YOUR RUNE READINGS',
     journal_count_recent: 'last {n}',   // 2026-10-10: dřív natvrdo v runar-journal.js; počet všech čtení skládá vn('reading')
     journal_empty:      'No rune readings recorded yet.<br>Draw your first rune.',
+    profile_load_err:   'Could not load your account details — check your connection and try again.',   // 2026-10-12: selhané načtení profilu (fetchUserProfile), vzor journal_load_err
+    profile_retry_btn:  'TRY AGAIN',
     journal_load_err:   'Could not load your rune readings — check your connection and try again.',   // 2026-10-10: chyba načtení deníku (dřív brána návštěvníka / prázdný deník)
     life_rune_short:    'Life rune',
     // 2026-10-11: hlas čtení v deníku (owner „hear the reading by znělo líp“); tlačítko Kolekce z deníku pryč i s klíči jcard_audio_btn,
@@ -720,6 +722,8 @@ const UI_TEXT = {
     journal_title:      '\u2726 SP\u00c1R \u00de\u00cdNAR',
     journal_count_recent: 'síðustu {n}',   // 2026-10-10: dřív kalk z „last N“ (tvar v check-is.py BAD_PATTERNS, korpus 2×); „síðustu fimm“ 13 235×
     journal_empty:      'Engar skr\u00e1\u00f0ar sp\u00e1r enn.<br>Dragðu fyrstu r\u00fanina þ\u00edna.',
+    profile_load_err:   'Ekki tókst að sækja upplýsingarnar þínar — athugaðu nettenginguna og reyndu aftur.',   // 2026-10-12: greynir, korpus („sækja upplýsingarnar“ 44), is-gpt-check OK
+    profile_retry_btn:  'REYNDU AFTUR',   // „Reyna aftur.“ greynir nerozebral (E001); „reyndu aftur“ korpus 370
     journal_load_err:   'Ekki tókst að sækja spárnar þínar — athugaðu nettenginguna og reyndu aftur.',   // 2026-10-10: vzor err_save_failed; korpus viz runar-journal.js
     life_rune_short:    'L\u00edfsr\u00fan',
     jcard_voice_btn:    'ᚢ HLUSTA Á LESTURINN',   // 2026-10-11: greynir + gpt-check OK, korpus „hlusta á lesturinn“ 17×

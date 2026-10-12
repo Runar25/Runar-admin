@@ -20,6 +20,8 @@
 //      celý — bez filtru a se zaklapnutými kartami (§14); nález procházky přihlášené appky, CODE-read.
 //  (E) Rúnakort islandsky ve správném pádu: po vyčerpání volného čtení „með“ + 3. pád (VOCAB.card.is_dat) a popisek zadání kódu „sláðu
 //      inn kóðann á …“ s určitým 3. pádem (is_dat_def), ne kalk „SLÁÐU INN RÚNAKORT KÓÐA“ (nález CODE-read 2026-10-11).
+//  (F) selhané načtení profilu (databáze zablokovaná, oba pokusy fetchUserProfile selžou): Životní runa ukáže hlášku a „zkusit znovu“,
+//      ne „When were you born?“; pruh nad formulářem nehlásí vyčerpané volné čtení a nevyskočí výzva ke jménu (nález CODE-read, 2026-10-12).
 // Neumí: text přes obrázek (bere barvu pozadí předků), stavy přihlášeného (čtení, menu), stín a obrys písma.
 // Útok: scripts/protipriklady.py → PRIPADY.
 //   node scripts/verify_citelnost.js            · --slabe vypíše i texty mezi 3 a 4,5 : 1 (podklad pro rozhodnutí o vzhledu)
@@ -83,7 +85,7 @@ const TYPY = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; cha
   '.jpg': 'image/jpeg', '.svg': 'image/svg+xml', '.json': 'application/json', '.webmanifest': 'application/manifest+json', '.woff2': 'font/woff2' };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 function konec() {
-  console.log(fail ? '\nFAIL  čitelnost: ' + fail + ' selhalo' : '\nOK    čitelnost: kontrast každého viditelného textu aspoň 3 : 1 (nad --dim, §5), v IS žádná zaseklá angličtina, okno přepnutí jazyka v jazyce čtenáře, Deník po přepnutí v novém jazyce, Rúnakort ve správném pádu' + (konec.info || ''));
+  console.log(fail ? '\nFAIL  čitelnost: ' + fail + ' selhalo' : '\nOK    čitelnost: kontrast každého viditelného textu aspoň 3 : 1 (nad --dim, §5), v IS žádná zaseklá angličtina, okno přepnutí jazyka v jazyce čtenáře, Deník po přepnutí v novém jazyce, Rúnakort ve správném pádu, selhaný profil se nevydává za nový' + (konec.info || ''));
   process.exit(fail ? 1 : 0);
 }
 const srv = http.createServer((req, res) => {
@@ -188,17 +190,34 @@ const srv = http.createServer((req, res) => {
 
     // (E) Rúnakort v pádu: Rune Seeker po vyčerpání volného čtení (updateBanners) a popisek zadání kódu karty (updateUIText), islandsky
     const k = await ev(`(() => {
-      currentUser = { id: 'u1', email: 'tester@example.com' }; userTier = 'rune_seeker'; userFreeBalance = 0; userCredits = 0;
+      currentUser = { id: 'u1', email: 'tester@example.com' }; userTier = 'rune_seeker'; userFreeBalance = 0; userCredits = 0; profileLoaded = true;
       setLang('is'); updateBanners(); updateUIText();
       const v = { volne: (document.getElementById('free-user-text') || {}).textContent || '', kod: (document.getElementById('redeem-lbl') || {}).textContent || '',
                   nom: VOCAB.card.is, dat: VOCAB.card.is_dat, datDef: VOCAB.card.is_dat_def };
-      currentUser = null; userTier = 'free'; updateBanners(); updateUIText();
+      currentUser = null; userTier = 'free'; profileLoaded = false; updateBanners(); updateUIText();
       return v;
     })()`);
     rekni(!!k && k.volne.indexOf('með ' + k.dat) !== -1 && !new RegExp('með ' + k.nom + '(?![a-záéíóúýþæöð])', 'i').test(k.volne),
       '(E) po vyčerpání volného čtení „með ' + (k && k.dat) + '“ (3. pád), ne „með ' + (k && k.nom) + '“', JSON.stringify(k && k.volne));
     rekni(!!k && k.datDef && k.kod.indexOf('KÓÐANN Á ' + k.datDef.toUpperCase()) !== -1 && k.kod.indexOf(k.nom.toUpperCase() + ' KÓÐA') === -1,
       '(E) popisek kódu karty „SLÁÐU INN KÓÐANN Á ' + (k && k.datDef ? k.datDef.toUpperCase() : '?') + '“, ne kalk', JSON.stringify(k && k.kod));
+
+    // (F) selhané načtení profilu: přihlášený (podvržený) bez data narození v appce, databáze zablokovaná → oba pokusy selžou
+    const pf = await ev(`(async () => {
+      currentUser = { id: 'u1', email: 'tester@example.com' }; userTier = 'free'; readerUser = {}; _lifeRuneText = null;
+      showAppTab('liferune');
+      await fetchUserProfile('u1');
+      const vis = (id) => { const el = document.getElementById(id); if (!el) return false;
+        for (let e = el; e; e = e.parentElement) if (getComputedStyle(e).display === 'none') return false; return true; };
+      const r = { selhal: profileLoadFailed, nacteno: profileLoaded, chyba: vis('tree-loading') ? (document.getElementById('tree-loading-text') || {}).textContent : null,
+                  ocekavana: t('profile_load_err'), znovu: vis('tree-loading-retry'), noDob: vis('tree-no-dob'), pruh: vis('free-user-banner') };
+      await new Promise((ok) => setTimeout(ok, 1600));   // výzva ke jménu by vyskočila 1,2 s po načtení profilu
+      r.jmeno = vis('name-overlay');
+      profileLoadFailed = false; currentUser = null; showAppTab('reading'); updateAuthUI();
+      return r;
+    })()`);
+    rekni(!!pf && pf.selhal && !pf.nacteno && pf.chyba === pf.ocekavana && pf.znovu && !pf.noDob && !pf.pruh && !pf.jmeno,
+      '(F) selhané načtení profilu: Životní runa hlásí chybu se „zkusit znovu“, ne „kdy ses narodil?“; bez pruhu a bez výzvy ke jménu', JSON.stringify(pf));
     const anglicky = /\b(SPEAK|AGAIN|STAY|YES|credits?)\b/i;
     rekni(!!o1 && o1.otevreno && o1.jazyk === 'is' && o1.zavreno && o1.jazykPo === 'is' && /ENSKU/.test(o1.title) && /ÍSLENSKU/.test(o1.zpet)
           && ![o1.title, o1.body, o1.ok, o1.zpet, o1.cena].some((x) => anglicky.test(x)) && o1.cena === o1.cekana.toUpperCase()

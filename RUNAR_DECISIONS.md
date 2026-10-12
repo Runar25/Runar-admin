@@ -11101,3 +11101,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   tamto je o souladu s popisy run, tohle o nitru čtenáře; obojí zůstává na ownerovi.
   Nález se znovu nepředkládá, dokud owner sám nezmíní, že mu statické čtení vadí.
 - Affected doc(s): `RUNAR_BACKLOG.md` (položka z procházky zavřená ✖) — v témže commitu.
+
+## 2026-10-12 (2) — Selhané načtení profilu se už nevydává za nový účet: druhý pokus, pak hláška a „zkusit znovu“
+
+- **Proč:** owner *„udělej i tu položku s načtením profilu“* (nález CODE-read, BACKLOG). `fetchUserProfile` chybu nečetl — Supabase výpadek
+  sítě nevyhodí, vrátí `{ error }` — a appka se pak tvářila, že je člověk nový: Životní runa se znovu ptala „When were you born?“ i toho, kdo
+  datum i hotové čtení má, pruh nad formulářem hlásil vyčerpané volné čtení i předplatiteli a vyskočila výzva ke jménu. Placení nehrozilo
+  (druhou životní runu server odmítne), ale vypadalo to, jako by appka zapomněla, co člověk má.
+- **Co:** chyba z databáze → jeden druhý pokus po 1,5 s; když selže i ten, `profileLoadFailed`: Životní runa a strom ukážou hlášku
+  (`profile_load_err`, vzor `journal_load_err`) a tlačítko „REYNDU AFTUR“ / „TRY AGAIN“ (`znovuNactiProfil`), appka ukáže hlášku i jako toast,
+  nevyskočí výzva ke jménu ani upozornění na obnovu, a po návratu sítě se profil načte sám. Pruh nad formulářem se bez načteného profilu
+  neukazuje vůbec — tím zmizelo i krátké probliknutí „vyčerpáno“ při každém přihlášení. Prázdný profil bez chyby (nový účet) se chová jako dřív.
+- **Islandština:** psaná islandsky po vzoru `journal_load_err`; greynir („Reyna aftur.“ nerozebral → „Reyndu aftur.“), korpus („sækja
+  upplýsingarnar“ 44, „reyndu aftur“ 370) a is-gpt-check bez nálezu.
+- **Hlídá smoke ㊽ (F):** skutečná cesta `fetchUserProfile` proti zablokované databázi — hláška se „zkusit znovu“, žádný formulář na datum,
+  žádný pruh, žádná výzva ke jménu. Útoky v protipříkladech (chyba zase přejitá, pruh zase bez profilu).
+- Affected doc(s): `RUNAR_BACKLOG.md` (položka CODE-read odškrtnutá) — v témže commitu.

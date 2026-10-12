@@ -621,6 +621,17 @@ function updateTreeTab() {
     return;
   }
 
+  // Profil se nenačetl ani napodruhé (2026-10-12, fetchUserProfile): hláška a „zkusit znovu“ místo formuláře na datum narození — dřív
+  // se tu člověka, který datum i hotové čtení má, appka znovu ptala „When were you born?“ (nález CODE-read). Nabídky výš čekají na profileLoaded.
+  if (typeof profileLoadFailed !== 'undefined' && profileLoadFailed) {
+    var _tlf = document.getElementById('tree-loading'); if (_tlf) _tlf.style.display = 'block';
+    var _tlft = document.getElementById('tree-loading-text'); if (_tlft) _tlft.textContent = t('profile_load_err');
+    var _tlfg = document.getElementById('tree-loading-glyph'); if (_tlfg) _tlfg.innerHTML = '';
+    var _tlfr = document.getElementById('tree-loading-retry'); if (_tlfr) { _tlfr.style.display = ''; _tlfr.textContent = t('profile_retry_btn'); }
+    return;
+  }
+  var _tlr0 = document.getElementById('tree-loading-retry'); if (_tlr0) _tlr0.style.display = 'none';
+
   if (!hasDob) {
     // Profil se jeste nacita (currentUser je hned, readerUser.d dorazi z DB ~1-2s):
     // ukaz loading misto no-dob formulare, jinak to blikne jako "kdy ses narodil?" a vypada rozbite.
