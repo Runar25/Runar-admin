@@ -66,7 +66,7 @@ v `docs/archive/RUNAR_BACKLOG_odlozene.md` jako ⏸ — nejsou to úkoly. Vrací
 tři srovnávací skripty `compare_*` (nefunkční, 401), šly pryč s nimi. Prompty beze změny (golden); kontrola ㉦ přišla o krok, který
 hlídal jen V2 cestu.
 - ✅ *(CODE-tune 2026-10-12: oba smazány — nikdo je nepoužíval, ceny počítá `pricing_tabulka.js`, v rejstříku `tools.js` místo nich)*
-  ~~**`compare_seasonal.js` a `measure_reading_costs.js` (`scripts/utils/`) volají proxy veřejným klíčem**~~ → 401 od 2026-08-02,
+  ~~**`compare_seasonal.js` a `measure_reading_costs.js` (`scripts/utils/`) volají proxy veřejným klíčem**~~ → 401 od 2026-08-02, <!-- doc-links:ok 2026-10-12 oba skripty záměrně smazány (CODE-tune), odkaz je historie -->
   nefungují (zjištěno 2026-10-11 CODE-tune). Opravit na admin token (vzor `gen_batch.js`), nebo smazat — ceny dnes počítá
   `scripts/utils/pricing_tabulka.js`; `measure_reading_costs` stojí i v rejstříku `scripts/utils/tools.js`. CODE-tune.
 
