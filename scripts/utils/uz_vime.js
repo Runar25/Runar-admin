@@ -38,8 +38,11 @@ souhrn.push(['RUNAR_DECISIONS.md', hledej('RUNAR_DECISIONS.md', /^## \d{4}-\d{2}
 souhrn.push(['RUNAR_BACKLOG.md', hledej('RUNAR_BACKLOG.md', /^#{2,3} /)]);
 // Archiv hotových a zamítnutých položek BACKLOGu (2026-10-12, scripts/utils/backlog_uklid.py): bez něj by po přesunu „už je hotové“ nikdo
 // nenašel. Pokračovací řádky položek značku nemají — v archivu je všechno uzavřené, takže bez ✖ se hlásí jako ✅.
-souhrn.push(['docs/archive/RUNAR_BACKLOG_hotovo.md', hledej('docs/archive/RUNAR_BACKLOG_hotovo.md', /^#{2,3} /)
-  .map((x) => Object.assign(x, { stav: x.stav === '✖' ? '✖' : '✅' }))]);
+// Od 2026-10-12 i uzavřené záznamy přesunuté celé (RUNAR_BACKLOG_kontrola-architektury.md) — seznam se odvozuje z adresáře, ne opisuje.
+try {
+  for (const f of fs.readdirSync(path.join(REPO, 'docs', 'archive')).filter((x) => /^RUNAR_BACKLOG_.*\.md$/.test(x)).sort())
+    souhrn.push(['docs/archive/' + f, hledej('docs/archive/' + f, /^#{2,4} /).map((x) => Object.assign(x, { stav: x.stav === '✖' ? '✖' : '✅' }))]);
+} catch (e) {}
 souhrn.push(['RUNAR_EVAL_LOG.md', hledej('RUNAR_EVAL_LOG.md', /^## \d{4}-\d{2}-\d{2}/)]);
 souhrn.push(['RUNAR_DESIGN.md', hledej('RUNAR_DESIGN.md', /^#{2,3} /)]);
 // Ostatní kanonické docy v kořeni — seznam se odvozuje, ne opisuje (2026-10-11: chyběly RUNAR_TREE, PRICING, POPISY_RUN, PRIVACY;
