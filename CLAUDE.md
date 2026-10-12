@@ -390,8 +390,6 @@ jelikož to je náš společný jazyk se Sigrún. Zapiš, vytvoř kontrolu, coko
 - **IS + EN:** co uvidí uživatel, tester nebo model — appka, nápověda, soukromí, e-maily, odpovědi testerům (koncepty v Gmailu).
 - **EN:** co je pro adminy — shrine, štítky schránky runar@therunekeeper.com, logy edge funkcí, štítek verze promptu
   (`RUNAR_PROMPT_VERSION`, admin ho vidí u čtení). Angličtina je společná řeč se Sigrún.
-  **Od 2026-10-12 i návrhy k výběru a jejich popisky** (náhledy webu, karet, vizuálů ve `web/`) — owner: *„všechny návrhy a popisky v EN“*.
-  Chat o nich zůstává česky.
 - **Česky jen owner ↔ Claude:** chat, docs (`RUNAR_*.md`, `CLAUDE.md`), komentáře v kódu, commity, paměť, výstup skriptů
   v `scripts/`, laby (`tree-lab-*`). Že je repo veřejné, z nich veřejnou komunikaci nedělá.
 - **Hlídá stroj — smoke ㉹** (`scripts/verify_jazyk_ui.js`): UI_TEXT, stránky v2/ a web/, jejich JS, edge funkce, šablony e-mailů.
@@ -569,6 +567,8 @@ SÁM — bez ownera.
 - **CODE-web** → prefix `[web]` (od 2026-10-12, owner *„ano to zní dobře“*): veřejný web therunekeeper.com — složka `web/`, landing page,
   coming soon, registrace před spuštěním, nákup Rúnakortu (Shopify / Rapyd), návrh fyzické karty. Appku (`v2/`) nesahá; co web
   potřebuje z appky (texty, config, glyfy), jen ČTE (`UI_TEXT`, `CARD_PACKS`, `runeSvg`) a změny v nich předává lane, která je vlastní.
+  **Návrhy a jejich popisky píše CODE-web anglicky** (owner 2026-10-12: *„všechny návrhy a popisky v EN“* — platí jen pro tuhle lane);
+  chat s ownerem česky.
 - **Cowork-tune · Cowork-read · Cowork-tree** → prefix `[cowork]`: design, docs, eval-OBSAH,
   copy audit, handoffy. Každý je **symbiont své CODE session** — ta se s ním radí o obsahu. Repo **READ-ONLY přes `git show HEAD:`** (ne `git status`, ten zapisuje do indexu); do repa píše VÝHRADNĚ přes CODE. Další Cowork session = táž lane, táž pravidla.
 
