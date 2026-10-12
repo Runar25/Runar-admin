@@ -11,6 +11,8 @@ const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJ
 const PROXY     = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/claude-proxy';
 const EL_PROXY  = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/elevenlabs-proxy';
 const EL_STATIC = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/elevenlabs-static';
+// TREE_UPDATE appka nevolá (strom se z klienta do tree_state neukládá) — adresa funkce supabase/functions/tree-update, nechaná
+// pro CODE-tree (kontrola architektury 2026-10-10, část 21). Do 2026-10-12 tu stála bez slova, jako by se používala.
 const TREE_UPDATE = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/tree-update';
 const RESET_TREE  = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/reset-tree';
 // ASK_MULTI_LIVE ODEBRÁN 2026-09-26 (úklid): byl to vypínač náběhu dvou Asků (2026-09-24/25); od spuštění kdo smí Ask a kolikrát
@@ -127,6 +129,15 @@ const RUNAR_MODES = {
     max_tokens: 700,
     voice:      false,
     layers:     null,
+    active:     true,
+  },
+  // Ask — doplňující otázka ke čtení. Strop odpovědi čte runar-reading.js (do 2026-10-12 tam stál natvrdo, §10) a gen_batch.js.
+  // Historie stropu: 120 usekával IS uprostřed věty (IS je na tokeny ~1,5–2× hustší) → 140 (KUKY: náklad, dlouhý Ask nedává smysl)
+  // → 2026-09-06 320: prompt povoluje ~90 slov (změřeno jako optimum, TEST DILY) a 140 by IS odpověď usekl. Délku drží PROMPT;
+  // _trimToSentence zařídí, že se useknutý zbytek nikdy neukáže.
+  ask: {
+    label:      'Ask',
+    max_tokens: 320,
     active:     true,
   },
   daily_reflection: {
@@ -571,7 +582,8 @@ const SPREAD_CONFIG = {
 // ─── VOICE PROFILES ─────────────────────────────────────────────────────────
 // Každý profil nahrazuje voice + variability + imagery v systémovém promptu.
 // Přepnutí produkce: změnit ACTIVE_VOICE_PROFILE.
-// Shrine může přepínat přes dropdown (localStorage: shrine_voice_profile).
+// Shrine přepínač nemá — čte ACTIVE_VOICE_PROFILE jako reader; dávky skriptů přepínají přes `activeVoice` (runar-character.js).
+// Do 2026-10-12 tu stálo, že shrine přepíná přes dropdown (localStorage: shrine_voice_profile) — ten nikdy nebyl.
 const ACTIVE_VOICE_PROFILE = 'focused';
 
 const VOICE_PROFILES = {

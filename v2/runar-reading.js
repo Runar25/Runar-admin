@@ -1126,16 +1126,10 @@ async function askRunar() {
   var _askJournal = (currentUser && _lastReadingId)
     ? { kind: 'ask', reading_id: _lastReadingId, ask_entry_id: _askEntryId, question: q } : null;
   // mode 'ask' = not a cast: it must not draw down the monthly cap (see claude-proxy).
-  // Follow-up ma byt KRATKY (odpoved na jednu otazku, ne cteni). Strop 140 (KUKY: cost
-  // + dlouhy FU nedava smysl). Puvodni 120 usekaval IS uprostred vety — IS je ~1,5-2x
-  // hustsi na tokeny, takze ~40 slov IS = ~120 tok. 140 da mirnou rezervu; EN se stropu
-  // stejne nedotkne (prompt ho drzi na ~40 slov). Fix B (_trimToSentence) zaridi, ze se
-  // nikdy nezobrazi useknuty fragment — IS FU u horni hranice delky prijde o posledni
-  // vetu, coz je pri zamerne kratke odpovedi v poradku. Delku primarne drzi PROMPT.
-  // 2026-09-06: 140 -> 320. Prompt povoluje ~90 slov (zmereno jako optimum, TEST DILY),
-  // a 140 tokenu by IS odpoved useklo uprostred — IS je ~1,5-2x hustsi na tokeny.
-  var askCap = 320;
-  var res = await callProxy(sys, prompt, askCap, shouldUseCredit(), SPREAD_COSTS.single.credits, _askJournal, 'ask'); // FU: lang-aware cap
+  // Strop odpovědi = RUNAR_MODES.ask.max_tokens (config, §10; historie stropu stojí tam). Do 2026-10-12 tu stál natvrdo
+  // a komentář sliboval strop podle jazyka — byl jeden pro oba.
+  var askCap = RUNAR_MODES.ask.max_tokens;
+  var res = await callProxy(sys, prompt, askCap, shouldUseCredit(), SPREAD_COSTS.single.credits, _askJournal, 'ask');
   if (res.error) {
     // chyba: výměna zmizí, jako by se Ask nestal (otázka zůstává v poli k novému pokusu)
     if (cislo === 1) { if (qEl) qEl.style.display = 'none'; if (ans) { ans.innerHTML = ''; ans.style.display = 'none'; } }

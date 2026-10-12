@@ -41,10 +41,13 @@ v `docs/archive/RUNAR_BACKLOG_odlozene.md` jako ⏸ — nejsou to úkoly. Vrací
 - [ ] **`SEASON_POOLS` — 133 obrazů v kódu, do čtení se nedostanou** (`v2/runar-character.js`; ověřeno protlačením 2026-09-08,
   CLAUDE.md „Obraznost“): mrtvá data, udržovaná dvojjazyčně. S hotovým promptem spíš odstranit (CODE-tune). Zbytek původní položky
   (Sowilo zimní obraz, losy ve spreadech) je v archivu odložených.
-- [ ] **Drobné rozpory kód ↔ komentář (zbytek inventury 2026-09-08, ověřeno 2026-10-12 CODE-read)** — pro CODE-tune: (a) `TREE_UPDATE`
-  v `v2/runar-config.js:14` nikdo nečte · (b) komentář `v2/runar-config.js` ~ř. 574 slibuje přepínač hlasu ve shrine (`shrine_voice_profile`),
-  který neexistuje · (c) strop Asku 320 tokenů natvrdo v `v2/runar-reading.js` (~ř. 1137), mimo config (§10) · (d) výchozí „Only your name
-  is required…“ v `v2/runar-reader.html:297` (přepíše ho `_updateReadingForm`, uživatel ho nevidí) · (e) laboratorní V2 řetěz → podsekce níž.
+- [ ] **Drobné rozpory kód ↔ komentář (zbytek inventury 2026-09-08, ověřeno 2026-10-12 CODE-read)** — pro CODE-tune: zbývá (e)
+  laboratorní V2 řetěz → podsekce níž. ✅ *(CODE-tune 2026-10-12: (a)–(d) — strop Asku stojí v configu `RUNAR_MODES.ask`, čte ho
+  `runar-reading.js` i `gen_batch.js`; komentáře u `TREE_UPDATE` a u přepínače hlasu říkají pravdu; výchozí věta z HTML pryč, appka tam
+  dává text z UI_TEXT — ověřeno v prohlížeči EN i IS)* ~~(a) `TREE_UPDATE` v `v2/runar-config.js:14` nikdo nečte · (b) komentář
+  `v2/runar-config.js` ~ř. 574 slibuje přepínač hlasu ve shrine (`shrine_voice_profile`), který neexistuje · (c) strop Asku natvrdo
+  v `v2/runar-reading.js` (~ř. 1137), mimo config (§10) · (d) výchozí „Only your name is required…“ v `v2/runar-reader.html:297`
+  (přepíše ho `_updateReadingForm`, uživatel ho nevidí)~~
 
 ### Mrtvý řetěz V2 charakteru k odstranění (nalezeno 2026-08-15)
 `DEF_CHAR_V2_EN` (v2/runar-character.js) je **druhá úplná kopie popisu Rúnara** a už se rozešla —
