@@ -140,7 +140,9 @@ hlídal jen V2 cestu.
   (sazba opravena 03bf490).
   (e) **Výstup:** nálezy jako „Pro CODE-tune“ (kód a nasazení dělá CODE-tune), co chce ownera zvlášť. Nic negenerovat přes ElevenLabs —
   stojí kredity; stav účtu ze snímků nebo od ownera.
-- [ ] **Zásady soukromí: výčet toho, co drží úložiště prohlížeče, není úplný** (nalezeno 2026-10-11 CODE-tune u okna „Where to start“,
+- ✅ *(CODE-tune 2026-10-12: oddíl o úložišti v obou jazycích přepsán podle toho, co appka opravdu drží; napřed z úložiště pryč, co
+  nečetlo nic — `treeLog`, staré počítadlo zkušebního čtení, místní korekce — a fronta neuložených čtení svázaná s účtem; DECISIONS
+  2026-10-12 (4))* ~~**Zásady soukromí: výčet toho, co drží úložiště prohlížeče, není úplný**~~ (nalezeno 2026-10-11 CODE-tune u okna „Where to start“,
   DECISIONS 2026-10-11 (65)): `v2/runar-privacy.html` bod 6 (EN i IS) jmenuje jazyk, jméno, počet čtení a přihlášení — chybí oslovení
   (`runar_gender`) a příznak „okno Where to start už viděl“ (`runar_wts_seen`); osobní údaj ani jedno nenese. Doplnit větou EN + IS
   (IS ověřit, CLAUDE.md §2), nebo výčet nahradit popisem druhu („nastavení appky“).
@@ -614,11 +616,14 @@ doladit apku“*).
 - [ ] **Owner — rozhodnutí:** (a) výslovný souhlas u pole otázky / výzva nepsat citlivé údaje (1) · (b) vývojové konverzace s Claudem:
       do zásad, nebo lhůta a přísnější nevypisování (5) · (c) minimální věk — Island 13, doporučeno 16–18 (6) · (d) DPIA před veřejným
       spuštěním (10).
-- [ ] **CODE-tune — zásady EN + IS (IS ověřit §2):** doplnit Brevo, Sign in with Google a GitHub Pages (2, D) · ElevenLabs: netrénuje
-      (po vypnutí), uchování, mechanismus přenosu; Google Drive: mechanismus přenosu (9, 12) · větu „Consent — voice and language“ přepsat
-      na smlouvu (4) · hlášení do tabulky „What is held“ + doba uchování (8, s položkou „Retence čtení“ v „OWNER rozhodnutí“) · úložiště
-      prohlížeče: `treeLog` a fronta neuložených čtení (7 — spojit s položkou „Zásady soukromí: výčet…“ v „Profil / personalizace“) ·
-      minimální věk po rozhodnutí. Zásady na agndofa.is (3) vede položka „Publikovat privacy policy na agndofa.is“.
+- [ ] **CODE-tune — zásady EN + IS (IS ověřit §2), zbývá jen to, co čeká na ownera:** ElevenLabs „netrénuje“ a doba uchování — až owner
+      vypne trénink v účtu (12) · hlášení do tabulky „What is held“ + doba uchování (8, s položkou „Retence čtení“ v „OWNER rozhodnutí“) ·
+      minimální věk po rozhodnutí (6). Zásady na agndofa.is (3) vede položka „Publikovat privacy policy na agndofa.is“.
+      ✅ *(CODE-tune 2026-10-12: Brevo, přihlášení přes Google (+ řádek v tabulce: jméno a fotka z Google účtu), GitHub Pages; mechanismus
+      přenosu u Google Drive, ElevenLabs a GitHub (rámec EU–USA platí v EHP od 6. 7. 2024, EEA-Lex 32023D1795); „Consent“ jen u testerů,
+      hlas a jazyk pod smlouvou; úložiště prohlížeče podle skutečnosti — `treeLog` se do zásad nepíše, appka ho přestala sbírat. Po cestě
+      opravy islandštiny, které stránka nesla: „hlíðum“ → „erum bundin af“, „á spám þínum“ (předpovědi — Rúnar není věštec) → „á lestrum
+      þínum“, „lestrar“ → „lestra“, „á þessum slóð“ → „á þessari slóð“, „Mótmæla“ → „Mótmæltu“. Ověřeno is-greynir, korpus, is-gpt-check.)*
 - [ ] **CODE-read:** do `RUNAR_PRIVACY.md` záznamy o činnostech zpracování (čl. 30), test oprávněného zájmu a postup při úniku dat (10);
       zapsat, že do Slacku osobní údaje nejdou (D).
 

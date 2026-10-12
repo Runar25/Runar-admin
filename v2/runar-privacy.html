@@ -151,9 +151,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
     <div class="help-block">
       <div class="help-block-body" id="s3-body">
         <p>We process your data on the following legal grounds under GDPR Article 6:</p>
-        <p><strong>Contract</strong> — to provide you with readings, journal, and account features you have requested.</p>
+        <p><strong>Contract</strong> — to provide the readings in the language you choose, Rúnar's voice, your journal, and the account features you have requested.</p>
         <p><strong>Legitimate interest</strong> — to prevent abuse of the free reading allowance, to keep the service running reliably, and to improve the quality of Rúnar's readings. For that we may review and analyse readings — the text and the details you enter. You can opt out of this at any time in the menu, under Privacy.</p>
-        <p><strong>Consent</strong> — for optional features such as voice and language preferences.</p>
+        <p><strong>Consent</strong> — only where we ask for it. If you take part in testing Rúnar, you give it in the app before you begin, so that we may review your readings.</p>
         <p>We do not use your data for advertising, profiling, or automated decision-making.</p>
       </div>
     </div>
@@ -166,11 +166,14 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
       <div class="help-block-body" id="s4-body">
         <p>We share only what is necessary, and only with these processors:</p>
         <p><strong>Supabase</strong> (database &amp; authentication) — servers in EU West (Ireland). What we store stays in the European Economic Area, apart from the backup copy described below. <a href="https://supabase.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">supabase.com/privacy</a></p>
-        <p><strong>Google</strong> (Drive, backups) — once a day we store a backup copy of our database there, in encrypted form (AES-256; only we hold the key, so Google cannot read it). Google may keep it outside the European Economic Area. It is used only to restore the data. Each copy is deleted after 30 days; Google may keep a deleted copy in its trash for up to 30 more days. <a href="https://policies.google.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">policies.google.com/privacy</a></p>
+        <p><strong>Brevo</strong> (e-mail, France) — sends the sign-in code to your e-mail address and processes it within the European Union. Where Brevo's sub-processors outside the European Economic Area are involved, the transfer rests on the EU standard contractual clauses or the EU–U.S. Data Privacy Framework. <a href="https://www.brevo.com/legal/privacypolicy/" target="_blank" style="color:var(--gold);opacity:0.8;">brevo.com/legal/privacypolicy</a></p>
+        <p><strong>Google</strong> (sign-in) — only if you choose to sign in with Google. Google confirms who you are and passes us your e-mail address, the name on your Google account and a link to its profile picture. The sign-in service stores these with your account; Rúnar itself uses only the e-mail address. <a href="https://policies.google.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">policies.google.com/privacy</a></p>
+        <p><strong>Google</strong> (Drive, backups) — once a day we store a backup copy of our database there, in encrypted form (AES-256; only we hold the key, so Google cannot read it). Google may keep it outside the European Economic Area; the transfer then rests on the EU–U.S. Data Privacy Framework, under which Google is certified. It is used only to restore the data. Each copy is deleted after 30 days; Google may keep a deleted copy in its trash for up to 30 more days. <a href="https://policies.google.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">policies.google.com/privacy</a></p>
         <p><strong>OpenAI</strong> (AI readings, United States) — to write your reading we send the details you enter (your name if you give one, your choices and your question) and the runes drawn; for your life rune, also your day and month of birth. OpenAI does not use them to train its models and keeps them for no more than 30 days to check for misuse, unless the law requires longer or they are flagged for misuse. <a href="https://openai.com/policies/privacy-policy/" target="_blank" style="color:var(--gold);opacity:0.8;">openai.com/policies/privacy-policy</a></p>
         <p><strong>Anthropic</strong> (AI readings, United States) — receives the same details only when OpenAI is unavailable. Anthropic does not use them to train its models and deletes them within 30 days, unless the law requires longer or they are flagged for misuse. <a href="https://www.anthropic.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">anthropic.com/privacy</a></p>
         <p>In both cases, the transfer to the United States rests on the EU standard contractual clauses.</p>
-        <p><strong>ElevenLabs</strong> (voice, United States) — the text of your reading is sent only when Rúnar first reads it aloud. <a href="https://elevenlabs.io/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">elevenlabs.io/privacy</a></p>
+        <p><strong>ElevenLabs</strong> (voice, United States) — the text of your reading is sent only when Rúnar first reads it aloud. The transfer rests on the EU–U.S. Data Privacy Framework and the EU standard contractual clauses. <a href="https://elevenlabs.io/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">elevenlabs.io/privacy</a></p>
+        <p><strong>GitHub</strong> (hosting of the app, United States) — like any host, GitHub sees your IP address when you open Rúnar and keeps it in its logs for security. The transfer rests on the EU standard contractual clauses and the EU–U.S. Data Privacy Framework, in which GitHub takes part. <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" style="color:var(--gold);opacity:0.8;">docs.github.com</a></p>
         <p>No data is sold. No data is shared with advertisers or data brokers. Ever.</p>
       </div>
     </div>
@@ -193,8 +196,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
     <div class="help-block">
       <div class="help-block-body" id="s6-body">
         <p>Rúnar does not use tracking cookies or third-party analytics.</p>
-        <p>Your browser's local storage holds a small amount of information to keep the experience seamless: your chosen language, your name (if given), the count of readings this month, and a session token used to keep you signed in. This data never leaves your device unless explicitly synced to your account.</p>
-        <p>You can clear this at any time through your browser settings, or by signing out of Rúnar.</p>
+        <p>Your browser's local storage keeps only what the app needs on this device: your sign-in, your language and how Rúnar addresses you, which introductions and notices you have already seen, and which image Rúnar last used for each rune, so that he does not repeat himself.</p>
+        <p>Sometimes our server has not yet confirmed that a reading, or your question to Rúnar and his answer, has been saved. A copy then waits here; the app sends it to your account at the first opportunity and then removes it. If you sign out before that succeeds, the copy waits until you sign in again. If you send us a report from the app, it waits here until it has been sent. The name you give in reports is kept so that you do not have to type it again.</p>
+        <p>None of this leaves your device, except the copies on their way to your account and the reports you send us. You can clear all of it at any time in your browser settings; signing out removes your sign-in from the browser.</p>
       </div>
     </div>
   </div>
@@ -254,6 +258,7 @@ const C = {
     s2Th:    ['WHAT', 'WHY', 'HOW LONG'],
     s2Rows:  [
       ['Email address',      'Sign in, account identity',              'Until account deleted'],
+      ['Name and profile picture from your Google account (only if you sign in with Google)', 'Come with the sign-in; Rúnar does not use them', 'Until account deleted'],
       ['Name (optional)',    'Personalise your experience',            'Until changed or account deleted'],
       ['Norse name and what it carries (optional)', 'So Rúnar can show it to you again', 'Until account deleted'],
       ['How Rúnar addresses you (he / she / they)', 'Correct word forms in Icelandic readings', 'Until changed or account deleted'],
@@ -272,22 +277,31 @@ const C = {
 
     s3Lbl:  'THE REASON WE HOLD IT',
     s3Body: `<p>We process your data on the following legal grounds under GDPR Article 6:</p>
-             <p><strong>Contract</strong> — to provide you with readings, journal, and account features you have requested.</p>
+             <p><strong>Contract</strong> — to provide the readings in the language you choose, Rúnar's voice, your journal, and the account features you have requested.</p>
              <p><strong>Legitimate interest</strong> — to prevent abuse of the free reading allowance, to keep the service running reliably, and to improve the quality of Rúnar's readings. For that we may review and analyse readings — the text and the details you enter. You can opt out of this at any time in the menu, under Privacy.</p>
-             <p><strong>Consent</strong> — for optional features such as voice and language preferences.</p>
+             <p><strong>Consent</strong> — only where we ask for it. If you take part in testing Rúnar, you give it in the app before you begin, so that we may review your readings.</p>
              <p>We do not use your data for advertising, profiling, or automated decision-making.</p>`,
 
     // 2026-10-09: OpenAI jako zpracovatel (čtení píše od 2026-10-09 gpt-6-sol, DECISIONS 2026-10-09 (13) bod (b); KUKY 2026-10-09 „8. doplň“). Do té doby tu stál jen
     // Anthropic bez země a u Supabase „Your data never leaves the EEA“, přestože čtení jde do USA. Znění = A z
     // docs/inbox/2026-09-30-navrh-textu-soukromi.md + OpenAI. Statická záloha v HTML výš nese TÝŽ text — měnit obojí.
+    // 2026-10-12 (CODE-tune, kontrola GDPR CODE-read: docs/archive/2026-10-12-gdpr-kontrola.md body 2, 4, 7, 9): + Brevo, přihlášení
+    // Google, GitHub Pages; u Google Drive, ElevenLabs a GitHub mechanismus přenosu; Consent jen u testerů (hlas a jazyk = smlouva);
+    // úložiště prohlížeče podle skutečnosti (treeLog a počítadlo zkušebního čtení appka už nedrží). V IS opravy chyb, které stránka
+    // nesla: „hlíðum“ (svahy) → „erum bundin af“, „lestrar“ → „lestra“, „á spám“ (předpovědi — Rúnar není věštec) → „á lestrum“,
+    // „á þessum slóð“ → „á þessari slóð“, „Mótmæla“ → „Mótmæltu“, „litla magni“ a „óbrotnni“ v oddílu úložiště. Ověřeno is-greynir,
+    // korpus (is-vazba), is-gpt-check.
     s4Lbl:  'WHO ELSE SEES IT',
     s4Body: `<p>We share only what is necessary, and only with these processors:</p>
              <p><strong>Supabase</strong> (database &amp; authentication) — servers in EU West (Ireland). What we store stays in the European Economic Area, apart from the backup copy described below. <a href="https://supabase.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">supabase.com/privacy</a></p>
-             <p><strong>Google</strong> (Drive, backups) — once a day we store a backup copy of our database there, in encrypted form (AES-256; only we hold the key, so Google cannot read it). Google may keep it outside the European Economic Area. It is used only to restore the data. Each copy is deleted after 30 days; Google may keep a deleted copy in its trash for up to 30 more days. <a href="https://policies.google.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">policies.google.com/privacy</a></p>
+             <p><strong>Brevo</strong> (e-mail, France) — sends the sign-in code to your e-mail address and processes it within the European Union. Where Brevo's sub-processors outside the European Economic Area are involved, the transfer rests on the EU standard contractual clauses or the EU–U.S. Data Privacy Framework. <a href="https://www.brevo.com/legal/privacypolicy/" target="_blank" style="color:var(--gold);opacity:0.8;">brevo.com/legal/privacypolicy</a></p>
+             <p><strong>Google</strong> (sign-in) — only if you choose to sign in with Google. Google confirms who you are and passes us your e-mail address, the name on your Google account and a link to its profile picture. The sign-in service stores these with your account; Rúnar itself uses only the e-mail address. <a href="https://policies.google.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">policies.google.com/privacy</a></p>
+             <p><strong>Google</strong> (Drive, backups) — once a day we store a backup copy of our database there, in encrypted form (AES-256; only we hold the key, so Google cannot read it). Google may keep it outside the European Economic Area; the transfer then rests on the EU–U.S. Data Privacy Framework, under which Google is certified. It is used only to restore the data. Each copy is deleted after 30 days; Google may keep a deleted copy in its trash for up to 30 more days. <a href="https://policies.google.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">policies.google.com/privacy</a></p>
              <p><strong>OpenAI</strong> (AI readings, United States) — to write your reading we send the details you enter (your name if you give one, your choices and your question) and the runes drawn; for your life rune, also your day and month of birth. OpenAI does not use them to train its models and keeps them for no more than 30 days to check for misuse, unless the law requires longer or they are flagged for misuse. <a href="https://openai.com/policies/privacy-policy/" target="_blank" style="color:var(--gold);opacity:0.8;">openai.com/policies/privacy-policy</a></p>
              <p><strong>Anthropic</strong> (AI readings, United States) — receives the same details only when OpenAI is unavailable. Anthropic does not use them to train its models and deletes them within 30 days, unless the law requires longer or they are flagged for misuse. <a href="https://www.anthropic.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">anthropic.com/privacy</a></p>
              <p>In both cases, the transfer to the United States rests on the EU standard contractual clauses.</p>
-             <p><strong>ElevenLabs</strong> (voice, United States) — the text of your reading is sent only when Rúnar first reads it aloud. <a href="https://elevenlabs.io/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">elevenlabs.io/privacy</a></p>
+             <p><strong>ElevenLabs</strong> (voice, United States) — the text of your reading is sent only when Rúnar first reads it aloud. The transfer rests on the EU–U.S. Data Privacy Framework and the EU standard contractual clauses. <a href="https://elevenlabs.io/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">elevenlabs.io/privacy</a></p>
+             <p><strong>GitHub</strong> (hosting of the app, United States) — like any host, GitHub sees your IP address when you open Rúnar and keeps it in its logs for security. The transfer rests on the EU standard contractual clauses and the EU–U.S. Data Privacy Framework, in which GitHub takes part. <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" style="color:var(--gold);opacity:0.8;">docs.github.com</a></p>
              <p>No data is sold. No data is shared with advertisers or data brokers. Ever.</p>`,
 
     s5Lbl:   'YOUR RIGHTS',
@@ -304,8 +318,9 @@ const C = {
 
     s6Lbl:  'COOKIES & LOCAL MEMORY',
     s6Body: `<p>Rúnar does not use tracking cookies or third-party analytics.</p>
-             <p>Your browser's local storage holds a small amount of information to keep the experience seamless: your chosen language, your name (if given), the count of readings this month, and a session token used to keep you signed in. This data never leaves your device unless explicitly synced to your account.</p>
-             <p>You can clear this at any time through your browser settings, or by signing out of Rúnar.</p>`,
+             <p>Your browser's local storage keeps only what the app needs on this device: your sign-in, your language and how Rúnar addresses you, which introductions and notices you have already seen, and which image Rúnar last used for each rune, so that he does not repeat himself.</p>
+             <p>Sometimes our server has not yet confirmed that a reading, or your question to Rúnar and his answer, has been saved. A copy then waits here; the app sends it to your account at the first opportunity and then removes it. If you sign out before that succeeds, the copy waits until you sign in again. If you send us a report from the app, it waits here until it has been sent. The name you give in reports is kept so that you do not have to type it again.</p>
+             <p>None of this leaves your device, except the copies on their way to your account and the reports you send us. You can clear all of it at any time in your browser settings; signing out removes your sign-in from the browser.</p>`,
 
     s7Lbl:  'THE RIGHT TO BE FORGOTTEN',
     s7Body: `<p>You may delete your account at any time. Open the <strong>menu</strong> in Rúnar and choose <em>Delete Account</em>. This permanently removes your account, all readings, your journal, and all associated data from our systems.</p>
@@ -328,7 +343,7 @@ const C = {
     hSub:     'Sumt verður að segja beint frá. Þetta er loforð okkar til þín — hvað við vitum, hvers vegna við vitum það, og hvernig þú getur beðið okkur um að gleyma.',
 
     s1Lbl:  'GÆSLUMAÐUR GAGNA',
-    s1Body: `<p><strong>Agndofa ehf.</strong> ber ábyrgð á gögnum þínum innan Rúnar-forritsins. Við erum staðsett á Íslandi — aðildarríki Evrópska efnahagssvæðisins — og við hlíðum að fullu við almennu persónuverndarreglugerðina (GDPR).</p>
+    s1Body: `<p><strong>Agndofa ehf.</strong> ber ábyrgð á gögnum þínum innan Rúnar-forritsins. Við erum staðsett á Íslandi — aðildarríki Evrópska efnahagssvæðisins — og erum að fullu bundin af almennu persónuverndarreglugerðinni (GDPR).</p>
              <p>Hafðu samband: <a href="mailto:info@agndofa.is" style="color:var(--gold);opacity:0.85;">info@agndofa.is</a></p>`,
 
     s2Lbl:   'HVAÐ ER GEYMT',
@@ -336,6 +351,7 @@ const C = {
     s2Th:    ['HVAÐ', 'HVERS VEGNA', 'HVE LENGI'],
     s2Rows:  [
       ['Netfang',                   'Innskráning, auðkenni reiknings',             'Þar til reikningi er eytt'],
+      ['Nafn og prófílmynd á Google-reikningnum þínum (aðeins ef þú skráir þig inn með Google)', 'Fylgja innskráningunni; Rúnar notar þau ekki', 'Þar til reikningi er eytt'],
       ['Nafn (valkvætt)',           'Sérsníða upplifun þína',                      'Þar til breytt eða reikningi eytt'],
       ['Norræna nafnið þitt og það sem það ber (valkvætt)', 'Svo Rúnar geti sýnt þér það aftur', 'Þar til reikningi er eytt'],
       ['Hvernig Rúnar ávarpar þig (hann / hún / hán)', 'Réttar beygingar í lestrum á íslensku', 'Þar til breytt eða reikningi eytt'],
@@ -343,7 +359,7 @@ const C = {
       ['Lestur lífsrúnar þinnar',  'Svo Rúnar geti sýnt þér hann aftur',          'Þar til reikningi er eytt'],
       ['Tréð þitt (nafn þess og hvenær það festi rætur)', 'Svo tréð þitt geti vaxið', 'Þar til breytt eða reikningi eytt'],
       ['Rúnalestrar, með spurningum þínum og svörum Rúnars', 'Dagbók þín — geymd fyrir endurkomu þína', 'Þar til reikningi er eytt'],
-      ['Upplestur Rúnars á spám þínum', 'Svo þú getir hlustað á hann aftur í dagbókinni', 'Þar til reikningi er eytt'],
+      ['Upplestur Rúnars á lestrum þínum', 'Svo þú getir hlustað á hann aftur í dagbókinni', 'Þar til reikningi er eytt'],
       ['Tungumál',                 'Sýna Rúnar á máli þínu',                      'Þar til breytt'],
       ['Fjöldi lestra',            'Svo enginn fari yfir hámark á mánuði',         'Endurnýjast mánaðarlega; eytt með reikningi'],
       ['Hve oft röddin hefur talað í mánuðinum', 'Til að vita hve oft Rúnar les upphátt', 'Endurnýjast mánaðarlega; eytt með reikningi'],
@@ -353,20 +369,23 @@ const C = {
     ],
 
     s3Lbl:  'ÁSTÆÐAN FYRIR GEYMSLU',
-    s3Body: `<p>Við vinnslu gagna þinna byggist á eftirfarandi lagalegum grundvelli samkvæmt 6. gr. GDPR:</p>
-             <p><strong>Samningur</strong> — til að veita þér lestrar, dagbók og reikningseiginleika sem þú hefur óskað eftir.</p>
+    s3Body: `<p>Vinnsla gagna þinna byggist á eftirfarandi heimildum samkvæmt 6. gr. GDPR:</p>
+             <p><strong>Samningur</strong> — til að veita þér lestra á því tungumáli sem þú velur, upplestur Rúnars, dagbók og reikningseiginleika sem þú hefur óskað eftir.</p>
              <p><strong>Lögmætir hagsmunir</strong> — til að koma í veg fyrir misnotkun á ókeypis lestrum, til að halda þjónustunni áreiðanlegri og til að bæta gæði lestra Rúnars. Í því skyni kunnum við að fara yfir og greina lestra, bæði textann og upplýsingarnar sem þú slærð inn. Þú getur afþakkað gæðagreiningu hvenær sem er í valmyndinni, undir Persónuvernd.</p>
-             <p><strong>Samþykki</strong> — fyrir valkvæða eiginleika eins og rödd og tungumálastillingar.</p>
+             <p><strong>Samþykki</strong> — aðeins þar sem við biðjum um það. Ef þú tekur þátt í prófun Rúnars veitir þú það í forritinu áður en þú byrjar, svo að við megum fara yfir lestrana þína.</p>
              <p>Við notum ekki gögn þín í auglýsingar, snið eða sjálfvirka ákvarðanatöku.</p>`,
 
     s4Lbl:  'HVERJIR SJÁ ÞAÐ',
     s4Body: `<p>Við deilum aðeins því sem nauðsynlegt er, og aðeins með þessum vinnsluaðilum:</p>
              <p><strong>Supabase</strong> (gagnagrunnur og auðkenning) — þjónar í Vestur-Evrópu (Írland). Gögnin sem við geymum eru innan Evrópska efnahagssvæðisins, að undanskildu öryggisafritinu sem lýst er hér að neðan. <a href="https://supabase.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">supabase.com/privacy</a></p>
-             <p><strong>Google</strong> (Drive, öryggisafrit) — einu sinni á dag geymum við þar öryggisafrit af gagnagrunninum okkar, á dulkóðuðu formi (AES-256; aðeins við höfum lykilinn og Google getur því ekki lesið það). Google kann að geyma það utan Evrópska efnahagssvæðisins. Það er eingöngu notað til að endurheimta gögnin. Hverju afriti er eytt eftir 30 daga; Google kann að geyma eytt afrit í ruslinu í allt að 30 daga til viðbótar. <a href="https://policies.google.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">policies.google.com/privacy</a></p>
+             <p><strong>Brevo</strong> (tölvupóstur, Frakkland) — sendir innskráningarkóðann á netfangið þitt og vinnur úr því innan Evrópusambandsins. Þegar undirvinnsluaðilar Brevo utan Evrópska efnahagssvæðisins koma að málinu byggist miðlunin á stöðluðum samningsskilmálum ESB eða jafngildisákvörðun ESB fyrir Bandaríkin (e. EU–U.S. Data Privacy Framework). <a href="https://www.brevo.com/legal/privacypolicy/" target="_blank" style="color:var(--gold);opacity:0.8;">brevo.com/legal/privacypolicy</a></p>
+             <p><strong>Google</strong> (innskráning) — kemur aðeins við sögu ef þú velur að skrá þig inn með Google. Google staðfestir hver þú ert og sendir okkur netfangið þitt, nafnið á Google-reikningnum þínum og tengil á prófílmynd hans. Innskráningarþjónustan geymir þetta með reikningnum þínum, en Rúnar sjálfur notar aðeins netfangið. <a href="https://policies.google.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">policies.google.com/privacy</a></p>
+             <p><strong>Google</strong> (Drive, öryggisafrit) — einu sinni á dag geymum við þar öryggisafrit af gagnagrunninum okkar, á dulkóðuðu formi (AES-256; aðeins við höfum lykilinn og Google getur því ekki lesið það). Google kann að geyma það utan Evrópska efnahagssvæðisins og þá byggist miðlunin á jafngildisákvörðun ESB fyrir Bandaríkin, sem Google fellur undir. Það er eingöngu notað til að endurheimta gögnin. Hverju afriti er eytt eftir 30 daga; Google kann að geyma eytt afrit í ruslinu í allt að 30 daga til viðbótar. <a href="https://policies.google.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">policies.google.com/privacy</a></p>
              <p><strong>OpenAI</strong> (gervigreind, Bandaríkin) — til að semja lesturinn sendum við upplýsingarnar sem þú slærð inn (nafn þitt ef þú gefur það upp, val þitt og spurningu) og rúnirnar sem dregnar eru, og fyrir lífsrúnina einnig fæðingardag og mánuð. OpenAI notar þær ekki til að þjálfa gervigreind sína og geymir þær ekki lengur en í 30 daga til að fylgjast með misnotkun, nema lög krefjist lengri tíma eða þær séu merktar sem misnotkun. <a href="https://openai.com/policies/privacy-policy/" target="_blank" style="color:var(--gold);opacity:0.8;">openai.com/policies/privacy-policy</a></p>
              <p><strong>Anthropic</strong> (gervigreind, Bandaríkin) — fær sömu upplýsingar, aðeins ef OpenAI svarar ekki. Anthropic notar þær ekki til að þjálfa gervigreind sína og eyðir þeim innan 30 daga, nema lög krefjist lengri tíma eða þær séu merktar sem misnotkun. <a href="https://www.anthropic.com/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">anthropic.com/privacy</a></p>
              <p>Í báðum tilvikum byggist miðlun upplýsinganna til Bandaríkjanna á stöðluðum samningsskilmálum ESB.</p>
-             <p><strong>ElevenLabs</strong> (rödd, Bandaríkin) — texti lesturs þíns er aðeins sendur þegar Rúnar les hann upphátt í fyrsta sinn. <a href="https://elevenlabs.io/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">elevenlabs.io/privacy</a></p>
+             <p><strong>ElevenLabs</strong> (rödd, Bandaríkin) — texti lesturs þíns er aðeins sendur þegar Rúnar les hann upphátt í fyrsta sinn. Miðlunin byggist á jafngildisákvörðun ESB fyrir Bandaríkin og stöðluðum samningsskilmálum ESB. <a href="https://elevenlabs.io/privacy" target="_blank" style="color:var(--gold);opacity:0.8;">elevenlabs.io/privacy</a></p>
+             <p><strong>GitHub</strong> (hýsing forritsins, Bandaríkin) — eins og aðrir hýsingaraðilar sér GitHub IP-tölu þína þegar þú opnar Rúnar og geymir hana í skrám sínum af öryggisástæðum. Miðlunin byggist á stöðluðum samningsskilmálum ESB og jafngildisákvörðun ESB fyrir Bandaríkin, sem GitHub fellur undir. <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" style="color:var(--gold);opacity:0.8;">docs.github.com</a></p>
              <p>Engin gögn eru seld. Engum gögnum er deilt með auglýsendum eða gagnasölum. Aldrei.</p>`,
 
     s5Lbl:   'RÉTTINDI ÞÍN',
@@ -377,23 +396,24 @@ const C = {
       ['EYÐING',        'Eyddu reikningi þínum í forritinu, eða skrifaðu okkur. Allt hverfur — úr dulkóðuðu öryggisafritunum okkar innan 30 daga.'],
       ['FLUTNINGUR',    'Fáðu lestrana þína á véllæsilegu sniði.'],
       ['TAKMÖRKUN',     'Biddu okkur um að gera hlé á vinnslu meðan ágreiningur er leystur.'],
-      ['MÓTMÆLI',       'Mótmæla vinnslu sem byggist á lögmætum hagsmunum.'],
+      ['MÓTMÆLI',       'Mótmæltu vinnslu sem byggist á lögmætum hagsmunum.'],
       ['KVÖRTUN',       'Leggðu fram kvörtun hjá Persónuvernd á personuvernd.is.'],
     ],
 
     s6Lbl:  'VAFRAKÖKUR OG STAÐBUNDIN MINNI',
-    s6Body: `<p>Rúnar notar ekki rakningarvafrakökur eða þriðja aðila greiningar.</p>
-             <p>Staðbundið minni vafrans þíns geymir litla magni upplýsinga til að halda upplifuninni óbrotnni: tungumál þitt, nafn þitt (ef gefið upp), fjölda lestrar þessa mánaðar og setu-tákn til að halda þér skráðum inn. Þessi gögn fara aldrei úr tæki þínu nema sérstaklega samstillt við reikning þinn.</p>
-             <p>Þú getur hreinsað þetta hvenær sem er í stillingum vafrans, eða með því að skrá þig út úr Rúnar.</p>`,
+    s6Body: `<p>Rúnar notar ekki vafrakökur til að rekja ferðir þínar og engin greiningartól þriðju aðila.</p>
+             <p>Staðbundið minni vafrans geymir aðeins það sem forritið þarf á þessu tæki. Þar er innskráning þín, tungumálið þitt og hvernig Rúnar ávarpar þig. Þar kemur líka fram hvaða kynningar og tilkynningar þú hefur þegar séð og hvaða mynd Rúnar notaði síðast fyrir hverja rún, svo að hann endurtaki sig ekki.</p>
+             <p>Stundum hefur þjónninn okkar ekki enn staðfest að lestur eða spurning þín til Rúnars og svar hans hafi vistast. Þá bíður afrit hér. Forritið sendir það á reikninginn þinn við fyrsta tækifæri og fjarlægir það síðan. Ef þú skráir þig út áður en það tekst bíður afritið þar til þú skráir þig inn aftur. Ef þú sendir okkur tilkynningu úr forritinu bíður hún hér þar til hún hefur verið send. Nafnið sem þú gefur upp í tilkynningum er geymt svo að þú þurfir ekki að skrifa það aftur.</p>
+             <p>Ekkert af þessu fer úr tækinu nema afritin sem eru á leið á reikninginn þinn og tilkynningarnar sem þú sendir okkur. Þú getur hreinsað þetta allt hvenær sem er í stillingum vafrans og þegar þú skráir þig út er innskráningunni eytt úr vafranum.</p>`,
 
     s7Lbl:  'RÉTTUR TIL AÐ VERA GLEYMDUR',
-    s7Body: `<p>Þú getur eytt reikningi þínum hvenær sem er. Opnaðu <strong>valmyndina</strong> í Rúnar og veldu <em>Eyða reikningi</em>. Þetta fjarlægir varanlega reikning þinn, alla lestrar, dagbókina þína og öll tengd gögn úr kerfum okkar.</p>
+    s7Body: `<p>Þú getur eytt reikningi þínum hvenær sem er. Opnaðu <strong>valmyndina</strong> í Rúnar og veldu <em>Eyða reikningi</em>. Þetta fjarlægir varanlega reikning þinn, alla lestra, dagbókina þína og öll tengd gögn úr kerfum okkar.</p>
              <p>Ef þú kýst frekar, skrifaðu okkur á <a href="mailto:info@agndofa.is" style="color:var(--gold);opacity:0.85;">info@agndofa.is</a> og við munum gera það fyrir þig innan 30 daga, eins og GDPR krefst.</p>
-             <p>Gjafakortskóðar sem þú hefur innleyst eru áfram í gögnum okkar (án persónulegra gagna þinna tengdum) eingöngu vegna bókhalds.</p>`,
+             <p>Gjafakortskóðar sem þú hefur innleyst eru áfram í gögnum okkar, án tengsla við persónuupplýsingar þínar, eingöngu vegna bókhalds.</p>`,
 
     s8Lbl:  'EF HLUTIR BREYTAST',
     s8Body: `<p>Ef þessi stefna breytist á þann hátt sem hefur áhrif á réttindi þín, munum við tilkynna þér í gegnum forritið áður en breytingin tekur gildi. Dagsetning síðustu uppfærslu er sýnd hér að neðan.</p>
-             <p>Núverandi útgáfa er alltaf á þessum slóð.</p>`,
+             <p>Núverandi útgáfa er alltaf á þessari slóð.</p>`,
 
     contactLbl:  'SPURNINGAR UM GÖGN ÞÍN',
     contactBody: 'Ef eitthvað er óljóst, eða þú vilt nýta réttindi þín, talaðu beint við okkur.',
