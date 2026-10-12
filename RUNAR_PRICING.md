@@ -337,20 +337,20 @@ Změřená útrata modelů a hlasu = `node scripts/utils/stats.js` (z `readings.
 | Item | Dnes | Po spuštění | Note |
 |------|------|-------------|------|
 | Claude (Max, vývoj) | 100 | 100 ⓕ | vývoj; zůstane-li po spuštění, rozhodne owner |
-| „GPT 8 $“ | 8 ⓕ | 8 ⓕ | nejspíš předplatné ChatGPT Go (8 $/měsíc) — chat, NE API; potvrdí owner. API je řádek níž |
+| ChatGPT Go | 8 ✔ | 8 | předplatné chatu (owner 2026-10-12 „ano“) — NE API; API je řádek níž |
 | OpenAI API (čtení sol, korektor IS) | ~1 ✔ | proměnné | 30 dní: čtení + Ask přes sol ~$0.75 (`stats.js`), korektor IS $0.12 (`is_gpt_naklady.js`); po spuštění v „Variable“ níž |
 | Anthropic API (Opus pro admina, záloha, pokusy) | ~2–20 | ≤ 20 | 30 dní v appce ~$2.15 (Opus čtení + Ask, skoro vše admin); pokusy přes API mimo appku nezměřené; strop $20 (owner 2026-10-10) |
 | ElevenLabs | 6 ✔ | 22 | Starter (snímek předplatného 2026-10-12: 2 % kreditů využito, reset 2026-11-10); po spuštění Creator („ElevenLabs Plan“ výš) |
 | Supabase | 0 ✔ | 25 | Free; Pro „až půjdeme ven“ (owner) |
-| **Google Workspace** (schránka runar@, Drive se zálohami) | ~7–8.40 ⓕ | ~7–8.40 ⓕ | ✔ je to Workspace (DNS: MX Google); cena podle plánu a fakturace — Business Starter ~$7 ročně / $8.40 měsíčně za uživatele (ceníky třetích stran) |
+| Google Workspace (schránka runar@, Drive se zálohami) | 0 ✔ | 0 | ✔ je to Workspace (DNS: MX Google); platí ho Agndofa v rámci agndofa.is (owner 2026-10-12: „je to už v ceně agndofa.is“) — Rúnarovi nic navíc |
 | Brevo (e-mail s kódem) | 0 ✔ | 0 | free tarif (300 e-mailů denně); do 2026-10-12 tu stál Resend — zamítnut 2026-09-12 |
-| GitHub (repo, Pages) · Slack | 0 | 0 | veřejné repo + Pages zdarma; Slack free — ⓕ potvrdí owner |
+| GitHub (repo, Pages) · Slack | 0 ✔ | 0 | veřejné repo + Pages zdarma; Slack zdarma (owner 2026-10-12) |
 | Shopify (Basic) | 39 | 39 | e-shop Agndofa — sdílený s obchodem; kolik nese Rúnar, rozhodnout |
 | Apple Developer ($99/rok) | 0 | 8.25 | až nativní appka |
 | Google Play ($25 jednou) | 0 | 0.70 | až nativní appka, rozpočteno na ~36 měsíců |
 | Hetzner | 0 ✔ | 0 / ? | dnes nepředplacený („až předplatíme Supabase, nebo Hetzner“, DECISIONS 2026-10-10); alternativa k Supabase Pro |
-| Domény | 1.50 + ⓕ | 1.50 + ⓕ | agndofa.is; therunekeeper.com (GoDaddy) — cena z faktury |
-| **Celkem (hrubě)** | **~$165 + domény** | **~$235 + domény** | do 2026-10-12 ~$180 / ~$230 (Hetzner $6 navíc, bez Workspace) |
+| Domény | 1.50 | 1.50 | agndofa.is; therunekeeper.com je v ceně agndofa.is (owner 2026-10-12) |
+| **Celkem (hrubě)** | **~$158** | **~$225** | se Shopify $39 a Claude Max $100 — obojí ještě rozhodne owner (podíl Shopify, Claude po spuštění); do 2026-10-12 ~$180 / ~$230 |
 
 One-time: Google Play $25. Annual: Apple Developer $99.
 
