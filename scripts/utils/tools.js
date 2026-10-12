@@ -25,7 +25,7 @@ const filtr = (process.argv[2] || '').toLowerCase();
 // ne „co leží v scripts/utils".
 const SKUPINY = [
   ['generování a archiv čtení', ['gen_batch', 'archive_batches', 'export_readings', 'findings_to_backlog']],
-  ['měření a hodnocení výstupu', ['measure_readings', 'lint_readings', 'measure_reading_costs', 'stats', 'find_seeds']],
+  ['měření a hodnocení výstupu', ['measure_readings', 'lint_readings', 'stats', 'find_seeds', 'pricing_tabulka']],
   ['kontrola promptu a pravidel', ['lint_prompts', 'test_no_planted_bans', 'test_spine', 'test_lever_maps']],
   ['porovnání dávek', ['compare_']],
   // 2026-10-11: podle začátku jména (^), ne výčtem — nové nástroje kontroly IS padaly do „ostatní“ a výčet by se musel opravovat
