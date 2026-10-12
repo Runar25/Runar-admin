@@ -1098,7 +1098,7 @@ drží rejstřík, který z produkce odešel v `8e14f74`. Jediný čtenář je `
 **nikdo nevolá**; produkce jede `buildSysPrompt`. Lab záložka, kvůli které vznikl, byla odstraněna
 v `c6eb89c` (2026-07-10). Zatím jen označeno komentářem, aby to příští session nečetla jako pravdu.
 K odstranění: `DEF_CHAR_V2_EN` + `buildSysPromptV2` + `getContextLine`/`v2Voice`, pokud nemají
-jiného konzumenta. Před smazáním ověřit grepem přes **`scripts/**` i `v2/*.html`** — `buildSysPromptV2` volají
+jiného konzumenta. Před smazáním ověřit grepem přes **celé `scripts/` i `v2/*.html`** — `buildSysPromptV2` volají
 tři srovnávací skripty (`compare_horseshoe.js`, `compare_shrine_reader.js`,
 `compare_spreads_neutral.js`), takže „mrtvý" je jen vůči produkci, ne vůči repu.
 ⚠️ **2026-10-11 (CODE-tune):** ty tři skripty — a s nimi `compare_seasonal.js` a `measure_reading_costs.js` — volají proxy veřejným
