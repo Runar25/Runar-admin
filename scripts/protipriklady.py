@@ -157,6 +157,10 @@ PRIPADY = [
  # gitu), verify_zaklad_produkce + verify_liferune_states (chybu si podstrčí samy v každém běhu).
  ('chyti', 'verify_pill_lang.js', 'v2/runar-app.js', 'replace', 'function _syncPillLang() {', 'function _syncPillLang() { return;'),
  ('chyti', 'verify_prompt_rules_registry.js', 'v2/runar-character.js', 'replace', 'Never name the life rune.', 'Never mention the life rune.'),
+ # 2026-10-12 (CODE-tune): úplnost ㉜ — builder bez registru i bez výjimky musí kontrolu shodit; i se jménem s číslicí (regex
+ # `build[A-Za-z]+\(` ho neviděl). Jméno složené z kousků, ať ho nenajde kontrola, která hledá jména funkcí i ve scripts/.
+ ('chyti', 'verify_prompt_rules_registry.js', 'v2/runar-character.js', 'append', '', '\nfunction build' + 'PodstrcenyPrompt(u) { return "x"; }\n'),
+ ('obchazka', 'verify_prompt_rules_registry.js', 'v2/runar-character.js', 'append', '', '\nfunction build' + 'PodstrcenyPrompt2(u) { return "x"; }\n'),
  ('chyti', 'verify_pravidla_mapa.js', 'scripts/utils/pravidla_mapa.json', 'replace', '"pravidla": ["§30"],', '"pravidla": ["§99"],'),
  # kolo 3 / 4h (2026-10-11): obrazy, kalendář, myšlenka ✦, zrcadlo parseru
  ('chyti', 'verify_compose_mirror.js', 'v2/runar-character.js', 'replace', "var reading = segs.map(function (x) { return x.text; }).join(' ').trim();", "var reading = segs.map(function (x) { return x.text; }).join('  ').trim();"),

@@ -241,7 +241,9 @@ const VYJIMKY_BUILDERU = {
 {
   const zdrojCh = fs.readFileSync(D + 'runar-character.js', 'utf8');
   const tentoSkript = fs.readFileSync(__filename, 'utf8');
-  const buildeři = (zdrojCh.match(/^function (build[A-Za-z]+)\(/gm) || [])
+  // 2026-10-12 (CODE-tune): jméno smí nést i číslici nebo podtržítko — `build[A-Za-z]+\(` takové neviděl: buildSysPromptV2
+  // stál mimo kontrolu a jeho výjimka níž byla mrtvá. Útok v protipříkladech (builder se jménem s číslicí).
+  const buildeři = (zdrojCh.match(/^function (build[\w$]+)\(/gm) || [])
     .map(m => m.replace(/^function /, '').replace(/\($/, ''))
     .filter(n => /Prompt/.test(n));
   let chybi = 0;
