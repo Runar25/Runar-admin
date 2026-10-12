@@ -64,7 +64,7 @@ const MER = `((NEAKTIVNI) => {
 
 // Běží ve stránce: viditelné texty, které by mohly být anglické (zaseklá angličtina) — bez islandských, značek, run, adres a cen.
 const JAZYK = `(() => {
-  const POVOLENO = [/^(EN|IS)$/, /^(R[ÚU]NAR|AGNDOFA|THE GATHERING|YGGDRASIL)$/i, /^(Supabase|OpenAI|Anthropic|ElevenLabs|Google|GitHub|Slack)$/,
+  const POVOLENO = [/^(EN|IS)$/, /^(R[ÚU]NAR|AGNDOFA|THE GATHERING|YGGDRASIL)$/i, /^(Supabase|OpenAI|Anthropic|ElevenLabs|Google|GitHub|Slack|Brevo)$/,
     /^(Fehu|Uruz|Thurisaz|Ansuz|Raidho|Kenaz|Gebo|Wunjo|Hagalaz|Nauthiz|Isa|Jera|Eihwaz|Perth|Algiz|Sowilo|Tiwaz|Berkana|Ehwaz|Mannaz|Laguz|Ingwaz|Othila|Dagaz|Blank)$/i,
     /^[\\w.-]+\\.(com|io|is|org|net|app)(\\/\\S*)?$/i, /^[\\w.+-]+@[\\w.-]+\\.[a-z]{2,}$/i, /^Agndofa ehf\\.?$/, /^ISK$/, /^[\\d.,\\s]+kr\\.?$/];
   const out = [];
