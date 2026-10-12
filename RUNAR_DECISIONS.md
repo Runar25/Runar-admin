@@ -11205,3 +11205,12 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Co (CODE-tune):** menší průhlednost těch stylů, přeměřeno — žádný text pod 4,5 : 1. ㊽ (A) od teď padá pod 4,5 : 1 (velké písmo
   pod 3 : 1), ať se slabý text nevrátí s první novou průhledností; útok v protipříkladech („(OPTIONAL)“ zpátky na 0,45) ji shodí.
 - Affected doc(s): `RUNAR_BACKLOG.md` (položka „zvednout na 4,5 : 1“ odškrtnutá) — v témže commitu.
+
+## 2026-10-12 (10) — SQL souhlasu s otázkou puštěno ownerem; sloupec a grant v databázi ověřeny
+
+- **Co:** owner 2026-10-12 *„sql hotovo.“* — `sql/2026-10-12_question_consent.sql` (sloupec `user_profiles.question_consent_at`) a grant
+  `update (question_consent_at)` pro `authenticated` z `sql/2026-07-16_user_profiles_column_grants.sql`. Krok 2 rozhodnutí (7).
+- **Ověřeno (CODE-read):** dotaz do `information_schema` — sloupec existuje (`timestamp with time zone`), role `authenticated` na něm má
+  UPDATE. Git tohle nevidí, proto řádek tady (CLAUDE.md, „Mechanika“).
+- **Zbývá:** jednou naživo přihlášeným účtem zaškrtnout souhlas a odvolat ho v menu Privacy — přihlásit se Code nesmí.
+- Affected doc(s): `RUNAR_BACKLOG.md` (položka souhlasu v sekci GDPR) — v témže commitu.

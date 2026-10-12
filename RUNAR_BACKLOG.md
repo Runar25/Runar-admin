@@ -632,7 +632,7 @@ doladit apku“*).
       ✅ *(CODE-tune 2026-10-12, krok 1: „+“ za THE SITUATION s upozorněním EN + IS; v zásadách věk 13 a souhlas rodiče; ㊽ (G) hlídá,
       že „+“ nezmizí.)* ✅ *(krok 2 v kódu, CODE-tune 2026-10-12: políčko souhlasu (+ věk 13+) při prvním psaní do otázky nebo Asku, bez něj
       čtení s otázkou nezačne a Ask neodejde; odvolání v menu Privacy smaže i otázku rozdělaného čtení; testeři výjimka; popis v zásadách;
-      hlídá ㊽ (H).)* **Zbývá: owner pustí SQL** (`sql/2026-10-12_question_consent.sql` + grant v `…_column_grants.sql`), pak ověřit
+      hlídá ㊽ (H).)* ✅ *(SQL puštěno ownerem 2026-10-12, sloupec i grant ověřeny v DB — DECISIONS 2026-10-12 (10).)* **Zbývá:** ~~owner pustí SQL~~ ověřit
       naživo přihlášeným adminem (zaškrtnout, odvolat). Do té doby uložení souhlasu selže s hláškou a otázka neodejde.
 - [ ] **Před veřejným spuštěním (owner 2026-10-12 „později“):** vývojové konverzace s Claudem — do zásad, nebo lhůta (5) · doba uchování hlášení a čtení po smazání účtu (8, s „Retence čtení“) · DPIA ano/ne (10).
 - [x] ✅ *(CODE-tune 2026-10-12: ElevenLabs netrénuje od 12. 10. 2026 a drží text i zvuk v našem účtu (12, položka „historie ElevenLabs“
