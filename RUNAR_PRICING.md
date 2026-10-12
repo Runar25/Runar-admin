@@ -321,6 +321,9 @@ hlas zastaví všem; sledovat ve shrine (VOICE, TESTERS). Do 2026-10-11 tu stál
 ## Operating costs, taxes & break-even (Agndofa ehf., Iceland)
 
 > Planning model (interactive calculator, 2026-06-15). **Estimates — verify with an accountant (endurskoðandi).**
+> **Kalkulačka s posuvníky (2026-10-12, CODE-read):** https://claude.ai/artifact/3W2w5UjZxKqfap7fkR7TAA — soukromý artifact ownera; počítá týmž modelem z čísel této
+> sekce (ceny předplatného, fixní náklady, plány ElevenLabs, odvody). Změní-li se tu čísla, kalkulačka se musí přepublikovat (zdroj:
+> scratchpad CODE-read `runar-navratnost.html`; původní červnová kalkulačka se nenašla).
 > Rates change yearly and depend on company form. Sources at the end of this section.
 > All listed costs are tax-deductible business expenses (reduce taxable profit).
 

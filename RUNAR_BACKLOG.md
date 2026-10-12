@@ -82,6 +82,7 @@ hlídal jen V2 cestu.
   „GPT 8 $“ (předplatné, nebo API) · skutečná měsíční útrata Anthropic API a OpenAI API · plán ElevenLabs při spuštění · používá se ještě
   Hetzner · doména therunekeeper.com a schránka runar@ (Workspace?) · úložiště Google Drive pro zálohy · kolik ze Shopify nese Rúnar ·
   kdy Apple a Google Play. Pak přepočítat break-even (`RUNAR_PRICING.md`) a hlídat, ať čísla bydlí na jednom místě.
+  ✅ *2026-10-12 (CODE-read): náklady přeměřeny s ownerem (RUNAR_PRICING „Fixed monthly costs“: fixní po spuštění ~$186, break-even ~7) a kalkulačka postavena znovu → https://claude.ai/artifact/3W2w5UjZxKqfap7fkR7TAA. Zbývá jen: přečerpání u vyšších plánů ElevenLabs ověřit před spuštěním.*
   **Výstup jako kalkulačka s posuvníky** (owner 2026-10-11: *„měli jsme udělanou krásnou tabulku s posuvníky, kde bylo vidět, kdy bych měl
   přejít na jiný subscription kvůli nákladům… i s tím, kolik potřebuju uživatelů pro návratnost“*). Původní (pricing ji uvádí jako
   „interactive calculator, 2026-06-15“) se nenašla v repu, v artifactech ani v přepisech konverzací (červnové už nejsou) — nejspíš artifact
