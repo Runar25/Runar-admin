@@ -41,7 +41,8 @@ souhrn.push(['RUNAR_BACKLOG.md', hledej('RUNAR_BACKLOG.md', /^#{2,3} /)]);
 // Od 2026-10-12 i uzavřené záznamy přesunuté celé (RUNAR_BACKLOG_kontrola-architektury.md) — seznam se odvozuje z adresáře, ne opisuje.
 try {
   for (const f of fs.readdirSync(path.join(REPO, 'docs', 'archive')).filter((x) => /^RUNAR_BACKLOG_.*\.md$/.test(x)).sort())
-    souhrn.push(['docs/archive/' + f, hledej('docs/archive/' + f, /^#{2,4} /).map((x) => Object.assign(x, { stav: x.stav === '✖' ? '✖' : '✅' }))]);
+    // Odložené (výzkum promptu, Vegvísir — owner 2026-10-12 „prompt prakticky hotovo“) nejsou hotové: bez vlastní značky ⏸, ne ✅.
+    souhrn.push(['docs/archive/' + f, hledej('docs/archive/' + f, /^#{2,4} /).map((x) => Object.assign(x, { stav: (x.stav === '✖' || (/odlozene/.test(f) && x.stav === '✅')) ? x.stav : /odlozene/.test(f) ? '⏸' : '✅' }))]);
 } catch (e) {}
 souhrn.push(['RUNAR_EVAL_LOG.md', hledej('RUNAR_EVAL_LOG.md', /^## \d{4}-\d{2}-\d{2}/)]);
 souhrn.push(['RUNAR_DESIGN.md', hledej('RUNAR_DESIGN.md', /^#{2,3} /)]);
