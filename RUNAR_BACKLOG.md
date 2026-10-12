@@ -38,10 +38,17 @@ v `docs/archive/RUNAR_BACKLOG_odlozene.md` jako ⏸ — nejsou to úkoly. Vrací
 - [ ] **Shrine: korekce nejdou smazat** (nález 2026-09-23) — záložka WORD CORRECTIONS umí jen přidat a vypsat
   (`runar-shrine.html` `saveCorrection`/`loadCorrections`), mazání nemá. Owner tak smaže řádek jen přes Supabase. Doplnit
   mazání (jen admin, s potvrzením) — CODE-tune.
-- [ ] **`scripts/utils/gen_batch.js` staví prompt Asku jinak než produkce** — volá `buildAskPrompt` se 7 argumenty (~ř. 804),
+- ✅ *(CODE-tune 2026-10-12: prompt Asku skládá produkční `_askBuild` v druhém sandboxu (reader jako `verify_ask_hints.js`) — stav
+  po čtení se nastaví tam, kam ho píše appka, předchozí výměny se nesou jako `_askLog`; dry-run nově ukáže prompt Asku zadarmo.
+  Sandbox čtení beze změny. Ověřeno dry-runem single IS a Norny EN: aspekt i pozice v promptu; stav × `_askBuild` testem.)*
+  ~~**`scripts/utils/gen_batch.js` staví prompt Asku jinak než produkce**~~ — volá `buildAskPrompt` se 7 argumenty (~ř. 804),
   produkce s 10 (`v2/runar-reading.js` ~ř. 894: navíc `_askSpread()`, `_askAspect()`, předchozí výměna). Dávky Asku přes gen_batch
   tedy měří jiný prompt, než dostane člověk. Znovu otevřeno 2026-10-12: v 89bc39c jsem to omylem uzavřel jako „gen_batch.js už v repu
   není“ — výpis grepu mi uřízl `head -3`. (CODE-read; nástroj evalu, nízká priorita — prompt hotový.)
+- [ ] **`gen_batch.js` staví čtení bez řádku ✦ (myšlenka na konec)** — produkce ho přidá Standard a Premium (`_thoughtFor`
+  v `v2/runar-reading.js`, `TIERS.*.reading_thought`), mimo builder; dávky tedy měří prompt Rune Seekera, ne testera (testeři jsou
+  premium). Zjištěno 2026-10-12 CODE-tune u opravy Asku. Rozhodne ten, kdo eval pouští (CODE-read): volba tarifu v gen_batch
+  (sandbox Asku už `_thoughtFor` umí), nebo vědomě jen Rune Seeker a napsat to do hlavičky.
 - [ ] **`SEASON_POOLS` — 133 obrazů v kódu, do čtení se nedostanou** (`v2/runar-character.js`; ověřeno protlačením 2026-09-08,
   CLAUDE.md „Obraznost“): mrtvá data, udržovaná dvojjazyčně. S hotovým promptem spíš odstranit (CODE-tune). Zbytek původní položky
   (Sowilo zimní obraz, losy ve spreadech) je v archivu odložených.

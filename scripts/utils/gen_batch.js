@@ -214,6 +214,25 @@ function makeSandbox() {
   return ctx;
 }
 
+// Sandbox pro Ask (2026-10-12): navíc runar-translations.js a runar-reading.js, aby prompt Asku složila PRODUKČNÍ _askBuild —
+// stejná sada souborů a stuby jako scripts/verify_ask_hints.js. Zvlášť od sandboxu čtení, aby se prompty čtení nezměnily ani
+// o bajt (translations přináší vlastní t()/UI_TEXT, runar-reading.js vlastní globály).
+function makeAskSandbox() {
+  const ctx = vm.createContext({
+    Math: Math, JSON: JSON, Date: Date, console: console,
+    setTimeout: () => 0, clearTimeout: () => {}, setInterval: () => 0, clearInterval: () => {},
+    document: { getElementById: () => null, querySelector: () => null, querySelectorAll: () => [] },
+    localStorage: { getItem: () => null, setItem: () => {}, removeItem: () => {} },
+  });
+  ctx.window = ctx; ctx.self = ctx; ctx.globalThis = ctx;
+  let code = 'var lang = "en"; var userGender = "hk"; var currentUser = null; var userTier = "premium"; var sb = null;\n'
+           + 'var activeChar = null; var corrections = []; var voiceGenerated = {}; var readerTexts = {}; var isTester = false;\n';
+  for (const f of ['runar-config.js', 'runar-runes.js', 'runar-translations.js', 'runar-character.js', 'runar-utils.js', 'runar-reading.js'])
+    code += fs.readFileSync(path.join(V2, f), 'utf8') + '\n;\n';
+  vm.runInContext(code, ctx, { filename: 'gen_batch-ask-sandbox.js' });
+  return ctx;
+}
+
 // ─── real _parseSegments, lifted from runar-reading.js ──
 // §18: no parallel copy. The stored text of a real reading is the COMPOSED text
 // (segments joined by one space + any prose tail), never the raw JSON array.
@@ -642,6 +661,41 @@ async function main() {
     return { angle: idx >= 0 ? pool[idx] : null, angle_idx: idx, draws: d };
   }
 
+  // ── Ask: prompt skládá PRODUKČNÍ _askBuild (runar-reading.js), ne opsané volání buildAskPrompt ──
+  // 2026-10-12 (CODE-tune; BACKLOG, znovu otevřela CODE-read): do té doby se tu volal buildAskPrompt se 7 argumenty, produkce
+  // s 10 — chyběly pozice ve spreadu, aspekt single čtení a předchozí výměna v Asku, v zadání `seeking`. Dávky Asku tak měřily
+  // jiný prompt, než dostane člověk. Teď se stav nastaví tam, kam ho po čtení zapisuje produkce (readerUser, _lastDrawn,
+  // _spreadMode, _lastGen, _askLog), a prompt složí táž funkce jako v appce (vzor verify_ask_hints.js).
+  const ctxA = makeAskSandbox();
+  const A = function (expr) { return vm.runInContext(expr, ctxA); };
+  vm.runInContext('userGender = ' + JSON.stringify(gender) + ';', ctxA);
+  if (voiceKey) vm.runInContext('activeVoice = ' + JSON.stringify(voiceKey) + ';', ctxA);
+  for (const k of without)   // vypnuté páky platí i pro Ask — dřív se Ask skládal v sandboxu čtení, kde jsou vypnuté celou dávku
+    if (WITHOUT[k].fn) vm.runInContext(WITHOUT[k].fn + ' = function () { return ""; };', ctxA);
+  const RUNES_A = A('RUNES');
+  const runaA = function (r) { return r ? (RUNES_A.find(function (x) { return x.n === r.n; }) || null) : null; };
+  // Prompt Asku přesně tak, jak ho appka složí po tomhle čtení. `earlier` = předchozí výměny k témuž čtení ({ q, a, lang },
+  // jako _askLog v produkci; _askBuild si z nich vezme ty ve stejném jazyce).
+  function askPromptProd(o) {
+    vm.runInContext('lang = ' + JSON.stringify(o.lang) + ';', ctxA);
+    ctxA.readerUser = { name: o.u.name, d: null, m: null, y: null, lifeRune: runaA(o.u.lifeRune),
+                        area: o.u.area, seeking: o.u.seeking, intention: o.u.intention, question: o.u.question };
+    ctxA._lastDrawn = o.runes.map(runaA);
+    ctxA._spreadMode = o.mode;
+    ctxA._lastGen = { sys: '', prompt: o.readingPrompt, lang: o.lang, kind: o.mode === 'single' ? 'single' : o.mode };
+    ctxA._askLog = o.earlier.slice();
+    return A('_askBuild')(o.reading, o.q, o.runeStr);
+  }
+  // Odpověď tak, jak ji produkce uloží do _askLog (rozbalí JSON, ořízne na celou větu) — vstup pro další Ask.
+  function askAnswerProd(text) {
+    return A('_trimToSentence')(A('_parseSegments')(text || '').reading || String(text || '').trim());
+  }
+  // Jména run pro Ask jako v produkci (askRunar): z JSON čtení, jinak u single holé jméno (rnPrompt), u spreadu nic.
+  function askRunyProd(segs, runes) {
+    if (segs.length) return segs.map(function (x) { return x.rune; }).filter(Boolean).join(', ');
+    return spreadName === 'single' ? call('rnPrompt', [runes[0]]) : '';
+  }
+
   // ── the run ──
   let ok = 0, failed = 0;
   let authFails = 0, stopAuth = false;   // po sobe jdouci 401/403 -> token vyprsel behem davky
@@ -756,6 +810,12 @@ async function main() {
 
     if (args['dry-run']) {
       row.error = 'dry-run';
+      // Prompt Asku i bez sítě — ať jde zadarmo vidět, co Ask dostane. Zástupný text čtení, bez předchozích výměn; jména run
+      // holá (rnPrompt), jak je model vrací v JSON čtení — bez nich by spread dostal prázdný řádek run.
+      for (const q of args.fu)
+        row.ask.push({ question: q, answer: null, prompt: askPromptProd({ lang: lang, u: u, runes: runes, mode: spreadName,
+          readingPrompt: prompt, reading: '(dry-run)', q: q, earlier: [],
+          runeStr: askRunyProd(runes.map(function (r) { return { rune: call('rnPrompt', [r]) }; }), runes) }) });
       fs.appendFileSync(outPath, JSON.stringify(row) + '\n', 'utf8');
       console.log('  [' + (i + 1) + '/' + jobs.length + '] dry-run · ' + row.runes.join(',') + ' · prompt ' + prompt.length + ' ch');
       continue;
@@ -788,21 +848,14 @@ async function main() {
       row.word_count   = parsed.reading.split(/\s+/).filter(Boolean).length;
       fs.appendFileSync(txtPath, oneLine(parsed.reading) + '\n', 'utf8');
 
+      const askLog = [];   // výměny v Asku k tomuto čtení (produkce: _askLog, nové čtení ho vynuluje)
       for (const q of args.fu) {
         setLang(lang);
         // Production quotes back the COMPOSED reading and the rune names the model
-        // itself echoed in its JSON (runar-reading.js:528-532). `runes` here is a
+        // itself echoed in its JSON (runar-reading.js askRunar). `runes` here is a
         // comma-joined STRING — passing rune objects yields [object Object].
-        const runeStr = parsed.segs.length
-          ? parsed.segs.map(function (s) { return s.rune; }).join(', ')
-          : runes.map(function (r) { return call('rn', [r]); }).join(', ');
-        // Zrcadli produkci (runar-reading.js `askRunar`): zivotni runa + zadani cteni.
-        // Do 2026-09-11 se volalo s peti argumenty a davky merily jiny prompt, nez
-        // jaky dostane clovek.
-        let _lf = u.lifeRune || null;
-        if (_lf && runes.some(function (r) { return r && r.n === _lf.n; })) _lf = null;
-        const askPrompt = call('buildAskPrompt', [parsed.reading, q, runeStr, lang, [], _lf,
-          { area: u.area, intention: u.intention, question: u.question }]);
+        const askPrompt = askPromptProd({ lang: lang, u: u, runes: runes, mode: spreadName, readingPrompt: prompt,
+                                          reading: parsed.reading, q: q, runeStr: askRunyProd(parsed.segs, runes), earlier: askLog });
         const a = await generate(askPrompt, ASK_TOKENS, G('SPREAD_COSTS').single.credits, 'ask');
         row.ask.push({
           question: q, answer: a.text, prompt: askPrompt,
@@ -810,6 +863,7 @@ async function main() {
           char_count: a.text ? a.text.length : null,
         });
         if (a.text) fs.appendFileSync(askTxtPath, oneLine(a.text) + '\n', 'utf8');
+        if (a.text) askLog.push({ q: q, a: askAnswerProd(a.text), lang: lang });
       }
       ok++;
       console.log('  [' + (i + 1) + '/' + jobs.length + '] ok · ' + row.runes.join(',') +
