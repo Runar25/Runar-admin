@@ -345,12 +345,12 @@ Změřená útrata modelů a hlasu = `node scripts/utils/stats.js` (z `readings.
 | Google Workspace (schránka runar@, Drive se zálohami) | 0 ✔ | 0 | ✔ je to Workspace (DNS: MX Google); platí ho Agndofa v rámci agndofa.is (owner 2026-10-12: „je to už v ceně agndofa.is“) — Rúnarovi nic navíc |
 | Brevo (e-mail s kódem) | 0 ✔ | 0 | free tarif (300 e-mailů denně); do 2026-10-12 tu stál Resend — zamítnut 2026-09-12 |
 | GitHub (repo, Pages) · Slack | 0 ✔ | 0 | veřejné repo + Pages zdarma; Slack zdarma (owner 2026-10-12) |
-| Shopify (Basic) | 39 | 39 | e-shop Agndofa — sdílený s obchodem; kolik nese Rúnar, rozhodnout |
+| Shopify (Basic) | 0 ✔ | 0 | platí ho obchod agndofa.is (owner 2026-10-12: „shopify taky obchod agndofa.is“) — Rúnarovi jen poplatky z plateb („Variable“ níž) |
 | Apple Developer ($99/rok) | 0 | 8.25 | až nativní appka |
 | Google Play ($25 jednou) | 0 | 0.70 | až nativní appka, rozpočteno na ~36 měsíců |
 | Hetzner | 0 ✔ | 0 / ? | dnes nepředplacený („až předplatíme Supabase, nebo Hetzner“, DECISIONS 2026-10-10); alternativa k Supabase Pro |
 | Domény | 1.50 | 1.50 | agndofa.is; therunekeeper.com je v ceně agndofa.is (owner 2026-10-12) |
-| **Celkem (hrubě)** | **~$158** | **~$225** | se Shopify $39 a Claude Max $100 — obojí ještě rozhodne owner (podíl Shopify, Claude po spuštění); do 2026-10-12 ~$180 / ~$230 |
+| **Celkem (hrubě)** | **~$119** | **~$186** | Claude Max $100 zůstává i po spuštění (owner 2026-10-12: „bude asi pokračovat“); do 2026-10-12 ~$180 / ~$230 |
 
 One-time: Google Play $25. Annual: Apple Developer $99.
 
@@ -379,14 +379,15 @@ Model: revenue − VAT − payment fees − operating costs = company money; −
 
 | Net take-home / month | Paying users needed |
 |-----------------------|---------------------|
-| Break-even (covers all costs) | **~9** (fixní ~$230 = 28 461 ISK ÷ (3 518 − 237 ISK na uživatele) = 8,7; do 2026-10-11 ~8) |
-| 200.000 ISK | ~149 |
-| 350.000 ISK | ~252 |
-| **500.000 ISK** (solid Icelandic living) | **~355** |
-| 700.000 ISK | ~493 |
+| Break-even (covers all costs) | **~7** (fixní ~$186 = 22 971 ISK ÷ (3 518 − 237 ISK na uživatele) = 7,0; 2026-10-11 ~9, předtím ~8) |
+| 200.000 ISK | ~147 |
+| 350.000 ISK | ~250 |
+| **500.000 ISK** (solid Icelandic living) | **~354** |
+| 700.000 ISK | ~491 |
 
 - Mandatory contributions (both layers) roughly **double** the user count vs a naive gross model.
-- **Claude $100 is a temporary dev cost** → drops post-launch → break-even falls to ~5 and the curve lifts.
+- **Claude $100 zůstává** (owner 2026-10-12) — do 2026-10-12 tu stálo „temporary dev cost → drops post-launch“. Bez něj by break-even byl ~3.
+- 2026-10-12 přepočteno (CODE-read): fixní po spuštění $186 (Shopify nese obchod agndofa.is, Workspace a doména v ceně agndofa.is, Hetzner dnes 0) → break-even 7,0 a řádky 147 / 250 / 354 / 491 (výpočet níž beze změny).
 - Margins on revenue stay high (~88–93 % with voice on every reading); the wedge to *personal net* is what raises the counts.
 - 2026-10-11: přepočteno týmž modelem — ověřeno, že s červnovými vstupy (fixní $202.45, variabilní $1.81) dá přesně 147 / 250 / 353 /
   490 a break-even 7,6. Nové vstupy: fixní ~$230 po spuštění, variabilní $1.88 → +1 až +3 uživatelé na řádek; s hlasem ke každému čtení (2026-10-11)
