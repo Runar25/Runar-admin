@@ -716,6 +716,13 @@ konzole bez chyb. Islandské věty panelu is-greynir: „lestrunum“ korpus dok
 2026-10-12 bez vady i obrazovka hotového čtení (`callProxy` podvržená v prohlížeči, zbytek produkční cestou; čtení „someone“, aby se nic
 neukládalo): Single i Norny v EN a IS, myšlenka ✦ zvlášť, kameny run, ťuknutí na glyf, Ask podle tarifu (premium 2 otázky, standard 1 +
 nabídka vyššího tarifu, Rune Seeker jen navržené otázky), formuláře všech pěti výkladů, Mé jméno, okno smazání (jen otevřeno), Rúnakort.
+Tamtéž 2026-10-12 (druhá polovina, síť na cizí hosty blokovaná, `callProxy` podvržená): čtení životní runy a rozbor jména, výklady Kříž,
+Podkova a Yggdrasil (cena, tlačítko, kameny v hlavičce, text), nápověda — v EN i IS bez chyby v konzoli a bez cizího jazyka. Souhlas
+s otázkou (krok 2) ověřen týmž způsobem: bez souhlasu čtení nezačne, neuložený souhlas nechá políčko prázdné, se souhlasem otázka projde.
+Procházka je tím úplná.
+- [ ] **Pro CODE-tune — EN `tree_carry_life_rune` bez členu** (`v2/runar-translations.js` ~ř. 275): „You carry life rune {rune}“ →
+  „You carry the life rune {rune}“. Předáno 2026-10-12. IS „Þú ber lífsrún {rune}“ beze změny — E001 Greyniru dělá cizí jméno runy
+  (padá i „Þú ber rún Berkana.“), ne vazba.
 - [x] ✅ *(CODE-tune 2026-10-11: `prekresliDenik` v `runar-journal.js`, volá ho `setLang` — Deník v novém jazyce se stejným filtrem a otevřenými
   kartami, obnoví i pruh pro Rune Seekera; hlídá smoke ㊽ (D) včetně islandštiny v EN. Upřesnění příčiny: v produkci Deník překresloval
   `_updateGateTexts` v `updateUIText` z `_journalCache` — ukázková čtení přes `renderJournal` ho neplní, proto nález v testu; skutečné vady byly
