@@ -342,6 +342,8 @@ const UI_TEXT = {
     coll_audio_missing: 'Audio file missing.',
     // 2026-10-10: „draw one“ → „choose one“ — v Safn rúna se runa vybírá, netáhne.
     vcn_text:           'You walk here as a <strong>Visitor</strong>. Five runes await you — choose one, and listen to the ancient stones.<br><br>Should you want all twenty-five, and a reading that speaks to you alone, become a <strong>Rune Seeker</strong>. Free to join.',
+    // 2026-10-12 (owner „ano“): klepnutí na zamčenou runu — dřív nedělalo nic a působilo jako porucha. Navazuje na vcn_text („Five runes await you“).
+    coll_locked_toast:  'Sign in, and all twenty-five runes await you.',
     // Okno „Where to start“ — jednou pro každého (2026-10-11, DECISIONS (65)); {guide} = guide_title. Text schválil owner.
     wts_title:          'WHERE TO START',
     wts_l1:             'I speak in images, not in plain answers. Each reading is a picture with a rune inside it.',
@@ -854,6 +856,8 @@ const UI_TEXT = {
     coll_audio_missing: 'Hljóðskrá vantar.',
     // 2026-10-10: „dragðu eina“ → „veldu eina“ (korpus 0× / 16×) — v Safn rúna se runa vybírá, netáhne.
     vcn_text:           'Þú ert hér <strong>Gestur</strong>. Fimm rúnir bíða þín — veldu eina og hlustaðu á fornu steinana.<br><br>Viljir þú allar tuttugu og fimm rúnirnar, og lestur sem á aðeins við þig, gerðu þig að <strong>Leitanda</strong>. Skráning er ókeypis.',
+    // 2026-10-12: navazuje na vcn_text („Fimm rúnir bíða þín“); greynir OK, korpus „skráðu þig inn“ 104 · „þá bíða þín“ 11.
+    coll_locked_toast:  'Skráðu þig inn og þá bíða þín allar tuttugu og fimm rúnirnar.',
     // „Where to start“ (2026-10-11): psáno islandsky, greynir + gpt-check bez nálezu; korpus „tala í gegnum“ 207 · „í gegnum myndir“ 187 ·
     // „svara ekki beint“ 8 · „í henni býr“ 411 · „taka eftir þegar“ 73 · „kemur til þín“ 454. „Opna Safn rúna“ greynir četl jako sloveso
     // „rúna“ → rozkaz „Opnaðu“, tak jako v EN.

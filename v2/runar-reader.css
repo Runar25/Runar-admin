@@ -50,6 +50,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .side-overlay.open{display:block;}
 .side-panel{position:fixed;top:0;right:-280px;width:260px;height:100dvh;background:#0d1220;border-left:1px solid rgba(46,74,112,0.5);z-index:151;transition:right 0.32s cubic-bezier(0.4,0,0.2,1);display:flex;flex-direction:column;padding:0;}
 .side-panel.open{right:0;}
+/* 2026-10-12 (owner „ano“, BACKLOG „Procházka appky“): vlajka hlášení a „?“ (z-index 99998) ležely na telefonu přes otevřený panel
+   (151), vlajka v řádku „× DELETE ACCOUNT“. Stav se bere z třídy panelu samého, takže ho neobejde žádná cesta zavření. */
+body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:none;}
 .side-panel-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px 16px;border-bottom:1px solid rgba(46,74,112,0.3);}
 .side-panel-brand{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:4px;color:var(--gold);opacity:0.85;}
 .side-panel-close{background:none;border:none;color:var(--gold);opacity:0.6;font-size:1.1em;cursor:pointer;padding:2px 4px;transition:opacity 0.2s;}
@@ -482,7 +485,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .tree-cta-cost #tree-rs-balance-val{color:var(--gold);}
 .tree-cta-free{font-size:0.7em;color:var(--muted);margin-top:3px;opacity:0.75;letter-spacing:0.06em;}
 /* Locked rune cells */
-.coll-cell.locked{opacity:0.28;cursor:not-allowed;pointer-events:none;}
+/* 2026-10-12: bez pointer-events:none — klepnutí na zamčenou runu ukáže hlášku coll_locked_toast (runar-app.js renderCollection) */
+.coll-cell.locked{opacity:0.28;cursor:not-allowed;}
 .coll-cell.locked:hover{background:transparent;border-color:var(--border);}
 .coll-audio-player{margin-top:10px;}.coll-audio-player .cap,.jcard-audio-player .cap{margin-top:0;}
 

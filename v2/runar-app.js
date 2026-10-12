@@ -1083,7 +1083,9 @@ async function loadCollection() {
     // 2026-09-23 (KUKY): tecky „ma nahravku EN / IS" pryc — clovek vidi jen svuj jazyk.
 
     cell.dataset.rune = r.n;
-    if (!locked) cell.onclick = () => openCollDetail(r, cell);
+    // 2026-10-12 (owner „ano“, BACKLOG „Procházka appky“): klepnutí na zamčenou runu nedělalo nic — návštěvník měl dojem, že appka
+    // nefunguje. Teď krátká hláška, co runu odemkne (CSS .locked už nemá pointer-events:none).
+    cell.onclick = locked ? () => showToast(t('coll_locked_toast')) : () => openCollDetail(r, cell);
     grid.appendChild(cell);
   });
 

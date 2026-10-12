@@ -700,7 +700,9 @@ start“ (runa = naše SVG), šířka telefonu (bez vodorovného posunu, mříž
 - [x] ✖ *(owner 2026-10-12: „nechavame“ — statická čtení zůstávají, jak jsou; DECISIONS 2026-10-12 (1).)* ~~**Pro Cowork / ownera — statická čtení v Kolekci tvrdí, co se děje v nitru čtenáře**~~ (Fehu IS: „Það sem þú hefur nært í kyrrðinni
   er farið að taka rætur… krafturinn sem fer á hreyfingu þegar þú treystir því sem býr innra með þér“) — kánon to Rúnarovi zakazuje
   (memory `rozkaz-a-studene-cteni-hranice`). Dosud zapsaný jen Dagaz (položka „Statické čtení Dagaz“); projít všech 25.
-- [ ] **Pro CODE-tune** *(owner 2026-10-12: „ano“ — krátká hláška EN + IS po klepnutí na zamčenou runu, např. „přihlas se a odemkni všech 25 run“; IS vymyslet a ověřit §2)* ~~**Návrh pro design (ne chyba)**~~ — klik návštěvníka na zamčenou runu v Kolekci nedělá nic (`if (!locked) cell.onclick`); výzva
+- [x] ✅ *(CODE-tune 2026-10-12: „Sign in, and all twenty-five runes await you.“ / „Skráðu þig inn og þá bíða þín allar tuttugu og fimm
+  rúnirnar.“ — navazuje na výzvu nahoře („Five runes await you“); zamčená buňka už nemá pointer-events:none. IS greynir, korpus,
+  is-gpt-check.)* **Pro CODE-tune** *(owner 2026-10-12: „ano“ — krátká hláška EN + IS po klepnutí na zamčenou runu, např. „přihlas se a odemkni všech 25 run“; IS vymyslet a ověřit §2)* ~~**Návrh pro design (ne chyba)**~~ — klik návštěvníka na zamčenou runu v Kolekci nedělá nic (`if (!locked) cell.onclick`); výzva
   nahoře vysvětluje pět odemčených run, ale krátká nápověda po kliknutí by předešla dojmu „nefunguje“.
 
 **Přihlášená část** (CODE-read 2026-10-11, appka z pracovního stromu na localhostu, podvržený tester s premium jen v prohlížeči, deník
@@ -742,7 +744,8 @@ nabídka vyššího tarifu, Rune Seeker jen navržené otázky), formuláře vš
   se zablokovanou sítí. Platba nehrozí: druhé vygenerování životní runy server odmítne (409, `claude-proxy` ~ř. 688), uživatel
   ale dostane „The runes are quiet“. Tutéž podobu „zapomenuté runy“ řeší komentář u ř. 107 (Sigrún, iPhone, 3×) pro pomalý profil —
   pro neúspěšný ne. Návrh: při chybě jeden opakovaný pokus a jinak hláška místo formuláře.
-- [ ] **Pro CODE-tune** *(owner 2026-10-12: „ano“ — dokud je postranní panel otevřený, vlajku hlášení a „?“ skrýt)* ~~**Návrh pro design (ne chyba)**~~ — na telefonu leží vlajka hlášení (`#br-btn`, z-index 99998) a „?“ (`#hb-btn`) i nad otevřeným
+- [x] ✅ *(CODE-tune 2026-10-12: pravidlo v `runar-reader.css` podle třídy panelu samého (`body:has(#side-panel.open)`), takže ho
+  neobejde žádná cesta zavření; ověřeno v prohlížeči i pro přihlášeného.)* **Pro CODE-tune** *(owner 2026-10-12: „ano“ — dokud je postranní panel otevřený, vlajku hlášení a „?“ skrýt)* ~~**Návrh pro design (ne chyba)**~~ — na telefonu leží vlajka hlášení (`#br-btn`, z-index 99998) a „?“ (`#hb-btn`) i nad otevřeným
   postranním panelem (z-index 151); vlajka stojí v řádku „× DELETE ACCOUNT“. Text dnes nezakryje, ale panel působí neuzavřeně.
 
 ## Ověřit naživo, než rozešleš odkaz
