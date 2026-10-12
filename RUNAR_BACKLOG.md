@@ -35,7 +35,8 @@ v `docs/archive/RUNAR_BACKLOG_odlozene.md` jako ⏸ — nejsou to úkoly. Vrací
      IS 1202 tokenů, EN 31 (jen řádek `test`).
   5. Až smyčka poroste: řádky téže třídy sloučit do jedné věty v IS gramatickém bloku (CODE-tune); korekce vázané
      na runu (Gebo, Fehu) posílat jen s tou runou.
-- [ ] **Shrine: korekce nejdou smazat** (nález 2026-09-23) — záložka WORD CORRECTIONS umí jen přidat a vypsat
+- ✅ *(CODE-tune 2026-10-12, owner „udělej“, DECISIONS 2026-10-12 (5): u každé korekce z databáze „✕ DELETE“ s potvrzením)*
+  ~~**Shrine: korekce nejdou smazat**~~ (nález 2026-09-23) — záložka WORD CORRECTIONS umí jen přidat a vypsat
   (`runar-shrine.html` `saveCorrection`/`loadCorrections`), mazání nemá. Owner tak smaže řádek jen přes Supabase. Doplnit
   mazání (jen admin, s potvrzením) — CODE-tune.
 - ✅ *(CODE-tune 2026-10-12: prompt Asku skládá produkční `_askBuild` v druhém sandboxu (reader jako `verify_ask_hints.js`) — stav

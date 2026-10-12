@@ -11151,3 +11151,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Hlídá smoke ㊿** (`verify_fronta_ucet.js`): skutečné `_pendAdd` a `_flushPending` s podvrženým serverem a úložištěm; útoky
   v protipříkladech (filtr čtení / Asků pryč).
 - Affected doc(s): `v2/runar-privacy.html`, oddíl o úložišti prohlížeče — navazující commit téhož dne spolu s texty z kontroly GDPR.
+
+## 2026-10-12 (5) — Shrine: korekci slov jde smazat přímo v záložce WORD CORRECTIONS
+
+- **Proč:** owner *„udělej i ty dvě zbývající položky od CODE-read“* (CODE-read mu je vypsala 2026-10-12 17:13; druhá — islandský vzor
+  e-mailu v přihlášení — byla hotová už odpoledne). Záložka korekce jen přidávala a vypisovala; špatnou korekci, která jde do každého
+  promptu, šlo smazat jen v Supabase (nález 2026-09-23).
+- **Co:** u každé korekce z databáze tlačítko „✕ DELETE“ (vzhled i postup jako mazání verze hlasu runy ve shrine) → potvrzení → smazání;
+  `.select()` ověří, že řádek opravdu zmizel (RLS by jinak tiše smazala nula řádků) a ohlásí to. Mazat smí jen admin — databázová
+  politika `runar_corrections_admin_write` to pouštěla už dřív, SQL se neměnilo. Reader korekce načítá při startu, takže smazaná přestane
+  platit od příštího načtení appky. Po cestě: text korekcí jde do seznamu přes `escapeHtml` (do té doby rovnou do innerHTML) a výpadek
+  databáze už nehlásí „No corrections yet.“, ale ukáže korekce uložené v prohlížeči, jak ta větev zamýšlela (Supabase chybu nevyhodí).
+- **Ověřeno:** v prohlížeči proti podvržené databázi — smazání, odmítnutí oprávněním (0 řádků), výpadek, text se značkami jako text.
+  S přihlášeným adminem naživo ne (přihlásit se Code nesmí); politiku jsem přečetl v databázi.
+- Affected doc(s): `RUNAR_BACKLOG.md` (položka odškrtnutá) — v témže commitu.
