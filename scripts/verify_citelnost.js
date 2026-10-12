@@ -25,6 +25,7 @@
 //      ne „When were you born?“; pruh nad formulářem nehlásí vyčerpané volné čtení a nevyskočí výzva ke jménu (nález CODE-read, 2026-10-12).
 //  (G) nápovědy pod „+“ ve formuláři čtení: každé tlačítko rozbalí větu z UI_TEXT v jazyce appky, ne holý klíč ani prázdno. Od 2026-10-10
 //      ukazovaly „area_hint“, „seek_hint“, „intention_hint“ — úklid mrtvých klíčů je smazal (kód je skládá `k + '_hint'`), CODE-tune 2026-10-12.
+//      Mezi nimi musí být „+“ u otázky (qpriv-hint): kam otázka jde a že se ukládá (DECISIONS 2026-10-12 (7)) — jeho zmizení nesmí projít.
 // Neumí: text přes obrázek (bere barvu pozadí předků), stavy přihlášeného (čtení, menu), stín a obrys písma.
 // Útok: scripts/protipriklady.py → PRIPADY.
 //   node scripts/verify_citelnost.js            · --slabe vypíše i texty mezi 3 a 4,5 : 1 (podklad pro rozhodnutí o vzhledu)
@@ -252,7 +253,9 @@ const srv = http.createServer((req, res) => {
     for (const [jz, sada] of [['en', hEn], ['is', hIs]])
       for (const h of (sada || [])) if (!h.text || klic.test(h.text) || !h.otevreno) vadne.push(jz + ' ' + h.id + ': „' + h.text + '“');
     (hEn || []).forEach((h, i) => { if (hIs && hIs[i] && h.text && h.text === hIs[i].text) vadne.push('stejné v EN i IS ' + h.id + ': „' + h.text + '“'); });
-    rekni(!!hEn && hEn.length >= 3 && !vadne.length,
+    // 2026-10-12: upozornění u otázky je informace o zpracování údajů (DECISIONS 2026-10-12 (7)); počet „aspoň 3“ by jeho zmizení nepoznal
+    if (!(hEn || []).some((h) => h.id === 'qpriv-hint')) vadne.push('chybí „+“ s upozorněním u otázky (qpriv-hint)');
+    rekni(!!hEn && hEn.length >= 4 && !vadne.length,
       '(G) nápovědy pod „+“ ve formuláři (' + ((hEn && hEn.length) || 0) + '): věta z UI_TEXT v jazyce appky, ne holý klíč', vadne.join(' · '));
     const anglicky = /\b(SPEAK|AGAIN|STAY|YES|credits?)\b/i;
     rekni(!!o1 && o1.otevreno && o1.jazyk === 'is' && o1.zavreno && o1.jazykPo === 'is' && /ENSKU/.test(o1.title) && /ÍSLENSKU/.test(o1.zpet)

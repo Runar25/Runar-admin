@@ -121,6 +121,9 @@ const UI_TEXT = {
     // Navadi ke „kde stojim", ne k „co se stane" — to je hranice mezi otazkou,
     // na kterou Runar umi odpovedet, a otazkou, kterou musi odmitnout (G2b no-fate).
     q_hint:           'Tell Rúnar where you stand now — not what is to come.',
+    // 2026-10-12 (DECISIONS 2026-10-12 (7), kontrola GDPR bod 1): upozornění pod „+“ za THE SITUATION — volná otázka může nést
+    // zvláštní kategorii údajů (zdraví, vztahy, víra), jde k AI v USA a u vlastního čtení se ukládá. Souhlas při psaní je krok 2.
+    qpriv_hint:       'Please do not write health details or other sensitive information here. Your question is sent to OpenAI in the USA, whose AI writes the reading. If the reading is your own, the question is also saved in your journal.',
     q_ph:             'e.g. I am deciding whether to take on more work',
     // 2026-09-08: ukazky, JAK napsat otazku (handoff #55). Rotuji, viz _phRotate.
     q_placeholders:   ['I keep putting off a conversation I need to have.',
@@ -640,6 +643,7 @@ const UI_TEXT = {
     // Overeno: „hvar þú stendur" 302 vyskytu, „hvað verður" 13915 (Risamalheild);
     // GreynirCorrect 0 flagu. Vymysleno islandsky, ne prelozeno (§2).
     q_hint:           'Segðu Rúnari hvar þú stendur núna, ekki hvað verður.',
+    qpriv_hint:       'Skrifaðu hvorki heilsufarsupplýsingar né aðrar viðkvæmar upplýsingar hér. Spurningin fer til gervigreindar OpenAI í Bandaríkjunum sem semur lesturinn. Ef lesturinn er þinn er spurningin líka vistuð í dagbókinni þinni.',   // 2026-10-12 viz EN; greynir, korpus a is-gpt-check
     q_ph:             'T.d. Ég er að ákveða hvort ég eigi að taka að mér meiri vinnu',
     q_placeholders:   ['Ég fresta stöðugt samtali sem ég þarf að eiga.',
                        'Eitthvað í sambandinu er ekki í jafnvægi og ég veit ekki af hverju.',

@@ -321,6 +321,8 @@
       <!-- THE SITUATION — Rune Walker/Rune Wanderer only -->
       <div id="q-section" style="display:none;">
         <label class="flbl" id="q-lbl" data-i18n="q_lbl">SPECIFIC QUESTION <span class="opt">(OPTIONAL)</span></label>
+        <!-- 2026-10-12 (DECISIONS 2026-10-12 (7)): upozornění za „+“ u otázky — text qpriv_hint z UI_TEXT (toggleFormHint) -->
+        <p class="note form-hint" id="qpriv-hint" style="display:none;"></p>
         <!-- Text plní setText('q-hint') v _updateAreaSeekLabels(); `data-i18n` překlad NEDĚLÁ
              (čte ho jen runar-reporter.js). Měřeno 2026-08-16: volný text ukotví čtení
              +8,8 b., kdežto výběr z nabídky +2,7 b. — proto se vyplatí navést, jak psát. -->

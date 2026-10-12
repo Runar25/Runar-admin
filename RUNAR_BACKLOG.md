@@ -628,8 +628,12 @@ doladit apku“*).
       do zásad, nebo lhůta a přísnější nevypisování (5) · (c) minimální věk — Island 13, doporučeno 16–18 (6) · (d) DPIA před veřejným
       spuštěním (10).
 - [ ] **CODE-tune — souhlas u volné otázky a minimální věk** (DECISIONS 2026-10-12 (7), celé zadání tam): „+“ za THE SITUATION s upozorněním; jednorázové políčko souhlasu (+ věk 13+) při prvním psaní do otázky nebo Asku, uložené k účtu (sloupec a grant = SQL ownera, smoke ⑩), odvolání v menu Privacy; zásady EN + IS: věk 13 a souhlas rodiče, popis souhlasu. IS ověřit (§2).
+      ✅ *(CODE-tune 2026-10-12, krok 1: „+“ za THE SITUATION s upozorněním EN + IS; v zásadách věk 13 a souhlas rodiče; ㊽ (G) hlídá,
+      že „+“ nezmizí.)* Zbývá krok 2: políčko souhlasu, SQL ownera, odvolání v menu Privacy, popis souhlasu v zásadách.
 - [ ] **Před veřejným spuštěním (owner 2026-10-12 „později“):** vývojové konverzace s Claudem — do zásad, nebo lhůta (5) · doba uchování hlášení a čtení po smazání účtu (8, s „Retence čtení“) · DPIA ano/ne (10).
-- [ ] **CODE-tune — zásady EN + IS (IS ověřit §2), zbývá jen to, co čeká na ownera:** ElevenLabs „netrénuje“ a doba uchování — až owner
+- [x] ✅ *(CODE-tune 2026-10-12: ElevenLabs netrénuje od 12. 10. 2026 a drží text i zvuk v našem účtu (12, položka „historie ElevenLabs“
+      níž); věk 13 a souhlas rodiče (6). Hlášení a doba jejich uchování (8) vede „Před veřejným spuštěním“ výš.)*
+      **CODE-tune — zásady EN + IS (IS ověřit §2), zbývá jen to, co čeká na ownera:** ElevenLabs „netrénuje“ a doba uchování — až owner
       vypne trénink v účtu (12) · hlášení do tabulky „What is held“ + doba uchování (8, s položkou „Retence čtení“ v „OWNER rozhodnutí“) ·
       minimální věk po rozhodnutí (6). Zásady na agndofa.is (3) vede položka „Publikovat privacy policy na agndofa.is“.
       ✅ *(CODE-tune 2026-10-12: Brevo, přihlášení přes Google (+ řádek v tabulce: jméno a fotka z Google účtu), GitHub Pages; mechanismus
@@ -637,6 +641,11 @@ doladit apku“*).
       hlas a jazyk pod smlouvou; úložiště prohlížeče podle skutečnosti — `treeLog` se do zásad nepíše, appka ho přestala sbírat. Po cestě
       opravy islandštiny, které stránka nesla: „hlíðum“ → „erum bundin af“, „á spám þínum“ (předpovědi — Rúnar není věštec) → „á lestrum
       þínum“, „lestrar“ → „lestra“, „á þessum slóð“ → „á þessari slóð“, „Mótmæla“ → „Mótmæltu“. Ověřeno is-greynir, korpus, is-gpt-check.)*
+- [ ] **CODE-tune — historie ElevenLabs drží text čtení i zvuk; smazání účtu v Rúnaru tam nedosáhne** (nalezeno 2026-10-12 při psaní
+      zásad). Ověřeno v dokumentaci API: `enable_logging` je ve výchozím stavu zapnuté a vypnout ho smí jen Enterprise; `elevenlabs-proxy`
+      ani `elevenlabs-static` ho nenastavují; položka historie nese `text` a zvuk jde stáhnout. Návrh: po uložení zvuku položku smazat
+      (`DELETE /v1/history/{id}`; jak získat id u streamu, neověřeno) — úprava edge funkcí, nasazení ownerem; pak upravit větu v zásadách
+      („keeps it and the audio in our account“ / „geymir hann og upplesturinn á reikningnum okkar“). Do té doby zásady říkají pravdu.
 - [x] ✅ *(CODE-read 2026-10-12: hotovo — `RUNAR_PRIVACY.md` sekce „Záznamy o činnostech zpracování“, „Test oprávněného zájmu“, „Únik dat“ s evidencí incidentů; Slack zapsán v tabulce.)* **CODE-read:** do `RUNAR_PRIVACY.md` záznamy o činnostech zpracování (čl. 30), test oprávněného zájmu a postup při úniku dat (10);
       zapsat, že do Slacku osobní údaje nejdou (D).
 

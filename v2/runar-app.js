@@ -816,9 +816,10 @@ function _updateAreaSeekLabels() {
   if (slbl) slbl.innerHTML = t('seek_lbl') + _optSpan + _tgl('seek') + _lockHint;
   const ilbl = document.getElementById('intention-lbl');
   if (ilbl) ilbl.innerHTML = t('intention_lbl') + _optSpan + _tgl('intention') + _lockHint;
-  ['area', 'seek', 'intention'].forEach(function (k) { setText(k + '-hint', t(k + '_hint')); });   // přepnutí jazyka přepíše i otevřenou nápovědu
+  ['area', 'seek', 'intention', 'qpriv'].forEach(function (k) { setText(k + '-hint', t(k + '_hint')); });   // přepnutí jazyka přepíše i otevřenou nápovědu
   const qlbl = document.getElementById('q-lbl');
-  if (qlbl) qlbl.innerHTML = t('q_lbl') + ' <span class="opt">'+t('opt')+'</span>';
+  // 2026-10-12 (DECISIONS 2026-10-12 (7)): „+“ i za THE SITUATION — upozornění, co se s otázkou děje (#qpriv-hint).
+  if (qlbl) qlbl.innerHTML = t('q_lbl') + ' <span class="opt">'+t('opt')+'</span>' + _tgl('qpriv');
   // Napoveda k otazce. Patri SEM (a ne do updateUIText primo), protoze je soucasti
   // sekce otazky — a `_updateAreaSeekLabels` updateUIText vola (:746), takze se to
   // pri prepnuti jazyka prekresli.
@@ -1158,7 +1159,8 @@ function toggleFormHint(k) {
   var otevrit = box.style.display === 'none';
   box.textContent = t(k + '_hint');
   box.style.display = otevrit ? '' : 'none';
-  var lbl = document.getElementById(k + '-lbl'), b = lbl && lbl.querySelector('.hint-tgl');
+  // tlačítko podle aria-controls, ne podle id popisku: u otázky nese „+“ popisek q-lbl a nápověda je qpriv-hint (2026-10-12)
+  var b = document.querySelector('.hint-tgl[aria-controls="' + k + '-hint"]');
   if (b) b.setAttribute('aria-expanded', otevrit ? 'true' : 'false');
 }
 // ─── „WHERE TO START“ — jednou pro každého, i návštěvníka (KUKY 2026-10-11, DECISIONS 2026-10-11 (65)) ───────────────────────────
