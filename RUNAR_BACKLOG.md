@@ -506,6 +506,12 @@ Nic z toho zatím není rozhodnuté. Owner: *„Hetzner — vlastní server pro 
    pro soukromé repo na free plánu ověřit při výběru).
 6. **Víc postav (charakterů):** jakmile se prompt skládá na serveru, postava může být data v DB (tabulka `runar_character` existuje,
    je prázdná) — nová postava bez nového kódu appky. Na GitHubu ani hostingu to nezávisí.
+7. **Adresy — směr (owner 2026-10-12: *„zní to dobře… přechod bude až před spuštěním“*):** web `therunekeeper.com`, appka
+   `app.therunekeeper.com`; rozhoduje se spolu s hostingem (bod 5). GitHub Pages dá jednomu repu jen jednu vlastní doménu a zveřejní
+   celé repo (i `RUNAR_*.md`, `scripts/`) a neumí vlastní bezpečnostní hlavičky → kandidát Cloudflare Pages (dva weby z jednoho repa:
+   `web/` a `v2/`; ověřit v jejich docs před volbou). Kritéria owner nechal na CODE: HTTPS, hlavičky (CSP, frame-ancestors), ochrana
+   proti převzetí domény, ven jen web + appka, soukromé repo, nasazení z gitu s návratem, pošta (MX Google, DKIM Brevo) beze změny, cena.
+   Přechod appky na novou adresu: adresy přihlášení v Supabase, uživatelé se přihlásí znovu, PWA znovu nainstalovat.
 Pořadí podle CODE-read: Supabase Pro (nebo Free + export) → soukromé repo + hosting → prompt na server (mapa závislostí CODE-read,
 přestavba CODE-tune). Rozhoduje owner.
 
@@ -832,3 +838,14 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
    uložená jako data; návštěvník dostane jedno k tažené runě. Žádné volání modelu, žádný otvor, kvalitu vybereme. Potřeba: ownerovo ano
    na generování (~100 volání, §30). Pak karta po tahu = text čtení + teaser hlasu + teaser Asku (stejné provedení jako teaser Asku
    u Rune Seekera: funkce vidět celá, zamčená, pod ní řádek „opens with {tier}“) + výzva k registraci.
+
+## Web therunekeeper.com (CODE-web, od 2026-10-12)
+- [ ] **Registrace před spuštěním** (owner 2026-10-12: *„ano sbíráme“*). Landing „coming soon“ sbírá e-maily; každý dostane jeden
+  e-mail, až Rúnar půjde ven. Napřed plán ownerovi (kam se ukládá, dvojí potvrzení, text do zásad soukromí, smazání po spuštění).
+- [ ] **Pro OWNERA — Rapyd:** smí účet Agndofy prodávat přes Rapyd Hosted Checkout / odkaz k platbě na therunekeeper.com, a jaký tarif
+  má Shopify Agndofy (u cizí brány Shopify bere příplatek, Basic 2 %)? Rozhodne, jestli Rúnakort půjde přes Shopify, nebo rovnou Rapyd.
+  Fyzické runy jdou přes Shopify vždy. Kupovat jde pět balíčků (`CARD_PACKS`).
+- [ ] **Doručení kódu po koupi:** návrh webhook (Shopify nebo Rapyd) → edge funkce → `gift_codes` → e-mail přes Brevo. Navazuje na
+  blocker „Shopify webhook + checkout“ výš (i jeho spouštěč přezkumu GDPR).
+- [ ] **Vzhled:** úvod styl A (Noc) schválen; coming soon — owner vybírá mezi variantou 1 (štítek) a 3 (nad dlaní); fyzická karta
+  a další vizuály počkají, až owner dodá obrázky. Náhledy leží lokálně ve `web/nahled/` (necommitnuté, obrázky ~5 MB).

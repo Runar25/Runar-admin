@@ -521,7 +521,7 @@ nikdy nebyl. Dvě mapy téhož = přesně to, co §20 zakazuje.
 ---
 
 ## N paralelních session — kdo o čem mluví
-Repo zpracovává VÍC session naráz: **3× CODE** (tune · read · tree), a ke každé **Cowork symbiont**,
+Repo zpracovává VÍC session naráz: **4× CODE** (tune · read · tree · web), a ke každé **Cowork symbiont**,
 se kterým se radí (Cowork-tune · Cowork-read · Cowork-tree). Cowork je **read-only**, proto volnější —
 do repa píše výhradně přes svého CODE.
 
@@ -564,6 +564,9 @@ SÁM — bez ownera.
   ⚠️ **`[read]`, ne `[reader]`** — `[reading]` je v historii 46× jako téma a `[reader]`
   by se od něj v `git log` nedalo odlišit pohledem (změřeno 2026-08-18).
 - **CODE-tree** → prefix `[tree]`: vizuální engine — runar-tree-prod.js (generovaný `build_tree_production.py`), tree-lab composery (runar-branch.js, runar-trunk.js), build_*composer.py, tree-lab-*/, tree-snapshots/, `RUNAR_TREE_*` docs, `tree_state` DB. Doménový doc = RUNAR_TREE.md.
+- **CODE-web** → prefix `[web]` (od 2026-10-12, owner *„ano to zní dobře“*): veřejný web therunekeeper.com — složka `web/`, landing page,
+  coming soon, registrace před spuštěním, nákup Rúnakortu (Shopify / Rapyd), návrh fyzické karty. Appku (`v2/`) nesahá; co web
+  potřebuje z appky (texty, config, glyfy), jen ČTE (`UI_TEXT`, `CARD_PACKS`, `runeSvg`) a změny v nich předává lane, která je vlastní.
 - **Cowork-tune · Cowork-read · Cowork-tree** → prefix `[cowork]`: design, docs, eval-OBSAH,
   copy audit, handoffy. Každý je **symbiont své CODE session** — ta se s ním radí o obsahu. Repo **READ-ONLY přes `git show HEAD:`** (ne `git status`, ten zapisuje do indexu); do repa píše VÝHRADNĚ přes CODE. Další Cowork session = táž lane, táž pravidla.
 

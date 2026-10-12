@@ -11165,3 +11165,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno:** v prohlížeči proti podvržené databázi — smazání, odmítnutí oprávněním (0 řádků), výpadek, text se značkami jako text.
   S přihlášeným adminem naživo ne (přihlásit se Code nesmí); politiku jsem přečetl v databázi.
 - Affected doc(s): `RUNAR_BACKLOG.md` (položka odškrtnutá) — v témže commitu.
+
+## 2026-10-12 (6) — Čtvrtá CODE lane `CODE-web` pro veřejný web; adresy web / appka; před spuštěním sbíráme registrace
+
+- **Rozhodl:** owner 2026-10-12 — lane: *„ano to zní dobře“* (na návrh přidat CODE-web); adresy: *„zní to dobře. vše musí být maximálně
+  bezpečné… přechod bude až před spuštěním“*; registrace: *„ano sbíráme“*.
+- **Proč lane:** web therunekeeper.com je nová oblast, kterou žádná ze tří lane nevlastní, a session, která ho dělá, neměla pod jakým
+  jménem commitovat — smoke ㉛ zná jen vyjmenované lane (`LANES` ve `scripts/verify_commit_identity.js`).
+- **Co:** `CODE-web`, prefix `[web]`, vlastní `web/`; appku jen čte. Přidáno do `LANES` (smoke ㉛) a do SessionStart hooku, který vypisuje
+  úkoly „Pro CODE-…“ (`~/.claude/runar-context.py`, mimo repo). Adresy a kritéria hostingu = BACKLOG „Kam s databází, promptem a
+  hostingem“ bod 7 (směr, ne nasazení). Registrace a nákup = BACKLOG „Web therunekeeper.com“.
+- Affected doc(s): `CLAUDE.md` (lanes), `RUNAR_BACKLOG.md` — v témže commitu.
