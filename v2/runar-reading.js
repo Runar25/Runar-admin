@@ -389,9 +389,9 @@ async function _generateReading() {
   } else {
     // Journal is saved SERVER-SIDE by the proxy (right after the credit deduction) so a
     // charged reading is always journaled — even if the app is backgrounded before this
-    // point. Here we only refresh local views: tree log (localStorage) + journal + balance.
+    // point. Here we only refresh local views: journal + balance. (Do 2026-10-12 i treeLog v úložišti prohlížeče — nečetlo ho
+    // nic, viz STARE_KLICE v runar-app.js.)
     if (_readingMode === 'mine') {
-      recordTreeReading('single', [readerRune], readerUser.area, readerUser.intention);
       loadJournal();
     }
     await syncFreeBalance(currentUser.id);
@@ -1421,7 +1421,7 @@ async function _generateSpreadReading(o) {
 
   if (currentUser) {
     // Journal saved SERVER-SIDE by the proxy (right after the deduction). Refresh local views.
-    if (_readingMode === 'mine') { recordTreeReading(o.kind, o.runes, readerUser.area, readerUser.intention); loadJournal(); }
+    if (_readingMode === 'mine') { loadJournal(); }   // 2026-10-12: bez treeLog (STARE_KLICE v runar-app.js)
     await syncFreeBalance(currentUser.id);
   } else { updateAuthUI(); }
 

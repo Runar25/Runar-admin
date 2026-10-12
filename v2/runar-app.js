@@ -226,29 +226,23 @@ async function upsertProfile() {
 }
 
 // ─── DB: READINGS ────────────────────────────────────────
-// FREE-SOLO tree: after saving a reading, append it to localStorage treeLog (data source for the Tree of Life).
-// Format expected by engine: { spread, runes:[{rune:<glyph>, el:<lowercase element>}], area, intention }
-function recordTreeReading(spreadKind, runeObjs, area, intention) {
-  try {
-    var toEl = function(r){ return ((r && r.elements && r.elements[0]) || 'Earth').toLowerCase(); };
-    var log = JSON.parse(localStorage.getItem('treeLog') || '[]');
-    log.push({
-      spread:    (spreadKind || 'single').toLowerCase(),
-      runes:     (runeObjs || []).filter(Boolean).map(function(r){ return { rune: r.g, el: toEl(r) }; }),
-      area:      area || null,
-      intention: intention || null
-    });
-    localStorage.setItem('treeLog', JSON.stringify(log));
-  } catch(e) {}
+// Klíče úložiště prohlížeče, které appka už nečte — smažou se při startu, ať v prohlížeči nezůstávají data bez účelu
+// (2026-10-12, CODE-tune; nalezeno při inventuře úložiště pro zásady soukromí):
+//   treeLog           — recordTreeReading (23fc4d8, 2026-07-10, „free-solo“ strom) sem po každém vlastním čtení přidal runy,
+//                       oblast a záměr. Strom od té doby čte čtení z databáze (runar-tree.js) a tenhle záznam nečetlo nic — jen rostl.
+//   runar_trial_count — počítadlo zkušebního čtení návštěvníka, zrušené 2026-10-10 (523797a) bez úklidu.
+var STARE_KLICE = ['treeLog', 'runar_trial_count'];
+function _uklidStareKlice() {
+  STARE_KLICE.forEach(function (k) { try { localStorage.removeItem(k); } catch (e) {} });
 }
 
 // saveReading / saveSpreadReading REMOVED — the reading journal is now written
 // SERVER-SIDE by claude-proxy (same request, right after the deduction — not one transaction), so a charged reading
 // is always journaled even if the app is killed before the response arrives. The client
 // sends the reading meta via callProxy(..., journal); the proxy composes + inserts it.
-// recordTreeReading (localStorage tree log) stays client-side, called from the reader flow.
 
-// Sync monthly count from DB → localStorage (accurate, multi-device)
+// Zůstatek a měsíční počítadla z DB do proměnných appky — do úložiště prohlížeče se nic neukládá (do 2026-10-12 tu stálo
+// „Sync monthly count from DB → localStorage“).
 // Refresh userFreeBalance z DB (free_balance: 1 při registraci, žádné doplnění — model B).
 // Název zachován kvůli stabilitě call-sites; už není měsíční.
 // 2026-10-11: čte i month_units/month_key — po čtení předplatitele tak počítadlo v menu (updateDropdown) ukáže nový zůstatek.
@@ -1643,6 +1637,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 // ─── INIT ────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', async () => {
+  _uklidStareKlice();   // klíče, které appka už nečte (STARE_KLICE výš)
   // Restore language from localStorage (before auth, so UI is correct immediately)
   const savedLang = localStorage.getItem('runar_lang');
   if (savedLang && savedLang !== lang) {
