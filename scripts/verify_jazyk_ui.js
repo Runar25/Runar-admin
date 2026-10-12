@@ -14,7 +14,7 @@
 // V řetězci s HTML se dívá jen na to, co je vidět (text a atributy title/placeholder/alt/aria-label/value) — jméno třídy
 // „rd-obraz“ je kód, ne řeč.
 // KDE (jen soubory v gitu — co v gitu není, není v produkci): hodnoty UI_TEXT · stránky v2/*.html (text, atributy, inline
-//   skripty) · JS, které ty stránky načítají, a v2/*.js · edge funkce supabase/functions/**/*.ts · šablony e-mailů
+//   skripty) · stránky web/**/*.html (od 2026-10-12) · JS, které ty stránky načítají, a v2/*.js · edge funkce supabase/functions/**/*.ts · šablony e-mailů
 //   supabase/templates/*.html.
 // VÝJIMKY: v runar-names.js hodnoty klíčů `name:` (jméno člověka, třeba Zdeněk — data, ne řeč) a `note:` (interní poznámka,
 //   nezobrazuje se, do promptu nejde) · přesné hodnoty ve VYJIMKY_HODNOTY, každá s důvodem a datem; výjimka, jejíž hodnota už
@@ -200,7 +200,8 @@ const zkus = (s, kde) => {
 }
 // 2) stránky v2/ (text + atributy + inline skripty); zároveň sběr JS, které načítají
 const js = new Set(git.filter((p) => /^v2\/[^/]+\.js$/.test(p)));
-for (const p of git.filter((x) => /^v2\/[^/]+\.html$/.test(x))) {
+// web/ (od 2026-10-12, CODE-web): veřejný web therunekeeper.com a návrhy k výběru — owner: „všechny návrhy a popisky v EN“
+for (const p of git.filter((x) => /^(v2\/[^/]+|web\/.+)\.html$/.test(x))) {
   const src = fs.readFileSync(ROOT + p, 'utf8');
   htmlText(src).forEach((t) => zkus(t, p + ' (text)'));
   retezce(skriptyVHtml(src)).forEach((x) => zkus(x.s, p + ' (skript)'));
@@ -227,4 +228,4 @@ if (nalezy.length || mrtve.length) {
   if (mrtve.length) console.log('FAIL  mrtvá výjimka (hodnota už v kódu není) — smaž ji z VYJIMKY_HODNOTY: ' + mrtve.join(', '));
   process.exit(1);
 }
-console.log('OK    jazyk komunikace: v UI_TEXT, stránkách v2/, jejich JS, edge funkcích ani e-mailech není čeština (jen IS a EN)');
+console.log('OK    jazyk komunikace: v UI_TEXT, stránkách v2/ a web/, jejich JS, edge funkcích ani e-mailech není čeština (jen IS a EN)');
