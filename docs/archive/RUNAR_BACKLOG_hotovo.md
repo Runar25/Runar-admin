@@ -405,3 +405,15 @@
 - [x] ✅ *(CODE-read 2026-10-12, ověřeno proti kódu: hotovo 2026-09-28 — komentáře v `runar-reading.js:24` a `runar-character.js`.)* Zahodit stale `_lastDeeper` + `deeper_meaning` extrakci (nikde se nečte; deeper_meaning zrušen 2026-07-04). Guard: `composeReading` musí zůstat zrcadlo `_parseSegments` (smoke ⑦).
 - [x] ✅ *(CODE-read 2026-10-12, ověřeno proti kódu: přesunuty do `scripts/archive/root-patches-2026-07-19/` (7e90991; v gitu předtím nikdy nebyly).)* **Dva jednorázové patch skripty leží v kořeni repa** — `fix-norns-reading.py` a `unify-reading-style.py` patří do `scripts/archive/root-patches-*` (tam už jich je ~20). Dnes matou grep: obsahují volání funkcí, které v kódu neexistují.
 - [x] ✅ *(CODE-read 2026-10-12, ověřeno proti kódu: opraveno 7e90991 — SPREAD_RE + pojistka `area === 'spread'` → `spread_other`.)* **`export_readings.js`: `THE GATHERING` a `SPREAD_3` padají do kolonky „single"** — nejsou v `SPREAD_RE`, takže statistiky délky za single jsou nadhodnocené (změřeno 2026-08-08: 9 čtení >200 slov je tímhle).
+
+### Reading quality (audit 2026-07-04)
+- [x] ✅ *(CODE-read 2026-10-12, ověřeno: zbylé (a) a (c) hotové — hlas přehrán naostro 2026-10-11 (DECISIONS 2026-10-11 (64)), živý stav ukazuje záložka VOICE ve shrine (`runar-voice-admin.js`, funkce `voice-usage`).)* **Sledování nákladů na hlas (handoff CODE-tune 2026-09-24, owner „udělej, jak říkáš")** — (1) admin funkce, která zavolá
+  `GET https://api.elevenlabs.io/v1/user/subscription` (klíč `ELEVENLABS_API_KEY`) a vrátí `character_count`, `character_limit`,
+  `next_character_count_reset_unix`, `tier`, `status`, `current_overage`; (2) `elevenlabs-proxy` ukládá u každého generování počet
+  znaků, model, jazyk a uživatele (dnes jen `voice_month_count`) → hlas po skupinách admin/tester/uživatel; (3) týdenní zápis do
+  soukromé tabulky (EL ukazuje jen aktuální období, bez zápisu není trend). Claude po skupinách už ukazuje `stats.js`.
+  **Stav 2026-09-25 (DECISIONS 2026-09-25 (2)): body 1–3 NASAZENÉ** (funkce `voice-usage`, zápis v `elevenlabs-proxy`/`-static`,
+  tabulky `voice_usage` + `voice_quota_snapshots`, týdenní snímek bez plánovače). Zbývá: (a) owner přehraje jeden hlas → CODE-tune
+  ověří řádek v `voice_usage` a první snímek; (b) ✅ *(2026-09-26)* CODE-read: `stats.js` o hlas po skupinách a modelech + poslední snímek
+  (sekce „hlas ElevenLabs": znaky po skupinách / modelu / zdroji, předplatné z posledního snímku, přečerpání, naše znaky od resetu);
+  (c) živý stav z `voice-usage` zatím nemá místo v UI — nabídnuto ownerovi (panel ve shrine).

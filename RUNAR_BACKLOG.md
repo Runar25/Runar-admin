@@ -117,16 +117,6 @@
     ✅ ~~**Po rozhodnutí 2026-09-26 zbývá opravit ceník**~~ (`RUNAR_PRICING.md`: EN = Multilingual $0,10/1k, ne Flash $0,05) — *hotovo 2026-10-11
     při přepočtu na sol (`scripts/utils/pricing_tabulka.js` bere model hlasu z elevenlabs-proxy a sazbu z `EL_PRECERPANI`).*
   - **Skutečná spotřeba a kdy na vyšší tarif** → handoff CODE-tune 2026-09-24 (položka níž).
-- [ ] **Sledování nákladů na hlas (handoff CODE-tune 2026-09-24, owner „udělej, jak říkáš")** — (1) admin funkce, která zavolá
-  `GET https://api.elevenlabs.io/v1/user/subscription` (klíč `ELEVENLABS_API_KEY`) a vrátí `character_count`, `character_limit`,
-  `next_character_count_reset_unix`, `tier`, `status`, `current_overage`; (2) `elevenlabs-proxy` ukládá u každého generování počet
-  znaků, model, jazyk a uživatele (dnes jen `voice_month_count`) → hlas po skupinách admin/tester/uživatel; (3) týdenní zápis do
-  soukromé tabulky (EL ukazuje jen aktuální období, bez zápisu není trend). Claude po skupinách už ukazuje `stats.js`.
-  **Stav 2026-09-25 (DECISIONS 2026-09-25 (2)): body 1–3 NASAZENÉ** (funkce `voice-usage`, zápis v `elevenlabs-proxy`/`-static`,
-  tabulky `voice_usage` + `voice_quota_snapshots`, týdenní snímek bez plánovače). Zbývá: (a) owner přehraje jeden hlas → CODE-tune
-  ověří řádek v `voice_usage` a první snímek; (b) ✅ *(2026-09-26)* CODE-read: `stats.js` o hlas po skupinách a modelech + poslední snímek
-  (sekce „hlas ElevenLabs": znaky po skupinách / modelu / zdroji, předplatné z posledního snímku, přečerpání, naše znaky od resetu);
-  (c) živý stav z `voice-usage` zatím nemá místo v UI — nabídnuto ownerovi (panel ve shrine).
 - [ ] **Shrine: korekce nejdou smazat** (nález 2026-09-23) — záložka WORD CORRECTIONS umí jen přidat a vypsat
   (`runar-shrine.html` `saveCorrection`/`loadCorrections`), mazání nemá. Owner tak smaže řádek jen přes Supabase. Doplnit
   mazání (jen admin, s potvrzením) — CODE-tune.
