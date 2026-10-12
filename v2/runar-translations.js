@@ -124,6 +124,14 @@ const UI_TEXT = {
     // 2026-10-12 (DECISIONS 2026-10-12 (7), kontrola GDPR bod 1): upozornění pod „+“ za THE SITUATION — volná otázka může nést
     // zvláštní kategorii údajů (zdraví, vztahy, víra), jde k AI v USA a u vlastního čtení se ukládá. Souhlas při psaní je krok 2.
     qpriv_hint:       'Please do not write health details or other sensitive information here. Your question is sent to OpenAI in the USA, whose AI writes the reading. If the reading is your own, the question is also saved in your journal.',
+    // 2026-10-12 (DECISIONS 2026-10-12 (7), krok 2): výslovný souhlas s odesláním a uložením otázky (čl. 9 GDPR) + věk 13+;
+    // ukáže se při prvním psaní do otázky nebo Asku (_showQuestionConsent, runar-app.js), odvolání v menu (sp_qconsent_lbl).
+    qconsent_lbl:     'I agree that my questions are sent to OpenAI in the USA, whose AI writes the readings, even when I write about my health or anything else sensitive. I also agree that they are kept in my journal when the reading is mine. I am 13 or older.',
+    qconsent_need:    'Your question is sent only with your consent. Tick the box. To continue without a question, delete it.',
+    qconsent_need_ask: 'Your question is sent only with your consent. Tick the box to send it.',
+    qconsent_saved:   'Your consent has been saved.',
+    qconsent_withdrawn: 'Consent withdrawn. Your questions will not be sent.',
+    sp_qconsent_lbl:  'Send my questions with my readings',
     q_ph:             'e.g. I am deciding whether to take on more work',
     // 2026-09-08: ukazky, JAK napsat otazku (handoff #55). Rotuji, viz _phRotate.
     q_placeholders:   ['I keep putting off a conversation I need to have.',
@@ -646,6 +654,14 @@ const UI_TEXT = {
     // GreynirCorrect 0 flagu. Vymysleno islandsky, ne prelozeno (§2).
     q_hint:           'Segðu Rúnari hvar þú stendur núna, ekki hvað verður.',
     qpriv_hint:       'Skrifaðu hvorki heilsufarsupplýsingar né aðrar viðkvæmar upplýsingar hér. Spurningin fer til gervigreindar OpenAI í Bandaríkjunum sem semur lesturinn. Ef lesturinn er þinn er spurningin líka vistuð í dagbókinni þinni.',   // 2026-10-12 viz EN; greynir, korpus a is-gpt-check
+    // 2026-10-12 krok 2 souhlasu, viz EN. Greynir u qconsent_lbl hlásí pád „spurningar mínar“ — falešně, „samþykki“ bere jako
+    // podstatné jméno; korpus „ég samþykki að“ 93×, is-gpt-check 0 nálezů. „haka við“ (hakað við 996×), ne „haka í“ (0×).
+    qconsent_lbl:     'Ég samþykki að spurningar mínar séu sendar til gervigreindar OpenAI í Bandaríkjunum sem semur lestrana, líka ef ég skrifa um heilsu mína eða annað viðkvæmt. Ég samþykki líka að þær séu geymdar í dagbókinni minni þegar lesturinn er minn. Ég er 13 ára eða eldri.',
+    qconsent_need:    'Spurningin er aðeins send með samþykki þínu. Hakaðu við reitinn. Til að halda áfram án spurningar skaltu eyða henni.',
+    qconsent_need_ask: 'Spurningin er aðeins send með samþykki þínu. Hakaðu við reitinn til að senda hana.',
+    qconsent_saved:   'Samþykki þitt hefur verið vistað.',
+    qconsent_withdrawn: 'Samþykkið er dregið til baka. Spurningar þínar verða ekki sendar.',
+    sp_qconsent_lbl:  'Senda spurningar mínar með lestrunum',
     q_ph:             'T.d. Ég er að ákveða hvort ég eigi að taka að mér meiri vinnu',
     q_placeholders:   ['Ég fresta stöðugt samtali sem ég þarf að eiga.',
                        'Eitthvað í sambandinu er ekki í jafnvægi og ég veit ekki af hverju.',

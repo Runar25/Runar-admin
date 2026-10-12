@@ -155,7 +155,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
         <p>We process your data on the following legal grounds under GDPR Article 6:</p>
         <p><strong>Contract</strong> — to provide the readings in the language you choose, Rúnar's voice, your journal, and the account features you have requested.</p>
         <p><strong>Legitimate interest</strong> — to prevent abuse of the free reading allowance, to keep the service running reliably, and to improve the quality of Rúnar's readings. For that we may review and analyse readings — the text and the details you enter. You can opt out of this at any time in the menu, under Privacy.</p>
-        <p><strong>Consent</strong> — only where we ask for it. If you take part in testing Rúnar, you give it in the app before you begin, so that we may review your readings.</p>
+        <p><strong>Consent</strong> — only where we ask for it. If you take part in testing Rúnar, you give it in the app before you begin, so that we may review your readings. A question you write may say something about your health or another sensitive matter. So, as Article 9 of the GDPR requires, we ask for your explicit consent before we send and keep your first question. You can withdraw it at any time in the menu, under Privacy. After that, your questions are not sent.</p>
         <p>We do not use your data for advertising, profiling, or automated decision-making.</p>
       </div>
     </div>
@@ -278,11 +278,12 @@ const C = {
       ['Your analysis choice and tester consent', 'To respect your choice', 'Until changed or account deleted'],
     ],
 
+    // 2026-10-12 (DECISIONS 2026-10-12 (7), krok 2): u souhlasu i otázka — výslovný souhlas (čl. 9), odvolání v menu. IS: greynir, gpt-check.
     s3Lbl:  'THE REASON WE HOLD IT',
     s3Body: `<p>We process your data on the following legal grounds under GDPR Article 6:</p>
              <p><strong>Contract</strong> — to provide the readings in the language you choose, Rúnar's voice, your journal, and the account features you have requested.</p>
              <p><strong>Legitimate interest</strong> — to prevent abuse of the free reading allowance, to keep the service running reliably, and to improve the quality of Rúnar's readings. For that we may review and analyse readings — the text and the details you enter. You can opt out of this at any time in the menu, under Privacy.</p>
-             <p><strong>Consent</strong> — only where we ask for it. If you take part in testing Rúnar, you give it in the app before you begin, so that we may review your readings.</p>
+             <p><strong>Consent</strong> — only where we ask for it. If you take part in testing Rúnar, you give it in the app before you begin, so that we may review your readings. A question you write may say something about your health or another sensitive matter. So, as Article 9 of the GDPR requires, we ask for your explicit consent before we send and keep your first question. You can withdraw it at any time in the menu, under Privacy. After that, your questions are not sent.</p>
              <p>We do not use your data for advertising, profiling, or automated decision-making.</p>`,
 
     // 2026-10-09: OpenAI jako zpracovatel (čtení píše od 2026-10-09 gpt-6-sol, DECISIONS 2026-10-09 (13) bod (b); KUKY 2026-10-09 „8. doplň“). Do té doby tu stál jen
@@ -378,7 +379,7 @@ const C = {
     s3Body: `<p>Vinnsla gagna þinna byggist á eftirfarandi heimildum samkvæmt 6. gr. GDPR:</p>
              <p><strong>Samningur</strong> — til að veita þér lestra á því tungumáli sem þú velur, upplestur Rúnars, dagbók og reikningseiginleika sem þú hefur óskað eftir.</p>
              <p><strong>Lögmætir hagsmunir</strong> — til að koma í veg fyrir misnotkun á ókeypis lestrum, til að halda þjónustunni áreiðanlegri og til að bæta gæði lestra Rúnars. Í því skyni kunnum við að fara yfir og greina lestra, bæði textann og upplýsingarnar sem þú slærð inn. Þú getur afþakkað gæðagreiningu hvenær sem er í valmyndinni, undir Persónuvernd.</p>
-             <p><strong>Samþykki</strong> — aðeins þar sem við biðjum um það. Ef þú tekur þátt í prófun Rúnars veitir þú það í forritinu áður en þú byrjar, svo að við megum fara yfir lestrana þína.</p>
+             <p><strong>Samþykki</strong> — aðeins þar sem við biðjum um það. Ef þú tekur þátt í prófun Rúnars veitir þú það í forritinu áður en þú byrjar, svo að við megum fara yfir lestrana þína. Í spurningu sem þú skrifar getur komið fram eitthvað um heilsu þína eða annað viðkvæmt. Samkvæmt 9. grein GDPR biðjum við því um skýrt samþykki þitt áður en við sendum fyrstu spurninguna þína og geymum hana. Þú getur dregið það til baka hvenær sem er í valmyndinni, undir Persónuvernd. Eftir það eru spurningar þínar ekki sendar.</p>
              <p>Við notum ekki gögn þín í auglýsingar, snið eða sjálfvirka ákvarðanatöku.</p>`,
 
     s4Lbl:  'HVERJIR SJÁ ÞAÐ',

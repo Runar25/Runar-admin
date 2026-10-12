@@ -335,7 +335,14 @@
              řádek `angle` — a tenhle komentář je záměrně NEOPISUJE (§20).
              Do 2026-08-16 tu limit nebyl žádný. Není to bezpečnostní hranice — prompt se staví
              v klientovi — ale drží UI cestu v rozumné délce. Strop je v proxy (8000 znaků). -->
-        <input class="txt" id="r-question" type="text" maxlength="160" placeholder="e.g. I am deciding whether to take on more work">
+        <input class="txt" id="r-question" type="text" maxlength="160" placeholder="e.g. I am deciding whether to take on more work"
+               oninput="_qConsentOnInput(this)">
+        <!-- 2026-10-12 (DECISIONS 2026-10-12 (7), krok 2): výslovný souhlas s odesláním otázky (+ věk 13+). Jeden prvek pro otázku
+             i Ask — _showQuestionConsent (runar-app.js) ho přesune pod pole, do kterého člověk píše. Text z UI_TEXT qconsent_lbl. -->
+        <label class="q-consent" id="q-consent" style="display:none;">
+          <input type="checkbox" id="q-consent-cb" onchange="onQuestionConsent(this)">
+          <span class="note" id="q-consent-lbl"></span>
+        </label>
       </div>
       <!-- Teaser for Visitor / Rune Seeker -->
       <div id="q-teaser" style="display:none;">
@@ -507,7 +514,7 @@
         <div class="ask-hints" id="ask-hints" style="display:none;"></div>
         <div class="ask-input-wrap" id="ask-input-wrap">
           <input type="text" id="ask-input" class="ask-input" maxlength="160" placeholder="Ask Rúnar about this reading…"
-                 onkeydown="if(event.key==='Enter')askRunar();">
+                 onkeydown="if(event.key==='Enter')askRunar();" oninput="_qConsentOnInput(this)">
           <button class="ask-btn" id="ask-btn" onclick="askRunar()">ASK</button>
         </div>
         <div class="ask-teaser" id="ask-teaser" style="display:none;"></div>
@@ -914,6 +921,12 @@
       <label class="sp-toggle">
         <input type="checkbox" id="sp-optout-toggle" checked onchange="onOptOutToggle(this)">
         <span id="sp-optout-label">Help improve Rúnar with my readings</span>
+      </label>
+      <!-- 2026-10-12 (DECISIONS 2026-10-12 (7)): odvolání souhlasu s odesláním otázek; vidět jen se souhlasem (_syncPrivacyUI). Udělit jde
+           jen u pole otázky, kde stojí celý text souhlasu. -->
+      <label class="sp-toggle" id="sp-qconsent-row" style="display:none;">
+        <input type="checkbox" id="sp-qconsent-toggle" checked onchange="onQuestionConsentToggle(this)">
+        <span id="sp-qconsent-label">Send my questions with my readings</span>
       </label>
     </div>
   </div>

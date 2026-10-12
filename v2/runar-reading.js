@@ -459,6 +459,10 @@ function startReading() {
     setSt('st-setup', _readingErrMsg('no_credits'));
     return;
   }
+  // 2026-10-12 (DECISIONS 2026-10-12 (7), krok 2): otázka bez souhlasu se neposílá. Čtení nezačne — kredit by padl na čtení bez otázky,
+  // kterou člověk napsal; ukáže se políčko souhlasu a co dál. Bez otázky jde čtení jako dosud.
+  var _qEl = document.getElementById('r-question');
+  if (_qEl && _qEl.value.trim() && _needsQuestionConsent()) { _showQuestionConsent(_qEl); setSt('st-setup', t('qconsent_need')); return; }
   var isMine = (_readingMode === 'mine');
   var knownUser = isMine && userName && _lifeRuneNum;
   // Use stored name if own reading and name is known
@@ -1085,6 +1089,8 @@ async function askRunar() {
   var inp = document.getElementById('ask-input');
   var q = inp ? inp.value.trim() : '';
   if (!q) return;
+  // 2026-10-12 (DECISIONS 2026-10-12 (7), krok 2): psaná otázka bez souhlasu se neposílá — políčko souhlasu pod polem.
+  if (_needsQuestionConsent()) { _showQuestionConsent(inp); setSt('ask-status', t('qconsent_need_ask')); return; }
   var reading = (readerTexts[lang] && readerTexts[lang].short) || '';
   if (!reading) return;
   var runes = (_lastSegs && _lastSegs.length)
@@ -1223,6 +1229,7 @@ function resetReader() {
   ['r-name','r-question'].forEach(id => {   // r-day/r-month/r-year v HTML nejsou (2026-10-09)
     const el = document.getElementById(id); if (el) el.value = '';
   });
+  _hideQuestionConsent();   // 2026-10-12: otázka je pryč, políčko souhlasu k ní taky (DECISIONS 2026-10-12 (7))
   readerUser.intention = '';
   buildPills();
 }

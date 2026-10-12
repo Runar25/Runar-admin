@@ -173,6 +173,9 @@ PRIPADY = [
  ('chyti', 'verify_citelnost.js', 'v2/runar-app.js', 'replace', "'</span>' + _tgl('qpriv');", "'</span>';"),
  # 2026-10-12 (CODE-tune): práh (A) 4,5 : 1 — „(OPTIONAL)“ zpátky na průhlednost 0,45 (3,12 : 1) musí shodit kontrolu.
  ('chyti', 'verify_citelnost.js', 'v2/runar-reader.css', 'replace', '.opt{opacity:0.65;', '.opt{opacity:0.45;'),
+ # 2026-10-12 (CODE-tune): ㊽ (H) — brána souhlasu u otázky obejitá ve čtení a v Asku (DECISIONS 2026-10-12 (7)).
+ ('chyti', 'verify_citelnost.js', 'v2/runar-reading.js', 'replace', "if (_qEl && _qEl.value.trim() && _needsQuestionConsent()) {", "if (false) {"),
+ ('chyti', 'verify_citelnost.js', 'v2/runar-reading.js', 'replace', "  if (_needsQuestionConsent()) { _showQuestionConsent(inp);", "  if (false) { _showQuestionConsent(inp);"),
  ('obchazka', 'verify_ui_text_used.js', 'scripts/verify_ui_text_used.js', 'replace', " && !post.some((p) => k.endsWith(p))", ''),
  ('chyti', 'verify_pravidla_mapa.js', 'scripts/utils/pravidla_mapa.json', 'replace', '"pravidla": ["§30"],', '"pravidla": ["§99"],'),
  # kolo 3 / 4h (2026-10-11): obrazy, kalendář, myšlenka ✦, zrcadlo parseru

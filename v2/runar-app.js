@@ -36,6 +36,7 @@ let analyticsOptOut = false;    // user_profiles.analytics_opt_out — user excl
                                 // Default true = dnesni chovani. Vypnuto: cteni skonci u tazene runy.
                                 // Duvod + mereni (10/12 zaveru si brala cocka) -> RUNAR_EVAL_LOG.md 2026-09-10.
 let testerConsentAt = null;     // user_profiles.tester_consent_at — when the tester accepted consent
+let questionConsentAt = null;   // user_profiles.question_consent_at — souhlas s odesláním otázky (DECISIONS 2026-10-12 (7))
 let profileLoaded   = false;    // fetchUserProfile dobehl (data aplikovana) — Tree tab drzi loading dokud false
 let profileLoadFailed = false;  // načtení profilu selhalo i napodruhé — Životní runa a strom ukážou hlášku a „zkusit znovu“ (2026-10-12)
 let readerRune     = null;
@@ -128,6 +129,12 @@ async function fetchUserProfile(userId, _pokus) {
       // Cross-device gender — best-effort own query (address_gender column may not exist yet; never blocks profile load)
       sb.from('user_profiles').select('address_gender').eq('id', userId).maybeSingle()
         .then(function (r) { if (r && r.data && r.data.address_gender) { userGender = r.data.address_gender; localStorage.setItem('runar_gender', userGender); _updateGenderPills(); } })
+        .catch(function () {});
+      // 2026-10-12 (DECISIONS 2026-10-12 (7)): souhlas s odesláním otázky — vlastní dotaz, ať chybějící sloupec (než owner pustí SQL)
+      // nerozbije příznaky testera níž. Bez odpovědi zůstane null → otázka se bez souhlasu nepošle (raději se zeptat než poslat).
+      questionConsentAt = null;
+      sb.from('user_profiles').select('question_consent_at').eq('id', userId).maybeSingle()
+        .then(function (r) { if (r && r.data) questionConsentAt = r.data.question_consent_at || null; _syncPrivacyUI(); })
         .catch(function () {});
       // Privacy/tester flags — guarded (never blocks profile load). Drives opt-out toggle + tester consent.
       sb.from('user_profiles').select('is_tester, analytics_opt_out, tester_consent_at').eq('id', userId).maybeSingle()
@@ -616,6 +623,10 @@ function _syncPrivacyUI() {
   if (sec) sec.style.display = currentUser ? 'block' : 'none';
   var cb = document.getElementById('sp-optout-toggle');
   if (cb) cb.checked = !analyticsOptOut;   // checked = "use my readings" (opted IN)
+  // souhlas s odesláním otázek: řádek jen se souhlasem — odškrtnutí ho odvolá (udělit jde u pole otázky, DECISIONS 2026-10-12 (7))
+  var qr = document.getElementById('sp-qconsent-row');
+  if (qr) qr.style.display = (currentUser && questionConsentAt) ? '' : 'none';
+  var qc = document.getElementById('sp-qconsent-toggle'); if (qc) qc.checked = !!questionConsentAt;
 }
 
 // Checkbox checked = keep helping (opted in); unchecked = opt out.
@@ -666,6 +677,52 @@ async function acceptTesterConsent() {
   }
 }
 
+// ── Souhlas s odesláním otázky (DECISIONS 2026-10-12 (7), krok 2) ─────────────────────────────────────────────────────────────────
+// Volná otázka (formulář čtení i Ask) může nést zdraví a jiné citlivé údaje (čl. 9 GDPR): k OpenAI jde a ukládá se jen s výslovným
+// souhlasem, který zároveň potvrdí věk 13+. Testeři ho dali v souhlasu testerů. Udělit jde jen zaškrtnutím u pole (celý text
+// souhlasu), odvolat v menu (Privacy). Brány jsou dvě: startReading a askRunar (runar-reading.js).
+function _needsQuestionConsent() {
+  return !!currentUser && !questionConsentAt && !(isTester && testerConsentAt);
+}
+function _showQuestionConsent(pole) {
+  var box = document.getElementById('q-consent'); if (!box || !pole) return;
+  var kotva = (pole.id === 'ask-input') ? (document.getElementById('ask-input-wrap') || pole) : pole;
+  if (kotva.nextElementSibling !== box) kotva.after(box);
+  setText('q-consent-lbl', t('qconsent_lbl'));
+  var cb = document.getElementById('q-consent-cb'); if (cb) cb.checked = false;
+  box.style.display = '';
+}
+function _hideQuestionConsent() { var box = document.getElementById('q-consent'); if (box) box.style.display = 'none'; }
+function _qConsentOnInput(pole) { if (pole && pole.value.trim() && _needsQuestionConsent()) _showQuestionConsent(pole); }
+// .select('id') — RLS by jinak tiše zapsala nula řádků a appka by souhlas hlásila jako uložený
+async function onQuestionConsent(cb) {
+  if (!cb.checked) return;
+  if (!currentUser) { cb.checked = false; return; }
+  var stamp = new Date().toISOString();
+  try {
+    var r = await sb.from('user_profiles').update({ question_consent_at: stamp }).eq('id', currentUser.id).select('id');
+    if (r.error) throw r.error;
+    if (!r.data || !r.data.length) throw new Error('0 rows');
+    questionConsentAt = stamp;
+    _hideQuestionConsent(); setSt('st-setup', ''); setSt('ask-status', '');
+    _syncPrivacyUI();
+    showToast(t('qconsent_saved'), 'ok');
+  } catch (e) { cb.checked = false; showToast(t('optout_err'), 'err'); }
+}
+async function onQuestionConsentToggle(cb) {
+  if (cb.checked || !currentUser) return;
+  try {
+    var r = await sb.from('user_profiles').update({ question_consent_at: null }).eq('id', currentUser.id).select('id');
+    if (r.error) throw r.error;
+    if (!r.data || !r.data.length) throw new Error('0 rows');
+    questionConsentAt = null;
+    // otázka už zachycená k rozdělanému čtení (druhý tah, kontext Asku) se po odvolání taky nepošle
+    if (readerUser) readerUser.question = '';
+    _syncPrivacyUI();
+    showToast(t('qconsent_withdrawn'), 'ok');
+  } catch (e) { cb.checked = true; showToast(t('optout_err'), 'err'); }
+}
+
 function updateSidePanel() {
   const accEl = document.getElementById('sp-account');
   if (!accEl) return;
@@ -695,6 +752,7 @@ function updateSidePanel() {
     privEl.style.display = 'block';
     setText('sp-privacy-lbl', t('sp_privacy_settings_lbl'));
     setText('sp-optout-label', t('optout_label'));
+    setText('sp-qconsent-label', t('sp_qconsent_lbl'));
     _syncPrivacyUI();
   }
   if (sessionEl) sessionEl.style.display = 'block';
@@ -816,7 +874,8 @@ function _updateAreaSeekLabels() {
   if (slbl) slbl.innerHTML = t('seek_lbl') + _optSpan + _tgl('seek') + _lockHint;
   const ilbl = document.getElementById('intention-lbl');
   if (ilbl) ilbl.innerHTML = t('intention_lbl') + _optSpan + _tgl('intention') + _lockHint;
-  ['area', 'seek', 'intention', 'qpriv'].forEach(function (k) { setText(k + '-hint', t(k + '_hint')); });   // přepnutí jazyka přepíše i otevřenou nápovědu
+  ['area', 'seek', 'intention', 'qpriv'].forEach(function (k) { setText(k + '-hint', t(k + '_hint')); });
+  setText('q-consent-lbl', t('qconsent_lbl'));   // políčko souhlasu u otázky (krok 2, DECISIONS 2026-10-12 (7))   // přepnutí jazyka přepíše i otevřenou nápovědu
   const qlbl = document.getElementById('q-lbl');
   // 2026-10-12 (DECISIONS 2026-10-12 (7)): „+“ i za THE SITUATION — upozornění, co se s otázkou děje (#qpriv-hint).
   if (qlbl) qlbl.innerHTML = t('q_lbl') + ' <span class="opt">'+t('opt')+'</span>' + _tgl('qpriv');

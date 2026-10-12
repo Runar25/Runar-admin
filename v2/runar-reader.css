@@ -681,6 +681,10 @@ input:autofill{filter:none;}
 /* Přepínač GPT-6 sol pod „Begin the reading" — jen admin (2026-09-24). Týž tichý štítek jako ostatní admin prvky. */
 .opus-toggle{display:flex;align-items:center;gap:8px;margin-top:14px;font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:1.5px;color:var(--muted);cursor:pointer;}
 .opus-toggle input{accent-color:var(--gold);margin:0;cursor:pointer;}
+/* 2026-10-12 souhlas u otázky (DECISIONS 2026-10-12 (7)): zaškrtávátko jako .sp-toggle input, text jako .note (próza formuláře) */
+.q-consent{display:flex;align-items:flex-start;gap:10px;margin-top:10px;cursor:pointer;}
+.q-consent input{accent-color:var(--gold);width:16px;height:16px;margin:4px 0 0;flex-shrink:0;cursor:pointer;}
+.q-consent .note{margin-bottom:0;}
 /* 2026-10-06 výběr obrazu pro admina — popisek jako .opus-toggle, výběry jako .journal-filter-select (existující vzhled) */
 .img-pin{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:12px;}
 .img-pin-lbl{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:1.5px;color:var(--muted);}

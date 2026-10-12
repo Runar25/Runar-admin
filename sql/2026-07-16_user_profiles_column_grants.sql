@@ -60,3 +60,7 @@ grant update (norse_name, address_pref) on public.user_profiles to authenticated
 -- rozbor jen pri prazdnem `name_lore_text` — a ten si klient smel sam vynulovat, takze kdo umel F12,
 -- mel rozbor zdarma dokola (overeno v zive DB 2026-09-12). Grant odebira
 -- sql/2026-09-12_name_lore_server_only.sql — spustit AZ PO nasazeni klienta, ktery ho nepise.
+
+-- 2026-10-12: SOUHLAS S ODESLÁNÍM OTÁZKY (DECISIONS 2026-10-12 (7), krok 2). Klient ho zapíše při zaškrtnutí políčka u otázky
+-- a smaže (null) při odvolání v menu. Sloupec zakládá sql/2026-10-12_question_consent.sql; grant bydlí TADY (zapisovatelná plocha, smoke ⑩).
+grant update (question_consent_at) on public.user_profiles to authenticated;

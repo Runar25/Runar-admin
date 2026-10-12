@@ -27,6 +27,9 @@
 //  (G) nápovědy pod „+“ ve formuláři čtení: každé tlačítko rozbalí větu z UI_TEXT v jazyce appky, ne holý klíč ani prázdno. Od 2026-10-10
 //      ukazovaly „area_hint“, „seek_hint“, „intention_hint“ — úklid mrtvých klíčů je smazal (kód je skládá `k + '_hint'`), CODE-tune 2026-10-12.
 //      Mezi nimi musí být „+“ u otázky (qpriv-hint): kam otázka jde a že se ukládá (DECISIONS 2026-10-12 (7)) — jeho zmizení nesmí projít.
+//  (H) souhlas s odesláním otázky (DECISIONS 2026-10-12 (7), čl. 9 GDPR): podvržený přihlášený Premium bez souhlasu — otázka ve čtení
+//      ani Ask bez něj neodejdou a ukáže se políčko; zaškrtnutí souhlas uloží (podvržená databáze) a čtení s otázkou pak začne; odvolání
+//      v menu ho vezme zpět i s otázkou zachycenou k rozdělanému čtení. Testeři (souhlas testera) políčko nevidí.
 // Neumí: text přes obrázek (bere barvu pozadí předků), stavy přihlášeného (čtení, menu), stín a obrys písma.
 // Útok: scripts/protipriklady.py → PRIPADY.
 //   node scripts/verify_citelnost.js
@@ -258,6 +261,44 @@ const srv = http.createServer((req, res) => {
     if (!(hEn || []).some((h) => h.id === 'qpriv-hint')) vadne.push('chybí „+“ s upozorněním u otázky (qpriv-hint)');
     rekni(!!hEn && hEn.length >= 4 && !vadne.length,
       '(G) nápovědy pod „+“ ve formuláři (' + ((hEn && hEn.length) || 0) + '): věta z UI_TEXT v jazyce appky, ne holý klíč', vadne.join(' · '));
+
+    // (H) souhlas s odesláním otázky — brány startReading a askRunar, uložení, odvolání; databáze podvržená jen pro user_profiles
+    const sq = await ev(`(async () => {
+      const realFrom = sb.from, zapis = [];
+      sb.from = function (tb) {
+        if (tb !== 'user_profiles') return realFrom.call(sb, tb);
+        return { update: function (o) { zapis.push(o); const res = Promise.resolve({ data: [{ id: 'u1' }], error: null });
+          return { eq: function () { return { select: function () { return res; }, then: res.then.bind(res), catch: res.catch.bind(res) }; } }; } };
+      };
+      const r = {}, zs = () => zapis.filter((o) => 'question_consent_at' in o);   // setLang u přihlášeného zapisuje i jazyk účtu
+      try {
+        currentUser = { id: 'u1', email: 'tester@example.com' }; userTier = 'premium'; isTester = false; testerConsentAt = null; questionConsentAt = null;
+        setLang('en'); showAppTab('reading'); resetReader(); updateQuestionGate();
+        const q = document.getElementById('r-question'), box = document.getElementById('q-consent');
+        const videt = () => box.style.display !== 'none', karta = () => document.getElementById('reader-rune-card').style.display === 'block';
+        q.value = 'Should I take the new job?'; q.dispatchEvent(new Event('input', { bubbles: true }));
+        r.polickoPoPsani = videt();
+        startReading(); r.cteniBezSouhlasu = karta(); r.hlaska = document.getElementById('st-setup').textContent === t('qconsent_need');
+        const ask = document.getElementById('ask-input'), byl = ask.disabled; ask.disabled = false; ask.value = 'What does the ice mean?';
+        await askRunar(); r.askHlaska = document.getElementById('ask-status').textContent === t('qconsent_need_ask');
+        r.askOdeslan = document.getElementById('ask-question').textContent === ask.value;
+        ask.value = ''; ask.disabled = byl; setSt('ask-status', '');
+        isTester = true; testerConsentAt = '2026-10-01T00:00:00Z'; r.testerPotrebuje = _needsQuestionConsent(); isTester = false; testerConsentAt = null;
+        document.getElementById('q-consent-cb').click(); await new Promise((ok) => setTimeout(ok, 50));
+        r.ulozeno = !!questionConsentAt && zs().length === 1 && !!zs()[0].question_consent_at; r.polickoPoSouhlasu = videt();
+        startReading(); r.cteniSOtazkou = karta() && readerUser.question === 'Should I take the new job?';
+        updateSidePanel(); r.radekVMenu = getComputedStyle(document.getElementById('sp-qconsent-row')).display !== 'none';
+        document.getElementById('sp-qconsent-toggle').click(); await new Promise((ok) => setTimeout(ok, 50));
+        r.odvolano = questionConsentAt === null && zs().length === 2 && zs()[1].question_consent_at === null && readerUser.question === '';
+      } catch (e) { r.chyba = String(e); }
+      sb.from = realFrom; questionConsentAt = null; currentUser = null; userTier = 'free';
+      resetReader(); updateQuestionGate(); showAppTab('reading'); updateAuthUI();
+      return r;
+    })()`);
+    rekni(!!sq && !sq.chyba && sq.polickoPoPsani && !sq.cteniBezSouhlasu && sq.hlaska && sq.askHlaska && !sq.askOdeslan && !sq.testerPotrebuje
+          && sq.ulozeno && !sq.polickoPoSouhlasu && sq.cteniSOtazkou && sq.radekVMenu && sq.odvolano,
+      '(H) souhlas u otázky: bez něj otázka ani Ask neodejdou, zaškrtnutí ho uloží, odvolání v menu ho vezme zpět i s rozdělanou otázkou',
+      JSON.stringify(sq));
     const anglicky = /\b(SPEAK|AGAIN|STAY|YES|credits?)\b/i;
     rekni(!!o1 && o1.otevreno && o1.jazyk === 'is' && o1.zavreno && o1.jazykPo === 'is' && /ENSKU/.test(o1.title) && /ÍSLENSKU/.test(o1.zpet)
           && ![o1.title, o1.body, o1.ok, o1.zpet, o1.cena].some((x) => anglicky.test(x)) && o1.cena === o1.cekana.toUpperCase()
