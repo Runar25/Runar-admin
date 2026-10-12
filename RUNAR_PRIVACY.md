@@ -135,6 +135,45 @@ a souhlasí na pravdivém textu. Detail → `RUNAR_DECISIONS.md` 2026-09-11 (8).
   data adminů smí. Strojem to
   spolehlivě hlídat nejde (výstup je v přepisu dřív, než by ho cokoli posoudilo) — proto krok výmazu výš.
 
+## Záznamy o činnostech zpracování (čl. 30) — 2026-10-12
+Úkol z kontroly GDPR (`docs/archive/2026-10-12-gdpr-kontrola.md`, nález 10; výjimka pro firmy pod 250 zaměstnanců neplatí — zpracování
+není příležitostné a může zahrnovat zvláštní kategorie). Správce: Agndofa ehf., info@agndofa.is. Co přesně se drží a jak dlouho, vlastní
+tabulka „What is held“ v `v2/runar-privacy.html` (EN i IS) — tady se neopisuje; tady jen účel → základ → příjemci → přenos.
+| účel | údaje (druh) | základ | příjemci (zpracovatelé) | přenos mimo EHP |
+|---|---|---|---|---|
+| účet a přihlášení | e-mail, jméno a fotka z Google (`auth.users`), kód | smlouva | Supabase · Brevo · Google (přihlášení, spíš samostatný správce) | — / DPF |
+| čtení, deník, Ask | jméno (volitelné), volby, volná otázka (⚠️ může být čl. 9), den + měsíc narození, text čtení | smlouva · čl. 9 nevyřešen (kontrola, nález 1) | OpenAI · Anthropic (záloha) · Supabase | SCC (OpenAI, Anthropic) |
+| hlas | text čtení, uložené audio | smlouva | ElevenLabs · Supabase | DPF + SCC |
+| kredity a limity | zůstatky, měsíční jednotky, `credit_ledger`, `voice_usage` | smlouva · oprávněný zájem (účetnictví, prevence zneužití) | Supabase | — |
+| rozbor kvality | texty čtení a vstupy, pseudonymizovaně, bez odhlášených | oprávněný zájem (opt-out) | interně; vývojová session → Anthropic (kontrola, nález 5) | SCC |
+| testeři | souhlas, čtení „pro někoho“, hlášení | výslovný souhlas (čl. 9 odst. 2 a) | Supabase · Slack (jen metadata hlášení, bez osobních údajů) | — |
+| zálohy | celá DB šifrovaně (AES-256) | oprávněný zájem (obnova) | Google Drive | DPF + SCC (jen ve Workspace s CDPA — ověřuje owner) |
+| vývoj | přepisy konverzací (mohou nést údaje uživatelů) | oprávněný zájem | Anthropic (Claude Code) | SCC — v zásadách zatím chybí (nález 5) |
+| hosting appky | IP adresa v logu | oprávněný zájem (provoz, bezpečnost) | GitHub Pages | DPF + SCC |
+**Technická a organizační opatření:** RLS a granty sloupců (`sql/2026-07-16_user_profiles_column_grants.sql`, smoke ⑩) · peníze a oprávnění píše
+jen server (service_role) · zálohy šifrované, klíč jen u nás · hlas přes podepsané lístky a odkazy s platností hodiny · fronta neuložených
+čtení vázaná na účet (DECISIONS 2026-10-12 (4), smoke ㊿) · e-maily uživatelů se ve vývoji nevypisují (výš, „Přepisy konverzací“).
+
+## Test oprávněného zájmu (čl. 6 odst. 1 f) — 2026-10-12
+| účel | zájem | nezbytnost | vyvážení |
+|---|---|---|---|
+| rozbor kvality čtení | aby čtení byla dobrá a islandština správná — jádro služby | bez čtení skutečných výstupů se kvalita změřit nedá (syntetická čtení nereprodukují produkční vady, `RUNAR_EVAL_LOG.md` 2026-09-19) | jen výstup a vstupy, ne identita; citlivá otázka vázaná na osobu jen u testerů se souhlasem; opt-out kdykoli a skripty ho respektují (pravidla analýzy výš, smoke ㉾) |
+| prevence zneužití | aby volné čtení a kredity nešly obejít | měsíční čítače a evidence kreditů jsou nejmenší možná data | po smazání účtu anonymní účetní řádek (výš, „Retence + práva“) |
+| zálohy | obnova po chybě nebo výpadku | bez kopie se data nedají vrátit | šifrováno, 30 dní, klíč jen u nás |
+| vývoj (přepisy) | aby se rozhodnutí a pokyny neztrácely | ⚠️ údaje uživatelů v přepisech nezbytné NEJSOU — vznikají vedlejším účinkem práce | slabé místo: lhůta „bez lhůty“ a přenos k Anthropicu — rozhodne owner (kontrola, nález 5) |
+
+## Únik dat (čl. 33–34) — postup, 2026-10-12
+1. Kdo si všimne (session, tester, owner): **hned ownerovi**, s tím, co, odkdy a koho se to týká; nic nemazat (důkazy).
+2. Zastavit únik (vypnout funkci, zneplatnit klíč, opravit) a zapsat čas, kdy jsme se o úniku dozvěděli.
+3. Posoudit riziko pro lidi (druh údajů — citlivá otázka a text čtení je vyšší riziko; počet lidí; jestli šlo o šifrovaná data).
+4. Je-li riziko: **do 72 hodin** od zjištění oznámit Persónuvernd (personuvernd.is); je-li riziko vysoké, informovat i dotčené uživatele.
+5. Každý únik — i neoznámený — zapsat do evidence níž (čl. 33 odst. 5): co, kdy, dopad, opatření, proč (ne)oznámeno.
+
+**Evidence incidentů:**
+- **2026-10-12 — fronta neuložených čtení na sdíleném zařízení** (DECISIONS 2026-10-12 (4)): neuložené čtení jednoho účtu se mohlo odeslat
+  pod účtem, který se přihlásil po něm. Opraveno týž den (CODE-tune, smoke ㊿). Zda se to stalo, **nevíme** — nikdo to nehlásil a v datech
+  se to rozlišit nedá; uzavřený test (testeři + tým). Neoznamováno: výskyt nezjištěn. Rozhodnutí potvrdí owner.
+
 ## Implementační checklist
 **DB (owner v SQL editoru — viz `sql/2026-07-13_privacy_columns.sql`):**
 - `user_profiles.is_tester boolean default false` — značka testera (souhlas + „zlatá data" filtr).

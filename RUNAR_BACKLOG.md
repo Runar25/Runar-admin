@@ -624,7 +624,7 @@ doladit apku“*).
       hlas a jazyk pod smlouvou; úložiště prohlížeče podle skutečnosti — `treeLog` se do zásad nepíše, appka ho přestala sbírat. Po cestě
       opravy islandštiny, které stránka nesla: „hlíðum“ → „erum bundin af“, „á spám þínum“ (předpovědi — Rúnar není věštec) → „á lestrum
       þínum“, „lestrar“ → „lestra“, „á þessum slóð“ → „á þessari slóð“, „Mótmæla“ → „Mótmæltu“. Ověřeno is-greynir, korpus, is-gpt-check.)*
-- [ ] **CODE-read:** do `RUNAR_PRIVACY.md` záznamy o činnostech zpracování (čl. 30), test oprávněného zájmu a postup při úniku dat (10);
+- [x] ✅ *(CODE-read 2026-10-12: hotovo — `RUNAR_PRIVACY.md` sekce „Záznamy o činnostech zpracování“, „Test oprávněného zájmu“, „Únik dat“ s evidencí incidentů; Slack zapsán v tabulce.)* **CODE-read:** do `RUNAR_PRIVACY.md` záznamy o činnostech zpracování (čl. 30), test oprávněného zájmu a postup při úniku dat (10);
       zapsat, že do Slacku osobní údaje nejdou (D).
 
 ## Musí být hotové PŘED prvním cizím přihlášením
