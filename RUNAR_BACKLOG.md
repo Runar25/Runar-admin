@@ -3685,7 +3685,7 @@ start“ (runa = naše SVG), šířka telefonu (bez vodorovného posunu, mříž
 - [ ] **Pro ownera — 19 textů s kontrastem 3–4,5 : 1** (pod doporučením WCAG pro malé písmo, nad `--dim`, takže §5 neporušují): hlavně popisky
   sekcí a hlavičky tabulek nápovědy (průhlednost 0,5, ~3,6 : 1), „GUIDE & FAQ“, štítek „soon“ a pár popisků v readeru a zásadách. Smoke ㊽ je
   jen vypisuje. Rozhodnutí o vzhledu: zvednout na 4,5 : 1, nebo nechat. Seznam: `node scripts/verify_citelnost.js --slabe`. (CODE-tune 2026-10-11)
-- [ ] **Pro Cowork / ownera — statická čtení v Kolekci tvrdí, co se děje v nitru čtenáře** (Fehu IS: „Það sem þú hefur nært í kyrrðinni
+- [x] ✖ *(owner 2026-10-12: „nechavame“ — statická čtení zůstávají, jak jsou; DECISIONS 2026-10-12 (1).)* ~~**Pro Cowork / ownera — statická čtení v Kolekci tvrdí, co se děje v nitru čtenáře**~~ (Fehu IS: „Það sem þú hefur nært í kyrrðinni
   er farið að taka rætur… krafturinn sem fer á hreyfingu þegar þú treystir því sem býr innra með þér“) — kánon to Rúnarovi zakazuje
   (memory `rozkaz-a-studene-cteni-hranice`). Dosud zapsaný jen Dagaz (položka „Statické čtení Dagaz“); projít všech 25.
 - [ ] **Návrh pro design (ne chyba)** — klik návštěvníka na zamčenou runu v Kolekci nedělá nic (`if (!locked) cell.onclick`); výzva

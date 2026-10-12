@@ -11089,3 +11089,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Změřeno (jeho strom z produkce, 471 čtení):** kořeny 0,45 → 0,58 šířky koruny (šířka 592 → 772, hloubka 651 → 570), žádný kořen nad
   zemí; semínko (strom bez čtení) bod po bodu stejné — rozevření se ho netýká.
 - Affected doc(s): `RUNAR_TREE_MAP.md` §10 (výchozí hodnota); `RUNAR_BACKLOG.md` (položka o rovné větvi a kořenech uzavřena) — v témže commitu.
+
+## 2026-10-12 (1) — Statická čtení run v Kolekci zůstávají, jak jsou (i tam, kde mluví o nitru čtenáře)
+
+- **Proč:** nález CODE-read z procházky appky 2026-10-11 — statická čtení v Kolekci (např. Fehu IS „Það sem þú hefur nært í kyrrðinni er
+  farið að taka rætur…“) tvrdí, co se děje v nitru čtenáře, což kánon živému čtení zakazuje (memory `rozkaz-a-studene-cteni-hranice`).
+  Owner 2026-10-12: *„statická čtení v Kolekci tvrdí, co se děje v nitru čtenáře; nechavame.“*
+- **Co:** nic se nepřegenerovává ani nepřepisuje (`runar_static_audio`, hlas). Hranice: rozhodnutí se týká výhrady „nitro čtenáře“;
+  zvláštní položka „Statické čtení Dagaz“ (rozpor s popisem runy, owner 2026-09-24 „necháme na později“) zůstává otevřená, jak byla.
+  Navazuje na ownerovo „zatím nechat, bude jich víc k opravě“ u statických čtení (BACKLOG, rozbor 2026-09-24 bod 15, ⏸ beze změny) —
+  tamto je o souladu s popisy run, tohle o nitru čtenáře; obojí zůstává na ownerovi.
+  Nález se znovu nepředkládá, dokud owner sám nezmíní, že mu statické čtení vadí.
+- Affected doc(s): `RUNAR_BACKLOG.md` (položka z procházky zavřená ✖) — v témže commitu.
