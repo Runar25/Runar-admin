@@ -383,6 +383,8 @@ atomický upsert, úklid starších než hodina; stejně tak `use_credit` (atomi
   ➕ *(2026-10-12, z položky GPT-6 sol)* zásady na agndofa.is doplnit o OpenAI (čte od 2026-10-09) stejně jako appkovou
   `v2/runar-privacy.html`; znění v `RUNAR_PRIVACY.md`, publikuje owner.
 - [ ] **Právní/DPO review** (Island/EEA) IS textů + legal-basis modelu. `RUNAR_PRIVACY.md` je pracovní podklad, ne posudek.
+      ➕ **2026-10-12:** owner „udělej ten posudek“ → technická kontrola GDPR hotová (`docs/archive/2026-10-12-gdpr-kontrola.md`, není to právní posudek);
+      úkoly z ní v sekci „Soukromí — kontrola GDPR 2026-10-12“. Právník zůstává volitelný — podklad pro něj je ta kontrola.
       ⚠️ **Na seznam k posouzeni patri i `credit_ledger`:** radky prezivaji smazani uctu. Muj zaver „je to v poradku, protoze klic je znicen" je TECHNICKY ROZBOR (delete-account nuluje `gift_codes.used_by` a kaskadou maze `user_profiles` i `readings`, takze UUID uz nejde spojit s osobou), NE pravni posudek.
 - [ ] **Shopify webhook + checkout** — owner: webhook v Shopify admin + secret + mapa produkt→tier. CODE: edge fce (HMAC verify → `user_profiles.tier`) + odpojit „coming soon" stuby (`runar-auth.js:317-323`, `runar-app.js:1207-1208`, `runar-help.html:180`). Platby na webu (EEA/DMA).
       ⚠️ **SPOUSTEC pro GDPR prezkum:** objednavka nese e-mail I `user_id`, cimz OBNOVI mapovani UUID -> osoba. Zaver „radky v `credit_ledger` smi prezit smazani uctu" (RUNAR_PRIVACY.md, 2026-07-19) stoji prave na tom, ze po smazani uctu zadne mapovani nezbyde. Az bude Shopify, musi se ten zaver prezkoumat ZNOVU.
@@ -602,6 +604,23 @@ backlog moc velky?“; uz_vime.js ho prohledává). Kolo 4 owner odložil (2026-
 doladit apku“*).
 - [ ] **Pro ownera / Cowork (obsah, nespěchá; část 28):** hlavička `RUNAR_POPISY_RUN.md` píše „Společný tvar… pozorování, ne pravidlo —
   pravidlo vznikne, až jich bude 25+“. Popisů je 25, spouštěč nastal, pravidlo nikdo nesepsal. Jen připomínka; CODE do obsahu nesahá.
+
+## Soukromí — kontrola GDPR 2026-10-12 (CODE-read; nálezy a důvody jen v `docs/archive/2026-10-12-gdpr-kontrola.md`)
+Čísla v závorce = nález v kontrole. Nic z toho tu neopakuje důvody — ty bydlí v kontrole (§20).
+- [ ] **Owner — hned:** v účtu ElevenLabs vypnout „Improve the models for everyone“ (profil → Terms and privacy → Data use) (12).
+- [ ] **Owner:** ověřit, že `runar@therunekeeper.com` je Google Workspace, a v Admin console přijmout dodatek CDPA (zálohy na Drive, D).
+      Je-li to osobní Google účet, zálohu přesunout jinam — bez dodatku chybí smlouva o zpracování.
+- [ ] **Owner (volitelné):** OpenAI — vyplnit DPA formulář pro jistotu a zvážit žádost o nulovou retenci (D, 1).
+- [ ] **Owner — rozhodnutí:** (a) výslovný souhlas u pole otázky / výzva nepsat citlivé údaje (1) · (b) vývojové konverzace s Claudem:
+      do zásad, nebo lhůta a přísnější nevypisování (5) · (c) minimální věk — Island 13, doporučeno 16–18 (6) · (d) DPIA před veřejným
+      spuštěním (10).
+- [ ] **CODE-tune — zásady EN + IS (IS ověřit §2):** doplnit Brevo, Sign in with Google a GitHub Pages (2, D) · ElevenLabs: netrénuje
+      (po vypnutí), uchování, mechanismus přenosu; Google Drive: mechanismus přenosu (9, 12) · větu „Consent — voice and language“ přepsat
+      na smlouvu (4) · hlášení do tabulky „What is held“ + doba uchování (8, s položkou „Retence čtení“ v „OWNER rozhodnutí“) · úložiště
+      prohlížeče: `treeLog` a fronta neuložených čtení (7 — spojit s položkou „Zásady soukromí: výčet…“ v „Profil / personalizace“) ·
+      minimální věk po rozhodnutí. Zásady na agndofa.is (3) vede položka „Publikovat privacy policy na agndofa.is“.
+- [ ] **CODE-read:** do `RUNAR_PRIVACY.md` záznamy o činnostech zpracování (čl. 30), test oprávněného zájmu a postup při úniku dat (10);
+      zapsat, že do Slacku osobní údaje nejdou (D).
 
 ## Musí být hotové PŘED prvním cizím přihlášením
 

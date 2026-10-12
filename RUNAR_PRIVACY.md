@@ -161,7 +161,8 @@ a souhlasí na pravdivém textu. Detail → `RUNAR_DECISIONS.md` 2026-09-11 (8).
   ⚠️ Do 2026-09-12 tu stálo „podepsat“, a CODE ownerovi radil „stáhnout PDF k firemním dokumentům“
   — obojí zbytečné. Ukol, ktery nikdo neoveril, prezil dva mesice ve trech dokumentech.
 - **Publikovat privacy policy** na agndofa.is (sekce výše) + odkaz z appky.
-- **Právní review** IS textů + celého přístupu (Island/EEA).
+- **Právní review** IS textů + celého přístupu (Island/EEA). ➕ 2026-10-12: technická kontrola GDPR (CODE-read, není to právní
+  posudek) → `docs/archive/2026-10-12-gdpr-kontrola.md` (nálezy, smlouvy u poskytovatelů); úkoly v `RUNAR_BACKLOG.md` „Soukromí — kontrola GDPR 2026-10-12“.
 
 ## Poznámka k friction (odpověď na „bude to lidi odrazovat")
 Otázka „smíme použít tvé čtení k analýze?" jako **opt-in brána = NE.** Běžný user nic navíc nevidí —
