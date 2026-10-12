@@ -154,12 +154,14 @@ function loadSandbox() {
 }
 
 // ── transformace ────────────────────────────────────────────────────────────
-const SPREAD_RE = /NORNS|KRIZ|CROSS|COMPASS|HORSESHOE|YGGDRASIL/;
+// GATHERING a SPREAD_3 doplněny 2026-10-12 (BACKLOG z 2026-08-08: padaly do „single“ a nadsazovaly délku single — 9 čtení >200 slov).
+// Pojistka pro další nové jméno výkladu: řádek s area 'spread' (tak výklad pozná i deník) single není nikdy.
+const SPREAD_RE = /NORNS|KRIZ|CROSS|COMPASS|HORSESHOE|YGGDRASIL|GATHERING|SPREAD_3/;
 
 function toRow(raw, glyphSet) {
   const name = String(raw.rune_name || '');
   const m = name.toUpperCase().match(SPREAD_RE);
-  const spread = m ? m[0].toLowerCase() : 'single';
+  const spread = m ? m[0].toLowerCase() : (raw.area === 'spread' ? 'spread_other' : 'single');
 
   // Stejná cesta, jakou se krmí strom: glyfy z rune_glyph + short_text (§20 — jeden zvyk).
   const src = String(raw.rune_glyph || '') + ' ' + String(raw.short_text || '');
