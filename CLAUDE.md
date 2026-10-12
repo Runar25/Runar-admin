@@ -390,9 +390,11 @@ jelikož to je náš společný jazyk se Sigrún. Zapiš, vytvoř kontrolu, coko
 - **IS + EN:** co uvidí uživatel, tester nebo model — appka, nápověda, soukromí, e-maily, odpovědi testerům (koncepty v Gmailu).
 - **EN:** co je pro adminy — shrine, štítky schránky runar@therunekeeper.com, logy edge funkcí, štítek verze promptu
   (`RUNAR_PROMPT_VERSION`, admin ho vidí u čtení). Angličtina je společná řeč se Sigrún.
+  **Od 2026-10-12 i návrhy k výběru a jejich popisky** (náhledy webu, karet, vizuálů ve `web/`) — owner: *„všechny návrhy a popisky v EN“*.
+  Chat o nich zůstává česky.
 - **Česky jen owner ↔ Claude:** chat, docs (`RUNAR_*.md`, `CLAUDE.md`), komentáře v kódu, commity, paměť, výstup skriptů
   v `scripts/`, laby (`tree-lab-*`). Že je repo veřejné, z nich veřejnou komunikaci nedělá.
-- **Hlídá stroj — smoke ㉹** (`scripts/verify_jazyk_ui.js`): UI_TEXT, stránky v2/, jejich JS, edge funkce, šablony e-mailů.
+- **Hlídá stroj — smoke ㉹** (`scripts/verify_jazyk_ui.js`): UI_TEXT, stránky v2/ a web/, jejich JS, edge funkce, šablony e-mailů.
   Co neumí (česká věta bez háčků a bez slova ze seznamu), stojí v její hlavičce — minutou češtinu oprav a slovo přidej do
   `CZ_SLOVA`. Gmail nevidí: štítky a postup → memory `schranka-runar-gmail`. Proč a co našla → `RUNAR_DECISIONS.md` 2026-10-10.
 

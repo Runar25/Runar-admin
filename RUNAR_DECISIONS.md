@@ -11195,3 +11195,12 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - Affected doc(s): `RUNAR_BACKLOG.md` (sekce „Soukromí — kontrola GDPR 2026-10-12“: rozhodnutí → úkol CODE-tune, zbytek před spuštěním) —
   v témže commitu.
 
+## 2026-10-12 (7) — Návrhy k výběru a jejich popisky anglicky; smoke ㉹ hlídá i `web/`
+
+- **Rozhodl:** owner 2026-10-12: *„všechny návrhy a popisky v EN“* (k náhledům webu, kde CODE-web psal popisky česky podle §31 „laby“).
+- **Proč:** o vzhledu webu, karet a obrázků rozhoduje owner se Sigrún; jejich společná řeč je angličtina (§31). Český popisek
+  pod návrhem by Sigrún musel někdo překládat.
+- **Co:** CLAUDE.md §31 (EN) rozšířen o návrhy k výběru a jejich popisky; chat o nich zůstává česky. Smoke ㉹ čte i `web/**/*.html`
+  (`verify_jazyk_ui.js`). Náhledy ve `web/nahled/` přepsané do angličtiny.
+- **Hranice:** kontrola vidí jen soubory v gitu; náhledy zatím v gitu nejsou (obrázky ~5 MB), takže je do commitu hlídá jen tohle pravidlo.
+- Affected doc(s): `CLAUDE.md` §31, `RUNAR_BACKLOG.md` („Web therunekeeper.com“) — v témže commitu.
