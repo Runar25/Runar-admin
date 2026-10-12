@@ -7,7 +7,8 @@
 #
 # Co přesune: položku na začátku řádku (bez odsazení), která začíná `- [x]`, `- ✅`, `- ✖`, `- ~~` nebo `N. ✅/✖`, i s jejími odsazenými
 # pokračováními. Vnořené hotové body uvnitř otevřené položky nechá (jsou její kontext).
-# Co nechá: blok, ve kterém je jakýkoli řádek mladší než 48 h nebo necommitnutý (git blame) — tam pracuje jiná session; přesun by jí sebral
+# Co nechá: blok s lichým počtem ** (rozbitá značka — přesun by posunul párování tučných úseků, smoke ㉘), a blok, ve kterém je
+# jakýkoli řádek mladší než 48 h nebo necommitnutý (git blame) — tam pracuje jiná session; přesun by jí sebral
 # rozdělanou práci a pre-commit (pojistka 51 proti mazání cizích řádků) by commit stejně zastavil.
 #
 #   python -X utf8 scripts/utils/backlog_uklid.py              (jen spočítá, nic nezapíše)
@@ -53,7 +54,10 @@ def rozdel(text, casy, ted):
             while j < len(r) and r[j].strip() and r[j][:1] in (' ', '\t') and not r[j].startswith('#'):
                 j += 1
             cerstve = any((casy[k] if k < len(casy) else 0) > ted - CERSTVE_S or (k < len(casy) and casy[k] == 0) for k in range(i, j))
-            if cerstve:
+            # Lichý počet ** = rozbitá značka tučného (nebo glob v kódu); smoke ㉘ dělí text na ** a páruje v pořadí, takže přesun
+            # takového bloku posune párování ve zbytku BACKLOGu a z obyčejných vět udělá „nová opakování“ (2026-10-12, první běh: 3 bloky).
+            licha = sum(r[k].count('**') for k in range(i, j)) % 2 == 1
+            if cerstve or licha:
                 zustava.extend(r[i:j])
             else:
                 presun.append((sekce, r[i:j]))
