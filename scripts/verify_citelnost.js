@@ -210,7 +210,9 @@ const srv = http.createServer((req, res) => {
       const vis = (id) => { const el = document.getElementById(id); if (!el) return false;
         for (let e = el; e; e = e.parentElement) if (getComputedStyle(e).display === 'none') return false; return true; };
       const r = { selhal: profileLoadFailed, nacteno: profileLoaded, chyba: vis('tree-loading') ? (document.getElementById('tree-loading-text') || {}).textContent : null,
-                  ocekavana: t('profile_load_err'), znovu: vis('tree-loading-retry'), noDob: vis('tree-no-dob'), pruh: vis('free-user-banner') };
+                  ocekavana: t('profile_load_err'), znovu: vis('tree-loading-retry'), noDob: vis('tree-no-dob'),
+                  // pruh: zobrazila ho appka? (vlastní display — záložka Čtení je při testu skrytá, viditelnost by platila vždy; chyceno útokem)
+                  pruh: (document.getElementById('free-user-banner') || { style: {} }).style.display === 'block' };
       await new Promise((ok) => setTimeout(ok, 1600));   // výzva ke jménu by vyskočila 1,2 s po načtení profilu
       r.jmeno = vis('name-overlay');
       profileLoadFailed = false; currentUser = null; showAppTab('reading'); updateAuthUI();
