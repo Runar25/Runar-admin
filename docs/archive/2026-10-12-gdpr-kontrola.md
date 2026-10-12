@@ -48,6 +48,7 @@ Co je v pořádku → oddíl C. Smlouvy u poskytovatelů → oddíl D.
   Google“) a **GitHub Pages** (hostuje appku, vidí IP adresu návštěvníka) — oddíl D.
 
 ### 3 🟠 Zásady na agndofa.is jsou v rozporu s appkou
+- ✖ *2026-10-12 (owner): neplatí — Rúnar nebude na agndofa.is, ale na therunekeeper.com; zásady = stránka appky.*
 - Text „Your readings“ (`RUNAR_PRIVACY.md` ř. 56–75, publikuje owner na agndofa.is) říká *„Your data is hosted within the EU“* a nezmiňuje
   OpenAI, Anthropic ani ElevenLabs v USA. Appková stránka je od 2026-10-09 opravená. Už zapsáno (BACKLOG „Publikovat privacy policy na
   agndofa.is“); tady jen potvrzeno, že rozpor trvá.

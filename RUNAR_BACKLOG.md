@@ -383,14 +383,14 @@ atomický upsert, úklid starších než hodina; stejně tak `use_credit` (atomi
 # RUNAR_SEGMENTACE_FaseB_CODE, RUNAR_IS_GRAMMAR_CHECK_CODE.
 
 ### 🔴 Blockery prodeje — OWNER (odloženo, trigger = **6. 9. 2026**, scheduled task `runar-launch-blockers-reminder`)
-- [ ] **Publikovat privacy policy na agndofa.is** — OWNER krok mimo repo. (Wiring v appce je HOTOVY: `v2/runar-privacy.html` je vysazena produkcni stranka EN+IS a odkaz z appky vede. Overeno 2026-07-19.) Bez publikace neplati legitimate-interest model.
+- [x] ✖ *(owner 2026-10-12: „na agndofa.is Rúnar sídlit nebude, bude na therunekeeper.com“ — zásady Rúnara jsou stránka appky `v2/runar-privacy.html` (od 2026-10-12 s OpenAI, Brevo, Google, GitHub); veřejný web na ni odkáže, CODE-web, DECISIONS 2026-10-12 (6).)* ~~**Publikovat privacy policy na agndofa.is**~~ — OWNER krok mimo repo. (Wiring v appce je HOTOVY: `v2/runar-privacy.html` je vysazena produkcni stranka EN+IS a odkaz z appky vede. Overeno 2026-07-19.) Bez publikace neplati legitimate-interest model.
   ➕ *(2026-10-12, z položky GPT-6 sol)* zásady na agndofa.is doplnit o OpenAI (čte od 2026-10-09) stejně jako appkovou
   `v2/runar-privacy.html`; znění v `RUNAR_PRIVACY.md`, publikuje owner.
 - [ ] **Právní/DPO review** (Island/EEA) IS textů + legal-basis modelu. `RUNAR_PRIVACY.md` je pracovní podklad, ne posudek.
       ➕ **2026-10-12:** owner „udělej ten posudek“ → technická kontrola GDPR hotová (`docs/archive/2026-10-12-gdpr-kontrola.md`, není to právní posudek);
       úkoly z ní v sekci „Soukromí — kontrola GDPR 2026-10-12“. Právník zůstává volitelný — podklad pro něj je ta kontrola.
       ⚠️ **Na seznam k posouzeni patri i `credit_ledger`:** radky prezivaji smazani uctu. Muj zaver „je to v poradku, protoze klic je znicen" je TECHNICKY ROZBOR (delete-account nuluje `gift_codes.used_by` a kaskadou maze `user_profiles` i `readings`, takze UUID uz nejde spojit s osobou), NE pravni posudek.
-- [ ] **Shopify webhook + checkout** — owner: webhook v Shopify admin + secret + mapa produkt→tier. CODE: edge fce (HMAC verify → `user_profiles.tier`) + odpojit „coming soon" stuby (`runar-auth.js:317-323`, `runar-app.js:1207-1208`, `runar-help.html:180`). Platby na webu (EEA/DMA).
+- [ ] **Shopify webhook + checkout** — owner: webhook v Shopify admin + secret + mapa produkt→tier. ➕ *Owner 2026-10-12: „dodělame. potřebuju to pak mít všechno souhrnně“* → až přijde na řadu, připravit ownerovi JEDEN souhrnný postup (všechny kroky v jeho účtech v pořadí), ne po kouskách. CODE: edge fce (HMAC verify → `user_profiles.tier`) + odpojit „coming soon" stuby (`runar-auth.js:317-323`, `runar-app.js:1207-1208`, `runar-help.html:180`). Platby na webu (EEA/DMA).
       ⚠️ **SPOUSTEC pro GDPR prezkum:** objednavka nese e-mail I `user_id`, cimz OBNOVI mapovani UUID -> osoba. Zaver „radky v `credit_ledger` smi prezit smazani uctu" (RUNAR_PRIVACY.md, 2026-07-19) stoji prave na tom, ze po smazani uctu zadne mapovani nezbyde. Az bude Shopify, musi se ten zaver prezkoumat ZNOVU.
 
 ### 🟠 CODE — odblokované, v pořadí
@@ -623,7 +623,7 @@ doladit apku“*).
 - [x] ✅ *(owner 2026-10-12: „hotovo“ — trénink v ElevenLabs vypnutý; platí pro data odeslaná od té chvíle.)* **Owner — hned:** v účtu ElevenLabs vypnout „Improve the models for everyone“ (profil → Terms and privacy → Data use) (12).
 - [ ] **Owner:** v Admin console přijmout dodatek CDPA (zálohy na Drive, D). ✔ *2026-10-12 ověřeno DNS: `therunekeeper.com` má poštu u Google (MX `aspmx.l.google.com`) → je to Google Workspace.* Postup (Google, „Privacy, compliance and records“): přihlásit se jako super admin → Menu → Account → Account settings → Legal and compliance → „Security and Privacy Additional Terms“ → Cloud Data Processing Addendum → Review and Accept → I Accept. Je-li už přijatý, přijetí nic nemění.
       Je-li to osobní Google účet, zálohu přesunout jinam — bez dodatku chybí smlouva o zpracování.
-- [ ] **Owner (volitelné):** OpenAI — vyplnit DPA formulář pro jistotu a zvážit žádost o nulovou retenci (D, 1).
+- [x] ✖ *(owner 2026-10-12: „už mě tím neotravuj… nic se nepodepisuje“ — DPA OpenAI platí používáním služby, ověřeno 2026-10-09 (DECISIONS 2026-10-09 (13)); NEPŘEDKLÁDAT znovu.)* ~~**Owner (volitelné):** OpenAI — vyplnit DPA formulář pro jistotu a zvážit žádost o nulovou retenci (D, 1).~~
 - [x] ✅ *(owner 2026-10-12, DECISIONS 2026-10-12 (7): (a) obojí — upozornění pod „+“ a jednorázový souhlas při psaní; (c) minimální věk 13 + věta o souhlasu rodiče; (b) a (d) „později“ → položka „Před spuštěním“ níž.)* **Owner — rozhodnutí:** (a) výslovný souhlas u pole otázky / výzva nepsat citlivé údaje (1) · (b) vývojové konverzace s Claudem:
       do zásad, nebo lhůta a přísnější nevypisování (5) · (c) minimální věk — Island 13, doporučeno 16–18 (6) · (d) DPIA před veřejným
       spuštěním (10).
@@ -847,7 +847,7 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   API klíč Brevo účet má (owner 2026-10-12); v Supabase secrets ani u nás uložený NENÍ (ověřeno) — přijde jako nový secret.
   Útok pro smoke ㉹ na `web/` (čeština v HTML) přidat do `scripts/protipriklady.py`, až bude ve `web/` první soubor v gitu — `create`
   netrackuje a kontrola čte jen git; ručně ověřeno 2026-10-12 přes `git add -N` (FAIL na „Tady je náhled stránky“).
-- [ ] **Pro OWNERA — Rapyd:** smí účet Agndofy prodávat přes Rapyd Hosted Checkout / odkaz k platbě na therunekeeper.com, a jaký tarif
+- [ ] **Pro OWNERA — Rapyd** *(owner 2026-10-12: totéž co Shopify — dodělá se, pak JEDEN souhrnný postup)*: smí účet Agndofy prodávat přes Rapyd Hosted Checkout / odkaz k platbě na therunekeeper.com, a jaký tarif
   má Shopify Agndofy (u cizí brány Shopify bere příplatek, Basic 2 %)? Rozhodne, jestli Rúnakort půjde přes Shopify, nebo rovnou Rapyd.
   Fyzické runy jdou přes Shopify vždy. Kupovat jde pět balíčků (`CARD_PACKS`).
 - [ ] **Doručení kódu po koupi:** návrh webhook (Shopify nebo Rapyd) → edge funkce → `gift_codes` → e-mail přes Brevo. Navazuje na

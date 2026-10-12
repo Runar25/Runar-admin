@@ -54,6 +54,7 @@ souhlasily na tom starém, byl jim `tester_consent_at` **vynulován** — modal 
 a souhlasí na pravdivém textu. Detail → `RUNAR_DECISIONS.md` 2026-09-11 (8).
 
 ## Privacy policy — „Your readings" sekce (na agndofa.is)
+⚠️ **ZASTARALÉ (owner 2026-10-12):** Rúnar nebude na agndofa.is, ale na therunekeeper.com; zásady Rúnara = stránka appky `v2/runar-privacy.html`. Text níž (tvrdí „hosted within the EU“, nejmenuje přenos do USA) se nikam nepublikuje — zůstává jen jako historie.
 
 **EN:**
 > **Your readings.** When you draw a reading we store it in your account so you can see your history; it
@@ -199,7 +200,7 @@ jen server (service_role) · zálohy šifrované, klíč jen u nás · hlas pře
   účtu. Nic nového k dělání nevzniká.
   ⚠️ Do 2026-09-12 tu stálo „podepsat“, a CODE ownerovi radil „stáhnout PDF k firemním dokumentům“
   — obojí zbytečné. Ukol, ktery nikdo neoveril, prezil dva mesice ve trech dokumentech.
-- **Publikovat privacy policy** na agndofa.is (sekce výše) + odkaz z appky.
+- ~~**Publikovat privacy policy** na agndofa.is (sekce výše) + odkaz z appky.~~ ✖ owner 2026-10-12: Rúnar je na therunekeeper.com, zásady = stránka appky.
 - **Právní review** IS textů + celého přístupu (Island/EEA). ➕ 2026-10-12: technická kontrola GDPR (CODE-read, není to právní
   posudek) → `docs/archive/2026-10-12-gdpr-kontrola.md` (nálezy, smlouvy u poskytovatelů); úkoly v `RUNAR_BACKLOG.md` „Soukromí — kontrola GDPR 2026-10-12“.
 
