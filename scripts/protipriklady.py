@@ -161,6 +161,9 @@ PRIPADY = [
  # `build[A-Za-z]+\(` ho neviděl). Jméno složené z kousků, ať ho nenajde kontrola, která hledá jména funkcí i ve scripts/.
  ('chyti', 'verify_prompt_rules_registry.js', 'v2/runar-character.js', 'append', '', '\nfunction build' + 'PodstrcenyPrompt(u) { return "x"; }\n'),
  ('obchazka', 'verify_prompt_rules_registry.js', 'v2/runar-character.js', 'append', '', '\nfunction build' + 'PodstrcenyPrompt2(u) { return "x"; }\n'),
+ # 2026-10-12 (CODE-tune): ㊿ — bez filtru účtu by fronta poslala cizí čtení / cizí Ask pod právě přihlášeným účtem.
+ ('chyti', 'verify_fronta_ucet.js', 'v2/runar-utils.js', 'replace', "var reads = _pendGet('pendingReadings').filter(_mine);", "var reads = _pendGet('pendingReadings');"),
+ ('chyti', 'verify_fronta_ucet.js', 'v2/runar-utils.js', 'replace', "var asks = _pendGet('pendingAsks').filter(_mine);", "var asks = _pendGet('pendingAsks');"),
  ('chyti', 'verify_pravidla_mapa.js', 'scripts/utils/pravidla_mapa.json', 'replace', '"pravidla": ["§30"],', '"pravidla": ["§99"],'),
  # kolo 3 / 4h (2026-10-11): obrazy, kalendář, myšlenka ✦, zrcadlo parseru
  ('chyti', 'verify_compose_mirror.js', 'v2/runar-character.js', 'replace', "var reading = segs.map(function (x) { return x.text; }).join(' ').trim();", "var reading = segs.map(function (x) { return x.text; }).join('  ').trim();"),

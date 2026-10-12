@@ -66,7 +66,14 @@ function _uuid() {
 }
 function _pendGet(key) { try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch (e) { return []; } }
 function _pendSet(key, arr) { try { localStorage.setItem(key, JSON.stringify(arr.slice(-50))); } catch (e) {} }
-function _pendAdd(key, item) { var a = _pendGet(key); if (!a.some(function (x) { return x.id === item.id; })) { a.push(item); _pendSet(key, a); } }
+// 2026-10-12 (CODE-tune): položka nese účet, který ji vytvořil (`uid`), a _flushPending ji pošle jen pod týmž účtem. Do té doby
+// šlo všechno pod právě přihlášeným — resave v claude-proxy ukládá podle JWT, takže na sdíleném zařízení by se neuložené čtení
+// jednoho člověka (se jménem a otázkou) zapsalo do deníku toho, kdo se přihlásí po něm. Cizí položky zůstanou ve frontě pro svůj
+// účet. Hlídá smoke ㊿ (verify_fronta_ucet.js).
+function _pendAdd(key, item) {
+  if (item && !item.uid && typeof currentUser !== 'undefined' && currentUser) item.uid = currentUser.id;
+  var a = _pendGet(key); if (!a.some(function (x) { return x.id === item.id; })) { a.push(item); _pendSet(key, a); }
+}
 function _pendRemove(key, id) { _pendSet(key, _pendGet(key).filter(function (x) { return x.id !== id; })); }
 
 // Re-send anything the server never confirmed. Readings first (so an Ask can attach to its parent
@@ -75,15 +82,17 @@ var _flushing = false;
 async function _flushPending() {
   if (_flushing || typeof currentUser === 'undefined' || !currentUser || typeof callProxy !== 'function') return;
   _flushing = true;
+  // jen položky tohoto účtu; bez `uid` = z doby před 2026-10-12 (jdou jako dřív pod tím, kdo je přihlášen)
+  var _mine = function (x) { return x && (!x.uid || x.uid === currentUser.id); };
   try {
-    var reads = _pendGet('pendingReadings');
+    var reads = _pendGet('pendingReadings').filter(_mine);
     for (var i = 0; i < reads.length; i++) {
       var r = reads[i];
       var meta = Object.assign({}, r.journal, { model_text: r.model_text });
       var res = await callProxy('', '', 0, false, 0, meta, 'resave');
       if (res && !res.error && res.saved) _pendRemove('pendingReadings', r.id);
     }
-    var asks = _pendGet('pendingAsks');
+    var asks = _pendGet('pendingAsks').filter(_mine);
     for (var j = 0; j < asks.length; j++) {
       var a = asks[j];
       var meta2 = { kind: 'ask', reading_id: a.reading_id, ask_entry_id: a.id, question: a.question, answer: a.answer };

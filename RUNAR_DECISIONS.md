@@ -11135,3 +11135,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - Affected doc(s): `RUNAR_BACKLOG.md` (nová sekce „Čtení a islandština — co zbývá“, hlavička); `RUNAR_PRIVACY.md` (zrušená fronta „→ Sigrún“,
   nález téhož průchodu) — v témže commitu.
 
+## 2026-10-12 (4) — Úložiště prohlížeče: fronta neuložených čtení patří účtu, který ji vytvořil; pryč data, která appka nečte
+
+- **Proč:** inventura úložiště prohlížeče pro zásady soukromí (BACKLOG „Zásady soukromí: výčet…“; kontrola GDPR CODE-read 2026-10-12,
+  bod 7). Ukázala tři vady. (a) Když server čtení nebo Ask nepotvrdí, appka ho drží ve frontě (`pendingReadings` / `pendingAsks`)
+  a `_flushPending` ho pošle znovu — do té doby pod PRÁVĚ přihlášeným účtem, a `resave` v claude-proxy ukládá podle JWT. Na sdíleném
+  zařízení by se neuložené čtení jednoho člověka (jméno, otázka, text) zapsalo do deníku toho, kdo se přihlásí po něm. (b) `treeLog`:
+  po každém vlastním čtení runy, oblast a záměr — strom čte čtení z databáze a tenhle klíč nečetlo nic, jen rostl (CODE-tree potvrdil).
+  (c) Místní doplněk korekcí z `runar_corrections`: klíč nikdy nic nezapsalo a cokoli by v něm stálo, šlo by rovnou do promptu.
+- **Co:** (a) položka fronty nese id účtu (`uid`, jedno místo `_pendAdd`); `_flushPending` pošle jen položky přihlášeného účtu, cizí
+  zůstanou ve frontě pro svůj účet; položky bez `uid` (z doby před opravou) jdou jako dřív. (b) zápis `treeLog` zrušen; appka při startu
+  smaže klíče, které už nečte (`STARE_KLICE` v `runar-app.js`: `treeLog`, `runar_trial_count`). (c) Korekce jen z databáze.
+- **Hranice:** server (`resave`) vlastníka položky dál nekontroluje — zná jen JWT; ochrana stojí v klientu. Neuložené položky zůstávají
+  v prohlížeči i po odhlášení (odejdou, až se jejich účet přihlásí) — zásady to mají říct.
+- **Hlídá smoke ㊿** (`verify_fronta_ucet.js`): skutečné `_pendAdd` a `_flushPending` s podvrženým serverem a úložištěm; útoky
+  v protipříkladech (filtr čtení / Asků pryč).
+- Affected doc(s): `v2/runar-privacy.html`, oddíl o úložišti prohlížeče — navazující commit téhož dne spolu s texty z kontroly GDPR.

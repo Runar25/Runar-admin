@@ -855,6 +855,15 @@ radky = [l for l in (r2.stdout + r.stdout + r.stderr + r2.stderr).strip().split(
 prvni = radky[-1] if radky else 'kontrola anglickeho textu natvrdo probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# ㊿ 2026-10-12 (CODE-tune): fronta neuložených čtení a Asků patří účtu, který ji vytvořil. Do té doby _flushPending poslal všechno
+# pod právě přihlášeným účtem (resave ukládá podle JWT) — na sdíleném zařízení by se cizí čtení zapsalo do deníku. DECISIONS 2026-10-12 (4).
+print('\n' + chr(0x32BF) + ' FRONTA NEULOŽENÝCH ČTENÍ PATŘÍ ÚČTU (verify_fronta_ucet.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_fronta_ucet.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola fronty neulozenych cteni probehla'
+check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
+
 # ㉴ Štítek modelu v UI = model v edge funkci (CODE-tune 2026-10-05). KUKY (report 2026-10-05 07:40): „Pokud jsi změnil model
 # na sol6.1, proč jsi to taky neupravil… Tady v readeru. Což znamená, že nevíš, kde co je.“ Proxy běžela na gpt-6.1-sol, přepínač
 # admina hlásil „GPT-6 sol“ — dvě místa (edge funkce × překlady), která nikdo nehlídal.
