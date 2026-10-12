@@ -11176,3 +11176,22 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   úkoly „Pro CODE-…“ (`~/.claude/runar-context.py`, mimo repo). Adresy a kritéria hostingu = BACKLOG „Kam s databází, promptem a
   hostingem“ bod 7 (směr, ne nasazení). Registrace a nákup = BACKLOG „Web therunekeeper.com“.
 - Affected doc(s): `CLAUDE.md` (lanes), `RUNAR_BACKLOG.md` — v témže commitu.
+
+## 2026-10-12 (7) — Volná otázka: upozornění pod „+“ a jednorázový souhlas při psaní; minimální věk 13 let
+
+- **Proč:** kontrola GDPR 2026-10-12 (`docs/archive/2026-10-12-gdpr-kontrola.md`, nálezy 1 a 6): volná otázka a otázky v Asku mohou nést
+  zvláštní kategorii údajů (zdraví, vztahy, víra), jdou k OpenAI (USA) a ukládají se — čl. 9 chce výslovný souhlas, běžný uživatel ho
+  nedával; minimální věk nebyl stanoven. Owner 2026-10-12: *„13. obojí. the situation + za tím plus jako je u seeking a Area se budou
+  skrývat tyhle informace“* · na korekci CODE-read (souhlas nesmí být schovaný — musí být aktivní krok) *„12. ano“* · věk *„pro IS 13
+  pokud je to správně… 18 je určitě moc“* → na návrh *„13. minimální věk podle návrhu“*.
+- **Co (staví CODE-tune):** (a) za štítkem THE SITUATION „+“ jako u oblasti a hledání; pod ním upozornění: nepsat zdravotní a jiné citlivé
+  údaje, a co se s otázkou děje (jde k AI, OpenAI v USA, a ukládá se v deníku); (b) když člověk začne do otázky (nebo do Asku) psát poprvé,
+  ukáže se jedno zaškrtávací políčko výslovného souhlasu, které zároveň potvrdí věk 13+; bez zaškrtnutí se otázka nepošle, čtení bez otázky
+  jde jako dosud; souhlas se uloží k účtu (jednou), odvolat jde v menu (Privacy) — pak se otázka zase neposílá. Testeři ho mají už
+  v souhlasu testerů. (c) Zásady EN + IS: minimální věk **13 let**; kde země vyžaduje vyšší věk pro souhlas (GDPR čl. 8 dovoluje 13–16),
+  potřeba souhlas rodiče; věk se neověřuje, platí prohlášení. Island 13 (island.is). IS texty ověřit (§2).
+- **Hranice:** není to právní posudek; odkládá se (owner *„14. později“*): vývojové konverzace s Claudem v zásadách × lhůta, doba uchování
+  hlášení a čtení po smazání účtu, DPIA — „před veřejným spuštěním“.
+- Affected doc(s): `RUNAR_BACKLOG.md` (sekce „Soukromí — kontrola GDPR 2026-10-12“: rozhodnutí → úkol CODE-tune, zbytek před spuštěním) —
+  v témže commitu.
+

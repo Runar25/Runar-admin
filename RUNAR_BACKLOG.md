@@ -624,9 +624,11 @@ doladit apku“*).
 - [ ] **Owner:** v Admin console přijmout dodatek CDPA (zálohy na Drive, D). ✔ *2026-10-12 ověřeno DNS: `therunekeeper.com` má poštu u Google (MX `aspmx.l.google.com`) → je to Google Workspace.* Postup (Google, „Privacy, compliance and records“): přihlásit se jako super admin → Menu → Account → Account settings → Legal and compliance → „Security and Privacy Additional Terms“ → Cloud Data Processing Addendum → Review and Accept → I Accept. Je-li už přijatý, přijetí nic nemění.
       Je-li to osobní Google účet, zálohu přesunout jinam — bez dodatku chybí smlouva o zpracování.
 - [ ] **Owner (volitelné):** OpenAI — vyplnit DPA formulář pro jistotu a zvážit žádost o nulovou retenci (D, 1).
-- [ ] **Owner — rozhodnutí:** (a) výslovný souhlas u pole otázky / výzva nepsat citlivé údaje (1) · (b) vývojové konverzace s Claudem:
+- [x] ✅ *(owner 2026-10-12, DECISIONS 2026-10-12 (7): (a) obojí — upozornění pod „+“ a jednorázový souhlas při psaní; (c) minimální věk 13 + věta o souhlasu rodiče; (b) a (d) „později“ → položka „Před spuštěním“ níž.)* **Owner — rozhodnutí:** (a) výslovný souhlas u pole otázky / výzva nepsat citlivé údaje (1) · (b) vývojové konverzace s Claudem:
       do zásad, nebo lhůta a přísnější nevypisování (5) · (c) minimální věk — Island 13, doporučeno 16–18 (6) · (d) DPIA před veřejným
       spuštěním (10).
+- [ ] **CODE-tune — souhlas u volné otázky a minimální věk** (DECISIONS 2026-10-12 (7), celé zadání tam): „+“ za THE SITUATION s upozorněním; jednorázové políčko souhlasu (+ věk 13+) při prvním psaní do otázky nebo Asku, uložené k účtu (sloupec a grant = SQL ownera, smoke ⑩), odvolání v menu Privacy; zásady EN + IS: věk 13 a souhlas rodiče, popis souhlasu. IS ověřit (§2).
+- [ ] **Před veřejným spuštěním (owner 2026-10-12 „později“):** vývojové konverzace s Claudem — do zásad, nebo lhůta (5) · doba uchování hlášení a čtení po smazání účtu (8, s „Retence čtení“) · DPIA ano/ne (10).
 - [ ] **CODE-tune — zásady EN + IS (IS ověřit §2), zbývá jen to, co čeká na ownera:** ElevenLabs „netrénuje“ a doba uchování — až owner
       vypne trénink v účtu (12) · hlášení do tabulky „What is held“ + doba uchování (8, s položkou „Retence čtení“ v „OWNER rozhodnutí“) ·
       minimální věk po rozhodnutí (6). Zásady na agndofa.is (3) vede položka „Publikovat privacy policy na agndofa.is“.
