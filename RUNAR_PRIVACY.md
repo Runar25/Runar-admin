@@ -172,7 +172,7 @@ jen server (service_role) · zálohy šifrované, klíč jen u nás · hlas pře
 **Evidence incidentů:**
 - **2026-10-12 — fronta neuložených čtení na sdíleném zařízení** (DECISIONS 2026-10-12 (4)): neuložené čtení jednoho účtu se mohlo odeslat
   pod účtem, který se přihlásil po něm. Opraveno týž den (CODE-tune, smoke ㊿). Zda se to stalo, **nevíme** — nikdo to nehlásil a v datech
-  se to rozlišit nedá; uzavřený test (testeři + tým). Neoznamováno: výskyt nezjištěn. Rozhodnutí potvrdí owner.
+  se to rozlišit nedá; uzavřený test (testeři + tým). Neoznamováno: výskyt nezjištěn. Owner 2026-10-12 potvrdil („ok“).
 
 ## Implementační checklist
 **DB (owner v SQL editoru — viz `sql/2026-07-13_privacy_columns.sql`):**

@@ -613,8 +613,8 @@ doladit apku“*).
 
 ## Soukromí — kontrola GDPR 2026-10-12 (CODE-read; nálezy a důvody jen v `docs/archive/2026-10-12-gdpr-kontrola.md`)
 Čísla v závorce = nález v kontrole. Nic z toho tu neopakuje důvody — ty bydlí v kontrole (§20).
-- [ ] **Owner — hned:** v účtu ElevenLabs vypnout „Improve the models for everyone“ (profil → Terms and privacy → Data use) (12).
-- [ ] **Owner:** ověřit, že `runar@therunekeeper.com` je Google Workspace, a v Admin console přijmout dodatek CDPA (zálohy na Drive, D).
+- [x] ✅ *(owner 2026-10-12: „hotovo“ — trénink v ElevenLabs vypnutý; platí pro data odeslaná od té chvíle.)* **Owner — hned:** v účtu ElevenLabs vypnout „Improve the models for everyone“ (profil → Terms and privacy → Data use) (12).
+- [ ] **Owner:** v Admin console přijmout dodatek CDPA (zálohy na Drive, D). ✔ *2026-10-12 ověřeno DNS: `therunekeeper.com` má poštu u Google (MX `aspmx.l.google.com`) → je to Google Workspace.* Postup (Google, „Privacy, compliance and records“): přihlásit se jako super admin → Menu → Account → Account settings → Legal and compliance → „Security and Privacy Additional Terms“ → Cloud Data Processing Addendum → Review and Accept → I Accept. Je-li už přijatý, přijetí nic nemění.
       Je-li to osobní Google účet, zálohu přesunout jinam — bez dodatku chybí smlouva o zpracování.
 - [ ] **Owner (volitelné):** OpenAI — vyplnit DPA formulář pro jistotu a zvážit žádost o nulovou retenci (D, 1).
 - [ ] **Owner — rozhodnutí:** (a) výslovný souhlas u pole otázky / výzva nepsat citlivé údaje (1) · (b) vývojové konverzace s Claudem:
