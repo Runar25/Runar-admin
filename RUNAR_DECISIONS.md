@@ -11195,8 +11195,9 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - Affected doc(s): `RUNAR_BACKLOG.md` (sekce „Soukromí — kontrola GDPR 2026-10-12“: rozhodnutí → úkol CODE-tune, zbytek před spuštěním) —
   v témže commitu.
 
-## 2026-10-12 (7) — Návrhy k výběru a jejich popisky anglicky; smoke ㉹ hlídá i `web/`
+## 2026-10-12 (8) — Návrhy k výběru a jejich popisky anglicky; smoke ㉹ hlídá i `web/`
 
+- *Číslo:* napsáno jako (7) souběžně s (7) CODE-read; commity db39e0c a 3fdbcb0 ho tak nesou — platí (8).
 - **Rozhodl:** owner 2026-10-12: *„všechny návrhy a popisky v EN“* (k náhledům webu, kde CODE-web psal popisky česky podle §31 „laby“).
 - **Proč:** o vzhledu webu, karet a obrázků rozhoduje owner se Sigrún; jejich společná řeč je angličtina (§31). Český popisek
   pod návrhem by Sigrún musel někdo překládat.
