@@ -16,6 +16,8 @@ BASE = os.environ.get('RUNAR_ROOT', r'C:\Users\zkuku\Downloads\Runar-admin') + r
 _SKIP = {'runar-svgs.js'}  # pure SVG data, no IS prose
 FILES = sorted(p for p in glob.glob(os.path.join(BASE, '*.js')) + glob.glob(os.path.join(BASE, '*.html'))
                if os.path.basename(p) not in _SKIP)
+# 2026-10-12 (CODE-web): i veřejný web web/**/*.html — islandská copy webu je táž řeč jako appka a pre-commit ji jinak neviděl.
+FILES += sorted(glob.glob(os.path.join(os.path.dirname(BASE), 'web', '**', '*.html'), recursive=True))
 
 # (bad_pattern, correct_form, note)
 BAD_PATTERNS = [
