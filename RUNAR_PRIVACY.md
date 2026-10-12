@@ -146,7 +146,7 @@ a souhlasí na pravdivém textu. Detail → `RUNAR_DECISIONS.md` 2026-09-11 (8).
 - ✅ `list-readings` **vylučuje opt-out usery** (GDPR); budoucí eval taktéž (pseudonymizace).
 - ✅ Tester consent modal (první login is_tester bez `tester_consent_at`; freely-given = dismissible).
 - ✅ Readings viewer: `is_tester` badge + „⚑ Testers" filtr.
-- Texty přes UI_TEXT (§10); **IS = draft → Sigrún**. Zbývá: flag/annotate + obohacení řádku (prompt_version…).
+- Texty přes UI_TEXT (§10); IS hotová a ověřená (CLAUDE.md §2 — fronta „→ Sigrún“ zrušena 2026-07-18; opraveno 2026-10-12). Zbývá: flag/annotate + obohacení řádku (prompt_version…).
 
 **Owner (mimo kód):**
 - ✅ **Supabase DPA — nic se nepodepisuje** (ověřil owner v dashboardu 2026-09-12). Supabase ho má

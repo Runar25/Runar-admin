@@ -11117,3 +11117,21 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Hlídá smoke ㊽ (F):** skutečná cesta `fetchUserProfile` proti zablokované databázi — hláška se „zkusit znovu“, žádný formulář na datum,
   žádný pruh, žádná výzva ke jménu. Útoky v protipříkladech (chyba zase přejitá, pruh zase bez profilu).
 - Affected doc(s): `RUNAR_BACKLOG.md` (položka CODE-read odškrtnutá) — v témže commitu.
+
+## 2026-10-12 (3) — BACKLOG proti aktuálnímu stavu: hotové do archivu, výzkum promptu odložen (prompt prakticky hotový)
+
+- **Proč:** owner 2026-10-12 *„neni ten backlog moc velky?“* (3 925 řádků, pravidlo ~200) a *„je potřeba projít všechno pozorně proti aktuálnímu
+  stavu. nedivil bych se, kdyby něco už bylo hotové, ale nebylo odškrtnuté. pozor na zdvojování věcí“* · *„prompt už je prakticky hotovo.
+  takže pozor na to, co tam leží.“* Výzkumné nápady k promptu v BACKLOGu vypadaly jako úkoly a mohly svést další session k zásahům do
+  hotového promptu; hotové položky (SMTP přes Brevo, druhý Ask, sol, úhel [4] …) tam stály dál jako otevřené.
+- **Co:** všech 207 otevřených položek a sekce bez políček přečteny a ověřeny proti kódu, git logu a DECISIONS. Hotové a zdvojené →
+  `docs/archive/RUNAR_BACKLOG_hotovo.md` (s důvodem a dokladem u každé); výzkum a nápady k promptu, obrazům, Asku, Vegvísir a staré sweepy →
+  `docs/archive/RUNAR_BACKLOG_odlozene.md` jako ⏸ (nejsou to úkoly ani potvrzeně hotové; vrací se, až se vada objeví v nových čteních a owner
+  na ni upozorní — CLAUDE.md §30); záznam kol 1–3 kontroly architektury → `RUNAR_BACKLOG_kontrola-architektury.md`. Přesun doslova, ověřeno
+  porovnáním řádků (ztratila se jen prázdná sekce „Launch blockers“). `uz_vime.js` prohledává všechny tři archivy (hotové ✅, odložené ⏸);
+  hotové položky starší 48 h odnáší opakovatelně `scripts/utils/backlog_uklid.py`. Výsledek: BACKLOG 3 925 → ~800 řádků, 86 otevřených.
+- **Hranice:** ownerovy dřívější podněty k promptu (obraz × oblast, stav domova, Podkova, „unshown“, slova oblasti, víc konců s otázkou)
+  jsou v odložených, ne zavřené. Stromové položky (lane CODE-tree) ani sekci „Kontrola návštěvníka“ (CODE-tune) jsem nesoudil.
+- Affected doc(s): `RUNAR_BACKLOG.md` (nová sekce „Čtení a islandština — co zbývá“, hlavička); `RUNAR_PRIVACY.md` (zrušená fronta „→ Sigrún“,
+  nález téhož průchodu) — v témže commitu.
+
