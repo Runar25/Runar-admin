@@ -272,7 +272,8 @@ const UI_TEXT = {
     life_rune_free:   'Free',
     tree_rs_balance:    'your rune readings:',
     tree_rs_free_line:  '{casts} available for regular draws',   // 2026-10-10: dřív natvrdo v runar-tree.js (ráčna ㉸)
-    tree_carry_life_rune: 'You carry life rune {rune}',   // 2026-10-10: dřív natvrdo v runar-tree.js (isIs ? … — ㉸ alias neviděl)
+    tree_carry_life_rune: 'You carry the life rune {rune}',   // 2026-10-10: dřív natvrdo v runar-tree.js (isIs ? … — ㉸ alias neviděl)
+    // 2026-10-12: + člen „the“ — „You carry life rune Fehu“ zní jako zkratka, ne věta (nález CODE-read při procházce appky)
     tree_name_label:    'NAME YOUR TREE',
     tree_hist_all:      'whole tree · {casts}',
     tree_hist_at:       'reading {k} of {n}',

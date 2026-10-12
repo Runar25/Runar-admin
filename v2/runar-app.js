@@ -874,8 +874,8 @@ function _updateAreaSeekLabels() {
   if (slbl) slbl.innerHTML = t('seek_lbl') + _optSpan + _tgl('seek') + _lockHint;
   const ilbl = document.getElementById('intention-lbl');
   if (ilbl) ilbl.innerHTML = t('intention_lbl') + _optSpan + _tgl('intention') + _lockHint;
-  ['area', 'seek', 'intention', 'qpriv'].forEach(function (k) { setText(k + '-hint', t(k + '_hint')); });
-  setText('q-consent-lbl', t('qconsent_lbl'));   // políčko souhlasu u otázky (krok 2, DECISIONS 2026-10-12 (7))   // přepnutí jazyka přepíše i otevřenou nápovědu
+  ['area', 'seek', 'intention', 'qpriv'].forEach(function (k) { setText(k + '-hint', t(k + '_hint')); });   // přepnutí jazyka přepíše i otevřenou nápovědu
+  setText('q-consent-lbl', t('qconsent_lbl'));   // políčko souhlasu u otázky (krok 2, DECISIONS 2026-10-12 (7))
   const qlbl = document.getElementById('q-lbl');
   // 2026-10-12 (DECISIONS 2026-10-12 (7)): „+“ i za THE SITUATION — upozornění, co se s otázkou děje (#qpriv-hint).
   if (qlbl) qlbl.innerHTML = t('q_lbl') + ' <span class="opt">'+t('opt')+'</span>' + _tgl('qpriv');
