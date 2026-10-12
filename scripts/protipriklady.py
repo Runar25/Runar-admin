@@ -167,6 +167,9 @@ PRIPADY = [
  # 2026-10-12 (CODE-tune): ㊀ — builder, který zapomene předat jazyk (spready), a pomocník, který parametr ignoruje.
  ('chyti', 'verify_jazyk_parametr.js', 'v2/runar-character.js', 'replace', "return rk(r, lang).split(", "return rk(r).split("),
  ('obchazka', 'verify_jazyk_parametr.js', 'v2/runar-utils.js', 'replace', "function rn(r, l)  { return (l || lang) === 'is'", "function rn(r, l)  { return lang === 'is'"),
+ # 2026-10-12 (CODE-tune): nápovědy pod „+“ — 2026-10-10 je úklid smazal jako mrtvé a „+“ ukazoval holý klíč „area_hint“.
+ ('chyti', 'verify_citelnost.js', 'v2/runar-translations.js', 'replace', "    seek_hint:        'This sets the tone.',\n", ''),
+ ('obchazka', 'verify_ui_text_used.js', 'scripts/verify_ui_text_used.js', 'replace', " && !post.some((p) => k.endsWith(p))", ''),
  ('chyti', 'verify_pravidla_mapa.js', 'scripts/utils/pravidla_mapa.json', 'replace', '"pravidla": ["§30"],', '"pravidla": ["§99"],'),
  # kolo 3 / 4h (2026-10-11): obrazy, kalendář, myšlenka ✦, zrcadlo parseru
  ('chyti', 'verify_compose_mirror.js', 'v2/runar-character.js', 'replace', "var reading = segs.map(function (x) { return x.text; }).join(' ').trim();", "var reading = segs.map(function (x) { return x.text; }).join('  ').trim();"),

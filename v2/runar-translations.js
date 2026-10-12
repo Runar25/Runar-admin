@@ -71,6 +71,11 @@ const UI_TEXT = {
     day_ph:           'Day',
     month_ph:         'Month',
     area_lbl:         'AREA OF LIFE',
+    // 2026-10-12: tři nápovědy pod „+“ vrácené (znění z 2026-09-29) — 2026-10-10 je úklid mrtvých klíčů smazal, protože je kód skládá
+    // `t(k + '_hint')` (_updateAreaSeekLabels, toggleFormHint) a ㉽ dynamickou příponu neviděla; „+“ pak ukazoval holý klíč.
+    area_hint:        'The area tells Rúnar where in your life to let the picture land.',
+    seek_hint:        'This sets the tone.',
+    intention_hint:   'This sets the time the reading speaks to.',
     // 2026-09-29 (KUKY bod 4: jen jedna věta, „není potřeba to víc vysvětlovat, alespoň ne zatím“) — rozbalí „+“ u popisku.
     seek_lbl:         'WHAT ARE YOU SEEKING?',
     intention_lbl:    'THIS READING IS FOR',
@@ -592,6 +597,9 @@ const UI_TEXT = {
     day_ph:           'Dagur',
     month_ph:         'Mánuður',
     area_lbl:         'SVIÐ LÍFSINS',
+    area_hint:        'Sviðið segir Rúnari hvar í lífi þínu myndin á að lenda.',   // 2026-10-12 vráceno (viz EN), znění z 2026-09-29
+    seek_hint:        'Þetta ræður tóninum.',
+    intention_hint:   'Þetta ræður því um hvaða tíma lesturinn talar.',
     seek_lbl:         'HVAÐ ERTU AÐ LEITA AÐ?',
     intention_lbl:    'ÞESSI LESTUR ER FYRIR',
     report_btn:       'Tilkynna athugasemd',

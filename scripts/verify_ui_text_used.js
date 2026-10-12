@@ -21,17 +21,24 @@ function prefixy(src) {
   for (const m of src.matchAll(/['"`]([a-z][a-z0-9_]*_)['"`]\s*\+/g)) out.add(m[1]);
   return [...out];
 }
+// 2026-10-12: i dynamická PŘÍPONA (`t(k + '_hint')`). Bez ní ㉽ 2026-10-10 označila area_hint, seek_hint a intention_hint za mrtvé,
+// smazaly se a „+“ u formuláře ukazoval holý klíč. Klíč s takovou příponou se bere jako živý (raději nechat mrtvý než smazat živý).
+function pripony(src) {
+  const out = new Set();
+  for (const m of src.matchAll(/\+\s*['"`](_[a-z][a-z0-9_]*)['"`]/g)) out.add(m[1]);
+  return [...out];
+}
 function mrtve(keys, src) {
-  const pre = prefixy(src);
-  return keys.filter((k) => !new RegExp('\\b' + k + '\\b').test(src) && !pre.some((p) => k.startsWith(p)));
+  const pre = prefixy(src), post = pripony(src);
+  return keys.filter((k) => !new RegExp('\\b' + k + '\\b').test(src) && !pre.some((p) => k.startsWith(p)) && !post.some((p) => k.endsWith(p)));
 }
 
 if (process.argv.includes('--test')) {
   // Životní cyklus: čtený klíč živý · nečtený mrtvý · čtený přes vlastnost živý · dynamický prefix živý · podřetězec jiného slova NE.
-  const src = "t('a_live'); x = UI_TEXT[lang].b_prop; y = t('rune_' + n); z = 'c_deadx';";
-  const d = mrtve(['a_live', 'b_prop', 'rune_fehu', 'c_dead', 'd_gone'], src);
+  const src = "t('a_live'); x = UI_TEXT[lang].b_prop; y = t('rune_' + n); z = 'c_deadx'; w = t(k + '_hint');";
+  const d = mrtve(['a_live', 'b_prop', 'rune_fehu', 'c_dead', 'd_gone', 'area_hint'], src);
   const ok = d.length === 2 && d.includes('c_dead') && d.includes('d_gone');
-  console.log(ok ? 'OK    samotest: čtený, vlastností čtený i dynamický klíč živý; nečtený a podřetězec mrtvý' : 'FAIL  samotest ' + JSON.stringify(d));
+  console.log(ok ? 'OK    samotest: čtený, vlastností čtený i dynamický klíč (předpona i přípona) živý; nečtený a podřetězec mrtvý' : 'FAIL  samotest ' + JSON.stringify(d));
   process.exit(ok ? 0 : 1);
 }
 

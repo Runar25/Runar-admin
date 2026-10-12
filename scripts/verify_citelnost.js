@@ -23,6 +23,8 @@
 //      inn kóðann á …“ s určitým 3. pádem (is_dat_def), ne kalk „SLÁÐU INN RÚNAKORT KÓÐA“ (nález CODE-read 2026-10-11).
 //  (F) selhané načtení profilu (databáze zablokovaná, oba pokusy fetchUserProfile selžou): Životní runa ukáže hlášku a „zkusit znovu“,
 //      ne „When were you born?“; pruh nad formulářem nehlásí vyčerpané volné čtení a nevyskočí výzva ke jménu (nález CODE-read, 2026-10-12).
+//  (G) nápovědy pod „+“ ve formuláři čtení: každé tlačítko rozbalí větu z UI_TEXT v jazyce appky, ne holý klíč ani prázdno. Od 2026-10-10
+//      ukazovaly „area_hint“, „seek_hint“, „intention_hint“ — úklid mrtvých klíčů je smazal (kód je skládá `k + '_hint'`), CODE-tune 2026-10-12.
 // Neumí: text přes obrázek (bere barvu pozadí předků), stavy přihlášeného (čtení, menu), stín a obrys písma.
 // Útok: scripts/protipriklady.py → PRIPADY.
 //   node scripts/verify_citelnost.js            · --slabe vypíše i texty mezi 3 a 4,5 : 1 (podklad pro rozhodnutí o vzhledu)
@@ -232,6 +234,26 @@ const srv = http.createServer((req, res) => {
     })()`);
     rekni(!!pf && pf.selhal && !pf.nacteno && pf.chyba === pf.ocekavana && pf.znovu && !pf.noDob && !pf.pruh && !pf.jmeno,
       '(F) selhané načtení profilu: Životní runa hlásí chybu se „zkusit znovu“, ne „kdy ses narodil?“; bez pruhu a bez výzvy ke jménu', JSON.stringify(pf));
+
+    // (G) nápovědy pod „+“: rozbalit každou v EN i IS (i v sekci, která je návštěvníkovi skrytá) a vrátit, jak byla
+    const napovedy = (jz) => ev(`(() => {
+      setLang(${JSON.stringify(jz)});
+      return [...document.querySelectorAll('.hint-tgl')].map((b) => {
+        const id = b.getAttribute('aria-controls'), box = id && document.getElementById(id);
+        if (!box) return { id, text: null };
+        const bylo = box.style.display; b.click();
+        const v = { id, text: (box.textContent || '').trim(), otevreno: box.style.display !== 'none' };
+        if (bylo === 'none' && box.style.display !== 'none') b.click();
+        return v;
+      });
+    })()`);
+    const hEn = await napovedy('en'), hIs = await napovedy('is');
+    const klic = /^[a-z][a-z0-9_]*$/, vadne = [];
+    for (const [jz, sada] of [['en', hEn], ['is', hIs]])
+      for (const h of (sada || [])) if (!h.text || klic.test(h.text) || !h.otevreno) vadne.push(jz + ' ' + h.id + ': „' + h.text + '“');
+    (hEn || []).forEach((h, i) => { if (hIs && hIs[i] && h.text && h.text === hIs[i].text) vadne.push('stejné v EN i IS ' + h.id + ': „' + h.text + '“'); });
+    rekni(!!hEn && hEn.length >= 3 && !vadne.length,
+      '(G) nápovědy pod „+“ ve formuláři (' + ((hEn && hEn.length) || 0) + '): věta z UI_TEXT v jazyce appky, ne holý klíč', vadne.join(' · '));
     const anglicky = /\b(SPEAK|AGAIN|STAY|YES|credits?)\b/i;
     rekni(!!o1 && o1.otevreno && o1.jazyk === 'is' && o1.zavreno && o1.jazykPo === 'is' && /ENSKU/.test(o1.title) && /ÍSLENSKU/.test(o1.zpet)
           && ![o1.title, o1.body, o1.ok, o1.zpet, o1.cena].some((x) => anglicky.test(x)) && o1.cena === o1.cekana.toUpperCase()
