@@ -502,9 +502,9 @@ async function main() {
 
   const parseSegments = loadParseSegments();
 
-  // System prompt: production passes buildSysPrompt(activeChar, lang) with activeChar
-  // loaded from the runar_character table. We pass null (= DEF_CHAR_EN/IS). If a row is
-  // ever set active in the DB, production diverges from this batch — noted in the meta file.
+  // System prompt: production passes buildSysPrompt(activeChar, lang) and activeChar is always
+  // null there too (= DEF_CHAR_EN/IS) — since 2026-10-12 the reader no longer loads the
+  // runar_character table. Before that, an active DB row would have made production diverge.
   setLang(lang);
   // Přepnout PŘED buildSysPrompt: systémový prompt se staví jednou pro celou dávku,
   // takže `--without voice` by po něm už neměl kam zabrat.
@@ -578,8 +578,7 @@ async function main() {
     prompt_version: PROMPT_VERSION, lang: lang, spread: spreadName,
     max_tokens: maxTokens, spread_cost: spreadCost, season_bucket: seasonBucket,
     system_sha256: sysSha, system_prompt: sysPrompt, active_char: null,
-    note: 'activeChar is null here; production loads runar_character where active=true. ' +
-          'If such a row exists, the production system prompt differs from this batch.',
+    note: 'activeChar is null here and in production (the reader stopped loading runar_character on 2026-10-12).',
   }, null, 2), 'utf8');
 
   // ── request plumbing ──

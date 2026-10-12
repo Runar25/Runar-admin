@@ -432,7 +432,7 @@ Runa — klíče; inline větev _spreadBlock odstraněna, golden = jen 4 kříž
   indexu (trojcestný `git merge-file` proti HEAD); cizí necommitnuté zůstanou ve stromě, nic se nevrací ani nepřepisuje; postup v memory
   `parallel-code-sessions-collision`. Metoda navržená níž (`git checkout HEAD -- <soubor>` + `git apply -3`) sahá do cizího pracovního stavu
   — nepoužita. Původně: **Do `memory/parallel-code-sessions-collision.md` doplnit BEZPEČNOU metodu na sdílený append-only soubor** — 2026-08-09 jsem si vyrobil pomocný skript, který `RUNAR_DECISIONS.md` krájel podle **délky HEAD** (`content[len(head):]`), aby oddělil cizí necommitnutou práci. To platí jen dokud se HEAD nezmění; jiná session mezitím commitla a řez padl doprostřed věty — sigil session přišla o hlavičku a první odrážky svého záznamu (obnoveno z výpisu, 0 ztrát). Správně: `git diff <soubor> > cizi.patch` → `git checkout HEAD -- <soubor>` → připojit své → commit → `git apply -3 cizi.patch`. Zapsat, až soubor nebude rozeditovaný jinou session (dnes je — proto sem, ne rovnou tam).
-- [ ] **Smazat mrtvý loader charakteru** `runar-app.js:1380` — reader načítá `runar_character` (active=true), i když je editor (shrine Rúnar lab) dávno mrtvý. Ověřeno 2026-08-07: v tabulce **0 aktivních řádků**, takže file `DEF_CHAR` jede a nic to teď nekazí — ale řádek, který by se tam objevil, by potichu přebil celý charakter.
+- ✅ *(CODE-tune 2026-10-12: loader pryč, důvod v komentáři na jeho místě; shrine si postavu čte dál sám)* ~~**Smazat mrtvý loader charakteru**~~ `runar-app.js:1380` — reader načítá `runar_character` (active=true), i když je editor (shrine Rúnar lab) dávno mrtvý. Ověřeno 2026-08-07: v tabulce **0 aktivních řádků**, takže file `DEF_CHAR` jede a nic to teď nekazí — ale řádek, který by se tam objevil, by potichu přebil celý charakter.
 - [~] **IS tvary, které dozrají samy (KUKY 2026-08-09: „netlačit na sílu") — `hlénu`→`hléinu`** — nalezeno v IS dávce 2026-08-09 (`Hvað í þér heldur enn fast í hlénu?`). Slovník uvádí vlastní kolokaci `í hléinu` (hlé = hk), takže `hlénu` je skutečná chyba, ne false-pos. Nevkládat teď: obojí se potvrdí (nebo vyvrátí) samo, až na tvar narazíme v dalším čtení. Sbírat, ne honit.
 - [~] **IS: `kvíslir` → pravděpodobně `kvíslar`** (tentýž režim — potvrdit, až se objeví znovu) (`jökuláin greinist í kvíslir yfir sandinn`, reálné čtení). `kvísl` je kvk (ověřeno), ale **množné číslo žádný náš nástroj nepotvrdí** — slovník má jen hesla, GreynirCorrect u IS dělá falešné poplachy. Nevymýšlet; potvrdit u Coworku/rodilého mluvčího, pak teprve korekce.
 
@@ -703,8 +703,6 @@ nabídka vyššího tarifu, Rune Seeker jen navržené otázky), formuláře vš
 
 - [ ] jedno hlášení z reporteru → **přišlo do Slacku?** (řádky v DB nedokazují, že webhook běží)
 - [ ] po pushi zkontrolovat verzi: `curl -s https://runar25.github.io/Runar-admin/v2/sw.js | head -1`
-- [ ] aktivní postava je ta, kterou čekáš:
-      `select id, label, active from public.runar_character where active = true;`
 
 ## Co testerům napsat dopředu (ať to nehlásí jako chybu)
 

@@ -1714,11 +1714,9 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
-  // Load character + corrections
-  try {
-    const { data } = await sb.from('runar_character').select('*').eq('active', true).limit(1).maybeSingle();
-    activeChar = data || null;
-  } catch { activeChar = null; }
+  // Korekce. Postava se z DB nenačítá (2026-10-12, CODE-tune): editor ve shrine odešel 2026-07-10 (c6eb89c), tabulka
+  // runar_character je prázdná a aktivní řádek by potichu přebil celý charakter z kódu (DEF_CHAR_EN/IS) — v jazyce, ve kterém byl
+  // uložen (RUNAR_DECISIONS 2026-08-17). activeChar tak zůstává null = postava z kódu. Shrine si svou postavu čte dál sám.
   await loadCorrections();
 
   updateAuthUI();
