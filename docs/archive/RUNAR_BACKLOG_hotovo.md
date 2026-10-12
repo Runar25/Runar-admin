@@ -395,3 +395,13 @@
 3. ✅ **Uzavřeno** → DECISIONS 2026-09-23 (10). ~~**Úvodní pokyn „začni celým obrazem najednou"** (jeden ze 7 losovaných začátků čtení) — dává první
    větu ~25 slov proti 17–21 u ostatních a vede model dokreslovat okolí, které v obrazu není.
    Návrh: přepsat a změřit na ~12 čteních před/po. Owner zatím nerozhodl (nevěděl, o co jde).~~
+
+## Přesunuto 2026-10-12 — ověřeno proti kódu (5 položek)
+
+### 🟢 Dlouhý ocas (kód, nízká priorita)
+- [x] ✅ *(CODE-read 2026-10-12, ověřeno proti kódu: duplikát položky `detectPatterns()` o řádek výš — zbývající „nová podoba“ čeká právě na ni (§20).)* **Nahradit `runar-gathering.js`** <!-- doc-links:ok 2026-09-28 soubor záměrně smazán, odkaz je historie --> — ✅ *mrtvý kód smazán 2026-09-28* (modul, `<script>`, sw.js, výběr karet v deníku, CSS, klíče
+  překladů; DECISIONS 2026-09-28 (1)); stará logika je v gitu (`git log -- v2/runar-gathering.js`). Zbývá **nová podoba** (čeká na `detectPatterns()` výš).
+- [x] ✅ *(CODE-read 2026-10-12, ověřeno proti kódu: `_moodContext` v kódu není (grep v2/), intention se zapojuje (`_intentionContext`).)* `_moodContext`/`_intentionContext` — zapojit intention, nebo smazat mood (mood z UI ODSTRANĚN, helper dřímá).  <!-- check-docs:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
+- [x] ✅ *(CODE-read 2026-10-12, ověřeno proti kódu: hotovo 2026-09-28 — komentáře v `runar-reading.js:24` a `runar-character.js`.)* Zahodit stale `_lastDeeper` + `deeper_meaning` extrakci (nikde se nečte; deeper_meaning zrušen 2026-07-04). Guard: `composeReading` musí zůstat zrcadlo `_parseSegments` (smoke ⑦).
+- [x] ✅ *(CODE-read 2026-10-12, ověřeno proti kódu: přesunuty do `scripts/archive/root-patches-2026-07-19/` (7e90991; v gitu předtím nikdy nebyly).)* **Dva jednorázové patch skripty leží v kořeni repa** — `fix-norns-reading.py` a `unify-reading-style.py` patří do `scripts/archive/root-patches-*` (tam už jich je ~20). Dnes matou grep: obsahují volání funkcí, které v kódu neexistují.
+- [x] ✅ *(CODE-read 2026-10-12, ověřeno proti kódu: opraveno 7e90991 — SPREAD_RE + pojistka `area === 'spread'` → `spread_other`.)* **`export_readings.js`: `THE GATHERING` a `SPREAD_3` padají do kolonky „single"** — nejsou v `SPREAD_RE`, takže statistiky délky za single jsou nadhodnocené (změřeno 2026-08-08: 9 čtení >200 slov je tímhle).
