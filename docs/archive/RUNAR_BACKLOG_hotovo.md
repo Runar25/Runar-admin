@@ -633,7 +633,7 @@
     neuberou, EVAL_LOG 2026-10-04 (3)); je to návyk modelů. Podle enginu sol 6 `low` 8/14 · 6.1 `low` 5/14 · Opus 5 7/14 · Opus 5 `low`
     5/14 (sklon, ne důkaz). **Krok 2 ji neodstranil** (EVAL_LOG 2026-10-04 (2): ve slovech méně, tahem asi 6/12
     proti 8/12) → samostatná položka: najít, které pravidlo ji vyvolává, a odebrat příčinu (memory `oprava-promptu-odebira-vadu`).
-- [x] ✅ *(CODE-read 2026-10-12: body 1–3 opraveny; 4 (`gen_batch.js`) už v repu není; 5 hlavička proxy dnes popisuje sol + záložní Claude.)* **Ask — nálezy z průzkumu 2026-09-23** (workflow 5 čtenářů + skeptici, CODE-tune), opravit s druhým Askem nebo dřív:
+- [x] ✅ *(CODE-read 2026-10-12: body 1–3 opraveny; 4 (`gen_batch.js`) už v repu není ⚠️ OPRAVA 2026-10-12: NEPLATÍ — soubor v repu je a bod 4 platí, znovu otevřen v RUNAR_BACKLOG.md; 5 hlavička proxy dnes popisuje sol + záložní Claude.)* **Ask — nálezy z průzkumu 2026-09-23** (workflow 5 čtenářů + skeptici, CODE-tune), opravit s druhým Askem nebo dřív:
   1. ✅ *(opraveno 2026-09-24 v kroku 1 — pole je během dotazu zakázané)* **Dvojí odeslání:** Enter v poli Asku volá `askRunar()`, během dotazu je zakázané jen tlačítko, pole ne → druhý Enter pošle druhý souběžný Ask (a oba projdou jako „první“ zdarma).
   2. ✅ *(opraveno 2026-09-27 — `append_follow_up` v DB, DECISIONS 2026-09-27 (9))* ~~**Zápis `follow_up` není atomický**~~ (`persistJournal`: přečti pole → přidej → zapiš celé) — dva souběžné zápisy ztratí jednu odpověď.
   3. ✅ *(opraveno 2026-09-27 — `_questionSafe` i v Asku, test ask_q)* ~~**Otázka v Asku se nečistí**~~ — `_questionSafe` (zalomení, uvozovky) se používá jen na původní otázku čtení, ne na otázku v Asku; `verify_question_injection.js` pokrývá jen tu první.
