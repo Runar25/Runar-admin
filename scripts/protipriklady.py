@@ -38,7 +38,8 @@ APP = 'v2/runar-app.js'
 PRIPADY = [
  # ㊁ mapa nosičů (CODE-read 2026-10-13): nové pravidlo bez nosiče; nosič, který smoke přestal pouštět (nadpis i volání)
  ('chyti', 'verify_nosice.js', 'CLAUDE.md', 'append', '', '\n### §' + '99 — pravidlo bez nosiče\nText.\n'),
- ('chyti', 'verify_nosice.js', 'smoke.py', 'replace', "PRODUKCE (verify_zaklad_" + "produkce.js')\nr = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_zaklad_" + "produkce.js')]", "PRODUKCE (verify_zaklad_" + "x.js')\nr = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_zaklad_" + "x.js')]"),
+ ('chyti', 'verify_nosice.js', 'smoke.py', 'regex',
+  r"(PRODUKCE \(verify_zaklad_)produkce(\.js\)'\)\r?\nr = subprocess\.run\(\['node', os\.path\.join\(ROOT, 'scripts', 'verify_zaklad_)produkce", r'\g<1>x\g<2>x'),
  # kolo 3 / 4a (2026-10-11)
  ('chyti', 'verify_doc_links.js', 'RUNAR_DESIGN.md', 'append', '', '\n\nOdkaz do prázdna: `docs/neexistuje-xyz.md`\n'),
  ('chyti', 'verify_escape_marks.js', 'RUNAR_DESIGN.md', 'append', '', '\n\nřádek s holou značkou <!-- doc-links:ok -->\n'),
