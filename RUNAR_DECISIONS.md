@@ -11284,6 +11284,7 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   the text and the audio from our ElevenLabs account.“ / „Um leið og upplesturinn er tilbúinn eyðum við textanum og upplestrinum af
   reikningnum okkar hjá ElevenLabs.“ (greynir, is-gpt-check bez nálezu).
 - **Nasazeno 2026-10-13** před pushem zásad (věta „mažeme“ nesměla do produkce dřív než mazání). Ověřeno: bez přihlášení 401,
-  preflight 204. Mazání samo se ozve až u skutečného hlasu — ověří owner (přečíst jedno čtení nahlas, v ElevenLabs → History nesmí
-  přibýt). Starou historii (vše před dneškem) smaže owner v ElevenLabs → History.
+  preflight 204. Mazání samo se ozve až u skutečného hlasu. (Do 2026-10-13 večer tu stálo, že to owner ověří v ElevenLabs → History
+  a starou historii tam smaže — byl to můj odhad: owner tam žádné hlasy nenašel a jestli webové rozhraní hlasy z API ukazuje,
+  dokumentace neříká. Ověří až výpis `GET /v1/history` naším klíčem, BACKLOG sekce GDPR.)
 - Affected doc(s): `RUNAR_PRIVACY.md` (hlas), `RUNAR_BACKLOG.md` (položka odškrtnutá) — v témže commitu.
