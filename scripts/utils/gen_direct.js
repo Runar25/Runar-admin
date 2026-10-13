@@ -25,7 +25,8 @@ const LIFERUNE = arg('liferune', '');    // '' | 'random' | jmeno runy
 // 2026-09-20 (davka sol vs opus-5, owner): model je parametr — gpt-* jde pres OpenAI.
 // Prompty jsou diky seedovanemu proudu bit po bitu STEJNE pro kazdy model (preseed(i)),
 // takze dve spusteni s ruznym --model = tyz prompt, jiny mozek.
-const MODEL = arg('model', 'claude-opus-4-8');
+// 2026-10-13: výchozí = model produkce (SOL_MODEL v claude-proxy), ne opus-4-8 — jeho API vyprší a čtení od 2026-10-09 píše sol.
+const MODEL = arg('model', 'gpt-6-sol');
 const JE_OPENAI = /^gpt/.test(MODEL);
 
 // Klic: env ma prednost, jinak soubor MIMO repo. Repo je verejne, takze v nem klic nesmi

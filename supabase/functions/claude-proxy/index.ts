@@ -882,7 +882,9 @@ serve(async (req: Request) => {
     // owner wanted it gone not replaced (see RUNAR_PRICING.md "Volba modelu čtení").
     // 2026-09-24: primární claude-opus-5, fallback claude-opus-4-8 (owner „chci přejít na Opus 5“; slepí soudci 20 : 8,
     // v IS 8 : 0; stejná cena — RUNAR_EVAL_LOG 2026-09-24 (1)+(2)). Opus 4.7 z řetězu vypadl, fallback je dnešní model.
-    const MODELS = ["claude-opus-5", "claude-opus-4-8"];
+    // 2026-10-13: Opus 4.8 z řetězu ven — jeho API vyprší (owner 2026-10-13); poslední článek by jen vracel chybu modelu místo chyby
+    // přetížení. Za sol tak zůstává Opus 5; další zálohu owner nechtěl (Sonnet 5 pryč 2026-08-17, viz výš).
+    const MODELS = ["claude-opus-5"];
     let result: { ok: true; data: any } | { ok: false; status: number; error: string } =
       { ok: false, status: 503, error: "no attempt" };
     for (const model of MODELS) {
@@ -892,7 +894,7 @@ serve(async (req: Request) => {
         system:   systemParts.length > 0 ? systemParts : undefined,
         messages: [{ role: "user", content: prompt }],
         // Opus 5 bez vypnutého přemýšlení na max_tokens 700 spálí vše na thinking a vrátí PRÁZDNÝ text
-        // (změřeno CODE-read: stop_reason max_tokens, 0 znaků). Opus 4.8 parametr nedostává (jako dosud).
+        // (změřeno CODE-read: stop_reason max_tokens, 0 znaků).
         ...(model.indexOf("opus-5") !== -1 ? { thinking: { type: "disabled" } } : {}),
       }, anthropicKey, tries);
       if (result.ok) break;

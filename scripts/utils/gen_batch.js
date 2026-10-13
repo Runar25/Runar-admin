@@ -783,10 +783,9 @@ async function main() {
       pass: jobs[i].pass,
       gen_ts: genTs,
       prompt_version: PROMPT_VERSION,
-      // The proxy never reports which model answered — the fallback chain
-      // (opus-4-8 -> opus-4-7) is invisible to the caller
-      // (index.ts:662-670 returns text only). Requested != confirmed.
-      model_requested: 'claude-opus-4-8',
+      // Model volí proxy (sol, záloha Claude) — dávka žádný nežádá. Který opravdu odpověděl, nese usage.model (níž).
+      // Do 2026-10-13 tu stálo natvrdo 'claude-opus-4-8', ač čtení od 2026-10-09 píše sol.
+      model_requested: null,
       model_actual: null,
       lang: lang,
       spread: spreadName,
@@ -829,6 +828,7 @@ async function main() {
     const res = await generate(prompt, maxTokens, spreadCost, '');
     row.http_status = res.status; row.duration_ms = res.ms; row.error = res.error;
     row.usage = res.usage || null;   // tokeny + cache; null = stara proxy nebo chyba
+    row.model_actual = (res.usage && res.usage.model) || null;   // 2026-10-13: proxy vrací model, který odpověděl
 
     // Token vyprsel UPROSTRED davky: session JWT plati 60 minut, dlouha davka to prekroci.
     // Bez tohohle guardu bezi zbytek davky do 401, ceka svuj throttle slot a zapisuje prazdne

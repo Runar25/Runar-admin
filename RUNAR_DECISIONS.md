@@ -11226,6 +11226,8 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   hér.“ (greynir a is-gpt-check bez nálezu; „skrifaðu ekkert“ 0× v korpusu).
 - **Otevřené:** owner dodal *„Posílání o datech bude v tom formuláři, co má každý podepsat po přihlášení“*. Formulář pro všechny po
   přihlášení rozhodnutý ani postavený není — souhlas stojí u pole otázky (7)(b). Ownerovi položena otázka 2026-10-13, zda myslel ten.
+- **Odpověď ownera 2026-10-13:** *„ano, myslel jsem ten u otázky, nech to tak“* — souhlas zůstává u pole otázky, formulář po
+  přihlášení nevzniká.
 - Affected doc(s): žádný jiný (texty bydlí v `UI_TEXT`).
 
 ## 2026-10-13 (2) — Runa v hlavičce oken = kámen z Kolekce, ne holá linka
@@ -11246,3 +11248,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Platí dál:** web a PWA bez obchodu (QR z Rúnakortu → prohlížeč) — na ně se to nevztahuje.
 - **K rozhodnutí (owner):** iOS appka s IAP (15 %), nebo bez nákupu; jak naložit s uplatněním kódu Rúnakortu v iOS appce.
 - Affected doc(s): `RUNAR_PRICING.md` („PWA vs Native App“) — opraveno v témže commitu.
+
+## 2026-10-13 (4) — Opus 4.8 pryč z řetězu záloh i z nástrojů: za sol zůstává jen Opus 5
+
+- **Proč:** owner 2026-10-13: *„api pro opus 4.8 vyprší za pár dní. používáme ho někde ještě?“* Po vypnutí by každé volání skončilo
+  chybou modelu.
+- **Kde se volal:** produkce — záložní řetěz `claude-proxy` sol → Opus 5 → Opus 4.8 (k 4.8 čtení došlo jen při výpadku solu i Opusu 5);
+  nástroje — soudce Prófsteinnu, výchozí model `gen_direct` a `attribute_prompt`, natvrdo zapsaný štítek v `gen_batch`.
+- **Co (CODE-tune):** `MODELS = ["claude-opus-5"]` — další zálohu owner nechtěl (Sonnet 5 pryč 2026-08-17). Prófsteinn soudí Opusem 5
+  bez přemýšlení; jeho znění se ladilo na 4.8 a uložené verdikty k porovnání nejsou — čísla z doby před 2026-10-13 jsou jiný přístroj
+  (stojí v hlavičce nástroje). `gen_direct` bere model produkce (sol), `attribute_prompt` Opus 5, `gen_batch` zapisuje model z
+  `usage.model`. Ceníky a popisky 4.8 zůstávají: v DB jsou čtení, která psal.
+- **Nasazení:** změna `claude-proxy` platí až po nasazení — čeká na ownerovo „nasaď“.
+- Affected doc(s): žádný jiný (řetěz bydlí jen v `MODELS`, §20).

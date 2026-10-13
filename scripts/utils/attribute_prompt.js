@@ -74,7 +74,9 @@ async function claude(sys, obsah, maxTok, model) {
       const r = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
         headers: { 'content-type': 'application/json', 'x-api-key': KEY, 'anthropic-version': '2023-06-01' },
-        body: JSON.stringify({ model: model || 'claude-opus-4-8', max_tokens: maxTok,
+        // 2026-10-13: výchozí opus-5 místo opus-4-8 (API 4.8 vyprší); bez přemýšlení, jinak spálí max_tokens na thinking
+        body: JSON.stringify({ model: model || 'claude-opus-5', max_tokens: maxTok,
+          ...(/opus-5/.test(model || 'claude-opus-5') ? { thinking: { type: 'disabled' } } : {}),
           system: [{ type: 'text', text: sys, cache_control: { type: 'ephemeral' } }],
           messages: [{ role: 'user', content: obsah }] }),
       });

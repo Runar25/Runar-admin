@@ -764,9 +764,10 @@ Procházka je tím úplná.
 
 - [ ] **Owner → CODE-tune: při otevření appky logo Chrome** (hlášení 457a5a6f, 2026-10-13: *„dřív to nedělal“*). Server je v pořádku,
       ověřeno 2026-10-13 v produkci: service worker aktivní a řídí stránku, manifest i všechny čtyři ikony 200, manifest od května beze
-      změny. Bez telefonu to nejde zopakovat — chybí: Android, nebo iPhone? Appka z plochy, nebo z prohlížeče? Logo na úvodní obrazovce
-      při spuštění, nebo se appka otevře jako karta Chrome (adresní řádek)? Na Androidu bývá příčinou instalace jako zástupce místo
-      aplikace (pak pomůže odinstalovat a znovu „Instalovat aplikaci“) — neověřeno, dokud nepřijdou odpovědi.
+      změny. Owner 2026-10-13: Android, appka z plochy, logo jen chvíli při spuštění, nikdy dřív. Na Androidu 12+ ukáže systém při
+      spuštění ikonu aplikace, která se spouští — u zástupce na ploše je to Chrome, u nainstalované appky Rúnar (neověřeno na jeho
+      telefonu). Další krok (owner): Nastavení → Aplikace — je tam „Rúnar“? Není → zástupce: smazat z plochy, v Chrome ⋮ → „Instalovat
+      aplikaci“. Je, a logo pořád → hlásit CODE-tune, hledat dál.
 - [ ] jedno hlášení z reporteru → **přišlo do Slacku?** (řádky v DB nedokazují, že webhook běží)
 - [ ] po pushi zkontrolovat verzi: `curl -s https://runar25.github.io/Runar-admin/v2/sw.js | head -1`
 

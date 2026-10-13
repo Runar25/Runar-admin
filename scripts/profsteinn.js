@@ -11,7 +11,9 @@
 //             které drží; varianty bez příkladů driftovaly ±4, RUNAR_EVAL_LOG 21.-22.8.)
 //   chlad   — studené čtení: tvrzení o čtenáři, které nejde vyvrátit (zákaz v promptu)
 //
-// Soudce = claude-opus-4-8, 3 hlasy, většina (svět = medián). ZNĚNÍ SOUDCŮ VLASTNÍ TENHLE
+// Soudce = claude-opus-5 (bez přemýšlení), 3 hlasy, většina (svět = medián). Do 2026-10-13 soudil claude-opus-4-8 — jeho API
+// vyprší; znění soudců se ladilo na něm a verdikty nového soudce s dřívějšími nikdo neporovnal (uložené nejsou) — čísla z doby
+// před 2026-10-13 ber jako jiný přístroj. ZNĚNÍ SOUDCŮ VLASTNÍ TENHLE
 // SOUBOR — kostra/soud skripty 22.8. byly scratch; druhá kopie znění by driftovala (§18).
 // ⚠️ Čísla jsou MANTINEL, ne rozhodčí: rozhoduje oko ownera nad celým čtením. Soudce
 // „smysl" byl vyřazen (trestal přesně MYND splynutí — 0/3 vs 3/3 na témž textu).
@@ -72,7 +74,8 @@ async function claude(sys, obsah, maxTok) {
       const r = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
         headers: { 'content-type': 'application/json', 'x-api-key': KEY, 'anthropic-version': '2023-06-01' },
-        body: JSON.stringify({ model: 'claude-opus-4-8', max_tokens: maxTok,
+        // opus-5 bez vypnutého přemýšlení spálí malý max_tokens na thinking a vrátí prázdný text (proxy, CODE-read 2026-09-19)
+        body: JSON.stringify({ model: 'claude-opus-5', max_tokens: maxTok, thinking: { type: 'disabled' },
           system: [{ type: 'text', text: sys, cache_control: { type: 'ephemeral' } }],
           messages: [{ role: 'user', content: obsah }] }),
       });
