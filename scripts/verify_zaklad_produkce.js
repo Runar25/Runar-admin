@@ -46,9 +46,14 @@ async function prohlizec() {
   const proc = cp.spawn(exe, ['--headless=new', '--disable-gpu', '--no-first-run', '--no-default-browser-check', '--disable-extensions',
     '--window-size=1280,900', '--remote-debugging-port=0', '--user-data-dir=' + dir, 'about:blank'], { stdio: 'ignore' });
   const soubor = path.join(dir, 'DevToolsActivePort');
-  for (let i = 0; i < 100 && !fs.existsSync(soubor); i++) await cekej(100);
-  if (!fs.existsSync(soubor)) { proc.kill(); throw new Error('prohlížeč nenaběhl (' + exe + ')'); }
-  const [port, cesta] = fs.readFileSync(soubor, 'utf8').trim().split('\n');
+  // 2026-10-13 (CODE-read): číst ve smyčce s try, jako ostatní kontroly s prohlížečem — od souběhu kontrol ve smoke (předspuštění) Chrome
+  // soubor občas ještě drží zamčený nebo nedopsaný a jednorázové čtení spadlo na EBUSY (pre-push 2026-10-13).
+  let port = null, cesta = null;
+  for (let i = 0; i < 100 && !cesta; i++) {
+    await cekej(100);
+    try { const r = fs.readFileSync(soubor, 'utf8').trim().split('\n'); if (r.length >= 2 && r[1].trim()) { port = r[0]; cesta = r[1]; } } catch (e) {}
+  }
+  if (!cesta) { proc.kill(); throw new Error('prohlížeč nenaběhl (' + exe + ')'); }
   const ws = new WebSocket('ws://127.0.0.1:' + port + cesta.trim());
   await new Promise((ok, err) => { ws.onopen = ok; ws.onerror = () => err(new Error('DevTools WebSocket se nepřipojil')); });
   let id = 0; const cekaji = new Map(); const vyjimky = [];
