@@ -144,7 +144,7 @@ tabulka „What is held“ v `v2/runar-privacy.html` (EN i IS) — tady se neopi
 | účel | údaje (druh) | základ | příjemci (zpracovatelé) | přenos mimo EHP |
 |---|---|---|---|---|
 | účet a přihlášení | e-mail, jméno a fotka z Google (`auth.users`), kód | smlouva | Supabase · Brevo · Google (přihlášení, spíš samostatný správce) | — / DPF |
-| čtení, deník, Ask | jméno (volitelné), volby, volná otázka (⚠️ může být čl. 9), den + měsíc narození, text čtení | smlouva · čl. 9 nevyřešen (kontrola, nález 1) | OpenAI · Anthropic (záloha) · Supabase | SCC (OpenAI, Anthropic) |
+| čtení, deník, Ask | jméno (volitelné), volby, volná otázka (⚠️ může být čl. 9), den + měsíc narození, text čtení | smlouva · otázka jen s výslovným souhlasem (čl. 9 odst. 2 a, od 2026-10-12; do té doby tu stálo „čl. 9 nevyřešen“) | OpenAI · Anthropic (záloha) · Supabase | SCC (OpenAI, Anthropic) |
 | hlas | text čtení, uložené audio | smlouva | ElevenLabs · Supabase | DPF + SCC |
 | kredity a limity | zůstatky, měsíční jednotky, `credit_ledger`, `voice_usage` | smlouva · oprávněný zájem (účetnictví, prevence zneužití) | Supabase | — |
 | rozbor kvality | texty čtení a vstupy, pseudonymizovaně, bez odhlášených | oprávněný zájem (opt-out) | interně; vývojová session → Anthropic (kontrola, nález 5) | SCC |
@@ -152,6 +152,7 @@ tabulka „What is held“ v `v2/runar-privacy.html` (EN i IS) — tady se neopi
 | zálohy | celá DB šifrovaně (AES-256) | oprávněný zájem (obnova) | Google Drive | DPF + SCC (Workspace s přijatým CDPA — owner 2026-10-13) |
 | vývoj | přepisy konverzací (mohou nést údaje uživatelů) | oprávněný zájem | Anthropic (Claude Code) | SCC — v zásadách zatím chybí (nález 5) |
 | hosting appky | IP adresa v logu | oprávněný zájem (provoz, bezpečnost) | GitHub Pages | DPF + SCC |
+| registrace čekatelů (web therunekeeper.com, od 2026-10-13) | e-mail (jen u Brevo, dvojí potvrzení) · IP adresa krátce v počítadle pokusů (`rate_limits`) | souhlas (e-mail) · oprávněný zájem (IP, proti automatickým registracím) | Brevo · Supabase (IP) | — |
 **Technická a organizační opatření:** RLS a granty sloupců (`sql/2026-07-16_user_profiles_column_grants.sql`, smoke ⑩) · peníze a oprávnění píše
 jen server (service_role) · zálohy šifrované, klíč jen u nás · hlas přes podepsané lístky a odkazy s platností hodiny · fronta neuložených
 čtení vázaná na účet (DECISIONS 2026-10-12 (4), smoke ㊿) · e-maily uživatelů se ve vývoji nevypisují (výš, „Přepisy konverzací“).
