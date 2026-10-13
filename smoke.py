@@ -67,7 +67,10 @@ def vysledek(skript):
     text = out.read()
     out.close()
     return subprocess.CompletedProcess(proc.args, proc.returncode, text, '')
-for _s in ('verify_citelnost.js', 'verify_wts.js'):
+# 2026-10-13 (téhož dne, owner „pokračuj v kontrole“): po prvních dvou trvalo smoke 72 s a nejdražší zbylo dalších pět kontrol s prohlížečem
+# (základ produkce 12 s, založení stromu 8,5 s, verze v hlášení 7 s, hlas v appce 5 s, místa větví 5 s). Žádná nepíše do sdílených
+# souborů a každá si bere volný port a vlastní dočasný profil — proto jdou na pozadí taky.
+for _s in ('verify_citelnost.js', 'verify_wts.js', 'verify_zaklad_produkce.js', 'verify_zalozeni_stromu.js', 'verify_verze_hlaseni.js', 'verify_hlas_appka.js', 'verify_tree_mista.js'):
     predem(_s)
 
 print()
@@ -779,8 +782,7 @@ check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 # vyrustaly dve nebo vice vetvi ze stejneho mista — tohle resim od samoho zacatku" · "na strome nema byt nic, co sam uzivatel
 # nevytvoril". Pred opravou 19 dvojic ramen pod 10 px a 55 neklikatelnych tahu; hlidal to jen owner okem.
 print('\n' + chr(0x3273) + ' STROM (lab): MISTA VETVI, KLIKATELNOST, INSPEKCE (verify_tree_mista.js)')
-r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_tree_mista.js')],
-                   capture_output=True, text=True, encoding='utf-8')
+r = vysledek('verify_tree_mista.js')   # předspuštěno na začátku (viz „Předspuštění pomalých kontrol“)
 passed = r.returncode == 0
 output = (r.stdout + r.stderr).strip()
 radky = [l for l in output.split('\n') if l.strip()]
@@ -799,8 +801,7 @@ check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode !=
 # ㊷ 2026-10-11 (CODE-tree; owner: „neukážou se runy. je potřeba, abys to celé prošel, že to funguje“): rituál založení stromu klik po
 # kliku skutečnou appkou — tah zakládacích Noren byl bez run a nic to nehlásilo. Proxy i DB podvržené jen v prohlížeči testu.
 print('\n' + chr(0x32B7) + ' ZALOŽENÍ STROMU KLIK PO KLIKU (verify_zalozeni_stromu.js)')
-r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_zalozeni_stromu.js')],
-                   capture_output=True, text=True, encoding='utf-8')
+r = vysledek('verify_zalozeni_stromu.js')   # předspuštěno na začátku (viz „Předspuštění pomalých kontrol“)
 radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola zalozeni probehla'
 check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
@@ -817,8 +818,7 @@ check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode !=
 # ㊹ 2026-10-11 (CODE-tune): hlas v appce klik po kliku — co appka pošle serveru hlasu (uložené čtení id, neuložené podpis, jazyk na
 # obrazovce, deník, menu). Vazba hlasu na čtení se 2026-08-03 vracela do hodiny, protože ji nikdo neproklikal (DECISIONS 2026-08-03 „#2b VRÁCENO“).
 print('\n' + chr(0x32B9) + ' HLAS V APPCE KLIK PO KLIKU (verify_hlas_appka.js)')
-r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_hlas_appka.js')],
-                   capture_output=True, text=True, encoding='utf-8')
+r = vysledek('verify_hlas_appka.js')   # předspuštěno na začátku (viz „Předspuštění pomalých kontrol“)
 radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola hlasu v appce probehla'
 check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
@@ -849,8 +849,7 @@ check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 # píše ho hooks/pre-commit.py), a nasazenou, když se liší — hlášení 24c6c548 neslo nasazenou v564, okno jelo na starém JS. Skutečný
 # service worker ve čtyřech stavech. DECISIONS 2026-10-11 (68).
 print('\n' + chr(0x32BC) + ' VERZE V HLÁŠENÍ (verify_verze_hlaseni.js)')
-r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_verze_hlaseni.js')],
-                   capture_output=True, text=True, encoding='utf-8')
+r = vysledek('verify_verze_hlaseni.js')   # předspuštěno na začátku (viz „Předspuštění pomalých kontrol“)
 radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola verze v hlaseni probehla'
 check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
@@ -1036,8 +1035,7 @@ check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 # tohle si budeš kontrolovat“; CLAUDE.md §32): skutečný prohlížeč bez okna, appka jako návštěvník i simulovaný přihlášený, všechny
 # stavy. Na commitu 2a3f03b našla 10 vad (Norny skryté, Rúnarova fotka po návratu do Spá) — tam, kde je owner našel v produkci.
 print('\n' + chr(0x327C) + ' ZÁKLAD PRODUKCE (verify_zaklad_produkce.js)')
-r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_zaklad_produkce.js')],
-                   capture_output=True, text=True, encoding='utf-8')
+r = vysledek('verify_zaklad_produkce.js')   # předspuštěno na začátku (viz „Předspuštění pomalých kontrol“)
 passed = r.returncode == 0
 output = (r.stdout + r.stderr).strip()
 radky = [l for l in output.split('\n') if l.strip()]
