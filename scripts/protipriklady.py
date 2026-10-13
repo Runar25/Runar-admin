@@ -11,6 +11,7 @@
 #                obchazka = tatáž vada v jiném tvaru; musí spadnout taky (případ vznikl ze slepoty, která byla opravena)
 #                nesmi    = správný kód; kontrola NESMÍ spadnout (hlídá falešně červenou po rozšíření kontroly)
 # Podstrčení:    append (text na konec) · replace (přesný text, právě 1×) · regex (právě 1 shoda) · create (nový soubor)
+#                commit_append (text na konec a commit toho souboru v kopii — pro kontroly, které vidí jen commitnuté řádky, ⑮)
 # Sdílený strom se nemění; do worktree se nakopírují kontroly z pracovního stromu (ať jde ověřit i necommitnutou opravu kontroly).
 #
 #   python -X utf8 scripts/protipriklady.py            jen změněné případy (jak ho volá smoke)
@@ -36,6 +37,9 @@ POSLEDNI_VYSTUP = ''
 APP = 'v2/runar-app.js'
 
 PRIPADY = [
+ # ⑮ §16 output B (CODE-read 2026-10-13): commitnuté rozhodnutí slíbí opravu docu, který se po něm nepohnul (neexistuje)
+ ('chyti', 'verify_decisions_followthrough.js', 'RUNAR_DECISIONS.md', 'commit_append', '',
+  '\n## 2026-10-13 (99) — protipříklad\n\n- Affected doc(s): `docs/protipriklad-' + 'xyz.md` — v témže commitu.\n'),
  # ㊃ kalkulačka návratnosti (CODE-read 2026-10-13): položka nákladů změněná bez součtu
  ('chyti', 'verify_payback_pricing.js', 'RUNAR_PRICING.md', 'replace', '| Supabase | 0 ✔ | 25 |', '| Supabase | 0 ✔ | 45 |'),
  # ㊂ zákazy a cesty (CODE-read 2026-10-13): po jednom útoku na každou část
@@ -286,6 +290,18 @@ def podstrc(W, rel, mode, a, b):
         r = subprocess.run(['git', '-C', W, '-c', 'user.name=' + a, '-c', 'user.email=protipriklad@local', 'commit', '-q', '--allow-empty',
                             '-m', 'protipříklad (scripts/protipriklady.py)'], capture_output=True, text=True, encoding='utf-8', env=ENV)
         return '' if r.returncode == 0 else 'commit selhal: ' + (r.stdout + r.stderr)[-120:]
+    # commit_append (2026-10-13, CODE-read): text na konec souboru a commit jen toho souboru — ⑮ čte git blame, necommitnutý řádek
+    # schválně přeskakuje (rozdělaná práce), takže bez commitu by na ni žádný útok nedosáhl. Úklid vrátí HEAD i soubor.
+    if mode == 'commit_append':
+        puvodni = io.open(p, encoding='utf-8', newline='').read()
+        io.open(p, 'w', encoding='utf-8', newline='').write(puvodni + b)
+        r = subprocess.run(['git', '-C', W, '-c', 'user.name=protipriklad', '-c', 'user.email=protipriklad@local', 'commit', '-q',
+                            '-m', 'protipříklad (scripts/protipriklady.py)', '--', rel], capture_output=True, text=True, encoding='utf-8',
+                           env=dict(ENV, RUNAR_SDILENE_OK='protipříklad v dočasné kopii repa (scripts/protipriklady.py, commit_append) — do historie nejde'))
+        if r.returncode != 0:
+            io.open(p, 'w', encoding='utf-8', newline='').write(puvodni)
+            return 'commit selhal: ' + (r.stdout + r.stderr)[-120:]
+        return ''
     # create = podstrčený ZAPOMENUTÝ soubor: datum o 3 dny zpět (2026-10-11: kontroly souborů mimo git berou čerstvý soubor mladší než
     # 2 h jako rozdělanou práci a jen varují); create_cerstvy = soubor právě vytvořený
     if mode in ('create', 'create_cerstvy'):
@@ -318,6 +334,8 @@ def vrat(W, rel, mode=''):
     if mode == 'commit':
         subprocess.run(['git', '-C', W, 'reset', '-q', '--soft', 'HEAD~1'], check=True, env=ENV)
         return
+    if mode == 'commit_append':
+        subprocess.run(['git', '-C', W, 'reset', '-q', '--mixed', 'HEAD~1'], check=True, env=ENV)   # index ← předchozí HEAD, soubor pak níž
     if mode == 'stage':
         subprocess.run(['git', '-C', W, 'reset', '-q', '--', rel], check=True, env=ENV)   # index ← HEAD
     r = subprocess.run(['git', '-C', W, 'ls-files', '--error-unmatch', '--', rel], capture_output=True, env=ENV)
@@ -435,7 +453,7 @@ def main():
             if proc:
                 chyby.append('FAIL  %s [%s]: podstrčení se neprojevilo (%s) — cílový text se změnil; uprav případ v scripts/protipriklady.py'
                              % (sk, rel, proc))
-                if mode != 'commit': vrat(W, rel, mode)   # nepovedený commit nic nevytvořil — reset by sebral skutečný HEAD kopie
+                if mode not in ('commit', 'commit_append'): vrat(W, rel, mode)   # nepovedený commit nic nevytvořil — reset by sebral skutečný HEAD kopie
                 continue
             k1, r1 = beh(W, sk)
             vrat(W, rel, mode)
