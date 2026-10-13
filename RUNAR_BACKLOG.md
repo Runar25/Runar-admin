@@ -720,7 +720,7 @@ Tamtéž 2026-10-12 (druhá polovina, síť na cizí hosty blokovaná, `callProx
 Podkova a Yggdrasil (cena, tlačítko, kameny v hlavičce, text), nápověda — v EN i IS bez chyby v konzoli a bez cizího jazyka. Souhlas
 s otázkou (krok 2) ověřen týmž způsobem: bez souhlasu čtení nezačne, neuložený souhlas nechá políčko prázdné, se souhlasem otázka projde.
 Procházka je tím úplná.
-- [ ] **Pro CODE-tune — EN `tree_carry_life_rune` bez členu** (`v2/runar-translations.js` ~ř. 275): „You carry life rune {rune}“ →
+- [x] ✅ *(CODE-tune 2026-10-12, 5c8d281: „You carry the life rune {rune}“.)* ~~**Pro CODE-tune — EN `tree_carry_life_rune` bez členu**~~ (`v2/runar-translations.js` ~ř. 275): „You carry life rune {rune}“ →
   „You carry the life rune {rune}“. Předáno 2026-10-12. IS „Þú ber lífsrún {rune}“ beze změny — E001 Greyniru dělá cizí jméno runy
   (padá i „Þú ber rún Berkana.“), ne vazba.
 - [x] ✅ *(CODE-tune 2026-10-11: `prekresliDenik` v `runar-journal.js`, volá ho `setLang` — Deník v novém jazyce se stejným filtrem a otevřenými
