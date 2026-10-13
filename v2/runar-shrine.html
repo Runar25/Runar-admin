@@ -267,10 +267,10 @@ textarea::placeholder{color:var(--dim);}
   <button class="tab"     id="tab-readings-btn" onclick="showTab('readings')">📜 READINGS</button>
   <button class="tab"     id="tab-voice-btn"    onclick="showTab('voice')">🔊 VOICE</button>
   <button class="tab"     id="tab-testers-btn"  onclick="showTab('testers')">👥 TESTERS</button>
+  <!-- 2026-10-13 (owner „payback nemá být odkaz na claude… nevadí, pokud to bude webovka“): kalkulačka návratnosti jako záložka;
+       do té doby (b116f4d) odkaz na soukromý artifact v claude.ai. -->
+  <button class="tab"     id="tab-payback-btn"  onclick="showTab('payback')">📈 PAYBACK</button>
   <a class="tab" href="runar-reader.html" style="text-decoration:none;">👁 USER VIEW</a>
-  <!-- 2026-10-13 (owner „dej mi návratnost jako odkaz do shrine“): kalkulačka návratnosti = soukromý artifact ownera (otevře ho jen jeho
-       účet claude.ai); čísla v ní pocházejí z RUNAR_PRICING „Fixed monthly costs“ — při jejich změně ji přepublikovat na tutéž adresu. -->
-  <a class="tab" href="https://claude.ai/artifact/3W2w5UjZxKqfap7fkR7TAA" target="_blank" rel="noopener" style="text-decoration:none;">📈 PAYBACK</a>
 </div>
 
 <!-- ═══ TEACH ═══ -->
@@ -550,11 +550,43 @@ textarea::placeholder{color:var(--dim);}
   </div>
 </div>
 
+<!-- PAYBACK (2026-10-13): kolik platících předplatitelů pokryje náklady a kolik zbyde na mzdu. Čísla čte z RUNAR_PRICING.md,
+     maluje runar-payback-admin.js. Barvy jako záložka TESTERS. -->
+<div class="pane" id="pane-payback">
+  <style>
+    #pane-payback .pb-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:start;}
+    @media (max-width:860px){#pane-payback .pb-grid{grid-template-columns:minmax(0,1fr);}}
+    #pane-payback .pb-ctl{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;align-items:center;padding:8px 0;border-top:1px solid var(--border);color:#e6e9f0;font-size:0.9em;}
+    #pane-payback .card-lbl + .pb-ctl{border-top:0;}
+    #pane-payback .pb-val{color:var(--gold);font-variant-numeric:tabular-nums;text-align:right;}
+    #pane-payback input[type=range]{grid-column:1/-1;width:100%;accent-color:var(--gold);}
+    #pane-payback input[type=number]{width:7.5em;background:var(--bg);color:#e6e9f0;border:1px solid var(--border);padding:3px 6px;text-align:right;font-variant-numeric:tabular-nums;}
+    #pane-payback input[type=checkbox]{accent-color:var(--gold);width:18px;height:18px;}
+    #pane-payback .pb-hint,#pane-payback .pb-note{grid-column:1/-1;color:#b9c4d6;font-size:0.8em;margin:8px 0 0;}
+    #pane-payback .pb-err{color:#e08a74;}
+    #pane-payback .pb-big{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:14px;}
+    #pane-payback .pb-big > div{border:1px solid var(--border);padding:12px;min-width:0;}
+    #pane-payback .pb-k{color:#8a94a6;font-size:0.75em;letter-spacing:1px;text-transform:uppercase;}
+    #pane-payback .pb-v{font-size:1.35em;color:#e6e9f0;font-variant-numeric:tabular-nums;margin-top:2px;}
+    #pane-payback .pb-s{color:#b9c4d6;font-size:0.8em;}
+    #pane-payback .pb-pos{color:#7cc49a;} #pane-payback .pb-neg{color:#e08a74;}
+    #pane-payback .pb-tab{border-collapse:collapse;font-size:0.85em;color:#e6e9f0;font-variant-numeric:tabular-nums;width:100%;}
+    #pane-payback .pb-tab td,#pane-payback .pb-tab th{padding:4px 8px 4px 0;text-align:left;border-top:1px solid var(--border);}
+    #pane-payback .pb-tab th{color:#8a94a6;font-weight:normal;border-top:0;}
+    #pane-payback .pb-tab .n{text-align:right;white-space:nowrap;}
+    #pane-payback .pb-sum td{color:var(--gold);}
+    #pane-payback .pb-akt td{color:var(--gold);}
+    #pane-payback .pb-plan{color:var(--gold);border:1px solid var(--gold);padding:0 8px;}
+  </style>
+  <div id="pb-root"><p class="pb-note">Open this tab to load…</p></div>
+</div>
+
 </div><!-- .app -->
 <script src="runar-reports-admin.js"></script>
 <script src="runar-readings-admin.js"></script>
 <script src="runar-voice-admin.js"></script>
 <script src="runar-testers-admin.js"></script>
+<script src="runar-payback-admin.js"></script>
 <script>
 const sb = supabase.createClient(SB_URL, SB_KEY);
 
@@ -715,7 +747,7 @@ function updateUIText() {
 
 // ─── TABS ───────────────────────────────────────────────
 function showTab(name) {
-  ['teach','progress','correct','codes','reports','readings','voice','testers'].forEach(n => {
+  ['teach','progress','correct','codes','reports','readings','voice','testers','payback'].forEach(n => {
     document.getElementById('pane-' + n)?.classList.remove('on');
     document.getElementById('tab-' + n + '-btn')?.classList.remove('on');
   });
@@ -728,6 +760,7 @@ function showTab(name) {
   if (name === 'readings') { window.initReadingsTab(); window.loadReadings(); }
   if (name === 'voice')    window.loadVoice();   // 2026-09-25: živý stav ElevenLabs (runar-voice-admin.js)
   if (name === 'testers')  window.loadTesters(); // 2026-10-11: účty testerů a týmu (runar-testers-admin.js)
+  if (name === 'payback')  window.loadPayback(); // 2026-10-13: kalkulačka návratnosti (runar-payback-admin.js)
 }
 
 // ─── GIFT CODES ─────────────────────────────────────────
