@@ -817,6 +817,16 @@ function _heroDownStav() {
   p.classList.toggle('nahoru', nahoru);
   p.setAttribute('aria-label', t(nahoru ? 'hero_up_aria' : 'hero_down_aria'));
 }
+// Posune stránku tak, aby horní (nebo spodní) hrana prvku stála hned pod lepkavou lištou. 2026-10-13 (hlášení ownera c68119ac,
+// 1e562586): popis runy v Kolekci přistával dolů a po Begin ležela obrazovka na konci mřížky run — první runy mimo dohled.
+// Jeden pomocník pro všechna taková místa; bez animace, když si to systém nepřeje (jako scrollToReading).
+function _posunPodListu(el, spodniHrana, mezera) {
+  if (!el) return;
+  var lista = document.querySelector('.topbar'), r = el.getBoundingClientRect();
+  var cil = (spodniHrana ? r.bottom : r.top) + window.pageYOffset - (lista ? lista.offsetHeight : 0) - (mezera || 0);
+  var klid = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.scrollTo({ top: Math.max(0, cil), behavior: klid ? 'auto' : 'smooth' });
+}
 function scrollToReading() {
   var p = document.getElementById('hero-down');
   if (!p) return;
@@ -1182,7 +1192,9 @@ function openCollDetail(r, cell, skipScroll) {
   loadCollAudio(lang);
   _paintCollRuneText(r);   // text TEHLE runy v jazyce appky (KUKY 2026-09-23); pri zmene jazyka sem vede loadCollection
 
-  if (!skipScroll) det.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  // 2026-10-13 (hlášení ownera c68119ac): horní hrana rámečku popisu pod lištu — glyf a jméno runy hned vidět, dál se čte posunem dolů.
+  // Do té doby block:'nearest' zarovnal popis dolů a člověk se musel vracet nahoru.
+  if (!skipScroll) _posunPodListu(det, false, 8);
 }
 
 // Navod pod statickou runou (KUKY 2026-09-23). Obsah se maluje z UI_TEXT pri otevreni a pri
@@ -1682,9 +1694,11 @@ window.addEventListener('DOMContentLoaded', () => {
   const capHost = document.getElementById('cap-host');
   if (capHost) { capHost.innerHTML = _makeCapPlayer('cap', '', false); _capWire('cap'); }
   // Runy v oknech (souhlas testera ᛏ, smazání účtu ᚾ): naše SVG místo znaku písma — týmž setRuneText (bod 11, 2026-10-10).
+  // 2026-10-13 (hlášení ownera 0681916e): runa v hlavičce okna je KÁMEN jako v Kolekci (runeSvg frame:true), ne holá linka
+  // (setRuneText) — ta v okně „Where to start“ působila jako runa písmem. Holá linka zůstává jen u runy uvnitř textu (CLAUDE.md §5).
   document.querySelectorAll('[data-rune-glyph]').forEach(function (el) {
     var r = RUNES.find(function (x) { return x.n === el.getAttribute('data-rune-glyph'); });
-    if (r) setRuneText(el, r.g);
+    if (r) el.innerHTML = runeSvg(r, { frame: true, cls: 'modal-rune-svg' });
   });
   setTimeout(maybeShowWhereToStart, 1800);   // „Where to start“ — jednou, až se appka usadí (DECISIONS 2026-10-11 (65))
   // ── Close topbar dropdown on outside click ──

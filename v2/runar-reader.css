@@ -452,7 +452,7 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 .guide{margin-top:14px;}
 /* „Where to start“ (2026-10-11, DECISIONS (65)) — okno appky (.modal); zavření ho zmenší a zasune do „How a reading works“
    (transform z closeWhereToStart v runar-app.js), závoj zmizí a popisek se dvakrát rozzáří. Bez animací (prefers-reduced-motion) jen rozzáření. */
-.wts-rune{font-size:2em;color:var(--gold);margin-bottom:12px;opacity:0.7;}
+.wts-rune{font-size:2em;color:var(--gold);margin-bottom:12px;}
 .wts-note{font-size:0.8em;color:var(--muted);margin:2px 0 6px;line-height:1.6;}
 #wts-modal{transition:background-color .45s ease;}
 #wts-modal.wts-out{background-color:rgba(0,0,0,0);}
@@ -616,6 +616,8 @@ input:autofill{filter:none;}
 .lbl-rune .rune-svg path{fill:currentColor;}
 .modal-rune .lbl-rune{margin-right:0;}
 .modal-rune .lbl-rune .rune-svg{height:1em;}
+/* 2026-10-13 (hlášení ownera): runa v hlavičce okna = kámen z Kolekce (runeSvg frame:true), plná sytost jako tam */
+.modal-rune .modal-rune-svg{width:56px;height:auto;aspect-ratio:72/88;display:inline-block;vertical-align:top;}
 .rune-svg-fb{color:var(--gold);font-size:1.5em;line-height:1;}
 /* Frameless (bare-line) rune: height tracks the container font-size (~old glyph, slightly larger). */
 .rune-svg-fl{height:1.1em;width:auto;}

@@ -11214,3 +11214,24 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   UPDATE. Git tohle nevidí, proto řádek tady (CLAUDE.md, „Mechanika“).
 - **Zbývá:** jednou naživo přihlášeným účtem zaškrtnout souhlas a odvolat ho v menu Privacy — přihlásit se Code nesmí.
 - Affected doc(s): `RUNAR_BACKLOG.md` (položka souhlasu v sekci GDPR) — v témže commitu.
+
+## 2026-10-13 (1) — Upozornění pod „+“ u otázky jen krátké: nepsat o zdraví; kam otázka jde, říká souhlas u pole
+
+- **Rozhodl:** owner 2026-10-13 v hlášení z appky u textu pod „+“ (564fac2a): *„Žádnou zmínku o AI tady, bude jen že nemá psát nic
+  o svém zdravotním stavu. Obecné poučení. Krátké výstižné.“*
+- **Mění:** 2026-10-12 (7) bod (a) — upozornění neslo i to, co se s otázkou děje (jde k AI, OpenAI v USA, ukládá se v deníku). To teď
+  říká jen souhlas u pole (krok 2, `qconsent_lbl`): vidí ho každý, kdo otázku píše, dřív než odejde; testeři to mají v souhlasu testerů;
+  zásady beze změny.
+- **Co (CODE-tune):** `qpriv_hint` EN „Please do not write anything about your health here.“ · IS „Skrifaðu ekki neitt um heilsu þína
+  hér.“ (greynir a is-gpt-check bez nálezu; „skrifaðu ekkert“ 0× v korpusu).
+- **Otevřené:** owner dodal *„Posílání o datech bude v tom formuláři, co má každý podepsat po přihlášení“*. Formulář pro všechny po
+  přihlášení rozhodnutý ani postavený není — souhlas stojí u pole otázky (7)(b). Ownerovi položena otázka 2026-10-13, zda myslel ten.
+- Affected doc(s): žádný jiný (texty bydlí v `UI_TEXT`).
+
+## 2026-10-13 (2) — Runa v hlavičce oken = kámen z Kolekce, ne holá linka
+
+- **Rozhodl:** owner 2026-10-13 v hlášení z appky (0681916e): *„U pop up window jsi nepoužil náš glyf, ale font runy.“* Okno „Where to
+  start“ kreslilo od 2026-10-10 (18) naši SVG, ale holou linku (`setRuneText`) — vedle textu okna vypadala jako znak písma.
+- **Mění:** 2026-10-10 (18), část o oknech: `data-rune-glyph` kreslí `runeSvg(r, {frame:true})`, kámen jako v Kolekci, v plné sytosti
+  (dřív průhlednost 0,5–0,7). Všechna tři okna: Where to start, souhlas testera, smazání účtu. Runa uvnitř textu popisků zůstává holou linkou.
+- Affected doc(s): `CLAUDE.md` §5 (výčet, kde je kámen) — v témže commitu.

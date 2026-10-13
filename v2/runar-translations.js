@@ -123,7 +123,9 @@ const UI_TEXT = {
     q_hint:           'Tell Rúnar where you stand now — not what is to come.',
     // 2026-10-12 (DECISIONS 2026-10-12 (7), kontrola GDPR bod 1): upozornění pod „+“ za THE SITUATION — volná otázka může nést
     // zvláštní kategorii údajů (zdraví, vztahy, víra), jde k AI v USA a u vlastního čtení se ukládá. Souhlas při psaní je krok 2.
-    qpriv_hint:       'Please do not write health details or other sensitive information here. Your question is sent to OpenAI in the USA, whose AI writes the reading. If the reading is your own, the question is also saved in your journal.',
+    // 2026-10-13 (hlášení ownera 564fac2a, DECISIONS 2026-10-13 (1)): jen krátké obecné poučení, bez zmínky o AI — kam otázka jde
+    // a že se ukládá, říká souhlas u pole (qconsent_lbl), který každý, kdo otázku píše, vidí dřív, než odejde.
+    qpriv_hint:       'Please do not write anything about your health here.',
     // 2026-10-12 (DECISIONS 2026-10-12 (7), krok 2): výslovný souhlas s odesláním a uložením otázky (čl. 9 GDPR) + věk 13+;
     // ukáže se při prvním psaní do otázky nebo Asku (_showQuestionConsent, runar-app.js), odvolání v menu (sp_qconsent_lbl).
     qconsent_lbl:     'I agree that my questions are sent to OpenAI in the USA, whose AI writes the readings, even when I write about my health or anything else sensitive. I also agree that they are kept in my journal when the reading is mine. I am 13 or older.',
@@ -654,7 +656,8 @@ const UI_TEXT = {
     // Overeno: „hvar þú stendur" 302 vyskytu, „hvað verður" 13915 (Risamalheild);
     // GreynirCorrect 0 flagu. Vymysleno islandsky, ne prelozeno (§2).
     q_hint:           'Segðu Rúnari hvar þú stendur núna, ekki hvað verður.',
-    qpriv_hint:       'Skrifaðu hvorki heilsufarsupplýsingar né aðrar viðkvæmar upplýsingar hér. Spurningin fer til gervigreindar OpenAI í Bandaríkjunum sem semur lesturinn. Ef lesturinn er þinn er spurningin líka vistuð í dagbókinni þinni.',   // 2026-10-12 viz EN; greynir, korpus a is-gpt-check
+    // 2026-10-13 viz EN. Greynir a is-gpt-check bez nálezu; „Ekki skrifa neitt…“ Greynir četl jako sloveso bez podmětu, „skrifaðu ekkert“ 0×.
+    qpriv_hint:       'Skrifaðu ekki neitt um heilsu þína hér.',
     // 2026-10-12 krok 2 souhlasu, viz EN. Greynir u qconsent_lbl hlásí pád „spurningar mínar“ — falešně, „samþykki“ bere jako
     // podstatné jméno; korpus „ég samþykki að“ 93×, is-gpt-check 0 nálezů. „haka við“ (hakað við 996×), ne „haka í“ (0×).
     qconsent_lbl:     'Ég samþykki að spurningar mínar séu sendar til gervigreindar OpenAI í Bandaríkjunum sem semur lestrana, líka ef ég skrifa um heilsu mína eða annað viðkvæmt. Ég samþykki líka að þær séu geymdar í dagbókinni minni þegar lesturinn er minn. Ég er 13 ára eða eldri.',

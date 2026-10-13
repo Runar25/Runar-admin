@@ -481,6 +481,9 @@ function startReading() {
   document.getElementById('reader-rune-card').style.display = 'block';
   document.getElementById('reader-output').style.display = 'none';
   buildGrid(); setSt('st-setup', ''); setSt('st-reader', '');
+  // 2026-10-13 (hlášení ownera 1e562586, b674e012): fotka i formulář zmizely, stránka zůstala posunutá → obrazovka ležela na konci
+  // mřížky. Teď přistane hned pod čarou záložek: nahoře výběr čtení (Single a spready), pod ním runy od Fehu.
+  _posunPodListu(document.querySelector('.app-tabs'), true);
 }
 
 
@@ -1183,6 +1186,7 @@ function drawAnother() {
   _visitorJoin(false);
   if (currentUser && userTier === 'rune_seeker' && userFreeBalance <= 0 && userCredits <= 0) { updateAuthUI(); return; }
   document.getElementById('reader-rune-card').style.display = 'block';
+  _posunPodListu(document.querySelector('.app-tabs'), true);   // táž vada jako po Begin: čtení nad mřížkou zmizelo (2026-10-13)
   document.querySelectorAll('#reader-grid .rb').forEach(b => b.classList.remove('on'));
   document.getElementById('reader-rune-info').textContent = '';
   document.getElementById('btn-speak').disabled = true;
