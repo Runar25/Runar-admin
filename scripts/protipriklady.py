@@ -36,6 +36,11 @@ POSLEDNI_VYSTUP = ''
 APP = 'v2/runar-app.js'
 
 PRIPADY = [
+ # ㊂ zákazy a cesty (CODE-read 2026-10-13): po jednom útoku na každou část
+ ('chyti', 'verify_zakazy_cesty.js', 'v2/runar-reader.html', 'replace', '<div class="auth-gate-rune">ᚱ</div>', '<div class="auth-gate-rune">◌ ᚱ ◌</div>'),
+ ('chyti', 'verify_zakazy_cesty.js', 'v2/runar-auth.js', 'regex', r"(banner\.style\.display      = 'block';\r?\n    content\.style\.display     = )'block'", r"\g<1>'none'"),
+ ('chyti', 'verify_zakazy_cesty.js', 'v2/runar-app.js', 'append', '', "\nfunction _jmenoX(u) { return u.email.split('" + "@')[0]; }\n"),
+ ('chyti', 'verify_zakazy_cesty.js', 'v2/runar-reading.js', 'replace', "} else if (_spreadMode === 'horseshoe') {", "} else if (_spreadMode === 'horseshoe_x') {"),
  # ㊁ mapa nosičů (CODE-read 2026-10-13): nové pravidlo bez nosiče; nosič, který smoke přestal pouštět (nadpis i volání)
  ('chyti', 'verify_nosice.js', 'CLAUDE.md', 'append', '', '\n### §' + '99 — pravidlo bez nosiče\nText.\n'),
  ('chyti', 'verify_nosice.js', 'smoke.py', 'regex',

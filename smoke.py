@@ -1097,6 +1097,19 @@ radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola mapy nosicu probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# ㊂ Zákazy a cesty (CODE-read 2026-10-13, owner „co s tím? … pokračuj v kontrole“ nad mapou nosičů ㊁): části pravidel, které nedržela
+# žádná kontrola — ᚱ bez ozdob a neskrytý reader-content (§5), jméno nikdy z e-mailu (§12), každý výklad ve všech pěti funkcích (§13).
+print('\n' + chr(0x3282) + ' ZÁKAZY A CESTY §5 §12 §13 (verify_zakazy_cesty.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_zakazy_cesty.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+r2 = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_zakazy_cesty.js'), '--test'],
+                    capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0 and r2.returncode == 0
+output = (r2.stdout + r.stdout + r.stderr + r2.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola zakazu a cest probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
