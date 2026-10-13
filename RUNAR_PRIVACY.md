@@ -13,7 +13,8 @@
   čl. 5 odst. 1 c, `RUNAR_DECISIONS.md` 2026-09-30 (11); **od 2026-10-09 se rok vůbec nezadává** — islandský měsíc se počítá bez něj,
   uložený rok starých účtů slouží jen jako semínko tvaru stromu, `RUNAR_DECISIONS.md` 2026-10-09 „Rok narození se nezadává“; ty staré účty jsou admin účty a rok u nich ZŮSTÁVÁ — KUKY 2026-10-10, `RUNAR_DECISIONS.md` 2026-10-10 (35), data admin účtů nejsou nález)
   · u Asku jeho otázky a text čtení. Hlas: text čtení k ElevenLabs (USA), jen při prvním přečtení — pak se pouští uložený
-  (DECISIONS 2026-10-11 (61)).
+  (DECISIONS 2026-10-11 (61)). Položku (text i zvuk) z historie našeho účtu ElevenLabs `elevenlabs-proxy` hned po vygenerování
+  maže (od 2026-10-13, DECISIONS 2026-10-13 (6)); dřív zůstávala v historii i po smazání účtu v Rúnaru.
 
 ## Právní základy — KTERÝ na CO (klíč k „bez popupu")
 | Účel | Základ | UI dopad |

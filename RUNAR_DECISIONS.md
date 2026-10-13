@@ -11272,3 +11272,18 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   `runar-app.js`, jedno místo pro popisky i pilulky. Bez volného čtení i kreditu jsou volby otevřené a pruh nad formulářem nabízí kartu.
   Počty odemčených voleb přešly do `TIER_LIMITS.rune_seeker` (do té doby natvrdo v `buildPills`, §10). Návštěvník beze změny.
 - Affected doc(s): žádný jiný.
+
+## 2026-10-13 (6) — Hlas: položka z historie ElevenLabs se maže hned po vygenerování
+
+- **Rozhodl:** owner 2026-10-13 *„ano udělej“* na návrh z 2026-10-12 (BACKLOG, sekce GDPR: historie ElevenLabs drží text čtení i zvuk;
+  smazání účtu v Rúnaru tam nedosáhne). Proč: ElevenLabs ukládá každé vygenerování do historie účtu (`enable_logging` je výchozí,
+  vypnout smí jen Enterprise — ověřeno v jejich dokumentaci 2026-10-12).
+- **Co (CODE-tune):** `elevenlabs-proxy` po vygenerování najde položku v posledních položkách našeho hlasu podle textu (odpověď streamu
+  id nenese) a smaže ji (`DELETE /v1/history/{id}`) — na pozadí, čtenář nečeká; nenajde-li ji, jen zaloguje. `elevenlabs-static`
+  (statická čtení Kolekce, Rúnarovy texty, žádná data uživatele) beze změny. Zásady EN + IS: „As soon as the audio is ready, we delete
+  the text and the audio from our ElevenLabs account.“ / „Um leið og upplesturinn er tilbúinn eyðum við textanum og upplestrinum af
+  reikningnum okkar hjá ElevenLabs.“ (greynir, is-gpt-check bez nálezu).
+- **Nasazeno 2026-10-13** před pushem zásad (věta „mažeme“ nesměla do produkce dřív než mazání). Ověřeno: bez přihlášení 401,
+  preflight 204. Mazání samo se ozve až u skutečného hlasu — ověří owner (přečíst jedno čtení nahlas, v ElevenLabs → History nesmí
+  přibýt). Starou historii (vše před dneškem) smaže owner v ElevenLabs → History.
+- Affected doc(s): `RUNAR_PRIVACY.md` (hlas), `RUNAR_BACKLOG.md` (položka odškrtnutá) — v témže commitu.

@@ -646,7 +646,9 @@ doladit apku“*).
       hlas a jazyk pod smlouvou; úložiště prohlížeče podle skutečnosti — `treeLog` se do zásad nepíše, appka ho přestala sbírat. Po cestě
       opravy islandštiny, které stránka nesla: „hlíðum“ → „erum bundin af“, „á spám þínum“ (předpovědi — Rúnar není věštec) → „á lestrum
       þínum“, „lestrar“ → „lestra“, „á þessum slóð“ → „á þessari slóð“, „Mótmæla“ → „Mótmæltu“. Ověřeno is-greynir, korpus, is-gpt-check.)*
-- [ ] **CODE-tune — historie ElevenLabs drží text čtení i zvuk; smazání účtu v Rúnaru tam nedosáhne** (nalezeno 2026-10-12 při psaní
+- [x] ✅ *(CODE-tune 2026-10-13, owner „ano udělej“: `elevenlabs-proxy` položku po vygenerování maže, nasazeno; zásady upravené.
+      Zbývá owner: jedno čtení nahlas a kontrola v ElevenLabs → History; starou historii tam smazat. DECISIONS 2026-10-13 (6).)*
+      **CODE-tune — historie ElevenLabs drží text čtení i zvuk; smazání účtu v Rúnaru tam nedosáhne** (nalezeno 2026-10-12 při psaní
       zásad). Ověřeno v dokumentaci API: `enable_logging` je ve výchozím stavu zapnuté a vypnout ho smí jen Enterprise; `elevenlabs-proxy`
       ani `elevenlabs-static` ho nenastavují; položka historie nese `text` a zvuk jde stáhnout. Návrh: po uložení zvuku položku smazat
       (`DELETE /v1/history/{id}`; jak získat id u streamu, neověřeno) — úprava edge funkcí, nasazení ownerem; pak upravit větu v zásadách
