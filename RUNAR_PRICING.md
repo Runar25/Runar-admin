@@ -321,7 +321,7 @@ hlas zastaví všem; sledovat ve shrine (VOICE, TESTERS). Do 2026-10-11 tu stál
 ## Operating costs, taxes & break-even (Agndofa ehf., Iceland)
 
 > Planning model (interactive calculator, 2026-06-15). **Estimates — verify with an accountant (endurskoðandi).**
-> **Kalkulačka s posuvníky (2026-10-12, CODE-read):** https://claude.ai/artifact/3W2w5UjZxKqfap7fkR7TAA — soukromý artifact ownera; počítá týmž modelem z čísel této
+> **Kalkulačka s posuvníky (2026-10-12, CODE-read):** shrine, záložka „📈 PAYBACK“ (adresa bydlí v `v2/runar-shrine.html`, od 2026-10-13) — soukromý artifact ownera; počítá týmž modelem z čísel této
 > sekce (ceny předplatného, fixní náklady, plány ElevenLabs, odvody). Změní-li se tu čísla, kalkulačka se musí přepublikovat (zdroj:
 > stránka artifactu, z níž se dá přečíst a přepublikovat; původní červnová kalkulačka se nenašla).
 > Rates change yearly and depend on company form. Sources at the end of this section.

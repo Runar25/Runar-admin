@@ -148,7 +148,7 @@ tabulka „What is held“ v `v2/runar-privacy.html` (EN i IS) — tady se neopi
 | kredity a limity | zůstatky, měsíční jednotky, `credit_ledger`, `voice_usage` | smlouva · oprávněný zájem (účetnictví, prevence zneužití) | Supabase | — |
 | rozbor kvality | texty čtení a vstupy, pseudonymizovaně, bez odhlášených | oprávněný zájem (opt-out) | interně; vývojová session → Anthropic (kontrola, nález 5) | SCC |
 | testeři | souhlas, čtení „pro někoho“, hlášení | výslovný souhlas (čl. 9 odst. 2 a) | Supabase · Slack (jen metadata hlášení, bez osobních údajů) | — |
-| zálohy | celá DB šifrovaně (AES-256) | oprávněný zájem (obnova) | Google Drive | DPF + SCC (jen ve Workspace s CDPA — ověřuje owner) |
+| zálohy | celá DB šifrovaně (AES-256) | oprávněný zájem (obnova) | Google Drive | DPF + SCC (Workspace s přijatým CDPA — owner 2026-10-13) |
 | vývoj | přepisy konverzací (mohou nést údaje uživatelů) | oprávněný zájem | Anthropic (Claude Code) | SCC — v zásadách zatím chybí (nález 5) |
 | hosting appky | IP adresa v logu | oprávněný zájem (provoz, bezpečnost) | GitHub Pages | DPF + SCC |
 **Technická a organizační opatření:** RLS a granty sloupců (`sql/2026-07-16_user_profiles_column_grants.sql`, smoke ⑩) · peníze a oprávnění píše
