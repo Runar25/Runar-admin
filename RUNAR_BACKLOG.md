@@ -883,7 +883,7 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   má Shopify Agndofy (u cizí brány Shopify bere příplatek, Basic 2 %)? Rozhodne, jestli Rúnakort půjde přes Shopify, nebo rovnou Rapyd.
   Fyzické runy jdou přes Shopify vždy. Kupovat jde pět balíčků (`CARD_PACKS`).
 - [ ] **Obchody před spuštěním** (rešerše CODE-web 2026-10-13; poplatky a provize v `RUNAR_PRICING.md` „PWA vs Native App“, platby v iOS
-  → DECISIONS 2026-10-13 (3), rozhoduje owner). Android: táž PWA zabalená přes Trusted Web Activity (Bubblewrap) + `.well-known/assetlinks.json`
+  → DECISIONS 2026-10-13 (3), rozhoduje owner). Android: táž PWA zabalená přes Trusted Web Activity (Bubblewrap) + ověřovací soubor Digital Asset Links (assetlinks)
   na doméně appky. Účty pod Agndofa ehf. potřebují D-U-N-S (Apple i Google). iOS: když appka nabídne přihlášení Googlem, Apple podle
   pravidla 4.8 chce i rovnocenné přihlášení (prakticky Sign in with Apple) — přesné znění 4.8 neověřeno. Jméno: v obou obchodech už je
   „Runar: AI Chat & Runes“ (runar.app, AI věštění z run) a na Google Play „Runar“ (com.tnco.runar) — název v obchodě musí být jiný,
