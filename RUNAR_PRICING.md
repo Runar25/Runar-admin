@@ -321,9 +321,10 @@ hlas zastaví všem; sledovat ve shrine (VOICE, TESTERS). Do 2026-10-11 tu stál
 ## Operating costs, taxes & break-even (Agndofa ehf., Iceland)
 
 > Planning model (interactive calculator, 2026-06-15). **Estimates — verify with an accountant (endurskoðandi).**
-> **Kalkulačka s posuvníky (2026-10-12, CODE-read):** shrine, záložka „📈 PAYBACK“ (adresa bydlí v `v2/runar-shrine.html`, od 2026-10-13) — soukromý artifact ownera; počítá týmž modelem z čísel této
-> sekce (ceny předplatného, fixní náklady, plány ElevenLabs, odvody). Změní-li se tu čísla, kalkulačka se musí přepublikovat (zdroj:
-> stránka artifactu, z níž se dá přečíst a přepublikovat; původní červnová kalkulačka se nenašla).
+> **Kalkulačka s posuvníky:** shrine, záložka „📈 PAYBACK“ (`v2/runar-payback-admin.js`, od 2026-10-13). Čte čísla PŘÍMO z tabulek
+> tohoto souboru — „Subscription Pricing“, „ElevenLabs Plan“ a „Fixed monthly costs“ (sloupec Po spuštění) —, takže je tu neměň tvarem
+> bez kontroly: smoke ㊃ pustí týž parser a hlídá i, že položky dají řádek „Celkem“. Daně, odvody a poplatek za platbu jsou konstanty
+> modelu v tom JS (z prózy níž). Do 2026-10-13 tu stál odkaz na soukromý artifact v claude.ai — owner: „payback nemá být odkaz na claude“.
 > Rates change yearly and depend on company form. Sources at the end of this section.
 > All listed costs are tax-deductible business expenses (reduce taxable profit).
 
