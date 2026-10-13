@@ -47,10 +47,11 @@ PRIPADY = [
  ('chyti', 'verify_zakazy_cesty.js', 'v2/runar-auth.js', 'regex', r"(banner\.style\.display      = 'block';\r?\n    content\.style\.display     = )'block'", r"\g<1>'none'"),
  ('chyti', 'verify_zakazy_cesty.js', 'v2/runar-app.js', 'append', '', "\nfunction _jmenoX(u) { return u.email.split('" + "@')[0]; }\n"),
  ('chyti', 'verify_zakazy_cesty.js', 'v2/runar-reading.js', 'replace', "} else if (_spreadMode === 'horseshoe') {", "} else if (_spreadMode === 'horseshoe_x') {"),
- # ㊁ mapa nosičů (CODE-read 2026-10-13): nové pravidlo bez nosiče; nosič, který smoke přestal pouštět (nadpis i volání)
+ # ㊁ mapa nosičů (CODE-read 2026-10-13): nové pravidlo bez nosiče; nosič, který smoke přestal pouštět (nadpis i volání; ㉹ — ne
+ # předspuštěná kontrola, ta má jméno i v seznamu predem)
  ('chyti', 'verify_nosice.js', 'CLAUDE.md', 'append', '', '\n### §' + '99 — pravidlo bez nosiče\nText.\n'),
  ('chyti', 'verify_nosice.js', 'smoke.py', 'regex',
-  r"(PRODUKCE \(verify_zaklad_)produkce(\.js\)'\)\r?\nr = subprocess\.run\(\['node', os\.path\.join\(ROOT, 'scripts', 'verify_zaklad_)produkce", r'\g<1>x\g<2>x'),
+  r"(JAZYK KOMUNIKACE \(verify_)jazyk_ui(\.js\)'\)\r?\nr = subprocess\.run\(\['node', os\.path\.join\(ROOT, 'scripts', 'verify_)jazyk_ui(\.js'\)\],\r?\n[^\n]*\r?\nr2 = subprocess\.run\(\['node', os\.path\.join\(ROOT, 'scripts', 'verify_)jazyk_ui", r'\g<1>x\g<2>x\g<3>x'),
  # kolo 3 / 4a (2026-10-11)
  ('chyti', 'verify_doc_links.js', 'RUNAR_DESIGN.md', 'append', '', '\n\nOdkaz do prázdna: `docs/neexistuje-xyz.md`\n'),
  ('chyti', 'verify_escape_marks.js', 'RUNAR_DESIGN.md', 'append', '', '\n\nřádek s holou značkou <!-- doc-links:ok -->\n'),
