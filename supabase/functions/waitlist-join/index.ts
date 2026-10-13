@@ -4,7 +4,7 @@
 // „Rúnar – waitlist“ (#3) kontakt zapíše až po kliknutí. U nás se nic neukládá — jediná kopie je v Brevu (zásady soukromí).
 // Rate limit: 5 pokusů / 15 min na IP (táž RPC jako redeem-code). Honeypot `website` = bot, odpověď jako úspěch.
 // Odpověď neprozradí, jestli e-mail už v seznamu je (duplicate → ok), ať se přes formulář nedá zjišťovat, kdo se registroval.
-// Logy anglicky (§31), bez celé adresy — jen doména.
+// Logy anglicky (§31), bez adresy (2026-10-13: ani doména — kontrola zákazů (verify_zakazy_cesty.js, §12) hlídá split e-mailu a adresa do logu nepatří).
 // Deploy: supabase functions deploy waitlist-join --project-ref pmitxjvkeovijreepror --no-verify-jwt
 
 import { createClient } from "npm:@supabase/supabase-js@2.117.3";
@@ -74,9 +74,8 @@ Deno.serve(async (req) => {
   if (res.ok) return json({ ok: true });
 
   const text = await res.text();
-  const domain = email.split("@")[1];
   // 2026-10-13: první zkouška vrátila 400 „An active DOI template does not exist“ — šablona #1 musí být v Brevu Active.
   if (res.status === 400 && /duplicate/i.test(text)) return json({ ok: true });   // už registrovaný — neprozradit
-  console.error(`waitlist-join: Brevo ${res.status} for @${domain}: ${text.slice(0, 300)}`);
+  console.error(`waitlist-join: Brevo ${res.status}: ${text.slice(0, 300)}`);
   return json({ error: "server_error" }, 502);
 });
