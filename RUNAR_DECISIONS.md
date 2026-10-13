@@ -11287,4 +11287,6 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   preflight 204. Mazání samo se ozve až u skutečného hlasu. (Do 2026-10-13 večer tu stálo, že to owner ověří v ElevenLabs → History
   a starou historii tam smaže — byl to můj odhad: owner tam žádné hlasy nenašel a jestli webové rozhraní hlasy z API ukazuje,
   dokumentace neříká. Ověří až výpis `GET /v1/history` naším klíčem, BACKLOG sekce GDPR.)
+- **Nasazeno 2026-10-13 večer** (owner *„ano udělej a nasaď“*): `voice-usage` čte historii naším klíčem a shrine VOICE ukazuje počet
+  položek, z toho Rúnarova hlasu, nejnovější a nejstarší. Ověřeno: bez přihlášení 401. Owner předtím historii v rozhraní ElevenLabs smazal.
 - Affected doc(s): `RUNAR_PRIVACY.md` (hlas), `RUNAR_BACKLOG.md` (položka odškrtnutá) — v témže commitu.

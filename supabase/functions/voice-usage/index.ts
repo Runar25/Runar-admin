@@ -10,7 +10,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.117.3";
 import { fetchQuota, saveQuota, EL_DOBITI_KREDITY, EL_TARIF_KREDITY, EL_KREDIT_USD } from "../_shared/voice_usage.ts";
-import { kredityHlasu } from "../_shared/el_voice.ts";
+import { kredityHlasu, EL_VOICE_ID } from "../_shared/el_voice.ts";
 
 // Kopie seznamu adminů (další: v2/runar-config.js a ostatní edge funkce). Shodu hlídá smoke ㉪ (scripts/verify_admin_emails.js).
 const ADMIN_EMAILS = ["kukula@agndofa.is", "info@agndofa.is"];
@@ -155,6 +155,29 @@ serve(async (req) => {
     }
   }
 
+  // ── Historie ElevenLabs (2026-10-13, owner „ano udělej a nasaď“): kolik položek v historii našeho účtu je, kolik z nich našeho hlasu
+  // a kdy přibyla nejnovější. Owner ve webovém rozhraní ElevenLabs hlasy nenašel a jestli tam rozhraní hlasy z API ukazuje, dokumentace
+  // neříká — rozhodne jen výpis naším klíčem. Zároveň ukáže, jestli mazání po vygenerování (elevenlabs-proxy, DECISIONS 2026-10-13 (6))
+  // zabírá: po přečtení čtení nahlas nesmí počet našeho hlasu vzrůst. Jen čtení, nic nemaže. Chyba nesmí shodit zbytek záložky.
+  let history: any = null;
+  try {
+    const hr = await fetch("https://api.elevenlabs.io/v1/history?page_size=1000", { headers: { "xi-api-key": key } });
+    if (hr.ok) {
+      const hd: any = await hr.json();
+      const items: any[] = Array.isArray(hd?.history) ? hd.history : [];
+      const dates = items.map((h) => h?.date_unix).filter((x) => typeof x === "number");
+      history = {
+        count: items.length, more: !!hd?.has_more,
+        ours: items.filter((h) => h?.voice_id === EL_VOICE_ID).length,
+        newest: dates.length ? new Date(Math.max(...dates) * 1000).toISOString() : null,
+        oldest: dates.length ? new Date(Math.min(...dates) * 1000).toISOString() : null,
+      };
+    } else history = { error: hr.status };
+  } catch (e) {
+    console.error("voice-usage history:", (e as Error).message);
+    history = { error: "request_failed" };
+  }
+
   const { data: snaps } = await sb.from("voice_quota_snapshots")
     .select("taken_at, source, character_count, character_limit").order("taken_at", { ascending: false }).limit(14);
 
@@ -167,5 +190,6 @@ serve(async (req) => {
     logged, by_group: byGroup, by_model: byModel,
     snapshots: snaps ?? [],
     accounts,
+    history,
   });
 });

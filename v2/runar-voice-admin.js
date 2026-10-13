@@ -12,6 +12,17 @@
   function esc(s) { return (typeof escapeHtml === 'function') ? escapeHtml(s) : String(s == null ? '' : s); }
   function num(n) { return (typeof n === 'number') ? n.toLocaleString('en-GB') : '—'; }
   function den(iso) { if (!iso) return '—'; var d = new Date(iso); return isNaN(d) ? '—' : d.toISOString().slice(0, 10); }
+  function cas(iso) { if (!iso) return '—'; var d = new Date(iso); return isNaN(d) ? '—' : d.toISOString().slice(0, 16).replace('T', ' ') + ' UTC'; }
+  // 2026-10-13 (owner „ano udělej a nasaď“): historie ElevenLabs přečtená naším klíčem — jestli v ní něco je a jestli mazání po
+  // vygenerování zabírá (DECISIONS 2026-10-13 (6)). Webové rozhraní ElevenLabs hlasy z API ukazovat nemusí, proto tady.
+  function historie(h) {
+    if (!h) return '<div class="vc-empty">Not available.</div>';
+    if (h.error) return '<div class="vc-empty">ElevenLabs history could not be read (' + esc(h.error) + ').</div>';
+    return '<div class="vc-meta">Items in our ElevenLabs history: <b>' + num(h.count) + (h.more ? '+' : '') + '</b> · Rúnar\u2019s voice: <b>' +
+      num(h.ours) + '</b> · newest ' + cas(h.newest) + ' · oldest ' + cas(h.oldest) + '</div>' +
+      '<div class="vc-note">Since 2026-10-13 the app deletes each new voice from this history right after it is made. If the number for' +
+      ' Rúnar\u2019s voice grows after a reading is read aloud, the deletion is not working.</div>';
+  }
   var SKUPINY = { admin: 'Admin', team: 'Team (owner & Sigrún)', tester: 'Testers', user: 'Users', unknown: 'No account' };
   var ZDROJ = { weekly: 'weekly', admin: 'on open', daily: 'daily', brake: 'BRAKE STOPPED VOICE' };
 
@@ -56,6 +67,7 @@
         '<div class="vc-note">Only voice generated in the app since 2026-09-25. The difference from the number above is older voice and tests on the ElevenLabs website.</div>' +
         '<div class="vc-cols"><div><h5>By group</h5>' + radky(d.by_group, SKUPINY) + '</div>' +
         '<div><h5>By model</h5>' + radky(d.by_model) + '</div></div>' +
+        '<h4>ElevenLabs history</h4>' + historie(d.history) +
         '<h4>Snapshots</h4>' + ((d.snapshots || []).length ? '<table class="vc-tab"><tr><th>when</th><th>credits used</th><th>limit</th><th></th></tr>' +
           d.snapshots.map(function (s) { return '<tr><td>' + den(s.taken_at) + '</td><td>' + num(s.character_count) + '</td><td>' + num(s.character_limit) +
             '</td><td>' + esc(ZDROJ[s.source] || s.source) + '</td></tr>'; }).join('') + '</table>' : '<div class="vc-empty">None.</div>');

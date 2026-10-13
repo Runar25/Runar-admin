@@ -649,7 +649,9 @@ doladit apku“*).
 - [ ] *(CODE-tune 2026-10-13, owner „ano udělej“: `elevenlabs-proxy` položku po vygenerování maže, nasazeno; zásady upravené.
       DECISIONS 2026-10-13 (6).)* **Neověřeno, že v historii něco je a že mazání zabírá:** owner v ElevenLabs → Text to Speech → historie
       žádné hlasy nenašel (2026-10-13); jestli webové rozhraní ukazuje hlasy z API, dokumentace ElevenLabs neříká. Rozhodne jen výpis
-      `GET /v1/history` naším klíčem — ten je jen v Supabase secrets (lokálně ne). Návrh ownerovi: počet a datum položek ve shrine VOICE.
+      `GET /v1/history` naším klíčem — ten je jen v Supabase secrets (lokálně ne). ✅ *(2026-10-13, owner „ano udělej a nasaď“: shrine VOICE
+      ukazuje počet položek historie, z toho Rúnarova hlasu, nejnovější a nejstarší — `voice-usage` nasazena. Owner předtím historii v
+      rozhraní ElevenLabs smazal.)* Zbývá ověřit: po přečtení čtení nahlas nesmí počet Rúnarova hlasu ve shrine VOICE vzrůst.
       **CODE-tune — historie ElevenLabs drží text čtení i zvuk; smazání účtu v Rúnaru tam nedosáhne** (nalezeno 2026-10-12 při psaní
       zásad). Ověřeno v dokumentaci API: `enable_logging` je ve výchozím stavu zapnuté a vypnout ho smí jen Enterprise; `elevenlabs-proxy`
       ani `elevenlabs-static` ho nenastavují; položka historie nese `text` a zvuk jde stáhnout. Návrh: po uložení zvuku položku smazat
