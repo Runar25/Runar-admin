@@ -1083,6 +1083,20 @@ radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'protipriklady probehly'
 check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
 
+# ㊁ Mapa nosičů (CODE-read 2026-10-13, BACKLOG „Mapa nosičů“ z 2026-08-21): ke každému pravidlu §N v CLAUDE.md stojí v MAPA skriptu,
+# která kontrola, hook nebo nástroj ho drží, nebo „nevynutitelné + proč“. Padá na nové § bez řádku, řádek pro zrušené §, nosič, který
+# neexistuje nebo ho smoke nepouští. Pravidla o bumpu a o délce doců byla jen próza a obě se porušila — pravidlo bez nosiče je přání.
+print('\n' + chr(0x3281) + ' MAPA NOSIČŮ PRAVIDEL (verify_nosice.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_nosice.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+r2 = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_nosice.js'), '--test'],
+                    capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0 and r2.returncode == 0
+output = (r2.stdout + r.stdout + r.stderr + r2.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola mapy nosicu probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
