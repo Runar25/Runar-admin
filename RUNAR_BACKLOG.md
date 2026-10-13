@@ -762,7 +762,8 @@ Procházka je tím úplná.
 
 ## Ověřit naživo, než rozešleš odkaz
 
-- [ ] **Owner → CODE-tune: při otevření appky logo Chrome** (hlášení 457a5a6f, 2026-10-13: *„dřív to nedělal“*). Server je v pořádku,
+- [x] ✅ *(owner 2026-10-13: „teď jsem to zkusil znova a už se logo chrome neobjevilo“ — jednorázové, příčina neověřená; hlášení
+      uzavřeno.)* **Owner → CODE-tune: při otevření appky logo Chrome** (hlášení 457a5a6f, 2026-10-13: *„dřív to nedělal“*). Server je v pořádku,
       ověřeno 2026-10-13 v produkci: service worker aktivní a řídí stránku, manifest i všechny čtyři ikony 200, manifest od května beze
       změny. Owner 2026-10-13: Android, appka z plochy, logo jen chvíli při spuštění, nikdy dřív. Na Androidu 12+ ukáže systém při
       spuštění ikonu aplikace, která se spouští — u zástupce na ploše je to Chrome, u nainstalované appky Rúnar (neověřeno na jeho
