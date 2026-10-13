@@ -58,7 +58,9 @@ const rekni = (ok, co) => { if (!ok) fail++; console.log((ok ? 'OK    ' : 'FAIL 
   rekni(/\.from\("readings"\)\s*\n?\s*\.select\([^)]*\)\.eq\("id", reading_id\)\.eq\("user_id", userId\)/.test(el), 'čtení se hledá jen mezi vlastními (user_id)');
   rekni(/pf\?\.founding_reading_id === r\.id\) return json\(\{ error: "voice_not_offered" \}/.test(el), 'zakládací Norny hlas nedostanou');
   rekni(/const nonce = await over\(/.test(el) && /if \(!nonce\) return json\(\{ error: "voice_unbound" \}/.test(el), 'neuložené čtení jen s platným podpisem');
-  const iZamek = el.indexOf('from("voice_tickets").insert'), iEl = el.indexOf('api.elevenlabs.io');
+  // 2026-10-13: placené volání hlasu (text-to-speech), ne první zmínka domény — nad handlerem stojí mazání historie (smazHistorii),
+  // které běží až PO vygenerování; s indexOf('api.elevenlabs.io') kontrola po 8c12069 falešně zčervenala a zastavila push všem.
+  const iZamek = el.indexOf('from("voice_tickets").insert'), iEl = el.indexOf('api.elevenlabs.io/v1/text-to-speech');
   rekni(iZamek !== -1 && iEl !== -1 && iZamek < iEl, 'zámek „jednou“ vzniká PŘED voláním ElevenLabs');
   rekni(/zErr\.code === "23505"\) return json\(\{ error: "voice_used" \}/.test(el), 'druhý pokus o týž hlas → voice_used');
   rekni((el.match(/await pustZamek\(\)/g) || []).length >= 3, 'selhání ElevenLabs zámek uvolní (síť, odpověď, tělo)');

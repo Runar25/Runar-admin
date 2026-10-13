@@ -229,6 +229,9 @@ PRIPADY = [
  ('chyti', 'verify_hlas_ke_cteni.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'replace', '.eq("id", reading_id).eq("user_id", userId)', '.eq("id", reading_id)'),
  ('chyti', 'verify_hlas_ke_cteni.js', 'v2/runar-journal.js', 'regex', r'        \$\{_jHlas\(e, i\)\}\r?\n', ''),
  ('nesmi', 'verify_hlas_ke_cteni.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'append', '', '\n// komentář navíc — správný kód\n'),
+ # 2026-10-13 (CODE-tune): zámek „jednou“ zmizí → ㊸ musí spadnout; zmínka domény ElevenLabs nad zámkem (jako mazání historie) nesmí.
+ ('chyti', 'verify_hlas_ke_cteni.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'replace', 'from("voice_tickets").insert({ id: zamek, user_id: userId })', 'from("voice_tickets").select("id").eq("id", zamek)'),
+ ('nesmi', 'verify_hlas_ke_cteni.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'replace', 'const EL_API_KEY     = Deno.env.get("ELEVENLABS_API_KEY");', 'const EL_API_KEY     = Deno.env.get("ELEVENLABS_API_KEY");   // api.elevenlabs.io (jen zmínka)'),
  # strop 5 pro všechny se nesmí vrátit; strop testera musí být živý (⑨, 2026-10-11)
  ('chyti', 'verify_monthly_limits.js', 'v2/runar-config.js', 'append', '', '\nconst VOICE_MONTHLY_' + 'LIMIT = 5;\n'),
  ('chyti', 'verify_monthly_limits.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'replace', 'if (vprof?.is_tester && vUsed >= VOICE_MONTHLY_LIMIT_TESTER) {', 'if (false) {'),
