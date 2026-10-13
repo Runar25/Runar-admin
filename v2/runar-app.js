@@ -823,9 +823,13 @@ function _heroDownStav() {
 function _posunPodListu(el, spodniHrana, mezera) {
   if (!el) return;
   var lista = document.querySelector('.topbar'), r = el.getBoundingClientRect();
-  var cil = (spodniHrana ? r.bottom : r.top) + window.pageYOffset - (lista ? lista.offsetHeight : 0) - (mezera || 0);
+  _posunNa((spodniHrana ? r.bottom : r.top) + window.pageYOffset - (lista ? lista.offsetHeight : 0) - (mezera || 0));
+}
+// Úplně nahoru (Start over — owner 2026-10-13: „start over nahoře u fotky“). Jeden posun pro oba pomocníky, ať ohled na
+// prefers-reduced-motion nestojí dvakrát.
+function _posunNa(y) {
   var klid = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  window.scrollTo({ top: Math.max(0, cil), behavior: klid ? 'auto' : 'smooth' });
+  window.scrollTo({ top: Math.max(0, y), behavior: klid ? 'auto' : 'smooth' });
 }
 function scrollToReading() {
   var p = document.getElementById('hero-down');

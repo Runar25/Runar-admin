@@ -446,7 +446,8 @@ function _visitorJoin(on) {
   var p = document.getElementById('apane-reading');
   if (p) p.classList.toggle('host-drawn', !!on);
   var el = document.getElementById('trial-end');
-  if (on && el) setTimeout(function () { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, DELAY_SCROLL);
+  // 2026-10-13 (owner: „platí všude“): výzva horní hranou pod lištou jako ostatní skoky, dřív na střed obrazovky
+  if (on && el) setTimeout(function () { _posunPodListu(el, false, 8); }, DELAY_SCROLL);
 }
 
 function startReading() {
@@ -481,9 +482,10 @@ function startReading() {
   document.getElementById('reader-rune-card').style.display = 'block';
   document.getElementById('reader-output').style.display = 'none';
   buildGrid(); setSt('st-setup', ''); setSt('st-reader', '');
-  // 2026-10-13 (hlášení ownera 1e562586, b674e012): fotka i formulář zmizely, stránka zůstala posunutá → obrazovka ležela na konci
-  // mřížky. Teď přistane hned pod čarou záložek: nahoře výběr čtení (Single a spready), pod ním runy od Fehu.
-  _posunPodListu(document.querySelector('.app-tabs'), true);
+  // 2026-10-13 (hlášení ownera 1e562586, b674e012 + jeho screenshot téhož dne): fotka i formulář zmizely, stránka zůstala posunutá →
+  // obrazovka ležela na konci mřížky. Teď začíná horní hranou karty tahu: nahoře výběr čtení (Single a spready), pod ním runy od Fehu.
+  // (Ráno téhož dne cíl = čára záložek; mezi ní a kartou ale stojí pruh, takže karta zůstala níž — owner poslal, jak to má vypadat.)
+  _posunPodListu(document.getElementById('reader-rune-card'), false, 8);
 }
 
 
@@ -661,6 +663,14 @@ function _updateSpread7Slots() { _updateSpreadSlots(_SPREAD_SLOT_CFG.horseshoe);
 // ─── YGGDRASIL (9 rune) helpers ──────────────────────────────────────────
 function _updateSpread9Slots() { _updateSpreadSlots(_SPREAD_SLOT_CFG.yggdrasil); }
 
+// Mřížka pryč, výklad sem (single i všechny spready). 2026-10-13 (owner: „obrazovka začíná naspodu místo nahoře… platí všude“):
+// mřížka nad výkladem zmizela a stránka zůstala posunutá → obrazovka ležela dole ve výkladu. Teď začíná jeho horní hranou.
+function _ukazVyklad() {
+  document.getElementById('reader-rune-card').style.display = 'none';
+  var out = document.getElementById('reader-output');
+  out.style.display = 'block';
+  _posunPodListu(out, false, 8);
+}
 async function readRune() {
   if (_spreadMode === 'kriz') {
     // Tier check — block Visitor (anonymous) only
@@ -669,8 +679,7 @@ async function readRune() {
       _setSpreadMode('single'); return;
     }
     if (_spreadCount(_spread5Runes) === _spreadN() && !readerRune) {
-      document.getElementById('reader-rune-card').style.display = 'none';
-      document.getElementById('reader-output').style.display = 'block';
+      _ukazVyklad();
       readerTexts = {}; voiceGenerated = {};
       await _generateSpread5Reading();
       return;
@@ -689,8 +698,7 @@ async function readRune() {
       _setSpreadMode('single'); return;
     }
     if (_spreadCount(_spread7Runes) === _spreadN() && !readerRune) {
-      document.getElementById('reader-rune-card').style.display = 'none';
-      document.getElementById('reader-output').style.display = 'block';
+      _ukazVyklad();
       readerTexts = {}; voiceGenerated = {};
       await _generateHorseshoeReading();
       return;
@@ -716,8 +724,7 @@ async function readRune() {
       showToast(t('yggdrasil_power_toast'));
     }
     if (_spreadCount(_spread9Runes) === _spreadN() && !readerRune) {
-      document.getElementById('reader-rune-card').style.display = 'none';
-      document.getElementById('reader-output').style.display = 'block';
+      _ukazVyklad();
       readerTexts = {}; voiceGenerated = {};
       await _generateYggdrasilReading();
       return;
@@ -736,8 +743,7 @@ async function readRune() {
       _setSpreadMode('single'); return;
     }
     if (_spreadCount(_spread3Runes) === _spreadN() && !readerRune) {
-      document.getElementById('reader-rune-card').style.display = 'none';
-      document.getElementById('reader-output').style.display = 'block';
+      _ukazVyklad();
       readerTexts = {}; voiceGenerated = {};
       await _generateNornsReading();
       return;
@@ -751,8 +757,7 @@ async function readRune() {
   }
   // Single rune mode (original)
   if (!readerRune) return;
-  document.getElementById('reader-rune-card').style.display = 'none';
-  document.getElementById('reader-output').style.display = 'block';
+  _ukazVyklad();
   const u = readerUser, drawn = readerRune, life = u.lifeRune;
   _renderLifeBadge(life);
   readerTexts = {}; voiceGenerated = {};
@@ -1186,7 +1191,7 @@ function drawAnother() {
   _visitorJoin(false);
   if (currentUser && userTier === 'rune_seeker' && userFreeBalance <= 0 && userCredits <= 0) { updateAuthUI(); return; }
   document.getElementById('reader-rune-card').style.display = 'block';
-  _posunPodListu(document.querySelector('.app-tabs'), true);   // táž vada jako po Begin: čtení nad mřížkou zmizelo (2026-10-13)
+  _posunPodListu(document.getElementById('reader-rune-card'), false, 8);   // táž vada jako po Begin: čtení nad mřížkou zmizelo (2026-10-13)
   document.querySelectorAll('#reader-grid .rb').forEach(b => b.classList.remove('on'));
   document.getElementById('reader-rune-info').textContent = '';
   document.getElementById('btn-speak').disabled = true;
@@ -1234,6 +1239,7 @@ function resetReader() {
     const el = document.getElementById(id); if (el) el.value = '';
   });
   _hideQuestionConsent();   // 2026-10-12: otázka je pryč, políčko souhlasu k ní taky (DECISIONS 2026-10-12 (7))
+  _posunNa(0);   // 2026-10-13 (owner, schválený náhled): Start over = úplně nahoru k Rúnarově fotce, ne konec stránky
   readerUser.intention = '';
   buildPills();
 }
