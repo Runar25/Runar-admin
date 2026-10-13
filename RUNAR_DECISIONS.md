@@ -11259,5 +11259,5 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   bez přemýšlení; jeho znění se ladilo na 4.8 a uložené verdikty k porovnání nejsou — čísla z doby před 2026-10-13 jsou jiný přístroj
   (stojí v hlavičce nástroje). `gen_direct` bere model produkce (sol), `attribute_prompt` Opus 5, `gen_batch` zapisuje model z
   `usage.model`. Ceníky a popisky 4.8 zůstávají: v DB jsou čtení, která psal.
-- **Nasazení:** změna `claude-proxy` platí až po nasazení — čeká na ownerovo „nasaď“.
+- **Nasazeno 2026-10-13** (owner *„nasad“*): `claude-proxy` z f8c5850. Ověřeno: volání bez přihlášení 401, CORS preflight 204.
 - Affected doc(s): žádný jiný (řetěz bydlí jen v `MODELS`, §20).
