@@ -47,6 +47,29 @@ def check(label, passed, detail=''):
     else:
         fail_count += 1
 
+# Předspuštění pomalých kontrol (CODE-read 2026-10-13; owner „proč ty commity trvají tak dlouho?“ → „ok udělej“): smoke trval 159 s
+# a ㊽ čitelnost (29 s) s ㊺ Where to start (28 s) — každá s vlastním prohlížečem bez okna — byly nejpomalejší. ㊺ čeká hlavně na appku
+# (okno naskočí 1,8 s po načtení, stránka se načte osmkrát), zkrátit ji nejde bez ztráty testu. Proto se obě pustí HNED na začátku na
+# pozadí (každá má vlastní server na volném portu a vlastní profil prohlížeče) a na svém místě se jen vyzvedne výsledek. Výstup jde do
+# dočasného souboru, ne do roury — plná roura by kontrolu zastavila.
+import tempfile
+_PREDEM = {}
+def predem(skript):
+    out = tempfile.TemporaryFile(mode='w+', encoding='utf-8')
+    _PREDEM[skript] = (subprocess.Popen(['node', os.path.join(ROOT, 'scripts', skript)], stdout=out, stderr=subprocess.STDOUT,
+                                        encoding='utf-8'), out)
+def vysledek(skript):
+    if skript not in _PREDEM:
+        return subprocess.run(['node', os.path.join(ROOT, 'scripts', skript)], capture_output=True, text=True, encoding='utf-8')
+    proc, out = _PREDEM.pop(skript)
+    proc.wait()
+    out.seek(0)
+    text = out.read()
+    out.close()
+    return subprocess.CompletedProcess(proc.args, proc.returncode, text, '')
+for _s in ('verify_citelnost.js', 'verify_wts.js'):
+    predem(_s)
+
 print()
 print('══════════════════════════════════════════')
 print('  RÚNAR SMOKE TEST')
@@ -804,8 +827,7 @@ check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode !=
 # skutečnou appkou — jednou, EN i IS, let do „How a reading works“ na telefonu i počítači, tlačítko do Kolekce, bez animací. První verze
 # let neměla (popisek uprostřed obrazovky = tam, kde stojí okno), proto se let MĚŘÍ. DECISIONS 2026-10-11 (65).
 print('\n' + chr(0x32BA) + ' OKNO WHERE TO START (verify_wts.js)')
-r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_wts.js')],
-                   capture_output=True, text=True, encoding='utf-8')
+r = vysledek('verify_wts.js')   # předspuštěno na začátku (viz „Předspuštění pomalých kontrol“)
 radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola okna where to start probehla'
 check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
@@ -837,8 +859,7 @@ check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode !=
 # „not professional advice“ mělo 2,41 : 1 (--muted přes průhlednost ≈ --dim, které §5 na text zakazuje) a nic to nehlídalo. Skutečný
 # prohlížeč: reader jako návštěvník, nápověda, zásady, EN i IS; každý viditelný text aspoň 3 : 1, slabší než 4,5 jen vypíše.
 print('\n' + chr(0x32BD) + ' ČITELNOST (verify_citelnost.js)')
-r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_citelnost.js')],
-                   capture_output=True, text=True, encoding='utf-8')
+r = vysledek('verify_citelnost.js')   # předspuštěno na začátku (viz „Předspuštění pomalých kontrol“)
 radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola citelnosti probehla'
 check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
