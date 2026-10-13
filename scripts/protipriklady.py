@@ -39,7 +39,7 @@ APP = 'v2/runar-app.js'
 PRIPADY = [
  # ⑮ §16 output B (CODE-read 2026-10-13): commitnuté rozhodnutí slíbí opravu docu, který se po něm nepohnul (neexistuje)
  ('chyti', 'verify_decisions_followthrough.js', 'RUNAR_DECISIONS.md', 'commit_append', '',
-  '\n## 2026-10-13 (99) — protipříklad\n\n- Affected doc(s): `docs/protipriklad-' + 'xyz.md` — v témže commitu.\n'),
+  '\n## 2026-10-13 (99) — protipříklad\n\n- Affected doc(s): `docs/protipriklad-' + 'xyz.' + 'md` — v témže commitu.\n'),
  # ㊃ kalkulačka návratnosti (CODE-read 2026-10-13): položka nákladů změněná bez součtu
  ('chyti', 'verify_payback_pricing.js', 'RUNAR_PRICING.md', 'replace', '| Supabase | 0 ✔ | 25 |', '| Supabase | 0 ✔ | 45 |'),
  # ㊂ zákazy a cesty (CODE-read 2026-10-13): po jednom útoku na každou část
