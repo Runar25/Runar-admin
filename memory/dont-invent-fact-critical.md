@@ -21,5 +21,10 @@ přesvědčivěji vyplní mezeru něčím, co zní správně. U 🔄 (tiery, cen
 ownerův záměr, opraví se datovaným rozhodnutím); u 🔒/📜 je vymyšlená hodnota tichá vada,
 kterou nikdo nepozná, dokud ji nechytí externí zdroj nebo native mluvčí.
 
+- **Návod ke klikání v cizí aplikaci** (Brevo, GitHub, GoDaddy, Supabase…) je taky 🔒 fakt: nikdy z hlavy. Dohledej aktuální
+  stránku nápovědy té aplikace, nebo si vyžádej screenshot a piš přesně podle něj; co nevidíš, řekni. 2026-10-13 CODE-web
+  3× za sebou radil naslepo (číslo seznamu „v adrese“, šablona Brevo, „Show advanced options“) — owner: *„nemáš si nic domýšlet,
+  ale máš vždy přesně najít, jak to je!! vždy!!!“*
+
 Sesterské: §19.2 (žádné tiché zelené), [[verify-agent-claims-about-code]] (handoff = žádost),
 [[ask-owner-for-checks-you-cannot-run]] (co sám neověříš, vyžádej), [[is-done-together-not-for-sigrun]].
