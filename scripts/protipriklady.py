@@ -267,11 +267,30 @@ def cti_bin(p):
         return b''
 
 
+_HEADY = None
 def v_head(rel):
     # cíl z HEAD, ne z pracovního stromu: útočí se na kopii HEAD a cizí rozdělaná práce by klíč měnila (2026-10-11: z worktree pre-push
     # se proto pustilo 12 útoků z 19, ač se nic nezměnilo)
-    r = subprocess.run(['git', '-C', ROOT, 'show', 'HEAD:' + rel], capture_output=True, env=ENV)
-    return r.stdout.replace(b'\r\n', b'\n') if r.returncode == 0 else b''
+    # 2026-10-13 (CODE-read, zrychlení smoke): všechny cíle najednou jedním `git cat-file --batch` — dřív `git show` pro každý ze 145 případů,
+    # ~5,6 s i v běhu, kdy se žádný útok nespouští. Chybějící soubor = b'' jako dřív.
+    global _HEADY
+    if _HEADY is None:
+        _HEADY = {}
+        cile = sorted(set(x[2] for x in PRIPADY))
+        r = subprocess.run(['git', '-C', ROOT, 'cat-file', '--batch'], input=''.join('HEAD:' + c + '\n' for c in cile).encode('utf-8'),
+                           capture_output=True, env=ENV)
+        buf, i = r.stdout, 0
+        for c in cile:
+            nl = buf.find(b'\n', i)
+            if nl < 0:
+                break
+            hlava = buf[i:nl].decode('utf-8', 'replace').split(' ')
+            i = nl + 1
+            if len(hlava) == 3 and hlava[1] == 'blob':
+                n = int(hlava[2])
+                _HEADY[c] = buf[i:i + n].replace(b'\r\n', b'\n')
+                i += n + 1
+    return _HEADY.get(rel, b'')
 
 
 def klic(pripad, ja):
