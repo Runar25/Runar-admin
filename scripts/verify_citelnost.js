@@ -223,9 +223,19 @@ const srv = http.createServer((req, res) => {
 
     // (F) selhané načtení profilu: přihlášený (podvržený) bez data narození v appce, databáze zablokovaná → oba pokusy selžou
     const pf = await ev(`(async () => {
+      // 2026-10-13 (CODE-read, owner „ok udělej“ na zrychlení smoke): chyba profilu podvržená přímo v sb.from('user_profiles'). Do té doby
+      // ji dělala jen zablokovaná síť — supabase-js pak dotaz sám několikrát opakoval s čekáním a dva pokusy appky trvaly ~13 s z 29 s
+      // celé kontroly. Appka dostane tutéž odpověď s chybou (error), takže se cvičí táž větev (if (error) throw → druhý pokus → hláška).
+      const realFrom = sb.from;
+      sb.from = function (tb) {
+        if (tb !== 'user_profiles') return realFrom.call(sb, tb);
+        const res = Promise.resolve({ data: null, error: { message: 'blocked in test' } });
+        const q = { select: () => q, eq: () => q, maybeSingle: () => res, then: res.then.bind(res), catch: res.catch.bind(res) };
+        return q;
+      };
       currentUser = { id: 'u1', email: 'tester@example.com' }; userTier = 'free'; readerUser = {}; _lifeRuneText = null;
       showAppTab('liferune');
-      await fetchUserProfile('u1');
+      try { await fetchUserProfile('u1'); } finally { sb.from = realFrom; }
       const vis = (id) => { const el = document.getElementById(id); if (!el) return false;
         for (let e = el; e; e = e.parentElement) if (getComputedStyle(e).display === 'none') return false; return true; };
       const r = { selhal: profileLoadFailed, nacteno: profileLoaded, chyba: vis('tree-loading') ? (document.getElementById('tree-loading-text') || {}).textContent : null,
