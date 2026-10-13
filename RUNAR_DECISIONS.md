@@ -11235,3 +11235,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Mění:** 2026-10-10 (18), část o oknech: `data-rune-glyph` kreslí `runeSvg(r, {frame:true})`, kámen jako v Kolekci, v plné sytosti
   (dřív průhlednost 0,5–0,7). Všechna tři okna: Where to start, souhlas testera, smazání účtu. Runa uvnitř textu popisků zůstává holou linkou.
 - Affected doc(s): `CLAUDE.md` §5 (výčet, kde je kámen) — v témže commitu.
+
+## 2026-10-13 (3) — Předpoklad 2026-06-09 „Island = EEA → platby v iOS appce na webu, App Store cut 0 %“ neplatí; rozhodnutí čeká na ownera
+
+- **Zjistil:** CODE-web 2026-10-13 při rešerši obchodů pro ownera (*„nechci, aby sis to vymýšlel, ale přesně věděl“*).
+- **Co neplatí:** Apple pouští platební volby EU v islandském obchodě jen hudebním streamovacím appkám (stránka Payment options
+  on the App Store in the EU, poznámka u `is`); DMA zatím není převzaté do Dohody o EHP (EFTA). Pravidla 3.1.1 zakazují v appce
+  odkaz na nákup mimo IAP (mimo obchod USA) i odemykání vlastním kódem/QR; 3.1.3(b) pouští obsah koupený na webu jen tehdy,
+  když jde koupit i přes IAP. Riziko navíc: 4.2 (appka nesmí být jen přebalený web) — Capacitor obal je na to typický adept.
+- **Platí dál:** web a PWA bez obchodu (QR z Rúnakortu → prohlížeč) — na ně se to nevztahuje.
+- **K rozhodnutí (owner):** iOS appka s IAP (15 %), nebo bez nákupu; jak naložit s uplatněním kódu Rúnakortu v iOS appce.
+- Affected doc(s): `RUNAR_PRICING.md` („PWA vs Native App“) — opraveno v témže commitu.

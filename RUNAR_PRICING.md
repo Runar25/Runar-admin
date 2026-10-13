@@ -528,17 +528,23 @@ Premium = ceremonial mód (Rúnar ví že piješ kakao)
 
 ## PWA vs Native App
 
-### Rozhodnutí: subscriptions zůstávají na webu
-Platby neprocházejí App Store ani Google Play IAP.
-Island je EEA → Apple musí umožnit external purchase link (Digital Markets Act, březen 2024).
-Model: appka slouží ke čtení, subscription se platí na runar25.github.io. Žádný App Store cut.
+### Platby v appkách z obchodů — ⚠️ předpoklad z 2026-06-09 pro Island neplatí (CODE-web 2026-10-13, DECISIONS 2026-10-13 (3))
+Do 2026-10-13 tu stálo „Island je EEA → Apple musí umožnit external purchase link (DMA), žádný App Store cut“. Ověřeno u Applu:
+platební volby EU platí pro islandský obchod **jen pro hudební streamovací appky**; jinde odkaz ani tlačítko na nákup mimo IAP
+nesmí (výjimka jen obchod USA). DMA navíc v EHP zatím převzaté není. Pravidla 3.1.1: odemknout funkci kódem/QR vlastním
+mechanismem nesmí; 3.1.3(b): co si člověk koupil na webu, smí v appce používat, jen když se to dá koupit i přes IAP.
+→ Rúnakort a předplatné v iOS appce = IAP (provize 15 % v Small Business Programu do 1 M USD), nebo appka bez nákupu.
+Google Play (od 2026-06-30, EHP): poplatek za službu 10 % (i předplatné) + 5 % za Play Billing; při odkazu na web jen 10 % —
+zda program platí i pro Island, Google nevypisuje (neověřeno). Rozhoduje owner.
+Zdroje: developer.apple.com/app-store/review/guidelines (3.1.1, 3.1.3, 4.2) · developer.apple.com/support/communication-and-promotion-of-offers-on-the-app-store-in-the-eu · developer.apple.com/app-store/small-business-program ·
+android-developers.googleblog.com/2026/06/play-expanded-billing.html
 
 ### Skutečné náklady nativní appky
 | Položka | Cena | Frekvence |
 |---------|------|-----------|
 | Apple Developer Program | $99/rok | Roční |
 | Google Play Developer | $25 | Jednorázově |
-| App Store cut (IAP) | 0 % | Subscriptions na webu |
+| Provize obchodu | Apple IAP 15 % (Small Business) · Google 10–15 % | viz sekce výš |
 | Capacitor development | 2–4 týdny práce | Jednorázově |
 | App update maintenance | ~1–2× ročně | iOS/Android OS updates |
 
