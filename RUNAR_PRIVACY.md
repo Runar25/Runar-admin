@@ -146,7 +146,7 @@ tabulka „What is held“ v `v2/runar-privacy.html` (EN i IS) — tady se neopi
 | účet a přihlášení | e-mail, jméno a fotka z Google (`auth.users`), kód | smlouva | Supabase · Brevo · Google (přihlášení, spíš samostatný správce) | — / DPF |
 | čtení, deník, Ask | jméno (volitelné), volby, volná otázka (⚠️ může být čl. 9), den + měsíc narození, text čtení | smlouva · otázka jen s výslovným souhlasem (čl. 9 odst. 2 a, od 2026-10-12; do té doby tu stálo „čl. 9 nevyřešen“) | OpenAI · Anthropic (záloha) · Supabase | SCC (OpenAI, Anthropic) |
 | hlas | text čtení, uložené audio | smlouva | ElevenLabs · Supabase | DPF + SCC |
-| kredity a limity | zůstatky, měsíční jednotky, `credit_ledger`, `voice_usage` | smlouva · oprávněný zájem (účetnictví, prevence zneužití) | Supabase | — |
+| kredity a limity | zůstatky, měsíční jednotky, `credit_ledger`, `voice_usage` · IP adresa krátce při uplatnění kódu karty (`rate_limits`, od 2026-10-13 v zásadách) | smlouva · oprávněný zájem (účetnictví, prevence zneužití) | Supabase | — |
 | rozbor kvality | texty čtení a vstupy, pseudonymizovaně, bez odhlášených | oprávněný zájem (opt-out) | interně; vývojová session → Anthropic (kontrola, nález 5) | SCC |
 | testeři | souhlas, čtení „pro někoho“, hlášení | výslovný souhlas (čl. 9 odst. 2 a) | Supabase · Slack (jen metadata hlášení, bez osobních údajů) | — |
 | zálohy | celá DB šifrovaně (AES-256) | oprávněný zájem (obnova) | Google Drive | DPF + SCC (Workspace s přijatým CDPA — owner 2026-10-13) |
