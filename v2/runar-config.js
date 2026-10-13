@@ -338,6 +338,9 @@ const TIER_LIMITS = {
   },
   rune_seeker: {
     onboarding:   1,     // 1 free reading at registration
+    // Volné čtení má zúžené volby: prvních N oblastí a hledání (_volneCteniDalsi, runar-app.js). Do 2026-10-13 natvrdo 3 a 1 v buildPills (§10).
+    free_reading_areas: 3,
+    free_reading_seeks: 1,
     journal_entries: 5,
     onboarding_label_en: 'one free reading',
     onboarding_label_is: 'ein ókeypis spá',   // 2026-10-10: „frjáls“ = svobodný (kalk z EN „free“), zdarma = ókeypis („ókeypis aðgangur“ 596×)

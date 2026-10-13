@@ -11261,3 +11261,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   `usage.model`. Ceníky a popisky 4.8 zůstávají: v DB jsou čtení, která psal.
 - **Nasazeno 2026-10-13** (owner *„nasad“*): `claude-proxy` z f8c5850. Ověřeno: volání bez přihlášení 401, CORS preflight 204.
 - Affected doc(s): žádný jiný (řetěz bydlí jen v `MODELS`, §20).
+
+## 2026-10-13 (5) — Zúžené volby (oblast, hledání) jen před volným čtením, ne po vyčerpání kreditů
+
+- **Rozhodl:** owner 2026-10-13 se screenshotem po vyčerpání kreditů: *„proč vidím omezené možnosti volby AREA, seeking? … je asi
+  zbytečné tímhle omezovat vizuálně čtení, když stejně nemůžu nic udělat, pokud nekoupím kredity, a hlavně už jsem koupené měl
+  a dělal čtení, za které jsem zaplatil.“*
+- **Co bylo:** zámek platil pro každého Rune Seekera bez kreditu — i bez volného čtení, kdy se číst nedá tak jako tak.
+- **Co je (CODE-tune):** zamyká se, jen když další čtení bude to volné (volné čtení zbývá, kredit ne) — `_volneCteniDalsi` v
+  `runar-app.js`, jedno místo pro popisky i pilulky. Bez volného čtení i kreditu jsou volby otevřené a pruh nad formulářem nabízí kartu.
+  Počty odemčených voleb přešly do `TIER_LIMITS.rune_seeker` (do té doby natvrdo v `buildPills`, §10). Návštěvník beze změny.
+- Affected doc(s): žádný jiný.

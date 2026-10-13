@@ -868,11 +868,18 @@ function _updateDobLabel() {
   // (dob-lbl, r-day/r-month/r-year): ty prvky v runar-reader.html od přestavby formuláře nejsou, kód sahal do prázdna.
 }
 
+// Zúžené volby (oblast, hledání) patří jen k VOLNÉMU čtení. 2026-10-13 (owner po vyčerpání kreditů: „je asi zbytečné tímhle omezovat
+// vizuálně čtení, když stejně nemůžu nic udělat, pokud nekoupím kredity, a hlavně už jsem koupené měl“): zamyká se, jen když další
+// čtení bude to volné — volné čtení zbývá a kredit ne. Do té doby i bez volného čtení a bez kreditu, kdy se číst nedá tak jako tak
+// (pruh nad formulářem nabízí kartu). Jediné místo podmínky pro popisky i pilulky (§18).
+function _volneCteniDalsi() {
+  return !!currentUser && userTier === 'rune_seeker' && userCredits <= 0 && userFreeBalance > 0;
+}
 // Area of Life + Seeking + Question labels with tier lock hints
 function _updateAreaSeekLabels() {
   const albl = document.getElementById('area-lbl');
   const _isVisitor = !currentUser;
-  const _isRSnoCredits = currentUser && userTier === 'rune_seeker' && userCredits <= 0;
+  const _isRSnoCredits = _volneCteniDalsi();
   const _lockHint = _isVisitor
     ? ' <span class="visitor-lock-hint">' + tp('lock_become_rs', { tier: tierLabel('rune_seeker', lang) }) + '</span>'
     : _isRSnoCredits
@@ -1449,9 +1456,9 @@ function _syncPillLang() {
 function buildPills() {
   _syncPillLang();
   const _isVisitor = !currentUser;
-  const _isRSnoCredits = currentUser && userTier === 'rune_seeker' && userCredits <= 0;
-  const _areaUnlocked = _isRSnoCredits ? 3 : undefined;
-  const _seekUnlocked = _isRSnoCredits ? 1 : undefined;
+  const _volne = _volneCteniDalsi(), _lim = TIER_LIMITS.rune_seeker;
+  const _areaUnlocked = _volne ? _lim.free_reading_areas : undefined;
+  const _seekUnlocked = _volne ? _lim.free_reading_seeks : undefined;
   buildPillGroup('area-pills', AREAS[lang], 'area', _areaUnlocked);
   buildPillGroup('seek-pills', SEEKS[lang], 'seek', _seekUnlocked);
   buildPillGroup('intention-pills', INTENTIONS[lang] || INTENTIONS.en, 'intention');
