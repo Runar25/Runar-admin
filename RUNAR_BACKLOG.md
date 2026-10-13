@@ -882,3 +882,12 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
 - [ ] **Pro OWNERA — Rapyd** *(owner 2026-10-12: totéž co Shopify — dodělá se, pak JEDEN souhrnný postup)*: smí účet Agndofy prodávat přes Rapyd Hosted Checkout / odkaz k platbě na therunekeeper.com, a jaký tarif
   má Shopify Agndofy (u cizí brány Shopify bere příplatek, Basic 2 %)? Rozhodne, jestli Rúnakort půjde přes Shopify, nebo rovnou Rapyd.
   Fyzické runy jdou přes Shopify vždy. Kupovat jde pět balíčků (`CARD_PACKS`).
+- [ ] **Obchody před spuštěním** (rešerše CODE-web 2026-10-13; poplatky a provize v `RUNAR_PRICING.md` „PWA vs Native App“, platby v iOS
+  → DECISIONS 2026-10-13 (3), rozhoduje owner). Android: táž PWA zabalená přes Trusted Web Activity (Bubblewrap) + `.well-known/assetlinks.json`
+  na doméně appky. Účty pod Agndofa ehf. potřebují D-U-N-S (Apple i Google). iOS: když appka nabídne přihlášení Googlem, Apple podle
+  pravidla 4.8 chce i rovnocenné přihlášení (prakticky Sign in with Apple) — přesné znění 4.8 neověřeno. Jméno: v obou obchodech už je
+  „Runar: AI Chat & Runes“ (runar.app, AI věštění z run) a na Google Play „Runar“ (com.tnco.runar) — název v obchodě musí být jiný,
+  ochrannou známku owner řešit nechce (2026-10-13). Odznaky obchodů na webu až s živou appkou, jen oficiální soubory.
+- [ ] **Landing — právní minimum** (2026-10-13): patička s údaji firmy podle zákona 30/2002 (jméno, adresa, e-mail, kennitala, VSK —
+  údaje dodá owner; přesný článek zákona nestažen, althingi.is 403), věta o účelu u formuláře + odkaz na zásady, zásady doplnit
+  o registraci na webu. Cookie lišta jen když přibude analytika (zákon 70/2022; landing žádné cookies nemá).
