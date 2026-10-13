@@ -80,17 +80,44 @@ function tucne(text) {
   return m;
 }
 
+// RYCHLOST (2026-10-13, CODE-read; owner „proč ty commity trvají tak dlouho?“): dřív `git show BASE:soubor` zvlášť pro každý z ~90 docs
+// a pamětí — 90 procesů gitu po ~80 ms = 7,6 s z celé kontroly. Teď JEDEN `git cat-file --batch` pro všechny; výsledek stejný (chybějící
+// soubor = null jako dřív).
+function headVse(rels) {
+  const out = new Map();
+  let buf;
+  try {
+    buf = execSync('git cat-file --batch', { cwd: ROOT, input: rels.map((r) => BASE + ':' + r).join('\n') + '\n',
+                                             stdio: ['pipe', 'pipe', 'ignore'], maxBuffer: 1 << 28 });
+  } catch (e) { return out; }   // není repo → prázdný předchozí stav (jako dřív)
+  let i = 0;
+  for (const rel of rels) {
+    const nl = buf.indexOf(10, i);
+    if (nl < 0) break;
+    const hlava = buf.slice(i, nl).toString('utf8');
+    i = nl + 1;
+    const m = hlava.match(/^[0-9a-f]+ blob (\d+)$/);
+    if (!m) continue;                                  // „… missing“ = soubor v BASE není
+    const n = +m[1];
+    out.set(rel, buf.slice(i, i + n).toString('utf8'));
+    i += n + 1;                                        // obsah + koncový \n
+  }
+  return out;
+}
+
 const ted = new Map();     // klíč → [soubory]
 const drive = new Map();   // klíč → počet v HEAD
 let bezGitu = true;        // shodí se na false, jakmile se povede přečíst cokoli z HEAD
-for (const rel of kanon()) {
+const SOUBORY = kanon();
+const HEADY = headVse(SOUBORY);
+for (const rel of SOUBORY) {
   const p = path.join(ROOT, rel);
   if (!fs.existsSync(p)) continue;
   for (const [k, n] of tucne(fs.readFileSync(p, 'utf8'))) {
     if (!ted.has(k)) ted.set(k, []);
     for (let i = 0; i < n; i++) ted.get(k).push(rel);
   }
-  const head = git('show ' + BASE + ':"' + rel + '"');
+  const head = HEADY.has(rel) ? HEADY.get(rel) : null;
   if (head !== null) {
     bezGitu = false;
     for (const [k, n] of tucne(head)) drive.set(k, (drive.get(k) || 0) + n);

@@ -50,7 +50,20 @@ function blameOf(lineNo) {
   if (!_blame) {
     _blame = {};
     let out = '';
-    try { out = git(`blame --line-porcelain -- ${DOC}`); } catch (e) { return null; }
+    // 2026-10-13 (CODE-read, owner „3. ano, podívej se“ na pomalé smoke): blame jen řádků, které kontrola čte (-L n,n po dávkách 300 —
+    // příkaz bez shellu, ať nenarazí na délku řádku), ne celého souboru o 11 000 řádcích. Změřeno: 3,8 s → 2,2 s; výstup porcelain má
+    // čísla řádků celého souboru, parser níž beze změny.
+    try {
+      const { spawnSync } = require('child_process');
+      for (let k = 0; k < targets.length; k += 300) {
+        const args = ['blame', '--line-porcelain'];
+        for (const t of targets.slice(k, k + 300)) args.push('-L', t.line + ',' + t.line);
+        args.push('--', DOC);
+        const r = spawnSync('git', args, { cwd: R, encoding: 'utf8', maxBuffer: 1 << 26 });
+        if (r.status !== 0) throw new Error(r.stderr || 'git blame selhal');
+        out += r.stdout;
+      }
+    } catch (e) { return null; }
     const shaTime = {};
     let cur = null;
     for (const l of out.split('\n')) {
