@@ -178,6 +178,12 @@ spustit jen on — pak přesné a celé, → [[paste-sql-explicitly]]).
 **Táž chyba, dvakrát za den:** `/compact Zachovej: …` (zrušeno ráno, sekce „Compact" níž)
 a večer tenhle příkaz na generování dávky. První byla výjimka v pravidle, druhá byl reflex.
 
+**Potřetí 2026-10-13 (CODE-read):** na „co jsi kde udělal, ať můžu zkontrolovat“ jsem poslal `node scripts/verify_nosice.js --vypis`
+a `git log … | grep …`. Owner je spustil z `C:\Users\zkuku` v PowerShellu (bez `grep`) — obojí spadlo: *„proč mi posíláš ty funkce,
+co já s tím?“* Na „ať můžu zkontrolovat“ patří odkazy `soubor:řádek` a výsledek, který jsem pustil sám.
+🔒 **Od 2026-10-13 hlídá stroj:** Stop-hook `~/.claude/runar-zprava-check.py` pravidlo 5 — zpráva s blokem `node`/`git`/`python`/`npm`/
+`supabase` neprojde, pokud neříká, proč to owner musí spustit sám; bloky ```sql se nepočítají.
+
 ---
 
 ## Co NIKDY nedělat
