@@ -15,7 +15,8 @@ Na začátku každé session PŘEČÍST V TOMTO POŘADÍ:
 1. Tento soubor (MEMORY.md)
 2. [working-style.md](working-style.md) — jak spolu pracujeme (Explore→Plan→Implement)
 3. `CLAUDE.md` (repo root) — architektura + pravidla §1+
-4. `RUNAR_DECISIONS.md` (repo root) — **datovaný log rozhodnutí; při sporu vyhrává novější záznam**
+4. `RUNAR_DECISIONS.md` (repo root) — **datovaný log rozhodnutí; při sporu vyhrává novější záznam**. Celý se nečte (přes 11 000 řádků):
+   hledá se podle tématu `node scripts/utils/uz_vime.js <pojmy>` (hook ho stejně chce před zápisem do docs) a čte se nalezený záznam.
 5. Doc podle úkolu (viz rozcestník) + cílový zdrojový soubor
 
 Po přečtení potvrdit: „Mám kontext — jsem připraven."
