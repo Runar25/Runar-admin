@@ -11318,3 +11318,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   kopie v repu i odkazy dávají stejný kód i výstup; tenhle commit už šel přes nové odkazy.
 - Affected doc(s): `CLAUDE.md` §30 (cesty hooků + odrážka o verzování), `memory/working-style.md`, `RUNAR_BACKLOG.md`,
   `scripts/verify_nosice.js` (nosiče jako hook v repu) — v témže commitu.
+
+## 2026-10-14 (3) — Islandská korekce „bertum → berum“ zapsána do produkční DB (`runar_corrections`)
+
+- **Co:** CODE-tune vložil do `runar_corrections` (is) `bertum` → `berum` s vodítkem podle rodu: *„Í þágufalli er sagt „undir berum
+  himni“ og „með berum höndum“, en „á berri jörðinni“ í kvenkyni og „beru höfði“ í hvorugkyni.“* Správný tvar závisí na rodu
+  (`berum` mužský rod a množné číslo, `beru` střední, `berri` ženský), holá náhrada by u středního a ženského rodu chybu vyrobila.
+  Totéž do `BAD_PATTERNS` v `check-is.py`. Islandských řádků v DB 28 → 29.
+- **Odkud:** hlášení 6282e405 — owner chtěl zkontrolovat islandská čtení testerů. Greynir lokálně na 14 IS čteních od 1. 10. (109 vět,
+  odhlášených 0) našel `bertum` u Ingwaz 2026-10-13; slovník ho nezná, korpus 0× × „berum“ 27 344×.
+- **Na základě:** 2026-09-23 (6) bod 1 (potvrzená chyba vždy do korekcí); zápis přes `supabase db query --linked` jako 2026-09-23 (7).
+- **Ověřeno (§19):** všechny řádky DB protlačeny produkčním `normalizeCorrections` → `getCorrPrompt('is')` — nový řádek v bloku celý,
+  bez `undefined` a rozbitého kódování. Vodítko: Greynir bez E001 (jediný nález „berri → betri“ je planý, „berri“ v korpusu 135×),
+  obraty doložené (*undir berum himni* 2824 · *með berum höndum* 834 · *á berri jörðinni* 8 · *beru höfði* 4).
+- **Reverzibilita:** `delete from runar_corrections where id = '076b8f77-eea2-4aeb-8c42-d0d68172d0c5'`.
+- Affected doc(s): `check-is.py` (vzor) · `RUNAR_BACKLOG.md` (smyčka ze skutečných čtení — owner ji hlášením otevřel znovu, první běh)
+  — v témže commitu.
