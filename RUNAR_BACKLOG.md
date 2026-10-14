@@ -640,7 +640,27 @@ Nárok = nejmenší z nich (memory `strop-serveru-neni-narok`). První průchod 
 **Kola 1–3 uzavřena (2026-10-09 → 2026-10-11).** Celý záznam — části 1–44, kolo 2 / 1–24, kolo 3 / 1–5 a co z nich hlídá stroj
 („⭐ Kolo 2 / 3 uzavřeno“) — přesunut doslova do `docs/archive/RUNAR_BACKLOG_kontrola-architektury.md` (2026-10-12, owner: „neni ten
 backlog moc velky?“; uz_vime.js ho prohledává). Kolo 4 owner odložil (2026-10-11: *„kolo 4. bych mozna nechal jeste stranou… potrebuju
-doladit apku“*).
+doladit apku“*). **Kolo 4 spuštěno 2026-10-14** (owner *„4. ano“*) — níž.
+
+#### Kolo 4 (od 2026-10-14, CODE-read) — napřed části změněné od uzavření kola 3 (b05f6d6, 186 commitů), pak zátěž a souběh
+Souběh už zčásti hotový týž den: push s commitem vzniklým během smoke (DECISIONS 2026-10-14 (1)), osiřelé kopie pre-push, kontroly při commitu × sdílený strom.
+- **K4/1 edge funkce — `waitlist-join` (CODE-web, nová, veřejný vstup):** omezení na IP bere první hodnotu `x-forwarded-for` (jako `redeem-code`);
+  ✅ **ověřeno pokusem, nedá se podvrhnout** — 6 požadavků s vlastní hlavičkou → 429, s jinou hodnotou i bez hlavičky dál 429 (Supabase
+  hlavičku na své hraně přepisuje; platí i pro `redeem-code`). Vedlejší účinek pokusu: 5 požadavků s `@example.invalid` prošlo do Brevo.
+  - [x] ✅ *(CODE-web 2026-10-14, 7dbbfc5, nasazeno: táž adresa nejvýš 2× za hodinu (tichý úspěch), celkem 8 za hodinu = max 192/den z 300 Brevo (nad limit 503 a poctivá chyba ve formuláři); ověřeno naostro.)* ~~**Pro CODE-web — zneužití denní kvóty Brevo:**~~ omezení je jen na IP (5 / 15 min), ne na cílovou adresu ani celkem za den. Kdo má víc IP
+    adres, pošle potvrzovací e-maily na cizí adresy (obtěžování) a vyčerpá denní kvótu Brevo (RUNAR_PRICING, řádek Brevo), kterou sdílejí
+    přihlašovací kódy appky → ten den by se nikdo nepřihlásil e-mailem. Návrh: limit na adresu (otisk e-mailu, např. 2 / den) a denní strop
+    registrací pod kvótou Brevo, ať zbude na kódy. Tichý úspěch při překročení (jako duplicita), ať se nedá zjišťovat.
+- [ ] **Past v DB funkci `check_rate_limit`** (nalezla CODE-web 2026-10-14): při ~5 % volání maže řádky s `window_start` starším než 1 h, takže
+  okno delší než hodina (denní limit) se uprostřed vynuluje. Dnes všechna okna ≤ 1 h, netrefí to nic. Zapsat do hlavičky funkce v migraci,
+  nebo úklid vázat na délku okna (SQL ownera). Kdo chce denní limit, musí o tom vědět.
+- **K4/1 další edge funkce:** `elevenlabs-proxy` (mazání položky z historie EL: podle request_id, text jen záloha, na pozadí přes waitUntil, cizí
+  pokus ownera nesmaže) — v pořádku · `voice-usage` (počty historie pro shrine, jen admin) — v pořádku · `claude-proxy` — jen smazání A/B/C.
+- **K4/2 appka:** prošlé v procházce 2026-10-11–13 (souhlas, deník, profil, Rúnakort, okna). Nález: reader přestal číst `runar_character` (9ff06eb),
+  ale shrine ji četla dál → TEACH by s aktivním řádkem měl jinou postavu než appka. ✅ Opraveno 2026-10-14 (shrine: postava jen z kódu).
+- **K4/2b mrtvé tabulky v DB** (nový typ: tabulka, kterou nečte ani nezapisuje žádný kód ani funkce v DB): `knowledge_base` (3 ř. z května)
+  → SQL `sql/2026-10-14_drop_knowledge_base.sql`, čeká na ownera. Nečtené, ale zůstávají: `gpt_reviews` (DECISIONS 2026-10-09 (8) — data
+  se nemažou), `runar_character` (prázdná; výš „Víc postav“ s ní počítá). `rate_limits`, `reading_locks`, `credit_ledger` používají funkce v DB.
 - [ ] **Pro ownera / Cowork (obsah, nespěchá; část 28):** hlavička `RUNAR_POPISY_RUN.md` píše „Společný tvar… pozorování, ne pravidlo —
   pravidlo vznikne, až jich bude 25+“. Popisů je 25, spouštěč nastal, pravidlo nikdo nesepsal. Jen připomínka; CODE do obsahu nesahá.
 
