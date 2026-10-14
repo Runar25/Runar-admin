@@ -108,14 +108,18 @@ async function main() {
     };
     await b.posli('Runtime.enable', {}, sessionId);   // od teď chodí Runtime.exceptionThrown — i z načítání stránky
     await b.posli('Page.navigate', { url }, sessionId);
+    // 2026-10-14 (kolo 4, zátěž a souběh): 60 s podle hodin. Do té doby 120 kol × 250 ms = „30 s“ jen na volném stroji — při pre-push
+    // (7 kontrol s prohlížečem souběžně + další session) appka jednou nenaběhla včas a push padl, samostatně ㉼ prošla. Skutečnou chybu
+    // skriptu delší čekání neschová (typeof zůstane false a výjimku hlásí Runtime.exceptionThrown), jen ji ohlásí později.
     let pripraveno = false;
-    for (let i = 0; i < 120 && !pripraveno; i++) {
+    const doKdy = Date.now() + 60000;
+    while (Date.now() < doKdy && !pripraveno) {
       await cekej(250);
       // Připraveno = skripty načtené a formulář na místě. Do 2026-10-10 večer se čekalo na mřížku run — tu měl návštěvník hned jen
       // po 2a3f03b (bez formuláře); s vráceným formulářem se mřížka staví až po „DRAW A RUNE“.
       try { pripraveno = await ev("document.readyState === 'complete' && typeof showAppTab === 'function' && typeof startReading === 'function' && !!document.getElementById('reader-setup')"); } catch (e) {}
     }
-    if (!pripraveno) throw new Error('appka v prohlížeči nenaběhla do 30 s (síť? chyba skriptu?) — ' + url);
+    if (!pripraveno) throw new Error('appka v prohlížeči nenaběhla do 60 s (síť? chyba skriptu?) — ' + url);
     await cekej(800);
     const krok = async (popis, js) => {
       if (js) await ev('(async function(){ ' + js + ' })()');
