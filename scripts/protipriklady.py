@@ -43,6 +43,8 @@ PRIPADY = [
  ('chyti', 'verify_ceny_server.js', 'v2/runar-config.js', 'replace', "    'gpt-6-sol':  [2, 0.2, 10],", "    'gpt-6-sol':  [3, 0.2, 10],"),
  # ㊈ hlídání provozu (CODE-tune 2026-10-14): práh selhání modelu desetkrát vyšší — upozornění by nepřišlo
  ('chyti', 'verify_ops_souhrn.js', 'supabase/functions/_shared/ops_souhrn.ts', 'replace', '  chybModeluZaHodinu: 3,', '  chybModeluZaHodinu: 30,'),
+ # ㊈ krátké e-maily (CODE-tune 2026-10-14, owner „maily nesmí zabírat moc místa“): nad tělem znovu řádek se stavem — e-mail o řádek delší
+ ('chyti', 'verify_ops_souhrn.js', 'supabase/functions/_shared/ops_souhrn.ts', 'replace', '  const text = nahore.join(', '  const text = stav + "\\n" + nahore.join('),
  # ㊆ útok na skutečných výstupech (CODE-read 2026-10-14): kontrola vypisuje cestu bez „supabase/functions/“ (díra z prvního útoku) → ㊆ musí padnout
  ('chyti', 'verify_rychle_kontroly.py', 'scripts/verify_edge_imports.js', 'replace', "const rel = 'supabase/functions/' + d.name + '/' + f;", "const rel = d.name + '/' + f;"),
  # ㊆ rychlé kontroly při commitu (CODE-tune 2026-10-14): vada na staged souboru commit nezastaví · cizí vada commit zastaví

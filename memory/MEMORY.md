@@ -115,6 +115,7 @@ Intake (NENÍ pravda): `docs/inbox/` · Mrtvá (scratch): mimo index.
 - [admin-ucty-nejsou-nalez.md](admin-ucty-nejsou-nalez.md) — data admin účtů (rok narození, staré volby) nejsou nález o soukromí; ownerovi nehlásit, rok zůstává
 - [nacti-cteni-a-reporty.md](nacti-cteni-a-reporty.md) — owner řekne „načti čtení a reporty“ → `node scripts/nacti_cteni.js` (čtení + monitor ozvěn + hlášení); ⚠ a hlášení ohlas s textem
 - [schranka-runar-gmail.md](schranka-runar-gmail.md) — schránka runar@therunekeeper.com: třídit přes Gmail konektor do štítků, odpovědi jen jako koncepty, nic neodeslat bez ownerova ano
+- [emaily-kratke.md](emaily-kratke.md) — každý e-mail, který posíláme (provoz, přihlášení, web), se vejde na jednu obrazovku telefonu; owner 2026-10-14 „obecně“
 - [always-show-reading-samples.md](always-show-reading-samples.md) — ownerovi vždy ukázat konkrétní TEXT čtení a k němu instrukce, které do čtení vstoupily
 - [modelove-stromy-neposilat.md](modelove-stromy-neposilat.md) — ownerovi jeho strom před/po; stromy vymyšlených lidí jen pro měření, okrajovou poznámku k obrázku nerozebírat otázkami
 - [testovani-jedne-runy-je-zamer.md](testovani-jedne-runy-je-zamer.md) — owner testuje jednu runu opakovaně schválně; jeho „pořád stejné X“ nevysvětluj jeho metodou, dohledej konkrétní případ

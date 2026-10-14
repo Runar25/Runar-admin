@@ -11507,3 +11507,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   Nasazeno ops-watch v2, ověřeno: bez tajné hodnoty 401, `scripts/utils/nasazene_vs_repo.py` = HEAD.
 - **Zbývá:** první ostrý souhrn v 06:00 UTC a první `backup_ok` po noční záloze; prahy po 14 dnech provozu.
 - Affected doc(s): `RUNAR_BACKLOG.md` (úkol hlídání provozu) — v témže commitu.
+
+## 2026-10-14 (17) — E-maily krátké, obecně: souhrn a upozornění hlídání provozu se vejdou na jednu obrazovku telefonu
+
+- **Rozhodl:** owner 2026-10-14 po zkušebním souhrnu: *„maily nesmí zabírat moc místa. to myslím obecně.“*
+- **Jak to beru (číslo místo přídavného jména):** e-mail se vejde na jednu obrazovku telefonu bez posouvání. Platí pro každý e-mail,
+  který posíláme; pravidlo vlastní `memory/emaily-kratke.md` a session, která sáhne na soubory s e-maily, ho dostane od mapy pravidel
+  (`scripts/utils/pravidla_mapa.json`, oblast „e-maily“).
+- **Hlídání provozu — změřeno:** před: souhrn 14–16 řádků textu i v klidný den (nadpis se stavem, „Needs you“, tabulka devíti řádků,
+  patička), HTML ~2 kB; upozornění 4 řádky. Po: klidný den 3 řádky, běžný 6, den s problémem 7, upozornění 1; HTML 0,3–0,7 kB. Nahoře
+  zůstává, co potřebuje ownera; čísla jen ta, která nejsou v předmětu, jeden řádek na téma, nuly vynechané. Mez hlídá smoke ㊈,
+  útok je v protipříkladech. Mění (13) „nahoře Needs you, pod tím čísla“ — nadpis „Needs you“ odpadl.
+- **Ostatní e-maily:** přihlašovací kód (`supabase/templates/prihlaseni-kod.html`) má 5 řádků textu, u účtu bez jazyka 8 (oba jazyky) —
+  vejde se, beze změny. Potvrzení registrace z webu je šablona v Brevu, kterou vede CODE-web — pravidlo jí předávám.
+- Affected doc(s): `memory/emaily-kratke.md` (nové), `memory/MEMORY.md` (řádek indexu) — v témže commitu.
