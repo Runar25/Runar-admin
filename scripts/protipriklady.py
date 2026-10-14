@@ -37,6 +37,8 @@ POSLEDNI_VYSTUP = ''
 APP = 'v2/runar-app.js'
 
 PRIPADY = [
+ # ㊆ útok na skutečných výstupech (CODE-read 2026-10-14): kontrola vypisuje cestu bez „supabase/functions/“ (díra z prvního útoku) → ㊆ musí padnout
+ ('chyti', 'verify_rychle_kontroly.py', 'scripts/verify_edge_imports.js', 'replace', "const rel = 'supabase/functions/' + d.name + '/' + f;", "const rel = d.name + '/' + f;"),
  # ㊆ rychlé kontroly při commitu (CODE-tune 2026-10-14): vada na staged souboru commit nezastaví · cizí vada commit zastaví
  ('chyti', 'verify_rychle_kontroly.py', 'scripts/utils/rychle_kontroly.py', 'replace', '            (blok if je_staged(c, st) else cizi).append((k, l.strip()))', '            cizi.append((k, l.strip()))'),
  ('chyti', 'verify_rychle_kontroly.py', 'scripts/utils/rychle_kontroly.py', 'replace', '            (blok if je_staged(c, st) else cizi).append((k, l.strip()))', '            blok.append((k, l.strip()))'),
