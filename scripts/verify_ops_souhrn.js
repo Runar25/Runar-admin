@@ -51,11 +51,11 @@ const klid = O.souhrn(D({}));
 ok(klid.stav === 'OK' && klid.subject === 'Rúnar Ops · OK · 0 readings · 0 voices · $0.00' && /Nothing needs you/.test(klid.text), 'klidný den: OK, „Nothing needs you“');
 const den = O.souhrn(D({ cteni: 12, spready: 2, asky: 3, modely: { 'gpt-6-sol': 14, 'claude-opus-5': 1 }, cenaModelu: 0.21, hlasy: 7, znakyHlasu: 2100,
   cenaHlasu: 0.1, hlaseni: { crash: 1, visual: 2 }, neprectena: 2, ulozeno: 4 }));
-ok(den.stav === 'WATCH' && den.subject === 'Rúnar Ops · WATCH · 12 readings · 7 voices · $0.31' && /2 unread app reports\. Ask CODE/.test(den.text)
-  && /App reports \(24 h\): visual 2, crash 1 · saved lines \(Keep\) 4 · unread 2/.test(den.text), 'den s nepřečtenými hlášeními: WATCH, počty podle typu bez textu, Keep zvlášť');
+ok(den.stav === 'WATCH' && den.subject === 'Rúnar Ops · WATCH · 12 readings · 7 voices · $0.31' && /2 unread app reports — ask CODE to load them\./.test(den.text)
+  && /App reports \(24 h\) visual 2, crash 1 · Keep 4/.test(den.text), 'den s nepřečtenými hlášeními: WATCH, počty podle typu bez textu, Keep zvlášť');
 // 2026-10-14: hlášení za 24 h, ale všechna už načtená (první zkušební souhrn psal „Ask CODE to load“ u uzavřeného hlášení)
 const nacteno = O.souhrn(D({ hlaseni: { other: 1 } }));
-ok(nacteno.stav === 'OK' && /Nothing needs you/.test(nacteno.text) && /App reports \(24 h\): other 1/.test(nacteno.text),
+ok(nacteno.stav === 'OK' && /Nothing needs you/.test(nacteno.text) && /App reports \(24 h\) other 1/.test(nacteno.text),
   'hlášení za 24 h už načtená: v číslech ano, v „Needs you“ ne, stav OK');
 const zle = O.souhrn(D({ otevrene: { model: 'ok', voice_brake: 'problem', backup: 'ok' } }));
 ok(zle.stav === 'PROBLEM' && /credit brake/.test(zle.text), 'otevřený problém: PROBLEM a nahoře v „Needs you“');
@@ -65,9 +65,18 @@ const bez = O.souhrn(D({ zaloha: { posledniOk: null, bajtu: null, posledniChyba:
 ok(/No database backup has reported/.test(bez.text) && bez.stav === 'WATCH', 'záloha ještě nehlásila: WATCH s pokynem');
 const zly = O.souhrn(D({ modely: { '<script>x': 1 } }));
 ok(zly.html.indexOf('<script>') === -1 && zly.html.indexOf('&lt;script&gt;') !== -1, 'HTML escapované');
-const cz = [klid, den, nacteno, zle, malo, bez, p, r].map((e) => e.subject + e.html + e.text).join(' ');
+// 2026-10-14 owner po zkušebním souhrnu: „maily nesmí zabírat moc místa. to myslím obecně.“ (memory emaily-kratke) — e-mail na jednu
+// obrazovku telefonu. Do té doby 14–16 řádků textu i v klidný den (nadpis, „Needs you“, tabulka devíti řádků, patička), HTML ~2 kB.
+const radku = (e) => e.text.split('\n').filter((x) => x.trim()).length;
+const cisel = (e) => (e.text.split('\n\n')[1] || '').split('\n').filter((x) => x.trim()).length;
+const jeden = O.souhrn(D({ cteni: 1, modely: { 'gpt-6-sol': 1 }, cenaModelu: 0.01, neprectena: 1 }));
+ok(/1 unread app report — ask CODE to load it\./.test(jeden.text) && /Cost models \$0\.01$/m.test(jeden.text), 'jedno hlášení „it“, nulová cena hlasu vynechaná');
+ok(radku(klid) <= 3 && radku(den) <= 7 && [klid, den, nacteno, zle, malo, bez].every((e) => cisel(e) <= 5) && radku(p) <= 2 && radku(r) <= 2
+  && [klid, den, zle, p, r].every((e) => e.html.indexOf('<table') === -1 && Buffer.byteLength(e.html) <= 1000),
+  'krátké e-maily: klidný den ≤ 3 řádky, běžný ≤ 7, čísla ≤ 5, upozornění ≤ 2, bez tabulky, HTML ≤ 1 kB (owner 2026-10-14)');
+const cz = [klid, den, nacteno, zle, malo, bez, p, r, jeden].map((e) => e.subject + e.html + e.text).join(' ');
 ok(!/[ěščřžůňťďĚŠČŘŽŮŇŤĎ]/.test(cz), 'e-maily bez češtiny (§31 — admini EN)');
 
 console.log(fail ? '\nFAIL  hlídání provozu: ' + fail + ' případů nesedí'
-  : '\nOK    hlídání provozu: prahy, e-mail jen při změně stavu, ranní souhrn (OK / WATCH / PROBLEM, Needs you, čísla) — EN, escapované');
+  : '\nOK    hlídání provozu: prahy, e-mail jen při změně stavu, ranní souhrn (OK / WATCH / PROBLEM, co potřebuje ownera, čísla) — krátké, EN, escapované');
 process.exit(fail ? 1 : 0);

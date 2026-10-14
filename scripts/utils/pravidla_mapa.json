@@ -53,6 +53,12 @@
       "hlavicky": ["scripts/verify_edge_imports.js", "scripts/verify_admin_emails.js"]
     },
     {
+      "oblast": "e-maily",
+      "cesty": ["supabase/functions/_shared/ops_souhrn.ts", "supabase/functions/ops-watch/**", "supabase/functions/waitlist-join/**", "supabase/templates/**"],
+      "pravidla": ["§31"],
+      "pamet": ["emaily-kratke"]
+    },
+    {
       "oblast": "SQL a databáze",
       "cesty": ["sql/**"],
       "docs": [{"soubor": "CLAUDE.md", "nadpis": "DB — user_profiles"}]
