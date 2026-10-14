@@ -797,12 +797,11 @@ Procházka je tím úplná.
       Větev je sdílená, takže commit dostane na origin i cizí push a červená pak blokuje všechny. Návrh: `commit_vlastni.py commit` sám pustí
       kontroly ze `scripts/`, které čtou měněné soubory (cesta souboru v jejich zdroji), a při červené necommitne. Nástroj je sdílený (CODE-tree)
       a zdrží commity všem — napřed domluvit s CODE-tree / ownerem.
-      **Nález CODE-read 2026-10-14 (ať se to nezkouší znovu):** podezření „push odnese i commit, který vznikl během běhu pre-push“ je
-      VYVRÁCENÉ pokusem v dočasném repu (git 2.54, holý `git push` i `git push origin main`, hook čeká 4 s a mezitím vznikne commit):
-      server dostal přesně commit, který hook testoval. Přepisy všech session 2026-10-13 21:19–21:24 UTC: push CODE-tune testoval d23658c
-      (odmítnut: server už byl na 8c12069), push CODE-read testoval 9681561, CODE-web pushoval až po svém commitu 2fe6472. Kdo dal na
-      server vrchol 8c12069 bez otestování, z přepisů nevyplývá (push mimo session, třeba z jiného nástroje — neověřeno). Pre-push hlídá jen
-      vrchol, takže kontrola při commitu by tenhle případ nezachytila, pokud vznikl obejitím pushe; levnější je napřed zjistit cestu.
+      ✅ **Příčina nalezena a zavřena (CODE-read 2026-10-14, DECISIONS 2026-10-14 (1)):** 8c12069 svezl push CODE-read — přes HTTPS git
+      přeloží větev na commit až PO pre-push, takže commit vzniklý během minut smoke odešel neotestovaný (reflog + pokus přes git http-backend).
+      `hooks/pre-push.py` teď po smoke ověří, že se větev nepohnula, jinak push zastaví. Do téhož dne tu stálo, že pokus domněnku vyvrátil
+      a cesta je nevysvětlená — první pokus běžel lokálním přenosem, kde se to nestane. Kontroly už při commitu (návrh výš) zůstávají otevřené
+      jako jiná věc: chytily by vlastní chybu dřív, ale tenhle průchod nezpůsobily.
 - [ ] `user_profiles` má **dvě identické RLS policy** („Users manage own profile" a „own profile").
       Neškodí (permissive se sčítají), ale je to duplikát — jednu smazat.
 

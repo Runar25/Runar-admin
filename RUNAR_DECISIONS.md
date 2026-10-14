@@ -11290,3 +11290,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Nasazeno 2026-10-13 večer** (owner *„ano udělej a nasaď“*): `voice-usage` čte historii naším klíčem a shrine VOICE ukazuje počet
   položek, z toho Rúnarova hlasu, nejnovější a nejstarší. Ověřeno: bez přihlášení 401. Owner předtím historii v rozhraní ElevenLabs smazal.
 - Affected doc(s): `RUNAR_PRIVACY.md` (hlas), `RUNAR_BACKLOG.md` (položka odškrtnutá) — v témže commitu.
+
+## 2026-10-14 (1) — Pre-push zastaví push, když během kontroly přibyl commit (přes HTTPS by odešel neotestovaný)
+
+- **Rozhodl:** owner 2026-10-14 *„pokračuj“* (kontrola) po dotazu CODE-read, zda 2026-10-13 večer něco pushoval sám — *„ne, nic jsem nepushoval“*.
+- **Proč:** 2026-10-13 se na server dostal commit 8c12069 (CODE-tune) s červenou ㊸ a zablokoval push všem. Příčina: přes HTTPS předá git
+  pomocníkovi `git-remote-https` větev jménem a ten ji přeloží na commit až PO pre-push hooku. Pre-push CODE-read testoval 9 minut 9681561,
+  mezitím CODE-tune commitnul 8c12069 a ten odešel místo otestovaného. Doklad: reflog `origin/main` — 21:22:04 „9681561 update by push“,
+  21:23:40 fetch už 8c12069, žádný další push z repa; pokus přes `git http-backend` průběh zopakoval (hook testoval A, server dostal B,
+  lokální origin/main hlásil A). Lokálním přenosem se to nestane — proto první pokus (bez HTTP) domněnku mylně vyvrátil.
+- **Co:** `hooks/pre-push.py` si ze vstupu pamatuje (větev, testovaný commit) a po smoke ověří, že větev pořád ukazuje na týž commit; když
+  ne, push zastaví s pokynem pustit ho znovu. Ověřeno týmž HTTP pokusem s hlídáním: push zastaven, server beze změny. Zbývá okno mezi
+  koncem hooku a odesláním (zlomek sekundy místo minut). Instalovaný hook soubor jen volá — platí hned pro všechny session.
+- **Netvrdí:** že návrh CODE-tune (kontroly už při commitu, BACKLOG) je zbytečný — tenhle incident ale vysvětluje a zavírá jinak.
+- Affected doc(s): `RUNAR_BACKLOG.md` (položka „Commit bez kontrol…“: příčina nalezena) — v témže commitu.
