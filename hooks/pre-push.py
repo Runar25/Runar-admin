@@ -67,6 +67,21 @@ def postaru(duvod):
     print('[pre-push] OK')
     sys.exit(0)
 
+# Úklid (2026-10-14, CODE-read, owner „2. ano, smaž to“ u zapomenuté kopie): spadlý nebo zabitý push nechá svou kopii v %TEMP% a v
+# `git worktree list` — našla se jedna tři dny stará (z 2026-10-11, kdy ㊺ visel 48 min). Kopie starší než 2 h se smažou; živý push trvá minuty.
+try:
+    import time
+    for radek in git('worktree', 'list', '--porcelain').stdout.splitlines():
+        if radek.startswith('worktree ') and 'runar-prepush-' in radek:
+            cesta = radek[len('worktree '):].strip()
+            if os.path.isdir(cesta) and time.time() - os.path.getmtime(cesta) > 2 * 3600:
+                git('worktree', 'remove', '--force', cesta)
+                shutil.rmtree(cesta, ignore_errors=True)
+                print('[pre-push] uklizena osiřelá kopie ' + os.path.basename(cesta))
+    git('worktree', 'prune')
+except Exception:
+    pass   # úklid nesmí push zastavit
+
 tmp = tempfile.mkdtemp(prefix='runar-prepush-')
 w = git('worktree', 'add', '--detach', tmp, cil)
 if w.returncode != 0:
