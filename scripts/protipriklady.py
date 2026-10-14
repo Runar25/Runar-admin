@@ -37,6 +37,9 @@ POSLEDNI_VYSTUP = ''
 APP = 'v2/runar-app.js'
 
 PRIPADY = [
+ # ㊆ rychlé kontroly při commitu (CODE-tune 2026-10-14): vada na staged souboru commit nezastaví · cizí vada commit zastaví
+ ('chyti', 'verify_rychle_kontroly.py', 'scripts/utils/rychle_kontroly.py', 'replace', '            (blok if je_staged(c, st) else cizi).append((k, l.strip()))', '            cizi.append((k, l.strip()))'),
+ ('chyti', 'verify_rychle_kontroly.py', 'scripts/utils/rychle_kontroly.py', 'replace', '            (blok if je_staged(c, st) else cizi).append((k, l.strip()))', '            blok.append((k, l.strip()))'),
  # ㊄ pravidlo 6 kontroly zpráv (CODE-tune 2026-10-14): schovaná otázka projde, když je podmínka vypnutá
  ('chyti', 'verify_hooky_claude.py', 'hooks/claude/runar-zprava-check.py', 'replace', '        ceka = CEKA.search(bod)', '        ceka = None'),
  # past §11 v pravidla_pri_dotyku (CODE-read 2026-10-14): vzor islandského escape přestane sedět → samotest hooku (㊴) musí padnout

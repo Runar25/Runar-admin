@@ -823,7 +823,8 @@ Procházka je tím úplná.
 
 ## Zjištěno při auditu — nespěchá, ale ať se neztratí
 
-- [ ] **Commit bez kontrol, které čtou měněný soubor — podruhé za dva dny (CODE-tune, §30 chce mechanismus).** 2026-10-12 zásady
+- [x] ✅ *(CODE-tune s CODE-read 2026-10-14: pre-commit pouští rychlé textové kontroly a zastaví jen vadu na staged souboru —
+  DECISIONS 2026-10-14 (9), smoke ㊆.)* **Commit bez kontrol, které čtou měněný soubor — podruhé za dva dny (CODE-tune, §30 chce mechanismus).** 2026-10-12 zásady
       (㊽ a ㊱ shodily pre-push) a 2026-10-13 8c12069: změna `elevenlabs-proxy` shodila ㊸, protože jsem pustil jen vybrané kontroly.
       Větev je sdílená, takže commit dostane na origin i cizí push a červená pak blokuje všechny. Návrh: `commit_vlastni.py commit` sám pustí
       kontroly ze `scripts/`, které čtou měněné soubory (cesta souboru v jejich zdroji), a při červené necommitne. Nástroj je sdílený (CODE-tree)

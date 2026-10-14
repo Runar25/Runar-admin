@@ -11400,3 +11400,20 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   byl vypnutý, takže produkce s ním nic nedělá. Kdo `claude-proxy` nasadí příště (z HEAD), nese i smazání (DECISIONS 2026-10-14 (6));
   do té doby `scripts/utils/nasazene_vs_repo.py` hlásí u `claude-proxy` ROZDÍL — očekávaný. Hlídá položka v BACKLOGu.
 - Affected doc(s): `RUNAR_BACKLOG.md` (položka k nasazení) — v témže commitu.
+
+## 2026-10-14 (9) — Pre-commit pouští rychlé textové kontroly; zastaví jen vadu na staged souboru
+
+- **Rozhodli:** CODE-tune a CODE-read (owner 2026-10-14 ke koordinaci mezi session: *„na tom se domluv s ním. co já ti mám říct?“*).
+- **Proč:** tři dny po sobě šel commit bez kontroly, která čte měněný soubor — 2026-10-12 zásady (㊽ a ㊱ shodily pre-push),
+  2026-10-13 8c12069 (㊸), 2026-10-14 49db492 (㊱; zablokoval push i CODE-read). Pre-push v čisté kopii vadu chytí, ale až po minutách
+  smoke a ve chvíli, kdy commit už leží ve sdílené větvi a blokuje všechny. §30: porušené potřetí → mechanismus.
+- **Co:** `hooks/pre-commit.py` pustí `scripts/utils/rychle_kontroly.py` (8 rychlých textových kontrol ze smoke souběžně, ~1 s; seznam
+  a pravidlo tam). Podmínka CODE-read: strom je sdílený a kontroly procházejí celé repo — commit zastaví JEN vada, jejíž umístění
+  (cesta na začátku řádku FAIL nebo odsazeného řádku pod ním; UI_TEXT = překlady) je staged soubor; cizí vadu jen vypíše (chytí ji
+  pre-push v čisté kopii, 2026-10-10 (40)). Staged se čte z indexu, se kterým commit běží (commit_vlastni má dočasný). Bez výjimky
+  k vypnutí — rozbitou kontrolu je třeba opravit.
+- **Ověřeno:** samotest rozhodování na ukázkách skutečných tvarů výstupu (smoke ㊆, `scripts/verify_rychle_kontroly.py`) a dva útoky
+  v protipříkladech (nikdy nezastaví / zastaví vždy). Naostro v dočasném worktree s podstrčenou vadou ㊱: soubor ve staged → commit
+  zastaven (EXIT 1, ~1 s), tentýž rozbitý soubor jen ve stromu → commit projde s „cizí, neblokuje“. Zkouška našla vadu i ve vlastní
+  ukázce samotestu (dvě jména nástrojů IS na řádku) — opraveno před commitem.
+- Affected doc(s): `CLAUDE.md` §30 (odrážka Kontroly při commitu), `RUNAR_BACKLOG.md` (položka uzavřena) — v témže commitu.

@@ -1166,6 +1166,15 @@ radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola mazani historie ElevenLabs probehla'
 check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
 
+# ㊆ Rychlé kontroly při commitu (CODE-tune 2026-10-14, domluveno s CODE-read): pre-commit pouští rychlé textové kontroly a zastaví jen
+# vadu na staged souboru (strom je sdílený). Rozbité rozhodování by pouštělo vlastní chyby, nebo blokovalo všechny kvůli cizí práci.
+print('\n' + chr(0x3286) + ' RYCHLÉ KONTROLY PŘI COMMITU (verify_rychle_kontroly.py)')
+r = subprocess.run([sys.executable, '-X', 'utf8', os.path.join(ROOT, 'scripts', 'verify_rychle_kontroly.py')],
+                   capture_output=True, text=True, encoding='utf-8')
+radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola rychlych kontrol probehla'
+check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

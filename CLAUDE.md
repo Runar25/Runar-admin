@@ -384,6 +384,9 @@ musí to buď **udělat skript samo**, nebo **zastavit práci**, když se to vyn
   pravidlo 4): věta s „nejspíš/pravděpodobně/zřejmě“ o kódu nebo souboru projde jen s „neověřeno“. (KUKY 2026-10-11, DECISIONS 2026-10-11 (36).)
 - **Kontroly pod útokem** → smoke ㊵ (`scripts/protipriklady.py`): podstrčená chyba v čisté kopii repa musí kontrolu shodit; pouští
   se znovu, kdykoli se kontrola změní. Nová kontrola = aspoň jeden útok v `PRIPADY`. (DECISIONS 2026-10-11 (44).)
+- **Kontroly při commitu** → `hooks/pre-commit.py` pustí rychlé textové kontroly (`scripts/utils/rychle_kontroly.py`, ~1 s) a zastaví
+  jen vadu na staged souboru; cizí necommitnutou práci jen vypíše (chytí ji pre-push v čisté kopii). Hlídá smoke ㊆. Tři dny po sobě
+  šel commit bez kontroly, která čte měněný soubor. (CODE-tune s CODE-read, DECISIONS 2026-10-14 (9).)
 - **Hooky Claude Code se verzují** → zdroj je `hooks/claude/` v repu; v `~/.claude` jsou jen jednořádkové odkazy, na které míří nastavení.
   Hook měň v repu a commituj (DECISIONS 2026-10-14 (2)); do té doby žily jen v `~/.claude` a změnu nikdo neviděl.
 Najdeš nové pravidlo, které se porušilo podruhé? Nepiš ho jen do paměti — přidej mechanismus (hook, kontrola ve smoke, krok skriptu).

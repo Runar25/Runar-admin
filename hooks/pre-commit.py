@@ -160,6 +160,16 @@ if is_src:
         print('[hook] check-is: bad IS literal in staged source -> commit blocked (fix or update BAD_PATTERNS).')
         sys.exit(1)
 
+# ── Rychlé textové kontroly (CODE-tune 2026-10-14, domluveno s CODE-read) ──
+# Proč: 2026-10-12, -13 a -14 šel commit bez kontroly, která čte měněný soubor (㊽ ㊱ shodily pre-push, ㊸ prošel na server, 49db492
+# zablokoval push i CODE-read). Strom je sdílený → zastaví JEN vada na staged souboru; cizí vadu jen vypíše (chytí ji pre-push v čisté
+# kopii, DECISIONS 2026-10-10 (40)). Seznam kontrol a pravidlo umístění: scripts/utils/rychle_kontroly.py; hlídá smoke ㊆. ~1 s.
+if staged:
+    _r = subprocess.run([sys.executable, '-X', 'utf8', os.path.join(REPO, 'scripts', 'utils', 'rychle_kontroly.py')],
+                        input='\n'.join(staged), text=True, encoding='utf-8', cwd=REPO)
+    if _r.returncode != 0:
+        sys.exit(1)
+
 # Je změněno JS/CSS v v2/?
 js_css = [f for f in staged
           if (f.startswith('v2/') or f == 'v2/sw.js')
