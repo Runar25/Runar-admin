@@ -67,10 +67,14 @@ Deno.serve(async (req) => {
     p_key: `waitlist:email:${hash}`, p_window_seconds: 3600, p_max_requests: 2,
   });
   if (okEmail === false) return json({ ok: true });
-  // (b) celkem nejvýš 8 registrací za hodinu = nejvýš 192 e-mailů za den, ať z 300 zbude ≥ 108 na přihlašovací kódy.
+  // (b) celkem za hodinu: přes den víc, v noci míň (owner 2026-10-14: „přes den budou víc potřeba“; zatím testujeme, v produkci
+  //     se to vyřeší jinak — tarif Brevo bez denního stropu). Island = UTC celý rok. Den 08–23 h: 12/h, noc 23–08 h: 3/h
+  //     → nejvýš 15 × 12 + 9 × 3 = 207 e-mailů za den, z 300 tak zbude ≥ 93 na přihlašovací kódy.
   //     Nad limit poctivá chyba (formulář ukáže „zkus to za chvíli“), ne tichý úspěch — skutečný člověk by jinak čekal na e-mail marně.
+  const hourUtc = new Date().getUTCHours();
+  const capPerHour = hourUtc >= 8 && hourUtc < 23 ? 12 : 3;
   const { data: okAll } = await sb.rpc("check_rate_limit", {
-    p_key: "waitlist:all", p_window_seconds: 3600, p_max_requests: 8,
+    p_key: "waitlist:all", p_window_seconds: 3600, p_max_requests: capPerHour,
   });
   if (okAll === false) { console.error("waitlist-join: hourly cap reached"); return json({ error: "busy" }, 503); }
 
