@@ -159,3 +159,30 @@ Bez varování.
 
 Bez varování.
 <!-- do: 2026-10-13 13:01:32.172472+00 -->
+
+## 2026-10-14 · čtení po 2026-10-13 13:01 → 2026-10-14 09:54
+
+Čtení 5 · Asků 2 · modely: gpt-6-sol 7
+
+| vstup → výstup | vše | sol | opus | poznámka |
+|---|---|---|---|---|
+| obraz opsán (≥ 4 slova za sebou) | 2/5 | 2/5 | — | věta 1: 1 · 2: 1 |
+| význam z hlavičky doslova v textu (definiční věta, záměr) | 3/5 | 3/5 | — | věta 2: 2 · 3: 1 |
+| sloveso z losu hned za jménem runy (záměr, v5.01) | 4/4 | 4/4 | — | věta 2: 3 · 3: 1 · stands for 3, represents 1 |
+| nejčastější sloveso po jménu runy (er) | 1/1 | 1/1 | — | er 1 |
+| podoba oblasti opsaná (≥ 3 slova) | 1/4 | 1/4 | — | „í næsta skrefi“ věta posl.: 1 |
+| otázka runy z Kolekce opsaná (≥ 3 slova) | 1/4 | 1/4 | — | „now and what“ věta posl.: 1 |
+| pokyn úhlu opsaný (≥ 4 slova) | 0/5 | 0/5 | — |  |
+| pokyn konce opsaný (≥ 4 slova) | 0/5 | 0/5 | — |  |
+| Ask: slova otázky zopakovaná | 0/2 | 0/2 | — |  |
+| Ask: „drawn“ (runa tažená / netažená) | 0/2 | 0/2 | — |  |
+| Ask: „the rune / reading does not say“ | 0/2 | 0/2 | — |  |
+| Ask: „leaves … open“ | 1/2 | 1/2 | — |  |
+| Ask: „not a promise / verdict / sign“ | 0/2 | 0/2 | — |  |
+| Ask: „…, or not“ | 0/2 | 0/2 | — |  |
+
+**Odkud se to bere** (vstup čtení / text čtení / pevný text promptu podle živých builderů):
+- Ask „leaves … open“ 1× — v promptu není → zvyk modelu (nebo vstup, který monitor nezná)
+
+Bez varování.
+<!-- do: 2026-10-14 09:54:13.835567+00 -->

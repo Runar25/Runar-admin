@@ -244,9 +244,12 @@ function souhrn(R) {
     radekM('sloveso z losu hned za jménem runy (záměr, v5.01)', s((x) => x.los), (x) => x.los.ok,
       rozlozeni(C.map((x) => x.los && x.los.kde)) + ' · ' + Object.entries(C.filter((x) => x.los).reduce((o, x) => { o[x.los.v] = (o[x.los.v] || 0) + 1; return o; }, {})).map(([k, n]) => k + ' ' + n).join(', '));
   }
-  const sl = {}; C.forEach((x) => { if (x.sloveso) sl[x.sloveso] = (sl[x.sloveso] || 0) + 1; });
+  // 2026-10-14: jen slovesa, která si model vybral SÁM. Převzaté z losu (v5.01, řádek výš) měří los, ne zvyk modelu — načtení 14. 10.
+  // hlásilo ⚠ „stands“ 3/5 a byly to tři ze čtyř losů „stands for“ (los ze šesti sloves, náhoda ~10 %), převzaté 4/4.
+  const vlastni = C.filter((x) => x.sloveso && !(x.los && x.los.ok));
+  const sl = {}; vlastni.forEach((x) => { sl[x.sloveso] = (sl[x.sloveso] || 0) + 1; });
   const top = Object.entries(sl).sort((a, b) => b[1] - a[1]);
-  radekM('nejčastější sloveso po jménu runy (' + (top.length ? top[0][0] : '—') + ')', C.filter((x) => x.sloveso), (x) => top.length && x.sloveso === top[0][0], top.slice(0, 4).map(([k, n]) => k + ' ' + n).join(', '));
+  radekM('nejčastější sloveso po jménu runy (' + (top.length ? top[0][0] : '—') + ')', vlastni, (x) => top.length && x.sloveso === top[0][0], top.slice(0, 4).map(([k, n]) => k + ' ' + n).join(', '));
   radekM('podoba oblasti opsaná (≥ 3 slova)', s((x) => x.oblast), (x) => x.oblast.n >= 3,
     [...new Set(s((x) => x.oblast && x.oblast.n >= 3).map((x) => '„' + x.oblast.kus + '“'))].slice(0, 3).join(' · ') + ' ' + rozlozeni(C.map((x) => x.oblast && x.oblast.kde)));
   radekM('otázka runy z Kolekce opsaná (≥ 3 slova)', s((x) => x.otazka), (x) => x.otazka.n >= 3,
@@ -359,6 +362,9 @@ if (process.argv.includes('--test')) {
   // …a obráceně: převzal 3/3 → žádné ⚠ (u běžného řádku by 3/3 varovalo — tady je návrat ZÁMĚR).
   const TS3 = souhrn(rozber(rowsS.slice(0, 2).concat([Object.assign({}, rowsS[0])])));
   ok(/\| sloveso z losu hned za jménem runy \(záměr, v5\.01\) \| 3\/3/.test(TS3.tabulka) && !/⚠ sloveso z losu/.test(TS3.tabulka), 'sloveso z losu 3/3 → bez ⚠ (záměr splněn)');
+  // 2026-10-14: sloveso převzaté z losu se do „nejčastějšího slovesa“ nepočítá — 3/3 převzatá dřív dala ⚠ „represents“ 3/3 (měřil se los).
+  ok(!/⚠ nejčastější sloveso/.test(TS3.tabulka) && /\| nejčastější sloveso po jménu runy \(—\) \| —/.test(TS3.tabulka),
+     'nejčastější sloveso: převzaté z losu se nepočítá (3/3 z losu → řádek prázdný, bez ⚠)');
   // 2026-10-06: otázka runy z Kolekce — Thurisaz ji má („…you do not strike back?“); čtení bez vlastní otázky ji opíše v poslední větě,
   // čtení S vlastní otázkou ji v promptu nemá → nepočítá se. Opakovaná fráze z ní se přiřadí ke vstupu, ne ke zvyku modelu.
   const oqT = otazkaRuny('Thurisaz', 'en');
