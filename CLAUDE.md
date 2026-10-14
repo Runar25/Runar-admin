@@ -355,7 +355,8 @@ musí to buď **udělat skript samo**, nebo **zastavit práci**, když se to vyn
   `RUNAR_API_OWNER="<ownerova slova>"`. Každý puštěný pokus se zapíše do `~/.claude/runar-api-pokusy.log` (čas, počet, skript, záměr). <!-- doc-links:ok 2026-10-07 log je uživatelský soubor v ~/.claude, mimo repo -->
   Malý vzorek napřed (KUKY 2026-10-07: *„vždycky se udělá malý vzorek… ZÁMĚR… PŘEDPOKLAD“*).
 - **Zpráva ownerovi** → Stop-hook (`hooks/claude/runar-zprava-check.py`): body a otázky číslované; zpráva s návrhem nebo otázkou na
-  rozhodnutí projde, jen když v témže tahu běžel `node scripts/utils/uz_vime.js <pojmy>` (co už je hotové, zamítnuté, zapsané).
+  rozhodnutí projde, jen když v témže tahu běžel `node scripts/utils/uz_vime.js <pojmy>` (co už je hotové, zamítnuté, zapsané);
+  co na ownera čeká, musí být v tom bodu položené jako otázka s otazníkem (pravidlo 6, KUKY 2026-10-14, DECISIONS 2026-10-14 (5)).
 - **Hlášení z appky** → §29 (`nacti_cteni.js` stav v DB; zápis hned po načtení hlídá týž Stop-hook). **Co je hotové, rozhodnuté nebo zapsané, se ownerovi znovu nepředkládá** —
   vrací se, až se vada objeví v nových čteních a owner na ni upozorní.
 - **Konverzace se neztrácí** → přepisy se nemažou (`cleanupPeriodDays`), noční šifrovaná kopie `scripts/utils/zaloha_konverzaci.js`

@@ -7,6 +7,7 @@
 # Co hlídá (v kopii, kterou pouští — RUNAR_ROOT, v pre-push tedy pushovaný commit):
 #   hlídač API      — příkaz na API modelu bez souhlasu zablokuje, běžný příkaz pustí
 #   kontrola zpráv  — blok příkazu ownerovi zastaví (pravidlo 5), SQL a příkaz s důvodem pustí, dvě odrážky na nejvyšší úrovni zastaví
+#                     + pravidlo 6 (CODE-tune 2026-10-14): schovanou otázku zastaví, položenou pustí, „otázku runy“ z obsahu čtení pustí
 #   kontext         — po startu vrátí kontext s pravidly (neprázdný, s hlavičkou RUNAR)
 #   tree-guard      — start i stop doběhnou bez chyby a stop předá zastavení z kontroly zpráv
 #   záloha přepisu  — bez přepisu nespadne
@@ -62,6 +63,15 @@ def over(d):
         dlouha = 'Úvod. ' * 80 + '\n- první odrážka bez čísla\n- druhá odrážka bez čísla\n'
         r = zprava(dlouha)
         ok('kontrola zpráv zastaví odrážky bez čísel', 'ČÍSLOVÁNÍ' in r.stdout, r.stdout[:150] + r.stderr[-150:])
+        # pravidlo 6 (CODE-tune 2026-10-14): otázka zmíněná, ale nepoložená — přesně tahle věta owner přehlédl
+        r = zprava('1. Hotovo.\n2. Ještě otevřené: tvé odpovědi čekají i dvě otázky k islandštině z dřívějška.')
+        ok('kontrola zpráv zastaví schovanou otázku', 'SCHOVANÁ OTÁZKA' in r.stdout, r.stdout[:150] + r.stderr[-150:])
+        r = zprava('1. Hotovo.\n2. Na tebe čekají dvě otázky:\n   1. Mám postavit krok s Greynirem?\n   2. Mám pustit test?')
+        ok('kontrola zpráv pustí položenou otázku', 'SCHOVANÁ OTÁZKA' not in r.stdout, r.stdout[:150])
+        r = zprava('4. Otázka: mám to zapsat jako pravidlo?\n5. Ještě otevřené: tvé odpovědi čekají i dvě otázky k islandštině.')
+        ok('kontrola zpráv zastaví schovanou otázku i vedle jiné položené', 'SCHOVANÁ OTÁZKA' in r.stdout, r.stdout[:150])
+        r = zprava('1. Otázka runy z Kolekce opsaná ve 2 ze 4 čtení, vstup se vrací v poslední větě.')
+        ok('kontrola zpráv pustí „otázku runy“ z obsahu čtení', 'SCHOVANÁ OTÁZKA' not in r.stdout, r.stdout[:150])
 
         p = prepis('1. Hotovo.'); soubory.append(p)
         r = py(d, 'runar-context.py', {'session_id': SID, 'transcript_path': p, 'source': 'startup'})

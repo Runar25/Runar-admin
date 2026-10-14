@@ -22,6 +22,10 @@
 #    (spadly mu: jiná složka, PowerShell bez grep). Pravidlo stálo v paměti od 2026-08-18 (working-style „Ownerovi se neposílají příkazy“)
 #    a padlo potřetí. Blok kódu s příkazem node/git/python/npm/npx ve zprávě projde, jen když zpráva říká, proč ho owner musí spustit
 #    SÁM („musíš spustit sám“, „spusť to ty“). Bloky ```sql (SQL v Supabase smí jen owner) se nepočítají.
+# 6) SCHOVANÁ OTÁZKA (2026-10-14): „pokud máš na mě dvě otázky, tak to napiš jako otázky. pokud je to nějak schované v textu, tak to
+#    můžu přehlédnout.“ Ve zprávě stálo „tvé odpovědi čekají i dvě otázky k islandštině…“ — bez jediné položené otázky; pravidlo 1 chytá
+#    jen otazník bez čísla. Zpráva, která říká, že na ownera čeká otázka, odpověď nebo rozhodnutí, projde, jen když aspoň jednu otázku
+#    POLOŽÍ: řádek s číslem (nebo odsazený pod číslem) a otazníkem. Citace v „…“ se nepočítají. I v krátké odpovědi.
 # Zastaví jen jednou za sebou (stop_hook_active) — přepsaná zpráva už projde. Chyba čtení = nic neblokuje.
 import json, os, re, sys
 
@@ -130,6 +134,23 @@ def main():
             vady.append('PŘÍKAZY OWNEROVI: zpráva mu dává ke spuštění „' + blok[1].strip().split(chr(10))[0][:60] + '“. Owner příkazy nespouští — '
                         'pusť to sám a ukaž výsledek nebo soubor:řádek (memory neposilej-ownerovi-prikazy / working-style). Musí-li to opravdu '
                         'spustit on, napiš proč („musíš spustit sám, protože …“).')
+            break
+    # 6) SCHOVANÁ OTÁZKA — i v krátké odpovědi (2026-10-14)
+    bez_cit6 = re.sub(r'„[^“]*“|"[^"\n]*"', ' ', re.sub(r'```.*?```', '', zprava, flags=re.S))
+    # Jen obraty mířené na ownera: „odpověď“ a „čeká“ samy znamenají i odpověď API a čekání kódu (2 plané poplachy ze 40 zpráv).
+    CEKA = re.compile(r'(tvé|tvou|tvoje|tvého)\s+(odpověd\w*|rozhodnutí|ano)\W+(?:\w+\W+){0,6}?(ček\w*|zůstáv\w*|visí)\b'
+                      r'|(ček\w*|zůstáv\w*|visí)\W+(?:\w+\W+){0,6}?(tvé|tvou|tvoje|tvého)\s+(odpověd\w*|rozhodnutí|ano)\b'
+                      r'|ček\w*\s+na\s+(tebe|tvé|tvou|tvoje|tvůj|ownera)\b'
+                      r'|otázk\w*\W+(?:\w+\W+){0,6}?(ček\w*|zůstáv\w*|visí)\b|(ček\w*|visí)\W+(?:\w+\W+){0,6}?otázk\w*', re.I)
+    # Otázka se musí položit V TOM BODU, který čekající věc zmiňuje (první verze pustila „5. … čekají i dvě otázky…“, protože bod 4
+    # nesl jinou otázku — přesně to owner přehlédl). Úvod a nadpisy nad body: stačí otázka kdekoli v číslovaném bodu.
+    body = re.split(r'\n(?=\d+[.)]\s)', '\n' + bez_cit6)
+    polozena = any('?' in l and re.match(r'^\s*(\d+[.)]\s|\s+([-*•]|\d+[.)])\s)', l) for l in bez_cit6.split('\n'))
+    for bod in body:
+        ceka = CEKA.search(bod)
+        if ceka and ('?' not in bod if re.match(r'\d+[.)]\s', bod) else not polozena):
+            vady.append('SCHOVANÁ OTÁZKA: „' + ceka.group(0)[:60] + '“ — zpráva říká, že na ownera něco čeká, ale v tom bodu otázku nepoloží. '
+                        'Polož každou zvlášť: „N. <otázka>?“ s vlastním číslem (owner 2026-10-14: „schované v textu můžu přehlédnout“).')
             break
     if len(zprava) < 400:
         if vady:

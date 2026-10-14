@@ -11348,3 +11348,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Neověřeno:** že ElevenLabs hlavičku `request-id` u streamu posílá a položku zapíše do ~50 s — ukáže log u prvního hlasu po nasazení
   (`EL history deleted (match: …)` / `… not found … (request-id present|missing, …)`). Do té doby věta v zásadách „mažeme“ čeká na potvrzení.
 - Affected doc(s): `RUNAR_BACKLOG.md` (položka v sekci GDPR: nasazeno, co zbývá ověřit) — v témže commitu.
+
+## 2026-10-14 (5) — Stop-hook zprávy ownerovi: co na ownera čeká, musí být v tom bodu položené jako otázka (pravidlo 6)
+
+- **Rozhodl:** KUKY 2026-10-14 *„pokud máš na mě dvě otázky, tak to napiš jako otázky. pokud je to nějak schované v textu, tak to můžu
+  přehlédnout.“*
+- **Proč:** ve zprávě CODE-tune stálo „tvé odpovědi čekají i dvě otázky k islandštině z dřívějška“ a žádná položená otázka. Pravidlo
+  „otázky mají vlastní čísla“ stojí v paměti od 2026-10-07 (`full-path-and-numbered-lists`), hook ale chytal jen otazník bez čísla —
+  zmínku o otázce bez otázky neviděl. Porušené znovu → mechanismus (CLAUDE.md §30).
+- **Co:** `hooks/claude/runar-zprava-check.py`, pravidlo 6 (znění a důvod v hlavičce hooku): číslovaný bod, který říká, že na ownera něco
+  čeká (tvé odpovědi / rozhodnutí / ano, „čeká na tebe“, otázky čekají), projde jen s otazníkem v tomtéž bodu; úvod a nadpisy nad body
+  stačí s otázkou kdekoli v číslovaném bodu. Platí i pro krátkou zprávu.
+- **Ověřeno:** ㊄ (`scripts/verify_hooky_claude.py`) 14 případů, z toho 4 nové (schovaná otázka · schovaná vedle jiné položené ·
+  položená · „otázka runy“ z obsahu čtení); útok v protipříkladech. Na 150 skutečných zprávách CODE-tune zastaví 14 — všechny „čeká na
+  tebe / tvoje rozhodnutí“ bez položené otázky. První verze měla 2 plané poplachy ze 40 („odpověď“ API, „čeká“ kód) a pustila zprávu,
+  kterou owner přehlédl (otázka v jiném bodu) — obojí opraveno, než šla do commitu.
+- Affected doc(s): `CLAUDE.md` §30 (odrážka Zpráva ownerovi), `memory/full-path-and-numbered-lists.md` — v témže commitu.

@@ -30,5 +30,10 @@ Otázky a návrhy, na které má odpovědět, mají VLASTNÍ čísla (ne „Mám
 🔒 **Od 2026-10-07 to hlídá stroj** (CLAUDE.md §30): Stop-hook `~/.claude/runar-zprava-check.py` zprávu s odrážkami na nejvyšší úrovni <!-- doc-links:ok 2026-10-07 hook je uživatelský soubor v ~/.claude, mimo repo -->
 nebo s otázkou bez čísla zastaví a nechá přepsat.
 
+⛔ **Otázku POLOŽ, nezmiňuj** (KUKY 2026-10-14: *„pokud máš na mě dvě otázky, tak to napiš jako otázky. pokud je to nějak schované
+v textu, tak to můžu přehlédnout.“*). „Tvé odpovědi čekají i dvě otázky z dřívějška“ není otázka — owner ji přehlédl. Co na něj čeká,
+napiš celé znovu jako „N. <otázka>?“, i když už padla v minulé zprávě. Od 2026-10-14 to hlídá pravidlo 6 téhož hooku
+(`hooks/claude/runar-zprava-check.py`, DECISIONS 2026-10-14 (5)).
+
 **How to apply:** každý odkaz na soubor = plná cesta od `C:\`. **Každý bod hlášení a každá otázka = číslo**
 (1, 2, 3 …, průběžně přes celé hlášení, ať „7“ znamená jen jednu věc). Odrážky jen uvnitř bodu.
