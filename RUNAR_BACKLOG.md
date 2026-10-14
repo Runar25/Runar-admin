@@ -661,6 +661,15 @@ doladit apku“*).
       `GET /v1/history` naším klíčem — ten je jen v Supabase secrets (lokálně ne). ✅ *(2026-10-13, owner „ano udělej a nasaď“: shrine VOICE
       ukazuje počet položek historie, z toho Rúnarova hlasu, nejnovější a nejstarší — `voice-usage` nasazena. Owner předtím historii v
       rozhraní ElevenLabs smazal.)* Zbývá ověřit: po přečtení čtení nahlas nesmí počet Rúnarova hlasu ve shrine VOICE vzrůst.
+      ⛔ **Ověřeno 2026-10-14 — mazání NEZABRALO** (owner poslal snímek: ElevenLabs → Text to Speech → History, položka hlasem Rúnar
+      ze 14. 10. — *„nesmazalo se automaticky“*). Jediný hlas od nasazení: `voice_usage` 2026-10-14 08:25:56 UTC (is, eleven_v3, 310 znaků),
+      vygenerovala ho `elevenlabs-proxy` v41 nasazená 2026-10-13 21:18 UTC i s mazáním — kód tedy běžel a položku nesmazal. Tím je
+      zodpovězeno i to, co dokumentace neříká: webové rozhraní hlasy z API ukazuje. **Který krok selhal, neověřeno** — řekne jen log
+      funkce (`EL history list <kód>` = klíč historii nečte · `… item not found` = položku nenašla · `EL history delete <kód>` = klíč
+      nesmí mazat · `… cleanup failed` = výjimka · žádný řádek = úklid neběžel); CLI logy neumí a vestavěný prohlížeč k Supabase přihlášený
+      není → log přečte owner. Kandidát opravy podle výsledku: hledat položku podle `request_id` (hlavička `request-id`, kterou ElevenLabs
+      vrací pro navazování požadavků; položka historie pole `request_id` nese) místo podle textu, který proxy normalizuje, a čekat déle
+      než 3 × 1,5 s; při 401/403 je oprava v oprávněních klíče (historie: zápis), ne v kódu. Do opravy věta v zásadách „mažeme“ neplatí.
       **CODE-tune — historie ElevenLabs drží text čtení i zvuk; smazání účtu v Rúnaru tam nedosáhne** (nalezeno 2026-10-12 při psaní
       zásad). Ověřeno v dokumentaci API: `enable_logging` je ve výchozím stavu zapnuté a vypnout ho smí jen Enterprise; `elevenlabs-proxy`
       ani `elevenlabs-static` ho nenastavují; položka historie nese `text` a zvuk jde stáhnout. Návrh: po uložení zvuku položku smazat
