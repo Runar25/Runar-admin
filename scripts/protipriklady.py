@@ -37,6 +37,8 @@ POSLEDNI_VYSTUP = ''
 APP = 'v2/runar-app.js'
 
 PRIPADY = [
+ # ㉽ landing (CODE-read 2026-10-14, kolo 4): web/site čte klíč, který v UI_TEXT není (přejmenování v appce) → prázdné místo na webu
+ ('chyti', 'verify_ui_text_used.js', 'web/site/index.html', 'replace', 'data-k="hero_eyebrow"', 'data-k="hero_eyebrow_v2"'),
  # ㊇ ceník na serveru (CODE-tune 2026-10-14): cena změněná jen ve v2/ — zrcadlo nepřegenerované
  ('chyti', 'verify_ceny_server.js', 'v2/runar-config.js', 'replace', "    'gpt-6-sol':  [2, 0.2, 10],", "    'gpt-6-sol':  [3, 0.2, 10],"),
  # ㊈ hlídání provozu (CODE-tune 2026-10-14): práh selhání modelu desetkrát vyšší — upozornění by nepřišlo
