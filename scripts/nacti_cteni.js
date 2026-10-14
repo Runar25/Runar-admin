@@ -7,6 +7,7 @@
 // CO DĚLÁ (vše od posledního zápisu monitoru — značka „do:“ v docs/monitor/ozveny.md; bez značky 2 dny zpět):
 //   1) nová čtení → CELÉ řádky do souboru MIMO repo (nesou jména a otázky lidí; repo je veřejné) — ten soubor CODE čte
 //   2) monitor ozvěn --nove --zapis → tabulka do docs/monitor/ozveny.md + ⚠ k ohlášení
+//   2c) islandská čtení přes Greynir (lokálně, zdarma; scripts/utils/is_greynir_cteni.js) — nálezy k ověření korpusem (owner 2026-10-14)
 //   3) hlášení z appky (bug_reports) se stavem „new“ (NEPŘEČTENÁ, bez ohledu na datum) → do terminálu (texty lidí do repa nepatří,
 //      RUNAR_PRIVACY.md) a hned se OZNAČÍ jako přečtená („triaged“). Stav v DB je jediný zdroj (§20): každá session i po compactu
 //      vidí jen to, co ještě nikdo nečetl. KUKY 2026-10-06: „načteš je, označ jako přečtené, uděláme je, co se neudělá, je backlog!“
@@ -61,7 +62,7 @@ const odSql = od.replace(/'/g, '');
 const kratce = (s, n) => { const t = String(s || '').replace(/\s+/g, ' ').trim(); return t.length > n ? t.slice(0, n) + '…' : t; };
 
 // 1) čtení
-const cteni = dotaz("select id, drawn_at, lang, rune_name, area, aol, seeking, intention, question, reading_mode, life_rune, short_text, follow_up, "
+const cteni = dotaz("select id, drawn_at, lang, rune_name, area, aol, seeking, intention, question, reading_mode, life_rune, short_text, deep_text, follow_up, "
   + "prompt_draws, prompt_version, usage from " + CTENI + " where drawn_at > '" + odSql + "' order by drawn_at");
 const vystup = arg('--vystup') || path.join(os.tmpdir(), 'runar_cteni_' + new Date().toISOString().slice(0, 16).replace(/[:T]/g, '-') + '.json');
 fs.writeFileSync(vystup, JSON.stringify(cteni, null, 1));
@@ -82,6 +83,14 @@ if (cteni.length) {
   console.log('\n══ MONITOR OZVĚN' + (zapis ? ' (připsáno do docs/monitor/ozveny.md)' : ' (jen výpis, bez zápisu)'));
   console.log(String(r.stdout || '').split('\n').filter((l) => l.trim() && !/^Initialising/.test(l)).join('\n'));
   if (r.status !== 0) console.log('   ⚠ monitor skončil chybou: ' + kratce(r.stderr, 300));
+}
+
+// 2c) islandská čtení přes Greynir — owner 2026-10-14 na hlášení 6282e405 („Potřebuju najít řešení jak IS čtení analyzovat“): „zdarma ano“.
+// Smyčka ze skutečných čtení (DECISIONS 2026-09-23 (6) bod 3) tak běží při každém načtení sama, ne až si na ni někdo vzpomene.
+if (cteni.some((r) => r.lang === 'is')) {
+  const g = cp.spawnSync('node', [path.join(__dirname, 'utils', 'is_greynir_cteni.js'), vystup], { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+  console.log('\n══ ISLANDŠTINA (Greynir lokálně, zdarma)');
+  console.log(String(g.stdout || '').split('\n').filter((l) => l.trim() && !/^Initialising/.test(l)).join('\n') || '   ⚠ kontrola se nespustila: ' + kratce(g.stderr, 300));
 }
 
 // 2b) plýtvání voláními — KUKY 2026-10-10: „budeme ještě chtít hlídat případné plýtvání voláním, což nás stojí peníze“.
