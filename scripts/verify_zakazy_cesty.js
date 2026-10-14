@@ -3,6 +3,7 @@
 //   (A) §5  ᚱ vždy bez ozdob — žádný ozdobný znak (◌ ✦ ✧ · • ◈ …) těsně před ani za ᚱ v textu appky
 //   (B) §5  reader-content se NIKDY neskrývá — z JS jen display 'block' / '', žádná třída ani CSS display:none
 //   (C) §12 jméno uživatele nikdy z e-mailu — žádné split('@') ani odříznutí za zavináčem ve v2/ a v edge funkcích
+// Každá hláška začíná cestou souboru (2026-10-14): pre-commit (scripts/utils/rychle_kontroly.py) zastaví commit jen podle ní.
 //   (D) §13 nový výklad musí projít VŠEMI cestami — každý režim z _SPREAD_COST_KEY (kromě single) se objeví v readRune, drawAnother,
 //           resetReader, _setSpreadMode i generateVoice (runar-reading.js). Dnes je to pravda pro všechny čtyři výklady.
 // Postaveno CODE-read 2026-10-13 na ownerovo „co s tím? … pokračuj v kontrole“ nad výpisem mapy nosičů.
@@ -55,13 +56,13 @@ const CESTY = ['readRune', 'drawAnother', 'resetReader', '_setSpreadMode', 'gene
 function castD(reading) {
   const v = [];
   const m = reading.match(/_SPREAD_COST_KEY\s*=\s*\{([^}]*)\}/);
-  if (!m) return ['(D) §13 v runar-reading.js chybí _SPREAD_COST_KEY — kontrola neví, které výklady existují (uprav ji)'];
+  if (!m) return ['(D) §13 v2/runar-reading.js: chybí _SPREAD_COST_KEY — kontrola neví, které výklady existují (uprav ji)'];
   const rezimy = (m[1].match(/(\w+)\s*:/g) || []).map((x) => x.replace(/\s*:$/, '')).filter((x) => x !== 'single');
-  if (rezimy.length < 1) return ['(D) §13 _SPREAD_COST_KEY bez výkladů — kontrola by nic neověřila'];
+  if (rezimy.length < 1) return ['(D) §13 v2/runar-reading.js: _SPREAD_COST_KEY bez výkladů — kontrola by nic neověřila'];
   for (const f of CESTY) {
     const b = telo(reading, f);
-    if (!b) { v.push('(D) §13 funkce ' + f + ' v runar-reading.js chybí (přejmenovaná? uprav CESTY v kontrole)'); continue; }
-    for (const r of rezimy) if (!new RegExp("['\"]" + r + "['\"]").test(b)) v.push('(D) §13 výklad \'' + r + '\' chybí v ' + f + '()');
+    if (!b) { v.push('(D) §13 v2/runar-reading.js: funkce ' + f + ' chybí (přejmenovaná? uprav CESTY v kontrole)'); continue; }
+    for (const r of rezimy) if (!new RegExp("['\"]" + r + "['\"]").test(b)) v.push('(D) §13 v2/runar-reading.js: výklad \'' + r + '\' chybí v ' + f + '()');
   }
   return v;
 }
