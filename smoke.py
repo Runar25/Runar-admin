@@ -1142,6 +1142,20 @@ radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola kalkulacky navratnosti probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# ㊄ Hooky Claude Code (CODE-read 2026-10-14; po přesunu do repa, DECISIONS 2026-10-14 (2)): hlídač API, kontrola zpráv ownerovi, kontext
+# po startu, tree-guard a záloha přepisu dostanou známý vstup a musí dát očekávaný výsledek. Spadlý hook nic nezastaví — Claude Code chybu
+# hooku jen zaloguje —, takže rozbití by se jinak projevilo až tím, že hlídání přestane hlídat.
+print('\n' + chr(0x3284) + ' HOOKY CLAUDE CODE (verify_hooky_claude.py)')
+r = subprocess.run([sys.executable, '-X', 'utf8', os.path.join(ROOT, 'scripts', 'verify_hooky_claude.py')],
+                   capture_output=True, text=True, encoding='utf-8')
+r2 = subprocess.run([sys.executable, '-X', 'utf8', os.path.join(ROOT, 'scripts', 'verify_hooky_claude.py'), '--test'],
+                    capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0 and r2.returncode == 0
+output = (r2.stdout + r.stdout + r.stderr + r2.stderr).strip()
+radky = [l for l in output.split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola hooku probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

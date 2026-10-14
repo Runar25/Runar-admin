@@ -37,6 +37,9 @@ POSLEDNI_VYSTUP = ''
 APP = 'v2/runar-app.js'
 
 PRIPADY = [
+ # ㊄ hooky Claude Code (CODE-read 2026-10-14): kontrola zpráv přestane poznat příkaz; hlídač API přestane poznat OpenAI
+ ('chyti', 'verify_hooky_claude.py', 'hooks/claude/runar-zprava-check.py', 'replace', '(node|git|python3?|', '(nodex|gitx|python3x?|'),
+ ('chyti', 'verify_hooky_claude.py', 'hooks/claude/runar-api-guard.py', 'replace', r"API = re.compile(r'api\.openai\.com|", r"API = re.compile(r'"),
  # ⑮ §16 output B (CODE-read 2026-10-13): commitnuté rozhodnutí slíbí opravu docu, který se po něm nepohnul (neexistuje)
  ('chyti', 'verify_decisions_followthrough.js', 'RUNAR_DECISIONS.md', 'commit_append', '',
   '\n## 2026-10-13 (99) — protipříklad\n\n- Affected doc(s): `docs/protipriklad-' + 'xyz.' + 'md` — v témže commitu.\n'),
