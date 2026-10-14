@@ -387,7 +387,10 @@ def _zabij_strom(p):
 
 def beh(W, sk):
     env = dict(ENV, RUNAR_ROOT=W)
-    p = subprocess.Popen(['node', W + '/scripts/' + sk], cwd=W, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+    # 2026-10-14 (CODE-read): kontrola v Pythonu (㊄ verify_hooky_claude.py) se pouští Pythonem — do té doby vždy node a útok spadl na „už na
+    # čisté kopii exit 1“ (node nerozumí .py).
+    prikaz = [sys.executable, '-X', 'utf8'] if sk.endswith('.py') else ['node']
+    p = subprocess.Popen(prikaz + [W + '/scripts/' + sk], cwd=W, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                          text=True, encoding='utf-8', **({} if os.name == 'nt' else {'start_new_session': True}))
     try:
         out, _ = p.communicate(timeout=LIMIT_S)
