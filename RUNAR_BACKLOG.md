@@ -659,8 +659,11 @@ Souběh už zčásti hotový týž den: push s commitem vzniklým během smoke (
 - **K4/2 appka:** prošlé v procházce 2026-10-11–13 (souhlas, deník, profil, Rúnakort, okna). Nález: reader přestal číst `runar_character` (9ff06eb),
   ale shrine ji četla dál → TEACH by s aktivním řádkem měl jinou postavu než appka. ✅ Opraveno 2026-10-14 (shrine: postava jen z kódu).
 - **K4/2b mrtvé tabulky v DB** (nový typ: tabulka, kterou nečte ani nezapisuje žádný kód ani funkce v DB): `knowledge_base` (3 ř. z května)
-  → SQL `sql/2026-10-14_drop_knowledge_base.sql`, čeká na ownera. Nečtené, ale zůstávají: `gpt_reviews` (DECISIONS 2026-10-09 (8) — data
+  → SQL `sql/2026-10-14_drop_knowledge_base.sql` ✅ spustil owner 2026-10-14, ověřeno v DB. Nečtené, ale zůstávají: `gpt_reviews` (DECISIONS 2026-10-09 (8) — data
   se nemažou), `runar_character` (prázdná; výš „Víc postav“ s ní počítá). `rate_limits`, `reading_locks`, `credit_ledger` používají funkce v DB.
+- **K4/3 landing `web/site` (CODE-web):** zásady soukromí registraci na webu pokrývají (Brevo, otisk e-mailu). Nález: landing bere texty živě
+  z UI_TEXT appky, ale ㉽ četla jen v2/ — klíč, který appka přestane číst, by nabídla ke smazání a přejmenování by web ukázal prázdně.
+  ✅ Opraveno 2026-10-14 v ㉽ (`scripts/verify_ui_text_used.js`: čte i web/site, chybějící klíč = FAIL) + útok v protipříkladech.
 - [ ] **Pro ownera / Cowork (obsah, nespěchá; část 28):** hlavička `RUNAR_POPISY_RUN.md` píše „Společný tvar… pozorování, ne pravidlo —
   pravidlo vznikne, až jich bude 25+“. Popisů je 25, spouštěč nastal, pravidlo nikdo nesepsal. Jen připomínka; CODE do obsahu nesahá.
 
