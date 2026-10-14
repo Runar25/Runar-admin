@@ -57,6 +57,23 @@ Deno.serve(async (req) => {
   if (rlErr) console.error("waitlist-join: rate limit check failed:", rlErr.message);
   if (allowed === false) return json({ error: "rate_limited" }, 429);
 
+  // 2026-10-14 (nález CODE-read, kontrola architektury kolo 4, K4/1): limit jen na IP nestačí — kdo má víc IP, posílá potvrzovací
+  // e-maily na cizí adresy a vyčerpá denní kvótu Brevo (300/den), ze které jdou i přihlašovací kódy appky.
+  // Okna jen hodinová: check_rate_limit namátkou maže řádky s window_start starším než 1 h, takže denní okno by se tiše vynulovalo.
+  // (a) táž adresa nejvýš 2× za hodinu — klíč je otisk (SHA-256), adresa sama do rate_limits nejde; nad limit tichý úspěch (neprozradit).
+  const hash = Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(email))))
+    .map((x) => x.toString(16).padStart(2, "0")).join("");
+  const { data: okEmail } = await sb.rpc("check_rate_limit", {
+    p_key: `waitlist:email:${hash}`, p_window_seconds: 3600, p_max_requests: 2,
+  });
+  if (okEmail === false) return json({ ok: true });
+  // (b) celkem nejvýš 8 registrací za hodinu = nejvýš 192 e-mailů za den, ať z 300 zbude ≥ 108 na přihlašovací kódy.
+  //     Nad limit poctivá chyba (formulář ukáže „zkus to za chvíli“), ne tichý úspěch — skutečný člověk by jinak čekal na e-mail marně.
+  const { data: okAll } = await sb.rpc("check_rate_limit", {
+    p_key: "waitlist:all", p_window_seconds: 3600, p_max_requests: 8,
+  });
+  if (okAll === false) { console.error("waitlist-join: hourly cap reached"); return json({ error: "busy" }, 503); }
+
   const key = Deno.env.get("BREVO_API_KEY");
   if (!key) { console.error("waitlist-join: BREVO_API_KEY missing"); return json({ error: "server_error" }, 500); }
 
