@@ -11391,3 +11391,12 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Co:** znění vlastní `memory/working-style.md` „Explore → Plan → Implement“ (tam celé, tady se neopisuje — §20); CLAUDE.md §16 na něj
   odkazuje.
 - Affected doc(s): `memory/working-style.md`, `CLAUDE.md` §16 — v témže commitu.
+
+## 2026-10-14 (8) — `tree_state` smazána v DB (owner); smazání Vrstev A/B/C v `claude-proxy` se přibalí k dalšímu nasazení
+
+- **Co:** owner 2026-10-14 *„3. hotovo“* — pustil `sql/2026-10-14_drop_tree_state.sql`; ověřeno CODE-read (`information_schema`: tabulka
+  `public.tree_state` neexistuje). Git puštění SQL nevidí, proto řádek tady.
+- **Nasazení `claude-proxy`:** owner *„4. přibal to k dalšímu nasazení“* — CODE-read nasazení zablokovala ochrana Claude Code; smazaný kód
+  byl vypnutý, takže produkce s ním nic nedělá. Kdo `claude-proxy` nasadí příště (z HEAD), nese i smazání (DECISIONS 2026-10-14 (6));
+  do té doby `scripts/utils/nasazene_vs_repo.py` hlásí u `claude-proxy` ROZDÍL — očekávaný. Hlídá položka v BACKLOGu.
+- Affected doc(s): `RUNAR_BACKLOG.md` (položka k nasazení) — v témže commitu.

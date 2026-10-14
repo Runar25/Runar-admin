@@ -796,6 +796,10 @@ Procházka je tím úplná.
 
 ## Ověřit naživo, než rozešleš odkaz
 
+- [ ] **`claude-proxy`: s příštím nasazením odejde i smazání Vrstev A/B/C** (owner 2026-10-14 „přibal to k dalšímu nasazení“,
+  DECISIONS 2026-10-14 (8)). Kód byl vypnutý, nasazení samo nic nemění; po něm `python -X utf8 scripts/utils/nasazene_vs_repo.py`
+  musí u `claude-proxy` hlásit „= HEAD“ — pak odškrtnout.
+
 - [x] ✅ *(owner 2026-10-13: „teď jsem to zkusil znova a už se logo chrome neobjevilo“ — jednorázové, příčina neověřená; hlášení
       uzavřeno.)* **Owner → CODE-tune: při otevření appky logo Chrome** (hlášení 457a5a6f, 2026-10-13: *„dřív to nedělal“*). Server je v pořádku,
       ověřeno 2026-10-13 v produkci: service worker aktivní a řídí stránku, manifest i všechny čtyři ikony 200, manifest od května beze
