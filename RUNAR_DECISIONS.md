@@ -11334,3 +11334,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Reverzibilita:** `delete from runar_corrections where id = '076b8f77-eea2-4aeb-8c42-d0d68172d0c5'`.
 - Affected doc(s): `check-is.py` (vzor) · `RUNAR_BACKLOG.md` (smyčka ze skutečných čtení — owner ji hlášením otevřel znovu, první běh)
   — v témže commitu.
+
+## 2026-10-14 (4) — Úklid historie ElevenLabs hledá položku podle request_id a čeká déle — nasazeno (elevenlabs-proxy v42)
+
+- **Rozhodl:** owner 2026-10-14 *„nasad“* — oprava už schváleného mazání (2026-10-13 (6)).
+- **Proč:** první skutečný hlas po nasazení mazání (14. 10. 08:25:56 UTC) v historii ElevenLabs zůstal; log funkce (snímek od ownera)
+  *„EL history item not found — left in history“* — výpis historie prošel, položka se podle přesného textu za ~5 s nenašla.
+- **Co (ae78b65):** `smazHistorii` hledá podle `request_id` z hlavičky `request-id`, záložně podle textu (normalizovaného na obou
+  stranách), čeká až ~50 s na pozadí; log říká, čím se položka našla, nebo co bylo vidět (počty, ne text). Záloha „nejnovější položka
+  našeho hlasu“ úmyslně ne — smazala by i ownerův pokus na webu ElevenLabs. Hlídá smoke ㊅ (`scripts/verify_el_historie.js`).
+- **Nasazeno 2026-10-14 21:10 UTC** (v42). Ověřeno: bez přihlášení 401, preflight 204; `scripts/utils/nasazene_vs_repo.py`:
+  nasazené = HEAD.
+- **Neověřeno:** že ElevenLabs hlavičku `request-id` u streamu posílá a položku zapíše do ~50 s — ukáže log u prvního hlasu po nasazení
+  (`EL history deleted (match: …)` / `… not found … (request-id present|missing, …)`). Do té doby věta v zásadách „mažeme“ čeká na potvrzení.
+- Affected doc(s): `RUNAR_BACKLOG.md` (položka v sekci GDPR: nasazeno, co zbývá ověřit) — v témže commitu.
