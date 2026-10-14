@@ -829,7 +829,8 @@ Procházka je tím úplná.
 
 ## Ověřit naživo, než rozešleš odkaz
 
-- [ ] **`claude-proxy`: s příštím nasazením odejde i smazání Vrstev A/B/C** (owner 2026-10-14 „přibal to k dalšímu nasazení“,
+- [x] ✅ *(CODE-tune 2026-10-14: nasazeno v88 s hlídáním provozu, `nasazene_vs_repo.py` = HEAD; DECISIONS 2026-10-14 (14).)*
+  **`claude-proxy`: s příštím nasazením odejde i smazání Vrstev A/B/C** (owner 2026-10-14 „přibal to k dalšímu nasazení“,
   DECISIONS 2026-10-14 (8)). Kód byl vypnutý, nasazení samo nic nemění; po něm `python -X utf8 scripts/utils/nasazene_vs_repo.py`
   musí u `claude-proxy` hlásit „= HEAD“ — pak odškrtnout.
 

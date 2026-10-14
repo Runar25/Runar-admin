@@ -11468,3 +11468,12 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Zbývá:** owner pustí `sql/2026-10-14_ops_watch.sql` (pg_cron, tabulky, plánované běhy); filtr Gmailu na štítek Ops — konektor filtry
   zakládat neumí. Nasazení `ops-watch` a `claude-proxy` (s ním odchází i smazání Vrstev A/B/C, (8)) — zápis o nasazení níž v témže dni.
 - Affected doc(s): `RUNAR_BACKLOG.md` (úkol z (12)), `memory/schranka-runar-gmail.md` (štítek Ops) — v témže commitu.
+
+## 2026-10-14 (14) — Nasazeno: ops-watch v1 a claude-proxy v88 (zápis provozních událostí + smazání Vrstev A/B/C)
+
+- **Na základě:** (13) — owner „ano udělej“; claude-proxy s ním nese i smazání Vrstev A/B/C od CODE-read (owner „přibal to k dalšímu
+  nasazení“, (8)). Kód 8d9b867.
+- **Ověřeno:** ops-watch bez tajné hodnoty 401; claude-proxy bez přihlášení 401 (s textem; prázdné tělo dává 400 „Missing prompt“ — ta
+  kontrola stojí před přihlášením od 2026-09-14, chování se nezměnilo), preflight 204; `scripts/utils/nasazene_vs_repo.py`: obě = HEAD.
+- **Zbývá:** owner pustí `sql/2026-10-14_ops_watch.sql` — do té doby claude-proxy zápis události jen zaloguje jako chybu (čtení
+  neovlivní) a plánovač neběží; pak zkušební souhrn do schránky.
