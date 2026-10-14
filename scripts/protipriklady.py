@@ -37,6 +37,10 @@ POSLEDNI_VYSTUP = ''
 APP = 'v2/runar-app.js'
 
 PRIPADY = [
+ # ㊇ ceník na serveru (CODE-tune 2026-10-14): cena změněná jen ve v2/ — zrcadlo nepřegenerované
+ ('chyti', 'verify_ceny_server.js', 'v2/runar-config.js', 'replace', "    'gpt-6-sol':  [2, 0.2, 10],", "    'gpt-6-sol':  [3, 0.2, 10],"),
+ # ㊈ hlídání provozu (CODE-tune 2026-10-14): práh selhání modelu desetkrát vyšší — upozornění by nepřišlo
+ ('chyti', 'verify_ops_souhrn.js', 'supabase/functions/_shared/ops_souhrn.ts', 'replace', '  chybModeluZaHodinu: 3,', '  chybModeluZaHodinu: 30,'),
  # ㊆ útok na skutečných výstupech (CODE-read 2026-10-14): kontrola vypisuje cestu bez „supabase/functions/“ (díra z prvního útoku) → ㊆ musí padnout
  ('chyti', 'verify_rychle_kontroly.py', 'scripts/verify_edge_imports.js', 'replace', "const rel = 'supabase/functions/' + d.name + '/' + f;", "const rel = d.name + '/' + f;"),
  # ㊆ rychlé kontroly při commitu (CODE-tune 2026-10-14): vada na staged souboru commit nezastaví · cizí vada commit zastaví

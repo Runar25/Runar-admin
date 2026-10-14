@@ -48,6 +48,14 @@ function q(sql) {
   if (!Array.isArray(j.rows)) throw new Error('dotaz selhal: ' + s.slice(0, 200));
   return j.rows;
 }
+// Výsledek zálohy do ops_events pro hlídání provozu (2026-10-14, DECISIONS 2026-10-14 (13)): edge funkce ops-watch pošle upozornění, když
+// záloha selže nebo úspěch chybí déle než 26 h (pozná i zálohu, která vůbec neběžela). Jen čísla a zkrácená chybová hláška, žádná data.
+// Zápis nesmí zálohu nikdy shodit — tabulka nemusí existovat (sql/2026-10-14_ops_watch.sql) nebo může být DB nedostupná.
+function hlasProvoz(kind, detail) {
+  try {
+    q("insert into public.ops_events (kind, detail) values ('" + kind + "', '" + JSON.stringify(detail).replace(/'/g, "''") + "'::jsonb) returning id");
+  } catch (e) { log('ops_events (' + kind + ') nezapsáno: ' + String(e.message).slice(0, 150)); }
+}
 function heslo() {
   if (!fs.existsSync(HESLO)) {
     fs.mkdirSync(path.dirname(HESLO), { recursive: true });
@@ -132,6 +140,7 @@ async function main() {
     const archivDb = path.join(CIL, 'runar-db-' + DEN + '.7z');
     zabal(archivDb, fs.readdirSync(tmp).map((f) => path.join(tmp, f)), h);
     naDrive(archivDb);
+    hlasProvoz('backup_ok', { bytes: fs.statSync(archivDb).size, tables: Object.keys(souhrn).length });
     log('DB ok → ' + archivDb + ' (' + fs.statSync(archivDb).size + ' B; ' + Object.entries(souhrn).map(([k, v]) => k + ' ' + v).join(', ') + ')');
     smazStare(DEN, [CIL, DRIVE]).forEach((f) => log('smazána záloha starší než ' + LHUTA_DNI + ' dní: ' + f));
 
@@ -190,4 +199,5 @@ function konverzace() {
 }
 if (process.env.RUNAR_ZALOHA_TEST_DB_SELZE) main = async () => { throw new Error('test: záloha DB selhala'); };   // jen samotest kroku 7
 main().then(() => { if (!konverzace()) process.exitCode = 2; })
-  .catch((e) => { log('CHYBA: ' + e.message); konverzace(); process.exit(1); });
+  .catch((e) => { log('CHYBA: ' + e.message); hlasProvoz('backup_fail', { error: String(e.message).replace(/\S+@\S+/g, '[e-mail]').slice(0, 200) });
+    konverzace(); process.exit(1); });

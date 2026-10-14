@@ -11449,3 +11449,22 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   Ověřeno předem, že webhook fungoval (4 poslední hlášení = zprávy v kanálu) — ruší se pro malý užitek, ne pro poruchu.
 - **Dál:** hlídání provozu + denní souhrn do `runar@therunekeeper.com` — úkol CODE-tune v BACKLOGu (nahradil položku „Monitoring / alerting“).
 - Affected doc(s): `RUNAR_PRIVACY.md` (Slack jako příjemce), `RUNAR_PRICING.md` (řádek nákladů), `RUNAR_BACKLOG.md` — v témže commitu.
+
+## 2026-10-14 (13) — Hlídání provozu a ranní souhrn e-mailem: edge funkce ops-watch, pg_cron, Brevo, štítek Ops
+
+- **Rozhodl:** owner 2026-10-14 na návrh CODE-tune (úkol z (12)): *„7. ano, pg_cron + Brevo. 8. ano založ štítek, žádná čeština v Gmail.
+  Nikdy. Vše EN. ano udělej.“*
+- **Co:** edge funkce `ops-watch` (volá ji pg_cron, přístup jen s tajnou hodnotou z vaultu v hlavičce `x-ops-secret`): každých 15 min
+  kontrola, e-mail jen při ZMĚNĚ stavu (PROBLEM / RESOLVED); v 06:00 UTC ranní souhrn za 24 h (předmět `Rúnar Ops · OK|WATCH|PROBLEM · …`,
+  nahoře „Needs you“, pod tím čísla). Hlídá: model čtení (`claude-proxy` zapisuje `model_error` / `model_fallback` do `ops_events`),
+  brzdu hlasu (snímky `brake`), noční zálohu (`zaloha_db.js` zapisuje `backup_ok` / `backup_fail`; problém i když úspěch chybí > 26 h).
+  Prahy a texty: `supabase/functions/_shared/ops_souhrn.ts` (čisté funkce, smoke ㊈); cena čtení ze serverového zrcadla ceníku
+  `_shared/ceny_modelu.ts`, generovaného z `v2/` (`scripts/utils/gen_ceny_server.js`, smoke ㊇). Posílá Brevo z `noreply@therunekeeper.com`
+  do `runar@therunekeeper.com`; v e-mailu jen počty a typy, žádné texty čtení ani jména. EN (§31). Gmail: štítek **Ops** (Label_6).
+- **Proč v cloudu, ne na ownerově počítači:** upozornění musí přijít i při vypnutém počítači a hlídač musí poznat i zálohu, která vůbec
+  neproběhla. pg_cron 2026-09-25 záměrně nezapnut (změna nastavení DB bez ownerova ano) — teď ano.
+- **Prahy (2026-10-14, bez historie — přepočítat po 14 dnech):** ≥ 3 selhání modelu za hodinu, nebo ≥ 3 přepnutí na zálohu při ≥ 30 %
+  pokusů; záloha > 26 h; brzda = jakýkoli zásah za hodinu. Při malém provozu podíl sám skáče, proto vždy i absolutní minimum.
+- **Zbývá:** owner pustí `sql/2026-10-14_ops_watch.sql` (pg_cron, tabulky, plánované běhy); filtr Gmailu na štítek Ops — konektor filtry
+  zakládat neumí. Nasazení `ops-watch` a `claude-proxy` (s ním odchází i smazání Vrstev A/B/C, (8)) — zápis o nasazení níž v témže dni.
+- Affected doc(s): `RUNAR_BACKLOG.md` (úkol z (12)), `memory/schranka-runar-gmail.md` (štítek Ops) — v témže commitu.

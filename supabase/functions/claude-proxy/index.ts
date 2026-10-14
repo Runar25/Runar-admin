@@ -57,6 +57,17 @@ function sb() {
   );
 }
 
+// Provozní události pro hlídání provozu (2026-10-14, owner „ano, pg_cron + Brevo … ano udělej“, DECISIONS 2026-10-14 (13)): edge funkce
+// ops-watch z nich pozná, že model čtení padá víc než obvykle, a pošle upozornění. Do té doby šly chyby modelu jen do logu funkce, který
+// stroj nepřečte. Jen druh, model a stav — žádný text čtení ani otázka. Na pozadí (EdgeRuntime.waitUntil): čtenář na zápis nečeká a selhání
+// zápisu (např. tabulka ještě nevznikla) čtení nezastaví.
+function logOps(kind: "model_fallback" | "model_error", detail: Record<string, unknown>) {
+  const zapis = sb().from("ops_events").insert({ kind, detail })
+    .then(({ error }: { error: { message: string } | null }) => { if (error) console.error("ops_events insert failed:", error.message); });
+  const er = (globalThis as any).EdgeRuntime;
+  if (er?.waitUntil) er.waitUntil(zapis);
+}
+
 // (getISOWeekKey odstraněn 2026-10-09: nikdo ho nevolal — týdenní příděl skončil s modelem B 2026-06-12.)
 
 // ── Claude call with timeout + retry on transient upstream errors ────────────
@@ -692,7 +703,7 @@ serve(async (req: Request) => {
       const openaiKey = Deno.env.get("OPENAI_API_KEY");
       const sol = openaiKey ? await callSol(baseSystem, String(prompt ?? ""), cappedMaxTokens, openaiKey) : null;
       if (sol) { text = sol.text; data = { model: SOL_MODEL, usage: sol.usage }; tries.push("sol"); }
-      else { tries.push("sol:fail"); console.warn("sol unavailable — falling back to Claude"); }
+      else { tries.push("sol:fail"); console.warn("sol unavailable — falling back to Claude"); logOps("model_fallback", { from: SOL_MODEL }); }
     }
 
     if (!text) {
@@ -736,6 +747,7 @@ serve(async (req: Request) => {
     // keeper to diagnose. Do NOT surface the cause to the client — that is intentional.
     if (!result.ok) {
       console.error("claude call failed:", result.status, result.error);
+      logOps("model_error", { stage: "claude", status: result.status });
       return json({
         error:   "overloaded",
         message: "The runes are quiet right now — please try again in a moment.",
@@ -752,6 +764,7 @@ serve(async (req: Request) => {
     text = (Array.isArray(data?.content) ? data.content : [])
       .filter((c: any) => c && c.type === "text").map((c: any) => c.text || "").join("");
     if (!text) {
+      logOps("model_error", { stage: "empty", model: data?.model ?? null });
       return json({
         error:   "empty",
         message: "No reading came through — please try again.",

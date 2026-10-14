@@ -376,6 +376,9 @@ hlídal jen V2 cestu.
   ✅ **Od 2026-10-10 automaticky** (DECISIONS 2026-10-10 (9)): denně 3:30 šifrovaná záloha → lokálně + Google Drive runar@therunekeeper.com
   (`scripts/utils/zaloha_db.js`, úloha Windows „Runar - zaloha databaze“). Zbývá: Supabase Pro před produkcí, obnova do DB nanečisto.
 - [ ] **CODE-tune — hlídání provozu a denní souhrn e-mailem (před spuštěním; owner 2026-10-14, DECISIONS 2026-10-14 (12))**.
+  ▶ *(CODE-tune 2026-10-14, owner „ano, pg_cron + Brevo … ano udělej“: postaveno — edge funkce `ops-watch`, DECISIONS 2026-10-14 (13).
+  Zbývá: owner pustí `sql/2026-10-14_ops_watch.sql`; první souhrn ověřit ve schránce; filtr Gmailu na štítek Ops (konektor filtry neumí);
+  prahy přepočítat po 14 dnech provozu; platby, až budou.)*
   Owner: *„udělat CODE-tune. dobře to v e-mailu uspořádá. kam to přijde a bude to přehledné. udělat nejlepší cestu.“* Místo Slacku (zrušen týž den —
   hlásil jen „přišlo hlášení“) dvě věci, obě do schránky `runar@therunekeeper.com`:
   1. **Okamžité upozornění, když se něco kazí:** model čtení padá víc než obvykle (chyby `claude-proxy` / pády na zálohu), hlas narazí na brzdu

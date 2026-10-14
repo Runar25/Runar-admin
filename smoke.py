@@ -1175,6 +1175,22 @@ radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola rychlych kontrol probehla'
 check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
 
+# ㊇ Serverový ceník modelů (CODE-tune 2026-10-14, DECISIONS 2026-10-14 (13)): ranní souhrn provozu počítá cenu čtení na serveru —
+# _shared/ceny_modelu.ts je generované z MODEL_PRICES a readingCostUsd ve v2/; změna jen ve v2/ by souhrn tiše počítala staré ceny.
+print('\n' + chr(0x3287) + ' CENÍK MODELŮ NA SERVERU (verify_ceny_server.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_ceny_server.js')], capture_output=True, text=True, encoding='utf-8')
+radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola ceniku probehla'
+check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
+
+# ㊈ Hlídání provozu (CODE-tune 2026-10-14, DECISIONS 2026-10-14 (13)): prahy, e-mail jen při změně stavu a ranní souhrn protlačené
+# známými daty — upozornění, které nepřijde, je horší než žádné; to, které chodí pořád, se přestane číst.
+print('\n' + chr(0x3288) + ' HLÍDÁNÍ PROVOZU (verify_ops_souhrn.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_ops_souhrn.js')], capture_output=True, text=True, encoding='utf-8')
+radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola hlidani provozu probehla'
+check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
