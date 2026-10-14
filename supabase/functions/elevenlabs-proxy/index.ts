@@ -48,23 +48,34 @@ function sb() {
 // (enable_logging je výchozí, vypnout smí jen Enterprise — ověřeno v jejich dokumentaci 2026-10-12) a smazání účtu v Rúnaru tam
 // nedosáhne. Po vygenerování proto položku smažeme. Odpověď streamu id položky nenese → hledá se v posledních položkách našeho hlasu
 // podle textu; nenajde-li se ani na třetí pokus, jen se zaloguje (položka pak zůstane, jak tomu bylo dosud).
-async function smazHistorii(text: string, odUnix: number): Promise<void> {
+// 2026-10-14: první skutečný hlas (14. 10. 08:25:56 UTC) v historii ZŮSTAL — log „EL history item not found“ po 3 pokusech za ~5 s;
+// výpis prošel, klíč historii číst smí. Jestli položka ještě nebyla zapsaná, nebo nesouhlasil text (posíláme ho normalizovaný), log
+// nerozliší → teď se hledá podle request_id (hlavička `request-id`, kterou ElevenLabs vrací pro navazování požadavků; položka historie
+// ho nese), text je záloha (normalizovaný na obou stranách), a čeká se ~50 s (na pozadí, čtenář nečeká). Bez „nejnovější položky
+// našeho hlasu“ jako zálohy: smazala by i ownerův pokus na webu ElevenLabs. Log říká, čím se našlo, nebo co bylo vidět (počty, ne text).
+const CEKANI_HISTORIE_MS = [2000, 3000, 5000, 8000, 12000, 20000];
+async function smazHistorii(text: string, odUnix: number, reqId: string | null): Promise<void> {
+  const hlavicky = { "xi-api-key": EL_API_KEY! };
+  let videno = 0;
   try {
-    for (let pokus = 0; pokus < 3; pokus++) {
-      const r = await fetch(`https://api.elevenlabs.io/v1/history?voice_id=${EL_VOICE_ID}&date_after_unix=${odUnix}&page_size=20`,
-        { headers: { "xi-api-key": EL_API_KEY! } });
-      if (!r.ok) { console.warn(`EL history list ${r.status}`); return; }
+    for (let pokus = 0; pokus <= CEKANI_HISTORIE_MS.length; pokus++) {
+      const r = await fetch(`https://api.elevenlabs.io/v1/history?voice_id=${EL_VOICE_ID}&date_after_unix=${odUnix}&page_size=50`,
+        { headers: hlavicky });
+      if (!r.ok) { console.warn(`EL history list ${r.status}: ${(await r.text()).slice(0, 200)}`); return; }
       const d: any = await r.json();
-      const pol = (d?.history || []).find((h: any) => h?.text === text);
-      if (pol?.history_item_id) {
-        const del = await fetch(`https://api.elevenlabs.io/v1/history/${pol.history_item_id}`,
-          { method: "DELETE", headers: { "xi-api-key": EL_API_KEY! } });
-        if (!del.ok) console.warn(`EL history delete ${del.status}`);
+      const pol: any[] = d?.history || [];
+      videno = pol.length;
+      const podleId = reqId ? pol.find((h) => h?.request_id === reqId) : undefined;
+      const naj = podleId || pol.find((h) => normalizuj(h?.text ?? "") === normalizuj(text));
+      if (naj?.history_item_id) {
+        const del = await fetch(`https://api.elevenlabs.io/v1/history/${naj.history_item_id}`, { method: "DELETE", headers: hlavicky });
+        if (!del.ok) console.warn(`EL history delete ${del.status}: ${(await del.text()).slice(0, 200)}`);
+        else console.log(`EL history deleted (match: ${podleId ? "request_id" : "text"}, try ${pokus + 1})`);
         return;
       }
-      await new Promise((ok) => setTimeout(ok, 1500));
+      if (pokus < CEKANI_HISTORIE_MS.length) await new Promise((ok) => setTimeout(ok, CEKANI_HISTORIE_MS[pokus]));
     }
-    console.warn("EL history item not found — left in history");
+    console.warn(`EL history item not found — left in history (request-id ${reqId ? "present" : "missing"}, items of our voice since start: ${videno})`);
   } catch (e) {
     console.warn("EL history cleanup failed:", (e as Error).message);
   }
@@ -193,7 +204,9 @@ serve(async (req) => {
     const pustZamek = async () => { if (zamek) await sb().from("voice_tickets").delete().eq("id", zamek); };
 
     // ── Call ElevenLabs ──
-    const odUnix = Math.floor(Date.now() / 1000) - 5;   // od kdy hledat položku historie ke smazání (smazHistorii)
+    // Od kdy hledat položku historie ke smazání (smazHistorii). Rezerva 60 s (do 2026-10-14 jen 5 s) proti rozdílu hodin u ElevenLabs;
+    // cizí položku nesmaže — hledá se podle request_id, záložně podle celého textu.
+    const odUnix = Math.floor(Date.now() / 1000) - 60;
     const elRes = await fetch(
       `https://api.elevenlabs.io/v1/text-to-speech/${EL_VOICE_ID}/stream`,
       {
@@ -215,6 +228,7 @@ serve(async (req) => {
       await pustZamek();
       return json({ error: `ElevenLabs ${elRes.status}: ${err}` }, 502);
     }
+    const reqId = elRes.headers.get("request-id");   // ke smazání položky z historie (smazHistorii), 2026-10-14
     const buf = await elRes.arrayBuffer().catch(async (e) => { await pustZamek(); throw e; });
 
     // Zapocitat az ted — hlas se opravdu ozval. Server-owned sloupce, klient je psat nesmi.
@@ -244,7 +258,7 @@ serve(async (req) => {
     }
 
     // Položka z historie ElevenLabs pryč — na pozadí (EdgeRuntime.waitUntil), čtenář na hlas nečeká.
-    const uklid = smazHistorii(text, odUnix);
+    const uklid = smazHistorii(text, odUnix, reqId);
     const er = (globalThis as any).EdgeRuntime;
     if (er?.waitUntil) er.waitUntil(uklid); else await uklid;
 

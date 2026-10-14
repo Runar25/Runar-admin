@@ -1156,6 +1156,16 @@ radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola hooku probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# ㊅ Mazání z historie ElevenLabs (CODE-tune 2026-10-14): zásady slibují smazání hlasu z historie ElevenLabs hned po vygenerování
+# (DECISIONS 2026-10-13 (6)); první skutečný hlas po nasazení tam zůstal — hledalo se jen podle přesného textu a ~5 s. Kontrola protlačí
+# skutečný kód úklidu (smazHistorii) podvrženými odpověďmi ElevenLabs a ověří, kterou položku smaže a co zaloguje.
+print('\n' + chr(0x3285) + ' MAZÁNÍ Z HISTORIE ELEVENLABS (verify_el_historie.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_el_historie.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola mazani historie ElevenLabs probehla'
+check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

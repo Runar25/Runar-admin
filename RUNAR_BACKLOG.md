@@ -670,6 +670,12 @@ doladit apku“*).
       není → log přečte owner. Kandidát opravy podle výsledku: hledat položku podle `request_id` (hlavička `request-id`, kterou ElevenLabs
       vrací pro navazování požadavků; položka historie pole `request_id` nese) místo podle textu, který proxy normalizuje, a čekat déle
       než 3 × 1,5 s; při 401/403 je oprava v oprávněních klíče (historie: zápis), ne v kódu. Do opravy věta v zásadách „mažeme“ neplatí.
+      **Log (owner, snímek 2026-10-14):** 08:26:01 `EL history item not found — left in history` → výpis prošel (klíč historii číst smí),
+      položka se za 3 pokusy nenašla; jestli ještě nebyla zapsaná, nebo nesouhlasil text, log nerozliší. **Oprava připravená, čeká na
+      nasazení (owner „nasaď“):** hledá se podle `request_id` z hlavičky odpovědi, text je záloha (normalizovaný na obou stranách), čeká
+      se ~50 s na pozadí, log nově řekne, čím se našlo, nebo co bylo vidět (počty, ne text). Žádná záloha „nejnovější položka našeho
+      hlasu“ — smazala by i ownerův pokus na webu ElevenLabs. Hlídá smoke ㊅ (`scripts/verify_el_historie.js`); že ElevenLabs hlavičku
+      u streamu posílá a položku zapíše do ~50 s, ukáže až log u prvního hlasu po nasazení.
       **CODE-tune — historie ElevenLabs drží text čtení i zvuk; smazání účtu v Rúnaru tam nedosáhne** (nalezeno 2026-10-12 při psaní
       zásad). Ověřeno v dokumentaci API: `enable_logging` je ve výchozím stavu zapnuté a vypnout ho smí jen Enterprise; `elevenlabs-proxy`
       ani `elevenlabs-static` ho nenastavují; položka historie nese `text` a zvuk jde stáhnout. Návrh: po uložení zvuku položku smazat

@@ -37,6 +37,9 @@ POSLEDNI_VYSTUP = ''
 APP = 'v2/runar-app.js'
 
 PRIPADY = [
+ # ㊅ mazání z historie ElevenLabs (CODE-tune 2026-10-14): úklid bez hledání podle request_id — 14. 10. tak hlas v historii zůstal
+ ('chyti', 'verify_el_historie.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'replace',
+  'const podleId = reqId ? pol.find((h) => h?.request_id === reqId) : undefined;', 'const podleId = undefined;'),
  # ㊄ hooky Claude Code (CODE-read 2026-10-14): kontrola zpráv přestane poznat příkaz; hlídač API přestane poznat OpenAI
  ('chyti', 'verify_hooky_claude.py', 'hooks/claude/runar-zprava-check.py', 'replace', '(node|git|python3?|', '(nodex|gitx|python3x?|'),
  ('chyti', 'verify_hooky_claude.py', 'hooks/claude/runar-api-guard.py', 'replace', r"API = re.compile(r'api\.openai\.com|", r"API = re.compile(r'"),
