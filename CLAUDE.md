@@ -178,7 +178,8 @@ Task měnící chování/rozhodnutí (ne refactor/CSS) = Output A (práce) + Out
 `RUNAR_DECISIONS.md` (append-only) + oprav špatnou sekci dotčeného docu **v tomtéž commitu**. Output B není formalita: nesplněný
 řádek `Affected doc(s)` je přesný mechanismus, který vyrobil 97 rozporů (§20).
 Reconciliation (owner-triggered): „Reconciliation: `<doc|modul>`" → Code každý rozpor (doc/komentář vs kód) ověří a **sám opraví**;
-co potřebuje ownera (rozhodnutí, nasazení, produkční DB), zapíše do seznamu a **pokračuje dál** — owner to vyřeší najednou
+co potřebuje ownera (rozhodnutí; nasazení a produkční DB jen tam, kde to chce `memory/working-style.md` „Explore → Plan → Implement“ —
+do 2026-10-14 tu stálo nasazení bez výjimky, DECISIONS 2026-10-14 (7)), zapíše do seznamu a **pokračuje dál** — owner to vyřeší najednou
 (KUKY 2026-10-09, kontrola architektury: *„ověříš si, že to máš všechno správně, a opravíš; pokud potřebuje můj zásah, zapíšeme
 a pokračuješ“*; do té doby Code vypsal seznam a zastavil, takže owner rozsuzoval i banality). Formáty polí + příklady → RUNAR_DECISIONS.md (RUNAR_DOC_SYNC.md nikdy neexistoval; v docs/archive/ je jen RUNAR_DOC_SYNC_CODE.md — do 2026-10-10 tu stálo „je v docs/archive/“).
 

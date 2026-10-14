@@ -47,6 +47,12 @@ zjistím grepem, a neukazuje *proč* — což je jediné, co mi po compactu chyb
 **Plán schvaluje owner u nových funkcí a změn chování** (co uživatel uvidí, co se počítá, prompt, data). **Bez ptaní** se opravují
 rozpory doc × kód, duplikáty a chyby (CLAUDE.md §16, §20), vlastní kontroly a paměť ([[find-a-gap-close-it-now]]) — a dohodnutý
 plán se odjede celý bez ptaní mezi kroky ([[proceed-dont-ask]]). DECISIONS 2026-10-11 (15).
+**Nasazení (edge funkce, databáze) — KUKY 2026-10-14** (*„proč se mě ptáš na to, jestli můžeš nasadit? je to důležité se mě ptát?“*
+→ *„ano zapiš“*): oprava už schváleného chování se zeleným smoke se **nasadí bez ptaní a ohlásí** (verze, bez přihlášení 401 /
+preflight 204, `scripts/utils/nasazene_vs_repo.py`). Ownera se ptát jen u: nového chování nebo nové funkce · čehokoli, co mění peníze
+(kredity ElevenLabs, model, ceny), soukromí nebo platby · SQL, které mění databázi (mimo zápisy, které owner session svěřil — korekce
+IS, DECISIONS 2026-09-23 (6), (7)) · nasazení, které se předem ověřit nedá. Do té doby šlo každé nasazení na „nasaď“ ze zvyku, pravidlo
+to nebylo. DECISIONS 2026-10-14 (7).
 1. Ty popíšeš záměr (nemusí být technicky přesně)
 2. Claude ukáže co to znamená v praxi — kde to sáhne, co ovlivní, co je nejdřív
 3. Ty doplníš / upřesníš / zamítneš

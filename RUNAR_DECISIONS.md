@@ -11380,3 +11380,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   přepínač byl `false`, takže chování čtení se nemění. **Nasazení `claude-proxy` čeká na ownera** (do té doby produkce = HEAD před smazáním,
   `scripts/utils/nasazene_vs_repo.py` to ukáže).
 - Affected doc(s): `RUNAR_TREE.md` (tvrzení „tree_state existuje a je zapojená“), `RUNAR_PRIVACY.md` (obnova účtu), `RUNAR_BACKLOG.md` — v témže commitu.
+
+## 2026-10-14 (7) — Nasazení: oprava schváleného chování se zeleným smoke bez ptaní; ptát se jen u nového chování, peněz, soukromí, SQL
+
+- **Rozhodl:** KUKY 2026-10-14 *„nasad. proč se mě ptáš na to, jestli můžeš nasadit? je to důležité se mě ptát?“* → na návrh CODE-tune
+  *„ano zapiš“*.
+- **Proč:** pravidlo „před nasazením se zeptat“ nikde nestálo. Každé nasazení šlo na ownerovo „nasaď“ ze zvyku a CLAUDE.md §16 řadilo
+  nasazení bez výjimky mezi věci pro ownera; paměť `bash-no-cd-prefix` přitom říká, že nasazení i push jsou povolené předem a pojistkou
+  je zelený smoke. Oprava úklidu historie ElevenLabs (2026-10-14 (4)) tak ownera stála kolo navíc.
+- **Co:** znění vlastní `memory/working-style.md` „Explore → Plan → Implement“ (tam celé, tady se neopisuje — §20); CLAUDE.md §16 na něj
+  odkazuje.
+- Affected doc(s): `memory/working-style.md`, `CLAUDE.md` §16 — v témže commitu.
