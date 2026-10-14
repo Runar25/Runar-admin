@@ -833,6 +833,10 @@ Procházka je tím úplná.
       `hooks/pre-push.py` teď po smoke ověří, že se větev nepohnula, jinak push zastaví. Do téhož dne tu stálo, že pokus domněnku vyvrátil
       a cesta je nevysvětlená — první pokus běžel lokálním přenosem, kde se to nestane. Kontroly už při commitu (návrh výš) zůstávají otevřené
       jako jiná věc: chytily by vlastní chybu dřív, ale tenhle průchod nezpůsobily.
+      ⛔ **Potřetí 2026-10-14 (CODE-tune):** 49db492 (nový `scripts/utils/is_greynir_cteni.js`) shodil ㊱ — dvě jména nástrojů IS na řádku;
+      pustil jsem jen vybrané kontroly, které čtou `scripts/`, ㊱ mezi nimi nebyla. Push zablokoval mně i CODE-read (nahlásil, oprava
+      e40fb75). Koordinace mechanismu mezi session nejde přes ownera (owner 2026-10-14: *„na tom se domluv s ním. co já ti mám říct?“*) —
+      návrh poslán CODE-read.
 - [ ] `user_profiles` má **dvě identické RLS policy** („Users manage own profile" a „own profile").
       Neškodí (permissive se sčítají), ale je to duplikát — jednu smazat.
 
