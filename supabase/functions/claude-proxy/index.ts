@@ -10,9 +10,8 @@
 //   standard / premium — monthly cast cap (MONTHLY_LIMITS); a follow-up (ask) does not count
 // Rate limit: 10 requests / 60s per logged-in user (anonymous never gets this far)
 //   + one METERED reading at a time per account (reading_locks, see CONCURRENCY below)
-// Vrstvy A/B/C (tree context, session state, voice scale) — OFF since 2026-07-04 (ENABLE_DYNAMIC_CONTEXT below);
-//   the code stays for a validated return. (Until 2026-10-09 this header described them as live — CODE-read copied
-//   that into an architecture overview the same day.)
+// Vrstvy A/B/C (paměť o člověku z tabulky tree_state, stav sezení, škála hlasu) — vypnuté od 2026-07-04, SMAZANÉ 2026-10-14
+//   (owner „to je hodně staré. smaž to“, DECISIONS 2026-10-14 (6)). Návrat jen jako nový návrh (CLAUDE.md §21).
 //
 // CREDIT SAFETY (2026-07-04): the balance/credit is deducted ONLY AFTER a
 //   verified-successful reading. Eligibility is checked up front (402 if the
@@ -51,14 +50,6 @@ const cors = {
 const json = (data: unknown, status = 200) =>
   new Response(JSON.stringify(data), { status, headers: { ...cors, "Content-Type": "application/json" } });
 
-// Vrstvy A/B/C (tree memory / session state / voice scale) OFF (2026-07-04).
-// The reading-quality audit found they stack ~8 conflicting tone directives onto
-// paid readings (e.g. "come as fire" from a calendar rotation vs the winter
-// seasonal image; voice-scale "pure metaphor" vs the base "one image, direct"),
-// degrading Icelandic coherence. Re-enable once each layer is driven by real UI
-// and validated by the IS eval. Flip to true to restore the previous behaviour.
-const ENABLE_DYNAMIC_CONTEXT = false;
-
 function sb() {
   return createClient(
     Deno.env.get("SUPABASE_URL")!,
@@ -67,134 +58,6 @@ function sb() {
 }
 
 // (getISOWeekKey odstraněn 2026-10-09: nikdo ho nevolal — týdenní příděl skončil s modelem B 2026-06-12.)
-
-// ── Vrstva A: tree context ────────────────────────────────────────────────────
-function buildTreeContext(tree: Record<string, unknown>): string {
-  const patterns  = (tree.recurring_pattern as string[] ?? []).filter(Boolean);
-  const arc       = (tree.emotional_arc as string) || "opening";
-  const symbols   = tree.personal_symbols as Record<string, number> ?? {};
-  const forbidden = (tree.forbidden_next as string[] ?? []).filter(Boolean);
-
-  const topSymbols = Object.entries(symbols)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 3)
-    .map(([sym]) => sym);
-
-  const arcDesc: Record<string, string> = {
-    opening:     "beginning to become aware",
-    deepening:   "turning inward",
-    integration: "weaving things together",
-    threshold:   "standing at a turning point",
-  };
-
-  let ctx = "\n\n--- SEEKER'S LIVING PATTERN ---\n";
-  if (patterns.length)   ctx += "What returns: " + patterns.join(", ") + "\n";
-  if (arc)               ctx += "Where they stand: " + (arcDesc[arc] ?? arc) + "\n";
-  if (topSymbols.length) ctx += "Images that speak to them: " + topSymbols.join(", ") + "\n";
-  if (forbidden.length)  ctx += "Avoid repeating this time: " + forbidden.join(", ") + "\n";
-  ctx += "---";
-  return ctx;
-}
-
-// ── Vrstva B: session state ───────────────────────────────────────────────────
-interface SessionState {
-  energy:   "high" | "low" | "still";
-  distance: "close" | "wide";
-  element:  "fire" | "water" | "air" | "earth" | "silence";
-  movement: "forward" | "inward" | "weaving" | "turning";
-}
-
-function deriveSessionState(tree: Record<string, unknown> | null, now: Date): SessionState {
-  const arc          = (tree?.emotional_arc as string) || "opening";
-  const sessionCount = (tree?.session_count as number) || 0;
-
-  let energy: SessionState["energy"];
-  if (arc === "threshold")      energy = "high";
-  else if (arc === "deepening") energy = "still";
-  else {
-    const hour = now.getUTCHours();
-    energy = (hour >= 17 || hour < 6) ? "low" : "high";
-  }
-
-  const distance: SessionState["distance"] = sessionCount < 6 ? "close" : "wide";
-
-  const elements: SessionState["element"][] = ["fire", "water", "air", "earth", "silence"];
-  const element = elements[(sessionCount + now.getUTCDay()) % elements.length];
-
-  const movementMap: Record<string, SessionState["movement"]> = {
-    opening: "forward", deepening: "inward", integration: "weaving", threshold: "turning",
-  };
-  const movement = movementMap[arc] ?? "forward";
-
-  return { energy, distance, element, movement };
-}
-
-function buildSessionContext(s: SessionState): string {
-  const elementDesc: Record<string, string> = {
-    fire:    "Come as fire — direct, warming, consuming what needs to burn.",
-    water:   "Come as water — yielding, deep, finding what lies beneath.",
-    air:     "Come as air — sweeping, clarifying, seeing from above.",
-    earth:   "Come as earth — grounded, patient, rooted in what endures.",
-    silence: "Come as silence — spacious, waiting, letting the unspoken surface.",
-  };
-  const energyDesc: Record<string, string> = {
-    high:  "Speak with full presence.",
-    low:   "Speak quietly, as if by firelight.",
-    still: "Hold space. Let the words land gently.",
-  };
-  const distanceDesc: Record<string, string> = {
-    close: "Stay close to this moment, this person.",
-    wide:  "Hold the wider arc of their journey.",
-  };
-  const movementDesc: Record<string, string> = {
-    forward: "The current moves forward.",
-    inward:  "The current moves inward.",
-    weaving: "The threads are being woven together.",
-    turning: "Something is turning — meet it without hurry.",
-  };
-  return (
-    "\n\n--- THIS READING'S VOICE ---\n" +
-    (elementDesc[s.element]   ?? "") + " " +
-    (energyDesc[s.energy]     ?? "") + " " +
-    (distanceDesc[s.distance] ?? "") + " " +
-    (movementDesc[s.movement] ?? "") +
-    "\n---"
-  );
-}
-
-// ── Vrstva C: voice scale (0-20) ─────────────────────────────────────────────
-const VOICE_INSTRUCTIONS: Record<number, string> = {
-  0:  "Speak with absolute plainness. No image, no symbol. Only what is real and direct.",
-  1:  "Speak almost entirely in plain language. One concrete image may appear if unavoidable.",
-  2:  "Very direct. Ground everything. Let no metaphor linger.",
-  3:  "Mostly direct. Image may appear once, briefly.",
-  4:  "Predominantly direct. A single metaphor only if it earns its place.",
-  5:  "Direct with rare image. Keep both feet on the ground.",
-  6:  "Grounded. One image may open the door, nothing more.",
-  7:  "Lean direct. Let image appear only to clarify, not to decorate.",
-  8:  "Slight lean toward direct. Balance tips toward plain speech.",
-  9:  "Nearly balanced, direct has a slight edge.",
-  10: "Equal measure — direct and image in balance.",
-  11: "Nearly balanced, image has a slight edge.",
-  12: "Slight lean toward image. Let metaphor carry some weight.",
-  13: "Lean toward image. Direct is the anchor, metaphor the sail.",
-  14: "More image than plain speech. Ground once, then let it fly.",
-  15: "Image-forward. Reality appears as shadow beneath the symbol.",
-  16: "Mostly symbolic. Direct speech surfaces only to orient.",
-  17: "Strongly symbolic. Plain meaning is implied, not stated.",
-  18: "Almost entirely in image. Directness is a distant shore.",
-  19: "Near-pure symbol. One plain word at most, if needed.",
-  20: "Speak entirely in symbol and image. Nothing literal. Pure metaphor.",
-};
-
-function buildVoiceContext(scale: number, settled: boolean): string {
-  const clamped = Math.max(0, Math.min(20, Math.round(scale)));
-  const instruction = VOICE_INSTRUCTIONS[clamped] ?? VOICE_INSTRUCTIONS[10];
-  if (settled) {
-    return "\n\n--- VOICE ---\n" + instruction + " (This seeker's voice is known to you.)\n---";
-  }
-  return "\n\n--- VOICE ---\n" + instruction + "\n---";
-}
 
 // ── Claude call with timeout + retry on transient upstream errors ────────────
 // Returns { ok:true, data } on a 2xx, or { ok:false, status, error } otherwise.
@@ -806,50 +669,12 @@ serve(async (req: Request) => {
       }
     }
 
-    // ── Vrstva A + B + C: tree context, session state, voice scale ────────────
-    const treeMode =
-      userTier === "standard" ||
-      userTier === "premium"  ||
-      (userTier === "rune_seeker" && use_credit === true);
-
-    let dynamicContext = "";
-    let sessionState: SessionState | null = null;
-
-    if (ENABLE_DYNAMIC_CONTEXT && treeMode && userId && mode !== "extraction") {
-      const { data } = await sb()
-        .from("tree_state")
-        .select("recurring_pattern, emotional_arc, personal_symbols, forbidden_next, session_count, voice_scale, voice_settled")
-        .eq("user_id", userId)
-        .maybeSingle();
-
-      const treeState = data ?? null;
-
-      // Vrstva A: tree memory
-      if (treeState &&
-          ((treeState.recurring_pattern as string[] ?? []).length > 0 ||
-           (treeState.forbidden_next    as string[] ?? []).length > 0)) {
-        dynamicContext += buildTreeContext(treeState);
-      }
-
-      // Vrstva B: session state
-      sessionState = deriveSessionState(treeState, new Date());
-      dynamicContext += buildSessionContext(sessionState);
-
-      // Vrstva C: voice scale
-      const voiceScale   = (treeState?.voice_scale   as number  ?? 10);
-      const voiceSettled = (treeState?.voice_settled  as boolean ?? false);
-      if (voiceScale !== 10 || voiceSettled) {
-        dynamicContext += buildVoiceContext(voiceScale, voiceSettled);
-      }
-    }
-
-    // ── Build system array: base + dynamic context ────────────────
+    // ── Build system array ────────────────
     // 2026-10-11 bez cache_control (nález CODE-read (n), BACKLOG část 41): zápis do cache se platí 1,25× vstupu a skoro se z něj
     // nečte (za 30 dní z cache 1 % vstupu u opus-4-8, 13 % u opus-5) — přirážka bez návratu. Claude je záloha za sol.
     const baseSystem = system || "";
     const systemParts: Array<{ type: "text"; text: string }> = [];
     if (baseSystem)      systemParts.push({ type: "text", text: baseSystem });
-    if (dynamicContext)  systemParts.push({ type: "text", text: dynamicContext });
 
     // ── GPT-6 sol — od 2026-10-09 každé volání modelu (DECISIONS 2026-10-09 (13)); při chybě níž normální cesta přes Claude ──
     let data: any = null;
@@ -865,7 +690,7 @@ serve(async (req: Request) => {
     const useSol = !(isAdmin && engine === "opus");
     if (useSol) {
       const openaiKey = Deno.env.get("OPENAI_API_KEY");
-      const sol = openaiKey ? await callSol(baseSystem + dynamicContext, String(prompt ?? ""), cappedMaxTokens, openaiKey) : null;
+      const sol = openaiKey ? await callSol(baseSystem, String(prompt ?? ""), cappedMaxTokens, openaiKey) : null;
       if (sol) { text = sol.text; data = { model: SOL_MODEL, usage: sol.usage }; tries.push("sol"); }
       else { tries.push("sol:fail"); console.warn("sol unavailable — falling back to Claude"); }
     }
@@ -1010,7 +835,6 @@ serve(async (req: Request) => {
       ...(isNameLore && nameLorePrev
         ? { name_lore_for: nameLorePrev.name, name_lore_count: nameLorePrev.count + 1, name_lore_saved: nameLoreSaved }
         : {}),
-      ...(sessionState ? { session_state: sessionState } : {}),
       ...(deductPlan.kind === "paid"
         ? { credits_remaining: creditsRemaining ?? Math.max(0, creditsBalance - deductPlan.cost) }
         : {}),

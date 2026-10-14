@@ -1335,7 +1335,7 @@ async function callProxy(system, prompt, max_tokens = 500) {
     });
     const data = await res.json();
     if (data.error) return { error: data.error };
-    return { text: data.text, session_state: data.session_state || null };
+    return { text: data.text };   // 2026-10-14: bez session_state — paměť (tree_state) smazána, DECISIONS 2026-10-14 (6)
   } catch (e) { return { error: e.message }; }
 }
 
