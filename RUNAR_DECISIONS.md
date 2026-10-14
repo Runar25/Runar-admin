@@ -11426,3 +11426,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Proč zápis:** owner 2026-10-14 *„projdi všechny dostupné možnosti jak opravovat IS texty! … myslím dostupné veřejně!“* — zastaralá věta
   by tu možnost příští session tiše vyřadila. Rozhodnutí, jestli Málstaður použít, tady není (čeká na ownera).
 - Affected doc(s): `RUNAR_BACKLOG.md` (uzavřená položka 2026-10-10), `is-gpt-check.py`, `is-grammar-qa.py` — v témže commitu.
+
+## 2026-10-14 (11) — Islandštinu čtení kontroluje jiný model než ten, který je píše; Málstaður teď ne
+
+- **Rozhodl:** KUKY 2026-10-14 k přehledu veřejných možností opravy islandštiny: *„5. super. instalujeme. pak kontrola těch 109 vět.
+  6. moc drahé v tuto chvíli. 11. GPT je lepší než Claude. U čtení problém nečekám, ale chce to kontrolu. Ale i jinou než GPT. Čtení GPT,
+  kontrola GPT — to moc nepomáhá.“*
+- **Platí:** (a) kontrola islandštiny ČTENÍ (píše je GPT-6 sol) jde nástroji mimo GPT — GreynirCorrect (běží v „načti reporty“) a opravný
+  model Miðeind `mideind/yfirlestur-icelandic-correction-byt5` (instaluje se, napřed zkouška na 109 větách). `is-gpt-check.py` na čtení
+  ne — sdílí s autorem slepá místa; na naše vlastní texty (rozhraní, zásady) dál smí. (b) Málstaður / Málfríður (Miðeind, API 1 kr za
+  100 znaků + 2 990 kr měsíčně, DECISIONS 2026-10-14 (10)) teď ne — drahé; vrátit se, až se změní cena nebo rozpočet.
+- Affected doc(s): `RUNAR_BACKLOG.md` (smyčka ze skutečných čtení) — v témže commitu.

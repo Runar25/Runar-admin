@@ -25,9 +25,9 @@ v `docs/archive/RUNAR_BACKLOG_odlozene.md` jako ⏸ — nejsou to úkoly. Vrací
   24 vět s nálezem: 1 jistá chyba (`bertum`, zapsána do korekcí, DECISIONS 2026-10-14 (3)), zbytek plané poplachy (jména run,
   „maður vill“, velké písmeno po dvojtečce, styl „er að“) a 7× E001 (nerozebráno, neověřeno). Kalky Greynir nevidí: dva obraty
   s korpusem 0× nehlásil (že jsou chybné, neověřeno). (a) Krok s Greynirem **postaven** (owner *„zdarma ano“*). (b) Test
-  `is-gpt-check.py` na týchž 109 větách (3 volání, ≈ $0,11) se **nepouští** — owner 2026-10-14 *„0.11$ je drahé“*. Vrátit se k němu
-  jen, když owner v čteních uvidí chyby, které Greynir nechytá; pak napřed OpenAI jako příjemce u „rozbor kvality“ v `RUNAR_PRIVACY.md`
-  a jména maskovaná.
+  `is-gpt-check.py` na týchž 109 větách (3 volání, ≈ $0,11) se **nepouští** — owner 2026-10-14 *„0.11$ je drahé“* a hlavně: čtení píše
+  GPT, kontrola GPT „moc nepomáhá“ (DECISIONS 2026-10-14 (11)). Druhá vrstva místo GPT: opravný model Miðeind (ByT5, lokálně, zdarma)
+  — instaluje se do `~/runar-eval/byt5-venv`, napřed zkouška na 109 větách a známých chybách; Málstaður teď ne (drahé).
 - [ ] **Blok korekcí roste do KAŽDÉHO IS promptu** — změřeno 2026-09-23 (`count_tokens`, Opus 4.8): IS 27 řádků
   = **1287 tokenů** (≈ $0,0064 na IS čtení), z toho **419 (33 %) jsou vysvětlení v závorkách**; EN 2 řádky = 69.
   Blok stojí na konci user promptu, za obsahem čtení → **cache tam principiálně nejde**. Přesun do system promptu
