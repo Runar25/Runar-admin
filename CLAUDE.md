@@ -348,13 +348,13 @@ KUKY 2026-10-07: *„nikdy nic nechci, aby záviselo na tvé paměti!! to je nej
 Session si nepamatuje nic z minulé konverzace ani z doby před compactem. Co se má dít pokaždé, proto nesmí stát jen v paměti nebo v docu —
 musí to buď **udělat skript samo**, nebo **zastavit práci**, když se to vynechá. Dnes hlídá stroj:
 - **Záloha všech čtení z pokusů** → Stop-hook (`scripts/utils/zaloha_cteni.js` → `~/runar-eval/zaloha`).
-- **Pokus přes API** → PreToolUse hook (`~/.claude/runar-api-guard.py`) ho nepustí bez `RUNAR_API_ANO=<počet>`. To se píše až poté, co <!-- doc-links:ok 2026-10-07 hook je uživatelský soubor v ~/.claude, mimo repo -->
+- **Pokus přes API** → PreToolUse hook (`hooks/claude/runar-api-guard.py`) ho nepustí bez `RUNAR_API_ANO=<počet>`. To se píše až poté, co
   `node scripts/utils/najdi_cteni.js` ukázal, že odpověď v datech (čtení, která udělal CODE i owner) není nebo je vzorek malý, **a owner
   k tomu řekl ano**. Když data nestačí, řekni to ownerovi a domluvte se — nenavrhuj rovnou pokus.
   Spolu s počtem musí příkaz nést `RUNAR_API_ZAMER="<co pokus rozhodne; když tak → …, jinak → …>"`; nad 50 volání navíc
   `RUNAR_API_OWNER="<ownerova slova>"`. Každý puštěný pokus se zapíše do `~/.claude/runar-api-pokusy.log` (čas, počet, skript, záměr). <!-- doc-links:ok 2026-10-07 log je uživatelský soubor v ~/.claude, mimo repo -->
   Malý vzorek napřed (KUKY 2026-10-07: *„vždycky se udělá malý vzorek… ZÁMĚR… PŘEDPOKLAD“*).
-- **Zpráva ownerovi** → Stop-hook (`~/.claude/runar-zprava-check.py`): body a otázky číslované; zpráva s návrhem nebo otázkou na <!-- doc-links:ok 2026-10-07 hook je uživatelský soubor v ~/.claude, mimo repo -->
+- **Zpráva ownerovi** → Stop-hook (`hooks/claude/runar-zprava-check.py`): body a otázky číslované; zpráva s návrhem nebo otázkou na
   rozhodnutí projde, jen když v témže tahu běžel `node scripts/utils/uz_vime.js <pojmy>` (co už je hotové, zamítnuté, zapsané).
 - **Hlášení z appky** → §29 (`nacti_cteni.js` stav v DB; zápis hned po načtení hlídá týž Stop-hook). **Co je hotové, rozhodnuté nebo zapsané, se ownerovi znovu nepředkládá** —
   vrací se, až se vada objeví v nových čteních a owner na ni upozorní.
@@ -378,10 +378,12 @@ musí to buď **udělat skript samo**, nebo **zastavit práci**, když se to vyn
   z té zprávy a ukáže, kde už to stojí — pokyn se nezapíše jako nový, když platí. (KUKY 2026-10-11, DECISIONS 2026-10-11 (26).)
 - **Pasti v příkazech** → týž PreToolUse hook zastaví heredoc se zpětným lomítkem v těle, `grep … OK|FAIL … &&` jako podmínku
   a zápis Edit/Write, který do souboru vkládá neviditelný znak (escape `\uXXXX` v parametru se změní na znak už při předání)
-  (obojí padlo 2026-10-11 znovu, ač stálo v paměti). **Neověřené tvrzení** → Stop-hook zprávy (`~/.claude/runar-zprava-check.py` <!-- doc-links:ok 2026-10-11 uživatelský hook mimo repo -->
+  (obojí padlo 2026-10-11 znovu, ač stálo v paměti). **Neověřené tvrzení** → Stop-hook zprávy (`hooks/claude/runar-zprava-check.py`
   pravidlo 4): věta s „nejspíš/pravděpodobně/zřejmě“ o kódu nebo souboru projde jen s „neověřeno“. (KUKY 2026-10-11, DECISIONS 2026-10-11 (36).)
 - **Kontroly pod útokem** → smoke ㊵ (`scripts/protipriklady.py`): podstrčená chyba v čisté kopii repa musí kontrolu shodit; pouští
   se znovu, kdykoli se kontrola změní. Nová kontrola = aspoň jeden útok v `PRIPADY`. (DECISIONS 2026-10-11 (44).)
+- **Hooky Claude Code se verzují** → zdroj je `hooks/claude/` v repu; v `~/.claude` jsou jen jednořádkové odkazy, na které míří nastavení.
+  Hook měň v repu a commituj (DECISIONS 2026-10-14 (2)); do té doby žily jen v `~/.claude` a změnu nikdo neviděl.
 Najdeš nové pravidlo, které se porušilo podruhé? Nepiš ho jen do paměti — přidej mechanismus (hook, kontrola ve smoke, krok skriptu).
 
 ### §31 — Jazyk komunikace: veřejně i pro adminy jen IS a EN, česky jen owner ↔ Claude (platí pro VŠECHNY session)

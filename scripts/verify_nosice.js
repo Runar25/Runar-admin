@@ -17,7 +17,7 @@ const fs = require('fs'), path = require('path'), os = require('os');
 const R = process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin';
 
 const PDD = 'scripts/utils/pravidla_pri_dotyku.py';
-const ZPRAVA = '~/.claude/runar-zprava-check.py';
+const ZPRAVA = 'hooks/claude/runar-zprava-check.py';   // od 2026-10-14 v repu (do té doby ~/.claude, druh „mimo“)
 const MAPA = {
   '§1':  { drzi: [{ smoke: '① JS SYNTAX' }, { hook: 'hooks/pre-commit.py', co: 'sdílené soubory jen přes commit_vlastni (_SDILENE)' },
                   { hook: PDD, co: 'Edit na sdílený soubor zastaví; pravidla při prvním dotyku JS' }],
@@ -54,9 +54,9 @@ const MAPA = {
                   { hook: PDD, co: 'nový text porovná s kánonem; zápis do docs až po uz_vime.js' }] },
   '§21': { nevynutitelne: 'kritický pohled na ownerův nápad je úsudek; stroj ho nepozná ani nevynutí' },
   '§22': { slouceno: '§20' },
-  '§23': { drzi: [{ mimo: ZPRAVA, co: 'pravidlo 4: „nejspíš/pravděpodobně“ bez „neověřeno“' }],
+  '§23': { drzi: [{ hook: ZPRAVA, co: 'pravidlo 4: „nejspíš/pravděpodobně“ bez „neověřeno“' }],
            castecne: 'výmysl řečený jistě nepozná nic' },
-  '§24': { drzi: [{ mimo: ZPRAVA, co: 'pravidlo 4' }],
+  '§24': { drzi: [{ hook: ZPRAVA, co: 'pravidlo 4' }],
            castecne: 'jistě znějící neověřené tvrzení nepozná nic' },
   '§25': { drzi: [{ smoke: 'protipriklady.py' }],
            castecne: 'B (útok na kontroly) drží ㊵; A (obrácená páka u hypotéz) je metoda, nevynutí ji nic' },
@@ -64,9 +64,9 @@ const MAPA = {
   '§27': { slouceno: '§25' },
   '§28': { drzi: [{ smoke: 'verify_escape_marks.js' }],
            castecne: 'jen výjimky z kontrol (značky s důvodem a datem); důvod u změny kódu nehlídá nic' },
-  '§29': { drzi: [{ nastroj: 'scripts/nacti_cteni.js' }, { mimo: ZPRAVA, co: 'tah neskončí s nezapsaným hlášením' }] },
+  '§29': { drzi: [{ nastroj: 'scripts/nacti_cteni.js' }, { hook: ZPRAVA, co: 'tah neskončí s nezapsaným hlášením' }] },
   '§30': { drzi: [{ hook: 'hooks/pre-commit.py', co: '_SDILENE, mazání cizích řádků' }, { hook: PDD, co: 'pravidla při dotyku, pasti' },
-                  { mimo: '~/.claude/runar-api-guard.py', co: 'pokus přes API' }, { smoke: 'verify_pravidla_mapa.js' },
+                  { hook: 'hooks/claude/runar-api-guard.py', co: 'pokus přes API' }, { smoke: 'verify_pravidla_mapa.js' },
                   { smoke: 'protipriklady.py' }, { smoke: 'verify_nosice.js' }] },
   '§31': { drzi: [{ smoke: 'verify_jazyk_ui.js' }], castecne: 'Gmail (štítky, koncepty) nevidí — postup v paměti schranka-runar-gmail' },
   '§32': { drzi: [{ smoke: 'verify_zaklad_produkce.js' }] },

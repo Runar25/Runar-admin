@@ -11304,3 +11304,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   koncem hooku a odesláním (zlomek sekundy místo minut). Instalovaný hook soubor jen volá — platí hned pro všechny session.
 - **Netvrdí:** že návrh CODE-tune (kontroly už při commitu, BACKLOG) je zbytečný — tenhle incident ale vysvětluje a zavírá jinak.
 - Affected doc(s): `RUNAR_BACKLOG.md` (položka „Commit bez kontrol…“: příčina nalezena) — v témže commitu.
+
+## 2026-10-14 (2) — Hooky Claude Code se verzují v repu (`hooks/claude/`), v `~/.claude` zůstaly jen odkazy
+
+- **Rozhodl:** owner 2026-10-14 *„2. ano, udělej to“* na návrh CODE-read (BACKLOG 2026-08-17 „mechanismus načtení po compactu mimo git“).
+- **Proč:** pět hooků (hlídač API, kontrola zpráv ownerovi, kontext po startu a compactu, záloha přepisu, tree-guard) žilo jen v `~/.claude`.
+  Změnu (2026-10-13 pravidlo 5 kontroly zpráv) nikdo neviděl a nešlo dohledat, kdo co a proč změnil; noční záloha (DECISIONS 2026-10-11 (21))
+  kopii držela, ne historii. Ověřeno předem: žádné klíče ani hesla, jen cesty a naše pravidla (repo je veřejné, CLAUDE.md taky).
+- **Co:** `hooks/claude/*` = zdroj (hlavička říká, že se mění tady); `~/.claude/<hook>` = odkaz (`runpy` / `exec bash`), nastavení Claude Code
+  beze změny; originály jako `<hook>.bak-2026-10-14`. `tree-guard.sh` volá sourozence ze své složky (`TG_DIR`). Data hooků (logy, markery,
+  seznam hlášení) dál v `~/.claude`. `.gitattributes`: `hooks/claude/*.sh` vždy LF (bash s CRLF nejede).
+- **Ověřeno:** šest případů (hlídač API blokuje i pouští, kontrola zpráv, kontext po startu, záloha bez přepisu, tree-guard stop) — původní,
+  kopie v repu i odkazy dávají stejný kód i výstup; tenhle commit už šel přes nové odkazy.
+- Affected doc(s): `CLAUDE.md` §30 (cesty hooků + odrážka o verzování), `memory/working-style.md`, `RUNAR_BACKLOG.md`,
+  `scripts/verify_nosice.js` (nosiče jako hook v repu) — v témže commitu.
