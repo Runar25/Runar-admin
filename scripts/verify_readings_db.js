@@ -45,15 +45,21 @@ const ANG = vm.runInContext('READING_ANGLES', S), SLOV = vm.runInContext('ESSENC
 const T = S.__rdTest;
 T.setRune('Hagalaz'); T.setRows(DATA); T.renderAll();
 const sum = el['rd-summary'].innerHTML;
-const radky = [...sum.matchAll(/onclick="pickRdImageIdx\((\d+)\)"[^>]*><td>([^<]*)<\/td><td>([^<]*)<\/td><td>(\d+)<\/td>/g)];
+// 2026-10-14: buňka obrazu nese pod EN i islandské znění (<div class="rd-is">) — hlášení 6282e405.
+const radky = [...sum.matchAll(/onclick="pickRdImageIdx\((\d+)\)"[^>]*><td>([^<]*)(?:<div class="rd-is">[^<]*<\/div>)?<\/td><td>([^<]*)<\/td><td>(\d+)<\/td>/g)];
 const rEN = radky.find((m) => m[2].indexOf(EN.slice(0, 20)) !== -1);
 rekni(!!rEN && rEN[4] === '2', 'EN i IS téhož obrazu = jeden řádek přehledu, 2 čtení (' + (rEN ? rEN[4] : '—') + ')');
+rekni(sum.indexOf('<div class="rd-is">' + IS.slice(0, 20)) !== -1, 'řádek přehledu nese pod EN i islandské znění obrazu');
 rekni(radky.some((m) => m[2].indexOf('gull') !== -1 && m[4] === '1'), 'obraz mimo banku má vlastní řádek');
 rekni(radky.some((m) => m[2].indexOf('not recorded') !== -1 && m[4] === '1'), 'čtení bez zaznamenaného obrazu má řádek „image not recorded"');
 rekni(!/pickRdImage\('/.test(sum), 'onclick nenese text obrazu (apostrof ho nerozbije)');
 S.pickRdImageIdx(Number(rEN[1]));
 rekni(el['rd-count'].textContent === '2 of 4', 'klik na obraz → jen jeho čtení (' + el['rd-count'].textContent + ')');
 const list = el['readings-list'].innerHTML;
+// 2026-10-14 (hlášení 6282e405): u čtení obraz tak, jak ho dostal model — islandské čtení islandsky, anglické anglicky, druhé
+// znění jen v bublině. Do té doby stálo u obou EN znění a owner četl islandská čtení testerů jako „obraz anglicky“.
+rekni(list.indexOf('🖼 ' + IS.slice(0, 20)) !== -1 && list.indexOf('🖼 ' + EN.slice(0, 20)) !== -1,
+  'u čtení obraz v jeho jazyce (islandské čtení islandsky, anglické anglicky)');
 rekni(list.indexOf('Výborné čtení') !== -1 && list.indexOf('Uložená věta.') !== -1, 'poznámka i ✦ Keep se ukážou u čtení');
 rekni(list.indexOf('meaning: disruption') !== -1 && list.indexOf('claude-opus-5') !== -1, 'u čtení je význam i model');
 S.pickRdImageIdx(Number(rEN[1]));   // zrušit výběr

@@ -47,13 +47,17 @@
     });
     return _bankaIdx;
   }
+  // 2026-10-14 (hlášení 6282e405, KUKY: „obraz je tam anglicky a ne IS“): `label` je EN znění řádku banky a stálo i u islandských
+  // čtení, přestože model dostal obraz islandsky (10/10 IS čtení v5.08). U čtení proto stojí `vlastni` = obraz tak, jak šel do
+  // promptu, druhé znění jen v bublině (`jinak`); řádek přehledu je skupina obou jazyků, nese EN a pod ním IS (`is`).
   function obraz(r) {
     var d = r.prompt_draws || {};
     var t = bezTecky(d.image);
-    if (!t) return { key: '', label: '(image not recorded)', title: '' };
-    var hit = banka()[t];
-    if (hit) return { key: 'IMG#' + hit.i, label: hit.row[3] || t, title: hit.row[2] || '' };
-    return { key: 'RAW#' + t, label: t, title: 'not in the current image bank' };
+    if (!t) return { key: '', label: '(image not recorded)', title: '', is: '', vlastni: '', jinak: '' };
+    var vl = String(d.image).trim(), hit = banka()[t];
+    if (hit) return { key: 'IMG#' + hit.i, label: hit.row[3] || t, title: hit.row[2] || '', is: hit.row[2] || '', vlastni: vl,
+      jinak: (bezTecky(hit.row[2]) === t ? hit.row[3] : hit.row[2]) || '' };
+    return { key: 'RAW#' + t, label: t, title: 'not in the current image bank', is: '', vlastni: vl, jinak: '' };
   }
   function model(r) { return (r.usage && r.usage.model) || '—'; }
   function vyznam(r) { return (r.prompt_draws && r.prompt_draws.kws) || ''; }
@@ -208,7 +212,7 @@
     _rows.forEach(function (r) {
       if (!prosel(r, 'img')) return;
       var o = obraz(r);
-      var x = g[o.key] = g[o.key] || { key: o.key, label: o.label, title: o.title, n: 0, kws: {}, last: '', notes: 0, keep: 0 };
+      var x = g[o.key] = g[o.key] || { key: o.key, label: o.label, title: o.title, is: o.is, n: 0, kws: {}, last: '', notes: 0, keep: 0 };
       x.n++;
       var k = vyznam(r); if (k) x.kws[k] = (x.kws[k] || 0) + 1;
       if ((r.drawn_at || '') > x.last) x.last = r.drawn_at || '';
@@ -221,7 +225,7 @@
       '<th>Last</th><th>💬</th><th>✦</th></tr></thead><tbody>' + radky.map(function (x, i) {
         var kws = Object.keys(x.kws).map(function (k) { return k + (x.kws[k] > 1 ? ' ×' + x.kws[k] : ''); }).join(' · ');   // ' · ': starší čtení mají ve významu víc slov s čárkou
         return '<tr class="' + (_f.img === x.key ? 'on' : '') + '" onclick="pickRdImageIdx(' + i + ')" title="' + esc(x.title) + '">' +
-          '<td>' + esc(x.label) + '</td><td>' + esc(kws) + '</td><td>' + x.n + '</td><td>' + esc((x.last || '').slice(0, 10)) + '</td>' +
+          '<td>' + esc(x.label) + (x.is ? '<div class="rd-is">' + esc(x.is) + '</div>' : '') + '</td><td>' + esc(kws) + '</td><td>' + x.n + '</td><td>' + esc((x.last || '').slice(0, 10)) + '</td>' +
           '<td>' + (x.notes || '') + '</td><td>' + (x.keep || '') + '</td></tr>';
       }).join('') + '</tbody></table>';
   }
@@ -287,7 +291,7 @@
         d.pin ? '<span class="rd-tag" title="image chosen by an admin (2026-10-06), not drawn">📌 image chosen</span>' : '',
       ].filter(Boolean).join('');
       var skladbaHtml = (o.key || skladba) ? '<div class="rd-skladba">' +
-        (o.key ? '<div class="rd-obraz" title="' + esc(o.title) + '">🖼 ' + esc(o.label) + '</div>' : '') + skladba + '</div>' : '';
+        (o.key ? '<div class="rd-obraz" title="' + esc(o.jinak || o.title) + '">🖼 ' + esc(o.vlastni) + '</div>' : '') + skladba + '</div>' : '';
 
       // Ask Rúnar follow-up exchange(s) captured with the reading.
       var fu = Array.isArray(r.follow_up) ? r.follow_up : [];
