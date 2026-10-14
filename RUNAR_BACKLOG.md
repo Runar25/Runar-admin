@@ -375,7 +375,15 @@ hlídal jen V2 cestu.
   `supabase db dump` nejde (chce Docker) → export přes `supabase db query`. Je to JEDNA kopie, ne záloha průběžná; bod zůstává otevřený.
   ✅ **Od 2026-10-10 automaticky** (DECISIONS 2026-10-10 (9)): denně 3:30 šifrovaná záloha → lokálně + Google Drive runar@therunekeeper.com
   (`scripts/utils/zaloha_db.js`, úloha Windows „Runar - zaloha databaze“). Zbývá: Supabase Pro před produkcí, obnova do DB nanečisto.
-- [ ] **Monitoring / alerting** (error rate + fail-open události → Slack/Sentry). Dnes jen pull logy.
+- [ ] **CODE-tune — hlídání provozu a denní souhrn e-mailem (před spuštěním; owner 2026-10-14, DECISIONS 2026-10-14 (12))**.
+  Owner: *„udělat CODE-tune. dobře to v e-mailu uspořádá. kam to přijde a bude to přehledné. udělat nejlepší cestu.“* Místo Slacku (zrušen týž den —
+  hlásil jen „přišlo hlášení“) dvě věci, obě do schránky `runar@therunekeeper.com`:
+  1. **Okamžité upozornění, když se něco kazí:** model čtení padá víc než obvykle (chyby `claude-proxy` / pády na zálohu), hlas narazí na brzdu
+     kreditů ElevenLabs, noční záloha DB selže, po spuštění selže platba. Jen skutečné problémy — žádný šum, ať se upozornění nepřestane číst.
+  2. **Denní souhrn (jednou ráno):** čtení a hlasy za den, co stály, nová hlášení (počet + typ, bez textu), stav kreditů a brzdy, výsledek zálohy.
+  Přehledně: předmět řekne stav jedním slovem (vše v pořádku / pozor / problém), nahoře co vyžaduje ownera, pod tím čísla. EN (§31 — admini).
+  Zvážit, odkud (edge funkce + plánovač Supabase, nebo noční úloha vedle zálohy DB) a čím posílat (Brevo už máme). Napřed návrh ownerovi.
+  Do 2026-10-14 tu stálo: „Monitoring / alerting (error rate + fail-open události → Slack/Sentry). Dnes jen pull logy.“
 - [ ] **Staging / preview** prostředí pro migrace + edge fn (dnes vše proti prod DB).
 - [ ] **Deploy / rollback runbook** pro edge funkce (živý stav je mimo git, neviditelný).
 - [ ] **Review brána** na citlivé cesty (supabase/functions, sql, auth) — jinak jdou peníze/bezpečnost/migrace zlive bez druhého páru očí.

@@ -348,7 +348,7 @@ Změřená útrata modelů a hlasu = `node scripts/utils/stats.js` (z `readings.
 | Supabase | 0 ✔ | 25 | Free; Pro „až půjdeme ven“ (owner) |
 | Google Workspace (schránka runar@, Drive se zálohami) | 0 ✔ | 0 | ✔ je to Workspace (DNS: MX Google); platí ho Agndofa v rámci agndofa.is (owner 2026-10-12: „je to už v ceně agndofa.is“) — Rúnarovi nic navíc |
 | Brevo (e-mail s kódem) | 0 ✔ | 0 | free tarif (300 e-mailů denně); do 2026-10-12 tu stál Resend — zamítnut 2026-09-12 |
-| GitHub (repo, Pages) · Slack | 0 ✔ | 0 | veřejné repo + Pages zdarma; Slack zdarma (owner 2026-10-12) |
+| GitHub (repo, Pages) | 0 ✔ | 0 | veřejné repo + Pages zdarma; Slack zrušen 2026-10-14 (do té doby zdarma) |
 | Shopify (Basic) | 0 ✔ | 0 | platí ho obchod agndofa.is (owner 2026-10-12: „shopify taky obchod agndofa.is“) — Rúnarovi jen poplatky z plateb („Variable“ níž) |
 | Apple Developer ($99/rok) | 0 | 8.25 | až nativní appka |
 | Google Play ($25 jednou) | 0 | 0.70 | až nativní appka, rozpočteno na ~36 měsíců |

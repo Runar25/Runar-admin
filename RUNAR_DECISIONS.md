@@ -11437,3 +11437,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   ne — sdílí s autorem slepá místa; na naše vlastní texty (rozhraní, zásady) dál smí. (b) Málstaður / Málfríður (Miðeind, API 1 kr za
   100 znaků + 2 990 kr měsíčně, DECISIONS 2026-10-14 (10)) teď ne — drahé; vrátit se, až se změní cena nebo rozpočet.
 - Affected doc(s): `RUNAR_BACKLOG.md` (smyčka ze skutečných čtení) — v témže commitu.
+
+## 2026-10-14 (12) — Slack zrušen; místo něj hlídání provozu a denní souhrn e-mailem (úkol CODE-tune před spuštěním)
+
+- **Rozhodl:** owner 2026-10-14 na otázku, jestli má Slack cenu (*„slack až tak užitečným nenašel. nedělá nic navíc“*) a návrh CODE-read:
+  *„4. ano zruš to 5. ano zapiš. a udělat CODE-tune. dobře to v e-mailu uspořádá. kam to přijde a bude to přehledné. udělat nejlepší cestu.“*
+- **Proč:** Slack dělal jedinou věc — ke každému hlášení z appky zprávu „přišlo hlášení“ (typ, jazyk, verze, bez textu). Hlášení samo je
+  v DB, ve shrine (REPORTS) a session ho načítají přes `nacti_cteni.js`. Chybí naopak upozornění, když se něco kazí (dnes jen čtení logů).
+- **Co (CODE-read):** smazána edge funkce `notify-report` (v Supabase i v repu), tajné hodnoty `SLACK_WEBHOOK_URL` a `WEBHOOK_SECRET`
+  (nic jiného je nečetlo); spouštěč „notify-report“ na `public.bug_reports` = SQL ownera `sql/2026-10-14_drop_notify_report_trigger.sql`.
+  Ověřeno předem, že webhook fungoval (4 poslední hlášení = zprávy v kanálu) — ruší se pro malý užitek, ne pro poruchu.
+- **Dál:** hlídání provozu + denní souhrn do `runar@therunekeeper.com` — úkol CODE-tune v BACKLOGu (nahradil položku „Monitoring / alerting“).
+- Affected doc(s): `RUNAR_PRIVACY.md` (Slack jako příjemce), `RUNAR_PRICING.md` (řádek nákladů), `RUNAR_BACKLOG.md` — v témže commitu.
