@@ -21,7 +21,8 @@
 # poetic text — NEVER auto-apply these to a reading; flag only, human judges.
 
 # ⚠️ 2026-10-10 MRTVÉ: https://yfirlestur.is/correct.api trvale přesměrovává (HTTP 301) na malstadur.mideind.is/malfridur — Miðeind
-# přesunul Yfirlestur do placeného produktu Málstaður bez veřejného API (ověřeno na jeho stránce). Skript dostával HTML a hlásil všechno
+# přesunul Yfirlestur do placeného produktu Málstaður (2026-10-10 tu stálo „bez veřejného API“ — 2026-10-14 ověřeno, že API má tarif
+# „Frjáls áskrift“: 2 990 kr na uživatele a měsíc + 1 kr za 100 znaků, malstadur.mideind.is/askrift). Skript dostával HTML a hlásil všechno
 # „NEZKONTROLOVÁNO“. Náhrada (KUKY 2026-10-10 „GPT dělá dobrou IS“): is-gpt-check.py, obhájený samotestem; idiomy a obraty dál
 # is-vazba.py --freq. Kód níž zůstává kvůli historii — main() hned odkáže na náhradu.
 

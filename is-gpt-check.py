@@ -2,7 +2,9 @@
 # is-gpt-check.py — islandská korektura přes GPT (náhrada za Yfirlestur API).
 #
 # Proč (2026-10-10): is-grammar-qa.py volal https://yfirlestur.is/correct.api a ten od 2026-10 trvale přesměrovává (HTTP 301) na
-# malstadur.mideind.is/malfridur — Miðeind službu přesunul do placeného produktu Málstaður bez veřejného API. urllib přesměrování
+# malstadur.mideind.is/malfridur — Miðeind službu přesunul do placeného produktu Málstaður (API má jen tarif „Frjáls áskrift“: 2 990 kr
+# na uživatele a měsíc + oprava přes API 1 kr za 100 znaků — ověřeno 2026-10-14 na malstadur.mideind.is/askrift; do té doby tu stálo
+# „bez veřejného API“). urllib přesměrování
 # následoval jako GET, dostal HTML stránku a padal na „Expecting value“ → každá kontrola skončila „NEZKONTROLOVÁNO“.
 # KUKY 2026-10-10: „zjisti příčinu. najdi jiné lepší řešení. GPT dělá dobrou IS.“
 #

@@ -411,6 +411,8 @@ atomický upsert, úklid starších než hodina; stejně tak `use_credit` (atomi
 - [ ] **Obohatit řádek: pořadí tažených run + char_count** — ALTER už NEPOTŘEBUJE (2026-08-10). Řádek `readings` má sloupec `prompt_draws jsonb`, do kterého se dá přidat cokoli bez migrace; dnes v něm jede úhel, obraz, klíčová slova, tvar konce a umístění jména. Pořadí run je navíc jediné, co ještě chybí — model může sloty přeskládat, takže se musí ukládat strukturovaně.
 - [ ] **Readings viewer: flag/annotate** — dnes view-only (`initReadingsTab` = prázdný stub). Potřebuje review tabulku (owner ALTER).
 - [x] *(CODE-tune 2026-10-10, DECISIONS 2026-10-10 (39): Málstaður veřejné API nemá — jen editor (zdarma 400 znaků) a předplatné;
+  ⚠️ NEPLATÍ (ověřeno 2026-10-14, DECISIONS 2026-10-14 (10)): API má tarif „Frjáls áskrift“, 2 990 kr na uživatele a měsíc + oprava
+  1 kr za 100 znaků;
   náhrada `is-gpt-check.py` (GPT, KUKY „GPT dělá dobrou IS“), obhájený samotestem; `is-grammar-qa.py` hned odkáže na náhradu.)*
   **⚠️ `is-grammar-qa.py` je mrtvý: API Yfirlestur přestěhované** (2026-10-10, CODE-tune, §22). `https://yfirlestur.is/correct.api`
   vrací **301 → `https://malstadur.mideind.is/malfridur`** (webová aplikace Málstaður od Miðeind, Cloudflare), takže skript místo JSON

@@ -11417,3 +11417,12 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   zastaven (EXIT 1, ~1 s), tentýž rozbitý soubor jen ve stromu → commit projde s „cizí, neblokuje“. Zkouška našla vadu i ve vlastní
   ukázce samotestu (dvě jména nástrojů IS na řádku) — opraveno před commitem.
 - Affected doc(s): `CLAUDE.md` §30 (odrážka Kontroly při commitu), `RUNAR_BACKLOG.md` (položka uzavřena) — v témže commitu.
+
+## 2026-10-14 (10) — Oprava faktu: Málstaður (Miðeind) API má — 2026-10-10 (39) psalo opak
+
+- **Co platí:** oprava islandštiny přes API Málstaður (Málfríður, nástupce Yfirlesturu) je v tarifu „Frjáls áskrift“: 2 990 kr na uživatele
+  a měsíc + 1 kr za 100 znaků (ověřeno 2026-10-14 na `malstadur.mideind.is/askrift`; „Föst áskrift“ 2 690 kr API nemá). 2026-10-10 (39)
+  a hlavičky `is-gpt-check.py` a `is-grammar-qa.py` tvrdily „bez veřejného API“ — opraveno v témže commitu.
+- **Proč zápis:** owner 2026-10-14 *„projdi všechny dostupné možnosti jak opravovat IS texty! … myslím dostupné veřejně!“* — zastaralá věta
+  by tu možnost příští session tiše vyřadila. Rozhodnutí, jestli Málstaður použít, tady není (čeká na ownera).
+- Affected doc(s): `RUNAR_BACKLOG.md` (uzavřená položka 2026-10-10), `is-gpt-check.py`, `is-grammar-qa.py` — v témže commitu.
