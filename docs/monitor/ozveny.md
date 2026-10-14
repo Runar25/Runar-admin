@@ -132,3 +132,30 @@ Opakované fráze ve čteních (≥ 30 %): „thorn catches your sleeve“ 2 · 
 
 Bez varování.
 <!-- do: 2026-10-09 23:27:59.655687+00 -->
+
+## 2026-10-13 · čtení po 2026-10-09 23:27 → 2026-10-13 13:01
+
+Čtení 14 · Asků 7 · modely: gpt-6-sol 21
+
+| vstup → výstup | vše | sol | opus | poznámka |
+|---|---|---|---|---|
+| obraz opsán (≥ 4 slova za sebou) | 6/14 | 6/14 | — | věta 1: 6 |
+| význam z hlavičky doslova v textu (definiční věta, záměr) | 7/14 | 7/14 | — | věta 2: 1 · 3: 4 |
+| sloveso z losu hned za jménem runy (záměr, v5.01) | 6/6 | 6/6 | — | věta 2: 3 · 3: 3 · stands for 2, is the rune of 2, represents 1, embodies 1 |
+| nejčastější sloveso po jménu runy (er) | 5/12 | 5/12 | — | er 5, stands 2, is 2, s 1 |
+| podoba oblasti opsaná (≥ 3 slova) | 3/10 | 3/10 | — | „vex upp úr“ · „í því sem“ · „að þroskast í“ věta posl.: 3 |
+| otázka runy z Kolekce opsaná (≥ 3 slova) | 2/8 | 2/8 | — | „before you knew“ · „lead where you want to go or“ věta posl.: 2 |
+| pokyn úhlu opsaný (≥ 4 slova) | 0/14 | 0/14 | — |  |
+| pokyn konce opsaný (≥ 4 slova) | 0/14 | 0/14 | — |  |
+| Ask: slova otázky zopakovaná | 2/7 | 2/7 | — | „your life rune“ · „in this reading“ |
+| Ask: „drawn“ (runa tažená / netažená) | 0/7 | 0/7 | — |  |
+| Ask: „the rune / reading does not say“ | 0/7 | 0/7 | — |  |
+| Ask: „leaves … open“ | 1/7 | 1/7 | — |  |
+| Ask: „not a promise / verdict / sign“ | 0/7 | 0/7 | — |  |
+| Ask: „…, or not“ | 0/7 | 0/7 | — |  |
+
+**Odkud se to bere** (vstup čtení / text čtení / pevný text promptu podle živých builderů):
+- Ask „leaves … open“ 1× — v promptu není → zvyk modelu (nebo vstup, který monitor nezná)
+
+Bez varování.
+<!-- do: 2026-10-13 13:01:32.172472+00 -->
