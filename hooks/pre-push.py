@@ -21,6 +21,14 @@
 # pustí smoke postaru nad sdíleným stromem (a řekne to).
 #
 # Obejít se dá `git push --no-verify` — vědomě a viditelně, ne mlčky.
+#
+# 2026-10-14 (CODE-read, owner „pokračuj“ po incidentu 8c12069): přes HTTPS (GitHub) git předá pomocníkovi git-remote-https větev JMÉNEM
+# a ten ji přeloží na commit až PO tomhle hooku. Vznikl-li commit během běhu smoke (sdílený strom, minuty), odejde na server neotestovaný
+# — a lokální origin/main přitom tvrdí, že odešel ten otestovaný. Doloženo: 2026-10-13 pre-push CODE-read testoval 9681561 a server
+# dostal 8c12069 (commit CODE-tune z 21:19, rozbitá ㊸) — reflog `origin/main` 9681561 „update by push“, o 96 s později fetch 8c12069;
+# pokus přes git http-backend týž průběh zopakoval (bez HTTP, lokálním přenosem, ne — proto ho první pokus neukázal). Proto se na konci
+# ověří, že každá pushovaná větev pořád ukazuje na commit, který prošel; když ne, push se zastaví. Zbývá okno mezi koncem hooku
+# a odesláním (zlomek sekundy místo minut).
 import os, shutil, subprocess, sys, tempfile
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -31,12 +39,13 @@ def git(*a, **kw):
     return subprocess.run(['git', '-C', REPO] + list(a), capture_output=True, text=True, **kw)
 
 # Co se pushuje: stdin nese „<local ref> <local sha> <remote ref> <remote sha>“; mazání větve má local sha samé nuly.
-shas, zaklady = [], []
+shas, zaklady, vetve = [], [], []
 try:
     for line in sys.stdin.read().splitlines():
         p = line.split()
         if len(p) >= 2 and p[1].strip('0'):
             shas.append(p[1])
+            vetve.append((p[0], p[1]))   # (lokální ref, testovaný commit) — na konci se ověří, že se nepohnul
             if len(p) >= 4 and p[3].strip('0'):
                 zaklady.append(p[3])
 except Exception:
@@ -87,5 +96,14 @@ finally:
 
 if not ok:
     print('\n[pre-push] ZABLOKOVÁNO — smoke neprošel. Oprav to, nebo `git push --no-verify`.')
+    sys.exit(1)
+posunute = []
+for ref, sha in vetve:
+    ted = git('rev-parse', '--verify', '-q', ref).stdout.strip()
+    if ted and ted != sha:
+        posunute.append(ref + ': otestován ' + sha[:7] + ', teď ' + ted[:7])
+if posunute:
+    print('\n[pre-push] ZABLOKOVÁNO — během kontroly přibyl commit, který smoke neviděl (' + '; '.join(posunute) + ').')
+    print('  Přes HTTPS by na server odešel ten NOVÝ commit, neotestovaný. Pusť push znovu — otestuje se aktuální stav.')
     sys.exit(1)
 print('[pre-push] OK')
