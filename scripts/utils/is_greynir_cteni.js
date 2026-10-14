@@ -6,7 +6,7 @@
 // Tady se dělá totéž pokaždé samo, jen na nových čteních (okno = čtení, která nacti_cteni.js právě načetl).
 //
 // Co dělá: z islandských čtení (text bez řádku ✦ i řádek ✦, u spreadu deep_text — totéž pravidlo jako elevenlabs-proxy; a Asky) udělá věty,
-// pustí na ně `is-greynir.py` (GreynirCorrect u nás, text nikam neodchází) a vypíše nálezy. Plané poplachy odfiltruje podle měření
+// pustí na ně `is-greynir.py` (lokálně, text nikam neodchází; nástroje a pořadí kontroly IS → CLAUDE.md §2) a vypíše nálezy. Plané poplachy odfiltruje podle měření
 // z 2026-10-14 (109 vět, 0 skutečných chyb v těchto třídách): Z002 velké písmeno po dvojtečce (v islandštině se po dvojtečce píše malé) ·
 // P_VeraAð styl „er að + infinitiv“ · P_NT_SvigaInnihaldNl oslovení jménem · S004/S005/W001 „oprava“ jména runy nebo slova s „rún“
 // (Perþ → Perú, Lífsrúnin → Lífbrúnin, rúnin → rúin). E001 (věta nerozebraná) zůstává jako žlutá — „nerozebráno“ ≠ „v pořádku“ (§19.2).
