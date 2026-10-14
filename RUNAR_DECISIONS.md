@@ -11364,3 +11364,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   tebe / tvoje rozhodnutí“ bez položené otázky. První verze měla 2 plané poplachy ze 40 („odpověď“ API, „čeká“ kód) a pustila zprávu,
   kterou owner přehlédl (otázka v jiném bodu) — obojí opraveno, než šla do commitu.
 - Affected doc(s): `CLAUDE.md` §30 (odrážka Zpráva ownerovi), `memory/full-path-and-numbered-lists.md` — v témže commitu.
+
+## 2026-10-14 (6) — Stará „paměť o člověku“ smazána: tabulka `tree_state`, funkce `tree-update`, vypnuté Vrstvy A/B/C v `claude-proxy`
+
+- **Rozhodl:** owner 2026-10-14 *„aha.. tak to je hodně staré. smaž to.“* — po vysvětlení CODE-read, co to je (otázka „komu patří tree-update“).
+- **Co to bylo:** návrh z 2026-05: `tree-update` po čtení vytáhla modelem Haiku opakující se témata, symboly, „emoční oblouk“ a fráze
+  k neopakování do `tree_state`; `claude-proxy` je měl přidávat do promptu (+ stav sezení, škála hlasu). Vypnuto od 2026-07-04
+  (`ENABLE_DYNAMIC_CONTEXT = false`: ~8 protichůdných tónových direktiv), funkce z nasazení stažena 2026-10-10, appka ji nikdy nevolala.
+- **Mění starší rozhodnutí:** 2026-08-10 (Rúnaþula) nechalo přepínač „beze změny“ — vypnutá páka s podmínkami návratu nebyla zetlelá.
+  Teď ji owner ruší; návrat paměti napříč čteními = nový návrh s vlastním schématem a soukromím (odvozené údaje o člověku; CLAUDE.md §21).
+  Plán stromu („Muninn“, souhrn stromu v RUNAR_TREE.md / RUNAR_DESIGN.md) zůstává — počítal s JINÝM schématem, bude to nová tabulka.
+- **Co:** smazáno `supabase/functions/tree-update/`, z `claude-proxy` blok A/B/C, pomocné funkce a `session_state` v odpovědi (nikdo ho
+  nečetl; shrine ho jen předával), `TREE_UPDATE` z `v2/runar-config.js`. DB: `sql/2026-10-14_drop_tree_state.sql` (owner; 1 řádek).
+- **Ověřeno:** v `claude-proxy` nezůstal odkaz na nic smazaného; `deno check` dává tytéž 2 chyby jako HEAD (staré, `_shared/voice_ticket.ts`);
+  přepínač byl `false`, takže chování čtení se nemění. **Nasazení `claude-proxy` čeká na ownera** (do té doby produkce = HEAD před smazáním,
+  `scripts/utils/nasazene_vs_repo.py` to ukáže).
+- Affected doc(s): `RUNAR_TREE.md` (tvrzení „tree_state existuje a je zapojená“), `RUNAR_PRIVACY.md` (obnova účtu), `RUNAR_BACKLOG.md` — v témže commitu.

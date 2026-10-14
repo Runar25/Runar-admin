@@ -116,8 +116,8 @@ a souhlasí na pravdivém textu. Detail → `RUNAR_DECISIONS.md` 2026-09-11 (8).
   1. najít nejnovější archiv PŘED smazáním a v něm staré ID podle e-mailu (`auth.users`);
   2. v uzavřeném testu vrátit e-mail do `allowed_emails` se stejnou rolí jako v záloze (`delete-account` ho maže);
   3. uživatel se znovu přihlásí → nové ID;
-  4. z archivu přenést řádky starého ID pod nové: `user_profiles` (i tier a kredity — píše jen server, tedy SQL ownera), `readings`,
-     `tree_state`; `gift_codes.used_by` u kódů, které uplatnil (smazání je vynulovalo); `credit_ledger` přežil se starým ID → přepsat
+  4. z archivu přenést řádky starého ID pod nové: `user_profiles` (i tier a kredity — píše jen server, tedy SQL ownera), `readings`;
+     `gift_codes.used_by` u kódů, které uplatnil (smazání je vynulovalo); `credit_ledger` přežil se starým ID → přepsat
      na nové. `voice_usage` zůstává anonymní (`on delete set null`, mapování už není). Zámek životní runy hlídá jen roli klienta,
      SQL ownera ho neblokuje;
   5. začerněné přepisy konverzací (výmaz výš) se neobnovují.

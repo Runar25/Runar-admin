@@ -291,6 +291,8 @@ Ostatní (později, decentně): pulzy dominance (element/ætt), bloom fáze, lis
   se strom skládá při každém otevření tabu z `readings` (regexem), a proto se přeskládá. ⚠️ **Telefon tím nezrychlíš:** výpočet tvaru je 2–4 % překreslení, zbytek je
   kreslení (`RUNAR_DECISIONS.md` 2026-10-11 (29)). `tree_state`
   drží souhrn (roots, element_scores, dominant_element, trunk_themes, pattern_cache).
+  ⚠️ **Od 2026-10-14 neexistuje ani stará `tree_state`** — smazána i s funkcí `tree-update` a vypnutým čtením v `claude-proxy`
+  (owner „to je hodně staré. smaž to“, DECISIONS 2026-10-14 (6)); úložiště z odstavce výš bude nová tabulka. Do té doby tu stálo:
   ⚠️ **`tree_readings` NEEXISTUJE** — to je cíl, ne stav. **`tree_state` ale ANO a je zapojená**
   (ověřeno v živé DB 2026-08-22, CODE-read): 11 sloupců — `recurring_pattern`, `emotional_arc`,
   `personal_symbols`, `forbidden_next`, `session_count`, `voice_scale`, `voice_settled`… Čte ji

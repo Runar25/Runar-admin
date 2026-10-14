@@ -426,7 +426,7 @@ atomický upsert, úklid starších než hodina; stejně tak `use_credit` (atomi
 ### 🟢 Dlouhý ocas (kód, nízká priorita)
 - [ ] **§18 debt:** lab i prod drží kompozici stromu 2× (`build_tree_production.py`) → vytáhnout `runar-tree-core.js`. Prod navíc načítá enginy z `tree-lab-*` cest. *(soubor zatím neexistuje — je to cíl toho refaktoru)*  <!-- doc-links:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
 - [x] ~~Strom se **neaktualizuje po čtení** (`renderLivingTree` jen při otevření tabu).~~ **Není vada — KUKY 2026-09-26**; pravidlo vlastní `RUNAR_TREE.md` §8 („Strom se nemusí překreslit hned po čtení“), přesunuto tam 2026-10-11.
-- [ ] `tree_state`/`tree_readings` — `sql/tree_state.sql` je STARÉ schéma (Vrstva A) pro tree-update; produkční strom čte z `readings` → rozhodnout: rozšířit / nahradit / zahodit.
+- [x] ✅ *(owner 2026-10-14 „smaž to“, DECISIONS 2026-10-14 (6): stará `tree_state` + `tree-update` + Vrstvy A/B/C v proxy smazány; DB = SQL ownera `sql/2026-10-14_drop_tree_state.sql`.)* ~~`tree_state`/`tree_readings` — `sql/tree_state.sql` je STARÉ schéma (Vrstva A) pro tree-update; produkční strom čte z `readings` → rozhodnout: rozšířit / nahradit / zahodit.~~
   ⚠️ Než z `tree_state` začne cokoli číst server: politika UPDATE pro vlastníka nemá omezené sloupce — zúžit jako `user_profiles` (granty
   sloupců, smoke ⑩); nález CODE-read 2026-10-11 (položka „Pro CODE-tree“ (a)).
 - [ ] **Před spuštěním: viditelnost + sklad dobrých vět** (KUKY 2026-09-29 bod 6: *„některá čtení jsou fakt dobrá, popřípadě vyjde dobrý
@@ -474,15 +474,15 @@ i v angličtině a mezera zaniká sama. To je levnější a nikoho to nečeká.
 ### Haiku 5.5 (vyšel 2026-10-07) — kde by šel použít; srovnání s lunou čeká na ownerovo ano (hlášení b4365ead) (CODE-tune)
 Owner: *„Zjisti všechno o Haiku 5.5… Nabízí se nám nějaké možnosti, jak tyhle levné modely používat? Jak by se dal porovnat s Luna 6?“*
 Ceník Anthropicu (platform.claude.com/docs/en/about-claude/pricing, ověřeno 2026-10-09): cenou stejný jako gpt-6-luna, desetina Haiku 4.5;
-prompt nad 100 000 tokenů je dražší (u nás nikdy). Haiku 4.5 je v repu jen v edge fn `tree-update`, kterou appka nevolá.
-Kandidáti: rozbor čtení (dnes luna, `gpt-review`) · třídění hlášení testerů · `tree-update`, až ho CODE-tree oživí. Čtení a Ask ne:
+prompt nad 100 000 tokenů je dražší (u nás nikdy). Haiku 4.5 byla v repu jen v edge fn `tree-update` (smazána 2026-10-14).
+Kandidáti: rozbor čtení (dnes luna, `gpt-review`) · třídění hlášení testerů · ~~`tree-update`~~ (smazán 2026-10-14). Čtení a Ask ne:
 model je proti hlasu malá část ceny a islandština malého modelu neověřená. **Další krok jen s ownerovým ano (§30):** Haiku 5.5 × luna
 na rozboru týchž čtení (lunin rozbor je uložený v `gpt_reviews`), malý vzorek, texty vedle sebe pro ownera.
 **2026-10-09 ZMĚŘENO** (owner *„13. ano porovnej“*, EVAL_LOG 2026-10-09 (2)): na 5 čteních Haiku 5.5 s přemýšlením 1 platný nález
 a 0 neplatných, luna 0 platných a 7 neplatných, Haiku bez přemýšlení horší než luna. Haiku ~5× dráž než luna (pořád < 0,1 c za rozbor)
 a 2 z 10 rozborů s ruským slovem v češtině. `tree-update` přepnut na Haiku 5.5 bez přemýšlení (owner *„předělat haiku 4.5 na 5.5“*).
 ✅ **Rozhodnuto 2026-10-09 (KUKY):** rozbor čtení *„zrušit úplně“* (luna se nepoužívá, Haiku místo ní nebude) — tlačítko i edge fn
-`gpt-review` pryč, DECISIONS 2026-10-09 (8). Třídění hlášení modelem *„ok, neřešit“*. Zůstává: `tree-update` na Haiku 5.5.
+`gpt-review` pryč, DECISIONS 2026-10-09 (8). Třídění hlášení modelem *„ok, neřešit“*. ~~Zůstává: `tree-update` na Haiku 5.5.~~ (funkce smazána 2026-10-14)
 
 ### ✅ `rk()` / `rn()` čtou GLOBÁLNÍ `lang`, ne parametr (2026-08-15)
 ✅ *(CODE-tune 2026-10-12: rk/rn/rnPrompt/rnPromptAcc/rworld berou jazyk 2. parametrem, buildery ho předávají — i spready přes
