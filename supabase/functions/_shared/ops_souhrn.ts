@@ -88,7 +88,8 @@ export type Den = {
   modely: Record<string, number>;              // usage.model × počet (čtení i Asky)
   cenaModelu: number; bezCeny: number;          // USD; volání, jejichž model nemá cenu v MODEL_PRICES
   hlasy: number; znakyHlasu: number; cenaHlasu: number;
-  hlaseni: Record<string, number>;             // nová hlášení z appky podle typu, bez „keep“
+  hlaseni: Record<string, number>;             // hlášení z appky za 24 h podle typu, bez „keep“ (jen čísla)
+  neprectena: number;                          // hlášení ve stavu new (nikdo je nenačetl), bez „keep“ — jen tohle jde do „Needs you“
   ulozeno: number;                              // ✦ Keep — uložené věty, ne problém
   chybModelu: number; zalohModelu: number; brzd: number;
   kredity: Kredity | null;
@@ -101,7 +102,8 @@ export function souhrn(d: Den): Email {
   const potreba: string[] = [];
   for (const k of KLICE) if (d.otevrene[k] === "problem") potreba.push(POPIS[k].problem + ". " + POPIS[k].co);
   const nHlaseni = Object.values(d.hlaseni).reduce((a, b) => a + b, 0);
-  if (nHlaseni) potreba.push(nHlaseni + " new app report" + (nHlaseni > 1 ? "s" : "") + " (" + seznam(d.hlaseni) + "). Ask CODE to load the reports.");
+  // 2026-10-14: jen nepřečtená (stav new) — první souhrn posílal ownera načítat hlášení, které session týž den uzavřela.
+  if (d.neprectena) potreba.push(d.neprectena + " unread app report" + (d.neprectena > 1 ? "s" : "") + ". Ask CODE to load the reports.");
   const doBrzdy = d.kredity && d.kredity.hladina != null ? d.kredity.hladina - d.kredity.spotreba : null;
   if (doBrzdy != null && d.kredity!.limit && doBrzdy < PRAHY.kredityMaloPodil * d.kredity!.limit)
     potreba.push("ElevenLabs: only " + cislo(doBrzdy) + " credits left before the voice brake.");
@@ -119,7 +121,8 @@ export function souhrn(d: Den): Email {
     ["Model fallbacks / failures", d.zalohModelu + " / " + d.chybModelu],
     ["Voices", d.hlasy + " (" + cislo(d.znakyHlasu) + " characters)"],
     ["Cost", "models $" + d.cenaModelu.toFixed(2) + " · voice $" + d.cenaHlasu.toFixed(2) + " · total $" + celkem.toFixed(2)],
-    ["App reports", (nHlaseni ? seznam(d.hlaseni) : "none") + (d.ulozeno ? " · saved lines (Keep) " + d.ulozeno : "")],
+    ["App reports (24 h)", (nHlaseni ? seznam(d.hlaseni) : "none") + (d.ulozeno ? " · saved lines (Keep) " + d.ulozeno : "")
+      + (d.neprectena ? " · unread " + d.neprectena : "")],
     ["ElevenLabs credits", d.kredity ? "used " + cislo(d.kredity.spotreba) + (d.kredity.limit ? " of " + cislo(d.kredity.limit) : "")
       + (doBrzdy != null ? " · " + cislo(doBrzdy) + " left before the brake" : "") + (d.kredity.reset ? " · resets " + d.kredity.reset.slice(0, 10) : "")
       : "status unavailable"],

@@ -87,7 +87,7 @@ async function hlidka(db: any, ted: Date): Promise<Hlidka> {
 // deno-lint-ignore no-explicit-any
 async function den(db: any, ted: Date): Promise<Den> {
   const od = new Date(ted.getTime() - 864e5).toISOString();
-  const [rd, vu, br, chyb, zaloh, brzd, z, otevrene, raw] = await Promise.all([
+  const [rd, vu, br, chyb, zaloh, brzd, z, otevrene, raw, neprectena] = await Promise.all([
     db.from("readings").select("area, usage, follow_up").gte("drawn_at", od),
     db.from("voice_usage").select("model, chars").gte("created_at", od),
     db.from("bug_reports").select("type").gte("created_at", od),
@@ -97,6 +97,8 @@ async function den(db: any, ted: Date): Promise<Den> {
     zaloha(db),
     nactiStavy(db),
     fetchQuota(Deno.env.get("ELEVENLABS_API_KEY") ?? ""),
+    // nepřečtená = stav new kdykoli (ne jen za 24 h) — do „Needs you“ (2026-10-14: souhrn hlásil i uzavřené hlášení)
+    pocet(db.from("bug_reports").select("id", { count: "exact", head: true }).eq("status", "new").neq("type", "keep")),
   ]);
   for (const q of [rd, vu, br]) if (q.error) throw new Error(q.error.message);
   const modely: Record<string, number> = {};
@@ -133,7 +135,7 @@ async function den(db: any, ted: Date): Promise<Den> {
   }
   return {
     od, do: ted.toISOString(), cteni: (rd.data ?? []).length, spready, asky, modely, cenaModelu: cena, bezCeny,
-    hlasy: (vu.data ?? []).length, znakyHlasu: znaky, cenaHlasu: kredity * EL_KREDIT_USD, hlaseni, ulozeno,
+    hlasy: (vu.data ?? []).length, znakyHlasu: znaky, cenaHlasu: kredity * EL_KREDIT_USD, hlaseni, neprectena, ulozeno,
     chybModelu: chyb, zalohModelu: zaloh, brzd, kredity: kr, zaloha: z, otevrene,
   };
 }
