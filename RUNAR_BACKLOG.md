@@ -809,7 +809,7 @@ Procházka je tím úplná.
       spuštění ikonu aplikace, která se spouští — u zástupce na ploše je to Chrome, u nainstalované appky Rúnar (neověřeno na jeho
       telefonu). Další krok (owner): Nastavení → Aplikace — je tam „Rúnar“? Není → zástupce: smazat z plochy, v Chrome ⋮ → „Instalovat
       aplikaci“. Je, a logo pořád → hlásit CODE-tune, hledat dál.
-- [ ] jedno hlášení z reporteru → **přišlo do Slacku?** (řádky v DB nedokazují, že webhook běží)
+- [x] ✅ *(CODE-read 2026-10-14: čtyři poslední hlášení v DB (13.–14. 10.) jsou jako zprávy v Slacku #runar-reports, každé do sekundy od zápisu — webhook notify-report běží.)* ~~jedno hlášení z reporteru → **přišlo do Slacku?**~~
 - [ ] po pushi zkontrolovat verzi: `curl -s https://runar25.github.io/Runar-admin/v2/sw.js | head -1`
 
 ## Co testerům napsat dopředu (ať to nehlásí jako chybu)
