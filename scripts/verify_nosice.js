@@ -35,8 +35,9 @@ const MAPA = {
   '§9':  { slouceno: '§2' },
   '§10': { drzi: [{ smoke: '② HARDCODED STRINGS' }, { smoke: 'verify_lang_ternary.js' }, { smoke: 'verify_en_natvrdo.js' },
                   { smoke: 'verify_tier_features.js' }, { smoke: 'verify_spread_prices.js' }, { smoke: 'verify_doc_values.js' }] },
-  '§11': { drzi: [{ hook: PDD, co: 'past: heredoc se zpětným lomítkem, neviditelný znak z escape v Edit/Write' }],
-           castecne: 'escape sekvence v Python skriptu napsaném nástrojem Write nehlídá nic' },
+  '§11': { drzi: [{ hook: PDD, co: 'past: heredoc se zpětným lomítkem, neviditelný znak, islandský escape v .py při Write/Edit (od 2026-10-14)' },
+                  { smoke: 'verify_pravidla_mapa.js' }],
+           castecne: 'skript vzniklý jinak než nástrojem Write/Edit (příkazem v shellu) past nevidí' },
   '§12': { drzi: [{ smoke: 'verify_liferune_states.js' }, { smoke: 'verify_zakazy_cesty.js' }] },   // 2026-10-13: jméno z e-mailu chytá ㊂ (C)
   '§13': { drzi: [{ smoke: 'verify_contract_wiring.js' }, { smoke: 'verify_prompt_levers.js' }, { smoke: 'verify_zakazy_cesty.js' }],
            castecne: 'výklad musí být zapsaný v _SPREAD_COST_KEY, jinak o něm ㊂ neví; nové POLE formuláře mimo prompt a shrine parts[] nehlídá nic' },

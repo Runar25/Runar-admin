@@ -37,6 +37,8 @@ POSLEDNI_VYSTUP = ''
 APP = 'v2/runar-app.js'
 
 PRIPADY = [
+ # past §11 v pravidla_pri_dotyku (CODE-read 2026-10-14): vzor islandského escape přestane sedět → samotest hooku (㊴) musí padnout
+ ('chyti', 'verify_pravidla_mapa.js', 'scripts/utils/pravidla_pri_dotyku.py', 'replace', '(?:u00|x)(e1|e9|', '(?:u00q|xq)(e1|e9|'),
  # ㊅ mazání z historie ElevenLabs (CODE-tune 2026-10-14): úklid bez hledání podle request_id — 14. 10. tak hlas v historii zůstal
  ('chyti', 'verify_el_historie.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'replace',
   'const podleId = reqId ? pol.find((h) => h?.request_id === reqId) : undefined;', 'const podleId = undefined;'),
