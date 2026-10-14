@@ -403,6 +403,25 @@ def neviditelne(inp):
     return out
 
 
+# §11 (2026-10-14, CODE-read; mapa nosičů ㊁ ukázala §11 jako „escape v Python skriptu napsaném nástrojem Write nehlídá nic“): islandský text
+# v Python skriptu se píše doslovně, nikdy jako escape — escape se při předávání mezi nástroji láme (memory heredoc-mangles-backslash-escapes,
+# edit-tool-escapes-new-text) a v kódu se nedá přečíst ani zkontrolovat (check-is ho nevidí jako slovo). Zastaví se escape islandského znaku,
+# který v souboru ještě není (úprava starého skriptu, který escapy už má, projde).
+IS_ESCAPE = re.compile(r'\\(?:u00|x)(e1|e9|ed|f3|fa|fd|fe|f0|e6|f6|c1|c9|cd|d3|da|dd|de|d0|c6|d6)', re.I)
+
+
+def is_escape(inp):
+    p = inp.get('file_path') or ''
+    if not p.lower().endswith('.py'):
+        return []
+    novy = inp.get('new_string') or inp.get('content') or ''
+    novy += ''.join((e or {}).get('new_string', '') for e in (inp.get('edits') or []))
+    stary = inp.get('old_string') or ''
+    try: stary += cti(p) if os.path.isfile(p) else ''
+    except Exception: pass
+    return sorted(set(m.group(0) for m in IS_ESCAPE.finditer(novy) if m.group(0) not in stary))
+
+
 def rozhodni(vstup):
     tool = vstup.get('tool_name', '')
     inp = vstup.get('tool_input') or {}
@@ -413,6 +432,11 @@ def rozhodni(vstup):
                     'v parametru nástroje — escape se změní na skutečný znak už při předání. Chceš-li v souboru TEXT `\\u2028`, poskládej ho\n'
                     'skriptem (chr(92) + "u2028"); chceš-li opravdu ten znak, vlož ho skriptem výslovně (chr(0x2028)).\n\n'
                     '(Hook pravidla_pri_dotyku.py — neviditelné znaky)')
+        ie = is_escape(inp)
+        if ie:
+            return ('⛔ §11: islandský znak jako escape v Python skriptu (' + ', '.join(ie) + '). Piš ho doslovně (á, þ, ð, æ, ö…) a skript\n'
+                    'spouštěj s python -X utf8 — escape se mezi nástroji láme a check-is ho jako slovo nevidí (CLAUDE.md §11).\n\n'
+                    '(Hook pravidla_pri_dotyku.py — §11 escape v Pythonu)')
         # Sdílený doc nástrojem Edit (nebo Write přes EXISTUJÍCÍ soubor) by šel zapsat, ale ne commitnout: commit_vlastni bere jen zápisy
         # ze zapis() a pre-commit jinou cestu nepustí (CODE-read 2026-10-11, kolo 3 — rozpor dvou mechanismů). Zastavit hned, ne až při commitu.
         r0 = rel(inp.get('file_path') or inp.get('notebook_path'))
@@ -664,6 +688,14 @@ def samotest():
         (lambda d: d is None or 'přímo do sdíleného' not in d)(sk_('p3.py', "t = open('v2/runar-tree.js').read()" + chr(10) + "open('C:/tmp/vystup.txt', 'w').write(t)" + chr(10))))
     chk('54. zápis přes cv.zapis do sdíleného → zákaz přímého zápisu nedostane',
         (lambda d: d is None or 'přímo do sdíleného' not in d)(sk_('p4.py', "s = cv.cti('v2/runar-tree.js', R)" + chr(10) + "cv.zapis('v2/runar-tree.js', s + 'x', 'CODE-read', R)" + chr(10))))
+    py11 = os.path.join(STAV, 'p11.py')
+    chk('55. Write .py s islandským escape (' + B + 'u00fe) → zastaví §11',
+        (lambda d: d and '§11' in d)(V('Write', sid='p11a', file_path=py11, content='s = "' + B + 'u00feetta"' + chr(10))))
+    chk('56. Write .py s doslovným islandským textem → §11 nezastaví',
+        (lambda d: d is None or '§11' not in d)(V('Write', sid='p11b', file_path=py11, content='s = "þetta"' + chr(10))))
+    js11 = os.path.join(STAV, 'p11.js')
+    chk('57. escape v .js (ne Python) → §11 nezastaví',
+        (lambda d: d is None or '§11' not in d)(V('Write', sid='p11c', file_path=js11, content='s = "' + B + 'u00feetta"' + chr(10))))
     for jm, v in ok: print(('OK    ' if v else 'FAIL  ') + jm)
     return 0 if all(v for _, v in ok) else 1
 
