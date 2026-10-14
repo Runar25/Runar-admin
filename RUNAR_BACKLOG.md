@@ -12,7 +12,9 @@ Owner 2026-10-12: *„prompt už je prakticky hotovo. takže pozor na to, co tam
 v `docs/archive/RUNAR_BACKLOG_odlozene.md` jako ⏸ — nejsou to úkoly. Vrací se, až se vada objeví v nových čteních a owner na ni upozorní
 (CLAUDE.md §30); `uz_vime.js` je najde.
 
-- [ ] ⭐ **SMYČKA ZE SKUTEČNÝCH ČTENÍ — IS chyby do korekcí** (DECISIONS 2026-09-23 (6) bod 3). **Owner ji 2026-10-14 otevřel znovu**
+- [x] ✅ *(CODE-tune 2026-10-14, owner „zdarma ano“: běží při každém „načti reporty“ — krok 2c v `scripts/nacti_cteni.js` →
+  `scripts/utils/is_greynir_cteni.js`; nálezy ověřuje session korpusem, potvrzené jdou do korekcí.)* ⭐ **SMYČKA ZE SKUTEČNÝCH ČTENÍ —
+  IS chyby do korekcí** (DECISIONS 2026-09-23 (6) bod 3). **Owner ji 2026-10-14 otevřel znovu**
   (hlášení 6282e405: *„Potřebuju najít řešení jak IS čtení analyzovat. Jestli je IS dobrá.“*). Do té doby ⏸ *odloženo (owner 2026-10-13:
   „nech to, vyřešíme později“): čtení textů z produkce i `najdi_cteni.js` zablokovala ochrana Claude Code („Production Reads“)* — 2026-10-14
   v session CODE-tune obojí prošlo. Vzorek islandských čtení z DB (jen přes `scripts/utils/cteni_analyza.sql`, bez odhlášených) →
@@ -22,9 +24,10 @@ v `docs/archive/RUNAR_BACKLOG_odlozene.md` jako ⏸ — nejsou to úkoly. Vrací
   **První běh 2026-10-14 (CODE-tune, na ownerovo hlášení):** Greynir lokálně na 14 IS čteních od 1. 10. (109 vět, odhlášených 0) →
   24 vět s nálezem: 1 jistá chyba (`bertum`, zapsána do korekcí, DECISIONS 2026-10-14 (3)), zbytek plané poplachy (jména run,
   „maður vill“, velké písmeno po dvojtečce, styl „er að“) a 7× E001 (nerozebráno, neověřeno). Kalky Greynir nevidí: dva obraty
-  s korpusem 0× nehlásil (že jsou chybné, neověřeno). **Čeká na ownera:** (a) krok v `nacti_cteni.js` — Greynir na nových IS čteních
-  při každém načtení, zdarma; (b) malý test `is-gpt-check.py` na týchž 109 větách (3 volání, ≈ $0,11), než se přidá do kroku — napřed
-  OpenAI jako příjemce u „rozbor kvality“ v `RUNAR_PRIVACY.md` (dnes tam stojí jen interně a Anthropic) a jména maskovaná.
+  s korpusem 0× nehlásil (že jsou chybné, neověřeno). (a) Krok s Greynirem **postaven** (owner *„zdarma ano“*). (b) Test
+  `is-gpt-check.py` na týchž 109 větách (3 volání, ≈ $0,11) se **nepouští** — owner 2026-10-14 *„0.11$ je drahé“*. Vrátit se k němu
+  jen, když owner v čteních uvidí chyby, které Greynir nechytá; pak napřed OpenAI jako příjemce u „rozbor kvality“ v `RUNAR_PRIVACY.md`
+  a jména maskovaná.
 - [ ] **Blok korekcí roste do KAŽDÉHO IS promptu** — změřeno 2026-09-23 (`count_tokens`, Opus 4.8): IS 27 řádků
   = **1287 tokenů** (≈ $0,0064 na IS čtení), z toho **419 (33 %) jsou vysvětlení v závorkách**; EN 2 řádky = 69.
   Blok stojí na konci user promptu, za obsahem čtení → **cache tam principiálně nejde**. Přesun do system promptu
