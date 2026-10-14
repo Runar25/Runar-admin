@@ -22,12 +22,18 @@ v `docs/archive/RUNAR_BACKLOG_odlozene.md` jako ⏸ — nejsou to úkoly. Vrací
   a obhajobou) do korekcí. ⚠️ **Soukromí:** CODE-read smí číst jen ownerova čtení; čtení testerů/uživatelů =
   rozhodnutí podle `RUNAR_PRIVACY.md` (zpracování pro kvalitu, anonymizace), ne mimochodem.
   **První běh 2026-10-14 (CODE-tune, na ownerovo hlášení):** Greynir lokálně na 14 IS čteních od 1. 10. (109 vět, odhlášených 0) →
-  24 vět s nálezem: 1 jistá chyba (`bertum`, zapsána do korekcí, DECISIONS 2026-10-14 (3)), zbytek plané poplachy (jména run,
-  „maður vill“, velké písmeno po dvojtečce, styl „er að“) a 7× E001 (nerozebráno, neověřeno). Kalky Greynir nevidí: dva obraty
+  24 vět s nálezem: 1 jistá chyba (`bertum`, zapsána do korekcí, DECISIONS 2026-10-14 (3)), 4 chyby velkého písmena po dvojtečce
+  (Asky Opus 5; filtr je do večera mylně zahazoval — Ritreglur § 29.4, DECISIONS 2026-10-14 (15)), zbytek plané poplachy (jména run,
+  „maður vill“, styl „er að“) a 7× E001 (nerozebráno, neověřeno). Kalky Greynir nevidí: dva obraty
   s korpusem 0× nehlásil (že jsou chybné, neověřeno). (a) Krok s Greynirem **postaven** (owner *„zdarma ano“*). (b) Test
   `is-gpt-check.py` na týchž 109 větách (3 volání, ≈ $0,11) se **nepouští** — owner 2026-10-14 *„0.11$ je drahé“* a hlavně: čtení píše
-  GPT, kontrola GPT „moc nepomáhá“ (DECISIONS 2026-10-14 (11)). Druhá vrstva místo GPT: opravný model Miðeind (ByT5, lokálně, zdarma)
-  — instaluje se do `~/runar-eval/byt5-venv`, napřed zkouška na 109 větách a známých chybách; Málstaður teď ne (drahé).
+  GPT, kontrola GPT „moc nepomáhá“ (DECISIONS 2026-10-14 (11)). (c) Druhá vrstva místo GPT, opravný model Miðeind (ByT5, lokálně,
+  zdarma): **změřen a do rutiny nejde** — ve 109 větách nenašel nic, co Greynir nevidí, a dvě jeho opravy by změnily smysl
+  (DECISIONS 2026-10-14 (15)); zůstává nainstalovaný v `~/runar-eval/byt5-venv`. Málstaður teď ne (drahé).
+- [ ] **IS prompty: malé písmeno po dvojtečce před celou větou** (CODE-tune 2026-10-14, nález při kontrole ByT5). Ritreglur
+  § 29.4 chce velké, když za dvojtečkou stojí celá samostatná věta — např. `v2/runar-character.js` landing Norn: *„síðasta setningin
+  tilheyrir Skuld: hún nefnir tvennt…“*. Projít IS řetězce promptu (výčty a fragmenty zůstávají malé), opravit a bumpnout verzi
+  promptu. Nízká priorita: jsou to pokyny modelu, uživatel je nevidí; čtení GPT-6 sol tuhle chybu ve 109 větách nemá (0 ze 3).
 - [ ] **Blok korekcí roste do KAŽDÉHO IS promptu** — změřeno 2026-09-23 (`count_tokens`, Opus 4.8): IS 27 řádků
   = **1287 tokenů** (≈ $0,0064 na IS čtení), z toho **419 (33 %) jsou vysvětlení v závorkách**; EN 2 řádky = 69.
   Blok stojí na konci user promptu, za obsahem čtení → **cache tam principiálně nejde**. Přesun do system promptu
@@ -376,9 +382,10 @@ hlídal jen V2 cestu.
   ✅ **Od 2026-10-10 automaticky** (DECISIONS 2026-10-10 (9)): denně 3:30 šifrovaná záloha → lokálně + Google Drive runar@therunekeeper.com
   (`scripts/utils/zaloha_db.js`, úloha Windows „Runar - zaloha databaze“). Zbývá: Supabase Pro před produkcí, obnova do DB nanečisto.
 - [ ] **CODE-tune — hlídání provozu a denní souhrn e-mailem (před spuštěním; owner 2026-10-14, DECISIONS 2026-10-14 (12))**.
-  ▶ *(CODE-tune 2026-10-14, owner „ano, pg_cron + Brevo … ano udělej“: postaveno — edge funkce `ops-watch`, DECISIONS 2026-10-14 (13).
-  Zbývá: owner pustí `sql/2026-10-14_ops_watch.sql`; první souhrn ověřit ve schránce; filtr Gmailu na štítek Ops (konektor filtry neumí);
-  prahy přepočítat po 14 dnech provozu; platby, až budou.)*
+  ▶ *(CODE-tune 2026-10-14, owner „ano, pg_cron + Brevo … ano udělej“: postaveno — edge funkce `ops-watch`, DECISIONS 2026-10-14 (13);
+  běží — SQL pustil owner, zkušební souhrn došel se štítkem Ops (filtr ve schránce funguje), „Needs you“ jen u nepřečtených hlášení
+  (DECISIONS 2026-10-14 (16)). Zbývá: první ostrý souhrn v 06:00 UTC a první `backup_ok` po noční záloze ověřit; prahy přepočítat
+  po 14 dnech provozu; platby, až budou.)*
   Owner: *„udělat CODE-tune. dobře to v e-mailu uspořádá. kam to přijde a bude to přehledné. udělat nejlepší cestu.“* Místo Slacku (zrušen týž den —
   hlásil jen „přišlo hlášení“) dvě věci, obě do schránky `runar@therunekeeper.com`:
   1. **Okamžité upozornění, když se něco kazí:** model čtení padá víc než obvykle (chyby `claude-proxy` / pády na zálohu), hlas narazí na brzdu

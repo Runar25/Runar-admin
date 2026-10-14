@@ -11477,3 +11477,33 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   kontrola stojí před přihlášením od 2026-09-14, chování se nezměnilo), preflight 204; `scripts/utils/nasazene_vs_repo.py`: obě = HEAD.
 - **Zbývá:** owner pustí `sql/2026-10-14_ops_watch.sql` — do té doby claude-proxy zápis události jen zaloguje jako chybu (čtení
   neovlivní) a plánovač neběží; pak zkušební souhrn do schránky.
+
+## 2026-10-14 (15) — Kontrola IS čtení: ByT5 do rutiny nejde; velké písmeno po dvojtečce je chyba podle Ritreglur § 29.4
+
+- **Na základě:** (11) — owner *„instalujeme. pak kontrola těch 109 vět“*.
+- **ByT5 změřen** (`mideind/yfirlestur-icelandic-correction-byt5`, lokálně na GPU, 0,31 s na větu). Známé chyby: 11 z 16 (minul
+  „nafnlægt“, „Fjöldi lestrar“, idiom a „bertum“; jednu správnou větu změnil). 109 vět ze 14 IS čtení: změnil 7 — 1 oprava správná
+  (velké písmeno po dvojtečce, hlásí ji i Greynir), 2 by změnily smysl („dyr“ → „dýr“ ve čtení Kenaz s pochodní, „stytt skrefið“ →
+  „stigið skrefið“), 4 zbytečné (čárky, oslovení s dvojtečkou, „tilfinningu“ → „tilfinningar“ — korpus „tilfinningu fyrir“ 9 636×,
+  vložené „eru“ — „fáein skref“ 59×).
+- **Platí:** ByT5 do „načti reporty“ nejde — v reálných čteních nenašel nic, co Greynir nevidí, a dvě jeho opravy by škodily.
+  Nástrojem v CLAUDE.md §2 se nestává; zůstává nainstalovaný u ownera (`~/runar-eval/byt5-venv`). Kontrola čtení mimo GPT = Greynir + korpus.
+- **Oprava vlastní chyby (§23):** `scripts/utils/is_greynir_cteni.js` zahazoval Greynirův nález Z002 (velké písmeno po dvojtečce)
+  s odůvodněním „v islandštině se po dvojtečce píše malé“ — výmysl. Ritreglur Íslenskrar málnefndar § 29.4: velké písmeno, když za
+  dvojtečkou stojí celá samostatná věta, jinak malé (výčet, přístavek, vedlejší věta). Ve 109 větách 7× Z002: 4 skutečné chyby (Asky
+  modelu Opus 5, v4.84/v4.90 — „Ehwaz í Skuld: þráðurinn liggur…“), 3 plané (GPT-6 sol). Z002 teď zůstává mezi nálezy a nese pravidlo;
+  test chce, aby „Ehwaz í Skuld: þráðurinn…“ prošel jako nález (se starým filtrem padá). U GPT-6 sol 0 skutečných ze 3 → prompt beze změny.
+- **Známé místo, nic nového:** ByT5 sáhl i na „stytt skrefið“ (obraz Ehwaz) — vede ho (2026-09-12 (5)) jako nedoložený, ale ponechaný,
+  protože každá alternativa je taky 0×. Nově změřeno „stytta skrefin“ 3×, „styttri skref“ 26× — doklad pro změnu to není, obraz zůstává.
+- Affected doc(s): `RUNAR_BACKLOG.md` (smyčka ze skutečných čtení; nová položka k IS promptům) — v témže commitu.
+
+## 2026-10-14 (16) — Hlídání provozu běží: SQL pustil owner, zkušební souhrn došel, ops-watch v2 hlásí jen nepřečtená hlášení
+
+- **SQL:** owner pustil `sql/2026-10-14_ops_watch.sql` (*„3. hotovo“*) — běhy `ops-watch-check` (každých 15 min) a `ops-watch-digest`
+  (06:00 UTC) aktivní.
+- **Zkušební souhrn** (22:47 UTC) došel do runar@ se štítkem Ops, který jsem nedal já → filtr ve schránce funguje.
+- **Vada, kterou ukázal:** „Needs you“ hlásil hlášení z appky za 24 h podle data, i už uzavřené (6282e405). Teď jen hlášení ve stavu `new`
+  (bez Keep, kdykoli); počty za 24 h zůstávají v číslech. `bug_reports.type` je NOT NULL, takže `neq('keep')` nic neztratí (ověřeno v DB).
+  Nasazeno ops-watch v2, ověřeno: bez tajné hodnoty 401, `scripts/utils/nasazene_vs_repo.py` = HEAD.
+- **Zbývá:** první ostrý souhrn v 06:00 UTC a první `backup_ok` po noční záloze; prahy po 14 dnech provozu.
+- Affected doc(s): `RUNAR_BACKLOG.md` (úkol hlídání provozu) — v témže commitu.
