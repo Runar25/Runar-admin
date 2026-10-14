@@ -254,6 +254,8 @@ const C = {
     // 2026-10-13 (žádost CODE-web, owner: „vyřešte to mezi sebou“): registrace čekatelů z therunekeeper.com — správce s kennitala
     // a adresou (owner 2026-10-13), řádky e-mail a IP v tabulce, souhlas dvojím potvrzením, Brevo; + řádek souhlasu s odesláním otázek
     // (chyběl od kroku 2, 2026-10-12). IS greynir a is-gpt-check bez nálezu. + IP při uplatnění kódu karty (redeem-code, klíč redeem:ip:…).
+    // 2026-10-14 (žádost CODE-web): registrace na webu drží vedle IP i jednosměrný otisk e-mailu (waitlist:email:<SHA-256>, nejvýš 2 registrace
+    // téže adresy za hodinu) — maže se jako řádek s IP. IS přepsáno na „við skráningu á“, ať ho greynir rozebere; is-gpt-check bez nálezu.
     s1Lbl:  'THE KEEPER OF RECORDS',
     s1Body: `<p><strong>Agndofa ehf.</strong> is responsible for your data within the Rúnar application and on the website therunekeeper.com. Company ID 540312-1170, address Brekkugata 38, 600 Akureyri. We are based in Iceland — a member of the European Economic Area — and are fully bound by the General Data Protection Regulation (GDPR).</p>
              <p>Rúnar is for people aged 13 and over. If the law in your country sets a higher age for consent (GDPR allows up to 16), you need the consent of a parent or guardian. We do not verify age; we rely on what you tell us.</p>
@@ -281,7 +283,7 @@ const C = {
       ['Your analysis choice and tester consent', 'To respect your choice', 'Until changed or account deleted'],
       ['Your consent to send your questions', 'To respect your choice', 'Until you withdraw it or the account is deleted'],
       ['Email address, when you register on therunekeeper.com', 'To send you one e-mail when Rúnar launches', 'Until that e-mail is sent; then the list is deleted. Earlier if you ask us or unsubscribe'],
-      ['IP address, when you register on therunekeeper.com', 'To prevent automated sign-ups', 'Deleted automatically after a short time'],
+      ['IP address and a one-way fingerprint (hash) of your email address, when you register on therunekeeper.com', 'To prevent automated and repeated sign-ups', 'Deleted automatically after a short time'],
       ['IP address, when you redeem a gift card', 'To prevent guessing of codes', 'Deleted automatically after a short time'],
     ],
 
@@ -383,7 +385,7 @@ const C = {
       ['Val þitt um greiningu og samþykki þitt sem prófari', 'Til að virða val þitt', 'Þar til breytt eða reikningi eytt'],
       ['Samþykki þitt fyrir því að spurningar þínar séu sendar', 'Til að virða val þitt', 'Þar til þú dregur það til baka eða reikningi er eytt'],
       ['Netfang þegar þú skráir þig á therunekeeper.com', 'Til að senda þér einn tölvupóst þegar Rúnar fer í loftið', 'Þar til sá tölvupóstur hefur verið sendur og þá er listanum eytt. Því er eytt fyrr ef þú biður um það eða afskráir þig'],
-      ['IP-tala þegar þú skráir þig á therunekeeper.com', 'Til að koma í veg fyrir sjálfvirkar skráningar', 'Eytt sjálfkrafa eftir skamman tíma'],
+      ['IP-tala og stafrænt fingrafar netfangsins við skráningu á therunekeeper.com', 'Til að koma í veg fyrir sjálfvirkar og ítrekaðar skráningar', 'Eytt sjálfkrafa eftir skamman tíma'],
       ['IP-tala við innlausn gjafakorts', 'Til að koma í veg fyrir að reynt sé að giska á kóða', 'Eytt sjálfkrafa eftir skamman tíma'],
     ],
 
