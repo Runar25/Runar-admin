@@ -34,7 +34,8 @@ for (const d of fs.readdirSync(FN, { withFileTypes: true })) {
   if (!d.isDirectory()) continue;
   for (const f of fs.readdirSync(path.join(FN, d.name))) {
     if (!/\.(ts|js|mjs)$/.test(f)) continue;
-    const rel = d.name + '/' + f;
+    // 2026-10-14: plná cesta od kořene repa — pre-commit (scripts/utils/rychle_kontroly.py) podle ní páruje vadu se staged souborem.
+    const rel = 'supabase/functions/' + d.name + '/' + f;
     for (const s of specifikatory(fs.readFileSync(path.join(FN, d.name, f), 'utf8'))) {
       n++;
       if (plovouci(s)) { vady++; console.log('FAIL  ' + rel + ': plovoucí import „' + s + '“'); }
