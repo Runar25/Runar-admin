@@ -185,15 +185,12 @@ PRIPADY = [
  ('obchazka', 'verify_runar_root.js', 'scripts/utils/stats.js', 'append', '', "\nconst _protiCesta2 = 'C:" + chr(92) * 2 + "Users" + chr(92) * 2 + "zkuku" + chr(92) * 2 + "Downloads" + chr(92) * 2 + "Runar-admin';\n"),
  ('obchazka', 'verify_code_doc_refs.js', 'v2/runar-reader.css', 'append', '', '\n/* podrobnosti viz docs/neexistuje-protipriklad-css' + '.md */\n'),
  ('chyti', 'verify_tree_signals.js', 'v2/runar-tree.js', 'replace', '(row.aol || null)', 'null'),
- # kolo 3 / 4i (2026-10-11): Ask nápověda, kolekce, páky promptu, databáze čtení. Bez útoku: verify_open_reports (čte hlášení
- # z produkční DB), verify_inbox_freshness (stáří z historie gitu) — podstrčit by šlo jen zápisem do DB / commitem se zfalšovaným datem.
+ # kolo 3 / 4i (2026-10-11): Ask nápověda, kolekce, páky promptu, databáze čtení. Kontroly bez útoku → BEZ_UTOKU níž.
  ('chyti', 'verify_ask_hints.js', 'v2/runar-reading.js', 'replace', 'var many = dr.length > 1, life = u.lifeRune;', 'var many = true, life = u.lifeRune;'),
  ('chyti', 'verify_coll_shape.js', 'v2/runar-app.js', 'replace', "document.getElementById('cd-shape').textContent    = (_tv && typeof _tv === 'object' && _tv[r.n]) || '';", "document.getElementById('cd-shape').textContent    = '';"),
  ('chyti', 'verify_prompt_levers.js', 'v2/runar-character.js', 'regex', r'    _addressContext\(lang\),(\r?\n    // _describeRule)', r'\g<1>'),
  ('chyti', 'verify_readings_db.js', 'v2/runar-readings-admin.js', 'replace', "var rows = (typeof RUNE_IMAGES !== 'undefined') ? RUNE_IMAGES : [];", 'var rows = [];'),
- # kolo 3 / 4j (2026-10-11). Bez útoku zůstávají jen kontroly, které ho mít nemůžou nebo ho nesou samy: verify_prelaunch_open (jen
- # vypisuje), verify_decisions_followthrough (necommitnuté řádky přeskakuje), verify_open_reports + verify_inbox_freshness (DB / historie
- # gitu), verify_zaklad_produkce + verify_liferune_states (chybu si podstrčí samy v každém běhu).
+ # kolo 3 / 4j (2026-10-11). Kontroly bez útoku jmenovitě s důvodem → BEZ_UTOKU (od 2026-10-15; do té doby výčet stál tady).
  ('chyti', 'verify_pill_lang.js', 'v2/runar-app.js', 'replace', 'function _syncPillLang() {', 'function _syncPillLang() { return;'),
  ('chyti', 'verify_prompt_rules_registry.js', 'v2/runar-character.js', 'replace', 'Never name the life rune.', 'Never mention the life rune.'),
  # 2026-10-12 (CODE-tune): úplnost ㉜ — builder bez registru i bez výjimky musí kontrolu shodit; i se jménem s číslicí (regex
@@ -273,6 +270,37 @@ PRIPADY = [
  ('chyti', 'verify_wts.js', 'v2/runar-app.js', 'replace', '  setTimeout(maybeShowWhereToStart, 1800);', ''),
  ('nesmi', 'verify_wts.js', 'v2/runar-app.js', 'append', '', '\n// komentář navíc — správný kód\n'),
 ]
+
+
+# Kontroly ve smoke, které útok mít nemůžou nebo si chybu podstrčí samy — JMENOVITĚ s důvodem (2026-10-15, CODE-read, kolo 4).
+# Proč: §30 říká „nová kontrola = aspoň jeden útok v PRIPADY“, ale nic to nevynucovalo — výjimky stály jen v komentáři u kol 3/4i a 4j
+# a kontrola přidaná bez útoku by prošla tiše. Teď: kontrola ve smoke.py, která není v PRIPADY ani tady → FAIL.
+BEZ_UTOKU = {
+    'verify_open_reports.js': 'čte hlášení z produkční DB — podstrčit by šlo jen zápisem do DB',
+    'verify_inbox_freshness.js': 'stáří z historie gitu — podstrčit by šlo jen commitem se zfalšovaným datem',
+    'verify_prelaunch_open.js': 'jen vypisuje, nikdy nepadá',
+    'verify_zaklad_produkce.js': 'chybu si podstrčí sama v každém běhu (samotest: skryté Norny, fotka, chyba JS)',
+    'verify_liferune_states.js': 'chybu si podstrčí sama v každém běhu',
+}
+
+
+def pokryti(smoke_txt, pripady, bez, existuje):
+    """Vrátí (chybi, navic): kontroly ze smoke bez útoku i výjimky · výjimky, které už útok mají nebo ve smoke nejsou."""
+    vsmoke = sorted({m for m in re.findall(r'(verify_[a-z0-9_]+\.(?:js|py))', smoke_txt) if existuje(m)})
+    s_utokem = {x[1] for x in pripady}
+    chybi = [k for k in vsmoke if k not in s_utokem and k not in bez]
+    navic = [k for k in bez if k in s_utokem or k not in vsmoke]
+    return chybi, navic
+
+
+def _samotest_pokryti():
+    # Životní cyklus: kontrola s útokem · nová bez útoku · výjimka · výjimka, která útok dostala · výjimka zmizelá ze smoke ·
+    # jméno ve smoke, ke kterému soubor neexistuje (komentář o smazané kontrole) — to se nepočítá.
+    smoke = "run('verify_a.js') run('verify_b.py') run('verify_c.js') run('verify_d.js') # dřív verify_gone.js"
+    pr = [('chyti', 'verify_a.js', 'x', 'append', '', ''), ('chyti', 'verify_d.js', 'x', 'append', '', '')]
+    bez = {'verify_c.js': 'x', 'verify_d.js': 'x', 'verify_e.js': 'x'}
+    chybi, navic = pokryti(smoke, pr, bez, lambda m: m != 'verify_gone.js')
+    return chybi == ['verify_b.py'] and sorted(navic) == ['verify_d.js', 'verify_e.js']
 
 
 def h(*casti):
@@ -469,9 +497,23 @@ def main():
         cache = json.load(open(CACHE, encoding='utf-8'))
     except (OSError, ValueError):
         cache = {}
+    pokr = []
+    if not _samotest_pokryti():
+        pokr.append('FAIL  protipříklady: samotest ráčny pokrytí neprošel (pokryti() v scripts/protipriklady.py)')
+    if not argy:
+        chybi, navic = pokryti(open(os.path.join(ROOT, 'smoke.py'), encoding='utf-8').read(), PRIPADY, BEZ_UTOKU,
+                               lambda m: os.path.exists(os.path.join(ROOT, 'scripts', m)))
+        for k in chybi:
+            pokr.append('FAIL  %s je ve smoke bez útoku — přidej útok do PRIPADY, nebo ji s důvodem do BEZ_UTOKU (§30)' % k)
+        if navic:
+            print('ℹ  BEZ_UTOKU: už má útok nebo není ve smoke — vyškrtni: ' + ' · '.join(navic))
     vybrane = [p for p in PRIPADY if not argy or p[1] in argy]
     kspusteni = [p for p in vybrane if vse or argy or cache.get(klic(p, ja)) != 'ok']
     if not kspusteni:
+        if pokr:
+            for c in pokr: print(c)
+            print('FAIL  protipříklady: pokrytí kontrol útoky')
+            return 1
         print('OK    protipříklady: %d útoků na %d kontrol, žádná kontrola se od posledního úspěchu nezměnila'
               % (len(PRIPADY), len({p[1] for p in PRIPADY})))
         return 0
@@ -484,7 +526,7 @@ def main():
     chyby = []
     try:
         for f in os.listdir(ROOT + '/scripts'):
-            if f.startswith('verify_') and f.endswith('.js'):
+            if f.startswith('verify_') and f.endswith(('.js', '.py')):   # .py od 2026-10-15 — jinak útok na necommitnutou opravu .py kontroly běžel proti HEAD
                 shutil.copyfile(ROOT + '/scripts/' + f, W + '/scripts/' + f)
         cista = {}
         for p in kspusteni:
@@ -528,6 +570,7 @@ def main():
             json.dump(cache, open(CACHE, 'w', encoding='utf-8'), ensure_ascii=False, indent=0)
         except OSError:
             pass
+    chyby = pokr + chyby
     for c in chyby:
         print(c)
     if chyby:
