@@ -284,15 +284,15 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 .dd-balance{font-family:'Cinzel',serif;font-size:0.56em;letter-spacing:1px;color:var(--teal);padding:3px 18px 12px;border-bottom:1px solid rgba(46,74,112,0.3);}
 
 /* ── MAIN CONTENT ── */
-.app{position:relative;z-index:1;max-width:680px;width:100%;margin:0 auto;padding:24px 16px 80px;}
+/* 2026-10-15 (hlášení 7ef640b5, KUKY: mezera pod šipkou má být stejná jako vzdálenost mezi oběma řádky záložek): vršek 24 → 14 px,
+   takže od pásu se šipkou (#hero-down) k textu LIFE RUNE je 29 px — stejně jako mezi texty obou řádků (393 i 1024 px). První pokus
+   (4549cab) četl hlášení obráceně: řádky stáhl k sobě a pás pod šipkou zvětšil; owner: „mluvím o tomhle místě v rámečku“. */
+.app{position:relative;z-index:1;max-width:680px;width:100%;margin:0 auto;padding:14px 16px 80px;}
 
 /* ── APP TABS ── */
 /* ── PRIMARY TAB ROW (Tree of Life) ── */
-/* 2026-10-15 (hlášení 7ef640b5, KUKY: „přiblížit okna… tuhle vzdálenost chci přenést nad okna life rune a tree jako mezeru mezi
-   posuvníkem“): řádky záložek blíž k sobě (spodek primární záložky 13 → 6 px, vršek spodní řádky 12 → 5 px) a ušetřených 14 px nad
-   ně jako mezera pod šipkou (#hero-down). Na 393 px: mezi texty řádků 29 → 15 px, šipka → první řádek 39 → 53 px; celková výška stejná. */
-.app-tabs-primary{display:flex;border-bottom:1px solid var(--gold-dim);margin:14px 0 0;}
-.app-tab-primary{flex:1;text-align:center;font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:1.2px;color:var(--muted);padding:13px 4px 6px;cursor:pointer;border:none;border-bottom:2px solid transparent;background:transparent;white-space:nowrap;transition:all 0.2s;}
+.app-tabs-primary{display:flex;border-bottom:1px solid var(--gold-dim);margin-bottom:0;}
+.app-tab-primary{flex:1;text-align:center;font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:1.2px;color:var(--muted);padding:13px 4px;cursor:pointer;border:none;border-bottom:2px solid transparent;background:transparent;white-space:nowrap;transition:all 0.2s;}
 .app-tab-primary:hover{color:var(--gold);}
 .app-tab-primary.active{color:var(--gold);border-bottom-color:var(--gold);}
 
@@ -301,7 +301,7 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 /* 2026-09-28 (report KUKY, screenshoty): flex:1 dával třem záložkám STEJNOU třetinu, „◈ RUNES COLLECTION“ se do ní nevešel
    a přetékal ven (změřeno v iframe: 401–490 px o 6–13 px, ≤380 px o až 13 px + vodorovný posuv stránky). flex:1 1 auto dělí
    šířku podle délky popisku — delší záložka dostane víc. */
-.app-tab{flex:1 1 auto;min-width:0;text-align:center;font-family:'Cinzel',serif;font-size:0.68em;letter-spacing:0.8px;color:var(--muted);padding:5px 4px 12px;cursor:pointer;border:none;border-bottom:2px solid transparent;background:transparent;white-space:nowrap;transition:all 0.2s;}
+.app-tab{flex:1 1 auto;min-width:0;text-align:center;font-family:'Cinzel',serif;font-size:0.68em;letter-spacing:0.8px;color:var(--muted);padding:12px 4px;cursor:pointer;border:none;border-bottom:2px solid transparent;background:transparent;white-space:nowrap;transition:all 0.2s;}
 .app-tab:hover{color:var(--white);}
 .app-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
 @media(max-width:400px){.app-tab{font-size:0.56em;letter-spacing:0.2px;}.app-tab-primary{font-size:0.62em;}}
