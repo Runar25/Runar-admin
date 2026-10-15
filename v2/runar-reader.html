@@ -890,8 +890,13 @@
 
   <!-- ① Path section — always visible (Visitor + logged-in) -->
   <div class="side-panel-section" id="sp-path-section">
-    <div class="sp-curr-tier-name" id="sp-curr-tier-name"></div>
-    <div class="sp-tier-desc" id="sp-tier-desc"></div>
+    <!-- 2026-10-15 (owner: „zabalit popis, co účet obsahuje… schovat stejně jako upgrade your journey“): jméno účtu je tlačítko s „+“,
+         výpis funkcí se rozbalí klepnutím (toggleTierDesc, runar-app.js). Návštěvník vidí pozvánku celou a „+“ nemá. -->
+    <button type="button" class="sp-curr-toggle" id="sp-curr-toggle" onclick="toggleTierDesc()" aria-expanded="false" aria-controls="sp-tier-desc">
+      <span class="sp-curr-arrow" id="sp-curr-arrow">+</span>
+      <span class="sp-curr-tier-name" id="sp-curr-tier-name"></span>
+    </button>
+    <div class="sp-tier-desc" id="sp-tier-desc" style="display:none;"></div>
     <button class="sp-path-toggle" id="sp-higher-toggle" onclick="toggleHigherPath()" style="display:none;justify-content:flex-start;gap:10px;">
       <span id="sp-path-arrow" style="font-size:1.4em;letter-spacing:0;line-height:1;">+</span>
       <span id="sp-higher-lbl">UPGRADE YOUR JOURNEY</span>

@@ -71,6 +71,11 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 /* ── YOUR PATH section ── */
 .sp-curr-tier-name{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:3px;color:var(--gold);padding:10px 0 2px;display:block;}
 .sp-tier-desc{font-size:0.78em;font-style:italic;color:var(--muted);line-height:1.6;padding:2px 0 10px;}
+/* 2026-10-15: jméno účtu jako tlačítko, které rozbalí výpis funkcí — „+“ ve stylu UPGRADE YOUR JOURNEY (.sp-path-toggle: Cinzel, zlatá,
+   průhlednost 0.85, velikost jako jeho „+“ = 1.4 × 0.62em), písmo jména beze změny (.sp-curr-tier-name). */
+.sp-curr-toggle{display:flex;align-items:baseline;gap:10px;width:100%;background:none;border:none;padding:0;margin:0;font:inherit;color:inherit;text-align:left;cursor:pointer;}
+.sp-curr-arrow{font-family:'Cinzel',serif;font-size:0.87em;line-height:1;color:var(--gold);opacity:0.85;transition:opacity 0.15s;}
+.sp-curr-toggle:hover .sp-curr-arrow{opacity:1;}
 .sp-path-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;color:var(--gold);font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:3px;cursor:pointer;padding:10px 0 4px;opacity:0.85;transition:opacity 0.15s;text-align:left;}
 .sp-path-toggle:hover{opacity:1;}
 .sp-path-body{padding-bottom:4px;}
