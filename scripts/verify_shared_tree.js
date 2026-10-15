@@ -18,21 +18,24 @@ const verze = (t) => { const m = String(t).match(/v(\d+)/); return m ? parseInt(
 let fail = 0;
 const radky = [];
 
-// 1. sw.js: index vs HEAD
-try {
-  const vHead = verze(git('show HEAD:v2/sw.js'));
-  const vIndex = verze(git('show :v2/sw.js'));
-  const vStrom = verze(fs.readFileSync(path.join(ROOT, 'v2', 'sw.js'), 'utf8'));
-  if (vHead && vIndex && vIndex !== vHead) {
-    fail++;
-    radky.push('sw.js: v INDEXU je v' + vIndex + ', v HEAD v' + vHead + ' (strom v' + vStrom + ')');
-    radky.push('       Presne z tohohle stavu vznikl 2026-08-02 produkcni downgrade v249->v248.');
-    radky.push('       Sroubek: `git restore --staged v2/sw.js` (obsah souboru nemeni).');
-  } else if (vHead) {
-    radky.push('ℹ  sw.js: index i HEAD na v' + vHead + ' — mina nenastrazena');
+// 1. generované soubory: index vs HEAD. 2026-10-15 (CODE-read, kolo 4): i runar-verze.js — pre-commit ho od 2026-10-11 git-adduje
+// stejně jako sw.js a ㉞ ani post-commit o něm nevěděly (nalezeno: index v686, HEAD i strom v688).
+for (const soubor of ['sw.js', 'runar-verze.js']) {
+  try {
+    const vHead = verze(git('show HEAD:v2/' + soubor));
+    const vIndex = verze(git('show :v2/' + soubor));
+    const vStrom = verze(fs.readFileSync(path.join(ROOT, 'v2', soubor), 'utf8'));
+    if (vHead && vIndex && vIndex !== vHead) {
+      fail++;
+      radky.push(soubor + ': v INDEXU je v' + vIndex + ', v HEAD v' + vHead + ' (strom v' + vStrom + ')');
+      radky.push('       Presne z tohohle stavu (u sw.js) vznikl 2026-08-02 produkcni downgrade v249->v248.');
+      radky.push('       Sroubek: `git restore --staged v2/' + soubor + '` (obsah souboru nemeni).');
+    } else if (vHead) {
+      radky.push('ℹ  ' + soubor + ': index i HEAD na v' + vHead + ' — mina nenastrazena');
+    }
+  } catch (e) {
+    radky.push('ℹ  ' + soubor + ': stav indexu nelze zjistit (' + String(e.message).slice(0, 60) + ')');
   }
-} catch (e) {
-  radky.push('ℹ  sw.js: stav indexu nelze zjistit (' + String(e.message).slice(0, 60) + ')');
 }
 
 // 2. cizi lock — hlasi, nemaze
@@ -54,7 +57,7 @@ try {
 } catch (e) { /* zadny audit = zadny sirotek */ }
 
 if (!fail) {
-  console.log('  OK    sdileny strom: zadna z minu (sw.js v indexu, cizi lock) nehrozi');
+  console.log('  OK    sdileny strom: zadna z minu (sw.js / runar-verze.js v indexu, cizi lock) nehrozi');
   radky.forEach((r) => console.log('       ' + r));
   process.exit(0);
 }

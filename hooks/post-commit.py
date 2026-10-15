@@ -19,6 +19,10 @@ if not REPO:
     raise SystemExit(0)
 
 SW = 'v2/sw.js'
+# 2026-10-15 (CODE-read, kolo 4 — souběh): i v2/runar-verze.js. Pre-commit ho od 2026-10-11 generuje a git-adduje stejně jako sw.js,
+# takže po každém pathspec commitu s JS zůstal v indexu pozadu (nalezeno: index v686, HEAD i strom v688 — `MM` v git status, který
+# vypadá jako cizí staged práce). Pokusem v čistém repu ověřeno: soubor, který hook přidá při pathspec commitu, hlavní index nedostane.
+GENEROVANE = [SW, 'v2/runar-verze.js']
 
 
 def verze(text):
@@ -32,10 +36,11 @@ def git(args):
     return r.stdout if r.returncode == 0 else None
 
 
-head = verze(git(['show', 'HEAD:' + SW]))
-index = verze(git(['show', ':' + SW]))
-if head and index and head != index:
-    subprocess.run(['git', 'restore', '--staged', SW], cwd=REPO,
-                   capture_output=True, text=True)
-    print('[hook] SW: index mel v%s proti HEAD v%s — index srovnan '
-          '(obsah souboru nedotcen)' % (index, head))
+for soubor in GENEROVANE:
+    head = verze(git(['show', 'HEAD:' + soubor]))
+    index = verze(git(['show', ':' + soubor]))
+    if head and index and head != index:
+        subprocess.run(['git', 'restore', '--staged', soubor], cwd=REPO,
+                       capture_output=True, text=True)
+        print('[hook] %s: index mel v%s proti HEAD v%s — index srovnan '
+              '(obsah souboru nedotcen)' % (soubor, index, head))
