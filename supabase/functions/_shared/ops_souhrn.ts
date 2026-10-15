@@ -36,7 +36,10 @@ export function stavy(h: Hlidka): Record<string, Stav> {
   const pokusy = Math.max(1, h.cteni60 + h.chybModelu60);
   const model = h.chybModelu60 >= PRAHY.chybModeluZaHodinu
     || (h.zalohModelu60 >= PRAHY.zalohModeluZaHodinu && h.zalohModelu60 / pokusy >= PRAHY.podilZalohModelu);
-  let backup: Stav = "unknown";   // dokud záloha nezapsala první úspěch, nehlásí se nic (jinak by po nasazení hned přišel poplach)
+  // unknown jen bez jakéhokoli záznamu (po nasazení ještě žádná záloha neběžela — bez poplachu); chyba bez předchozího úspěchu = problem.
+  // (Do 2026-10-15 tu stálo „dokud záloha nezapsala první úspěch, nehlásí se nic“ — opak kódu; CODE-read podle toho usoudila, že pád
+  // zálohy v 00:38 prošel tiše, ač upozornění v 00:45 odešlo.)
+  let backup: Stav = "unknown";
   if (h.zaloha.posledniOk) {
     const hodin = (Date.parse(h.ted) - Date.parse(h.zaloha.posledniOk)) / 3.6e6;
     const chybaPo = h.zaloha.posledniChyba && Date.parse(h.zaloha.posledniChyba) > Date.parse(h.zaloha.posledniOk);
