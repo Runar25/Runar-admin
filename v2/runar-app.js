@@ -1585,6 +1585,28 @@ function toggleHigherPath() {
   if (arrow) arrow.textContent = open ? '+' : '−';
 }
 
+// ─── VÝPIS FUNKCÍ ÚČTU (sbalený) ──────────────────────────
+// 2026-10-15 (owner přes CODE-read: „zabalit popis, co účet třeba Rune Seeker obsahuje za features. Schovat stejně jako upgrade your
+// journey.“): výpis funkcí účtu se rozbalí klepnutím na jméno účtu, stejně jako UPGRADE YOUR JOURNEY. Návštěvník vidí pozvánku celou
+// a „+“ nemá — není to výpis funkcí účtu, ale co dostane po registraci. Stav drží proměnná, ať přepnutí jazyka (_renderYourPath)
+// rozbalený výpis nezavře.
+var _tierDescOpen = false;
+function _applyTierDesc() {
+  const desc = document.getElementById('sp-tier-desc');
+  const arrow = document.getElementById('sp-curr-arrow');
+  const btn = document.getElementById('sp-curr-toggle');
+  const ucet = !!currentUser;
+  const open = !ucet || _tierDescOpen;
+  if (desc) desc.style.display = open ? 'block' : 'none';
+  if (arrow) { arrow.style.display = ucet ? '' : 'none'; arrow.textContent = _tierDescOpen ? '−' : '+'; }
+  if (btn) { btn.setAttribute('aria-expanded', open ? 'true' : 'false'); btn.style.cursor = ucet ? '' : 'default'; }
+}
+function toggleTierDesc() {
+  if (!currentUser) return;
+  _tierDescOpen = !_tierDescOpen;
+  _applyTierDesc();
+}
+
 // ─── TOPBAR DROPDOWN ─────────────────────────────────────
 function toggleDropdown() {
   const dd = document.getElementById('auth-dropdown');
@@ -1682,6 +1704,7 @@ function _renderYourPath() {
   // Current tier properties (multi-line, always visible)
   const descEl = document.getElementById('sp-tier-desc');
   if (descEl) descEl.innerHTML = currData.props[lk].map(function(s){return s.split('{card}').join(vl('card', lang));}).join('<br>');
+  _applyTierDesc();   // účet: sbalený výpis (2026-10-15), návštěvník: pozvánka celá
 
   // Show / hide HIGHER PATH toggle
   const hToggle = document.getElementById('sp-higher-toggle');
