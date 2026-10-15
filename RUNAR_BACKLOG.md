@@ -372,6 +372,11 @@ hlídal jen V2 cestu.
 - [ ] **Runtime testy peníze-kritických edge funkcí** (deno test: deduct až po úspěchu · hranice měsíčního stropu · idempotence · anonymous nedostane placené). Dnes 0 runtime testů, jen 24 statických.
 - [ ] **CI brána** (GitHub Actions: smoke.py + deno test na push/PR do main). Dnes jediná brána = lokální hook (jde obejít --no-verify).
 - [ ] **Zálohy / DR** pro Supabase DB (peníze + PII): ověřit PITR, runbook kadence + restore, jednou nasucho vyzkoušet.
+  ✅ **Archiv ověřen 2026-10-15** (CODE-read, owner *„6. over ji“*): `runar-db-2026-10-15.7z` jde rozšifrovat, všech 17 tabulek public +
+  auth.users čitelných; počty proti živému count(*) sedí (rozdíly jen kladné, 1–3 řádky přibylé po 06:57). Schéma nese sloupce, politiky,
+  funkce, triggery, cizí klíče, granty, indexy, rozšíření, buckety. Archivy chybí za 12.–14. 10. (padala kontrola v zálohovacím skriptu,
+  opraveno 9804afe). **Neověřeno: obnova** — neexistuje skript, který by z JSON + schématu databázi postavil, a není kam obnovit
+  (Postgres ani Docker na počítači). auth.users nese jen id, e-mail, časy, app metadata — jestli jde účet obnovit se stejným id, neověřeno.
   ⚠️ **Stav 2026-10-10 (CODE-read, `supabase backups list`): žádná záloha neexistuje** — `backups: []`, `pitr_enabled: false`.
   Deníky, kredity, profily i hlášení nemají kopii; `scripts/utils/zaloha_cteni.js` zálohuje jen čtení z pokusů, ne produkci.
   Volba (owner): placený tarif Supabase s denními zálohami (cena podle ceníku Supabase), nebo vlastní pravidelný `supabase db dump`
