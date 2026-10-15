@@ -677,6 +677,11 @@ Souběh už zčásti hotový týž den: push s commitem vzniklým během smoke (
   ✅ 2026-10-14: 60 s podle hodin. Dřív v témže dni: pre-push hlídá posun větve, úklid osiřelých kopií (DECISIONS 2026-10-14 (1)).
 - **K4/6 docs:** v CLAUDE.md „Soubory a jejich zodpovědnost“ chyběly moduly shrine TESTERS a PAYBACK (dvě session), nic to nehlídalo.
   ✅ 2026-10-15: doplněno + smoke ㊉ (`scripts/verify_soubory_claude.js`, každý v2/runar-* v mapě, nic navíc) s útokem.
+- **K4/7 souběh — dvě session nad týmž souborem:** nesdílené soubory měnilo za 14 dní víc session (runar-app.js 3 lane, runar-config.js,
+  shrine, check-is.py…), ale od zavedení commit_vlastni (2026-10-11) žádná zaznamenaná kolize mimo `_SDILENE` a strom byl při měření čistý
+  → **není to díra, nový mechanismus nestavím** (smazání cizích řádků chytí pre-commit 24 h, rozbitou cizí práci pre-push v čisté kopii).
+  Nález jinde: soubor, který pre-commit přidá (`git add`) při pathspec commitu, hlavní index nedostane (ověřeno pokusem) → `runar-verze.js`
+  ležel v indexu na v686 proti HEAD v688; post-commit a ㉞ znaly jen sw.js. ✅ 2026-10-15 oba hlídají i runar-verze.js (hook to hned uklidil).
 - [ ] **Pro ownera / Cowork (obsah, nespěchá; část 28):** hlavička `RUNAR_POPISY_RUN.md` píše „Společný tvar… pozorování, ne pravidlo —
   pravidlo vznikne, až jich bude 25+“. Popisů je 25, spouštěč nastal, pravidlo nikdo nesepsal. Jen připomínka; CODE do obsahu nesahá.
 
