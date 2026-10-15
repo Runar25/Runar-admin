@@ -35,6 +35,8 @@ v `docs/archive/RUNAR_BACKLOG_odlozene.md` jako ⏸ — nejsou to úkoly. Vrací
   tilheyrir Skuld: hún nefnir tvennt…“*. Projít IS řetězce promptu (výčty a fragmenty zůstávají malé), opravit a bumpnout verzi
   promptu. Nízká priorita: jsou to pokyny modelu, uživatel je nevidí; čtení GPT-6 sol tuhle chybu ve 109 větách nemá (0 ze 3).
 - [ ] **Blok korekcí roste do KAŽDÉHO IS promptu** — změřeno 2026-09-23 (`count_tokens`, Opus 4.8): IS 27 řádků
+  ⭐ **2026-10-15 pokus „bez korekcí“ (sol, RUNAR_EVAL_LOG 2026-10-15 (1)):** blok ≈ 900 tokenů (~43 % vstupu); bez něj 0 chybných
+  tvarů ze seznamu (n = 8); 28 z 29 korekcí je z doby Opusu. Návrh čeká na ownera: zúžit na korekce, které sol dělá.
   = **1287 tokenů** (≈ $0,0064 na IS čtení), z toho **419 (33 %) jsou vysvětlení v závorkách**; EN 2 řádky = 69.
   Blok stojí na konci user promptu, za obsahem čtení → **cache tam principiálně nejde**. Přesun do system promptu
   by cache umožnil, ale (a) při dnešním provozu by 5min cache skoro vždy minula a zápis stojí 1,25× → dráž;

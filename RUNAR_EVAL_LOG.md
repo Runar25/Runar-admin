@@ -6374,3 +6374,24 @@ lifetime/always/since v těle čtení):
 **Závěr:** délku nesl „long“ — bez něj 0 z 20. „years of practice“ je v angličtině běžná kolokace (Ngram 0,2 / mil.) → sledovat
 v monitoru u Career [4]. **Hranice:** EN, sol, n = 4–6 na znění, jedna dávka; IS jen ověřena korpusem (is-grammar-qa týž den
 nedostupné). Data mimo repo: `~/runar-eval/podoby-bez-delky-2026-10-09.json`, `…-p3b-…json`. <!-- doc-links:ok 2026-10-09 data mimo repo (texty čtení), skript ve scratchpadu session -->
+
+## 2026-10-15 (1) — Čtení bez korekcí (pokus ownera): sol bez bloku nedělá chybné tvary ze seznamu; obecný vliv bloku neprokázán (n = 8 + 8)
+
+- **Zadání (owner 2026-10-15):** *„GPT dělá lepší čtení, než dělal Opus, je pravděpodobné, že nepotřebuje tolik korekcí… máme teď nová
+  čtení od Ingy, udělej identická čtení bez korekce, jak si povede“* · *„12. ano. a ještě to porovnat s jejíma čteníma.“*
+- **Záměr:** dělá sol bez bloku korekcí chyby, které korekce opravují? Ano → blok zůstává; ne → zúžit na korekce, které zabírají.
+- **Vstup:** Ingina 4 IS čtení (13.–15. 10.: Ingwaz, Kenaz, Ehwaz, Sowilo) se stejnými vstupy (runa, oblast, hledání, záměr, životní
+  runa, úhel, ženský rod; Sowilo bylo „pro někoho“ → jméno „þú“), každé 2× s blokem (29 korekcí) a 2× bez; gpt-6-sol, 16 volání.
+  `gen_batch.js --korekce db` (přepínač přidán týž den — do té doby žádná dávka korekce do promptu nedávala). Bez věty ✦ (testeři ji mají).
+- **Cena bloku:** vstup 2 960–2 980 tokenů s blokem proti 2 080–2 120 bez → blok ≈ 900 tokenů, ~43 % vstupu IS čtení.
+- **Výsledek:** chybný tvar ze seznamu korekcí — s blokem 0/8, bez 0/8. Greynir posouzený ručně: s blokem 0 skutečných chyb (falešné:
+  „skáninni“, „fái“), bez bloku 2 — „aukin skýrleiki“ (shoda rodu, má být „aukinn“) a „skófarins“ (má být „skófarsins“), ani jedna
+  ze seznamu. Ingina originální čtení (s blokem): 1 chyba ze seznamu, „bertum“ — čtení z 13. 10., korekce vznikla až 14. 10.
+- **Produkce od 9. 10. (sol):** 11 IS čtení, chybný tvar ze seznamu 1× (týž „bertum“). **28 z 29 korekcí je z doby Opusu**
+  (13. 5.–26. 9.), za solu přibyla jediná.
+- **Hranice:** n = 8 na rameno; 0 : 2 obecných chyb je v šumu. Nízká základní míra: kontexty pro většinu korekcí v 16 čteních
+  nenastanou, takže „0 ze seznamu“ neříká, že by sol ty chyby nikdy neudělal — říká jen, že se tu neukázaly. Ověřeno, že detektor
+  zásah umí najít („bertum“ v originálu našel).
+- **Co z toho (návrh, rozhoduje owner):** blok nemazat naslepo; zúžit ho na korekce, které sol skutečně dělá (kandidát: 28 opusových
+  pryč, „bertum“ zůstává; nové chyby z živých čtení přidává owner jako dosud); obecný vliv bloku (0 : 2) ověřit větším vzorkem jen
+  na ownerovo ano. Data: `~/runar-eval/korekce-pokus/` (mimo repo).
