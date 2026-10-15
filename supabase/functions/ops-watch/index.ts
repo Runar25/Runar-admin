@@ -98,7 +98,8 @@ async function den(db: any, ted: Date): Promise<Den> {
     nactiStavy(db),
     fetchQuota(Deno.env.get("ELEVENLABS_API_KEY") ?? ""),
     // nepřečtená = stav new kdykoli (ne jen za 24 h) — do „Needs you“ (2026-10-14: souhrn hlásil i uzavřené hlášení)
-    pocet(db.from("bug_reports").select("id", { count: "exact", head: true }).eq("status", "new").neq("type", "keep")),
+    // 2026-10-15: bez zpráv čtenářů („Send Rúnar a line“, typ message) — na ty owner odpovídá v Gmailu, CODE je nenačítá
+    pocet(db.from("bug_reports").select("id", { count: "exact", head: true }).eq("status", "new").neq("type", "keep").neq("type", "message")),
   ]);
   for (const q of [rd, vu, br]) if (q.error) throw new Error(q.error.message);
   const modely: Record<string, number> = {};

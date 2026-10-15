@@ -303,8 +303,13 @@
   // 2026-10-10 (DECISIONS 2026-10-10 (1) bod 2 — kontrola architektury, KUKY „opravit“): tlačítko vidí jen přihlášený. Databáze
   // hlášení od nepřihlášeného odmítne (politika bug_reports_insert jen pro authenticated); do té doby tlačítko viděl každý.
   // Volá init a updateAuthUI (runar-auth.js) při každé změně přihlášení.
+  // 2026-10-15 (owner „9. ano“ — vlajka jen testerům; DECISIONS 2026-10-15): běžný uživatel píše Rúnarovi z menu („Send Rúnar a line“,
+  // send-line). Vlajku s typy hlášení pro testery vidí tester a tým (admin); do té doby každý přihlášený. Příznak tester přijde
+  // z profilu až po přihlášení — fetchUserProfile pak volá _paintReportBtn znovu.
   function paintReportBtn() {
-    if (btn) btn.style.display = (typeof currentUser !== 'undefined' && currentUser) ? '' : 'none';
+    var prihlasen = typeof currentUser !== 'undefined' && !!currentUser;
+    var tester = typeof isTester !== 'undefined' && !!isTester;
+    if (btn) btn.style.display = (prihlasen && (tester || _jeAdmin())) ? '' : 'none';
   }
   window._paintReportBtn = paintReportBtn;
 

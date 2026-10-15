@@ -43,7 +43,9 @@ serve(async (req) => {
       const id = body.id;
       const status = body.status;
       if (!id || !["new", "triaged", "fixed"].includes(status)) return json({ error: "Bad params" }, 400);
-      const { error } = await sb.from("bug_reports").update({ status }).eq("id", id);
+      // 2026-10-15: „fixed“ zapíše čas (resolved_at) — u zpráv „Send Rúnar a line“ je to poslední odpověď, od které běží 6 měsíců do
+      // smazání (sql/2026-10-15_zpravy_runarovi.sql); stejně to dělá nacti_cteni.js --hotovo. Vrácení stavu čas smaže.
+      const { error } = await sb.from("bug_reports").update({ status, resolved_at: status === "fixed" ? new Date().toISOString() : null }).eq("id", id);
       if (error) return json({ error: error.message }, 500);
       return json({ success: true });
     }

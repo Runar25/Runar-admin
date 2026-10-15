@@ -146,6 +146,7 @@ async function fetchUserProfile(userId, _pokus) {
           if (typeof _syncPrivacyUI === 'function') _syncPrivacyUI();
           if (typeof _maybeShowTesterConsent === 'function') _maybeShowTesterConsent();
           if (typeof updateDropdown === 'function') updateDropdown();   // 2026-10-11: strop hlasu v menu závisí na příznaku tester
+          if (typeof _paintReportBtn === 'function') _paintReportBtn();   // 2026-10-15: vlajka jen testerům — příznak přijde až teď
         })
         .catch(function () {});
       // Restore language preference
@@ -733,6 +734,12 @@ function updateSidePanel() {
   setText('sp-higher-lbl',   t('sp_higher_path'));
   setText('sp-install-btn', t('sp_install_btn'));
   setText('sp-privacy-link', t('sp_privacy_link'));
+  // 2026-10-15 „Send Rúnar a line“ (owner „8. ano“): přihlášený otevře okno (openLine), návštěvník má odkaz na e-mail (bod 5).
+  setText('sp-line-btn', t('line_menu'));
+  setText('sp-line-mail', t('line_menu_visitor'));
+  const lineBtn = document.getElementById('sp-line-btn'), lineMail = document.getElementById('sp-line-mail');
+  if (lineBtn) lineBtn.style.display = currentUser ? 'block' : 'none';
+  if (lineMail) lineMail.style.display = currentUser ? 'none' : 'block';
   // Render current tier + higher path (PANEL_TIERS — single source of truth)
   _renderYourPath();
 
@@ -781,6 +788,57 @@ function updateSidePanel() {
 
   // Topbar dropdown (logged-in only)
   updateDropdown();
+}
+
+// ─── SEND RÚNAR A LINE (2026-10-15) ─────────────────────
+// Owner 2026-10-15 („8. ano 9. ano 10. ano“, DECISIONS 2026-10-15): přihlášený napíše Rúnarovi z menu. Edge funkce send-line zprávu
+// uloží (bug_reports, typ message; smaže se 6 měsíců po poslední odpovědi) a pošle do runar@therunekeeper.com s odpovědí rovnou
+// uživateli. Adresu bere server z přihlášení. Texty z UI_TEXT (§10) se plní při otevření — okno je krátké a jazyk se v něm nemění.
+function openLine() {
+  if (!currentUser) return;
+  const sp = document.getElementById('side-panel');
+  if (sp && sp.classList.contains('open') && typeof closeSidePanel === 'function') closeSidePanel();
+  setText('line-title', t('line_title'));
+  setText('line-sub', t('line_sub'));
+  setText('line-note', t('line_note'));
+  setText('line-send', t('line_send'));
+  const ta = document.getElementById('line-text');
+  if (ta) ta.placeholder = t('line_ph');
+  setSt('st-line', '');
+  const m = document.getElementById('line-modal');
+  if (m) m.classList.add('open');
+  if (ta) setTimeout(function () { ta.focus(); }, 50);
+}
+function closeLine() {
+  const m = document.getElementById('line-modal');
+  if (m) m.classList.remove('open');
+}
+async function sendLine() {
+  const ta = document.getElementById('line-text'), btn = document.getElementById('line-send');
+  const text = ta ? ta.value.trim() : '';
+  if (!text) { setSt('st-line', t('line_empty')); return; }
+  if (btn) btn.disabled = true;
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    const token = session && session.access_token;
+    if (!token) throw new Error('not_authenticated');
+    const res = await fetch(LINE_FN, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+      // verze běžícího kódu stejně jako v hlášení testerů (runar-reporter.js, _reportVersion)
+      body: JSON.stringify({ message: text, app_version: (typeof window._reportVersion === 'function' ? window._reportVersion() : ''), locale: lang }),
+    });
+    if (res.status === 429) { setSt('st-line', t('line_limit')); return; }
+    const d = await res.json().catch(function () { return {}; });
+    if (!res.ok || !d.ok) throw new Error(d.error || ('http ' + res.status));
+    if (ta) ta.value = '';
+    closeLine();
+    showToast(t('line_sent'), 'ok');
+  } catch (e) {
+    setSt('st-line', t('line_err'));
+  } finally {
+    if (btn) btn.disabled = false;
+  }
 }
 
 // ── SIDE PANEL ───────────────────────────────────────────

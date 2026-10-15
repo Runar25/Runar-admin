@@ -12,6 +12,8 @@ const PROXY     = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/claude-
 const EL_PROXY  = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/elevenlabs-proxy';
 const EL_STATIC = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/elevenlabs-static';
 const RESET_TREE  = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/reset-tree';
+// 2026-10-15: „Send Rúnar a line“ — zpráva z menu do runar@ (supabase/functions/send-line, owner „8. ano“)
+const LINE_FN     = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/send-line';
 // ASK_MULTI_LIVE ODEBRÁN 2026-09-26 (úklid): byl to vypínač náběhu dvou Asků (2026-09-24/25); od spuštění kdo smí Ask a kolikrát
 // říká jen TIERS.*.asks_per_reading (zrcadlo serverového ASKS_PER_READING v claude-proxy, shodu hlídá smoke ⑨).
 // 2026-10-09: GPT_REVIEW a GPT_REVIEW_LANG pryč — rozbor čtení modelem GPT (tlačítko „GPT-6 luna“, edge fn gpt-review) ZRUŠEN 2026-10-09 (KUKY „Lunu už nepoužívám… zrušit úplně“).

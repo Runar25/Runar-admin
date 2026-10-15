@@ -103,10 +103,16 @@ if (cteni.some((r) => r.lang === 'is')) {
 
 // 3) hlášení — NEPŘEČTENÁ (stav „new“), bez ohledu na datum
 const rep = dotaz("select id, created_at, type, status, message, flagged_text, suggested_replacement, screen_context, locale, app_version "
-  + "from bug_reports where status = 'new' order by created_at");
+  + "from bug_reports where status = 'new' and type <> 'message' order by created_at");
+// Zprávy čtenářů („Send Rúnar a line“, typ message, od 2026-10-15) nejsou hlášení k opravě: přijdou e-mailem do runar@ a owner odpovídá
+// v Gmailu (štítek Messages). Tady jen počet — session je neoznačuje a nechtějí --hotovo. Po odpovědi je owner ve shrine označí „fixed“;
+// od toho času běží 6 měsíců do smazání (sql/2026-10-15_zpravy_runarovi.sql).
+const zpravy = dotaz("select count(*) as n from bug_reports where type = 'message' and status <> 'fixed'");
 const rozdelana = dotaz("select count(*) as n from bug_reports where status = 'triaged' and type <> 'keep'");
 console.log('\n══ HLÁŠENÍ NOVÁ (nepřečtená): ' + rep.length + ' · přečtená a nehotová: ' + ((rozdelana[0] && rozdelana[0].n) || 0)
   + ' (hotová: --hotovo, nehotová do BACKLOGu: --backlog)');
+const nZprav = Number((zpravy[0] && zpravy[0].n) || 0);
+if (nZprav) console.log('   zprávy čtenářů bez odpovědi: ' + nZprav + ' — odpovídá owner v Gmailu (štítek Messages), pak ve shrine „fixed“');
 // Jména testerů v textu hlášení maskovaná (KUKY 2026-10-11 „nepotřebuju vidět nic ohledně uživatele ani jeho jméno“; DECISIONS 2026-10-11 (30) c).
 const _MJ = require('./utils/maskuj_jmena.js'), _JM = rep.length ? _MJ.nacti(ROOT) : [];
 const _m = (t) => _JM ? _MJ.maskuj(t, _JM) : '(text skryt — jména z DB nejdou načíst)';

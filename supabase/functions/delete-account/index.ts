@@ -38,6 +38,14 @@ serve(async (req) => {
     // gift_codes.used_by nemá ON DELETE CASCADE — musíme nullovat ručně
     await sb.from("gift_codes").update({ used_by: null }).eq("used_by", user.id);
 
+    // ── Zprávy „Send Rúnar a line“ (2026-10-15, send-line) ──
+    // V bug_reports nesou e-mail účtu (sloupec tester), vazbu na auth.users nemají — CASCADE je nesmaže. Zásady slibují, že s účtem
+    // zmizí vše; selže-li to, účet se nemaže (uživatel to zkusí znovu a slib platí), stejně jako allowed_emails níž.
+    if (user.email) {
+      const { error: lineErr } = await sb.from("bug_reports").delete().eq("type", "message").eq("tester", user.email);
+      if (lineErr) return json({ error: "Failed to delete messages: " + lineErr.message }, 500);
+    }
+
     // ── E-mail ze seznamu testerů (allowed_emails) ──
     // 2026-10-10 (CODE-read BACKLOG část 32 (j)): tabulka nemá vazbu na auth.users, takže e-mail smazání účtu přežil — zásady přitom
     // slibují „Email address — until account deleted“ a „Everything goes“. Shoda bez ohledu na velikost písmen, ale přesná: NE ilike —
