@@ -279,6 +279,16 @@ async function main() {
     console.log('\n  Using : ' + r.source);
     console.log('  length: ' + r.token.length + ' chars  (the value itself is never printed)');
     console.log('  valid until: ' + exp.toISOString() + '  (' + minsLeft + ' min left)');
+    // 2026-10-15 (CODE-read): datum nestačí — token ze zrušeného přihlášení (odhlášení ve shrine) má platný exp, ale proxy vrátí 401
+    // („Session from session_id claim in JWT does not exist“); 16 volání pokusu tak padlo naprázdno. Zeptat se auth serveru (zdarma).
+    try {
+      const cfg = fs.readFileSync(path.join(V2, 'runar-config.js'), 'utf8');
+      const url = (cfg.match(/SB_URL\s*=\s*['"]([^'"]+)/) || [])[1], key = (cfg.match(/SB_KEY\s*=\s*['"]([^'"]+)/) || [])[1];
+      const res = await fetch(url + '/auth/v1/user', { headers: { apikey: key, Authorization: 'Bearer ' + r.token } });
+      const j = await res.json().catch(() => ({}));
+      if (res.ok) console.log('  auth server: přihlášení žije' + (j.email ? '' : ' (bez e-mailu?)'));
+      else { console.error('  auth server: ' + res.status + ' ' + (j.msg || j.message || j.error_code || '') + ' — token nepoužitelný, vezmi nový ze shrine'); process.exit(1); }
+    } catch (e) { console.log('  auth server: neověřeno (' + String(e.message).slice(0, 80) + ')'); }
     console.log('');
     process.exit(0);
   }
