@@ -675,6 +675,8 @@ Souběh už zčásti hotový týž den: push s commitem vzniklým během smoke (
   jen v komentáři) a kopie repa pro útoky brala jen .js kontroly. ✅ 2026-10-15: ráčna v ㊵ (`BEZ_UTOKU` s důvody) + .py do kopie.
 - **K4/5 zátěž a souběh:** ㉼ jednou zablokovala push — appka při souběhu nenaběhla do „30 s“ (120 kol smyčky), samostatně prošla.
   ✅ 2026-10-14: 60 s podle hodin. Dřív v témže dni: pre-push hlídá posun větve, úklid osiřelých kopií (DECISIONS 2026-10-14 (1)).
+- **K4/6 docs:** v CLAUDE.md „Soubory a jejich zodpovědnost“ chyběly moduly shrine TESTERS a PAYBACK (dvě session), nic to nehlídalo.
+  ✅ 2026-10-15: doplněno + smoke ㊉ (`scripts/verify_soubory_claude.js`, každý v2/runar-* v mapě, nic navíc) s útokem.
 - [ ] **Pro ownera / Cowork (obsah, nespěchá; část 28):** hlavička `RUNAR_POPISY_RUN.md` píše „Společný tvar… pozorování, ne pravidlo —
   pravidlo vznikne, až jich bude 25+“. Popisů je 25, spouštěč nastal, pravidlo nikdo nesepsal. Jen připomínka; CODE do obsahu nesahá.
 
