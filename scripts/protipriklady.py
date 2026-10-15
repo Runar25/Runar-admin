@@ -37,6 +37,8 @@ POSLEDNI_VYSTUP = ''
 APP = 'v2/runar-app.js'
 
 PRIPADY = [
+ # ㊉ mapa souborů (CODE-read 2026-10-15): nový modul appky bez řádku v CLAUDE.md → musí spadnout
+ ('chyti', 'verify_soubory_claude.js', 'v2/runar-protipriklad-modul.js', 'create', '', '// modul bez řádku v mapě\n'),
  # ㉽ landing (CODE-read 2026-10-14, kolo 4): web/site čte klíč, který v UI_TEXT není (přejmenování v appce) → prázdné místo na webu
  ('chyti', 'verify_ui_text_used.js', 'web/site/index.html', 'replace', 'data-k="hero_eyebrow"', 'data-k="hero_eyebrow_v2"'),
  # ㊇ ceník na serveru (CODE-tune 2026-10-14): cena změněná jen ve v2/ — zrcadlo nepřegenerované

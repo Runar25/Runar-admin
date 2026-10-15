@@ -38,6 +38,8 @@ runar-helper.js       — nápověda „?" (bublina: glyf-tap, Ask) + hesla zrca
 runar-readings-admin.js — shrine: prohlížeč čtení (edge fn list-readings)
 runar-reports-admin.js  — shrine: prohlížeč hlášení (edge fn list-reports)
 runar-voice-admin.js    — shrine: záložka VOICE, stav ElevenLabs (edge fn voice-usage)
+runar-testers-admin.js  — shrine: záložka TESTERS, účty testerů a týmu — čtení, Asky, hlasy, cena (edge fn voice-usage {accounts})
+runar-payback-admin.js  — shrine: záložka PAYBACK, kalkulačka návratnosti (čte tabulky RUNAR_PRICING.md)
 runar-help.html · runar-privacy.html — statické stránky (návod, zásady soukromí)
 runar-reader.html     — produkční app  ← sdílený: commit_vlastni.py uprav (§1)
 runar-reader.css      — styly          ← sdílený: commit_vlastni.py uprav (§1)

@@ -1191,6 +1191,16 @@ radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola hlidani provozu probehla'
 check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
 
+# ㊉ Mapa souborů v CLAUDE.md (CODE-read 2026-10-15, kolo 4): každý v2/runar-* v „Soubory a jejich zodpovědnost“, nic navíc — chyběly
+# v ní dva moduly shrine od dvou session a nic to nehlídalo.
+print('\n' + chr(0x3289) + ' MAPA SOUBORŮ V CLAUDE.MD (verify_soubory_claude.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_soubory_claude.js')], capture_output=True, text=True, encoding='utf-8')
+r2 = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_soubory_claude.js'), '--test'], capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0 and r2.returncode == 0
+radky = [l for l in (r2.stdout + r.stdout + r.stderr + r2.stderr).strip().split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola mapy souboru probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
