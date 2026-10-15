@@ -384,8 +384,8 @@ hlídal jen V2 cestu.
 - [ ] **CODE-tune — hlídání provozu a denní souhrn e-mailem (před spuštěním; owner 2026-10-14, DECISIONS 2026-10-14 (12))**.
   ▶ *(CODE-tune 2026-10-14, owner „ano, pg_cron + Brevo … ano udělej“: postaveno — edge funkce `ops-watch`, DECISIONS 2026-10-14 (13);
   běží — SQL pustil owner, zkušební souhrn došel se štítkem Ops (filtr ve schránce funguje), „Needs you“ jen u nepřečtených hlášení
-  (DECISIONS 2026-10-14 (16)). Zbývá: první ostrý souhrn v 06:00 UTC a první `backup_ok` po noční záloze ověřit; prahy přepočítat
-  po 14 dnech provozu; platby, až budou.)*
+  (DECISIONS 2026-10-14 (16)). První ostrý souhrn (2026-10-15) hned chytil zálohu DB, která od 10-12 každou noc padala — opraveno,
+  DECISIONS 2026-10-15 (1). Zbývá: prahy přepočítat po 14 dnech provozu; platby, až budou.)*
   Owner: *„udělat CODE-tune. dobře to v e-mailu uspořádá. kam to přijde a bude to přehledné. udělat nejlepší cestu.“* Místo Slacku (zrušen týž den —
   hlásil jen „přišlo hlášení“) dvě věci, obě do schránky `runar@therunekeeper.com`:
   1. **Okamžité upozornění, když se něco kazí:** model čtení padá víc než obvykle (chyby `claude-proxy` / pády na zálohu), hlas narazí na brzdu

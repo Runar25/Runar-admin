@@ -47,6 +47,8 @@ PRIPADY = [
  ('chyti', 'verify_ops_souhrn.js', 'supabase/functions/_shared/ops_souhrn.ts', 'replace', '  chybModeluZaHodinu: 3,', '  chybModeluZaHodinu: 30,'),
  # ㊈ krátké e-maily (CODE-tune 2026-10-14, owner „maily nesmí zabírat moc místa“): nad tělem znovu řádek se stavem — e-mail o řádek delší
  ('chyti', 'verify_ops_souhrn.js', 'supabase/functions/_shared/ops_souhrn.ts', 'replace', '  const text = nahore.join(', '  const text = stav + "\\n" + nahore.join('),
+ # ㊈ záloha jedním řádkem (CODE-tune 2026-10-15): druhý řádek „No database backup has reported yet“ i u otevřeného problému
+ ('chyti', 'verify_ops_souhrn.js', 'supabase/functions/_shared/ops_souhrn.ts', 'replace', ' && d.otevrene.backup !== "problem")', ')'),
  # ㊆ útok na skutečných výstupech (CODE-read 2026-10-14): kontrola vypisuje cestu bez „supabase/functions/“ (díra z prvního útoku) → ㊆ musí padnout
  ('chyti', 'verify_rychle_kontroly.py', 'scripts/verify_edge_imports.js', 'replace', "const rel = 'supabase/functions/' + d.name + '/' + f;", "const rel = d.name + '/' + f;"),
  # ㊆ rychlé kontroly při commitu (CODE-tune 2026-10-14): vada na staged souboru commit nezastaví · cizí vada commit zastaví

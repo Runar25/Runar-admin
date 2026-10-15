@@ -11521,3 +11521,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ostatní e-maily:** přihlašovací kód (`supabase/templates/prihlaseni-kod.html`) má 5 řádků textu, u účtu bez jazyka 8 (oba jazyky) —
   vejde se, beze změny. Potvrzení registrace z webu je šablona v Brevu, kterou vede CODE-web — pravidlo jí předávám.
 - Affected doc(s): `memory/emaily-kratke.md` (nové), `memory/MEMORY.md` (řádek indexu) — v témže commitu.
+
+## 2026-10-15 (1) — Záloha DB padala od 2026-10-12 na zastaralém odhadu řádků; opraveno, záloha hotová, souhrn o ní píše jedním řádkem
+
+- **Jak se přišlo:** první ostrý ranní souhrn (06:00 UTC) přišel jako PROBLEM — záloha selhala v 00:38 UTC. Owner tipoval noční restart
+  počítače (*„počítač se přes noc restartoval a tohle je asi výsledek“*); restart ale byl až ve 02:13 (LastBootUpTime), po záloze.
+- **Příčina:** `scripts/utils/zaloha_db.js` porovnával export s odhadem `n_live_tup`. U `reading_locks` (zámky běžícího čtení) zůstal
+  odhad na 1, tabulka byla prázdná (2026-10-15: count 0, odhad 1). Záloha proto padala každou noc od 2026-10-12 (log.txt: 10-12, 10-13,
+  10-15); poslední úspěšná 2026-10-11. Chyba končila jen v lokálním logu — hlídání provozu (2026-10-14 (13)) ji chytilo první noc.
+- **Oprava:** prázdný export u tabulky, kde odhad hlásí řádky, rozhodne přesný `count(*)` (role zálohy je postgres a obchází RLS, vidí
+  totéž co export) a jeden opakovaný export. Přechodná chyba Supabase (Cloudflare 520, síť) se zkusí znovu, nejvýš 3×: ráno padla záloha
+  na 520 dvakrát po sobě a minutu nato prošla. Chyba SQL se neopakuje. Samotest `--test-prechodna`.
+- **Ověřeno:** ruční běh 06:57 UTC — `runar-db-2026-10-15.7z` lokálně i na Google Drive, `backup_ok` v `ops_events`.
+- **Souhrn o záloze jedním řádkem:** psal dva — „…no successful nightly backup in the last 26 h“ (nepravda, záloha běžela a selhala)
+  a pod tím „No database backup has reported yet“. Teď jeden řádek s časem posledního pokusu nebo úspěchu; hlídá smoke ㊈ (útok
+  v protipříkladech). Nasazeno a ověřeno (bez tajné hodnoty 401, nasazené = HEAD).
+- Affected doc(s): `RUNAR_BACKLOG.md` (hlídání provozu) — v témže commitu.
