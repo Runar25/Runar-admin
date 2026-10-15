@@ -126,7 +126,10 @@ PRIPADY = [
  ('chyti', 'verify_tier_features.js', 'v2/runar-config.js', 'replace', 'if (v !== null && v !== undefined) out.push(', 'out.push('),
  ('chyti', 'verify_new_duplicates.js', 'RUNAR_PRIVACY.md', 'append', '', '\n**Dvě kopie nejsou riziko rozporu; jsou rozpor s odloženou splatností.**\n'),
  ('chyti', 'verify_fresh_dates.js', 'RUNAR_DECISIONS.md', 'append', '', '\n## 2026-10-01 (99) — podstrčený záznam se starým datem\n\n- test\n'),
- ('chyti', 'verify_shared_tree.js', 'v2/sw.js', 'stage', 'HEAD~40', ''),
+ # 2026-10-15 (CODE-read): pevná revize a4cc4b6 místo HEAD~40 — když posledních 40 commitů sw.js neměnilo (samé docs/skripty), byla
+ # podstrčená verze stejná jako HEAD a útok padal na „podstrčení se neprojevilo“. Verze jsou monotónní, a4cc4b6 se od HEAD liší napořád.
+ ('chyti', 'verify_shared_tree.js', 'v2/sw.js', 'stage', 'a4cc4b6', ''),
+ ('chyti', 'verify_shared_tree.js', 'v2/runar-verze.js', 'stage', 'a4cc4b6', ''),
  ('chyti', 'verify_commit_identity.js', '(historie)', 'commit', 'Runar Admin', ''),
  # kolo 3 / 4f (2026-10-11): peníze, soukromí, jazyk
  ('chyti', 'verify_founding_flag.js', 'v2/runar-reading.js', 'replace', "var _isFounding = (o.kind === 'NORNS'", "var _isFounding = (o.mode === 'norns'"),
