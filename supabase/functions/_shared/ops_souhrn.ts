@@ -59,7 +59,7 @@ const POPIS: Record<string, { problem: string; resolved: string; co: string }> =
   backup: {
     problem: "Database backup missing or failed",
     resolved: "Database backup OK again",
-    co: "no successful nightly backup in the last " + PRAHY.zalohaDbMaxHodin + " h; check the backup task on the PC.",
+    co: "check the backup task and its log on the PC.",   // co přesně se stalo, řekne zalohaVeta() (2026-10-15)
   },
 };
 
@@ -81,8 +81,16 @@ export function upozorneni(predtim: Record<string, Stav>, ted: Record<string, St
 
 function detail(k: string, h: Hlidka): string {
   if (k === "model") return " Last hour: " + h.chybModelu60 + " failed, " + h.zalohModelu60 + " fell back to Claude, " + h.cteni60 + " readings saved.";
-  if (k === "backup") return " Last successful backup: " + (h.zaloha.posledniOk ? kdy(h.zaloha.posledniOk) : "none recorded") + ".";
+  if (k === "backup") return zalohaVeta(h.zaloha);
   return "";
+}
+
+// Co se zálohou je: poslední pokus selhal (a kdy), nebo kdy byl poslední úspěch. Proč (2026-10-15): text „no successful nightly backup
+// in the last 26 h“ stál i u zálohy, která v 00:38 běžela a selhala — owner z něj usoudil, že vinu má noční restart počítače.
+function zalohaVeta(z: Zaloha): string {
+  const chybaPo = !!z.posledniChyba && (!z.posledniOk || Date.parse(z.posledniChyba) > Date.parse(z.posledniOk));
+  return chybaPo ? " Last attempt failed at " + kdy(z.posledniChyba!) + "."
+    : " Last successful backup: " + (z.posledniOk ? kdy(z.posledniOk) : "none recorded") + ".";
 }
 
 // Vstup ranního souhrnu — posledních 24 h (počítá ops-watch/index.ts z DB).
@@ -104,14 +112,15 @@ export type Email = { subject: string; html: string; text: string; stav: string 
 
 export function souhrn(d: Den): Email {
   const potreba: string[] = [];
-  for (const k of KLICE) if (d.otevrene[k] === "problem") potreba.push(POPIS[k].problem + " — " + POPIS[k].co);
+  for (const k of KLICE) if (d.otevrene[k] === "problem") potreba.push(POPIS[k].problem + " — " + POPIS[k].co + (k === "backup" ? zalohaVeta(d.zaloha) : ""));
   // 2026-10-14: jen nepřečtená (stav new) — první souhrn posílal ownera načítat hlášení, které session týž den uzavřela.
   if (d.neprectena) potreba.push(d.neprectena + " unread app report" + (d.neprectena > 1 ? "s" : "") + " — ask CODE to load " + (d.neprectena > 1 ? "them." : "it."));
   const doBrzdy = d.kredity && d.kredity.hladina != null ? d.kredity.hladina - d.kredity.spotreba : null;
   if (doBrzdy != null && d.kredity!.limit && doBrzdy < PRAHY.kredityMaloPodil * d.kredity!.limit)
     potreba.push("ElevenLabs: only " + cislo(doBrzdy) + " credits left before the voice brake.");
   if (d.bezCeny) potreba.push(d.bezCeny + " model call" + (d.bezCeny > 1 ? "s have" : " has") + " no price in MODEL_PRICES — cost below is incomplete.");
-  if (!d.zaloha.posledniOk) potreba.push("No database backup has reported yet — check the nightly backup task on the PC.");
+  // Jen když záloha ještě není hlášená jako problém — jinak by o ní stály dva řádky (souhrn 2026-10-15).
+  if (!d.zaloha.posledniOk && d.otevrene.backup !== "problem") potreba.push("No database backup has reported yet — check the nightly backup task on the PC.");
   const problem = KLICE.some((k) => d.otevrene[k] === "problem");
   const stav = problem ? "PROBLEM" : (potreba.length || d.chybModelu || d.zalohModelu || d.brzd ? "WATCH" : "OK");
 

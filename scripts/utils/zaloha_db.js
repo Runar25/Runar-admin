@@ -37,12 +37,33 @@ const SEVENZ = process.env.RUNAR_7Z || path.join(os.homedir(), 'scoop', 'shims',
 // nastavuje, plánovač ne) — `--output-format json` sám nestačí, proto ji skript nastaví sám.
 const SUPABASE = process.env.RUNAR_SUPABASE || path.join(os.homedir(), 'scoop', 'shims', 'supabase.exe');
 
-function log(m) { const r = new Date().toISOString().slice(0, 16).replace('T', ' ') + ' ' + m; fs.appendFileSync(LOG, r + '\n'); console.log(r); }
-function q(sql) {
+function log(m) {
+  const r = new Date().toISOString().slice(0, 16).replace('T', ' ') + ' ' + m;
+  if (!process.env.RUNAR_ZALOHA_TICHY_LOG) fs.appendFileSync(LOG, r + '\n');   // samotest nepíše do skutečného logu
+  console.log(r);
+}
+// Přechodná chyba Supabase se zkusí znovu (2026-10-15, CODE-tune): ráno po opravě kontroly padla záloha dvakrát po sobě na „unexpected
+// login role status 520“ (Cloudflare) a o minutu později prošla. Noční úloha běží bez dozoru — jeden výpadek API znamenal noc bez zálohy.
+// Tři pokusy s pauzou 20 s a 60 s; chyba SQL nebo oprávnění se neopakuje. Samotest: --test-prechodna.
+const PRECHODNA = /status 5\d\d|error 5\d\d|ECONNRESET|ETIMEDOUT|EAI_AGAIN|ENOTFOUND|socket hang up|timed out|cloudflare/i;
+function cekej(ms) { if (ms > 0) Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms); }
+function spustSupabase(sql) {
+  return execFileSync(SUPABASE, ['db', 'query', '--linked', sql, '--workdir', REPO, '--output-format', 'json'], { encoding: 'utf8', maxBuffer: 1 << 28, stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, AI_AGENT: process.env.AI_AGENT || 'runar-zaloha' } });
+}
+function q(sql, spust = spustSupabase) {
   let s;
-  try {
-    s = execFileSync(SUPABASE, ['db', 'query', '--linked', sql, '--workdir', REPO, '--output-format', 'json'], { encoding: 'utf8', maxBuffer: 1 << 28, stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, AI_AGENT: process.env.AI_AGENT || 'runar-zaloha' } });
-  } catch (e) { throw new Error('supabase selhal: ' + String((e.stderr || '') + (e.stdout || '') || e.message).slice(0, 300)); }
+  for (let pokus = 1; ; pokus++) {
+    try { s = spust(sql); break; } catch (e) {
+      const t = String((e.stderr || '') + (e.stdout || '') || e.message);
+      if (pokus < 3 && PRECHODNA.test(t)) {
+        log('supabase přechodně selhal (pokus ' + pokus + ' ze 3), zkouším znovu: ' + t.replace(/\s+/g, ' ').slice(0, 120));
+        const env = process.env.RUNAR_ZALOHA_CEKANI_MS;
+        cekej(env != null ? Number(env) : (pokus === 1 ? 20000 : 60000));
+        continue;
+      }
+      throw new Error('supabase selhal: ' + t.slice(0, 300));
+    }
+  }
   if (s.indexOf('{') < 0) throw new Error('supabase nevrátil JSON: ' + s.slice(0, 300));
   const j = JSON.parse(s.slice(s.indexOf('{')));
   if (!Array.isArray(j.rows)) throw new Error('dotaz selhal: ' + s.slice(0, 200));
@@ -111,8 +132,16 @@ async function main() {
     const pocty = Object.fromEntries(q("select relname t, n_live_tup n from pg_stat_user_tables where schemaname='public'").map((r) => [r.t, Number(r.n)]));
     const souhrn = {};
     for (const t of tabulky) {
-      const rows = q(`select * from public."${t}"`);
-      if ((pocty[t] || 0) > 0 && rows.length === 0) throw new Error('tabulka ' + t + ' má v DB ~' + pocty[t] + ' řádků, export 0');
+      let rows = q(`select * from public."${t}"`);
+      // Prázdný export u tabulky, kde statistika hlásí řádky → rozhodne přesný počet. Proč (2026-10-15, CODE-tune): n_live_tup je jen
+      // odhad a u reading_locks (zámky běžícího čtení, řádky hned mizí) zůstal na 1, i když tabulka byla prázdná — záloha kvůli tomu padala
+      // každou noc od 2026-10-12 (log.txt), až ji 2026-10-15 nahlásilo hlídání provozu. Role zálohy (postgres) obchází RLS, takže count(*)
+      // vidí totéž co export; druhý pokus o export kryje zámek, který mezi dotazy vznikl.
+      if ((pocty[t] || 0) > 0 && rows.length === 0) {
+        const n = Number((q(`select count(*) n from public."${t}"`)[0] || {}).n || 0);
+        if (n > 0) rows = q(`select * from public."${t}"`);
+        if (n > 0 && rows.length === 0) throw new Error('tabulka ' + t + ' má v DB ' + n + ' řádků, export 0');
+      }
       fs.writeFileSync(path.join(tmp, 'public.' + t + '.json'), JSON.stringify(rows));
       souhrn[t] = rows.length;
     }
@@ -182,6 +211,20 @@ if (process.argv.includes('--test-lhuta')) {
   const ok = JSON.stringify(smazano) === JSON.stringify(cekano) && zbylo[0] === zbylo[1]
     && zbylo[0] === 'jiny.txt,runar-audio-2026-09-01.7z,runar-db-2026-09-01.7z.bak,runar-db-2026-10-17.7z,runar-db-2026-11-15.7z';
   console.log((ok ? 'OK    ' : 'FAIL  ') + 'lhůta ' + LHUTA_DNI + ' dní k ' + dnes + ': smazáno ' + JSON.stringify(smazano) + '; zůstalo ' + zbylo[0]);
+  process.exit(ok ? 0 : 1);
+}
+// Samotest opakování (2026-10-15): skutečná q() s podstrčeným spouštěčem, bez sítě a bez čekání — 520 dvakrát a pak JSON → řádky po třech
+// pokusech; chyba SQL → hned chyba (jeden pokus); 520 třikrát → chyba po třech pokusech.
+if (process.argv.includes('--test-prechodna')) {
+  process.env.RUNAR_ZALOHA_TICHY_LOG = '1'; process.env.RUNAR_ZALOHA_CEKANI_MS = '0';
+  const chyba = (stderr) => Object.assign(new Error('selhalo'), { stderr });
+  const e520 = 'Initialising login role...\n{"_tag":"Error","error":{"code":"LegacyDbConfigLoginRoleStatusError","message":"unexpected login role status 520: Error 520: Web server is returning an unknown error"}}';
+  const eSql = 'ERROR: relation "public.neni" does not exist (SQLSTATE 42P01)';
+  const spoustec = (plan) => { let n = 0; const f = () => { const k = plan[n++]; if (k === 'ok') return '{"rows":[{"ok":1}]}'; throw chyba(k === '520' ? e520 : eSql); }; f.pocet = () => n; return f; };
+  const zkus = (plan) => { const f = spoustec(plan); try { return { r: q('select 1 as ok', f), n: f.pocet() }; } catch (e) { return { chyba: e.message, n: f.pocet() }; } };
+  const a = zkus(['520', '520', 'ok']), b = zkus(['sql', 'ok']), c = zkus(['520', '520', '520', 'ok']);
+  const ok = a.r && a.r.length === 1 && a.n === 3 && /SQLSTATE/.test(b.chyba || '') && b.n === 1 && /status 520/.test(c.chyba || '') && c.n === 3;
+  console.log((ok ? 'OK    ' : 'FAIL  ') + 'přechodná chyba Supabase: 520 → znovu (nejvýš 3 pokusy), chyba SQL hned · pokusy ' + [a.n, b.n, c.n].join('/'));
   process.exit(ok ? 0 : 1);
 }
 // Krok 7 (2026-10-11, KUKY „pravidelná záloha z konverzace… ať se nic neztratí“, DECISIONS 2026-10-11): šifrovaná kopie všech konverzací

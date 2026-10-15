@@ -63,6 +63,11 @@ const malo = O.souhrn(D({ kredity: { spotreba: 85000, hladina: 90000, limit: 103
 ok(/only 5,000 credits left/.test(malo.text) && malo.stav === 'WATCH', 'málo kreditů do brzdy: řádek v „Needs you“');
 const bez = O.souhrn(D({ zaloha: { posledniOk: null, bajtu: null, posledniChyba: null } }));
 ok(/No database backup has reported/.test(bez.text) && bez.stav === 'WATCH', 'záloha ještě nehlásila: WATCH s pokynem');
+// 2026-10-15: záloha selhala (žádný úspěch, chyba v 00:38) a je otevřená jako problém → JEDEN řádek o záloze, s časem selhání
+const zal = O.souhrn(D({ otevrene: { model: 'ok', voice_brake: 'ok', backup: 'problem' }, zaloha: { posledniOk: null, bajtu: null, posledniChyba: '2026-10-15T00:38:18.000Z' } }));
+const radkyZal = zal.text.split('\n\n')[0].split('\n').filter((x) => /backup/i.test(x));
+ok(zal.stav === 'PROBLEM' && radkyZal.length === 1 && /Last attempt failed at 2026-10-15 00:38 UTC/.test(radkyZal[0]) && !/26 h/.test(zal.text),
+  'záloha selhala: jeden řádek s časem selhání, ne dva a ne „26 h“');
 const zly = O.souhrn(D({ modely: { '<script>x': 1 } }));
 ok(zly.html.indexOf('<script>') === -1 && zly.html.indexOf('&lt;script&gt;') !== -1, 'HTML escapované');
 // 2026-10-14 owner po zkušebním souhrnu: „maily nesmí zabírat moc místa. to myslím obecně.“ (memory emaily-kratke) — e-mail na jednu
