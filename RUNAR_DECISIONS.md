@@ -11537,3 +11537,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   a pod tím „No database backup has reported yet“. Teď jeden řádek s časem posledního pokusu nebo úspěchu; hlídá smoke ㊈ (útok
   v protipříkladech). Nasazeno a ověřeno (bez tajné hodnoty 401, nasazené = HEAD).
 - Affected doc(s): `RUNAR_BACKLOG.md` (hlídání provozu) — v témže commitu.
+
+## 2026-10-15 (2) — Infrastruktura před spuštěním: Cloudflare Pages + Supabase Pro + prompt v claude-proxy; Hetzner vypadl
+
+- **Rozhodl:** owner 2026-10-15 na ověřený plán (BACKLOG „Plán infrastruktury před spuštěním“): *„9. beru. zatím nejedeme komerčně
+  a ani nic neprodáváme. ale před spuštěním chci mít připravený přesný plán postupu… zbavit se toho, co už v plánu není“* ·
+  *„11. ano“* (druhý Free projekt pro zkoušku obnovy) · *„12. pokud nepotřebujeme za něj platit, tak nebudeme“* (GitHub jen hlášení).
+- **Proč:** GitHub Pages podmínky zakazují komerční SaaS (ověřeno přímo) a neumí bezpečnostní hlavičky; Cloudflare Pages Free bere
+  soukromé repo, `_headers` a dva weby z jednoho repa; Supabase Free se uspává a nezálohuje; prompt v claude-proxy neopustí server.
+  Hetzner = backend znovu a provoz na nás kvůli ~15 € úspory (levné servery 2026-10-15 nedostupné). Fakta a zdroje jen v BACKLOGu (§20).
+- **Co ne teď:** nic se nepřepíná, dokud se neprodává; postup se připraví do detailu. GitHub Pro (vynucení kontrol) ne — placené.
+- **Nález mimo plán:** Supabase ruší staré klíče `anon`/`service_role` do konce 2026 (krok 9 plánu); Google Workspace nemá DKIM.
+- Affected doc(s): `RUNAR_BACKLOG.md` (plán, rozhodnutí, kroky), `RUNAR_PRICING.md` (řádky hostingu, Hetzner pryč), `RUNAR_PRIVACY.md`
+  (věta o přechodu na Hetzner) — v témže commitu.

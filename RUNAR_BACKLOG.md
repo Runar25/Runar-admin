@@ -528,15 +528,16 @@ tichá past: kdokoli zavolá builder s jiným jazykem, než je globál, dostane 
 ### Plán infrastruktury před spuštěním — ověřeno 2026-10-15 (CODE-read; nahradil „Kam s databází, promptem a hostingem“ z 2026-10-10)
 Owner 2026-10-15: *„napřed je potřeba udělat pořádný plán krok po kroku. Všechno mít přesně prověřené, že to je takhle nejlepší
 řešení! pořádně to zapsat, jelikož to nechci pořád řešit od začátku“* · *„budu rád, pokud budeme mít desítky uživatelů, takže spíš
-levné, ale kvalitní řešení, které se může rozšířit, když porosteme.“* **Nic není rozhodnuté**; rozhoduje owner. Kritéria (owner
+levné, ale kvalitní řešení, které se může rozšířit, když porosteme.“* **Rozhodnuto 2026-10-15** (owner *„9. beru“*, DECISIONS 2026-10-15 (2)): doporučená cesta níž. Dnes se neprodává
+(owner: *„zatím nejedeme komerčně a ani nic neprodáváme, ale před spuštěním chci mít připravený přesný plán postupu“*). Kritéria (owner
 2026-10-12): HTTPS, bezpečnostní hlavičky (CSP, frame-ancestors), ochrana proti převzetí domény, ven jen web + appka, nasazení z gitu
 s návratem, pošta (MX Google, DKIM Brevo) beze změny, cena. Adresy: web therunekeeper.com, appka app.therunekeeper.com (owner 2026-10-12).
 Do 2026-10-15 tu stály podklady z 2026-10-10 a Cloudflare Pages jen „z obecné znalosti“ (konverzace 2026-10-12) — níž je to ověřené.
 
 **Fakta, která rozhodují** (oficiální stránky čtené 2026-10-15, URL dole):
 1. **GitHub Pages zakazuje komerční SaaS** („not … allowed to be used as a free web hosting service to run your online business …
-   or providing commercial software as a service“, GitHub Terms for Additional Products, oddíl Pages — ověřeno přímo). Appka s
-   placenými kredity tam být nesmí → **přesun je nutný**, ne volba. Pages navíc neumí vlastní hlavičky (CSP) a ze soukromého repa
+   or providing commercial software as a service“, GitHub Terms for Additional Products, oddíl Pages — ověřeno přímo). Až appka začne
+   prodávat (kredity), tam být nesmí → **přesun před spuštěním je nutný**; dnes se neprodává (owner 2026-10-15). Pages navíc neumí vlastní hlavičky (CSP) a ze soukromého repa
    jen s placeným plánem.
 2. **Vercel Hobby** komerční použití zakazuje (Pro 20 $/měs.); **Netlify Free** má tvrdý strop 300 kreditů/měs. bez dobití.
 3. **Cloudflare Pages Free:** soukromé repo ano · `_headers` (CSP, frame-ancestors, HSTS; max 100 pravidel; na Pages Functions neplatí)
@@ -570,8 +571,19 @@ promptu v `claude-proxy` (už ověřuje přihlášení a odečítá kredity; pro
 2. **Supabase Free → Pro**, ověřit, že denní zálohy běží.
 3. **Repo soukromé.** Historie, klony a forky zůstanou — dnešní prompt brát jako vyzrazený (úsudek).
 4. **Cloudflare:** dva Pages projekty z jednoho repa, `_headers`, zkouška na `*.pages.dev`.
-5. **DNS:** export všech záznamů z GoDaddy (MX Google, SPF, DKIM Brevo, DMARC, ověřovací TXT), nízké TTL, vypnout DNSSEC, zóna na
-   Cloudflare, porovnat import s exportem, přepnout nameservery, ověřit poštu (testovací e-mail i přihlašovací kód), DNSSEC zapnout.
+5. **DNS** — stav z veřejného DNS 2026-10-15 (CODE-read, nslookup přes 1.1.1.1): nameservery GoDaddy (ns09/ns10.domaincontrol.com) ·
+   MX 5× Google (aspmx.l.google.com, alt1–alt4) · TXT `brevo-code:…`, `google-site-verification=…` a SPF
+   `v=spf1 include:dc-aa8e722993._spfm.therunekeeper.com ~all` · DKIM Brevo = CNAME `brevo1._domainkey` → `b1.therunekeeper-com.dkim.brevo.com`
+   a `brevo2._domainkey` → `b2.therunekeeper-com.dkim.brevo.com` · DMARC `p=quarantine; adkim=r; aspf=r`, hlášení na
+   `dmarc_rua@onsecureserver.net` (služba GoDaddy) · apex A 185.199.108.153, www AAAA (obojí GitHub Pages) · `app.` neexistuje ·
+   DNSSEC vypnutý (žádný DNSKEY) → krok „vypnout DNSSEC před přepnutím“ odpadá.
+   ⚠️ **SPF stojí na záznamu, který spravuje GoDaddy** (`dc-aa8e722993._spfm` = `v=spf1 include:_spf.google.com ~all`) → v Cloudflare
+   zapsat SPF přímo `v=spf1 include:_spf.google.com ~all`, jinak po odchodu z GoDaddy DNS přestane platit. Hlášení DMARC na adresu
+   GoDaddy přesměrovat jinam, nebo `rua` odebrat.
+   Postup: export zóny z GoDaddy, nízké TTL den předem, zóna na Cloudflare, porovnat import s exportem i s tímhle výpisem, poštovní
+   záznamy „DNS only“, přepnout nameservery, ověřit poštu (e-mail do i z runar@, přihlašovací kód z Brevo), pak zapnout DNSSEC v Cloudflare.
+   Nález mimo plán: **Google Workspace nemá DKIM** (`google._domainkey` neexistuje) — pošta z runar@ není podepsaná doménou. Zapnout
+   v administraci Google Workspace (Gmail, ověření e-mailu), nezávisle na přesunu.
 6. **Domény a přihlášení:** vlastní domény v Pages; Supabase Auth Site URL + Redirect URLs; Google OAuth origin a redirect; CORS funkcí.
 7. **Ověřit** hlavičky, přihlášení Googlem i kódem, smoke.
 8. **Stará adresa:** přesměrovat nebo vypnout, smazat DNS záznamy mířící na GitHub (převzetí domény). Nová adresa = nový origin →
@@ -594,8 +606,14 @@ promptu v `claude-proxy` (už ověřuje přihlášení a odečítá kredity; pro
   `supabase functions download` + git tag; návrat = nasadit z tagu. Změna tajné hodnoty platí hned, bez nasazení.
 - **Soupis tajných hodnot:** jméno, kde žije, kdo vydal, postup rotace, datum poslední rotace — bez hodnot.
 
-- [ ] **Owner rozhodne:** (1) Cloudflare Pages + přesun DNS ano? (2) kdy Supabase Pro? (3) GitHub Pro kvůli vynucení kontrol, nebo
-  jen hlášení? (4) zkouška obnovy v druhém Free projektu (zakládá owner)? Před rozhodnutím nic z kroků 2–9 nespouštět.
+- **Owner 2026-10-15:** (1) Cloudflare Pages + přesun DNS — *„beru“* · (2) Supabase Pro — *„chci to mít kompletně připravené, všechno do
+  detailu, zjisti a znovu ověř, že jsou informace správné“*: přepíná se v kroku 2, plán je předem hotový; klíčová fakta ověřena podruhé
+  přímo na oficiálních stránkách 2026-10-15 (Cloudflare domény a limity, soukromé repo; Supabase ceník; GitHub Actions minuty; podmínky
+  GitHub Pages) · (3) kontrola na GitHubu — *„pokud nepotřebujeme za něj platit, tak nebudeme“*: jen hlášení (Actions při pushi,
+  2 000 min zdarma), bez GitHub Pro · (4) druhý Free projekt pro zkoušku obnovy — *„ano“*, zakládá owner.
+- [ ] **CODE-read:** po založení druhého projektu: klient Postgresu, záloha `pg_dump` do nočního skriptu, skript obnovy, první zkouška.
+- [ ] **CODE-read:** Actions „jen hlášení“ (které kontroly poběží bez tajných hodnot, kolik minut spotřebují) — připravit, spustit s přechodem na soukromé repo.
+- [ ] **CODE-tune:** krok 1 (prompt na server) a krok 9 (klíče Supabase).
 
 **Zdroje (čteno 2026-10-15):** Cloudflare: developers.cloudflare.com/pages/platform/limits · /pages/configuration/custom-domains ·
 /pages/configuration/headers · /pages/get-started/git-integration · /pages/configuration/monorepos · /dns/zone-setups/full-setup/setup ·
@@ -638,7 +656,7 @@ podstatná část hodnoty, takže odpověď nejspíš ano — ale stojí to pře
 - `max_tokens` od klienta je serverově **zastropovaný na 2500** (`:432`).
 
 #### Mapa: z čeho appka skládá prompt — podklad pro přesun na server (CODE-read 2026-10-10)
-Platí pro Supabase edge funkci i vlastní server (Hetzner) — viz „Plán infrastruktury před spuštěním“ výš.
+Platí pro Supabase edge funkci (zvolená cesta, owner 2026-10-15) — viz „Plán infrastruktury před spuštěním“ výš.
 1. **Vstupy od člověka** (z klienta dál jako parametry): jméno, oblast, co hledá, záměr, otázka, tažené runy + pozice ve spreadu,
    jazyk, režim mine/someone, IS oslovení (`userGender` kk/kvk/hk), životní runa; u Asku navíc text čtení, otázka, předchozí výměna.
 2. **Data a kód appky** (přestěhují se na server; dnes veřejné soubory): `runar-character.js` (hlas, `RP_*`, `RUNE_IMAGES`, buildery),

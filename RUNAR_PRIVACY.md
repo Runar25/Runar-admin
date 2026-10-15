@@ -35,8 +35,8 @@ v „oprávněném zájmu“ chyběl, ačkoli rozbor běžel (`RUNAR_DECISIONS.m
 4. **Respektuj opt-out**: user s `analytics_opt_out=true` → jeho čtení se NEzahrnou do vieweru/evalu. Skripty ve `scripts/` čtou čtení k analýze jen přes `scripts/utils/cteni_analyza.sql` (bez odhlášených), hlídá smoke ㉾ (2026-10-10; do té doby filtr měl jen `list-readings` a export, 11 skriptů ne — odhlášených bylo 0).
 5. **Data v EU** (Supabase eu-west-1) — nikdy nesypat osobní čtení mimo EU (služby v USA dostanou jen anonymizovaná data).
    **Výjimka (KUKY 2026-10-10, DECISIONS 2026-10-10 (32)):** šifrovaná denní záloha DB na Google Drive (7z AES-256, heslo jen u nás) —
-   Drive umístění v EHP nezaručuje, proto stojí v zásadách mezi zpracovateli (`v2/runar-privacy.html`, EN i IS). S přechodem na Hetzner
-   zálohy jen v EHP a kopie na Drive se vypne. Zálohy se drží **30 dní** (KUKY 2026-10-10 „7. ano, 30 dní“; maže `scripts/utils/zaloha_db.js`), smazaný soubor může ještě
+   Drive umístění v EHP nezaručuje, proto stojí v zásadách mezi zpracovateli (`v2/runar-privacy.html`, EN i IS). Hetzner z plánu vypadl
+   2026-10-15 (Supabase Pro; DECISIONS 2026-10-15 (2)) — kopie na Drive zůstává jako jediná mimo Supabase. Zálohy se drží **30 dní** (KUKY 2026-10-10 „7. ano, 30 dní“; maže `scripts/utils/zaloha_db.js`), smazaný soubor může ještě
    až 30 dní ležet v koši Google Drive — obojí stojí v zásadách.
 6. **'someone' čtení (třetí osoba) = JEN u testerů.** Čtení „FOR SOMEONE" nese jméno třetí osoby v textu a ta nic neodsouhlasila → u testera testovací data krytá souhlasem; u běžného usera se NEUKLÁDÁ vůbec. Journal usera je nikdy nezobrazí (`reading_mode='someone'`).
 
