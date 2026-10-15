@@ -381,7 +381,7 @@ hlídal jen V2 cestu.
   `supabase db dump` nejde (chce Docker) → export přes `supabase db query`. Je to JEDNA kopie, ne záloha průběžná; bod zůstává otevřený.
   ✅ **Od 2026-10-10 automaticky** (DECISIONS 2026-10-10 (9)): denně 3:30 šifrovaná záloha → lokálně + Google Drive runar@therunekeeper.com
   (`scripts/utils/zaloha_db.js`, úloha Windows „Runar - zaloha databaze“). Zbývá: Supabase Pro před produkcí, obnova do DB nanečisto.
-- [ ] **CODE-tune — hlídání provozu a denní souhrn e-mailem (před spuštěním; owner 2026-10-14, DECISIONS 2026-10-14 (12))**.
+- [x] ✅ *(běží od 2026-10-14 — DECISIONS 2026-10-14 (14), (16); upozornění na pád zálohy ověřeno naostro 2026-10-15)* ~~**CODE-tune — hlídání provozu a denní souhrn e-mailem (před spuštěním; owner 2026-10-14, DECISIONS 2026-10-14 (12))**~~.
   ▶ *(CODE-tune 2026-10-14, owner „ano, pg_cron + Brevo … ano udělej“: postaveno — edge funkce `ops-watch`, DECISIONS 2026-10-14 (13);
   běží — SQL pustil owner, zkušební souhrn došel se štítkem Ops (filtr ve schránce funguje), „Needs you“ jen u nepřečtených hlášení
   (DECISIONS 2026-10-14 (16)). První ostrý souhrn (2026-10-15) hned chytil zálohu DB, která od 10-12 každou noc padala — opraveno,
@@ -896,7 +896,7 @@ Procházka je tím úplná.
       pustil jsem jen vybrané kontroly, které čtou `scripts/`, ㊱ mezi nimi nebyla. Push zablokoval mně i CODE-read (nahlásil, oprava
       e40fb75). Koordinace mechanismu mezi session nejde přes ownera (owner 2026-10-14: *„na tom se domluv s ním. co já ti mám říct?“*) —
       návrh poslán CODE-read.
-- [ ] `user_profiles` má **dvě identické RLS policy** („Users manage own profile" a „own profile").
+- [x] ✅ *(ověřeno v DB 2026-10-15, CODE-read: zbývá jediná politika „Users manage own profile“)* ~~`user_profiles` má **dvě identické RLS policy** („Users manage own profile" a „own profile").~~
       Neškodí (permissive se sčítají), ale je to duplikát — jednu smazat.
 
 ---
