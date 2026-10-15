@@ -153,6 +153,7 @@ tabulka „What is held“ v `v2/runar-privacy.html` (EN i IS) — tady se neopi
 | vývoj | přepisy konverzací (mohou nést údaje uživatelů) | oprávněný zájem | Anthropic (Claude Code) | SCC — v zásadách zatím chybí (nález 5) |
 | hosting appky | IP adresa v logu | oprávněný zájem (provoz, bezpečnost) | GitHub Pages | DPF + SCC |
 | registrace čekatelů (web therunekeeper.com, od 2026-10-13) | e-mail (jen u Brevo, dvojí potvrzení) · IP adresa a jednosměrný otisk e-mailu (SHA-256, od 2026-10-14) krátce v počítadle pokusů (`rate_limits`) | souhlas (e-mail) · oprávněný zájem (IP, proti automatickým registracím) | Brevo · Supabase (IP) | — |
+| zprávy čtenářů („Send Rúnar a line“ z menu appky, od 2026-10-15) | text zprávy, e-mail účtu, verze appky a zařízení (user-agent) | smlouva (odpověď na dotaz uživatele) | Supabase (`bug_reports`, typ message) · Brevo (doručení do schránky) · Google Workspace (schránka runar@) | — / DPF (Google) |
 **Technická a organizační opatření:** RLS a granty sloupců (`sql/2026-07-16_user_profiles_column_grants.sql`, smoke ⑩) · peníze a oprávnění píše
 jen server (service_role) · zálohy šifrované, klíč jen u nás · hlas přes podepsané lístky a odkazy s platností hodiny · fronta neuložených
 čtení vázaná na účet (DECISIONS 2026-10-12 (4), smoke ㊿) · e-maily uživatelů se ve vývoji nevypisují (výš, „Přepisy konverzací“).

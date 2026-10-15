@@ -121,6 +121,21 @@
   </div>
 </div>
 
+<!-- ═══ SEND RÚNAR A LINE (2026-10-15, owner „8. ano“) ═══ — openLine / sendLine v runar-app.js, server: supabase/functions/send-line.
+     Runa v hlavičce kamenem jako u ostatních oken (§5, DECISIONS 2026-10-13 (2)); Ansuz = slovo a zpráva. -->
+<div class="modal-overlay" id="line-modal" role="dialog" aria-modal="true" aria-labelledby="line-title" onclick="if(event.target===this)closeLine()">
+  <div class="modal">
+    <button class="modal-close" type="button" onclick="closeLine()">✕</button>
+    <div class="modal-rune" data-rune-glyph="Ansuz" style="margin-bottom:12px;"></div>
+    <div class="modal-title" id="line-title"></div>
+    <p class="modal-sub" id="line-sub"></p>
+    <textarea class="txt line-ta" id="line-text" rows="5" maxlength="2000"></textarea>
+    <p class="line-note" id="line-note"></p>
+    <button class="btn-full" type="button" id="line-send" onclick="sendLine()"></button>
+    <div class="status" id="st-line"></div>
+  </div>
+</div>
+
 <!-- ═══ LANG SWITCH MODAL ═══ -->
 <div class="modal-overlay" id="lang-switch-modal">
   <div class="modal">
@@ -939,6 +954,10 @@
   <!-- ③ Navigation — always visible -->
   <div class="side-panel-section">
     <a class="sp-item" id="sp-guide-link"   href="runar-help.html"    style="text-decoration:none;">? GUIDE &amp; FAQ</a>
+    <!-- 2026-10-15 „Send Rúnar a line“ (owner „8. ano“): přihlášený otevře okno se zprávou, návštěvník dostane odkaz na e-mail
+         (bod 5 plánu: jeho adresu neznáme a veřejný formulář by lákal spam). Texty a viditelnost: updateSidePanel (runar-app.js). -->
+    <button class="sp-item" id="sp-line-btn" type="button" onclick="openLine()" style="display:none;"></button>
+    <a class="sp-item" id="sp-line-mail" href="mailto:runar@therunekeeper.com" style="text-decoration:none;display:none;"></a>
     <button class="sp-item" id="sp-install-btn" onclick="installPWA();closeSidePanel();" style="display:none;">⬇ INSTALL RÚNAR</button>
     <a class="sp-item" id="sp-privacy-link" href="runar-privacy.html" style="text-decoration:none;">PRIVACY POLICY</a>
   </div>

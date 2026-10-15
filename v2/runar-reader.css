@@ -822,6 +822,10 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 .modal-sub{font-size:0.9em;color:var(--muted);font-style:italic;margin-bottom:20px;line-height:1.7;}
 .modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--dim);font-size:1.2em;cursor:pointer;}
 .modal-close:hover{color:var(--white);}
+/* 2026-10-15 okno „Send Rúnar a line“: pole jako ostatní (.txt — jen spodní linka), víc řádků; poznámka tlumeně jako .modal-sub
+   (--muted, ne --dim — §5: --dim nikdy pro text). */
+.line-ta{resize:vertical;min-height:120px;line-height:1.5;display:block;}
+.line-note{font-size:0.8em;color:var(--muted);font-style:italic;line-height:1.6;margin:10px 0 0;}
 /* 2026-10-09: přihlášení e-mailem šestimístným kódem (runar-auth.js sendLoginCode/verifyLoginCode) — plocha „MAGIC LINK SENT“
    (.modal-success) pryč. Popisek .auth-lbl = dosavadní inline styl „YOUR EMAIL“. Text kroků --muted (§5: --dim nikdy pro text). */
 .auth-lbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--gold);display:block;margin-bottom:8px;}

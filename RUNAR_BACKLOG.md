@@ -861,7 +861,12 @@ Souběh už zčásti hotový týž den: push s commitem vzniklým během smoke (
       ⚠️ Vedlejší nález: DB default `tier = 'free'` není mezi dokumentovanými hodnotami a drží ho při životě
       kompatibilní převod na DVOU místech. Všechny 4 skutečné účty mají `rune_seeker`. Nerozbité, jen křehké —
       default by měl být `rune_seeker`.
-- [ ] **Hlášení pro běžné uživatele bude úplně jiné — probrat před spuštěním** (KUKY 2026-10-09: *„čistě z uživatelského pohledu to, co
+- [ ] **Zprávy „Send Rúnar a line“ ve schránce runar@ smazat 6 měsíců po poslední odpovědi** (CODE-tune 2026-10-15, owner „10. ano“). DB maže
+  pg_cron sám (`sql/2026-10-15_zpravy_runarovi.sql`); kopie v Gmailu (štítek Messages) ne — Workspace bez Vaultu pravidlo pro mazání nemá.
+  Možnosti: měsíční plánovaná úloha Claude (Gmail konektor: `label:Messages older_than:6m` → koš; stálé nastavení → s ownerovým ano),
+  nebo ručně ownerem. Do rozhodnutí zásady slibují 6 měsíců i pro schránku — splnit nejpozději 2027-04-15 (první zprávy).
+- [x] ✅ *(CODE-tune 2026-10-15, owner „8. ano 9. ano“: běžný uživatel píše Rúnarovi z menu — „Send Rúnar a line“, edge funkce `send-line`;
+  vlajku s typy hlášení vidí jen tester a tým. DECISIONS 2026-10-15 (4).)* ~~**Hlášení pro běžné uživatele bude úplně jiné — probrat před spuštěním**~~ (KUKY 2026-10-09: *„čistě z uživatelského pohledu to, co
       může trápit běžného uživatele. Teď nevím, co se do takového reportu obyčejně dává. To probereme před spuštěním.“*). Dnes vidí každý
       ne-admin typy pro testery.
 - [x] ✅ *(CODE-tune 2026-10-11: běžící verze z `v2/runar-verze.js`, který píše hook; „v657 (now v659)“, když se liší; smoke ㊼, DECISIONS 2026-10-11 (68).)* ~~**Hlášení nese verzi nasazenou, ne tu, která v telefonu běží**~~ (2026-10-09, CODE-tune, §22). `runar-reporter.js` bere `app_version`

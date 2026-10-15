@@ -11550,3 +11550,31 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Nález mimo plán:** Supabase ruší staré klíče `anon`/`service_role` do konce 2026 (krok 9 plánu); Google Workspace nemá DKIM.
 - Affected doc(s): `RUNAR_BACKLOG.md` (plán, rozhodnutí, kroky), `RUNAR_PRICING.md` (řádky hostingu, Hetzner pryč), `RUNAR_PRIVACY.md`
   (věta o přechodu na Hetzner) — v témže commitu.
+
+## 2026-10-15 (3) — Mezery 1–4; první obrazovka telefonu je vždy jen Rúnar se šipkou dole
+
+- **Rozhodl:** owner na otázku o mezerách (*„některé mezery mi přijdou zbytečně velké… co navrhuješ?“*) → po návrhu s měřením *„mezery 1–4 ano“*,
+  k bodu 1 se snímkem: *„Rúnarova úvodní fotka je vždy jen Rúnar… dole je pak šipka na posun na druhou stránku.“*
+- **Co:** hero na telefonu aspoň na výšku obrazovky bez lišty, proužek se šipkou na jejím spodu, volné místo kolem textu pod fotkou (dřív výška
+  podle obsahu: na 393×851 pod šipkou vykoukly záložky). Pevné mezery: pod podtitulkem 60 → 24 px, pod záložkami 28 → 16, „Jak vzniká čtení +“
+  20 → 14 (i v Kolekci), přepínač MÍN SPÁ 22 → 16, pod HEFJA LESTURINN 82 → 20 (prázdný stavový řádek místo nedrží). Hodnoty v `v2/runar-reader.css`.
+- **Hranice:** na telefonu 360×640 je fotka vyšší než obrazovka — šipka je 67 px pod okrajem (na první obrazovce dál jen Rúnar). Zmenšit fotku
+  na nízkých obrazovkách by změnilo kompozici — bez ownera ne.
+- **Body 5–6** (řádkování čtení 1,9 → 1,65, okraj rámečku čtení) owner zatím nerozhodl.
+- Affected doc(s): žádný (hodnoty vlastní CSS).
+
+## 2026-10-15 (4) — „Send Rúnar a line“ / „Sendu Rúnari línu“: zpráva z menu do runar@, vlajka s hlášeními jen testerům
+
+- **Rozhodl:** owner (přes CODE-read: *„dal bych to do menu… odpovědi z runar@therunekeeper.com“*) → plán CODE-tune → *„8. ano 9. ano 10. ano“*.
+- **Co:** položka v menu pro přihlášené otevře okno se zprávou; edge funkce `send-line` vezme adresu z přihlášení (ne z klienta), zprávu uloží
+  do `bug_reports` (typ `message`) a pošle Brevem do runar@ s Reply-To na uživatele — owner v Gmailu klikne Odpovědět a odpověď jde z runar@
+  (štítek **Messages**, Label_7). Nejvýš 3 zprávy za hodinu. Návštěvník má v menu jen odkaz na e-mail. Vlajku s typy hlášení vidí jen
+  tester a tým (admin) — tím uzavřena položka BACKLOGu „Hlášení pro běžné uživatele“.
+- **Mazání 6 měsíců po poslední odpovědi:** DB — pg_cron denně (`sql/2026-10-15_zpravy_runarovi.sql`), čas odpovědi = `resolved_at` (shrine
+  ho od teď zapisuje při „fixed“; bez odpovědi od přijetí). Smazání účtu maže i jeho zprávy. Kopie ve schránce runar@ → BACKLOG (mechanismus
+  čeká na ownera).
+- **Kde všude:** ranní souhrn zprávy nepočítá mezi nepřečtená hlášení (odpovídá owner v Gmailu); „načti reporty“ je jen spočítá.
+  Zásady EN + IS: řádek tabulky, Brevo, Google Workspace (schránka); záznam o zpracování v `RUNAR_PRIVACY.md`. IS ověřeno Greynirem a korpusem.
+- **Zbývá:** owner pustí SQL (napřed — bez nového typu DB zprávu odmítne), pak nasazení `send-line`, `delete-account`, `list-reports`,
+  `ops-watch`; filtr ve schránce na štítek Messages.
+- Affected doc(s): `RUNAR_PRIVACY.md`, `RUNAR_BACKLOG.md`, `memory/schranka-runar-gmail.md` — v témže commitu.
