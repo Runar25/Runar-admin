@@ -93,7 +93,7 @@
   // v tabulce bez řádku tady se ukáže pod jménem z docu — viditelně, ne zahozená.
   var EN = [[/^Claude/i, 'Claude Max (development)'], [/^ChatGPT/i, 'ChatGPT Go'], [/^Anthropic/i, 'Anthropic API (admin, backup; cap)'],
             [/^Supabase/i, 'Supabase Pro'], [/^Google Workspace/i, 'Google Workspace'], [/^Brevo/i, 'Brevo (sign-in e-mail)'],
-            [/^GitHub/i, 'GitHub · Slack'], [/^Shopify/i, 'Shopify'], [/^Hetzner/i, 'Hetzner'], [/^Dom/i, 'Domains'],
+            [/^GitHub/i, 'GitHub · Cloudflare Pages'], [/^Shopify/i, 'Shopify'], [/^Dom/i, 'Domains'],
             [/^Apple/i, 'Apple Developer ($99/year)'], [/^Google Play/i, 'Google Play ($25 once)']];
   function enJmeno(jm) { for (var i = 0; i < EN.length; i++) if (EN[i][0].test(jm)) return EN[i][1]; return jm; }
 
