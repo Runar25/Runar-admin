@@ -159,6 +159,7 @@ const USAGE = [
   '  --rune      Perth          forced rune (single; first position of a spread)',
   '  --runes     A,B,C          explicit spread runes; else a random distinct sample',
   '  --life-rune Gebo|self|none life rune context; self = life==drawn per reading (default none)',
+  '  --korekce   db|none      corrections block: db = rows of runar_corrections, the way the app loads them (default none)',
   '  --without   a,b,c        build the reading WITHOUT these parts of the prompt — for hearing',
   '              Groups: dice (all per-reading rolls) · rules (the standing rules) · all.',
   '              how it sounds stripped back. `--without list` prints what can go.',
@@ -284,6 +285,20 @@ async function main() {
 
   const ctx  = makeSandbox();
   const G    = function (expr) { return vm.runInContext(expr, ctx); };
+  // --korekce db (2026-10-15, CODE-read; owner: „udělej identická čtení bez korekce, jak si povede“): do té doby gen_batch skládal
+  // prompt VŽDY bez bloku korekcí (sandbox má corrections = []), takže žádná dávka neměřila, co korekce dělají. Teď stejná cesta jako
+  // appka (runar-app.js: select * from runar_corrections order by created_at → normalizeCorrections), výchozí stav beze změny.
+  let korekci = 0;
+  if (args['korekce'] === 'db') {
+    const SUPA = process.env.RUNAR_SUPABASE || path.join(os.homedir(), 'scoop', 'shims', 'supabase.exe');
+    const out = require('child_process').execFileSync(SUPA, ['db', 'query', '--linked', '--workdir', REPO, '--output-format', 'json',
+      'select * from public.runar_corrections order by created_at'], { encoding: 'utf8', env: Object.assign({}, process.env, { AI_AGENT: '1' }) });
+    const rows = JSON.parse(out.slice(out.indexOf('{'))).rows;
+    if (!Array.isArray(rows) || !rows.length) die('--korekce db: z runar_corrections nepřišel žádný řádek');
+    vm.runInContext('corrections = normalizeCorrections(' + JSON.stringify(rows) + ');', ctx);
+    korekci = vm.runInContext('corrections.length', ctx);
+    console.log('  --korekce db: ' + korekci + ' korekcí v promptu');
+  } else if (args['korekce'] && args['korekce'] !== 'none') die('--korekce: db nebo none');
   const call = function (fn, a) { return G(fn).apply(null, a); };
   const setLang = function (l) { vm.runInContext('lang = ' + JSON.stringify(l) + ';', ctx); };
 
@@ -583,7 +598,7 @@ async function main() {
     append_mode: !!args['append'],
     prompt_version: PROMPT_VERSION, lang: lang, spread: spreadName,
     max_tokens: maxTokens, spread_cost: spreadCost, season_bucket: seasonBucket,
-    system_sha256: sysSha, system_prompt: sysPrompt, active_char: null,
+    system_sha256: sysSha, system_prompt: sysPrompt, active_char: null, korekce: args['korekce'] || 'none', korekci: korekci,
     note: 'activeChar is null here and in production (the reader stopped loading runar_character on 2026-10-12).',
   }, null, 2), 'utf8');
 
@@ -714,8 +729,10 @@ async function main() {
     };
 
     const build = () => (spreadName === 'single')
-      ? call(spec.builder, [u, runes[0], lang, []])
-      : call(spec.builder, [u, runes, lang, []]);
+      // korekce jako 4. argument jako v produkci (runar-reading.js: buildReadingPrompt(u, drawn, lang, corrections)); do 2026-10-15 tu
+      // stálo natvrdo [] — globál ze sandboxu builder nečte, takže --korekce db bez tohohle neměnila prompt ani o znak (ověřeno dry-run).
+      ? call(spec.builder, [u, runes[0], lang, G('corrections')])
+      : call(spec.builder, [u, runes, lang, G('corrections')]);
     const prompt = stripLines(build());
 
     // DŮKAZ, že vypnutí opravdu ubralo. Jednou za dávku, u prvního čtení: postav týž
