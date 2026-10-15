@@ -650,6 +650,9 @@ backlog moc velky?“; uz_vime.js ho prohledává). Kolo 4 owner odložil (2026-
 doladit apku“*). **Kolo 4 spuštěno 2026-10-14** (owner *„4. ano“*) — níž.
 
 #### Kolo 4 (od 2026-10-14, CODE-read) — napřed části změněné od uzavření kola 3 (b05f6d6, 186 commitů), pak zátěž a souběh
+**⭐ Uzavřeno 2026-10-15.** Prošlé: edge funkce, appka, landing, skripty, docs, zátěž, souběh. Co z nálezů hlídá stroj: ㉽ vidí landing,
+㊵ ráčna „každá kontrola má útok nebo důvod v BEZ_UTOKU“, ㊉ mapa souborů v CLAUDE.md, ㉞ + post-commit i runar-verze.js, ㉼ 60 s podle
+hodin. Otevřené zůstává jen past v `check_rate_limit` (níž, nikoho dnes netrefí). Nová kola jen na ownerův pokyn.
 Souběh už zčásti hotový týž den: push s commitem vzniklým během smoke (DECISIONS 2026-10-14 (1)), osiřelé kopie pre-push, kontroly při commitu × sdílený strom.
 - **K4/1 edge funkce — `waitlist-join` (CODE-web, nová, veřejný vstup):** omezení na IP bere první hodnotu `x-forwarded-for` (jako `redeem-code`);
   ✅ **ověřeno pokusem, nedá se podvrhnout** — 6 požadavků s vlastní hlavičkou → 429, s jinou hodnotou i bez hlavičky dál 429 (Supabase
