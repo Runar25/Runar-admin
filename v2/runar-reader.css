@@ -216,6 +216,16 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
     background:linear-gradient(to bottom, transparent 0, var(--bg) 48px);
   }
   .hero-quote{margin:0 auto 22px;border-left:none;border-top:1px solid rgba(125,88,56,0.35);padding:16px 0 0;text-align:center;max-width:100%;font-size:0.95em;}
+  /* 2026-10-15 (KUKY: „Rúnarova úvodní fotka je vždy jen Rúnar… dole je pak šipka na posun na druhou stránku“): první obrazovka
+     telefonu je jen Rúnar a proužek se šipkou (#hero-down) stojí na jejím spodku — hero je aspoň tak vysoké jako obrazovka bez horní
+     lišty (48–50 px) a volné místo se rozdělí kolem textu pod fotkou. Do té doby výška podle obsahu: na vyšším telefonu vykoukly pod
+     šipkou záložky, na nižším byla šipka pod okrajem. Pevné mezery pod podtitulkem 28 + 32 → 12 + 12 px (bod 1 návrhu mezer).
+     .hidden: min-height by jinak přebil max-height:0 a skryté hero by drželo prázdné místo. */
+  .hero{display:flex;flex-direction:column;min-height:calc(100vh - 50px);min-height:calc(100svh - 50px);}
+  .hero.hidden{min-height:0;}
+  .hero-inner{flex:1 0 auto;}
+  .hero-text-col{flex:1 0 auto;justify-content:center;padding-bottom:12px;}
+  .hero-sub{margin-bottom:12px;}
 }
 @media(max-width:420px){
   .topbar-inner{padding:12px 16px;}
@@ -302,7 +312,8 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 .app-tab-primary.active{color:var(--gold);border-bottom-color:var(--gold);}
 
 /* ── SECONDARY TAB ROW (Reading, Journal, Collection) ── */
-.app-tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:28px;}
+/* 2026-10-15 (owner „mezery 1–4 ano“): mezera pod záložkami k obsahu 28 → 16 px — platí pro všechny záložky i hotové čtení. */
+.app-tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:16px;}
 /* 2026-09-28 (report KUKY, screenshoty): flex:1 dával třem záložkám STEJNOU třetinu, „◈ RUNES COLLECTION“ se do ní nevešel
    a přetékal ven (změřeno v iframe: 401–490 px o 6–13 px, ≤380 px o až 13 px + vodorovný posuv stránky). flex:1 1 auto dělí
    šířku podle délky popisku — delší záložka dostane víc. */
@@ -346,7 +357,7 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 .tree-growth-section{padding:24px 0 8px;border-top:1px solid var(--border);}
 .tree-growth-quote{text-align:center;font-style:italic;color:var(--muted);font-size:0.9em;line-height:1.9;padding:0 12px;}
 /* ── READING MODE TOGGLE ── */
-.reading-mode-row{display:flex;gap:0;margin-bottom:22px;border:1px solid rgba(46,74,112,0.4);}
+.reading-mode-row{display:flex;gap:0;margin-bottom:16px;border:1px solid rgba(46,74,112,0.4);}
 .reading-mode-btn{flex:1;font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;padding:10px 8px;background:transparent;border:none;color:var(--muted);cursor:pointer;transition:all 0.2s;text-align:center;border-bottom:2px solid transparent;}
 .reading-mode-btn:hover{color:var(--gold);}
 .reading-mode-btn.active{color:var(--gold);background:rgba(255,191,0,0.05);border-bottom-color:var(--gold);}
@@ -447,7 +458,7 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
    jako „✦ HOW RÚNAR SEES THE RUNE“ v Kolekci (Cinzel, zlatá) a mezera pod ním. */
 .guide-lbl{background:none;border:0;padding:0;cursor:pointer;display:block;width:100%;text-align:center;
   font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;text-transform:uppercase;color:var(--gold);
-  margin:4px 0 20px;}
+  margin:4px 0 14px;}   /* 2026-10-15: 20 → 14 px (bod 3 návrhu mezer; týž štítek v Kolekci) */
 .guide-lbl::after{content:" +";opacity:.55;}
 .guide-lbl[aria-expanded="true"]::after{content:" −";}
 .guide-lbl:focus-visible{outline:1px solid var(--gold);outline-offset:4px;}
@@ -598,6 +609,9 @@ input:autofill{filter:none;}
 .btn-half.sec{border-color:var(--border);color:var(--muted);}
 .btn-half.sec:hover{border-color:var(--border2);color:var(--white);background:transparent;}
 .status{text-align:center;font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:1.5px;color:var(--gold);margin-top:12px;min-height:18px;}
+/* 2026-10-15 (bod 4 návrhu mezer): prázdný stavový řádek místo nedrží — pod HEFJA LESTURINN stály dva prázdné (#st-setup, #st-reader)
+   a s okraji dělaly 82 px prázdna. Zpráva se objeví pod tlačítkem, takže nic nad ním neposkočí. */
+.status:empty{min-height:0;margin-top:0;}
 .status.ok{color:var(--teal);}
 .status.err{color:#e07070;}
 
