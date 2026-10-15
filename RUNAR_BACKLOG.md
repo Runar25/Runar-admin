@@ -671,6 +671,10 @@ Souběh už zčásti hotový týž den: push s commitem vzniklým během smoke (
 - **K4/3 landing `web/site` (CODE-web):** zásady soukromí registraci na webu pokrývají (Brevo, otisk e-mailu). Nález: landing bere texty živě
   z UI_TEXT appky, ale ㉽ četla jen v2/ — klíč, který appka přestane číst, by nabídla ke smazání a přejmenování by web ukázal prázdně.
   ✅ Opraveno 2026-10-14 v ㉽ (`scripts/verify_ui_text_used.js`: čte i web/site, chybějící klíč = FAIL) + útok v protipříkladech.
+- **K4/4 skripty (29 nových od kola 3):** každá nová kontrola ve smoke má útok. Nález: pravidlo „nová kontrola = útok“ nic nevynucovalo (výjimky
+  jen v komentáři) a kopie repa pro útoky brala jen .js kontroly. ✅ 2026-10-15: ráčna v ㊵ (`BEZ_UTOKU` s důvody) + .py do kopie.
+- **K4/5 zátěž a souběh:** ㉼ jednou zablokovala push — appka při souběhu nenaběhla do „30 s“ (120 kol smyčky), samostatně prošla.
+  ✅ 2026-10-14: 60 s podle hodin. Dřív v témže dni: pre-push hlídá posun větve, úklid osiřelých kopií (DECISIONS 2026-10-14 (1)).
 - [ ] **Pro ownera / Cowork (obsah, nespěchá; část 28):** hlavička `RUNAR_POPISY_RUN.md` píše „Společný tvar… pozorování, ne pravidlo —
   pravidlo vznikne, až jich bude 25+“. Popisů je 25, spouštěč nastal, pravidlo nikdo nesepsal. Jen připomínka; CODE do obsahu nesahá.
 

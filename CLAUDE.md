@@ -383,7 +383,8 @@ musí to buď **udělat skript samo**, nebo **zastavit práci**, když se to vyn
   (obojí padlo 2026-10-11 znovu, ač stálo v paměti). **Neověřené tvrzení** → Stop-hook zprávy (`hooks/claude/runar-zprava-check.py`
   pravidlo 4): věta s „nejspíš/pravděpodobně/zřejmě“ o kódu nebo souboru projde jen s „neověřeno“. (KUKY 2026-10-11, DECISIONS 2026-10-11 (36).)
 - **Kontroly pod útokem** → smoke ㊵ (`scripts/protipriklady.py`): podstrčená chyba v čisté kopii repa musí kontrolu shodit; pouští
-  se znovu, kdykoli se kontrola změní. Nová kontrola = aspoň jeden útok v `PRIPADY`. (DECISIONS 2026-10-11 (44).)
+  se znovu, kdykoli se kontrola změní. Nová kontrola = aspoň jeden útok v `PRIPADY`, nebo jmenovitě s důvodem v `BEZ_UTOKU` —
+  jinak ㊵ spadne (od 2026-10-15; do té doby to nic nevynucovalo). (DECISIONS 2026-10-11 (44).)
 - **Kontroly při commitu** → `hooks/pre-commit.py` pustí rychlé textové kontroly (`scripts/utils/rychle_kontroly.py`, ~1 s) a zastaví
   jen vadu na staged souboru; cizí necommitnutou práci jen vypíše (chytí ji pre-push v čisté kopii). Hlídá smoke ㊆. Tři dny po sobě
   šel commit bez kontroly, která čte měněný soubor. (CODE-tune s CODE-read, DECISIONS 2026-10-14 (9).)
