@@ -56,9 +56,14 @@ konkrétní pokyn v user promptu ji může přebít (DECISIONS 2026-10-16 (1): �
     hægt að finna fyrir á ekki heima hér.“**; chybí i „No filler“ a pravidlo přítomného času.
 
 ### A3. Logika a technické vady
-1. Ask délka (střední): IS `:1963` „ekki meira en um 90 orð … Svarið má vera lengra ef skýringin þarf þess.“ výslovně povoluje přesah;
-   strop `RUNAR_MODES.ask.max_tokens` 320 a IS je na tokeny hustší → usekne `_trimToSentence`. EN `:1922` dvojznačné. → jedno číslo,
-   věta jako zdůvodnění („90 slov, protože se nečte nahlas“), bez svolení.
+1. Ask délka — **OPRAVENO V PODKLADU 2026-10-16 po ownerově „než to opravíš, zjisti, proč to tam je“.** Věta má důvod: DECISIONS
+   2026-09-06 (Ask 40 → 90 slov; měřeno 8 run × 3 délky, 90 vyhrálo v dílech obrazu i opakování; 40 bylo odvozeno od hlasu a Ask hlas
+   nemá). EN „This answer is read, never spoken aloud, so it may take the room an explanation needs.“ je ZDŮVODNĚNÍ 90 slov, ne vada —
+   nechat. Vada je jen v IS: původní „svo það má taka það rými sem skýring þarf“ se 2026-09-27 (0fb222c, přepis kvůli is-grammar-qa)
+   posunula na „Svarið má vera lengra ef skýringin þarf þess.“ = svolení jít přes 90. Produkce od 2026-09-27: IS Asků 6, max 82 slov,
+   nad 90 žádný; EN 110, nad 90 jen 4 (max 101) → přesah ani useknutí se v praxi neděje. → jen IS vrátit ke smyslu zdůvodnění:
+   **„Svarið er aðeins lesið og aldrei talað upphátt, þess vegna fær það meira rými en lesturinn.“** (Greynir OK; „þess vegna“ běžné).
+   Moje původní znění tohoto bodu („EN dvojznačné, jedno číslo bez svolení“) důvod přehlédlo.
 2. Čtení „pro někoho“ v IS oslovuje rodem MAJITELE účtu: `_addressContext` (`:1229–1235`) čte `userGender` i v režimu `someone`
    (`runar-reading.js:467–479`) → v `someone` použít `hk` (nebo se zeptat).
 3. Single s otázkou: `qBranch` `:1799` / `:1778` „Let Kenaz answer: "<q>" — through image and symbol, not advice.“ — „answer“ zve
