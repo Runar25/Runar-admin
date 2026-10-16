@@ -162,6 +162,8 @@ const USAGE = [
   '  --runes     A,B,C          explicit spread runes; else a random distinct sample',
   '  --life-rune Gebo|self|none life rune context; self = life==drawn per reading (default none)',
   '  --korekce   db|none      corrections block: db = rows of runar_corrections, the way the app loads them (default none)',
+  '  --sys-extra    "text"   LAB: append this sentence to the END of the system prompt (system × user placement test)',
+  '  --prompt-extra "text"   LAB: append this sentence to the END of the user prompt',
   '  --without   a,b,c        build the reading WITHOUT these parts of the prompt — for hearing',
   '              Groups: dice (all per-reading rolls) · rules (the standing rules) · all.',
   '              how it sounds stripped back. `--without list` prints what can go.',
@@ -559,7 +561,9 @@ async function main() {
     // Bez tohohle by --voice zmenil jen system prompt a pravidla registru by se neprojevila.
     vm.runInContext('activeVoice = ' + JSON.stringify(voiceKey) + ';', ctx);
   }
-  const sysPrompt = call('buildSysPrompt', [null, lang, voiceKey]);
+  // --sys-extra (2026-10-16, CODE-read): labová věta na konec systému — test, jestli sol pravidlo v systému poslechne stejně jako v user
+  // promptu (CLAUDE.md „Reading systém“, KLÍČ: do 2026-10-16 tvrdilo, že systém model ignoruje; ověřeno jen na Claudovi 2026-06).
+  const sysPrompt = call('buildSysPrompt', [null, lang, voiceKey]) + (args['sys-extra'] ? '\n' + args['sys-extra'] : '');
   const sysSha = crypto.createHash('sha256').update(sysPrompt).digest('hex').slice(0, 12);
 
   let seasonBucket = null;
@@ -748,7 +752,7 @@ async function main() {
       // stálo natvrdo [] — globál ze sandboxu builder nečte, takže --korekce db bez tohohle neměnila prompt ani o znak (ověřeno dry-run).
       ? call(spec.builder, [u, runes[0], lang, G('corrections')])
       : call(spec.builder, [u, runes, lang, G('corrections')])) + _lr();
-    const prompt = stripLines(build());
+    const prompt = stripLines(build()) + (args['prompt-extra'] ? '\n' + args['prompt-extra'] : '');   // --prompt-extra: LAB, viz --sys-extra
 
     // DŮKAZ, že vypnutí opravdu ubralo. Jednou za dávku, u prvního čtení: postav týž
     // prompt s PŮVODNÍMI funkcemi a porovnej. Kdyby se helper přejmenoval, override by
