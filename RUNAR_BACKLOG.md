@@ -7,6 +7,18 @@
 ---
 
 ## Čtení a islandština — co zbývá (prompt prakticky hotový, owner 2026-10-12)
+- [ ] **Kontrola promptu tvorby čtení před spuštěním — 2026-10-16 (CODE-read)** (owner: *„jakákoliv další velká kontrola je vítána…
+  chceme vychytat všechny mouchy“*). Celé nálezy s řádky a hotovými ověřenými IS opravami: `docs/inbox/2026-10-16-kontrola-promptu.md`.
+  - [ ] **CODE-tune — opravy (A):** krize v Asku: pravidlo „mimo téma neodpovídej“ přebije větu o 112 (vysoká) · 19 islandských chyb
+    v živých promptech (mj. „Sleppu“ → „Slepptu“ v každém IS single, chybné pravidlo 2. osoby v IS systému, „rúna“ × „rún“, Kříž „einum
+    flæði“, Yggdrasil „til Heljar“, kalky v bloku „never“) · Ask v IS povoluje přesah 90 slov (useká se) · „pro někoho“ oslovuje rodem
+    majitele účtu · single „Let X answer“ zve k předpovědi · životní runa a jméno dostávají „popiš obraz“ bez obrazu · EN esence × „Mention
+    by name once“ · technické (dvojité mezery, „PERSON: you“, korekce za pokynem JSON, ✦ nový řádek × „no breaks“) · proxy `SOL_EFFORTS`
+    `minimal` neexistuje (ověřeno) · známé duplikáty „Respond in English.“.
+  - [ ] **Owner rozhodne (B):** studené čtení ve struktuře (otázka runy „in you“, štítky pozic „what lives inside“, „subconscious“) ·
+    záměr „Right now“ × časové osy Noren/Kříže/Podkovy · otázka ve spreadech bez pokynu · IS osy Kříže „verdandi/skuld/urd“ · pravidlo
+    CLAUDE.md „system prompt ignoruje“ je na solu neměřené a proti návodům výrobců (návrh: malý pokus) · lab: role developer, Structured
+    Outputs, „check every sentence“ bez přemýšlení, velká písmena v IS, příprava na gpt-6.1-sol.
 Owner 2026-10-12: *„prompt už je prakticky hotovo. takže pozor na to, co tam leží.“* Výzkum a nápady k promptu, obrazům, Asku a Vegvísiru
 (dřív „Reading quality“, nálady, HANDOFF57, audity obrazů, Vegvísir, testy „obrazy se potkávají“ a prompt z „Nálezů z workflow“) leží doslova
 v `docs/archive/RUNAR_BACKLOG_odlozene.md` jako ⏸ — nejsou to úkoly. Vrací se, až se vada objeví v nových čteních a owner na ni upozorní

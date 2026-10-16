@@ -6395,3 +6395,5 @@ nedostupné). Data mimo repo: `~/runar-eval/podoby-bez-delky-2026-10-09.json`, `
 - **Co z toho (návrh, rozhoduje owner):** blok nemazat naslepo; zúžit ho na korekce, které sol skutečně dělá (kandidát: 28 opusových
   pryč, „bertum“ zůstává; nové chyby z živých čtení přidává owner jako dosud); obecný vliv bloku (0 : 2) ověřit větším vzorkem jen
   na ownerovo ano. Data: `~/runar-eval/korekce-pokus/` (mimo repo).
+- **Výhrada (2026-10-16, kontrola promptu):** `gen_batch.js` skládal single bez otázky runy a bez připomínky délky (chyběly translations),
+  takže pokus neběžel na přesně produkčním promptu. Obě ramena stejně → závěr o korekcích tím nedotčen; nástroj opraven týž den.
