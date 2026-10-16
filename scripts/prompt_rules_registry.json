@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-10-16",
- "prompt_version": "v5.09-crisis-112",
+ "prompt_version": "v5.10-crisis-ask",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
@@ -682,7 +682,7 @@
    "zacatek": "If the seeker is thanking you or taking their leave rather than asking"
   },
   {
-   "hash": "ac76ef9a9aeb",
+   "hash": "1dd9ab7951e8",
    "lang": "en",
    "zdroj": "ask",
    "zacatek": "If the question is not about this reading (small talk, facts, unrelate"
@@ -1666,7 +1666,7 @@
    "zacatek": "Ef leitandinn þakkar eða kveður í stað þess að spyrja, svaraðu með ein"
   },
   {
-   "hash": "de42ba2ce3af",
+   "hash": "df1da31b024a",
    "lang": "is",
    "zdroj": "ask",
    "zacatek": "Svaraðu ekki spurningu sem snýst ekki um þennan lestur. Það á við um s"

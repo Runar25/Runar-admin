@@ -67,7 +67,9 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 // v5.09 (2026-10-16): krize → 112 (Island a celá Evropa), ne čísla z jiných zemí — věta v DEF_CHAR_*.never (hlášení 59c64907: model
 //    sám nabídl „In the US or Canada… 988“; owner „přeformulovat na něco evropského… nejsme poradna“).
 //    Štítek anglicky (§31 — admin ho vidí u čtení); do pushe stál česky „v5.09-krize-112“, žádné čtení s ním uložené není.
-const RUNAR_PROMPT_VERSION = 'v5.09-crisis-112';
+// v5.10 (2026-10-16): pravidlo Asku „otázka mimo čtení → vrať k runám“ neplatí pro řeč o sebepoškození — jinak by přebilo větu o 112
+//    ze v5.09 (CODE-read, kontrola promptu 2026-10-16; ownerův test 59c64907 byl v Asku).
+const RUNAR_PROMPT_VERSION = 'v5.10-crisis-ask';
 
 // Měsíční strop hlasu pro všechny (VOICE_MONTHLY_LIMIT = 5, od 2026-09-11) ZRUŠEN 2026-10-11: „limit na hlas max 5 na měsíc“ byl
 // ownerův pokyn pro testery, omylem pro všechny (DECISIONS 2026-10-11 (49)); owner: „žádný měsíční strop 5 hlasů není!!!“. Rúnar přečte
