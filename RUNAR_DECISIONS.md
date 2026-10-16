@@ -11628,3 +11628,20 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   yet“) a jednou klikne „Run now“ u úlohy `runar-zpravy-gmail`, ať schválí nástroje (jinak se běh zastaví na dotazu).
 - Affected doc(s): `CLAUDE.md` §30 (pravidlo pro nová mazání), `RUNAR_PRIVACY.md` (lhůta zpráv), `RUNAR_BACKLOG.md` (Gmail uzavřeno),
   `memory/schranka-runar-gmail.md` (owner jen odpovídá), `memory/is-vazba-check.md` (spoj sloves) — v témže commitu.
+
+## 2026-10-16 (3) — Kontrola promptu, část B: spready bez časového rámce, otázka ve spreadu do labu, test system × user, návody výrobců do V3
+
+- **Rozhodl:** owner 2026-10-16 na otázky z kontroly promptu (BACKLOG „Kontrola promptu tvorby čtení před spuštěním“):
+  *„7. ano. myslím, že celkově u spreadů vynechat. asi všechny časové tvary pro spready ignorovat, jelikož mají svůj tvar. a pro „this reading
+  is for“ dopsat poznámku, že platí jen pro single čtení“* · *„8. to by měla a je potřeba to testovat“* · *„9. ano a udělat test. jen EN jako
+  první“* · *„10. tohle je dobré zkusit pro V3… zapsat to… řešit to budeme později“* · k bodu 6: *„„what strength is already in you“ na tom
+  není nic špatného. je potřeba si lépe určit definice, kdy je to tvrzení o člověku a co je neškodné povzbuzení či konstatování faktu.“*
+- **Proč:** spready mají vlastní časovou osu (Norny Urður/Verðandi/Skuld, Kříž a Podkova pozice minulost/budoucnost) a záměr „Right now —
+  speak in the present“ jí odporoval v témže promptu. Otázka ve spreadu dnes stojí jen v hlavičce bez pokynu. Pravidlo „system prompt
+  model ignoruje“ vzniklo na jednom testu s Claudem a výrobci učí opak.
+- **Co:** CODE-tune — spready bez `_intentionContext` (a jiných časových rámců), poznámka u „This reading is for“; CODE-read — lab otázky
+  ve spreadu, test EN system × user, definice tvrzení o člověku k ownerovu schválení. CLAUDE.md „Reading systém“ přepsán na „neměřeno na solu“.
+  ⚠️ Rozpor s minulostí (§21): v0.9 eval 2026-07 odstraňoval tah „already“ jako studené čtení (`runar-character.js:1010`); owner teď
+  „what strength is already in you“ za vadu nepovažuje → definice musí říct, čím se liší od dřívějšího „already“ (oznamovací věta ×
+  otázka / povzbuzení).
+- Affected doc(s): `CLAUDE.md` (Reading systém, KLÍČ), `RUNAR_BACKLOG.md` (kontrola promptu, nápady pro V3) — v témže commitu.

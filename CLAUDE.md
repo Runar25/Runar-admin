@@ -470,7 +470,10 @@ runePhrase || …` po poolu nesáhne), a `_seasonBucket` vrací pool pro všech 
 ani ten guard nezabere. Padá s tím i los klíčových slov (`pickedKws`), který visí na téže
 podmínce. Sezónní **sáček** se přesto čerpá při každém čtení — to je jediný živý účinek poolů.
 Sáček proti opakování má klíč per SADA run; u spreadu se losuje ze všech tažených, ne z první pozice.
-KLÍČ: per-čtení user-prompt injekce model POSLECHNE, system prompt IGNORUJE. Reader i shrine = `buildSysPrompt`.
+KLÍČ (2026-06-12, jeden test na Claudovi): konkrétní pokyn v user promptu vyhrál nad obecným pravidlem v systému. **Na solu neměřeno**
+a výrobci učí opak (OpenAI Model Spec: system/developer zpráva má vyšší autoritu než user; Anthropic: stálá pravidla do systému,
+krátká připomínka na konec) — rozhodovat mohla poloha a konkrétnost, ne role. Test EN běží (owner 2026-10-16, DECISIONS 2026-10-16 (3));
+do výsledku to neber jako pravidlo. Do 2026-10-16 tu stálo „user prompt model POSLECHNE, system prompt IGNORUJE“. Reader i shrine = `buildSysPrompt`.
 
 ### Spread systém
 Kredity = **per typ čtení**, NE počet run. Počty run i ceny = `SPREAD_COSTS` / `SPREAD_CONFIG`

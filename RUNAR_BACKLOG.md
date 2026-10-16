@@ -15,10 +15,43 @@
     majitele účtu · single „Let X answer“ zve k předpovědi · životní runa a jméno dostávají „popiš obraz“ bez obrazu · EN esence × „Mention
     by name once“ · technické (dvojité mezery, „PERSON: you“, korekce za pokynem JSON, ✦ nový řádek × „no breaks“) · proxy `SOL_EFFORTS`
     `minimal` neexistuje (ověřeno) · známé duplikáty „Respond in English.“.
-  - [ ] **Owner rozhodne (B):** studené čtení ve struktuře (otázka runy „in you“, štítky pozic „what lives inside“, „subconscious“) ·
-    záměr „Right now“ × časové osy Noren/Kříže/Podkovy · otázka ve spreadech bez pokynu · IS osy Kříže „verdandi/skuld/urd“ · pravidlo
-    CLAUDE.md „system prompt ignoruje“ je na solu neměřené a proti návodům výrobců (návrh: malý pokus) · lab: role developer, Structured
-    Outputs, „check every sentence“ bez přemýšlení, velká písmena v IS, příprava na gpt-6.1-sol.
+  - **Owner 2026-10-16 k části B** (DECISIONS 2026-10-16 (3)):
+    - [ ] **Studené čtení — napřed definice** (owner: *„„what strength is already in you“ na tom není nic špatného. je potřeba si lépe určit
+      definice, kdy je to tvrzení o člověku a co je neškodné povzbuzení či konstatování faktu“*). CODE-read navrhne definice ownerovi;
+      štítky pozic a otázky run se posoudí až podle nich.
+    - [ ] **CODE-tune — spready bez časového rámce** (owner: *„celkově u spreadů vynechat… všechny časové tvary pro spready ignorovat, jelikož
+      mají svůj tvar. a pro „this reading is for“ dopsat poznámku, že platí jen pro single čtení“*): `_intentionContext` (a jiné časové
+      rámce) ve spreadech nevkládat; u `intention_lbl` / IS v UI poznámka „jen pro jednu runu“ (EN + IS, §2, §31).
+    - [ ] **Otázka ve spreadu** (owner: *„to by měla a je potřeba to testovat“*): pole vidí Standard a Premium (i testeři) ve všech výkladech
+      (`updateQuestionGate`, runar-auth.js), spread ji má jen v hlavičce bez pokynu. CODE-read napřed lab (pokyn + malý vzorek), pak CODE-tune.
+    - [ ] **CODE-read — test „pravidlo v systému × v user promptu“, jen EN** (owner: *„ano a udělat test. jen EN jako první“*). CLAUDE.md
+      přepsán na „neměřeno na solu“ týž den.
+    - IS osy Kříže „verdandi/skuld/urd“ — zatím bez rozhodnutí.
+    - [ ] **Pro V3 — rozpracováno níž** (owner: *„dobré zkusit pro V3, kterou máme už mírně rozpracovanou. zapsat to. celé to rozpracuj, ať je
+      čeho se chytit, ale řešit to budeme později“*).
+  - **Nápady pro V3 z návodů výrobců (2026-10-16, CODE-read; řeší se později, v labu, ne v produkci).** Každý: co · proč (zdroj) · jak
+    změřit · riziko. Podklad s citacemi a URL: `docs/inbox/2026-10-16-kontrola-promptu.md` (B6).
+    1. **Role `developer` místo `system` pro sol** (`claude-proxy/index.ts:188`) · OpenAI API reference: pro novější modely „use developer
+       messages“, Model Spec vyhrazuje „System“ pravidlům OpenAI · malý vzorek, totéž čtení s rolí system × developer, porovnat dodržení
+       pravidel ze systému (zakázaná slova, délka) · riziko: jiné chování modelu u celého promptu → jen lab.
+    2. **Vynucený formát výstupu (Structured Outputs)** místo „return ONLY this JSON array“ · OpenAI doporučuje Structured Outputs, gpt-6-sol
+       je podporuje; kořen schématu musí být objekt → obal `{segments:[…]}`, úprava `_parseSegments` a zrcadla `composeReading` v proxy ·
+       napřed změřit, kolik čtení se dnes nerozparsuje (DB / logy) · riziko: změna formátu na dvou místech (§18, smoke ⑦).
+    3. **„Check every sentence before returning“ bez přemýšlení** (`runar-character.js:55`, IS `:87`, `:94`) · sol běží s `reasoning_effort:
+       none`, kontrola nemá kde proběhnout; OpenAI: u minimálního přemýšlení je důležité výslovné plánování · lab: systém bez kontrolního
+       seznamu × s ním, chyby IS nástroji z §2 · riziko: IS seznam možná pomáhá jako připomínka pravidel — měřit, ne hádat.
+    4. **Méně velkých písmen v IS systému** (SKYLDA, HVERJA, ALDREI… proti jednomu v EN) · Anthropic: novější modely „may overtrigger“,
+       radí zmírnit · lab: IS bez zdůraznění × se zdůrazněním · riziko: OpenAI se k tomu nevyjadřuje, efekt na solu neznámý.
+    5. **Konkrétní volby místo obecných štítků povahy** (PERSONALITY/IDENTITY „calm, compassionate“) · OpenAI: obecné štítky jsou dvojznačné,
+       popsat konkrétní volby ve psaní (HOW YOU SPEAK to už dělá) · obsah = owner + Cowork · riziko: hlas Rúnara je kánon (📜).
+    6. **Příprava na gpt-6.1-sol** · stránka gpt-6-sol odkazuje na 6.1 jako novější; 6.1 nemá `none`, jen `low` a výš; 2026-10-05 6.1 `low`
+       čtení zhoršil (DECISIONS 2026-10-05 (3)) · v labu připravit variantu promptu pro `low` dřív, než gpt-6-sol skončí · riziko: přemýšlející
+       model chce méně předepsaný postup (návody 2026-10-04 bod 6).
+    7. **Data odděleně od pokynů** (obraz, podoba oblasti, otázka ve vlastních značkách místo uvnitř vět) · OpenAI/Anthropic: oddělit vstupy
+       od instrukcí; návody 2026-10-04 bod 5 · lab, měřit opisování obrazu · riziko: známé „pokyn ‚použij tenhle text‘ = opisování“.
+    8. **Poměr zákazů a kladných pokynů** (systém ~62 % vět se zákazem) · Anthropic radí říkat, co dělat; OpenAI varuje jen před opakováním ·
+       přepis po blocích s měřením · riziko: zákazy drží kánon (NO COLD READING) — přepsat znění, ne obsah.
+    9. **Výsledek testu „systém × user“** (výš) rozhodne, kam v V3 patří stálá pravidla a kam per-čtení pokyny.
 Owner 2026-10-12: *„prompt už je prakticky hotovo. takže pozor na to, co tam leží.“* Výzkum a nápady k promptu, obrazům, Asku a Vegvísiru
 (dřív „Reading quality“, nálady, HANDOFF57, audity obrazů, Vegvísir, testy „obrazy se potkávají“ a prompt z „Nálezů z workflow“) leží doslova
 v `docs/archive/RUNAR_BACKLOG_odlozene.md` jako ⏸ — nejsou to úkoly. Vrací se, až se vada objeví v nových čteních a owner na ni upozorní
