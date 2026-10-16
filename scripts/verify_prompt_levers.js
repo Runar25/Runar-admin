@@ -177,8 +177,10 @@ const VYJIMKY = {
     + 'vyžádání pojmenovat smí. Do 2026-09-11 tu stálo „ask oblast nedostává" a byla to už nepravda. '
     + '(Single: oblast vrácena v4.1, 22. 8.)' },
   register: { cesty: ['ask', 'liferune'], proc: 'Táž příčina jako u `domain`. Ověřeno 2026-08-18.' },
-  intention: { cesty: ['ask', 'liferune'], proc: 'Táž příčina jako u `domain` — včetně toho, že `ask` záměr '
-    + 'od 2026-09-11 dostává přes `_askCastContext`. Ověřeno 2026-08-18, přepsáno 2026-09-11.' },
+  intention: { cesty: ['ask', 'liferune', 'norns', 'kriz', 'horseshoe', 'yggdrasil'], proc: 'Táž příčina jako u `domain` — včetně toho, že `ask` záměr '
+    + 'od 2026-09-11 dostává přes `_askCastContext`. Ověřeno 2026-08-18, přepsáno 2026-09-11. '
+    + 'Spready od 2026-10-16 (v5.11) bez záměru: spread má vlastní časovou osu v pozicích a „Right now — speak in the present“ jí '
+    + 'odporovalo (owner: „všechny časové tvary pro spready ignorovat, jelikož mají svůj tvar“, DECISIONS 2026-10-16 (3)).' },
   describe: { cesty: ['norns', 'kriz', 'horseshoe', 'yggdrasil', 'ask', 'liferune'], proc: 'liferune pridano 2026-09-27 (KUKY: vysvetlit runu v kazdem vyznamu, jako Ask explain without image) — esencni radek „after the picture“ patri cteni s obrazem, tady rozporoval vysvetleni → RUNAR_DECISIONS.md 2026-09-27 (7). '
     + 'v4.9 (2026-08-23): esencni radek VEN ze spreadu — rikal pojmenuj proti zamernemu nejmenuj (KUKY: zatim nejmenuj). Jmena nese UI pozic. '
     + 'ask pridano 2026-09-18 (handoff CODE-read #6): pravidlo se tlouklo s vetvi rozlouceni/odmitnuti a jeho zakaz vyznamu-pro-tebe nechal Runara odmitnout primou otazku what does it mean for me. → RUNAR_DECISIONS.md 2026-09-18.' },
