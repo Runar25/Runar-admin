@@ -298,17 +298,22 @@ const NAME_PLACEMENTS_IS = [
   'Láttu nafnið {name} koma seint, undir lokin, sem hljóðláta viðurkenningu.',   // 2026-09-27: „nafnið“ (apozice), dřív E001
   'Notaðu ekki nafnið {name} í þetta sinn. Lesturinn stendur án þess.',   // 2026-09-27: dřív „Í þetta sinn skaltu… —“ (E001)
 ];
+// Skutečné jméno, ne §12 záložní oslovení („you“ / „þú“ dosazuje startReading při prázdném poli). Jedno místo pro _namePlacement
+// i hlavičky builderů — 2026-10-16 (kontrola promptu A3.7): hlavička „PERSON: you“ / „Seeker: you“ podávala zájmeno jako jméno.
+function _skutecneJmeno(name) { return !!name && name !== 'you' && name !== 'þú'; }
+// Věty spojené mezerou bez prázdných kusů — 2026-10-16 (A3.6): „No labels. ' + '' + ' 11-12 sentences“ dávalo dvojitou mezeru.
+function _spoj() { return Array.prototype.slice.call(arguments).filter(Boolean).join(' '); }
 function _namePlacement(name, lang, jenKonec) {
   // No real name: reading.js:238 fills the §12 fallback ('you' / 'þú') when the name field is blank
   // (Visitor, for-someone, no saved name). Emit NO name instruction — there is nothing to place or
   // omit, and "do not use the name þú" would fight the mandated second-person voice.
-  if (!name || name === 'you' || name === 'þú') return '';
+  if (!_skutecneJmeno(name)) return '';
   var pool = lang === 'is' ? NAME_PLACEMENTS_IS : NAME_PLACEMENTS;
   // KUKY (via Cowork relay): a name in every reading grates -> omit it in at least half (~55%).
   // INVARIANT: the "do not use the name" variant must stay LAST in both pools — this picks it by
   // position. Reordering a pool without moving it silently breaks the ratio.
   if (Math.random() < 0.55) return pool[pool.length - 1].split('{name}').join(name);
-  var placed = pool.slice(0, pool.length - 1); // early / middle / late
+  var placed = pool.slice(0, pool.length - 1); // middle / late (2026-10-16: komentář říkal i „early“, pool má dvě)
   var i = Math.floor(Math.random() * placed.length);
   // 2026-09-30: jenKonec = Norny s obrazem zvířete (B2 „k tazateli až poslední věta“, IMG_POSTAVA) — „uprostřed“ by B2
   // odporovalo, proto ho nahradí poslední varianta (pozdě). Los se nemění (týž počet volání Math.random), jen výsledek.
@@ -591,10 +596,13 @@ const ESSENCE_FRAMES_IS = [
 // něčeho očekávaného“): pryč „the stone that bears no mark“ — sol ji opsal doslova a popsal jen vzhled kamene (report 09:56).
 const ESSENCE_BLANK = 'THE ESSENCE LINE: after the picture, one short line that names the blank rune once and says what it is in this scene — what is not yet known, not yet decided, or missing where something was expected. It gives no meaning of its own; the line leaves that open place open instead of filling it. Plain words a stranger to runes can grasp. No invented mechanism, no fate. Never tell the seeker what it means for them.';
 const ESSENCE_BLANK_IS = 'KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem nefnir auðu rúnina einu sinni og segir hvað hún er í þessari mynd — það sem enn er óþekkt, enn óráðið eða vantar þar sem búist var við einhverju. Hún gefur enga merkingu af sjálfri sér; línan lætur opna rýmið standa opið í stað þess að fylla það. Hversdagsleg orð sem ókunnugur skilur. Engin uppdiktuð skýring, engin örlög. Segðu leitandanum aldrei hvað þetta þýðir fyrir hann.';
+// EN sol: esenční rámec začíná „{Runa} {sloveso}“ (v5.01), runu tedy jmenuje sám. Čte i single builder — pokyn „Mention <runa> by name
+// once“ tam byl druhý pokyn na totéž místo (2026-10-16, kontrola promptu A3.5). Opus a IS rámec [0] runu nejmenuje → pokyn zůstává.
+function _esenceJmenujeRunu(lang) { return lang !== 'is' && typeof READ_ENGINE !== 'undefined' && READ_ENGINE === 'sol'; }
 function _essenceFrame(lang, rune) {
   if (rune && rune.n === 'Blank') return lang === 'is' ? ESSENCE_BLANK_IS : ESSENCE_BLANK;
   // v5.01: sol (EN) dostane začátek věty se jménem runy a slovesem z korpusu — proč viz ESSENCE_VERBS_SOL. Dva losy: rámec, sloveso.
-  if (lang !== 'is' && typeof READ_ENGINE !== 'undefined' && READ_ENGINE === 'sol') {
+  if (_esenceJmenujeRunu(lang)) {
     var ram = ESSENCE_FRAMES_SOL[Math.floor(Math.random() * ESSENCE_FRAMES_SOL.length)];
     var sl = ESSENCE_VERBS_SOL[Math.floor(Math.random() * ESSENCE_VERBS_SOL.length)];
     return ram.replace('{R}', (rune && rune.n) || 'The rune').replace('{V}', sl);

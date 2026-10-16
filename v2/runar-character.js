@@ -91,7 +91,7 @@ Ef einhver talar um að skaða sig eða binda enda á líf sitt nefnir Rúnar 11
 4. Fallstjórn: rún í þolfalli = rún; fleirtala nefnifall = rúnir / rúnirnar. Sagnirnar "láta" og "gera" taka NAFNHÁTT á eftir sér, ekki lýsingarhátt: "láta sjá" (ekki "láta séð"), "láta koma". Orðasambandið "láta sjá til sín" merkir að koma fram.
 5. Kynið er tilgreint í línunni ÁVARP; fylgdu því.
 6. Notaðu EINGÖNGU þekkt, hefðbundin íslensk orð. Búðu ALDREI til ný orð, ný samsett orð eða óþekkta beygingu sem rótgróinn málnotandi þekkir ekki. Í vafa: veldu einfaldara, algengara orð. Skáldlegt og bókmenntalegt mál er í lagi — að finna upp orð er það EKKI.
-7. Síðasta skref fyrir skil: lestu textann yfir — (a) hverja sögn í 2. persónu eintölu, (b) hvert lýsingarorð gagnvart kyni + tölu + falli nafnorðsins, (c) að viðmælandinn sé kynhlutlaus eða samræmdur í öllum textanum, (d) að engin ensk sletta sé eftir, (e) að ekkert nýyrði eða óþekkt samsett orð sé eftir, (f) að sagnir eins og "láta/gera" taki nafnhátt en ekki lýsingarhátt.
+7. Síðasta skref fyrir skil: lestu textann yfir — (a) hverja sögn í 2. persónu eintölu, (b) hvert lýsingarorð gagnvart kyni + tölu + falli nafnorðsins, (c) að kyn viðmælandans sé alls staðar það sem línan ÁVARP segir, (d) að engin ensk sletta sé eftir, (e) að ekkert nýyrði eða óþekkt samsett orð sé eftir, (f) að sagnir eins og "láta/gera" taki nafnhátt en ekki lýsingarhátt.
 Svaraðu einungis á íslensku — allur textinn á íslensku.`,
 
 };
@@ -1017,10 +1017,18 @@ function _describeRule(lang, key, rune) {
 // tedy pres to, ze to zna. Zbyva ciste zakaz + kam misto toho koukat (na obraz).
 // v1.2 reframe: LEADS positive and no longer NAMES "already/þegar" — naming the banned word
 // 3x was itself planting it (that was the leak). Detail -> RUNAR_EVAL_LOG.
-function _noColdRead(lang) {
+function _noColdReadPlny(lang) {
   if (lang === 'is')
     return 'ENGIN KÖLD LESNING: Segðu leitandanum aldrei hvað sé satt, á hreyfingu eða vitað innra með honum — það er ágiskun í búningi vitneskju. Lýstu myndinni; innra líf hans er ekki þitt að túlka. Heimurinn raðar sér ekki heldur í kringum hann og hefur ekki verið að undirbúa neitt; engin örlög eru að verki.';
   return 'NO COLD READING: never tell the seeker what is true, stirring, or known inside them — that is an unfalsifiable guess wearing the clothes of knowledge. Describe the image; their inner life is not yours to narrate. The world is not arranging itself around them either: no omen, no preparation, no destiny at work.';
+}
+
+// 2026-10-16 (kontrola promptu A3.4): životní runa a rozbor jména obraz nemají (jejich pravidla: „Explain the meaning in words, not in
+// images“) — „Describe the image“ / „Lýstu myndinni“ jim odporovalo. bezObrazu = jen zákaz studeného čtení.
+function _noColdRead(lang, bezObrazu) {
+  var s = _noColdReadPlny(lang);
+  if (!bezObrazu) return s;
+  return lang === 'is' ? s.replace('Lýstu myndinni; innra líf', 'Innra líf') : s.replace('Describe the image; their inner life', 'Their inner life');
 }
 
 // --- NORNS AXIS HELPER (V2) ---------------------------------------------
@@ -1349,7 +1357,7 @@ function getBirthMonth(d, m, y, lang) {   // `y` už nečte (2026-10-09, viz vý
 // language = add RP_LIFE.xx, do not write a third builder. Same pattern as RP_SINGLE.
 var RP_LIFE = {
   is: {
-    header:'Þú ert Rúnar, rúnavörður Agndofa.',
+    header:'',   // 2026-10-16 (A3.11): opakovalo úvod systémového promptu
     PERSON:'MANNESKJAN', LIFE:'LÍFSRÚNIN', BORN:'FÆDD/UR', MONTH:'ÍSLENSKUR MÁNUÐUR',
     CORE:'MERKINGAR',
     rname:function(r){ return _bezGlosy(r.is_n); },   // 2026-09-24: bez glosy „(Eignir)“ — viz rnPrompt() v runar-utils.js
@@ -1375,7 +1383,7 @@ var RP_LIFE = {
     langInstr:'Svaraðu einungis á íslensku.',
   },
   en: {
-    header:'You are Runar, rune keeper of Agndofa.',
+    header:'',   // 2026-10-16 (A3.11): dřív „You are Runar…“ — opakovalo úvod systémového promptu (a bez čárky)
     PERSON:'PERSON', LIFE:'LIFE RUNE', BORN:'BORN', MONTH:'ICELANDIC MONTH',
     CORE:'MEANINGS',
     rname:function(r){ return r.n; },
@@ -1394,7 +1402,7 @@ var RP_LIFE = {
     rules:['Rules: Rúnar\'s voice — calm and clear. Explain the meaning in words, not in images. One short image may come with it where it makes a sense clearer, but never in place of the explanation.',
            'Do not use journey as a metaphor. Do not use embrace or empower. No exclamation marks.',
            'If you name the Icelandic month, gloss it in English at first mention — e.g. "Sólmánuður, the month of the midnight sun". Never open the reading with an unglossed Icelandic word.'],
-    langInstr:'Respond in English.',
+    langInstr:'',
   },
 };
 
@@ -1414,7 +1422,7 @@ function buildLifeRuneBase(name, rune, day, month, year, lang) {
     '',
     S.intro(name),
     '',
-    S.PERSON + ': ' + name,
+    _skutecneJmeno(name) ? S.PERSON + ': ' + name : '',
     S.LIFE + ': ' + S.rname(rune),
     // 2026-09-30 (KUKY „tak to můžeme vynechat“): rok narození do promptu nejde — čtení ho nepotřebuje a jel by k modelu do USA
     // navíc (čl. 5 GDPR, minimalizace). Rok dál počítá islandský měsíc výš (getBirthMonth), do promptu jde jen jeho jméno.
@@ -1453,7 +1461,7 @@ function buildLifeRunePrompt(name, rune, day, month, year, lang, corrections) {
     // takze si model rod ctenare volil sam. EN vraci '' a filter(Boolean) to zahodi.
     _addressContext(lang),
     // _describeRule (esenční řádek „after the picture…“) ODEBRÁN 2026-09-27 — patří čtení s obrazem; tady rozporoval „vysvětli“.
-    _noColdRead(lang),
+    _noColdRead(lang, true),
     getCorrPrompt(lang, corrections),
   ].filter(Boolean).join('\n\n');
 }
@@ -1710,8 +1718,8 @@ function _parseSegments(raw) {
 // Parser zvládne obojí, ale pokyn si nesmí odporovat → ✦ výslovně DOVNITŘ, na konec posledního textu (jak to dělá sol).
 // IS: is-grammar-qa čisté; „í lok síðasta“ 11 399 (korpus), „aftast í síðasta“ 0 → nepoužito.
 var THOUGHT_MARK = {
-  en: 'AFTER THE READING — inside the JSON, at the end of the last "text" value, on a new line beginning with ✦',
-  is: 'Á EFTIR LESTRINUM: Í lok síðasta textans inni í JSON-fylkinu kemur ein stutt lína til viðbótar í nýrri línu sem hefst á ✦',
+  en: 'AFTER THE READING — inside the JSON, at the end of the last "text" value, on a new line (the only line break in the reading) beginning with ✦',
+  is: 'Á EFTIR LESTRINUM: Í lok síðasta textans inni í JSON-fylkinu kemur ein stutt lína til viðbótar í nýrri línu sem hefst á ✦. Hvergi annars staðar í lestrinum byrjar ný lína',
 };
 // 2026-10-05 (KUKY „zkrať myšlenku u Opusu“): jedna věta, nejvýš THOUGHT_MAX_SLOV slov — jedno číslo pro EN i IS (§20).
 // Do té doby „one more short line“ bez čísla: Opus EN 18 slov (13–25), polovina myšlenek výrok + otázka; sol 11, vždy jedna věta.
@@ -1779,7 +1787,7 @@ var RP_SINGLE = {
     langInstr:'',
     worldFb:function(pk){ return 'lifandi leiðin'; },
     angleIntro:'SJÓNARHORN (fylgdu þessum upphafspunkti og láttu hann móta tóninn og byrjunina): ',
-    qBranch:function(rune,g,q){ return 'Láttu ' + rune + ' svara spurningunni: "' + q + '" — í myndum og táknmáli, ekki ráðgjöf. Nefndu ' + rune + ' einu sinni og fléttaðu nafnið náttúrlega inn í textann.'; },
+    qBranch:function(rune,g,q){ return 'Láttu lesturinn beinast að spurningunni og gefðu engin ráð: "' + q + '". Nefndu ' + rune + ' einu sinni og fléttaðu nafnið náttúrlega inn í textann.'; },
     // Prvni veta („koma fram í myndum, ekki útskýringu") ODSTRANENA 2026-08-21: zadavala
     // opak toho, co zada `_describeRule` v produkcnim profilu. IS 4/20 -> 8/20.
     noqBranch:function(rune,g,world){ return 'Nefndu ' + rune + ' einu sinni og fléttaðu nafnið náttúrlega inn í textann. Ein skýr innsýn nægir — ekki troða öllu inn.'; },
@@ -1800,11 +1808,14 @@ var RP_SINGLE = {
     angleIntro:'READING ANGLE (follow this entry point — let it shape the opening and tone): ',
     // 2026-09-18: „Speak to what lies beneath the question." ODEBRANO — zadalo nitro tazatele
     // (proti NO COLD READING). IS protejsek tez; spready podobnou vetu nemaji (grep).
-    qBranch:function(rune,g,q){ return 'Let ' + rune + ' answer: "' + q + '" — through image and symbol, not advice. Mention ' + rune + ' by name once, woven naturally.'; },
+    // 2026-10-16 (kontrola promptu A3.3, A3.5): „Let <runa> answer“ zvalo k předpovědi (otázka „Will it work out?“ × „never predicts fate“
+    // a „Neither confirm nor refute“ v témže promptu); „through image and symbol“ = zbytek odebraný z noqBranch 2026-08-21. U EN solu
+    // esence runu jmenuje sama (_esenceJmenujeRunu) — „Mention by name once“ jen pro Opus.
+    qBranch:function(rune,g,q){ return 'Let the reading turn toward their question: "' + q + '" — not advice.' + (_esenceJmenujeRunu('en') ? '' : ' Mention ' + rune + ' by name once, woven naturally.'); },
     // Prvni veta („through image, not explanation") ODSTRANENA 2026-08-21 — tyz duvod
     // jako u islandske vetve; anglicky model ji sice prebijel, ale rozpor v zadani
     // neni neco, co se nechava stat proto, ze jeden model si poradi.
-    noqBranch:function(rune,g,world){ return 'Mention ' + rune + ' by name once, woven naturally. One clear insight is enough — do not pack everything in.'; },
+    noqBranch:function(rune,g,world){ return (_esenceJmenujeRunu('en') ? '' : 'Mention ' + rune + ' by name once, woven naturally. ') + 'One clear insight is enough — do not pack everything in.'; },
     // 2026-10-05 (bod 3 auditu): pryč „One paragraph. No breaks. No labels.“ (řádek rozpočtu: „No sections, no labels, no line
     // breaks between thoughts“ + JSON „one flowing paragraph“) a „Stay within the word count — short sentences, no filler.“
     // (rozpočet + připomínka délky na konci + systémové „No filler“). „Mention <runa> by name once“ v qBranch/noqBranch
@@ -1838,7 +1849,7 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     // z životní runy (Isa: z elementu Shadow se stal význam, report 048c14c1); single dostával týž údaj v hlavičce tažené runy.
     ;
   var parts = [
-    S.PERSON + ': ' + u.name,
+    _skutecneJmeno(u.name) ? S.PERSON + ': ' + u.name : '',
     // drawn == life: NEopakovat tutéž runu podruhé jako kontext a NEpřidávat hotovou
     // větu o „významném okamžiku" — model tu citovanou větu opisoval doslova (24/25,
     // stejná třída úniku jako pojmenovaná zakázaná slova). Čočka už ustupuje sama
@@ -1965,7 +1976,7 @@ var RP_ASK = {
     // korpus „nýbúinn að lesa“ 180 · „hvernig þetta hófst“ 20 · „leit fyrst“ 423 · „beindist að“ 3401 · „talar út frá“ 69.
     rules:
       'Leitandinn er nýbúinn að lesa lesturinn. Þú endursegir ekki hvernig hann hófst, hvert hann leit fyrst eða að hverju hann beindist, heldur talar út frá því sem myndin geymir. '
-      + 'Þú talar sem Rúnar, hljóðlátur og íhugull, og gefur aldrei ráð eða fyrirmæli. Gefðu EKKI nýjan spádóm og dragðu ekki nýjar rúnir. Hafðu þetta þétt — ekki meira en um 90 orð. Þetta svar er lesið en aldrei talað upphátt. Svarið má vera lengra ef skýringin þarf þess.\n' +
+      + 'Þú talar sem Rúnar, hljóðlátur og íhugull, og gefur aldrei ráð eða fyrirmæli. Gefðu EKKI nýjan spádóm og dragðu ekki nýjar rúnir. Hafðu þetta þétt — ekki meira en um 90 orð. Svarið er aðeins lesið og aldrei talað upphátt, þess vegna fær það meira rými en lesturinn.\n' +
       'Speglaðu ekki leitandann: ef spurningin fullyrðir eitthvað eða gefur í skyn, hvorki staðfestu það né gerðu það að þínu — segðu það sem dregnu rúnirnar bera í raun, líka þótt það sé ekki það sem spurningin væntir.\n' +
       'Ef leitandinn þakkar eða kveður í stað þess að spyrja skaltu svara með einu eða tveimur hlýjum kveðjuorðum — nafn hans ef lesturinn ber það, myndin fær að hvíla, aðeins líðandi stund. Enginn nýr lestur, engin kennsla og ekkert orð um það sem koma skal.\n' +
       // 2026-09-27: přepsáno na krátké věty (E001); „karakter“ (anglicismus) → „hlutverk“.
@@ -2159,7 +2170,7 @@ function buildNameLorePrompt(name, zaznam, lang, corrections) {
     S.task(name),
     _nameFacts(zaznam, lang),
     _addressContext(lang),
-    _noColdRead(lang),
+    _noColdRead(lang, true),
     getCorrPrompt(lang, corrections),
   ].filter(Boolean).join('\n\n');
 }
@@ -2263,7 +2274,7 @@ var RP_KRIZ = {
       'Fimmta rúnin (Framar) er ekki spá. Hún sýnir hvert þessi orka leiðir ef ekkert breytist.',
       'Sérhver rún verður að setja mark sitt — láttu allar fimm móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leitandinn sér þær þegar.',
     ]; },
-    closing:function(name){ return 'Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir. ' + _namePlacement(name, 'is') + ' Vertu hnitmiðaður — 6 til 7 setningar.'; },
+    closing:function(name){ return _spoj('Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir.', _namePlacement(name, 'is'), 'Vertu hnitmiðaður — 6 til 7 setningar.'); },
     json:'Skilaðu EINGÖNGU þessu JSON-fylki, einum hlut fyrir hverja rún í þeirri röð sem listuð er að ofan, engu á undan eða eftir: [{"rune": "(nafn rúnarinnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rún)"}]. Text-reitirnir tengdir með bili verða að lesast sem ein samfelld heild.',
   },
   en: {
@@ -2271,7 +2282,7 @@ var RP_KRIZ = {
     positions:['RUNE 1 (Centre / Core — present):','RUNE 2 (Above / Aspiration — future):','RUNE 3 (Below / Root — hidden):','RUNE 4 (Behind / Past — past):','RUNE 5 (Ahead / Direction — future):'],
     intro:'The seeker draws five runes — the Compass.',
     landing:'THE LANDING — the last sentence answers one thing: what has become visible now that the five forces are seen together, gathered around the centre. Say it in the words of the image. Not a question, no moral, no "this means", no comfort added.',
-    langInstr:'Respond in English.',
+    langInstr:'',
     instructions:function(ctrName){ return [
       'Read all five as one flowing passage — not five separate readings.',
       'The centre rune (' + ctrName + ') is the heart — it colours everything.',
@@ -2281,7 +2292,7 @@ var RP_KRIZ = {
       'Rune 5 (Ahead): not prophecy — where this energy leads if nothing changes.',
       'Every rune must leave its mark — let all five shape the reading through their quality, never just one or two. Do not name the runes; the seeker already sees them.',
     ]; },
-    closing:function(name){ return 'One paragraph. No breaks. No labels. ' + _namePlacement(name, 'en') + ' 6-7 sentences, complete and whole.'; },
+    closing:function(name){ return _spoj('One paragraph. No breaks. No labels.', _namePlacement(name, 'en'), '6-7 sentences, complete and whole.'); },
     json:'Output format — return ONLY this JSON array, one object per rune in the order listed above, nothing before or after: [{"rune": "(rune name)", "text": "(the part of the flowing reading for this rune)"}]. The text fields joined with a space must read as one seamless passage.',
   },
 };
@@ -2304,7 +2315,7 @@ function buildKrizPromptCross(u, runes, lang, corrections) {
   var S = RP_KRIZ[lang] || RP_KRIZ.en;
   var rCtr = runes[0], rAbo = runes[1], rBel = runes[2], rBeh = runes[3], rAhe = runes[4];
   var ctx = [
-    u.name    ? S.seeker + ': ' + u.name : '',
+    _skutecneJmeno(u.name) ? S.seeker + ': ' + u.name : '',
     u.area    ? S.area + ': ' + u.area : '',
     // 2026-09-08: hlavicka „Seeking: X" odebrana. Spready hodnotu pojmenovavaly
     // DVAKRAT (tady + nalepka v _registerContext), single jen jednou — dolozeno
@@ -2372,11 +2383,11 @@ var RP_NORNS = {
       // korpus „tekið aðra stefnu“ 123.
       'Skuld talar ekki eins og spámaður — heldur um hvert þráðurinn stefnir ef hann heldur áfram eins og nú. Hann getur enn tekið aðra stefnu.',
     ],
-    bigInstruction:function(name, jenKonec){ return 'Gefðu hverri rún sinn eigin takt í röð. Urður er það sem var, Verðandi það sem er að verða og Skuld hvert þráðurinn stefnir. Taktarnir þrír renna saman í EINN samfelldan straum, ekki þrjá aðskilda lestra — engar fyrirsagnir, engin merki. Nefndu ekki rúnirnar né Nornirnar; leitandinn sér þær þegar. ' + _namePlacement(name, 'is', jenKonec) + ' 5 til 6 setningar alls yfir taktana þrjá.'; },
+    bigInstruction:function(name, jenKonec){ return _spoj('Gefðu hverri rún sinn eigin takt í röð. Urður er það sem var, Verðandi það sem er að verða og Skuld hvert þráðurinn stefnir. Taktarnir þrír renna saman í EINN samfelldan straum — engar fyrirsagnir, engin merki. Nefndu ekki rúnirnar né Nornirnar; leitandinn sér þær þegar.', _namePlacement(name, 'is', jenKonec), '5 til 6 setningar alls yfir taktana þrjá.'); },
     json:'Skilaðu EINGÖNGU þessu JSON-fylki, einum hlut fyrir hverja rún í röð (Urður, Verðandi, Skuld), engu á undan eða eftir: [{"rune": "(nafn rúnarinnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rún)"}]. Þrír text-reitir tengdir með bili verða að lesast sem ein samfelld heild.',
   },
   en: {
-    seeker:'Seeker', lifeRune:'Life rune', area:'Area', seeking:'Seeking', seekJoin:' & ', question:'Question', langInstr:'Respond in English.',
+    seeker:'Seeker', lifeRune:'Life rune', area:'Area', seeking:'Seeking', seekJoin:' & ', question:'Question', langInstr:'',
     labels:['URÐUR (urd — what was woven, cannot be undone):','VERÐANDI (verdandi — what is being woven, alive now):','SKULD (skuld — where the thread is heading now, not foretold):'],
     intro:'The seeker draws three runes — the Norns speak.',
     landing:'THE LANDING — the last sentence belongs to Skuld: it holds out two things this movement may be in the seeker\'s life — from what was woven, through what is clearing, to where it now heads — each a state that may be so, left for them to weigh. Drawn from the image, never a prediction, no moral, no comfort added.',
@@ -2390,7 +2401,7 @@ var RP_NORNS = {
       // posazovaly čtenáře do obrazu — Norny začaly psem a skončily „ty“ (report 2026-09-28). Nit = tentýž obraz jako štítek SKULD.
       'Skuld does not predict — she speaks of where the thread is heading if it keeps its course, and it can turn.',
     ],
-    bigInstruction:function(name, jenKonec){ return 'Give each of the three runes its own beat, in order — Urður (what was), Verðandi (what is becoming), Skuld (where the thread is heading). The three beats connect into ONE flowing passage, not three separate readings — no headings, no labels. Do not name the runes or the Norns; the seeker already sees them. ' + _namePlacement(name, 'en', jenKonec) + ' 5-6 sentences total across the three beats.'; },
+    bigInstruction:function(name, jenKonec){ return _spoj('Give each of the three runes its own beat, in order — Urður (what was), Verðandi (what is becoming), Skuld (where the thread is heading). The three beats connect into ONE flowing passage — no headings, no labels. Do not name the runes or the Norns; the seeker already sees them.', _namePlacement(name, 'en', jenKonec), '5-6 sentences total across the three beats.'); },
     json:'Output format — return ONLY this JSON array, one object per rune in order (Urður, Verðandi, Skuld), nothing before or after: [{"rune": "(rune name)", "text": "(the part of the flowing reading for this rune)"}]. The three text fields joined with a space must read as one seamless passage.',
   },
 };
@@ -2399,7 +2410,7 @@ function buildNornsPromptFate(u, runes, lang, corrections) {
   var S = RP_NORNS[lang] || RP_NORNS.en;
   var rUrd = runes[0], rVerd = runes[1], rSkul = runes[2];
   var ctx = [
-    u.name    ? S.seeker + ': ' + u.name : '',
+    _skutecneJmeno(u.name) ? S.seeker + ': ' + u.name : '',
     u.area    ? S.area + ': ' + u.area : '',
     // 2026-09-08: hlavicka „Seeking: X" odebrana. Spready hodnotu pojmenovavaly
     // DVAKRAT (tady + nalepka v _registerContext), single jen jednou — dolozeno
@@ -2430,10 +2441,10 @@ function buildNornsPromptFate(u, runes, lang, corrections) {
     (u.area || u.seeking) ? _priorityContext(false, runes, lang) : '',   // false = bez čočky (odebrána 2026-09-26)
   ].concat(S.beats).concat([
     S.bigInstruction(u.name, _imgPostava),   // 2026-09-30: s B2 jméno jen pozdě / vůbec — „uprostřed“ odporuje „k tazateli až poslední věta“
-    S.json,
     (S.langInstr ? S.langInstr : ''),
     _addressContext(lang, u),
-    getCorrPrompt(lang, corrections),
+    getCorrPrompt(lang, corrections),   // 2026-10-16 (A3.8): před pokynem JSON, jako single a Kříž
+    S.json,
   ]).filter(Boolean).join('\n');
 }
 
@@ -2456,11 +2467,11 @@ var RP_HORSESHOE = {
       'Nefndu ekki staðsetningarnar í textanum en berðu þær í röddinni.',
       'Sérhver rún verður að setja mark sitt — láttu allar sjö móta lesturinn gegnum eðli sitt, aldrei aðeins eina eða tvær. Nefndu ekki rúnirnar með nafni; leitandinn sér þær þegar.',
     ],
-    closing:function(name){ return 'Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir. ' + _namePlacement(name, 'is') + ' 11 til 12 setningar.'; },
+    closing:function(name){ return _spoj('Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir.', _namePlacement(name, 'is'), '11 til 12 setningar.'); },
     json:'Skilaðu EINGÖNGU þessu JSON-fylki, einum hlut fyrir hverja rún í þeirri röð sem listuð er að ofan, engu á undan eða eftir: [{"rune": "(nafn rúnarinnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rún)"}]. Text-reitirnir tengdir með bili verða að lesast sem ein samfelld heild.',
   },
   en: {
-    seeker:'Seeker', lifeRune:'Life rune', area:'Area', seeking:'Seeking', seekJoin:' & ', question:'Question', langInstr:'Respond in English.',
+    seeker:'Seeker', lifeRune:'Life rune', area:'Area', seeking:'Seeking', seekJoin:' & ', question:'Question', langInstr:'',
     positions:['RUNE 1 — Past (what has shaped this, spoken in the image’s own past):','RUNE 2 — Present (what is active now):','RUNE 3 — Hidden / Near future (what is emerging):','RUNE 4 — Challenges (what weighs or blocks):','RUNE 5 — Outside forces (what acts from beyond):','RUNE 6 — Inner state (what lives inside):','RUNE 7 — Outcome (where this is heading):'],
     intro:'The seeker draws seven runes — the Horseshoe.',
     landing:'THE LANDING — the last sentence answers one thing: what has become visible about where the whole movement is tending — the whole arc, not the last rune alone. Say it in the words of the image. Not a question, no moral, no "this means", no comfort added.',
@@ -2470,7 +2481,7 @@ var RP_HORSESHOE = {
       'Do not name the positions in the output. Carry them in your voice.',
       'Every rune must leave its mark — let all seven shape the reading through their quality, never just one or two. Do not name the runes; the seeker already sees them.',
     ],
-    closing:function(name){ return 'One paragraph. No breaks. No labels. ' + _namePlacement(name, 'en') + ' 11-12 sentences.'; },
+    closing:function(name){ return _spoj('One paragraph. No breaks. No labels.', _namePlacement(name, 'en'), '11-12 sentences.'); },
     json:'Output format — return ONLY this JSON array, one object per rune in the order listed above, nothing before or after: [{"rune": "(rune name)", "text": "(the part of the flowing reading for this rune)"}]. The text fields joined with a space must read as one seamless passage.',
   },
 };
@@ -2478,7 +2489,7 @@ var RP_HORSESHOE = {
 function buildHorseshoePromptSeven(u, runes, lang, corrections) {
   var S = RP_HORSESHOE[lang] || RP_HORSESHOE.en;
   var ctx = [
-    u.name    ? S.seeker + ': ' + u.name : '',
+    _skutecneJmeno(u.name) ? S.seeker + ': ' + u.name : '',
     u.area    ? S.area + ': ' + u.area : '',
     // 2026-09-08: hlavicka „Seeking: X" odebrana. Spready hodnotu pojmenovavaly
     // DVAKRAT (tady + nalepka v _registerContext), single jen jednou — dolozeno
@@ -2511,10 +2522,10 @@ function buildHorseshoePromptSeven(u, runes, lang, corrections) {
     (u.area || u.seeking) ? _priorityContext(false, runes, lang) : '',   // false = bez čočky (odebrána 2026-09-26)
   ].concat(S.beats).concat([
     S.closing(u.name),
-    _addressContext(lang, u),
-    S.json,
     (S.langInstr ? S.langInstr : ''),
-    getCorrPrompt(lang, corrections),
+    _addressContext(lang, u),
+    getCorrPrompt(lang, corrections),   // 2026-10-16 (A3.8): před pokynem JSON, jako single a Kříž
+    S.json,
   ]).filter(Boolean).join('\n');
 }
 
@@ -2545,15 +2556,15 @@ var RP_YGGDRASIL = {
       'Nöfn heimanna og laganna koma ekki fyrir í textanum. Láttu þau lifa í röddinni.',   // 2026-09-27: hvorki…né E001
       'Sérhver rún verður að setja mark sitt — láttu allar níu móta lesturinn gegnum eðli sitt, aldrei aðeins fáeinar. Nefndu ekki rúnirnar með nafni; leitandinn sér þær þegar.',
     ],
-    closing:function(name){ return 'Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir. ' + _namePlacement(name, 'is') + ' 14 til 15 setningar.'; },
+    closing:function(name){ return _spoj('Einn texti. Engar hlutaskiptingar. Engar fyrirsagnir.', _namePlacement(name, 'is'), '14 til 15 setningar.'); },
     json:'Skilaðu EINGÖNGU þessu JSON-fylki, einum hlut fyrir hverja rún í þeirri röð sem listuð er að ofan, engu á undan eða eftir: [{"rune": "(nafn rúnarinnar)", "text": "(sá hluti samfellda lestursins sem tilheyrir þessari rún)"}]. Text-reitirnir tengdir með bili verða að lesast sem ein samfelld heild.',
   },
   en: {
-    seeker:'Seeker', lifeRune:'Life rune', area:'Area', seeking:'Seeking', seekJoin:' & ', question:'Question', langInstr:'Respond in English.',
+    seeker:'Seeker', lifeRune:'Life rune', area:'Area', seeking:'Seeking', seekJoin:' & ', question:'Question', langInstr:'',
     tiers:['── CROWN — what shows itself ──','── TRUNK — what carries ──','── ROOTS — what feeds ──'],
     positions:['RUNE 1 — Asgard (the seat high enough to see every other world from):','RUNE 2 — Vanaheim (gold that lies in daylight, not dug from under it):','RUNE 3 — Alfheim (a brightness the sun itself is measured against):','RUNE 4 — Midgard (a fence built from a giant\u2019s brows):','RUNE 5 — Jotunheim (weather no fence was ever built to hold):','RUNE 6 — Svartalfheim (hands working unseen, shaping what the others carry):','RUNE 7 — Nidavellir (wealth that was found, not grown):','RUNE 8 — Niflheim (one spring, feeding eleven rivers, fed by none):','RUNE 9 — Hel (the quiet the roots feed on):'],
     intro:'The seeker draws nine runes — the Yggdrasil, nine worlds.',   // 2026-10-11: „Once a year.“ pryč — důvod u IS výš
-    landing:'THE LANDING — the last sentence answers one thing: what has become visible now that the whole image is seen at once. Set the changed image down beside what the seeker brought (or, if nothing was asked, beside what the image itself carries). Say it in the words of the image. Not a question, no moral, no "this means", no comfort added.',
+    landing:'THE LANDING — the last sentence answers one thing: what has become visible now that the whole image is seen at once. Set the changed image down beside what the seeker asked about (or, if nothing was asked, beside what the image itself carries). Say it in the words of the image. Not a question, no moral, no "this means", no comfort added.',
     beats:[
       'This is not nine separate readings — it is one life seen through nine windows.',
       'Runes 1–3 (Crown): what shows itself — speak of what stands in the light and is seen.',
@@ -2563,7 +2574,7 @@ var RP_YGGDRASIL = {
       'Do not name the worlds or the tiers in the output. Carry them in your voice.',
       'Every rune must leave its mark — let all nine shape the reading through their quality, never just a few. Do not name the runes; the seeker already sees them.',
     ],
-    closing:function(name){ return 'One paragraph. No breaks. No labels. ' + _namePlacement(name, 'en') + ' 14-15 sentences.'; },
+    closing:function(name){ return _spoj('One paragraph. No breaks. No labels.', _namePlacement(name, 'en'), '14-15 sentences.'); },
     json:'Output format — return ONLY this JSON array, one object per rune in the order listed above, nothing before or after: [{"rune": "(rune name)", "text": "(the part of the flowing reading for this rune)"}]. The text fields joined with a space must read as one seamless passage.',
   },
 };
@@ -2571,7 +2582,7 @@ var RP_YGGDRASIL = {
 function buildYggdrasilPromptNine(u, runes, lang, corrections) {
   var S = RP_YGGDRASIL[lang] || RP_YGGDRASIL.en;
   var ctx = [
-    u.name    ? S.seeker + ': ' + u.name : '',
+    _skutecneJmeno(u.name) ? S.seeker + ': ' + u.name : '',
     u.area    ? S.area + ': ' + u.area : '',
     // 2026-09-08: hlavicka „Seeking: X" odebrana. Spready hodnotu pojmenovavaly
     // DVAKRAT (tady + nalepka v _registerContext), single jen jednou — dolozeno
@@ -2609,10 +2620,10 @@ function buildYggdrasilPromptNine(u, runes, lang, corrections) {
     (u.area || u.seeking) ? _priorityContext(false, runes, lang) : '',   // false = bez čočky (odebrána 2026-09-26)
   ].concat(S.beats).concat([
     S.closing(u.name),
-    _addressContext(lang, u),
-    S.json,
     (S.langInstr ? S.langInstr : ''),
-    getCorrPrompt(lang, corrections),
+    _addressContext(lang, u),
+    getCorrPrompt(lang, corrections),   // 2026-10-16 (A3.8): před pokynem JSON, jako single a Kříž
+    S.json,
   ]).filter(Boolean).join('\n');
 }
 
