@@ -20,7 +20,7 @@ const RUNES = [
     n: 'Uruz',     is_n: 'Uruz (Styrkur)',
     g: 'ᚢ',        svg: 'Uruz',
     k:    'raw power, strength, primal force',
-    k_is: 'hráur kraftur, styrkur, frumkraftur',
+    k_is: 'hrár kraftur, styrkur, frumkraftur',
     formula_is: 'Uruz er rún styrks, lífskrafts og innri máttar.',
     world: 'Midgard',   elements: ['Earth'],
     aett: 'freya',

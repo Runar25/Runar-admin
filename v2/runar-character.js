@@ -402,7 +402,7 @@ var RUNE_IMAGES = [
   // 2026-10-01 (KUKY „vsech 7, nasad“, kontrola dvojic run): zavej, ktera si cestu najde SAMA, je tvar Laguz („Water finds its own way“),
   // brana s popisy Laguz 3/3. Raidho ve ctenich zije chuzi, ne veci, ktera se hybe sama. Rytmus nalezeny az chuzi (popis Raidho), Raidho 3/3.
   ['Raidho','cold','Á langri göngu yfir snævi þakta heiðina finnur þú taktinn og hættir að telja skrefin.','On the long walk across the snowy heath you find your rhythm and stop counting the steps.','taktur','natural rhythm','P'],
-  ['Kenaz','any','Aflinn glóir í dimmri smiðjunni og hamarinn mótar járnið.','The forge glows in the dark shed and the iron takes its shape.','kyndill','fire','D', '', '', '', 'cg'],
+  ['Kenaz','any','Aflinn glóir í dimmri smiðjunni og hamarinn mótar járnið.','The forge glows in the dark shed and the iron takes its shape.','eldur','fire','D', '', '', '', 'cg'],
   ['Kenaz','any','Glæðurnar lifa undir öskunni fram á morgun.','The embers stay alive under the ash until morning.','innra ljós','inner light','D'],
   // 2026-09-21 (report #7, KUKY: „Blade pak svetlo — ten blade tam nezapada!"): puvodni radek
   // nesl lampu I hoblinu, model pak stavel scenu z jednoho a esenci z druheho. Rozdeleno;
@@ -416,7 +416,7 @@ var RUNE_IMAGES = [
   // 2026-09-22 (druha vlna): dve ohniska jako u Kenaz lampa/hoblina — dva podmety spojene 'og'
   // bez interakce; model stavel scenu ze dveri a esenci z kavy (eval 2026-08-21, readings 238).
   // 2026-09-23 (identitni brana, 3 slepi soudci): otevrene dvere cetli jako Othila/Wunjo -> dve ruce z popisu Gebo („jedna ruka podava, druha prijima"), Gebo 3/3.
-  ['Gebo','any','Önnur höndin réttir fram og hin tekur á móti.','One hand holds something out, and the other receives it.','að gefa og þiggja','giving and receiving','D'],
+  ['Gebo','any','Önnur höndin réttir eitthvað fram og hin tekur á móti því.','One hand holds something out, and the other receives it.','að gefa og þiggja','giving and receiving','D'],
   // 2026-10-01 (kontrola dvojic): kava pro dva — ve 4 ze 4 cteni druhy clovek u stolu nebyl (prazdna zidle, cekani = Isa, jejiz kava stydne);
   // brana Wunjo 2, Gebo 1. Deka pro dva: oba jsou u toho a oba ubiraji („prostor, ktery patri obema“, popis Gebo), Gebo 3/3. Aspekt jafnvaegi (dosud 0 obrazu).
   ['Gebo','any','Tvö deila einu teppi á köldu kvöldi og hvort togar það ögn minna til sín svo það nái yfir bæði.','On a cold evening two share one blanket, each pulling it a little less their own way so it covers both.','jafnvægi','balance','D', '', '', '', 'lfh'],
@@ -442,10 +442,10 @@ var RUNE_IMAGES = [
   ['Nauthiz','any','Plantan í glugganum snýr sér að glerinu, að þeirri einu stund birtu sem hún fær.','The plant on the sill turns itself flat to the glass, toward the one hour of light it gets.','þörf','need','D'],
   ['Nauthiz','any','Reipið hefur þrútnað í bleytunni og hnúturinn gefur sig ekki, hvernig sem þú togar.','The rope has swollen tight in the wet and the knot will not give, however you pull.','þrýstingur','constraint','P'],
   ['Isa','cold','Lognkafaldið fellur beint niður og hylur allt hljóðlaust.','The windless snowfall comes straight down and covers everything without a sound.','kyrrstaða','stillness','E'],
-  ['Isa','cold','Tjörnin er lögð hjarni og bíður án þess að biðja um neitt.','The pond has iced over and waits without asking for anything.','að bíða','waiting','E'],
+  ['Isa','cold','Tjörnin er ísi lögð og bíður án þess að biðja um neitt.','The pond has iced over and waits without asking for anything.','að bíða','waiting','E'],
   ['Isa','any','Kaffibollinn kólnar á borðinu meðan þú bíður.','The cup of coffee goes cold on the table while you wait.','að bíða','waiting','D'],
   ['Jera','bright','Heyið þornar örlítið meir hverja stund sem sólin helst, og að kvöldi er það tilbúið að snúa.','The hay dries a shade more each hour the sun holds, and by evening it is ready to turn.','þolinmæði','patience','P'],
-  ['Jera','any','Sólarhringurinn lengist hægt fram á vorið.','The day lengthens slowly toward spring.','þolinmæði','patience','E'],
+  ['Jera','any','Daginn lengir hægt fram á vorið.','The day lengthens slowly toward spring.','þolinmæði','patience','E'],
   // 2026-10-01 (kontrola dvojic): testo = skryte zrani (Ingwaz ma skyr pres noc); starsi zneni testa se ve 2 ze 3 cteni stocilo k cekani
   // a „quiet working underneath“. Leto se vraci v zime (popis Jery: sklizis, co jsi udelal driv); zadne seti ani pestovani (KUKY u chleba 2026-09-23).
   // Jera 2/3 — treti hlas Isa s poznamkou „prirozeneji Jera, ale Jera uz ma obraz“ = vada zadani brany (par 1:1), ne obrazu.
@@ -455,10 +455,10 @@ var RUNE_IMAGES = [
   // radku prosel identitnim soudcem 3/3; ze stejne davky jich 14 propadlo a nenasazuje se.
   // Duvod + cisla -> RUNAR_EVAL_LOG.md 2026-09-10 (2).
   ['Jera','bright','Kartöflurnar koma upp úr moldinni margfalt fleiri en handfyllin sem fór niður.','The potatoes come up out of the soil far more than the handful that went in.','uppskera','harvest','P'],
-  ['Jera','bright','Síðasta heyið er komið inn og hlaðan andar hlýju alla sína lengd.','The last of the hay is in and the barn breathes warm the whole way down its length.','uppskera','harvest','P','hay'],
+  ['Jera','bright','Síðasta heyið er komið inn og hlaðan andar hlýju endanna á milli.','The last of the hay is in and the barn breathes warm the whole way down its length.','uppskera','harvest','P','hay'],
   ['Jera','bright','Sami akur sem var svört leðja í vor stendur gullinn og sleginn í lok sumars, eins og í fyrra og eins og hann verður næst.','The same field that was black mud in spring stands gold and cut by summer\'s end, as last year and as it will be next.','hringur','cycle','P'],
   ['Jera','any','Rjúpan verður hvít fyrir snjóinn og brún aftur fyrir lyngið, eftir klukku eldri en allt tal.','The ptarmigan turns white for the snow and brown again for the heath, on a clock older than counting.','hringur','cycle','E'],
-  ['Jera','bright','Þú snýrð heyinu þennan eina þurra eftirmiðdag sem öll vikan leyfir, og það nægir.','You turn the hay the one dry afternoon the whole week allows, and it is enough.','rétt tímasetning','right timing','P','hay'],
+  ['Jera','bright','Þú snýrð heyinu eina þurra eftirmiðdaginn sem vikan leyfir, og það nægir.','You turn the hay the one dry afternoon the whole week allows, and it is enough.','rétt tímasetning','right timing','P','hay'],
   ['Jera','any','Þú sest niður í lok vertíðar og í þetta sinn kallar ekkert á þig að standa upp aftur.','You sit down at the end of the season and this time nothing is calling you to get up again.','umbun','reward','D', '', '', '', 'chg'],
   // 2026-09-23: chleba z Fehu — soudci ho ctou jako odmenu urody (Jera 3/3); KUKY „cim vic obrazu tim vic variant".
   // 2026-09-23 (KUKY „přepsat a otestovat“): chléb „dost pro všechny“ nesl hojnost = Fehu (brána 0/3 i s popisy 0/3).
@@ -468,7 +468,7 @@ var RUNE_IMAGES = [
   ['Jera','any','Lopapeysan sem þú prjónaðir í allan vetur er loksins tilbúin.','The sweater you knitted all winter is finally finished.','umbun','reward','D', '', '', '', 'cfg'],
   ['Eihwaz','any','Reyniviðurinn við bæinn leggst flatur í hviðunni og réttir sig um leið og hana lægir.','The rowan by the farmhouse bends flat in the gust and rights itself the moment it drops.','seigla','resilience','P'],
   ['Eihwaz','any','Þegar skriðan fer af stað tekur rótin álagið og jörðin fyrir ofan hana fer hvergi.','When the scree starts to slide the root takes the strain and the ground above it goes nowhere.','seigla','resilience','P'],
-  ['Perth','any','Andartak glittir í eitthvað á botni lónsins áður en gruggið hylur það aftur.','The lagoon water clears for a moment and something below stirs, then closes over again.','hið hulda sem kemur í ljós','the hidden coming to light','E'],
+  ['Perth','any','Andartak glittir í eitthvað á botni lónsins áður en gruggið hylur það aftur.','For a moment something glints on the lagoon bed before the silt covers it again.','hið hulda sem kemur í ljós','the hidden coming to light','E'],
   ['Perth','any','Í lágri sól koma fótsporin í ljós yfir túnið, andartak, áður en birtan breytist og þau hverfa.','In the low sun a whole trail of footprints comes to light across the field, for a moment, before the light shifts and they are gone.','hið hulda sem kemur í ljós','the hidden coming to light','E'],
   // 2026-09-22 (KUKY „udelej", popis Perth: „ne *nic nevim*, ale *jeste nevim*… mozna ted neni
   // potreba nadobu rozbijet"): obraz, ktery nese JESTE — obsah skryty, ale uz se neco dela.
@@ -483,7 +483,7 @@ var RUNE_IMAGES = [
   // 2026-09-23 (identitni brana, 3 slepi soudci): okno cetli jako Othila 3/3 (domov), i opravene „v necase" -> sob na strazi, Algiz 3/3 ve dvou kolech. Lampa ne: pozemek Kenaz [22].
   ['Algiz','any','Hreindýrið lyftir höfðinu og er á varðbergi.','The reindeer lifts its head, on guard.','vernd','protection','P', '', '', 'postava'],
   ['Sowilo','bright','Miðnætursólin sest aldrei alveg um Jónsmessuna.','The midnight sun never quite sets around Midsummer.','sól','sun','E','midnight-sun'],
-  ['Sowilo','bright','Sólin brýtur loks í gegn og glampar á blautu grjóti.','The sun finally breaks through and glints on the wet stones.','skýrleiki','clarity','E'],
+  ['Sowilo','bright','Sólin brýst loks í gegn og glampar á blautu grjóti.','The sun finally breaks through and glints on the wet stones.','skýrleiki','clarity','E'],
   // 2026-09-09: nahrazeno — „never tilts" je nehybnost, tedy pole Isy; soudce cetl
   // Tiwaz jako Isu opakovane (nejcastejsi jednotliva zamena celeho testu, 5x).
   // Nahrada prosla 3/3 a je SITUACNI: jediny Tiwaz obraz, ktery uz drzel, byl take
@@ -514,7 +514,7 @@ var RUNE_IMAGES = [
   // v každém ročním období dost variant po odchodu chleba. IS: kandidati prošli korpusem + is-grammar-qa (audit 2026-09-23).
   ['Fehu','any','Ullin er lögð inn og fyrir hana kemur kaffi og sykur.','The wool is traded in, and coffee and sugar come back for it.','auður','wealth','P', '', '', '', 'cf'],   // 2026-09-30: aspekt „mobile energy“ z klíčů Fehu odebrán
   ['Fehu','any','Mjólkin flóir yfir barminn á fötunni.','The milk spills over the brim of the pail.','efnisleg velsæld','material prosperity','P'],
-  ['Uruz','bright','Nautið rífur sig upp úr mýrinni og heldur áfram.','The bull tears itself up out of the bog and keeps going.','hráur kraftur','raw power','P', '', '', 'postava'],
+  ['Uruz','bright','Nautið rífur sig upp úr mýrinni og heldur áfram.','The bull tears itself up out of the bog and keeps going.','hrár kraftur','raw power','P', '', '', 'postava'],
   ['Gebo','cold','Ókunnugur hjálpar þér að ýta bílnum úr skaflinum og veifar bara þegar hann fer.','A stranger helps push your car out of the drift and only waves as he leaves.','gjöf','gift','P'],
   ['Perth','any','Teningurinn liggur enn í bikarnum og enginn hefur kastað.','The die still lies in the cup and no one has thrown.','tilviljun','chance','D'],
   ['Perth','any','Spilið liggur á grúfu og enginn hefur snúið því við.','The card lies face down and no one has turned it over.','hið ósýnilega','the unseen','D'],
@@ -528,8 +528,8 @@ var RUNE_IMAGES = [
   // 16 z 18 prošlo (15 zařazeno; 14× 3/3, skyr 2/3), kontroly 2/2. Vyřazeno: pupeny na holé bříze (Ingwaz 3/3),
   // palčáky, ze kterých dítě vyrostlo (Jera 3/3), a žitné těsto u horkého pramene (prošlo, ale je to zase chléb —
   // owner 2026-09-23 chléb u Jery nechtěl). IS: korpus + is-grammar-qa (workflow tenke-runy-obrazy).
-  ['Uruz','cold','Hreindýrstarfurinn öslar snjóinn upp að bringu og hægir ekki á sér.','The reindeer stag wades through chest-deep snow and does not slow down.','hráur kraftur','raw power','P', '', '', 'postava'],
-  ['Uruz','cold','Þú rekur járnkarlinn af öllu afli í frosna jörðina og hún gefur sig.','You drive the iron bar into the frozen ground with all your might, and it gives way.','hráur kraftur','raw power','P'],
+  ['Uruz','cold','Hreindýrstarfurinn öslar snjóinn upp að bringu og hægir ekki á sér.','The reindeer stag wades through chest-deep snow and does not slow down.','hrár kraftur','raw power','P', '', '', 'postava'],
+  ['Uruz','cold','Þú rekur járnkarlinn af öllu afli í frosna jörðina og hún gefur sig.','You drive the iron bar into the frozen ground with all your might, and it gives way.','hrár kraftur','raw power','P'],
   ['Uruz','any','Strákurinn fer í sjómann við stóra bróður sinn og vinnur í fyrsta sinn.','The boy arm-wrestles his big brother and wins for the first time.','styrkur','strength','D', '', '', '', 'f'],
   ['Berkana','any','Ljósmóðirin leggur nýfædda barnið í fang móðurinnar og stígur svo skref til baka.','The midwife lays the newborn in its mother\'s arms, then takes a step back.','fæðing','birth','P', '', '', '', 'fh'],
   ['Ehwaz','cold','Þú teymir hestinn yfir snjóinn og taumurinn á milli ykkar er slakur.','You lead the horse across the snow, and the rope between you hangs slack.','traust milli tveggja','trust','P'],
@@ -577,7 +577,7 @@ var RUNE_IMAGES = [
   ['Mannaz','any','Andlit þitt speglast í augum hins, lítið og skýrt.','In the eyes of the other your face is mirrored, small and clear.','mannleg vitund','humanity','D','reflection', '', '', 'lg'],
   ['Laguz','any','Undiraldan finnst í fótunum áður en hún sést.','The groundswell is felt in your feet before it is seen.','innsæi','intuition','E'],
   ['Laguz','any','Jökuláin rennur grá og þung, full af því sem hún ber að ofan.','The glacial river runs grey and heavy, full of what it carries down from above.','flæði','the unconscious','E'],
-  ['Laguz','any','Vatnið finnur sér leið niður hlíðina, enginn vísar því.','Water finds its own way down the slope, and no one shows it the path.','flæði|innsæi','flow|intuition','E'],   // 2026-10-05 C: oba dosavadní významy (IS i EN soudci) potvrzeny v k4 4/4 → dvojice
+  ['Laguz','any','Vatnið finnur sér leið niður hlíðina, og enginn vísar því veginn.','Water finds its own way down the slope, and no one shows it the path.','flæði|innsæi','flow|intuition','E'],   // 2026-10-05 C: oba dosavadní významy (IS i EN soudci) potvrzeny v k4 4/4 → dvojice
   ['Ingwaz','cold','Fræið liggur í frosinni jörð og bíður síns tíma.','The seed lies in the frozen ground and waits for its time.','innri þróun','potential','P'],
   ['Ingwaz','any','Laukurinn býr sig neðanjarðar löngu áður en hann sést.','The bulb readies itself underground long before it shows.','innri þróun','inner development','P'],
   ['Othila','any','Gamli bærinn stendur í tóftum en heldur enn hita í minningunni.','The old farmstead stands in ruins but still holds warmth in memory.','heimili|arfur','home|heritage','P'],   // 2026-10-06 (KUKY „Othilu oprav“): EN měl heritage, IS heimili — dvě různé věci. k4: home 4/4, heritage EN 2/2 a jeho smyslový protějšek arfur IS 2/2 (v k/k_is je heritage↔hefðir, hefðir 0/2) → home | heritage = heimili | arfur
@@ -621,7 +621,7 @@ var RUNE_IMAGES = [
   ['Thurisaz','cold','Þyrnóttur runninn stendur ber og svartur í hríðinni, en broddarnir bíða enn.','The thorn-bush stands bare and black in the blizzard, but the spines are still waiting.','þyrnir|aðgát','thorn|caution','E'],   // 2026-10-05 C: oba dosavadní významy (IS i EN soudci) potvrzeny v k4 4/4 → dvojice
   ['Berkana','cold','Ærin ber inni í húsi um miðjan vetur og lambið finnur hlýjuna í myrkrinu.','The ewe gives birth indoors in midwinter and the lamb finds the warmth in the dark.','umhyggja','nurturing','D','lamb', '', 'postava'],
   ['Berkana','bright','Æðarkollan leiðir ungana sína niður að vatninu fyrsta morguninn.','The eider leads her ducklings down to the water on their first morning.','umhyggja','nurturing','P', '', '', 'postava'],
-  ['Berkana','bright','Rabarbarinn teygir sig upp úr kaldri moldinni við suðurvegginn, fyrstur allra á vorin.','The rhubarb noses up through the cold soil by the south wall.','nýtt upphaf','new beginnings','P'],
+  ['Berkana','bright','Rabarbarinn teygir sig upp úr kaldri moldinni við suðurvegginn.','The rhubarb noses up through the cold soil by the south wall.','nýtt upphaf','new beginnings','P'],
   // 2026-09-23 (KUKY: „mluvi o teplu a pak fire, pod kamenem to nesedi"): horky pramen je teplo bez svetla i plamene; skryte teplo uz nese [21]. Kyndill = prvni klic Kenaz. Kenaz 3/3.
   ['Kenaz','any','Kyndillinn lýsir aðeins nokkur skref fram á veginn.','The torch lights only a few steps of the way ahead.','kyndill','torch','P'],
   // ── 2026-09-26: z GPT inspirace (docs/inbox/2026-09-25-gpt-obrazy-24-run-plus-blank.txt), zkráceno na konkrétní islandskou scénu;
@@ -644,7 +644,7 @@ var RUNE_IMAGES = [
   // ── 2026-09-26 kolo 2 (runy s 5 obrazy): brána se statickými popisy 12/12 (10 × 3/3; Isa jasný mrazivý vzduch 2/3 → Sowilo 1,
   // Perth mlha a ovce 2/3 → Dagaz 1). IS korpus + is-grammar-qa čisté.
   ['Kenaz', 'any', 'Undir lampanum sést hárfín sprunga í bollanum, þótt enginn hafi séð hana frá hinum enda stofunnar.', 'Under the lamp the hairline crack in the cup shows, though no one saw it from across the room.', 'þekking', 'knowledge', 'D'],
-  ['Kenaz', 'any', 'Eldspýtu er kveikt í rafmagnsleysinu, og allt herbergið tekur aftur á sig mynd.', 'A match is struck in the power cut, and the whole room gets its shape back.', 'eldur', 'fire', 'D'],
+  ['Kenaz', 'any', 'Kveikt er á eldspýtu í rafmagnsleysinu, og allt herbergið tekur aftur á sig mynd.', 'A match is struck in the power cut, and the whole room gets its shape back.', 'eldur', 'fire', 'D'],
   // 2026-10-04 (KUKY „A, nasaď to bez brány“) — BEZ identitní brány, na ownerovo slovo (DECISIONS 2026-10-04 (1)). Scéna z jeho Asku
   // (Kenaz × Family & Home, 2026-10-02: stůl s lampou, prázdná židle). Statické znění „lamp over the kitchen table lights every chair…“
   // dala brána k Othile 2/3 (kuchyňský stůl = domov; EVAL_LOG 2026-10-03 (4)). Tohle nese OKAMŽIK, kdy světlo odhalí — popis Kenazu

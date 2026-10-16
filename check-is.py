@@ -37,6 +37,7 @@ BAD_PATTERNS = [
     ('rúnunnar',       'rúnarinnar',      'gen. urč. od rún (rúnarinnar 16× / rúnunnar 0×); JSON pokyny 2026-10-16'),
     ('einum flæði',    'einu flæði',      'flæði je střední rod; Kříž 2026-10-16'),
     ('í úttakinu',     'í textanum',      'technický kalk „output“ (0×); spready a životní runa 2026-10-16'),
+    ('hráur',          'hrár',            'tvar v BÍN neexistuje (hrár kraftur 9× / hráur 0×); Uruz 2026-10-16'),
     # 2026-10-06: citát nad čtením měl „Rúnirnar spá ekki um örlög þín“ — vazba je „spá fyrir um“ (Risamálheild 8477, „spá um örlög“ 0).
     ('spá ekki um örlög', 'spá ekki fyrir um örlög', 'vazba spá fyrir um; citát nad čtením 2026-10-06'),
     # 2026-09-23: kolokace a shoda z testu modelu (EVAL_LOG 2026-09-22 (1)/(2), 2026-09-23 (4)); kazda s korpusem.

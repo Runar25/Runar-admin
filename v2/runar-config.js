@@ -77,7 +77,9 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 //    a Yggdrasilu, „í textanum“, úhel „SJÓNARHORN“, kveðjuorð v Asku (CODE-read, kontrola promptu A2).
 //    + neaktivní hlasový profil „lyrical“ (aktivní je focused, do promptu nejde): „á sömu rún“, „rúnarinnar“ (našel nový vzor
 //    v check-is.py), „kyrrlegir skógar“ (skógur je mužský rod — slovník). Jeho věta s výčtem za „eins og“ dál hlásí Greynir P_NT_ÍTölu.
-const RUNAR_PROMPT_VERSION = 'v5.13-is-builders';
+// v5.14 (2026-10-16): islandské obrazy RUNE_IMAGES (12 oprav: Uruz „hrár kraftur“ i v runar-runes.js, Jera, Kenaz, Isa, Sowilo,
+//    Laguz, Gebo, Berkana; Kenaz výheň význam „eldur“; Perth EN věta podle IS) — CODE-read, kontrola promptu A4.
+const RUNAR_PROMPT_VERSION = 'v5.14-is-images';
 
 // Měsíční strop hlasu pro všechny (VOICE_MONTHLY_LIMIT = 5, od 2026-09-11) ZRUŠEN 2026-10-11: „limit na hlas max 5 na měsíc“ byl
 // ownerův pokyn pro testery, omylem pro všechny (DECISIONS 2026-10-11 (49)); owner: „žádný měsíční strop 5 hlasů není!!!“. Rúnar přečte
