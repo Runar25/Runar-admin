@@ -60,13 +60,16 @@ function vypis(dbUrl, slozka) {
   return vel;
 }
 
-// data.sql bez bloků COPY ze schémat, která se do cíle obnovovat nesmí (naplánované úlohy, síťová volání).
+// data.sql bez bloků COPY ze schémat, která se do cíle obnovovat nesmí (naplánované úlohy, síťová volání), a bez záznamů o souborech
+// (`storage.objects`): soubory samotné záloha DB nenese, takže by po obnově zbyly mrtvé odkazy — a Supabase je SQL smazat nedovolí
+// („Direct deletion from storage tables is not allowed“, zjištěno při úklidu Runar Testing 2026-10-16). Buckety (definice) se obnoví.
 const BEZ_OBNOVY = ['cron', 'net', 'supabase_functions'];
+const BEZ_OBNOVY_TABULKY = ['"storage"."objects"'];
 function dataProObnovu(sql) {
   const radky = sql.split('\n'), out = [];
   let skip = false;
   for (const r of radky) {
-    if (!skip && BEZ_OBNOVY.some((s) => r.startsWith('COPY "' + s + '".'))) { skip = true; continue; }
+    if (!skip && (BEZ_OBNOVY.some((s) => r.startsWith('COPY "' + s + '".')) || BEZ_OBNOVY_TABULKY.some((x) => r.startsWith('COPY ' + x + ' ')))) { skip = true; continue; }
     if (skip) { if (r === '\\.' || r === '\\.\r') skip = false; continue; }
     out.push(r);
   }
@@ -94,9 +97,11 @@ module.exports = { PG_BIN, PROD_REF, url, skript, vypis, dataProObnovu, opravOpr
 if (require.main === module && process.argv.includes('--test')) {
   // Samotest čistých funkcí (bez sítě): filtr COPY bloků, oprava oprávnění.
   const d = ['SET x;', 'COPY "cron"."job" ("a") FROM stdin;', '1', '\\.', 'COPY "public"."readings" ("a") FROM stdin;', '2', '\\.',
-    'COPY "net"."http_request_queue" ("a") FROM stdin;', '3', '\\.', 'RESET ALL;'].join('\n');
+    'COPY "net"."http_request_queue" ("a") FROM stdin;', '3', '\\.', 'COPY "storage"."objects" ("a") FROM stdin;', '4', '\\.',
+    'COPY "storage"."buckets" ("a") FROM stdin;', '5', '\\.', 'RESET ALL;'].join('\n');
   const f = dataProObnovu(d);
-  const ok1 = f.indexOf('cron') === -1 && f.indexOf('"net"') === -1 && f.indexOf('"readings"') !== -1 && f.indexOf('\n2\n') !== -1;
+  const ok1 = f.indexOf('cron') === -1 && f.indexOf('"net"') === -1 && f.indexOf('"readings"') !== -1 && f.indexOf('\n2\n') !== -1
+    && f.indexOf('"objects"') === -1 && f.indexOf('"buckets"') !== -1;
   const a = opravOpravneni('CREATE TABLE x;\nGRANT SELECT ON TABLE "public"."x" TO "anon";\nREVOKE ALL ON FUNCTION "public"."f"() FROM PUBLIC;');
   const ok2 = /REVOKE ALL ON ALL TABLES/.test(a) && /GRANT SELECT ON TABLE "public"\."x"/.test(a) && a.indexOf('CREATE TABLE') === -1
     && a.indexOf('TO PUBLIC;') < a.indexOf('FROM PUBLIC;');
