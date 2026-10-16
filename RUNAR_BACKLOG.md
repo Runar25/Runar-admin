@@ -1139,7 +1139,8 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
    u Rune Seekera: funkce vidět celá, zamčená, pod ní řádek „opens with {tier}“) + výzva k registraci.
 
 ## Web therunekeeper.com (CODE-web, od 2026-10-12)
-- [ ] **Registrace před spuštěním** (owner 2026-10-12: *„ano sbíráme“*). Landing „coming soon“ sbírá e-maily; každý dostane jeden
+- [x] ✅ *(CODE-web 2026-10-16: běží na https://therunekeeper.com — formulář → waitlist-join → Brevo, dvojí potvrzení; ověřeno
+  naostro z webu: hláška, potvrzovací e-mail došel. Zbývá jen limit Brevo pro rozeslání při spuštění, viz níž.)* **Registrace před spuštěním** (owner 2026-10-12: *„ano sbíráme“*). Landing „coming soon“ sbírá e-maily; každý dostane jeden
   e-mail, až Rúnar půjde ven. Napřed plán ownerovi (kam se ukládá, dvojí potvrzení, text do zásad soukromí, smazání po spuštění).
   API klíč Brevo: secret `BREVO_API_KEY` v Supabase (owner 2026-10-12, ověřeno). Hosting landing page teď (owner: „zatím A“):
   samostatné malé veřejné repo jen s webem na GitHub Pages, zdroj zůstává ve `web/`. Denní limit Brevo (RUNAR_PRICING, řádek Brevo)
