@@ -38,6 +38,8 @@ const CZ_SLOVA = ['obraz', 'obrazy', 'obrazu', 'význam', 'významy', 'naposled'
   'tady', 'mezi', 'zde', 'kdy', 'kdo', 'dnes', 'tarif', 'hotovo', 'vybrat', 'vyber', 'zadej', 'zadejte', 'klikni', 'nový', 'nová',
   'nové', 'starý', 'stará', 'staré', 'prázdná', 'prázdné', 'vlastní', 'rámec', 'bez', 'ze', 'nalezeno', 'nenalezeno', 'snímek',
   'snímky', 'skupina', 'skupiny', 'období',
+  // 2026-10-16: štítek verze promptu „v5.09-krize-112“ prošel (CODE-tune, opraveno před pushem).
+  'krize',
   // čeština bez diakritiky (2026-10-10: „ulozit se nepodarilo“ v konzoli stromu prošlo všemi síty). Ne „vyznam“ ani „cteni“ —
   // ty slouží i jako klíče v kódu (sáček _seasonBagPick('vyznam', …)).
   'ulozit', 'ulozeno', 'nepodarilo', 'podarilo', 'vratil', 'vratila', 'nacitam', 'vsechny', 'zadne', 'zadny', 'kdyz', 'jeste',
@@ -47,9 +49,8 @@ const KRATKA = ['je', 'se', 'na', 'pro', 'od', 'po', 'za', 'aby', 'jak', 'jsem',
 const PRED_REGEXEM = /[(,=:[!&|?{};+\-*%<>~^]$/;
 const KLICOVA = /\b(return|typeof|case|in|of|delete|void|throw|new|else)$/;
 // Přesné hodnoty, které kontrola pouští — každá s datem a důvodem (§28).
+// 2026-10-16: výjimka 'v5.08-bez-elementu' smazána — štítek v5.09 je anglicky, jak slibovala (CODE-tune).
 const VYJIMKY_HODNOTY = {
-  'v5.08-bez-elementu': '2026-10-10 štítek verze promptu, s nímž se od rána ukládají čtení; přejmenovat = rozdělit čtení téže verze '
-    + 'na dvě skupiny. Další verze už anglicky (§31) — s ní tahle výjimka zmizí.',
 };
 const VYJIMKY = { 'v2/runar-names.js': ['name', 'note'] };
 // Soubory, jejichž řetězce se nekontrolují vůbec — každý s datem a důvodem (§28); soubor, který v gitu už není, kontrolu shodí.
