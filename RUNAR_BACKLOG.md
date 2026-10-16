@@ -701,7 +701,7 @@ ne příznak experimentu. Bez něj se známky sesypou do jedné hromady a A/B se
 **Otevřené a je to rozhodnutí ownera + Coworku (obsah/UX, ne kód):** na co přesně se ptát.
 Jedna otázka unese jeden druh odpovědi a víc otázek lidi nevyplní.
 
-### Krize v otázce (sebevražedné myšlenky, lékařská nouze, násilí) — rešerše 2026-10-15 (CODE-read), čeká na ownera
+### Krize v otázce (sebevražedné myšlenky, lékařská nouze, násilí) — rešerše 2026-10-15 (CODE-read), owner rozhodl 2026-10-16, zbývá níž
 Nález 2026-08-16: otázka s příznaky infarktu dostala běžné čtení o sběru borůvek a stála kredit. Owner 2026-10-15: *„těžko se mi věří,
 že by si šel někdo pro radu v AI postavě ohledně infarktu. sebevražedné myšlenky asi ano… zkusím mu položit takové otázky a uvidíme“*
 · *„to, že to bude nebo nebude stát kredit, bych asi neřešil. tohle je potřeba taky pořádně zjistit, jak se v takové situaci jedná.“*
@@ -723,9 +723,12 @@ Nález 2026-08-16: otázka s příznaky infarktu dostala běžné čtení o sbě
   otázky a v zásadách, obecné upozornění v rozhraní nemá · Anthropic AUP (záloha): oznámení AI v rozhraní + pravidla pro produkty
   pro nezletilé (náš věk 13+) · obchody (Apple, Google Play) jen u nativní appky · GDPR: příznak „sebevražedné myšlenky“ je zdravotní
   údaj (čl. 9) → neukládat, nanejvýš počet.
-- [ ] **Owner po svém testu rozhodne:** krizová odpověď místo čtení? v Rúnarově tónu, nebo mimo roli? jak přísně u nejasných případů
-  (obraz smrti)? upozornění „Rúnar je AI“ v rozhraní? věk 13+ proti požadavkům Anthropicu na nezletilé? oznamovací povinnost při
-  zneužívání dítěte (islandský zákon o ochraně dětí — pro právníka)?
+- [x] **Owner rozhodl 2026-10-16** (svým testem, hlášení 59c64907 → DECISIONS 2026-10-16 (1)): krizová odpověď místo čtení ne, Rúnar
+  zůstává v roli a dělá výklad, čtení se platí („nejsme poradna“); model jmenuje 112 místo čísel z jiných zemí (v5.09). Kontrola
+  v `claude-proxy` (návrh výš) tím nemá zadání.
+- [ ] **Zbývá — pro ownera, část pro právníka:** upozornění „Rúnar je AI“ v rozhraní (EU AI Act čl. 50 od 2. 8. 2026)? · věk 13+
+  proti pravidlům Anthropicu pro nezletilé? · oznamovací povinnost při zneužívání dítěte (islandský zákon o ochraně dětí)? ·
+  placení za čtení s otázkou na sebevraždu — owner: *„Nebo je to protizákonné?“* (rešerše 2026-10-15 to neřešila)?
 **Zdroje (2026-10-15):** model-spec.openai.com · openai.com/index/strengthening-chatgpt-responses-in-sensitive-conversations ·
 developers.openai.com/api/docs/guides/moderation · anthropic.com/news/protecting-well-being-of-users · anthropic.com/legal/aup ·
 support.claude.com/en/articles/9307344 · artificialintelligenceact.eu/article/50 · raudikrossinn.is (Hjálparsíminn 1717) · pieta.is ·

@@ -11578,3 +11578,23 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Zbývá:** owner pustí SQL (napřed — bez nového typu DB zprávu odmítne), pak nasazení `send-line`, `delete-account`, `list-reports`,
   `ops-watch`; filtr ve schránce na štítek Messages.
 - Affected doc(s): `RUNAR_PRIVACY.md`, `RUNAR_BACKLOG.md`, `memory/schranka-runar-gmail.md` — v témže commitu.
+
+## 2026-10-16 (1) — Krize v otázce: Rúnar zůstává v roli, čtení se platí, model dává 112 místo čísel z jiných zemí (v5.09)
+
+- **Rozhodl:** owner svým testem v appce (hlášení 59c64907, Ask po čtení Raidho): *„My jsme primárně IS a pak EN, takže volání nebo psaní
+  do US a CAN bude potřeba přeformulovat na něco evropského. Nebudeme se úplně snažit změnit to, jak model reaguje. To, že je pořád
+  v určité roli Rúnara a dělá výklad runy. My nejsme poradna!“* · *„Každý bude platit za čtení, i když se bude ptát na sebevraždu…
+  někdo si může dělat srandu, a proto mu žádné čtení zdarma dávat nebudeme.“*
+- **Proč:** model (GPT-6 sol) sám od sebe přidal *„In the US or Canada, you can also call or text 988“*; náš prompt o krizi neříkal nic
+  (grep). Vlastní bezpečnostní chování modelu owner nechává, mění se jen země.
+- **Co:** věta v `DEF_CHAR_EN/IS.never` (blok „WHAT YOU NEVER DO“; všechny cesty přes `buildSysPrompt`: čtení, Ask, životní runa, shrine):
+  při řeči o sebepoškození nebo konci života Rúnar jmenuje 112 — tísňové číslo na Islandu a v celé Evropě — ne čísla z jiných zemí.
+  Verze promptu `v5.09-crisis-112`, štítek anglicky podle §31 (česká výjimka v5.08 ve `verify_jazyk_ui.js` tím zmizela; „krize“ přibylo
+  do síta, protože česky napsaný štítek napoprvé prošel). IS: Greynir bez nálezu, korpus u všech obratů (čísla v commitu c53eb52).
+- **Odpovídá BACKLOGu „Krize v otázce“** (rešerše CODE-read 2026-10-15): krizová odpověď místo čtení — ne; mimo roli — ne; kredit —
+  platí se. Návrh kontroly v `claude-proxy` před voláním modelu tím nemá zadání.
+- **Hranice:** neověřeno, jak sol větu poslechne — ověří owner stejnou otázkou v appce. Kdo napíše, že je mimo Evropu, dostane podle
+  věty pořád 112 (trh je IS + Evropa). Islandské linky 1717 a 1799 z rešerše do promptu nejdou („nejsme poradna“).
+- **Otevřené:** *„Nebo je to protizákonné?“* (placení za čtení s otázkou na sebevraždu) — nevím; rešerše 2026-10-15 to neřešila
+  (z praxe jen: Myra krizovou odpověď neúčtuje). Otázka pro právníka → BACKLOG u položky.
+- Affected doc(s): `RUNAR_BACKLOG.md` (položka „Krize v otázce“) — v témže commitu.
