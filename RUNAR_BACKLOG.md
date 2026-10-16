@@ -44,6 +44,25 @@
       `runar-auth.js`: `canAsk = standard || premium`). Pozor na základ produkce (§32) a souhlas s otázkou (㊽).
     - [x] ✅ **Test „pravidlo v systému × v user promptu“, EN** — 2026-10-16: systém 5/5 = user 5/5, kontrola 0/5 (RUNAR_EVAL_LOG
       2026-10-16 (1)); CLAUDE.md opraven. IS a pravidlo proti protichůdnému pokynu zatím neměřeno.
+    - [ ] **Lab: pravidlo v systému × PROTICHŮDNÝ pokyn v user promptu** (owner 2026-10-16: *„zapsat. teď to funguje, tak neměním, ale
+      otestujeme to“*). Co to je: test 2026-10-16 měřil pravidlo, kterému nic neodporovalo. V promptu ale jsou místa, kde systém říká jedno
+      a user prompt pod ním něco, co táhne jinam — tam rozhodne, který z nich model poslechne (výklad červnového nálezu: vyhrál konkrétní
+      pokyn na konci). Test: na jednom takovém místě dvě ramena (dnešní znění × user pokyn sladěný se systémem), malý vzorek, měřit, které
+      pravidlo vyhrálo. Kandidáti (z aktuálního EN single promptu 2026-10-16):
+      1. Systém „Rúnar never predicts fate / does not guarantee outcomes“ × user „Let Kenaz answer: <otázka>“ — u otázky typu „Will it
+         work out?“ zve k předpovědi; vedle stojí „Neither confirm nor refute.“ (oprava v A3.3 u CODE-tune — test napřed, nebo na jiném místě).
+      2. Systém „Never hand the seeker a conclusion“ × user konec „End on one line that holds out two things this may be in a slow change in the
+         seeker“ a u oblasti „Do not tell them how they have changed — except in the closing line“ — povolená výjimka (změřeno, owner
+         potvrdil „most may be“); test jen ověří, že výjimka nepřetéká do vět před koncem.
+      3. Systém „LANGUAGE & STYLE — check every sentence before returning“ × user „return ONLY this JSON array, nothing before or after“ —
+         kontrola nemá kde proběhnout (sol bez přemýšlení; V3 bod 3).
+    - [ ] **Místa v promptu k pozornosti (žádný změřený přínos, nebo dvojznačné; owner: *„zjistit další místa, která by si zasloužila
+      pozornost“*):** (a) „The image must connect to where this person is standing right now“ — nikdy netestováno, LAB 2026-10-05 doporučil
+      vyndat (bod 8; podezřelá z přenosu do života ve větě 3) · (b) „Neither confirm nor refute.“ u hledání Confirmation proti otázce ano/ne —
+      co model udělá, když člověk potvrzení výslovně chce · (c) „down to one detail the sentence does not name“ — „the sentence“ je
+      dvojznačné (věta obrazu, nebo věta čtení?) · (d) „through image and symbol“ u otázky — „symbol“ zve k mystice, kterou systém zakazuje
+      („Avoid abstract, mystical-sounding lines“) · (e) délka stojí v promptu dvakrát (uprostřed a na konci) — záměr (připomínka, Opus −8 slov),
+      nechat · (f) štítky pozic „what lives inside“ / „subconscious“ — potenciální vada výš. Každé až s měřením, ne přepisem naslepo.
     - IS osy Kříže „verdandi/skuld/urd“ — zatím bez rozhodnutí.
     - [ ] **Pro V3 — rozpracováno níž** (owner: *„dobré zkusit pro V3, kterou máme už mírně rozpracovanou. zapsat to. celé to rozpracuj, ať je
       čeho se chytit, ale řešit to budeme později“*).
