@@ -476,7 +476,9 @@ function startReading() {
   readerUser = { name, d: readerUser.d || null, m: readerUser.m || null, y: readerUser.y || null, lifeRune,
     area: readerUser.area || '', seeking: readerUser.seeking || '',
     intention: readerUser.intention || '',
-    question: document.getElementById('r-question').value.trim() };
+    question: document.getElementById('r-question').value.trim(),
+    // 2026-10-16 v5.15 (A3.2): čtení pro někoho → _addressContext neoslovuje rodem majitele účtu (neutrální „hán“)
+    proNekoho: !isMine };
   document.getElementById('reader-hero').classList.add('hidden');
   document.getElementById('reader-setup').style.display = 'none';
   document.getElementById('reader-rune-card').style.display = 'block';
@@ -1546,6 +1548,11 @@ function _updateReadingForm() {
     if (!isMine) noteEl.textContent = t('setup_someone_note');
     else         noteEl.textContent = t('reader_note');
   }
+
+  // Řádek rodu oslovení (jen IS) mluví o majiteli účtu („Hvernig Rúnar ávarpar þig“) — ve čtení pro někoho neplatí, skrýt (2026-10-16,
+  // A3.2). Patří sem, ne do updateUIText (§14): závisí na režimu; _updateGenderVisibility zůstává jen podle jazyka a volá se dřív.
+  var genderRow = document.getElementById('setup-gender-row');
+  if (genderRow) genderRow.style.display = (lang === 'is' && isMine) ? 'block' : 'none';
 
   // Name row — hidden when own reading and user is fully known
   var nameRow = document.getElementById('setup-name-row');

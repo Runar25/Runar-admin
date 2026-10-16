@@ -1228,9 +1228,11 @@ function _registerContext(seeking, lang) {
 
 // Address gender (modern Icelandic): kk (karlkyn) / kvk (kvenkyn) / hk (hvorugkyn, han = default).
 // IS only — English has no gendered addressee forms. Reads the global userGender.
-function _addressContext(lang) {
+// 2026-10-16 v5.15 (kontrola promptu A3.2): čtení „pro někoho“ (u.proNekoho, nastavuje startReading) dostane neutrální rod — rod toho
+// člověka neznáme a userGender je rod MAJITELE účtu. Bez `u` (životní runa, jméno, Ask) beze změny: tam „þú“ = majitel.
+function _addressContext(lang, u) {
   if (lang !== 'is') return '';
-  var g = (typeof userGender !== 'undefined' && userGender) ? userGender : 'hk';
+  var g = (u && u.proNekoho) ? 'hk' : ((typeof userGender !== 'undefined' && userGender) ? userGender : 'hk');
   if (g === 'kk')  return 'ÁVARP: ávarpaðu viðmælandann í KARLKYNI — öll lýsingarorð og fornöfn um "þú" í karlkyni (tilbúinn, sjálfan þig, einn).';
   if (g === 'kvk') return 'ÁVARP: ávarpaðu viðmælandann í KVENKYNI — öll lýsingarorð og fornöfn um "þú" í kvenkyni (tilbúin, sjálfa þig, ein).';
   return 'ÁVARP: ávarpaðu viðmælandann í HVORUGKYNI (hán, kynhlutlaust) — öll lýsingarorð og fornöfn um "þú" í hvorugkyni (tilbúið, sjálft þig, eitt).';
@@ -1878,7 +1880,7 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     // Čočka životní runy (v4.4–v4.59) z builderu ODEBRÁNA 2026-09-26 (úklid) — od v4.60 byla vypnutá (životní runa jen
     // v Asku); _lensContext zůstává jako laboratorní funkce, návrat jen podle §26.
     S.closing(u.name) + (S.langInstr ? S.langInstr : '') + getCorrPrompt(lang, corrections),
-    _addressContext(lang),
+    _addressContext(lang, u),
     S.json,
   ].filter(Boolean).join('\n');
 }
@@ -2337,7 +2339,7 @@ function buildKrizPromptCross(u, runes, lang, corrections) {
     (u.area || u.seeking) ? _priorityContext(false, runes, lang) : '',   // false = bez čočky (odebrána 2026-09-26)
   ].concat(S.instructions(ctrName)).concat([
     S.closing(u.name) + (S.langInstr ? ' ' + S.langInstr : '') + getCorrPrompt(lang, corrections),
-    _addressContext(lang),
+    _addressContext(lang, u),
     S.json,
   ]).filter(Boolean).join('\n');
 }
@@ -2430,7 +2432,7 @@ function buildNornsPromptFate(u, runes, lang, corrections) {
     S.bigInstruction(u.name, _imgPostava),   // 2026-09-30: s B2 jméno jen pozdě / vůbec — „uprostřed“ odporuje „k tazateli až poslední věta“
     S.json,
     (S.langInstr ? S.langInstr : ''),
-    _addressContext(lang),
+    _addressContext(lang, u),
     getCorrPrompt(lang, corrections),
   ]).filter(Boolean).join('\n');
 }
@@ -2509,7 +2511,7 @@ function buildHorseshoePromptSeven(u, runes, lang, corrections) {
     (u.area || u.seeking) ? _priorityContext(false, runes, lang) : '',   // false = bez čočky (odebrána 2026-09-26)
   ].concat(S.beats).concat([
     S.closing(u.name),
-    _addressContext(lang),
+    _addressContext(lang, u),
     S.json,
     (S.langInstr ? S.langInstr : ''),
     getCorrPrompt(lang, corrections),
@@ -2607,7 +2609,7 @@ function buildYggdrasilPromptNine(u, runes, lang, corrections) {
     (u.area || u.seeking) ? _priorityContext(false, runes, lang) : '',   // false = bez čočky (odebrána 2026-09-26)
   ].concat(S.beats).concat([
     S.closing(u.name),
-    _addressContext(lang),
+    _addressContext(lang, u),
     S.json,
     (S.langInstr ? S.langInstr : ''),
     getCorrPrompt(lang, corrections),
