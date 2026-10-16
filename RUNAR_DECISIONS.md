@@ -11669,3 +11669,13 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Co:** CODE-tune — `updateQuestionGate` jen pro admina; CODE-read — definice do `RUNAR_DESIGN.md` („Cold reading“), štítky pozic do BACKLOGu.
   ⚠️ Rozpor s minulostí (§21): v0.9 odstraňoval „already“ — definice to vysvětluje (oznamovací věta × otázka).
 - Affected doc(s): `RUNAR_DESIGN.md` (definice), `RUNAR_BACKLOG.md` (kontrola promptu), `CLAUDE.md` (KLÍČ: výsledek testu) — v témže commitu.
+
+## 2026-10-16 (6) — Toast „You have left the circle“ při odhlášení zrušen; nápověda „This reading is for“ jen „for a single rune only“
+
+- **Rozhodl:** owner 2026-10-16: *„14. Toast „You have left the circle“ rušíme. tohle tam nechci. zjisti další toast. rozhodneme o jejich
+  platnosti.“* · k nápovědě z (3): *„stačí jen „for a single rune only““*.
+- **Co:** odhlášení bez toastu (klíč `signed_out_toast` EN + IS pryč; prodleva 1,2 s před načtením stránky zůstává — její jiný účel není
+  doložený, owner chtěl pryč jen toast). Nápověda: EN „This sets the time the reading speaks to — for a single rune only.“, IS „Þetta ræður
+  því um hvaða tíma lesturinn talar og á aðeins við um eina rún.“ (Greynir bez nálezu) — věta o vlastním čase spreadů pryč.
+- **Zbývá:** owner rozhodne o ostatních toastech (soupis předložen v chatu 2026-10-16).
+- Affected doc(s): žádný (texty vlastní UI_TEXT).

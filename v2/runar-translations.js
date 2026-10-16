@@ -39,7 +39,6 @@ const UI_TEXT = {
     reading_mode_mine:    'MY READING',
     reading_mode_someone: 'FOR SOMEONE',
     sign_out:             'SIGN OUT',
-    signed_out_toast:     'YOU HAVE LEFT THE CIRCLE',   // 2026-10-10: dřív natvrdo v runar-app.js (SIGNED_OUT), i v islandské appce
     auth_or:              'or',
     auth_modal_sub_google: 'No password needed — continue with Google.',
     // 2026-10-09: přihlášení e-mailem kódem (runar-auth.js sendLoginCode) — viditelné až s AUTH_EMAIL_ENABLED.
@@ -75,7 +74,7 @@ const UI_TEXT = {
     // `t(k + '_hint')` (_updateAreaSeekLabels, toggleFormHint) a ㉽ dynamickou příponu neviděla; „+“ pak ukazoval holý klíč.
     area_hint:        'The area tells Rúnar where in your life to let the picture land.',
     seek_hint:        'This sets the tone.',
-    intention_hint:   'This sets the time the reading speaks to — for a single rune only. The spreads have their own time.',   // 2026-10-16 owner: „platí jen pro single“
+    intention_hint:   'This sets the time the reading speaks to — for a single rune only.',   // 2026-10-16 owner: „platí jen pro single“ → „stačí jen for a single rune only“
     // 2026-09-29 (KUKY bod 4: jen jedna věta, „není potřeba to víc vysvětlovat, alespoň ne zatím“) — rozbalí „+“ u popisku.
     seek_lbl:         'WHAT ARE YOU SEEKING?',
     intention_lbl:    'THIS READING IS FOR',
@@ -591,7 +590,6 @@ const UI_TEXT = {
     reading_mode_mine:    'MÍN SPÁ',
     reading_mode_someone: 'FYRIR AÐRA',
     sign_out:             'SKRÁ ÚT',
-    signed_out_toast:     'ÞÚ HEFUR STIGIÐ ÚT ÚR HRINGNUM',   // 2026-10-10: korpus „stigið út úr“ 427, „út úr hringnum“ 116; bez rodu
     auth_or:              'eða',
     auth_modal_sub_google: 'Það þarf ekkert lykilorð — haltu áfram með Google.',   // 2026-10-10: „Ekkert lykilorð þarf“ korpus 0×
     // 2026-10-09: kód místo odkazu. Korpus (Risamálheild): „sex stafa“ 116 · „kóða í tölvupósti“ 10 · „var sendur á“ 1430 ·
@@ -627,7 +625,7 @@ const UI_TEXT = {
     area_lbl:         'SVIÐ LÍFSINS',
     area_hint:        'Sviðið segir Rúnari hvar í lífi þínu myndin á að lenda.',   // 2026-10-12 vráceno (viz EN), znění z 2026-09-29
     seek_hint:        'Þetta ræður tóninum.',
-    intention_hint:   'Þetta ræður því um hvaða tíma lesturinn talar og á aðeins við um eina rún. Lagnirnar hafa sinn eigin tíma.',   // 2026-10-16: Greynir OK, korpus v commitu
+    intention_hint:   'Þetta ræður því um hvaða tíma lesturinn talar og á aðeins við um eina rún.',   // 2026-10-16: Greynir OK; věta o lagnir pryč (owner: stačí jen „for a single rune only“)
     seek_lbl:         'HVAÐ ERTU AÐ LEITA AÐ?',
     intention_lbl:    'ÞESSI LESTUR ER FYRIR',
     report_btn:       'Tilkynna athugasemd',

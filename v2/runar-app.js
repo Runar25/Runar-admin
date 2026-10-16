@@ -1876,7 +1876,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
     if (event === 'SIGNED_OUT') {
       hideJournal();
-      showToast(t('signed_out_toast'));   // 2026-10-10 z UI_TEXT — natvrdo anglicky se ukazovalo i v islandské appce
+      // Toast „You have left the circle“ ZRUŠEN 2026-10-16 (owner: „tohle tam nechci“); prodleva před načtením zůstává.
       // Reset local state and reload so the page starts fresh for the next visitor
       setTimeout(() => window.location.reload(), DELAY_RELOAD);
     }
