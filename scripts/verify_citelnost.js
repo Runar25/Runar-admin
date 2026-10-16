@@ -282,7 +282,11 @@ const srv = http.createServer((req, res) => {
       };
       const r = {}, zs = () => zapis.filter((o) => 'question_consent_at' in o);   // setLang u přihlášeného zapisuje i jazyk účtu
       try {
-        currentUser = { id: 'u1', email: 'tester@example.com' }; userTier = 'premium'; isTester = false; testerConsentAt = null; questionConsentAt = null;
+        // 2026-10-16: pole s otázkou je od 2bf5e27 jen pro admina (owner) — Premium ho nevidí, otázka by se nedostala do čtení. Napřed
+        // ověř tuhle bránu, pak celý souhlas jako admin (souhlas chce i admin; přeskočí ho jen tester se souhlasem testera).
+        currentUser = { id: 'u1', email: 'premium@example.com' }; userTier = 'premium'; isTester = false; testerConsentAt = null; questionConsentAt = null;
+        updateQuestionGate(); r.premiumBezPole = document.getElementById('q-section').style.display === 'none';
+        currentUser = { id: 'u1', email: ADMIN_EMAILS[0] };
         setLang('en'); showAppTab('reading'); resetReader(); updateQuestionGate();
         const q = document.getElementById('r-question'), box = document.getElementById('q-consent');
         const videt = () => box.style.display !== 'none', karta = () => document.getElementById('reader-rune-card').style.display === 'block';
@@ -305,9 +309,9 @@ const srv = http.createServer((req, res) => {
       resetReader(); updateQuestionGate(); showAppTab('reading'); updateAuthUI();
       return r;
     })()`);
-    rekni(!!sq && !sq.chyba && sq.polickoPoPsani && !sq.cteniBezSouhlasu && sq.hlaska && sq.askHlaska && !sq.askOdeslan && !sq.testerPotrebuje
+    rekni(!!sq && !sq.chyba && sq.premiumBezPole && sq.polickoPoPsani && !sq.cteniBezSouhlasu && sq.hlaska && sq.askHlaska && !sq.askOdeslan && !sq.testerPotrebuje
           && sq.ulozeno && !sq.polickoPoSouhlasu && sq.cteniSOtazkou && sq.radekVMenu && sq.odvolano,
-      '(H) souhlas u otázky: bez něj otázka ani Ask neodejdou, zaškrtnutí ho uloží, odvolání v menu ho vezme zpět i s rozdělanou otázkou',
+      '(H) souhlas u otázky: pole s otázkou jen admin; bez souhlasu otázka ani Ask neodejdou, zaškrtnutí ho uloží, odvolání v menu ho vezme zpět i s rozdělanou otázkou',
       JSON.stringify(sq));
     const anglicky = /\b(SPEAK|AGAIN|STAY|YES|credits?)\b/i;
     rekni(!!o1 && o1.otevreno && o1.jazyk === 'is' && o1.zavreno && o1.jazykPo === 'is' && /ENSKU/.test(o1.title) && /ÍSLENSKU/.test(o1.zpet)
