@@ -10,13 +10,20 @@
 - [ ] **Kontrola promptu tvorby čtení před spuštěním — 2026-10-16 (CODE-read)** (owner: *„jakákoliv další velká kontrola je vítána…
   chceme vychytat všechny mouchy“*). Celé nálezy s řádky a hotovými ověřenými IS opravami: `docs/inbox/2026-10-16-kontrola-promptu.md`.
   - ✅ *(CODE-tune 2026-10-16: krize v Asku hotová — v5.10, výjimka v pravidle „mimo téma“, EN + IS.)*
+  - ✅ *(CODE-tune 2026-10-16: A2 hotovo — islandský systém v5.12 (blok never bez kalků, pravidlo 2. osoby, množné číslo, ÁVARP,
+    pravopis) a buildery v5.13 („Slepptu“, „rún“ místo „rúna“, Kříž „flæði“, „til Heljar“, štítky Podkovy a Yggdrasilu, „í textanum“,
+    „SJÓNARHORN“, kveðjuorð v Asku). Vědomě vynecháno: „Verðu → Vertu“ („verðu“ je správný rozkaz od „verða“ = EN „become“), „dregnar“
+    a „öðru hvoru“ (podklad sám: odložené / vědomý duál), štítek „hvað er inni í þér“ (část B). Zbývá: A2.19 (do HOW YOU SPEAK IS
+    přibývají pravidla = změna chování, změřit) a A3. Žlutě, beze změny (§19.2): v IS Asku pokračování věty o rozloučení za pomlčkou
+    (výčet bez slovesa — Greynir E005, P_NT_ÍTölu) a v neaktivním profilu „lyrical“ výčet za „eins og“ (P_NT_ÍTölu).)*
   - [ ] **CODE-tune — opravy (A):** krize v Asku: pravidlo „mimo téma neodpovídej“ přebije větu o 112 (vysoká) · 19 islandských chyb
     v živých promptech (mj. „Sleppu“ → „Slepptu“ v každém IS single, chybné pravidlo 2. osoby v IS systému, „rúna“ × „rún“, Kříž „einum
     flæði“, Yggdrasil „til Heljar“, kalky v bloku „never“) · Ask v IS povoluje přesah 90 slov (useká se) · „pro někoho“ oslovuje rodem
     majitele účtu · single „Let X answer“ zve k předpovědi · životní runa a jméno dostávají „popiš obraz“ bez obrazu · EN esence × „Mention
     by name once“ · technické (dvojité mezery, „PERSON: you“, korekce za pokynem JSON, ✦ nový řádek × „no breaks“) · proxy `SOL_EFFORTS`
     `minimal` neexistuje (ověřeno) · známé duplikáty „Respond in English.“.
-  - [ ] **CODE-tune — islandské obrazy (A4, owner *„zkontrolovat všechny IS obrazy“*):** 189 obrazů + 12 míst prošlo; 12 skutečných chyb
+  - [x] ✅ *(CODE-tune 2026-10-16, v5.14: všech 12 oprav, Greynir znovu bez nálezu; 15 podezření beze změny.)*
+    **CODE-tune — islandské obrazy (A4, owner *„zkontrolovat všechny IS obrazy“*):** 189 obrazů + 12 míst prošlo; 12 skutečných chyb
     (mj. Uruz „hráur kraftur“ → „hrár“ i v `k_is` a ve zlatém snímku, Sowilo „brýst“, Kenaz „kveikt á eldspýtu“, Isa „ísi lögð“, Jera
     „daginn lengir“) a 15 podezření; opravy hotové a ověřené v podkladu, část A4.
   - **Owner 2026-10-16 k části B** (DECISIONS 2026-10-16 (3)):
