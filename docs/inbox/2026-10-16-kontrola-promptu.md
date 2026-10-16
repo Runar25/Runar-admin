@@ -159,3 +159,17 @@ starém skládání (obě ramena stejně, závěr o korekcích tím nedotčen).
 Žádné volání modelu: všechny nálezy jsou textové, jak je model vyřeší, neměřeno. Neprošlo: banka `RUNE_IMAGES` (jen obrazy ze vzorků),
 klíčová slova run, texty Kolekce mimo otázku runy a ✦, RP_LIFE/RP_NAME v IS jazykově, jiné hlasové profily než aktivní, cesta promptu ve
 shrine, `is-gpt-check.py` (placený). Idiomy jen n-gramy do 3 slov.
+
+## E. Podklady k místům v promptu k pozornosti (2026-10-16, owner „potřebuju víc podkladů“)
+Data: od 2026-10-09 (sol) 28 čtení (23 single, 5 spreadů), 11 Asků — pozorování, ne měření.
+| místo | důvod nalezen | změřeno | doporučení |
+|---|---|---|---|
+| (a) „The image must connect to where this person is standing“ (`runar-character.js:794`, IS `:793`) | ne — vznik 7a5e7b5 (2026-06-07) bez důvodu; přesuny 08-14 a 09-18 zdůvodněné | přímo nikdy; 3. věta „you“ 49/84 (EVAL 09-26 (1)); LAB 10-05 bod 8 doporučil vyndat | otestovat; pozor: všechna 4 EN čtení s přenosem do života mají záměr „Decision ahead“ (0/8 bez něj) — zdroj může být záměr |
+| (b) „Neither confirm nor refute.“ (`:1222`, IS `:1215`) | ano — 9ce6956 (07-14) nahradilo „affirm what is already true“ (studené čtení); DECISIONS 09-23 (12) | opis metafory 3/15 → 0/15; u otázky ano/ne ne; Confirmation s otázkou 0 čtení v celé DB | otestovat spolu s (d); tvar konce drží `SEEK_SHAPE` (`runar-utils.js:775`), ne věta |
+| (c) „one detail the sentence does not name“ (`:958`, jen sol) | ano — EVAL 09-23 (8), (9); DECISIONS 09-24 (17); „the sentence“ = řádek obrazu nad tím | převyprávění 20 → 12/28 (p ≈ 0,01), lepší čtení ne; IS neměřeno (dluh verdiktu 09-23 (9)) | sledovat, IS doměřit |
+| (d) „Let <runa> answer: … through image and symbol“ (`:1814`, IS `:1790`) | vznik ne (06-06); ponechání ano (adbab95, owner) | nikdy | otestovat; viz krize níž |
+| (e) štítky pozic „Inner state“ / „subconscious“ | ne (vznik 06-05, 06-07, před pravidlem proti studenému čtení) | hrubě: zásahy 19/29 (do 08-15) → 1/11 → 0/3 (sol) | sledovat (owner) |
+
+⚠️ **Krize ve čtení s otázkou:** ownerův test 2026-10-16 (Raidho EN, otázka o sebepoškození) dostal běžný výklad bez 112 — „Let Raidho
+answer“ vzalo otázku k výkladu; pojistka v5.10 (284d36d) kryje jen Ask. Doložený případ „pravidlo v systému × protichůdný pokyn v user
+promptu“ (systémová věta o 112 prohrála). Dopad dnes malý — pole s otázkou je jen pro admina (2bf5e27). Testy (a)–(d) chtějí API (§30).
