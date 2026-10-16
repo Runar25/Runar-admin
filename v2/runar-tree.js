@@ -916,7 +916,9 @@ function _rsLifeRuneReading() {
   var COST = (SPREAD_COSTS && SPREAD_COSTS.life_rune) ? SPREAD_COSTS.life_rune.credits : 3;
   var bal  = typeof userCredits !== 'undefined' ? userCredits : 0;
   if (bal < COST) {
-    showToast(tp('life_need_credits', { n: COST }));
+    // 2026-10-16: jednotka i jméno karty z VOCAB (§10) — dřív „{n} credits“ / „reading gift card“ natvrdo, jinde jednotka „rune reading“
+    // a karta „Rune Reading Card“; IS „{n} kredit“ navíc bez množného čísla.
+    showToast(tp('life_need_credits', { units: vn('unit', COST, lang), card: vl('card', lang) }));
     return;
   }
   generateLifeRuneReading();

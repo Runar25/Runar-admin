@@ -508,7 +508,7 @@ const UI_TEXT = {
     redeem_err_session:   'Please sign in again.',
     redeem_err_rate:      'Too many attempts. Please wait 15 minutes.',
     life_need_units:      'You need {units}',
-    life_need_credits:    'You need {n} credits. Get a reading gift card.',
+    life_need_credits:    'You need {units}. Get a {card}.',
     name_you:             'you',
     // 2026-10-10 (ráčna ㉸, DECISIONS 2026-10-10 (1) bod 5): texty dřív psané natvrdo v runar-app.js a runar-reading.js — znění
     // beze změny, jen jméno tieru a karty jde z TIERS / VOCAB ({tier}, {card}, §15).
@@ -1031,7 +1031,7 @@ const UI_TEXT = {
     redeem_err_session:   'Skráðu þig inn aftur.',
     redeem_err_rate:      'Of margar tilraunir. Bíddu 15 mínútur.',
     life_need_units:      'Þú þarft {units}',
-    life_need_credits:    'Þú þarft {n} kredit. Keyptu þér gjafakort.',
+    life_need_credits:    'Þú þarft {units}. Keyptu þér {card}.',
     name_you:             'þú',
     lock_become_rs:       '· Gerast {tier} til að opna',
     lock_card_unveils:    '· {card} opnar allt',
