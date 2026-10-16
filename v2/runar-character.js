@@ -1027,6 +1027,8 @@ function _noColdRead(lang) {
 // Convert the intention label into a Norns-axis time-framing instruction.
 // Data source: INTENTIONS.norns (runar-runes.js). Never surfaced verbatim.
 
+// Jen single (2026-10-16, v5.11): spready mají vlastní časovou osu v pozicích a „Right now — speak in the present“ jí odporovalo
+// (owner: „všechny časové tvary pro spready ignorovat, jelikož mají svůj tvar“, DECISIONS 2026-10-16 (3)).
 function _intentionContext(intention, lang) {
   if (!intention || !INTENTIONS) return '';
   var label = (lang === 'is') ? 'TILGANGUR' : 'READING PURPOSE';
@@ -2308,7 +2310,7 @@ function buildKrizPromptCross(u, runes, lang, corrections) {
     // sam vylozi na stul a o dva radky niz zakaze ji vyslovit". Po odebrani obou
     // maji spready TYZ tvar registru jako single — tedy ten, na kterem se merilo.
     // Popisky S.seeking/seekJoin v packach zustavaji: jsou to data, ne chovani.
-    u.intention ? _intentionContext(u.intention, lang) : '',
+    // 2026-10-16 v5.11: záměr (časový rámec) do spreadu nejde — spread má vlastní časovou osu v pozicích (owner, DECISIONS 2026-10-16 (3)).
     u.question ? S.question + ': ' + _questionSafe(u.question) : '',
   ].filter(Boolean).join('\n');
   var P = S.positions;
@@ -2403,7 +2405,7 @@ function buildNornsPromptFate(u, runes, lang, corrections) {
     // sam vylozi na stul a o dva radky niz zakaze ji vyslovit". Po odebrani obou
     // maji spready TYZ tvar registru jako single — tedy ten, na kterem se merilo.
     // Popisky S.seeking/seekJoin v packach zustavaji: jsou to data, ne chovani.
-    u.intention ? _intentionContext(u.intention, lang) : '',
+    // 2026-10-16 v5.11: záměr (časový rámec) do spreadu nejde — spread má vlastní časovou osu v pozicích (owner, DECISIONS 2026-10-16 (3)).
     u.question ? S.question + ': ' + _questionSafe(u.question) : '',
   ].filter(Boolean).join('\n');
   var L = S.labels;
@@ -2482,7 +2484,7 @@ function buildHorseshoePromptSeven(u, runes, lang, corrections) {
     // sam vylozi na stul a o dva radky niz zakaze ji vyslovit". Po odebrani obou
     // maji spready TYZ tvar registru jako single — tedy ten, na kterem se merilo.
     // Popisky S.seeking/seekJoin v packach zustavaji: jsou to data, ne chovani.
-    u.intention ? _intentionContext(u.intention, lang) : '',
+    // 2026-10-16 v5.11: záměr (časový rámec) do spreadu nejde — spread má vlastní časovou osu v pozicích (owner, DECISIONS 2026-10-16 (3)).
     u.question ? S.question + ': ' + _questionSafe(u.question) : '',
   ].filter(Boolean).join('\n');
   var P = S.positions;
@@ -2575,7 +2577,7 @@ function buildYggdrasilPromptNine(u, runes, lang, corrections) {
     // sam vylozi na stul a o dva radky niz zakaze ji vyslovit". Po odebrani obou
     // maji spready TYZ tvar registru jako single — tedy ten, na kterem se merilo.
     // Popisky S.seeking/seekJoin v packach zustavaji: jsou to data, ne chovani.
-    u.intention ? _intentionContext(u.intention, lang) : '',
+    // 2026-10-16 v5.11: záměr (časový rámec) do spreadu nejde — spread má vlastní časovou osu v pozicích (owner, DECISIONS 2026-10-16 (3)).
     u.question ? S.question + ': ' + _questionSafe(u.question) : '',
   ].filter(Boolean).join('\n');
   var T = S.tiers, P = S.positions;

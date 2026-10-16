@@ -75,7 +75,7 @@ const UI_TEXT = {
     // `t(k + '_hint')` (_updateAreaSeekLabels, toggleFormHint) a ㉽ dynamickou příponu neviděla; „+“ pak ukazoval holý klíč.
     area_hint:        'The area tells Rúnar where in your life to let the picture land.',
     seek_hint:        'This sets the tone.',
-    intention_hint:   'This sets the time the reading speaks to.',
+    intention_hint:   'This sets the time the reading speaks to — for a single rune only. The spreads have their own time.',   // 2026-10-16 owner: „platí jen pro single“
     // 2026-09-29 (KUKY bod 4: jen jedna věta, „není potřeba to víc vysvětlovat, alespoň ne zatím“) — rozbalí „+“ u popisku.
     seek_lbl:         'WHAT ARE YOU SEEKING?',
     intention_lbl:    'THIS READING IS FOR',
@@ -627,7 +627,7 @@ const UI_TEXT = {
     area_lbl:         'SVIÐ LÍFSINS',
     area_hint:        'Sviðið segir Rúnari hvar í lífi þínu myndin á að lenda.',   // 2026-10-12 vráceno (viz EN), znění z 2026-09-29
     seek_hint:        'Þetta ræður tóninum.',
-    intention_hint:   'Þetta ræður því um hvaða tíma lesturinn talar.',
+    intention_hint:   'Þetta ræður því um hvaða tíma lesturinn talar og á aðeins við um eina rún. Lagnirnar hafa sinn eigin tíma.',   // 2026-10-16: Greynir OK, korpus v commitu
     seek_lbl:         'HVAÐ ERTU AÐ LEITA AÐ?',
     intention_lbl:    'ÞESSI LESTUR ER FYRIR',
     report_btn:       'Tilkynna athugasemd',

@@ -9,6 +9,7 @@
 ## Čtení a islandština — co zbývá (prompt prakticky hotový, owner 2026-10-12)
 - [ ] **Kontrola promptu tvorby čtení před spuštěním — 2026-10-16 (CODE-read)** (owner: *„jakákoliv další velká kontrola je vítána…
   chceme vychytat všechny mouchy“*). Celé nálezy s řádky a hotovými ověřenými IS opravami: `docs/inbox/2026-10-16-kontrola-promptu.md`.
+  - ✅ *(CODE-tune 2026-10-16: krize v Asku hotová — v5.10, výjimka v pravidle „mimo téma“, EN + IS.)*
   - [ ] **CODE-tune — opravy (A):** krize v Asku: pravidlo „mimo téma neodpovídej“ přebije větu o 112 (vysoká) · 19 islandských chyb
     v živých promptech (mj. „Sleppu“ → „Slepptu“ v každém IS single, chybné pravidlo 2. osoby v IS systému, „rúna“ × „rún“, Kříž „einum
     flæði“, Yggdrasil „til Heljar“, kalky v bloku „never“) · Ask v IS povoluje přesah 90 slov (useká se) · „pro někoho“ oslovuje rodem
@@ -22,7 +23,8 @@
     - [ ] **Studené čtení — napřed definice** (owner: *„„what strength is already in you“ na tom není nic špatného. je potřeba si lépe určit
       definice, kdy je to tvrzení o člověku a co je neškodné povzbuzení či konstatování faktu“*). CODE-read navrhne definice ownerovi;
       štítky pozic a otázky run se posoudí až podle nich.
-    - [ ] **CODE-tune — spready bez časového rámce** (owner: *„celkově u spreadů vynechat… všechny časové tvary pro spready ignorovat, jelikož
+    - [x] ✅ *(CODE-tune 2026-10-16, v5.11: `_intentionContext` jen v single, ve čtyřech spreadech pryč; nápověda „+“ u „This reading is
+      for“ EN + IS „jen pro jednu runu, spready mají svůj čas“ — IS Greynir OK.)* **CODE-tune — spready bez časového rámce** (owner: *„celkově u spreadů vynechat… všechny časové tvary pro spready ignorovat, jelikož
       mají svůj tvar. a pro „this reading is for“ dopsat poznámku, že platí jen pro single čtení“*): `_intentionContext` (a jiné časové
       rámce) ve spreadech nevkládat; u `intention_lbl` / IS v UI poznámka „jen pro jednu runu“ (EN + IS, §2, §31).
     - [ ] **Otázka ve spreadu** (owner: *„to by měla a je potřeba to testovat“*): pole vidí Standard a Premium (i testeři) ve všech výkladech
