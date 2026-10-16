@@ -85,6 +85,29 @@ konkrétní pokyn v user promptu ji může přebít (DECISIONS 2026-10-16 (1): �
 13. ZNÁMÉ, pořád platí (návody 2026-10-04 bod 3): „Respond in English.“ na konci spreadů a životní runy (`:2268`, `:2373`, `:2457`, `:2546`,
     `:1393`) vedle „Respond only in English.“ v systému (`:60`); Norny „not three separate readings“ dvakrát (`:2378`, `:2387`).
 
+### A4. Islandské obrazy (`RUNE_IMAGES` 189 řádků + `IMG_PLACES` 12 vět; owner 2026-10-16 „zkontrolovat všechny IS obrazy“)
+Nástroje: Greynir na všech, korpus/slovník/BÍN ~100 dotazů, opravy znovu přes Greynir (OK). Místa `IMG_PLACES` 12/12 OK.
+1. Uruz význam „hráur kraftur“ — tvar v BÍN neexistuje, správně **„hrár kraftur“** (korpus 9× / 0×). Řádky `:517`, `:531`, `:532` a zdroj
+   `v2/runar-runes.js:23` (`k_is`) — opravit obojí najednou; mění to zlatý snímek `scripts/golden/golden_baseline.json` → golden-verify (§18.3).
+2. Jera `:448` „Sólarhringurinn lengist hægt fram á vorið.“ (sólarhringur = 24 h) → **„Daginn lengir hægt fram á vorið.“**
+3. Kenaz `:647` „Eldspýtu er kveikt í rafmagnsleysinu, …“ (kveikja á; 0× / 13×) → **„Kveikt er á eldspýtu í rafmagnsleysinu, og allt herbergið tekur aftur á sig mynd.“**
+4. Isa `:445` „Tjörnin er lögð hjarni …“ (hjarn = sněhová krusta) → **„Tjörnin er ísi lögð og bíður án þess að biðja um neitt.“**
+5. Sowilo `:486` „Sólin brýtur loks í gegn …“ (brjótast í gegn; 52× / 4×) → **„Sólin brýst loks í gegn og glampar á blautu grjóti.“**
+6. Kenaz výheň `:405` „Aflinn glóir …“ — IS význam `kyndill` (pochodeň) u výhně, EN `fire` → IS význam **`eldur`**.
+7. Perth laguna `:471` — IS a EN popisují jinou scénu (IS přepsána 2026-09-11, EN zůstala) → EN podle IS: „For a moment something glints on
+   the lagoon bed before the silt covers it again.“ (EN neověřena nástrojem).
+8. Laguz `:580` „… enginn vísar því.“ (vísa = odkázat) → **„Vatnið finnur sér leið niður hlíðina, og enginn vísar því veginn.“**
+9. Gebo `:419` „Önnur höndin réttir fram …“ (bez předmětu) → **„Önnur höndin réttir eitthvað fram og hin tekur á móti því.“**
+10. Jera `:458` „… hlaðan andar hlýju alla sína lengd.“ (shoda, kalk) → **„Síðasta heyið er komið inn og hlaðan andar hlýju endanna á milli.“**
+11. Jera `:461` (E001, §19.2) → **„Þú snýrð heyinu eina þurra eftirmiðdaginn sem vikan leyfir, og það nægir.“**
+12. Berkana rebarbora `:624` (E001; IS má navíc „fyrstur allra“, kolize s břízou) → **„Rabarbarinn teygir sig upp úr kaldri moldinni við suðurvegginn.“**
+Podezření (neověřeno, úsudek): Nauthiz `:433` „leita fast að ylnum“ → „hjúfrar sig fast upp að ánni“ · Ansuz `:388` anglická stavba → „Þú útskýrir
+vandann upphátt og þagnar í miðju kafi, því að orðin sjálf sýna þér svarið.“ · Ingwaz `:582` „býr sig“ → „býr sig undir vorið neðanjarðar…“ ·
+Hagalaz `:431` „úr heiðskíru“ → „úr heiðskíru lofti“ · Mannaz `:563` dvakrát „en“ · Jera `:460` „tal“ × EN „counting“ · Nauthiz `:442` „stund birtu“ ·
+Othila `:583` „stendur í tóftum“ · Jera `:457` „fleiri en handfyllin“ · Ehwaz `:551` „styttir skrefið“ · významy z `k_is` s 0× (vöxtur í áskorun,
+skýrleiki í kulda, traust milli tveggja, guðleg leiðsögn). ZNÁMÉ (owner „1–8 nech“, DECISIONS 2026-10-06 (1)): rozpory významů Isa, Laguz, Nauthiz,
+Dagaz, Raidho, Ingwaz, Ansuz.
+
 ## B. K rozhodnutí ownera (obsah, kánon, pokus)
 1. **Studené čtení ve struktuře promptu:** otázka runy jako zdroj konce u run, jejichž otázka mluví o nitru (IS Laguz „Hvað finnur þú innra
    með þér…?“ pár řádků pod „ENGIN KÖLD LESNING“; EN Uruz „what strength is already in you“; Eihwaz, Dagaz, Berkana, Ingwaz — `runar-utils.js:818–842`)
