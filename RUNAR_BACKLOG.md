@@ -818,6 +818,10 @@ Nález 2026-08-16: otázka s příznaky infarktu dostala běžné čtení o sbě
 - [ ] **Zbývá — pro ownera, část pro právníka:** upozornění „Rúnar je AI“ v rozhraní (EU AI Act čl. 50 od 2. 8. 2026)? · věk 13+
   proti pravidlům Anthropicu pro nezletilé? · oznamovací povinnost při zneužívání dítěte (islandský zákon o ochraně dětí)? ·
   placení za čtení s otázkou na sebevraždu — owner: *„Nebo je to protizákonné?“* (rešerše 2026-10-15 to neřešila)?
+- [ ] **Krize v poli s otázkou (single i spready) 112 nedostane** (CODE-read 2026-10-16, ownerův test Raidho EN): `qBranch` „Let <runa>
+  answer: <q>“ (`runar-character.js`) vezme otázku jako zadání výkladu a systémová věta o 112 prohraje; výjimka v5.10 kryje jen Ask.
+  Dnes jen admin (pole s otázkou, 2bf5e27). Nutné, než se pole otevře; „Let X answer“ owner drží do testu → měnit až s ním
+  (podklad `docs/inbox/2026-10-16-kontrola-promptu.md` část E).
 **Zdroje (2026-10-15):** model-spec.openai.com · openai.com/index/strengthening-chatgpt-responses-in-sensitive-conversations ·
 developers.openai.com/api/docs/guides/moderation · anthropic.com/news/protecting-well-being-of-users · anthropic.com/legal/aup ·
 support.claude.com/en/articles/9307344 · artificialintelligenceact.eu/article/50 · raudikrossinn.is (Hjálparsíminn 1717) · pieta.is ·
