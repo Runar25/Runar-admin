@@ -805,6 +805,12 @@ function openLine() {
   const ta = document.getElementById('line-text');
   if (ta) ta.placeholder = t('line_ph');
   setSt('st-line', '');
+  // 2026-10-16 (owner zprávou fd51c6f7: „budeme tu náhodně vkládat všech 25 glyfů run“): runa v hlavičce okna je při každém otevření
+  // náhodná ze všech 25 (i Blank), kámen jako v ostatních oknech (CLAUDE.md §5). Do té doby pevně Ansuz z data-rune-glyph — owner ji
+  // četl jako Fehu (kresba ověřena: totožná s naší Ansuz).
+  const runaOkna = document.querySelector('#line-modal .modal-rune');
+  if (runaOkna && typeof RUNES !== 'undefined' && RUNES.length && typeof runeSvg === 'function')
+    runaOkna.innerHTML = runeSvg(RUNES[Math.floor(Math.random() * RUNES.length)], { frame: true, cls: 'modal-rune-svg' });
   const m = document.getElementById('line-modal');
   if (m) m.classList.add('open');
   if (ta) setTimeout(function () { ta.focus(); }, 50);

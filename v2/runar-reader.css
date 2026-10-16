@@ -16,6 +16,10 @@
 
 /* ── BODY ── */
 body{background:var(--bg);color:var(--white);font-family:'Cormorant Garamond',serif;min-height:100vh;}
+/* 2026-10-16 (owner zprávou fd51c6f7: „číslovka 25 se píše tak, že 5 je pod úrovní 2“): číslice stejné výšky v celé appce. Cormorant má
+   výchozí starodávné číslice — „5“ a „3“ padají pod účaří, „2“ je malá. Formulářová pole písmo nedědí, proto zvlášť. Do té doby to měl
+   jen .tree-name-inp (2026-05-31, týž důvod) — tam už pravidlo není, platí tohle jedno. */
+body,input,textarea,select,button{font-variant-numeric:lining-nums;}
 body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   background:
     radial-gradient(ellipse 120% 55% at 50% 0%,rgba(46,74,112,0.4) 0%,transparent 55%),
@@ -335,7 +339,7 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 .tree-intro-title{font-style:normal !important;font-size:0.78em;letter-spacing:0.18em;color:var(--gold) !important;opacity:0.85;margin-bottom:1.8em !important;}
 .tree-name-section{padding:24px 20px 8px;text-align:center;border-top:1px solid var(--border);margin-top:8px;}
 .tree-name-label{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--muted);margin-bottom:12px;}
-.tree-name-inp{width:100%;max-width:360px;text-align:center;font-variant-numeric:lining-nums;}
+.tree-name-inp{width:100%;max-width:360px;text-align:center;}
 .tree-name-saved{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:1.5px;color:var(--gold);margin-top:8px;}
 .tree-named-lbl{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--muted);display:block;margin-bottom:6px;}
 .tree-named-nm{font-family:'Cinzel',serif;font-size:1.15em;color:var(--gold);letter-spacing:1px;}

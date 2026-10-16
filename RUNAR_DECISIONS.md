@@ -11645,3 +11645,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   „what strength is already in you“ za vadu nepovažuje → definice musí říct, čím se liší od dřívějšího „already“ (oznamovací věta ×
   otázka / povzbuzení).
 - Affected doc(s): `CLAUDE.md` (Reading systém, KLÍČ), `RUNAR_BACKLOG.md` (kontrola promptu, nápady pro V3) — v témže commitu.
+
+## 2026-10-16 (4) — Okno „Send Rúnar a line“: náhodná runa ze všech 25; číslice stejné výšky v celé appce
+
+- **Rozhodl:** owner zprávou z appky (fd51c6f7, „Send Rúnar a line“): *„máš tady jako glyf runu FEHU. budeme tu náhodně vkládat všech 25
+  glyfů run. … číslovka 25 se píše tak, že 5 je pod úrovní 2. zkontroluj to“*; v chatu na otázku, jestli to platí: *„odesláno přes „Send
+  Rúnar a line““*.
+- **Co:** okno zprávy ukáže při každém otevření náhodnou runu ze všech 25 (i Blank — prázdný kámen), kámen jako ostatní okna (CLAUDE.md §5).
+  Do té doby pevně Ansuz — owner ji četl jako Fehu (kresba ověřena: totožná s naší Ansuz). Číslice: Cormorant má výchozí starodávné
+  číslice („5“ a „3“ pod účařím, „2“ malá); `font-variant-numeric: lining-nums` na `body` a formulářových polích (ta písmo nedědí). Do té
+  doby to měl jen `.tree-name-inp` (2026-05-31, týž důvod) — teď jedno pravidlo pro všechno.
+- **Ověřeno:** naše kopie písma (`v2/fonts/`) vlastnost lining má (změřeno vedle sebe); 12 otevření okna = 9 různých run, všechny naše
+  kameny; číslice stejné výšky v poli zprávy, vstupech, tlačítkách i volbách; verify_zaklad_produkce.js OK (11 stavů).
+- Affected doc(s): žádný (hodnoty vlastní CSS a `openLine()` v `v2/runar-app.js`).
