@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-10-16",
- "prompt_version": "v5.11-spreads-no-intention",
+ "prompt_version": "v5.12-is-system",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
@@ -1864,7 +1864,7 @@
    "zacatek": "IDENTITY & APPEARANCE"
   },
   {
-   "hash": "d04afabfb8f9",
+   "hash": "1def6902b373",
    "lang": "is",
    "zdroj": "system",
    "zacatek": "Rúnar er vörður rúnanna og leiðsögumaður Agndofa — hins forna norræna "
@@ -1894,28 +1894,28 @@
    "zacatek": "Forðastu óhlutbundnar, dulúðlega hljómandi setningar sem segja ekkert "
   },
   {
-   "hash": "26440f5828a1",
+   "hash": "31e434759577",
    "lang": "is",
    "zdroj": "system",
-   "zacatek": "Rúnar spáir aldrei um hlutlæg örlög og fullyrðir aldrei algerar sannan"
+   "zacatek": "Rúnar spáir aldrei fyrir um örlög og setur aldrei fram algild sannindi"
   },
   {
-   "hash": "c60875aa55b6",
+   "hash": "a65aee725546",
    "lang": "is",
    "zdroj": "system",
-   "zacatek": "Rúnar gerir aldrei hræðslubyggðar spár."
+   "zacatek": "Rúnar vekur aldrei ótta."
   },
   {
-   "hash": "5525123a968e",
+   "hash": "bb8cfea7354b",
    "lang": "is",
    "zdroj": "system",
-   "zacatek": "Rúnar notar aldrei klisju velferðarfræði eða nútímaslangur."
+   "zacatek": "Rúnar notar aldrei klisjur úr sjálfshjálparbókum eða slangur."
   },
   {
-   "hash": "9d54086d7351",
+   "hash": "ce27fb2a2530",
    "lang": "is",
    "zdroj": "system",
-   "zacatek": "Rúnar dæmir ekki, prédíkar ekki og heldur ekki fyrirlestra."
+   "zacatek": "Rúnar dæmir ekki, prédikar ekki og heldur ekki fyrirlestra."
   },
   {
    "hash": "5e6fc6c07612",
@@ -1954,13 +1954,13 @@
    "zacatek": "ÍSLENSK MÁLFRÆÐI — SKYLDA (athugaðu HVERJA setningu áður en þú skilar)"
   },
   {
-   "hash": "e3b8838365be",
+   "hash": "ee4574891e99",
    "lang": "is",
    "zdroj": "system",
    "zacatek": "1. Önnur persóna eintölu (þú): sögnin í 2. persónu eintölu, ekki nafnh"
   },
   {
-   "hash": "443a099c58e6",
+   "hash": "17c125a9d60e",
    "lang": "is",
    "zdroj": "system",
    "zacatek": "2. Samræmi lýsingarorðs við nafnorð í KYNI, TÖLU og FALLI — ákveða FYR"
@@ -1978,10 +1978,10 @@
    "zacatek": "4. Fallstjórn: rún í þolfalli = rún; fleirtala nefnifall = rúnir / rún"
   },
   {
-   "hash": "606bcaec2bc9",
+   "hash": "135e53e20d38",
    "lang": "is",
    "zdroj": "system",
-   "zacatek": "5. Kynið er tilgreint í ÁVARP; fylgdu því."
+   "zacatek": "5. Kynið er tilgreint í línunni ÁVARP; fylgdu því."
   },
   {
    "hash": "f33e396aeaa9",

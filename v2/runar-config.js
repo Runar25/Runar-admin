@@ -71,7 +71,9 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 //    ze v5.09 (CODE-read, kontrola promptu 2026-10-16; ownerův test 59c64907 byl v Asku).
 // v5.11 (2026-10-16): spready bez časového rámce záměru (_intentionContext jen single) — owner „všechny časové tvary pro spready
 //    ignorovat, jelikož mají svůj tvar“ (DECISIONS 2026-10-16 (3)); nápověda u „This reading is for“ to říká uživateli.
-const RUNAR_PROMPT_VERSION = 'v5.11-spreads-no-intention';
+// v5.12 (2026-10-16): islandský systémový prompt — blok „never“ bez kalků, pravidlo 2. osoby opravené (bylo chybné: „þú talir“),
+//    pravidlo 2 rozebratelné, „línunni ÁVARP“, pravopis (CODE-read, kontrola promptu A2).
+const RUNAR_PROMPT_VERSION = 'v5.12-is-system';
 
 // Měsíční strop hlasu pro všechny (VOICE_MONTHLY_LIMIT = 5, od 2026-09-11) ZRUŠEN 2026-10-11: „limit na hlas max 5 na měsíc“ byl
 // ownerův pokyn pro testery, omylem pro všechny (DECISIONS 2026-10-11 (49)); owner: „žádný měsíční strop 5 hlasů není!!!“. Rúnar přečte
