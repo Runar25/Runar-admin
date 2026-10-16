@@ -11,8 +11,8 @@ import { createClient } from "npm:@supabase/supabase-js@2.117.3";
 import { fetchQuota, brzdaHlasu, EL_KREDIT_USD } from "../_shared/voice_usage.ts";
 import { kredityHlasu } from "../_shared/el_voice.ts";
 import { readingCostUsd } from "../_shared/ceny_modelu.ts";
-import { stavy, upozorneni, souhrn, KLICE } from "../_shared/ops_souhrn.ts";
-import type { Stav, Hlidka, Den, Email, Zaloha, Kredity } from "../_shared/ops_souhrn.ts";
+import { stavy, upozorneni, souhrn, vadyMazani, KLICE, MAZANI } from "../_shared/ops_souhrn.ts";
+import type { Stav, Hlidka, Den, Email, Zaloha, Kredity, MazaniPosledni, MazaniDen } from "../_shared/ops_souhrn.ts";
 
 const PRIJEMCE = "runar@therunekeeper.com";
 // Tentýž odesílatel jako e-mail s přihlašovacím kódem (posílá ho Brevo, adresa je u Brevo ověřená).
@@ -62,6 +62,31 @@ async function zaloha(db: any): Promise<Zaloha> {
   const o = ok.data?.[0];
   return { posledniOk: o?.created_at ?? null, bajtu: o?.detail?.bytes ?? null, posledniChyba: ch.data?.[0]?.created_at ?? null };
 }
+// Poslední záznam „purge“ každé mazací úlohy (2026-10-16, owner: „chci vždy potvrzení … musíme mít kontroly“). Úloha bez záznamu → kdy null.
+// deno-lint-ignore no-explicit-any
+async function mazaniPosledni(db: any): Promise<Record<string, MazaniPosledni>> {
+  const o: Record<string, MazaniPosledni> = {};
+  await Promise.all(Object.keys(MAZANI).map(async (job) => {
+    const { data, error } = await db.from("ops_events").select("created_at, detail").eq("kind", "purge").eq("detail->>job", job)
+      .order("created_at", { ascending: false }).limit(1);
+    if (error) throw new Error(error.message);
+    const r = data?.[0];
+    o[job] = { kdy: r?.created_at ?? null, ok: r ? r.detail?.ok !== false : null, chyba: r?.detail?.error ? String(r.detail.error).slice(0, 80) : null };
+  }));
+  return o;
+}
+// Nezávislá kontrola výsledku mazání zpráv čtenářů: kolik jich v DB zůstalo déle než 6 měsíců (+ 2 dny rezerva) po poslední odpovědi,
+// bez odpovědi po přijetí — stejné pravidlo jako public.purge_reader_messages() (sql/2026-10-16_mazani_hlasi.sql). Má být vždy 0.
+// deno-lint-ignore no-explicit-any
+function zpravyPoLhute(db: any, ted: Date): Promise<number> {
+  const h = new Date(ted.getTime());
+  h.setUTCMonth(h.getUTCMonth() - 6);
+  h.setUTCDate(h.getUTCDate() - 2);
+  const iso = h.toISOString();
+  return pocet(db.from("bug_reports").select("id", { count: "exact", head: true }).eq("type", "message")
+    .or('resolved_at.lt."' + iso + '",and(resolved_at.is.null,created_at.lt."' + iso + '")'));
+}
+
 // deno-lint-ignore no-explicit-any
 async function nactiStavy(db: any): Promise<Record<string, Stav>> {
   const { data, error } = await db.from("ops_alert_state").select("key, state");
@@ -74,20 +99,22 @@ async function nactiStavy(db: any): Promise<Record<string, Stav>> {
 // deno-lint-ignore no-explicit-any
 async function hlidka(db: any, ted: Date): Promise<Hlidka> {
   const od = new Date(ted.getTime() - 3.6e6).toISOString();
-  const [chyb, zaloh, cteni, brzd, z] = await Promise.all([
+  const [chyb, zaloh, cteni, brzd, z, mz, poLhute] = await Promise.all([
     udalosti(db, "model_error", od),
     udalosti(db, "model_fallback", od),
     pocet(db.from("readings").select("id", { count: "exact", head: true }).gte("drawn_at", od)),
     pocet(db.from("voice_quota_snapshots").select("id", { count: "exact", head: true }).eq("source", "brake").gte("taken_at", od)),
     zaloha(db),
+    mazaniPosledni(db),
+    zpravyPoLhute(db, ted),
   ]);
-  return { ted: ted.toISOString(), chybModelu60: chyb, zalohModelu60: zaloh, cteni60: cteni, brzd60: brzd, zaloha: z };
+  return { ted: ted.toISOString(), chybModelu60: chyb, zalohModelu60: zaloh, cteni60: cteni, brzd60: brzd, zaloha: z, mazani: mz, zpravyPoLhute: poLhute };
 }
 
 // deno-lint-ignore no-explicit-any
-async function den(db: any, ted: Date): Promise<Den> {
+async function den(db: any, ted: Date, h: Hlidka): Promise<Den> {
   const od = new Date(ted.getTime() - 864e5).toISOString();
-  const [rd, vu, br, chyb, zaloh, brzd, z, otevrene, raw, neprectena] = await Promise.all([
+  const [rd, vu, br, chyb, zaloh, brzd, z, otevrene, raw, neprectena, pu] = await Promise.all([
     db.from("readings").select("area, usage, follow_up").gte("drawn_at", od),
     db.from("voice_usage").select("model, chars").gte("created_at", od),
     db.from("bug_reports").select("type").gte("created_at", od),
@@ -100,8 +127,20 @@ async function den(db: any, ted: Date): Promise<Den> {
     // nepřečtená = stav new kdykoli (ne jen za 24 h) — do „Needs you“ (2026-10-14: souhrn hlásil i uzavřené hlášení)
     // 2026-10-15: bez zpráv čtenářů („Send Rúnar a line“, typ message) — na ty owner odpovídá v Gmailu, CODE je nenačítá
     pocet(db.from("bug_reports").select("id", { count: "exact", head: true }).eq("status", "new").neq("type", "keep").neq("type", "message")),
+    db.from("ops_events").select("created_at, detail").eq("kind", "purge").gte("created_at", od),
   ]);
-  for (const q of [rd, vu, br]) if (q.error) throw new Error(q.error.message);
+  for (const q of [rd, vu, br, pu]) if (q.error) throw new Error(q.error.message);
+  // Mazání za 24 h podle úlohy (2026-10-16): počet běhů, smazáno, položky (id zpráv / názvy archivů), selhání; poslední běh vůbec z h.
+  const mazani: Record<string, MazaniDen> = {};
+  for (const job of Object.keys(MAZANI)) mazani[job] = { behu: 0, smazano: 0, polozky: [], chyb: 0, posledni: h.mazani[job]?.kdy ?? null };
+  for (const e of pu.data ?? []) {
+    const m = mazani[e.detail?.job];
+    if (!m) continue;
+    m.behu++;
+    m.smazano += Number(e.detail?.deleted) || 0;
+    if (Array.isArray(e.detail?.items)) m.polozky.push(...e.detail.items.map((x: unknown) => String(x).slice(0, 40)));
+    if (e.detail?.ok === false) m.chyb++;
+  }
   const modely: Record<string, number> = {};
   let cena = 0, bezCeny = 0, asky = 0, spready = 0;
   // deno-lint-ignore no-explicit-any
@@ -138,6 +177,7 @@ async function den(db: any, ted: Date): Promise<Den> {
     od, do: ted.toISOString(), cteni: (rd.data ?? []).length, spready, asky, modely, cenaModelu: cena, bezCeny,
     hlasy: (vu.data ?? []).length, znakyHlasu: znaky, cenaHlasu: kredity * EL_KREDIT_USD, hlaseni, neprectena, ulozeno,
     chybModelu: chyb, zalohModelu: zaloh, brzd, kredity: kr, zaloha: z, otevrene,
+    mazani, vadyMazani: vadyMazani(h, stavy(h).backup),
   };
 }
 
@@ -150,7 +190,7 @@ serve(async (req) => {
   const ted = new Date();
   try {
     if (mode === "digest") {
-      const e = souhrn(await den(db, ted));
+      const e = souhrn(await den(db, ted, await hlidka(db, ted)));
       const poslano = await posli(e);
       await db.from("ops_events").insert({ kind: poslano ? "digest_sent" : "digest_failed", detail: { stav: e.stav } });
       return json({ ok: poslano, mode, stav: e.stav });

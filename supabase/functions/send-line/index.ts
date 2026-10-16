@@ -6,6 +6,9 @@
 // Adresu bere server z přihlášení (auth.getUser), ne z těla požadavku — klient ji podvrhnout nemůže. Nejvýš 3 zprávy za hodinu na účet
 // (check_rate_limit; okno ≤ 1 h — u delšího okna má ta funkce past, RUNAR_BACKLOG.md).
 // Uložení a e-mail jsou dvě cesty: selže-li jedna, druhá zprávu drží (uživatel dostane „ok“). Chyba jen když neprojde ani jedna.
+// Předmět nese značku zprávy „ref <8 znaků id>“ (2026-10-16, owner k bodu 9: „to dělej ty automaticky“): plánovaná úloha nad Gmailem
+// (scripts/ulohy/zpravy-gmail.md) podle ní spáruje vlákno s řádkem v DB, označí zprávu za zodpovězenou a po 6 měsících vlákno smaže.
+// Gmailový filtr na štítek Messages hledá „A line from a reader“ — značka za tím ho neruší.
 // Deploy: supabase functions deploy send-line --project-ref pmitxjvkeovijreepror --no-verify-jwt
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.117.3";
@@ -60,10 +63,11 @@ serve(async (req) => {
   if (smi === false) return json({ error: "rate_limited" }, 429);
 
   // 1) databáze — zdroj pro shrine a pro mazání po 6 měsících
-  const { error: dbErr } = await sb.from("bug_reports").insert({
+  const { data: radek, error: dbErr } = await sb.from("bug_reports").insert({
     client_uuid: crypto.randomUUID(), tester: user.email, type: "message", message: zprava, screen_context: "send-line",
     locale: jazyk, app_version: verze, user_agent: ua, reported_at: new Date().toISOString(), status: "new",
-  });
+  }).select("id").single();
+  const ref = radek?.id ? String(radek.id).slice(0, 8) : "";
   if (dbErr) console.error("send-line: db insert failed: " + (dbErr.code || "") + " " + dbErr.message);
 
   // 2) e-mail do runar@ s odpovědí rovnou uživateli
@@ -77,7 +81,7 @@ serve(async (req) => {
       headers: { "api-key": key, "Content-Type": "application/json", "Accept": "application/json" },
       body: JSON.stringify({
         sender: ODESILATEL, to: [{ email: PRIJEMCE, name: "Rúnar" }], replyTo: { email: user.email },
-        subject: "Rúnar · A line from a reader",
+        subject: "Rúnar · A line from a reader" + (ref ? " · ref " + ref : ""),
         textContent: zprava + "\n\n— " + meta,
         htmlContent: '<div style="font:14px/1.5 Arial,Helvetica,sans-serif;color:#1f1f1f;white-space:pre-wrap">' + esc(zprava) + "</div>"
           + '<div style="font:12px/1.5 Arial,Helvetica,sans-serif;color:#777;margin-top:10px">' + esc(meta) + "</div>",

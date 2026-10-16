@@ -171,7 +171,18 @@ async function main() {
     naDrive(archivDb);
     hlasProvoz('backup_ok', { bytes: fs.statSync(archivDb).size, tables: Object.keys(souhrn).length });
     log('DB ok → ' + archivDb + ' (' + fs.statSync(archivDb).size + ' B; ' + Object.entries(souhrn).map(([k, v]) => k + ' ' + v).join(', ') + ')');
-    smazStare(DEN, [CIL, DRIVE]).forEach((f) => log('smazána záloha starší než ' + LHUTA_DNI + ' dní: ' + f));
+    // Potvrzení mazání do ops_events (2026-10-16, owner: „chci vždy potvrzení … kde a co smazala. musíme mít kontroly!“): i nula — bez
+    // záznamu nejde poznat, že mazání neběželo. Archiv leží na PC i na Drive → jména bez duplicit, souborů zvlášť. Registr MAZANI
+    // (supabase/functions/_shared/ops_souhrn.ts, job backups_pc); selhání mazání zálohu neshodí, jen se nahlásí.
+    try {
+      const smazane = smazStare(DEN, [CIL, DRIVE]);
+      smazane.forEach((f) => log('smazána záloha starší než ' + LHUTA_DNI + ' dní: ' + f));
+      const jmena = [...new Set(smazane.map((f) => path.basename(f)))].sort();
+      hlasProvoz('purge', { job: 'backups_pc', ok: true, deleted: jmena.length, files: smazane.length, items: jmena });
+    } catch (e) {
+      log('CHYBA mazání starých záloh: ' + e.message);
+      hlasProvoz('purge', { job: 'backups_pc', ok: false, deleted: 0, error: String(e.message).slice(0, 120) });
+    }
 
     // Audio jen při změně: otisk = seznam (jazyk, runa, verze, adresa, změna)
     const audio = JSON.parse(fs.readFileSync(path.join(tmp, 'public.runar_static_audio.json'), 'utf8'));

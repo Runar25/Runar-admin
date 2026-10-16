@@ -54,6 +54,16 @@ function sb() {
 // ho nese), text je záloha (normalizovaný na obou stranách), a čeká se ~50 s (na pozadí, čtenář nečeká). Bez „nejnovější položky
 // našeho hlasu“ jako zálohy: smazala by i ownerův pokus na webu ElevenLabs. Log říká, čím se našlo, nebo co bylo vidět (počty, ne text).
 const CEKANI_HISTORIE_MS = [2000, 3000, 5000, 8000, 12000, 20000];
+// Výsledek každého mazání do ops_events (kind „purge“, job el_history — registr MAZANI v _shared/ops_souhrn.ts), 2026-10-16, owner:
+// „chci vždy potvrzení … kde a co smazala. musíme mít kontroly!“ Hlídání ohlásí selhání, ranní souhrn počet. Jen výsledek a kód chyby,
+// žádný text čtení. Zápis nesmí hlas nikdy shodit.
+async function hlasMazani(ok: boolean, chyba?: string): Promise<void> {
+  try {
+    const { error } = await sb().from("ops_events").insert({ kind: "purge",
+      detail: ok ? { job: "el_history", ok: true, deleted: 1 } : { job: "el_history", ok: false, deleted: 0, error: chyba ?? "unknown" } });
+    if (error) console.error("ops_events purge insert failed:", error.message);
+  } catch (e) { console.error("ops_events purge insert failed:", (e as Error).message); }
+}
 async function smazHistorii(text: string, odUnix: number, reqId: string | null): Promise<void> {
   const hlavicky = { "xi-api-key": EL_API_KEY! };
   let videno = 0;
@@ -61,7 +71,7 @@ async function smazHistorii(text: string, odUnix: number, reqId: string | null):
     for (let pokus = 0; pokus <= CEKANI_HISTORIE_MS.length; pokus++) {
       const r = await fetch(`https://api.elevenlabs.io/v1/history?voice_id=${EL_VOICE_ID}&date_after_unix=${odUnix}&page_size=50`,
         { headers: hlavicky });
-      if (!r.ok) { console.warn(`EL history list ${r.status}: ${(await r.text()).slice(0, 200)}`); return; }
+      if (!r.ok) { console.warn(`EL history list ${r.status}: ${(await r.text()).slice(0, 200)}`); await hlasMazani(false, "list " + r.status); return; }
       const d: any = await r.json();
       const pol: any[] = d?.history || [];
       videno = pol.length;
@@ -69,15 +79,17 @@ async function smazHistorii(text: string, odUnix: number, reqId: string | null):
       const naj = podleId || pol.find((h) => normalizuj(h?.text ?? "") === normalizuj(text));
       if (naj?.history_item_id) {
         const del = await fetch(`https://api.elevenlabs.io/v1/history/${naj.history_item_id}`, { method: "DELETE", headers: hlavicky });
-        if (!del.ok) console.warn(`EL history delete ${del.status}: ${(await del.text()).slice(0, 200)}`);
-        else console.log(`EL history deleted (match: ${podleId ? "request_id" : "text"}, try ${pokus + 1})`);
+        if (!del.ok) { console.warn(`EL history delete ${del.status}: ${(await del.text()).slice(0, 200)}`); await hlasMazani(false, "delete " + del.status); }
+        else { console.log(`EL history deleted (match: ${podleId ? "request_id" : "text"}, try ${pokus + 1})`); await hlasMazani(true); }
         return;
       }
       if (pokus < CEKANI_HISTORIE_MS.length) await new Promise((ok) => setTimeout(ok, CEKANI_HISTORIE_MS[pokus]));
     }
     console.warn(`EL history item not found — left in history (request-id ${reqId ? "present" : "missing"}, items of our voice since start: ${videno})`);
+    await hlasMazani(false, "not_found");
   } catch (e) {
     console.warn("EL history cleanup failed:", (e as Error).message);
+    await hlasMazani(false, "exception");
   }
 }
 
