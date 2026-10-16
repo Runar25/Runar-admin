@@ -6397,3 +6397,18 @@ nedostupné). Data mimo repo: `~/runar-eval/podoby-bez-delky-2026-10-09.json`, `
   na ownerovo ano. Data: `~/runar-eval/korekce-pokus/` (mimo repo).
 - **Výhrada (2026-10-16, kontrola promptu):** `gen_batch.js` skládal single bez otázky runy a bez připomínky délky (chyběly translations),
   takže pokus neběžel na přesně produkčním promptu. Obě ramena stejně → závěr o korekcích tím nedotčen; nástroj opraven týž den.
+
+## 2026-10-16 (1) — Pravidlo v systémovém promptu × v user promptu (sol, EN): obojí 5/5, bez pravidla 0/5 — sol systém neignoruje
+
+- **Zadání (owner 2026-10-16):** *„9. ano a udělat test. jen EN jako první“* — ověřit větu CLAUDE.md „user prompt model poslechne, system
+  prompt ignoruje“ (vznikla 2026-06-12 na jednom testu s Claudem; výrobci učí opak).
+- **Záměr:** systém ≈ user ≫ kontrola → věta na solu neplatí; user ≫ systém ≈ kontrola → platí.
+- **Pokus:** single Kenaz EN, úhel 2, gpt-6-sol, 3 ramena × 5: věta *„Somewhere in the reading, mention the colour blue once.“* na konci
+  systémového promptu (`gen_batch --sys-extra`) · na konci user promptu (`--prompt-extra`) · nikde (kontrola). 15 volání. Umístění ověřeno
+  v uložených promptech (systém 5/5 jen v systému, user 5/5 jen v promptu).
+- **Výsledek:** „blue“ ve čtení — systém **5/5**, user **5/5**, kontrola **0/5**. Kontrola ukazuje, že model modrou sám nepřidává
+  (detektor má smysl). Modrá šla pokaždé do obrazu (plamen, okraj šálku, světlo), přirozeně.
+- **Hranice:** jedno jednoduché aditivní pravidlo bez konfliktu, EN, n = 5, jedna runa. **Neměřeno:** pravidlo v systému proti
+  protichůdnému pokynu v user promptu (tam může rozhodnout poloha a konkrétnost — výklad původního nálezu z června), IS.
+- **Co z toho:** CLAUDE.md „Reading systém“ přepsán; V3 může stálá pravidla nechat v systému (BACKLOG „Nápady pro V3“, bod 9).
+  Data: `~/runar-eval/system-vs-user/` (mimo repo).

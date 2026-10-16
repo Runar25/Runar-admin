@@ -11658,3 +11658,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno:** naše kopie písma (`v2/fonts/`) vlastnost lining má (změřeno vedle sebe); 12 otevření okna = 9 různých run, všechny naše
   kameny; číslice stejné výšky v poli zprávy, vstupech, tlačítkách i volbách; verify_zaklad_produkce.js OK (11 stavů).
 - Affected doc(s): žádný (hodnoty vlastní CSS a `openLine()` v `v2/runar-app.js`).
+
+## 2026-10-16 (5) — Pole s otázkou jen pro admina; definice tvrzení o člověku; štítky pozic jako potenciální vada
+
+- **Rozhodl:** owner 2026-10-16: *„3. pole s otázkou jen pro adminy. nikdo jiný. není to vyladěné. je to featura do budoucna“* · *„10. ano“*
+  (definice tvrzení o člověku × povzbuzení × fakt, návrh CODE-read) · *„6. štítky pozic — záleží na tom, jak to zní ve čtení… zapiš to
+  jako potenciální vadu“*.
+- **Proč:** pole s otázkou dnes vidí Standard i Premium (i testeři) ve všech výkladech, ale spready s otázkou nepracují a funkce není
+  vyladěná. Definice: dosavadní hranice (memory `rozkaz-a-studene-cteni-hranice`) neříkala, kde je otázka/povzbuzení v pořádku.
+- **Co:** CODE-tune — `updateQuestionGate` jen pro admina; CODE-read — definice do `RUNAR_DESIGN.md` („Cold reading“), štítky pozic do BACKLOGu.
+  ⚠️ Rozpor s minulostí (§21): v0.9 odstraňoval „already“ — definice to vysvětluje (oznamovací věta × otázka).
+- Affected doc(s): `RUNAR_DESIGN.md` (definice), `RUNAR_BACKLOG.md` (kontrola promptu), `CLAUDE.md` (KLÍČ: výsledek testu) — v témže commitu.

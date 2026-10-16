@@ -472,8 +472,9 @@ podmínce. Sezónní **sáček** se přesto čerpá při každém čtení — to
 Sáček proti opakování má klíč per SADA run; u spreadu se losuje ze všech tažených, ne z první pozice.
 KLÍČ (2026-06-12, jeden test na Claudovi): konkrétní pokyn v user promptu vyhrál nad obecným pravidlem v systému. **Na solu neměřeno**
 a výrobci učí opak (OpenAI Model Spec: system/developer zpráva má vyšší autoritu než user; Anthropic: stálá pravidla do systému,
-krátká připomínka na konec) — rozhodovat mohla poloha a konkrétnost, ne role. Test EN běží (owner 2026-10-16, DECISIONS 2026-10-16 (3));
-do výsledku to neber jako pravidlo. Do 2026-10-16 tu stálo „user prompt model POSLECHNE, system prompt IGNORUJE“. Reader i shrine = `buildSysPrompt`.
+krátká připomínka na konec) — rozhodovat mohla poloha a konkrétnost, ne role. **Změřeno na solu 2026-10-16** (RUNAR_EVAL_LOG 2026-10-16 (1)):
+jednoduché pravidlo v systému dodrženo 5/5 = v user promptu 5/5, bez pravidla 0/5 — sol systém NEignoruje (EN, n = 5, pravidlo bez konfliktu;
+pravidlo proti protichůdnému pokynu v user promptu neměřeno). Do 2026-10-16 tu stálo „user prompt model POSLECHNE, system prompt IGNORUJE“. Reader i shrine = `buildSysPrompt`.
 
 ### Spread systém
 Kredity = **per typ čtení**, NE počet run. Počty run i ceny = `SPREAD_COSTS` / `SPREAD_CONFIG`

@@ -140,6 +140,19 @@ Kánon zrcadla už tady je. Tohle mu dává **jméno a mechanismus** — a jedno
   gone flat and careful"* — owner: *„ta Isa je špatně, to každopádně"*): domov smí být tam, kam obraz dosedne; co se v něm
   děje, podané jako fakt, je tvrzení. Platí pro čtení i Ask. (Rubrika GPT rozboru to jako kategorie A hlídat nezvládla —
   „you“ ve scéně brala za výrok o životě; 2026-09-30 vyndána, `RUNAR_DECISIONS.md` 2026-09-30 (7).)
+- ⭐ **Definice: tvrzení o člověku × povzbuzení × fakt (KUKY 2026-10-16, „10. ano“; DECISIONS 2026-10-16 (5)).** Podnět: *„„what strength
+  is already in you“ na tom není nic špatného. je potřeba si lépe určit definice, kdy je to tvrzení o člověku a co je neškodné povzbuzení
+  či konstatování faktu.“*
+  1. **Tvrzení o člověku (vada):** OZNAMOVACÍ věta, která jako fakt říká, co člověk cítí, ví, skrývá nebo prožívá, nebo jaká je jeho
+     situace — Rúnar to vědět nemůže. Zkouška: může člověk odpovědět *„to o mně není pravda“*? (*„You are afraid of losing her.“*,
+     *„Something in you is grieving.“*)
+  2. **Neškodné povzbuzení (v pořádku):** otázka, přání, nabídka nebo obecná pravda, která o člověku nic netvrdí (*„What strength is
+     already in you?“*, *„May you find…“*, *„Strength like this is often there before we name it.“*).
+  3. **Konstatování faktu (v pořádku):** co člověk sám zadal (oblast, otázka), nebo fyzický důsledek v obraze (*„your knuckles have learned
+     this“*, memory `rozkaz-a-studene-cteni-hranice`).
+  Rozdíl proti červencovému „already“ (v0.9, `runar-character.js:1010`): tehdy šlo o oznamovací *„you already know“* — to je bod 1 a vadou
+  zůstává; otázka se stejným slovem je bod 2. Štítky pozic spreadů („what lives inside“, „subconscious“) se posuzují podle čtení, ne podle
+  znění štítku (BACKLOG, potenciální vada).
 - ⭐ **Myšlenka ✦ na konci čtení SMÍ oslovit člověka — je to POVOLENÉ, ne vada k opravě** (KUKY 2026-09-30: *„zapiš, že je to
   povolené, ať se nějaká jiná session to nesnaží opravit“*). Otázka k němu (*„What in you is ready to break through stone?“*)
   nebo tiché pozvání všímat si (*„Listen closely to what speaks when you are still.“*), vedené obrazem runy, který je v té větě

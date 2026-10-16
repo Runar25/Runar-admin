@@ -20,20 +20,32 @@
     (mj. Uruz „hráur kraftur“ → „hrár“ i v `k_is` a ve zlatém snímku, Sowilo „brýst“, Kenaz „kveikt á eldspýtu“, Isa „ísi lögð“, Jera
     „daginn lengir“) a 15 podezření; opravy hotové a ověřené v podkladu, část A4.
   - **Owner 2026-10-16 k části B** (DECISIONS 2026-10-16 (3)):
-    - [ ] **Studené čtení — napřed definice** (owner: *„„what strength is already in you“ na tom není nic špatného. je potřeba si lépe určit
-      definice, kdy je to tvrzení o člověku a co je neškodné povzbuzení či konstatování faktu“*). CODE-read navrhne definice ownerovi;
-      štítky pozic a otázky run se posoudí až podle nich.
+    - [x] ✅ **Studené čtení — definice** schválená ownerem 2026-10-16 (*„10. ano“*) → `RUNAR_DESIGN.md`, sekce „Cold reading“.
+    - [ ] **Potenciální vada (sledovat v testování) — štítky pozic žádají nitro:** Podkova pozice 6 „Inner state (what lives inside)“ /
+      „Innri staða (hvað er inni í þér)“ (`runar-character.js:2458`, `:2443`), Kříž „what lies in the subconscious“ (`:2273`, `:2255`).
+      Owner 2026-10-16: *„záleží na tom, jak to zní ve čtení… nemůžeme měnit všechno jen kvůli tomu, že to jako nevypadá dobře. musí to potvrdit
+      čtení… zapiš to jako potenciální vadu. buď se objeví, nebo ne.“* Měnit jen, když čtení ukáže tvrzení o člověku podle definice v DESIGN.
     - [x] ✅ *(CODE-tune 2026-10-16, v5.11: `_intentionContext` jen v single, ve čtyřech spreadech pryč; nápověda „+“ u „This reading is
       for“ EN + IS „jen pro jednu runu, spready mají svůj čas“ — IS Greynir OK.)* **CODE-tune — spready bez časového rámce** (owner: *„celkově u spreadů vynechat… všechny časové tvary pro spready ignorovat, jelikož
       mají svůj tvar. a pro „this reading is for“ dopsat poznámku, že platí jen pro single čtení“*): `_intentionContext` (a jiné časové
       rámce) ve spreadech nevkládat; u `intention_lbl` / IS v UI poznámka „jen pro jednu runu“ (EN + IS, §2, §31).
-    - [ ] **Otázka ve spreadu** (owner: *„to by měla a je potřeba to testovat“*): pole vidí Standard a Premium (i testeři) ve všech výkladech
-      (`updateQuestionGate`, runar-auth.js), spread ji má jen v hlavičce bez pokynu. CODE-read napřed lab (pokyn + malý vzorek), pak CODE-tune.
-    - [ ] **CODE-read — test „pravidlo v systému × v user promptu“, jen EN** (owner: *„ano a udělat test. jen EN jako první“*). CLAUDE.md
-      přepsán na „neměřeno na solu“ týž den.
+    - [ ] **Otázka ve spreadu** (owner: *„to by měla a je potřeba to testovat“*): spread ji má jen v hlavičce bez pokynu. CODE-read napřed
+      lab (pokyn + malý vzorek), pak CODE-tune.
+    - [ ] **CODE-tune — pole s otázkou jen pro admina** (owner 2026-10-16: *„pole s otázkou jen pro adminy. nikdo jiný. není to vyladěné.
+      je to featura do budoucna“*; DECISIONS 2026-10-16 (5)). Dnes ho vidí Standard a Premium, tedy i testeři (`updateQuestionGate`,
+      `runar-auth.js`: `canAsk = standard || premium`). Pozor na základ produkce (§32) a souhlas s otázkou (㊽).
+    - [x] ✅ **Test „pravidlo v systému × v user promptu“, EN** — 2026-10-16: systém 5/5 = user 5/5, kontrola 0/5 (RUNAR_EVAL_LOG
+      2026-10-16 (1)); CLAUDE.md opraven. IS a pravidlo proti protichůdnému pokynu zatím neměřeno.
     - IS osy Kříže „verdandi/skuld/urd“ — zatím bez rozhodnutí.
     - [ ] **Pro V3 — rozpracováno níž** (owner: *„dobré zkusit pro V3, kterou máme už mírně rozpracovanou. zapsat to. celé to rozpracuj, ať je
       čeho se chytit, ale řešit to budeme později“*).
+  - **V3 = přestavba promptu s méně zákazy** (owner 2026-10-16: *„měla to být verze s méně zákazy podle definice, jak se tvoří takový
+    charakter. hledali jsme o tom hodně informací a asi je to zase ztracené“*). Dohledáno 2026-10-16 pod jinými názvy: **„LAB přestavby
+    promptu“** — výtah změřeného + 7 závěrů + metodika: `memory/snapshots/2026-10-05-lab-co-uz-vime.md` (owner 2026-10-05 *„to budeme celé
+    předělávat“*; připraveno, nezačato) · **„Prompt × návody výrobců“ 2026-10-04** (Anthropic Opus 5, OpenAI GPT-6): `docs/archive/RUNAR_BACKLOG_odlozene.md`
+    (body 2, 4–8) a `docs/archive/RUNAR_BACKLOG_hotovo.md` (1, 3) · dnešní kontrola: `docs/inbox/2026-10-16-kontrola-promptu.md` (B6).
+    Jinou rešerši „jak se tvoří charakter“ jsem v konverzacích ani docs nenašel (hledáno: méně zákazů, charakter, persona, přestavba,
+    kladné pokyny, V3) — pokud existovala v Cowork, je ztracená.
   - **Nápady pro V3 z návodů výrobců (2026-10-16, CODE-read; řeší se později, v labu, ne v produkci).** Každý: co · proč (zdroj) · jak
     změřit · riziko. Podklad s citacemi a URL: `docs/inbox/2026-10-16-kontrola-promptu.md` (B6).
     1. **Role `developer` místo `system` pro sol** (`claude-proxy/index.ts:188`) · OpenAI API reference: pro novější modely „use developer
