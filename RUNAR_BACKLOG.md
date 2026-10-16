@@ -15,6 +15,9 @@
     majitele účtu · single „Let X answer“ zve k předpovědi · životní runa a jméno dostávají „popiš obraz“ bez obrazu · EN esence × „Mention
     by name once“ · technické (dvojité mezery, „PERSON: you“, korekce za pokynem JSON, ✦ nový řádek × „no breaks“) · proxy `SOL_EFFORTS`
     `minimal` neexistuje (ověřeno) · známé duplikáty „Respond in English.“.
+  - [ ] **CODE-tune — islandské obrazy (A4, owner *„zkontrolovat všechny IS obrazy“*):** 189 obrazů + 12 míst prošlo; 12 skutečných chyb
+    (mj. Uruz „hráur kraftur“ → „hrár“ i v `k_is` a ve zlatém snímku, Sowilo „brýst“, Kenaz „kveikt á eldspýtu“, Isa „ísi lögð“, Jera
+    „daginn lengir“) a 15 podezření; opravy hotové a ověřené v podkladu, část A4.
   - **Owner 2026-10-16 k části B** (DECISIONS 2026-10-16 (3)):
     - [ ] **Studené čtení — napřed definice** (owner: *„„what strength is already in you“ na tom není nic špatného. je potřeba si lépe určit
       definice, kdy je to tvrzení o člověku a co je neškodné povzbuzení či konstatování faktu“*). CODE-read navrhne definice ownerovi;
