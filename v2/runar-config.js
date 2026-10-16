@@ -83,7 +83,9 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 // v5.16 (2026-10-16): logické drobnosti z kontroly promptu A3 — single s otázkou bez „Let X answer“, u EN solu bez druhého „Mention by
 //    name“, životní runa a jméno bez „popiš obraz“, hlavička bez „you“, bez dvojitých mezer, korekce před JSON, „Respond in English“
 //    a úvod jen v systému, ✦ jediný zalomený řádek, Yggdrasil „asked about“, IS 7(c), IS Ask délka bez svolení přesáhnout.
-const RUNAR_PROMPT_VERSION = 'v5.16-logic';
+// v5.17 (2026-10-16): A3.3 („Let <runa> answer“), A3.5 („Mention by name“) a A3.9 (✦ řádek) zpět na znění před v5.16 — CODE-read je
+//    prověřila historií: měřená páka (EVAL 2026-09-08, LAB 2026-10-05), záměr v4.83, owner „teď to funguje, tak neměním“.
+const RUNAR_PROMPT_VERSION = 'v5.17-logic-revert';
 
 // Měsíční strop hlasu pro všechny (VOICE_MONTHLY_LIMIT = 5, od 2026-09-11) ZRUŠEN 2026-10-11: „limit na hlas max 5 na měsíc“ byl
 // ownerův pokyn pro testery, omylem pro všechny (DECISIONS 2026-10-11 (49)); owner: „žádný měsíční strop 5 hlasů není!!!“. Rúnar přečte

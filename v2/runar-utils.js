@@ -596,8 +596,7 @@ const ESSENCE_FRAMES_IS = [
 // něčeho očekávaného“): pryč „the stone that bears no mark“ — sol ji opsal doslova a popsal jen vzhled kamene (report 09:56).
 const ESSENCE_BLANK = 'THE ESSENCE LINE: after the picture, one short line that names the blank rune once and says what it is in this scene — what is not yet known, not yet decided, or missing where something was expected. It gives no meaning of its own; the line leaves that open place open instead of filling it. Plain words a stranger to runes can grasp. No invented mechanism, no fate. Never tell the seeker what it means for them.';
 const ESSENCE_BLANK_IS = 'KJARNALÍNAN: á eftir myndinni kemur ein stutt lína sem nefnir auðu rúnina einu sinni og segir hvað hún er í þessari mynd — það sem enn er óþekkt, enn óráðið eða vantar þar sem búist var við einhverju. Hún gefur enga merkingu af sjálfri sér; línan lætur opna rýmið standa opið í stað þess að fylla það. Hversdagsleg orð sem ókunnugur skilur. Engin uppdiktuð skýring, engin örlög. Segðu leitandanum aldrei hvað þetta þýðir fyrir hann.';
-// EN sol: esenční rámec začíná „{Runa} {sloveso}“ (v5.01), runu tedy jmenuje sám. Čte i single builder — pokyn „Mention <runa> by name
-// once“ tam byl druhý pokyn na totéž místo (2026-10-16, kontrola promptu A3.5). Opus a IS rámec [0] runu nejmenuje → pokyn zůstává.
+// EN sol: esenční rámec začíná „{Runa} {sloveso}“ (v5.01) — dostává ho jen sol v EN.
 function _esenceJmenujeRunu(lang) { return lang !== 'is' && typeof READ_ENGINE !== 'undefined' && READ_ENGINE === 'sol'; }
 function _essenceFrame(lang, rune) {
   if (rune && rune.n === 'Blank') return lang === 'is' ? ESSENCE_BLANK_IS : ESSENCE_BLANK;

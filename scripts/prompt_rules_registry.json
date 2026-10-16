@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-10-16",
- "prompt_version": "v5.16-logic",
+ "prompt_version": "v5.17-logic-revert",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
@@ -220,151 +220,151 @@
    "zacatek": "The main figure of this picture is not the seeker, and the seeker has "
   },
   {
-   "hash": "e88c3f7990a9",
+   "hash": "a11df6368d5b",
    "lang": "en",
    "zdroj": "myslenka[Fehu]",
    "zacatek": "AFTER THE READING — inside the JSON, at the end of the last \"text\" val"
   },
   {
-   "hash": "a339995422e8",
+   "hash": "f0c0d413af47",
    "lang": "en",
    "zdroj": "myslenka[Uruz]",
    "zacatek": "AFTER THE READING — inside the JSON, at the end of the last \"text\" val"
   },
   {
-   "hash": "98a54972780e",
+   "hash": "a93f0f6a5192",
    "lang": "en",
    "zdroj": "myslenka[Thurisaz]",
    "zacatek": "AFTER THE READING — inside the JSON, at the end of the last \"text\" val"
   },
   {
-   "hash": "3e608f5bdee5",
+   "hash": "27ec6625b390",
    "lang": "en",
    "zdroj": "myslenka[Ansuz]",
    "zacatek": "AFTER THE READING — inside the JSON, at the end of the last \"text\" val"
   },
   {
-   "hash": "d309bb1b391d",
+   "hash": "aefefaf676fa",
    "lang": "en",
    "zdroj": "myslenka[Raidho]",
    "zacatek": "AFTER THE READING — inside the JSON, at the end of the last \"text\" val"
   },
   {
-   "hash": "c159e8ba9fa8",
+   "hash": "ee093790ce36",
    "lang": "en",
    "zdroj": "myslenka[Kenaz]",
    "zacatek": "AFTER THE READING — inside the JSON, at the end of the last \"text\" val"
   },
   {
-   "hash": "6ab1d5ccf497",
+   "hash": "4b374a6570cd",
    "lang": "en",
    "zdroj": "myslenka[Gebo]",
    "zacatek": "AFTER THE READING — inside the JSON, at the end of the last \"text\" val"
   },
   {
-   "hash": "4f801a0e084b",
+   "hash": "afbb4434b578",
    "lang": "en",
    "zdroj": "myslenka[Wunjo]",
    "zacatek": "AFTER THE READING — inside the JSON, at the end of the last \"text\" val"
   },
   {
-   "hash": "5916ba381230",
+   "hash": "2c809078e72b",
    "lang": "en",
    "zdroj": "myslenka[Hagalaz]",
    "zacatek": "AFTER THE READING — inside the JSON, at the end of the last \"text\" val"
   },
   {
-   "hash": "d0796bfe393c",
+   "hash": "193ee8227341",
    "lang": "en",
    "zdroj": "myslenka[Nauthiz]",
    "zacatek": "AFTER THE READING — inside the JSON, at the end of the last \"text\" val"
   },
   {
-   "hash": "bfc5784a2d0a",
+   "hash": "42cb85596027",
    "lang": "en",
    "zdroj": "myslenka[Isa]",
    "zacatek": "AFTER THE READING — inside the JSON, at the end of the last \"text\" val"
   },
   {
-   "hash": "ce0dd2794935",
+   "hash": "f3736ae7fca6",
    "lang": "en",
    "zdroj": "myslenka[Jera]",
    "zacatek": "AFTER THE READING — inside the JSON, at the end of the last \"text\" val"
   },
   {
-   "hash": "d9c9fd5e4e10",
+   "hash": "a39e75297714",
    "lang": "en",
    "zdroj": "myslenka[Eihwaz]",
    "zacatek": "AFTER THE READING — inside the JSON, at the end of the last \"text\" val"
   },
   {
-   "hash": "1a627976f717",
+   "hash": "d31e03c63c18",
    "lang": "en",
    "zdroj": "myslenka[Perth]",
    "zacatek": "AFTER THE READING — inside the JSON, at the end of the last \"text\" val"
   },
   {
-   "hash": "97ab9b6535a5",
+   "hash": "f7551cc320f1",
    "lang": "en",
    "zdroj": "myslenka[Algiz]",
    "zacatek": "AFTER THE READING — inside the JSON, at the end of the last \"text\" val"
   },
   {
-   "hash": "de6f13c48228",
+   "hash": "8e15ea6ecbaa",
    "lang": "en",
    "zdroj": "myslenka[Sowilo]",
    "zacatek": "AFTER THE READING — inside the JSON, at the end of the last \"text\" val"
   },
   {
-   "hash": "077e31227090",
+   "hash": "13f46bb4b3b8",
    "lang": "en",
    "zdroj": "myslenka[Tiwaz]",
    "zacatek": "AFTER THE READING — inside the JSON, at the end of the last \"text\" val"
   },
   {
-   "hash": "c330e3c8ad6c",
+   "hash": "f2f30cd88b92",
    "lang": "en",
    "zdroj": "myslenka[Berkana]",
    "zacatek": "AFTER THE READING — inside the JSON, at the end of the last \"text\" val"
   },
   {
-   "hash": "74085586168b",
+   "hash": "81bcc2d24e57",
    "lang": "en",
    "zdroj": "myslenka[Ehwaz]",
    "zacatek": "AFTER THE READING — inside the JSON, at the end of the last \"text\" val"
   },
   {
-   "hash": "ba5941d8f25a",
+   "hash": "9f4a7014f013",
    "lang": "en",
    "zdroj": "myslenka[Mannaz]",
    "zacatek": "AFTER THE READING — inside the JSON, at the end of the last \"text\" val"
   },
   {
-   "hash": "ebd0e56d6b80",
+   "hash": "6298fc4fe2d9",
    "lang": "en",
    "zdroj": "myslenka[Laguz]",
    "zacatek": "AFTER THE READING — inside the JSON, at the end of the last \"text\" val"
   },
   {
-   "hash": "8f38fe2b3749",
+   "hash": "6f50316b4576",
    "lang": "en",
    "zdroj": "myslenka[Ingwaz]",
    "zacatek": "AFTER THE READING — inside the JSON, at the end of the last \"text\" val"
   },
   {
-   "hash": "9e772993f7bf",
+   "hash": "8e4b8700f010",
    "lang": "en",
    "zdroj": "myslenka[Othila]",
    "zacatek": "AFTER THE READING — inside the JSON, at the end of the last \"text\" val"
   },
   {
-   "hash": "887de1d5ca58",
+   "hash": "c71d01a62b6e",
    "lang": "en",
    "zdroj": "myslenka[Dagaz]",
    "zacatek": "AFTER THE READING — inside the JSON, at the end of the last \"text\" val"
   },
   {
-   "hash": "a8212f12a030",
+   "hash": "7d5facb3dc71",
    "lang": "en",
    "zdroj": "myslenka[Blank]",
    "zacatek": "AFTER THE READING — inside the JSON, at the end of the last \"text\" val"
@@ -634,10 +634,10 @@
    "zacatek": "NO COLD READING: never tell the seeker what is true, stirring, or know"
   },
   {
-   "hash": "65ea75b8fd53",
+   "hash": "9e4641e99215",
    "lang": "en",
    "zdroj": "single",
-   "zacatek": "One clear insight is enough — do not pack everything in."
+   "zacatek": "Mention Ansuz by name once, woven naturally. One clear insight is enou"
   },
   {
    "hash": "a45d56ca34db",
@@ -1198,151 +1198,151 @@
    "zacatek": "Leitandinn er ekki aðalpersóna myndarinnar og hefur ekki séð hana. Seg"
   },
   {
-   "hash": "5ce94932e63c",
+   "hash": "59086c8607f3",
    "lang": "is",
    "zdroj": "myslenka[Fehu]",
    "zacatek": "Á EFTIR LESTRINUM: Í lok síðasta textans inni í JSON-fylkinu kemur ein"
   },
   {
-   "hash": "d163848b1260",
+   "hash": "ceaa17aae70f",
    "lang": "is",
    "zdroj": "myslenka[Uruz]",
    "zacatek": "Á EFTIR LESTRINUM: Í lok síðasta textans inni í JSON-fylkinu kemur ein"
   },
   {
-   "hash": "3d059d10bec4",
+   "hash": "00dbc3559ab9",
    "lang": "is",
    "zdroj": "myslenka[Thurisaz]",
    "zacatek": "Á EFTIR LESTRINUM: Í lok síðasta textans inni í JSON-fylkinu kemur ein"
   },
   {
-   "hash": "d026869275c4",
+   "hash": "8a806f42182c",
    "lang": "is",
    "zdroj": "myslenka[Ansuz]",
    "zacatek": "Á EFTIR LESTRINUM: Í lok síðasta textans inni í JSON-fylkinu kemur ein"
   },
   {
-   "hash": "902bb37a4ad7",
+   "hash": "70de484be112",
    "lang": "is",
    "zdroj": "myslenka[Raidho]",
    "zacatek": "Á EFTIR LESTRINUM: Í lok síðasta textans inni í JSON-fylkinu kemur ein"
   },
   {
-   "hash": "3e87192f2ab9",
+   "hash": "0f0e390c087d",
    "lang": "is",
    "zdroj": "myslenka[Kenaz]",
    "zacatek": "Á EFTIR LESTRINUM: Í lok síðasta textans inni í JSON-fylkinu kemur ein"
   },
   {
-   "hash": "43ecb71fad0a",
+   "hash": "1ec0dd5c7fd5",
    "lang": "is",
    "zdroj": "myslenka[Gebo]",
    "zacatek": "Á EFTIR LESTRINUM: Í lok síðasta textans inni í JSON-fylkinu kemur ein"
   },
   {
-   "hash": "e6de0ed2b50a",
+   "hash": "00eb299e762d",
    "lang": "is",
    "zdroj": "myslenka[Wunjo]",
    "zacatek": "Á EFTIR LESTRINUM: Í lok síðasta textans inni í JSON-fylkinu kemur ein"
   },
   {
-   "hash": "83a164c56263",
+   "hash": "ec8a0d25e28e",
    "lang": "is",
    "zdroj": "myslenka[Hagalaz]",
    "zacatek": "Á EFTIR LESTRINUM: Í lok síðasta textans inni í JSON-fylkinu kemur ein"
   },
   {
-   "hash": "99fae02030f6",
+   "hash": "93de1661e16f",
    "lang": "is",
    "zdroj": "myslenka[Nauthiz]",
    "zacatek": "Á EFTIR LESTRINUM: Í lok síðasta textans inni í JSON-fylkinu kemur ein"
   },
   {
-   "hash": "3fe29b0b2763",
+   "hash": "1e1c136ef8b6",
    "lang": "is",
    "zdroj": "myslenka[Isa]",
    "zacatek": "Á EFTIR LESTRINUM: Í lok síðasta textans inni í JSON-fylkinu kemur ein"
   },
   {
-   "hash": "59d0d133e2b0",
+   "hash": "34ba76b89f96",
    "lang": "is",
    "zdroj": "myslenka[Jera]",
    "zacatek": "Á EFTIR LESTRINUM: Í lok síðasta textans inni í JSON-fylkinu kemur ein"
   },
   {
-   "hash": "cb09e7e27a94",
+   "hash": "2084f065e8f0",
    "lang": "is",
    "zdroj": "myslenka[Eihwaz]",
    "zacatek": "Á EFTIR LESTRINUM: Í lok síðasta textans inni í JSON-fylkinu kemur ein"
   },
   {
-   "hash": "eff9e91d5ef8",
+   "hash": "b60eb355cddf",
    "lang": "is",
    "zdroj": "myslenka[Perth]",
    "zacatek": "Á EFTIR LESTRINUM: Í lok síðasta textans inni í JSON-fylkinu kemur ein"
   },
   {
-   "hash": "ac7e842dd205",
+   "hash": "ccbff4c91e62",
    "lang": "is",
    "zdroj": "myslenka[Algiz]",
    "zacatek": "Á EFTIR LESTRINUM: Í lok síðasta textans inni í JSON-fylkinu kemur ein"
   },
   {
-   "hash": "2cc0f1aa4801",
+   "hash": "87dd99aaaade",
    "lang": "is",
    "zdroj": "myslenka[Sowilo]",
    "zacatek": "Á EFTIR LESTRINUM: Í lok síðasta textans inni í JSON-fylkinu kemur ein"
   },
   {
-   "hash": "ed55b8f1952d",
+   "hash": "36b41d1461dd",
    "lang": "is",
    "zdroj": "myslenka[Tiwaz]",
    "zacatek": "Á EFTIR LESTRINUM: Í lok síðasta textans inni í JSON-fylkinu kemur ein"
   },
   {
-   "hash": "08c5a6cb6653",
+   "hash": "aee794dbed71",
    "lang": "is",
    "zdroj": "myslenka[Berkana]",
    "zacatek": "Á EFTIR LESTRINUM: Í lok síðasta textans inni í JSON-fylkinu kemur ein"
   },
   {
-   "hash": "6dc9ef5a73e0",
+   "hash": "07ff399cbb0e",
    "lang": "is",
    "zdroj": "myslenka[Ehwaz]",
    "zacatek": "Á EFTIR LESTRINUM: Í lok síðasta textans inni í JSON-fylkinu kemur ein"
   },
   {
-   "hash": "fbb778cdfdd3",
+   "hash": "d442c4cf860c",
    "lang": "is",
    "zdroj": "myslenka[Mannaz]",
    "zacatek": "Á EFTIR LESTRINUM: Í lok síðasta textans inni í JSON-fylkinu kemur ein"
   },
   {
-   "hash": "884865c7a8ed",
+   "hash": "0c30152771c9",
    "lang": "is",
    "zdroj": "myslenka[Laguz]",
    "zacatek": "Á EFTIR LESTRINUM: Í lok síðasta textans inni í JSON-fylkinu kemur ein"
   },
   {
-   "hash": "3166cdea4dc4",
+   "hash": "60d30d49add6",
    "lang": "is",
    "zdroj": "myslenka[Ingwaz]",
    "zacatek": "Á EFTIR LESTRINUM: Í lok síðasta textans inni í JSON-fylkinu kemur ein"
   },
   {
-   "hash": "d9018c3e306a",
+   "hash": "10661fbbb725",
    "lang": "is",
    "zdroj": "myslenka[Othila]",
    "zacatek": "Á EFTIR LESTRINUM: Í lok síðasta textans inni í JSON-fylkinu kemur ein"
   },
   {
-   "hash": "bbcdccee5d18",
+   "hash": "66ec3ef76fe6",
    "lang": "is",
    "zdroj": "myslenka[Dagaz]",
    "zacatek": "Á EFTIR LESTRINUM: Í lok síðasta textans inni í JSON-fylkinu kemur ein"
   },
   {
-   "hash": "cd03b366e514",
+   "hash": "7085a9e33685",
    "lang": "is",
    "zdroj": "myslenka[Blank]",
    "zacatek": "Á EFTIR LESTRINUM: Í lok síðasta textans inni í JSON-fylkinu kemur ein"

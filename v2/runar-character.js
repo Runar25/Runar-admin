@@ -1718,8 +1718,8 @@ function _parseSegments(raw) {
 // Parser zvládne obojí, ale pokyn si nesmí odporovat → ✦ výslovně DOVNITŘ, na konec posledního textu (jak to dělá sol).
 // IS: is-grammar-qa čisté; „í lok síðasta“ 11 399 (korpus), „aftast í síðasta“ 0 → nepoužito.
 var THOUGHT_MARK = {
-  en: 'AFTER THE READING — inside the JSON, at the end of the last "text" value, on a new line (the only line break in the reading) beginning with ✦',
-  is: 'Á EFTIR LESTRINUM: Í lok síðasta textans inni í JSON-fylkinu kemur ein stutt lína til viðbótar í nýrri línu sem hefst á ✦. Hvergi annars staðar í lestrinum byrjar ný lína',
+  en: 'AFTER THE READING — inside the JSON, at the end of the last "text" value, on a new line beginning with ✦',
+  is: 'Á EFTIR LESTRINUM: Í lok síðasta textans inni í JSON-fylkinu kemur ein stutt lína til viðbótar í nýrri línu sem hefst á ✦',
 };
 // 2026-10-05 (KUKY „zkrať myšlenku u Opusu“): jedna věta, nejvýš THOUGHT_MAX_SLOV slov — jedno číslo pro EN i IS (§20).
 // Do té doby „one more short line“ bez čísla: Opus EN 18 slov (13–25), polovina myšlenek výrok + otázka; sol 11, vždy jedna věta.
@@ -1787,7 +1787,7 @@ var RP_SINGLE = {
     langInstr:'',
     worldFb:function(pk){ return 'lifandi leiðin'; },
     angleIntro:'SJÓNARHORN (fylgdu þessum upphafspunkti og láttu hann móta tóninn og byrjunina): ',
-    qBranch:function(rune,g,q){ return 'Láttu lesturinn beinast að spurningunni og gefðu engin ráð: "' + q + '". Nefndu ' + rune + ' einu sinni og fléttaðu nafnið náttúrlega inn í textann.'; },
+    qBranch:function(rune,g,q){ return 'Láttu ' + rune + ' svara spurningunni: "' + q + '" — í myndum og táknmáli, ekki ráðgjöf. Nefndu ' + rune + ' einu sinni og fléttaðu nafnið náttúrlega inn í textann.'; },
     // Prvni veta („koma fram í myndum, ekki útskýringu") ODSTRANENA 2026-08-21: zadavala
     // opak toho, co zada `_describeRule` v produkcnim profilu. IS 4/20 -> 8/20.
     noqBranch:function(rune,g,world){ return 'Nefndu ' + rune + ' einu sinni og fléttaðu nafnið náttúrlega inn í textann. Ein skýr innsýn nægir — ekki troða öllu inn.'; },
@@ -1808,14 +1808,14 @@ var RP_SINGLE = {
     angleIntro:'READING ANGLE (follow this entry point — let it shape the opening and tone): ',
     // 2026-09-18: „Speak to what lies beneath the question." ODEBRANO — zadalo nitro tazatele
     // (proti NO COLD READING). IS protejsek tez; spready podobnou vetu nemaji (grep).
-    // 2026-10-16 (kontrola promptu A3.3, A3.5): „Let <runa> answer“ zvalo k předpovědi (otázka „Will it work out?“ × „never predicts fate“
-    // a „Neither confirm nor refute“ v témže promptu); „through image and symbol“ = zbytek odebraný z noqBranch 2026-08-21. U EN solu
-    // esence runu jmenuje sama (_esenceJmenujeRunu) — „Mention by name once“ jen pro Opus.
-    qBranch:function(rune,g,q){ return 'Let the reading turn toward their question: "' + q + '" — not advice.' + (_esenceJmenujeRunu('en') ? '' : ' Mention ' + rune + ' by name once, woven naturally.'); },
+    // 2026-10-16: A3.3 a A3.5 z kontroly promptu NEMĚNIT — „Let <runa> answer“ owner: „teď to funguje, tak neměním, ale otestujeme to“
+    // (kandidát na test systém × user, CODE-read); „Mention <runa> by name once“ je měřená páka (ablace EVAL 2026-09-08: dělá definiční
+    // větu; LAB 2026-10-05 „ponechat“), vztah k EN esenci solu jen v labu. Krátce změněno v 8e5ac52, vráceno v5.17.
+    qBranch:function(rune,g,q){ return 'Let ' + rune + ' answer: "' + q + '" — through image and symbol, not advice. Mention ' + rune + ' by name once, woven naturally.'; },
     // Prvni veta („through image, not explanation") ODSTRANENA 2026-08-21 — tyz duvod
     // jako u islandske vetve; anglicky model ji sice prebijel, ale rozpor v zadani
     // neni neco, co se nechava stat proto, ze jeden model si poradi.
-    noqBranch:function(rune,g,world){ return (_esenceJmenujeRunu('en') ? '' : 'Mention ' + rune + ' by name once, woven naturally. ') + 'One clear insight is enough — do not pack everything in.'; },
+    noqBranch:function(rune,g,world){ return 'Mention ' + rune + ' by name once, woven naturally. One clear insight is enough — do not pack everything in.'; },
     // 2026-10-05 (bod 3 auditu): pryč „One paragraph. No breaks. No labels.“ (řádek rozpočtu: „No sections, no labels, no line
     // breaks between thoughts“ + JSON „one flowing paragraph“) a „Stay within the word count — short sentences, no filler.“
     // (rozpočet + připomínka délky na konci + systémové „No filler“). „Mention <runa> by name once“ v qBranch/noqBranch
