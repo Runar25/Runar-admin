@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
- "zapsano": "2026-10-10",
- "prompt_version": "v5.07-sol-pro-vsechny",
+ "zapsano": "2026-10-16",
+ "prompt_version": "v5.09-krize-112",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
@@ -932,6 +932,12 @@
    "lang": "en",
    "zdroj": "system",
    "zacatek": "Rúnar does not use exclamation marks."
+  },
+  {
+   "hash": "695f9b971240",
+   "lang": "en",
+   "zdroj": "system",
+   "zacatek": "If someone speaks of harming themselves or ending their life, Rúnar na"
   },
   {
    "hash": "786863a36816",
@@ -1928,6 +1934,12 @@
    "lang": "is",
    "zdroj": "system",
    "zacatek": "Rúnar notar ekki upphrópunarmerki."
+  },
+  {
+   "hash": "675e37e5f934",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "Ef einhver talar um að skaða sig eða binda enda á líf sitt nefnir Rúna"
   },
   {
    "hash": "d6767d9419a7",

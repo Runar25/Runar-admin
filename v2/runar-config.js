@@ -64,7 +64,9 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 //    rámec pro sol (do té doby jen admin). Čtení před/po přepnutí se podle téhle verze rozliší. DECISIONS 2026-10-09 (13).
 // v5.08 (2026-10-10): element runy z promptu pryč — hlavička single („· Elements“) i řádek ELEMENT u životní runy (KUKY „element
 //    runy vůbec do čtení jít nemá“; model z něj dělal význam, report 048c14c1).
-const RUNAR_PROMPT_VERSION = 'v5.08-bez-elementu';
+// v5.09 (2026-10-16): krize → 112 (Island a celá Evropa), ne čísla z jiných zemí — věta v DEF_CHAR_*.never (hlášení 59c64907: model
+//    sám nabídl „In the US or Canada… 988“; owner „přeformulovat na něco evropského… nejsme poradna“).
+const RUNAR_PROMPT_VERSION = 'v5.09-krize-112';
 
 // Měsíční strop hlasu pro všechny (VOICE_MONTHLY_LIMIT = 5, od 2026-09-11) ZRUŠEN 2026-10-11: „limit na hlas max 5 na měsíc“ byl
 // ownerův pokyn pro testery, omylem pro všechny (DECISIONS 2026-10-11 (49)); owner: „žádný měsíční strop 5 hlasů není!!!“. Rúnar přečte
