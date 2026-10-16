@@ -878,7 +878,9 @@ Souběh už zčásti hotový týž den: push s commitem vzniklým během smoke (
       ⚠️ Vedlejší nález: DB default `tier = 'free'` není mezi dokumentovanými hodnotami a drží ho při životě
       kompatibilní převod na DVOU místech. Všechny 4 skutečné účty mají `rune_seeker`. Nerozbité, jen křehké —
       default by měl být `rune_seeker`.
-- [ ] **Zprávy „Send Rúnar a line“ ve schránce runar@ smazat 6 měsíců po poslední odpovědi** (CODE-tune 2026-10-15, owner „10. ano“). DB maže
+- [x] ✅ *(CODE-tune 2026-10-16, owner „12. udělej plánovanou úlohu… chci vždy potvrzení“: týdenní úloha `runar-zpravy-gmail`, potvrzení
+  v hlídání provozu; zbývá ownerovo SQL `sql/2026-10-16_mazani_hlasi.sql` a „Run now“. DECISIONS 2026-10-16 (2).)*
+  ~~**Zprávy „Send Rúnar a line“ ve schránce runar@ smazat 6 měsíců po poslední odpovědi**~~ (CODE-tune 2026-10-15, owner „10. ano“). DB maže
   pg_cron sám (`sql/2026-10-15_zpravy_runarovi.sql`); kopie v Gmailu (štítek Messages) ne — Workspace bez Vaultu pravidlo pro mazání nemá.
   Možnosti: měsíční plánovaná úloha Claude (Gmail konektor: `label:Messages older_than:6m` → koš; stálé nastavení → s ownerovým ano),
   nebo ručně ownerem. Do rozhodnutí zásady slibují 6 měsíců i pro schránku — splnit nejpozději 2027-04-15 (první zprávy).

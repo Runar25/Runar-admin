@@ -15,8 +15,10 @@ zůstává `noreply@therunekeeper.com`). Stránka soukromí má dál `info@agndo
 Claude ji čte přes **Gmail konektor** (připojený účet = runar@therunekeeper.com, ověř `authuser` v `viewUrl`, než cokoli uděláš).
 Štítky: **Testers · Login · Bugs · Ideas · Other** (Label_1–Label_5) + **Ops** (Label_6, od 2026-10-14: hlídání provozu — e-maily
 „Rúnar Ops · …“ od noreply@therunekeeper.com, DECISIONS 2026-10-14 (13)) + **Messages** (Label_7, od 2026-10-15: zprávy čtenářů
-„Rúnar · A line from a reader“ z menu appky, Reply-To = uživatel; odpovídá owner tlačítkem Odpovědět, pak zprávu ve shrine (REPORTS)
-označí „fixed“ — od toho času běží 6 měsíců do smazání z DB; DECISIONS 2026-10-15) — anglicky, je to společná řeč se Sigrún (CLAUDE.md §31,
+„Rúnar · A line from a reader · ref <id>“ z menu appky, Reply-To = uživatel; owner jen odpovídá tlačítkem Odpovědět — ve shrine nic
+neoznačuje (2026-10-16: „to dělej ty automaticky“). Týdenní plánovaná úloha `runar-zpravy-gmail` (`scripts/ulohy/zpravy-gmail.md`) podle
+odpovědi z runar@ zapíše zprávě v DB resolved_at a vlákna starší 6 měsíců po poslední zprávě přesune do koše; potvrzení jde do hlídání
+provozu. Do štítku nepatří nic jiného — cizí vlákno úloha nemaže, jen ho vypíše; DECISIONS 2026-10-15 (4), 2026-10-16 (2)) — anglicky, je to společná řeč se Sigrún (CLAUDE.md §31,
 KUKY 2026-10-10: „štítky musí být EN“; do té doby česky; 2026-10-14 znovu: „žádná čeština v Gmail. Nikdy. Vše EN.“).
 
 Jak s ní pracovat (owner 2026-10-10: „jsi schopný si tu korespondenci přebírat, až jí bude hodně, a sortovat?“ → „ano, udělej všechno“):

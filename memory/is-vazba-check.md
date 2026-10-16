@@ -45,3 +45,8 @@ Ověřeno 2026-09-11 při stavbě Ask nápovědy; do té doby to musela každá 
 **Od 2026-09-22 to říká nástroj sám** — pro 4+ slov tiskne `NELZE POSOUDIT`, ne „NEDOLOŽENO (0)".
 Důvod změny: tahle poznámka nestačila, CODE-read na tichou nulu 2026-09-22 naletěl znovu (4gram
 „tekur á sig mynd" = 0 vedle trigramu „á sig mynd" = 2122). Pravidlo, které musí hlídat člověk, spadne.
+
+⚠️ **Spoj dvou sloves přes „eða“ dává 0 i u správné věty** (CODE-tune 2026-10-16, změřeno na třech variantách): `sig eða binda` 0,
+`sig eða svipta` 0, `lífi eða skaða` 0 — přitom `skaða sig eða` 43, `eða binda enda` 61, `binda enda á` 8362, `svipta sig lífi` 1849.
+Korpus tu potvrdí jen vzácnost spoje, ne chybu. Postup: ověř obě strany zvlášť (trojice končící spojkou a začínající jí) a celou větu
+Greynirem; nulu na spoji zapiš jako slepotu nástroje, ne jako „v pořádku“. Totéž číslice: `allt að 30` 0 — korpus je neindexuje.

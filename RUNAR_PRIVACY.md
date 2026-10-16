@@ -106,6 +106,11 @@ a souhlasí na pravdivém textu. Detail → `RUNAR_DECISIONS.md` 2026-09-11 (8).
   hlášení nesmaže. Číst je smí jen admin přes `list-reports` (RLS bez SELECT politiky); do Slacku nejde nic (upozornění `notify-report`
   zrušeno 2026-10-14). Vložit hlášení smí od 2026-10-10 jen přihlášený (do té doby i nepřihlášený;
   politika `bug_reports_insert` → `authenticated`, `RUNAR_BACKLOG.md` „Kontrola architektury“, bod 9). **Doba uchování nerozhodnuta.**
+- **Zprávy čtenářů (`bug_reports`, typ `message`, od 2026-10-15):** smažou se 6 měsíců po poslední odpovědi, bez odpovědi po přijetí.
+  DB denně `public.purge_reader_messages()` (pg_cron, `sql/2026-10-16_mazani_hlasi.sql`); kopie ve schránce runar@ (štítek Messages)
+  přesouvá do koše týdenní plánovaná úloha Claude (`scripts/ulohy/zpravy-gmail.md`), koš Gmailu se vysype po 30 dnech. Každé mazání
+  se zapisuje do hlídání provozu (registr `MAZANI`, ranní souhrn „Deleted (24 h)“). Smazání účtu maže i jeho zprávy v DB. Zásady
+  (EN/IS) to uvádějí v tabulce a u Google. DECISIONS 2026-10-15 (4), 2026-10-16 (2).
 - **Rozbory čtení od GPT (`gpt_reviews`, 2026-09-25 – 2026-10-09)** — tlačítko v adminově vlastní session (text jeho čtení šel
   k OpenAI) je od 2026-10-09 **zrušené** i s edge funkcí `gpt-review`; nové rozbory nevznikají. Uložené řádky zůstaly: text rozboru,
   model, id čtení a admin; cizí čtení v nich nejsou. Smazáním účtu admina zmizí (`on delete cascade`). Klient tabulku nečte ani nepíše.

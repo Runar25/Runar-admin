@@ -11598,3 +11598,33 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Otevřené:** *„Nebo je to protizákonné?“* (placení za čtení s otázkou na sebevraždu) — nevím; rešerše 2026-10-15 to neřešila
   (z praxe jen: Myra krizovou odpověď neúčtuje). Otázka pro právníka → BACKLOG u položky.
 - Affected doc(s): `RUNAR_BACKLOG.md` (položka „Krize v otázce“) — v témže commitu.
+
+## 2026-10-16 (2) — Automatická mazání hlásí, kde a co smazala; zprávy čtenářů v Gmailu: zodpovězené a mazání po 6 měsících samy
+
+- **Rozhodl:** owner na body 9 a 12 (návrh CODE-tune 2026-10-15): k označování zodpovězené zprávy ve shrine *„to dělej ty automaticky. já to
+  dělat nebudu.“*; k mazání kopií v Gmailu *„udělej plánovanou úlohu. chci vždy potvrzení že úloha po 6 měsících proběhla kde a co smazala.
+  musíme mít kontroly! to platí pro všechna podobné příkazy.“*
+- **Proč takhle:** do té doby běžela všechna automatická mazání tiše — pg_cron zpráv (bez stopy), staré zálohy PC+Drive (jen log na
+  počítači), historie ElevenLabs (jen log funkce; 2026-10-14 nezabrala a poznal to owner ze snímku). Úloha, o které hlídání neví, je táž
+  past jako noční záloha, která 2026-10-12 až 15 padala bez povšimnutí.
+- **Co:**
+  - registr `MAZANI` v `supabase/functions/_shared/ops_souhrn.ts` — jediné místo: úloha, kde, lhůta hlášení, zdroj. Každý běh zapíše
+    `ops_events` kind `purge` (kolik, krátká id zpráv / názvy archivů — i nulu, jinak nejde poznat, že běžel);
+  - `ops-watch`: stav `purge` — úloha selhala, nebo se neozvala v lhůtě (denní 26 h, Gmail 8 dní); u zpráv v DB navíc samo spočítá zprávy
+    po lhůtě (výsledek, ne hlášení úlohy, §19). E-mail při změně stavu. Ranní souhrn má vždy řádek „Deleted (24 h)“ — vědomá výjimka
+    z „nuly vynechat“ (memory emaily-kratke): nula = proběhla, nebylo co mazat; „no run“ = neproběhla;
+  - kopie zpráv v Gmailu: týdenní plánovaná úloha Claude `runar-zpravy-gmail` (pondělí 9:00, postup `scripts/ulohy/zpravy-gmail.md`).
+    Rozhoduje `scripts/utils/zpravy_gmail.js`: zodpovězeno = ve vlákně je zpráva z runar@ (resolved_at = čas poslední → od něj běží
+    6 měsíců v DB); do koše = poslední zpráva vlákna starší než 6 měsíců; cizí vlákno ve štítku nikdy. `send-line` dává do předmětu
+    „ref <8 znaků id>“ pro párování; starší zprávy se párují časem příchodu;
+  - zásady EN + IS: Google může kopii držet v koši ještě 30 dní (táž věta jako u záloh, 9f48493);
+  - smoke ㊊ (`scripts/verify_mazani.js`) + útoky ㊵: mazání mimo registr nebo bez potvrzení shodí smoke.
+- **Ověřeno:** smoke ㊈ (29 případů vč. nových), `zpravy_gmail.js --test` (9), `verify_mazani.js --test` (8 podstrčených vad chyceno),
+  ruční běh úlohy na skutečném Gmailu (1 vlákno, spárováno s fd51c6f7, nic ke smazání → první záznam `purge` gmail_messages 16:27 UTC);
+  nasazené `send-line` v2, `ops-watch` v7, `elevenlabs-proxy` v45 = HEAD.
+- **Hranice:** Gmail a zálohy na PC běží jen se zapnutým počítačem (úloha Claude při spuštěné appce, záloha z plánovače Windows) —
+  výpadek ohlásí hlídání po lhůtě, nezabrání mu. Mazání na žádost (smazání účtu) do registru nepatří — potvrzení vidí uživatel v appce.
+- **Zbývá:** owner pustí `sql/2026-10-16_mazani_hlasi.sql` (do té doby maže pg_cron postaru a nehlásí — souhrn ukáže „messages DB no run
+  yet“) a jednou klikne „Run now“ u úlohy `runar-zpravy-gmail`, ať schválí nástroje (jinak se běh zastaví na dotazu).
+- Affected doc(s): `CLAUDE.md` §30 (pravidlo pro nová mazání), `RUNAR_PRIVACY.md` (lhůta zpráv), `RUNAR_BACKLOG.md` (Gmail uzavřeno),
+  `memory/schranka-runar-gmail.md` (owner jen odpovídá), `memory/is-vazba-check.md` (spoj sloves) — v témže commitu.

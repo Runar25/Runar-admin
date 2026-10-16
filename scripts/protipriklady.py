@@ -43,6 +43,13 @@ PRIPADY = [
  ('chyti', 'verify_ui_text_used.js', 'web/site/index.html', 'replace', 'data-k="hero_eyebrow"', 'data-k="hero_eyebrow_v2"'),
  # ㊇ ceník na serveru (CODE-tune 2026-10-14): cena změněná jen ve v2/ — zrcadlo nepřegenerované
  ('chyti', 'verify_ceny_server.js', 'v2/runar-config.js', 'replace', "    'gpt-6-sol':  [2, 0.2, 10],", "    'gpt-6-sol':  [3, 0.2, 10],"),
+ # ㊊ automatická mazání (CODE-tune 2026-10-16, owner „musíme mít kontroly! to platí pro všechna podobné příkazy“): edge funkce mimo registr
+ # MAZANI začne mazat přes API (send-line; „create“ novou složku funkce neumí) · nový pg_cron maže přímo bez funkce, která zapíše
+ # potvrzení → obojí musí spadnout. Vzory po kouskách.
+ ('chyti', 'verify_mazani.js', 'supabase/functions/send-line/index.ts', 'replace', '"Access-Control-Allow-Methods": "POST, OPTIONS",',
+  '"Access-Control-Allow-Methods": "POST, OPTIONS", _x: fetch(u, { method: "DEL' + 'ETE" }),'),
+ ('chyti', 'verify_mazani.js', 'sql/2099-12-31_protipriklad.sql', 'create', '',
+  "select cron.schedule('protipriklad', '0 1 * * *', $$del" + "ete from public.bug_reports where false$$);\n"),
  # ㊈ hlídání provozu (CODE-tune 2026-10-14): práh selhání modelu desetkrát vyšší — upozornění by nepřišlo
  ('chyti', 'verify_ops_souhrn.js', 'supabase/functions/_shared/ops_souhrn.ts', 'replace', '  chybModeluZaHodinu: 3,', '  chybModeluZaHodinu: 30,'),
  # ㊈ krátké e-maily (CODE-tune 2026-10-14, owner „maily nesmí zabírat moc místa“): nad tělem znovu řádek se stavem — e-mail o řádek delší

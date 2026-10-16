@@ -390,6 +390,10 @@ musí to buď **udělat skript samo**, nebo **zastavit práci**, když se to vyn
 - **Kontroly při commitu** → `hooks/pre-commit.py` pustí rychlé textové kontroly (`scripts/utils/rychle_kontroly.py`, ~1 s) a zastaví
   jen vadu na staged souboru; cizí necommitnutou práci jen vypíše (chytí ji pre-push v čisté kopii). Hlídá smoke ㊆. Tři dny po sobě
   šel commit bez kontroly, která čte měněný soubor. (CODE-tune s CODE-read, DECISIONS 2026-10-14 (9).)
+- **Automatická mazání hlásí, kde a co smazala** → každé stojí v registru `MAZANI` (`supabase/functions/_shared/ops_souhrn.ts`) a každý
+  běh zapíše `ops_events` kind `purge` (i nulu); ops-watch ohlásí úlohu, která selhala nebo se neozvala, ranní souhrn ukáže „Deleted (24 h)“.
+  Mazání mimo registr nebo bez potvrzení shodí smoke ㊊ (`scripts/verify_mazani.js`). (KUKY 2026-10-16: *„chci vždy potvrzení … kde a co
+  smazala. musíme mít kontroly! to platí pro všechna podobné příkazy.“*, DECISIONS 2026-10-16 (2).)
 - **Hooky Claude Code se verzují** → zdroj je `hooks/claude/` v repu; v `~/.claude` jsou jen jednořádkové odkazy, na které míří nastavení.
   Hook měň v repu a commituj (DECISIONS 2026-10-14 (2)); do té doby žily jen v `~/.claude` a změnu nikdo neviděl.
 Najdeš nové pravidlo, které se porušilo podruhé? Nepiš ho jen do paměti — přidej mechanismus (hook, kontrola ve smoke, krok skriptu).

@@ -1201,6 +1201,16 @@ radky = [l for l in (r2.stdout + r.stdout + r.stderr + r2.stderr).strip().split(
 prvni = radky[-1] if radky else 'kontrola mapy souboru probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# ㊊ Automatická mazání (CODE-tune 2026-10-16, owner: „chci vždy potvrzení že úloha po 6 měsících proběhla kde a co smazala. musíme mít
+# kontroly! to platí pro všechna podobné příkazy.“): každé mazání v registru MAZANI, jeho kód zapisuje „purge“, ops-watch ho hlídá.
+print('\n' + chr(0x328A) + ' AUTOMATICKÁ MAZÁNÍ (verify_mazani.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_mazani.js')], capture_output=True, text=True, encoding='utf-8')
+r2 = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_mazani.js'), '--test'], capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0 and r2.returncode == 0
+radky = [l for l in (r2.stdout + r.stdout + r.stderr + r2.stderr).strip().split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola automatickych mazani probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
