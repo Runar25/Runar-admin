@@ -38,7 +38,8 @@
       rámce) ve spreadech nevkládat; u `intention_lbl` / IS v UI poznámka „jen pro jednu runu“ (EN + IS, §2, §31).
     - [ ] **Otázka ve spreadu** (owner: *„to by měla a je potřeba to testovat“*): spread ji má jen v hlavičce bez pokynu. CODE-read napřed
       lab (pokyn + malý vzorek), pak CODE-tune.
-    - [ ] **CODE-tune — pole s otázkou jen pro admina** (owner 2026-10-16: *„pole s otázkou jen pro adminy. nikdo jiný. není to vyladěné.
+    - [x] ✅ *(CODE-tune 2026-10-16: updateQuestionGate = isAdmin; ověřeno v prohlížeči — admin pole vidí v každém tarifu, Premium,
+      Standard, Rune Seeker ani návštěvník ne; čitelnost ㊽ a základ produkce ㉼ OK.)* **CODE-tune — pole s otázkou jen pro admina** (owner 2026-10-16: *„pole s otázkou jen pro adminy. nikdo jiný. není to vyladěné.
       je to featura do budoucna“*; DECISIONS 2026-10-16 (5)). Dnes ho vidí Standard a Premium, tedy i testeři (`updateQuestionGate`,
       `runar-auth.js`: `canAsk = standard || premium`). Pozor na základ produkce (§32) a souhlas s otázkou (㊽).
     - [x] ✅ **Test „pravidlo v systému × v user promptu“, EN** — 2026-10-16: systém 5/5 = user 5/5, kontrola 0/5 (RUNAR_EVAL_LOG

@@ -239,13 +239,14 @@ function updateAuthUI() {
 }
 
 // ── SPECIFIC QUESTION GATE ────────────────────────────────
-// Visible only for Rune Walker / Rune Wanderer. Visitor + Rune Seeker see a teaser.
+// Jen ADMIN (2026-10-16, owner: „pole s otázkou jen pro adminy. nikdo jiný. není to vyladěné. je to featura do budoucna“, DECISIONS
+// 2026-10-16 (5)). Do té doby Standard a Premium (i testeři) — ve spreadech s otázkou prompt nepracoval. Ask (doptávání) je jiné pole.
 function updateQuestionGate() {
   const qSection = document.getElementById('q-section');
   const qTeaser  = document.getElementById('q-teaser');
   const qInput   = document.getElementById('r-question');
   if (!qSection || !qTeaser) return;
-  const canAsk = (userTier === 'standard' || userTier === 'premium');
+  const canAsk = !!currentUser && typeof isAdmin === 'function' && isAdmin(currentUser.email);
   qSection.style.display = canAsk ? 'block' : 'none';
   qTeaser.style.display  = 'none'; // hidden until Premium decision is made
   if (!canAsk && qInput) qInput.value = '';
