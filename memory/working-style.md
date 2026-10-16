@@ -18,6 +18,10 @@ Pravidla na tohle už existují (`CLAUDE.md` §21 kritika · §24 ověř · §26
 §27 zaútoč na nástroj). **Chybělo jen pořadí** — v jakém sledu je pustit, když něco vezmeš do ruky.
 
 1. **Co to je a PROČ to tam je** — ne co to říká. Kdo to čte, co se rozbije, když to zmizí.
+   ⭐ **Pokyn v promptu: napřed `git log -S"<věta>" -- v2/` a záznam DECISIONS ke commitu, TEPRVE pak návrh změny** — a stejný krok
+   napiš do zadání každé kontroly promptu, kterou pouštíš (agent jinak hlásí „rozpor“ bez důvodu). 2026-10-16: kontrola označila
+   „Ask … may take the room an explanation needs“ za vadu a já ji předal k opravě; owner: *„než to opravíš, tak zjistit, proč to tam tak
+   je! ASK má větší délku z nějakého důvodu!!!“* Důvod stál v DECISIONS 2026-09-06 (40 → 90 slov, změřeno); vadný byl jen IS přepis z 09-27.
    ⭐ **Než napíšeš JAKÝKOLI vzor (regex, filtr, detektor), VYPIŠ SI DATA, na která má sednout.**
    Ne „asi tam bude *one flowing*" — vytisknout ty řádky a psát vzor podle nich. 2026-08-17 jsem
    takhle **třikrát** ohlásil falešný nález: islandský detektor (`\b` neplatí na `þ`), obrazy
