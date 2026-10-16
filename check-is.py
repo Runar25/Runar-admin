@@ -32,6 +32,11 @@ BAD_PATTERNS = [
     # 2026-10-16 (CODE-tune, kontrola promptu CODE-read A2.10): pravopis v islandském systémovém promptu (identity, blok never).
     ('einhversstaðar', 'einhvers staðar', 'pravopis; systémový prompt 2026-10-16'),
     ('prédíkar',       'prédikar',        'pravopis (prédikar 12 944× / prédíkar 4×); blok never 2026-10-16'),
+    # 2026-10-16 (CODE-tune, kontrola promptu A2): chyby v islandských builderech — rozkaz, slabý tvar „rúna“, rod, technický kalk.
+    ('Sleppu öllu',    'Slepptu öllu',    'rozkaz od sleppa (slepptu öllu 62× / sleppu öllu 0×); single 2026-10-16'),
+    ('rúnunnar',       'rúnarinnar',      'gen. urč. od rún (rúnarinnar 16× / rúnunnar 0×); JSON pokyny 2026-10-16'),
+    ('einum flæði',    'einu flæði',      'flæði je střední rod; Kříž 2026-10-16'),
+    ('í úttakinu',     'í textanum',      'technický kalk „output“ (0×); spready a životní runa 2026-10-16'),
     # 2026-10-06: citát nad čtením měl „Rúnirnar spá ekki um örlög þín“ — vazba je „spá fyrir um“ (Risamálheild 8477, „spá um örlög“ 0).
     ('spá ekki um örlög', 'spá ekki fyrir um örlög', 'vazba spá fyrir um; citát nad čtením 2026-10-06'),
     # 2026-09-23: kolokace a shoda z testu modelu (EVAL_LOG 2026-09-22 (1)/(2), 2026-09-23 (4)); kazda s korpusem.

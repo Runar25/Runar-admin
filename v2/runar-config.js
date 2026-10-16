@@ -73,7 +73,11 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 //    ignorovat, jelikož mají svůj tvar“ (DECISIONS 2026-10-16 (3)); nápověda u „This reading is for“ to říká uživateli.
 // v5.12 (2026-10-16): islandský systémový prompt — blok „never“ bez kalků, pravidlo 2. osoby opravené (bylo chybné: „þú talir“),
 //    pravidlo 2 rozebratelné, „línunni ÁVARP“, pravopis (CODE-read, kontrola promptu A2).
-const RUNAR_PROMPT_VERSION = 'v5.12-is-system';
+// v5.13 (2026-10-16): islandské buildery — „Slepptu“, „rún“ místo „rúna/rúnu“, shoda a pád ve spreadech, „til Heljar“, štítky Podkovy
+//    a Yggdrasilu, „í textanum“, úhel „SJÓNARHORN“, kveðjuorð v Asku (CODE-read, kontrola promptu A2).
+//    + neaktivní hlasový profil „lyrical“ (aktivní je focused, do promptu nejde): „á sömu rún“, „rúnarinnar“ (našel nový vzor
+//    v check-is.py), „kyrrlegir skógar“ (skógur je mužský rod — slovník). Jeho věta s výčtem za „eins og“ dál hlásí Greynir P_NT_ÍTölu.
+const RUNAR_PROMPT_VERSION = 'v5.13-is-builders';
 
 // Měsíční strop hlasu pro všechny (VOICE_MONTHLY_LIMIT = 5, od 2026-09-11) ZRUŠEN 2026-10-11: „limit na hlas max 5 na měsíc“ byl
 // ownerův pokyn pro testery, omylem pro všechny (DECISIONS 2026-10-11 (49)); owner: „žádný měsíční strop 5 hlasů není!!!“. Rúnar přečte
@@ -698,9 +702,9 @@ The living calendar: the long winter dark when night swallows nearly everything,
 Norse mythology: Odin and his ravens — memory and foresight carried on black wings. The Norns weaving fate — what has been, what is, what is still becoming.
 Seasonal rhythms: solstices, equinoxes, the moon's phases. The threshold between seasons. Ancient memory. The space between darkness and light.`,
     is: `Hann talar eins og gamall sögumaður við eld — aldrei í flýti, aldrei árásargjarn, aldrei of dramatískt. Hann notar myndlíkingar úr íslenskri náttúru: hraun, norðurljós, jöklaár, birkiskógar, hafþoka, eldfjallssteinn.
-Tungan er ljóðræn en aldrei tilgerðarleg. Andrúmsloftið líður eins og forn norræn speki, kertaljós, kyrrlegar skógar, ljósaborg. Hann útskýrir ekki — hann opinberar.
+Tungan er ljóðræn en aldrei tilgerðarleg. Andrúmsloftið líður eins og forn norræn speki, kertaljós, kyrrlegir skógar, ljósaborg. Hann útskýrir ekki — hann opinberar.
 
-Sérhver lestur á sömu rúnu verður að nálgast hana frá öðru horni. Breyttu opnunarmyndinni, þeim þætti rúnunnar sem leiðir, uppsprettu myndlíkingarinnar og tilfinningalegum tón. Stundum grimmt og beint. Stundum mjúkt og þolinmætt. Stundum hljóðlega leikið.
+Sérhver lestur á sömu rún verður að nálgast hana frá öðru horni. Breyttu opnunarmyndinni, þeim þætti rúnarinnar sem leiðir, uppsprettu myndlíkingarinnar og tilfinningalegum tón. Stundum grimmt og beint. Stundum mjúkt og þolinmætt. Stundum hljóðlega leikið.
 Spurningin í lokin verður alltaf að koma á óvart — aldrei formúlukennd.
 Lestur sem hefði getað verið skrifaður í gær er ekki lestur — hann er bergmál.
 

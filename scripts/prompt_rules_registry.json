@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
  "zapsano": "2026-10-16",
- "prompt_version": "v5.12-is-system",
+ "prompt_version": "v5.13-is-builders",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
@@ -1588,10 +1588,10 @@
    "zacatek": "Stundum rennur þetta ekki saman í eina náttúrlega mynd. Haltu þá Ansuz"
   },
   {
-   "hash": "b759b407958d",
+   "hash": "30fccc47a451",
    "lang": "is",
    "zdroj": "single",
-   "zacatek": "LESTRARHORNIÐ (fylgdu þessum opnunarpunkti — láttu hann móta tón og up"
+   "zacatek": "SJÓNARHORN (fylgdu þessum upphafspunkti og láttu hann móta tóninn og b"
   },
   {
    "hash": "497414e30a08",
@@ -1618,10 +1618,10 @@
    "zacatek": "Nefndu Ansuz einu sinni og fléttaðu nafnið náttúrlega inn í textann. E"
   },
   {
-   "hash": "4e02346319cb",
+   "hash": "f774fcdc305d",
    "lang": "is",
    "zdroj": "single",
-   "zacatek": "Sleppu öllu uppfyllingarefni."
+   "zacatek": "Slepptu öllu uppfyllingarefni."
   },
   {
    "hash": "1a87c639d13d",
@@ -1630,10 +1630,10 @@
    "zacatek": "ÁVARP: ávarpaðu viðmælandann í HVORUGKYNI (hán, kynhlutlaust) — öll lý"
   },
   {
-   "hash": "0407979c673f",
+   "hash": "eef37063fd37",
    "lang": "is",
    "zdroj": "single",
-   "zacatek": "Skilaðu EINGÖNGU þessu JSON fylki, engu á undan eða eftir: [{\"rune\": \""
+   "zacatek": "Skilaðu EINGÖNGU þessu JSON-fylki, engu á undan eða eftir: [{\"rune\": \""
   },
   {
    "hash": "2567aa64eb82",
@@ -1660,10 +1660,10 @@
    "zacatek": "Speglaðu ekki leitandann: ef spurningin fullyrðir eitthvað eða gefur í"
   },
   {
-   "hash": "3126fef26f6d",
+   "hash": "eb70b1a7166c",
    "lang": "is",
    "zdroj": "ask",
-   "zacatek": "Ef leitandinn þakkar eða kveður í stað þess að spyrja, svaraðu með ein"
+   "zacatek": "Ef leitandinn þakkar eða kveður í stað þess að spyrja skaltu svara með"
   },
   {
    "hash": "df1da31b024a",
@@ -1756,10 +1756,10 @@
    "zacatek": "MERKINGAR: skilaboð, viska, guðleg leiðsögn, rödd, andardráttur"
   },
   {
-   "hash": "d41d46340579",
+   "hash": "fca9c1ae7294",
    "lang": "is",
    "zdroj": "liferune",
-   "zacatek": "Skrifaðu í tveimur hlutum og hafðu engar fyrirsagnir í úttakinu."
+   "zacatek": "Skrifaðu í tveimur hlutum og hafðu engar fyrirsagnir í textanum."
   },
   {
    "hash": "972435b2058d",
