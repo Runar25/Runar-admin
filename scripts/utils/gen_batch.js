@@ -44,9 +44,11 @@ const V2   = (_v2i !== -1 && process.argv[_v2i + 1])
   ? path.resolve(process.argv[_v2i + 1])
   : path.join(REPO, 'v2');
 
-// Same file set as scripts/verify_contract_wiring.js. runar-translations.js is
-// deliberately excluded: it redeclares t()/UI_TEXT, and character.js never calls t().
-const FILES = ['runar-config.js', 'runar-runes.js', 'runar-utils.js', 'runar-character.js'];
+// Soubory v POŘADÍ APPKY (runar-reader.html): config → runes → translations → character → utils. 2026-10-16 (CODE-read, kontrola
+// promptu): do té doby tu translations chyběly („character.js never calls t()“) — jenže `_runeQuestion` (runar-utils.js) čte UI_TEXT,
+// takže single v dávce nedostal otázku runy, kterou produkce do pokynu konce dává od 2026-09-24; utils navíc běžel před character.
+// Každá dávka od té doby měřila jiný single prompt, než dostává člověk. Ověřeno sondou s produkční sadou souborů (bez sítě).
+const FILES = ['runar-config.js', 'runar-runes.js', 'runar-translations.js', 'runar-character.js', 'runar-utils.js'];
 
 const DEFAULT_DELAY_MS = 12000;  // ~5 req/min = HALF the shared 10/60s IP bucket,
                                  // so a parallel session / the app keeps the other half.
@@ -738,11 +740,14 @@ async function main() {
       area: area, seeking: seeking, intention: intention, question: args.question || '',
     };
 
-    const build = () => (spreadName === 'single')
+    // Single: připomínka délky na konci jako v produkci (runar-reading.js: prompt += '\n' + _lengthReminder(lang); od 2026-10-04).
+    // Do 2026-10-16 v dávce chyběla. ✦ (Standard/Premium) dávka dál nepřidává — staví prompt Rune Seekera (hlavička souboru).
+    const _lr = () => { const r = (spreadName === 'single') ? call('_lengthReminder', [lang]) : ''; return r ? '\n' + r : ''; };
+    const build = () => ((spreadName === 'single')
       // korekce jako 4. argument jako v produkci (runar-reading.js: buildReadingPrompt(u, drawn, lang, corrections)); do 2026-10-15 tu
       // stálo natvrdo [] — globál ze sandboxu builder nečte, takže --korekce db bez tohohle neměnila prompt ani o znak (ověřeno dry-run).
       ? call(spec.builder, [u, runes[0], lang, G('corrections')])
-      : call(spec.builder, [u, runes, lang, G('corrections')]);
+      : call(spec.builder, [u, runes, lang, G('corrections')])) + _lr();
     const prompt = stripLines(build());
 
     // DŮKAZ, že vypnutí opravdu ubralo. Jednou za dávku, u prvního čtení: postav týž
