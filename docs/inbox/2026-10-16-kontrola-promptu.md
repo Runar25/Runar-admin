@@ -56,6 +56,15 @@ konkrétní pokyn v user promptu ji může přebít (DECISIONS 2026-10-16 (1): �
     hægt að finna fyrir á ekki heima hér.“**; chybí i „No filler“ a pravidlo přítomného času.
 
 ### A3. Logika a technické vady
+⚠️ **Prověřeno historií (`git log -S` + DECISIONS/EVAL) 2026-10-16 po ownerově „než to opravíš, zjisti, proč to tam je“:**
+- A3.1 Ask délka — má důvod (DECISIONS 2026-09-06), mění se jen IS věta (viz bod 1).
+- A3.3 „Let X answer … through image and symbol“ — původní znění z 2026-06-06 bez měření; **PODRŽET**, je to kandidát testu „pravidlo
+  v systému × protichůdný pokyn“ (owner: *„teď to funguje, tak neměním, ale otestujeme to“*).
+- A3.5 „Mention <runa> by name once“ — **NENÍ vada k vyškrtnutí**: změřená páka (EVAL 2026-09-08 ablace: tenhle řádek dělá definiční větu;
+  LAB 2026-10-05 „ponechat“). Vztah k EN esenci solu („begins "X embodies"“) jen v labu.
+- A3.9 ✦ „on a new line (the only line break in the reading)“ — **NENÍ vada**: záměr v4.83 (2026-09-30), prompt výslovně dělá výjimku.
+- A3.4 (`_noColdRead` „Describe the image“ u životní runy a jména) — v souladu s odchodem `_describeRule` 2026-09-27; oprava platí.
+- A3.6, A3.10, A3.11 — bez nalezeného důvodu; před změnou totéž `git log -S`.
 1. Ask délka — **OPRAVENO V PODKLADU 2026-10-16 po ownerově „než to opravíš, zjisti, proč to tam je“.** Věta má důvod: DECISIONS
    2026-09-06 (Ask 40 → 90 slov; měřeno 8 run × 3 délky, 90 vyhrálo v dílech obrazu i opakování; 40 bylo odvozeno od hlasu a Ask hlas
    nemá). EN „This answer is read, never spoken aloud, so it may take the room an explanation needs.“ je ZDŮVODNĚNÍ 90 slov, ne vada —
