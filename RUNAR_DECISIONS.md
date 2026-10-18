@@ -11680,15 +11680,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Zbývá:** owner rozhodne o ostatních toastech (soupis předložen v chatu 2026-10-16).
 - Affected doc(s): žádný (texty vlastní UI_TEXT).
 
-## 2026-10-16 (7) — Ostatní vyskakovací hlášky zůstávají; hláška „You need {n} credits“ s kartou a jednotkou z VOCAB
+## 2026-10-18 (1) — Ostatní vyskakovací hlášky zůstávají; hláška „You need {n} credits“ s kartou a jednotkou z VOCAB
 - **Rozhodnutí (owner):** na soupis 17 hlášek (15 toastů a 2 okna, která se otevřou sama) odpověděl *„žádnou“* — nic se neruší ani nemění.
-  Uzavírá „Zbývá“ z (6); znovu se nepředkládá, dokud owner na některou neupozorní (§30).
+  Uzavírá „Zbývá“ z 2026-10-16 (6); znovu se nepředkládá, dokud owner na některou neupozorní (§30).
 - **Oprava §10 (CODE-tune, bez rozhodnutí):** toast u čtení životní runy bez dostatku jednotek měl natvrdo „credits“ a „reading gift card“
   (IS „{n} kredit. Keyptu þér gjafakort.“ bez množného čísla) → `vn('unit')` + `vl('card')`: „You need 3 rune readings. Get a Rune Reading
   Card.“ / „Þú þarft 3 spár. Keyptu þér Rúnakort.“ (Greynir bez nálezu; korpus „þarf þrjár“ 54×, „keyptu þér“ 1541×). Commit 7b1f934.
 - Affected doc(s): žádný (texty vlastní UI_TEXT).
 
-## 2026-10-18 (1) — Hlídání provozu hlásí i úlohy, které nic nemažou: registr BEHY, první zkouška obnovy; smazání zkušební kopie v MAZANI
+## 2026-10-18 (2) — Hlídání provozu hlásí i úlohy, které nic nemažou: registr BEHY, první zkouška obnovy; smazání zkušební kopie v MAZANI
 - **Owner** (2026-10-18, chat CODE-read): *„pak informaci do mailu, ať máme všechno zapsané. všechna a jakákoliv další důležité zálohy
   a cokoliv, co je třeba neviditelné, ale je dobré vidět, že to proběhlo, zapisovat emailem dokud nenajdeme lepší řešení“*.
 - **Co:** registr `BEHY` v `supabase/functions/_shared/ops_souhrn.ts` — klíč = kind v `ops_events`, detail `{ ok, chyba? }`, lhůta. První

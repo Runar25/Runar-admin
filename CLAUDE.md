@@ -395,7 +395,7 @@ musí to buď **udělat skript samo**, nebo **zastavit práci**, když se to vyn
   Mazání mimo registr nebo bez potvrzení shodí smoke ㊊ (`scripts/verify_mazani.js`). (KUKY 2026-10-16: *„chci vždy potvrzení … kde a co
   smazala. musíme mít kontroly! to platí pro všechna podobné příkazy.“*, DECISIONS 2026-10-16 (2).) Úlohy, které nic nemažou, ale je dobré
   vidět, že proběhly (zkouška obnovy zálohy), stojí v registru `BEHY` téhož souboru — selhání nebo neozvání hlásí ops-watch e-mailem
-  (KUKY 2026-10-18: *„cokoliv, co je třeba neviditelné, ale je dobré vidět, že to proběhlo, zapisovat emailem“*, DECISIONS 2026-10-18 (1)).
+  (KUKY 2026-10-18: *„cokoliv, co je třeba neviditelné, ale je dobré vidět, že to proběhlo, zapisovat emailem“*, DECISIONS 2026-10-18 (2)).
 - **Hooky Claude Code se verzují** → zdroj je `hooks/claude/` v repu; v `~/.claude` jsou jen jednořádkové odkazy, na které míří nastavení.
   Hook měň v repu a commituj (DECISIONS 2026-10-14 (2)); do té doby žily jen v `~/.claude` a změnu nikdo neviděl.
 Najdeš nové pravidlo, které se porušilo podruhé? Nepiš ho jen do paměti — přidej mechanismus (hook, kontrola ve smoke, krok skriptu).
