@@ -11728,4 +11728,4 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   Laguz, Blank „asks you to“, Jera „Reward“) — rozhoduje owner; Fehu je podle Coworku ownerův text (neověřeno). Název, zadní strana
   (vazebná runa AGNDOFA, dodá owner), IS verze, spadávka pro tiskárnu, originál fotky Rúnara (Supabase `runar-images/Runar_portrait.png`).
   Generátor stojí nad kopiemi a vlastním `fonts.css` — má-li se pouštět znovu (IS, tiskárna), patří do repa nad `v2/` (BACKLOG).
-- Affected doc(s): `RUNAR_BACKLOG.md` (Karty run + Účty stejně) — v témže commitu; `v2/assets/README.md` až soubory přejdou do repa.
+- Affected doc(s): `RUNAR_BACKLOG.md` (Karty run + Účty stejně) — v témže commitu.
