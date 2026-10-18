@@ -80,7 +80,10 @@ a souhlasí na pravdivém textu. Detail → `RUNAR_DECISIONS.md` 2026-09-11 (8).
 ## Retence + práva
 - **Retence:** rozhodnout dobu (návrh: čtení drž po dobu účtu; při zrušení účtu smazat, nebo anonymizovat pro eval).
 - **Práva subjektu:** přístup (Readings viewer to částečně pokrývá pro adminy; user si vidí své v journalu) +
-  smazání (delete account → smazat/anonymizovat jeho readings). Export na vyžádání.
+  smazání (delete account → smazat/anonymizovat jeho readings). **Export (čl. 15 a 20 GDPR) jen na žádost e-mailem** (owner 2026-10-18,
+  DECISIONS 2026-10-18 (3)): žádost musí přijít **z adresy, pod kterou je účet**, a export (čtení, profil; strojově čitelně, např.
+  JSON) jde **zpět na tutéž adresu**, do měsíce. Žádost z jiné adresy → nejdřív ověřit přihlášením / potvrzovacím e-mailem na adresu účtu.
+  Tlačítko v appce ne — e-mail z adresy účtu je ověření navíc.
 - **Evidence pohybů kreditu (`credit_ledger`) přežívá smazání účtu — a je to v pořádku, protože
   po smazání se to UUID nemá s čím spojit.** `delete-account` nuluje `gift_codes.used_by` a pak
   smaže `auth.users`, což kaskádou bere `user_profiles` i `readings`. Nezůstane **žádná** tabulka,

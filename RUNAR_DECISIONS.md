@@ -11702,3 +11702,12 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno:** smoke ㊈ (nové případy: neznámo bez záznamu · 34 dní ok · 36 dní problém · selhání s důvodem · e-mail při změně · řádek
   zálohy · bez zálohy samostatně · meze délky beze změny) · ㊊ registr mazání · jazyk EN · syntaxe ops-watch.
 - Affected doc(s): `CLAUDE.md` §30 (bod o mazáních) — v témže commitu.
+
+## 2026-10-18 (3) — Export dat na žádost jen e-mailem z adresy účtu
+
+- **Rozhodl:** owner 2026-10-18 na otázku „jen ručně, kdyby někdo napsal, nebo tlačítko v appce?“: *„musí napsat. jinak by to mohl udělat
+  kdokoliv a kdykoliv, ne? myslím tím, že jde o další zabezpečení, pokud musí napsat e-mail.“*
+- **Proč:** GDPR (čl. 12 odst. 6) chce ověřit totožnost žadatele; e-mail z adresy účtu a odpověď na tutéž adresu je ověření navíc —
+  export nedostane nikdo, kdo nemá přístup ke schránce účtu. Tlačítko by stálo jen na přihlášení. Lhůta odpovědi: měsíc (čl. 12 odst. 3).
+- **Co:** zásady v repu (`RUNAR_PRIVACY.md` „Retence + práva“); skript exportu jednoho účtu a text v zásadách appky (EN + IS) jsou otevřené (BACKLOG).
+- Affected doc(s): `RUNAR_PRIVACY.md`, `RUNAR_BACKLOG.md` — v témže commitu.
