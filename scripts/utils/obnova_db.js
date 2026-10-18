@@ -9,6 +9,8 @@
 //   node scripts/utils/obnova_db.js                    nejnovější archiv → Runar Testing, porovnání s produkcí
 //   node scripts/utils/obnova_db.js --archiv <cesta>   konkrétní archiv
 //   node scripts/utils/obnova_db.js --vycistit         jen smazat kopii ve zkušebním projektu (public schéma + auth.users)
+//   node scripts/utils/obnova_db.js --mesicni          naplánovaná zkouška (Plánovač úloh „Runar - zkouska obnovy“, jednou za 4 týdny v pondělí 4:15):
+//                                                     vyčistí, obnoví, porovná, zapíše `restore_test` do ops_events (ranní e-mail), vyčistí
 // Připojení: ~/.claude/runar-test-db-url.txt (cíl), ~/.claude/runar-db-url.txt (produkce, jen čtení na porovnání). Heslo zálohy
 // ~/.claude/runar-zaloha-heslo.txt. Nic z toho se nevypisuje.
 'use strict';
@@ -51,8 +53,26 @@ const KONTROLY = [
   ['těla funkcí', "select md5(string_agg(p.proname||md5(regexp_replace(p.prosrc,'\\s+',' ','g')), ',' order by p.proname||md5(regexp_replace(p.prosrc,'\\s+',' ','g')))) from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='public' and p.prokind='f'"],
 ];
 
+// Výsledek do ops_events (produkce) → hlídání provozu ho dá do ranního e-mailu (owner 2026-10-18: „informaci do mailu, ať máme všechno
+// zapsané“). Jen jména kontrol a počty, žádná data.
+function hlasVysledek(detail) {
+  try {
+    if (!fs.existsSync(PROD_URL_SOUBOR)) return;
+    pg.psql(pg.url(PROD_URL_SOUBOR), ['-tAc', "insert into public.ops_events (kind, detail) values ('restore_test', '" + JSON.stringify(detail).replace(/'/g, "''") + "'::jsonb)"], { env: ENV });
+  } catch (e) { console.error('ops_events nezapsáno'); }
+}
+
+// „tabulka=počet …“: kopie smí mít méně řádků než produkce (záloha je starší), ne víc a ne jiné tabulky.
+function pribyloJen(prod, kopie) {
+  const m = (s) => Object.fromEntries(s.split(' ').filter(Boolean).map((x) => x.split('=')).map(([k, v]) => [k, Number(v)]));
+  const p = m(prod), k = m(kopie);
+  return Object.keys(p).length === Object.keys(k).length && Object.keys(p).every((t) => t in k && k[t] <= p[t]);
+}
+
 function main() {
   if (process.argv.includes('--vycistit')) return vycistit();
+  const mesicni = process.argv.includes('--mesicni');
+  if (mesicni && Number(sql(CIL_URL, "select count(*) from pg_tables where schemaname='public'")) > 0) vycistit();
   if (Number(sql(CIL_URL, "select count(*) from pg_tables where schemaname='public'")) > 0) {
     console.error('STOP: ve zkušebním projektu už jsou tabulky — napřed `node scripts/utils/obnova_db.js --vycistit`.'); process.exit(1);
   }
@@ -75,14 +95,20 @@ function main() {
     console.log('obnoveno z ' + path.basename(archiv) + ' → zkušební projekt');
     if (!fs.existsSync(PROD_URL_SOUBOR)) { console.log('porovnání přeskočeno: chybí ' + PROD_URL_SOUBOR); return; }
     const PROD = pg.url(PROD_URL_SOUBOR);
-    let vad = 0;
+    let vad = 0; const vadne = [];
     for (const [jm, q] of KONTROLY) {
       const a = sql(PROD, q), b = sql(CIL_URL, q);
+      if (a !== b && jm.startsWith('tabulky') && pribyloJen(a, b)) { console.log('  SEDÍ  ' + jm + ' (v produkci jen řádky přibylé po záloze)'); continue; }
+      if (a !== b) vadne.push(jm);
       if (a === b) console.log('  SEDÍ  ' + jm);
       else { vad++; console.log('  LIŠÍ  ' + jm + (jm.startsWith('tabulky') || jm === 'kredity' ? '\n        produkce: ' + a + '\n        kopie:    ' + b : '')); }
     }
     console.log(vad ? 'ROZDÍLY: ' + vad + ' (tabulky se mohou lišit o řádky přibylé od zálohy)' : 'OK    obnova sedí s produkcí ve všech ' + KONTROLY.length + ' kontrolách');
-    console.log('Kopie nese osobní údaje — po prohlédnutí: node scripts/utils/obnova_db.js --vycistit');
+    if (mesicni) {
+      hlasVysledek({ ok: vad === 0, archiv: path.basename(archiv), kontrol: KONTROLY.length, vadne: vadne });
+      vycistit();
+    } else console.log('Kopie nese osobní údaje — po prohlédnutí: node scripts/utils/obnova_db.js --vycistit');
+    if (vad) process.exitCode = 1;
   } finally { fs.rmSync(tmp, { recursive: true, force: true }); }
 }
 // Chyby bez adresy databáze: execFileSync vrací celý příkaz psql i s připojovacím řetězcem (v něm heslo) — 2026-10-18 se tak dostal do výstupu.
@@ -90,5 +116,6 @@ try { main(); } catch (e) {
   const zprava = String((e.stderr || '') + '\n' + (e.message || e)).replace(/postgres(ql)?:\/\/\S+/g, '<url>').split('\n')
     .filter((l) => /ERROR|DETAIL|HINT|CONTEXT|STOP|Error:/.test(l)).slice(0, 8).join('\n');
   console.error('CHYBA obnovy (transakce vrácena, nic se nezapsalo):\n' + zprava);
+  if (process.argv.includes('--mesicni')) { hlasVysledek({ ok: false, chyba: zprava.slice(0, 300) }); try { vycistit(); } catch (e2) {} }
   process.exit(1);
 }
