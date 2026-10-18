@@ -11711,3 +11711,21 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   export nedostane nikdo, kdo nemá přístup ke schránce účtu. Tlačítko by stálo jen na přihlášení. Lhůta odpovědi: měsíc (čl. 12 odst. 3).
 - **Co:** zásady v repu (`RUNAR_PRIVACY.md` „Retence + práva“); skript exportu jednoho účtu a text v zásadách appky (EN + IS) jsou otevřené (BACKLOG).
 - Affected doc(s): `RUNAR_PRIVACY.md`, `RUNAR_BACKLOG.md` — v témže commitu.
+
+## 2026-10-18 (4) — Karty run ke stažení (Cowork, pracovně „Rúnar's Book of Stones“): zapsáno a ověřeno proti repu
+- **Co (owner s Coworkem 2026-10-18; přepis Coworku je v cloudu, `najdi_v_konverzacich.js` ho nevidí — ownerova slova níž jsou
+  z Coworkových handoffů, ne z přepisu):** statická krátká verze významu každé z 25 run (ne hlas Rúnara), ke stažení pro uživatele jako
+  ukázka, „jak se Rúnar na runy dívá“, a tiskový podklad pro nás. Vzhled appky (tmavá + zlatá, kameny `RUNE_SVGS`, Cinzel / Cormorant),
+  jména run z `RUNES[].n`, pod jménem `k`, řádek svět · živel · ætt, bez čísel stránek a bez glyfu. 28 karet (obálka, úvod, 25 run, poznámka),
+  dvě velikosti 65 × 100 a 70 × 120 mm, každá tmavá a tisková. Soubory: `Claude outputs/rune-cards/` (mimo git; PDF ~10 MB) + handoffy
+  HANDOFF66, 67, 68 v `Claude outputs/`.
+- **Ověřeno CODE-tune proti repu (generátor `build2.js` puštěný nad `v2/runar-runes.js` a `v2/runar-svgs.js`):** 25 textů = 25 run, žádné
+  jméno navíc ani chybějící · každá runa má kámen; tiskové přebarvení nenechá jinou barvu (kameny mají jen `#1e2535` a `#D6A85C`) ·
+  štítky ættů se shodují s `AETTY.*.name_en` (Cowork psal, že název v appce nenašel — je v `runar-runes.js`, `AETTY`) · barvy = tokeny
+  `runar-reader.css` · obě věty úvodní karty jsou doslova z appky (`hero_quote`, nápověda čtení v `runar-translations.js`) · Cinzel má v
+  `v2/fonts/fonts.css` jen 400 a 700, karty chtějí 500 → prohlížeč vezme nejbližší (neviditelná chyba, ale chyba).
+- **Neověřitelné / otevřené:** 24 z 25 textů napsal Cowork a neodpovídají pravidlu `RUNAR_POPISY_RUN.md` (rady a tvrzení: Thurisaz,
+  Laguz, Blank „asks you to“, Jera „Reward“) — rozhoduje owner; Fehu je podle Coworku ownerův text (neověřeno). Název, zadní strana
+  (vazebná runa AGNDOFA, dodá owner), IS verze, spadávka pro tiskárnu, originál fotky Rúnara (Supabase `runar-images/Runar_portrait.png`).
+  Generátor stojí nad kopiemi a vlastním `fonts.css` — má-li se pouštět znovu (IS, tiskárna), patří do repa nad `v2/` (BACKLOG).
+- Affected doc(s): `RUNAR_BACKLOG.md` (Karty run + Účty stejně) — v témže commitu; `v2/assets/README.md` až soubory přejdou do repa.

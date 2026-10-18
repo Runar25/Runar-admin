@@ -1223,3 +1223,24 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   doplněné o registraci; web žádné cookies nemá. Zbývá jen VSK do zásad, až ho owner bude vědět.)* **Landing — právní minimum** (2026-10-13): patička s údaji firmy podle zákona 30/2002 (jméno, adresa, e-mail, kennitala, VSK —
   údaje dodá owner; přesný článek zákona nestažen, althingi.is 403), věta o účelu u formuláře + odkaz na zásady, zásady doplnit
   o registraci na webu. Cookie lišta jen když přibude analytika (zákon 70/2022; landing žádné cookies nemá).
+
+## Z Coworku 2026-10-18 (HANDOFF66, 67, 68 v `Claude outputs/`; ověřeno CODE-tune proti repu, DECISIONS 2026-10-18 (4))
+### Účty vypadají a ovládají se stejně — HANDOFF66 (owner: rozdíl jen tam, kde ho chce funkce)
+- [ ] **CODE-read: matice stav × plocha** (Visitor · Rune Seeker · Standard · Premium/tester · admin × menu, formulář, spready, Ask, hlas,
+  Kolekce, Životní runa, okna, toasty, ⚑ a „?“) — z kódu; Standard v DB nemá nikdo (2026-10-18: 4× rune_seeker, 1× premium).
+- [ ] **Visitor: UPGRADE YOUR JOURNEY rozbalené ve výchozím stavu** (`sp-path-body`, `toggleHigherPath` v `runar-app.js`); ovládání stejné.
+  Ownerova slova jen z handoffu (Cowork přepis v cloudu) → potvrdit s ownerem, než se staví.
+- [ ] **První věta Visitorova výpisu neodpovídá appce** (`TIER_LIMITS.free_trial.panel_props`): „The Runes Collection and your life rune are
+  free.“ — Visitor má 5 run z 25 (`VISITOR_RUNES`) a životní runu jen zjistí, číst ji může po přihlášení. ⚠️ Větu owner schválil 2026-10-10
+  (komentář v configu) — Cowork to neuvedl; změna = nové rozhodnutí ownera. Coworkův IS návrh: Greynir bez gramatického nálezu, ale
+  „getur fundið hvaða“ 7× proti „fundið út hvaða“ 219× — přepsat islandsky, ne převzít.
+- [ ] **„free to join“ → „{onboarding} when you join“** ve `vcn_text` a `journal_gate_txt` — zdroj je `TIER_LIMITS.rune_seeker.onboarding_label_*`
+  (jako `visitor_join_note`), ne `free_trial` (Cowork ukázal na `free_trial`, tam je `onboarding` jen historický).
+- [ ] **Kontakt pro Visitora: mailto vs okno** — mailto schválil owner 2026-10-15 („8. ano“, bod 5: adresu neznáme, veřejný formulář = spam);
+  „stejné pro všechny“ by chtělo veřejný vstup (pole e-mailu, limit, ochrana proti botům, zásady). Rozhodnutí ownera s čísly.
+- [ ] Ownerova diskuse D–H (uvítání Visitora v menu, statický „Rúnar's welcome“, vysvětlení v Journalu, blok jako „How a reading works“,
+  jeden text o tom, co je zdarma) — owner: „ještě to doplníme“; nestavět.
+### Karty run ke stažení — HANDOFF67, 68
+- [ ] Owner: název · zadní strana (AGNDOFA) · 24 textů (rady proti `RUNAR_POPISY_RUN.md`) · kde vyhodit dvojí citát · originál fotky.
+- [ ] Až karty půjdou opakovaně (IS, tiskárna): generátor do repa nad `v2/runar-runes.js`, `v2/runar-svgs.js`, `v2/fonts/fonts.css`
+  (dnes kopie + vlastní `fonts.css`), Cinzel 500 → 400/700, přebarvení kamene jednou funkcí vedle `runeSvg`, spadávka 3 mm.
