@@ -11679,3 +11679,26 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   því um hvaða tíma lesturinn talar og á aðeins við um eina rún.“ (Greynir bez nálezu) — věta o vlastním čase spreadů pryč.
 - **Zbývá:** owner rozhodne o ostatních toastech (soupis předložen v chatu 2026-10-16).
 - Affected doc(s): žádný (texty vlastní UI_TEXT).
+
+## 2026-10-16 (7) — Ostatní vyskakovací hlášky zůstávají; hláška „You need {n} credits“ s kartou a jednotkou z VOCAB
+- **Rozhodnutí (owner):** na soupis 17 hlášek (15 toastů a 2 okna, která se otevřou sama) odpověděl *„žádnou“* — nic se neruší ani nemění.
+  Uzavírá „Zbývá“ z (6); znovu se nepředkládá, dokud owner na některou neupozorní (§30).
+- **Oprava §10 (CODE-tune, bez rozhodnutí):** toast u čtení životní runy bez dostatku jednotek měl natvrdo „credits“ a „reading gift card“
+  (IS „{n} kredit. Keyptu þér gjafakort.“ bez množného čísla) → `vn('unit')` + `vl('card')`: „You need 3 rune readings. Get a Rune Reading
+  Card.“ / „Þú þarft 3 spár. Keyptu þér Rúnakort.“ (Greynir bez nálezu; korpus „þarf þrjár“ 54×, „keyptu þér“ 1541×). Commit 7b1f934.
+- Affected doc(s): žádný (texty vlastní UI_TEXT).
+
+## 2026-10-18 (1) — Hlídání provozu hlásí i úlohy, které nic nemažou: registr BEHY, první zkouška obnovy; smazání zkušební kopie v MAZANI
+- **Owner** (2026-10-18, chat CODE-read): *„pak informaci do mailu, ať máme všechno zapsané. všechna a jakákoliv další důležité zálohy
+  a cokoliv, co je třeba neviditelné, ale je dobré vidět, že to proběhlo, zapisovat emailem dokud nenajdeme lepší řešení“*.
+- **Co:** registr `BEHY` v `supabase/functions/_shared/ops_souhrn.ts` — klíč = kind v `ops_events`, detail `{ ok, chyba? }`, lhůta. První
+  úloha `restore_test` (zkouška obnovy, `scripts/utils/obnova_db.js --mesicni`, jednou za 4 týdny) s lhůtou 35 dní. Nový stav `runs`:
+  selhání nebo neozvání → okamžitý e-mail a řádek v „Needs you“. Ranní souhrn připíše výsledek k řádku zálohy („restore test OK
+  2026-10-18 (9/9)“, „FAILED“, „no run yet“) — e-mail tím o řádek nenaroste (owner 2026-10-14 „maily nesmí zabírat moc místa“).
+  Úloha jiného druhu než zálohy dostane vlastní řádek. Nová úloha = řádek v `BEHY` + zápis v jejím kódu.
+- **Smazání kopie po zkoušce** (CODE-read se ptala, jestli patří do `MAZANI`): ano — kopie produkce ve zkušebním projektu nese skutečné
+  osobní údaje, „proběhlo a je pryč“ musí být vidět jako u ostatních mazání (owner 2026-10-16). `restore_copy` v `MAZANI` (lhůta 35 dní),
+  `obnova_db.js` po vyčištění zapíše `purge` s `ok` = nezůstala žádná tabulka public ani účet.
+- **Ověřeno:** smoke ㊈ (nové případy: neznámo bez záznamu · 34 dní ok · 36 dní problém · selhání s důvodem · e-mail při změně · řádek
+  zálohy · bez zálohy samostatně · meze délky beze změny) · ㊊ registr mazání · jazyk EN · syntaxe ops-watch.
+- Affected doc(s): `CLAUDE.md` §30 (bod o mazáních) — v témže commitu.
