@@ -55,11 +55,23 @@ const KONTROLY = [
 
 // Výsledek do ops_events (produkce) → hlídání provozu ho dá do ranního e-mailu (owner 2026-10-18: „informaci do mailu, ať máme všechno
 // zapsané“). Jen jména kontrol a počty, žádná data.
-function hlasVysledek(detail) {
+function hlasVysledek(detail) { hlasUdalost('restore_test', detail); }
+function hlasUdalost(kind, detail) {
   try {
     if (!fs.existsSync(PROD_URL_SOUBOR)) return;
-    pg.psql(pg.url(PROD_URL_SOUBOR), ['-tAc', "insert into public.ops_events (kind, detail) values ('restore_test', '" + JSON.stringify(detail).replace(/'/g, "''") + "'::jsonb)"], { env: ENV });
+    pg.psql(pg.url(PROD_URL_SOUBOR), ['-tAc', "insert into public.ops_events (kind, detail) values ('" + kind + "', '" + JSON.stringify(detail).replace(/'/g, "''") + "'::jsonb)"], { env: ENV });
   } catch (e) { console.error('ops_events nezapsáno'); }
+}
+
+// Smazání kopie (nese osobní údaje) jako mazací úloha „restore_copy“ — registr MAZANI v supabase/functions/_shared/ops_souhrn.ts
+// (CODE-tune 2026-10-18, owner 2026-10-16: „chci vždy potvrzení … kde a co smazala“). ok = po vyčištění nezůstala ve zkušebním
+// projektu žádná tabulka public ani účet; deleted = tabulek public před vyčištěním. Chyba bez textu z psql (v něm může být adresa).
+function vycistitAHlasit() {
+  let pred = 0, chyba = null, zbylo = null;
+  try { pred = Number(sql(CIL_URL, "select count(*) from pg_tables where schemaname='public'")); vycistit(); } catch (e) { chyba = 'cleanup failed'; }
+  try { zbylo = sql(CIL_URL, "select (select count(*) from pg_tables where schemaname='public') + (select count(*) from auth.users)"); } catch (e) {}
+  const ok = !chyba && zbylo === '0';
+  hlasUdalost('purge', { job: 'restore_copy', ok: ok, deleted: pred, items: ['Runar Testing'], error: ok ? undefined : (chyba || 'copy not empty') });
 }
 
 // „tabulka=počet …“: kopie smí mít méně řádků než produkce (záloha je starší), ne víc a ne jiné tabulky.
@@ -106,7 +118,7 @@ function main() {
     console.log(vad ? 'ROZDÍLY: ' + vad + ' (tabulky se mohou lišit o řádky přibylé od zálohy)' : 'OK    obnova sedí s produkcí ve všech ' + KONTROLY.length + ' kontrolách');
     if (mesicni) {
       hlasVysledek({ ok: vad === 0, archiv: path.basename(archiv), kontrol: KONTROLY.length, vadne: vadne });
-      vycistit();
+      vycistitAHlasit();
     } else console.log('Kopie nese osobní údaje — po prohlédnutí: node scripts/utils/obnova_db.js --vycistit');
     if (vad) process.exitCode = 1;
   } finally { fs.rmSync(tmp, { recursive: true, force: true }); }
@@ -116,6 +128,6 @@ try { main(); } catch (e) {
   const zprava = String((e.stderr || '') + '\n' + (e.message || e)).replace(/postgres(ql)?:\/\/\S+/g, '<url>').split('\n')
     .filter((l) => /ERROR|DETAIL|HINT|CONTEXT|STOP|Error:/.test(l)).slice(0, 8).join('\n');
   console.error('CHYBA obnovy (transakce vrácena, nic se nezapsalo):\n' + zprava);
-  if (process.argv.includes('--mesicni')) { hlasVysledek({ ok: false, chyba: zprava.slice(0, 300) }); try { vycistit(); } catch (e2) {} }
+  if (process.argv.includes('--mesicni')) { hlasVysledek({ ok: false, chyba: zprava.slice(0, 300) }); vycistitAHlasit(); }
   process.exit(1);
 }

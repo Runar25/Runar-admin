@@ -30,7 +30,19 @@ export const MAZANI: Record<string, { kratce: string; lhutaH: number | null; zdr
   backups_pc: { kratce: "backups PC+Drive", lhutaH: 26, zdroj: "scripts/utils/zaloha_db.js" },
   gmail_messages: { kratce: "Gmail Messages", lhutaH: 8 * 24 + 2, zdroj: "scripts/utils/zpravy_gmail.js" },
   el_history: { kratce: "ElevenLabs", lhutaH: null, zdroj: "supabase/functions/elevenlabs-proxy/index.ts" },
+  // 2026-10-18 (CODE-tune, na dotaz CODE-read): zkouška obnovy maže po sobě kopii produkce ve zkušebním projektu — nese skutečné osobní
+  // údaje, takže „proběhlo a je pryč“ musí být vidět stejně jako u ostatních mazání. Běží jednou za 4 týdny → lhůta 35 dní.
+  restore_copy: { kratce: "restore copy", lhutaH: 35 * 24, zdroj: "scripts/utils/obnova_db.js" },
 };
+
+// Pravidelné úlohy, které nic nemažou, ale je dobré vidět, že proběhly (owner 2026-10-18: „všechna a jakákoliv další důležité zálohy
+// a cokoliv, co je třeba neviditelné, ale je dobré vidět, že to proběhlo, zapisovat emailem“). Klíč = kind v ops_events, detail
+// { ok, chyba? }. Selhání nebo neozvání do lhutaH → stav „runs“ problem a e-mail; ranní souhrn je připíše k řádku zálohy (všechny dnešní
+// jsou o zálohách — úloha jiného druhu dostane vlastní řádek). Nová úloha = řádek tady + zápis v jejím kódu.
+export const BEHY: Record<string, { kratce: string; lhutaH: number; zdroj: string }> = {
+  restore_test: { kratce: "restore test", lhutaH: 35 * 24, zdroj: "scripts/utils/obnova_db.js" },   // jednou za 4 týdny + týden rezerva
+};
+export type BehPosledni = { kdy: string | null; ok: boolean | null; chyba: string | null; info: string | null };
 // Poslední záznam úlohy (kontrola každých 15 min) a součty za 24 h (ranní souhrn).
 export type MazaniPosledni = { kdy: string | null; ok: boolean | null; chyba: string | null };
 export type MazaniDen = { behu: number; smazano: number; polozky: string[]; chyb: number; posledni: string | null };
@@ -45,10 +57,11 @@ export type Hlidka = {
   brzd60: number;
   zaloha: Zaloha;
   mazani: Record<string, MazaniPosledni>;      // poslední záznam „purge“ každé úlohy z MAZANI
+  behy?: Record<string, BehPosledni>;          // poslední záznam každé úlohy z BEHY
   zpravyPoLhute: number;                        // zprávy čtenářů v DB déle než 6 měsíců + 2 dny po poslední odpovědi (nezávislá kontrola výsledku)
 };
 export type Stav = "ok" | "problem" | "unknown";
-export const KLICE = ["model", "voice_brake", "backup", "purge"] as const;
+export const KLICE = ["model", "voice_brake", "backup", "purge", "runs"] as const;
 
 export function stavy(h: Hlidka): Record<string, Stav> {
   const pokusy = Math.max(1, h.cteni60 + h.chybModelu60);
@@ -63,7 +76,29 @@ export function stavy(h: Hlidka): Record<string, Stav> {
     const chybaPo = h.zaloha.posledniChyba && Date.parse(h.zaloha.posledniChyba) > Date.parse(h.zaloha.posledniOk);
     backup = hodin > PRAHY.zalohaDbMaxHodin || chybaPo ? "problem" : "ok";
   } else if (h.zaloha.posledniChyba) backup = "problem";
-  return { model: model ? "problem" : "ok", voice_brake: h.brzd60 > 0 ? "problem" : "ok", backup, purge: stavMazani(h, backup) };
+  return { model: model ? "problem" : "ok", voice_brake: h.brzd60 > 0 ? "problem" : "ok", backup, purge: stavMazani(h, backup),
+    runs: vadyBehu(h).length ? "problem" : Object.values(h.behy ?? {}).some((p) => p && p.kdy) ? "ok" : "unknown" };
+}
+
+// Co je s úlohami z BEHY špatně — stejné pravidlo jako u mazání: bez záznamu nic (ještě neběžela), pak selhání nebo neozvání do lhůty.
+export function vadyBehu(h: Hlidka): string[] {
+  const vady: string[] = [];
+  for (const [kind, b] of Object.entries(BEHY)) {
+    const p = h.behy?.[kind];
+    if (!p || !p.kdy) continue;
+    const jm = b.kratce.charAt(0).toUpperCase() + b.kratce.slice(1);
+    if (p.ok === false) vady.push(jm + ": last run failed at " + kdy(p.kdy) + (p.chyba ? " (" + p.chyba + ")" : ""));
+    else if ((Date.parse(h.ted) - Date.parse(p.kdy)) / 3.6e6 > b.lhutaH) vady.push(jm + ": no report since " + kdy(p.kdy));
+  }
+  return vady;
+}
+// Úlohy z BEHY do ranního souhrnu: „restore test OK 2026-10-18 (9/9)“ · „… FAILED 2026-10-18“ · „… no run yet“.
+export function behyVeta(behy: Record<string, BehPosledni> | undefined): string {
+  return Object.entries(BEHY).map(([kind, b]) => {
+    const p = behy?.[kind];
+    if (!p || !p.kdy) return b.kratce + " no run yet";
+    return b.kratce + (p.ok === false ? " FAILED " : " OK ") + p.kdy.slice(0, 10) + (p.info ? " (" + p.info + ")" : "");
+  }).join(" · ");
 }
 
 // Co je s mazacími úlohami špatně (prázdné = nic). Úloha bez jediného záznamu se nehlásí (po nasazení ještě neběžela — jako záloha);
@@ -107,6 +142,11 @@ const POPIS: Record<string, { problem: string; resolved: string; co: string }> =
     resolved: "Database backup OK again",
     co: "check the backup task and its log on the PC.",   // co přesně se stalo, řekne zalohaVeta() (2026-10-15)
   },
+  runs: {
+    problem: "A scheduled check failed or did not report",
+    resolved: "Scheduled checks reporting again",
+    co: "",   // která a od kdy, řekne vadyBehu()
+  },
 };
 
 // Změny stavu → jeden e-mail (víc změn najednou = jeden e-mail). Bez změny → null (nic se neposílá).
@@ -129,6 +169,7 @@ function detail(k: string, h: Hlidka): string {
   if (k === "model") return " Last hour: " + h.chybModelu60 + " failed, " + h.zalohModelu60 + " fell back to Claude, " + h.cteni60 + " readings saved.";
   if (k === "backup") return zalohaVeta(h.zaloha);
   if (k === "purge") return " " + vadyMazani(h, stavy(h).backup).join("; ") + ".";
+  if (k === "runs") return " " + vadyBehu(h).join("; ") + ".";
   return "";
 }
 
@@ -156,13 +197,16 @@ export type Den = {
   otevrene: Record<string, Stav>;               // stav upozornění teď (ops_alert_state)
   mazani: Record<string, MazaniDen>;           // „purge“ za 24 h podle úlohy (+ poslední běh vůbec)
   vadyMazani: string[];                        // vadyMazani() z kontroly — do „Needs you“, když je stav purge problem
+  behy?: Record<string, BehPosledni>;          // poslední běh úloh z BEHY (z kontroly)
+  vadyBehu?: string[];                         // vadyBehu() z kontroly — do „Needs you“, když je stav runs problem
 };
 export type Email = { subject: string; html: string; text: string; stav: string };
 
 export function souhrn(d: Den): Email {
   const potreba: string[] = [];
   for (const k of KLICE) if (d.otevrene[k] === "problem") potreba.push(POPIS[k].problem + " — " + POPIS[k].co
-    + (k === "backup" ? zalohaVeta(d.zaloha) : k === "purge" ? (d.vadyMazani.join("; ") || "see the next check.") : ""));
+    + (k === "backup" ? zalohaVeta(d.zaloha) : k === "purge" ? (d.vadyMazani.join("; ") || "see the next check.")
+      : k === "runs" ? ((d.vadyBehu ?? []).join("; ") || "see the next check.") : ""));
   // 2026-10-14: jen nepřečtená (stav new) — první souhrn posílal ownera načítat hlášení, které session týž den uzavřela.
   if (d.neprectena) potreba.push(d.neprectena + " unread app report" + (d.neprectena > 1 ? "s" : "") + " — ask CODE to load " + (d.neprectena > 1 ? "them." : "it."));
   const doBrzdy = d.kredity && d.kredity.hladina != null ? d.kredity.hladina - d.kredity.spotreba : null;
@@ -189,7 +233,12 @@ export function souhrn(d: Den): Email {
   cisla.push((d.kredity ? "ElevenLabs " + cislo(d.kredity.spotreba) + (d.kredity.limit ? " of " + cislo(d.kredity.limit) : "") + " used"
     + (doBrzdy != null ? " · " + cislo(doBrzdy) + " to the brake" : "") + (d.kredity.reset ? " · resets " + d.kredity.reset.slice(0, 10) : "")
     : "ElevenLabs status unavailable") + (d.brzd ? " · brake hits " + d.brzd : ""));
-  if (d.zaloha.posledniOk) cisla.push("Backup " + kdy(d.zaloha.posledniOk) + (d.zaloha.bajtu ? " · " + (d.zaloha.bajtu / 1e6).toFixed(1) + " MB" : ""));
+  // Úlohy z BEHY (zkouška obnovy) jedou na řádku zálohy — řeč je o téže záloze, e-mail tím nenaroste (owner 2026-10-14 „maily nesmí
+  // zabírat moc místa“). Bez úspěšné zálohy stojí samy.
+  const behy = behyVeta(d.behy);
+  if (d.zaloha.posledniOk) cisla.push("Backup " + kdy(d.zaloha.posledniOk) + (d.zaloha.bajtu ? " · " + (d.zaloha.bajtu / 1e6).toFixed(1) + " MB" : "")
+    + (behy ? " · " + behy : ""));
+  else if (behy) cisla.push(behy.charAt(0).toUpperCase() + behy.slice(1));
   const nHlaseni = Object.values(d.hlaseni).reduce((a, b) => a + b, 0);
   if (nHlaseni || d.ulozeno) cisla.push("App reports (24 h) " + [nHlaseni ? seznam(d.hlaseni) : "", d.ulozeno ? "Keep " + d.ulozeno : ""]
     .filter(Boolean).join(" · "));

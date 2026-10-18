@@ -13,7 +13,7 @@ process.removeAllListeners('warning'); process.on('warning', () => {});
 const src = fs.readFileSync(path.join(ROOT, 'supabase', 'functions', '_shared', 'ops_souhrn.ts'), 'utf8');
 const js = strip(src).replace(/^export\s+/gm, '');
 const S = {}; vm.createContext(S);
-vm.runInContext(js + '\n;globalThis.__o = { PRAHY, KLICE, MAZANI, stavy, upozorneni, souhrn, vadyMazani, mazaniVeta };', S);
+vm.runInContext(js + '\n;globalThis.__o = { PRAHY, KLICE, MAZANI, BEHY, stavy, upozorneni, souhrn, vadyMazani, mazaniVeta, vadyBehu, behyVeta };', S);
 const O = S.__o;
 let fail = 0;
 const ok = (c, p) => { if (c) console.log('OK    ' + p); else { fail++; console.log('FAIL  ' + p); } };
@@ -52,6 +52,19 @@ const zalohaZle = { posledniOk: hod(30), bajtu: 1, posledniChyba: hod(1) };
 ok(O.stavy(H({ zaloha: zalohaZle, mazani: MZ({ backups_pc: { kdy: hod(30), ok: true, chyba: null } }), zpravyPoLhute: 0 })).purge === 'ok',
   'mazání: staré zálohy se neozvaly, protože selhala záloha — hlásí se jednou (backup), ne podruhé');
 
+// 1c) úlohy, které je dobré vidět (2026-10-18, owner: „cokoliv, co je třeba neviditelné, ale je dobré vidět, že to proběhlo, zapisovat
+// emailem“) — zkouška obnovy jednou za 4 týdny, lhůta 35 dní
+const BH = (o) => ({ restore_test: Object.assign({ kdy: hod(30), ok: true, chyba: null, info: '9/9' }, o) });
+ok(O.stavy(H({ mazani: {}, zpravyPoLhute: 0 })).runs === 'unknown', 'běhy: žádný záznam = neznámo, bez poplachu');
+ok(O.stavy(H({ mazani: {}, zpravyPoLhute: 0, behy: BH({ kdy: hod(34 * 24) }) })).runs === 'ok', 'běhy: zkouška obnovy před 34 dny = v pořádku');
+ok(O.stavy(H({ mazani: {}, zpravyPoLhute: 0, behy: BH({ kdy: hod(36 * 24) }) })).runs === 'problem'
+  && /^Restore test: no report since/.test(O.vadyBehu(H({ behy: BH({ kdy: hod(36 * 24) }) }))[0]), 'běhy: zkouška obnovy se neozvala 36 dní = problém s názvem');
+ok(O.stavy(H({ mazani: {}, zpravyPoLhute: 0, behy: BH({ ok: false, chyba: 'archive has no pg_dump' }) })).runs === 'problem'
+  && /^Restore test: last run failed at .*\(archive has no pg_dump\)$/.test(O.vadyBehu(H({ behy: BH({ ok: false, chyba: 'archive has no pg_dump' }) }))[0]),
+  'běhy: zkouška obnovy selhala = problém s důvodem');
+ok(O.MAZANI.restore_copy && O.MAZANI.restore_copy.lhutaH === 35 * 24 && O.BEHY.restore_test && O.BEHY.restore_test.lhutaH === 35 * 24,
+  'registry: smazání zkušební kopie v MAZANI, zkouška obnovy v BEHY, obě s lhůtou 35 dní');
+
 // 2) upozornění jen při změně
 const vse = (s) => ({ model: s, voice_brake: s, backup: s });
 ok(O.upozorneni(vse('ok'), vse('ok'), H({})) === null, 'beze změny stavu žádný e-mail');
@@ -63,6 +76,9 @@ const pm = O.upozorneni(Object.assign(vse('ok'), { purge: 'ok' }), Object.assign
   H({ mazani: MZ({ messages_db: { kdy: hod(27), ok: true, chyba: null } }), zpravyPoLhute: 0 }));
 ok(pm && /^Rúnar Ops · PROBLEM · A deletion job/.test(pm.subject) && /messages DB: no report since/.test(pm.text), 'mazání v pořádku → problém: e-mail říká, která úloha');
 ok(r && /^Rúnar Ops · RESOLVED · Reading model/.test(r.subject), 'problém → v pořádku: e-mail RESOLVED');
+const pb = O.upozorneni(Object.assign(vse('ok'), { runs: 'ok' }), Object.assign(vse('ok'), { runs: 'problem' }), H({ behy: BH({ ok: false, chyba: null }) }));
+ok(pb && /^Rúnar Ops · PROBLEM · A scheduled check failed/.test(pb.subject) && /Restore test: last run failed at/.test(pb.text),
+  'běh v pořádku → problém: e-mail říká, která úloha');
 
 // 3) ranní souhrn
 const D = (o) => Object.assign({ od: hod(24), do: TED, cteni: 0, spready: 0, asky: 0, modely: {}, cenaModelu: 0, bezCeny: 0, hlasy: 0, znakyHlasu: 0,
@@ -94,10 +110,11 @@ ok(zal.stav === 'PROBLEM' && radkyZal.length === 1 && /Last attempt failed at 20
 const MD = (o) => Object.assign({ messages_db: { behu: 1, smazano: 0, polozky: [], chyb: 0, posledni: hod(2) },
   backups_pc: { behu: 1, smazano: 2, polozky: ['runar-db-2026-09-16.7z'], chyb: 0, posledni: hod(4) },
   gmail_messages: { behu: 0, smazano: 0, polozky: [], chyb: 0, posledni: '2026-10-12T07:05:00.000Z' },
-  el_history: { behu: 3, smazano: 3, polozky: [], chyb: 0, posledni: hod(1) } }, o);
+  el_history: { behu: 3, smazano: 3, polozky: [], chyb: 0, posledni: hod(1) },
+  restore_copy: { behu: 0, smazano: 0, polozky: [], chyb: 0, posledni: '2026-10-12T04:20:00.000Z' } }, o);
 const smaz = O.souhrn(D({ mazani: MD({}), vadyMazani: [] }));
-ok(/^Deleted \(24 h\) messages DB 0 · backups PC\+Drive 2 \(runar-db-2026-09-16\.7z\) · Gmail Messages last run 2026-10-12 · ElevenLabs 3$/m.test(smaz.text),
-  'souhrn: řádek Deleted — nula = proběhla, archivy jménem, týdenní Gmail s posledním během, hlas počtem');
+ok(/^Deleted \(24 h\) messages DB 0 · backups PC\+Drive 2 \(runar-db-2026-09-16\.7z\) · Gmail Messages last run 2026-10-12 · ElevenLabs 3 · restore copy last run 2026-10-12$/m.test(smaz.text),
+  'souhrn: řádek Deleted — nula = proběhla, archivy jménem, týdenní Gmail a kopie zkoušky s posledním během, hlas počtem');
 ok(/Deleted \(24 h\) messages DB no run yet · backups PC\+Drive no run yet · Gmail Messages no run yet · ElevenLabs 0/.test(klid.text),
   'souhrn: úlohy, které ještě nehlásily — „no run yet“, řádek je i v klidný den');
 const smazMoc = O.mazaniVeta(MD({ messages_db: { behu: 1, smazano: 5, polozky: ['a1', 'b2', 'c3', 'd4', 'e5'], chyb: 0, posledni: hod(2) } }));
@@ -106,6 +123,15 @@ const smazZle = O.souhrn(D({ otevrene: Object.assign(vse('ok'), { purge: 'proble
   vadyMazani: ['messages DB: no report since 2026-10-13 03:10 UTC'] }));
 ok(smazZle.stav === 'PROBLEM' && /A deletion job failed or did not report — messages DB: no report since/.test(smazZle.text),
   'souhrn: otevřený problém mazání nahoře v „Needs you“ s názvem úlohy');
+// 2026-10-18: zkouška obnovy na řádku zálohy (e-mail nenaroste), bez zálohy samostatně, otevřený problém nahoře
+const obn = O.souhrn(D({ behy: { restore_test: { kdy: '2026-10-12T04:20:00.000Z', ok: true, chyba: null, info: '9/9' } } }));
+ok(/^Backup .* · 5\.0 MB · restore test OK 2026-10-12 \(9\/9\)$/m.test(obn.text) && obn.stav === 'OK', 'souhrn: zkouška obnovy OK na řádku zálohy s počtem kontrol');
+ok(/^Backup .* · restore test no run yet$/m.test(klid.text), 'souhrn: zkouška obnovy, která ještě neběžela — „no run yet“');
+const obnBez = O.souhrn(D({ zaloha: { posledniOk: null, bajtu: null, posledniChyba: null }, behy: { restore_test: { kdy: '2026-10-12T04:20:00.000Z', ok: false, chyba: null, info: null } } }));
+ok(/^Restore test FAILED 2026-10-12$/m.test(obnBez.text), 'souhrn: bez úspěšné zálohy stojí zkouška obnovy na vlastním řádku');
+const obnZle = O.souhrn(D({ otevrene: Object.assign(vse('ok'), { runs: 'problem' }), vadyBehu: ['Restore test: no report since 2026-09-10 04:15 UTC'] }));
+ok(obnZle.stav === 'PROBLEM' && /A scheduled check failed or did not report — Restore test: no report since/.test(obnZle.text),
+  'souhrn: otevřený problém běhu nahoře v „Needs you“ s názvem úlohy');
 const zly = O.souhrn(D({ modely: { '<script>x': 1 } }));
 ok(zly.html.indexOf('<script>') === -1 && zly.html.indexOf('&lt;script&gt;') !== -1, 'HTML escapované');
 // 2026-10-14 owner po zkušebním souhrnu: „maily nesmí zabírat moc místa. to myslím obecně.“ (memory emaily-kratke) — e-mail na jednu
@@ -115,10 +141,10 @@ const radku = (e) => e.text.split('\n').filter((x) => x.trim()).length;
 const cisel = (e) => (e.text.split('\n\n')[1] || '').split('\n').filter((x) => x.trim()).length;
 const jeden = O.souhrn(D({ cteni: 1, modely: { 'gpt-6-sol': 1 }, cenaModelu: 0.01, neprectena: 1 }));
 ok(/1 unread app report — ask CODE to load it\./.test(jeden.text) && /Cost models \$0\.01$/m.test(jeden.text), 'jedno hlášení „it“, nulová cena hlasu vynechaná');
-ok(radku(klid) <= 4 && radku(den) <= 8 && [klid, den, nacteno, zle, malo, bez, smaz].every((e) => cisel(e) <= 6) && radku(p) <= 2 && radku(r) <= 2
-  && radku(pm) <= 2 && [klid, den, zle, p, r, pm, smaz].every((e) => e.html.indexOf('<table') === -1 && Buffer.byteLength(e.html) <= 1000),
+ok(radku(klid) <= 4 && radku(obn) <= 4 && radku(den) <= 8 && [klid, den, nacteno, zle, malo, bez, smaz, obn, obnBez, obnZle].every((e) => cisel(e) <= 6) && radku(p) <= 2 && radku(r) <= 2
+  && radku(pm) <= 2 && radku(pb) <= 2 && [klid, den, zle, p, r, pm, pb, smaz, obn].every((e) => e.html.indexOf('<table') === -1 && Buffer.byteLength(e.html) <= 1000),
   'krátké e-maily: klidný den ≤ 4 řádky, běžný ≤ 8, čísla ≤ 6, upozornění ≤ 2, bez tabulky, HTML ≤ 1 kB (owner 2026-10-14, 2026-10-16)');
-const cz = [klid, den, nacteno, zle, malo, bez, p, r, jeden, pm, smaz, smazZle].map((e) => e.subject + e.html + e.text).join(' ');
+const cz = [klid, den, nacteno, zle, malo, bez, p, r, jeden, pm, pb, smaz, smazZle, obn, obnBez, obnZle].map((e) => e.subject + e.html + e.text).join(' ');
 ok(!/[ěščřžůňťďĚŠČŘŽŮŇŤĎ]/.test(cz), 'e-maily bez češtiny (§31 — admini EN)');
 
 console.log(fail ? '\nFAIL  hlídání provozu: ' + fail + ' případů nesedí'

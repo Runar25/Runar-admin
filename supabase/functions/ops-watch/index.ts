@@ -11,8 +11,8 @@ import { createClient } from "npm:@supabase/supabase-js@2.117.3";
 import { fetchQuota, brzdaHlasu, EL_KREDIT_USD } from "../_shared/voice_usage.ts";
 import { kredityHlasu } from "../_shared/el_voice.ts";
 import { readingCostUsd } from "../_shared/ceny_modelu.ts";
-import { stavy, upozorneni, souhrn, vadyMazani, KLICE, MAZANI } from "../_shared/ops_souhrn.ts";
-import type { Stav, Hlidka, Den, Email, Zaloha, Kredity, MazaniPosledni, MazaniDen } from "../_shared/ops_souhrn.ts";
+import { stavy, upozorneni, souhrn, vadyMazani, vadyBehu, KLICE, MAZANI, BEHY } from "../_shared/ops_souhrn.ts";
+import type { Stav, Hlidka, Den, Email, Zaloha, Kredity, MazaniPosledni, MazaniDen, BehPosledni } from "../_shared/ops_souhrn.ts";
 
 const PRIJEMCE = "runar@therunekeeper.com";
 // Tentýž odesílatel jako e-mail s přihlašovacím kódem (posílá ho Brevo, adresa je u Brevo ověřená).
@@ -75,6 +75,21 @@ async function mazaniPosledni(db: any): Promise<Record<string, MazaniPosledni>> 
   }));
   return o;
 }
+// Poslední záznam každé úlohy z BEHY (2026-10-18, owner: „cokoliv, co je třeba neviditelné, ale je dobré vidět, že to proběhlo“).
+// info = „prošlo/celkem“, když úloha hlásí počet kontrol (zkouška obnovy: kontrol + vadne[]) — jen čísla, žádná data.
+// deno-lint-ignore no-explicit-any
+async function behyPosledni(db: any): Promise<Record<string, BehPosledni>> {
+  const o: Record<string, BehPosledni> = {};
+  await Promise.all(Object.keys(BEHY).map(async (kind) => {
+    const { data, error } = await db.from("ops_events").select("created_at, detail").eq("kind", kind).order("created_at", { ascending: false }).limit(1);
+    if (error) throw new Error(error.message);
+    const r = data?.[0], d = r?.detail ?? {};
+    const n = typeof d.kontrol === "number" ? d.kontrol : null;
+    o[kind] = { kdy: r?.created_at ?? null, ok: r ? d.ok !== false : null, chyba: d.chyba ? String(d.chyba).split("\n")[0].slice(0, 80) : null,
+      info: n != null ? (n - (Array.isArray(d.vadne) ? d.vadne.length : 0)) + "/" + n : null };
+  }));
+  return o;
+}
 // Nezávislá kontrola výsledku mazání zpráv čtenářů: kolik jich v DB zůstalo déle než 6 měsíců (+ 2 dny rezerva) po poslední odpovědi,
 // bez odpovědi po přijetí — stejné pravidlo jako public.purge_reader_messages() (sql/2026-10-16_mazani_hlasi.sql). Má být vždy 0.
 // deno-lint-ignore no-explicit-any
@@ -99,7 +114,7 @@ async function nactiStavy(db: any): Promise<Record<string, Stav>> {
 // deno-lint-ignore no-explicit-any
 async function hlidka(db: any, ted: Date): Promise<Hlidka> {
   const od = new Date(ted.getTime() - 3.6e6).toISOString();
-  const [chyb, zaloh, cteni, brzd, z, mz, poLhute] = await Promise.all([
+  const [chyb, zaloh, cteni, brzd, z, mz, poLhute, bh] = await Promise.all([
     udalosti(db, "model_error", od),
     udalosti(db, "model_fallback", od),
     pocet(db.from("readings").select("id", { count: "exact", head: true }).gte("drawn_at", od)),
@@ -107,8 +122,10 @@ async function hlidka(db: any, ted: Date): Promise<Hlidka> {
     zaloha(db),
     mazaniPosledni(db),
     zpravyPoLhute(db, ted),
+    behyPosledni(db),
   ]);
-  return { ted: ted.toISOString(), chybModelu60: chyb, zalohModelu60: zaloh, cteni60: cteni, brzd60: brzd, zaloha: z, mazani: mz, zpravyPoLhute: poLhute };
+  return { ted: ted.toISOString(), chybModelu60: chyb, zalohModelu60: zaloh, cteni60: cteni, brzd60: brzd, zaloha: z, mazani: mz, zpravyPoLhute: poLhute,
+    behy: bh };
 }
 
 // deno-lint-ignore no-explicit-any
@@ -177,7 +194,7 @@ async function den(db: any, ted: Date, h: Hlidka): Promise<Den> {
     od, do: ted.toISOString(), cteni: (rd.data ?? []).length, spready, asky, modely, cenaModelu: cena, bezCeny,
     hlasy: (vu.data ?? []).length, znakyHlasu: znaky, cenaHlasu: kredity * EL_KREDIT_USD, hlaseni, neprectena, ulozeno,
     chybModelu: chyb, zalohModelu: zaloh, brzd, kredity: kr, zaloha: z, otevrene,
-    mazani, vadyMazani: vadyMazani(h, stavy(h).backup),
+    mazani, vadyMazani: vadyMazani(h, stavy(h).backup), behy: h.behy, vadyBehu: vadyBehu(h),
   };
 }
 
