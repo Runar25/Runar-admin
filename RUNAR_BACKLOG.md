@@ -859,6 +859,15 @@ Nárok = nejmenší z nich (memory `strop-serveru-neni-narok`). První průchod 
 backlog moc velky?“; uz_vime.js ho prohledává). Kolo 4 owner odložil (2026-10-11: *„kolo 4. bych mozna nechal jeste stranou… potrebuju
 doladit apku“*). **Kolo 4 spuštěno 2026-10-14** (owner *„4. ano“*) — níž.
 
+#### Útok zvenku na živou appku, fáze 1 — bez přihlášení (2026-10-18, CODE-read; owner *„5. ano“*)
+Jen veřejný (anon) klíč z appky, čtení a pokusy na neexistující ID; ověřeno v DB, že se nic nezměnilo. **Zranitelnost nenalezena:**
+tabulky s osobními daty RLS nebo granty zavřené (prázdné / 401), zápis do `user_profiles` 401, `add_credits`/`use_credit` 401, edge funkce
+bez přihlášení 401 dřív, než stojí peníze (`claude-proxy` ř. 461), uložené XSS v hlášeních ošetřené `esc()`, v klientu jen anon klíč.
+`runar_corrections` jsou veřejné záměrně (slovní dvojice). Netestováno: přihlášený uživatel (cizí účty, kredity tokem appky), entropie
+dárkových kódů. (Druhý pokus o spuštění téhle zkoušky zastavila ochrana Claude Code; běh, který proběhl, je tenhle.)
+- [ ] **Hlášení (`bug_reports`) bez limitu pro nepřihlášené:** insert `check(true)`, deduplikace jen přes `client_uuid`, který volí klient →
+  dalo by se zaplavit (šum v triáži, místo v DB). Návrh: `check_rate_limit` per IP i tady (jako waitlist / redeem). CODE-tune.
+
 #### Kolo 4 (od 2026-10-14, CODE-read) — napřed části změněné od uzavření kola 3 (b05f6d6, 186 commitů), pak zátěž a souběh
 **⭐ Uzavřeno 2026-10-15.** Prošlé: edge funkce, appka, landing, skripty, docs, zátěž, souběh. Co z nálezů hlídá stroj: ㉽ vidí landing,
 ㊵ ráčna „každá kontrola má útok nebo důvod v BEZ_UTOKU“, ㊉ mapa souborů v CLAUDE.md, ㉞ + post-commit i runar-verze.js, ㉼ 60 s podle
