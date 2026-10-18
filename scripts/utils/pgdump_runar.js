@@ -65,12 +65,18 @@ function vypis(dbUrl, slozka) {
 // („Direct deletion from storage tables is not allowed“, zjištěno při úklidu Runar Testing 2026-10-16). Buckety (definice) se obnoví.
 const BEZ_OBNOVY = ['cron', 'net', 'supabase_functions'];
 const BEZ_OBNOVY_TABULKY = ['"storage"."objects"'];
-function dataProObnovu(sql) {
+// sStorage = true jen pro obnovu do NOVÉHO projektu při havárii (definice bucketů); zkouška obnovy je vynechá — v cíli je pak nejde
+// smazat SQL, jen ručně v dashboardu (2026-10-16).
+function dataProObnovu(sql, sStorage) {
+  const tabulky = sStorage ? BEZ_OBNOVY_TABULKY : BEZ_OBNOVY_TABULKY.concat(['"storage"."buckets"']);
   const radky = sql.split('\n'), out = [];
   let skip = false;
   for (const r of radky) {
-    if (!skip && (BEZ_OBNOVY.some((s) => r.startsWith('COPY "' + s + '".')) || BEZ_OBNOVY_TABULKY.some((x) => r.startsWith('COPY ' + x + ' ')))) { skip = true; continue; }
+    if (!skip && (BEZ_OBNOVY.some((s) => r.startsWith('COPY "' + s + '".')) || tabulky.some((x) => r.startsWith('COPY ' + x + ' ')))) { skip = true; continue; }
     if (skip) { if (r === '\\.' || r === '\\.\r') skip = false; continue; }
+    // setval sekvencí ve vynechaných schématech (2026-10-18: „relation supabase_functions.hooks_id_seq does not exist“ — výpis je nese,
+    // když se schéma vynechává až při obnově, ne při výpisu)
+    if (/^SELECT pg_catalog\.setval\('/.test(r) && BEZ_OBNOVY.some((x) => r.indexOf("'\"" + x + '\".') !== -1 || r.indexOf("'" + x + '.') !== -1)) continue;
     out.push(r);
   }
   return out.join('\n');
@@ -98,10 +104,13 @@ if (require.main === module && process.argv.includes('--test')) {
   // Samotest čistých funkcí (bez sítě): filtr COPY bloků, oprava oprávnění.
   const d = ['SET x;', 'COPY "cron"."job" ("a") FROM stdin;', '1', '\\.', 'COPY "public"."readings" ("a") FROM stdin;', '2', '\\.',
     'COPY "net"."http_request_queue" ("a") FROM stdin;', '3', '\\.', 'COPY "storage"."objects" ("a") FROM stdin;', '4', '\\.',
-    'COPY "storage"."buckets" ("a") FROM stdin;', '5', '\\.', 'RESET ALL;'].join('\n');
-  const f = dataProObnovu(d);
+    'COPY "storage"."buckets" ("a") FROM stdin;', '5', '\\.', "SELECT pg_catalog.setval('\"supabase_functions\".\"hooks_id_seq\"', 1, false);",
+    "SELECT pg_catalog.setval('\"public\".\"x_seq\"', 5, true);", 'RESET ALL;'].join('\n');
+  const f = dataProObnovu(d, true);
+  const f2 = dataProObnovu(d);
   const ok1 = f.indexOf('cron') === -1 && f.indexOf('"net"') === -1 && f.indexOf('"readings"') !== -1 && f.indexOf('\n2\n') !== -1
-    && f.indexOf('"objects"') === -1 && f.indexOf('"buckets"') !== -1;
+    && f.indexOf('"objects"') === -1 && f.indexOf('"buckets"') !== -1 && f2.indexOf('"buckets"') === -1
+    && f.indexOf('hooks_id_seq') === -1 && f.indexOf('x_seq') !== -1;
   const a = opravOpravneni('CREATE TABLE x;\nGRANT SELECT ON TABLE "public"."x" TO "anon";\nREVOKE ALL ON FUNCTION "public"."f"() FROM PUBLIC;');
   const ok2 = /REVOKE ALL ON ALL TABLES/.test(a) && /GRANT SELECT ON TABLE "public"\."x"/.test(a) && a.indexOf('CREATE TABLE') === -1
     && a.indexOf('TO PUBLIC;') < a.indexOf('FROM PUBLIC;');

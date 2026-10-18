@@ -166,10 +166,25 @@ async function main() {
       soubory: q("select bucket_id, name, (metadata->>'size') bajtu, created_at from storage.objects order by 1,2"),
     }));
     fs.writeFileSync(path.join(tmp, 'souhrn.json'), JSON.stringify({ kdy: new Date().toISOString(), radku: souhrn }));
+    // Logický výpis pg_dump (roles.sql, schema.sql, data.sql) — z něj jde databázi skutečně obnovit (2026-10-16/18, CODE-read; owner
+    // „bezpečnou zálohu uděláme jak?“, zkouška obnovy do Runar Testing prošla, RUNAR_BACKLOG „Zálohy / DR“). JSON výš zůstává jako
+    // čitelná kopie. Selže-li výpis, archiv s JSON stejně vznikne a ops_events dostane backup_fail → hlídání provozu ohlásí problém.
+    let pgChyba = null;
+    try {
+      const pg = require('./pgdump_runar.js');
+      const urlSoubor = process.env.RUNAR_DB_URL_FILE || path.join(os.homedir(), '.claude', 'runar-db-url.txt');
+      if (!fs.existsSync(urlSoubor)) throw new Error('chybí ' + urlSoubor + ' (připojovací řetězec session pooleru)');
+      const vel = pg.vypis(pg.url(urlSoubor), tmp);
+      log('pg_dump ok: ' + Object.entries(vel).map(([k, v]) => k + ' ' + v + ' B').join(', '));
+    } catch (e) {
+      pgChyba = String(e.message).replace(/postgres(ql)?:\/\/\S+/g, '<url>').replace(/\S+@\S+/g, '[adresa]').slice(0, 200);
+      log('pg_dump CHYBA: ' + pgChyba);
+    }
     const archivDb = path.join(CIL, 'runar-db-' + DEN + '.7z');
     zabal(archivDb, fs.readdirSync(tmp).map((f) => path.join(tmp, f)), h);
     naDrive(archivDb);
-    hlasProvoz('backup_ok', { bytes: fs.statSync(archivDb).size, tables: Object.keys(souhrn).length });
+    hlasProvoz('backup_ok', { bytes: fs.statSync(archivDb).size, tables: Object.keys(souhrn).length, pg_dump: !pgChyba });
+    if (pgChyba) hlasProvoz('backup_fail', { error: 'pg_dump: ' + pgChyba });   // po backup_ok → stav „problem“ (stavy() v ops_souhrn.ts)
     log('DB ok → ' + archivDb + ' (' + fs.statSync(archivDb).size + ' B; ' + Object.entries(souhrn).map(([k, v]) => k + ' ' + v).join(', ') + ')');
     // Potvrzení mazání do ops_events (2026-10-16, owner: „chci vždy potvrzení … kde a co smazala. musíme mít kontroly!“): i nula — bez
     // záznamu nejde poznat, že mazání neběželo. Archiv leží na PC i na Drive → jména bez duplicit, souborů zvlášť. Registr MAZANI
