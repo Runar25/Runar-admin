@@ -536,6 +536,11 @@ mechanismem nesmí; 3.1.3(b): co si člověk koupil na webu, smí v appce použ�
 → Rúnakort a předplatné v iOS appce = IAP (provize 15 % v Small Business Programu do 1 M USD), nebo appka bez nákupu.
 Google Play (od 2026-06-30, EHP): poplatek za službu 10 % (i předplatné) + 5 % za Play Billing; při odkazu na web jen 10 % —
 zda program platí i pro Island, Google nevypisuje (neověřeno). Rozhoduje owner.
+**Bez provize (rešerše CODE-web 2026-10-18, owner „nechce se mi jim nic platit“):** Google Play výslovně dovoluje appku
+„consumption-only“ — v appce se nic nekupuje a nic na nákup neodkazuje, uživatel jen používá, co koupil jinde (Play Console Help,
+Understanding Google Play’s Payments policy) → 0 % provize; registrace 25 $ jednou zůstává (od 2026/27 ji Google chce i u APK mimo Play).
+Apple obdobnou výjimku pro Rúnara nemá (3.1.3(f) jen VoIP, cloud, e-mail, hosting; 3.1.3(b) chce IAP) → na iPhonu bez provize
+i bez 99 $/rok jen PWA (Safari → Add to Home Screen; push od iOS 16.4, jen po přidání na plochu).
 Zdroje: developer.apple.com/app-store/review/guidelines (3.1.1, 3.1.3, 4.2) · developer.apple.com/support/communication-and-promotion-of-offers-on-the-app-store-in-the-eu · developer.apple.com/app-store/small-business-program ·
 android-developers.googleblog.com/2026/06/play-expanded-billing.html
 

@@ -1205,7 +1205,8 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   e-mail, až Rúnar půjde ven. Napřed plán ownerovi (kam se ukládá, dvojí potvrzení, text do zásad soukromí, smazání po spuštění).
   API klíč Brevo: secret `BREVO_API_KEY` v Supabase (owner 2026-10-12, ověřeno). Hosting landing page teď (owner: „zatím A“):
   samostatné malé veřejné repo jen s webem na GitHub Pages, zdroj zůstává ve `web/`. Denní limit Brevo (RUNAR_PRICING, řádek Brevo)
-  sdílí registrace s přihlašovacími kódy; rozeslání všem při spuštění se do něj nevejde — owner: *„musím vyřešit větší počet e-mailů“*.
+  sdílí registrace s přihlašovacími kódy; rozeslání všem při spuštění se do něj nevejde. Owner 2026-10-18: tarif zvednout, až se k limitu přiblížíme
+  (*„začínáme od základních tarifů a pokračujeme na vyšší, jakmile to potřebujeme. je to tak u ElevenLabs atd.“*).
   Útok pro smoke ㉹ na `web/` (čeština v HTML) přidat do `scripts/protipriklady.py`, až bude ve `web/` první soubor v gitu — `create`
   netrackuje a kontrola čte jen git; ručně ověřeno 2026-10-12 přes `git add -N` (FAIL na „Tady je náhled stránky“).
 - [ ] **Pro OWNERA — Rapyd** *(owner 2026-10-12: totéž co Shopify — dodělá se, pak JEDEN souhrnný postup)*: smí účet Agndofy prodávat přes Rapyd Hosted Checkout / odkaz k platbě na therunekeeper.com, a jaký tarif
