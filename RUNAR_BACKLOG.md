@@ -468,6 +468,19 @@ hlídal jen V2 cestu.
   funkce, triggery, cizí klíče, granty, indexy, rozšíření, buckety. Archivy chybí za 12.–14. 10. (padala kontrola v zálohovacím skriptu,
   opraveno 9804afe). **Neověřeno: obnova** — neexistuje skript, který by z JSON + schématu databázi postavil, a není kam obnovit
   (Postgres ani Docker na počítači). auth.users nese jen id, e-mail, časy, app metadata — jestli jde účet obnovit se stejným id, neověřeno.
+  ✅ **Zkouška obnovy 2026-10-16** (owner *„11. ano“*, *„6. ano“* ke smazání kopie): výpis produkce přes `pg_dump` (scoop postgresql17,
+  session pooler, `~/.claude/runar-db-url.txt`) obnoven do druhého Free projektu **Runar Testing** (organizace Runar Test, eu-west-1,
+  `~/.claude/runar-test-db-url.txt`). Sedí: všech 18 tabulek na řádek, účty se STEJNÝMI ID a jejich profily, kredity a deník, politiky,
+  triggery, funkce, rozšíření. Našla: obnovená DB dávala **90 grantů navíc** (anon/authenticated INSERT/UPDATE/DELETE na credit_ledger,
+  allowed_emails…, 6 na user_profiles) — nový projekt přidá výchozí granty, výpis je neodebere → po obnově `opravOpravneni` (pak tabulky,
+  sloupce i funkce = produkce). Dál: Windows pg_dump chce `--quote-all-identifiers`; vynechat `storage.buckets_vectors`/`vector_indexes`;
+  při obnově bez cron/net/supabase_functions (kopie by volala produkci) a bez `storage.objects` (soubory záloha nenese). Vše v
+  `scripts/utils/pgdump_runar.js`. Kopie po zkoušce smazána (tabulky, účty SQL; buckety owner v dashboardu), ověřeno prázdné.
+  - [x] ✅ *(2026-10-18, CODE-read)* `pg_dump` v noční záloze (`zaloha_db.js`; selhání → `backup_fail`) a `scripts/utils/obnova_db.js`
+    (produkci odmítne, cíl prázdný, jedna transakce, oprava oprávnění, 9 kontrol proti produkci; útok s grantem navíc chycen;
+    `--vycistit`). Zkouška z archivu 2026-10-18: vše SEDÍ (liší se jen řádky přibylé po záloze), kopie smazána.
+  - [ ] **Zkouška obnovy jednou měsíčně a po změně schématu** — `node scripts/utils/obnova_db.js`, prohlédnout, `--vycistit`. Kdo a kdy
+    (naplánovaná úloha, nebo ruční krok) zatím nerozhodnuto.
   ⚠️ **Stav 2026-10-10 (CODE-read, `supabase backups list`): žádná záloha neexistuje** — `backups: []`, `pitr_enabled: false`.
   Deníky, kredity, profily i hlášení nemají kopii; `scripts/utils/zaloha_cteni.js` zálohuje jen čtení z pokusů, ne produkci.
   Volba (owner): placený tarif Supabase s denními zálohami (cena podle ceníku Supabase), nebo vlastní pravidelný `supabase db dump`
