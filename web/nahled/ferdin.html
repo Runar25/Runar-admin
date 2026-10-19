@@ -5,47 +5,57 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>The journey with Rúnar · preview</title>
 <!-- 2026-10-19 CODE-web: NÁHLED stránky „The journey with Rúnar“ (DECISIONS 2026-10-19 (7)) — nevydává se, vzhled okna v appce čeká na ownera.
-     Verze 3 (týž den). Owner k v1: *„grafika neodpovídá tomu, co je Rúnar“*; k v2 (celá stránka ze tříd appky, účty pod sebou, portrét):
-     *„ten styl je dobrý, ale pozadí a barvy ne. horní lišta. druhá verze není přehledná, jelikož je moc dlouhá. vrať to zpět, ale pozadí
-     a barvy lepší. Rúnar se tam fakt nevleze.“* → rozložení v1 (čtyři účty vedle sebe, na mobilu pod sebou), bez portrétu; pozadí,
-     barvy a horní lišta ze živých stylů appky (runar-reader.css: body::before, .topbar, .card, .reading-mode-row, .btn-full, tokeny).
-     Texty jen EN a pracovní z ukázky CODE-read (docs/inbox/2026-10-19-okno-upgrade-ukazka.html); IS jednou sadou s oknem (§2).
-     Výpis účtu = tierFeatures(), jména TIERS, balíčky CARD_PACKS — živě z appky (§10, §20).
-     CENY PŘEDPLATNÉHO DOČASNĚ z RUNAR_PRICING „Subscription Pricing“ (PRICE_DRAFT), do configu je přesune CODE-tune.
-     Značka účtu: prázdný kámen (runeSvg Blank) jen jako místo — owner kosočtverec odmítl, symboly navrhuje CODE-read. -->
+     Verze 4 (týž den). v1 = vlastní vzhled, účty vedle sebe, kameny na čárkované cestě („grafika neodpovídá tomu, co je Rúnar“);
+     v2 = celé ze tříd appky pod sebou s portrétem („moc dlouhá, Rúnar se tam nevleze“); v3 = v1 v kartách appky, kámen na rámečku
+     („ty kameny se ti fakt nepovedly… líbila se mi první verze, tohle je hybrid“). → Tady v1 beze změny rozložení (bez karet, kameny
+     na cestě), z appky jen pozadí a horní lišta (živý runar-reader.css: body::before, .topbar) a tokeny barev. Vlastní třídy mají
+     předponu j-, ať se nepletou se třídami appky. Cesta mezi kameny je z kousků MEZI kameny — v3 kryla čáru krabičkou v barvě pozadí,
+     která na přechodu pozadí appky byla vidět.
+     Značky účtů schválené (DECISIONS 2026-10-19 (8), docs/inbox/2026-10-19-symboly-uctu-a-zalozek.html): Visitor prázdný Blank,
+     Seeker plamen v Isa, Walker stezka v Othila, Wanderer hory s ptákem v Uruz; kámen z RUNE_SVGS, symbol centrovaný getBBox.
+     Na webu bez pohybu (owner schválil pohyb jen pro „you are here“ v appce).
+     Texty jen EN a pracovní z ukázky CODE-read; IS jednou sadou s oknem (§2). Výpis = tierFeatures(), TIERS, CARD_PACKS živě (§10, §20).
+     CENY PŘEDPLATNÉHO DOČASNĚ z RUNAR_PRICING „Subscription Pricing“ (PRICE_DRAFT), do configu je přesune CODE-tune. -->
 <link rel="stylesheet" href="https://runar25.github.io/Runar-admin/v2/fonts/fonts.css">
 <link rel="stylesheet" href="https://runar25.github.io/Runar-admin/v2/runar-reader.css">
 <style>
-/* Rozložení stránky (appka ho nemá — je to jeden úzký sloupec); barvy jen z tokenů appky */
-.page{position:relative;z-index:1;max-width:1140px;margin:0 auto;padding:44px 28px 70px;}
-.head{text-align:center;margin-bottom:28px;}
-.head .hero-sub{max-width:34em;margin:0 auto;}
-.page .reading-mode-row{max-width:320px;margin:0 auto 34px;}
-.path{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;position:relative;align-items:stretch;}
-.path::before{content:"";position:absolute;left:12%;right:12%;top:26px;border-top:1px dashed var(--border);}
-.path .card{margin:0;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 18px 22px;background:var(--card);position:relative;margin-top:26px;}
-.stone{width:44px;margin:-24px auto 14px;background:var(--bg);padding:0 4px;}
-.stone svg{width:100%;height:auto;display:block}
-.path .card-lbl{margin-bottom:8px;}
-.price{font-family:'Cinzel',serif;font-size:1.25em;letter-spacing:1px;color:var(--white);min-height:1.5em;}
-.price small{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.72em;letter-spacing:0;color:var(--muted);}
-.gift{font-style:italic;color:var(--gold);opacity:0.85;font-size:0.92em;min-height:1.4em;}
-.feat{list-style:none;margin:10px 0 14px;}
-.feat li{font-size:1em;line-height:1.5;color:var(--white);margin-bottom:6px;}
-.path .btn-full{margin-top:auto;padding:12px 6px;font-size:0.66em;letter-spacing:1px;white-space:nowrap;}
-.path .note{margin:8px 0 0;}
-.cardsec{max-width:900px;margin:44px auto 0;text-align:center;}
-.packs{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin:6px 0 14px;}
-.pk{border:1px solid var(--border);background:var(--card2);padding:12px 18px;min-width:120px;}
-.pk .n{font-family:'Cinzel',serif;font-size:0.68em;letter-spacing:2px;color:var(--gold);}
-.pk .c{font-style:italic;color:var(--muted);margin:2px 0;}
-.pk .p{font-family:'Cinzel',serif;font-size:0.95em;color:var(--white);}
-.foot{text-align:center;margin-top:30px;}
-@media(max-width:860px){
-  .page{padding:26px 16px 50px;}
-  .path{grid-template-columns:1fr;gap:0;}
-  .path::before{display:none;}
-  .path .card{margin-top:30px;}
+.j-page{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:44px 40px 60px}
+.j-eyebrow{font-family:'Cinzel',serif;font-size:14px;letter-spacing:5px;color:var(--gold);text-align:center;margin-bottom:12px}
+.j-sub{font-style:italic;color:var(--muted);font-size:22px;text-align:center;max-width:32em;margin:0 auto 30px;line-height:1.5}
+.j-per{display:flex;justify-content:center;gap:26px;font-family:'Cinzel',serif;font-size:12px;letter-spacing:3px;margin-bottom:40px}
+.j-per span{cursor:pointer;color:var(--muted);padding-bottom:4px}
+.j-per span.on{color:var(--gold);border-bottom:1px solid var(--gold)}
+.j-path{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.j-st{position:relative;text-align:center;display:flex;flex-direction:column;align-items:center}
+/* kousek cesty od tohoto kamene k dalšímu: od pravého okraje kamene přes mezeru k levému okraji dalšího */
+.j-st:not(:last-child)::after{content:"";position:absolute;top:36px;left:calc(50% + 34px);width:calc(100% + 22px - 68px);border-top:1px dashed var(--border)}
+.j-stone{width:52px;height:72px;margin-bottom:14px}
+.j-stone svg{width:100%;height:100%;display:block;overflow:visible}
+.j-nm{font-family:'Cinzel',serif;font-size:15px;letter-spacing:3px;color:var(--white);margin-bottom:6px}
+.j-pr{font-size:24px;color:var(--gold);min-height:1.5em}
+.j-pr small{font-size:16px;color:var(--muted)}
+.j-gift{font-style:italic;color:var(--ember, #D6A85C);font-size:16px;min-height:1.4em}
+.j-ft{list-style:none;font-size:17px;color:#c9d6e3;line-height:1.45;margin:12px 0 16px;max-width:15em}
+.j-ft li{margin-bottom:6px}
+.j-btn{font-family:'Cinzel',serif;font-size:11px;letter-spacing:2px;padding:11px 16px;background:none;border:1px solid rgba(255,191,0,0.5);color:var(--gold);margin-top:auto;cursor:default}
+.j-note{font-size:15px;color:var(--muted);font-style:italic;margin-top:6px}
+.j-card{margin-top:60px;border-top:1px solid rgba(46,74,112,0.4);padding-top:40px;text-align:center}
+.j-card h2{font-family:'Cinzel',serif;font-weight:400;font-size:15px;letter-spacing:4px;color:var(--gold);margin-bottom:8px}
+.j-card p{font-style:italic;color:var(--muted);margin-bottom:24px}
+.j-packs{display:flex;flex-wrap:wrap;justify-content:center;gap:16px}
+.j-pk{border:1px solid rgba(214,168,92,0.33);background:var(--card);padding:16px 22px;min-width:150px}
+.j-pk .n{font-family:'Cinzel',serif;font-size:12px;letter-spacing:3px;color:#D6A85C}
+.j-pk .c{font-size:18px;margin:4px 0}
+.j-pk .p{color:var(--gold);font-size:20px}
+.j-foot{border-top:1px solid rgba(46,74,112,0.4);margin-top:50px;padding-top:16px;text-align:center;font-style:italic;color:var(--muted);font-size:16px}
+@media(max-width:760px){
+  .j-page{padding:22px 16px 40px}
+  .j-path{grid-template-columns:1fr;gap:0}
+  .j-st{display:grid;grid-template-columns:52px 1fr;column-gap:14px;text-align:left;align-items:start;padding-bottom:26px}
+  .j-st:not(:last-child)::after{top:80px;left:26px;width:0;bottom:4px;border-top:none;border-left:1px dashed var(--border)}
+  .j-stone{grid-row:span 6;margin:0}
+  .j-ft{max-width:none}
+  .j-btn{justify-self:start}
 }
 </style>
 </head>
@@ -53,24 +63,18 @@
 <header class="topbar"><div class="topbar-inner">
   <a class="brand" href="../site/">AGNDOFA</a>
 </div></header>
-
-<div class="page">
-  <div class="head">
-    <div class="hero-eyebrow">YOUR JOURNEY WITH RÚNAR</div>
-    <p class="hero-sub">Each step holds more of Rúnar. Walk as far as you wish, and step back whenever you like.</p>
-  </div>
-  <div class="reading-mode-row" id="per">
-    <button class="reading-mode-btn active" data-p="m">MONTHLY</button>
-    <button class="reading-mode-btn" data-p="y">YEARLY</button>
-  </div>
-  <div class="path" id="path"></div>
-  <div class="cardsec card">
-    <div class="card-lbl" id="card-h"></div>
-    <p class="note">No subscription and no expiry. For yourself, or as a gift.</p>
-    <div class="packs" id="packs"></div>
-    <p class="note" style="margin:0;">Coming soon.</p>
-  </div>
-  <p class="note foot">Prices in Icelandic krónur. Cancel any time.</p>
+<div class="j-page">
+  <div class="j-eyebrow">YOUR JOURNEY WITH RÚNAR</div>
+  <p class="j-sub">Each step holds more of Rúnar. Walk as far as you wish, and step back whenever you like.</p>
+  <div class="j-per" id="per"><span data-p="m" class="on">MONTHLY</span><span data-p="y">YEARLY</span></div>
+  <div class="j-path" id="path"></div>
+  <section class="j-card">
+    <h2 id="card-h"></h2>
+    <p>No subscription and no expiry. For yourself, or as a gift.</p>
+    <div class="j-packs" id="packs"></div>
+    <div class="j-note" style="margin-top:14px">Coming soon.</div>
+  </section>
+  <div class="j-foot">Prices in Icelandic krónur. Cancel any time.</div>
 </div>
 
 <script src="https://runar25.github.io/Runar-admin/v2/runar-config.js"></script>
@@ -84,32 +88,59 @@ var PRICE_DRAFT = { standard: { m: 3490, y: 34800 }, premium: { m: 4900, y: 4900
 var LANG = 'en', P = 'm';
 // Návštěvník nemá v tierFeatures() žádný řádek (nemá účet) → pracovní věta z ukázky okna CODE-read
 var VISITOR_EN = ['The Runes Collection and your life rune.'];
+// Značky účtů — schválené tvary a velikosti z docs/inbox/2026-10-19-symboly-uctu-a-zalozek.html (CODE-read), staticky.
+// Až je CODE-tune dá do appky jako data, bere se odtamtud a tady zmizí (§20).
+var FLAME = '<path d="M20 36C12 36 8.5 30 10.5 24c1.6-4.6 5.6-6.4 6.2-12 3.4 2.4 4.6 6 3.8 9.4 2.6-1.6 3.6-4.8 3-8 5.6 4.4 7.6 11 5.6 16.6C27.6 33.6 24.4 36 20 36z"/><path d="M20 33c-3.2 0-4.8-2.6-4-5.2.7-2 2.6-2.8 2.9-5.2 2.4 1.6 3.8 3.8 3.4 6.4-.3 2.2-1 4-2.3 4z"/>';
+var MOUNT = '<path d="M2 30 12 16l5 6 6-9 15 17"/><path d="M21 7q1.6-1.8 3.2 0q1.6-1.8 3.2 0"/>';
+var TB = { x0: 8, x1: 28, A: 5.2, k: 2.1, w: 3.4, f: 2.4 };
+function trail() { var L = [], R = []; for (var i = 0; i <= 56; i++) { var t = i / 56; var y = 6 + 32 * Math.pow(1 - t, TB.k); var A = TB.A * Math.pow(1 - t, 1.2) + 0.4; var x = TB.x0 + (TB.x1 - TB.x0) * Math.pow(t, 0.8) + A * Math.sin(t * TB.f * Math.PI); var w = TB.w * Math.pow(1 - t, 1.3) + 0.45; L.push([x - w / 2, y]); R.push([x + w / 2, y]); } var p = L.concat(R.reverse()); return 'M' + p.map(function (q) { return q[0].toFixed(2) + ' ' + q[1].toFixed(2); }).join(' L') + 'Z'; }
+var ZNACKA = {
+  free_trial:  { kamen: 'Blank',  sym: '', vel: 0 },
+  rune_seeker: { kamen: 'Isa',    sym: FLAME, vel: 7.2 },
+  standard:    { kamen: 'Othila', sym: '<path d="' + trail() + '"/>', vel: 9.6, vypln: true },
+  premium:     { kamen: 'Uruz',   sym: MOUNT, vel: 8.6 }
+};
+function stoneSvg(id) {
+  var u = ZNACKA[id], sd = RUNE_SVGS[u.kamen], kamen = sd.paths.match(/<path[^>]*>/)[0];
+  var g = u.sym ? '<g class="sym" ' + (u.vypln ? 'fill="#D6A85C" stroke="none"' : 'fill="none" stroke="#D6A85C" stroke-linecap="round" stroke-linejoin="round"') + '>' + u.sym + '</g>' : '';
+  return '<svg viewBox="' + sd.vb + '" data-id="' + id + '">' + kamen + g + '</svg>';
+}
+// symbol na střed skutečného obrysu kamene (getBBox jde až po vložení do stránky)
+function fitSymbols() {
+  document.querySelectorAll('.j-stone svg').forEach(function (svg) {
+    var u = ZNACKA[svg.getAttribute('data-id')], sg = svg.querySelector('.sym');
+    if (!sg) return;
+    var kb = svg.firstElementChild.getBBox(), cx = kb.x + kb.width / 2, cy = kb.y + kb.height / 2, b = sg.getBBox(), s = u.vel / Math.max(b.width, b.height);
+    sg.setAttribute('transform', 'translate(' + (cx - s * (b.x + b.width / 2)).toFixed(3) + ' ' + (cy - s * (b.y + b.height / 2)).toFixed(3) + ') scale(' + s.toFixed(4) + ')');
+    if (!u.vypln) sg.setAttribute('stroke-width', (0.38 / s).toFixed(2));
+  });
+}
 var ORDER = ['free_trial', 'rune_seeker', 'standard', 'premium'];
-var blank = RUNES.filter(function (r) { return r.svg === 'Blank'; })[0];
 function kr(x) { return x.toLocaleString('de-DE') + ' kr'; }   // tečka na tisíce jako v ukázce okna (1.490 kr)
 function draw() {
   document.getElementById('path').innerHTML = ORDER.map(function (id) {
     var T = TIERS[id], pr = PRICE_DRAFT[id], short = T.label.replace(/^Rune\s+/, '').toUpperCase();
-    var h = '<div class="card"><div class="stone">' + runeSvg(blank, { frame: true }) + '</div><div class="card-lbl">' + short + '</div>';
+    var h = '<div class="j-st"><div class="j-stone">' + stoneSvg(id) + '</div><div class="j-nm">' + short + '</div>';
     if (pr) {
-      h += P === 'm' ? '<div class="price">' + kr(pr.m) + ' <small>a month</small></div><div class="gift"></div>'
-                     : '<div class="price">' + kr(Math.round(pr.y / 12)) + ' <small>a month</small></div><div class="gift">' + kr(pr.y) + ' a year. Two months are a gift.</div>';
+      h += P === 'm' ? '<div class="j-pr">' + kr(pr.m) + ' <small>a month</small></div><div class="j-gift"></div>'
+                     : '<div class="j-pr">' + kr(Math.round(pr.y / 12)) + ' <small>a month</small></div><div class="j-gift">' + kr(pr.y) + ' a year. Two months are a gift.</div>';
     } else {
-      h += '<div class="price"><small>' + (id === 'free_trial' ? 'Free' : 'Free to join') + '</small></div><div class="gift"></div>';
+      h += '<div class="j-pr"><small>' + (id === 'free_trial' ? 'Free' : 'Free to join') + '</small></div><div class="j-gift"></div>';
     }
     var f = id === 'free_trial' ? VISITOR_EN : tierFeatures(id, LANG);
-    h += '<ul class="feat">' + f.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>';
-    if (pr) h += '<button class="btn-full" disabled>WALK ON AS ' + short + '</button><p class="note">Coming soon.</p>';
-    else if (id === 'rune_seeker') h += '<button class="btn-full sec">BECOME A ' + T.label.toUpperCase() + '</button>';
+    h += '<ul class="j-ft">' + f.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>';
+    if (pr) h += '<span class="j-btn">WALK ON AS ' + short + '</span><div class="j-note">Coming soon.</div>';
+    else if (id === 'rune_seeker') h += '<span class="j-btn">BECOME A ' + T.label.toUpperCase() + '</span>';
     return h + '</div>';
   }).join('');
+  fitSymbols();
 }
 document.getElementById('card-h').textContent = VOCAB.card.en.toUpperCase();
 document.getElementById('packs').innerHTML = CARD_PACKS.map(function (p) {
-  return '<div class="pk"><div class="n">' + cardPackName(p, LANG).toUpperCase() + '</div><div class="c">' + vn('cast', p.credits, LANG) + '</div><div class="p">' + kr(p.isk) + '</div></div>';
+  return '<div class="j-pk"><div class="n">' + cardPackName(p, LANG).toUpperCase() + '</div><div class="c">' + vn('cast', p.credits, LANG) + '</div><div class="p">' + kr(p.isk) + '</div></div>';
 }).join('');
-document.querySelectorAll('#per button').forEach(function (b) {
-  b.onclick = function () { P = b.dataset.p; document.querySelectorAll('#per button').forEach(function (x) { x.classList.toggle('active', x === b); }); draw(); };
+document.querySelectorAll('#per span').forEach(function (s) {
+  s.onclick = function () { P = s.dataset.p; document.querySelectorAll('#per span').forEach(function (x) { x.classList.toggle('on', x === s); }); draw(); };
 });
 draw();
 </script>
