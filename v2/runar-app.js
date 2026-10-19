@@ -1029,6 +1029,9 @@ function updateUIText() {
   // _updateReadingForm NE — text by pri prepnuti jazyka zustal anglicky.
   // `data-i18n` v HTML preklad nedela; cte ho jen runar-reporter.js.
   setText('reader-disclaimer', t('disclaimer'));
+  // 2026-10-19 (owner „13. pod BEGIN THE READING“): uživatel ví, že mluví s AI, dřív než čte (EU AI Act čl. 50 od 2. 8. 2026;
+  // text CODE-read). Do té doby to appka říkala jen v souhlasu u otázky, v nápovědě a v zásadách.
+  setText('ai-note', t('ai_note'));
   setText('atab-reading',    t('atab_reading'));      // 2026-10-10: záložky a nadpis z UI_TEXT (ráčna ㉸)
   setText('atab-collection', t('atab_collection'));
   setText('atab-tree',       t('atab_tree'));
@@ -1640,13 +1643,25 @@ function canUseVoice(cena) {   // cena čtení jako u shouldUseCredit — placen
 //  statické audio přehrává Kolekce sama, runar-journal.js a loadCollection().)
 
 // ─── HIGHER PATH TOGGLE ─────────────────────────────────
-function toggleHigherPath() {
+// 2026-10-19 (owner „10. ano“ na HANDOFF66 Coworku): návštěvník má UPGRADE YOUR JOURNEY rozbalené hned — jeho vlastní výpis jsou tři
+// věty, podstatné je, co dostane po registraci. Ovládání stejné pro všechny (klepnutí zavře i otevře), liší se jen výchozí stav.
+// Ruční volba platí, dokud se nezmění přihlášení; drží ji proměnná, ať přepnutí jazyka (_renderYourPath) nic nezavře.
+var _higherOpen = null, _higherPro = null;
+function _applyHigherPath() {
   const body  = document.getElementById('sp-path-body');
   const arrow = document.getElementById('sp-path-arrow');
   if (!body) return;
-  const open = body.style.display !== 'none';
-  body.style.display = open ? 'none' : 'block';
-  if (arrow) arrow.textContent = open ? '+' : '−';
+  const ucet = !!currentUser;
+  if (_higherPro !== ucet) { _higherPro = ucet; _higherOpen = null; }
+  const open = _higherOpen === null ? !ucet : _higherOpen;
+  body.style.display = open ? 'block' : 'none';
+  if (arrow) arrow.textContent = open ? '−' : '+';
+}
+function toggleHigherPath() {
+  const body = document.getElementById('sp-path-body');
+  if (!body) return;
+  _higherOpen = body.style.display === 'none';
+  _applyHigherPath();
 }
 
 // ─── VÝPIS FUNKCÍ ÚČTU (sbalený) ──────────────────────────
@@ -1784,6 +1799,7 @@ function _renderYourPath() {
          +  '</div>';
   });
   body.innerHTML = html;
+  _applyHigherPath();
 }
 // Wire audio element events once DOM ready
 window.addEventListener('DOMContentLoaded', () => {

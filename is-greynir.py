@@ -27,12 +27,17 @@
 #   python -X utf8 is-greynir.py --samotest     · obhajoba nástroje (12 vět, nic neplatí, nic neodchází ven)
 #   python -X utf8 is-greynir.py --aktualizace  · týdenní úloha Windows „Runar - GreynirCorrect aktualizace“: nová verze na PyPI →
 #                                                 aktualizovat → samotest → když neprojde, vrátit předchozí verze; zápis do logu
+#                                                 a do ops_events (greynir_update → hlídání provozu, e-mail při selhání nebo neozvání)
 import io, os, sys, json, subprocess, datetime, urllib.request
 
 VENV = os.path.join(os.path.expanduser('~'), 'runar-eval', 'greynir-venv')
 VPY = os.path.join(VENV, 'Scripts', 'python.exe')
 STAV = os.path.join(VENV, 'aktualizace.json')
 LOG = os.path.join(VENV, 'aktualizace.log')
+# Zápis výsledku do ops_events — stejná cesta jako noční záloha (scripts/utils/zaloha_db.js): CLI supabase s plnou cestou (plánovač nemá
+# scoop v PATH) a AI_AGENT kvůli JSON výstupu. Klíč greynir_update je v registru BEHY (supabase/functions/_shared/ops_souhrn.ts).
+SUPABASE = os.environ.get('RUNAR_SUPABASE') or os.path.join(os.path.expanduser('~'), 'scoop', 'shims', 'supabase.exe')
+REPO = os.path.dirname(os.path.abspath(__file__))
 BALICKY = ['reynir-correct', 'reynir', 'islenska', 'tokenizer', 'icegrams']
 STARE_DNI = 14   # starší kontrola aktualizací = varování (úloha běží týdně; dvakrát vynechaná = počítač dlouho vypnutý nebo chyba)
 
@@ -109,6 +114,27 @@ def zapis(vysledek, zprava, verze):
     io.open(STAV, 'w', encoding='utf-8').write(json.dumps({'kdy': datetime.datetime.now().isoformat(timespec='seconds'),
                                                            'vysledek': vysledek, 'zprava': zprava, 'verze': verze}, ensure_ascii=False))
     print(radek)
+    if os.environ.get('RUNAR_GREYNIR_BEZ_PROVOZU'):
+        return
+    detail = {'ok': vysledek != 'chyba'}
+    if vysledek == 'chyba':
+        detail['chyba'] = zprava[:200]
+    sql = ("insert into public.ops_events (kind, detail) values ('greynir_update', '"
+           + json.dumps(detail, ensure_ascii=False).replace("'", "''") + "'::jsonb)")
+    try:
+        r = subprocess.run([SUPABASE, 'db', 'query', '--linked', sql, '--workdir', REPO, '--output-format', 'json'], capture_output=True,
+                           text=True, encoding='utf-8', timeout=180, env=dict(os.environ, AI_AGENT=os.environ.get('AI_AGENT', 'runar-greynir')))
+        if r.returncode != 0:
+            print('ops_events nezapsáno: ' + ((r.stderr or r.stdout or '')[:150]))
+    except Exception as e:
+        print('ops_events nezapsáno: %s' % e)
+
+
+def hlavni(v):
+    try:
+        return int(str(v).split('.')[0])
+    except ValueError:
+        return None
 
 
 def samotest_v_prostredi():
@@ -118,18 +144,25 @@ def samotest_v_prostredi():
 
 def aktualizace():
     pred = verze_v_prostredi()
-    nove = {}
+    nove, hlavni_verze = {}, []
     for b in BALICKY:
         try:
             v = verze_na_pypi(b)
         except Exception as e:
             zapis('chyba', 'PyPI nedostupné (%s): %s' % (b, e), pred); return 1
         if pred.get(b) and v != pred[b]:
-            nove[b] = (pred[b], v)
+            # Nová HLAVNÍ verze se nebere sama (2026-10-19: islenska 2 změnila balení dat a rozbila nástroj) — jen se ohlásí v logu.
+            if hlavni(v) != hlavni(pred[b]):
+                hlavni_verze.append('%s %s → %s' % (b, pred[b], v))
+            else:
+                nove[b] = (pred[b], v)
+    pozn = (' · nová hlavní verze, ručně: ' + ', '.join(hlavni_verze)) if hlavni_verze else ''
     if not nove:
-        zapis('aktualni', 'beze změny: ' + ', '.join('%s %s' % (b, pred.get(b, '?')) for b in BALICKY), pred)
+        zapis('aktualni', 'beze změny: ' + ', '.join('%s %s' % (b, pred.get(b, '?')) for b in BALICKY) + pozn, pred)
         return 0
-    subprocess.run([VPY, '-m', 'pip', 'install', '--upgrade', '--disable-pip-version-check', '-q'] + list(nove), check=False)
+    # Přesné verze, ne --upgrade: --upgrade by s balíčkem povýšil i závislost na novou hlavní verzi (cesta, kterou přišla islenska-data).
+    subprocess.run([VPY, '-m', 'pip', 'install', '--disable-pip-version-check', '-q'] + ['%s==%s' % (b, n) for b, (_, n) in nove.items()],
+                   check=False)
     kod, vystup = samotest_v_prostredi()
     if kod != 0 and 'ModelNotFoundError' in vystup:
         # nový icegrams může chtít novější model (213 MB, oficiální vydání Miðeind, kontrolní součet ověří stahovač)
@@ -138,11 +171,18 @@ def aktualizace():
     po = verze_v_prostredi()
     zmeny = ', '.join('%s %s → %s' % (b, s, n) for b, (s, n) in nove.items())
     if kod == 0:
-        zapis('aktualizovano', zmeny + ' — samotest prošel', po)
+        zapis('aktualizovano', zmeny + ' — samotest prošel' + pozn, po)
         return 0
-    subprocess.run([VPY, '-m', 'pip', 'install', '--disable-pip-version-check', '-q'] + ['%s==%s' % (b, s) for b, (s, _) in nove.items()], check=False)
+    # Návrat: napřed pryč, co aktualizace nově přitáhla (2026-10-19: islenska-data 5.0.0 zůstala a samotest po vrácení dál padal),
+    # pak předchozí verze znovu přes sebe.
+    pribyle = [b for b in po if b not in pred]
+    if pribyle:
+        subprocess.run([VPY, '-m', 'pip', 'uninstall', '-y', '-q', '--disable-pip-version-check'] + pribyle, check=False)
+    subprocess.run([VPY, '-m', 'pip', 'install', '--force-reinstall', '--no-deps', '--disable-pip-version-check', '-q']
+                   + ['%s==%s' % (b, s) for b, (s, _) in nove.items()], check=False)
     kod2, _ = samotest_v_prostredi()
-    zapis('chyba', zmeny + ' — samotest NEprošel, vráceno na předchozí verze (samotest po vrácení: %s)' % ('OK' if kod2 == 0 else 'FAIL'),
+    zapis('chyba', zmeny + ' — samotest NEprošel, vráceno na předchozí verze (samotest po vrácení: %s)' % ('OK' if kod2 == 0 else 'FAIL')
+          + (' · odstraněno přitažené: ' + ', '.join(pribyle) if pribyle else '') + pozn,
           verze_v_prostredi())
     return 1
 

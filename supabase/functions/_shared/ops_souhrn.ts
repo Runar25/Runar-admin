@@ -37,10 +37,13 @@ export const MAZANI: Record<string, { kratce: string; lhutaH: number | null; zdr
 
 // Pravidelné úlohy, které nic nemažou, ale je dobré vidět, že proběhly (owner 2026-10-18: „všechna a jakákoliv další důležité zálohy
 // a cokoliv, co je třeba neviditelné, ale je dobré vidět, že to proběhlo, zapisovat emailem“). Klíč = kind v ops_events, detail
-// { ok, chyba? }. Selhání nebo neozvání do lhutaH → stav „runs“ problem a e-mail; ranní souhrn je připíše k řádku zálohy (všechny dnešní
-// jsou o zálohách — úloha jiného druhu dostane vlastní řádek). Nová úloha = řádek tady + zápis v jejím kódu.
+// { ok, chyba? }. Selhání nebo neozvání do lhutaH → stav „runs“ problem a e-mail; ranní souhrn je dá na řádek „Checks“. Nová úloha =
+// řádek tady + zápis v jejím kódu (zdroj musí kind obsahovat — hlídá smoke ㊈).
 export const BEHY: Record<string, { kratce: string; lhutaH: number; zdroj: string }> = {
   restore_test: { kratce: "restore test", lhutaH: 35 * 24, zdroj: "scripts/utils/obnova_db.js" },   // jednou za 4 týdny + týden rezerva
+  // 2026-10-19: týdenní aktualizace GreynirCorrect (úloha Windows, neděle → pondělí 4:30). Ten den aktualizace rozbila nástroj a návrat
+  // selhal — věděl to jen log na PC; kontroly islandštiny (§2) by tiše padaly. Týden + 2 h rezerva jako Gmail.
+  greynir_update: { kratce: "Greynir update", lhutaH: 8 * 24 + 2, zdroj: "is-greynir.py" },
 };
 export type BehPosledni = { kdy: string | null; ok: boolean | null; chyba: string | null; info: string | null };
 // Poslední záznam úlohy (kontrola každých 15 min) a součty za 24 h (ranní souhrn).
@@ -233,12 +236,11 @@ export function souhrn(d: Den): Email {
   cisla.push((d.kredity ? "ElevenLabs " + cislo(d.kredity.spotreba) + (d.kredity.limit ? " of " + cislo(d.kredity.limit) : "") + " used"
     + (doBrzdy != null ? " · " + cislo(doBrzdy) + " to the brake" : "") + (d.kredity.reset ? " · resets " + d.kredity.reset.slice(0, 10) : "")
     : "ElevenLabs status unavailable") + (d.brzd ? " · brake hits " + d.brzd : ""));
-  // Úlohy z BEHY (zkouška obnovy) jedou na řádku zálohy — řeč je o téže záloze, e-mail tím nenaroste (owner 2026-10-14 „maily nesmí
-  // zabírat moc místa“). Bez úspěšné zálohy stojí samy.
+  if (d.zaloha.posledniOk) cisla.push("Backup " + kdy(d.zaloha.posledniOk) + (d.zaloha.bajtu ? " · " + (d.zaloha.bajtu / 1e6).toFixed(1) + " MB" : ""));
+  // Úlohy z BEHY na jednom řádku (2026-10-19). Den předtím jela zkouška obnovy na řádku zálohy, aby e-mail nenarostl; s aktualizací
+  // Greyniru tam už nepatří — jeden řádek navíc, vždy (owner 2026-10-18: „je dobré vidět, že to proběhlo“).
   const behy = behyVeta(d.behy);
-  if (d.zaloha.posledniOk) cisla.push("Backup " + kdy(d.zaloha.posledniOk) + (d.zaloha.bajtu ? " · " + (d.zaloha.bajtu / 1e6).toFixed(1) + " MB" : "")
-    + (behy ? " · " + behy : ""));
-  else if (behy) cisla.push(behy.charAt(0).toUpperCase() + behy.slice(1));
+  if (behy) cisla.push("Checks " + behy);
   const nHlaseni = Object.values(d.hlaseni).reduce((a, b) => a + b, 0);
   if (nHlaseni || d.ulozeno) cisla.push("App reports (24 h) " + [nHlaseni ? seznam(d.hlaseni) : "", d.ulozeno ? "Keep " + d.ulozeno : ""]
     .filter(Boolean).join(" · "));

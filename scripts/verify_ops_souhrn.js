@@ -125,10 +125,14 @@ ok(smazZle.stav === 'PROBLEM' && /A deletion job failed or did not report — me
   'souhrn: otevřený problém mazání nahoře v „Needs you“ s názvem úlohy');
 // 2026-10-18: zkouška obnovy na řádku zálohy (e-mail nenaroste), bez zálohy samostatně, otevřený problém nahoře
 const obn = O.souhrn(D({ behy: { restore_test: { kdy: '2026-10-12T04:20:00.000Z', ok: true, chyba: null, info: '9/9' } } }));
-ok(/^Backup .* · 5\.0 MB · restore test OK 2026-10-12 \(9\/9\)$/m.test(obn.text) && obn.stav === 'OK', 'souhrn: zkouška obnovy OK na řádku zálohy s počtem kontrol');
-ok(/^Backup .* · restore test no run yet$/m.test(klid.text), 'souhrn: zkouška obnovy, která ještě neběžela — „no run yet“');
+ok(/^Checks restore test OK 2026-10-12 \(9\/9\) · Greynir update no run yet$/m.test(obn.text) && /^Backup .* · 5\.0 MB$/m.test(obn.text) && obn.stav === 'OK',
+  'souhrn: řádek Checks — zkouška obnovy s počtem kontrol, Greynir „no run yet“; řádek zálohy beze změny');
+ok(/^Checks restore test no run yet · Greynir update no run yet$/m.test(klid.text), 'souhrn: úlohy, které ještě neběžely — „no run yet“, řádek i v klidný den');
+// každá úloha z BEHY má zdroj, který existuje a zapisuje svůj kind (bez zápisu by ops-watch hlásil „no report“ jen podle lhůty)
+const bezZapisu = Object.entries(O.BEHY).filter(([kind, b]) => { const f = path.join(ROOT, b.zdroj); return !fs.existsSync(f) || fs.readFileSync(f, 'utf8').indexOf(kind) < 0; });
+ok(!bezZapisu.length, 'registr BEHY: zdroj každé úlohy existuje a obsahuje její kind' + (bezZapisu.length ? ' — chybí: ' + bezZapisu.map((x) => x[0]).join(', ') : ''));
 const obnBez = O.souhrn(D({ zaloha: { posledniOk: null, bajtu: null, posledniChyba: null }, behy: { restore_test: { kdy: '2026-10-12T04:20:00.000Z', ok: false, chyba: null, info: null } } }));
-ok(/^Restore test FAILED 2026-10-12$/m.test(obnBez.text), 'souhrn: bez úspěšné zálohy stojí zkouška obnovy na vlastním řádku');
+ok(/^Checks restore test FAILED 2026-10-12 · Greynir update no run yet$/m.test(obnBez.text), 'souhrn: selhaná zkouška obnovy „FAILED“ i bez úspěšné zálohy');
 const obnZle = O.souhrn(D({ otevrene: Object.assign(vse('ok'), { runs: 'problem' }), vadyBehu: ['Restore test: no report since 2026-09-10 04:15 UTC'] }));
 ok(obnZle.stav === 'PROBLEM' && /A scheduled check failed or did not report — Restore test: no report since/.test(obnZle.text),
   'souhrn: otevřený problém běhu nahoře v „Needs you“ s názvem úlohy');
@@ -141,9 +145,9 @@ const radku = (e) => e.text.split('\n').filter((x) => x.trim()).length;
 const cisel = (e) => (e.text.split('\n\n')[1] || '').split('\n').filter((x) => x.trim()).length;
 const jeden = O.souhrn(D({ cteni: 1, modely: { 'gpt-6-sol': 1 }, cenaModelu: 0.01, neprectena: 1 }));
 ok(/1 unread app report — ask CODE to load it\./.test(jeden.text) && /Cost models \$0\.01$/m.test(jeden.text), 'jedno hlášení „it“, nulová cena hlasu vynechaná');
-ok(radku(klid) <= 4 && radku(obn) <= 4 && radku(den) <= 8 && [klid, den, nacteno, zle, malo, bez, smaz, obn, obnBez, obnZle].every((e) => cisel(e) <= 6) && radku(p) <= 2 && radku(r) <= 2
+ok(radku(klid) <= 5 && radku(obn) <= 5 && radku(den) <= 9 && [klid, den, nacteno, zle, malo, bez, smaz, obn, obnBez, obnZle].every((e) => cisel(e) <= 7) && radku(p) <= 2 && radku(r) <= 2
   && radku(pm) <= 2 && radku(pb) <= 2 && [klid, den, zle, p, r, pm, pb, smaz, obn].every((e) => e.html.indexOf('<table') === -1 && Buffer.byteLength(e.html) <= 1000),
-  'krátké e-maily: klidný den ≤ 4 řádky, běžný ≤ 8, čísla ≤ 6, upozornění ≤ 2, bez tabulky, HTML ≤ 1 kB (owner 2026-10-14, 2026-10-16)');
+  'krátké e-maily: klidný den ≤ 5 řádků, běžný ≤ 9, čísla ≤ 7, upozornění ≤ 2, bez tabulky, HTML ≤ 1 kB (owner 2026-10-14, 2026-10-16, 2026-10-18)');
 const cz = [klid, den, nacteno, zle, malo, bez, p, r, jeden, pm, pb, smaz, smazZle, obn, obnBez, obnZle].map((e) => e.subject + e.html + e.text).join(' ');
 ok(!/[ěščřžůňťďĚŠČŘŽŮŇŤĎ]/.test(cz), 'e-maily bez češtiny (§31 — admini EN)');
 
