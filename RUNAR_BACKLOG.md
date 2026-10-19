@@ -1281,6 +1281,12 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
 - [ ] **Okno Upgrade v appce „Your journey with Rúnar“ (owner 2026-10-19 směr i vzhled schválil — „to vypadá dobře“, kosočtverec
   nahrazen kameny se symboly, DECISIONS 2026-10-19 (8)) → CODE-tune.** Ukázka okna `docs/inbox/2026-10-19-okno-upgrade-ukazka.html`,
   symboly `docs/inbox/2026-10-19-symboly-uctu-a-zalozek.html`; výpis účtů z `tierFeatures()` (jako náhled webu CODE-web), ne z pracovních vět.
+  Ukázka CODE-read 2026-10-19: účty jako kameny na cestě (Gestur → Leitandi → Vegfarandi → Ferðalangur), „you are here“ svíčkou, přepínač
+  měsíčně / ročně (roční = cena za měsíc + „dva měsíce jsou dar“, bez přeškrtnutých cen), upgrade („Walk on as …“ → therunekeeper.com),
+  downgrade od konce období, správa / zrušení předplatného, u Leitandi Rúnakort. V appce z Google Play bez cen, tlačítek i odkazů na nákup
+  (consumption-only, DECISIONS 2026-10-19 (4)); jak appka pozná, že běží z Play: značka v `start_url` (neověřeno, navrhnout). Do plateb
+  u placených účtů jen „Coming soon“. Vstup: menu (místo TAKTU FERÐINA LENGRA) a rozbalovací okno se jménem. **Ceny předplatného do
+  configu** (dnes jen `RUNAR_PRICING.md` „Subscription Pricing“) — okno i web je čtou odtud (§10, §20). Texty EN + IS (§2).
 - [x] ✅ *(CODE-tune 2026-10-19: TAB_IKONY + _zalozka v runar-app.js, styl .atab-ikona; ověřeno v náhledu 375 px, smoke ㉼ ㊽)* **Ikony záložek místo znaků ✧ ✦ ◌ ◈ (owner 2026-10-19, DECISIONS 2026-10-19 (8)) → CODE-tune.** Life Rune klíček, Rune Reading
   tři vržené kameny, Journal havraní pero, Runes Collection váček na runy, Tree of Life jasan — kresby v `docs/inbox/2026-10-19-symboly-uctu-a-zalozek.html`.
   Znaky dnes stojí v textech UI_TEXT (`atab_*`) → vyndat do SVG, záložky nesmí zmizet (§32, smoke ㉼).
@@ -1288,12 +1294,6 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   kalkulačka návratnosti a `verify_payback_pricing.js` je čtou odtud, tabulka v `RUNAR_PRICING.md` odkazuje.
 - [ ] **`RUNAR_PRICING.md` opisuje ceny ve výpočtech marží** (ř. ~232–263 „Standard value vs credits“, tabulka marží, a ~368 mix) — při změně
   ceny v configu se nepřepočítají samy. Přepsat na odkaz + výpočet, nebo nechat jen kalkulačku ve shrine (ta čte config). CODE-tune / owner.
-  Ukázka CODE-read 2026-10-19: účty jako kameny na cestě (Gestur → Leitandi → Vegfarandi → Ferðalangur), „you are here“ svíčkou, přepínač
-  měsíčně / ročně (roční = cena za měsíc + „dva měsíce jsou dar“, bez přeškrtnutých cen), upgrade („Walk on as …“ → therunekeeper.com),
-  downgrade od konce období, správa / zrušení předplatného, u Leitandi Rúnakort. V appce z Google Play bez cen, tlačítek i odkazů na nákup
-  (consumption-only, DECISIONS 2026-10-19 (4)); jak appka pozná, že běží z Play: značka v `start_url` (neověřeno, navrhnout). Do plateb
-  u placených účtů jen „Coming soon“. Vstup: menu (místo TAKTU FERÐINA LENGRA) a rozbalovací okno se jménem. **Ceny předplatného do
-  configu** (dnes jen `RUNAR_PRICING.md` „Subscription Pricing“) — okno i web je čtou odtud (§10, §20). Texty EN + IS (§2).
 - [ ] **Návštěvník: jedna pozvánka na obrazovce Spá, štítky zámků až na klepnutí (owner 2026-10-19, DECISIONS 2026-10-19 (9)) → CODE-tune.**
   Štítky `lock_become_rs` u oblasti / hledání / záměru skryté; klepnutí na zamčenou pilulku (dnes `.pills-locked{pointer-events:none}` —
   musí klepnutí přijmout, pilulka se ale nevybere) ukáže štítek té skupiny a rozsvítí ho svíčkou C3 (`rozsvit`, runar-helper.js) a zároveň
