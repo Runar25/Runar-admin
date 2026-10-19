@@ -325,6 +325,8 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 .app-tab{flex:1 1 auto;min-width:0;text-align:center;font-family:'Cinzel',serif;font-size:0.68em;letter-spacing:0.8px;color:var(--muted);padding:12px 4px;cursor:pointer;border:none;border-bottom:2px solid transparent;background:transparent;white-space:nowrap;transition:all 0.2s;}
 .app-tab:hover{color:var(--white);}
 .app-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+/* 2026-10-19 (DECISIONS 2026-10-19 (8)): kreslená ikona záložky (_zalozka v runar-app.js) místo znaku — barva z textu (currentColor). */
+.atab-ikona{width:1.45em;height:1.45em;vertical-align:-0.42em;margin-right:5px;flex:none;}
 @media(max-width:400px){.app-tab{font-size:0.56em;letter-spacing:0.2px;}.app-tab-primary{font-size:0.62em;}}
 
 /* ── TREE OF LIFE PANE ── */

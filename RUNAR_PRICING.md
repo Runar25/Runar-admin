@@ -212,19 +212,18 @@ A subscriber pays ~65–70 ISK/reading-unit (see below) — ~3× cheaper than th
 
 ## Subscription Pricing
 
+**Ceny v ISK bydlí v configu** — `TIERS.standard` / `TIERS.premium` → `price_isk_month`, `price_isk_year` (`v2/runar-config.js`), od 2026-10-19.
+Čte je okno „Your journey with Rúnar“, web i kalkulačka návratnosti ve shrine. Do té doby stály tady v tabulce (ISK/month, ISK/year,
+Annual/month equiv.) a kalkulačka je parsovala odtud — přesun DECISIONS 2026-10-19 (7) bod 4. Měsíční limit čtení = `monthly_readings`.
+Přibližné EUR/USD (ze směnného kurzu níž, jen orientačně):
+
 | | Standard | Premium |
 |--|---------|---------|
-| ISK/month | 3.490 ISK | 4.900 ISK |
 | EUR/month | ~€24 | ~€34 |
 | USD/month | ~$28 | ~$40 |
-| ISK/year | 34.800 ISK | 49.000 ISK |
-| Annual/month equiv. | 2.900 ISK | 4.083 ISK |
 | Annual discount | ~17% | ~17% |
-| Rune limit | 50/month | 75/month |
 
-Annual logic: ~17% discount ("pay 10 months, get 12" logic).
-Standard annual saves ~7.080 ISK/year vs monthly. Premium annual saves ~11.800 ISK/year.
-
+Annual logic: ~17% discount ("pay 10 months, get 12" logic) — roční cena = 10 × měsíční.
 Exchange rates (June 2026): €1 = 143.6 ISK / $1 = 123.5 ISK. ISK prices are fixed.
 
 ### Standard value vs credits
