@@ -1221,6 +1221,9 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
    u Rune Seekera: funkce vidět celá, zamčená, pod ní řádek „opens with {tier}“) + výzva k registraci.
 
 ## Web therunekeeper.com (CODE-web, od 2026-10-12)
+- [ ] **Stránka „The journey with Rúnar“ + nákup na webu (owner 2026-10-19, DECISIONS 2026-10-19 (7)):** všechny účty s cenami
+  (měsíčně / ročně) a Rúnakort na therunekeeper.com; nákup (Rapyd / Shopify) jen tady, appka sem z prohlížeče odkazuje, z Google Play ne.
+  Po zaplacení zpět do appky se stejným účtem (e-mail). Ceny ze stejného zdroje jako okno v appce (config), ne opsané.
 - [x] ✅ *(CODE-web 2026-10-16: běží na https://therunekeeper.com — formulář → waitlist-join → Brevo, dvojí potvrzení; ověřeno
   naostro z webu: hláška, potvrzovací e-mail došel. Zbývá jen limit Brevo pro rozeslání při spuštění, viz níž.)* **Registrace před spuštěním** (owner 2026-10-12: *„ano sbíráme“*). Landing „coming soon“ sbírá e-maily; každý dostane jeden
   e-mail, až Rúnar půjde ven. Napřed plán ownerovi (kam se ukládá, dvojí potvrzení, text do zásad soukromí, smazání po spuštění).
@@ -1269,6 +1272,19 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   po ownerově ano.
   ➕ **Mapa dnešního stavu hotová (CODE-read 2026-10-19):** `docs/inbox/2026-10-19-pruchod-appkou.md` (krok × co se objeví × kdy ×
   smysl). Návrhy čekají na ownerovo potvrzení stylu.
+- [ ] **Zvýraznění svíčkou C3 + helper bez žluté bubliny (owner 2026-10-19, DECISIONS 2026-10-19 (7)) → CODE-tune.** Jeden systém
+  pro všechna místa, na která helper „?“ ukazuje (popisek „How a reading works“, runa ve čtení, Ask, „?“, další): tři nádechy za 4,5 s
+  (písmo zesvětlá do bledě zlaté + teplé světlo svíčky na kartě kolem), pak slabě doutná, dokud na místo uživatel neklepne. Velikost
+  ani poloha textu se nemění. `prefers-reduced-motion` = jedno krátké rozzáření. Žlutá bublina helperu pryč — klepnutí na „?“ rozsvítí
+  místo. Zavření okna „Where to start“ rozsvítí napřed popisek, pak „?“. Vzor (CSS) v ukázce z konverzace CODE-read 2026-10-19:
+  `@keyframes c3` + `h4` (halo radial-gradient rgba(255,170,40,.32)); dnešní `guideGlow` (2× 1,4 s) owner viděl jako „skoro nejde poznat“.
+- [ ] **Okno Upgrade v appce „Your journey with Rúnar“ (owner 2026-10-19 směr schválil, vzhled čeká na ownera) → CODE-tune.**
+  Ukázka CODE-read 2026-10-19: účty jako kameny na cestě (Gestur → Leitandi → Vegfarandi → Ferðalangur), „you are here“ svíčkou, přepínač
+  měsíčně / ročně (roční = cena za měsíc + „dva měsíce jsou dar“, bez přeškrtnutých cen), upgrade („Walk on as …“ → therunekeeper.com),
+  downgrade od konce období, správa / zrušení předplatného, u Leitandi Rúnakort. V appce z Google Play bez cen, tlačítek i odkazů na nákup
+  (consumption-only, DECISIONS 2026-10-19 (4)); jak appka pozná, že běží z Play: značka v `start_url` (neověřeno, navrhnout). Do plateb
+  u placených účtů jen „Coming soon“. Vstup: menu (místo TAKTU FERÐINA LENGRA) a rozbalovací okno se jménem. **Ceny předplatného do
+  configu** (dnes jen `RUNAR_PRICING.md` „Subscription Pricing“) — okno i web je čtou odtud (§10, §20). Texty EN + IS (§2).
 - [ ] **Vady z průchodu appkou (CODE-read 2026-10-19 → CODE-tune)** — detail a místa v kódu: `docs/inbox/2026-10-19-pruchod-appkou.md`
   „Vady“. Ověřené v kódu: okno se jménem se po „Continue without a name“ vrací při každém načtení profilu; první přihlášení zdraví
   „Good to see you again“; toast Yggdrasilu při každém přidání runy (až 9×); Rune Seeker bez čtení po DRAW ANOTHER / START OVER

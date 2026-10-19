@@ -11802,3 +11802,20 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Co:** (4) dvě upozornění e-mailem — 30 dní a týden před smazáním. (5) Účet s nevyčerpanými kredity nebo běžícím předplatným se nemaže,
   dokud kredity nevyčerpá nebo předplatné neskončí. **Proč:** smazáním by člověk přišel o to, co zaplatil.
 - Affected doc(s): `RUNAR_PRIVACY.md` („Retence + práva“), `RUNAR_BACKLOG.md` — v témže commitu.
+
+## 2026-10-19 (7) — Zvýraznění svíčkou (C3) pro helper; nákup na therunekeeper.com, v appce okno „Your journey with Rúnar“
+
+- **Rozhodl:** owner 2026-10-19 po ukázkách CODE-read (průchod appkou, BACKLOG „Uvítání a navedení“). Styl: *„to sedí! je důležité, abychom
+  na tomhle moodu jeli dál“* (pomalé, klidné, málo prvků, nové věci z toho, co už je, Rúnar ukazuje, nevnucuje). Žlutá bublina helperu:
+  *„vůbec se mi nelíbí … chtěl bych vidět rozzáření jako svíčka … nemělo by posouvat text“*; okno „Where to start“ *„by mělo ukázat
+  i na helper … už mu nemusíme žádné okno vnucovat“*; z variant zvýraznění *„C3“*. K nákupu: *„můžeme udělat něco jako pricing, the
+  journey with Rúnar … kde budou vypsané všechny účty s cenami“* → na návrh (nákup na webu, okno v appce) *„zní to rozumně. udělej to.“*
+- **Co:** (1) Všechna místa pod helperem se zvýrazňují jedním způsobem — svíčka C3: tři nádechy za 4,5 s, pak doutná do klepnutí; text
+  se nehýbe; bez animací jedno rozzáření. Žlutá bublina pryč. (2) Zavření „Where to start“ rozsvítí popisek „How a reading works“, pak „?“.
+  (3) Nákup účtů i Rúnakortu na therunekeeper.com (stránka „The journey with Rúnar“); appka má okno se všemi účty, z prohlížeče vede
+  na web, z Google Play nikam (consumption-only, 2026-10-19 (4)). (4) Ceny předplatného se přesunou do configu, okno i web je čtou odtud.
+- **Proč:** dnešní rozzáření (2× 1,4 s) si nikdo nevšimne; zvětšení by posunulo obsah. Doutnání je vidět, i když se člověk díval jinam,
+  a nebliká (WCAG 2.3.1: pod 3 záblesky za sekundu). Nákup na jednom místě: jedna pokladna, ceny jedním zdrojem (§20), funguje pro
+  prohlížeč, Google Play i budoucí App Store (jako Spotify / Netflix: kupuje se na webu, appka jen pozná zaplacené).
+- **Otevřené:** vzhled okna (ukázka čeká na ownera); texty EN + IS; jak appka pozná Google Play.
+- Affected doc(s): `RUNAR_BACKLOG.md` (Uvítání a navedení, Web therunekeeper.com) — v témže commitu.
