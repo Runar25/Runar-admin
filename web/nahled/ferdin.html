@@ -11,14 +11,17 @@
      na cestě), z appky jen pozadí a horní lišta (živý runar-reader.css: body::before, .topbar) a tokeny barev. Vlastní třídy mají
      předponu j-, ať se nepletou se třídami appky. Cesta mezi kameny je z kousků MEZI kameny — v3 kryla čáru krabičkou v barvě pozadí,
      která na přechodu pozadí appky byla vidět.
-     Značky účtů schválené (DECISIONS 2026-10-19 (8), docs/inbox/2026-10-19-symboly-uctu-a-zalozek.html): Visitor prázdný Blank,
-     Seeker plamen v Isa, Walker stezka v Othila, Wanderer hory s ptákem v Uruz; kámen z RUNE_SVGS, symbol centrovaný getBBox.
-     Na webu bez pohybu (owner schválil pohyb jen pro „you are here“ v appce).
-     Texty jen EN a pracovní z ukázky CODE-read; IS jednou sadou s oknem (§2). Výpis = tierFeatures(), TIERS, CARD_PACKS živě (§10, §20).
+     Značky účtů (DECISIONS 2026-10-19 (8)) a texty (UI_TEXT journey_*, IS sada CODE-read) bere z appky: kamenUctuSvg / kamenUctuVystred
+     v runar-utils.js (CODE-tune), bez pohybu (owner schválil pohyb jen pro „you are here“ v appce). Výpis = tierFeatures(), TIERS, CARD_PACKS.
+     Náhled načítá appku z pracovního stromu (../../v2/), ať je vidět hned; vydaná stránka ji načte z živé adresy jako landing.
+     Nová věta jen J_CARD (sekce karty; IS ověřena Greynirem a korpusem 2026-10-19). journey_web_note a druhá věta journey_card_note
+     jsou jen pro appku (CODE-read) — web je nepoužívá.
      Ceny předplatného z configu: TIERS.*.price_isk_month / price_isk_year (do 2026-10-19 tu byla dočasná kopie z RUNAR_PRICING). -->
-<link rel="stylesheet" href="https://runar25.github.io/Runar-admin/v2/fonts/fonts.css">
-<link rel="stylesheet" href="https://runar25.github.io/Runar-admin/v2/runar-reader.css">
+<link rel="stylesheet" href="../../v2/fonts/fonts.css">
+<link rel="stylesheet" href="../../v2/runar-reader.css">
 <style>
+.j-lang button{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:3px;background:none;border:none;color:var(--gold);opacity:.5;cursor:pointer;margin-left:14px}
+.j-lang button.on{opacity:.9}
 .j-page{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:44px 40px 60px}
 .j-eyebrow{font-family:'Cinzel',serif;font-size:14px;letter-spacing:5px;color:var(--gold);text-align:center;margin-bottom:12px}
 .j-sub{font-style:italic;color:var(--muted);font-size:22px;text-align:center;max-width:32em;margin:0 auto 30px;line-height:1.5}
@@ -62,86 +65,74 @@
 <body>
 <header class="topbar"><div class="topbar-inner">
   <a class="brand" href="../site/">AGNDOFA</a>
+  <span class="j-lang"><button data-l="is">IS</button><button data-l="en">EN</button></span>
 </div></header>
 <div class="j-page">
-  <div class="j-eyebrow">YOUR JOURNEY WITH RÚNAR</div>
-  <p class="j-sub">Each step holds more of Rúnar. Walk as far as you wish, and step back whenever you like.</p>
-  <div class="j-per" id="per"><span data-p="m" class="on">MONTHLY</span><span data-p="y">YEARLY</span></div>
+  <div class="j-eyebrow" data-k="journey_title"></div>
+  <p class="j-sub" data-k="journey_sub"></p>
+  <div class="j-per" id="per"><span data-p="m" class="on" data-k="journey_monthly"></span><span data-p="y" data-k="journey_yearly"></span></div>
   <div class="j-path" id="path"></div>
   <section class="j-card">
     <h2 id="card-h"></h2>
-    <p>No subscription and no expiry. For yourself, or as a gift.</p>
+    <p id="card-p"></p>
     <div class="j-packs" id="packs"></div>
-    <div class="j-note" style="margin-top:14px">Coming soon.</div>
+    <div class="j-note" style="margin-top:14px" data-k="journey_soon"></div>
   </section>
-  <div class="j-foot">Prices in Icelandic krónur. Cancel any time.</div>
+  <div class="j-foot" data-k="journey_foot"></div>
 </div>
 
-<script src="https://runar25.github.io/Runar-admin/v2/runar-config.js"></script>
-<script src="https://runar25.github.io/Runar-admin/v2/runar-runes.js"></script>
-<script src="https://runar25.github.io/Runar-admin/v2/runar-translations.js"></script>
-<script src="https://runar25.github.io/Runar-admin/v2/runar-svgs.js"></script>
-<script src="https://runar25.github.io/Runar-admin/v2/runar-utils.js"></script>
+<script src="../../v2/runar-config.js"></script>
+<script src="../../v2/runar-runes.js"></script>
+<script src="../../v2/runar-translations.js"></script>
+<script src="../../v2/runar-svgs.js"></script>
+<script src="../../v2/runar-utils.js"></script>
 <script>
-var LANG = 'en', P = 'm';
-// Návštěvník nemá v tierFeatures() žádný řádek (nemá účet) → pracovní věta z ukázky okna CODE-read
-var VISITOR_EN = ['The Runes Collection and your life rune.'];
-// Značky účtů — schválené tvary a velikosti z docs/inbox/2026-10-19-symboly-uctu-a-zalozek.html (CODE-read), staticky.
-// Až je CODE-tune dá do appky jako data, bere se odtamtud a tady zmizí (§20).
-var FLAME = '<path d="M20 36C12 36 8.5 30 10.5 24c1.6-4.6 5.6-6.4 6.2-12 3.4 2.4 4.6 6 3.8 9.4 2.6-1.6 3.6-4.8 3-8 5.6 4.4 7.6 11 5.6 16.6C27.6 33.6 24.4 36 20 36z"/><path d="M20 33c-3.2 0-4.8-2.6-4-5.2.7-2 2.6-2.8 2.9-5.2 2.4 1.6 3.8 3.8 3.4 6.4-.3 2.2-1 4-2.3 4z"/>';
-var MOUNT = '<path d="M2 30 12 16l5 6 6-9 15 17"/><path d="M21 7q1.6-1.8 3.2 0q1.6-1.8 3.2 0"/>';
-var TB = { x0: 8, x1: 28, A: 5.2, k: 2.1, w: 3.4, f: 2.4 };
-function trail() { var L = [], R = []; for (var i = 0; i <= 56; i++) { var t = i / 56; var y = 6 + 32 * Math.pow(1 - t, TB.k); var A = TB.A * Math.pow(1 - t, 1.2) + 0.4; var x = TB.x0 + (TB.x1 - TB.x0) * Math.pow(t, 0.8) + A * Math.sin(t * TB.f * Math.PI); var w = TB.w * Math.pow(1 - t, 1.3) + 0.45; L.push([x - w / 2, y]); R.push([x + w / 2, y]); } var p = L.concat(R.reverse()); return 'M' + p.map(function (q) { return q[0].toFixed(2) + ' ' + q[1].toFixed(2); }).join(' L') + 'Z'; }
-var ZNACKA = {
-  free_trial:  { kamen: 'Blank',  sym: '', vel: 0 },
-  rune_seeker: { kamen: 'Isa',    sym: FLAME, vel: 7.2 },
-  standard:    { kamen: 'Othila', sym: '<path d="' + trail() + '"/>', vel: 9.6, vypln: true },
-  premium:     { kamen: 'Uruz',   sym: MOUNT, vel: 8.6 }
-};
-function stoneSvg(id) {
-  var u = ZNACKA[id], sd = RUNE_SVGS[u.kamen], kamen = sd.paths.match(/<path[^>]*>/)[0];
-  var g = u.sym ? '<g class="sym" ' + (u.vypln ? 'fill="#D6A85C" stroke="none"' : 'fill="none" stroke="#D6A85C" stroke-linecap="round" stroke-linejoin="round"') + '>' + u.sym + '</g>' : '';
-  return '<svg viewBox="' + sd.vb + '" data-id="' + id + '">' + kamen + g + '</svg>';
-}
-// symbol na střed skutečného obrysu kamene (getBBox jde až po vložení do stránky)
-function fitSymbols() {
-  document.querySelectorAll('.j-stone svg').forEach(function (svg) {
-    var u = ZNACKA[svg.getAttribute('data-id')], sg = svg.querySelector('.sym');
-    if (!sg) return;
-    var kb = svg.firstElementChild.getBBox(), cx = kb.x + kb.width / 2, cy = kb.y + kb.height / 2, b = sg.getBBox(), s = u.vel / Math.max(b.width, b.height);
-    sg.setAttribute('transform', 'translate(' + (cx - s * (b.x + b.width / 2)).toFixed(3) + ' ' + (cy - s * (b.y + b.height / 2)).toFixed(3) + ') scale(' + s.toFixed(4) + ')');
-    if (!u.vypln) sg.setAttribute('stroke-width', (0.38 / s).toFixed(2));
-  });
-}
+// Jediná nová věta stránky (sekce karty); IS ověřena 2026-10-19: Greynir OK, „rennur aldrei út“ 37×, „kaupa handa“ 2957×, „gefðu það“ 43×.
+var J_CARD = { en: 'No subscription, and the card never expires. Buy it for yourself, or give it to someone.',
+               is: 'Engin áskrift og kortið rennur aldrei út. Kauptu það handa þér eða gefðu það öðrum.' };
+var LANG = 'is', P = 'm';
+var lang = LANG;   // pro t()/tp() z runar-utils.js
 var ORDER = ['free_trial', 'rune_seeker', 'standard', 'premium'];
-function kr(x) { return x.toLocaleString('de-DE') + ' kr'; }   // tečka na tisíce jako v ukázce okna (1.490 kr)
+function cislo(x) { return x.toLocaleString('de-DE'); }   // tečka na tisíce (1.490), jednotku nese text UI_TEXT
+function jmeno(T) { return (LANG === 'is' ? T.label_is : T.label.replace(/^Rune\s+/, '')).toUpperCase(); }
 function draw() {
+  var U = UI_TEXT[LANG];
   document.getElementById('path').innerHTML = ORDER.map(function (id) {
-    var T = TIERS[id], pr = T.price_isk_month ? { m: T.price_isk_month, y: T.price_isk_year } : null, short = T.label.replace(/^Rune\s+/, '').toUpperCase();
-    var h = '<div class="j-st"><div class="j-stone">' + stoneSvg(id) + '</div><div class="j-nm">' + short + '</div>';
-    if (pr) {
-      h += P === 'm' ? '<div class="j-pr">' + kr(pr.m) + ' <small>a month</small></div><div class="j-gift"></div>'
-                     : '<div class="j-pr">' + kr(Math.round(pr.y / 12)) + ' <small>a month</small></div><div class="j-gift">' + kr(pr.y) + ' a year. Two months are a gift.</div>';
+    var T = TIERS[id], m = T.price_isk_month, y = T.price_isk_year;
+    var h = '<div class="j-st"><div class="j-stone">' + kamenUctuSvg(id) + '</div><div class="j-nm">' + jmeno(T) + '</div>';
+    if (m) {
+      h += P === 'm' ? '<div class="j-pr">' + tp('journey_price_m', { price: cislo(m) }) + '</div><div class="j-gift"></div>'
+                     : '<div class="j-pr">' + tp('journey_price_y', { price: cislo(Math.round(y / 12)), year: cislo(y) }) + '</div><div class="j-gift">' + U.journey_gift + '</div>';
     } else {
-      var zdarma = { free_trial: 'Free', rune_seeker: 'Free to join' }[id] || '';
-      h += '<div class="j-pr"><small>' + zdarma + '</small></div><div class="j-gift"></div>';
+      // zdarma jen Visitor a Rune Seeker jmenovitě — placený účet bez načtené ceny nesmí ukázat „zdarma“ (owner 2026-10-19)
+      h += '<div class="j-pr"><small>' + ({ free_trial: U.journey_free, rune_seeker: U.journey_free_join }[id] || '') + '</small></div><div class="j-gift"></div>';
     }
-    var f = id === 'free_trial' ? VISITOR_EN : tierFeatures(id, LANG);
+    var f = id === 'free_trial' ? [U.journey_visitor_ft] : tierFeatures(id, LANG);
     h += '<ul class="j-ft">' + f.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>';
-    if (pr) h += '<span class="j-btn">WALK ON AS ' + short + '</span><div class="j-note">Coming soon.</div>';
-    else if (id === 'rune_seeker') h += '<span class="j-btn">BECOME A ' + T.label.toUpperCase() + '</span>';
+    if (m) h += '<span class="j-btn">' + tp('journey_walk_on', { tier: jmeno(T) }) + '</span><div class="j-note">' + U.journey_soon + '</div>';
     return h + '</div>';
   }).join('');
-  fitSymbols();
+  kamenUctuVystred(document.getElementById('path'));   // bez živého účtu = bez pohybu
 }
-document.getElementById('card-h').textContent = VOCAB.card.en.toUpperCase();
-document.getElementById('packs').innerHTML = CARD_PACKS.map(function (p) {
-  return '<div class="j-pk"><div class="n">' + cardPackName(p, LANG).toUpperCase() + '</div><div class="c">' + vn('cast', p.credits, LANG) + '</div><div class="p">' + kr(p.isk) + '</div></div>';
-}).join('');
+function render() {
+  lang = LANG;
+  document.documentElement.lang = LANG;
+  document.querySelectorAll('[data-k]').forEach(function (el) { el.textContent = UI_TEXT[LANG][el.getAttribute('data-k')] || ''; });
+  document.querySelectorAll('.j-lang button').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-l') === LANG); });
+  document.getElementById('card-h').textContent = vl('card', LANG).toUpperCase();
+  document.getElementById('card-p').textContent = J_CARD[LANG];
+  document.getElementById('packs').innerHTML = CARD_PACKS.map(function (p) {
+    return '<div class="j-pk"><div class="n">' + cardPackName(p, LANG).toUpperCase() + '</div><div class="c">' + vn('cast', p.credits, LANG) + '</div><div class="p">' + cislo(p.isk) + ' kr</div></div>';
+  }).join('');
+  draw();
+}
+document.querySelectorAll('.j-lang button').forEach(function (b) {
+  b.onclick = function () { LANG = b.getAttribute('data-l'); render(); };
+});
 document.querySelectorAll('#per span').forEach(function (s) {
   s.onclick = function () { P = s.dataset.p; document.querySelectorAll('#per span').forEach(function (x) { x.classList.toggle('on', x === s); }); draw(); };
 });
-draw();
+render();
 </script>
 </body>
 </html>
