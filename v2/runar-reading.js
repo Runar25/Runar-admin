@@ -722,7 +722,9 @@ async function readRune() {
     var _ygNow = new Date();
     var _ygM = _ygNow.getMonth() + 1;
     var _ygD = _ygNow.getDate();
-    if (!(_ygM === 12 && _ygD >= 14 && _ygD <= 28) && !isAdmin(currentUser.email)) {
+    // 2026-10-19 (vada 5 z průchodu appkou): hláška běžela při KAŽDÉ přidané runě — až 9× za výklad. Teď jednou za načtení stránky.
+    if (!(_ygM === 12 && _ygD >= 14 && _ygD <= 28) && !isAdmin(currentUser.email) && !window._ygToastUkazan) {
+      window._ygToastUkazan = true;
       showToast(t('yggdrasil_power_toast'));
     }
     if (_spreadCount(_spread9Runes) === _spreadN() && !readerRune) {
@@ -1191,7 +1193,14 @@ function drawAnother() {
   readerRune = null; readerTexts = {}; voiceGenerated = {};
   document.getElementById('reader-output').style.display = 'none';
   _visitorJoin(false);
-  if (currentUser && userTier === 'rune_seeker' && userFreeBalance <= 0 && userCredits <= 0) { updateAuthUI(); return; }
+  // 2026-10-19 (vada 6 z průchodu appkou): Rune Seeker bez čtení končil na prázdné obrazovce — návrat sem zbyl z června (df3a424), kdy
+  // místo formuláře stál panel „konec zkoušky“. Dnes vysvětlení a cestu k Rúnakortu ukazuje formulář (startReading → no_credits), takže
+  // bez čtení vede DRAW ANOTHER zpět na formulář s touž větou, ne k tahu, který by čtení stejně nedostal.
+  if (currentUser && lacksCredits((SPREAD_COSTS[_SPREAD_COST_KEY[_spreadMode] || 'single'] || {}).credits)) {
+    resetReader(); setSt('st-setup', _readingErrMsg('no_credits'));
+    _posunPodListu(document.getElementById('begin-btn'), false, 8);   // věta stojí u tlačítka; Start over by jinak skončil u fotky
+    return;
+  }
   document.getElementById('reader-rune-card').style.display = 'block';
   _posunPodListu(document.getElementById('reader-rune-card'), false, 8);   // táž vada jako po Begin: čtení nad mřížkou zmizelo (2026-10-13)
   document.querySelectorAll('#reader-grid .rb').forEach(b => b.classList.remove('on'));
@@ -1233,9 +1242,8 @@ function resetReader() {
   document.getElementById('reader-output').style.display = 'none';
   document.getElementById('reader-rune-card').style.display = 'none';
   _visitorJoin(false);
-  if (currentUser && userTier === 'rune_seeker' && userFreeBalance <= 0 && userCredits <= 0) {
-    updateAuthUI(); return;
-  }
+  // 2026-10-19 (vada 6): bez čtení se formulář dřív neukázal (návrat z června, viz drawAnother) — Start over končil prázdnou obrazovkou.
+  if (currentUser && userTier === 'rune_seeker' && userFreeBalance <= 0 && userCredits <= 0) updateAuthUI();
   document.getElementById('reader-setup').style.display = 'block';
   ['r-name','r-question'].forEach(id => {   // r-day/r-month/r-year v HTML nejsou (2026-10-09)
     const el = document.getElementById(id); if (el) el.value = '';
