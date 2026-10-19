@@ -1006,9 +1006,9 @@ var TAB_IKONY = {
 function _zalozka(tab) {
   var el = document.getElementById('atab-' + tab);
   if (!el || !TAB_IKONY[tab]) return;
+  var txt = String(t('atab_' + tab)).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   el.innerHTML = '<svg class="atab-ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"'
-    + ' stroke-linejoin="round" aria-hidden="true">' + TAB_IKONY[tab] + '</svg>';
-  el.appendChild(document.createTextNode(t('atab_' + tab)));
+    + ' stroke-linejoin="round" aria-hidden="true">' + TAB_IKONY[tab] + '</svg>' + txt;
 }
 
 // Journal gate, auth modal consent, journal re-render, buildPills
