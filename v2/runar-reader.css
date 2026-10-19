@@ -612,7 +612,11 @@ input:autofill{filter:none;}
 .pill{padding:6px 14px;border:1px solid var(--border);background:transparent;font-family:'Cormorant Garamond',serif;font-size:0.95em;font-style:italic;color:var(--muted);cursor:pointer;transition:all 0.2s;}
 .pill:hover{border-color:var(--border2);color:var(--white);}
 .pill.on{border-color:var(--gold);color:var(--gold);background:var(--gold2);}
-.pills-locked{opacity:0.35;pointer-events:none;}
+.pills-locked{opacity:0.35;}
+/* 2026-10-19 (DECISIONS 2026-10-19 (9)): zamčená pilulka návštěvníka přijme klepnutí (_zamekKlep ukáže štítek se svíčkou), ale nevypadá
+   jako volba — do té doby pointer-events:none a klepnutí mlčelo. Štítek zámku je skrytý, dokud na skupinu neklepne. */
+.pills-locked .pill{cursor:default;}
+.visitor-lock-hint.lock-skryty{display:none;}
 .pill.pill-locked{opacity:0.35;pointer-events:none;cursor:default;}
 /* 2026-10-16 (hlášení 972e2a7e + ca5fab4b, KUKY: „Area má 4 řádky a snížení na 3 nám pomůže“ — tlačítko čtení má být vidět na druhé
    obrazovce): volby ve formuláři užší — okraj 14 → 8 px, mezera 8 → 6 px. Na 393 px šířky Area 3 řádky místo 4 a „This reading is for“

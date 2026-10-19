@@ -1294,7 +1294,7 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   kalkulačka návratnosti a `verify_payback_pricing.js` je čtou odtud, tabulka v `RUNAR_PRICING.md` odkazuje.
 - [ ] **`RUNAR_PRICING.md` opisuje ceny ve výpočtech marží** (ř. ~232–263 „Standard value vs credits“, tabulka marží, a ~368 mix) — při změně
   ceny v configu se nepřepočítají samy. Přepsat na odkaz + výpočet, nebo nechat jen kalkulačku ve shrine (ta čte config). CODE-tune / owner.
-- [ ] **Návštěvník: jedna pozvánka na obrazovce Spá, štítky zámků až na klepnutí (owner 2026-10-19, DECISIONS 2026-10-19 (9)) → CODE-tune.**
+- [x] ✅ *(CODE-tune 2026-10-19: _zamekKlep + štítky <skupina>-lock v runar-app.js, SIGN IN v menu; ověřeno v náhledu jako návštěvník i přihlášený, smoke ㉼ ㊽)* **Návštěvník: jedna pozvánka na obrazovce Spá, štítky zámků až na klepnutí (owner 2026-10-19, DECISIONS 2026-10-19 (9)) → CODE-tune.**
   Štítky `lock_become_rs` u oblasti / hledání / záměru skryté; klepnutí na zamčenou pilulku (dnes `.pills-locked{pointer-events:none}` —
   musí klepnutí přijmout, pilulka se ale nevybere) ukáže štítek té skupiny a rozsvítí ho svíčkou C3 (`rozsvit`, runar-helper.js) a zároveň
   tlačítko GERAST LEITANDI v horním pruhu. K pruhu se neposouvá. Žádný nový text. Přístupnost: zamčené pilulky `aria-disabled` + popis

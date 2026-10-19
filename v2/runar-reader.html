@@ -965,6 +965,12 @@
   </div>
 
   <!-- ④ Sign out — logged-in only -->
+  <!-- 2026-10-19 (DECISIONS 2026-10-19 (9)): návštěvník má v menu přihlášení (dřív jen v horní liště); text sign_in_btn (updateSidePanel). -->
+  <div id="sp-signin" style="display:none;">
+    <div class="side-panel-section">
+      <button class="sp-item" id="sp-signin-btn" onclick="closeSidePanel();openAuthModal()">SIGN IN</button>
+    </div>
+  </div>
   <div id="sp-session" style="display:none;">
     <div class="side-panel-section">
       <button class="sp-item" id="sp-signout-btn" onclick="handleAuthBtn();closeSidePanel()">SIGN OUT</button>
