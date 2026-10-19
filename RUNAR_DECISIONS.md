@@ -11835,3 +11835,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   proto žádné hvězdy, koruny ani počty čárek. Kámen je jazyk appky (§5 „kámen pro runy, které držíš“). Pohyb jen u jednoho kamene, jinak
   přestane ukazovat, kde člověk stojí.
 - Affected doc(s): `RUNAR_BACKLOG.md` (okno Upgrade, ikony záložek) — v témže commitu.
+
+## 2026-10-19 (9) — Návštěvník: na obrazovce Spá jen horní pozvánka, štítky zámků až na klepnutí; menu bez „Your account“, s přihlášením
+
+- **Rozhodl:** owner 2026-10-19 nad ukázkou CODE-read (dnes × návrh): *„7. ano, schvaluju. předej to tune.“*
+- **Co:** horní pruh s GERAST LEITANDI zůstává jako jediná viditelná pozvánka. Tři štítky „Become a Rune Seeker to unveil“ u polí formuláře
+  se ukážou až po klepnutí na zamčené pole — štítek té skupiny se rozzáří svíčkou C3 a rozsvítí se i tlačítko v pruhu. Menu návštěvníka
+  bez nadpisu „Your account“ a s položkou přihlášení. Ostatní obrazovky (Kolekce, Deník, Životní runa, karta po tahu) mají po jedné pozvánce
+  a zůstávají.
+- **Proč:** průchod appkou (`docs/inbox/2026-10-19-pruchod-appkou.md`) našel na obrazovce Spá čtyři pozvánky naráz a zamčené pole, které na
+  klepnutí nereaguje vůbec — návštěvník nepozná proč. Styl potvrzený týž den (2026-10-19 (7)): Rúnar ukazuje, nevnucuje; nápověda na
+  vyžádání (NN/g, kontextová nápověda). Svíčka je týž jazyk jako helper „?“.
+- Affected doc(s): `RUNAR_BACKLOG.md` (Uvítání a navedení) — v témže commitu.

@@ -1294,6 +1294,12 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   (consumption-only, DECISIONS 2026-10-19 (4)); jak appka pozná, že běží z Play: značka v `start_url` (neověřeno, navrhnout). Do plateb
   u placených účtů jen „Coming soon“. Vstup: menu (místo TAKTU FERÐINA LENGRA) a rozbalovací okno se jménem. **Ceny předplatného do
   configu** (dnes jen `RUNAR_PRICING.md` „Subscription Pricing“) — okno i web je čtou odtud (§10, §20). Texty EN + IS (§2).
+- [ ] **Návštěvník: jedna pozvánka na obrazovce Spá, štítky zámků až na klepnutí (owner 2026-10-19, DECISIONS 2026-10-19 (9)) → CODE-tune.**
+  Štítky `lock_become_rs` u oblasti / hledání / záměru skryté; klepnutí na zamčenou pilulku (dnes `.pills-locked{pointer-events:none}` —
+  musí klepnutí přijmout, pilulka se ale nevybere) ukáže štítek té skupiny a rozsvítí ho svíčkou C3 (`rozsvit`, runar-helper.js) a zároveň
+  tlačítko GERAST LEITANDI v horním pruhu. K pruhu se neposouvá. Žádný nový text. Přístupnost: zamčené pilulky `aria-disabled` + popis
+  ze štítku. Horní pruh zůstává. Ukázka v konverzaci CODE-read 2026-10-19. **Menu návštěvníka:** nadpis „YOUR ACCOUNT / REIKNINGUR ÞINN“
+  návštěvník nevidí (účet nemá) a v menu přibude přihlášení (`sign_in_btn` → `openAuthModal`).
 - [ ] **Vady z průchodu appkou (CODE-read 2026-10-19 → CODE-tune)** — detail a místa v kódu: `docs/inbox/2026-10-19-pruchod-appkou.md`
   „Vady“. ✅ *(CODE-tune 2026-10-19, owner „6. ano oprav je“, 29dd249 + 67ca401)* vady 1, 4, 5, 6: okno se jménem se nevrací · nový
   účet bez „again“ · toast Yggdrasilu jednou · Rune Seeker bez čtení má po DRAW ANOTHER / START OVER formulář s větou o Rúnakortu.
