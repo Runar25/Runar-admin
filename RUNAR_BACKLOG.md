@@ -1271,7 +1271,8 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   po ownerově ano.
   ➕ **Mapa dnešního stavu hotová (CODE-read 2026-10-19):** `docs/inbox/2026-10-19-pruchod-appkou.md` (krok × co se objeví × kdy ×
   smysl). Návrhy čekají na ownerovo potvrzení stylu.
-- [ ] **Zvýraznění svíčkou C3 + helper bez žluté bubliny (owner 2026-10-19, DECISIONS 2026-10-19 (7)) → CODE-tune.** Jeden systém
+- [x] ✅ *(CODE-tune 2026-10-19: rozsvit / zhasni v runar-helper.js, CSS .svice v runar-reader.css; ověřeno v náhledu — text se nehne o 0 px,
+  3 nádechy a doutnání, zhasne klepnutím, „?“ nahoře dojede k místu, po „Where to start“ popisek a pak „?“)* **Zvýraznění svíčkou C3 + helper bez žluté bubliny (owner 2026-10-19, DECISIONS 2026-10-19 (7)) → CODE-tune.** Jeden systém
   pro všechna místa, na která helper „?“ ukazuje (popisek „How a reading works“, runa ve čtení, Ask, „?“, další): tři nádechy za 4,5 s
   (písmo zesvětlá do bledě zlaté + teplé světlo svíčky na kartě kolem), pak slabě doutná, dokud na místo uživatel neklepne. Velikost
   ani poloha textu se nemění. `prefers-reduced-motion` = jedno krátké rozzáření. Žlutá bublina helperu pryč — klepnutí na „?“ rozsvítí

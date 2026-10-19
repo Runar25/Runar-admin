@@ -355,7 +355,6 @@ const UI_TEXT = {
     motto_paths:        'Rúnar does not tell you what to do. He points to what is possible.',
     // Helper ? (runar-helper.js) — report #2, KUKY 2026-09-21: zviditelnit glyf-tap a Ask ("veci ktere nejdou na prvni pohled videt").
     helper_btn:         'Help with the reading',
-    helper_title:       'GOOD TO KNOW',
     helper_guide:       'Tap here — it shows how a reading works.',
     helper_glyph:       'Tap the rune — it tells its name and meaning.',
     helper_ask:         'Tap here — suggested questions open.',
@@ -894,7 +893,6 @@ const UI_TEXT = {
     motto_mirror:       'Myndin er spegill. Það sem þú leitar að, finnur þú í honum.',
     motto_paths:        'Rúnar segir þér ekki hvað þú átt að gera. Hann bendir á möguleika.',
     helper_btn:         'Hjálp við lesturinn',
-    helper_title:       'GOTT AÐ VITA',
     helper_guide:       'Smelltu hér til að sjá hvernig lestur verður til.',
     helper_glyph:       'Snertu rúnina — hún segir nafn sitt og merkingu.',
     helper_ask:         'Smelltu hér, þá opnast tillögur að spurningum.',
