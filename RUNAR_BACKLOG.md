@@ -1285,11 +1285,10 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   u placených účtů jen „Coming soon“. Vstup: menu (místo TAKTU FERÐINA LENGRA) a rozbalovací okno se jménem. **Ceny předplatného do
   configu** (dnes jen `RUNAR_PRICING.md` „Subscription Pricing“) — okno i web je čtou odtud (§10, §20). Texty EN + IS (§2).
 - [ ] **Vady z průchodu appkou (CODE-read 2026-10-19 → CODE-tune)** — detail a místa v kódu: `docs/inbox/2026-10-19-pruchod-appkou.md`
-  „Vady“. Ověřené v kódu: okno se jménem se po „Continue without a name“ vrací při každém načtení profilu; první přihlášení zdraví
-  „Good to see you again“; toast Yggdrasilu při každém přidání runy (až 9×); Rune Seeker bez čtení po DRAW ANOTHER / START OVER
-  bez formuláře. Jen z kódu (ověřit v prohlížeči): souhlas testera se vrací stejně; okno se jménem a „Where to start“ naráz; závod
-  `upsertProfile` × `fetchUserProfile` u nového účtu („0 spár eftir“). Drobnosti a mrtvé prvky tamtéž, bod 8. Opravy chování
-  (okno se jménem, pozdrav, toast) jsou malé; co mění, co uživatel vidí, napřed ownerovi (§32).
+  „Vady“. ✅ *(CODE-tune 2026-10-19, owner „6. ano oprav je“, 29dd249 + 67ca401)* vady 1, 4, 5, 6: okno se jménem se nevrací · nový
+  účet bez „again“ · toast Yggdrasilu jednou · Rune Seeker bez čtení má po DRAW ANOTHER / START OVER formulář s větou o Rúnakortu.
+  **Zbývá** (jen z kódu, ověřit v prohlížeči): 2 souhlas testera se vrací stejně · 3 okno se jménem a „Where to start“ naráz ·
+  7 závod `upsertProfile` × `fetchUserProfile` u nového účtu („0 spár eftir“) · 8 drobnosti a mrtvé prvky.
 - [ ] **„free to join“ → „{onboarding} when you join“** ve `vcn_text` a `journal_gate_txt` — zdroj je `TIER_LIMITS.rune_seeker.onboarding_label_*`
   (jako `visitor_join_note`), ne `free_trial` (Cowork ukázal na `free_trial`, tam je `onboarding` jen historický).
 - [x] ✖ **Kontakt pro Visitora: mailto vs okno** — owner 2026-10-19 „12. e-mail“: Visitor má dál odkaz na e-mail (mailto, rozhodnutí
