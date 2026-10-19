@@ -1712,7 +1712,8 @@ function _journeyProstredi() {
   if (src === 'play') return 'play';
   return (typeof JOURNEY_URL === 'string' && JOURNEY_URL) ? 'web' : 'soon';
 }
-function _jkr(n) { return Number(n).toLocaleString('de-DE'); }   // tečka na tisíce: 3.490 (islandský zápis, i v EN jako na webu)
+// Tečka na tisíce: 3.490 (islandský zápis, i v EN jako na webu). Ručně, ne toLocaleString — prohlížeč bez dat jazyka by dal jiný zápis (smoke ㊻).
+function _jkr(n) { return String(Math.round(Number(n))).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
 function _jesc(x) { return String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 function _journeyObdobi(p) { _journeyP = p === 'y' ? 'y' : 'm'; _journeyPaint(); }
 function _journeyPaint() {
