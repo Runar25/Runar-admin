@@ -147,6 +147,8 @@ const UI_TEXT = {
     // priznaku reagovat nema: komentoval by tim necí telo, coz mu _noColdRead
     // a zakaz rad zakazuji (rozhodnuto s ownerem 2026-08-16). Tohle mluvi APPKA.
     disclaimer:       'Rúnar offers a reading to reflect on, not professional advice.',
+    // 2026-10-19 (owner „13. pod BEGIN THE READING“, text CODE-read): uživatel ví, že mluví s AI (EU AI Act čl. 50 od 2. 8. 2026).
+    ai_note:          'Rúnar is an AI. The runes are old; his words are made new each time.',
     opt:              '(OPTIONAL)',
     begin_btn:        'BEGIN THE READING',
     draw_lbl:         'ᚠ DRAW YOUR RUNE',
@@ -688,6 +690,8 @@ const UI_TEXT = {
     // Vymysleno islandsky, ne prelozeno (§2). Overeno: 'til umhugsunar' 10432 vyskytu,
     // 'faglega ráðgjöf' 626 (Risamalheild 2000-2021); GreynirCorrect 0 priznaku.
     disclaimer:       'Rúnar býður lestur til umhugsunar, ekki faglega ráðgjöf.',
+    // 2026-10-19: viz EN. Greynir bez nálezu; korpus „er gervigreind“ 78×, „eru fornar“ 63×, „verða til ný“ 197×, „orð hans verða“ 14×.
+    ai_note:          'Rúnar er gervigreind. Rúnirnar eru fornar en orð hans verða til ný í hvert sinn.',
     opt:              '(VALKVÆTT)',
     begin_btn:        'HEFJA LESTURINN',
     draw_lbl:         'ᚠ DRAGÐU RÚNINA ÞÍNA',

@@ -11729,3 +11729,31 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   (vazebná runa AGNDOFA, dodá owner), IS verze, spadávka pro tiskárnu, originál fotky Rúnara (Supabase `runar-images/Runar_portrait.png`).
   Generátor stojí nad kopiemi a vlastním `fonts.css` — má-li se pouštět znovu (IS, tiskárna), patří do repa nad `v2/` (BACKLOG).
 - Affected doc(s): `RUNAR_BACKLOG.md` (Karty run + Účty stejně) — v témže commitu.
+
+## 2026-10-19 (1) — Visitor: UPGRADE YOUR JOURNEY rozbalené; „Rúnar is an AI“ pod BEGIN THE READING; Visitor dál e-mailem
+- **Owner** (na body z kontroly Coworkových handoffů 2026-10-18): *„10. ano“* · *„12. e-mail“* · *„13. pod BEGIN THE READING“*.
+- **Co:** (10) návštěvník má v menu UPGRADE YOUR JOURNEY rozbalené hned; klepnutí zavře i otevře jako u všech, ruční volba platí do změny
+  přihlášení a přežije přepnutí jazyka (`_applyHigherPath`, `runar-app.js`). (12) Visitor má dál odkaz na e-mail — rozhodnutí 2026-10-15
+  platí, veřejný formulář se nestaví. (13) Pod tlačítkem čtení (pro všechny, i pod DRAW A RUNE návštěvníka) drobná věta `ai_note`:
+  „Rúnar is an AI. The runes are old; his words are made new each time.“ / „Rúnar er gervigreind. Rúnirnar eru fornar en orð hans verða
+  til ný í hvert sinn.“ (text CODE-read; Greynir bez nálezu, korpus „er gervigreind“ 78×, „eru fornar“ 63×, „verða til ný“ 197×).
+  Proč: EU AI Act čl. 50 od 2. 8. 2026 — do té doby to appka říkala jen v souhlasu u otázky, v nápovědě a v zásadách.
+- **Ověřeno v prohlížeči (náhled, návštěvník):** nabídka otevřená, klepnutí zavře, přepnutí jazyka ji nechá zavřenou, přihlášený ji má
+  zavřenou; věta pod tlačítkem v EN i IS, barva `--muted`.
+- **Bod 11 (uvítání a navedení Visitora a nového Rune Seekera)** — rešerše a návrh pro ownera; položka v BACKLOGu.
+- Affected doc(s): `RUNAR_BACKLOG.md` (Účty stejně, Krize v otázce) — v témže commitu.
+
+## 2026-10-19 (2) — Aktualizace GreynirCorrect: hlavní verze ručně, návrat uklidí přitažené balíčky, výsledek do hlídání provozu
+- **Co se stalo:** týdenní úloha 2026-10-19 04:30 povýšila `islenska` 1.5.0 → 2.1.0, ta přitáhla nový balíček `islenska-data` 5.0.0, samotest
+  neprošel a návrat ho nechal ležet — nástroj zůstal rozbitý („samotest po vrácení: FAIL“). Věděl to jen log na PC; kontroly islandštiny
+  (§2 bod 2) by do příští ruční kontroly tiše nefungovaly. Zjištěno CODE-tune při ověřování věty `ai_note`.
+- **Oprava prostředí:** `islenska-data` pryč, `islenska` 1.5.0 zpět; samotest OK. Pak skutečná aktualizace novou logikou: tokenizer 3.7.0,
+  icegrams 2.1.0, samotest prošel, `islenska` 2.1.0 ponechána „ručně“.
+- **Oprava nástroje (`is-greynir.py --aktualizace`):** nová HLAVNÍ verze se nebere sama (jen řádek v logu); instaluje přesné verze místo
+  `--upgrade` (ten s balíčkem povýší i závislost); návrat odinstaluje, co aktualizace nově přitáhla, a předchozí verze vrátí přes sebe.
+  Každý výsledek jde do `ops_events` kind `greynir_update` → registr `BEHY` (lhůta 8 dní): selhání nebo neozvání = e-mail (owner 2026-10-18
+  „cokoliv, co je třeba neviditelné, ale je dobré vidět, že to proběhlo, zapisovat emailem“). Ověřeno: zápis v produkci po běhu 06:49.
+- **Ranní souhrn:** úlohy z `BEHY` mají vlastní řádek „Checks“ (restore test, Greynir update) — den předtím jela zkouška obnovy na řádku
+  zálohy, aby e-mail nenarostl; s Greynirem tam nepatří. E-mail tím má o řádek víc (meze ve smoke ㊈: klidný den ≤ 5, čísla ≤ 7).
+  Smoke ㊈ nově hlídá, že zdroj každé úlohy z `BEHY` existuje a obsahuje její kind (útok: přejmenovaný kind → FAIL).
+- Affected doc(s): žádný (pravidlo BEHY stojí v CLAUDE.md §30 od 2026-10-18 (2), registr je v kódu).

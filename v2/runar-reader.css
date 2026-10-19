@@ -718,6 +718,8 @@ input:autofill{filter:none;}
 .q-consent{display:flex;align-items:flex-start;gap:10px;margin-top:10px;cursor:pointer;}
 .q-consent input{accent-color:var(--gold);width:16px;height:16px;margin:4px 0 0;flex-shrink:0;cursor:pointer;}
 .q-consent .note{margin-bottom:0;}
+/* 2026-10-19: „Rúnar is an AI…“ pod BEGIN THE READING — drobně a klidně, barva --muted jako ostatní poznámky (ne --dim, §5). */
+.ai-note{text-align:center;font-size:0.8em;margin:10px 0 0;line-height:1.5;}
 /* 2026-10-06 výběr obrazu pro admina — popisek jako .opus-toggle, výběry jako .journal-filter-select (existující vzhled) */
 .img-pin{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:12px;}
 .img-pin-lbl{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:1.5px;color:var(--muted);}

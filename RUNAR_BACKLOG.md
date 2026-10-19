@@ -829,7 +829,8 @@ Nález 2026-08-16: otázka s příznaky infarktu dostala běžné čtení o sbě
 - [x] **Owner rozhodl 2026-10-16** (svým testem, hlášení 59c64907 → DECISIONS 2026-10-16 (1)): krizová odpověď místo čtení ne, Rúnar
   zůstává v roli a dělá výklad, čtení se platí („nejsme poradna“); model jmenuje 112 místo čísel z jiných zemí (v5.09). Kontrola
   v `claude-proxy` (návrh výš) tím nemá zadání.
-- [ ] **Zbývá — pro ownera, část pro právníka:** upozornění „Rúnar je AI“ v rozhraní (EU AI Act čl. 50 od 2. 8. 2026)? · věk 13+
+- [ ] **Zbývá — pro ownera, část pro právníka:** ~~upozornění „Rúnar je AI“ v rozhraní~~ ✅ 2026-10-19 pod BEGIN THE READING (owner
+  „13.“, DECISIONS 2026-10-19 (1); zda to EU AI Act čl. 50 stačí, je otázka pro právníka) · věk 13+
   proti pravidlům Anthropicu pro nezletilé? · oznamovací povinnost při zneužívání dítěte (islandský zákon o ochraně dětí)? ·
   placení za čtení s otázkou na sebevraždu — owner: *„Nebo je to protizákonné?“* (rešerše 2026-10-15 to neřešila)?
 - [ ] **Krize v poli s otázkou (single i spready) 112 nedostane** (CODE-read 2026-10-16, ownerův test Raidho EN): `qBranch` „Let <runa>
@@ -1237,16 +1238,19 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
 ### Účty vypadají a ovládají se stejně — HANDOFF66 (owner: rozdíl jen tam, kde ho chce funkce)
 - [ ] **CODE-read: matice stav × plocha** (Visitor · Rune Seeker · Standard · Premium/tester · admin × menu, formulář, spready, Ask, hlas,
   Kolekce, Životní runa, okna, toasty, ⚑ a „?“) — z kódu; Standard v DB nemá nikdo (2026-10-18: 4× rune_seeker, 1× premium).
-- [ ] **Visitor: UPGRADE YOUR JOURNEY rozbalené ve výchozím stavu** (`sp-path-body`, `toggleHigherPath` v `runar-app.js`); ovládání stejné.
-  Ownerova slova jen z handoffu (Cowork přepis v cloudu) → potvrdit s ownerem, než se staví.
-- [ ] **První věta Visitorova výpisu neodpovídá appce** (`TIER_LIMITS.free_trial.panel_props`): „The Runes Collection and your life rune are
-  free.“ — Visitor má 5 run z 25 (`VISITOR_RUNES`) a životní runu jen zjistí, číst ji může po přihlášení. ⚠️ Větu owner schválil 2026-10-10
-  (komentář v configu) — Cowork to neuvedl; změna = nové rozhodnutí ownera. Coworkův IS návrh: Greynir bez gramatického nálezu, ale
-  „getur fundið hvaða“ 7× proti „fundið út hvaða“ 219× — přepsat islandsky, ne převzít.
+- [x] ✅ **Visitor: UPGRADE YOUR JOURNEY rozbalené ve výchozím stavu** — owner 2026-10-19 „10. ano“; postaveno týž den (`_applyHigherPath`
+  v `runar-app.js`, DECISIONS 2026-10-19 (1)).
+- [ ] **Uvítání a navedení: Visitor při návštěvě, nový Rune Seeker po první registraci** (owner 2026-10-19 bod 11, místo přepisu první věty
+  Visitorova výpisu: *„všechno má omezené, já bych si dokázal představit nějaké uvítací okno, welcome visitor … heslovitě, že může
+  prozkoumat, co mu appka nabízí, a po registraci si může nechat udělat od Rúnara čtení … totéž pro Rune Seekera … chce to uživatele
+  navést na správné používání appky. Je potřeba vymyslet jak! Zjisti, jak to dělat nejlépe.“*). Stavět z toho, co už je (Where to start,
+  How a reading works, „?“, nápovědy „+“, karta po tahu, výzva v Kolekci a Journalu); návrh předložit ownerovi. Opakování podle IP ne
+  bez rozboru — IP je osobní údaj a statická appka ji nevidí. Věta „The Runes Collection and your life rune are free.“ (schválená
+  2026-10-10) se řeší v rámci toho; Coworkův IS návrh („getur fundið hvaða“ 7× proti „fundið út hvaða“ 219×) nepřebírat.
 - [ ] **„free to join“ → „{onboarding} when you join“** ve `vcn_text` a `journal_gate_txt` — zdroj je `TIER_LIMITS.rune_seeker.onboarding_label_*`
   (jako `visitor_join_note`), ne `free_trial` (Cowork ukázal na `free_trial`, tam je `onboarding` jen historický).
-- [ ] **Kontakt pro Visitora: mailto vs okno** — mailto schválil owner 2026-10-15 („8. ano“, bod 5: adresu neznáme, veřejný formulář = spam);
-  „stejné pro všechny“ by chtělo veřejný vstup (pole e-mailu, limit, ochrana proti botům, zásady). Rozhodnutí ownera s čísly.
+- [x] ✖ **Kontakt pro Visitora: mailto vs okno** — owner 2026-10-19 „12. e-mail“: Visitor má dál odkaz na e-mail (mailto, rozhodnutí
+  2026-10-15 platí). Veřejný formulář se nestaví.
 - [ ] Ownerova diskuse D–H (uvítání Visitora v menu, statický „Rúnar's welcome“, vysvětlení v Journalu, blok jako „How a reading works“,
   jeden text o tom, co je zdarma) — owner: „ještě to doplníme“; nestavět.
 ### Karty run ke stažení — HANDOFF67, 68
