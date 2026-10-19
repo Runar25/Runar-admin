@@ -737,7 +737,13 @@ function updateSidePanel() {
   const accEl = document.getElementById('sp-account');
   if (!accEl) return;
   _updateInstallBtn();
+  // 2026-10-19 (DECISIONS 2026-10-19 (9)): návštěvník účet nemá → bez nadpisu „YOUR ACCOUNT“ (visibility, ať ✕ zůstane vpravo) a s přihlášením.
   setText('sp-tier-header', t('sp_account_title'));
+  const _hdr = document.getElementById('sp-tier-header');
+  if (_hdr) _hdr.style.visibility = currentUser ? '' : 'hidden';
+  setText('sp-signin-btn', t('sign_in_btn'));
+  const _spIn = document.getElementById('sp-signin');
+  if (_spIn) _spIn.style.display = currentUser ? 'none' : 'block';
   // Side panel navigation links — switch with language
   setText('sp-guide-link',   t('sp_guide_link'));
   setText('sp-higher-lbl',   t('sp_higher_path'));
@@ -953,21 +959,23 @@ function _updateAreaSeekLabels() {
   const albl = document.getElementById('area-lbl');
   const _isVisitor = !currentUser;
   const _isRSnoCredits = _volneCteniDalsi();
+  // 2026-10-19 (owner, DECISIONS 2026-10-19 (9)): návštěvník má na obrazovce Spá jen JEDNU viditelnou pozvánku (horní pruh); štítek zámku
+  // u skupiny je schovaný a ukáže se až po klepnutí na zamčenou pilulku (_zamekKlep). Id štítku = <skupina>-lock (čte i aria-describedby).
   const _lockHint = _isVisitor
-    ? ' <span class="visitor-lock-hint">' + tp('lock_become_rs', { tier: tierLabel('rune_seeker', lang) }) + '</span>'
+    ? function (k) { return ' <span class="visitor-lock-hint lock-skryty" id="' + k + '-lock">' + tp('lock_become_rs', { tier: tierLabel('rune_seeker', lang) }) + '</span>'; }
     : _isRSnoCredits
       // 2026-10-10: jméno karty z VOCAB (§15) — dřív natvrdo „Reading Gift Card“, jinde v appce „Rune Reading Card“
-      ? ' <span class="visitor-lock-hint">' + tp('lock_card_unveils', { card: vl('card', lang) }) + '</span>'
-      : '';
+      ? function () { return ' <span class="visitor-lock-hint">' + tp('lock_card_unveils', { card: vl('card', lang) }) + '</span>'; }
+      : function () { return ''; };
   const _optSpan = _isVisitor ? '' : ' <span class="opt">'+t('opt')+'</span>';
   // 2026-09-29 (report KUKY 11:32): „+“ za popiskem rozbalí jednu větu, co volba ve čtení dělá (toggleFormHint níž).
   const _tgl = function (k) { const box = document.getElementById(k + '-hint'); const open = !!(box && box.style.display !== 'none');
     return ' <button class="hint-tgl" type="button" aria-expanded="' + open + '" aria-controls="' + k + '-hint" onclick="toggleFormHint(\'' + k + '\')"></button>'; };
-  if (albl) albl.innerHTML = t('area_lbl') + _optSpan + _tgl('area') + _lockHint;
+  if (albl) albl.innerHTML = t('area_lbl') + _optSpan + _tgl('area') + _lockHint('area');
   const slbl = document.getElementById('seek-lbl');
-  if (slbl) slbl.innerHTML = t('seek_lbl') + _optSpan + _tgl('seek') + _lockHint;
+  if (slbl) slbl.innerHTML = t('seek_lbl') + _optSpan + _tgl('seek') + _lockHint('seek');
   const ilbl = document.getElementById('intention-lbl');
-  if (ilbl) ilbl.innerHTML = t('intention_lbl') + _optSpan + _tgl('intention') + _lockHint;
+  if (ilbl) ilbl.innerHTML = t('intention_lbl') + _optSpan + _tgl('intention') + _lockHint('intention');
   ['area', 'seek', 'intention', 'qpriv'].forEach(function (k) { setText(k + '-hint', t(k + '_hint')); });   // přepnutí jazyka přepíše i otevřenou nápovědu
   setText('q-consent-lbl', t('qconsent_lbl'));   // políčko souhlasu u otázky (krok 2, DECISIONS 2026-10-12 (7))
   const qlbl = document.getElementById('q-lbl');
@@ -1558,15 +1566,24 @@ function buildPills() {
   const _volne = _volneCteniDalsi(), _lim = TIER_LIMITS.rune_seeker;
   const _areaUnlocked = _volne ? _lim.free_reading_areas : undefined;
   const _seekUnlocked = _volne ? _lim.free_reading_seeks : undefined;
-  buildPillGroup('area-pills', AREAS[lang], 'area', _areaUnlocked);
-  buildPillGroup('seek-pills', SEEKS[lang], 'seek', _seekUnlocked);
-  buildPillGroup('intention-pills', INTENTIONS[lang] || INTENTIONS.en, 'intention');
+  buildPillGroup('area-pills', AREAS[lang], 'area', _areaUnlocked, _isVisitor);
+  buildPillGroup('seek-pills', SEEKS[lang], 'seek', _seekUnlocked, _isVisitor);
+  buildPillGroup('intention-pills', INTENTIONS[lang] || INTENTIONS.en, 'intention', undefined, _isVisitor);
   ['area-pills', 'seek-pills', 'intention-pills'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.toggle('pills-locked', _isVisitor);
   });
 }
-function buildPillGroup(containerId, items, type, unlockedCount) {
+// Klepnutí návštěvníka na zamčenou pilulku (2026-10-19, DECISIONS 2026-10-19 (9)): štítek té skupiny se ukáže a rozsvítí svíčkou (rozsvit,
+// runar-helper.js) a s ním tlačítko BECOME A RUNE SEEKER v horním pruhu. K pruhu se neposouvá — na mobilu může být mimo obraz, štítek pod
+// prstem informaci nese. Pilulka se nevybere.
+function _zamekKlep(type) {
+  const h = document.getElementById(type + '-lock');
+  if (h) { h.classList.remove('lock-skryty'); if (typeof window.rozsvit === 'function') window.rozsvit(h); }
+  const b = document.getElementById('tn-visitor-btn');
+  if (b && typeof window.rozsvit === 'function') window.rozsvit(b);
+}
+function buildPillGroup(containerId, items, type, unlockedCount, visitorLock) {
   const c = document.getElementById(containerId); if (!c) return;
   const current = type === 'area' ? readerUser.area
     : type === 'seek' ? readerUser.seeking
@@ -1577,7 +1594,11 @@ function buildPillGroup(containerId, items, type, unlockedCount) {
     const p = document.createElement('div');
     p.className = 'pill' + (label === current && !locked ? ' on' : '') + (locked ? ' pill-locked' : '');
     p.textContent = label;
-    if (!locked) {
+    if (visitorLock) {   // 2026-10-19: zamčená pro návštěvníka — klepnutí ukáže štítek, nevybere (dřív pointer-events:none, klepnutí mlčelo)
+      p.setAttribute('aria-disabled', 'true');
+      p.setAttribute('aria-describedby', type + '-lock');
+      p.onclick = function () { _zamekKlep(type); };
+    } else if (!locked) {
       p.onclick = () => {
         const isOn = p.classList.contains('on');
         c.querySelectorAll('.pill:not(.pill-locked)').forEach(x => x.classList.remove('on'));
