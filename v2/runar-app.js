@@ -1840,6 +1840,8 @@ window.addEventListener('DOMContentLoaded', async () => {
   userGender = localStorage.getItem('runar_gender') || 'hk';
   _updateGenderPills();
 
+  // 2026-10-19: QR Rúnakortu (#kort=…) → kód předvyplnit, nepřihlášenému napřed přihlášení (runar-auth.js _kortZAdresy)
+  if (typeof _kortZAdresy === 'function') _kortZAdresy();
   // 2026-10-09: návrat z Google s chybou (hook uzavřeného testu) → vysvětlit v modalu, ne mlčet (runar-auth.js)
   if (typeof _authRedirectError === 'function') _authRedirectError();
 
@@ -1872,6 +1874,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     updateAuthUI();
     if (currentUser) {
       closeAuthModal();
+      if (typeof _kortPredvypln === 'function') _kortPredvypln();   // kód z QR Rúnakortu čekal na přihlášení (2026-10-19)
       if (window.location.search.includes('code=')) {
         history.replaceState({}, document.title, window.location.pathname);
       }

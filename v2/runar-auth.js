@@ -369,7 +369,7 @@ function toggleRedeem() {
 async function redeemCode() {
   const input = document.getElementById('redeem-input');
   const code  = input?.value.trim().toUpperCase();
-  if (!code) { setSt('st-redeem', 'Enter a code.', 'err'); return; }
+  if (!code) { setSt('st-redeem', t('redeem_err_empty'), 'err'); return; }   // 2026-10-19: dřív natvrdo „Enter a code.“ i v IS (§10)
   if (!currentUser) { openAuthModal(); return; }
 
   const btn = document.getElementById('redeem-btn');
@@ -505,6 +505,32 @@ document.addEventListener('keydown', function (e) {
   if (e.target.id === 'auth-email') { e.preventDefault(); sendLoginCode(); }
   else if (e.target.id === 'auth-code') { e.preventDefault(); verifyLoginCode(); }
 });
+// QR na Rúnakortu (2026-10-19, CODE-web; DECISIONS 2026-10-19 (4) — karta s QR a kódem): QR vede na runar-reader.html#kort=<KÓD>.
+// Hash, ne ?code= — to je návrat z přihlášení Googlem (PKCE). Kód se jen PŘEDVYPLNÍ, uplatní ho člověk tlačítkem (žádné automatické
+// uplatnění z odkazu). Nepřihlášenému se napřed otevře přihlášení a kód počká v sessionStorage (přežije návrat z Googlu v témž panelu);
+// předvyplní se po přihlášení (_kortPredvypln z onAuthStateChange). Adresa se hned vyčistí — kód nemá zůstat v historii prohlížeče.
+var KORT_TVAR = /^[A-Z]{3,12}-[A-Z0-9]{4}-[A-Z0-9]{4}$/;
+function _kortZAdresy() {
+  var h = new URLSearchParams(String(window.location.hash || '').replace(/^#/, ''));
+  if (!h.has('kort')) return;
+  var kod = String(h.get('kort') || '').trim().toUpperCase();
+  history.replaceState({}, document.title, window.location.pathname + window.location.search);   // ?code= (Google) zůstává
+  if (!KORT_TVAR.test(kod)) return;
+  try { sessionStorage.setItem('runar_kort', kod); } catch (e) { window._runarKort = kod; }
+  _kortPredvypln();
+}
+function _kortPredvypln() {
+  var kod = null;
+  try { kod = sessionStorage.getItem('runar_kort'); } catch (e) { kod = window._runarKort || null; }
+  if (!kod) return;
+  if (!currentUser) { openAuthModal(); setSt('st-auth', t('redeem_err_signin')); return; }
+  try { sessionStorage.removeItem('runar_kort'); } catch (e) { window._runarKort = null; }
+  if (typeof showAppTab === 'function') showAppTab('reading');
+  var sec = document.getElementById('redeem-section'), inp = document.getElementById('redeem-input');
+  if (inp) inp.value = kod;
+  if (sec && sec.style.display === 'none') toggleRedeem();
+}
+
 // Návrat z Google s chybou (např. hook uzavřeného testu odmítl nový účet): Supabase vrací ?error=…&error_description=… (u implicit toku
 // v hash). Bez tohohle by člověk skončil na hlavní stránce bez vysvětlení. Volá se při startu (runar-app.js), adresa se vyčistí.
 function _authRedirectError() {
