@@ -11770,3 +11770,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   2026-10-18 („bez limitu pro nepřihlášené“) byl proto chybný a je v BACKLOGu opravený.
 - **Strop:** owner souhlasí s limitem; protože nepřihlášený psát nemůže, týká se už jen přihlášených (BACKLOG, CODE-tune).
 - Affected doc(s): `RUNAR_PRIVACY.md` („Retence + práva“), `RUNAR_BACKLOG.md` — v témže commitu.
+
+## 2026-10-19 (4) — Obchody: Android jako appka bez nákupu (Google 0 %), iPhone zatím PWA; Rúnakort digitálně jako karta, bez expirace
+
+- **Rozhodl:** owner 2026-10-19 na návrh CODE-web: *„3. budeme mít i více designů karty. teď máme černou a bílou, později můžou být
+  další. 4. ok. připravíme! 5. ano 6. zatím půjdeme s tím co jsi napsal, až nám bude něco chybět tak doplníme. 7. pro mě za mě může
+  použít i za pět let pokud budeme fungovat. 8. super. uděláme. … 11. souhlasím“*
+- **Obchody (navazuje na 2026-10-13 (3)):** Android = táž PWA v Google Play jako „consumption-only“ — v appce se nic nekupuje ani na nákup
+  neodkazuje → 0 % provize, jen registrace jednou. iPhone zatím jen PWA (přidat na plochu), App Store později. **Proč:** owner nechce
+  platit provize; Apple výjimku pro Rúnara nemá (rešerše v `RUNAR_PRICING.md`, „Platby v appkách z obchodů“).
+- **Rúnakort digitálně:** kupující nedostane holý kód, ale kartu, která vypadá jako fyzická (přední strana s runou, zadní s postupem,
+  QR a kódem) — k darování i vytištění. Vzhledy karty jsou data: teď černá a bílá, další přibudou. Fyzické karty se tisknou z PDF dávky.
+- **Sledování u kódu:** forma (digitální / fyzická), účel (pro sebe / dárek), kanál, dávka, balíček, číslo objednávky, cena a měna,
+  zdarma ano/ne, jazyk, vzhled. Co bude chybět, doplní se.
+- **Platnost:** karta nemá expiraci (kód platí, dokud Rúnar běží).
+- **Čeká:** automatické doručení po zaplacení — až owner rozhodne Shopify / Rapyd (BACKLOG).
+- Affected doc(s): `RUNAR_BACKLOG.md` — v témže commitu.
