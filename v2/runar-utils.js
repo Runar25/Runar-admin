@@ -1103,3 +1103,66 @@ function costLabel(u) {
   if (u && u.ms != null) p.push((u.ms / 1000).toFixed(1) + ' s');
   return p.join(' · ');
 }
+
+
+// ─── ZNAČKY ÚČTŮ (owner 2026-10-19, DECISIONS 2026-10-19 (8)) ───────────────────────────────────────────────────────────────────
+// Kámen z RUNE_SVGS (bez runy — první path je kámen) + symbol na středu jeho skutečného obrysu: Visitor prázdný Blank · Rune Seeker plamen
+// v Isa · Rune Walker stezka v Othila · Rune Wanderer hory s ptákem v Uruz. Symboly jsou zastávky na cestě, ne hodnosti (žádné hvězdy ani
+// koruny). Kresby CODE-read (docs/inbox/2026-10-19-symboly-uctu-a-zalozek.html). JEDINÉ místo: okno v appce i web therunekeeper.com čtou
+// odtud (CODE-web 2026-10-19 — do té doby měl tvary opsané v náhledu). Pohyb (plamen, stezka, pták) jen u „you are here“ — třída .zivy,
+// CSS v runar-reader.css; bez animací (prefers-reduced-motion) v klidu.
+var _ZN_STEZKA = { x0: 8, x1: 28, A: 5.2, k: 2.1, w: 3.4, f: 2.4 };
+// Stezka (varianta B, owner „B. jen ten jeden“): vyplněná zužující se čára z levého dolního rohu k obzoru; ph = fáze vlnění.
+function _stezkaUctu(ph) {
+  var T = _ZN_STEZKA, L = [], R = [];
+  for (var i = 0; i <= 56; i++) {
+    var u = i / 56, y = 6 + 32 * Math.pow(1 - u, T.k), A = T.A * Math.pow(1 - u, 1.2) + 0.4;
+    var x = T.x0 + (T.x1 - T.x0) * Math.pow(u, 0.8) + A * Math.sin(u * T.f * Math.PI + (ph || 0));
+    var w = T.w * Math.pow(1 - u, 1.3) + 0.45;
+    L.push([x - w / 2, y]); R.push([x + w / 2, y]);
+  }
+  var p = L.concat(R.reverse());
+  return 'M' + p.map(function (q) { return q[0].toFixed(2) + ' ' + q[1].toFixed(2); }).join(' L') + 'Z';
+}
+var ZNACKY_UCTU = {
+  free_trial:  { kamen: 'Blank',  sym: '', vel: 0 },
+  rune_seeker: { kamen: 'Isa',    vel: 7.2,
+    sym: '<path class="zn-fl" d="M20 36C12 36 8.5 30 10.5 24c1.6-4.6 5.6-6.4 6.2-12 3.4 2.4 4.6 6 3.8 9.4 2.6-1.6 3.6-4.8 3-8 5.6 4.4 7.6 11 5.6 16.6C27.6 33.6 24.4 36 20 36z"/>'
+       + '<path class="zn-fl2" d="M20 33c-3.2 0-4.8-2.6-4-5.2.7-2 2.6-2.8 2.9-5.2 2.4 1.6 3.8 3.8 3.4 6.4-.3 2.2-1 4-2.3 4z"/>' },
+  standard:    { kamen: 'Othila', vel: 9.6, vypln: true, stezka: true },
+  premium:     { kamen: 'Uruz',   vel: 8.6,
+    sym: '<path d="M2 30 12 16l5 6 6-9 15 17"/><g class="zn-ptak"><path class="zn-kridla" d="M21 7q1.6-1.8 3.2 0q1.6-1.8 3.2 0"/></g>' },
+};
+// SVG kamene účtu (řetězec). Po vložení do stránky zavolej kamenUctuVystred — symbol se centruje na obrys (getBBox jde až v DOM).
+function kamenUctuSvg(id) {
+  var u = ZNACKY_UCTU[id] || ZNACKY_UCTU.free_trial, sd = (typeof RUNE_SVGS !== 'undefined') && RUNE_SVGS[u.kamen];
+  if (!sd) return '';
+  var kamen = sd.paths.match(/<path[^>]*>/)[0];
+  var sym = u.stezka ? '<path class="zn-stezka" d="' + _stezkaUctu(0) + '"/>' : u.sym;
+  var g = sym ? '<g class="zn-sym" ' + (u.vypln ? 'fill="#D6A85C" stroke="none"' : 'fill="none" stroke="#D6A85C" stroke-linecap="round" stroke-linejoin="round"')
+    + '>' + sym + '</g>' : '';
+  return '<svg class="kamen-uctu" viewBox="' + sd.vb + '" data-ucet="' + id + '" aria-hidden="true">' + kamen + g + '</svg>';
+}
+// Vystředí symboly všech kamenů v root; zivyId = účet „you are here“ (pohyb), jinak všechny v klidu. Čára 0,38 jednotky kamene.
+function kamenUctuVystred(root, zivyId) {
+  var klid = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  (root || document).querySelectorAll('svg.kamen-uctu').forEach(function (svg) {
+    var id = svg.getAttribute('data-ucet'), u = ZNACKY_UCTU[id], sg = svg.querySelector('.zn-sym');
+    svg.classList.toggle('zivy', id === zivyId && !klid);
+    if (!sg || !u) return;
+    var kb = svg.firstElementChild.getBBox(), cx = kb.x + kb.width / 2, cy = kb.y + kb.height / 2, b = sg.getBBox();
+    var m = Math.max(b.width, b.height); if (!m) return;
+    var sc = u.vel / m;
+    sg.setAttribute('transform', 'translate(' + (cx - sc * (b.x + b.width / 2)).toFixed(3) + ' ' + (cy - sc * (b.y + b.height / 2)).toFixed(3) + ') scale(' + sc.toFixed(4) + ')');
+    if (!u.vypln) sg.setAttribute('stroke-width', (0.38 / sc).toFixed(2));
+    // Stezka se vlní přepočtem tvaru (vlnění nejde udělat jen CSS); smyčka skončí, když kámen zmizí ze stránky nebo přestane být živý.
+    if (u.stezka && svg.classList.contains('zivy') && !svg._stezkaBezi) {
+      var p = svg.querySelector('.zn-stezka'), t0 = null; svg._stezkaBezi = true;
+      (function krok(ts) {
+        if (!svg.isConnected || !svg.classList.contains('zivy')) { svg._stezkaBezi = false; return; }
+        if (ts) { if (!t0) t0 = ts; p.setAttribute('d', _stezkaUctu(Math.sin((ts - t0) / 1400) * 0.5)); }
+        requestAnimationFrame(krok);
+      })();
+    }
+  });
+}

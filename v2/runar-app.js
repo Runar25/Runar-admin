@@ -1695,27 +1695,106 @@ function canUseVoice(cena) {   // cena čtení jako u shouldUseCredit — placen
 // (checkStaticAudio() odstraněna 2026-10-09, kontrola architektury: od rozdělení monolitu dc17cc9 ji nikdo nevolal —
 //  statické audio přehrává Kolekce sama, runar-journal.js a loadCollection().)
 
+// ─── OKNO „YOUR JOURNEY WITH RÚNAR“ ─────────────────────────────────────────────────────────────────────────────────────────────
+// 2026-10-19 (owner, DECISIONS 2026-10-19 (7), (8); přes CODE-web „ano, ať to CODE-tune postaví. čistě a jednoduše.“): všechny účty od
+// Visitora po Rune Wanderera na jedné cestě — kámen se značkou (kamenUctuSvg, runar-utils.js), „you are here“ se pohybuje, měsíčně / ročně
+// (roční = cena za měsíc + „dva měsíce jsou dar“, bez přeškrtnutých cen), cesta dál i zpět. Ceny z TIERS.*.price_isk_*, výpis z
+// tierFeatures(), texty z UI_TEXT journey_* (čte je i web). Nakupuje se jen na webu (JOURNEY_URL); dokud platby neběží, u placených účtů
+// „Coming soon.“. Appka z Google Play (?src=play v adrese startu, zapamatováno na relaci) neukáže ceny ani tlačítka nákupu — Play
+// consumption-only (DECISIONS 2026-10-19 (4)). Vstup: UPGRADE YOUR JOURNEY v menu (místo rozbalovacího výpisu) a rozbalovací okno se jménem.
+var JOURNEY_PORADI = ['free_trial', 'rune_seeker', 'standard', 'premium'];
+var _journeyP = 'm';
+(function () {   // Google Play: značka ze startu appky přežije přechody v rámci relace
+  try { if (new URLSearchParams(window.location.search).get('src') === 'play') sessionStorage.setItem('runar_src', 'play'); } catch (e) {}
+})();
+function _journeyProstredi() {
+  var src = ''; try { src = sessionStorage.getItem('runar_src') || ''; } catch (e) {}
+  if (src === 'play') return 'play';
+  return (typeof JOURNEY_URL === 'string' && JOURNEY_URL) ? 'web' : 'soon';
+}
+function _jkr(n) { return Number(n).toLocaleString('de-DE'); }   // tečka na tisíce: 3.490 (islandský zápis, i v EN jako na webu)
+function _jesc(x) { return String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+function _journeyObdobi(p) { _journeyP = p === 'y' ? 'y' : 'm'; _journeyPaint(); }
+function _journeyPaint() {
+  var env = _journeyProstredi(), lk = lang === 'is' ? 'is' : 'en';
+  var ja = !currentUser ? 0 : Math.max(1, JOURNEY_PORADI.indexOf(normalizeTier(userTier || 'rune_seeker')));
+  setText('journey-title', t('journey_title'));
+  setText('journey-sub', t(env === 'play' ? 'journey_play_sub' : 'journey_sub'));
+  var per = document.getElementById('journey-per');
+  if (per) {
+    per.style.display = env === 'play' ? 'none' : '';
+    per.querySelectorAll('button').forEach(function (b) {
+      var y = b.getAttribute('data-p') === 'y';
+      b.textContent = t(y ? 'journey_yearly' : 'journey_monthly');
+      b.classList.toggle('on', (_journeyP === 'y') === y);
+    });
+  }
+  var h = '';
+  JOURNEY_PORADI.forEach(function (id, i) {
+    var T = TIERS[id] || {}, jm = (lk === 'is' ? (T.label_is || T.label) : T.label) || id, tady = i === ja;
+    h += '<div class="journey-st' + (tady ? ' here' : '') + '"><div class="journey-kamen">' + kamenUctuSvg(id) + '</div><div>'
+      + '<div class="journey-nm"><span>' + _jesc(jm.toUpperCase()) + '</span>' + (tady ? '<span class="journey-here">' + _jesc(t('journey_here')) + '</span>' : '') + '</div>';
+    if (T.price_isk_month) {
+      if (env !== 'play') {
+        h += _journeyP === 'y'
+          ? '<div class="journey-pr">' + _jesc(tp('journey_price_y', { price: _jkr(Math.round(T.price_isk_year / 12)), year: _jkr(T.price_isk_year) })) + '</div>'
+            + '<div class="journey-gift">' + _jesc(t('journey_gift')) + '</div>'
+          : '<div class="journey-pr">' + _jesc(tp('journey_price_m', { price: _jkr(T.price_isk_month) })) + '</div>';
+      }
+    } else {
+      h += '<div class="journey-pr"><small>' + _jesc(t(id === 'free_trial' ? 'journey_free' : 'journey_free_join')) + '</small></div>';
+    }
+    var ft = id === 'free_trial' ? [t('journey_visitor_ft')] : tierFeatures(id, lk);
+    h += '<ul class="journey-ft">' + ft.map(function (x) { return '<li>' + String(x).split('{card}').join(vl('card', lang)) + '</li>'; }).join('') + '</ul>';
+    if (env !== 'play') {
+      if (T.price_isk_month) {
+        var tierUp = jm.toUpperCase();
+        if (tady) { if (env === 'web') h += '<a class="tn-btn btn-upgrade" href="' + _jesc(JOURNEY_URL) + '" target="_blank" rel="noopener">' + _jesc(t('journey_manage')) + '</a>'; }
+        else if (env === 'soon') h += '<div class="journey-note">' + _jesc(t('journey_soon')) + '</div>';
+        else if (i > ja) h += '<a class="tn-btn btn-upgrade" href="' + _jesc(JOURNEY_URL) + '" target="_blank" rel="noopener">' + _jesc(tp('journey_walk_on', { tier: tierUp })) + '</a>'
+          + '<div class="journey-note">' + _jesc(t('journey_web_note')) + '</div>';
+        else h += '<a class="tn-btn btn-upgrade" href="' + _jesc(JOURNEY_URL) + '" target="_blank" rel="noopener">' + _jesc(tp('journey_step_back', { tier: tierUp })) + '</a>'
+          + '<div class="journey-note">' + _jesc(t('journey_step_note')) + '</div>';
+      } else if (id === 'rune_seeker' && ja === 0) {
+        h += '<button type="button" class="tn-btn btn-upgrade" onclick="closeJourney();openAuthModal()">' + _jesc(t('become_rs_btn')) + '</button>';
+      } else if (id === 'rune_seeker' && ja === 1 && typeof CARD_PACKS !== 'undefined' && CARD_PACKS.length) {
+        var p0 = CARD_PACKS.reduce(function (a, b) { return b.isk < a.isk ? b : a; });
+        h += '<div class="journey-note klik" role="button" tabindex="0" onclick="closeJourney();showAppTab(\'reading\');toggleRedeem()">'
+          + _jesc(tp('journey_card_note', { price: _jkr(p0.isk), casts: vn('cast', p0.credits, lang) })) + '</div>';
+      }
+    }
+    h += '</div></div>';
+  });
+  var path = document.getElementById('journey-path');
+  if (path) { path.innerHTML = h; kamenUctuVystred(path, JOURNEY_PORADI[ja]); }
+  setText('journey-foot', t(env === 'play' ? 'journey_play_foot' : 'journey_foot'));
+}
+function openJourney() {
+  var dd = document.getElementById('auth-dropdown'); if (dd) dd.classList.remove('open');
+  var m = document.getElementById('journey-modal'); if (!m) return;
+  m.classList.add('open');   // napřed otevřít: kamenUctuVystred měří getBBox, ve skrytém okně je nula
+  _journeyPaint();
+  document.addEventListener('keydown', _journeyEsc);
+}
+function closeJourney() {
+  var m = document.getElementById('journey-modal'); if (m) m.classList.remove('open');
+  document.removeEventListener('keydown', _journeyEsc);
+}
+function _journeyEsc(e) { if (e.key === 'Escape') closeJourney(); }
+document.addEventListener('click', function (e) { if (e.target && e.target.id === 'journey-modal') closeJourney(); });   // klik na závoj zavře
+
 // ─── HIGHER PATH TOGGLE ─────────────────────────────────
-// 2026-10-19 (owner „10. ano“ na HANDOFF66 Coworku): návštěvník má UPGRADE YOUR JOURNEY rozbalené hned — jeho vlastní výpis jsou tři
-// věty, podstatné je, co dostane po registraci. Ovládání stejné pro všechny (klepnutí zavře i otevře), liší se jen výchozí stav.
-// Ruční volba platí, dokud se nezmění přihlášení; drží ji proměnná, ať přepnutí jazyka (_renderYourPath) nic nezavře.
-var _higherOpen = null, _higherPro = null;
+// 2026-10-19 (pozdější téhož dne): UPGRADE YOUR JOURNEY v menu otevírá okno „Your journey with Rúnar“ (openJourney, runar-reader.html) — vstup
+// podle DECISIONS 2026-10-19 (7), (8). Rozbalovací výpis účtů v menu (sp-path-body) zůstává skrytý; návštěvníkovi ho ráno téhož dne
+// rozbalilo „10. ano“, odpoledne ho nahradilo okno se všemi účty. Šipka „→“ = otevře okno, ne rozbalí.
 function _applyHigherPath() {
   const body  = document.getElementById('sp-path-body');
   const arrow = document.getElementById('sp-path-arrow');
   if (!body) return;
-  const ucet = !!currentUser;
-  if (_higherPro !== ucet) { _higherPro = ucet; _higherOpen = null; }
-  const open = _higherOpen === null ? !ucet : _higherOpen;
-  body.style.display = open ? 'block' : 'none';
-  if (arrow) arrow.textContent = open ? '−' : '+';
+  body.style.display = 'none';
+  if (arrow) arrow.textContent = '→';
 }
-function toggleHigherPath() {
-  const body = document.getElementById('sp-path-body');
-  if (!body) return;
-  _higherOpen = body.style.display === 'none';
-  _applyHigherPath();
-}
+function toggleHigherPath() { openJourney(); }
 
 // ─── VÝPIS FUNKCÍ ÚČTU (sbalený) ──────────────────────────
 // 2026-10-15 (owner přes CODE-read: „zabalit popis, co účet třeba Rune Seeker obsahuje za features. Schovat stejně jako upgrade your
@@ -1759,6 +1838,7 @@ function updateDropdown() {
     tierNames[k] = (TIERS[k][_lkDD] || TIERS[k].label || k).toUpperCase();
   });
   if (tierEl)  tierEl.textContent  = tierNames[userTier] || userTier.toUpperCase();
+  setText('dd-journey', t('sp_higher_path') + ' →');   // 2026-10-19: cesta dál z rozbalovacího okna (openJourney)
   if (emailEl) emailEl.textContent = currentUser.email;
   if (balEl) {
     if (!profileLoaded) {

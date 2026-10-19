@@ -392,6 +392,10 @@ const TIER_LIMITS = {
 // plus elder… IS walker máš! je to stejné jako IS účet Walker.“ Balíček s `tier` bere jméno z TIERS (EN bez „Rune“, IS celé), takže se
 // s účtem nerozejde. Starter a Elder účet nemají — islandsky Byrjandi a Öldungur (KUKY 2026-10-10: „nezůstanou v EN, ale budou IS!“;
 // osoby jako jména účtů, řada = cesta: Byrjandi → Leitandi → Vegfarandi → Ferðalangur → Öldungur). U balíčku vždy s počtem kreditů.
+// Stránka nákupu účtů a Rúnakortu na webu (2026-10-19, DECISIONS 2026-10-19 (7): nákup jen na therunekeeper.com, appka má okno „Your journey
+// with Rúnar“). null = platby ještě neběží → u placených účtů v okně „Coming soon.“. Až CODE-web stránku spustí, sem její adresu.
+const JOURNEY_URL = null;
+
 const CARD_PACKS = [
   { name: 'Starter', name_is: 'Byrjandi', credits: 5,  isk: 1490 },
   { tier: 'rune_seeker', credits: 10, isk: 2490 },
