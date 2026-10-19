@@ -874,9 +874,10 @@ dárkových kódů. (Druhý pokus o spuštění téhle zkoušky zastavila ochran
 - [x] ~~**Hlášení (`bug_reports`) bez limitu pro nepřihlášené**~~ — **chybný nález (opraveno 2026-10-19, CODE-read):** nepřihlášený hlášení
   vložit nemůže od 2026-10-10 (politika `bug_reports_insert` jen `authenticated`, RLS zapnuté — ověřeno v produkci). Útok četl repo, kde to
   SQL chybělo; doplněno `sql/2026-10-10_bug_reports_insert_jen_prihlaseni.sql`. Návštěvník píše e-mailem (DECISIONS 2026-10-15, 2026-10-19 (1)).
-- [ ] **Strop hlášení pro přihlášeného** (owner 2026-10-19 souhlasí s limitem; DECISIONS 2026-10-19 (3), (5)): owner *„4. na účet“*. Hotové
+- [x] ✅ **Strop hlášení pro přihlášeného** (owner 2026-10-19 souhlasí s limitem; DECISIONS 2026-10-19 (3), (5)): owner *„4. na účet“*. Hotové
   `sql/2026-10-19_bug_reports_strop.sql` — trigger, 40 hlášení za hodinu na účet (`check_rate_limit`, klíč `report:<účet>`); odzkoušeno
-  ve zkušebním projektu v transakci s ROLLBACK (45 pokusů: 40 prošlo, 5 zastaveno; bez přihlášení bez stropu). **Zbývá: owner pustí SQL.**
+  ve zkušebním projektu v transakci s ROLLBACK (45 pokusů: 40 prošlo, 5 zastaveno; bez přihlášení bez stropu). Owner SQL pustil 2026-10-19
+  (trigger `bug_reports_strop` v produkci ověřen v `pg_trigger`).
 
 #### Kolo 4 (od 2026-10-14, CODE-read) — napřed části změněné od uzavření kola 3 (b05f6d6, 186 commitů), pak zátěž a souběh
 **⭐ Uzavřeno 2026-10-15.** Prošlé: edge funkce, appka, landing, skripty, docs, zátěž, souběh. Co z nálezů hlídá stroj: ㉽ vidí landing,
