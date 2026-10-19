@@ -5,6 +5,7 @@
 scripts/_patch.py
 scripts/_patch_tune.py
 scripts/_patch_read.py
+scripts/_patch_web.py
 
 __pycache__/
 
