@@ -124,7 +124,7 @@ function rune() {
   var pre = CODE.split('-')[0];
   return RUNES.filter(function (r) { return r.n.toUpperCase() === pre; })[0] || RUNES.filter(function (r) { return r.svg === 'Raidho'; })[0];
 }
-// QR vede do appky s kódem za # (#kort=…): appka ho zatím nepředvyplňuje (předáno CODE-tune) — do té doby QR otevře appku a kód se opíše.
+// QR vede do appky s kódem za # (#kort=…): appka ho předvyplní do pole kódu (runar-auth.js _kortZAdresy), uplatní ho člověk sám.
 function qrSvg() {
   var q = qrcode(0, 'M');
   q.addData(APP_URL + '#kort=' + CODE);
