@@ -25,6 +25,13 @@ let userVoiceKey    = '';       // voice_month_key — 'YYYY-MM' v UTC jako elev
 let readerUser     = {};
 let userGender     = 'hk';   // kk | kvk | hk (han, default) — how Runar addresses the seeker (IS)
 let greetingShown  = false;     // show topbar greeting only once per session
+// 2026-10-19 (vada 1 z průchodu appkou, CODE-read): okno se jménem se samo nabídne nejvýš jednou za načtení stránky — fetchUserProfile
+// běží i po obnovení tokenu a po chybě, a „Continue without a name“ okno jen skrylo, takže se vracelo. Kdo ho přeskočil, tomu se
+// samo už nenabídne (značka v prohlížeči na účet); jméno jde dál zadat v menu (openNamesEdit).
+let namePromptOffered = false;
+function _jmenoPreskoceno() { try { return !!currentUser && localStorage.getItem('runar_name_skip_' + currentUser.id) === '1'; } catch (e) { return false; } }
+// Účet mladší 10 minut = právě založený (jedno místo pro jazyk účtu i pozdrav, §18).
+function _novyUcet() { return !!(currentUser && currentUser.created_at && (Date.now() - Date.parse(currentUser.created_at) < 10 * 60 * 1000)); }
 let userName       = '';        // JAK RUNAR OSLOVUJE — vypocteno v _resolveUserName(), nikdy nepsat primo
 // Dve jmena (2026-09-12). `userName` zustava jedinym zdrojem osloveni (§12) a cte ho cela appka;
 // tyhle tri drzi, z ceho se sklada. Rozbor jmena bere VZDY `norseName`, ne `userName`.
@@ -155,7 +162,7 @@ async function fetchUserProfile(userId, _pokus) {
       // save it to DB instead of overriding with the DB default ('en').
       // 2026-10-10: appka startuje v IS, sloupec lang má v DB výchozí 'en' → účet mladší 10 minut (právě založený, žádnou vlastní
       // volbu v DB ještě nemá) přebírá jazyk, ve kterém se člověk přihlásil. Jinak by nového islandského testera přepnul do angličtiny.
-      const novyUcet = !!(currentUser && currentUser.created_at && (Date.now() - Date.parse(currentUser.created_at) < 10 * 60 * 1000));
+      const novyUcet = _novyUcet();
       if (data.lang && data.lang !== lang) {
         const localLang = localStorage.getItem('runar_lang');
         if ((localLang && localLang === lang) || novyUcet) {
@@ -191,8 +198,8 @@ async function fetchUserProfile(userId, _pokus) {
   showTopbarGreeting();
   if (typeof _updateReadingForm === 'function') _updateReadingForm();
   _renewalNotice();   // až tady: tarif i jazyk účtu jsou načtené (jazyk se z DB obnovuje výš)
-  // Ask for name if not set yet (delay so UI settles first)
-  if (!userName) setTimeout(showNamePrompt, DELAY_NAME_PROMPT);
+  // Ask for name if not set yet (delay so UI settles first) — jednou za načtení stránky a ne po „Continue without a name“ (2026-10-19)
+  if (!userName && !namePromptOffered && !_jmenoPreskoceno()) { namePromptOffered = true; setTimeout(showNamePrompt, DELAY_NAME_PROMPT); }
 }
 
 // „Zkusit znovu“ po selhaném načtení profilu (tlačítko v záložce Životní runa / strom) a samo po návratu sítě. 2026-10-12, viz fetchUserProfile.
@@ -492,8 +499,8 @@ function showTopbarGreeting() {
   if (!currentUser) {
     msg = t('greet_hello');
   } else {
-    const returning = userTier === 'rune_seeker' || userTier === 'standard' || userTier === 'premium';
-    msg = t(returning ? 'greet_again' : 'greet_hello');
+    // 2026-10-19 (vada 4 z průchodu appkou): „again“ dostával i úplně nový účet — každý přihlášený má tier, takže byl „returning“.
+    msg = t(_novyUcet() ? 'greet_hello' : 'greet_again');
   }
   el.textContent = msg;
   setTimeout(() => el.classList.add('show'), DELAY_TOAST_IN);
@@ -599,6 +606,8 @@ async function saveName() {
 
 function skipName() {
   document.getElementById('name-overlay').style.display = 'none';
+  // 2026-10-19: volba platí — okno se samo už nenabídne (jen v režimu prvního zadání, ne při úpravě z menu)
+  if (!_nameEditMode && currentUser) { try { localStorage.setItem('runar_name_skip_' + currentUser.id, '1'); } catch (e) {} }
 }
 
 // Z nastaveni i ze zalozky zivotni runy — obe cesty otviraji TOTEZ okno (§18, zadna druha kopie).
