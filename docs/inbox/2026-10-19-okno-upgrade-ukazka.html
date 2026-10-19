@@ -1,0 +1,85 @@
+<!doctype html>
+<!-- Ukázka okna „Your journey with Rúnar“ (CODE-read 2026-10-19, DECISIONS 2026-10-19 (7)). Intake, ne kánon: vzhled ČEKÁ na ownera.
+     Proč soubor: ukázka byla jen náhled v konverzaci; CODE-web a CODE-tune z ní mají stavět web i okno tak, aby vypadaly jako jedno.
+     Texty jsou zatím jen EN a jen pracovní — IS se vymyslí islandsky a ověří (§2) až při stavbě; ceny opsané z RUNAR_PRICING jen pro
+     ukázku, do produkce jdou z configu (§10, §20). Patička „your readings stay in your journal“ je NEOVĚŘENÁ (Rune Seeker vidí 5 čtení). -->
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Upgrade window mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+body{background:#0a0c12;margin:0;padding:16px;font-family:sans-serif;color:#8ba5c0}
+.ctl{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 12px;font-size:13px}
+.scr{display:flex;justify-content:center}
+.md{background:#12161f;border:1px solid #b38a00;max-width:380px;width:100%;padding:20px 18px;font-family:'Cormorant Garamond',serif;color:#F2F5F7}
+.ttl{font-family:'Cinzel',serif;letter-spacing:3px;font-size:14px;color:#FFBF00;margin:0 0 4px}
+.sub{font-style:italic;color:#8ba5c0;font-size:16px;margin:0 0 14px;line-height:1.5}
+.per{display:flex;justify-content:center;gap:18px;font-family:'Cinzel',serif;font-size:11px;letter-spacing:2px;margin:0 0 16px}
+.per span{cursor:pointer;color:#8ba5c0;padding-bottom:3px}.per span.on{color:#FFBF00;border-bottom:1px solid #FFBF00}
+.st{display:grid;grid-template-columns:26px 1fr;gap:10px;position:relative;padding:0 0 14px}
+.st::before{content:"";position:absolute;left:12px;top:26px;bottom:0;border-left:1px dashed #2E4A70}
+.st:last-child::before{display:none}
+.dot{width:24px;height:24px;border:1px solid #2E4A70;transform:rotate(45deg) scale(.75);background:#171b26;margin-top:2px}
+.st.me .dot{border-color:#FFBF00;background:#2a2410;box-shadow:0 0 10px rgba(255,170,40,.6)}
+.nm{font-family:'Cinzel',serif;font-size:13px;letter-spacing:2px;display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.st.me .nm{color:#FFBF00}
+.here{font-family:'Cormorant Garamond',serif;font-style:italic;letter-spacing:0;font-size:14px;color:#FFBF00}
+.pr{font-size:17px;margin:2px 0}.pr small{color:#8ba5c0;font-size:14px}
+.ft{font-size:15px;color:#c9d6e3;line-height:1.45;margin:2px 0 6px}
+.gift{font-style:italic;color:#d9b45a;font-size:14px}
+.btn{display:block;width:100%;font-family:'Cinzel',serif;letter-spacing:2px;font-size:11px;padding:9px 0;margin-top:6px;cursor:pointer;background:transparent;border:1px solid #FFBF00;color:#FFBF00}
+.btn.fill{background:#FFBF00;color:#0a0c12}
+.btn.quiet{border-color:#2E4A70;color:#8ba5c0}
+.note{font-size:13px;color:#8ba5c0;font-style:italic;margin-top:4px}
+.foot{border-top:1px solid #2E4A70;margin-top:4px;padding-top:10px;font-size:14px;color:#8ba5c0;font-style:italic;text-align:center}
+</style></head><body>
+<div class="ctl">
+<label>Who is looking <select id="who"><option value="v">Visitor</option><option value="s" selected>Rune Seeker</option><option value="w">Rune Walker</option><option value="r">Rune Wanderer</option></select></label>
+<label>Where <select id="env"><option value="pwa" selected>app in the browser</option><option value="play">app from Google Play</option><option value="soon">today (no payments yet)</option></select></label>
+</div>
+<div class="scr"><div class="md">
+<p class="ttl">YOUR JOURNEY WITH RÚNAR</p>
+<p class="sub" id="sub"></p>
+<div class="per" id="per"><span data-p="m" class="on">MONTHLY</span><span data-p="y">YEARLY</span></div>
+<div id="path"></div>
+<div class="foot" id="foot"></div>
+</div></div>
+<script>
+var P='m';
+var T=[
+{k:'v',n:'VISITOR',f:'The Runes Collection and your life rune.',free:'Free'},
+{k:'s',n:'RUNE SEEKER',f:'One free rune reading when you join. A Rune Reading Card opens further rune readings, with no subscription and no expiry.',free:'Free to join'},
+{k:'w',n:'RUNE WALKER',f:'50 rune readings a month. Rúnar reads every one aloud. Your full journal. One question of your own on every reading.',m:3490,y:34800},
+{k:'r',n:'RUNE WANDERER',f:'75 rune readings a month. Everything a Rune Walker has. Two questions of your own on every reading.',m:4900,y:49000}];
+var ord={v:0,s:1,w:2,r:3};
+function kr(x){return String(x).replace(/\B(?=(\d{3})+(?!\d))/g,'.')+' kr'}
+function draw(){
+var who=document.getElementById('who').value, env=document.getElementById('env').value, me=ord[who];
+document.getElementById('per').style.display=env==='play'?'none':'flex';
+document.getElementById('sub').textContent=env==='play'?'Where you stand on the path, and what each step holds.':'Each step holds more of Rúnar. Walk as far as you wish, and step back whenever you like.';
+var h='';
+T.forEach(function(t,i){
+h+='<div class="'+(i===me?'st me':'st')+'"><div class="dot"></div><div><div class="nm"><span>'+t.n+'</span>'+(i===me?'<span class="here">you are here</span>':'')+'</div>';
+if(t.m&&env!=='play'){
+ if(P==='m') h+='<div class="pr">'+kr(t.m)+' <small>a month</small></div>';
+ else h+='<div class="pr">'+kr(Math.round(t.y/12))+' <small>a month, '+kr(t.y)+' a year</small></div><div class="gift">Two months are a gift.</div>';
+}else if(!t.m){h+='<div class="pr"><small>'+t.free+'</small></div>';}
+h+='<div class="ft">'+t.f+'</div>';
+if(env!=='play'){
+ if(t.m){
+  if(i===me) h+='<button class="btn quiet">MANAGE YOUR SUBSCRIPTION</button>';
+  else if(env==='soon') h+='<div class="note">Coming soon.</div>';
+  else if(i>me) h+='<button class="btn fill">WALK ON AS '+t.n.replace('RUNE ','')+'</button><div class="note">Opens therunekeeper.com. You return here with the same account.</div>';
+  else h+='<button class="btn">STEP BACK TO '+t.n.replace('RUNE ','')+'</button><div class="note">From the end of this period.</div>';
+ }
+ else if(t.k==='s'&&me===0) h+='<button class="btn fill">BECOME A RUNE SEEKER</button>';
+ else if(t.k==='s'&&me===1&&env!=='soon') h+='<button class="btn">GET A RUNE READING CARD</button><div class="note">From 1.490 kr for 5 rune readings. Have a code? Enter it here.</div>';
+}
+h+='</div></div>';
+});
+document.getElementById('path').innerHTML=h;
+document.getElementById('foot').textContent=env==='play'?'Rúnar asks nothing of you here.':'Prices in Icelandic krónur. Cancel any time; your readings stay in your journal.';
+}
+document.querySelectorAll('#per span').forEach(function(s){s.onclick=function(){P=s.dataset.p;document.querySelectorAll('#per span').forEach(function(x){x.classList.toggle('on',x===s)});draw()}});
+document.getElementById('who').onchange=draw;document.getElementById('env').onchange=draw;
+draw();
+</script></body></html>
