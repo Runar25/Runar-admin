@@ -1238,9 +1238,10 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   pravidla 4.8 chce i rovnocenné přihlášení (prakticky Sign in with Apple) — přesné znění 4.8 neověřeno. Jméno: v obou obchodech už je
   „Runar: AI Chat & Runes“ (runar.app, AI věštění z run) a na Google Play „Runar“ (com.tnco.runar) — název v obchodě musí být jiný,
   ochrannou známku owner řešit nechce (2026-10-13). Odznaky obchodů na webu až s živou appkou, jen oficiální soubory.
-- [ ] **Rúnakort digitálně** (DECISIONS 2026-10-19 (4), CODE-web): (1) stránka karty na webu ve vzhledu černá / bílá z
-  `web/nahled/` — tisk a uložení do PDF; (2) sloupce sledování v `gift_codes` (SQL pustí owner); (3) PDF dávka pro tisk fyzických
-  karet ve shrine — předat CODE-tune (shrine je její); (4) doručení po zaplacení až po rozhodnutí Shopify / Rapyd.
+- [ ] **Rúnakort digitálně** (DECISIONS 2026-10-19 (4), CODE-web). ✅ 2026-10-19: stránka karty https://therunekeeper.com/kort/
+  (černá / bílá, QR, tisk do PDF) · sloupce sledování v `gift_codes` (owner pustil SQL) · appka předvyplní kód z QR `#kort=` a shrine
+  u dávky ukládá form / design / lang / channel / complimentary a dává odkaz na kartu (obojí CODE-tune). **Zbývá:** doručení po
+  zaplacení až po rozhodnutí Shopify / Rapyd; tisk celé dávky v jednom PDF pro tiskárnu, až budou fyzické karty (dnes karta po jedné).
 - [x] ✅ *(CODE-web 2026-10-14: patička © · e-mail · odkaz na zásady, kde stojí adresa a kennitala (CODE-tune d0bc678); zásady
   doplněné o registraci; web žádné cookies nemá. Zbývá jen VSK do zásad, až ho owner bude vědět.)* **Landing — právní minimum** (2026-10-13): patička s údaji firmy podle zákona 30/2002 (jméno, adresa, e-mail, kennitala, VSK —
   údaje dodá owner; přesný článek zákona nestažen, althingi.is 403), věta o účelu u formuláře + odkaz na zásady, zásady doplnit
