@@ -1265,6 +1265,14 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   works** (záblesk nebo pomalé zvětšení) — s rešerší, jak to udělat nevtíravě. Owner: *„nikde nemáme klikací okno Upgrade … zapomněl jsem
   vytvořit, jak na něj upgradovat.“* Ceny jsou zatím jen v `RUNAR_PRICING.md`, platby (Shopify / Rapyd) nepostavené. Stavět CODE-tune
   po ownerově ano.
+  ➕ **Mapa dnešního stavu hotová (CODE-read 2026-10-19):** `docs/inbox/2026-10-19-pruchod-appkou.md` (krok × co se objeví × kdy ×
+  smysl). Návrhy čekají na ownerovo potvrzení stylu.
+- [ ] **Vady z průchodu appkou (CODE-read 2026-10-19 → CODE-tune)** — detail a místa v kódu: `docs/inbox/2026-10-19-pruchod-appkou.md`
+  „Vady“. Ověřené v kódu: okno se jménem se po „Continue without a name“ vrací při každém načtení profilu; první přihlášení zdraví
+  „Good to see you again“; toast Yggdrasilu při každém přidání runy (až 9×); Rune Seeker bez čtení po DRAW ANOTHER / START OVER
+  bez formuláře. Jen z kódu (ověřit v prohlížeči): souhlas testera se vrací stejně; okno se jménem a „Where to start“ naráz; závod
+  `upsertProfile` × `fetchUserProfile` u nového účtu („0 spár eftir“). Drobnosti a mrtvé prvky tamtéž, bod 8. Opravy chování
+  (okno se jménem, pozdrav, toast) jsou malé; co mění, co uživatel vidí, napřed ownerovi (§32).
 - [ ] **„free to join“ → „{onboarding} when you join“** ve `vcn_text` a `journal_gate_txt` — zdroj je `TIER_LIMITS.rune_seeker.onboarding_label_*`
   (jako `visitor_join_note`), ne `free_trial` (Cowork ukázal na `free_trial`, tam je `onboarding` jen historický).
 - [x] ✖ **Kontakt pro Visitora: mailto vs okno** — owner 2026-10-19 „12. e-mail“: Visitor má dál odkaz na e-mail (mailto, rozhodnutí

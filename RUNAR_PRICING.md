@@ -156,7 +156,7 @@ opus-4-8 in 1889 / out 96 · sonnet-5 in 1889 / out **560** (thinking blow-up, ~
 - Životní runa: stejné čtení jako u všech, zdarma
 - Purpose: main product, target for all funnels
 
-### Premium (~$36/month)
+### Premium (~$40/month)  <!-- do 2026-10-19 tu stálo ~$36; tabulka předplatného níž: 4.900 ISK / 123,5 = ~$40 (CODE-read, průchod appkou) -->
 - 75 reading-units/month limit
 - Everything in Standard
 - Životní runa a rozbor jména: stejné jako u všech, zdarma a jednou. „Hlubší premium čtení (2000 tokenů)“ kód nikdy nedělal — tentýž
