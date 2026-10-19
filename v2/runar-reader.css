@@ -850,6 +850,41 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 .modal{background:var(--card);border:1px solid var(--gold);padding:32px;max-width:420px;width:100%;position:relative;}
 .modal-title{font-family:'Cinzel',serif;font-size:0.9em;letter-spacing:3px;color:var(--gold);margin-bottom:6px;}
 .modal-sub{font-size:0.9em;color:var(--muted);font-style:italic;margin-bottom:20px;line-height:1.7;}
+/* Okno „Your journey with Rúnar“ (2026-10-19, DECISIONS 2026-10-19 (7), (8)) — podoba náhledu webu CODE-web na mobilu: zastávky pod sebou,
+   kámen se značkou vlevo, čárkovaná svislá cesta mezi kameny, tlačítka jako v horním pruhu (tn-btn btn-upgrade). */
+.journey-card{max-width:440px;max-height:calc(100vh - 40px);overflow-y:auto;text-align:left;}
+.journey-card .modal-title,.journey-card .modal-sub{text-align:center;}
+.journey-per{display:flex;justify-content:center;gap:22px;margin:-6px 0 20px;}
+.journey-per button{background:none;border:0;border-bottom:1px solid transparent;font-family:'Cinzel',serif;font-size:0.68em;letter-spacing:2px;color:var(--muted);padding:0 0 3px;cursor:pointer;}
+.journey-per button.on{color:var(--gold);border-bottom-color:var(--gold);}
+.journey-st{display:grid;grid-template-columns:44px 1fr;column-gap:14px;position:relative;padding-bottom:22px;}
+.journey-st:not(:last-child)::after{content:"";position:absolute;left:22px;top:68px;bottom:4px;border-left:1px dashed var(--border);}
+.journey-kamen{width:44px;height:60px;}
+.kamen-uctu{width:100%;height:100%;display:block;overflow:visible;}
+.journey-nm{font-family:'Cinzel',serif;font-size:0.78em;letter-spacing:2px;color:var(--white);display:flex;justify-content:space-between;gap:8px;align-items:baseline;}
+.journey-st.here .journey-nm{color:var(--gold);}
+.journey-here{font-family:'Cormorant Garamond',serif;font-style:italic;letter-spacing:0;font-size:1.25em;color:var(--gold);}
+.journey-pr{font-size:1.05em;color:var(--gold);margin-top:3px;}
+.journey-pr small{color:var(--muted);font-size:0.85em;}
+.journey-gift{font-style:italic;color:#D6A85C;font-size:0.9em;}
+.journey-ft{list-style:none;padding:0;margin:6px 0 4px;font-size:0.92em;color:var(--white);line-height:1.45;}
+.journey-ft li{margin-bottom:3px;}
+.journey-st .tn-btn{margin-top:8px;display:inline-block;text-decoration:none;}
+.journey-note{font-size:0.85em;color:var(--muted);font-style:italic;margin-top:5px;}
+.journey-note.klik{cursor:pointer;text-decoration:underline;text-decoration-color:rgba(255,191,0,0.4);text-underline-offset:3px;}
+.journey-foot{border-top:1px solid var(--border);margin:2px 0 0;padding-top:12px;font-size:0.85em;color:var(--muted);font-style:italic;text-align:center;}
+.dd-journey{display:block;width:100%;margin-top:10px;padding:8px 0 0;border:0;border-top:1px solid var(--border);background:none;text-align:left;
+  font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;color:var(--gold);cursor:pointer;}
+/* Pohyb značky jen u „you are here“ (.zivy, kamenUctuVystred): plamen se chvěje, pták letí; stezku vlní skript. Bez animací v klidu. */
+.kamen-uctu.zivy .zn-fl{transform-box:fill-box;transform-origin:50% 100%;animation:znFl 2.8s ease-in-out infinite;}
+.kamen-uctu.zivy .zn-fl2{transform-box:fill-box;transform-origin:50% 100%;animation:znFl2 2.1s ease-in-out infinite;}
+.kamen-uctu.zivy .zn-ptak{animation:znLet 9s ease-in-out infinite;}
+.kamen-uctu.zivy .zn-kridla{transform-box:fill-box;transform-origin:50% 100%;animation:znMav 1.1s ease-in-out infinite;}
+@keyframes znFl{0%,100%{transform:skewX(0) scaleY(1)}30%{transform:skewX(-3deg) scaleY(1.03)}60%{transform:skewX(2deg) scaleY(.98)}}
+@keyframes znFl2{0%,100%{transform:skewX(0) scaleY(1)}40%{transform:skewX(4deg) scaleY(1.06)}75%{transform:skewX(-2deg) scaleY(.96)}}
+@keyframes znLet{0%{transform:translate(-9px,3px)}25%{transform:translate(-2px,-1.5px)}50%{transform:translate(7px,1px)}75%{transform:translate(1px,4px)}100%{transform:translate(-9px,3px)}}
+@keyframes znMav{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.35)}}
+@media (prefers-reduced-motion:reduce){.kamen-uctu.zivy .zn-fl,.kamen-uctu.zivy .zn-fl2,.kamen-uctu.zivy .zn-ptak,.kamen-uctu.zivy .zn-kridla{animation:none;}}
 .modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--dim);font-size:1.2em;cursor:pointer;}
 .modal-close:hover{color:var(--white);}
 /* 2026-10-15 okno „Send Rúnar a line“: pole jako ostatní (.txt — jen spodní linka), víc řádků; poznámka tlumeně jako .modal-sub

@@ -97,6 +97,23 @@
   </div>
 </div>
 
+<!-- 2026-10-19 (owner, DECISIONS 2026-10-19 (7), (8)): okno „Your journey with Rúnar“ — všechny účty na cestě pod sebou (kameny se značkami
+     z runar-utils.js, „you are here“ se pohybuje), měsíčně / ročně, cesta dál a zpět. Nákup jen na therunekeeper.com (JOURNEY_URL v configu;
+     do plateb „Coming soon“), z Google Play bez cen a tlačítek (consumption-only). Obsah kreslí _journeyPaint (runar-app.js). -->
+<div class="modal-overlay" id="journey-modal" role="dialog" aria-modal="true" aria-labelledby="journey-title">
+  <div class="modal journey-card">
+    <button class="modal-close" type="button" onclick="closeJourney()">✕</button>
+    <div class="modal-title" id="journey-title"></div>
+    <p class="modal-sub" id="journey-sub"></p>
+    <div class="journey-per" id="journey-per">
+      <button type="button" data-p="m" onclick="_journeyObdobi('m')"></button>
+      <button type="button" data-p="y" onclick="_journeyObdobi('y')"></button>
+    </div>
+    <div class="journey-path" id="journey-path"></div>
+    <p class="journey-foot" id="journey-foot"></p>
+  </div>
+</div>
+
 <div class="modal-overlay" id="tester-consent-modal">
   <div class="modal" style="max-width:420px;">
     <button class="modal-close" onclick="closeTesterConsent()">✕</button>
@@ -174,6 +191,8 @@
             <div class="dd-tier" id="dd-tier"></div>
             <div class="dd-email" id="dd-email"></div>
             <div class="dd-balance" id="dd-balance"></div>
+            <!-- 2026-10-19: z rozbalovacího okna se jménem vede cesta dál (owner nad screenshotem: „žádné tlačítko Upgrade“) -->
+            <button type="button" class="dd-journey" id="dd-journey" onclick="openJourney()"></button>
           </div>
         </div>
         <button class="auth-btn signin" id="auth-action-btn" onclick="handleAuthBtn()">SIGN IN</button>
@@ -914,7 +933,7 @@
       <span class="sp-curr-tier-name" id="sp-curr-tier-name"></span>
     </button>
     <div class="sp-tier-desc" id="sp-tier-desc" style="display:none;"></div>
-    <button class="sp-path-toggle" id="sp-higher-toggle" onclick="toggleHigherPath()" style="display:none;justify-content:flex-start;gap:10px;">
+    <button class="sp-path-toggle" id="sp-higher-toggle" onclick="closeSidePanel();openJourney()" style="display:none;justify-content:flex-start;gap:10px;">
       <span id="sp-path-arrow" style="font-size:1.4em;letter-spacing:0;line-height:1;">+</span>
       <span id="sp-higher-lbl">UPGRADE YOUR JOURNEY</span>
     </button>

@@ -11847,3 +11847,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   klepnutí nereaguje vůbec — návštěvník nepozná proč. Styl potvrzený týž den (2026-10-19 (7)): Rúnar ukazuje, nevnucuje; nápověda na
   vyžádání (NN/g, kontextová nápověda). Svíčka je týž jazyk jako helper „?“.
 - Affected doc(s): `RUNAR_BACKLOG.md` (Uvítání a navedení) — v témže commitu.
+
+## 2026-10-19 (10) — Okno „Your journey with Rúnar“ postavené; UPGRADE YOUR JOURNEY v menu ho otevírá místo rozbalovacího výpisu
+- **Owner** (přes CODE-web 2026-10-19): *„ano, ať to CODE-tune postaví. čistě a jednoduše.“* — vzhled jako náhled webu na mobilu, ukázka
+  a značky CODE-read (DECISIONS 2026-10-19 (7), (8)).
+- **Co:** okno se všemi účty pod sebou — kámen se značkou (`kamenUctuSvg` / `kamenUctuVystred` v `runar-utils.js`, data `ZNACKY_UCTU`;
+  web je čte odtud), „you are here“ se pohybuje (bez animací v klidu), měsíčně / ročně (roční = cena za měsíc + „Two months are a gift.“),
+  ceny z `TIERS.*.price_isk_*`, výpis z `tierFeatures()`, texty `journey_*` v UI_TEXT (EN + IS sada CODE-read). Nákup jen na webu: `JOURNEY_URL`
+  v configu je zatím `null` → u placených účtů „Coming soon.“; s adresou se objeví „Walk on as …“ / „Step back to …“ / „Manage your
+  subscription“. Rune Seeker: věta s cenou nejlevnějšího Rúnakortu otevře pole na kód. Návštěvník: „Become a Rune Seeker“. Google Play:
+  adresa startu s `?src=play` (zapamatováno na relaci) → bez cen a tlačítek (consumption-only, 2026-10-19 (4)).
+- **Vstup:** UPGRADE YOUR JOURNEY v menu otevře okno (šipka „→“) a nové tlačítko v rozbalovacím okně se jménem. **Mění 2026-10-19 (1):**
+  rozbalovací výpis účtů v menu (návštěvníkovi ráno rozbalený, owner „10. ano“) se už neukazuje — celou cestu nese okno.
+- **Otevřené:** adresa stránky nákupu (`JOURNEY_URL`, CODE-web); `?src=play` musí dát do `start_url` balíček pro Google Play (neověřeno).
+- **Ověřeno v náhledu (375 px):** návštěvník / Rune Seeker / Premium — „you are here“ a pohyb jen u svého účtu, symboly vystředěné, roční
+  přepočet 2.900 kr / 34.800 kr, IS texty, Play bez cen a tlačítek, zavření · smoke ㉼ ㊽ ㉹, ui_text_used, check-is.
+- Affected doc(s): `RUNAR_BACKLOG.md` (Okno Upgrade) — v témže commitu.
