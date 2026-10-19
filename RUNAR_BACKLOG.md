@@ -1281,9 +1281,8 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   jeden text o tom, co je zdarma) — owner: „ještě to doplníme“; nestavět.
 ### Rúnakort jako karta (DECISIONS 2026-10-19 (4), CODE-web → CODE-tune)
 - [x] ✅ *(CODE-tune 2026-10-19, fff8649)* QR na kartě (`runar-reader.html#kort=<KÓD>`) kód v appce předvyplní; uplatní ho člověk.
-- [ ] **Shrine: tisk dávky fyzických karet** — u vygenerované dávky odkazy na stránku karty CODE-web (`therunekeeper.com/kort/#k=…&v=o|f&l=…&n=…`,
-  `web/site/kort/index.html`; jeden vzhled = jedno místo, §20) a vyplnění `form='physical'`, `channel`, `design`, `lang`, `complimentary`.
-  Čeká na owner: `sql/2026-10-19_gift_codes_sledovani.sql` (CODE-web) ještě neběželo.
+- [x] ✅ *(CODE-tune 2026-10-19; SQL pustil owner týž den)* **Shrine: tisk dávky fyzických karet** — dávka ukládá `form='physical'`, `design`,
+  `lang`, `channel`, `complimentary`; každý kód odkazuje na svou kartu k tisku na webu CODE-web (`therunekeeper.com/kort/`), CSV nese odkaz.
 ### Karty run ke stažení — HANDOFF67, 68
 - [ ] Owner: název · zadní strana (AGNDOFA) · 24 textů (rady proti `RUNAR_POPISY_RUN.md`) · kde vyhodit dvojí citát · originál fotky.
 - [ ] Až karty půjdou opakovaně (IS, tiskárna): generátor do repa nad `v2/runar-runes.js`, `v2/runar-svgs.js`, `v2/fonts/fonts.css`
