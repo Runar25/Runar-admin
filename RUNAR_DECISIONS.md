@@ -11786,3 +11786,12 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Platnost:** karta nemá expiraci (kód platí, dokud Rúnar běží).
 - **Čeká:** automatické doručení po zaplacení — až owner rozhodne Shopify / Rapyd (BACKLOG).
 - Affected doc(s): `RUNAR_BACKLOG.md` — v témže commitu.
+
+## 2026-10-19 (5) — Strop hlášení z appky: 40 za hodinu na účet (trigger v databázi)
+- **Owner:** *„4. na účet“* (otázka: na účet, nebo i na IP adresu?).
+- **Co:** `sql/2026-10-19_bug_reports_strop.sql` — trigger před vložením do `bug_reports` volá `check_rate_limit('report:<účet>', 1 h, 40)`
+  a nad stropem vloží odmítne. Hlášení posílá appka rovnou do tabulky, server mezi tím není — strop proto drží databáze.
+- **Proč 40:** změřeno 2026-10-19 na 265 hlášeních (3 testeři): nejvíc 23 za hodinu jednou, jinak nejvýš 9. **Proč účet, ne IP:** hlášení
+  posílá jen přihlášený a IP by byl další osobní údaj. Odmítnuté hlášení appka drží ve frontě a pošle znovu (beze změny klienta).
+- **Ověřeno:** zkušební projekt, transakce s ROLLBACK — 45 pokusů jednoho účtu: 40 prošlo, 5 zastaveno; bez přihlášení 45 / 0.
+- Affected doc(s): `RUNAR_BACKLOG.md` — v témže commitu.
