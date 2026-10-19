@@ -15,7 +15,7 @@
      Seeker plamen v Isa, Walker stezka v Othila, Wanderer hory s ptákem v Uruz; kámen z RUNE_SVGS, symbol centrovaný getBBox.
      Na webu bez pohybu (owner schválil pohyb jen pro „you are here“ v appce).
      Texty jen EN a pracovní z ukázky CODE-read; IS jednou sadou s oknem (§2). Výpis = tierFeatures(), TIERS, CARD_PACKS živě (§10, §20).
-     CENY PŘEDPLATNÉHO DOČASNĚ z RUNAR_PRICING „Subscription Pricing“ (PRICE_DRAFT), do configu je přesune CODE-tune. -->
+     Ceny předplatného z configu: TIERS.*.price_isk_month / price_isk_year (do 2026-10-19 tu byla dočasná kopie z RUNAR_PRICING). -->
 <link rel="stylesheet" href="https://runar25.github.io/Runar-admin/v2/fonts/fonts.css">
 <link rel="stylesheet" href="https://runar25.github.io/Runar-admin/v2/runar-reader.css">
 <style>
@@ -83,8 +83,6 @@
 <script src="https://runar25.github.io/Runar-admin/v2/runar-svgs.js"></script>
 <script src="https://runar25.github.io/Runar-admin/v2/runar-utils.js"></script>
 <script>
-// DOČASNĚ: ceny z RUNAR_PRICING „Subscription Pricing“, dokud nejsou v configu (CODE-tune). Na web nejdou odsud.
-var PRICE_DRAFT = { standard: { m: 3490, y: 34800 }, premium: { m: 4900, y: 49000 } };
 var LANG = 'en', P = 'm';
 // Návštěvník nemá v tierFeatures() žádný řádek (nemá účet) → pracovní věta z ukázky okna CODE-read
 var VISITOR_EN = ['The Runes Collection and your life rune.'];
@@ -119,7 +117,7 @@ var ORDER = ['free_trial', 'rune_seeker', 'standard', 'premium'];
 function kr(x) { return x.toLocaleString('de-DE') + ' kr'; }   // tečka na tisíce jako v ukázce okna (1.490 kr)
 function draw() {
   document.getElementById('path').innerHTML = ORDER.map(function (id) {
-    var T = TIERS[id], pr = PRICE_DRAFT[id], short = T.label.replace(/^Rune\s+/, '').toUpperCase();
+    var T = TIERS[id], pr = T.price_isk_month ? { m: T.price_isk_month, y: T.price_isk_year } : null, short = T.label.replace(/^Rune\s+/, '').toUpperCase();
     var h = '<div class="j-st"><div class="j-stone">' + stoneSvg(id) + '</div><div class="j-nm">' + short + '</div>';
     if (pr) {
       h += P === 'm' ? '<div class="j-pr">' + kr(pr.m) + ' <small>a month</small></div><div class="j-gift"></div>'
