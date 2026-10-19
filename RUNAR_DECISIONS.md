@@ -11757,3 +11757,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   zálohy, aby e-mail nenarostl; s Greynirem tam nepatří. E-mail tím má o řádek víc (meze ve smoke ㊈: klidný den ≤ 5, čísla ≤ 7).
   Smoke ㊈ nově hlídá, že zdroj každé úlohy z `BEHY` existuje a obsahuje její kind (útok: přejmenovaný kind → FAIL).
 - Affected doc(s): žádný — pravidlo o úlohách z BEHY je zapsané od 2026-10-18 (2), registr je v kódu.
+
+## 2026-10-19 (3) — Retence čtení po dobu účtu, opuštěný účet po 3 letech pryč s upozorněním; hlášení jen přihlášení + strop
+
+- **Rozhodl:** owner 2026-10-19 na otázku o retenci: *„3. ano, přidej mazání po 3 letech s upozorněním. visitor tedy pokud má nějaký
+  dotaz napsat email přes emailové okno. registrovaný už na to má formulář. visitora maximálně omezíme právě proto, aby nemohl psát
+  nesmysly. a souhlasí i s limit na IP adresu.“*
+- **Retence:** čtení po dobu účtu; smazání účtu → pryč hned, ze záloh do 30 dní. Účet 3 roky bez přihlášení → upozornění e-mailem,
+  po lhůtě smazat. **Proč:** GDPR čl. 5 odst. 1 písm. e (omezení uložení) — „po dobu účtu“ bez konce by u opuštěných účtů znamenalo navždy.
+- **Návštěvník a hlášení:** platí už od 2026-10-10 (1) bod 2 — DB hlášení od nepřihlášeného odmítá, tlačítko vidí jen přihlášený; návštěvník
+  píše e-mailem (2026-10-15, 2026-10-19 (1)). Nic nového se nestaví. SQL z 2026-10-10 v repu chybělo → doplněno; nález z útoku zvenku
+  2026-10-18 („bez limitu pro nepřihlášené“) byl proto chybný a je v BACKLOGu opravený.
+- **Strop:** owner souhlasí s limitem; protože nepřihlášený psát nemůže, týká se už jen přihlášených (BACKLOG, CODE-tune).
+- Affected doc(s): `RUNAR_PRIVACY.md` („Retence + práva“), `RUNAR_BACKLOG.md` — v témže commitu.

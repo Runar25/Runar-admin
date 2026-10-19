@@ -566,6 +566,10 @@ atomický upsert, úklid starších než hodina; stejně tak `use_credit` (atomi
   taky při AI vyhledávání… Tohle je práce před spuštěním.“*). (a) SEO + AI vyhledávání (popisky run, tvar run v kolekci, statické texty jako
   obsah). (b) ✅ Ukládání vybraných čtení/vět pro vizuály — HOTOVO 2026-09-30: „✦ Keep this“ v reportéru (text + id čtení),
   DECISIONS 2026-09-30 (4); výpis = SQL v hlavičce `sql/2026-09-30_bug_reports_keep_a_limity.sql`.
+- [ ] **Mazání opuštěných účtů po 3 letech s upozorněním** (owner 2026-10-19, DECISIONS 2026-10-19 (3)) — CODE-tune: úloha
+  najde účty 3 roky bez přihlášení (`auth.users.last_sign_in_at`), pošle upozornění e-mailem (EN + IS, krátké — memory `emaily-kratke`),
+  po lhůtě smaže cestou `delete-account`; zápis v registru `MAZANI` + `ops_events` purge (§30). Zásady v appce (EN + IS). Otevřené
+  otázky na ownera (lhůta upozornění, účet s nevyčerpanými kredity / předplatným) → DECISIONS.
 - [ ] Export dat subjektu (mazání už kaskáduje přes delete-account). **Způsob rozhodnut 2026-10-18:** jen na e-mail z adresy účtu, odpověď
   na tutéž adresu (RUNAR_PRIVACY „Retence + práva“). Zbývá: skript, který export jednoho účtu vyrobí (CODE-read), a text do zásad (EN + IS).
 - [ ] Eval pipeline: pseudonymizace (opt-out exkluze HOTOVÁ).
@@ -866,8 +870,11 @@ tabulky s osobními daty RLS nebo granty zavřené (prázdné / 401), zápis do 
 bez přihlášení 401 dřív, než stojí peníze (`claude-proxy` ř. 461), uložené XSS v hlášeních ošetřené `esc()`, v klientu jen anon klíč.
 `runar_corrections` jsou veřejné záměrně (slovní dvojice). Netestováno: přihlášený uživatel (cizí účty, kredity tokem appky), entropie
 dárkových kódů. (Druhý pokus o spuštění téhle zkoušky zastavila ochrana Claude Code; běh, který proběhl, je tenhle.)
-- [ ] **Hlášení (`bug_reports`) bez limitu pro nepřihlášené:** insert `check(true)`, deduplikace jen přes `client_uuid`, který volí klient →
-  dalo by se zaplavit (šum v triáži, místo v DB). Návrh: `check_rate_limit` per IP i tady (jako waitlist / redeem). CODE-tune.
+- [x] ~~**Hlášení (`bug_reports`) bez limitu pro nepřihlášené**~~ — **chybný nález (opraveno 2026-10-19, CODE-read):** nepřihlášený hlášení
+  vložit nemůže od 2026-10-10 (politika `bug_reports_insert` jen `authenticated`, RLS zapnuté — ověřeno v produkci). Útok četl repo, kde to
+  SQL chybělo; doplněno `sql/2026-10-10_bug_reports_insert_jen_prihlaseni.sql`. Návštěvník píše e-mailem (DECISIONS 2026-10-15, 2026-10-19 (1)).
+- [ ] **Strop hlášení pro přihlášeného** (owner 2026-10-19 souhlasí s limitem; DECISIONS 2026-10-19 (3)): dnes přihlášený
+  (tester, tým) může hlášení posílat bez stropu. Návrh: `check_rate_limit` jako u waitlist / redeem — klíč (účet × IP) čeká na ownera. CODE-tune.
 
 #### Kolo 4 (od 2026-10-14, CODE-read) — napřed části změněné od uzavření kola 3 (b05f6d6, 186 commitů), pak zátěž a souběh
 **⭐ Uzavřeno 2026-10-15.** Prošlé: edge funkce, appka, landing, skripty, docs, zátěž, souběh. Co z nálezů hlídá stroj: ㉽ vidí landing,
