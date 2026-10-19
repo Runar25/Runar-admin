@@ -1,0 +1,64 @@
+<!doctype html>
+<!-- Symboly účtů a ikony záložek — SCHVÁLENO ownerem 2026-10-19 (DECISIONS 2026-10-19 (8)). CODE-read. Intake: podklad pro stavbu,
+     po převzetí CODE-tune (okno Upgrade, záložky) a CODE-web (stránka na webu) zmizí.
+     Kameny se NEKOPÍRUJÍ: bere je z v2/runar-svgs.js (RUNE_SVGS[klíč], první path = kámen), jako runeSvg(). Symbol se centruje na
+     skutečný obrys kamene (getBBox) a škáluje na danou velikost; tloušťka čáry 0,38 jednotky kamene.
+     Pohyb: v okně jen u účtu „you are here“; prefers-reduced-motion = bez pohybu. -->
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Account symbols</title>
+<style>
+body{background:#0a0c12;color:#8ba5c0;font-family:Georgia,serif;margin:0;padding:20px}
+.row{display:flex;flex-wrap:wrap;gap:28px;justify-content:center;text-align:center}
+.st{width:100px;height:138px;overflow:visible;display:block;margin:0 auto}
+.n{font-size:12px;letter-spacing:2px;color:#FFBF00;margin-top:8px}
+.tabs{display:flex;gap:30px;justify-content:center;margin-top:36px;color:#D6A85C;font-size:11px;letter-spacing:1.5px;text-align:center}
+.tabs svg{width:28px;height:28px;display:block;margin:0 auto 6px}
+.fl{transform-box:fill-box;transform-origin:50% 100%;animation:flk 2.8s ease-in-out infinite}
+.fl2{transform-box:fill-box;transform-origin:50% 100%;animation:flk2 2.1s ease-in-out infinite}
+@keyframes flk{0%,100%{transform:skewX(0) scaleY(1)}30%{transform:skewX(-3deg) scaleY(1.03)}60%{transform:skewX(2deg) scaleY(.98)}}
+@keyframes flk2{0%,100%{transform:skewX(0) scaleY(1)}40%{transform:skewX(4deg) scaleY(1.06)}75%{transform:skewX(-2deg) scaleY(.96)}}
+.bird{animation:fly 9s ease-in-out infinite}
+.wing{transform-box:fill-box;transform-origin:50% 100%;animation:flap 1.1s ease-in-out infinite}
+@keyframes fly{0%{transform:translate(-9px,3px)}25%{transform:translate(-2px,-1.5px)}50%{transform:translate(7px,1px)}75%{transform:translate(1px,4px)}100%{transform:translate(-9px,3px)}}
+@keyframes flap{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.35)}}
+@media (prefers-reduced-motion:reduce){.fl,.fl2,.bird,.wing{animation:none}}
+</style>
+<script src="../../v2/runar-svgs.js"></script>
+</head><body>
+<div class="row" id="stones"></div>
+<div class="tabs">
+<div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-7"/><path d="M12 14c-4 0-6-3-6-6 3 0 6 2 6 6z"/><path d="M12 12c0-4 2.5-6.5 6-6.5 0 3.5-2.5 6.5-6 6.5z"/><path d="M8 21h8"/></svg>LIFE RUNE<br>klíček</div>
+<div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15.5c0-2 .3-4 2.3-4.2 2-.1 3.4.3 3.5 2.4.1 2.2-.6 4-2.7 4.1-2 .1-3.1-.3-3.1-2.3z"/><path d="M13.6 18.6c-.2-1.7.4-3.2 2.1-3.4 1.8-.2 3 .3 3.2 2 .2 1.8-.6 2.9-2.3 3-1.8.2-2.8 0-3-1.6z"/><path d="M10 6.6c.2-1.8 1.2-2.8 3-2.6 1.8.2 2.7 1 2.5 2.8-.2 1.8-1.3 2.7-3 2.5-1.8-.2-2.7-.9-2.5-2.7z"/></svg>RUNE READING<br>tři vržené kameny</div>
+<div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 3C11 5 6 11 5 21"/><path d="M17 5l-5 1.6M15 8l-5 1.6M13 11l-4.5 1.5M11 14.5l-3.5 1.2"/></svg>JOURNAL<br>havraní pero</div>
+<div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8c-2 2-3.5 5-3.5 8 0 3 3 5 7.5 5s7.5-2 7.5-5c0-3-1.5-6-3.5-8"/><path d="M8 8h8"/><path d="M9 8 7.5 5.5M15 8l1.5-2.5"/><path d="M9.5 3.5c1.5 1 3.5 1 5 0"/></svg>RUNES COLLECTION<br>váček na runy</div>
+<div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V9"/><path d="M12 13 7.5 9.5M12 11l4.5-3.5M12 16l-3 -2M12 15l3-2"/><path d="M5 10c0-4 3-7 7-7s7 3 7 7c0 2-2 3.5-4 3.5M5 10c0 2 1.5 3.5 3.5 3.5"/><path d="M8 21c1.5-1 2.5-1 4 0 1.5-1 2.5-1 4 0"/></svg>TREE OF LIFE<br>jasan Yggdrasil</div>
+</div>
+<script>
+(function(){
+// Účet → kámen (klíč RUNE_SVGS) + symbol v souřadnicích 0–40. Visitor = prázdný kámen.
+var FLAME='<path class="fl" d="M20 36C12 36 8.5 30 10.5 24c1.6-4.6 5.6-6.4 6.2-12 3.4 2.4 4.6 6 3.8 9.4 2.6-1.6 3.6-4.8 3-8 5.6 4.4 7.6 11 5.6 16.6C27.6 33.6 24.4 36 20 36z"/><path class="fl2" d="M20 33c-3.2 0-4.8-2.6-4-5.2.7-2 2.6-2.8 2.9-5.2 2.4 1.6 3.8 3.8 3.4 6.4-.3 2.2-1 4-2.3 4z"/>';
+var MOUNT='<path d="M2 30 12 16l5 6 6-9 15 17"/><g class="bird"><path class="wing" d="M21 7q1.6-1.8 3.2 0q1.6-1.8 3.2 0"/></g>';
+// Stezka varianta B (owner „B“): vyplněná zužující se čára z levého dolního rohu doprava k obzoru; ph = fáze vlnění (pohyb).
+var TB={x0:8,x1:28,A:5.2,k:2.1,w:3.4,f:2.4};
+function trail(ph){var L=[],R=[];for(var i=0;i<=56;i++){var t=i/56;var y=6+32*Math.pow(1-t,TB.k);var A=TB.A*Math.pow(1-t,1.2)+0.4;var x=TB.x0+(TB.x1-TB.x0)*Math.pow(t,0.8)+A*Math.sin(t*TB.f*Math.PI+ph);var w=TB.w*Math.pow(1-t,1.3)+0.45;L.push([x-w/2,y]);R.push([x+w/2,y]);}var p=L.concat(R.reverse());return 'M'+p.map(function(q){return q[0].toFixed(2)+' '+q[1].toFixed(2)}).join(' L')+'Z';}
+var UCTY=[
+ {id:'free_trial',n:'VISITOR',kamen:'Blank',sym:'',vel:0},
+ {id:'rune_seeker',n:'RUNE SEEKER',kamen:'Isa',sym:FLAME,vel:7.2,cara:true},
+ {id:'standard',n:'RUNE WALKER',kamen:'Othila',sym:'<path class="trail" d="'+trail(0)+'"/>',vel:9.6,vypln:true},
+ {id:'premium',n:'RUNE WANDERER',kamen:'Uruz',sym:MOUNT,vel:8.6,cara:true}];
+var box=document.getElementById('stones');
+UCTY.forEach(function(u){
+ var sd=RUNE_SVGS[u.kamen]; var kamen=sd.paths.match(/<path[^>]*>/)[0];
+ var g=u.sym?('<g class="sym" '+(u.vypln?'fill="#D6A85C" stroke="none"':'fill="none" stroke="#D6A85C" stroke-linecap="round" stroke-linejoin="round"')+'>'+u.sym+'</g>'):'';
+ var d=document.createElement('div'); d.innerHTML='<svg class="st" viewBox="'+sd.vb+'">'+kamen+g+'</svg><div class="n">'+u.n+'</div>'; box.appendChild(d);
+ if(!u.sym) return;
+ var svg=d.querySelector('svg'), kp=svg.firstElementChild, sg=svg.querySelector('.sym');
+ var kb=kp.getBBox(), cx=kb.x+kb.width/2, cy=kb.y+kb.height/2, b=sg.getBBox(), s=u.vel/Math.max(b.width,b.height);
+ sg.setAttribute('transform','translate('+(cx-s*(b.x+b.width/2)).toFixed(3)+' '+(cy-s*(b.y+b.height/2)).toFixed(3)+') scale('+s.toFixed(4)+')');
+ if(!u.vypln) sg.setAttribute('stroke-width',(0.38/s).toFixed(2));
+});
+var red=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+var tr=document.querySelectorAll('.trail');
+if(!red){var t0=null;(function f(ts){if(ts){if(!t0)t0=ts;var ph=Math.sin((ts-t0)/1400)*0.5;tr.forEach(function(e){e.setAttribute('d',trail(ph))});}requestAnimationFrame(f)})();}
+})();
+</script></body></html>

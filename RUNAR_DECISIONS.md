@@ -11819,3 +11819,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   prohlížeč, Google Play i budoucí App Store (jako Spotify / Netflix: kupuje se na webu, appka jen pozná zaplacené).
 - **Otevřené:** vzhled okna (ukázka čeká na ownera); texty EN + IS; jak appka pozná Google Play.
 - Affected doc(s): `RUNAR_BACKLOG.md` (Uvítání a navedení, Web therunekeeper.com) — v témže commitu.
+
+## 2026-10-19 (8) — Účty značí kameny se symboly (prázdný · plamen · stezka · hory s ptákem); záložky dostanou kreslené ikony
+
+- **Rozhodl:** owner 2026-10-19 nad ukázkami CODE-read. Okno Upgrade: *„to vypadá dobře. jen se mi tam nelíbí ten kosočtverec … každý svoji
+  runu, ale runy to být nesmí … jednoduchý, čistý. Agndofa styl. možná by to mohly být svg kameny, co máme kolem run“*; pak *„visitor prázdný
+  kámen, RS plamen … klikatící stezka … hory, stezka a hory bez těch kroužků. umístit doprostřed kamenů“*; stezka *„jen ta čára … taky se
+  vlnit … z levého dolního rohu … imitace 3D“*, *„B. jen ten jeden.“*; pták *„super“*. Záložky: *„ikony záložek dobrý … runy se dávají do
+  váčku, takže kolekce run ve váčku je dobrá.“*
+- **Co:** Gestur = prázdný kámen (Blank) · Leitandi = plamen v kameni Isa · Vegfarandi = stezka B v kameni Othila · Ferðalangur = hory
+  s ptákem v kameni Uruz. Kameny z `RUNE_SVGS` (bez run), symbol na středu skutečného obrysu kamene. Pohyb (plamen se chvěje, stezka
+  se vlní, pták létá) jen u účtu „you are here“; bez animací v klidu. Záložky: klíček · tři kameny · pero · váček · jasan místo ✧ ✦ ◌ ◈.
+  Kresby: `docs/inbox/2026-10-19-symboly-uctu-a-zalozek.html`.
+- **Proč:** symboly jsou zastávky na cestě, ne stupně — kánon: Standard a Premium nejsou vyšší hodnost (`RUNAR_DESIGN.md` „Příběh uživatele“),
+  proto žádné hvězdy, koruny ani počty čárek. Kámen je jazyk appky (§5 „kámen pro runy, které držíš“). Pohyb jen u jednoho kamene, jinak
+  přestane ukazovat, kde člověk stojí.
+- Affected doc(s): `RUNAR_BACKLOG.md` (okno Upgrade, ikony záložek) — v témže commitu.

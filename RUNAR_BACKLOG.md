@@ -1278,7 +1278,12 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   ani poloha textu se nemění. `prefers-reduced-motion` = jedno krátké rozzáření. Žlutá bublina helperu pryč — klepnutí na „?“ rozsvítí
   místo. Zavření okna „Where to start“ rozsvítí napřed popisek, pak „?“. Vzor (CSS) v ukázce z konverzace CODE-read 2026-10-19:
   `@keyframes c3` + `h4` (halo radial-gradient rgba(255,170,40,.32)); dnešní `guideGlow` (2× 1,4 s) owner viděl jako „skoro nejde poznat“.
-- [ ] **Okno Upgrade v appce „Your journey with Rúnar“ (owner 2026-10-19 směr schválil, vzhled čeká na ownera) → CODE-tune.**
+- [ ] **Okno Upgrade v appce „Your journey with Rúnar“ (owner 2026-10-19 směr i vzhled schválil — „to vypadá dobře“, kosočtverec
+  nahrazen kameny se symboly, DECISIONS 2026-10-19 (8)) → CODE-tune.** Ukázka okna `docs/inbox/2026-10-19-okno-upgrade-ukazka.html`,
+  symboly `docs/inbox/2026-10-19-symboly-uctu-a-zalozek.html`; výpis účtů z `tierFeatures()` (jako náhled webu CODE-web), ne z pracovních vět.
+- [ ] **Ikony záložek místo znaků ✧ ✦ ◌ ◈ (owner 2026-10-19, DECISIONS 2026-10-19 (8)) → CODE-tune.** Life Rune klíček, Rune Reading
+  tři vržené kameny, Journal havraní pero, Runes Collection váček na runy, Tree of Life jasan — kresby v `docs/inbox/2026-10-19-symboly-uctu-a-zalozek.html`.
+  Znaky dnes stojí v textech UI_TEXT (`atab_*`) → vyndat do SVG, záložky nesmí zmizet (§32, smoke ㉼).
   Ukázka CODE-read 2026-10-19: účty jako kameny na cestě (Gestur → Leitandi → Vegfarandi → Ferðalangur), „you are here“ svíčkou, přepínač
   měsíčně / ročně (roční = cena za měsíc + „dva měsíce jsou dar“, bez přeškrtnutých cen), upgrade („Walk on as …“ → therunekeeper.com),
   downgrade od konce období, správa / zrušení předplatného, u Leitandi Rúnakort. V appce z Google Play bez cen, tlačítek i odkazů na nákup
