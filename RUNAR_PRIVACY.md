@@ -80,7 +80,8 @@ a souhlasí na pravdivém textu. Detail → `RUNAR_DECISIONS.md` 2026-09-11 (8).
 ## Retence + práva
 - **Retence** (owner 2026-10-19, DECISIONS 2026-10-19 (3)): čtení se drží **po dobu účtu**; smazáním účtu zmizí hned
   (kaskáda `delete-account`), ze záloh do 30 dní (zálohy výš). **Opuštěný účet** (3 roky bez přihlášení) se smaže stejnou cestou —
-  napřed mu přijde **upozornění e-mailem** (EN + IS) s lhůtou; přihlášení v lhůtě smazání zruší. Úloha mazání nečinných účtů zatím
+  napřed mu přijdou **dvě upozornění e-mailem** (EN + IS; 30 dní a týden předem); přihlášení v lhůtě smazání zruší. Účet s nevyčerpanými
+  kredity nebo běžícím předplatným se nemaže (DECISIONS 2026-10-19 (6)). Úloha mazání nečinných účtů zatím
   neexistuje (BACKLOG); až vznikne, stojí v registru `MAZANI` a hlásí, co smazala (§30).
 - **Práva subjektu:** přístup (Readings viewer to částečně pokrývá pro adminy; user si vidí své v journalu) +
   smazání (delete account → smazat/anonymizovat jeho readings). **Export (čl. 15 a 20 GDPR) jen na žádost e-mailem** (owner 2026-10-18,

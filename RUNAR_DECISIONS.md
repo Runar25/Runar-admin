@@ -11795,3 +11795,10 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   posílá jen přihlášený a IP by byl další osobní údaj. Odmítnuté hlášení appka drží ve frontě a pošle znovu (beze změny klienta).
 - **Ověřeno:** zkušební projekt, transakce s ROLLBACK — 45 pokusů jednoho účtu: 40 prošlo, 5 zastaveno; bez přihlášení 45 / 0.
 - Affected doc(s): `RUNAR_BACKLOG.md` — v témže commitu.
+
+## 2026-10-19 (6) — Opuštěné účty: upozornění 30 dní a týden předem, zaplacené se nemažou
+
+- **Rozhodl:** owner 2026-10-19 na otázky k 2026-10-19 (3): *„4. ano 5. ano 6. na účet“* (bod 6, strop hlášení na účet → 2026-10-19 (5)).
+- **Co:** (4) dvě upozornění e-mailem — 30 dní a týden před smazáním. (5) Účet s nevyčerpanými kredity nebo běžícím předplatným se nemaže,
+  dokud kredity nevyčerpá nebo předplatné neskončí. **Proč:** smazáním by člověk přišel o to, co zaplatil.
+- Affected doc(s): `RUNAR_PRIVACY.md` („Retence + práva“), `RUNAR_BACKLOG.md` — v témže commitu.

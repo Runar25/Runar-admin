@@ -568,8 +568,9 @@ atomický upsert, úklid starších než hodina; stejně tak `use_credit` (atomi
   DECISIONS 2026-09-30 (4); výpis = SQL v hlavičce `sql/2026-09-30_bug_reports_keep_a_limity.sql`.
 - [ ] **Mazání opuštěných účtů po 3 letech s upozorněním** (owner 2026-10-19, DECISIONS 2026-10-19 (3)) — CODE-tune: úloha
   najde účty 3 roky bez přihlášení (`auth.users.last_sign_in_at`), pošle upozornění e-mailem (EN + IS, krátké — memory `emaily-kratke`),
-  po lhůtě smaže cestou `delete-account`; zápis v registru `MAZANI` + `ops_events` purge (§30). Zásady v appce (EN + IS). Otevřené
-  otázky na ownera (lhůta upozornění, účet s nevyčerpanými kredity / předplatným) → DECISIONS.
+  po lhůtě smaže cestou `delete-account`; zápis v registru `MAZANI` + `ops_events` purge (§30). Zásady v appce (EN + IS).
+  **Upřesněno 2026-10-19 (6):** upozornění 30 dní předem + druhé týden předem; účet s nevyčerpanými kredity nebo běžícím
+  předplatným se NEMAŽE, dokud kredity nevyčerpá / předplatné neskončí.
 - [ ] Export dat subjektu (mazání už kaskáduje přes delete-account). **Způsob rozhodnut 2026-10-18:** jen na e-mail z adresy účtu, odpověď
   na tutéž adresu (RUNAR_PRIVACY „Retence + práva“). Zbývá: skript, který export jednoho účtu vyrobí (CODE-read), a text do zásad (EN + IS).
 - [ ] Eval pipeline: pseudonymizace (opt-out exkluze HOTOVÁ).
