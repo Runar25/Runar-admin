@@ -1247,6 +1247,12 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   How a reading works, „?“, nápovědy „+“, karta po tahu, výzva v Kolekci a Journalu); návrh předložit ownerovi. Opakování podle IP ne
   bez rozboru — IP je osobní údaj a statická appka ji nevidí. Věta „The Runes Collection and your life rune are free.“ (schválená
   2026-10-10) se řeší v rámci toho; Coworkův IS návrh („getur fundið hvaða“ 7× proti „fundið út hvaða“ 219×) nepřebírat.
+  ➕ **Owner 2026-10-19: celé na CODE-read** — průchod appkou jako uživatel Visitor → Rune Seeker → upgrade → Premium (co se kdy objeví,
+  dává-li to smysl), návrh **okna Upgrade** (všechny účty od Visitora po Premium, ceny měsíčně / ročně se slevou, upgrade i downgrade,
+  vzor ElevenLabs Subscription), **předělané menu**, **helper „?“** jako okno nad místem, na které upozorňuje, a **zvýraznění How a reading
+  works** (záblesk nebo pomalé zvětšení) — s rešerší, jak to udělat nevtíravě. Owner: *„nikde nemáme klikací okno Upgrade … zapomněl jsem
+  vytvořit, jak na něj upgradovat.“* Ceny jsou zatím jen v `RUNAR_PRICING.md`, platby (Shopify / Rapyd) nepostavené. Stavět CODE-tune
+  po ownerově ano.
 - [ ] **„free to join“ → „{onboarding} when you join“** ve `vcn_text` a `journal_gate_txt` — zdroj je `TIER_LIMITS.rune_seeker.onboarding_label_*`
   (jako `visitor_join_note`), ne `free_trial` (Cowork ukázal na `free_trial`, tam je `onboarding` jen historický).
 - [x] ✖ **Kontakt pro Visitora: mailto vs okno** — owner 2026-10-19 „12. e-mail“: Visitor má dál odkaz na e-mail (mailto, rozhodnutí
