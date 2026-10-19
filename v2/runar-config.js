@@ -225,6 +225,10 @@ const TIERS = {
     label_is_acc:     'Vegfaranda',
     label_is_dat:     'Vegfaranda',
     monthly_readings: 50,          // Rune Walker: 50/month
+    // Cena v ISK s DPH (2026-10-19: z RUNAR_PRICING.md „Subscription Pricing“ sem — jediné místo, čte okno Upgrade, web a kalkulačka
+    // návratnosti; DECISIONS 2026-10-19 (7)). Roční = „pay 10 months, get 12“. Ceny rozhodl owner 2026-10-10 (DECISIONS 2026-10-10 (22)).
+    price_isk_month:  3490,
+    price_isk_year:   34800,
     voice_monthly:    true,
     voice_credits:    true,
     voice_static:     true,
@@ -240,6 +244,10 @@ const TIERS = {
     label_is_acc:     'Ferðalang',
     label_is_dat:     'Ferðalangi',
     monthly_readings: 75,          // Rune Wanderer: 75/month
+    // Cena v ISK s DPH (2026-10-19: z RUNAR_PRICING.md „Subscription Pricing“ sem — jediné místo, čte okno Upgrade, web a kalkulačka
+    // návratnosti; DECISIONS 2026-10-19 (7)). Roční = „pay 10 months, get 12“. Ceny rozhodl owner 2026-10-10 (DECISIONS 2026-10-10 (22)).
+    price_isk_month:  4900,
+    price_isk_year:   49000,
     voice_monthly:    true,
     voice_credits:    true,
     voice_static:     true,

@@ -993,11 +993,29 @@ function _updateTrialTexts() {
   setText('trial-end-btn', t('become_rs_btn'));
 }
 
+// Ikony záložek (owner 2026-10-19, DECISIONS 2026-10-19 (8): „ikony záložek dobrý … runy se dávají do váčku“). Kresby CODE-read
+// (docs/inbox/2026-10-19-symboly-uctu-a-zalozek.html), barva = barva textu záložky (currentColor), takže aktivní záložka je zlatá
+// i s ikonou. Do té doby znaky ✧ ✦ ◌ ◈ v UI_TEXT atab_* — teď je text bez znaku a ikonu přidá _zalozka (jedno místo pro všech pět).
+var TAB_IKONY = {
+  liferune:   '<path d="M12 21v-7"/><path d="M12 14c-4 0-6-3-6-6 3 0 6 2 6 6z"/><path d="M12 12c0-4 2.5-6.5 6-6.5 0 3.5-2.5 6.5-6 6.5z"/><path d="M8 21h8"/>',
+  reading:    '<path d="M5 15.5c0-2 .3-4 2.3-4.2 2-.1 3.4.3 3.5 2.4.1 2.2-.6 4-2.7 4.1-2 .1-3.1-.3-3.1-2.3z"/><path d="M13.6 18.6c-.2-1.7.4-3.2 2.1-3.4 1.8-.2 3 .3 3.2 2 .2 1.8-.6 2.9-2.3 3-1.8.2-2.8 0-3-1.6z"/><path d="M10 6.6c.2-1.8 1.2-2.8 3-2.6 1.8.2 2.7 1 2.5 2.8-.2 1.8-1.3 2.7-3 2.5-1.8-.2-2.7-.9-2.5-2.7z"/>',
+  journal:    '<path d="M19 3C11 5 6 11 5 21"/><path d="M17 5l-5 1.6M15 8l-5 1.6M13 11l-4.5 1.5M11 14.5l-3.5 1.2"/>',
+  collection: '<path d="M8 8c-2 2-3.5 5-3.5 8 0 3 3 5 7.5 5s7.5-2 7.5-5c0-3-1.5-6-3.5-8"/><path d="M8 8h8"/><path d="M9 8 7.5 5.5M15 8l1.5-2.5"/><path d="M9.5 3.5c1.5 1 3.5 1 5 0"/>',
+  tree:       '<path d="M12 21V9"/><path d="M12 13 7.5 9.5M12 11l4.5-3.5M12 16l-3 -2M12 15l3-2"/><path d="M5 10c0-4 3-7 7-7s7 3 7 7c0 2-2 3.5-4 3.5M5 10c0 2 1.5 3.5 3.5 3.5"/><path d="M8 21c1.5-1 2.5-1 4 0 1.5-1 2.5-1 4 0"/>'
+};
+function _zalozka(tab) {
+  var el = document.getElementById('atab-' + tab);
+  if (!el || !TAB_IKONY[tab]) return;
+  el.innerHTML = '<svg class="atab-ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"'
+    + ' stroke-linejoin="round" aria-hidden="true">' + TAB_IKONY[tab] + '</svg>';
+  el.appendChild(document.createTextNode(t('atab_' + tab)));
+}
+
 // Journal gate, auth modal consent, journal re-render, buildPills
 function _updateGateTexts() {
   // Journal tab label
   // 2026-10-10 (ráčna ㉸, DECISIONS 2026-10-10 (1) bod 5): texty z UI_TEXT, znění beze změny.
-  setText('atab-journal', t('atab_journal'));
+  _zalozka('journal');
   // Journal gate — Visitor teaser
   const jgTxt = document.getElementById('journal-gate-txt');
   if (jgTxt) jgTxt.innerHTML = t('journal_gate_txt');
@@ -1041,10 +1059,10 @@ function updateUIText() {
   // 2026-10-19 (owner „13. pod BEGIN THE READING“): uživatel ví, že mluví s AI, dřív než čte (EU AI Act čl. 50 od 2. 8. 2026;
   // text CODE-read). Do té doby to appka říkala jen v souhlasu u otázky, v nápovědě a v zásadách.
   setText('ai-note', t('ai_note'));
-  setText('atab-reading',    t('atab_reading'));      // 2026-10-10: záložky a nadpis z UI_TEXT (ráčna ㉸)
-  setText('atab-collection', t('atab_collection'));
-  setText('atab-tree',       t('atab_tree'));
-  setText('atab-liferune',   t('atab_liferune'));
+  _zalozka('reading');      // 2026-10-10: záložky a nadpis z UI_TEXT (ráčna ㉸); 2026-10-19 s kreslenou ikonou (_zalozka)
+  _zalozka('collection');
+  _zalozka('tree');
+  _zalozka('liferune');
   _wtsPaint();   // okno „Where to start“ — statické texty (§14), přepnutí jazyka je přepíše i v otevřeném okně
   setText('hero-eyebrow',    t('hero_eyebrow'));
   setText('hero-eyebrow-m',  t('hero_eyebrow'));

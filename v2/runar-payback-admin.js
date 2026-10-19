@@ -1,8 +1,8 @@
 // Shrine admin — záložka PAYBACK: kalkulačka návratnosti (kolik platících předplatitelů pokryje náklady a kolik zbyde na mzdu).
 // Proč (owner 2026-10-13): „payback nemá být odkaz na claude! … mě nevadí, pokud to bude webovka“ — do té doby záložka vedla na soukromý
 // artifact v claude.ai (b116f4d), který owner nechtěl a nikdo jiný neotevřel.
-// Čísla NEBYDLÍ tady (§20): stránka si při otevření načte ../RUNAR_PRICING.md a vezme z něj ceny předplatného („Subscription Pricing“),
-// plány ElevenLabs („ElevenLabs Plan — When to Upgrade“) a fixní náklady po spuštění („Fixed monthly costs“). Změníš-li číslo v docu,
+// Čísla NEBYDLÍ tady (§20): ceny předplatného bere z configu (TIERS.*.price_isk_month / _year, od 2026-10-19 — do té doby z tabulky
+// „Subscription Pricing“ v docu), a při otevření si načte ../RUNAR_PRICING.md kvůli kurzu, plánům ElevenLabs („ElevenLabs Plan — When to Upgrade“) a fixní náklady po spuštění („Fixed monthly costs“). Změníš-li číslo v docu,
 // kalkulačka ho ukáže při příštím otevření. Když tabulku nepřečte, řekne to nahoře — nikdy tiše nepočítá se starými čísly.
 // Tvar tabulek hlídá smoke (scripts/verify_payback_pricing.js): parser tady + kontrolní součet proti řádku „Celkem“ v docu.
 // Daně a odvody (~20 % zaměstnavatel, ~33 % osobní, DPH 24 % nad 2 000 000 ISK ročně) a poplatek za platbu (2,9 % + $0,30) jsou
@@ -34,15 +34,17 @@
     }
     return out.length ? out : null;
   }
-  function parsePricing(md) {
+  // tiers = TIERS z runar-config.js (shrine ho má načtený; node ho předá). Ceny předplatného jen odtud (2026-10-19, §20).
+  function parsePricing(md, tiers) {
     var chyby = [];
-    var sub = tabulka(md, '## Subscription Pricing');
     var ceny = {};
-    (sub || []).forEach(function (r) {
-      if (/^ISK\/month$/i.test(r[0])) { ceny.stdM = cislo(r[1]); ceny.premM = cislo(r[2]); }
-      if (/^Annual\/month/i.test(r[0])) { ceny.stdR = cislo(r[1]); ceny.premR = cislo(r[2]); }
-    });
-    ['stdM', 'premM', 'stdR', 'premR'].forEach(function (k) { if (!(ceny[k] > 0)) chyby.push('subscription price ' + k + ' not found'); });
+    var T = tiers || (typeof TIERS !== 'undefined' ? TIERS : null);
+    if (T && T.standard && T.premium) {
+      ceny.stdM = T.standard.price_isk_month; ceny.premM = T.premium.price_isk_month;
+      ceny.stdR = T.standard.price_isk_year > 0 ? Math.round(T.standard.price_isk_year / 12) : null;
+      ceny.premR = T.premium.price_isk_year > 0 ? Math.round(T.premium.price_isk_year / 12) : null;
+    }
+    ['stdM', 'premM', 'stdR', 'premR'].forEach(function (k) { if (!(ceny[k] > 0)) chyby.push('subscription price ' + k + ' not found in config (TIERS.*.price_isk_*)'); });
     var kurzM = md.match(/\$1\s*=\s*([\d.,]+)\s*ISK/);
     var kurz = kurzM ? cislo(kurzM[1]) : null;
     if (!(kurz > 0)) chyby.push('exchange rate ($1 = … ISK) not found');
