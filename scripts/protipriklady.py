@@ -147,6 +147,8 @@ PRIPADY = [
  ('obchazka', 'verify_opt_out.js', 'scripts/utils/stats.js', 'append', '', "\nconst _protiQ2 = `select text\n  from\n  readings where lang = $1`;\n"),   # opt-out:ok 2026-10-11 podstrčená chyba pro útok na verify_opt_out, nic nečte
  ('obchazka', 'verify_opt_out.js', 'scripts/utils/stats.js', 'append', '', "\nconst _protiQ3 = 'select text from \"readings\" where lang = $1';\n"),   # opt-out:ok 2026-10-11 podstrčená chyba pro útok na verify_opt_out, nic nečte
  ('chyti', 'verify_jazyk_ui.js', 'v2/runar-translations.js', 'replace', "'Read with Opus 5 (test)'", "'Čtení s Opusem 5 (zkouška)'"),
+ # ㉹ čte i web/ (CODE-web 2026-10-19; BACKLOG čekal, až bude ve web/ první soubor v gitu): čeština ve věte, kterou vidí návštěvník webu
+ ('chyti', 'verify_jazyk_ui.js', 'web/site/index.html', 'replace', "'That email address does not look right.'", "'Tahle e-mailová adresa nevypadá správně.'"),
  ('chyti', 'verify_edge_imports.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'regex', r'npm:@supabase/supabase-js@[0-9.]+', 'npm:@supabase/supabase-js@2'),
  ('chyti', 'verify_rune_glyphs.js', 'v2/runar-help.html', 'replace', '</body>', '<p>ᚠ</p></body>'),
  # ㉻ hlídá od 2026-10-11 i shrine a runu z DB (CODE-tune, owner „jeď ty tři chyby“): návrat každé ze tří opravených vad musí shodit
