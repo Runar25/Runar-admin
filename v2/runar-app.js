@@ -1360,7 +1360,12 @@ function closeWhereToStart(doKolekce) {
     if (hotovo) return; hotovo = true;
     m.classList.remove('open', 'wts-out');
     if (card) { card.style.transform = ''; card.style.opacity = ''; }
-    if (cil) { cil.classList.remove('guide-glow'); void cil.offsetWidth; cil.classList.add('guide-glow'); }
+    // 2026-10-19 (owner, DECISIONS 2026-10-19 (7)): svíčka C3 místo dvojího rozzáření; okno „by mělo ukázat i na helper“ — po popisku
+    // „How a reading works“ se rozsvítí „?“ (4,5 s = délka nádechů). rozsvit žije v runar-helper.js (jedno místo pro všechna zvýraznění).
+    if (cil && typeof window.rozsvit === 'function') {
+      window.rozsvit(cil);
+      setTimeout(function () { var hb = document.getElementById('hb-btn'); if (hb) window.rozsvit(hb); }, 4500);
+    }
     if (doKolekce) setTimeout(function () { showAppTab('collection'); }, 600);
   };
   var klid = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);

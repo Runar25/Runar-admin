@@ -59,7 +59,7 @@ const srv = http.createServer((req, res) => {
     const nejbliz = zive.length ? zive.reduce((a, p) => d(p) < d(a) ? p : a, zive[0]) : null;
     return { d0: Math.round(d({ x: b0.left + b0.width / 2, y: b0.top + b0.height / 2 })), dMin: nejbliz ? Math.round(d(nejbliz)) : null,
              w0: Math.round(b0.width), wMin: zive.length ? Math.round(Math.min.apply(null, zive.map(p => p.w))) : null,
-             zavreno: !m.classList.contains('open'), glow: lbl.classList.contains('guide-glow'), seen: localStorage.getItem('runar_wts_seen'),
+             zavreno: !m.classList.contains('open'), glow: lbl.classList.contains('svice'), seen: localStorage.getItem('runar_wts_seen'),
              cilVidet: tr.top > 0 && tr.bottom < innerHeight, tab: activeAppTab };
   })()`);
 
