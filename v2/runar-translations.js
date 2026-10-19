@@ -507,6 +507,7 @@ const UI_TEXT = {
     redeem_err_not_found: 'Code not found.',
     redeem_err_used:      'This code has already been used.',
     redeem_err_signin:    'Please sign in first.',
+    redeem_err_empty:     'Enter a code.',   // 2026-10-19: dřív natvrdo v runar-auth.js redeemCode (§10)
     redeem_err_session:   'Please sign in again.',
     redeem_err_rate:      'Too many attempts. Please wait 15 minutes.',
     life_need_units:      'You need {units}',
@@ -1032,6 +1033,7 @@ const UI_TEXT = {
     redeem_err_not_found: 'Kóði fannst ekki.',
     redeem_err_used:      'Þessi kóði hefur þegar verið notaður.',
     redeem_err_signin:    'Skráðu þig inn fyrst.',
+    redeem_err_empty:     'Sláðu inn kóðann.',   // 2026-10-19: Greynir OK; korpus „slá inn kóðann“ 30×, „sláðu inn“ 432×
     redeem_err_session:   'Skráðu þig inn aftur.',
     redeem_err_rate:      'Of margar tilraunir. Bíddu 15 mínútur.',
     life_need_units:      'Þú þarft {units}',
