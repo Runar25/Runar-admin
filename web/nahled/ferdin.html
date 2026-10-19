@@ -5,27 +5,48 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>The journey with Rúnar · preview</title>
 <!-- 2026-10-19 CODE-web: NÁHLED stránky „The journey with Rúnar“ (DECISIONS 2026-10-19 (7)) — nevydává se, vzhled okna v appce čeká na ownera.
-     Verze 2 (týž den): owner k verzi 1 *„grafika neodpovídá tomu, co je Rúnar. načti si, jak přesně jsme dělali visual“* — verze 1 měla
-     vlastní vymyšlené styly (sloupce vedle sebe, vlastní písmo a odstupy). Teď stránka načítá ŽIVÉ styly appky (runar-reader.css) a staví
-     jen z jejích tříd: lišta, hero s portrétem, sloupec .app, .card + .card-lbl, přepínač .reading-mode-row, .btn-full / .btn-full.sec, .note
-     (paměť match-existing-visual-first). Vlastní CSS jen na cenu a řádky balíčků, z tokenů appky.
+     Verze 3 (týž den). Owner k v1: *„grafika neodpovídá tomu, co je Rúnar“*; k v2 (celá stránka ze tříd appky, účty pod sebou, portrét):
+     *„ten styl je dobrý, ale pozadí a barvy ne. horní lišta. druhá verze není přehledná, jelikož je moc dlouhá. vrať to zpět, ale pozadí
+     a barvy lepší. Rúnar se tam fakt nevleze.“* → rozložení v1 (čtyři účty vedle sebe, na mobilu pod sebou), bez portrétu; pozadí,
+     barvy a horní lišta ze živých stylů appky (runar-reader.css: body::before, .topbar, .card, .reading-mode-row, .btn-full, tokeny).
      Texty jen EN a pracovní z ukázky CODE-read (docs/inbox/2026-10-19-okno-upgrade-ukazka.html); IS jednou sadou s oknem (§2).
      Výpis účtu = tierFeatures(), jména TIERS, balíčky CARD_PACKS — živě z appky (§10, §20).
-     CENY PŘEDPLATNÉHO DOČASNĚ z RUNAR_PRICING „Subscription Pricing“ (PRICE_DRAFT), do configu je přesune CODE-tune. -->
+     CENY PŘEDPLATNÉHO DOČASNĚ z RUNAR_PRICING „Subscription Pricing“ (PRICE_DRAFT), do configu je přesune CODE-tune.
+     Značka účtu: prázdný kámen (runeSvg Blank) jen jako místo — owner kosočtverec odmítl, symboly navrhuje CODE-read. -->
 <link rel="stylesheet" href="https://runar25.github.io/Runar-admin/v2/fonts/fonts.css">
 <link rel="stylesheet" href="https://runar25.github.io/Runar-admin/v2/runar-reader.css">
 <style>
-/* jen to, co appka nemá: cena účtu a řádek balíčku karty — hodnoty z tokenů appky */
-.price{font-family:'Cinzel',serif;font-size:1.3em;letter-spacing:1px;color:var(--white);margin:-6px 0 2px;}
+/* Rozložení stránky (appka ho nemá — je to jeden úzký sloupec); barvy jen z tokenů appky */
+.page{position:relative;z-index:1;max-width:1140px;margin:0 auto;padding:44px 28px 70px;}
+.head{text-align:center;margin-bottom:28px;}
+.head .hero-sub{max-width:34em;margin:0 auto;}
+.page .reading-mode-row{max-width:320px;margin:0 auto 34px;}
+.path{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;position:relative;align-items:stretch;}
+.path::before{content:"";position:absolute;left:12%;right:12%;top:26px;border-top:1px dashed var(--border);}
+.path .card{margin:0;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 18px 22px;background:var(--card);position:relative;margin-top:26px;}
+.stone{width:44px;margin:-24px auto 14px;background:var(--bg);padding:0 4px;}
+.stone svg{width:100%;height:auto;display:block}
+.path .card-lbl{margin-bottom:8px;}
+.price{font-family:'Cinzel',serif;font-size:1.25em;letter-spacing:1px;color:var(--white);min-height:1.5em;}
 .price small{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.72em;letter-spacing:0;color:var(--muted);}
-.gift{font-style:italic;color:var(--gold);opacity:0.85;font-size:0.95em;margin-bottom:12px;}
-.feat{list-style:none;margin:12px 0 4px;}
-.feat li{font-size:1.02em;line-height:1.6;color:var(--white);margin-bottom:4px;}
-.pack{display:flex;justify-content:space-between;align-items:baseline;padding:11px 0;border-bottom:1px solid rgba(46,74,112,0.4);}
-.pack:last-of-type{border-bottom:none;}
-.pack .nm{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:2px;color:var(--gold);}
-.pack .c{font-style:italic;color:var(--muted);}
-.pack .p{font-family:'Cinzel',serif;font-size:0.9em;color:var(--white);}
+.gift{font-style:italic;color:var(--gold);opacity:0.85;font-size:0.92em;min-height:1.4em;}
+.feat{list-style:none;margin:10px 0 14px;}
+.feat li{font-size:1em;line-height:1.5;color:var(--white);margin-bottom:6px;}
+.path .btn-full{margin-top:auto;padding:12px 6px;font-size:0.66em;letter-spacing:1px;white-space:nowrap;}
+.path .note{margin:8px 0 0;}
+.cardsec{max-width:900px;margin:44px auto 0;text-align:center;}
+.packs{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin:6px 0 14px;}
+.pk{border:1px solid var(--border);background:var(--card2);padding:12px 18px;min-width:120px;}
+.pk .n{font-family:'Cinzel',serif;font-size:0.68em;letter-spacing:2px;color:var(--gold);}
+.pk .c{font-style:italic;color:var(--muted);margin:2px 0;}
+.pk .p{font-family:'Cinzel',serif;font-size:0.95em;color:var(--white);}
+.foot{text-align:center;margin-top:30px;}
+@media(max-width:860px){
+  .page{padding:26px 16px 50px;}
+  .path{grid-template-columns:1fr;gap:0;}
+  .path::before{display:none;}
+  .path .card{margin-top:30px;}
+}
 </style>
 </head>
 <body>
@@ -33,39 +54,23 @@
   <a class="brand" href="../site/">AGNDOFA</a>
 </div></header>
 
-<section class="hero">
-  <div class="hero-inner">
-    <div class="hero-portrait-col">
-      <div class="hero-portrait-wrap">
-        <img src="https://pmitxjvkeovijreepror.supabase.co/storage/v1/object/public/runar-images/Runar_portrait.png" alt="Rúnar the Rune Keeper">
-      </div>
-      <div class="hero-mob-label">
-        <div class="hero-eyebrow">YOUR JOURNEY WITH RÚNAR</div>
-        <div class="hero-title">Rúnar</div>
-      </div>
-    </div>
-    <div class="hero-text-col">
-      <div class="hero-eyebrow hero-desk-only">YOUR JOURNEY WITH RÚNAR</div>
-      <h1 class="hero-title hero-desk-only">Rúnar</h1>
-      <p class="hero-sub">Each step holds more of Rúnar. Walk as far as you wish, and step back whenever you like.</p>
-      <blockquote class="hero-quote" id="hero-quote"></blockquote>
-    </div>
+<div class="page">
+  <div class="head">
+    <div class="hero-eyebrow">YOUR JOURNEY WITH RÚNAR</div>
+    <p class="hero-sub">Each step holds more of Rúnar. Walk as far as you wish, and step back whenever you like.</p>
   </div>
-</section>
-
-<div class="app">
   <div class="reading-mode-row" id="per">
     <button class="reading-mode-btn active" data-p="m">MONTHLY</button>
     <button class="reading-mode-btn" data-p="y">YEARLY</button>
   </div>
-  <div id="path"></div>
-  <div class="card">
+  <div class="path" id="path"></div>
+  <div class="cardsec card">
     <div class="card-lbl" id="card-h"></div>
     <p class="note">No subscription and no expiry. For yourself, or as a gift.</p>
-    <div id="packs"></div>
-    <button class="btn-full sec" disabled>COMING SOON</button>
+    <div class="packs" id="packs"></div>
+    <p class="note" style="margin:0;">Coming soon.</p>
   </div>
-  <p class="note" style="text-align:center;">Prices in Icelandic krónur. Cancel any time.</p>
+  <p class="note foot">Prices in Icelandic krónur. Cancel any time.</p>
 </div>
 
 <script src="https://runar25.github.io/Runar-admin/v2/runar-config.js"></script>
@@ -80,27 +85,28 @@ var LANG = 'en', P = 'm';
 // Návštěvník nemá v tierFeatures() žádný řádek (nemá účet) → pracovní věta z ukázky okna CODE-read
 var VISITOR_EN = ['The Runes Collection and your life rune.'];
 var ORDER = ['free_trial', 'rune_seeker', 'standard', 'premium'];
+var blank = RUNES.filter(function (r) { return r.svg === 'Blank'; })[0];
 function kr(x) { return x.toLocaleString('de-DE') + ' kr'; }   // tečka na tisíce jako v ukázce okna (1.490 kr)
 function draw() {
   document.getElementById('path').innerHTML = ORDER.map(function (id) {
-    var T = TIERS[id], pr = PRICE_DRAFT[id], h = '<div class="card"><div class="card-lbl">✦ ' + T.label.toUpperCase() + '</div>';
+    var T = TIERS[id], pr = PRICE_DRAFT[id], short = T.label.replace(/^Rune\s+/, '').toUpperCase();
+    var h = '<div class="card"><div class="stone">' + runeSvg(blank, { frame: true }) + '</div><div class="card-lbl">' + short + '</div>';
     if (pr) {
-      h += P === 'm' ? '<div class="price">' + kr(pr.m) + ' <small>a month</small></div>'
-                     : '<div class="price">' + kr(Math.round(pr.y / 12)) + ' <small>a month, ' + kr(pr.y) + ' a year</small></div><div class="gift">Two months are a gift.</div>';
+      h += P === 'm' ? '<div class="price">' + kr(pr.m) + ' <small>a month</small></div><div class="gift"></div>'
+                     : '<div class="price">' + kr(Math.round(pr.y / 12)) + ' <small>a month</small></div><div class="gift">' + kr(pr.y) + ' a year. Two months are a gift.</div>';
     } else {
-      h += '<div class="price"><small>' + (id === 'free_trial' ? 'Free' : 'Free to join') + '</small></div>';
+      h += '<div class="price"><small>' + (id === 'free_trial' ? 'Free' : 'Free to join') + '</small></div><div class="gift"></div>';
     }
     var f = id === 'free_trial' ? VISITOR_EN : tierFeatures(id, LANG);
     h += '<ul class="feat">' + f.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>';
-    if (pr) h += '<button class="btn-full" disabled>WALK ON AS ' + T.label.replace(/^Rune\s+/, '').toUpperCase() + '</button><p class="note" style="text-align:center;margin:10px 0 0;">Coming soon.</p>';
+    if (pr) h += '<button class="btn-full" disabled>WALK ON AS ' + short + '</button><p class="note">Coming soon.</p>';
     else if (id === 'rune_seeker') h += '<button class="btn-full sec">BECOME A ' + T.label.toUpperCase() + '</button>';
     return h + '</div>';
   }).join('');
 }
-document.getElementById('hero-quote').innerHTML = UI_TEXT[LANG].hero_quote || '';
-document.getElementById('card-h').textContent = '✦ ' + VOCAB.card.en.toUpperCase();
+document.getElementById('card-h').textContent = VOCAB.card.en.toUpperCase();
 document.getElementById('packs').innerHTML = CARD_PACKS.map(function (p) {
-  return '<div class="pack"><span class="nm">' + cardPackName(p, LANG).toUpperCase() + '</span><span class="c">' + vn('cast', p.credits, LANG) + '</span><span class="p">' + kr(p.isk) + '</span></div>';
+  return '<div class="pk"><div class="n">' + cardPackName(p, LANG).toUpperCase() + '</div><div class="c">' + vn('cast', p.credits, LANG) + '</div><div class="p">' + kr(p.isk) + '</div></div>';
 }).join('');
 document.querySelectorAll('#per button').forEach(function (b) {
   b.onclick = function () { P = b.dataset.p; document.querySelectorAll('#per button').forEach(function (x) { x.classList.toggle('active', x === b); }); draw(); };
