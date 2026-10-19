@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The journey with Rúnar · preview</title>
+<!-- 2026-10-19 CODE-web: NÁHLED stránky „The journey with Rúnar“ (DECISIONS 2026-10-19 (7)) — nevydává se, vzhled okna v appce čeká na ownera.
+     Stejný jazyk jako ukázka okna CODE-read (docs/inbox/2026-10-19-okno-upgrade-ukazka.html): cesta, kameny, MONTHLY / YEARLY,
+     „Two months are a gift.“, bez přeškrtnutých cen. Texty jen EN a pracovní (IS se vymyslí s oknem jednou sadou, §2).
+     Výpis účtu skládá tierFeatures() z configu, jména TIERS, balíčky karty CARD_PACKS — vše živě z appky (§10, §20).
+     CENY PŘEDPLATNÉHO jsou tu DOČASNĚ opsané z RUNAR_PRICING „Subscription Pricing“ (PRICE_DRAFT), do configu je přesune CODE-tune.
+     Značka účtu: prázdný kámen (runeSvg Blank) jen jako místo — owner kosočtverec odmítl, vlastní symboly navrhuje CODE-read. -->
+<link rel="stylesheet" href="https://runar25.github.io/Runar-admin/v2/fonts/fonts.css">
+<style>
+:root{--bg:#0a0c12;--card:#12161f;--gold:#FFBF00;--ember:#D6A85C;--white:#F2F5F7;--muted:#8ba5c0;--navy:#2E4A70}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg)}
+body{color:var(--white);font-family:'Cormorant Garamond',serif;font-size:19px}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:22px 40px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:4px;color:var(--gold)}
+.nav a{color:inherit;text-decoration:none}
+.wrap{max-width:1100px;margin:0 auto;padding:30px 40px 60px}
+.eyebrow{font-family:'Cinzel',serif;font-size:14px;letter-spacing:5px;color:var(--gold);text-align:center;margin-bottom:12px}
+.sub{font-style:italic;color:var(--muted);font-size:22px;text-align:center;max-width:32em;margin:0 auto 30px;line-height:1.5}
+.per{display:flex;justify-content:center;gap:26px;font-family:'Cinzel',serif;font-size:12px;letter-spacing:3px;margin-bottom:40px}
+.per span{cursor:pointer;color:var(--muted);padding-bottom:4px}
+.per span.on{color:var(--gold);border-bottom:1px solid var(--gold)}
+/* cesta: na počítači kameny vedle sebe spojené čárkovanou linkou, na mobilu pod sebou (jako okno v appce) */
+.path{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;position:relative}
+.path::before{content:"";position:absolute;left:12%;right:12%;top:34px;border-top:1px dashed var(--navy)}
+.st{position:relative;text-align:center;display:flex;flex-direction:column;align-items:center}
+.stone{width:52px;margin-bottom:16px;background:var(--bg);padding:0 6px}
+.stone svg{width:100%;height:auto;display:block}
+.nm{font-family:'Cinzel',serif;font-size:15px;letter-spacing:3px;color:var(--white);margin-bottom:6px}
+.pr{font-size:24px;color:var(--gold);min-height:1.5em}
+.pr small{font-size:16px;color:var(--muted)}
+.gift{font-style:italic;color:var(--ember);font-size:16px;min-height:1.4em}
+.ft{list-style:none;font-size:17px;color:#c9d6e3;line-height:1.45;margin:12px 0 16px;max-width:15em}
+.ft li{margin-bottom:6px}
+.btn{font-family:'Cinzel',serif;font-size:11px;letter-spacing:2px;padding:11px 16px;background:none;border:1px solid #FFBF0080;color:var(--gold);margin-top:auto;cursor:default}
+.note{font-size:15px;color:var(--muted);font-style:italic;margin-top:6px}
+.card{margin-top:60px;border-top:1px solid #1d2635;padding-top:40px;text-align:center}
+.card h2{font-family:'Cinzel',serif;font-weight:400;font-size:15px;letter-spacing:4px;color:var(--gold);margin-bottom:8px}
+.card p{font-style:italic;color:var(--muted);margin-bottom:24px}
+.packs{display:flex;flex-wrap:wrap;justify-content:center;gap:16px}
+.pk{border:1px solid #D6A85C55;background:var(--card);padding:16px 22px;min-width:150px}
+.pk .n{font-family:'Cinzel',serif;font-size:12px;letter-spacing:3px;color:var(--ember)}
+.pk .c{font-size:18px;margin:4px 0}
+.pk .p{color:var(--gold);font-size:20px}
+.foot{border-top:1px solid #1d2635;margin-top:50px;padding-top:16px;text-align:center;font-style:italic;color:var(--muted);font-size:16px}
+@media(max-width:760px){
+  .nav{padding:16px}
+  .wrap{padding:20px 16px 40px}
+  .path{grid-template-columns:1fr;gap:0}
+  .path::before{display:none}
+  .st{display:grid;grid-template-columns:44px 1fr;column-gap:14px;text-align:left;align-items:start;padding-bottom:26px}
+  .st::before{content:"";position:absolute;left:22px;top:52px;bottom:4px;border-left:1px dashed var(--navy)}
+  .st:last-child::before{display:none}
+  .stone{width:44px;padding:0;grid-row:span 6}
+  .ft{max-width:none}
+  .btn{justify-self:start}
+}
+</style>
+</head>
+<body>
+<div class="nav"><a href="../site/">RÚNAR</a><span>AGNDOFA</span></div>
+<div class="wrap">
+  <div class="eyebrow">YOUR JOURNEY WITH RÚNAR</div>
+  <p class="sub">Each step holds more of Rúnar. Walk as far as you wish, and step back whenever you like.</p>
+  <div class="per" id="per"><span data-p="m" class="on">MONTHLY</span><span data-p="y">YEARLY</span></div>
+  <div class="path" id="path"></div>
+  <section class="card">
+    <h2 id="card-h"></h2>
+    <p>No subscription and no expiry. For yourself, or as a gift.</p>
+    <div class="packs" id="packs"></div>
+    <div class="note" style="margin-top:14px">Coming soon.</div>
+  </section>
+  <div class="foot">Prices in Icelandic krónur. Cancel any time.</div>
+</div>
+
+<script src="https://runar25.github.io/Runar-admin/v2/runar-config.js"></script>
+<script src="https://runar25.github.io/Runar-admin/v2/runar-runes.js"></script>
+<script src="https://runar25.github.io/Runar-admin/v2/runar-translations.js"></script>
+<script src="https://runar25.github.io/Runar-admin/v2/runar-svgs.js"></script>
+<script src="https://runar25.github.io/Runar-admin/v2/runar-utils.js"></script>
+<script>
+// DOČASNĚ: ceny z RUNAR_PRICING „Subscription Pricing“, dokud nejsou v configu (CODE-tune). Na web nejdou odsud.
+var PRICE_DRAFT = { standard: { m: 3490, y: 34800 }, premium: { m: 4900, y: 49000 } };
+var LANG = 'en', P = 'm';
+// Návštěvník nemá v tierFeatures() žádný řádek (nemá účet) → pracovní věta z ukázky okna CODE-read
+var VISITOR_EN = ['The Runes Collection and your life rune.'];
+var ORDER = ['free_trial', 'rune_seeker', 'standard', 'premium'];
+var blank = RUNES.filter(function (r) { return r.svg === 'Blank'; })[0];
+function kr(x) { return x.toLocaleString('de-DE') + ' kr'; }   // tečka na tisíce jako v ukázce okna (1.490 kr)
+function draw() {
+  document.getElementById('path').innerHTML = ORDER.map(function (id) {
+    var T = TIERS[id], pr = PRICE_DRAFT[id], h = '<div class="st"><div class="stone">' + runeSvg(blank, { frame: true }) + '</div>';
+    h += '<div class="nm">' + T.label.replace(/^Rune\s+/, '').toUpperCase() + '</div>';
+    if (pr) {
+      h += P === 'm' ? '<div class="pr">' + kr(pr.m) + ' <small>a month</small></div><div class="gift"></div>'
+                     : '<div class="pr">' + kr(Math.round(pr.y / 12)) + ' <small>a month</small></div><div class="gift">' + kr(pr.y) + ' a year. Two months are a gift.</div>';
+    } else {
+      h += '<div class="pr"><small>' + (id === 'free_trial' ? 'Free' : 'Free to join') + '</small></div><div class="gift"></div>';
+    }
+    var f = id === 'free_trial' ? VISITOR_EN : tierFeatures(id, LANG);
+    h += '<ul class="ft">' + f.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>';
+    if (pr) h += '<span class="btn">WALK ON AS ' + T.label.replace(/^Rune\s+/, '').toUpperCase() + '</span><div class="note">Coming soon.</div>';
+    else if (id === 'rune_seeker') h += '<span class="btn">BECOME A ' + T.label.toUpperCase() + '</span>';
+    return h + '</div>';
+  }).join('');
+}
+document.getElementById('card-h').textContent = VOCAB.card.en.toUpperCase();
+document.getElementById('packs').innerHTML = CARD_PACKS.map(function (p) {
+  return '<div class="pk"><div class="n">' + cardPackName(p, LANG).toUpperCase() + '</div><div class="c">' + vn('cast', p.credits, LANG) + '</div><div class="p">' + kr(p.isk) + '</div></div>';
+}).join('');
+document.querySelectorAll('#per span').forEach(function (s) {
+  s.onclick = function () { P = s.dataset.p; document.querySelectorAll('#per span').forEach(function (x) { x.classList.toggle('on', x === s); }); draw(); };
+});
+draw();
+</script>
+</body>
+</html>
