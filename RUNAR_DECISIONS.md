@@ -11756,4 +11756,4 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ranní souhrn:** úlohy z `BEHY` mají vlastní řádek „Checks“ (restore test, Greynir update) — den předtím jela zkouška obnovy na řádku
   zálohy, aby e-mail nenarostl; s Greynirem tam nepatří. E-mail tím má o řádek víc (meze ve smoke ㊈: klidný den ≤ 5, čísla ≤ 7).
   Smoke ㊈ nově hlídá, že zdroj každé úlohy z `BEHY` existuje a obsahuje její kind (útok: přejmenovaný kind → FAIL).
-- Affected doc(s): žádný (pravidlo BEHY stojí v CLAUDE.md §30 od 2026-10-18 (2), registr je v kódu).
+- Affected doc(s): žádný — pravidlo o úlohách z BEHY je zapsané od 2026-10-18 (2), registr je v kódu.

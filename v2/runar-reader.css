@@ -86,7 +86,8 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 .sp-tier-block{padding:7px 0;border-bottom:1px solid rgba(255,191,0,0.07);}
 .sp-tier-block:last-of-type{border-bottom:none;}
 .sp-tier-name{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;color:var(--gold);opacity:0.85;}
-.sp-tier-note{font-family:'Cormorant Garamond',serif;font-size:0.88em;font-style:italic;color:var(--gold);opacity:0.5;letter-spacing:0.5px;margin-left:6px;}
+/* 2026-10-19: opacity 0.5 → 0.85 — „coming soon“ měl kontrast 2,9 : 1 (smoke ㊽); dokud byla nabídka sbalená, nikdo ho neměřil, od 2026-10-19 ji návštěvník vidí rozbalenou. */
+.sp-tier-note{font-family:'Cormorant Garamond',serif;font-size:0.88em;font-style:italic;color:var(--gold);opacity:0.85;letter-spacing:0.5px;margin-left:6px;}
 .sp-tier-detail{font-size:0.71em;color:var(--muted);font-style:italic;line-height:1.6;margin-top:2px;}
 .sp-item.coming.active{opacity:0.85;pointer-events:auto;cursor:pointer;}
 .sp-item.journal{color:var(--gold);opacity:0.85;}
