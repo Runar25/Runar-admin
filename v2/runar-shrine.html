@@ -352,6 +352,30 @@ textarea::placeholder{color:var(--dim);}
         <label class="flbl">BATCH ID <span class="opt">(for tracking)</span></label>
         <input class="txt" id="gc-batch" type="text" placeholder="e.g. kakao-launch-2026-09">
       </div>
+      <!-- 2026-10-19 (DECISIONS 2026-10-19 (4)): sledování u kódu — dávka ze shrine jsou fyzické karty (form = physical). Vzhled a jazyk
+           jdou i do odkazu na kartu k tisku (therunekeeper.com/kort/, CODE-web: v = o černá / f bílá, l = is / en). -->
+      <div>
+        <label class="flbl">CARD DESIGN</label>
+        <select id="gc-design" style="width:100%;background:#080e18;border:1px solid var(--border);color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1em;padding:9px 10px;outline:none;">
+          <option value="o">Black</option>
+          <option value="f">White</option>
+        </select>
+      </div>
+      <div>
+        <label class="flbl">CARD LANGUAGE</label>
+        <select id="gc-lang" style="width:100%;background:#080e18;border:1px solid var(--border);color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1em;padding:9px 10px;outline:none;">
+          <option value="is">Icelandic</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+      <div>
+        <label class="flbl">CHANNEL <span class="opt">(where the cards go)</span></label>
+        <input class="txt" id="gc-channel" type="text" placeholder="e.g. shop, event, hand">
+      </div>
+      <div>
+        <label class="flbl">COMPLIMENTARY</label>
+        <label style="display:flex;align-items:center;gap:8px;padding:9px 0;color:var(--white);"><input type="checkbox" id="gc-complimentary"> given for free</label>
+      </div>
     </div>
     <button class="btn" id="gc-generate-btn" onclick="generateCodes()" style="margin-top:16px;width:100%;">GENERATE & SAVE CODES</button>
     <div class="status" id="st-gc"></div>
@@ -361,8 +385,9 @@ textarea::placeholder{color:var(--dim);}
     <div class="card-lbl">✓ CODES GENERATED</div>
     <p class="note" id="gc-result-note"></p>
     <button class="btn" onclick="downloadCSV()" style="width:100%;margin-bottom:8px;">⬇ DOWNLOAD CSV (for Sigrun)</button>
+    <p class="note">Each code opens its printable card (front and back, 85.6 × 54 mm) — print to PDF from the card page.</p>
     <div style="max-height:260px;overflow-y:auto;border:1px solid var(--border);padding:12px;background:#080e18;">
-      <pre id="gc-code-list" style="font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:1px;color:var(--teal);line-height:1.9;margin:0;white-space:pre-wrap;word-break:break-all;"></pre>
+      <div id="gc-code-list" style="font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:1px;color:var(--teal);line-height:1.9;margin:0;word-break:break-all;"></div>
     </div>
   </div>
   <!-- Batch overview -->
@@ -800,6 +825,10 @@ async function generateCodes() {
   const credits = parseInt(document.getElementById('gc-credits').value) || 10;
   const count   = Math.min(parseInt(document.getElementById('gc-count').value) || 50, 500);
   const batchId = document.getElementById('gc-batch').value.trim() || `batch-${Date.now()}`;
+  const design  = document.getElementById('gc-design').value || 'o';
+  const lang    = document.getElementById('gc-lang').value || 'is';
+  const channel = document.getElementById('gc-channel').value.trim() || null;
+  const complimentary = !!document.getElementById('gc-complimentary').checked;
 
   const btn = document.getElementById('gc-generate-btn');
   btn.disabled = true;
@@ -812,7 +841,11 @@ async function generateCodes() {
   while (rows.length < count && attempts < count * 10) {
     attempts++;
     const code = makeCode(prefix);
-    if (!seen.has(code)) { seen.add(code); rows.push({ code, credits, rune_name: prefix === 'RUNAR' ? null : prefix, batch_id: batchId }); }
+    if (!seen.has(code)) {
+      seen.add(code);
+      rows.push({ code, credits, rune_name: prefix === 'RUNAR' ? null : prefix, batch_id: batchId,
+                  form: 'physical', design, lang, channel, complimentary });
+    }
   }
 
   // Insert into Supabase in chunks of 100
@@ -833,15 +866,29 @@ async function generateCodes() {
   card.style.display = 'block';
   document.getElementById('gc-result-note').textContent =
     `${inserted} codes · ${credits} credits each · batch: ${batchId}`;
-  document.getElementById('gc-code-list').textContent = rows.map(r => r.code).join('\n');
+  // Odkaz na kartu k tisku (2026-10-19): stránka CODE-web nese kód za # — na server se nepošle, nekončí v logu. Jeden vzhled = jedno
+  // místo (§20): shrine kartu nekreslí, jen na ni odkazuje.
+  const list = document.getElementById('gc-code-list');
+  list.innerHTML = '';
+  rows.forEach(r => {
+    const a = document.createElement('a');
+    a.href = kartaUrl(r); a.target = '_blank'; a.rel = 'noopener';
+    a.textContent = r.code; a.style.color = 'var(--teal)'; a.style.display = 'block';
+    list.appendChild(a);
+  });
   loadBatches();
+}
+
+function kartaUrl(r) {
+  return 'https://therunekeeper.com/kort/#k=' + encodeURIComponent(r.code) + '&v=' + encodeURIComponent(r.design || 'o')
+    + '&l=' + encodeURIComponent(r.lang || 'is') + '&n=' + encodeURIComponent(r.credits);
 }
 
 function downloadCSV() {
   if (!generatedCodes.length) return;
-  const header = 'code,credits,rune_name,batch_id';
+  const header = 'code,credits,rune_name,batch_id,design,lang,channel,complimentary,card_url';
   const lines  = generatedCodes.map(r =>
-    `${r.code},${r.credits},${r.rune_name || ''},${r.batch_id || ''}`
+    `${r.code},${r.credits},${r.rune_name || ''},${r.batch_id || ''},${r.design || ''},${r.lang || ''},${(r.channel || '').replace(/,/g, ' ')},${r.complimentary ? 'yes' : 'no'},${kartaUrl(r)}`
   );
   const csv  = [header, ...lines].join('\n');
   const blob = new Blob([csv], { type: 'text/csv' });
