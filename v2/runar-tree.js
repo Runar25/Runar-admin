@@ -1236,14 +1236,13 @@ async function _loadFoundingReading(id) {
 // viditelny (KUKY 2026-09-14); tady zustava, protoze zalozeni je dlouhy rital a owner ho nerusil.
 function toggleFoundingReading() {
   var body = document.getElementById('tree-founding-body');
-  var arrow = document.getElementById('tree-founding-arrow');
+  var head = document.getElementById('tree-founding-head');
   if (!body) return;
   var open = body.style.display !== 'none';
   body.style.display = open ? 'none' : 'block';
-  if (arrow) {
-    arrow.textContent = open ? '+' : '\u2212';
-    arrow.classList.toggle('open', !open);
-  }
+  // 2026-10-20: „+“ se otočí na „×“ podle aria-expanded (rozbalovač, runar-reader.css). Do té doby se text měnil na „−“ A ZÁROVEŇ
+  // otáčel o 45° — otevřené založení ukazovalo šikmou čárku.
+  if (head) head.setAttribute('aria-expanded', open ? 'false' : 'true');
 }
 
 // Tester-only reset stromu. Sama brana je na SERVERU (edge funkce reset-tree

@@ -78,8 +78,6 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 /* 2026-10-15: jméno účtu jako tlačítko, které rozbalí výpis funkcí — „+“ ve stylu UPGRADE YOUR JOURNEY (.sp-path-toggle: Cinzel, zlatá,
    průhlednost 0.85, velikost jako jeho „+“ = 1.4 × 0.62em), písmo jména beze změny (.sp-curr-tier-name). */
 .sp-curr-toggle{display:flex;align-items:baseline;gap:10px;width:100%;background:none;border:none;padding:0;margin:0;font:inherit;color:inherit;text-align:left;cursor:pointer;}
-.sp-curr-arrow{font-family:'Cinzel',serif;font-size:0.87em;line-height:1;color:var(--gold);opacity:0.85;transition:opacity 0.15s;}
-.sp-curr-toggle:hover .sp-curr-arrow{opacity:1;}
 .sp-path-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;color:var(--gold);font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:3px;cursor:pointer;padding:10px 0 4px;opacity:0.85;transition:opacity 0.15s;text-align:left;}
 .sp-path-toggle:hover{opacity:1;}
 /* 2026-10-20 (hlášení 62283c8c, owner: „Upgrade your journey v menu není vycentrované. A mělo by být ve zlatém rámečku, je to viditelnější“):
@@ -353,15 +351,12 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 .tree-name-edit-link{background:none;border:none;color:var(--muted);font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:1.5px;cursor:pointer;margin-left:12px;padding:2px 4px;text-decoration:underline;text-underline-offset:3px;}
 .tree-name-edit-link:hover{color:var(--gold);}
 .tree-rune-header{cursor:pointer;padding:16px 0 8px;}
-.tree-rune-name-row{display:flex;align-items:center;gap:10px;padding:4px 0;}
+.tree-rune-name-row{display:flex;align-items:center;gap:10px;padding:4px 0;-webkit-tap-highlight-color:transparent;}
 /* 2026-10-20 (hlášení df67acda: „když v life rune kliknu na runu, problikne celý text místo jen runy. Už jsme to řešili“): táž oprava jako
    2026-10-07 u #reader-badge (.badge-life) — mobilní zvýraznění klepnutí na flex řádku rozblikalo i jméno vedle; tehdy chyběla v záložce Life Rune. */
-.tree-rune-name-row{-webkit-tap-highlight-color:transparent;}
 .tree-rune-name-row .rlbl-glyph{-webkit-tap-highlight-color:initial;}
 .tree-rune-name{font-family:'Cinzel',serif;font-size:1.1em;letter-spacing:1px;color:var(--gold);margin-bottom:6px;}   /* 2026-10-20: dvě definice → jedna */
 .tree-rune-glyph-inline{font-size:1.6em;color:var(--gold);opacity:0.85;}
-.tree-toggle-arrow{margin-left:auto;color:var(--muted);font-size:1.1em;transition:transform 0.2s;}
-.tree-toggle-arrow.open{transform:rotate(45deg);}
 .tree-static-open{font-family:'Cinzel',serif;font-size:0.85em;letter-spacing:0.5px;color:var(--muted);padding:12px 0 4px;}
 .tree-reading-text{font-size:1.05em;line-height:1.8;color:var(--white);padding:12px 0 20px;font-style:italic;}
 .tree-reveal-intro{text-align:center;font-style:italic;color:var(--muted);font-size:0.95em;line-height:1.7;padding:8px 16px 20px;}
@@ -472,14 +467,25 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 .guide-lbl{background:none;border:0;padding:0;cursor:pointer;display:block;width:100%;text-align:center;
   font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;text-transform:uppercase;color:var(--gold);
   margin:4px 0 14px;}   /* 2026-10-15: 20 → 14 px (bod 3 návrhu mezer; týž štítek v Kolekci) */
-.guide-lbl::after{content:" +";opacity:.55;}
-.guide-lbl[aria-expanded="true"]::after{content:" −";}
 .guide-lbl:focus-visible{outline:1px solid var(--gold);outline-offset:4px;}
 /* „+“ u popisků oblasti / hledání / záměru (2026-09-29, report KUKY 11:32) — tentýž znak jako u „How a reading works“. */
-.hint-tgl{background:none;border:0;padding:0 0 0 6px;margin:0;font:inherit;color:inherit;cursor:pointer;}
-.hint-tgl::after{content:"+";opacity:.55;}
-.hint-tgl[aria-expanded="true"]::after{content:"−";}
+.hint-tgl{background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;cursor:pointer;}
 .hint-tgl:focus-visible{outline:1px solid var(--gold);outline-offset:3px;}
+/* ── ROZBALOVAČ (2026-10-20, CODE-read jednotný vzhled §4; owner „výraznější“, vzor „+“ u počtu čtení Rune Seekera) ──
+   Jeden znak pro rozbalení na místě: „+“ ZA textem, zlatý, o stupeň větší než text; otevřením se otočí o 45° na „×“ (0,25 s; bez
+   animací jen výměna). Nositel je vždy tlačítko (<button> nebo role="button" + tabindex) s aria-expanded — CSS točí podle něj.
+   Dvě podoby: ::after u textových tlačítek (.guide-lbl, .hint-tgl, .ask-lbl) a <span class="xp-plus"> tam, kde text plní JS.
+   Do té doby šest podob: „+/−“ přepínané textem, „+“ otočené, „▾“ otočené o 180°, šedé i zlaté, před textem i za ním.
+   „▾“ zůstává jen u nabídky pod jménem (výběr z nabídky), „→“ = vede jinam. */
+.guide-lbl::after,.hint-tgl::after,.ask-lbl::after,.xp-plus{content:"+";display:inline-block;margin-left:.4em;font-family:'Cinzel',serif;
+  font-size:1.35em;line-height:1;color:var(--gold);opacity:1;position:relative;top:-.08em;transition:transform .25s ease;}
+/* top −0,08em: střed inkoustu „+“ ležel o 1,1 px pod středem inkoustu textu (změřeno u počtu čtení i How a reading works,
+   účaří + metriky písma); owner 2026-10-10 vytkl tentýž posun (2,3 px) u starého „+“. Otáčí se kolem středu inkoustu (odchylka 0,4 px). */
+.xp-plus{font-size:.85em;margin-left:0;flex-shrink:0;}   /* span stojí vedle textu (Cinzel ~.62em), ne v něm: .85em ≈ 1,35 × text */
+.guide-lbl[aria-expanded="true"]::after,.hint-tgl[aria-expanded="true"]::after,.ask-lbl[aria-expanded="true"]::after,
+[aria-expanded="true"] .xp-plus{transform:rotate(45deg);}
+[role="button"][aria-expanded]:focus-visible{outline:1px solid var(--gold);outline-offset:3px;}
+@media (prefers-reduced-motion:reduce){.guide-lbl::after,.hint-tgl::after,.ask-lbl::after,.xp-plus{transition:none;}}
 .form-hint{margin:-2px 0 10px;}
 .guide{margin-top:14px;}
 /* „Where to start“ (2026-10-11, DECISIONS (65)) — okno appky (.modal); zavření ho zmenší a zasune do „How a reading works“
@@ -540,15 +546,12 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 .tn-text{font-size:0.95em;font-style:italic;color:var(--muted);line-height:1.85;margin-bottom:18px;}
 .tn-text strong,.tn-text b{color:var(--gold);font-style:normal;font-weight:400;}
 /* 2026-10-10 (KUKY, hlášení bc1ab90e: „Rámeček pro tenhle text být nemusí… Celý rámeček a text zabírá moc místa“): Rune Seeker
-   vidí jen počet čtení na jedné řádce, vysvětlení se rozbalí přes „+“ — týž znak a otočení jako .tree-toggle-arrow. */
+   vidí jen počet čtení na jedné řádce, vysvětlení se rozbalí přes „+“ — rozbalovač .xp-plus (od 2026-10-20 společný). */
 .tier-notice.tn-compact{background:none;border:0;padding:0;margin:0 0 18px;}
 .tn-compact .tn-row{display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
 .tn-compact .tn-counter{margin-bottom:0;}
-/* 2026-10-10 (KUKY: „plus není zarovnané s textem, je trochu pod“): „+“ je v Cormorant 1.1em, počet v Cinzel 0.62em — flex
-   centruje řádkové boxy, ne inkoust; změřeno: střed „+“ o 2,3 px (0,13em) níž než střed textu → posun o totéž nahoru. */
-/* Barva = barva počtu (KUKY 2026-10-10: „plus nemá stejnou barvu“): .tree-toggle-arrow je šedý (--muted) pro rozbalovací hlavičky
-   stromu, tady ale „+“ patří k zlatému počtu (.tn-counter: --gold, opacity 0.9) — do té doby stál šedý vedle zlatého. */
-.tn-compact .tree-toggle-arrow{margin-left:0;position:relative;top:-0.13em;color:var(--gold);opacity:0.9;}
+/* Zarovnání a barvu „+“ u počtu (KUKY 2026-10-10: „plus není zarovnané s textem“, „plus nemá stejnou barvu“) řeší od 2026-10-20
+   společný rozbalovač .xp-plus — zlatý všude, srovnaný na inkoust textu. */
 .tn-compact .tn-text{margin:12px 0 0;}
 .tier-notice.curious .tn-btn{border-color:rgba(255,191,0,0.35);}
 
@@ -753,8 +756,6 @@ input:autofill{filter:none;}
    drive, proto se resetuje vse, co <button> pridava sam (ram, pozadi, font, zarovnani). */
 .ask-lbl{background:none;border:0;padding:0;font:inherit;color:inherit;letter-spacing:inherit;
   text-transform:inherit;cursor:pointer;display:block;width:100%;text-align:center;margin-bottom:12px;}   /* 2026-10-20: dvě definice → jedna */
-.ask-lbl::after{content:" +";opacity:.55;}
-.ask-lbl[aria-expanded="true"]::after{content:" −";}
 .ask-hints{display:flex;flex-direction:column;gap:6px;margin:10px 0 14px;}
 .ask-hint{background:none;border:1px solid var(--border);border-radius:0;
   padding:9px 13px;color:var(--muted);font-family:'Cormorant Garamond',serif;font-size:1.02em;
@@ -948,8 +949,7 @@ body:has(.modal-overlay.open) #hb-btn{display:none;}
    rozbaleného záznamu (zabalený ukazuje začátek čtení, ne myšlenku). */
 .jcard-thought{display:none;font-size:0.92em;line-height:1.7;font-style:italic;color:var(--gold);text-align:center;margin:14px 8px 2px;}
 .jcard-excerpt--open + .jcard-thought{display:block;}
-.jcard-arrow{font-size:0.75em;color:var(--dim);transition:transform 0.25s;flex-shrink:0;padding-top:4px;}
-.jcard-arrow.open{transform:rotate(180deg);}
+.jcard-header .xp-plus{padding-top:2px;}
 .jcard-body{padding:4px 18px 20px;border-top:1px solid rgba(255,191,0,0.12);}
 .jcard-layer-lbl{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:2.5px;color:var(--gold);opacity:0.7;margin:16px 0 8px;}
 .jcard-text{font-size:0.9em;font-style:italic;color:var(--muted);line-height:1.85;}

@@ -278,9 +278,9 @@
   <!-- THE CURIOUS NOTICE — 2026-10-10 (KUKY, hlášení bc1ab90e: „Rámeček pro tenhle text být nemusí. Nechal bych jen počet rune
        reading a text vložíme do plus vedle remaining“): bez rámečku, jedna řádka s počtem, vysvětlení za „+“ (toggleFreeNote). -->
   <div class="tier-notice curious tn-compact" id="free-user-banner" style="display:none;">
-    <div class="tn-row" onclick="toggleFreeNote()">
+    <div class="tn-row" id="free-user-row" role="button" tabindex="0" aria-expanded="false" aria-controls="free-user-text" onclick="toggleFreeNote()">
       <span class="tn-counter" id="free-user-count"></span>
-      <span class="tree-toggle-arrow" id="free-user-arrow">+</span>
+      <span class="xp-plus" id="free-user-arrow" aria-hidden="true">+</span>
     </div>
     <p class="tn-text" id="free-user-text" style="display:none;"></p>
     <button class="btn-full sec" onclick="toggleRedeem()" id="tn-curious-btn" style="margin-top:18px;"></button>
@@ -617,10 +617,10 @@
       <!-- Zakladaci Norny — zustavaji ve strome naporad, stejne jako zivotni runa.
            Tvar je kopie bloku tree-reading-exists vyse. -->
       <div id="tree-founding-reading" style="display:none;">
-        <div class="tree-rune-header" onclick="toggleFoundingReading()">
+        <div class="tree-rune-header" id="tree-founding-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tree-founding-body" onclick="toggleFoundingReading()">
           <div class="tree-rune-name-row">
             <span class="tree-rune-name" id="tree-founding-name"></span>
-            <span class="tree-toggle-arrow" id="tree-founding-arrow">+</span>
+            <span class="xp-plus" id="tree-founding-arrow" aria-hidden="true">+</span>
           </div>
         </div>
         <div id="tree-founding-body" style="display:none;">
@@ -914,8 +914,8 @@
     <!-- 2026-10-15 (owner: „zabalit popis, co účet obsahuje… schovat stejně jako upgrade your journey“): jméno účtu je tlačítko s „+“,
          výpis funkcí se rozbalí klepnutím (toggleTierDesc, runar-app.js). Návštěvník vidí pozvánku celou a „+“ nemá. -->
     <button type="button" class="sp-curr-toggle" id="sp-curr-toggle" onclick="toggleTierDesc()" aria-expanded="false" aria-controls="sp-tier-desc">
-      <span class="sp-curr-arrow" id="sp-curr-arrow">+</span>
       <span class="sp-curr-tier-name" id="sp-curr-tier-name"></span>
+      <span class="xp-plus" id="sp-curr-arrow" aria-hidden="true">+</span>
     </button>
     <div class="sp-tier-desc" id="sp-tier-desc" style="display:none;"></div>
     <button class="sp-path-toggle" id="sp-higher-toggle" onclick="closeSidePanel();openJourney()" style="display:none;gap:10px;">

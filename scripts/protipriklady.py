@@ -160,7 +160,7 @@ PRIPADY = [
  ('chyti', 'verify_datum_ui.js', 'v2/runar-utils.js', 'replace', "    return d.getDate() + '.' + (d.getMonth() + 1) + '.' + d.getFullYear();", "    return d.toLocaleDateString('is-IS', { day: 'numeric', month: 'short', year: 'numeric' });"),
  ('chyti', 'verify_datum_ui.js', 'v2/runar-tree.js', 'replace', '  return datumUI(iso, lang);', "  return new Date(iso).toLocaleDateString('en-GB');"),
  # ㊽ čitelnost (2026-10-11, CODE-tune): upozornění zpět s průhledností 0,45 (2,41 : 1) · podnadpis úvodu barvou --dim (§5)
- ('chyti', 'verify_citelnost.js', 'v2/runar-reader.css', 'replace', ".q-teaser-txt{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--muted);margin:14px 0 6px;}", ".q-teaser-txt{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--muted);opacity:0.45;margin:14px 0 6px;}"),
+ ('chyti', 'verify_citelnost.js', 'v2/runar-reader.css', 'replace', "letter-spacing:0;color:var(--muted);line-height:1.6;}", "letter-spacing:0;color:var(--muted);opacity:0.45;line-height:1.6;}"),   # 2026-10-20: upozornění nese .fine (dřív .q-teaser-txt)
  ('chyti', 'verify_citelnost.js', 'v2/runar-reader.css', 'replace', '.hero-sub{font-size:1.12em;color:var(--muted);', '.hero-sub{font-size:1.12em;color:var(--dim);'),
  # ㊽ (B) zaseklá angličtina: buňka tierů zase bez id · anglická věta s „Rúnar“ (její „ú“ ji nesmí pustit jako islandskou)
  ('chyti', 'verify_citelnost.js', 'v2/runar-help.html', 'replace', '<td id="tier-lbl-seeker">RUNE SEEKER</td>', '<td>RUNE SEEKER</td>'),
