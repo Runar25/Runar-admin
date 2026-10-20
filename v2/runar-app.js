@@ -1747,7 +1747,7 @@ function _journeyPaint() {
       h += '<div class="journey-pack"><div class="journey-nm"><span>' + _jesc(cardPackName(pk, lang).toUpperCase()) + '</span><span class="journey-pr">'
         + _jkr(pk.isk) + ' kr</span></div><div class="journey-note">' + _jesc(vn('cast', pk.credits, lang)) + '</div></div>';
     });
-    if (env === 'web') h += '<a class="tn-btn btn-upgrade" href="' + _jesc(JOURNEY_URL) + '" target="_blank" rel="noopener">' + _jesc(tp('gift_card_btn', { card: vl('card', lang).toUpperCase() })) + '</a>';
+    if (env === 'web') h += '<a class="tn-btn btn-upgrade" href="' + _jesc(JOURNEY_URL) + '" target="_blank" rel="noopener">' + _jesc(tp('gift_card_btn', { card: vl('card', lang).toUpperCase() })) + ' →</a>';   // → = vede jinam (web), CODE-read §4
     else h += '<div class="journey-note">' + _jesc(t('journey_soon')) + '</div>';
     var p0 = CARD_PACKS.reduce(function (a, b) { return b.isk < a.isk ? b : a; });
     h += '<div class="journey-note klik" role="button" tabindex="0" onclick="closeJourney();showAppTab(\'reading\');toggleRedeem()">'
@@ -1776,11 +1776,11 @@ function _journeyPaint() {
     if (env !== 'play') {
       if (T.price_isk_month) {
         var tierUp = jm.toUpperCase();
-        if (tady) { if (env === 'web') h += '<a class="tn-btn btn-upgrade" href="' + _jesc(JOURNEY_URL) + '" target="_blank" rel="noopener">' + _jesc(t('journey_manage')) + '</a>'; }
+        if (tady) { if (env === 'web') h += '<a class="tn-btn btn-upgrade" href="' + _jesc(JOURNEY_URL) + '" target="_blank" rel="noopener">' + _jesc(t('journey_manage')) + ' →</a>'; }
         else if (env === 'soon') h += '<div class="journey-note">' + _jesc(t('journey_soon')) + '</div>';
-        else if (i > ja) h += '<a class="tn-btn btn-upgrade" href="' + _jesc(JOURNEY_URL) + '" target="_blank" rel="noopener">' + _jesc(tp('journey_walk_on', { tier: tierUp })) + '</a>'
+        else if (i > ja) h += '<a class="tn-btn btn-upgrade" href="' + _jesc(JOURNEY_URL) + '" target="_blank" rel="noopener">' + _jesc(tp('journey_walk_on', { tier: tierUp })) + ' →</a>'
           + '<div class="journey-note">' + _jesc(t('journey_web_note')) + '</div>';
-        else h += '<a class="tn-btn btn-upgrade" href="' + _jesc(JOURNEY_URL) + '" target="_blank" rel="noopener">' + _jesc(tp('journey_step_back', { tier: tierUp })) + '</a>'
+        else h += '<a class="tn-btn btn-upgrade" href="' + _jesc(JOURNEY_URL) + '" target="_blank" rel="noopener">' + _jesc(tp('journey_step_back', { tier: tierUp })) + ' →</a>'
           + '<div class="journey-note">' + _jesc(t('journey_step_note')) + '</div>';
       } else if (id === 'rune_seeker' && ja === 0) {
         h += '<button type="button" class="tn-btn btn-upgrade" onclick="closeJourney();openAuthModal()">' + _jesc(t('become_rs_btn')) + '</button>';
