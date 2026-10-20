@@ -86,7 +86,8 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
    od 2026-10-19 otevírá okno „Your journey with Rúnar“, tedy tlačítko — rámeček jako .btn-upgrade, text na středu, šipka za textem. */
 #sp-higher-toggle{justify-content:center;border:1px solid var(--gold);padding:12px 14px;margin-top:12px;opacity:1;}
 #sp-higher-toggle #sp-path-arrow{order:2;}
-#sp-higher-toggle:hover{background:rgba(255,191,0,0.08);}
+#sp-higher-toggle{letter-spacing:2.5px;}
+#sp-higher-toggle:hover{background:var(--gold);color:#000;}   /* 2026-10-20: hover jako .btn-upgrade (do té doby jen tón) */
 .sp-path-body{padding-bottom:4px;}
 .sp-tier-block{padding:7px 0;border-bottom:1px solid rgba(255,191,0,0.07);}
 .sp-tier-block:last-of-type{border-bottom:none;}
@@ -364,8 +365,6 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 .tree-static-open{font-family:'Cinzel',serif;font-size:0.85em;letter-spacing:0.5px;color:var(--muted);padding:12px 0 4px;}
 .tree-reading-text{font-size:1.05em;line-height:1.8;color:var(--white);padding:12px 0 20px;font-style:italic;}
 .tree-reveal-intro{text-align:center;font-style:italic;color:var(--muted);font-size:0.95em;line-height:1.7;padding:8px 16px 20px;}
-.btn-gold{background:var(--gold);color:#0a0c12;font-family:'Cinzel',serif;font-size:0.75em;letter-spacing:1.5px;padding:14px 28px;border:none;cursor:pointer;width:100%;transition:opacity 0.2s;}
-.btn-gold:hover{opacity:0.88;}
 .tree-loading-glyph{text-align:center;font-size:3em;color:var(--gold);opacity:0.6;padding:24px 0 8px;animation:pulse-fade 1.4s ease-in-out infinite;}
 .tree-loading-text{text-align:center;font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--muted);padding-bottom:24px;}
 .tree-growth-section{padding:24px 0 8px;border-top:1px solid var(--border);}
@@ -513,13 +512,12 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 .guide p{font-size:0.92em;color:var(--muted);line-height:1.8;margin:0 0 10px;}
 .coll-no-audio{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:1.5px;color:var(--muted);padding:12px 0;}
 /* ── VISITOR COLLECTION NOTICE ── od 2026-10-10 .tier-notice (styl pruhu návštěvníka ve Spá); vlastní .visitor-coll-notice,
-   .vcn-rune a .vcn-text pryč — KUKY: „ten rámeček je úplně jiný, než co používáme. barva uvnitř“. .vcn-btn zůstává (tlačítka stromu). */
+   .vcn-rune a .vcn-text pryč — KUKY: „ten rámeček je úplně jiný, než co používáme. barva uvnitř“. .vcn-btn pryč 2026-10-20 → .btn-full.small / .btn-upgrade. */
 /* Shared upgrade button style — used for all tier-upgrade CTAs */
-.btn-upgrade{font-family:'Cinzel',serif;letter-spacing:2.5px;background:transparent;border:1px solid var(--gold);color:var(--gold);cursor:pointer;transition:all 0.25s;}
+/* 2026-10-20 (CODE-read, jednotný vzhled): obrysové tlačítko má JEDNU velikost — do té doby 0.58em v pruzích (.tn-btn), 0.62em ve stromě
+   (.vcn-btn), táž věta jinak velká. Plné tlačítko je .btn-full; malá plná varianta .btn-full.small (dřív .btn-gold, 2× definované). */
+.btn-upgrade{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2.5px;padding:12px 28px;background:transparent;border:1px solid var(--gold);color:var(--gold);cursor:pointer;transition:all 0.25s;}
 .btn-upgrade:hover{background:var(--gold);color:#000;}
-.btn-gold{font-family:'Cinzel',serif;letter-spacing:2.5px;background:var(--gold);color:#0d1824;cursor:pointer;border:none;transition:all 0.25s;}
-.btn-gold:hover{background:#e6ab00;}.btn-gold:disabled{background:rgba(255,191,0,0.25);color:rgba(255,191,0,0.5);cursor:not-allowed;}
-.vcn-btn{font-size:0.62em;padding:12px 28px;}
 /* RS teaser "Read what it carries": stejná velikost jako sousední Upgrade (auto šířka, ne 100%) */
 #tree-rs-reveal-btn{width:auto;}
 
@@ -552,7 +550,6 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
    stromu, tady ale „+“ patří k zlatému počtu (.tn-counter: --gold, opacity 0.9) — do té doby stál šedý vedle zlatého. */
 .tn-compact .tree-toggle-arrow{margin-left:0;position:relative;top:-0.13em;color:var(--gold);opacity:0.9;}
 .tn-compact .tn-text{margin:12px 0 0;}
-.tn-btn{font-size:0.58em;padding:10px 24px;}
 .tier-notice.curious .tn-btn{border-color:rgba(255,191,0,0.35);}
 
 
@@ -629,10 +626,11 @@ input:autofill{filter:none;}
 .btn-full{width:100%;padding:17px;background:var(--gold);color:#000;border:none;font-family:'Cinzel',serif;font-size:0.9em;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.25s;margin-top:14px;}
 .btn-full:hover{background:#fff;}
 .btn-full:disabled{opacity:0.3;cursor:not-allowed;}
-.btn-full.sec{background:transparent;color:var(--gold);border:1px solid var(--gold);}
+.btn-full.sec{background:transparent;color:var(--gold);border:1px solid var(--gold);font-size:0.62em;font-weight:400;letter-spacing:2.5px;padding:12px 28px;}   /* = .btn-upgrade */
 .btn-full.sec:hover{background:var(--gold);color:#000;}
+.btn-full.small{font-size:0.62em;font-weight:400;letter-spacing:2.5px;padding:12px 28px;margin-top:0;}
 .btn-row{display:flex;gap:10px;margin-top:20px;}
-.btn-half{flex:1;padding:13px;font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:1.5px;cursor:pointer;transition:all 0.25s;border:1px solid var(--gold);background:transparent;color:var(--gold);}
+.btn-half{flex:1;padding:12px;font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2.5px;cursor:pointer;transition:all 0.25s;border:1px solid var(--gold);background:transparent;color:var(--gold);}
 .btn-half:hover{background:var(--gold);color:#000;}
 .btn-half.sec{border-color:var(--border);color:var(--muted);}
 .btn-half.sec:hover{border-color:var(--border2);color:var(--white);background:transparent;}

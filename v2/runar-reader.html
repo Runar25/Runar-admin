@@ -517,7 +517,7 @@
       </div>
       <!-- Po zakládacích Nornách: do stromu až na klik (KUKY 2026-10-11 „až si to přečtu a jsem spokojený, kliknu na zobrazit strom“).
            Text = atab_tree; ukazuje _syncFoundingLock() v runar-reading.js. -->
-      <button class="vcn-btn btn-gold" id="founding-to-tree" style="display:none;" onclick="showAppTab('tree')"></button>
+      <button class="btn-full small" id="founding-to-tree" style="display:none;" onclick="showAppTab('tree')"></button>
       <!-- Voice -->
       <!-- 2026-10-10: popisky s runou (draw-lbl, btn-random, hlas, redeem-lbl) plní setRuneText — runa jako naše SVG, ne písmo (bod 11) -->
       <button class="btn-voice" id="btn-generate-voice" onclick="generateVoice()" disabled></button>
@@ -567,7 +567,7 @@
     <!-- Bez životní runy: nabídka ji vyložit (KUKY 2026-10-11 — cesta k založení; do té doby tu po resetu nebylo nic). Tvar = tree-founding-cta. -->
     <div id="tree-need-rune" style="display:none;">
       <p class="tree-reveal-intro" id="tree-need-rune-text"></p>
-      <button class="vcn-btn btn-gold" id="tree-need-rune-btn" onclick="showAppTab('liferune')"></button>
+      <button class="btn-full small" id="tree-need-rune-btn" onclick="showAppTab('liferune')"></button>
     </div>
 
     <!-- LIVING TREE (free-solo: grows from your readings) -->
@@ -631,7 +631,7 @@
       <!-- State: zivotni runa hotova, strom jeste nezalozeny — zakladaci ritual -->
       <div id="tree-founding-cta" style="display:none;">
         <p class="tree-reveal-intro" id="tree-founding-intro"></p>
-        <button class="vcn-btn btn-gold" id="tree-founding-btn" onclick="startTreeFounding()"></button>
+        <button class="btn-full small" id="tree-founding-btn" onclick="startTreeFounding()"></button>
       </div>
 
     <div class="tree-name-section" id="tree-name-section" style="display:none;">
@@ -707,14 +707,14 @@
           <!-- 2026-10-10: tlačítko jen pro návštěvníka (updateTreeTab) — do té doby tu četl „Sign in to read what this rune carries.“
                a nebylo na co klepnout. Obal .tree-cta-block = na střed a týž odstup jako tlačítko Rune Seekera pod ním. -->
           <div class="tree-cta-block" id="tree-visitor-cta" style="display:none;">
-            <button class="vcn-btn btn-upgrade" onclick="openAuthModal()" id="tree-visitor-btn"></button>
+            <button class="btn-upgrade" onclick="openAuthModal()" id="tree-visitor-btn"></button>
           </div>
 
           <!-- Primary CTA: Life Rune for 3 credits -->
           <!-- id 2026-09-11: navstevnik vidi tentyz teaser, ale nabidka za kredity
                pro nej nedava smysl (nema ucet) — skryva se mu. -->
           <div class="tree-cta-block" id="tree-rs-cta-block">
-            <button class="vcn-btn btn-gold" id="tree-rs-reveal-btn" onclick="_rsLifeRuneReading()">Read what it carries</button>
+            <button class="btn-full small" id="tree-rs-reveal-btn" onclick="_rsLifeRuneReading()">Read what it carries</button>
             <div class="tree-cta-cost">
               <span id="tree-rs-cost-label"></span>
               &nbsp;·&nbsp;
@@ -734,7 +734,7 @@
           </div>
           <p class="tree-gate-text tree-lr-origin"></p>
           <p class="tree-reveal-intro" id="tree-reveal-intro">Before the runes speak of today — shall Rúnar reveal the rune you carry since birth?</p>
-          <button class="vcn-btn btn-gold" id="tree-reveal-btn" onclick="generateLifeRuneReading()">Read what it carries</button>
+          <button class="btn-full small" id="tree-reveal-btn" onclick="generateLifeRuneReading()">Read what it carries</button>
         </div>
 
         <!-- State: loading -->
@@ -742,7 +742,7 @@
           <div class="tree-loading-glyph" id="tree-loading-glyph"></div>
           <div class="tree-loading-text" id="tree-loading-text">THE STONES SPEAK IN SILENCE…</div>
           <!-- „zkusit znovu“, když se profil nenačetl ani napodruhé (2026-10-12, znovuNactiProfil v runar-app.js) -->
-          <button class="vcn-btn btn-gold" id="tree-loading-retry" style="display:none;" onclick="znovuNactiProfil()"></button>
+          <button class="btn-full small" id="tree-loading-retry" style="display:none;" onclick="znovuNactiProfil()"></button>
         </div>
 
         <!-- State: reading exists — text VZDY viditelny, zadne sbaleni (KUKY 2026-09-14:
@@ -762,7 +762,7 @@
             <!-- Po vyložení runy: zasadit strom (KUKY 2026-10-11; nabídka chyběla od oddělení záložky 2026-09-11). Tvar = tree-founding-cta. -->
             <div id="lr-plant" style="display:none;">
               <p class="tree-reveal-intro" id="lr-plant-text"></p>
-              <button class="vcn-btn btn-gold" id="lr-plant-btn" onclick="showAppTab('tree')"></button>
+              <button class="btn-full small" id="lr-plant-btn" onclick="showAppTab('tree')"></button>
             </div>
             <!-- 2026-10-06 (KUKY „ze stromu ji smažeme“): citát „The runes do not predict your fate…“ pryč — týž stojí nad čtením. -->
             <!-- 2026-09-25: přepínač čočky životní runy odešel — životní runa do čtení nezasahuje, jen na dotaz v Asku (KUKY). -->
@@ -785,7 +785,7 @@
       </div>
       <p class="tree-gate-text" id="name-lore-intro"></p>
       <div class="tree-cta-block" id="name-lore-cta">
-        <button class="vcn-btn btn-gold" id="name-lore-btn" onclick="onNameLoreBtn()"></button>
+        <button class="btn-full small" id="name-lore-btn" onclick="onNameLoreBtn()"></button>
       </div>
       <div class="tree-reading-text" id="name-lore-text" style="display:none;"></div>
     </div>
@@ -919,7 +919,7 @@
     </button>
     <div class="sp-tier-desc" id="sp-tier-desc" style="display:none;"></div>
     <button class="sp-path-toggle" id="sp-higher-toggle" onclick="closeSidePanel();openJourney()" style="display:none;gap:10px;">
-      <span id="sp-path-arrow" style="font-size:1.4em;letter-spacing:0;line-height:1;">+</span>
+      <span id="sp-path-arrow" style="font-size:1.4em;letter-spacing:0;line-height:1;">→</span>
       <span id="sp-higher-lbl">UPGRADE YOUR JOURNEY</span>
     </button>
     <div id="sp-path-body" class="sp-path-body" style="display:none;"></div>
