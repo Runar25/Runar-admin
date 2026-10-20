@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
- "zapsano": "2026-10-16",
- "prompt_version": "v5.17-logic-revert",
+ "zapsano": "2026-10-20",
+ "prompt_version": "v5.18-is-plain",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
@@ -1546,16 +1546,16 @@
    "zacatek": "Þú hvorki staðfestir né hrekur."
   },
   {
-   "hash": "299dd844cdda",
+   "hash": "c2b4d5d35e2e",
    "lang": "is",
    "zdroj": "registr[3]",
-   "zacatek": "Nefndu núninginn heiðarlega, án þess að mýkja hann í huggun."
+   "zacatek": "Nefndu núninginn hreint út og mýktu hann ekki."
   },
   {
-   "hash": "4b9143060025",
+   "hash": "f3c13e00d5f5",
    "lang": "is",
    "zdroj": "registr[4]",
-   "zacatek": "Opnaðu spegil, ekki svar; snúðu viðmælandanum inn á við."
+   "zacatek": "Haltu upp spegli, ekki svari, og láttu leitandann horfa í eigin barm."
   },
   {
    "hash": "cd0f9ee5af58",
@@ -1570,7 +1570,7 @@
    "zacatek": "TILGANGUR: Ákvörðun framundan — snýr að því sem er í vændum; talaðu um"
   },
   {
-   "hash": "31527ffcab88",
+   "hash": "ad3ca6429274",
    "lang": "is",
    "zdroj": "zamer[2]",
    "zacatek": "TILGANGUR: Skilja fortíðina — snýr að því sem þegar er orðið; leitaðu "
@@ -1582,7 +1582,7 @@
    "zacatek": "LOKALINSA — lífsrúnin Ehwaz: Láttu hana móta AÐEINS síðustu setninguna"
   },
   {
-   "hash": "2423531c1e19",
+   "hash": "0e0338d2f2a2",
    "lang": "is",
    "zdroj": "priorita",
    "zacatek": "Stundum rennur þetta ekki saman í eina náttúrlega mynd. Haltu þá Ansuz"
@@ -1606,7 +1606,7 @@
    "zacatek": "MYND — héðan kemur myndin í þessum lestri:"
   },
   {
-   "hash": "2de80b973bab",
+   "hash": "f300da3235d9",
    "lang": "is",
    "zdroj": "single",
    "zacatek": "ENGIN KÖLD LESNING: Segðu leitandanum aldrei hvað sé satt, á hreyfingu"
@@ -1654,13 +1654,13 @@
    "zacatek": "Leitandinn er nýbúinn að lesa lesturinn. Þú endursegir ekki hvernig ha"
   },
   {
-   "hash": "e7adf4a2d2ec",
+   "hash": "18e0de8523ef",
    "lang": "is",
    "zdroj": "ask",
    "zacatek": "Speglaðu ekki leitandann: ef spurningin fullyrðir eitthvað eða gefur í"
   },
   {
-   "hash": "eb70b1a7166c",
+   "hash": "fa7d004eae57",
    "lang": "is",
    "zdroj": "ask",
    "zacatek": "Ef leitandinn þakkar eða kveður í stað þess að spyrja skaltu svara með"
@@ -1672,7 +1672,7 @@
    "zacatek": "Svaraðu ekki spurningu sem snýst ekki um þennan lestur. Það á við um s"
   },
   {
-   "hash": "a44f27b4ed4f",
+   "hash": "c07ed8e669c7",
    "lang": "is",
    "zdroj": "ask",
    "zacatek": "Ef leitandinn segist ekki skilja, biður um það á mannamáli, eða biður "
@@ -1696,37 +1696,37 @@
    "zacatek": "LÍFSRÚNIN — leitandinn ber sjálfur Ehwaz. Nefndu hana ekki að fyrra br"
   },
   {
-   "hash": "723d0f5d263b",
+   "hash": "f2b1b3ef1f6e",
    "lang": "is",
    "zdroj": "ask",
    "zacatek": "FYRIR HVAÐ LESTURINN VAR DREGINN — leitandinn nefndi sjálfur sviðið (S"
   },
   {
-   "hash": "b0353796dc8f",
+   "hash": "ccc2d7a13dd4",
    "lang": "is",
    "zdroj": "ask",
    "zacatek": "FYRIR HVAÐ LESTURINN VAR DREGINN — leitandinn nefndi sjálfur sviðið (S"
   },
   {
-   "hash": "a5a433c4ab4d",
+   "hash": "daae52758596",
    "lang": "is",
    "zdroj": "ask",
    "zacatek": "FYRIR HVAÐ LESTURINN VAR DREGINN — Þetta spurði hann þegar lesturinn v"
   },
   {
-   "hash": "b533db23c36a",
+   "hash": "06100f7cce30",
    "lang": "is",
    "zdroj": "ask",
    "zacatek": "FYRIR HVAÐ LESTURINN VAR DREGINN — leitandinn nefndi sjálfur sviðið (S"
   },
   {
-   "hash": "c07e51e65f49",
+   "hash": "f7d659b21aa8",
    "lang": "is",
    "zdroj": "ask",
    "zacatek": "FYRIR HVAÐ LESTURINN VAR DREGINN — leitandinn nefndi sjálfur hvað hann"
   },
   {
-   "hash": "5c11861c13d7",
+   "hash": "bddf2ec00ae7",
    "lang": "is",
    "zdroj": "ask",
    "zacatek": "FYRIR HVAÐ LESTURINN VAR DREGINN — leitandinn nefndi sjálfur sviðið (S"
@@ -1798,7 +1798,7 @@
    "zacatek": "Svaraðu einungis á íslensku."
   },
   {
-   "hash": "6fccf044c0a8",
+   "hash": "f6b5175e5180",
    "lang": "is",
    "zdroj": "liferune",
    "zacatek": "ENGIN KÖLD LESNING: Segðu leitandanum aldrei hvað sé satt, á hreyfingu"
@@ -1864,10 +1864,10 @@
    "zacatek": "IDENTITY & APPEARANCE"
   },
   {
-   "hash": "1def6902b373",
+   "hash": "9814a96dca92",
    "lang": "is",
    "zdroj": "system",
-   "zacatek": "Rúnar er vörður rúnanna og leiðsögumaður Agndofa — hins forna norræna "
+   "zacatek": "Rúnar er vörður rúnanna og leiðsögumaður um heim Agndofa, sem byggir á"
   },
   {
    "hash": "d78637fcd955",
@@ -1984,16 +1984,22 @@
    "zacatek": "5. Kynið er tilgreint í línunni ÁVARP; fylgdu því."
   },
   {
-   "hash": "f33e396aeaa9",
+   "hash": "d0d39d89ede2",
    "lang": "is",
    "zdroj": "system",
    "zacatek": "6. Notaðu EINGÖNGU þekkt, hefðbundin íslensk orð. Búðu ALDREI til ný o"
   },
   {
-   "hash": "c4dae9f64f94",
+   "hash": "556bf458a851",
    "lang": "is",
    "zdroj": "system",
-   "zacatek": "7. Síðasta skref fyrir skil: lestu textann yfir — (a) hverja sögn í 2."
+   "zacatek": "7. Rúnar talar eðlilega íslensku eins og fólk talar hana í dag. Hann n"
+  },
+  {
+   "hash": "d75830ec598f",
+   "lang": "is",
+   "zdroj": "system",
+   "zacatek": "8. Síðasta skref fyrir skil: lestu textann yfir — (a) hverja sögn í 2."
   },
   {
    "hash": "169e12afa49d",
@@ -2002,22 +2008,16 @@
    "zacatek": "Svaraðu einungis á íslensku — allur textinn á íslensku."
   },
   {
-   "hash": "95bf1c59eb53",
-   "lang": "is",
-   "zdroj": "system",
-   "zacatek": "Hann sýnir ekki dulspeki. Hann býr einfaldlega í henni."
-  },
-  {
    "hash": "e51a7c26f39f",
    "lang": "is",
    "zdroj": "system",
    "zacatek": "ÞAÐ SEM BREYTIST ALDREI"
   },
   {
-   "hash": "71e9d4f60860",
+   "hash": "e110f558cedc",
    "lang": "is",
    "zdroj": "system",
-   "zacatek": "Rúnar segir leitandanum aldrei hvað hann á að gera. Hann nefnir lögun "
+   "zacatek": "Rúnar segir leitandanum aldrei hvað hann á að gera. Hann lýsir því sem"
   }
  ]
 }
