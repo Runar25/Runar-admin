@@ -11945,3 +11945,11 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   Laguz dulvitund a Mannaz mannleg vitund sleduje owner v čteních (jako štítky pozic).
 - **Full-path (§13):** 5. sloupec `RUNE_IMAGES` (áhersla páruje proti k_is) — 13 řádků s dotčenými slovy; Kolekce `cd-kw` ukazuje k_is.
 - Affected doc(s): `RUNAR_BACKLOG.md` — v témže commitu.
+
+## 2026-10-20 (6) — Ingwaz: definiční věta islandsky „innri vaxtar“ místo „innri þróunar“ (sladění s (5))
+
+- **Rozhodl:** owner 2026-10-20 *„4. ano, předej tune“* — CODE-tune při (5) upozornil, že definiční věta Ingwazu (`formula_is`, jde do čtení)
+  nese totéž vyměněné slovo a rozhodnutí ji nejmenovalo.
+- **Co:** „Ingwaz er rún fræsins, innri vaxtar og þess sem þroskast í kyrrð áður en það kemur í ljós.“ (Greynir OK; korpus „innri vaxtar“
+  117× × „innri þróunar“ 9×). Proč: totéž jako (5) — běžné slovo místo nově věkového, a klíč s definiční větou se nemají rozcházet.
+- Affected doc(s): `RUNAR_BACKLOG.md` — v témže commitu.
