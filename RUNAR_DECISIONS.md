@@ -11953,3 +11953,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Co:** „Ingwaz er rún fræsins, innri vaxtar og þess sem þroskast í kyrrð áður en það kemur í ljós.“ (Greynir OK; korpus „innri vaxtar“
   117× × „innri þróunar“ 9×). Proč: totéž jako (5) — běžné slovo místo nově věkového, a klíč s definiční větou se nemají rozcházet.
 - Affected doc(s): `RUNAR_BACKLOG.md` — v témže commitu.
+
+## 2026-10-20 (7) — Deník: pero zapíše do knihy; ikona Rune Reading = dva naše kameny s měnící se runou; UPGRADE v nabídce jako v menu
+
+- **Rozhodl:** owner 2026-10-20 k náhledu `docs/inbox/2026-10-20-kniha-pero-kameny-nahled.html`: *„3 pero“* · *„runa B ale ta co je naspod
+  nesmí jít samozřejmě vidět celá a můžeme to udělat tak, že se runy uvnitř budou měnit? stačí jednou po spuštění appky … v tomhle
+  případě může“* · *„upgrade your journey by mělo dělat to stejné co dělá v menu … stejný styl. už jsme to řešili“*.
+- **Co:** (1) při otevření deníku pero v záložce JOURNAL pohasne, rozsvítí se u knihy v nadpisu, 3 s píše tři řádky a vrátí se
+  (`_peroVDeniku`, `runar-journal.js`); bez animací jen kniha. (2) ikona záložky Rune Reading = prázdný kámen vzadu, přední kámen s runou ho
+  zčásti zakryje; runa se losuje jednou při načtení appky (`_ikonaCteni`, `runar-app.js`). (3) UPGRADE YOUR JOURNEY v nabídce pod jménem
+  je tlačítko `.btn-upgrade` jako v menu (obojí otevírá okno Walk with Rúnar).
+- **Mění 2026-10-19 (8)** jen v jednom: tam *„runu, ale runy to být nesmí“* platí pro značky účtů a dál platí; ikona čtení runu nést smí
+  (owner výslovně „v tomhle případě může“).
+- Affected doc(s): `RUNAR_BACKLOG.md` — v témže commitu.

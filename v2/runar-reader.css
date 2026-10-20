@@ -856,6 +856,8 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 .journey-pack .journey-pr{margin:0;}
 .journey-kamen{width:44px;height:60px;}
 .kamen-uctu{width:100%;height:100%;display:block;overflow:visible;}
+/* 2026-10-20: pero, které v deníku zapíše do knihy (_peroVDeniku, runar-journal.js; owner „3 pero“) — leží nad stránkou, pod okny. */
+.pero-let{position:fixed;left:0;top:0;z-index:60;pointer-events:none;color:var(--gold);overflow:visible;transform-origin:20.83% 87.5%;}
 .journey-nm{font-family:'Cinzel',serif;font-size:0.78em;letter-spacing:2px;color:rgba(255,191,0,0.7);display:flex;justify-content:space-between;gap:8px;align-items:baseline;}
 .journey-st.here .journey-nm{color:var(--gold);}
 .journey-here{font-family:'Cormorant Garamond',serif;font-style:italic;letter-spacing:0;font-size:1.25em;color:var(--gold);}
@@ -870,8 +872,9 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 .journey-note{font-size:0.85em;color:var(--muted);font-style:italic;margin-top:5px;}
 .journey-note.klik{cursor:pointer;text-decoration:underline;text-decoration-color:rgba(255,191,0,0.4);text-underline-offset:3px;}
 .journey-foot{border-top:1px solid var(--border);margin:2px 0 0;padding-top:12px;font-size:0.85em;color:var(--muted);font-style:italic;text-align:center;}
-.dd-journey{display:block;width:100%;margin:0;padding:12px 18px;border:0;border-top:1px solid rgba(46,74,112,0.3);background:none;text-align:left;
-  font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;color:var(--gold);cursor:pointer;}
+/* 2026-10-20 (owner: „upgrade your journey by mělo dělat to stejné co dělá v menu … stejný styl. už jsme to řešili“): v nabídce pod
+   jménem totéž tlačítko jako v menu (.btn-upgrade — rámeček, na střed, hover zlatou); tady jen rozložení. Do té doby holý text vlevo. */
+.dd-journey{display:block;width:calc(100% - 36px);margin:4px 18px 16px;text-align:center;}
 /* Pohyb značky jen u „you are here“ (.zivy, kamenUctuVystred): plamen se chvěje, pták letí; stezku vlní skript. Bez animací v klidu. */
 /* 2026-10-20 (CODE-read): u tlačítek svítí jen rámeček, ne text — barva textu svíčky (forwards) přebila hover .btn-upgrade (zlatý text
    na zlaté výplni). Halo u tlačítek ne. */

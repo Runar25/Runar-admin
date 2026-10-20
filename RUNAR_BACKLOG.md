@@ -1338,7 +1338,7 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   spurningin búist við öðru“; úvod `DEF_CHAR_IS.identity` → „Rúnar er vörður rúnanna og leiðsögumaður um heim Agndofa, sem byggir á
   íslenskri náttúru, sögu og gömlu rúnunum.“; věta „Hann sýnir ekki dulspeki. Hann býr einfaldlega í henni.“ (ř. 1595) **pryč**. Nechat:
   „í myndum og táknmáli“ u otázky (až po ownerově testu otázek). Jedna nová verze promptu, sledovat v čteních testerů.
-- [ ] **Ingwaz `formula_is`: „innri þróunar“ → „innri vaxtar“ (owner 2026-10-20, DECISIONS 2026-10-20 (6)) → CODE-tune.** Věta:
+- [x] ✅ *(CODE-tune 2026-10-20, prompt v5.20)* **Ingwaz `formula_is`: „innri þróunar“ → „innri vaxtar“ (owner 2026-10-20, DECISIONS 2026-10-20 (6)) → CODE-tune.** Věta:
   „Ingwaz er rún fræsins, innri vaxtar og þess sem þroskast í kyrrð áður en það kemur í ljós.“ (Greynir OK; „innri vaxtar“ 117× × „innri
   þróunar“ 9×). Sladění s klíčem z (5).
 - [x] ✅ *(CODE-tune 2026-10-20, prompt v5.19; obrazů s dotčeným slovem bylo 16, ne 13; Uruz IS 2 × EN 3 → strop parity ㉤ na 1 s důvodem; „innri þróunar“ ve formula_is Ingwazu nezměněno — rozhodnutí ho nejmenuje)* **Klíčová slova run IS — schváleno všech 9 (owner 2026-10-20, DECISIONS 2026-10-20 (5)) → CODE-tune.** `v2/runar-runes.js` `k_is`:
@@ -1378,7 +1378,7 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   „Each step gives you more rune readings. …“; Rúnakort jako třetí karta vedle MONTHLY / YEARLY a odkaz u Rune Seekera, který na ni
   skočí; mezi kameny místo teček **stopy bot** (malé, nesymetrické, od Visitora k Wandererovi — „walk with us“). Owner nabízí ukázat na
   počítači. Návrh textů EN + IS a náhled stop napřed ownerovi. CODE-tune.
-- [ ] **Ikona záložky Rune Reading: dva překrývající se runové kameny (hlášení 84976d5d)** — owner: *„napřed náhled“*. Kameny z `RUNE_SVGS`.
+- [x] ✅ *(CODE-tune 2026-10-20, varianta B s runou losovanou při spuštění; DECISIONS 2026-10-20 (7))* **Ikona záložky Rune Reading: dva překrývající se runové kameny (hlášení 84976d5d)** — owner: *„napřed náhled“*. Kameny z `RUNE_SVGS`.
 - [ ] **„What are you seeking — This sets the tone“ (hlášení 3b79eac3):** owner: *„je složité si představit, co tím tónem myslíme“* — nová
   věta nápovědy `seek_hint` EN + IS, návrh ownerovi (co volba ve čtení skutečně dělá: tvar konce čtení, `SEEK_SHAPE` v runar-utils.js).
 - [ ] **Písmo čtení je malé (testeři IS, hlášení 4910de7c, db5e2b38 — čtení Norny 452a97c5):** *„Letrið er of lítið, það er erfitt að
