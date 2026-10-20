@@ -55,11 +55,13 @@
 .rk-f.rk-back .rk-url{color:#2E4A70}
 .rk-f.rk-back .rk-qr{border:1px solid #2E4A7022}
 /* w — Zimní slunovrat (owner 2026-10-20). Barvy z proužku pod archem Runar_WinterSolsticeOutfit: námořnická modř, ledová, sníh.
-   Obrázek runar-zima.jpg je výřez z archu (365 × 470 px) — na obrazovku stačí, na TISK málo; tisková verze se vygeneruje zvlášť. */
+   Obrázek runar-zima.jpg je výřez z archu složený jako runar-bile.jpg (postava do pasu) — na obrazovku stačí, na TISK málo;
+   tisková verze se vygeneruje zvlášť. Horní rozplynutí 30–34 % výšky rámu: rám je vyšší než karta a čtvercový obrázek začíná
+   ve 30 % (5–9 % končilo nad obrázkem a šev nechávalo, owner screenshot 2026-10-20). */
 .rk-w.rk-front{background:radial-gradient(ellipse at 75% 60%,#f7fafb 0%,#dfe9ee 58%,#c4d4dd 100%);border:1px solid #1e365733}
 .rk-w .rk-art{background-image:url(img/runar-zima.jpg);   /* pozadí výřezu je šedavé → okraje se rozplynou do karty */
-  -webkit-mask-image:linear-gradient(to right,transparent 0,#000 16%),linear-gradient(to bottom,transparent 0,#000 10%);-webkit-mask-composite:source-in;
-  mask-image:linear-gradient(to right,transparent 0,#000 16%),linear-gradient(to bottom,transparent 0,#000 10%);mask-composite:intersect}
+  -webkit-mask-image:linear-gradient(to right,transparent 0,#000 12%),linear-gradient(to bottom,transparent 30%,#000 34%);-webkit-mask-composite:source-in;
+  mask-image:linear-gradient(to right,transparent 0,#000 12%),linear-gradient(to bottom,transparent 30%,#000 34%);mask-composite:intersect}
 .rk-w .rk-n{color:#1e3657}
 .rk-w .rk-s{color:#4a6d8c}
 .rk-w .rk-q{color:#2a3446}
