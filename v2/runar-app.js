@@ -1720,7 +1720,8 @@ function _journeyPaint() {
   var env = _journeyProstredi(), lk = lang === 'is' ? 'is' : 'en';
   var ja = !currentUser ? 0 : Math.max(1, JOURNEY_PORADI.indexOf(normalizeTier(userTier || 'rune_seeker')));
   setText('journey-title', t('journey_title'));
-  setText('journey-sub', t(env === 'play' ? 'journey_play_sub' : 'journey_sub'));
+  // 2026-10-20: podtitul nese {casts} (owner „Each step gives you more rune readings“) — jméno jednotky z VOCAB (§10), web stejně.
+  setText('journey-sub', env === 'play' ? t('journey_play_sub') : tp('journey_sub', { casts: vlp('cast', lang) }));
   var per = document.getElementById('journey-per');
   if (per) {
     per.style.display = env === 'play' ? 'none' : '';

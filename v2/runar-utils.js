@@ -1149,6 +1149,7 @@ function kamenUctuVystred(root, zivyId) {
   (root || document).querySelectorAll('svg.kamen-uctu').forEach(function (svg) {
     var id = svg.getAttribute('data-ucet'), u = ZNACKY_UCTU[id], sg = svg.querySelector('.zn-sym');
     svg.classList.toggle('zivy', id === zivyId && !klid);
+    svg.classList.toggle('here', id === zivyId);   // 2026-10-20: záře kamene „you are here“ i bez animací a u prázdného kamene (CODE-read)
     if (!sg || !u) return;
     var kb = svg.firstElementChild.getBBox(), cx = kb.x + kb.width / 2, cy = kb.y + kb.height / 2, b = sg.getBBox();
     var m = Math.max(b.width, b.height); if (!m) return;
