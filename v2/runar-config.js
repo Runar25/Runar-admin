@@ -85,7 +85,11 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 //    a úvod jen v systému, ✦ jediný zalomený řádek, Yggdrasil „asked about“, IS 7(c), IS Ask délka bez svolení přesáhnout.
 // v5.17 (2026-10-16): A3.3 („Let <runa> answer“), A3.5 („Mention by name“) a A3.9 (✦ řádek) zpět na znění před v5.16 — CODE-read je
 //    prověřila historií: měřená páka (EVAL 2026-09-08, LAB 2026-10-05), záměr v4.83, owner „teď to funguje, tak neměním“.
-const RUNAR_PROMPT_VERSION = 'v5.17-logic-revert';
+// v5.18 (2026-10-20): islandský prompt bez knižního a archaického jazyka — tón pozitivně (pravidlo 7: „talar eðlilega íslensku … sagnorðum
+//    fremur en nafnorðum“), bez „Skáldlegt og bókmenntalegt mál er í lagi“, jednodušší závěr Norn, úvod postavy bez „forn / gamall“, věta
+//    o dulspeki pryč, 16 knižních / jmenných míst a kalků, moderní jména světů Yggdrasilu (i štítky v SPREAD_CONFIG). Owner, DECISIONS
+//    2026-10-20 (1), (2), (4); průchod CODE-read. EN beze změny.
+const RUNAR_PROMPT_VERSION = 'v5.18-is-plain';
 
 // Měsíční strop hlasu pro všechny (VOICE_MONTHLY_LIMIT = 5, od 2026-09-11) ZRUŠEN 2026-10-11: „limit na hlas max 5 na měsíc“ byl
 // ownerův pokyn pro testery, omylem pro všechny (DECISIONS 2026-10-11 (49)); owner: „žádný měsíční strop 5 hlasů není!!!“. Rúnar přečte
@@ -595,14 +599,15 @@ const SPREAD_CONFIG = {
         'Hel — Completion',             // 9 urd
       ],
       is: [
-        'Ásgarðr — Æðsta sjálfið',
-        'Vanaheimr — Samhljómur',
-        'Álfheimr — Sköpunarkraftur',
-        'Miðgarðr — Daglegur veruleiki',
-        'Jötunheimr — Hindrun',
-        'Svartálfaheimr — Dulin list',
-        'Níðavellir — Djúp uppspretta',
-        'Niflheimr — Uppruninn',
+        // 2026-10-20 (owner, DECISIONS 2026-10-20 (4)): moderní tvary jako v promptu (Ásgarðr 0× × Ásgarður 1 826×); Níðavellir 0× → Niðavellir
+        'Ásgarður — Æðsta sjálfið',
+        'Vanaheimur — Samhljómur',
+        'Álfheimur — Sköpunarkraftur',
+        'Miðgarður — Daglegur veruleiki',
+        'Jötunheimar — Hindrun',
+        'Svartálfaheimur — Dulin list',
+        'Niðavellir — Djúp uppspretta',
+        'Niflheimur — Uppruninn',
         'Hel — Lokið',
       ],
     },
