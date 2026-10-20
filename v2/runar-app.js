@@ -1715,7 +1715,20 @@ function _journeyProstredi() {
 // Tečka na tisíce: 3.490 (islandský zápis, i v EN jako na webu). Ručně, ne toLocaleString — prohlížeč bez dat jazyka by dal jiný zápis (smoke ㊻).
 function _jkr(n) { return String(Math.round(Number(n))).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
 function _jesc(x) { return String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
-function _journeyObdobi(p) { _journeyP = p === 'y' ? 'y' : 'm'; _journeyPaint(); }
+// 2026-10-20: třetí karta „c“ = Rúnakort (owner, hlášení bd915d60: „vedle month, year jako zvlášť okno a u Rune Seekera odkaz“).
+function _journeyObdobi(p) { _journeyP = (p === 'y' || p === 'c') ? p : 'm'; _journeyPaint(); }
+// Stopa boty (2026-10-20, owner: „místo teček spojující jeden druhý bych chtěl vidět stopy bot. Malé, ale dostatečně viditelné. Ne
+// symetrické, ale jdoucí od Visitora k Wandererovi“): podrážka + pata, špička dolů (cesta vede shora dolů), střídavě levá / pravá,
+// směrem dolů menší (perspektiva jako stezka). Bez pohybu.
+var _J_STOPA = '<path d="M3 12c-1.7 0-2.6-1.8-2.6-4S1.3 0 3.2 0s2.6 2.6 2.4 4.6C5.4 7.4 4.6 12 3 12z"/><path d="M3.4 13.4c1.2 0 1.8.8 1.7 1.8-.1 1-.8 1.8-1.9 1.8s-1.7-.8-1.6-1.8c.1-1 .7-1.8 1.8-1.8z"/>';
+function _jStopy(i) {
+  var h = '', k = 1 - i * 0.1;
+  [[0.10, 0, 1], [0.42, 1, 0.9], [0.74, 0, 0.8]].forEach(function (p, n) {
+    var vel = (p[2] * k).toFixed(2), x = p[1] ? 9 : 1, rot = p[1] ? 8 : -8;
+    h += '<svg class="journey-stopa" viewBox="0 0 6 17" style="top:' + (p[0] * 100) + '%;left:' + x + 'px;transform:rotate(' + (180 + rot) + 'deg) scale(' + vel + ')' + (p[1] ? ' scaleX(-1)' : '') + '">' + _J_STOPA + '</svg>';
+  });
+  return '<div class="journey-stopy" aria-hidden="true">' + h + '</div>';
+}
 function _journeyPaint() {
   var env = _journeyProstredi(), lk = lang === 'is' ? 'is' : 'en';
   var ja = !currentUser ? 0 : Math.max(1, JOURNEY_PORADI.indexOf(normalizeTier(userTier || 'rune_seeker')));
@@ -1726,12 +1739,27 @@ function _journeyPaint() {
   if (per) {
     per.style.display = env === 'play' ? 'none' : '';
     per.querySelectorAll('button').forEach(function (b) {
-      var y = b.getAttribute('data-p') === 'y';
-      b.textContent = t(y ? 'journey_yearly' : 'journey_monthly');
-      b.classList.toggle('on', (_journeyP === 'y') === y);
+      var p = b.getAttribute('data-p');
+      b.textContent = p === 'c' ? vl('card', lang).toUpperCase() : t(p === 'y' ? 'journey_yearly' : 'journey_monthly');
+      b.classList.toggle('on', _journeyP === p);
     });
   }
   var h = '';
+  if (_journeyP === 'c' && env !== 'play') {   // karta Rúnakort: balíčky z CARD_PACKS, cena, počet čtení; kód zadat hned
+    CARD_PACKS.forEach(function (pk) {
+      h += '<div class="journey-pack"><div class="journey-nm"><span>' + _jesc(cardPackName(pk, lang).toUpperCase()) + '</span><span class="journey-pr">'
+        + _jkr(pk.isk) + ' kr</span></div><div class="journey-note">' + _jesc(vn('cast', pk.credits, lang)) + '</div></div>';
+    });
+    if (env === 'web') h += '<a class="tn-btn btn-upgrade" href="' + _jesc(JOURNEY_URL) + '" target="_blank" rel="noopener">' + _jesc(tp('gift_card_btn', { card: vl('card', lang).toUpperCase() })) + '</a>';
+    else h += '<div class="journey-note">' + _jesc(t('journey_soon')) + '</div>';
+    var p0 = CARD_PACKS.reduce(function (a, b) { return b.isk < a.isk ? b : a; });
+    h += '<div class="journey-note klik" role="button" tabindex="0" onclick="closeJourney();showAppTab(\'reading\');toggleRedeem()">'
+      + _jesc(tp('journey_card_note', { price: _jkr(p0.isk), casts: vn('cast', p0.credits, lang) })) + '</div>';
+    var pathC = document.getElementById('journey-path');
+    if (pathC) pathC.innerHTML = h;
+    setText('journey-foot', t('journey_foot'));
+    return;
+  }
   JOURNEY_PORADI.forEach(function (id, i) {
     var T = TIERS[id] || {}, jm = (lk === 'is' ? (T.label_is || T.label) : T.label) || id, tady = i === ja;
     h += '<div class="journey-st' + (tady ? ' here' : '') + '"><div class="journey-kamen">' + kamenUctuSvg(id) + '</div><div>'
@@ -1759,13 +1787,11 @@ function _journeyPaint() {
           + '<div class="journey-note">' + _jesc(t('journey_step_note')) + '</div>';
       } else if (id === 'rune_seeker' && ja === 0) {
         h += '<button type="button" class="tn-btn btn-upgrade" onclick="closeJourney();openAuthModal()">' + _jesc(t('become_rs_btn')) + '</button>';
-      } else if (id === 'rune_seeker' && ja === 1 && typeof CARD_PACKS !== 'undefined' && CARD_PACKS.length) {
-        var p0 = CARD_PACKS.reduce(function (a, b) { return b.isk < a.isk ? b : a; });
-        h += '<div class="journey-note klik" role="button" tabindex="0" onclick="closeJourney();showAppTab(\'reading\');toggleRedeem()">'
-          + _jesc(tp('journey_card_note', { price: _jkr(p0.isk), casts: vn('cast', p0.credits, lang) })) + '</div>';
+      } else if (id === 'rune_seeker' && ja === 1) {   // 2026-10-20: odkaz na kartu Rúnakort (šipka = vede jinam, CODE-read §4)
+        h += '<button type="button" class="tn-btn btn-upgrade" onclick="_journeyObdobi(\'c\')">' + _jesc(vl('card', lang).toUpperCase()) + ' →</button>';
       }
     }
-    h += '</div></div>';
+    h += '</div>' + (i < JOURNEY_PORADI.length - 1 ? _jStopy(i) : '') + '</div>';
   });
   var path = document.getElementById('journey-path');
   if (path) { path.innerHTML = h; kamenUctuVystred(path, JOURNEY_PORADI[ja]); }
