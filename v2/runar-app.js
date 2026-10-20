@@ -553,7 +553,7 @@ function showNamePrompt(edit) {
   if (pIn) pIn.value = _nameEditMode ? profileName : '';
   setNamePref(_nameEditMode ? addressPref : 'name');
   _nameModalSync();
-  ov.style.display = 'flex';
+  ov.classList.add('open');   // 2026-10-20: .modal-overlay jako ostatní okna (dřív vlastní .name-overlay se style.display)
   setTimeout(() => nIn && nIn.focus(), DELAY_FOCUS);
 }
 
@@ -593,7 +593,7 @@ async function saveName() {
       showToast(t('err_save_failed'));
     }
   } catch(e) { console.warn('saveName:', e.message); }
-  document.getElementById('name-overlay').style.display = 'none';
+  document.getElementById('name-overlay').classList.remove('open');
   // Update label + greetings
   const lbl = document.getElementById('auth-user-label');
   if (lbl) lbl.textContent = userName;
@@ -605,7 +605,7 @@ async function saveName() {
 }
 
 function skipName() {
-  document.getElementById('name-overlay').style.display = 'none';
+  document.getElementById('name-overlay').classList.remove('open');
   // 2026-10-19: volba platí — okno se samo už nenabídne (jen v režimu prvního zadání, ne při úpravě z menu)
   if (!_nameEditMode && currentUser) { try { localStorage.setItem('runar_name_skip_' + currentUser.id, '1'); } catch (e) {} }
 }
@@ -1359,7 +1359,6 @@ function _wtsPaint() {
   setText('wts-note', tp('wts_note', { guide: t('guide_title') }));
   setText('wts-open', t('wts_open')); setText('wts-later', t('wts_later'));
 }
-function _wtsEsc(ev) { if (ev.key === 'Escape') closeWhereToStart(false); }
 function maybeShowWhereToStart() {
   var m = document.getElementById('wts-modal');
   if (!m || _wtsVidel() || m.classList.contains('open')) return;
@@ -1370,13 +1369,11 @@ function maybeShowWhereToStart() {
   }
   _wtsPaint();
   m.classList.add('open');
-  document.addEventListener('keydown', _wtsEsc);
   var b = document.getElementById('wts-open'); if (b) b.focus();
 }
 function closeWhereToStart(doKolekce) {
   var m = document.getElementById('wts-modal'), card = document.getElementById('wts-card'), cil = document.getElementById('read-guide-lbl');
   try { localStorage.setItem(WTS_KLIC, '1'); } catch (e) {}
-  document.removeEventListener('keydown', _wtsEsc);
   if (!m || !m.classList.contains('open')) return;
   var hotovo = false;
   var dokonci = function () {
@@ -1799,14 +1796,32 @@ function openJourney() {
   var m = document.getElementById('journey-modal'); if (!m) return;
   m.classList.add('open');   // napřed otevřít: kamenUctuVystred měří getBBox, ve skrytém okně je nula
   _journeyPaint();
-  document.addEventListener('keydown', _journeyEsc);
 }
 function closeJourney() {
   var m = document.getElementById('journey-modal'); if (m) m.classList.remove('open');
-  document.removeEventListener('keydown', _journeyEsc);
 }
-function _journeyEsc(e) { if (e.key === 'Escape') closeJourney(); }
-document.addEventListener('click', function (e) { if (e.target && e.target.id === 'journey-modal') closeJourney(); });   // klik na závoj zavře
+// ── OKNA: Esc a klik mimo zavřou vždy (2026-10-20, CODE-read jednotný vzhled §1 „Okno“) ──
+// Do té doby každé okno jinak: Esc jen Where to start a Walk with Rúnar, klik mimo jen tři okna, přihlášení ani jedno.
+// Souhlas testera tu schválně není — souhlas je podmínka, zavře se jen svým ✕. Okno se jménem: zavřít = „Continue without a name“.
+var OKNA_ZAVRI = {
+  'auth-modal': function () { closeAuthModal(); },
+  'wts-modal': function () { closeWhereToStart(false); },
+  'journey-modal': function () { closeJourney(); },
+  'delete-account-modal': function () { closeDeleteModal(); },
+  'line-modal': function () { closeLine(); },
+  'lang-switch-modal': function () { cancelLangSwitch(); },
+  'install-modal': function () { closeInstallModal(); },
+  'name-overlay': function () { skipName(); }
+};
+function _oknoNavrchu() { var o = document.querySelectorAll('.modal-overlay.open'); return o.length ? o[o.length - 1] : null; }
+document.addEventListener('keydown', function (e) {
+  if (e.key !== 'Escape') return;
+  var m = _oknoNavrchu(); if (m && OKNA_ZAVRI[m.id]) OKNA_ZAVRI[m.id]();
+});
+document.addEventListener('click', function (e) {   // klik na závoj (ne do okna)
+  var m = e.target;
+  if (m && m.classList && m.classList.contains('modal-overlay') && m.classList.contains('open') && OKNA_ZAVRI[m.id]) OKNA_ZAVRI[m.id]();
+});
 
 // ─── HIGHER PATH TOGGLE ─────────────────────────────────
 // 2026-10-19 (pozdější téhož dne): UPGRADE YOUR JOURNEY v menu otevírá okno „Your journey with Rúnar“ (openJourney, runar-reader.html) — vstup
