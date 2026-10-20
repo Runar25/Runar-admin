@@ -10,6 +10,7 @@
   --gold:#FFBF00; --gold2:rgba(255,191,0,0.12); --gold-dim:#b38a00;
   --gold-soft:#D6A85C;   /* 2026-10-20: zlatá kreseb run (RUNE_SVGS) a textu k nim — do té doby natvrdo #D6A85C (CODE-read, jednotný vzhled) */
   --white:#F2F5F7; --muted:#8ba5c0; --dim:#3a4a60;
+  --danger:#e07070; --panel:#0d1220;   /* 2026-10-20: chyba a tmavý panel (boční menu, odznak, sloty) — do té doby natvrdo (CODE-read) */
   --blue:#5BB8FF; --teal:#7ED9B5;
   --hearthwood:#7D5838; --obsidian:#1E1E1E;
 }
@@ -39,11 +40,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 /* ── TOPBAR GREETING ── */
 #topbar-greeting{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.95em;color:var(--gold);opacity:0;white-space:nowrap;pointer-events:none;transition:opacity 0.7s ease;margin-right:4px;min-width:0;overflow:hidden;text-overflow:ellipsis;}
 #topbar-greeting.show{opacity:1;}
-/* ── TIER BADGE (in banners) ── */
-.tier-badge{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:rgba(255,191,0,0.72);white-space:nowrap;}
 /* ── AUTH ── */
 .auth-badge{display:flex;align-items:center;gap:8px;}
-.auth-user{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:4px;color:var(--gold);opacity:0.85;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.auth-user{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:4px;color:var(--gold);opacity:0.85;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;position:relative;}
 .auth-btn{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:4px;padding:0;border:none;background:transparent;color:var(--gold);opacity:0.85;cursor:pointer;transition:opacity 0.2s;}
 .auth-btn:hover{opacity:1;}
 /* ── HAMBURGER BUTTON ── */
@@ -53,7 +52,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 /* ── SIDE PANEL ── */
 .side-overlay{position:fixed;inset:0;background:rgba(10,12,18,0.55);z-index:150;display:none;backdrop-filter:blur(3px);}
 .side-overlay.open{display:block;}
-.side-panel{position:fixed;top:0;right:-280px;width:260px;height:100dvh;background:#0d1220;border-left:1px solid rgba(46,74,112,0.5);z-index:151;transition:right 0.32s cubic-bezier(0.4,0,0.2,1);display:flex;flex-direction:column;padding:0;}
+.side-panel{position:fixed;top:0;right:-280px;width:260px;height:100dvh;background:var(--panel);border-left:1px solid rgba(46,74,112,0.5);z-index:151;transition:right 0.32s cubic-bezier(0.4,0,0.2,1);display:flex;flex-direction:column;padding:0;}
 .side-panel.open{right:0;}
 /* 2026-10-12 (owner „ano“, BACKLOG „Procházka appky“): vlajka hlášení a „?“ (z-index 99998) ležely na telefonu přes otevřený panel
    (151), vlajka v řádku „× DELETE ACCOUNT“. Stav se bere z třídy panelu samého, takže ho neobejde žádná cesta zavření. */
@@ -300,7 +299,6 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 @media (max-height:700px){.name-card{padding:30px 28px;}.name-card-rune{margin-bottom:10px;}.name-card-sub{margin-bottom:20px;}}
 
 /* ── TOPBAR DROPDOWN ── */
-.auth-user{cursor:pointer;position:relative;}
 .auth-user::after{content:' ▾';font-size:0.75em;opacity:0.5;}
 .auth-dropdown-wrap{position:relative;}
 .auth-dropdown{position:absolute;top:calc(100% + 10px);right:0;background:#13192a;border:1px solid rgba(46,74,112,0.55);min-width:230px;z-index:100;display:none;box-shadow:0 8px 32px rgba(0,0,0,0.45);}
@@ -339,7 +337,6 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 .tree-life-rune-section{padding:24px 0 16px;}
 .tree-rune-display{text-align:center;padding:20px 0 16px;}
 .tree-rune-label{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--muted);display:block;margin-bottom:8px;}
-.tree-rune-name{font-family:'Cinzel',serif;font-size:1.3em;letter-spacing:1px;color:var(--gold);margin-bottom:6px;}
 .tree-rune-glyph{font-size:2.8em;color:var(--gold);opacity:0.85;line-height:1;}
 .tree-gate-text{text-align:center;color:var(--muted);font-size:0.9em;font-style:italic;padding:0 20px 16px;}
 .tree-intro{text-align:center;color:var(--muted);font-style:italic;line-height:2.2;padding:8px 24px 24px;max-width:480px;margin:0 auto;}
@@ -360,7 +357,7 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
    2026-10-07 u #reader-badge (.badge-life) — mobilní zvýraznění klepnutí na flex řádku rozblikalo i jméno vedle; tehdy chyběla v záložce Life Rune. */
 .tree-rune-name-row{-webkit-tap-highlight-color:transparent;}
 .tree-rune-name-row .rlbl-glyph{-webkit-tap-highlight-color:initial;}
-.tree-rune-name{font-family:'Cinzel',serif;font-size:1.1em;color:var(--gold);}
+.tree-rune-name{font-family:'Cinzel',serif;font-size:1.1em;letter-spacing:1px;color:var(--gold);margin-bottom:6px;}   /* 2026-10-20: dvě definice → jedna */
 .tree-rune-glyph-inline{font-size:1.6em;color:var(--gold);opacity:0.85;}
 .tree-toggle-arrow{margin-left:auto;color:var(--muted);font-size:1.1em;transition:transform 0.2s;}
 .tree-toggle-arrow.open{transform:rotate(45deg);}
@@ -432,7 +429,7 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 @media(max-width:480px){.coll-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;}}
 .coll-cell{
   min-height:120px;height:100%;box-sizing:border-box;padding:8px 4px;
-  background:#0d1220;border:1px solid var(--border);
+  background:var(--panel);border:1px solid var(--border);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   cursor:pointer;transition:all 0.18s;gap:2px;min-width:0;position:relative;
 }
@@ -489,7 +486,7 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 /* „Where to start“ (2026-10-11, DECISIONS (65)) — okno appky (.modal); zavření ho zmenší a zasune do „How a reading works“
    (transform z closeWhereToStart v runar-app.js), závoj zmizí a popisek se dvakrát rozzáří. Bez animací (prefers-reduced-motion) jen rozzáření. */
 .wts-rune{font-size:2em;color:var(--gold);margin-bottom:12px;}
-.wts-note{font-size:0.8em;color:var(--muted);margin:2px 0 6px;line-height:1.6;}
+.wts-note{margin:2px 0 6px;}
 #wts-modal{transition:background-color .45s ease;}
 #wts-modal.wts-out{background-color:rgba(0,0,0,0);}
 .wts-card{transition:transform .7s cubic-bezier(.55,.06,.3,1),opacity .7s ease;transform-origin:center center;}
@@ -523,7 +520,6 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 .btn-gold{font-family:'Cinzel',serif;letter-spacing:2.5px;background:var(--gold);color:#0d1824;cursor:pointer;border:none;transition:all 0.25s;}
 .btn-gold:hover{background:#e6ab00;}.btn-gold:disabled{background:rgba(255,191,0,0.25);color:rgba(255,191,0,0.5);cursor:not-allowed;}
 .vcn-btn{font-size:0.62em;padding:12px 28px;}
-.vcn-btn:hover{}
 /* RS teaser "Read what it carries": stejná velikost jako sousední Upgrade (auto šířka, ne 100%) */
 #tree-rs-reveal-btn{width:auto;}
 
@@ -541,11 +537,8 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 /* ── TRIAL BANNER ── */
 /* ── TIER NOTICES (Visitor + Rune Seeker) ── */
 .tier-notice{background:var(--card);border:1px solid rgba(255,191,0,0.2);padding:22px 24px 20px;margin-bottom:22px;text-align:center;}
-.tier-notice.curious{border-color:rgba(255,191,0,0.2);}
 .tn-counter{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2.5px;color:var(--gold);margin-bottom:14px;opacity:0.9;}
-.tier-notice.curious .tn-counter{color:var(--gold);}
-.tn-counter.warn{color:var(--gold)!important;}
-.tn-counter.exhausted{color:#e07070!important;}
+.tn-counter.exhausted{color:var(--danger)!important;}
 .tn-text{font-size:0.95em;font-style:italic;color:var(--muted);line-height:1.85;margin-bottom:18px;}
 .tn-text strong,.tn-text b{color:var(--gold);font-style:normal;font-weight:400;}
 /* 2026-10-10 (KUKY, hlášení bc1ab90e: „Rámeček pro tenhle text být nemusí… Celý rámeček a text zabírá moc místa“): Rune Seeker
@@ -562,12 +555,6 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 .tn-btn{font-size:0.58em;padding:10px 24px;}
 .tier-notice.curious .tn-btn{border-color:rgba(255,191,0,0.35);}
 
-/* ── AUTH GATE ── */
-.auth-gate{background:var(--card);border:1px solid var(--gold);padding:32px 24px;text-align:center;margin-top:8px;}
-.auth-gate-rune{font-size:3em;margin-bottom:12px;opacity:0.4;}
-.auth-gate-title{font-family:'Cinzel',serif;font-size:0.85em;letter-spacing:2px;color:var(--gold);margin-bottom:12px;}
-.auth-gate-note{font-size:0.92em;color:var(--muted);font-style:italic;margin-bottom:24px;line-height:1.8;max-width:400px;margin-left:auto;margin-right:auto;}
-.auth-gate-note b,.auth-gate-note strong{color:var(--gold);font-style:normal;font-weight:400;}
 
 /* ── CARDS & FORMS ── */
 .card{background:var(--card);border:1px solid var(--border);padding:24px;margin-bottom:20px;}
@@ -590,7 +577,10 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 .opt{opacity:0.65;font-size:0.85em;}
 /* 2026-10-11 bez opacity 0.45: --muted přes průhlednost vycházelo ≈ --dim (#445160, kontrast 2,41 : 1), které §5 na text zakazuje — upozornění
    „not professional advice“ nešlo přečíst (procházka CODE-read). Vzor .credit-note (Cinzel, malé písmo, --muted bez průhlednosti, 7,7 : 1). Smoke ㊽. */
-.q-teaser-txt{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--muted);margin:14px 0 6px;}
+.q-teaser-txt{margin:14px 0 6px;}
+/* 2026-10-20 (CODE-read, jednotný vzhled): drobná poznámka všude stejně — upozornění pod BEGIN, teaser otázky, poznámky v oknech.
+   Do té doby čtyři podoby (Cinzel 0.58–0.6 i Cormorant, kurzíva i ne) na téže obrazovce. --muted bez průhlednosti drží 4,5 : 1 (㊽). */
+.fine{font-family:'Cormorant Garamond',serif;font-size:0.8em;font-style:italic;letter-spacing:0;color:var(--muted);line-height:1.6;}
 .note{font-size:0.9em;color:var(--muted);font-style:italic;line-height:1.7;margin-bottom:14px;}
 .txt{width:100%;background:transparent;border:none;border-bottom:1px solid var(--border2);color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1.1em;padding:10px 0;}
 .txt:focus{outline:none;border-bottom-color:var(--gold);}
@@ -651,17 +641,17 @@ input:autofill{filter:none;}
    a s okraji dělaly 82 px prázdna. Zpráva se objeví pod tlačítkem, takže nic nad ním neposkočí. */
 .status:empty{min-height:0;margin-top:0;}
 .status.ok{color:var(--teal);}
-.status.err{color:#e07070;}
+.status.err{color:var(--danger);}
 
 /* ── RUNE GRID ── */
 .rune-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px;align-items:stretch;}
 @media(max-width:480px){.rune-grid{grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:6px;}}
-.rb{min-height:120px;height:100%;box-sizing:border-box;padding:8px 4px;background:#0d1220;border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all 0.18s;gap:2px;min-width:0;}
+.rb{min-height:120px;height:100%;box-sizing:border-box;padding:8px 4px;background:var(--panel);border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all 0.18s;gap:2px;min-width:0;}
 .rb:hover{background:rgba(91,184,255,0.08);border-color:var(--blue);}
 .rb.on{background:rgba(91,184,255,0.12);border-color:var(--blue);box-shadow:0 0 10px rgba(91,184,255,0.15);}
 .rb.flashing{background:rgba(255,191,0,0.12);border-color:var(--gold);box-shadow:0 0 14px rgba(255,191,0,0.35);}
 .rb:disabled,.rb.used{opacity:0.28;cursor:not-allowed;}
-.rb:disabled:hover,.rb.used:hover{background:#0d1220;border-color:var(--border);}
+.rb:disabled:hover,.rb.used:hover{background:var(--panel);border-color:var(--border);}
 .btn-random{width:100%;padding:10px;background:rgba(255,191,0,0.05);border:1px solid rgba(255,191,0,0.7);color:var(--gold);font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:1.5px;cursor:pointer;transition:all 0.25s;margin-bottom:8px;opacity:1;}
 .btn-random:hover:not(:disabled){border-color:var(--gold);opacity:1;background:rgba(255,191,0,0.06);}
 .btn-random:disabled{opacity:0.3;cursor:not-allowed;}
@@ -704,16 +694,15 @@ input:autofill{filter:none;}
    což §5 pro text zakazuje (datum a počty v deníku, otázka u karty, „or“, souhlas s podmínkami, meta řádek v Kolekci…)
    → var(--muted). --dim zůstává jen u ikon, šipek, oddělovačů a placeholderů. */
 /* ── BADGE (Life Rune + Drawn) ── */
-.badge{display:flex;align-items:center;padding:14px 18px;background:#0d1220;border:1px solid var(--border);margin-bottom:14px;}
+.badge{display:flex;align-items:center;padding:14px 18px;background:var(--panel);border:1px solid var(--border);margin-bottom:14px;}
 /* Life rune = quiet lens: small subordinate line (drawn rune shown prominently below) */
-.badge-life{gap:9px;padding:9px 15px;}
+.badge-life{gap:9px;padding:9px 15px;-webkit-tap-highlight-color:transparent;}
 .badge-life .badge-life-g{font-size:1.15em;line-height:1;color:var(--gold);opacity:0.82;}
 .badge-life .badge-life-name{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:2px;color:#c9b77a;}
 .badge-life .badge-life-note{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:2px;color:#6f7c92;margin-left:auto;}
 /* 2026-10-07 (hlášení e9897395, Android Chrome: „když kliknu na glyf runy, problikne i celý text vedle… normálně reaguje jen glyf“):
    klepací glyf je vnořený inline span jako v hlavičce čtení (_renderLifeBadge). Řádek nemá zvýraznění klepnutí; glyf si nechává
    výchozí (initial) jako glyfy jinde. Velikost a ztmavnutí při najetí zůstávají, jaké byly (0,82 × 0,88 ≈ 0,72 jako .rlbl-glyph:hover). */
-.badge-life{-webkit-tap-highlight-color:transparent;}
 .badge-life .rlbl-glyph{font-size:inherit;line-height:1;-webkit-tap-highlight-color:initial;}
 .badge-life .rlbl-glyph:hover{opacity:0.88;}
 
@@ -748,14 +737,13 @@ input:autofill{filter:none;}
 .q-consent input{accent-color:var(--gold);width:16px;height:16px;margin:4px 0 0;flex-shrink:0;cursor:pointer;}
 .q-consent .note{margin-bottom:0;}
 /* 2026-10-19: „Rúnar is an AI…“ pod BEGIN THE READING — drobně a klidně, barva --muted jako ostatní poznámky (ne --dim, §5). */
-.ai-note{text-align:center;font-size:0.8em;margin:10px 0 0;line-height:1.5;}
+.ai-note{text-align:center;margin:10px 0 0;}
 /* 2026-10-06 výběr obrazu pro admina — popisek jako .opus-toggle, výběry jako .journal-filter-select (existující vzhled) */
 .img-pin{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:12px;}
 .img-pin-lbl{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:1.5px;color:var(--muted);}
 .img-pin select{max-width:100%;}
 /* Ask Rúnar — follow-up Q&A (Premium, one question per reading) */
 #ask-runar{margin-top:22px;padding-top:20px;border-top:1px solid rgba(255,191,0,0.14);}
-.ask-lbl{font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:12px;}
 /* Layout copies .redeem-row (the existing input+button row); the field copies .txt
    (the app's prose input: underline, no box) and the button the outlined-gold convention.
    No border-radius anywhere — nothing else in this app has one. */
@@ -766,11 +754,11 @@ input:autofill{filter:none;}
 /* 2026-09-10: z popisku Ask je tlacitko (rozbaluje napovedu). Vzhled musi zustat TYZ jako
    drive, proto se resetuje vse, co <button> pridava sam (ram, pozadi, font, zarovnani). */
 .ask-lbl{background:none;border:0;padding:0;font:inherit;color:inherit;letter-spacing:inherit;
-  text-transform:inherit;cursor:pointer;display:block;width:100%;text-align:center;}
+  text-transform:inherit;cursor:pointer;display:block;width:100%;text-align:center;margin-bottom:12px;}   /* 2026-10-20: dvě definice → jedna */
 .ask-lbl::after{content:" +";opacity:.55;}
 .ask-lbl[aria-expanded="true"]::after{content:" −";}
 .ask-hints{display:flex;flex-direction:column;gap:6px;margin:10px 0 14px;}
-.ask-hint{background:none;border:1px solid var(--border);border-radius:3px;
+.ask-hint{background:none;border:1px solid var(--border);border-radius:0;
   padding:9px 13px;color:var(--muted);font-family:'Cormorant Garamond',serif;font-size:1.02em;
   text-align:left;cursor:pointer;transition:all 0.2s;}
 .ask-hint:hover,.ask-hint:focus{color:var(--white);border-color:var(--border2);outline:none;}
@@ -781,22 +769,22 @@ input:autofill{filter:none;}
    dělá `.ask-input:disabled` + `.ask-btn:disabled` (existující konvence), tahle
    řádka jen dopoví proč. Registr kopíruje .ask-lbl (drobné, muted, na střed),
    kurzíva ji odliší od štítku nad polem. Žádné CTA — v readeru dnes není kam. */
-.ask-input:disabled{color:var(--dim);border-bottom-color:var(--border);cursor:not-allowed;}
+.ask-input:disabled{color:var(--muted);border-bottom-color:var(--border);cursor:not-allowed;}
 .ask-teaser{font-size:0.86rem;font-style:italic;color:var(--muted);text-align:center;margin-top:14px;}
 .ask-question{font-style:italic;color:var(--muted);margin:2px 0 15px;padding-left:13px;border-left:2px solid rgba(255,191,0,0.28);line-height:1.6;}
 .ask-answer{margin-top:16px;font-style:italic;}
 /* Tap-a-glyph popup: rune name + meaning (esp. for spreads with no names) */
-.rune-pop{position:absolute;z-index:200;background:#0d1220;border:1px solid rgba(255,191,0,0.5);border-radius:5px;padding:8px 12px;box-shadow:0 4px 18px rgba(0,0,0,0.55);text-align:center;max-width:230px;pointer-events:none;}
+.rune-pop{position:absolute;z-index:200;background:var(--panel);border:1px solid rgba(255,191,0,0.5);border-radius:0;padding:8px 12px;box-shadow:0 4px 18px rgba(0,0,0,0.55);text-align:center;max-width:230px;pointer-events:none;}
 .rune-pop-g{font-size:1.5em;color:var(--gold);display:block;line-height:1;}
 .rune-pop-n{font-family:'Cinzel',serif;font-size:0.82em;letter-spacing:1.5px;color:#e6e9f0;display:block;margin-top:5px;}
 .rune-pop-kw{font-size:0.72em;color:#8bb8d8;font-style:italic;display:block;margin-top:3px;}
 /* Meaning-tap (zivotni runa, 2026-09-14): zakladni .rune-pop ma pointer-events:none — klikaci je jen popup se stitky vyznamu */
 .rune-pop--tap{pointer-events:auto;}
-.rune-pop-kw-item{display:inline-block;margin:2px 3px;padding:1px 8px;border:1px solid rgba(139,184,216,0.35);border-radius:9px;cursor:pointer;transition:border-color .15s,color .15s;}
+.rune-pop-kw-item{display:inline-block;margin:2px 3px;padding:1px 8px;border:1px solid rgba(139,184,216,0.35);border-radius:0;cursor:pointer;transition:border-color .15s,color .15s;}
 .rune-pop-kw-item:hover{border-color:var(--gold);color:var(--gold);}
 .kw-hl{color:var(--gold);border-bottom:1px solid rgba(255,191,0,0.5);text-shadow:0 0 8px rgba(255,191,0,0.3);}
 /* 2026-09-14 KUKY: oznacuje se VETA nesouci vyznam (jemne pozadi), slovo v ni silneji (.kw-hl) */
-.kw-hl-sent{background:rgba(255,191,0,0.09);border-radius:3px;padding:0 2px;}
+.kw-hl-sent{background:rgba(255,191,0,0.09);border-radius:0;padding:0 2px;}
 .layer2{background:#0a0e18;padding:20px;margin-bottom:16px;}
 .layer2-lbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--muted);margin-bottom:10px;}
 .out-txt{font-size:1.05em;line-height:1.9;font-style:italic;color:var(--white);}
@@ -811,7 +799,7 @@ input:autofill{filter:none;}
 .btn-voice{width:100%;padding:14px;background:transparent;border:1px solid var(--border2);color:var(--muted);font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:1.5px;cursor:pointer;transition:all 0.25s;margin-top:4px;}
 .btn-voice:hover:not(:disabled){border-color:var(--blue);color:var(--blue);}
 .btn-voice:disabled{opacity:0.45;cursor:not-allowed;}
-.audio-player{display:none;margin-top:14px;background:transparent;border:1px solid rgba(255,191,0,0.3);border-radius:6px;padding:16px 18px;}
+.audio-player{display:none;margin-top:14px;background:transparent;border:1px solid rgba(255,191,0,0.3);border-radius:0;padding:16px 18px;}
 .audio-player.visible{display:block;}
 .audio-player-lbl{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:3px;color:var(--gold);margin-bottom:12px;opacity:0.9;}
 /* ── PŘEHRÁVAČ — jediný v appce (hlas čtení, kolekce, deník; staví ho _makeCapPlayer v runar-app.js) ── */
@@ -845,7 +833,7 @@ input:autofill{filter:none;}
 /* Globální <audio> — v appce bez nativního ovládání (jediný přehrávač je .cap); jantar pro případ <audio controls> */
 audio{accent-color:var(--gold);color-scheme:dark;}
 audio::-webkit-media-controls-panel{background-color:rgba(10,10,10,0.6)!important;}
-audio::-webkit-media-controls-enclosure{border-radius:6px;}
+audio::-webkit-media-controls-enclosure{border-radius:0;}
 audio::-webkit-media-controls-current-time-display,
 audio::-webkit-media-controls-time-remaining-display{color:var(--gold);}
 audio::-webkit-media-controls-timeline{accent-color:var(--gold);}
@@ -916,7 +904,7 @@ body:has(.modal-overlay.open) #hb-btn{display:none;}
 /* 2026-10-15 okno „Send Rúnar a line“: pole jako ostatní (.txt — jen spodní linka), víc řádků; poznámka tlumeně jako .modal-sub
    (--muted, ne --dim — §5: --dim nikdy pro text). */
 .line-ta{resize:vertical;min-height:120px;line-height:1.5;display:block;}
-.line-note{font-size:0.8em;color:var(--muted);font-style:italic;line-height:1.6;margin:10px 0 0;}
+.line-note{margin:10px 0 0;}
 /* 2026-10-09: přihlášení e-mailem šestimístným kódem (runar-auth.js sendLoginCode/verifyLoginCode) — plocha „MAGIC LINK SENT“
    (.modal-success) pryč. Popisek .auth-lbl = dosavadní inline styl „YOUR EMAIL“. Text kroků --muted (§5: --dim nikdy pro text). */
 .auth-lbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--gold);display:block;margin-bottom:8px;}
@@ -995,15 +983,9 @@ body:has(.modal-overlay.open) #hb-btn{display:none;}
 /* ── TOAST removed per owner (green showToast notification) ── */
 
 /* ── CREDIT NOTE ── */
-.credit-note{text-align:center;font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:2px;color:var(--muted);margin-top:14px;}
+.credit-note{text-align:center;margin-top:14px;}
 
 /* ── CREDITS BANNER ── */
-.credits-banner{background:var(--card);border:1px solid rgba(255,191,0,0.35);padding:12px 18px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
-.credits-balance{font-family:'Cinzel',serif;font-size:0.68em;letter-spacing:2px;color:var(--gold);white-space:nowrap;}
-.credits-balance.low{color:#e09060;}
-.credits-balance.empty{color:#e07070;}
-.credits-redeem-link{font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:1.5px;color:rgba(255,191,0,0.6);cursor:pointer;text-decoration:underline;text-decoration-color:rgba(255,191,0,0.3);white-space:nowrap;flex-shrink:0;}
-.credits-redeem-link:hover{color:var(--gold);}
 
 /* ── REDEEM SECTION ── */
 .redeem-section{background:var(--card);border:1px solid var(--border);padding:20px 18px;margin-bottom:20px;animation:fadeUp 0.3s ease;}
@@ -1044,7 +1026,7 @@ body:has(.modal-overlay.open) #hb-btn{display:none;}
 .spread-mode-row{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:20px;}
 .mode-btn{grid-column:span 2;padding:8px 12px;background:transparent;border:1px solid var(--border);
   color:var(--muted);font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;
-  cursor:pointer;border-radius:2px;transition:all 0.2s;text-align:center;}
+  cursor:pointer;border-radius:0;transition:all 0.2s;text-align:center;}
 .mode-btn:nth-child(4),.mode-btn:nth-child(5){grid-column:span 3;}
 /* Norny skryte (uzivatel jeste nema zivotni runu) = 4 tlacitka misto 5.
    nth-child pocita i skryte prvky, takze puvodni spany by nechaly v rade
@@ -1055,8 +1037,8 @@ body:has(.modal-overlay.open) #hb-btn{display:none;}
 
 /* ── SPREAD3 SLOT TRACKER ── */
 .spread3-slots{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px;
-  margin-bottom:18px;padding:10px;background:rgba(255,191,0,0.04);border-radius:4px;max-width:100%;box-sizing:border-box;}
-.s3-slot{font-size:1.4em;color:var(--muted);transition:all 0.3s;min-width:1.4em;text-align:center;border-radius:3px;padding:2px 4px;}
+  margin-bottom:18px;padding:10px;background:rgba(255,191,0,0.04);border-radius:0;max-width:100%;box-sizing:border-box;}
+.s3-slot{font-size:1.4em;color:var(--muted);transition:all 0.3s;min-width:1.4em;text-align:center;border-radius:0;padding:2px 4px;}
 .s3-slot.filled{color:var(--gold);text-shadow:0 0 12px rgba(255,191,0,0.4);}
 .s3-slot.filled:hover{background:rgba(255,191,0,0.08);text-decoration:line-through;opacity:0.7;}
 .s3-sep{color:var(--border);font-size:0.8em;}
@@ -1101,12 +1083,12 @@ body:has(.modal-overlay.open) #hb-btn{display:none;}
 /* ── SPREAD5 SLOT TRACKER (Cross) — cross layout ── */
 /* 2026-09-29 (report 13:08 „cross by měl být víc uprostřed“): JS rámeček zobrazí jako flex, ale bez justify-content kříž
    seděl vlevo (střed rámečku x=505, kříž x=289). */
-.spread5-slots{margin-bottom:18px;padding:10px 10px 6px;background:rgba(255,191,0,0.04);border-radius:4px;justify-content:center;}
+.spread5-slots{margin-bottom:18px;padding:10px 10px 6px;background:rgba(255,191,0,0.04);border-radius:0;justify-content:center;}
 .s5-cross{display:grid;grid-template-columns:repeat(3,var(--slot-cell));grid-auto-rows:var(--slot-cell);gap:var(--slot-gap);place-items:center;}
 .s5-row{display:contents;}   /* řádky jen drží značky; pozice dává mřížka .s5-cross (2026-10-11, stejný rozestup) */
 #s5slot2{grid-area:1/2;} #s5slot4{grid-area:2/1;} #s5slot1{grid-area:2/2;} #s5slot5{grid-area:2/3;} #s5slot3{grid-area:3/2;}
 .s5-slot{font-size:1.3em;color:var(--muted);transition:all 0.3s;min-width:1.6em;text-align:center;
-  border-radius:3px;padding:3px 5px;cursor:default;}
+  border-radius:0;padding:3px 5px;cursor:default;}
 .s5-slot.filled{color:var(--gold);text-shadow:0 0 12px rgba(255,191,0,0.4);}
 .s5-slot.filled:hover{background:rgba(255,191,0,0.08);text-decoration:line-through;opacity:0.7;cursor:pointer;}
 .s5-center{font-size:1.6em;color:rgba(255,191,0,0.55);}
@@ -1129,7 +1111,7 @@ body:has(.modal-overlay.open) #hb-btn{display:none;}
    Barvy z tokenů nahoře; `--dim` se pro text nepoužívá (§5). */
 .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(8px);
   z-index:9999;max-width:min(92vw,520px);padding:12px 20px;
-  background:var(--card2);color:var(--white);border:1px solid var(--border);border-radius:6px;
+  background:var(--card2);color:var(--white);border:1px solid var(--border);border-radius:0;
   font-family:'Cormorant Garamond',serif;font-size:1.05rem;letter-spacing:.01em;text-align:center;
   box-shadow:0 8px 28px rgba(0,0,0,.55);
   opacity:0;pointer-events:none;transition:opacity .22s ease,transform .22s ease;}

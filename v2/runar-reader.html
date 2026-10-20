@@ -91,7 +91,7 @@
     <div class="modal-title" id="wts-title"></div>
     <p class="modal-sub" id="wts-l1"></p>
     <p class="modal-sub" id="wts-l2"></p>
-    <p class="wts-note" id="wts-note"></p>
+    <p class="wts-note fine" id="wts-note"></p>
     <button class="btn-full" type="button" id="wts-open" onclick="closeWhereToStart(true)"></button>
     <button class="btn-full sec" type="button" id="wts-later" onclick="closeWhereToStart(false)"></button>
   </div>
@@ -148,7 +148,7 @@
     <div class="modal-title" id="line-title"></div>
     <p class="modal-sub" id="line-sub"></p>
     <textarea class="txt line-ta" id="line-text" rows="5" maxlength="2000"></textarea>
-    <p class="line-note" id="line-note"></p>
+    <p class="line-note fine" id="line-note"></p>
     <button class="btn-full" type="button" id="line-send" onclick="sendLine()"></button>
     <div class="status" id="st-line"></div>
   </div>
@@ -164,7 +164,7 @@
       <button class="btn-half" id="lsm-confirm" onclick="confirmLangSwitch()"></button>
       <button class="btn-half sec" id="lsm-cancel" onclick="cancelLangSwitch()"></button>
     </div>
-    <div class="credit-note" id="lsm-cost"></div>
+    <div class="credit-note fine" id="lsm-cost"></div>
   </div>
 </div>
 
@@ -254,15 +254,6 @@
   <!-- ═ READING PANE ═ -->
   <div id="apane-reading">
 
-  <!-- CREDITS BANNER (credits tier) -->
-  <div class="credits-banner" id="credits-banner" style="display:none;">
-    <div style="display:flex;align-items:center;gap:14px;">
-      <span class="tier-badge" id="credits-text">Rune Seeker</span>
-      <span class="credits-redeem-link" onclick="toggleRedeem()" id="redeem-link">+ RUNE READING CARD</span>
-    </div>
-    <span class="credits-balance" id="credits-balance-lbl"></span>
-  </div>
-
   <!-- REDEEM SECTION (collapsible) -->
   <div class="redeem-section" id="redeem-section" style="display:none;">
     <button class="redeem-close" onclick="toggleRedeem()">✕</button>
@@ -297,14 +288,7 @@
 
   <!-- (AUTH GATE pryč 2026-10-10 — nikde se nezobrazoval; návštěvník dostane po tahu kartu trial-end, _showVisitorJoin) -->
 
-  <!-- UPGRADE GATE (logged-in free user, monthly limit reached) -->
-  <div class="auth-gate" id="upgrade-gate" style="display:none;">
-    <div class="auth-gate-rune">ᚱ</div>
-    <div class="auth-gate-title" id="upgrade-gate-title">YOUR MONTHLY READINGS ARE COMPLETE</div>
-    <div class="auth-gate-note" id="upgrade-gate-note"></div>
-    <button class="btn-full" id="upgrade-gate-btn" style="max-width:300px;margin:0 auto;display:block;"></button>
-    <div class="auth-gate-note" id="upgrade-gate-sub" style="margin-top:14px;font-size:0.82em;"></div>
-  </div>
+  <!-- (UPGRADE GATE a CREDITS BANNER pryč 2026-10-20 — jen se skrývaly, nikde nezobrazily; CODE-read, jednotný vzhled) -->
 
   <!-- READER (shown when trial available or logged in) -->
   <div id="reader-content">
@@ -381,11 +365,11 @@
       </div>
       <!-- Teaser for Visitor / Rune Seeker -->
       <div id="q-teaser" style="display:none;">
-        <p class="q-teaser-txt" id="q-teaser-txt">Deeper questions open with Rune Walker.</p>
+        <p class="q-teaser-txt fine" id="q-teaser-txt">Deeper questions open with Rune Walker.</p>
       </div>
       <button class="btn-full" id="begin-btn" data-i18n="begin_btn" onclick="startReading()">BEGIN THE READING</button>
       <!-- 2026-10-19 (owner „13. pod BEGIN THE READING“): upozornění, že Rúnar je AI (EU AI Act čl. 50). Text z UI_TEXT ai_note (updateUIText). -->
-      <p class="note ai-note" id="ai-note" data-i18n="ai_note">Rúnar is an AI. The runes are old; his words are made new each time.</p>
+      <p class="fine ai-note" id="ai-note" data-i18n="ai_note">Rúnar is an AI. The runes are old; his words are made new each time.</p>
       <!-- Jen admin (od 2026-10-09, DECISIONS 2026-10-09 (13)): všichni čtou přes GPT-6 sol, přepínač vrací adminovi Opus 5.
            Do 2026-10-08 opačně — přepínač zapínal sol (test, DECISIONS 2026-09-24 (17)).
            Zobrazuje _paintOpusToggle() v runar-reading.js; server Opus pustí jen adminovi. -->
@@ -572,7 +556,7 @@
          Tohle mluví APPKA, ne postava. Rozhodnuto s ownerem 2026-08-16 po bezpečnostním testu,
          kde otázka „I have chest pain…" vrátila běžné čtení — což je správně, ale do té doby
          nebylo v aplikaci upozornění vůbec žádné (ověřeno grepem, EN i IS). -->
-    <p class="q-teaser-txt" id="reader-disclaimer" data-i18n="disclaimer" style="text-align:center;">Rúnar offers a reading to reflect on, not professional advice.</p>
+    <p class="q-teaser-txt fine" id="reader-disclaimer" data-i18n="disclaimer" style="text-align:center;">Rúnar offers a reading to reflect on, not professional advice.</p>
   </div><!-- /reader-content -->
 
   </div><!-- /apane-reading -->

@@ -77,7 +77,7 @@ PRIPADY = [
  # ㊃ kalkulačka návratnosti (CODE-read 2026-10-13): položka nákladů změněná bez součtu
  ('chyti', 'verify_payback_pricing.js', 'RUNAR_PRICING.md', 'replace', '| Supabase | 0 ✔ | 25 |', '| Supabase | 0 ✔ | 45 |'),
  # ㊂ zákazy a cesty (CODE-read 2026-10-13): po jednom útoku na každou část
- ('chyti', 'verify_zakazy_cesty.js', 'v2/runar-reader.html', 'replace', '<div class="auth-gate-rune">ᚱ</div>', '<div class="auth-gate-rune">◌ ᚱ ◌</div>'),
+ ('chyti', 'verify_zakazy_cesty.js', 'v2/runar-reader.html', 'replace', 'opacity:0.7;">ᚱ</div>', 'opacity:0.7;">◌ ᚱ ◌</div>'),   # 2026-10-20: brána s ᚱ smazaná (mrtvá)
  ('chyti', 'verify_zakazy_cesty.js', 'v2/runar-auth.js', 'regex', r"(banner\.style\.display      = 'block';\r?\n    content\.style\.display     = )'block'", r"\g<1>'none'"),
  ('chyti', 'verify_zakazy_cesty.js', 'v2/runar-app.js', 'append', '', "\nfunction _jmenoX(u) { return u.email.split('" + "@')[0]; }\n"),
  ('chyti', 'verify_zakazy_cesty.js', 'v2/runar-reading.js', 'replace', "} else if (_spreadMode === 'horseshoe') {", "} else if (_spreadMode === 'horseshoe_x') {"),
