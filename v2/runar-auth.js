@@ -105,13 +105,13 @@ function updateAuthLabel() {
 }
 
 // „+“ u počítadla Rune Seekera (2026-10-10, hlášení bc1ab90e) — vysvětlení se rozbalí a sbalí. Stav přežije překreslení banneru
-// (updateBanners mění jen text, ne viditelnost). Znak a otočení = .tree-toggle-arrow, jako u založení stromu.
+// (updateBanners mění jen text, ne viditelnost). Znak a otočení = rozbalovač .xp-plus podle aria-expanded (2026-10-20, runar-reader.css).
 function toggleFreeNote() {
-  var tx = document.getElementById('free-user-text'), ar = document.getElementById('free-user-arrow');
+  var tx = document.getElementById('free-user-text'), row = document.getElementById('free-user-row');
   if (!tx) return;
   var otevrit = tx.style.display === 'none';
   tx.style.display = otevrit ? '' : 'none';
-  if (ar) ar.classList.toggle('open', otevrit);
+  if (row) row.setAttribute('aria-expanded', otevrit ? 'true' : 'false');
 }
 
 // ── updateBanners — trial / free / credits banners + gates ───────────────────

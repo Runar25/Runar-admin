@@ -213,7 +213,7 @@ function renderJournal(entries) {
       // ── Multi-rune spread card (Norns / Kríž / Horseshoe / Yggdrasil / Gathering) ──
       const spreadNm = escapeHtml(spreadLabel(e.rune_name, e.lang));
       return `<div class="jcard" id="jcard-${i}">
-        <div class="jcard-header" onclick="toggleJournalEntry(${i})">
+        <div class="jcard-header" id="jhead-${i}" role="button" tabindex="0" aria-expanded="false" aria-controls="jbody-${i}" onclick="toggleJournalEntry(${i})">
           <div class="jcard-left">
             <div class="jcard-glyph" style="opacity:0.7;">✦</div>
             <div class="jcard-info">
@@ -223,7 +223,7 @@ function renderJournal(entries) {
               <div class="jcard-excerpt" id="jex-${i}">${escapeHtml(_jt.text)}</div>${_jThoughtHtml(_jt.thought)}
             </div>
           </div>
-          <div class="jcard-arrow" id="jarr-${i}">▾</div>
+          <span class="xp-plus" id="jarr-${i}" aria-hidden="true">+</span>
         </div>
         <div class="jcard-body" id="jbody-${i}" style="display:none;">${_jDetail(e)}${_jHlas(e, i)}</div>
       </div>`;
@@ -231,7 +231,7 @@ function renderJournal(entries) {
 
     // ── Regular reading card ──
     return `<div class="jcard" id="jcard-${i}">
-      <div class="jcard-header" onclick="toggleJournalEntry(${i})">
+      <div class="jcard-header" id="jhead-${i}" role="button" tabindex="0" aria-expanded="false" aria-controls="jbody-${i}" onclick="toggleJournalEntry(${i})">
         <div class="jcard-left">
           <div class="jcard-glyph">${glyphHtml}</div>
           <div class="jcard-info">
@@ -240,7 +240,7 @@ function renderJournal(entries) {
             <div class="jcard-excerpt" id="jex-${i}">${escapeHtml(_jt.text)}</div>${_jThoughtHtml(_jt.thought)}
           </div>
         </div>
-        <div class="jcard-arrow" id="jarr-${i}">▾</div>
+        <span class="xp-plus" id="jarr-${i}" aria-hidden="true">+</span>
       </div>
       <div class="jcard-body" id="jbody-${i}" style="display:none;">
         ${e.deep_text ? `
@@ -334,13 +334,13 @@ function populateJournalFilters(entries) {
 // už čtení neopakuje (nese jen hlubší vrstvu, otázku, životní runu a hlas). Prázdné tělo (spread) zůstává schované.
 function toggleJournalEntry(i) {
   const body  = document.getElementById(`jbody-${i}`);
-  const arrow = document.getElementById(`jarr-${i}`);
+  const head  = document.getElementById(`jhead-${i}`);
   const ex = document.getElementById(`jex-${i}`);
   if (!body && !ex) return;
   const open = ex ? ex.classList.contains('jcard-excerpt--open') : body.style.display !== 'none';
   if (ex) ex.classList.toggle('jcard-excerpt--open', !open);   // vypne CSS ořez na 2 řádky (runar-reader.css)
   if (body) body.style.display = (open || !body.innerHTML.trim()) ? 'none' : 'block';
-  if (arrow) arrow.classList.toggle('open', !open);
+  if (head) head.setAttribute('aria-expanded', open ? 'false' : 'true');   // 2026-10-20: „+“ → „×“ (rozbalovač; do té doby „▾“)
 }
 
 

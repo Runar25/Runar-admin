@@ -13,6 +13,15 @@
 //   stream(id, text)                   — word-by-word streaming display
 // ═══════════════════════════════════════════════════════
 
+// 2026-10-20 (jednotný vzhled, rozbalovač): prvek s role="button" a tabindex (hlavička karty deníku, počet čtení, založení stromu,
+// řádek s kódem v okně Walk with Rúnar) se ovládá i klávesou jako <button> — Enter nebo mezerník = klepnutí.
+document.addEventListener('keydown', function (e) {
+  var el = e.target;
+  if ((e.key === 'Enter' || e.key === ' ') && el && el.getAttribute && el.getAttribute('role') === 'button' && el.tagName !== 'BUTTON') {
+    e.preventDefault(); el.click();
+  }
+});
+
 function isAdmin(email) {
   return !!(email && ADMIN_EMAILS.includes(email.toLowerCase()));
 }

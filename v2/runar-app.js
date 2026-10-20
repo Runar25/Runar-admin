@@ -1834,7 +1834,7 @@ function _applyTierDesc() {
   const ucet = !!currentUser;
   const open = !ucet || _tierDescOpen;
   if (desc) desc.style.display = open ? 'block' : 'none';
-  if (arrow) { arrow.style.display = ucet ? '' : 'none'; arrow.textContent = _tierDescOpen ? '−' : '+'; }
+  if (arrow) arrow.style.display = ucet ? '' : 'none';   // „+“ → „×“ otočením podle aria-expanded (2026-10-20, rozbalovač)
   if (btn) { btn.setAttribute('aria-expanded', open ? 'true' : 'false'); btn.style.cursor = ucet ? '' : 'default'; }
 }
 function toggleTierDesc() {
