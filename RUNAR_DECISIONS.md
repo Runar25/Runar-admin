@@ -11976,3 +11976,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   (`docs/inbox/2026-10-20-kniha-pero-kameny-nahled.html`) ukazoval zvětšeninu vedle skutečné velikosti — rozhodla skutečná velikost v appce.
   Návrat jen s jiným řešením čitelnosti (§21).
 - Affected doc(s): žádný jiný — (7) zůstává záznamem toho, co se zkusilo.
+
+## 2026-10-20 (9) — Karty run s dvergy: další produkt, doplněk i samostatně; dverg jménem jen na kartě; podklady do gitu
+
+- **Rozhodl:** owner 2026-10-20: *„chce vytvořit sadu run jako tarotové karty, ale jsou to karty, co budou mít obrázek dvergů. je to vedlejší
+  produkt a jelikož ty karty jsou jako runy, tak je uživatel může použít i pro tahání run a na výklad použít Rúnara“*; na otázky CODE-read:
+  *„1. ano, přesuň i s PDF 2. ano. je to další produkt, co je jako doplněk k Rúnarovi, ale i jako samostatná věc. pro někoho, kdo chce runové
+  karty a udělat si čtení pro sebe nebo při vybrání karty si ji nechat přečíst od Rúnara.“*
+- **Co:** (1) karty s dvergy = samostatný produkt i doplněk; dverg na kartě je postava se jménem, **do čtení nevstupuje** — „dverg pod runou“
+  (RUNAR_DESIGN, materiál, nikdy jménem) platí dál; hranice zapsána v katalogu dvergů. (2) `Claude outputs/rune-cards/` (Cowork 2026-10-18,
+  karty ke stažení z (2026-10-18 (4)) i návrh karet s dvergy, PDF ~11 MB) + HANDOFF68 přesunuty do `docs/inbox/rune-cards/` a do gitu.
+- **Proč:** owner s Coworkem kartu s dvergy řešil 18. 10., ale nikam se to nezapsalo a složka nebyla v gitu — dnes ji nikdo nenašel, dokud
+  se nehledalo po souborech; hrozila ztráta. Rozpor s „dverg pod runou“ ohlásil už Cowork (DWARVES_25 § A) — hranice ho řeší.
+- Affected doc(s): `RUNAR_DESIGN.md` (katalog dvergů), `RUNAR_BACKLOG.md` — v témže commitu.

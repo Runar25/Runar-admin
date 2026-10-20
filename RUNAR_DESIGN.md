@@ -436,6 +436,9 @@ Rúnar je bere vážně. Velké kameny, kopce, staré stromy mají obyvatele.
 > Tenhle katalog je **lore**: kánon, zdroje, umístění. Do promptu se NEVKLÁDÁ.
 > Jedna věta na postavu, kterou Rúnar říct smí, žije v `v2/runar-character.js` (`DVERGAR`).
 > Přidáváš postavu? Nejdřív sem, teprve pak výtah do kódu.
+> 🃏 **Karty run s dvergy jsou jiná vrstva** (owner 2026-10-20, DECISIONS 2026-10-20 (9)): samostatný produkt i doplněk k Rúnarovi —
+> 25 karet, na každé dverg jako POSTAVA a jménem. Platí jen na kartě; do čtení nevstupuje — „dverg pod runou“ níž (materiál, nikdy
+> jménem) zůstává. Jména z karet, která tu ještě nejsou, se zapíšou SEM dřív, než se kreslí. Návrh v0: `docs/inbox/rune-cards/`.
 
 **Katalog** (co dělá · odkud · kde; „(Agndofa)" = naše umístění, skutek nad ním kánon):
 - [kánon] **Norðri · Suðri · Austri · Vestri** — drží nebe na čtyřech světových stranách (ze čtyř koutů Ymiho lebky), z prvního kamene. (Agndofa) každý u konce ostrova: Norðri pod severním ledovcem, Suðri v černých píscích, Austri v mlžných fjordech, Vestri na západních útesech.

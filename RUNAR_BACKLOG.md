@@ -1264,7 +1264,7 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   údaje dodá owner; přesný článek zákona nestažen, althingi.is 403), věta o účelu u formuláře + odkaz na zásady, zásady doplnit
   o registraci na webu. Cookie lišta jen když přibude analytika (zákon 70/2022; landing žádné cookies nemá).
 
-## Z Coworku 2026-10-18 (HANDOFF66, 67, 68 v `Claude outputs/`; ověřeno CODE-tune proti repu, DECISIONS 2026-10-18 (4))
+## Z Coworku 2026-10-18 (HANDOFF66 v `Claude outputs/`, 67 a 68 od 2026-10-20 v `docs/inbox/rune-cards/`; ověřeno CODE-tune proti repu, DECISIONS 2026-10-18 (4))
 ### Účty vypadají a ovládají se stejně — HANDOFF66 (owner: rozdíl jen tam, kde ho chce funkce)
 - [ ] **CODE-read: matice stav × plocha** (Visitor · Rune Seeker · Standard · Premium/tester · admin × menu, formulář, spready, Ask, hlas,
   Kolekce, Životní runa, okna, toasty, ⚑ a „?“) — z kódu; Standard v DB nemá nikdo (2026-10-18: 4× rune_seeker, 1× premium).
@@ -1391,7 +1391,13 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
 - [x] ✅ *(CODE-tune 2026-10-19, fff8649)* QR na kartě (`runar-reader.html#kort=<KÓD>`) kód v appce předvyplní; uplatní ho člověk.
 - [x] ✅ *(CODE-tune 2026-10-19; SQL pustil owner týž den)* **Shrine: tisk dávky fyzických karet** — dávka ukládá `form='physical'`, `design`,
   `lang`, `channel`, `complimentary`; každý kód odkazuje na svou kartu k tisku na webu CODE-web (`therunekeeper.com/kort/`), CSV nese odkaz.
-### Karty run ke stažení — HANDOFF67, 68
+### Karty run s dvergy — další produkt (owner 2026-10-20, DECISIONS 2026-10-20 (9))
+- [ ] **Návrh v0 čeká na ownera** (Cowork 2026-10-18, do té doby jen v nesledované složce; teď `docs/inbox/rune-cards/`): `NAVRH_trpaslici-
+  karty_v0_diskuse.md` (cs, `_old-cs/`) · `DWARVES_25_characterizations_v0_EN.md` · `ISA_scene_study_v0_EN.md`. Owner: *„další produkt jako
+  doplněk k Rúnarovi, ale i jako samostatná věc — pro někoho, kdo chce runové karty a udělat si čtení pro sebe, nebo při vybrání karty si ji
+  nechat přečíst od Rúnara.“* Zbývá: schválit přiřazení run → dverg; 12 pracovních jmen zapsat do katalogu v RUNAR_DESIGN a ověřit IS
+  tvary (§2); Sowilo / Dagaz (Cowork: Suðri na kraji stínu, Þjóðreyrir na prahu úsvitu); jak karta vede do appky (tah karty → čtení Rúnarem).
+### Karty run ke stažení — HANDOFF67, 68 (soubory od 2026-10-20 v `docs/inbox/rune-cards/`)
 - [ ] Owner: název · zadní strana (AGNDOFA) · 24 textů (rady proti `RUNAR_POPISY_RUN.md`) · kde vyhodit dvojí citát · originál fotky.
 - [ ] Až karty půjdou opakovaně (IS, tiskárna): generátor do repa nad `v2/runar-runes.js`, `v2/runar-svgs.js`, `v2/fonts/fonts.css`
   (dnes kopie + vlastní `fonts.css`), Cinzel 500 → 400/700, přebarvení kamene jednou funkcí vedle `runeSvg`, spadávka 3 mm;
