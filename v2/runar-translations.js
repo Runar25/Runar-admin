@@ -348,7 +348,6 @@ const UI_TEXT = {
     journey_step_note:    'From the end of this period.',
     journey_manage:       'MANAGE YOUR SUBSCRIPTION',
     journey_web_note:     'Opens therunekeeper.com. You return here with the same account.',
-    journey_soon:         'Coming soon.',
     journey_free:         'Free',
     journey_free_join:    'Registration is free',   // owner 2026-10-20 (CODE-web 6f6a1df); 2026-10-20 bez tečky — štítek jako „Free“
     journey_card_note:    'From {price} kr for {casts}. Have a code? Enter it here.',
@@ -912,7 +911,6 @@ const UI_TEXT = {
     journey_step_note:    'Breytingin tekur gildi í lok tímabilsins.',
     journey_manage:       'ÁSKRIFTIN ÞÍN',
     journey_web_note:     'Vefurinn therunekeeper.com opnast. Svo heldurðu áfram hér á sama aðgangi.',
-    journey_soon:         'Bráðlega.',
     journey_free:         'Ókeypis',
     journey_free_join:    'Skráning er ókeypis',   // 2026-10-20: štítek bez tečky jako „Ókeypis“
     journey_card_note:    'Frá {price} kr. fyrir {casts}. Áttu kóða? Sláðu hann inn hér.',
