@@ -1341,7 +1341,7 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   MY READING / FOR SOMEONE vyplněné jako BEGIN THE READING (`.btn-full`), aby bylo vidět, kde člověk je. Velikost tlačítka podle důležitosti
   (owner: *„všechno nemá být stejné“*). Pozor §32 / smoke ㉼: stav „další tah“ (drawAnother) se testuje — upravit kontrolu, ne ji obejít.
 ### Hlášení z appky 2026-10-19 / 20 (načtena 2026-10-20, CODE-tune; hotové: df67acda, 62283c8c — a56aa46)
-- [ ] **Jeden vzhled pro stejnou věc — soupis komponent a kontrola (owner, hlášení 116b643c, 0d5a0055, 89e4dc3f):** *„to má být sjednocené
+- [x] ✅ *(CODE-tune 2026-10-20, 2e0cfd1 · 5863e36 · 70cbdc5 · b19598d · d88dc2d; DECISIONS 2026-10-20 (3); zbytek položka níž)* **Jeden vzhled pro stejnou věc — soupis komponent a kontrola (owner, hlášení 116b643c, 0d5a0055, 89e4dc3f):** *„to má být sjednocené
   a ne že jeden text se rozbaluje takhle a druhý jinak. To neplatí jen pro tohle, ale všechno! Okna, text, font, barvy. … nehledáš si to,
   když to tvoříš! … musíš to mít někde speciálně napsané, abys to dodržoval? Tak to udělej.“* Rozbalovací „+“: líbí se mu to u „0 rune
   readings remaining +“ (výraznější, protočí se) — má se točit kolem svého středu a platit pro všechna rozbalování, ale „nebudeme to
@@ -1350,6 +1350,12 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   rozdíly, určit výchozí. Mechanismus (§30): soupis komponent appky (okno, tlačítko, rozbalovač, štítek, karta) s třídou, která je
   nese, na jednom místě + kontrola, že nová třída v `runar-reader.css` buď komponentu používá, nebo je v soupisu s důvodem.
   ⚠️ Moje nové třídy z 2026-10-19 (`.journey-*`, `.dd-journey`, `.ai-note`, `.svice`) projít jako první. CODE-tune, soupis a návrh ownerovi.
+- [ ] **Jednotný vzhled — co ㊋ zatím nehlídá (zbytek po kroku 3, DECISIONS 2026-10-20 (3)):** (a) ~20 velikostí kurzívy textu karet
+  (0.71–1.05em, řádkování 1.6–1.9) → dvě: text 0.92em / 1.8 a poznámka .fine; (b) 25 průhledností zlaté → 4 stupně (.08 tón · .2 rámeček ·
+  .4 linka · .7 text); (c) nadpisy sekcí (.card-lbl 0.7, .layer*-lbl, .tree-*-label, .dd-tier 0.58) → 0.65em / 2px / zlatá kromě vrstev
+  čtení; (d) `.visitor-lock-hint` vs `.opt`, `.pills-locked` vs `.pill-locked`; (e) `.atab-ikona` pevná velikost. Podklad: CODE-read
+  `docs/inbox/2026-10-20-jednotny-vzhled.md` §1–2. Pozor na ownerovo „velikost závisí od důležitosti“ — jen stejná úroveň. Po každém kusu
+  zúžit základ `scripts/komponenty_zaklad.json` (`--zaklad`) a doplnit soupis. CODE-tune.
 - [x] ✅ *(CODE-tune 2026-10-20, 369337e + ffbffb5; nadpis owner „10. ano“)* **Okno „Your journey with Rúnar“ — ownerovy úpravy (hlášení bd915d60):** nadpis „WALK WITH RÚNAR?“ (ptá se, jak to zní); podtitul
   „Each step gives you more rune readings. …“; Rúnakort jako třetí karta vedle MONTHLY / YEARLY a odkaz u Rune Seekera, který na ni
   skočí; mezi kameny místo teček **stopy bot** (malé, nesymetrické, od Visitora k Wandererovi — „walk with us“). Owner nabízí ukázat na

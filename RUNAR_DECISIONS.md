@@ -11900,3 +11900,21 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   (RUNAR_EVAL_LOG 2026-09-20 (2): EN rady 0/6; IS ověřeno jen gramaticky) — účel drží „tvennt sem þetta gæti verið“ + „leitandinn metur sjálfur“
   + „engin spá, enginn boðskapur“. Mění se jen závěr Norn, most u single ne. Další krok: CODE-read projde celý IS prompt stejným sítem.
 - Affected doc(s): `RUNAR_BACKLOG.md` — v témže commitu.
+
+## 2026-10-20 (3) — Jednotný vzhled appky: jedna komponenta pro jednu věc; soupis v hlavičce `scripts/verify_komponenty.js`, hlídá smoke ㊋
+
+- **Owner** 2026-10-20 (hlášení 116b643c, 0d5a0055, 89e4dc3f): *„to má být sjednocené a ne že jeden text se rozbaluje takhle a druhý jinak …
+  Okna, text, font, barvy … musíš to mít někde speciálně napsané, abys to dodržoval? Tak to udělej.“*; k podkladu CODE-read
+  (`docs/inbox/2026-10-20-jednotny-vzhled.md`): *„můžeme to opravit celé a taky podle tebou navrhovaného řešení“*.
+- **Co:** (1) **okna** — ✕ u každého, Esc a klik mimo zavřou každé okno (`OKNA_ZAVRI` v `runar-app.js`), kromě souhlasu testera (souhlas je
+  podmínka); okno se jménem je `.modal` jako ostatní. (2) **tlačítka** — plné `.btn-full` (malé `.btn-full.small`, dřív 2× `.btn-gold`),
+  obrysové jedna velikost (`.btn-upgrade` = `.btn-full.sec` = `.btn-half`). (3) **rozbalovač** — „+“ ZA textem, zlatý, otevřením se otočí na
+  „×“, nositel je tlačítko s `aria-expanded`; „▾“ jen nabídka pod jménem; „→“ = vede jinam (okno, obrazovka, web). (4) drobná poznámka `.fine`,
+  tokeny `--danger` / `--panel`, zaoblení 0; mrtvý pruh kreditů a brána „monthly readings complete“ pryč. (5) **soupis komponent** =
+  hlavička `scripts/verify_komponenty.js`; hook ho ukáže při prvním dotyku `runar-reader.css` / `.html` (mapa pravidel, oblast UI).
+- **Proč soupis u kontroly, ne v docu:** kontrola čte týž text (jedno místo, §20) a hook ho ukáže sám (§30) — doc by se nečetl ani nehlídal.
+  ㊋ hlídá: třídy ze soupisu existují · nová třída mimo základ (`scripts/komponenty_zaklad.json`, 350 tříd) jen ze soupisu nebo „VLASTNÍ … —
+  důvod“ · zaoblení jen 0 / kruh · nová barva natvrdo mimo `:root` ne.
+- **Hranice:** velikost podle důležitosti zůstává (owner přes CODE-read, 2026-10-20 (1): *„velikost závisí od důležitosti … všechno nemá být
+  stejné“*) — sjednocuje se jen stejná úroveň. Velikosti písma, 25 průhledností zlaté a ~20 velikostí textu karet ㊋ nehlídá → `RUNAR_BACKLOG.md`.
+- Affected doc(s): `RUNAR_BACKLOG.md` — v témže commitu.
