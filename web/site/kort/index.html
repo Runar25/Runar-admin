@@ -48,7 +48,7 @@ body{color:var(--white);font-family:'Cormorant Garamond',serif;font-size:19px;mi
 <div class="nav"><a href="/">RÚNAR</a><span><button data-l="is">IS</button><button data-l="en">EN</button></span></div>
 <div class="cards" id="cards"></div>
 <div class="tools" id="tools">
-  <button id="d-o" data-d="o"></button><button id="d-f" data-d="f"></button>
+  <span id="des"></span>
   <button class="main" id="print"></button>
 </div>
 <p class="hint" id="hint"></p>
@@ -98,10 +98,11 @@ function render() {
   }
   cards.innerHTML = '<div class="rk-wrap">' + rkFront({ design: DES, lang: LANG, credits: N, code: CODE }) + '</div>'
     + '<div class="rk-wrap">' + rkBack({ design: DES, lang: LANG, code: CODE, qr: qrSvg() }) + '</div>';
-  Object.keys(RK_DESIGNS).forEach(function (k) {
-    var b = document.getElementById('d-' + k);
-    b.textContent = RK_DESIGNS[k][LANG].toUpperCase();
-    b.classList.toggle('on', k === DES);
+  document.getElementById('des').innerHTML = Object.keys(RK_DESIGNS).map(function (k) {
+    return '<button data-d="' + k + '" class="' + (k === DES ? 'on' : '') + '">' + RK_DESIGNS[k][LANG].toUpperCase() + '</button>';
+  }).join(' ');
+  document.querySelectorAll('[data-d]').forEach(function (b) {
+    b.onclick = function () { DES = b.getAttribute('data-d'); save(); render(); };
   });
   document.getElementById('print').textContent = TXT.print[LANG].toUpperCase();
   document.getElementById('hint').textContent = TXT.hint[LANG];
@@ -113,9 +114,6 @@ function save() {
 }
 document.querySelectorAll('.nav button').forEach(function (b) {
   b.onclick = function () { LANG = b.getAttribute('data-l'); save(); render(); };
-});
-document.querySelectorAll('[data-d]').forEach(function (b) {
-  b.onclick = function () { DES = b.getAttribute('data-d'); save(); render(); };
 });
 document.getElementById('print').onclick = function () { window.print(); };
 render();

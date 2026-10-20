@@ -3,7 +3,8 @@
 // runar-translations.js + runar-utils.js (VOCAB, vn, runeSvg), runar-svgs.js. Nové věty jen tady v RK_TXT.
 
 // Vzhledy karty = data; nový vzhled = nový klíč + jeho pravidla rk-<klíč> v runakort.css (owner 2026-10-19: další přibudou).
-var RK_DESIGNS = { o: { is: 'Svart', en: 'Black' }, f: { is: 'Hvítt', en: 'White' } };
+// art = líc s postavou (rozložení rk-l2 v runakort.css). w = zimní slunovrat (owner 2026-10-20), IS „Vetur“ = zima.
+var RK_DESIGNS = { o: { is: 'Svart', en: 'Black' }, f: { is: 'Hvítt', en: 'White', art: true }, w: { is: 'Vetur', en: 'Winter', art: true } };
 var RK_TXT = {
   steps: { is: ['Skannaðu QR kóðann', 'Skráðu þig inn', 'Sláðu inn kóðann'], en: ['Scan the QR code', 'Sign in', 'Enter the code'] }
 };
@@ -25,8 +26,8 @@ function rkFront(o) {
   var stone = '<div class="rk-stone">' + runeSvg(rkRune(o.code), { frame: true }) + '</div>';
   var txt = '<div class="rk-t"><div class="rk-n">RÚNAR</div><div class="rk-s">' + VOCAB.card[o.lang].toUpperCase() + '</div><div class="rk-q">'
     + rkPackLine(o.credits, o.lang) + '</div></div>';
-  return d === 'f'
-    ? '<div class="rk-card rk-f rk-front"><div class="rk-art"></div>' + txt + stone + '<div class="rk-brand">AGNDOFA</div></div>'
+  return RK_DESIGNS[d].art
+    ? '<div class="rk-card rk-' + d + ' rk-l2 rk-front"><div class="rk-art"></div>' + txt + stone + '<div class="rk-brand">AGNDOFA</div></div>'
     : '<div class="rk-card rk-o rk-front">' + stone + txt + '<div class="rk-brand">AGNDOFA</div></div>';
 }
 // Rub karty. o = { design, lang, code, qr } — qr = hotové SVG (stránka karty ho kreslí z kódu)
