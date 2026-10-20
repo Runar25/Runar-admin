@@ -1745,7 +1745,7 @@ function _journeyPaint() {
         + _jkr(pk.isk) + ' kr</span></div><div class="journey-note">' + _jesc(vn('cast', pk.credits, lang)) + '</div></div>';
     });
     if (env === 'web') h += '<a class="tn-btn btn-upgrade" href="' + _jesc(JOURNEY_URL) + '" target="_blank" rel="noopener">' + _jesc(tp('gift_card_btn', { card: vl('card', lang).toUpperCase() })) + ' →</a>';   // → = vede jinam (web), CODE-read §4
-    else h += '<div class="journey-note">' + _jesc(t('journey_soon')) + '</div>';
+    // bez JOURNEY_URL nic (owner 2026-10-20: „v appce taky pryč“ — „Coming soon“ ani u Rúnakortu; klíč journey_soon zrušen)
     var p0 = CARD_PACKS.reduce(function (a, b) { return b.isk < a.isk ? b : a; });
     h += '<div class="journey-note klik" role="button" tabindex="0" onclick="closeJourney();showAppTab(\'reading\');toggleRedeem()">'
       + _jesc(tp('journey_card_note', { price: _jkr(p0.isk), casts: vn('cast', p0.credits, lang) })) + '</div>';

@@ -62,7 +62,7 @@ const SEEK_KOTVA = {
   'Clarity':                { en: 'into focus',                 is: 'skýrt fram' },
   'Confirmation':           { en: 'neither confirm nor refute', is: 'hvorki staðfestir né hrekur' },
   'Insight into Challenge': { en: 'friction',                   is: 'núninginn' },
-  'Reflection':             { en: 'mirror',                     is: 'spegil' },
+  'Reflection':             { en: 'mirror',                     is: 'spegli' },   // 2026-10-20 v5.18: „Haltu upp spegli“ (3. pád; dřív „Opnaðu spegil“)
 };
 for (const l of ['en', 'is']) {
   const seen = new Map();
