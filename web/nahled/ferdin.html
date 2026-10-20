@@ -69,7 +69,7 @@
 </div></header>
 <div class="j-page">
   <div class="j-eyebrow" data-k="journey_title"></div>
-  <p class="j-sub" data-k="journey_sub"></p>
+  <p class="j-sub" id="j-sub"></p>
   <div class="j-per" id="per"><span data-p="m" class="on" data-k="journey_monthly"></span><span data-p="y" data-k="journey_yearly"></span></div>
   <div class="j-path" id="path"></div>
   <section class="j-card">
@@ -119,6 +119,7 @@ function render() {
   document.documentElement.lang = LANG;
   document.querySelectorAll('[data-k]').forEach(function (el) { el.textContent = UI_TEXT[LANG][el.getAttribute('data-k')] || ''; });
   document.querySelectorAll('.j-lang button').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-l') === LANG); });
+  document.getElementById('j-sub').textContent = tp('journey_sub', { casts: vlp('cast', LANG) });
   document.getElementById('card-h').textContent = vl('card', LANG).toUpperCase();
   document.getElementById('card-p').textContent = J_CARD[LANG];
   document.getElementById('packs').innerHTML = CARD_PACKS.map(function (p) {
