@@ -1328,6 +1328,15 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   EVAL_LOG — starší baseline do archivu (CODE-read); DESIGN a PRICING — rozdělení je obsahové rozhodnutí ownera; working-style — část do
   samostatných memory souborů. Další obnova bez zkrácení ne.
 
+- [ ] **IS rejstřík: bez knižního a archaického (owner 2026-10-20, DECISIONS 2026-10-20 (1)) → CODE-tune.** `DEF_CHAR_IS.grammar`
+  pravidlo 6: vyndat „Skáldlegt og bókmenntalegt mál er í lagi“ (zákaz nových slov zůstává); IS protějšek EN pravidla 2 („Natural English
+  idiom — nothing … stiff“) — věta ověřená Greynirem: „Skrifaðu eðlilega íslensku, daglegt mál eins og fólk talar það í dag — ekkert
+  hátíðlegt eða gamaldags orðalag.“ („daglegt mál“ 99×, „gamaldags orðalag“ 10×); `IS_NATIVE_CHECKLIST.md` bod 5 „formal/archaic tone is
+  fine“ → opak. Prompt verze + sledovat v čteních testerů. Rozbor příčiny: `docs/inbox/2026-10-20-jednotny-vzhled.md` § 6 a zpráva CODE-read.
+- [ ] **Tlačítka po čtení a přepínač MY READING / FOR SOMEONE (owner 2026-10-20, DECISIONS 2026-10-20 (1)) → CODE-tune.**
+  DRAW ANOTHER RUNE pryč, zůstává jedno velké START OVER ve stylu HEAR RÚNAR SPEAK (`.btn-voice`, přes celou šířku); ASK beze změny. Aktivní
+  MY READING / FOR SOMEONE vyplněné jako BEGIN THE READING (`.btn-full`), aby bylo vidět, kde člověk je. Velikost tlačítka podle důležitosti
+  (owner: *„všechno nemá být stejné“*). Pozor §32 / smoke ㉼: stav „další tah“ (drawAnother) se testuje — upravit kontrolu, ne ji obejít.
 ### Hlášení z appky 2026-10-19 / 20 (načtena 2026-10-20, CODE-tune; hotové: df67acda, 62283c8c — a56aa46)
 - [ ] **Jeden vzhled pro stejnou věc — soupis komponent a kontrola (owner, hlášení 116b643c, 0d5a0055, 89e4dc3f):** *„to má být sjednocené
   a ne že jeden text se rozbaluje takhle a druhý jinak. To neplatí jen pro tohle, ale všechno! Okna, text, font, barvy. … nehledáš si to,

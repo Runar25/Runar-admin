@@ -11863,3 +11863,23 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno v náhledu (375 px):** návštěvník / Rune Seeker / Premium — „you are here“ a pohyb jen u svého účtu, symboly vystředěné, roční
   přepočet 2.900 kr / 34.800 kr, IS texty, Play bez cen a tlačítek, zavření · smoke ㉼ ㊽ ㉹, ui_text_used, check-is.
 - Affected doc(s): `RUNAR_BACKLOG.md` (Okno Upgrade) — v témže commitu.
+
+## 2026-10-20 (1) — Islandština čtení bez knižního a archaického rejstříku; tlačítka po čtení a přepínač podle důležitosti
+
+- **Rozhodl:** owner 2026-10-20 k rozboru hlášení „nerozumím“ (čtení Norn 452a97c5): *„návrh oprav souhlas. archaic nechceme. jak je to
+  u EN? … tak doplnit stejně jako IS? pokud já testuju EN a je to dobré, tak by se hodilo mít to podobně u IS. porovnej je!“* K UI: *„start
+  over by mělo být stejné jako hear runar speak. draw another rune můžeme asi zrušit a nechat jen jedno velké Start over … my reading a for
+  someone else můžeme udělat stejně jako to které je aktivní jako begin the reading … velikost závisí od důležitosti toho příkazu … všechno
+  nemá být stejné. pozor na to.“*
+- **Proč (rejstřík):** `DEF_CHAR_IS.grammar` pravidlo 6 od 2026-07-10 (c6c7455) končí „Skáldlegt og bókmenntalegt mál er í lagi“ a
+  `IS_NATIVE_CHECKLIST.md` bod 5 „formal/archaic tone is fine“ — vznikly při opravě vymyšlených slov („knižní slovo smí, vymyšlené ne“),
+  ale pouštějí model k úřednímu a knižnímu jazyku. EN má pravidlo „Natural English idiom — nothing translated-sounding, stiff, or
+  awkward“, IS protějšek neměla (zakazuje jen anglicismy). Ve čtení 452a97c5 žádné z vadných slov v promptu nestojí — model si je složil:
+  „knýir á“ (úřední „knýja á um“, bez předmětu nesrozumitelné), „skottið dillaði sér“ 0× (obraz v promptu měl správně „dilla skottinu“),
+  „allur afturhlutinn tók undir“ (kalk), „haglið lægir“ 0× — kolokace podle angličtiny + úřední rejstřík, ne stará slova. Abstraktní závěr
+  „Í lífi þínu gæti þetta verið kunnugleg nánd…“ zrcadlí islandské znění pokynu NIÐURLAGIÐ („tvennt sem þessi hreyfing gæti verið í lífi
+  leitandans … ástand“).
+- **Co:** pravidlo 6 bez věty o knižním jazyce; IS dostane protějšek EN pravidla 2 (věta v BACKLOGu, ověřená Greynirem a korpusem); checklist
+  opraven. Nic dalšího se nepřidává. Ověření: čtení testerů (owner 2026-10-20, bez API).
+- **Co (UI):** DRAW ANOTHER RUNE pryč, START OVER jako HEAR RÚNAR SPEAK; aktivní MY READING / FOR SOMEONE vyplněné jako BEGIN THE READING.
+- Affected doc(s): `RUNAR_BACKLOG.md` — v témže commitu; `IS_NATIVE_CHECKLIST.md` a prompt mění CODE-tune.
