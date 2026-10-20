@@ -157,7 +157,10 @@ function renderJournal(entries) {
   // Header counts
   const titleEl = document.getElementById('journal-pane-title');
   const countEl = document.getElementById('journal-pane-count');
-  if (titleEl) titleEl.textContent = t('journal_title');
+  // 2026-10-20 (owner „symbol na začátku by mohla být otevřená kniha“): ikona knihy místo ✦, tenká linka jako ikony záložek (.atab-ikona)
+  if (titleEl) titleEl.innerHTML = '<svg class="atab-ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"'
+    + ' stroke-linejoin="round" aria-hidden="true"><path d="M12 6.5C10 5 7 4.5 3 5v13c4-.5 7 0 9 1.5"/><path d="M12 6.5C14 5 17 4.5 21 5v13c-4-.5-7 0-9 1.5"/>'
+    + '<path d="M12 6.5v13"/></svg>' + String(t('journal_title')).replace(/&/g, '&amp;').replace(/</g, '&lt;');
   // Počet: Standard vidí všechna čtení („5 lestrar“), ostatní jen posledních pár („síðustu 5“). Jedno čtení = „1 lestur“ v obou
   // (2026-10-10: dřív „1 lestrar“ / „1 readings“ a islandský štítek posledních čtení jako kalk z „last N“ — zakázaný tvar
   // je v check-is.py; tvar podle čísla dělá vn, VOCAB.reading).

@@ -1139,7 +1139,9 @@ var ZNACKY_UCTU = {
   rune_seeker: { kamen: 'Isa',    vel: 7.2,
     sym: '<path class="zn-fl" d="M20 36C12 36 8.5 30 10.5 24c1.6-4.6 5.6-6.4 6.2-12 3.4 2.4 4.6 6 3.8 9.4 2.6-1.6 3.6-4.8 3-8 5.6 4.4 7.6 11 5.6 16.6C27.6 33.6 24.4 36 20 36z"/>'
        + '<path class="zn-fl2" d="M20 33c-3.2 0-4.8-2.6-4-5.2.7-2 2.6-2.8 2.9-5.2 2.4 1.6 3.8 3.8 3.4 6.4-.3 2.2-1 4-2.3 4z"/>' },
-  standard:    { kamen: 'Othila', vel: 9.6, vypln: true, stezka: true },
+  // strom (2026-10-20, owner „vedle cesty stromy … možná se tam vejde jen jeden“): smrček vpravo dole u začátku stezky — blízko, proto větší
+  standard:    { kamen: 'Othila', vel: 11, vypln: true, stezka: true,
+    strom: '<path class="zn-strom" d="M31 21 27.4 26.4h2l-3.2 4.4h2.2l-3.4 5h4.3V38h1.4v-2.2h4.3l-3.4-5h2.2l-3.2-4.4h2z"/>' },
   premium:     { kamen: 'Uruz',   vel: 8.6,
     sym: '<path d="M2 30 12 16l5 6 6-9 15 17"/><g class="zn-ptak"><path class="zn-kridla" d="M21 7q1.6-1.8 3.2 0q1.6-1.8 3.2 0"/></g>' },
 };
@@ -1148,7 +1150,7 @@ function kamenUctuSvg(id) {
   var u = ZNACKY_UCTU[id] || ZNACKY_UCTU.free_trial, sd = (typeof RUNE_SVGS !== 'undefined') && RUNE_SVGS[u.kamen];
   if (!sd) return '';
   var kamen = sd.paths.match(/<path[^>]*>/)[0];
-  var sym = u.stezka ? '<path class="zn-stezka" d="' + _stezkaUctu(0) + '"/>' : u.sym;
+  var sym = u.stezka ? '<path class="zn-stezka" d="' + _stezkaUctu(0) + '"/>' + (u.strom || '') : u.sym;
   var g = sym ? '<g class="zn-sym" ' + (u.vypln ? 'fill="#D6A85C" stroke="none"' : 'fill="none" stroke="#D6A85C" stroke-linecap="round" stroke-linejoin="round"')
     + '>' + sym + '</g>' : '';
   return '<svg class="kamen-uctu" viewBox="' + sd.vb + '" data-ucet="' + id + '" aria-hidden="true">' + kamen + g + '</svg>';
