@@ -44,8 +44,10 @@ with the grammar, never duplicated here.
 4. **Definite-article endings**, especially on our domain compounds.
    - *rún → rúnin*, *lífsrún → lífsrúnin* (kvk). Watch *auða rúnin* (not *rúnan*).
 
-5. **Second person consistency + register.** Whole reading stays in *þú*; formal/archaic tone
-   is fine, but a single slip into a wrong pronoun or an English-shaped clause stands out.
+5. **Second person consistency + register.** Whole reading stays in *þú*, in everyday modern Icelandic — no formal,
+   bookish or archaic wording (until 2026-10-20 this line said „formal/archaic tone is fine“; owner: „archaic nechceme“,
+   DECISIONS 2026-10-20 (1) — e.g. bare „án þess að þú knýir á“ read as officialese and testers did not understand it).
+   A single slip into a wrong pronoun or an English-shaped clause stands out.
 
 6. **Collocation & idiom — the tool-green class** (harvested from testing, 2026-07-30).
    All three below are *valid words + valid grammar* → GreynirCorrect and BÍN pass them **green**.
