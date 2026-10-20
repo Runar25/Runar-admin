@@ -28,6 +28,10 @@
     „daginn lengir“) a 15 podezření; opravy hotové a ověřené v podkladu, část A4.
   - **Owner 2026-10-16 k části B** (DECISIONS 2026-10-16 (3)):
     - [x] ✅ **Studené čtení — definice** schválená ownerem 2026-10-16 (*„10. ano“*) → `RUNAR_DESIGN.md`, sekce „Cold reading“.
+    - ℹ **Data 2026-10-20 (CODE-read, produkce od 2026-09-24, bez odhlášených): jen 2 Horseshoe + 2 Áttaviti.** (e) ve v5.08 (11. 10.) 0/2 —
+      „Inner state“ vyšlo obrazem (ryba z ruky do ruky), „subconscious“ otázkou ve scéně; IS Áttaviti 16. 10. čistý obraz; tvrzení o nitru jen
+      ve starém Horseshoe v4.77 (29. 9.). (a) 1/4 — Áttaviti 11. 10. začíná vymyšlenou scénou ze života („At the meeting, an empty chair…
+      You stand up for…“). Bez srovnání (věta (a) je ve všech promptech) nerozhodne; owner sleduje v čteních testerů, API pokus nenavržen.
     - [ ] **Potenciální vada (sledovat v testování) — štítky pozic žádají nitro:** Podkova pozice 6 „Inner state (what lives inside)“ /
       „Innri staða (hvað er inni í þér)“ (`runar-character.js:2458`, `:2443`), Kříž „what lies in the subconscious“ (`:2273`, `:2255`).
       Owner 2026-10-16: *„záleží na tom, jak to zní ve čtení… nemůžeme měnit všechno jen kvůli tomu, že to jako nevypadá dobře. musí to potvrdit
