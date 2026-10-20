@@ -335,7 +335,7 @@ const UI_TEXT = {
     tier_soon:            '— coming soon',   // 2026-09-26: z runar-app.js (§10), poznámka u tieru v panelu účtu
     // 2026-10-19: okno „Your journey with Rúnar“ (openJourney v runar-app.js; DECISIONS 2026-10-19 (7), (8)). Sada EN + IS od CODE-read,
     // čte ji i web therunekeeper.com (CODE-web) — texty jen tady (§20). {tier} = jméno účtu z TIERS, {price}/{year} z TIERS.*.price_isk_*.
-    journey_title:        'YOUR JOURNEY WITH RÚNAR',
+    journey_title:        'WALK WITH RÚNAR',   // 2026-10-20 owner „10. ano“ (hlášení bd915d60) — dřív „YOUR JOURNEY WITH RÚNAR“; IS nadpis vymyslí CODE-read
     journey_sub:          'Each step holds more of Rúnar. Walk as far as you wish, and step back whenever you like.',
     journey_monthly:      'MONTHLY',
     journey_yearly:       'YEARLY',
