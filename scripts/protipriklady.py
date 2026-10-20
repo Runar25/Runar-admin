@@ -285,6 +285,11 @@ PRIPADY = [
  ('chyti', 'verify_wts.js', 'v2/runar-app.js', 'replace', "  try { localStorage.setItem(WTS_KLIC, '1'); } catch (e) {}", ''),
  ('chyti', 'verify_wts.js', 'v2/runar-app.js', 'replace', '  setTimeout(maybeShowWhereToStart, 1800);', ''),
  ('nesmi', 'verify_wts.js', 'v2/runar-app.js', 'append', '', '\n// komentář navíc — správný kód\n'),
+ # ㊋ soupis komponent (2026-10-20, CODE-tune): nová třída mimo soupis · zaoblení · nová barva natvrdo · třída ze soupisu zmizí
+ ('chyti', 'verify_komponenty.js', 'v2/runar-reader.css', 'append', '', '\n.okno-jine{border:1px solid var(--gold);}\n'),
+ ('chyti', 'verify_komponenty.js', 'v2/runar-reader.css', 'append', '', '\n.fine{border-radius:6px;}\n'),
+ ('chyti', 'verify_komponenty.js', 'v2/runar-reader.css', 'append', '', '\n.fine{color:#123abc;}\n'),
+ ('chyti', 'verify_komponenty.js', 'v2/runar-reader.css', 'replace', '.fine{font-family', '.drobna{font-family'),
 ]
 
 

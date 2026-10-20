@@ -2,6 +2,8 @@
    RÚNAR — Reader Styles
    Extracted from runar-reader.html
    Source of truth: this file.
+   Nový prvek UI = napřed SOUPIS KOMPONENT v hlavičce scripts/verify_komponenty.js (která třída nese okno, tlačítko, rozbalovač…);
+   hlídá smoke ㊋. Hodnoty bydlí tady, soupis tam (2026-10-20, owner: „musíš to mít někde speciálně napsané“).
    ═══════════════════════════════════════════════════════ */
 
 :root {

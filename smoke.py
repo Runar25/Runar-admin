@@ -1211,6 +1211,16 @@ radky = [l for l in (r2.stdout + r.stdout + r.stderr + r2.stderr).strip().split(
 prvni = radky[-1] if radky else 'kontrola automatickych mazani probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# ㊋ Soupis komponent (CODE-tune 2026-10-20, owner: „musíš to mít někde speciálně napsané, abys to dodržoval? Tak to udělej.“):
+# nová třída v runar-reader.css použije komponentu ze soupisu (hlavička verify_komponenty.js) nebo má důvod; zaoblení 0; barvy tokeny.
+print('\n' + chr(0x328B) + ' SOUPIS KOMPONENT (verify_komponenty.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_komponenty.js')], capture_output=True, text=True, encoding='utf-8')
+r2 = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_komponenty.js'), '--test'], capture_output=True, text=True, encoding='utf-8')
+passed = r.returncode == 0 and r2.returncode == 0
+radky = [l for l in (r2.stdout + r.stdout + r.stderr + r2.stderr).strip().split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola soupisu komponent probehla'
+check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
