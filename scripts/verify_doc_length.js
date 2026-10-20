@@ -21,13 +21,13 @@ const DLUH_DNI = 30;        // dluh starsi nez tohle uz neni dluh, ale stav
 const VYJIMKY = {
   'CLAUDE.md': { typ: 'trvala', duvod: 'Vyňat z limitu rozhodnutím KUKY 2026-08-17 po měření: samotná pravidla §1–§28 přesahují 200 řádků a jsou důvod, proč ten soubor existuje. Platí pro něj jen test „způsobí jeho chybění chybu?".' },
   'RUNAR_DECISIONS.md': { typ: 'trvala', duvod: 'Append-only log rozhodnutí (§16). Rozdělením by se rozbilo pravidlo „při sporu vyhrává nejnovější datovaný záznam" — hledá se v jednom souboru.' },
-  'RUNAR_DESIGN.md': { typ: 'dluh', datum: '2026-09-20', duvod: 'Vlastní design, mytologii a spready dohromady; rozdělení je obsahové rozhodnutí ownera, ne mechanické.' },
-  'RUNAR_BACKLOG.md': { typ: 'dluh', datum: '2026-09-20', duvod: 'Roste s otevřenými úkoly. Zkrátí se uzavíráním položek, ne rozdělením.' },
-  'RUNAR_PRICING.md': { typ: 'dluh', datum: '2026-09-20', duvod: 'Business model + fyzické produkty v jednom; rozdělení čeká na rozhodnutí ownera.' },
-  'RUNAR_EVAL_LOG.md': { typ: 'dluh', datum: '2026-09-20', duvod: 'Po odsunu měření 08-06→08-17 do archivu 596 řádků. Další zkrácení = odsunout starší baseline, až přestane sloužit ke srovnání.' },
+  'RUNAR_DESIGN.md': { typ: 'dluh', datum: '2026-10-20', duvod: 'Vlastní design, mytologii a spready dohromady; rozdělení je obsahové rozhodnutí ownera, ne mechanické. Obnoveno 2026-10-20 po vypršení (blokovalo push všem lanům, potřetí) — zkrácení je položka BACKLOGu „Délka živých doců“, další obnova bez zkrácení ne.' },
+  'RUNAR_BACKLOG.md': { typ: 'dluh', datum: '2026-10-20', duvod: 'Roste s otevřenými úkoly. Zkrátí se uzavíráním položek, ne rozdělením. Obnoveno 2026-10-20 po vypršení (blokovalo push všem lanům, potřetí) — zkrácení je položka BACKLOGu „Délka živých doců“, další obnova bez zkrácení ne.' },
+  'RUNAR_PRICING.md': { typ: 'dluh', datum: '2026-10-20', duvod: 'Business model + fyzické produkty v jednom; rozdělení čeká na rozhodnutí ownera. Obnoveno 2026-10-20 po vypršení (blokovalo push všem lanům, potřetí) — zkrácení je položka BACKLOGu „Délka živých doců“, další obnova bez zkrácení ne.' },
+  'RUNAR_EVAL_LOG.md': { typ: 'dluh', datum: '2026-10-20', duvod: 'Po odsunu měření 08-06→08-17 do archivu 596 řádků. Další zkrácení = odsunout starší baseline, až přestane sloužit ke srovnání. Obnoveno 2026-10-20 po vypršení (blokovalo push všem lanům, potřetí) — zkrácení je položka BACKLOGu „Délka živých doců“, další obnova bez zkrácení ne.' },
   'RUNAR_TREE.md': { typ: 'dluh', datum: '2026-09-21', duvod: 'Obnoveno po vyprseni (261 r.): zkraceni je domena CODE-tree, cerveny smoke ale blokoval push vsem lanum (zapsal CODE-tune podruhe — CODE-tree: az se dotknes RUNAR_TREE.md, zkrat ho pod 250).' },
   'RUNAR_POPISY_RUN.md': { typ: 'trvala', duvod: 'Sbirka 25+ samostatnych ownerovych popisu run (jeden na runu). Roste s poctem run, ne s driftem; rozdelenim by jedno misto (§20) zdedilo 25 mist. Delka neni znak toho, ze se doc rozjel.' },
-  'memory/working-style.md': { typ: 'dluh', datum: '2026-09-20', duvod: 'Sbírka pracovních návyků; část patří do samostatných memory souborů.' },
+  'memory/working-style.md': { typ: 'dluh', datum: '2026-10-20', duvod: 'Sbírka pracovních návyků; část patří do samostatných memory souborů. Obnoveno 2026-10-20 po vypršení (blokovalo push všem lanům, potřetí) — zkrácení je položka BACKLOGu „Délka živých doců“, další obnova bez zkrácení ne.' },
 };
 
 function zivedocs() {
