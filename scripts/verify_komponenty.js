@@ -30,6 +30,7 @@
 //
 // VLASTNÍ (třída mimo komponenty, s důvodem):
 // VLASTNÍ .xp-plus — sám je komponenta rozbalovače (span tam, kde text plní JS a ::after nejde)
+// VLASTNÍ .pero-let — animované pero v deníku (owner 2026-10-20 „3 pero“), jediný prvek, který letí přes stránku; žádná komponenta to nedělá
 //
 // PRAVIDLA, KTERÁ KONTROLA HLÍDÁ:
 //   A) každá třída z tabulky v runar-reader.css existuje (soupis nehnije)

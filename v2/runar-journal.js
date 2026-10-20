@@ -158,9 +158,11 @@ function renderJournal(entries) {
   const titleEl = document.getElementById('journal-pane-title');
   const countEl = document.getElementById('journal-pane-count');
   // 2026-10-20 (owner „symbol na začátku by mohla být otevřená kniha“): ikona knihy místo ✦, tenká linka jako ikony záložek (.atab-ikona)
-  if (titleEl) titleEl.innerHTML = '<svg class="atab-ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"'
-    + ' stroke-linejoin="round" aria-hidden="true"><path d="M12 6.5C10 5 7 4.5 3 5v13c4-.5 7 0 9 1.5"/><path d="M12 6.5C14 5 17 4.5 21 5v13c-4-.5-7 0-9 1.5"/>'
-    + '<path d="M12 6.5v13"/></svg>' + String(t('journal_title')).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  // kniha s řádky, do kterých píše pero (_peroVDeniku); kreslí jen při změně, ať běžící pero nepřijde o svou knihu
+  if (titleEl && titleEl._knihaTxt !== String(t('journal_title'))) {
+    titleEl.innerHTML = _knihaSvg() + String(t('journal_title')).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+    titleEl._knihaTxt = String(t('journal_title'));
+  }
   // Počet: Standard vidí všechna čtení („5 lestrar“), ostatní jen posledních pár („síðustu 5“). Jedno čtení = „1 lestur“ v obou
   // (2026-10-10: dřív „1 lestrar“ / „1 readings“ a islandský štítek posledních čtení jako kalk z „last N“ — zakázaný tvar
   // je v check-is.py; tvar podle čísla dělá vn, VOCAB.reading).
@@ -331,6 +333,59 @@ function populateJournalFilters(entries) {
   areaEl.innerHTML = `<option value="">${t('jf_all_areas')}</option>`
     + (hasSpread ? `<option value="spread">${t('jf_spreads')}</option>` : '')
     + areas.map(a => `<option value="${a}">${a}</option>`).join('');
+}
+
+// Pero v deníku (2026-10-20, owner: „knihu udělat animovanou s perem … pero zmizí z journalu, objeví se a zapíše do knihy, zmizí z knihy
+// a objeví se zase zpět“ → varianta 3 z náhledu docs/inbox/2026-10-20-kniha-pero-kameny-nahled.html). Při každém otevření záložky:
+// pero v záložce pohasne, rozsvítí se u knihy, 3 s píše tři řádky, pohasne a vrátí se do záložky. Bez animací (prefers-reduced-motion)
+// nic — kniha zůstane s řádky. Polohu bere každý snímek znovu z obrazovky, takže drží i při posunu stránky.
+var _PERO_RADKY = [[13.6, 8.6, 19.2], [13.6, 11.2, 19.4], [13.6, 13.8, 18]];
+var _PERO_D = '<path d="M19 3C11 5 6 11 5 21"/><path d="M17 5l-5 1.6M15 8l-5 1.6M13 11l-4.5 1.5M11 14.5l-3.5 1.2"/>';
+function _knihaSvg() {
+  return '<svg class="atab-ikona kniha" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"'
+    + ' stroke-linejoin="round" aria-hidden="true"><path d="M12 6.5C10 5 7 4.5 3 5v13c4-.5 7 0 9 1.5"/><path d="M12 6.5C14 5 17 4.5 21 5v13c-4-.5-7 0-9 1.5"/>'
+    + '<path d="M12 6.5v13"/>' + _PERO_RADKY.map(function (r) { return '<path class="rd" stroke-width="0.9" d="M' + r[0] + ' ' + r[1] + ' L' + r[2] + ' ' + r[1] + '"/>'; }).join('') + '</svg>';
+}
+var _peroBezi = false;
+function _peroVDeniku(pokus) {
+  if (_peroBezi || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+  var kn = document.querySelector('#journal-pane-title svg.kniha'), tp = document.querySelector('#atab-journal svg.atab-ikona');
+  if (!kn || !tp || !kn.getBoundingClientRect().width) { if ((pokus || 0) < 15) setTimeout(function () { _peroVDeniku((pokus || 0) + 1); }, 200); return; }
+  _peroBezi = true;
+  var rd = [].slice.call(kn.querySelectorAll('.rd'));
+  var pero = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  pero.setAttribute('viewBox', '0 0 24 24'); pero.setAttribute('class', 'pero-let'); pero.setAttribute('aria-hidden', 'true');
+  pero.setAttribute('fill', 'none'); pero.setAttribute('stroke', 'currentColor'); pero.setAttribute('stroke-width', '1.3');
+  pero.setAttribute('stroke-linecap', 'round'); pero.setAttribute('stroke-linejoin', 'round');
+  pero.innerHTML = _PERO_D; pero.style.opacity = 0; document.body.appendChild(pero);
+  var poloz = function (x, y, op) {   // hrot pera (5,21 z 24×24) na bod knihy (x, y)
+    var r = kn.getBoundingClientRect(), s = r.width / 24, w = r.width * 0.95;
+    pero.style.width = w + 'px'; pero.style.height = w + 'px'; pero.style.opacity = op;
+    pero.style.transform = 'translate(' + (r.left + x * s - w * 5 / 24) + 'px,' + (r.top + y * s - w * 21 / 24) + 'px) rotate(-8deg)';
+  };
+  rd.forEach(function (p) { var L = p.getTotalLength(); p.style.strokeDasharray = L; p.style.strokeDashoffset = L; });
+  var R0 = _PERO_RADKY[0], RN = _PERO_RADKY[_PERO_RADKY.length - 1];
+  var useky = [[350, function (t) { tp.style.opacity = 1 - t; }], [350, function (t) { poloz(R0[0], R0[1], t); }]];
+  _PERO_RADKY.forEach(function (r, k) {
+    useky.push([1000, function (t) {
+      poloz(r[0] + (r[2] - r[0]) * t, r[1] - 0.5 * Math.abs(Math.sin(t * Math.PI * 7)), 1);
+      var L = rd[k].getTotalLength(); rd[k].style.strokeDashoffset = L * (1 - t);
+    }]);
+  });
+  useky.push([350, function (t) { poloz(RN[2], RN[1], 1 - t); }], [350, function (t) { tp.style.opacity = t; }]);
+  var konec = function () {
+    pero.remove(); tp.style.opacity = ''; rd.forEach(function (p) { p.style.strokeDasharray = ''; p.style.strokeDashoffset = ''; }); _peroBezi = false;
+  };
+  var i = 0, t0 = null;
+  (function krok(ts) {
+    if (ts) {
+      if (t0 === null) t0 = ts;
+      if (!document.body.contains(kn)) { konec(); return; }   // deník se mezitím překreslil nebo zavřel
+      var u = useky[i], t = Math.min(1, (ts - t0) / u[0]); u[1](t);
+      if (t >= 1) { i++; t0 = ts; if (i >= useky.length) { konec(); return; } }
+    }
+    requestAnimationFrame(krok);
+  })();
 }
 
 // 2026-09-25 (KUKY: „jen ho rozbalit… nebude tam 2× začátek“): úryvek v hlavičce se rozbalí na celý text; tělo karty
