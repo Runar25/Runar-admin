@@ -70,7 +70,9 @@ for (const row of IMGS) {
 // Součet rozdílů takovou ránu zachytí.
 // 2026-09-12: splaceno na NULU (Coworkova islandska slova + korpusove overeni). Kdo sem
 // strop zvedne, musi k tomu mit datovany duvod.
-const PARITA_STROP = 0;
+// 2026-10-20 → 1: Uruz EN 3 × IS 2 — owner vypustil „hrár kraftur“ (kalk „raw power“; DECISIONS 2026-10-20 (5), „12. ano, všech
+// devět“); jiné islandské slovo pro „raw power“ schválené není a vymýšlet se nemá (§23). Splatí ho jen nové rozhodnutí.
+const PARITA_STROP = 1;
 const parita = [];
 let chybiPolozek = 0;
 for (const r of RUNES) {

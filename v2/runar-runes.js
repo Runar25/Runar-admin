@@ -11,7 +11,7 @@ const RUNES = [
     // 2026-09-30 (KUKY „2 ano“): „mobile energy / hreyfanleg orka“ pryč — strojové slovo pro „bohatství, které proudí“;
     // bez něj ten význam model přinesl sám (EN 3/3, IS 1/1 — docs/eval/2026-09-29-testy, 2026-09-30-postava-is). DECISIONS 2026-09-30 (1).
     k:    'wealth, cattle, material prosperity',
-    k_is: 'efnisleg velsæld, auður, búfé',
+    k_is: 'velmegun, auður, búfé',   // 2026-10-20 (DECISIONS 2026-10-20 (5)): „efnisleg velsæld“ 3× → „velmegun“ 4 217×
     formula_is: 'Fehu er rún flæðis, næringar og þess sem vill vaxa.',
     world: 'Midgard',   elements: ['Fire', 'Earth'],
     aett: 'freya',
@@ -20,7 +20,7 @@ const RUNES = [
     n: 'Uruz',     is_n: 'Uruz (Styrkur)',
     g: 'ᚢ',        svg: 'Uruz',
     k:    'raw power, strength, primal force',
-    k_is: 'hrár kraftur, styrkur, frumkraftur',
+    k_is: 'styrkur, frumkraftur',   // 2026-10-20 (DECISIONS 2026-10-20 (5)): „hrár kraftur“ pryč (kalk „raw power“)
     formula_is: 'Uruz er rún styrks, lífskrafts og innri máttar.',
     world: 'Midgard',   elements: ['Earth'],
     aett: 'freya',
@@ -38,7 +38,7 @@ const RUNES = [
     n: 'Ansuz',    is_n: 'Ansuz (Boðberi)',
     g: 'ᚨ',        svg: 'Ansuz',
     k:    'messages, wisdom, divine guidance, voice, breath',
-    k_is: 'skilaboð, viska, guðleg leiðsögn, rödd, andardráttur',
+    k_is: 'skilaboð, viska, leiðsögn, rödd, andardráttur',   // 2026-10-20 (DECISIONS 2026-10-20 (5)): „guðleg leiðsögn“ 0× → „leiðsögn“
     formula_is: 'Ansuz er rún visku, orða og þess sem birtist í gegnum hlustun.',
     world: 'Asgard',    elements: ['Air'],
     aett: 'freya',
@@ -47,7 +47,7 @@ const RUNES = [
     n: 'Raidho',   is_n: 'Raidho (Ferðalag)',
     g: 'ᚱ',        svg: 'Raidho',
     k:    'the road, movement, natural rhythm, right action',
-    k_is: 'leið, hreyfing, taktur, rétt breytni',   // 2026-09-27: dřív „…röð“ = řada/pořadí (slovník), EN i kánon = rytmus
+    k_is: 'leið, hreyfing, taktur, að gera rétt',   // 2026-10-20: „rétt breytni“ 20× → „að gera rétt“ 2 850× (DECISIONS 2026-10-20 (5)) · 2026-09-27: dřív „…röð“ = řada/pořadí (slovník), EN i kánon = rytmus
     formula_is: 'Raidho er rún leiðarinnar, hreyfingar og innri takts.',
     world: 'Midgard',   elements: ['Air'],
     aett: 'freya',
@@ -92,7 +92,7 @@ const RUNES = [
     n: 'Nauthiz',  is_n: 'Nauthiz (Nauðsyn)',
     g: 'ᚾ',        svg: 'Nauthiz',
     k:    'necessity, need, constraint, growth through challenge',
-    k_is: 'nauðsyn, þörf, þrýstingur, vöxtur í áskorun',
+    k_is: 'nauðsyn, þörf, þrýstingur, þroski',   // 2026-10-20 (DECISIONS 2026-10-20 (5)): „vöxtur í áskorun“ 0× (kalk) → „þroski“
     formula_is: 'Nauthiz er rún nauðsynjar, þrýstings og þess sem vex í myrkrinu.',
     world: 'Hel',       elements: ['Earth'],
     aett: 'heimdall',
@@ -137,7 +137,7 @@ const RUNES = [
     n: 'Algiz',    is_n: 'Algiz (Vernd)',
     g: 'ᛉ',        svg: 'Algiz',
     k:    'protection, higher powers, shelter, connection to divine',
-    k_is: 'vernd, æðri máttarvöld, skjól, guðleg tenging',   // 2026-09-27: dřív kalk z EN „higher powers“ (korpus 0× v každém tvaru); slovníková kolokace, 727×
+    k_is: 'vernd, æðri máttarvöld, skjól, hið heilaga',   // 2026-10-20: „guðleg tenging“ 0× → „hið heilaga“ 417× (DECISIONS 2026-10-20 (5)) · 2026-09-27: dřív kalk z EN „higher powers“ (korpus 0× v každém tvaru); slovníková kolokace, 727×
     formula_is: 'Algiz er rún verndar, hærri afla og þess sem hlífir þegar við vitum það ekki.',
     world: 'Asgard',    elements: ['Air'],
     aett: 'heimdall',
@@ -200,7 +200,7 @@ const RUNES = [
     n: 'Ingwaz',   is_n: 'Ingwaz (Frjósemi)',
     g: 'ᛜ',        svg: 'Ingwaz',
     k:    'fertility, inner development, potential, seed, new life',
-    k_is: 'frjósemi, innri þróun, möguleiki, fræ, nýtt líf',
+    k_is: 'frjósemi, innri vöxtur, möguleiki, fræ, nýtt líf',   // 2026-10-20 (DECISIONS 2026-10-20 (5)): „innri þróun“ 16× → „innri vöxtur“ 379×
     formula_is: 'Ingwaz er rún fræsins, innri þróunar og þess sem þroskast í kyrrð áður en það kemur í ljós.',
     world: 'Asgard',    elements: ['Water'],
     aett: 'tyr',
@@ -209,7 +209,7 @@ const RUNES = [
     n: 'Othila',   is_n: 'Othila (Aðskilnaður)',
     g: 'ᛟ',        svg: 'Othila',
     k:    'inheritance, letting go, heritage, home, ancestral wisdom, foundation, belonging',
-    k_is: 'arfur, að sleppa, hefðir, heimili, forfeðraviska, grunnur, að tilheyra',   // 2026-09-27: holé sloveso → „að tilheyra“ (jako Wunjo)
+    k_is: 'arfur, að sleppa, hefðir, heimili, viska forfeðranna, grunnur, að tilheyra',   // 2026-10-20: „forfeðraviska“ 0× (nové slovo) → „viska forfeðranna“ (DECISIONS 2026-10-20 (5)) · 2026-09-27: holé sloveso → „að tilheyra“ (jako Wunjo)
     formula_is: 'Othila er rún arfsins, heimilis og þess sem þarf að sleppa til að vera sjálfur sér.',
     world: 'Asgard',    elements: ['Earth'],
     aett: 'tyr',
@@ -227,7 +227,7 @@ const RUNES = [
     n: 'Blank',    is_n: 'Auða rúnin (Óðinn)',
     g: '○',        svg: 'Blank',
     k:    'the unknown, unwritten potential, destiny, the void, Odin',
-    k_is: 'hið óþekkta, óskrifaður möguleiki, örlög, tómið, Óðinn',
+    k_is: 'hið óþekkta, óskrifað blað, örlög, tómið, Óðinn',   // 2026-10-20 (DECISIONS 2026-10-20 (5)): „óskrifaður möguleiki“ 0× → „óskrifað blað“ 1 449×
     formula_is: 'Auða rúnin er rún hins óþekkta, óskrifaðra möguleika og þeirrar þagnar sem geymir allt.',
     world: 'Hel',       elements: ['Water', 'Shadow'],
   },

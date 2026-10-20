@@ -89,7 +89,9 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 //    fremur en nafnorðum“), bez „Skáldlegt og bókmenntalegt mál er í lagi“, jednodušší závěr Norn, úvod postavy bez „forn / gamall“, věta
 //    o dulspeki pryč, 16 knižních / jmenných míst a kalků, moderní jména světů Yggdrasilu (i štítky v SPREAD_CONFIG). Owner, DECISIONS
 //    2026-10-20 (1), (2), (4); průchod CODE-read. EN beze změny.
-const RUNAR_PROMPT_VERSION = 'v5.18-is-plain';
+// v5.19 (2026-10-20): islandská klíčová slova devíti run běžnými slovy (velmegun, hið heilaga, leiðsögn, viska forfeðranna, að gera rétt,
+//    þroski, Uruz bez „hrár kraftur“, innri vöxtur, óskrifað blað) v k_is i v 5. sloupci RUNE_IMAGES (16 obrazů). DECISIONS 2026-10-20 (5).
+const RUNAR_PROMPT_VERSION = 'v5.19-is-kw';
 
 // Měsíční strop hlasu pro všechny (VOICE_MONTHLY_LIMIT = 5, od 2026-09-11) ZRUŠEN 2026-10-11: „limit na hlas max 5 na měsíc“ byl
 // ownerův pokyn pro testery, omylem pro všechny (DECISIONS 2026-10-11 (49)); owner: „žádný měsíční strop 5 hlasů není!!!“. Rúnar přečte
