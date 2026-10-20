@@ -1317,6 +1317,13 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   2026-10-15 platí). Veřejný formulář se nestaví.
 - [ ] Ownerova diskuse D–H (uvítání Visitora v menu, statický „Rúnar's welcome“, vysvětlení v Journalu, blok jako „How a reading works“,
   jeden text o tom, co je zdarma) — owner: „ještě to doplníme“; nestavět.
+### Délka živých doců (smoke ㉝, obnoveno potřetí 2026-10-20, CODE-tune)
+- [ ] Odklady délky v `scripts/verify_doc_length.js` pro `RUNAR_BACKLOG.md` (~1 350 ř.), `RUNAR_DESIGN.md` (~1 460), `RUNAR_EVAL_LOG.md`
+  (~6 400), `RUNAR_PRICING.md` (~580) a `memory/working-style.md` (~375) vypršely 2026-10-20 a zastavily push všem; obnoveny potřetí
+  (2026-09-20, 09-21, 10-20). Zkrátit: BACKLOG — odsunout hotové (`[x]`) do `docs/archive/RUNAR_BACKLOG_hotovo.md` (CODE-tune / CODE-read);
+  EVAL_LOG — starší baseline do archivu (CODE-read); DESIGN a PRICING — rozdělení je obsahové rozhodnutí ownera; working-style — část do
+  samostatných memory souborů. Další obnova bez zkrácení ne.
+
 ### Hlášení z appky 2026-10-19 / 20 (načtena 2026-10-20, CODE-tune; hotové: df67acda, 62283c8c — a56aa46)
 - [ ] **Jeden vzhled pro stejnou věc — soupis komponent a kontrola (owner, hlášení 116b643c, 0d5a0055, 89e4dc3f):** *„to má být sjednocené
   a ne že jeden text se rozbaluje takhle a druhý jinak. To neplatí jen pro tohle, ale všechno! Okna, text, font, barvy. … nehledáš si to,
