@@ -350,7 +350,7 @@ const UI_TEXT = {
     journey_web_note:     'Opens therunekeeper.com. You return here with the same account.',
     journey_soon:         'Coming soon.',
     journey_free:         'Free',
-    journey_free_join:    'Free to join',
+    journey_free_join:    'Registration is free.',   // owner 2026-10-20: „Free to join“ znělo, jako by se neplatilo vůbec — zdarma je účet, čtení se platí kartou; jako IS „Skráning er ókeypis.“
     journey_card_note:    'From {price} kr for {casts}. Have a code? Enter it here.',
     journey_play_sub:     'Where you stand on the path, and what each step holds.',
     journey_play_foot:    'Rúnar asks nothing of you here.',
