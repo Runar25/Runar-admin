@@ -460,7 +460,8 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
   margin:4px 0 14px;}   /* 2026-10-15: 20 → 14 px (bod 3 návrhu mezer; týž štítek v Kolekci) */
 .guide-lbl:focus-visible{outline:1px solid var(--gold);outline-offset:4px;}
 /* „+“ u popisků oblasti / hledání / záměru (2026-09-29, report KUKY 11:32) — tentýž znak jako u „How a reading works“. */
-.hint-tgl{background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;cursor:pointer;}
+.hint-tgl{background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;letter-spacing:inherit;text-transform:inherit;text-align:inherit;cursor:pointer;}
+/* 2026-10-20: tlačítkem je celý popisek (owner „neobjeví se ručička jako u how a reading works“) — proto dědí i rozestup a velká písmena. */
 .hint-tgl:focus-visible{outline:1px solid var(--gold);outline-offset:3px;}
 /* ── ROZBALOVAČ (2026-10-20, CODE-read jednotný vzhled §4; owner „výraznější“, vzor „+“ u počtu čtení Rune Seekera) ──
    Jeden znak pro rozbalení na místě: „+“ ZA textem, zlatý, o stupeň větší než text; otevřením se otočí o 45° na „×“ (0,25 s; bez
