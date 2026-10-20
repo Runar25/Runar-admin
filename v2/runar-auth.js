@@ -119,9 +119,8 @@ function updateBanners() {
   const banner      = document.getElementById('trial-banner');
   const freeBanner  = document.getElementById('free-user-banner');
   // (auth-gate pryč 2026-10-10 — nikde se nezobrazoval, jen skrýval; texty natvrdo v _updateTrialTexts byly mrtvé)
-  const upgradeGate = document.getElementById('upgrade-gate');
+  // (2026-10-20: #upgrade-gate a #credits-banner pryč z týchž důvodů — jen se tu skrývaly; CODE-read, jednotný vzhled)
   const content     = document.getElementById('reader-content');
-  const creditsBanner = document.getElementById('credits-banner');
 
   if (currentUser) {
     // ── Logged in ──
@@ -131,8 +130,6 @@ function updateBanners() {
     // (userTier 'free', nuly). 2026-10-12 (nález CODE-read u selhaného profilu); zmizí tím i probliknutí pruhu při každém přihlášení.
     if (typeof profileLoaded !== 'undefined' && !profileLoaded) {
       freeBanner.style.display    = 'none';
-      creditsBanner.style.display = 'none';
-      upgradeGate.style.display   = 'none';
       content.style.display       = 'block';
       return;
     }
@@ -141,15 +138,12 @@ function updateBanners() {
     //    Kolik zbývá, ukazuje menu pod jménem (updateDropdown, 2026-10-11). Do 2026-10-11 tu stálo „unlimited“ — od stropu neplatí.
     if (userTier === 'standard' || userTier === 'premium') {
       freeBanner.style.display    = 'none';
-      creditsBanner.style.display = 'none';
-      upgradeGate.style.display   = 'none';
       content.style.display       = 'block';
       updateQuestionGate();
       return;
     }
 
     // ── Rune Seeker — FREE_REGISTERED_LIMIT free reading(s) + paid credits ──
-    creditsBanner.style.display = 'none';
     const remaining = Math.max(0, userFreeBalance);
     // 2026-10-10 (KUKY, hlášení bc1ab90e + e9b05776: „Rámeček být nemusí. Nechal bych jen počet rune reading a text vložíme do plus“):
     // počítadlo ukazuje, kolik čtení zbývá CELKEM (volné + kredity), jako menu pod jménem; vysvětlení je za „+“ (toggleFreeNote).
@@ -170,7 +164,6 @@ function updateBanners() {
         });
       const btnEl = document.getElementById('tn-curious-btn');
       if (btnEl) { btnEl.textContent = tp('gift_card_btn', { card: vl('card', lang).toUpperCase() }); btnEl.style.display = ''; }
-      upgradeGate.style.display = 'none';
       content.style.display     = 'block';
 
     } else if (userCredits > 0) {
@@ -185,12 +178,10 @@ function updateBanners() {
       if (txtEl) txtEl.innerHTML = tp('rs_credits_desc', { units: vlp('unit', lang) });
       const btnEl2 = document.getElementById('tn-curious-btn');
       if (btnEl2) btnEl2.style.display = 'none'; // má kredity — nepotřebuje gift card button
-      upgradeGate.style.display = 'none';
       content.style.display     = 'block';
 
     } else {
       // Monthly readings AND credits exhausted — show 0 in banner, form stays visible
-      upgradeGate.style.display = 'none';
       freeBanner.style.display  = 'block';
       content.style.display     = 'block';
       const cntEl = document.getElementById('free-user-count');
@@ -211,7 +202,6 @@ function updateBanners() {
     // banner mu ho proto už neslibuje — žádné „1 rune reading remaining“, jen co může (vytáhnout runu) a výzva stát se Rune
     // Seekerem. Do té doby počítadlo zkušebních čtení (FREE_TRIAL_LIMIT − getTrialCount) a texty visitor_counter / visitor_exhausted.
     freeBanner.style.display  = 'none';
-    upgradeGate.style.display = 'none';
     banner.style.display      = 'block';
     content.style.display     = 'block';
     const cntEl = document.getElementById('trial-count');
