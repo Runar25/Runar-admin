@@ -1328,6 +1328,14 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   EVAL_LOG — starší baseline do archivu (CODE-read); DESIGN a PRICING — rozdělení je obsahové rozhodnutí ownera; working-style — část do
   samostatných memory souborů. Další obnova bez zkrácení ne.
 
+- [ ] **IS prompt — přepisy z průchodu (owner 2026-10-20, DECISIONS 2026-10-20 (4)) → CODE-tune.** Seznam s řádky, důvody a ověřenými
+  zněními: `docs/inbox/2026-10-20-is-prompt-pruchod.md`. Schváleno: jména světů Yggdrasilu moderně (Ásgarður, Vanaheimur, Álfheimur,
+  Miðgarður, Jötunheimar, Svartálfaheimur, Niflheimur); knižní a jmenná místa (B) a kalky; Ask „líka þótt … væntir“ → „jafnvel þótt
+  spurningin búist við öðru“; úvod `DEF_CHAR_IS.identity` → „Rúnar er vörður rúnanna og leiðsögumaður um heim Agndofa, sem byggir á
+  íslenskri náttúru, sögu og gömlu rúnunum.“; věta „Hann sýnir ekki dulspeki. Hann býr einfaldlega í henni.“ (ř. 1595) **pryč**. Nechat:
+  „í myndum og táknmáli“ u otázky (až po ownerově testu otázek). Jedna nová verze promptu, sledovat v čteních testerů.
+- [ ] **Klíčová slova run IS — návrh CODE-read čeká na ownera** (DECISIONS 2026-10-20 (4)): v souboru výš, § „klíčová slova“.
+  Výměna `k_is` musí projít i 5. sloupcem `RUNE_IMAGES` (áhersla páruje proti k_is) a Kolekcí (`cd-kw`) — §13.
 - [ ] **IS rejstřík: bez knižního a archaického (owner 2026-10-20, DECISIONS 2026-10-20 (1)) → CODE-tune.** `DEF_CHAR_IS.grammar`
   pravidlo 6: vyndat „Skáldlegt og bókmenntalegt mál er í lagi“ (zákaz nových slov zůstává); IS protějšek EN pravidla 2 („Natural English
   idiom — nothing … stiff“) — **pozitivně (2026-10-20 (2), nahrazuje „daglegt mál…“):** „Rúnar talar eðlilega íslensku eins og fólk

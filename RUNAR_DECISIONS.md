@@ -11918,3 +11918,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Hranice:** velikost podle důležitosti zůstává (owner přes CODE-read, 2026-10-20 (1): *„velikost závisí od důležitosti … všechno nemá být
   stejné“*) — sjednocuje se jen stejná úroveň. Velikosti písma, 25 průhledností zlaté a ~20 velikostí textu karet ㊋ nehlídá → `RUNAR_BACKLOG.md`.
 - Affected doc(s): `RUNAR_BACKLOG.md` — v témže commitu.
+
+## 2026-10-20 (4) — IS prompt: moderní jména světů, bez knižních obratů a kalků, nový úvod postavy, věta o dulspeki pryč
+
+- **Rozhodl:** owner 2026-10-20 k průchodu CODE-read (`docs/inbox/2026-10-20-is-prompt-pruchod.md`): *„7. ano předej. 8. ano. 9. vyndat.
+  10. navrhni. 11. ano“*.
+- **Co:** (7) přepisy z průchodu — staroseverská jména světů Yggdrasilu (Ásgarðr 0× × Ásgarður 1 826×) na moderní, 16 knižních a jmenných
+  míst, kalky, Ask „líka þótt“ (Greynir čte „líka“ jako sloveso) — vše ověřeno Greynirem a korpusem. (8) úvod `DEF_CHAR_IS.identity` bez
+  trojího „forn / gamall“. (9) věta „Hann sýnir ekki dulspeki…“ z IS promptu pryč (doslovný překlad věty z RUNAR_DESIGN; „dulspeki“ by ve
+  čtení vadilo) — kánon v RUNAR_DESIGN a EN prompt beze změny. (10) klíčová slova run: CODE-read navrhne. (11) „í myndum og táknmáli“
+  počká na ownerův test otázek (DECISIONS 2026-10-20, BACKLOG „systém × user“).
+- **Proč:** owner *„musíme zjistit proč používá starý jazyk IS … musíme se vyvarovat všemu, co do promptu může přinášet problémová slova“*;
+  sol bere vstup doslova (RUNAR_DESIGN „Slova, která dáváme modelu“ bod 1) a čtení 452a97c5 zrcadlilo knižní znění pokynu.
+- Affected doc(s): `RUNAR_BACKLOG.md` — v témže commitu.
