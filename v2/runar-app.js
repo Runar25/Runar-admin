@@ -1013,31 +1013,14 @@ var TAB_IKONY = {
   collection: '<path d="M8 8c-2 2-3.5 5-3.5 8 0 3 3 5 7.5 5s7.5-2 7.5-5c0-3-1.5-6-3.5-8"/><path d="M8 8h8"/><path d="M9 8 7.5 5.5M15 8l1.5-2.5"/><path d="M9.5 3.5c1.5 1 3.5 1 5 0"/>',
   tree:       '<path d="M12 21V9"/><path d="M12 13 7.5 9.5M12 11l4.5-3.5M12 16l-3 -2M12 15l3-2"/><path d="M5 10c0-4 3-7 7-7s7 3 7 7c0 2-2 3.5-4 3.5M5 10c0 2 1.5 3.5 3.5 3.5"/><path d="M8 21c1.5-1 2.5-1 4 0 1.5-1 2.5-1 4 0"/>'
 };
-// Ikona Rune Reading (2026-10-20, owner „runa B … ta co je naspod nesmí jít vidět celá … runy uvnitř se budou měnit … stačí jednou po
-// spuštění appky“): dva naše kameny z RUNE_SVGS — zadní prázdný (Blank) nakloněný doleva, přední s runou nakloněný doprava a o kus níž;
-// vnitřek předního vyplní barva pozadí, takže zakryje kus zadního. Runa se losuje jednou při načtení appky. U značek účtů runy být
-// nesmějí (DECISIONS 2026-10-19 (8)) — tady je owner výslovně povolil. Kapky v TAB_IKONY.reading zůstávají jako záloha bez RUNE_SVGS.
-var _IKONA_RUNA = (function () {
-  try { var k = Object.keys(RUNE_SVGS).filter(function (n) { return n !== 'Blank' && RUNE_SVGS[n] && RUNE_SVGS[n].vb; });
-        return k[Math.floor(Math.random() * k.length)]; } catch (e) { return null; }
-})();
-function _kamenIkony(k, x, y, w, rot, kryt, sRunou) {
-  var s = RUNE_SVGS[k], vb = s.vb.split(' ').map(Number), cx = vb[0] + vb[2] / 2, cy = vb[1] + vb[3] / 2, h = w * vb[3] / vb[2];
-  var obrys = s.paths.match(/<path[^>]*>/)[0], d = obrys.match(/ d="([^"]+)"/)[1];
-  return '<svg x="' + x + '" y="' + y + '" width="' + w + '" height="' + h.toFixed(2) + '" viewBox="' + s.vb + '" overflow="visible">'
-    + '<g transform="rotate(' + rot + ' ' + cx + ' ' + cy + ')" fill="currentColor" stroke="none">'
-    + (kryt ? '<path d="' + d + '" style="fill:var(--bg)"/>' : '') + obrys + (sRunou ? s.paths.replace(obrys, '') : '') + '</g></svg>';
-}
-function _ikonaCteni() {
-  if (!_IKONA_RUNA || typeof RUNE_SVGS === 'undefined' || !RUNE_SVGS.Blank) return TAB_IKONY.reading;
-  return _kamenIkony('Blank', 2.2, 1.6, 11.5, -14, false, false) + _kamenIkony(_IKONA_RUNA, 9.4, 5.2, 12.4, 9, true, true);
-}
+// (2026-10-20: ikona Rune Reading byla pár hodin ze dvou našich kamenů s losovanou runou — owner ji vrátil: „tohle nejde přečíst
+// a skoro to vypadá jako karty“. Ve velikosti záložky (~17 px) obrys kamene i runa splynou. Návrat jen s jiným řešením té čitelnosti.)
 function _zalozka(tab) {
   var el = document.getElementById('atab-' + tab);
   if (!el || !TAB_IKONY[tab]) return;
   var txt = String(t('atab_' + tab)).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   el.innerHTML = '<svg class="atab-ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"'
-    + ' stroke-linejoin="round" aria-hidden="true">' + (tab === 'reading' ? _ikonaCteni() : TAB_IKONY[tab]) + '</svg>' + txt;
+    + ' stroke-linejoin="round" aria-hidden="true">' + TAB_IKONY[tab] + '</svg>' + txt;
 }
 
 // Journal gate, auth modal consent, journal re-render, buildPills

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Symbol Before we begin</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400&family=Cormorant+Garamond:ital@0;1&display=swap">
+<style>
+:root{--bg:#0a0c12;--card:#12161f;--gold:#FFBF00;--muted:#8ba5c0}
+body{margin:0;background:var(--bg);color:var(--muted);font-family:'Cormorant Garamond',Georgia,serif;padding:20px 16px 40px}
+h1{font-family:Cinzel,serif;color:var(--gold);font-size:15px;letter-spacing:3px;font-weight:400;margin:0 0 6px}
+p.n{font-style:italic;max-width:720px;line-height:1.5;margin:4px 0 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;max-width:1100px}
+.box{background:var(--card);border:1px solid rgba(46,74,112,.5);padding:16px}
+.box h3{font-family:Cinzel,serif;font-size:11px;letter-spacing:2px;color:#D6A85C;font-weight:400;margin:0 0 4px}
+.box .d{font-size:14px;font-style:italic;margin:0 0 14px;line-height:1.45}
+.lbl{display:flex;align-items:center;gap:.5em;font-family:Cinzel,serif;font-size:.7em;letter-spacing:3px;color:var(--gold);margin:6px 0}
+.lbl svg{width:1.6em;height:1.6em;flex:none}
+.zoom{font-size:40px;margin:14px 0 4px}
+.sub{font-size:16px;font-style:italic;color:#aebfd2;margin-top:6px}
+</style></head><body>
+<h1>BEFORE WE BEGIN — NÁVRH SYMBOLU</h1>
+<p class="n">CODE-tune 2026-10-20. Jen náhled. Tenká zlatá linka jako ikony záložek; nahoře skutečná velikost nad formulářem, pod tím zvětšené.</p>
+<div class="grid" id="g"></div>
+<script>
+var SV = 'viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"';
+var V = [
+  ['Dnes · ✦', 'Hvězdička jako u RÚNAR SPEAKS a výkladů.', null],
+  ['A · Svíčka', 'Obřad začíná zapálením svíčky; tutéž svíčku rozsvěcuje nápověda „?“.',
+   '<path d="M9 11h6v9H9z"/><path d="M7 21h10"/><path d="M12 11V9.6"/><path d="M12 3c1.6 2 2.2 3.3 2.2 4.4a2.2 2.2 0 0 1-4.4 0C9.8 6.3 10.4 5 12 3z"/>'],
+  ['B · Otevřené dveře', 'Vstup ke čtení — jako věta nahoře „Whatever you carry through the door — leave it on the table“.',
+   '<path d="M6 21V4h12v17"/><path d="M6 4l5.5 1.6v14.2L6 21"/><path d="M9.6 13v.6"/><path d="M3 21h18"/><path d="M14.5 9.5l1.5-1M14.8 13H17M14.5 16.5l1.5 1"/>'],
+  ['C · Lucerna', 'Rúnar ji má na portrétu vlevo dole; světlo, se kterým se jde dovnitř.',
+   '<path d="M12 2.5v1.5"/><path d="M9.5 4h5l1.2 2H8.3z"/><path d="M8.5 6h7v11h-7z"/><path d="M7.5 17h9l-.9 2.5H8.4z"/><path d="M12 9.2c1 1.2 1.4 2 1.4 2.8a1.4 1.4 0 0 1-2.8 0c0-.8.4-1.6 1.4-2.8z"/>']
+];
+var g = document.getElementById('g');
+V.forEach(function (v) {
+  var ik = v[2] ? '<svg ' + SV + '>' + v[2] + '</svg>' : '<span>✦</span>';
+  var el = document.createElement('div'); el.className = 'box';
+  el.innerHTML = '<h3>' + v[0] + '</h3><p class="d">' + v[1] + '</p>'
+    + '<div class="lbl">' + ik + 'BEFORE WE BEGIN</div><div class="sub">Tell me where to look. The rune speaks for itself.</div>'
+    + '<div class="lbl zoom">' + ik + '</div>';
+  g.appendChild(el);
+});
+</script>
+</body></html>
