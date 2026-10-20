@@ -275,27 +275,16 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 /* 2026-10-09: pozdrav pod Rúnarem (.hero-greeting) pryč — stojí v horní liště (#topbar-greeting). */
 
 /* ── NAME PROMPT MODAL ── */
-.name-overlay{position:fixed;inset:0;background:rgba(10,12,18,0.9);z-index:200;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
-.name-card{background:var(--card);border:1px solid rgba(255,191,0,0.3);padding:52px 56px;max-width:420px;width:90%;text-align:center;}
-.name-card-rune{font-size:3em;color:var(--gold);opacity:0.65;margin-bottom:20px;letter-spacing:0;}
-.name-card-title{font-family:'Cinzel',serif;font-size:0.68em;letter-spacing:3.5px;color:var(--gold);margin-bottom:16px;opacity:0.8;}
-.name-card-sub{font-size:1.05em;font-style:italic;color:var(--muted);margin-bottom:34px;line-height:1.8;}
-.name-card-input{width:100%;background:rgba(46,74,112,0.15);border:none;border-bottom:1px solid rgba(46,74,112,0.6);color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1.25em;padding:10px 4px;text-align:center;margin-bottom:28px;outline:none;transition:border-color 0.2s;}
-.name-card-input:focus{border-bottom-color:rgba(255,191,0,0.55);}
-.name-card-input::placeholder{color:var(--dim);}
-.name-card-btn{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2.5px;padding:13px 32px;background:transparent;border:1px solid rgba(255,191,0,0.4);color:var(--gold);cursor:pointer;transition:all 0.2s;display:block;width:100%;margin-bottom:14px;}
-.name-card-btn:hover{background:rgba(255,191,0,0.08);}
-.name-card-skip{font-size:0.8em;color:var(--muted);cursor:pointer;transition:color 0.2s;}
-.name-card-skip:hover{color:var(--muted);}
-/* Dve jmena (2026-09-12): stitky nad poli, napoveda pod severskym jmenem, volba osloveni. */
-.name-card-lbl{display:block;font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:2.5px;color:var(--gold);opacity:0.8;margin-bottom:4px;text-align:center;}
-.name-card-input.name-card-input--pair{margin-bottom:8px;}
-.name-card-hint{font-size:0.82em;font-style:italic;color:var(--muted);margin:0 0 24px;line-height:1.5;}
-.name-card-call{margin:16px 0 26px;}
-.name-card-call .lang-toggle{justify-content:center;}
-/* Se dvema jmeny je okno vyssi — na nizkem telefonu by se nevešlo a spodni tlacitko by bylo mimo obrazovku. */
-.name-card{max-height:94vh;overflow-y:auto;}
-@media (max-height:700px){.name-card{padding:30px 28px;}.name-card-rune{margin-bottom:10px;}.name-card-sub{margin-bottom:20px;}}
+/* Okno se jménem (2026-10-20, CODE-read jednotný vzhled §1): od teď .modal-overlay/.modal jako ostatní okna — titul .modal-title vlevo,
+   ✕, Esc a klik mimo, pole .txt (podtržení), hlavní tlačítko .btn-full. Do té doby vlastní okno: rozmazané pozadí, na střed, rámeček .3,
+   pole s výplní, vlastní tlačítko i nadpis. Dvě jména (2026-09-12): štítky nad poli, nápověda pod severským jménem, volba oslovení. */
+.name-card-rune{font-size:2em;color:var(--gold);opacity:0.7;margin-bottom:16px;}   /* ᚱ = značka Rúnara (§5), jako v okně přihlášení */
+.name-card-lbl{display:block;font-family:'Cinzel',serif;font-size:0.58em;letter-spacing:2.5px;color:var(--gold);opacity:0.8;margin:14px 0 4px;}
+.name-card .name-card-input{margin-bottom:8px;}
+.name-card-hint{font-size:0.82em;font-style:italic;color:var(--muted);margin:0 0 10px;line-height:1.5;}
+.name-card-call{margin:16px 0 6px;}
+.name-card-skip{display:block;margin:14px auto 0;background:none;border:0;padding:4px;cursor:pointer;}
+.name-card-skip:hover{color:var(--white);}
 
 /* ── TOPBAR DROPDOWN ── */
 .auth-user::after{content:' ▾';font-size:0.75em;opacity:0.5;}
@@ -844,7 +833,7 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 /* ── MODALS ── */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:100;display:none;align-items:center;justify-content:center;padding:20px;}
 .modal-overlay.open{display:flex;}
-.modal{background:var(--card);border:1px solid var(--gold);padding:32px;max-width:420px;width:100%;position:relative;}
+.modal{background:var(--card);border:1px solid var(--gold);padding:32px;max-width:420px;width:100%;position:relative;max-height:94vh;overflow-y:auto;}   /* 2026-10-20: vysoké okno roluje uvnitř (dřív jen okno se jménem) */
 .modal-title{font-family:'Cinzel',serif;font-size:0.9em;letter-spacing:3px;color:var(--gold);margin-bottom:6px;}
 .modal-sub{font-size:0.9em;color:var(--muted);font-style:italic;margin-bottom:20px;line-height:1.7;}
 /* Okno „Your journey with Rúnar“ (2026-10-19, DECISIONS 2026-10-19 (7), (8)) — podoba náhledu webu CODE-web na mobilu: zastávky pod sebou,

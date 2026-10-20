@@ -126,22 +126,23 @@
 </div>
 
 <!-- ═══ DELETE ACCOUNT MODAL ═══ -->
-<div class="modal-overlay" id="delete-account-modal" onclick="if(event.target===this)closeDeleteModal()">
-  <div class="modal" style="text-align:center;max-width:340px;">
+<div class="modal-overlay" id="delete-account-modal" role="dialog" aria-modal="true" aria-labelledby="dam-title">
+  <div class="modal">
+    <button class="modal-close" type="button" onclick="closeDeleteModal()">✕</button>
     <div class="modal-rune" data-rune-glyph="Nauthiz" style="font-size:2em;color:var(--gold);margin-bottom:16px;"></div>
     <div class="modal-title" id="dam-title">DELETE YOUR ACCOUNT?</div>
     <p class="modal-sub" id="dam-body" style="margin:16px 0 24px;line-height:1.8;"></p>
     <div class="btn-row">
-      <button class="btn-half" id="dam-confirm" onclick="confirmDeleteAccount()" style="background:rgba(180,40,40,0.18);border-color:rgba(180,40,40,0.5);color:#e07070;"></button>
+      <button class="btn-half" id="dam-confirm" onclick="confirmDeleteAccount()" style="background:rgba(180,40,40,0.18);border-color:rgba(180,40,40,0.5);color:var(--danger);"></button>
       <button class="btn-half sec" id="dam-cancel" onclick="closeDeleteModal()"></button>
     </div>
-    <p id="dam-error" style="margin-top:14px;font-size:0.7em;color:#e07070;display:none;"></p>
+    <p id="dam-error" style="margin-top:14px;font-size:0.7em;color:var(--danger);display:none;"></p>
   </div>
 </div>
 
 <!-- ═══ SEND RÚNAR A LINE (2026-10-15, owner „8. ano“) ═══ — openLine / sendLine v runar-app.js, server: supabase/functions/send-line.
      Runa v hlavičce kamenem jako u ostatních oken (§5, DECISIONS 2026-10-13 (2)); Ansuz = slovo a zpráva. -->
-<div class="modal-overlay" id="line-modal" role="dialog" aria-modal="true" aria-labelledby="line-title" onclick="if(event.target===this)closeLine()">
+<div class="modal-overlay" id="line-modal" role="dialog" aria-modal="true" aria-labelledby="line-title">
   <div class="modal">
     <button class="modal-close" type="button" onclick="closeLine()">✕</button>
     <div class="modal-rune" data-rune-glyph="Ansuz" style="margin-bottom:12px;"></div>
@@ -155,8 +156,9 @@
 </div>
 
 <!-- ═══ LANG SWITCH MODAL ═══ -->
-<div class="modal-overlay" id="lang-switch-modal">
+<div class="modal-overlay" id="lang-switch-modal" role="dialog" aria-modal="true" aria-labelledby="lsm-title">
   <div class="modal">
+    <button class="modal-close" type="button" onclick="cancelLangSwitch()">✕</button>
     <!-- texty i cenu skládá openLangSwitchModal z UI_TEXT a configu (2026-10-11; do té doby „SPEAK AGAIN?“ a „1 CREDIT“ natvrdo) -->
     <div class="modal-title" id="lsm-title"></div>
     <div class="modal-sub" id="lsm-body"></div>
@@ -169,7 +171,7 @@
 </div>
 
 <!-- ═══ INSTALL MODAL (iOS / fallback) ═══ -->
-<div class="modal-overlay" id="install-modal" onclick="if(event.target===this)closeInstallModal()">
+<div class="modal-overlay" id="install-modal">
   <div class="modal">
     <button class="modal-close" onclick="closeInstallModal()">✕</button>
     <div class="modal-rune" style="font-size:2em;color:var(--gold);margin-bottom:16px;opacity:0.7;">ᚱ</div>
@@ -1004,17 +1006,18 @@
 <!-- ═══ NAME PROMPT MODAL ═══ -->
 <!-- Dve jmena (2026-09-12): severske jmeno (z nej ROZBOR) + jmeno/prezdivka (cokoli) + volba,
      kterym z nich Runar OSLOVUJE. Texty plni showNamePrompt() — tady jen nahradni EN. -->
-<div class="name-overlay" id="name-overlay" style="display:none;">
-  <div class="name-card">
+<div class="modal-overlay" id="name-overlay" role="dialog" aria-modal="true" aria-labelledby="name-card-title">
+  <div class="modal name-card">
+    <button class="modal-close" type="button" onclick="skipName()">✕</button>
     <div class="name-card-rune">ᚱ</div>
-    <div class="name-card-title" id="name-card-title">BEFORE THE RUNES SPEAK</div>
-    <p class="name-card-sub" id="name-card-sub">The runes speak differently to those whose name they know.</p>
+    <div class="modal-title" id="name-card-title">BEFORE THE RUNES SPEAK</div>
+    <p class="modal-sub" id="name-card-sub">The runes speak differently to those whose name they know.</p>
     <label class="name-card-lbl" id="name-norse-lbl" for="name-norse-input">YOUR NORSE NAME</label>
-    <input class="name-card-input name-card-input--pair" id="name-norse-input" type="text"
+    <input class="txt name-card-input" id="name-norse-input" type="text"
       placeholder="e.g. Sigrún, Einar" maxlength="40" oninput="_nameModalSync()">
     <p class="name-card-hint" id="name-norse-hint">Your own, or one you choose.</p>
     <label class="name-card-lbl" id="name-name-lbl" for="name-prompt-input">YOUR NAME OR NICKNAME</label>
-    <input class="name-card-input name-card-input--pair" id="name-prompt-input" type="text"
+    <input class="txt name-card-input" id="name-prompt-input" type="text"
       placeholder="Your name or nickname" maxlength="40" oninput="_nameModalSync()"
       onkeydown="if(event.key==='Enter')saveName()">
     <div class="name-card-call" id="name-call-row" hidden>
@@ -1024,8 +1027,8 @@
         <button class="lang-btn active" id="name-call-name" type="button" onclick="setNamePref('name')">NAME</button>
       </div>
     </div>
-    <button class="name-card-btn" onclick="saveName()" id="name-card-btn">LET THE READING BEGIN</button>
-    <div class="name-card-skip" onclick="skipName()" id="name-prompt-skip">Continue without a name</div>
+    <button class="btn-full" type="button" onclick="saveName()" id="name-card-btn">LET THE READING BEGIN</button>
+    <button class="name-card-skip fine" type="button" onclick="skipName()" id="name-prompt-skip">Continue without a name</button>
   </div>
 </div>
 
