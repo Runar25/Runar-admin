@@ -44,7 +44,8 @@
       "oblast": "UI readeru a shrine",
       "cesty": ["v2/runar-reader.html", "v2/runar-reader.css", "v2/runar-shrine.html"],
       "pravidla": ["§5", "§32", "§31"],
-      "pamet": ["match-existing-visual-first"]
+      "pamet": ["match-existing-visual-first"],
+      "hlavicky": ["scripts/verify_komponenty.js"]
     },
     {
       "oblast": "edge funkce",
