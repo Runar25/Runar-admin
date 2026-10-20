@@ -91,7 +91,8 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 //    2026-10-20 (1), (2), (4); průchod CODE-read. EN beze změny.
 // v5.19 (2026-10-20): islandská klíčová slova devíti run běžnými slovy (velmegun, hið heilaga, leiðsögn, viska forfeðranna, að gera rétt,
 //    þroski, Uruz bez „hrár kraftur“, innri vöxtur, óskrifað blað) v k_is i v 5. sloupci RUNE_IMAGES (16 obrazů). DECISIONS 2026-10-20 (5).
-const RUNAR_PROMPT_VERSION = 'v5.19-is-kw';
+// v5.20 (2026-10-20): Ingwaz formula_is „innri vaxtar“ místo „innri þróunar“ — sladěno s klíčem v5.19 (DECISIONS 2026-10-20 (6)).
+const RUNAR_PROMPT_VERSION = 'v5.20-ingwaz';
 
 // Měsíční strop hlasu pro všechny (VOICE_MONTHLY_LIMIT = 5, od 2026-09-11) ZRUŠEN 2026-10-11: „limit na hlas max 5 na měsíc“ byl
 // ownerův pokyn pro testery, omylem pro všechny (DECISIONS 2026-10-11 (49)); owner: „žádný měsíční strop 5 hlasů není!!!“. Rúnar přečte

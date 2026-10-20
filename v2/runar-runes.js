@@ -201,7 +201,7 @@ const RUNES = [
     g: 'ᛜ',        svg: 'Ingwaz',
     k:    'fertility, inner development, potential, seed, new life',
     k_is: 'frjósemi, innri vöxtur, möguleiki, fræ, nýtt líf',   // 2026-10-20 (DECISIONS 2026-10-20 (5)): „innri þróun“ 16× → „innri vöxtur“ 379×
-    formula_is: 'Ingwaz er rún fræsins, innri þróunar og þess sem þroskast í kyrrð áður en það kemur í ljós.',
+    formula_is: 'Ingwaz er rún fræsins, innri vaxtar og þess sem þroskast í kyrrð áður en það kemur í ljós.',   // 2026-10-20: „innri þróunar“ 9× → „innri vaxtar“ 117×, jako klíč (DECISIONS 2026-10-20 (6))
     world: 'Asgard',    elements: ['Water'],
     aett: 'tyr',
   },
