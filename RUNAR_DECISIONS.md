@@ -11931,3 +11931,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Proč:** owner *„musíme zjistit proč používá starý jazyk IS … musíme se vyvarovat všemu, co do promptu může přinášet problémová slova“*;
   sol bere vstup doslova (RUNAR_DESIGN „Slova, která dáváme modelu“ bod 1) a čtení 452a97c5 zrcadlilo knižní znění pokynu.
 - Affected doc(s): `RUNAR_BACKLOG.md` — v témže commitu.
+
+## 2026-10-20 (5) — Islandská klíčová slova devíti run: běžná slova místo knižních, nových a kalků
+
+- **Rozhodl:** owner 2026-10-20 *„12. ano, všech devět, předej tune“* k návrhu CODE-read (tabulka v konverzaci, korpus Risamálheild).
+- **Co:** `k_is` — Fehu velmegun (4 217×; dřív „efnisleg velsæld“ 3×) · Algiz hið heilaga (417×; „guðleg tenging“ 0×) · Ansuz leiðsögn
+  (22 168×; „guðleg leiðsögn“ 0×) · Othila viska forfeðranna („forfeðraviska“ 0×, nové slovo) · Raidho að gera rétt (2 850×; „rétt breytni“ 20×)
+  · Nauthiz þroski (3 429×; „vöxtur í áskorun“ 0×, kalk) · Uruz bez „hrár kraftur“ (kalk „raw power“; „frumkraftur“ zůstává) · Ingwaz innri
+  vöxtur (379×; „innri þróun“ 16×) · Blank óskrifað blað (1 449×; „óskrifaður möguleiki“ 0×). EN beze změny.
+- **Proč:** klíčová slova jdou do promptu (single „áhersla“, Ask „Aðrar merkingar“, výpisy spreadů) a sol je píše doslova (RUNAR_DESIGN
+  „Slova, která dáváme modelu“ bod 1); owner *„vyvarovat se všemu, co do promptu může přinášet problémová slova“*. Úpravy 2026-09-27
+  (kalky z EN) platí dál, tohle je další krok. Nechány: Tiwaz hermannsandi (= IS jméno runy), Isa skýrleiki í kulda, Perth örlög í mótun;
+  Laguz dulvitund a Mannaz mannleg vitund sleduje owner v čteních (jako štítky pozic).
+- **Full-path (§13):** 5. sloupec `RUNE_IMAGES` (áhersla páruje proti k_is) — 13 řádků s dotčenými slovy; Kolekce `cd-kw` ukazuje k_is.
+- Affected doc(s): `RUNAR_BACKLOG.md` — v témže commitu.
