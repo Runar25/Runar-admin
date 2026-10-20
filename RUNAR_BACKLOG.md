@@ -1338,7 +1338,7 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   rozdíly, určit výchozí. Mechanismus (§30): soupis komponent appky (okno, tlačítko, rozbalovač, štítek, karta) s třídou, která je
   nese, na jednom místě + kontrola, že nová třída v `runar-reader.css` buď komponentu používá, nebo je v soupisu s důvodem.
   ⚠️ Moje nové třídy z 2026-10-19 (`.journey-*`, `.dd-journey`, `.ai-note`, `.svice`) projít jako první. CODE-tune, soupis a návrh ownerovi.
-- [ ] **Okno „Your journey with Rúnar“ — ownerovy úpravy (hlášení bd915d60):** nadpis „WALK WITH RÚNAR?“ (ptá se, jak to zní); podtitul
+- [x] ✅ *(CODE-tune 2026-10-20, 369337e + ffbffb5; nadpis owner „10. ano“)* **Okno „Your journey with Rúnar“ — ownerovy úpravy (hlášení bd915d60):** nadpis „WALK WITH RÚNAR?“ (ptá se, jak to zní); podtitul
   „Each step gives you more rune readings. …“; Rúnakort jako třetí karta vedle MONTHLY / YEARLY a odkaz u Rune Seekera, který na ni
   skočí; mezi kameny místo teček **stopy bot** (malé, nesymetrické, od Visitora k Wandererovi — „walk with us“). Owner nabízí ukázat na
   počítači. Návrh textů EN + IS a náhled stop napřed ownerovi. CODE-tune.
