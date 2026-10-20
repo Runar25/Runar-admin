@@ -82,6 +82,11 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 .sp-curr-toggle:hover .sp-curr-arrow{opacity:1;}
 .sp-path-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;color:var(--gold);font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:3px;cursor:pointer;padding:10px 0 4px;opacity:0.85;transition:opacity 0.15s;text-align:left;}
 .sp-path-toggle:hover{opacity:1;}
+/* 2026-10-20 (hlášení 62283c8c, owner: „Upgrade your journey v menu není vycentrované. A mělo by být ve zlatém rámečku, je to viditelnější“):
+   od 2026-10-19 otevírá okno „Your journey with Rúnar“, tedy tlačítko — rámeček jako .btn-upgrade, text na středu, šipka za textem. */
+#sp-higher-toggle{justify-content:center;border:1px solid var(--gold);padding:12px 14px;margin-top:12px;opacity:1;}
+#sp-higher-toggle #sp-path-arrow{order:2;}
+#sp-higher-toggle:hover{background:rgba(255,191,0,0.08);}
 .sp-path-body{padding-bottom:4px;}
 .sp-tier-block{padding:7px 0;border-bottom:1px solid rgba(255,191,0,0.07);}
 .sp-tier-block:last-of-type{border-bottom:none;}
@@ -350,6 +355,10 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 .tree-name-edit-link:hover{color:var(--gold);}
 .tree-rune-header{cursor:pointer;padding:16px 0 8px;}
 .tree-rune-name-row{display:flex;align-items:center;gap:10px;padding:4px 0;}
+/* 2026-10-20 (hlášení df67acda: „když v life rune kliknu na runu, problikne celý text místo jen runy. Už jsme to řešili“): táž oprava jako
+   2026-10-07 u #reader-badge (.badge-life) — mobilní zvýraznění klepnutí na flex řádku rozblikalo i jméno vedle; tehdy chyběla v záložce Life Rune. */
+.tree-rune-name-row{-webkit-tap-highlight-color:transparent;}
+.tree-rune-name-row .rlbl-glyph{-webkit-tap-highlight-color:initial;}
 .tree-rune-name{font-family:'Cinzel',serif;font-size:1.1em;color:var(--gold);}
 .tree-rune-glyph-inline{font-size:1.6em;color:var(--gold);opacity:0.85;}
 .tree-toggle-arrow{margin-left:auto;color:var(--muted);font-size:1.1em;transition:transform 0.2s;}
