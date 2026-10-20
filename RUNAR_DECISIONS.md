@@ -11966,3 +11966,13 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Mění 2026-10-19 (8)** jen v jednom: tam *„runu, ale runy to být nesmí“* platí pro značky účtů a dál platí; ikona čtení runu nést smí
   (owner výslovně „v tomhle případě může“).
 - Affected doc(s): `RUNAR_BACKLOG.md` — v témže commitu.
+
+## 2026-10-20 (8) — Ikona Rune Reading zpět na tři kameny (mění 2026-10-20 (7) bod 2)
+
+- **Rozhodl:** owner 2026-10-20 nad snímkem záložky: *„vrátíme tři kameny. tohle nejde přečíst a skoro to vypadá jako karty.“*
+- **Co:** záložka Rune Reading má zase ikonu tří vržených kamenů (`TAB_IKONY.reading`, DECISIONS 2026-10-19 (8)); dva naše kameny s losovanou
+  runou (`_ikonaCteni`) pryč, důvod zůstal v komentáři u `_zalozka` (`runar-app.js`).
+- **Proč neprošla:** ve velikosti záložky (~17 px) obrys kamene i runa splynou a dva obdélníky přes sebe čte oko jako karty. Náhled
+  (`docs/inbox/2026-10-20-kniha-pero-kameny-nahled.html`) ukazoval zvětšeninu vedle skutečné velikosti — rozhodla skutečná velikost v appce.
+  Návrat jen s jiným řešením čitelnosti (§21).
+- Affected doc(s): žádný jiný — (7) zůstává záznamem toho, co se zkusilo.
