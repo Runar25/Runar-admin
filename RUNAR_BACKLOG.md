@@ -1255,6 +1255,10 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   (černá / bílá, QR, tisk do PDF) · sloupce sledování v `gift_codes` (owner pustil SQL) · appka předvyplní kód z QR `#kort=` a shrine
   u dávky ukládá form / design / lang / channel / complimentary a dává odkaz na kartu (obojí CODE-tune). **Zbývá:** doručení po
   zaplacení až po rozhodnutí Shopify / Rapyd; tisk celé dávky v jednom PDF pro tiskárnu, až budou fyzické karty (dnes karta po jedné).
+  **Vzhled Vetur (zimní slunovrat, owner 2026-10-20)** je v `web/site/runakort.css|js`, postava je zatím výřez z archu
+  `Runar_WinterSolsticeOutfit` (365 × 470 px) — na obrazovku stačí, na tisk ne. Owner: postavy se vygenerují zvlášť. Pro tisk je potřeba
+  jedna postava (gesto otevřené dlaně jako u bílé karty), aspoň ~1500 px na výšku, průhledné nebo čistě bílé pozadí; pak vyměnit
+  `web/site/img/runar-zima.jpg`. Další vzhledy podle oblečení (letní slavnost, půlnoční slunce, polární záře, cestovatel) stejně.
 - [x] ✅ *(CODE-web 2026-10-14: patička © · e-mail · odkaz na zásady, kde stojí adresa a kennitala (CODE-tune d0bc678); zásady
   doplněné o registraci; web žádné cookies nemá. Zbývá jen VSK do zásad, až ho owner bude vědět.)* **Landing — právní minimum** (2026-10-13): patička s údaji firmy podle zákona 30/2002 (jméno, adresa, e-mail, kennitala, VSK —
   údaje dodá owner; přesný článek zákona nestažen, althingi.is 403), věta o účelu u formuláře + odkaz na zásady, zásady doplnit
