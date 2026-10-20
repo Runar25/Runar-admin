@@ -572,7 +572,8 @@ atomický upsert, úklid starších než hodina; stejně tak `use_credit` (atomi
   **Upřesněno 2026-10-19 (6):** upozornění 30 dní předem + druhé týden předem; účet s nevyčerpanými kredity nebo běžícím
   předplatným se NEMAŽE, dokud kredity nevyčerpá / předplatné neskončí.
 - [ ] Export dat subjektu (mazání už kaskáduje přes delete-account). **Způsob rozhodnut 2026-10-18:** jen na e-mail z adresy účtu, odpověď
-  na tutéž adresu (RUNAR_PRIVACY „Retence + práva“). Zbývá: skript, který export jednoho účtu vyrobí (CODE-read), a text do zásad (EN + IS).
+  na tutéž adresu (RUNAR_PRIVACY „Retence + práva“). ✅ Skript `scripts/utils/export_uctu.js` (CODE-read 2026-10-20; samotest `--test` na účtu
+  ownera: čtení v exportu = řádky v DB). Zbývá: text ACCESS / PORTABILITY v `v2/runar-privacy.html` (EN + IS, ověřené věty předány CODE-tune).
 - [ ] Eval pipeline: pseudonymizace (opt-out exkluze HOTOVÁ).
 - [~] **Segmentace Faze B — zbytek** — B1 (tap -> segment zezlatne) HOTOVO a v produkci. B2 (deeper_meaning) ZRUSENO ownerem 2026-07-10. NEHOTOVO a nikde jinde nedrzene: „tap odhali VYZNAM POZICE" (popup dnes ukazuje jen jmeno runy + keywords, zadny nazev pozice ze SPREAD_CONFIG) a „geometrie per spread". Zadne datovane rozhodnuti to nerusi -> nemazat bez rozhodnuti ownera.
 - [x] ~~Journal SPREAD historie renderuje font glyfy~~ **✅ deník opraven 2026-09-27 (kameny z runeSvg, smoke ㉭); ✅ shrine 2026-10-11 (CODE-tune, owner „jeď ty tři chyby“): záložka a karta dárkových kódů, popisky učení a hlasu, mřížka run, vybraná runa i prohlížeč čtení kreslí naši runu (`runeSvg` / `setRuneText`); smoke ㉻ hlídá i shrine, jeho skripty, runu z DB a zrcadlo `.lbl-rune`.** ~~Zbývá: shrine obchází `runeSvg`~~ (§5; Yggdrasil stránka archivována 2026-09-28).
