@@ -42,7 +42,8 @@
 .j-ft li{margin-bottom:6px}
 .j-btn{font-family:'Cinzel',serif;font-size:11px;letter-spacing:2px;padding:11px 16px;background:none;border:1px solid rgba(255,191,0,0.5);color:var(--gold);margin-top:auto;cursor:default}
 .j-note{font-size:15px;color:var(--muted);font-style:italic;margin-top:6px}
-.j-card{margin-top:60px;border-top:1px solid rgba(46,74,112,0.4);padding-top:40px;text-align:center}
+.j-card{text-align:center}
+.j-btn.go{cursor:pointer}
 .j-card h2{font-family:'Cinzel',serif;font-weight:400;font-size:15px;letter-spacing:4px;color:var(--gold);margin-bottom:8px}
 .j-card p{font-style:italic;color:var(--muted);margin-bottom:24px}
 .j-packs{display:flex;flex-wrap:wrap;justify-content:center;gap:16px}
@@ -70,10 +71,9 @@
 <div class="j-page">
   <div class="j-eyebrow" data-k="journey_title"></div>
   <p class="j-sub" id="j-sub"></p>
-  <div class="j-per" id="per"><span data-p="m" class="on" data-k="journey_monthly"></span><span data-p="y" data-k="journey_yearly"></span></div>
+  <div class="j-per" id="per"><span data-p="m" class="on" data-k="journey_monthly"></span><span data-p="y" data-k="journey_yearly"></span><span data-p="k" id="per-k"></span></div>
   <div class="j-path" id="path"></div>
-  <section class="j-card">
-    <h2 id="card-h"></h2>
+  <section class="j-card" id="cardsec" style="display:none">
     <p id="card-p"></p>
     <div class="j-packs" id="packs"></div>
     <div class="j-note" style="margin-top:14px" data-k="journey_soon"></div>
@@ -110,9 +110,19 @@ function draw() {
     var f = id === 'free_trial' ? [U.journey_visitor_ft] : tierFeatures(id, LANG);
     h += '<ul class="j-ft">' + f.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>';
     if (m) h += '<span class="j-btn">' + tp('journey_walk_on', { tier: jmeno(T) }) + '</span><div class="j-note">' + U.journey_soon + '</div>';
+    else if (id === 'rune_seeker' && U.journey_buy_card) h += '<span class="j-btn go" data-go="k">' + tp('journey_buy_card', { card: vl('card', LANG).toUpperCase() }) + '</span>';
     return h + '</div>';
   }).join('');
   kamenUctuVystred(document.getElementById('path'));   // bez živého účtu = bez pohybu
+  document.querySelectorAll('[data-go]').forEach(function (b) { b.onclick = function () { setP(b.getAttribute('data-go')); }; });
+}
+// Přepínač: m / y = cesta s cenami, k = balíčky Rúnakortu místo cesty
+function setP(p) {
+  P = p;
+  document.querySelectorAll('#per span').forEach(function (x) { x.classList.toggle('on', x.dataset.p === P); });
+  document.getElementById('path').style.display = P === 'k' ? 'none' : '';
+  document.getElementById('cardsec').style.display = P === 'k' ? '' : 'none';
+  if (P !== 'k') draw();
 }
 function render() {
   lang = LANG;
@@ -120,18 +130,19 @@ function render() {
   document.querySelectorAll('[data-k]').forEach(function (el) { el.textContent = UI_TEXT[LANG][el.getAttribute('data-k')] || ''; });
   document.querySelectorAll('.j-lang button').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-l') === LANG); });
   document.getElementById('j-sub').textContent = tp('journey_sub', { casts: vlp('cast', LANG) });
-  document.getElementById('card-h').textContent = vl('card', LANG).toUpperCase();
+  document.getElementById('per-k').textContent = vl('card', LANG).toUpperCase();
   document.getElementById('card-p').textContent = J_CARD[LANG];
   document.getElementById('packs').innerHTML = CARD_PACKS.map(function (p) {
     return '<div class="j-pk"><div class="n">' + cardPackName(p, LANG).toUpperCase() + '</div><div class="c">' + vn('cast', p.credits, LANG) + '</div><div class="p">' + cislo(p.isk) + ' kr</div></div>';
   }).join('');
   draw();
+  setP(P);
 }
 document.querySelectorAll('.j-lang button').forEach(function (b) {
   b.onclick = function () { LANG = b.getAttribute('data-l'); render(); };
 });
 document.querySelectorAll('#per span').forEach(function (s) {
-  s.onclick = function () { P = s.dataset.p; document.querySelectorAll('#per span').forEach(function (x) { x.classList.toggle('on', x === s); }); draw(); };
+  s.onclick = function () { setP(s.dataset.p); };
 });
 render();
 </script>
