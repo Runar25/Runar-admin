@@ -336,7 +336,7 @@ const UI_TEXT = {
     // 2026-10-19: okno „Your journey with Rúnar“ (openJourney v runar-app.js; DECISIONS 2026-10-19 (7), (8)). Sada EN + IS od CODE-read,
     // čte ji i web therunekeeper.com (CODE-web) — texty jen tady (§20). {tier} = jméno účtu z TIERS, {price}/{year} z TIERS.*.price_isk_*.
     journey_title:        'WALK WITH RÚNAR',   // 2026-10-20 owner „10. ano“ (hlášení bd915d60) — dřív „YOUR JOURNEY WITH RÚNAR“; IS nadpis vymyslí CODE-read
-    journey_sub:          'Each step holds more of Rúnar. Walk as far as you wish, and step back whenever you like.',
+    journey_sub:          'Each step gives you more {casts}. Walk as far as you wish, and step back whenever you like.',   // 2026-10-20 owner (hlášení bd915d60); {casts} z VOCAB
     journey_monthly:      'MONTHLY',
     journey_yearly:       'YEARLY',
     journey_price_m:      '{price} kr a month',
@@ -350,7 +350,7 @@ const UI_TEXT = {
     journey_web_note:     'Opens therunekeeper.com. You return here with the same account.',
     journey_soon:         'Coming soon.',
     journey_free:         'Free',
-    journey_free_join:    'Registration is free.',   // owner 2026-10-20: „Free to join“ znělo, jako by se neplatilo vůbec — zdarma je účet, čtení se platí kartou; jako IS „Skráning er ókeypis.“
+    journey_free_join:    'Registration is free',   // owner 2026-10-20 (CODE-web 6f6a1df); 2026-10-20 bez tečky — štítek jako „Free“
     journey_card_note:    'From {price} kr for {casts}. Have a code? Enter it here.',
     journey_play_sub:     'Where you stand on the path, and what each step holds.',
     journey_play_foot:    'Rúnar asks nothing of you here.',
@@ -899,8 +899,8 @@ const UI_TEXT = {
     // 2026-10-19: okno „Ferð þín með Rúnari“ — viz EN. Ověřila CODE-read: Greynir OK; korpus „ferð þín“ 73×, „hvert skref“ 927×,
     // „þegar þér hentar“ 469×, „snúðu við“ 64×, „krónur á mánuði“ 20 557×, „að gjöf“ 11 864×, „í lok tímabilsins“ 3 754×,
     // „á sama aðgangi“ 13×, „svo heldurðu“ 58×, „hvar þú stendur“ 302×, „ber í sér“ 339×, „sagt upp hvenær“ 14×. GERAST {tier} = 1. pád.
-    journey_title:        'FERÐ ÞÍN MEÐ RÚNARI',
-    journey_sub:          'Hvert skref á leiðinni opnar meira. Farðu eins langt og þú vilt og snúðu við þegar þér hentar.',
+    journey_title:        'GAKKTU MEÐ RÚNARI',   // 2026-10-20 CODE-read: rozkaz jako „Gakktu inn í heim Rúnars“ v okně přihlášení; „gakktu með“ 29×
+    journey_sub:          'Með hverju skrefi færðu fleiri {casts}. Farðu eins langt og þú vilt og snúðu við þegar þér hentar.',   // 2026-10-20 CODE-read: Greynir OK, „með hverju skrefi“ 335×, „færðu fleiri“ 112×
     journey_monthly:      'MÁNAÐARLEGA',
     journey_yearly:       'ÁRLEGA',
     journey_price_m:      '{price} kr. á mánuði',
@@ -914,7 +914,7 @@ const UI_TEXT = {
     journey_web_note:     'Vefurinn therunekeeper.com opnast. Svo heldurðu áfram hér á sama aðgangi.',
     journey_soon:         'Bráðlega.',
     journey_free:         'Ókeypis',
-    journey_free_join:    'Skráning er ókeypis.',
+    journey_free_join:    'Skráning er ókeypis',   // 2026-10-20: štítek bez tečky jako „Ókeypis“
     journey_card_note:    'Frá {price} kr. fyrir {casts}. Áttu kóða? Sláðu hann inn hér.',
     journey_play_sub:     'Hvar þú stendur á leiðinni og hvað hvert skref ber í sér.',
     journey_play_foot:    'Hér biður Rúnar þig ekki um neitt.',

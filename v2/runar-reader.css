@@ -8,6 +8,7 @@
   --bg:#0a0c12; --card:#12161f; --card2:#171b26;
   --border:#2E4A70; --border2:#3a5a85;
   --gold:#FFBF00; --gold2:rgba(255,191,0,0.12); --gold-dim:#b38a00;
+  --gold-soft:#D6A85C;   /* 2026-10-20: zlatá kreseb run (RUNE_SVGS) a textu k nim — do té doby natvrdo #D6A85C (CODE-read, jednotný vzhled) */
   --white:#F2F5F7; --muted:#8ba5c0; --dim:#3a4a60;
   --blue:#5BB8FF; --teal:#7ED9B5;
   --hearthwood:#7D5838; --obsidian:#1E1E1E;
@@ -862,7 +863,7 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 /* Okno „Your journey with Rúnar“ (2026-10-19, DECISIONS 2026-10-19 (7), (8)) — podoba náhledu webu CODE-web na mobilu: zastávky pod sebou,
    kámen se značkou vlevo, čárkovaná svislá cesta mezi kameny, tlačítka jako v horním pruhu (tn-btn btn-upgrade). */
 .journey-card{max-width:440px;max-height:calc(100vh - 40px);overflow-y:auto;text-align:left;}
-.journey-card .modal-title,.journey-card .modal-sub{text-align:center;}
+/* 2026-10-20: titul a podtitul vlevo jako v ostatních oknech (.modal) — do té doby jen tohle okno na středu. */
 .journey-per{display:flex;justify-content:center;gap:22px;margin:-6px 0 20px;}
 .journey-per button{background:none;border:0;border-bottom:1px solid transparent;font-family:'Cinzel',serif;font-size:0.68em;letter-spacing:2px;color:var(--muted);padding:0 0 3px;cursor:pointer;}
 .journey-per button.on{color:var(--gold);border-bottom-color:var(--gold);}
@@ -870,21 +871,32 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 .journey-st:not(:last-child)::after{content:"";position:absolute;left:22px;top:68px;bottom:4px;border-left:1px dashed var(--border);}
 .journey-kamen{width:44px;height:60px;}
 .kamen-uctu{width:100%;height:100%;display:block;overflow:visible;}
-.journey-nm{font-family:'Cinzel',serif;font-size:0.78em;letter-spacing:2px;color:var(--white);display:flex;justify-content:space-between;gap:8px;align-items:baseline;}
+.journey-nm{font-family:'Cinzel',serif;font-size:0.78em;letter-spacing:2px;color:rgba(255,191,0,0.7);display:flex;justify-content:space-between;gap:8px;align-items:baseline;}
 .journey-st.here .journey-nm{color:var(--gold);}
 .journey-here{font-family:'Cormorant Garamond',serif;font-style:italic;letter-spacing:0;font-size:1.25em;color:var(--gold);}
 .journey-pr{font-size:1.05em;color:var(--gold);margin-top:3px;}
 .journey-pr small{color:var(--muted);font-size:0.85em;}
-.journey-gift{font-style:italic;color:#D6A85C;font-size:0.9em;}
+.journey-gift{font-style:italic;color:var(--gold-soft);font-size:0.9em;}
+/* 2026-10-20 (CODE-read): kámen „you are here“ svítí vždy (i bez animací a u prázdného kamene Visitora) — .here z kamenUctuVystred. */
+.kamen-uctu.here{filter:drop-shadow(0 0 6px rgba(255,170,40,0.55));}
 .journey-ft{list-style:none;padding:0;margin:6px 0 4px;font-size:0.92em;color:var(--white);line-height:1.45;}
 .journey-ft li{margin-bottom:3px;}
 .journey-st .tn-btn{margin-top:8px;display:inline-block;text-decoration:none;}
 .journey-note{font-size:0.85em;color:var(--muted);font-style:italic;margin-top:5px;}
 .journey-note.klik{cursor:pointer;text-decoration:underline;text-decoration-color:rgba(255,191,0,0.4);text-underline-offset:3px;}
 .journey-foot{border-top:1px solid var(--border);margin:2px 0 0;padding-top:12px;font-size:0.85em;color:var(--muted);font-style:italic;text-align:center;}
-.dd-journey{display:block;width:100%;margin-top:10px;padding:8px 0 0;border:0;border-top:1px solid var(--border);background:none;text-align:left;
+.dd-journey{display:block;width:100%;margin:0;padding:12px 18px;border:0;border-top:1px solid rgba(46,74,112,0.3);background:none;text-align:left;
   font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;color:var(--gold);cursor:pointer;}
 /* Pohyb značky jen u „you are here“ (.zivy, kamenUctuVystred): plamen se chvěje, pták letí; stezku vlní skript. Bez animací v klidu. */
+/* 2026-10-20 (CODE-read): u tlačítek svítí jen rámeček, ne text — barva textu svíčky (forwards) přebila hover .btn-upgrade (zlatý text
+   na zlaté výplni). Halo u tlačítek ne. */
+.tn-btn.svice,.btn-upgrade.svice,#hb-btn.svice{animation:sviceRing 4.5s ease-in-out forwards;}
+.tn-btn.svice .svice-halo,.btn-upgrade.svice .svice-halo,#hb-btn.svice .svice-halo{display:none;}
+@keyframes sviceRing{0%{box-shadow:0 0 0 rgba(255,191,0,0)}11%,39%,67%{box-shadow:0 0 14px 2px rgba(255,191,0,0.75)}25%,53%{box-shadow:0 0 4px rgba(255,191,0,0.25)}85%,100%{box-shadow:0 0 8px rgba(255,180,40,0.45)}}
+@keyframes sviceRing1{0%{box-shadow:0 0 0 rgba(255,191,0,0)}40%{box-shadow:0 0 14px 2px rgba(255,191,0,0.75)}100%{box-shadow:0 0 8px rgba(255,180,40,0.45)}}
+@media (prefers-reduced-motion:reduce){.tn-btn.svice,.btn-upgrade.svice,#hb-btn.svice{animation:sviceRing1 1.5s ease-in-out forwards;}}
+/* 2026-10-20 (CODE-read, ověřeno v prohlížeči): helper „?“ (z-index 99998) ležel nad každým oknem — v otevřeném okně se schová. */
+body:has(.modal-overlay.open) #hb-btn{display:none;}
 .kamen-uctu.zivy .zn-fl{transform-box:fill-box;transform-origin:50% 100%;animation:znFl 2.8s ease-in-out infinite;}
 .kamen-uctu.zivy .zn-fl2{transform-box:fill-box;transform-origin:50% 100%;animation:znFl2 2.1s ease-in-out infinite;}
 .kamen-uctu.zivy .zn-ptak{animation:znLet 9s ease-in-out infinite;}
@@ -1026,7 +1038,7 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 /* 5 spready: horní řádek 3 (každý 2/6), spodní řádek 2 (každý 3/6) — symetrické, bez scrollu */
 .spread-mode-row{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:20px;}
 .mode-btn{grid-column:span 2;padding:8px 12px;background:transparent;border:1px solid var(--border);
-  color:var(--dim-text);font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;
+  color:var(--muted);font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;
   cursor:pointer;border-radius:2px;transition:all 0.2s;text-align:center;}
 .mode-btn:nth-child(4),.mode-btn:nth-child(5){grid-column:span 3;}
 /* Norny skryte (uzivatel jeste nema zivotni runu) = 4 tlacitka misto 5.
@@ -1039,7 +1051,7 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 /* ── SPREAD3 SLOT TRACKER ── */
 .spread3-slots{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px;
   margin-bottom:18px;padding:10px;background:rgba(255,191,0,0.04);border-radius:4px;max-width:100%;box-sizing:border-box;}
-.s3-slot{font-size:1.4em;color:var(--dim-text);transition:all 0.3s;min-width:1.4em;text-align:center;border-radius:3px;padding:2px 4px;}
+.s3-slot{font-size:1.4em;color:var(--muted);transition:all 0.3s;min-width:1.4em;text-align:center;border-radius:3px;padding:2px 4px;}
 .s3-slot.filled{color:var(--gold);text-shadow:0 0 12px rgba(255,191,0,0.4);}
 .s3-slot.filled:hover{background:rgba(255,191,0,0.08);text-decoration:line-through;opacity:0.7;}
 .s3-sep{color:var(--border);font-size:0.8em;}
@@ -1088,7 +1100,7 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 .s5-cross{display:grid;grid-template-columns:repeat(3,var(--slot-cell));grid-auto-rows:var(--slot-cell);gap:var(--slot-gap);place-items:center;}
 .s5-row{display:contents;}   /* řádky jen drží značky; pozice dává mřížka .s5-cross (2026-10-11, stejný rozestup) */
 #s5slot2{grid-area:1/2;} #s5slot4{grid-area:2/1;} #s5slot1{grid-area:2/2;} #s5slot5{grid-area:2/3;} #s5slot3{grid-area:3/2;}
-.s5-slot{font-size:1.3em;color:var(--dim-text);transition:all 0.3s;min-width:1.6em;text-align:center;
+.s5-slot{font-size:1.3em;color:var(--muted);transition:all 0.3s;min-width:1.6em;text-align:center;
   border-radius:3px;padding:3px 5px;cursor:default;}
 .s5-slot.filled{color:var(--gold);text-shadow:0 0 12px rgba(255,191,0,0.4);}
 .s5-slot.filled:hover{background:rgba(255,191,0,0.08);text-decoration:line-through;opacity:0.7;cursor:pointer;}
