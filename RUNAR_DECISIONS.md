@@ -11883,3 +11883,20 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   opraven. Nic dalšího se nepřidává. Ověření: čtení testerů (owner 2026-10-20, bez API).
 - **Co (UI):** DRAW ANOTHER RUNE pryč, START OVER jako HEAR RÚNAR SPEAK; aktivní MY READING / FOR SOMEONE vyplněné jako BEGIN THE READING.
 - Affected doc(s): `RUNAR_BACKLOG.md` — v témže commitu; `IS_NATIVE_CHECKLIST.md` a prompt mění CODE-tune.
+
+## 2026-10-20 (2) — IS tón pozitivně (slovesa, algeng orð) a jednodušší islandský závěr Norn; doplňuje 2026-10-20 (1)
+
+- **Rozhodl:** owner 2026-10-20 *„9. ano, předej to tune“* k návrhu CODE-read (body 5 a 6). Předtím: *„používáme GPT a tem by měl instrukce
+  dostávat nějakou formou … IS bude těžší … proto se musíme vyvarovat všemu, co do promptu může přinášet problémová slova. knižní jazyk odstranit
+  a asi říct, jaký tón, jazyk IS může používat? najdi příklady, jak to udělat.“*
+- **Co:** místo věty „Skrifaðu eðlilega íslensku, daglegt mál…“ z (1) (říkala jen co ne) pozitivní popis tónu: „Rúnar talar eðlilega íslensku eins
+  og fólk talar hana í dag. Hann notar algeng orð og stuttar setningar og segir frá með sagnorðum fremur en nafnorðum.“ IS pokyn NIÐURLAGIÐ Norn
+  obyčejně, bez „hreyfing / ástand / í lífi leitandans“ (znění v BACKLOGu).
+- **Proč:** čtení 452a97c5 zrcadlilo knižní islandské znění pokynu („Í lífi þínu gæti þetta verið kunnugleg nánd…“ ← „tvennt sem þessi hreyfing
+  gæti verið í lífi leitandans … ástand“); RUNAR_DESIGN „Slova, která dáváme modelu“ bod 1; Anthropic „Match your prompt style to the desired
+  output“, „Tell … what to do instead of what not to do“; OpenAI GPT-5.5 guide (pokyny doslova, tón krátce jako osobnost). Slovesa místo podstatných
+  jmen míří na jmenný styl závěru. Riziko: přidaný požadavek → formule (krátké sekané věty); proto jen dvě věty, sledovat v čteních testerů.
+  Dřívější znění („í lífi leitandans — ástand sem gæti átt við, honum til umhugsunar“) vzniklo 2026-09-20 jako most ve tvaru MOŽNOSTI, ne rady
+  (RUNAR_EVAL_LOG 2026-09-20 (2): EN rady 0/6; IS ověřeno jen gramaticky) — účel drží „tvennt sem þetta gæti verið“ + „leitandinn metur sjálfur“
+  + „engin spá, enginn boðskapur“. Mění se jen závěr Norn, most u single ne. Další krok: CODE-read projde celý IS prompt stejným sítem.
+- Affected doc(s): `RUNAR_BACKLOG.md` — v témže commitu.

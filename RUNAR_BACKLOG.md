@@ -1330,9 +1330,12 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
 
 - [ ] **IS rejstřík: bez knižního a archaického (owner 2026-10-20, DECISIONS 2026-10-20 (1)) → CODE-tune.** `DEF_CHAR_IS.grammar`
   pravidlo 6: vyndat „Skáldlegt og bókmenntalegt mál er í lagi“ (zákaz nových slov zůstává); IS protějšek EN pravidla 2 („Natural English
-  idiom — nothing … stiff“) — věta ověřená Greynirem: „Skrifaðu eðlilega íslensku, daglegt mál eins og fólk talar það í dag — ekkert
-  hátíðlegt eða gamaldags orðalag.“ („daglegt mál“ 99×, „gamaldags orðalag“ 10×); `IS_NATIVE_CHECKLIST.md` bod 5 „formal/archaic tone is
-  fine“ → opak. Prompt verze + sledovat v čteních testerů. Rozbor příčiny: `docs/inbox/2026-10-20-jednotny-vzhled.md` § 6 a zpráva CODE-read.
+  idiom — nothing … stiff“) — **pozitivně (2026-10-20 (2), nahrazuje „daglegt mál…“):** „Rúnar talar eðlilega íslensku eins og fólk
+  talar hana í dag. Hann notar algeng orð og stuttar setningar og segir frá með sagnorðum fremur en nafnorðum.“ (Greynir OK). **IS NIÐURLAGIÐ
+  Norn** (`runar-character.js` landing IS) → „NIÐURLAGIÐ — Síðasta setningin er Skuldar. Þar nefnir Rúnar tvennt sem þetta gæti verið hjá
+  leitandanum núna, og leitandinn metur sjálfur hvort á við. Það sprettur af því sem var, því sem er að gerast og því sem er fram undan.
+  Hann segir það með orðum myndarinnar. Engin spá, enginn boðskapur og engin huggun.“ (Greynir OK; „hvort á við“ 61×, „sprettur af því“ 71×).
+  ✅ `IS_NATIVE_CHECKLIST.md` bod 5 opraven (CODE-read f57a570). Prompt verze + sledovat v čteních testerů. Rozbor příčiny: `docs/inbox/2026-10-20-jednotny-vzhled.md` § 6 a zpráva CODE-read.
 - [ ] **Tlačítka po čtení a přepínač MY READING / FOR SOMEONE (owner 2026-10-20, DECISIONS 2026-10-20 (1)) → CODE-tune.**
   DRAW ANOTHER RUNE pryč, zůstává jedno velké START OVER ve stylu HEAR RÚNAR SPEAK (`.btn-voice`, přes celou šířku); ASK beze změny. Aktivní
   MY READING / FOR SOMEONE vyplněné jako BEGIN THE READING (`.btn-full`), aby bylo vidět, kde člověk je. Velikost tlačítka podle důležitosti
