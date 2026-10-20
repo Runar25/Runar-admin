@@ -1774,7 +1774,7 @@ function _journeyPaint() {
       if (T.price_isk_month) {
         var tierUp = jm.toUpperCase();
         if (tady) { if (env === 'web') h += '<a class="tn-btn btn-upgrade" href="' + _jesc(JOURNEY_URL) + '" target="_blank" rel="noopener">' + _jesc(t('journey_manage')) + ' →</a>'; }
-        else if (env === 'soon') h += '<div class="journey-note">' + _jesc(t('journey_soon')) + '</div>';
+        // 2026-10-20 owner: u účtů žádné „Coming soon“ — až půjde appka do produkce, budou v nabídce všechny účty (do té doby tu stálo)
         else if (i > ja) h += '<a class="tn-btn btn-upgrade" href="' + _jesc(JOURNEY_URL) + '" target="_blank" rel="noopener">' + _jesc(tp('journey_walk_on', { tier: tierUp })) + ' →</a>'
           + '<div class="journey-note">' + _jesc(t('journey_web_note')) + '</div>';
         else h += '<a class="tn-btn btn-upgrade" href="' + _jesc(JOURNEY_URL) + '" target="_blank" rel="noopener">' + _jesc(tp('journey_step_back', { tier: tierUp })) + ' →</a>'
@@ -1782,7 +1782,7 @@ function _journeyPaint() {
       } else if (id === 'rune_seeker' && ja === 0) {
         h += '<button type="button" class="tn-btn btn-upgrade" onclick="closeJourney();openAuthModal()">' + _jesc(t('become_rs_btn')) + '</button>';
       } else if (id === 'rune_seeker' && ja === 1) {   // 2026-10-20: odkaz na kartu Rúnakort (šipka = vede jinam, CODE-read §4)
-        h += '<button type="button" class="tn-btn btn-upgrade" onclick="_journeyObdobi(\'c\')">' + _jesc(tp('journey_buy_card', { card: vl('card', lang).toUpperCase() })) + ' →</button>';   // owner přes CODE-web: „buy rune reading card“ jako u Walker / Wanderer
+        h += '<button type="button" class="tn-btn btn-upgrade" onclick="_journeyObdobi(\'c\')">' + _jesc(vl('card', lang).toUpperCase()) + ' →</button>';   // owner 2026-10-20: „stačit napsat jen rune reading card. bez buy.“ (klíč journey_buy_card zrušen)
       }
     }
     h += '</div>' + (i < JOURNEY_PORADI.length - 1 ? _jStopy(i) : '') + '</div>';
