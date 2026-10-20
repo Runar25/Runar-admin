@@ -1338,7 +1338,7 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   spurningin búist við öðru“; úvod `DEF_CHAR_IS.identity` → „Rúnar er vörður rúnanna og leiðsögumaður um heim Agndofa, sem byggir á
   íslenskri náttúru, sögu og gömlu rúnunum.“; věta „Hann sýnir ekki dulspeki. Hann býr einfaldlega í henni.“ (ř. 1595) **pryč**. Nechat:
   „í myndum og táknmáli“ u otázky (až po ownerově testu otázek). Jedna nová verze promptu, sledovat v čteních testerů.
-- [ ] **Klíčová slova run IS — schváleno všech 9 (owner 2026-10-20, DECISIONS 2026-10-20 (5)) → CODE-tune.** `v2/runar-runes.js` `k_is`:
+- [x] ✅ *(CODE-tune 2026-10-20, prompt v5.19; obrazů s dotčeným slovem bylo 16, ne 13; Uruz IS 2 × EN 3 → strop parity ㉤ na 1 s důvodem; „innri þróunar“ ve formula_is Ingwazu nezměněno — rozhodnutí ho nejmenuje)* **Klíčová slova run IS — schváleno všech 9 (owner 2026-10-20, DECISIONS 2026-10-20 (5)) → CODE-tune.** `v2/runar-runes.js` `k_is`:
   Fehu „efnisleg velsæld“→„velmegun“ · Algiz „guðleg tenging“→„hið heilaga“ · Ansuz „guðleg leiðsögn“→„leiðsögn“ · Othila „forfeðraviska“→
   „viska forfeðranna“ · Raidho „rétt breytni“→„að gera rétt“ · Nauthiz „vöxtur í áskorun“→„þroski“ · Uruz „hrár kraftur“ vypustit (zůstává
   „frumkraftur“) · Ingwaz „innri þróun“→„innri vöxtur“ · Blank „óskrifaður möguleiki“→„óskrifað blað“. EN `k` beze změny.
