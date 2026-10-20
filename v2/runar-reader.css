@@ -349,7 +349,7 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 .tree-rune-name{font-family:'Cinzel',serif;font-size:1.1em;letter-spacing:1px;color:var(--gold);margin-bottom:6px;}   /* 2026-10-20: dvě definice → jedna */
 .tree-rune-glyph-inline{font-size:1.6em;color:var(--gold);opacity:0.85;}
 .tree-static-open{font-family:'Cinzel',serif;font-size:0.85em;letter-spacing:0.5px;color:var(--muted);padding:12px 0 4px;}
-.tree-reading-text{font-size:1.05em;line-height:1.8;color:var(--white);padding:12px 0 20px;font-style:italic;}
+.tree-reading-text{font-size:1.1875em;line-height:1.8;color:var(--white);padding:12px 0 20px;font-style:italic;}
 .tree-reveal-intro{text-align:center;font-style:italic;color:var(--muted);font-size:0.95em;line-height:1.7;padding:8px 16px 20px;}
 .tree-loading-glyph{text-align:center;font-size:3em;color:var(--gold);opacity:0.6;padding:24px 0 8px;animation:pulse-fade 1.4s ease-in-out infinite;}
 .tree-loading-text{text-align:center;font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--muted);padding-bottom:24px;}
@@ -777,9 +777,11 @@ input:autofill{filter:none;}
 .kw-hl-sent{background:rgba(255,191,0,0.09);border-radius:0;padding:0 2px;}
 .layer2{background:#0a0e18;padding:20px;margin-bottom:16px;}
 .layer2-lbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--muted);margin-bottom:10px;}
-.out-txt{font-size:1.05em;line-height:1.9;font-style:italic;color:var(--white);}
+/* 2026-10-20: text čtení 1.05em (16,8 px) → 1.1875em (19 px) — testeři IS „Letrið er of lítið“ (4910de7c, db5e2b38), owner.
+   Totéž čtení životní runy a myšlenka ✦, ať je čtení všude stejně velké. */
+.out-txt{font-size:1.1875em;line-height:1.9;font-style:italic;color:var(--white);}
 /* Myšlenka ✦ po čtení (2026-09-30) — oddělená od textu čtení a mimo jeho prvek (hlas ji nečte); písmo čtení, zlatě. */
-.reading-thought{font-size:1.05em;line-height:1.8;font-style:italic;color:var(--gold);text-align:center;margin:22px 8px 6px;}
+.reading-thought{font-size:1.1875em;line-height:1.8;font-style:italic;color:var(--gold);text-align:center;margin:22px 8px 6px;}
 .stream-cur{display:none;}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 @keyframes pulse-fade{0%,100%{opacity:0.35}50%{opacity:1}}

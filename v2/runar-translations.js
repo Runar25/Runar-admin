@@ -225,7 +225,7 @@ const UI_TEXT = {
     delete_btn:         'DELETE',
     cancel_btn:         'CANCEL',
     deleting_btn:       'DELETING...',
-    journal_title:      '\u2726 YOUR RUNE READINGS',
+    journal_title:      'YOUR RUNE READINGS',   // 2026-10-20: ✦ → ikona knihy (runar-journal.js)
     journal_count_recent: 'last {n}',   // 2026-10-10: dřív natvrdo v runar-journal.js; počet všech čtení skládá vn('reading')
     journal_empty:      'No rune readings recorded yet.<br>Draw your first rune.',
     profile_load_err:   'Could not load your account details — check your connection and try again.',   // 2026-10-12: selhané načtení profilu (fetchUserProfile), vzor journal_load_err
@@ -792,7 +792,7 @@ const UI_TEXT = {
     delete_btn:         'EY\u00d0A',
     cancel_btn:         'H\u00c6TTA VI\u00d0',
     deleting_btn:       'EY\u00d0IR...',
-    journal_title:      '\u2726 SP\u00c1R \u00de\u00cdNAR',
+    journal_title:      'SP\u00c1R \u00de\u00cdNAR',
     journal_count_recent: 'síðustu {n}',   // 2026-10-10: dřív kalk z „last N“ (tvar v check-is.py BAD_PATTERNS, korpus 2×); „síðustu fimm“ 13 235×
     journal_empty:      'Engar skr\u00e1\u00f0ar sp\u00e1r enn.<br>Dragðu fyrstu r\u00fanina þ\u00edna.',
     profile_load_err:   'Ekki tókst að sækja upplýsingarnar þínar — athugaðu nettenginguna og reyndu aftur.',   // 2026-10-12: greynir, korpus („sækja upplýsingarnar“ 44), is-gpt-check OK
