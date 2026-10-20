@@ -110,7 +110,7 @@ function draw() {
     var f = id === 'free_trial' ? [U.journey_visitor_ft] : tierFeatures(id, LANG);
     h += '<ul class="j-ft">' + f.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>';
     if (m) h += '<span class="j-btn">' + tp('journey_walk_on', { tier: jmeno(T) }) + '</span><div class="j-note">' + U.journey_soon + '</div>';
-    else if (id === 'rune_seeker' && U.journey_buy_card) h += '<span class="j-btn go" data-go="k">' + tp('journey_buy_card', { card: vl('card', LANG).toUpperCase() }) + '</span>';
+    else if (id === 'rune_seeker' && U.journey_buy_card) h += '<span class="j-btn go" data-go="k">' + tp('journey_buy_card', { card: vl('card', LANG).toUpperCase() }) + ' →</span>';
     return h + '</div>';
   }).join('');
   kamenUctuVystred(document.getElementById('path'));   // bez živého účtu = bez pohybu
