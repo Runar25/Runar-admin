@@ -11,9 +11,11 @@
      Údaje jsou v části adresy za # (#k=KÓD&v=o|f&l=is|en&n=SPÁR) — ta se na server neposílá, takže kód nekončí v žádném logu.
      Stránka kód NEOVĚŘUJE proti DB: veřejný dotaz „existuje kód?“ by šel zneužít k hádání kódů; platnost ověří až redeem-code v appce.
      Vzhledy karty = data v DESIGNS (owner: „teď máme černou a bílou, později můžou být další“). Texty a čísla z appky živě (UI_TEXT,
-     VOCAB, CARD_PACKS, runeSvg) jako landing (§18, §20); nové věty jen tady v TXT. -->
+     VOCAB, CARD_PACKS, runeSvg) jako landing (§18, §20); nové věty jen tady v TXT.
+     2026-10-20: kresba karty (vzhled i skládání líce/rubu) bydlí v ../runakort.css a ../runakort.js — sdílí ji stránka cesty. -->
 <link rel="icon" type="image/png" sizes="96x96" href="https://runar25.github.io/Runar-admin/v2/icons/favicon-96x96.png">
 <link rel="stylesheet" href="https://runar25.github.io/Runar-admin/v2/fonts/fonts.css">
+<link rel="stylesheet" href="../runakort.css">
 <style>
 :root{--bg:#0a0c12;--gold:#FFBF00;--ember:#D6A85C;--white:#F2F5F7;--muted:#8ba5c0;--navy:#2E4A70;--wood:#7D5838;--ink:#1b2333}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -24,48 +26,6 @@ body{color:var(--white);font-family:'Cormorant Garamond',serif;font-size:19px;mi
 .nav button{font:inherit;letter-spacing:3px;background:none;border:none;color:var(--gold);opacity:.55;cursor:pointer;padding:0;margin-left:14px}
 .nav button.on{opacity:1}
 .cards{display:flex;flex-wrap:wrap;gap:24px;justify-content:center;width:100%;max-width:900px}
-.wrap{width:428px;max-width:100%;container-type:inline-size}
-/* Rozměry v cqw (1 cqw = 1 % šířky karty): táž karta na mobilu, na monitoru i v tisku 85,6 mm. Výchozí návrh 428 px → px / 4,28. */
-.card{width:100%;aspect-ratio:85.6/54;border-radius:3.7cqw;position:relative;overflow:hidden;box-shadow:0 18px 40px #0009;
-  -webkit-print-color-adjust:exact;print-color-adjust:exact}
-.stone svg{width:100%;height:auto;display:block}
-.qr{background:#fff;border-radius:1.4cqw;padding:1.6cqw;line-height:0;align-self:start}
-.qr svg{width:100%;height:auto;display:block}
-.code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:3.6cqw;letter-spacing:.5cqw}
-ol{list-style:none;font-size:3.6cqw;line-height:1.75}
-ol li span{font-family:'Cinzel',serif;margin-right:1.9cqw;font-size:2.8cqw}
-.url{font-family:'Cinzel',serif;font-size:2.3cqw;letter-spacing:.5cqw}
-/* o — Obsidián */
-.o.front{background:radial-gradient(ellipse at 30% 50%,#1a2230 0%,#0c0f15 70%);border:1px solid #D6A85C55}
-.o.front .stone{position:absolute;left:7.9cqw;top:50%;transform:translateY(-50%);width:27.6cqw}
-.o.front .stone svg{filter:drop-shadow(0 0 4cqw #FFBF0030)}
-.o.front .t{position:absolute;left:42cqw;top:50%;transform:translateY(-50%)}
-.o .n{font-family:'Cinzel',serif;color:var(--gold);font-size:7cqw;letter-spacing:1.2cqw}
-.o .s{font-family:'Cinzel',serif;color:var(--ember);font-size:2.6cqw;letter-spacing:.9cqw;margin-top:1.4cqw}
-.o .q{font-style:italic;color:#cbd5e1;font-size:3.6cqw;margin-top:3.3cqw;max-width:21ch;line-height:1.35}
-.o .brand{position:absolute;right:4.2cqw;bottom:2.8cqw;font-family:'Cinzel',serif;font-size:2.1cqw;letter-spacing:.7cqw;color:#D6A85C99}
-.back{padding:4.7cqw 5.1cqw;display:grid;grid-template-columns:1fr 26cqw;grid-template-rows:1fr auto;gap:3.7cqw}
-.back .foot{grid-column:1/3;display:flex;justify-content:space-between;align-items:center;padding-top:2.3cqw}
-.o.back{background:#0c0f15;border:1px solid #D6A85C55;color:#e5e9ee}
-.o.back ol li span{color:var(--gold)}
-.o.back .foot{border-top:1px solid #D6A85C44}
-.o.back .code{color:var(--gold)}
-.o.back .url{color:var(--ember)}
-/* f — Mráz */
-.f.front{background:radial-gradient(ellipse at 75% 60%,#fff 0%,#eef2f5 60%,#dfe6ec 100%);border:1px solid #2E4A7033}
-.f.front .art{position:absolute;right:-1.4cqw;bottom:0;width:52%;height:118%;background:url(../img/runar-bile.jpg) center bottom/contain no-repeat;mix-blend-mode:multiply}
-.f.front .t{position:absolute;left:6.1cqw;top:6.5cqw}
-.f .n{font-family:'Cinzel',serif;color:var(--navy);font-size:6.5cqw;letter-spacing:1.2cqw}
-.f .s{font-family:'Cinzel',serif;color:var(--wood);font-size:2.6cqw;letter-spacing:.9cqw;margin-top:1.4cqw}
-.f .q{font-style:italic;color:#2a3446;font-size:3.6cqw;margin-top:2.8cqw;max-width:20ch;line-height:1.35}
-.f.front .stone{position:absolute;left:6.1cqw;bottom:5.1cqw;width:13.6cqw}
-.f .brand{position:absolute;left:22.4cqw;bottom:7cqw;font-family:'Cinzel',serif;font-size:2.1cqw;letter-spacing:.7cqw;color:#2E4A70aa}
-.f.back{background:#f2f5f7;border:1px solid #2E4A7033;color:var(--ink)}
-.f.back ol li span{color:var(--wood)}
-.f.back .foot{border-top:1px solid #2E4A7033}
-.f.back .code{color:var(--navy)}
-.f.back .url{color:var(--navy)}
-.f.back .qr{border:1px solid #2E4A7022}
 .tools{margin-top:30px;display:flex;flex-wrap:wrap;gap:14px;justify-content:center;align-items:center}
 .tools button{font-family:'Cinzel',serif;font-size:12px;letter-spacing:3px;border:1px solid #FFBF0080;background:none;color:var(--gold);padding:12px 20px;cursor:pointer;border-radius:2px}
 .tools button.main{background:var(--gold);color:#000;border-color:var(--gold)}
@@ -78,9 +38,9 @@ ol li span{font-family:'Cinzel',serif;margin-right:1.9cqw;font-size:2.8cqw}
   body{padding:0;display:block}
   .nav,.tools,.hint{display:none}
   .cards{display:block;max-width:none}
-  .wrap{width:85.6mm;height:54mm;break-after:page;page-break-after:always}
-  .wrap:last-child{break-after:auto;page-break-after:auto}
-  html .cards .card{border-radius:0;box-shadow:none;border:none;height:54mm}
+  .rk-wrap{width:85.6mm;height:54mm;break-after:page;page-break-after:always}
+  .rk-wrap:last-child{break-after:auto;page-break-after:auto}
+  html .cards .rk-card{border-radius:0;box-shadow:none;border:none;height:54mm}
 }
 </style>
 </head>
@@ -99,13 +59,11 @@ ol li span{font-family:'Cinzel',serif;margin-right:1.9cqw;font-size:2.8cqw}
 <script src="https://runar25.github.io/Runar-admin/v2/runar-translations.js"></script>
 <script src="https://runar25.github.io/Runar-admin/v2/runar-svgs.js"></script>
 <script src="https://runar25.github.io/Runar-admin/v2/runar-utils.js"></script>
+<script src="../runakort.js"></script>
 <script>
 // Adresa appky — až přejde na app.therunekeeper.com, změní se jen tady (a na landingu).
 var APP_URL = 'https://runar25.github.io/Runar-admin/v2/runar-reader.html';
-// Vzhledy karty = data; nový vzhled = nový klíč + jeho CSS třída (owner 2026-10-19: další přibudou).
-var DESIGNS = { o: { is: 'Svart', en: 'Black' }, f: { is: 'Hvítt', en: 'White' } };
 var TXT = {
-  steps: { is: ['Skannaðu QR kóðann', 'Skráðu þig inn', 'Sláðu inn kóðann'], en: ['Scan the QR code', 'Sign in', 'Enter the code'] },
   print: { is: 'Prenta út eða vista sem PDF', en: 'Print or save as PDF' },
   hint:  { is: 'Kóðinn virkar einu sinni. Hver sem hefur hann getur notað hann. Gefðu hann því aðeins þeim sem á að fá kortið.',
            en: 'The code works once. Whoever has it can use it. So give it only to the person the card is for.' },
@@ -115,15 +73,10 @@ var TXT = {
 var P = new URLSearchParams(location.hash.replace(/^#/, ''));
 var CODE = (P.get('k') || '').trim().toUpperCase();
 if (!/^[A-Z]{3,12}-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(CODE)) CODE = '';   // formát z makeCode() ve shrine
-var DES = DESIGNS[P.get('v')] ? P.get('v') : 'o';
+var DES = RK_DESIGNS[P.get('v')] ? P.get('v') : 'o';
 var LANG = P.get('l') === 'en' ? 'en' : 'is';
 var N = parseInt(P.get('n'), 10) || 0;
 
-// Kámen na líci = runa z předpony kódu (shrine dává předponu podle runy); obecný kód RUNAR → ᚱ Raidho. Naše kresba, frame:true (§5).
-function rune() {
-  var pre = CODE.split('-')[0];
-  return RUNES.filter(function (r) { return r.n.toUpperCase() === pre; })[0] || RUNES.filter(function (r) { return r.svg === 'Raidho'; })[0];
-}
 // QR vede do appky s kódem za # (#kort=…): appka ho předvyplní do pole kódu (runar-auth.js _kortZAdresy), uplatní ho člověk sám.
 function qrSvg() {
   var q = qrcode(0, 'M');
@@ -132,11 +85,6 @@ function qrSvg() {
   var m = q.getModuleCount(), d = '';
   for (var y = 0; y < m; y++) for (var x = 0; x < m; x++) if (q.isDark(y, x)) d += 'M' + x + ' ' + y + 'h1v1h-1z';
   return '<svg viewBox="0 0 ' + m + ' ' + m + '" shape-rendering="crispEdges"><path fill="#0c0f15" d="' + d + '"/></svg>';
-}
-function packLine() {
-  if (!N) return '';
-  var pk = CARD_PACKS.filter(function (p) { return p.credits === N; })[0];
-  return (pk ? cardPackName(pk, LANG) + ' · ' : '') + vn('cast', N, LANG);
 }
 function render() {
   document.documentElement.lang = LANG;
@@ -148,18 +96,11 @@ function render() {
     document.getElementById('hint').style.display = 'none';
     return;
   }
-  var stone = '<div class="stone">' + runeSvg(rune(), { frame: true }) + '</div>';
-  var txt = '<div class="t"><div class="n">RÚNAR</div><div class="s">' + VOCAB.card[LANG].toUpperCase() + '</div><div class="q">' + packLine() + '</div></div>';
-  var front = DES === 'f'
-    ? '<div class="card f front"><div class="art"></div>' + txt + stone + '<div class="brand">AGNDOFA</div></div>'
-    : '<div class="card o front">' + stone + txt + '<div class="brand">AGNDOFA</div></div>';
-  var steps = TXT.steps[LANG].map(function (s, i) { return '<li><span>' + (i + 1) + '</span>' + s + '</li>'; }).join('');
-  var back = '<div class="card ' + DES + ' back"><ol>' + steps + '</ol><div class="qr">' + qrSvg() + '</div>'
-    + '<div class="foot"><span class="code">' + CODE + '</span><span class="url">THERUNEKEEPER.COM</span></div></div>';
-  cards.innerHTML = '<div class="wrap">' + front + '</div><div class="wrap">' + back + '</div>';
-  Object.keys(DESIGNS).forEach(function (k) {
+  cards.innerHTML = '<div class="rk-wrap">' + rkFront({ design: DES, lang: LANG, credits: N, code: CODE }) + '</div>'
+    + '<div class="rk-wrap">' + rkBack({ design: DES, lang: LANG, code: CODE, qr: qrSvg() }) + '</div>';
+  Object.keys(RK_DESIGNS).forEach(function (k) {
     var b = document.getElementById('d-' + k);
-    b.textContent = DESIGNS[k][LANG].toUpperCase();
+    b.textContent = RK_DESIGNS[k][LANG].toUpperCase();
     b.classList.toggle('on', k === DES);
   });
   document.getElementById('print').textContent = TXT.print[LANG].toUpperCase();
