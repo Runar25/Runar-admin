@@ -1317,6 +1317,29 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   2026-10-15 platí). Veřejný formulář se nestaví.
 - [ ] Ownerova diskuse D–H (uvítání Visitora v menu, statický „Rúnar's welcome“, vysvětlení v Journalu, blok jako „How a reading works“,
   jeden text o tom, co je zdarma) — owner: „ještě to doplníme“; nestavět.
+### Hlášení z appky 2026-10-19 / 20 (načtena 2026-10-20, CODE-tune; hotové: df67acda, 62283c8c — a56aa46)
+- [ ] **Jeden vzhled pro stejnou věc — soupis komponent a kontrola (owner, hlášení 116b643c, 0d5a0055, 89e4dc3f):** *„to má být sjednocené
+  a ne že jeden text se rozbaluje takhle a druhý jinak. To neplatí jen pro tohle, ale všechno! Okna, text, font, barvy. … nehledáš si to,
+  když to tvoříš! … musíš to mít někde speciálně napsané, abys to dodržoval? Tak to udělej.“* Rozbalovací „+“: líbí se mu to u „0 rune
+  readings remaining +“ (výraznější, protočí se) — má se točit kolem svého středu a platit pro všechna rozbalování, ale „nebudeme to
+  aplikovat plošně“, napřed soupis, kde všude „+“ je a čím se liší (oblast / hledání / záměr, How a reading works, menu…), a návrh
+  dalších symbolů pro schované menu. Pozvánka návštěvníka (BECOME A RUNE SEEKER) „nemá stejnou paletu barev jako ostatní okna“ — najít
+  rozdíly, určit výchozí. Mechanismus (§30): soupis komponent appky (okno, tlačítko, rozbalovač, štítek, karta) s třídou, která je
+  nese, na jednom místě + kontrola, že nová třída v `runar-reader.css` buď komponentu používá, nebo je v soupisu s důvodem.
+  ⚠️ Moje nové třídy z 2026-10-19 (`.journey-*`, `.dd-journey`, `.ai-note`, `.svice`) projít jako první. CODE-tune, soupis a návrh ownerovi.
+- [ ] **Okno „Your journey with Rúnar“ — ownerovy úpravy (hlášení bd915d60):** nadpis „WALK WITH RÚNAR?“ (ptá se, jak to zní); podtitul
+  „Each step gives you more rune readings. …“; Rúnakort jako třetí karta vedle MONTHLY / YEARLY a odkaz u Rune Seekera, který na ni
+  skočí; mezi kameny místo teček **stopy bot** (malé, nesymetrické, od Visitora k Wandererovi — „walk with us“). Owner nabízí ukázat na
+  počítači. Návrh textů EN + IS a náhled stop napřed ownerovi. CODE-tune.
+- [ ] **Ikona záložky Rune Reading: dva překrývající se runové kameny (hlášení 84976d5d)** — owner: *„napřed náhled“*. Kameny z `RUNE_SVGS`.
+- [ ] **„What are you seeking — This sets the tone“ (hlášení 3b79eac3):** owner: *„je složité si představit, co tím tónem myslíme“* — nová
+  věta nápovědy `seek_hint` EN + IS, návrh ownerovi (co volba ve čtení skutečně dělá: tvar konce čtení, `SEEK_SHAPE` v runar-utils.js).
+- [ ] **Písmo čtení je malé (testeři IS, hlášení 4910de7c, db5e2b38 — čtení Norny 452a97c5):** *„Letrið er of lítið, það er erfitt að
+  lesa þetta.“* Změřit dnešní velikost textu čtení na telefonu a navrhnout větší (pozor na délku čtení na obrazovce). Rozhodne owner.
+- [ ] **Islandské věty, kterým tester nerozumí (f35d5943 21:05, aa0a852e 00:02 — bez označeného textu):** aa0a852e přišlo ve stejnou minutu
+  jako db5e2b38 k Nornám 452a97c5 — nejspíš věta „Í lífi þínu gæti þetta verið kunnugleg nánd sem breytist í hlé, eða hlé sem gefur henni
+  nýtt rými.“ (neověřeno). CODE-read: projít čtení 452a97c5 islandsky (§2), u f35d5943 kontext chybí.
+
 ### Rúnakort jako karta (DECISIONS 2026-10-19 (4), CODE-web → CODE-tune)
 - [x] ✅ *(CODE-tune 2026-10-19, fff8649)* QR na kartě (`runar-reader.html#kort=<KÓD>`) kód v appce předvyplní; uplatní ho člověk.
 - [x] ✅ *(CODE-tune 2026-10-19; SQL pustil owner týž den)* **Shrine: tisk dávky fyzických karet** — dávka ukládá `form='physical'`, `design`,
