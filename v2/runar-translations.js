@@ -344,6 +344,7 @@ const UI_TEXT = {
     journey_gift:         'Two months are a gift.',
     journey_here:         'you are here',
     journey_walk_on:      'WALK ON AS {tier}',
+    journey_buy_card:     'BUY A {card}',   // 2026-10-20 owner přes CODE-web; tlačítko u Rune Seekera → karta Rúnakort
     journey_step_back:    'STEP BACK TO {tier}',
     journey_step_note:    'From the end of this period.',
     journey_manage:       'MANAGE YOUR SUBSCRIPTION',
@@ -908,6 +909,7 @@ const UI_TEXT = {
     journey_gift:         'Tveir mánuðir að gjöf.',
     journey_here:         'þú ert hér',
     journey_walk_on:      'GERAST {tier}',
+    journey_buy_card:     'KAUPA {card}',   // 2026-10-20 vzor shop_buy_more; Greynir OK, „kaupa kort“ 603×
     journey_step_back:    'GERAST {tier}',
     journey_step_note:    'Breytingin tekur gildi í lok tímabilsins.',
     journey_manage:       'ÁSKRIFTIN ÞÍN',
