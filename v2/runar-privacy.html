@@ -327,10 +327,12 @@ const C = {
     s5Lbl:   'YOUR RIGHTS',
     s5Intro: 'Under GDPR, these rights belong to you. They are not privileges — they are yours by law.',
     s5Rights: [
-      ['ACCESS',       'Request a copy of all data we hold about you.'],
+      // 2026-10-20 (DECISIONS 2026-10-18 (3)): export jen na e-mail z adresy účtu — ověření totožnosti (GDPR čl. 12 odst. 6); skript
+      // scripts/utils/export_uctu.js (CODE-read). Do té doby věta neříkala, odkud žádost poslat.
+      ['ACCESS',       'Write to us from the email address your account is registered to, and we will send a copy of all data we hold about you to that same address within a month.'],
       ['CORRECTION',   'Ask us to correct anything inaccurate.'],
       ['ERASURE',      'Delete your account in the app, or write to us. Everything goes — from our encrypted backups within 30 days.'],
-      ['PORTABILITY',  'Receive your readings in a machine-readable format.'],
+      ['PORTABILITY',  'The copy comes in a machine-readable format (JSON): your readings and everything linked to your account.'],
       ['RESTRICTION',  'Ask us to pause processing your data while a dispute is resolved.'],
       ['OBJECTION',    'Object to processing based on legitimate interest.'],
       ['COMPLAINT',    'Lodge a complaint with the Icelandic Data Protection Authority (Persónuvernd) at personuvernd.is.'],
@@ -418,10 +420,12 @@ const C = {
     s5Lbl:   'RÉTTINDI ÞÍN',
     s5Intro: 'Samkvæmt GDPR tilheyra þér þessi réttindi. Þau eru ekki forréttindi — þau eru þín samkvæmt lögum.',
     s5Rights: [
-      ['AÐGANGUR',      'Biddu um afrit af öllum gögnum sem við geymum um þig.'],
+      // 2026-10-20: Greynir OK; korpus „er skráður á“ 764×, „á sama netfang“ 74×, „innan mánaðar“ 2 260× (CODE-read).
+      ['AÐGANGUR',      'Skrifaðu okkur af netfanginu sem reikningurinn þinn er skráður á og við sendum þér afrit af öllum gögnum sem við geymum um þig á sama netfang innan mánaðar.'],
       ['LEIÐRÉTTING',   'Biddu okkur um að leiðrétta eitthvað sem er rangt.'],
       ['EYÐING',        'Eyddu reikningi þínum í forritinu, eða skrifaðu okkur. Allt hverfur — úr dulkóðuðu öryggisafritunum okkar innan 30 daga.'],
-      ['FLUTNINGUR',    'Fáðu lestrana þína á véllæsilegu sniði.'],
+      // 2026-10-20: „á véllæsilegu sniði“ korpus 0× → „á tölvutæku formi“ 879×; „allt sem fylgir“ 605× (CODE-read).
+      ['FLUTNINGUR',    'Í afritinu eru lestrarnir þínir og allt sem fylgir reikningnum, á tölvutæku formi (JSON).'],
       ['TAKMÖRKUN',     'Biddu okkur um að gera hlé á vinnslu meðan ágreiningur er leystur.'],
       ['MÓTMÆLI',       'Mótmæltu vinnslu sem byggist á lögmætum hagsmunum.'],
       ['KVÖRTUN',       'Leggðu fram kvörtun hjá Persónuvernd á personuvernd.is.'],
