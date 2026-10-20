@@ -30,16 +30,28 @@
 
   // Svicka: tri nadechy, pak doutna. Halo je vlastni prvek (ne ::after — u „How a reading works“ ho nese „+“), absolutne za textem,
   // takze nic neposune. Zhasne klepnutim na misto. Znovu zapalena svicka zacina od zacatku (reflow mezi odebranim a pridanim tridy).
+  // Halo kopíruje OBSAH prvku (text nebo kresbu), ne jeho krabici: „How a reading works“ je tlačítko přes celou šířku, runa je malý kámen.
+  // Měří se rozsah obsahu (Range) bez halo, ellipsa o kus větší, vystředěná na obsah (2026-10-20, owner — dřív pevných 300 × 60 px).
+  function obsah(el) {
+    var r = null;
+    try { var g = document.createRange(); g.selectNodeContents(el); r = g.getBoundingClientRect(); } catch (e) {}
+    return (r && r.width && r.height) ? r : el.getBoundingClientRect();
+  }
   function rozsvit(el) {
     if (!el) return;
     el.classList.remove("svice");
     void el.offsetWidth;
-    if (!el.querySelector(":scope > .svice-halo")) {
-      var h = document.createElement("span");
-      h.className = "svice-halo";
-      h.setAttribute("aria-hidden", "true");
-      el.appendChild(h);
-    }
+    var stare = el.querySelector(":scope > .svice-halo");
+    if (stare) stare.remove();
+    var o = obsah(el), b = el.getBoundingClientRect();
+    var h = document.createElement("span");
+    h.className = "svice-halo";
+    h.setAttribute("aria-hidden", "true");
+    h.style.width = Math.round(Math.min(o.width * 1.45 + 8, (window.innerWidth || 400) * 0.9)) + "px";
+    h.style.height = Math.round(o.height * 1.6 + 10) + "px";
+    h.style.left = Math.round(o.left - b.left + o.width / 2) + "px";
+    h.style.top = Math.round(o.top - b.top + o.height / 2) + "px";
+    el.appendChild(h);
     el.classList.add("svice");
     if (!el._sviceZhasni) {
       el._sviceZhasni = function () { zhasni(el); };
