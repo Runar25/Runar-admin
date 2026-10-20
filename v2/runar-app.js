@@ -969,18 +969,20 @@ function _updateAreaSeekLabels() {
       : function () { return ''; };
   const _optSpan = _isVisitor ? '' : ' <span class="opt">'+t('opt')+'</span>';
   // 2026-09-29 (report KUKY 11:32): „+“ za popiskem rozbalí jednu větu, co volba ve čtení dělá (toggleFormHint níž).
-  const _tgl = function (k) { const box = document.getElementById(k + '-hint'); const open = !!(box && box.style.display !== 'none');
-    return ' <button class="hint-tgl" type="button" aria-expanded="' + open + '" aria-controls="' + k + '-hint" onclick="toggleFormHint(\'' + k + '\')"></button>'; };
-  if (albl) albl.innerHTML = t('area_lbl') + _optSpan + _tgl('area') + _lockHint('area');
+  // 2026-10-20 (owner: „když najedu kurzorem na area, seeking, intention, neobjeví se ručička stejně jako … how a reading works“): tlačítkem
+  // je CELÝ popisek (text + „(optional)“ + „+“), jako u „How a reading works“ — do té doby jen „+“ za textem.
+  const _tgl = function (k, obsah) { const box = document.getElementById(k + '-hint'); const open = !!(box && box.style.display !== 'none');
+    return '<button class="hint-tgl" type="button" aria-expanded="' + open + '" aria-controls="' + k + '-hint" onclick="toggleFormHint(\'' + k + '\')">' + obsah + '</button>'; };
+  if (albl) albl.innerHTML = _tgl('area', t('area_lbl') + _optSpan) + _lockHint('area');
   const slbl = document.getElementById('seek-lbl');
-  if (slbl) slbl.innerHTML = t('seek_lbl') + _optSpan + _tgl('seek') + _lockHint('seek');
+  if (slbl) slbl.innerHTML = _tgl('seek', t('seek_lbl') + _optSpan) + _lockHint('seek');
   const ilbl = document.getElementById('intention-lbl');
-  if (ilbl) ilbl.innerHTML = t('intention_lbl') + _optSpan + _tgl('intention') + _lockHint('intention');
+  if (ilbl) ilbl.innerHTML = _tgl('intention', t('intention_lbl') + _optSpan) + _lockHint('intention');
   ['area', 'seek', 'intention', 'qpriv'].forEach(function (k) { setText(k + '-hint', t(k + '_hint')); });   // přepnutí jazyka přepíše i otevřenou nápovědu
   setText('q-consent-lbl', t('qconsent_lbl'));   // políčko souhlasu u otázky (krok 2, DECISIONS 2026-10-12 (7))
   const qlbl = document.getElementById('q-lbl');
   // 2026-10-12 (DECISIONS 2026-10-12 (7)): „+“ i za THE SITUATION — upozornění, co se s otázkou děje (#qpriv-hint).
-  if (qlbl) qlbl.innerHTML = t('q_lbl') + ' <span class="opt">'+t('opt')+'</span>' + _tgl('qpriv');
+  if (qlbl) qlbl.innerHTML = _tgl('qpriv', t('q_lbl') + ' <span class="opt">'+t('opt')+'</span>');
   // Napoveda k otazce. Patri SEM (a ne do updateUIText primo), protoze je soucasti
   // sekce otazky — a `_updateAreaSeekLabels` updateUIText vola (:746), takze se to
   // pri prepnuti jazyka prekresli.
