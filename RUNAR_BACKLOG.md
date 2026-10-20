@@ -44,7 +44,11 @@
       `runar-auth.js`: `canAsk = standard || premium`). Pozor na základ produkce (§32) a souhlas s otázkou (㊽).
     - [x] ✅ **Test „pravidlo v systému × v user promptu“, EN** — 2026-10-16: systém 5/5 = user 5/5, kontrola 0/5 (RUNAR_EVAL_LOG
       2026-10-16 (1)); CLAUDE.md opraven. IS a pravidlo proti protichůdnému pokynu zatím neměřeno.
-    - [ ] **Lab: pravidlo v systému × PROTICHŮDNÝ pokyn v user promptu** (owner 2026-10-16: *„zapsat. teď to funguje, tak neměním, ale
+    - [ ] **Pravidlo v systému × PROTICHŮDNÝ pokyn v user promptu — testuje OWNER v reálných čteních, ne lab přes API** (owner 2026-10-20:
+      *„to zkoušet nebudeme … čtení teď prochází přes testery u reálných čtení, takže to budeme kontrolovat tak“*). Owner dostal otázky
+      (budoucnost ano/ne do pole s otázkou a do Asku, EN i IS); znak vady = předpověď („it will“, ano/ne, časový slib, záruka). Výsledek
+      → hlášení z appky / zpráva ownera; teprve s vadou v ruce oprava `qBranch` („Let <runa> answer“, runar-character.js) nebo Ask pravidla.
+      Původní zadání: (owner 2026-10-16: *„zapsat. teď to funguje, tak neměním, ale
       otestujeme to“*). Co to je: test 2026-10-16 měřil pravidlo, kterému nic neodporovalo. V promptu ale jsou místa, kde systém říká jedno
       a user prompt pod ním něco, co táhne jinam — tam rozhodne, který z nich model poslechne (výklad červnového nálezu: vyhrál konkrétní
       pokyn na konci). Test: na jednom takovém místě dvě ramena (dnešní znění × user pokyn sladěný se systémem), malý vzorek, měřit, které
