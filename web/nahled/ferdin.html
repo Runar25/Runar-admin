@@ -126,7 +126,7 @@ function draw() {
     var f = id === 'free_trial' ? [U.journey_visitor_ft] : tierFeatures(id, LANG);
     h += '<ul class="j-ft">' + f.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>';
     if (m) h += '<button class="btn-upgrade">' + tp('journey_walk_on', { tier: jmeno(T) }) + '</button>';
-    else if (id === 'rune_seeker' && U.journey_buy_card) h += '<button class="btn-upgrade" data-go="k">' + tp('journey_buy_card', { card: vl('card', LANG).toUpperCase() }) + ' →</button>';
+    else if (id === 'rune_seeker') h += '<button class="btn-upgrade" data-go="k">' + vl('card', LANG).toUpperCase() + ' →</button>';
     return h + '</div>';
   }).join('');
   kamenUctuVystred(document.getElementById('path'));   // bez živého účtu = bez pohybu
