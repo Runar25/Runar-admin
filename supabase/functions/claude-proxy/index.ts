@@ -407,7 +407,6 @@ serve(async (req: Request) => {
     // life_rune_reset (2026-09-14) nevola Clauda, prompt nema — stejna vyjimka jako resave.
     // Nalezeno sondou na zivem endpointu: reset s prazdnym promptem koncil 400 pred auth.
     if (!prompt && mode !== "resave" && mode !== "life_rune_reset") return json({ error: "Missing prompt" }, 400);
-    if (prompt && body.stin && typeof body.stin === "object") stinPorovnej(body.stin, system, prompt);   // F2 stín (na pozadí)
 
     // Strop delky promptu. Merene maximum LEGITIMNIHO provozu (2026-08-16): user prompt
     // 3942 znaku (yggdrasil IS, vse vyplnene) + az ~1800 korekcni blok = ~5750;
@@ -479,6 +478,8 @@ serve(async (req: Request) => {
     // SECURITY: require a logged-in user. Visitor has only the static Rune Collection,
     // no live reading -> anonymous is rejected here before any Claude cost.
     if (!userId) return json({ error: "unauthorized" }, 401);
+    // F2 stín (na pozadí) — až po přihlášení: jinak by porovnání a zápis do ops_events spouštěl kdokoli (2026-10-21)
+    if (prompt && body.stin && typeof body.stin === "object") stinPorovnej(body.stin, system, prompt);
 
     // ── Rate limiting ──
     const rlKey = `claude:user:${userId}`;
