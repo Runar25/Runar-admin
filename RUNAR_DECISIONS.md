@@ -12081,3 +12081,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   řádek s počtem nových registrací za 24 h. Zdroj počtu: `ops_events` kind `waitlist_signup` bez osobních údajů (zapisuje waitlist-join).
 - **Adresy dál jen v Brevu** — RUNAR_PRIVACY „registrace čekatelů“ beze změny. Plný seznam v Google jen s doplněním zásad (owner nechce).
 - Affected doc(s): žádný jiný (zásady se nemění; stav vlastní kód).
+
+## 2026-10-21 (8) — Značka v liště RÚNAR (odkaz na domovskou stránku webu); karta Rúnakort i v appce, kresba na jednom místě v v2/
+
+- **Rozhodl:** owner 2026-10-21 20:37 (CODE-web předal, citát ověřen v přepisu): *„chci i kartu do apky. agndofa přejmenujeme všude
+  i web na Rúnar a odkazuje na home page. landing page zůstane agndofa.“* K líci karty: *„ať tam zůstane agndofa. to není odkaz na
+  agndofa a hlavně web ani apka neměli návrat do homepage.“*
+- **Co:** (1) Značka v liště appky, nápovědy, zásad i shrine = RÚNAR; v appce vede na domovskou stránku webu (`RUNAR_HOME_URL`
+  v configu), v Google Play bez odkazu. AGNDOFA zůstává na landing page, na líci karty Rúnakort a jako firma v zásadách.
+  (2) Okno cesty, karta Rúnakort: balíček se volí klepnutím, pod seznamem vzhled a náhled líce se zvoleným balíčkem. Kresba karty
+  přešla z `web/site/` do `v2/runar-runakort.js` / `.css` (+ `v2/img/`), web ji čte odsud (návrh CODE-web; jedno místo, §20).
+- **Proč:** značka má vést tam, kde Rúnar bydlí, ne do e-shopu, kde se Rúnar neprodává; karta v appce ukáže, co si člověk kupuje.
+- Affected doc(s): `CLAUDE.md` (soubory, pořadí načítání) — v témže commitu.

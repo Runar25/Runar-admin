@@ -1804,6 +1804,7 @@ function _journeyProstredi() {
 function _jkr(n) { return String(Math.round(Number(n))).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
 function _jesc(x) { return String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 // 2026-10-20: třetí karta „c“ = Rúnakort (owner, hlášení bd915d60: „vedle month, year jako zvlášť okno a u Rune Seekera odkaz“).
+var _jPk = 1, _jDes = 'o';   // karta Rúnakort v okně cesty: zvolený balíček (index CARD_PACKS) a vzhled (RK_DESIGNS) — 2026-10-21
 function _journeyObdobi(p) { _journeyP = (p === 'y' || p === 'c') ? p : 'm'; _journeyPaint(); }
 // Stopa boty (2026-10-20, owner: „místo teček spojující jeden druhý bych chtěl vidět stopy bot. Malé, ale dostatečně viditelné. Ne
 // symetrické, ale jdoucí od Visitora k Wandererovi“): podrážka + pata, špička dolů (cesta vede shora dolů), střídavě levá / pravá. Bez pohybu.
@@ -1842,10 +1843,20 @@ function _journeyPaint() {
   }
   var h = '';
   if (_journeyP === 'c' && env !== 'play') {   // karta Rúnakort: balíčky z CARD_PACKS, cena, počet čtení; kód zadat hned
-    CARD_PACKS.forEach(function (pk) {
-      h += '<div class="journey-pack"><div class="journey-nm"><span>' + _jesc(cardPackName(pk, lang).toUpperCase()) + '</span><span class="journey-pr">'
+    // 2026-10-21 (owner „chci i kartu do apky“): balíček se volí klepnutím, pod seznamem vzhled a náhled líce (runar-runakort.js) —
+    // jako stránka cesty na webu. Výchozí balíček druhý, vzhled černý (tytéž výchozí jako web).
+    CARD_PACKS.forEach(function (pk, i) {
+      h += '<div class="journey-pack' + (i === _jPk ? ' on' : '') + '" role="button" tabindex="0" aria-pressed="' + (i === _jPk) + '" onclick="_jPk=' + i + ';_journeyPaint()">'
+        + '<div class="journey-nm"><span>' + _jesc(cardPackName(pk, lang).toUpperCase()) + '</span><span class="journey-pr">'
         + _jkr(pk.isk) + ' kr</span></div><div class="journey-note">' + _jesc(vn('cast', pk.credits, lang)) + '</div></div>';
     });
+    if (typeof rkFront === 'function' && CARD_PACKS[_jPk]) {
+      h += '<div class="journey-per" style="margin:16px 0 12px">' + Object.keys(RK_DESIGNS).map(function (k) {
+        return '<button type="button" class="' + (k === _jDes ? 'on' : '') + '" onclick="_jDes=\'' + k + '\';_journeyPaint()">'
+          + _jesc(RK_DESIGNS[k][lang === 'is' ? 'is' : 'en'].toUpperCase()) + '</button>';
+      }).join('') + '</div><div class="rk-wrap" style="margin:4px auto 16px">'
+        + rkFront({ design: _jDes, lang: lang === 'is' ? 'is' : 'en', credits: CARD_PACKS[_jPk].credits }) + '</div>';
+    }
     if (env === 'web') h += '<a class="tn-btn btn-upgrade" href="' + _jesc(JOURNEY_URL) + '" target="_blank" rel="noopener">' + _jesc(tp('gift_card_btn', { card: vl('card', lang).toUpperCase() })) + ' →</a>';   // → = vede jinam (web), CODE-read §4
     // bez JOURNEY_URL nic (owner 2026-10-20: „v appce taky pryč“ — „Coming soon“ ani u Rúnakortu; klíč journey_soon zrušen)
     var p0 = CARD_PACKS.reduce(function (a, b) { return b.isk < a.isk ? b : a; });

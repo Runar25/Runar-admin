@@ -32,6 +32,7 @@ runar-reporter.js     — in-app hlášení od testerů (bug_reports) · jen rea
 runar-verze.js        — verze běžícího kódu pro hlášení (GENEROVANÉ hooks/pre-commit.py při bumpu sw.js, needitovat) · jen reader
 runar-rune-popup.js   — ťuknutí na glyf runy ve čtení → popup se jménem a významem · jen reader
 runar-helper.js       — nápověda „?" (bublina: glyf-tap, Ask) + hesla zrcadla v UI_TEXT · jen reader
+runar-runakort.js/.css — kresba karty Rúnakort (okno cesty); web therunekeeper.com ji čte odsud · třídy rk-* · jen reader
 runar-readings-admin.js — shrine: prohlížeč čtení (edge fn list-readings)
 runar-reports-admin.js  — shrine: prohlížeč hlášení (edge fn list-reports)
 runar-voice-admin.js    — shrine: záložka VOICE, stav ElevenLabs (edge fn voice-usage)
@@ -49,7 +50,7 @@ sw.js                 — Service Worker (auto-bump via git hook · hooks/pre-co
 ### Load order
 ```
 runar-config.js → runar-runes.js → [reader: runar-names.js → runar-names-registry.js] → runar-translations.js → runar-character.js
-→ runar-utils.js → runar-svgs.js
+→ runar-utils.js → runar-svgs.js → [reader: runar-runakort.js]
 → [reader]: runar-journal.js
             → tree-lab-trunk-composer/runar-trunk.js → tree-lab-branch-composer/runar-branch.js
             → runar-tree-prod.js → runar-tree.js

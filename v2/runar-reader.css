@@ -853,6 +853,9 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 .journey-stopy{position:absolute;left:13px;top:66px;bottom:4px;width:18px;pointer-events:none;}
 .journey-stopa{position:absolute;width:6px;height:17px;fill:rgba(255,191,0,0.4);transform-origin:50% 50%;}
 .journey-pack{padding:10px 0;border-bottom:1px solid rgba(255,191,0,0.1);}
+/* 2026-10-21: balíček se volí klepnutím (náhled karty pod seznamem) — zvolený má zlatou linku vlevo jako volba v .journey-per */
+.journey-pack[role="button"]{cursor:pointer;padding-left:10px;border-left:2px solid transparent;}
+.journey-pack.on{border-left-color:var(--gold);}
 .journey-pack .journey-nm{color:var(--gold);}
 .journey-pack .journey-pr{margin:0;}
 .journey-kamen{width:44px;height:60px;}

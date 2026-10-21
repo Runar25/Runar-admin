@@ -1425,7 +1425,8 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
 
 ### Revize nápovědy, zásad a textů v appce (owner 2026-10-21 „můžou tam být staré věci“; CODE-tune)
 Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zásady soukromí), 95375a7 (texty v appce). Zbývá:
-- [ ] **Mazání v ElevenLabs neověřené:** od zavedení záznamu (2026-10-16) vznikl jeden hlas (16. 10. 09:32) a `ops_events` purge
+- [x] ✅ *(CODE-tune 2026-10-21: ověřeno jedním hlasem z admin účtu, owner „5. ano“ — `ops_events` purge el_history ok, smazáno 1,
+  6 s po hlasu; věta v zásadách platí.)* **Mazání v ElevenLabs neověřené:** od zavedení záznamu (2026-10-16) vznikl jeden hlas (16. 10. 09:32) a `ops_events` purge
   `el_history` nemá ani jeden řádek — zásady přitom říkají „we delete the text and the audio“. Ověřit jedním hlasem a dotazem do
   `ops_events`; nezabere-li to, opravit mazání, nebo větu v zásadách.
 - [ ] **Zásady slibují upozornění v appce před změnou** (oddíl „If things change“) — mechanismus neexistuje, zásady se v říjnu měnily

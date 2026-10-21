@@ -1,8 +1,8 @@
-// Rúnar Service Worker — v774
+// Rúnar Service Worker — v775
 // HTML: network-first (always fresh). JS/CSS/icons: cache-first (fast, offline ok).
 // External (Supabase, ElevenLabs, fonts): pass-through, never intercepted.
 
-const CACHE = 'runar-v774';
+const CACHE = 'runar-v775';
 const JS_SHELL = [
   '/Runar-admin/v2/runar-reader.css',
   '/Runar-admin/v2/runar-utils.js',
@@ -18,6 +18,11 @@ const JS_SHELL = [
   '/Runar-admin/v2/runar-translations.js',
   '/Runar-admin/v2/runar-character.js',
   '/Runar-admin/v2/runar-svgs.js',
+  // 2026-10-21: karta Rúnakort v okně cesty (kresba + vzhled + dva obrázky vzhledů s postavou)
+  '/Runar-admin/v2/runar-runakort.js',
+  '/Runar-admin/v2/runar-runakort.css',
+  '/Runar-admin/v2/img/runar-bile.jpg',
+  '/Runar-admin/v2/img/runar-zima.jpg',
   // 2026-09-14: sedm souboru, ktere reader nacita a tady chybely — nebyly v precache, takze je
   // fetch handler ukladal az za behu PRES HTTP CACHE (stare byty pod novou verzi). Seznam ted
   // hlida kontrola ㉧ (verify_sw_shell.js) proti <script src> v runar-reader.html.
