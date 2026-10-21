@@ -3478,6 +3478,29 @@ function _stezkaSpust(svg) {
 // Klepnutí na kámen účtu ho na chvíli oživí — owner 2026-10-21: „při kliknutí na runu účtu … na pár vteřin, třeba 5 s, rozanimoval,
 // jak umí, aby šlo vidět, že to něco dělá“. Kámen „you are here“ žije pořád (nic se nemění); prázdný kámen Visitora pohyb nemá;
 // bez animací (prefers-reduced-motion) v klidu. Jedno místo — okno v appce i web mohou volat totéž.
+// ─── STOPY BOT mezi kameny účtů (owner 2026-10-20: „místo teček … stopy bot. Malé, ale dostatečně viditelné. Ne symetrické, ale jdoucí
+// od Visitora k Wandererovi“; večer: „stejně velké … mezera mezi stopami stejná … podle velikosti mezery určitý počet“). Podrážka + pata,
+// střídavě levá / pravá, bez pohybu. 2026-10-21 sem z runar-app.js (owner: „na webu nejsou stopy“) — jedno místo pro okno appky i web.
+// stopyRozmisti(box, smer): box = prázdný prvek s position (relative/absolute) a rozměrem, do kterého se stopy vejdou; smer 'dolu' =
+// cesta shora dolů, špička dolů, stopy vlevo / vpravo (box široký ~16 px); 'doprava' = cesta zleva doprava, špička doprava, stopy nahoře /
+// dole (box vysoký ~16 px). Počet = kolik kroků STOPA_KROK se do délky boxu vejde; rozměr zná až vykreslená stránka → volat po vložení
+// a znovu při změně velikosti okna. Barva a rozměr inline (STOPA_BARVA), takže stránka nepotřebuje žádné CSS kromě boxu.
+var STOPA_PATH = '<path d="M3 12c-1.7 0-2.6-1.8-2.6-4S1.3 0 3.2 0s2.6 2.6 2.4 4.6C5.4 7.4 4.6 12 3 12z"/><path d="M3.4 13.4c1.2 0 1.8.8 1.7 1.8-.1 1-.8 1.8-1.9 1.8s-1.7-.8-1.6-1.8c.1-1 .7-1.8 1.8-1.8z"/>';
+var STOPA_KROK = 24, STOPA_DELKA = 17, STOPA_BARVA = 'rgba(255,191,0,0.4)';   // rozestup (px, od stopy ke stopě), délka stopy (viewBox 6×17)
+function stopyRozmisti(box, smer) {
+  if (!box) return;
+  var vodor = smer === 'doprava', L = vodor ? box.clientWidth : box.clientHeight;
+  var n = Math.max(1, Math.floor((L - STOPA_DELKA) / STOPA_KROK) + 1), p0 = (L - (n - 1) * STOPA_KROK - STOPA_DELKA) / 2, out = '';
+  for (var k = 0; k < n; k++) {
+    var druha = k % 2 === 1, p = p0 + k * STOPA_KROK, bok = druha ? 9 : 1;
+    // svg 6×17 se otáčí kolem středu: vodorovně zabírá 17×6 → posun o (17 − 6) / 2 = 5,5 px, ať délka i bok sedí jako svisle
+    var poloha = vodor ? 'left:' + (p + 5.5).toFixed(1) + 'px;top:' + (bok - 5.5) + 'px' : 'top:' + p.toFixed(1) + 'px;left:' + bok + 'px';
+    var uhel = vodor ? (druha ? 98 : 82) : (druha ? 188 : 172);
+    out += '<svg class="stopa" viewBox="0 0 6 17" fill="' + STOPA_BARVA + '" style="position:absolute;width:6px;height:17px;transform-origin:50% 50%;'
+      + poloha + ';transform:rotate(' + uhel + 'deg)' + (druha ? ' scaleX(-1)' : '') + '">' + STOPA_PATH + '</svg>';
+  }
+  box.innerHTML = out;
+}
 function kamenUctuOziv(svg, ms) {
   if (!svg || svg.classList.contains('zivy')) return;
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;

@@ -1806,24 +1806,10 @@ function _jesc(x) { return String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;'
 // 2026-10-20: třetí karta „c“ = Rúnakort (owner, hlášení bd915d60: „vedle month, year jako zvlášť okno a u Rune Seekera odkaz“).
 var _jPk = 1, _jDes = 'o';   // karta Rúnakort v okně cesty: zvolený balíček (index CARD_PACKS) a vzhled (RK_DESIGNS) — 2026-10-21
 function _journeyObdobi(p) { _journeyP = (p === 'y' || p === 'c') ? p : 'm'; _journeyPaint(); }
-// Stopa boty (2026-10-20, owner: „místo teček spojující jeden druhý bych chtěl vidět stopy bot. Malé, ale dostatečně viditelné. Ne
-// symetrické, ale jdoucí od Visitora k Wandererovi“): podrážka + pata, špička dolů (cesta vede shora dolů), střídavě levá / pravá. Bez pohybu.
-// Téhož dne večer (owner: „má to vypadat vizuálně stejně i velikosti stop … mezera mezi samotnými stopami by měla být stejná“, „podle
-// velikosti mezery určitý počet“): všechny stopy stejně velké, krok _J_KROK px, počet = kolik kroků se do mezery vejde. Mezeru zná až
-// vykreslené okno, proto rozmístění dělá _jStopyRozmisti po vložení (a znovu při změně šířky okna — text se zalomí jinak).
-var _J_STOPA = '<path d="M3 12c-1.7 0-2.6-1.8-2.6-4S1.3 0 3.2 0s2.6 2.6 2.4 4.6C5.4 7.4 4.6 12 3 12z"/><path d="M3.4 13.4c1.2 0 1.8.8 1.7 1.8-.1 1-.8 1.8-1.9 1.8s-1.7-.8-1.6-1.8c.1-1 .7-1.8 1.8-1.8z"/>';
-var _J_KROK = 24, _J_VYSKA = 17;   // rozestup stop (px, od stopy ke stopě) a výška stopy (viewBox 6×17)
+// Stopy bot mezi kameny (owner 2026-10-20) — kresba a rozmístění v runar-utils.js (stopyRozmisti), sdílí je web (2026-10-21).
 function _jStopy() { return '<div class="journey-stopy" aria-hidden="true"></div>'; }
 function _jStopyRozmisti() {
-  document.querySelectorAll('#journey-path .journey-stopy').forEach(function (box) {
-    var h = box.clientHeight, n = Math.max(1, Math.floor((h - _J_VYSKA) / _J_KROK) + 1), y0 = (h - (n - 1) * _J_KROK - _J_VYSKA) / 2, out = '';
-    for (var k = 0; k < n; k++) {
-      var prava = k % 2 === 1;
-      out += '<svg class="journey-stopa" viewBox="0 0 6 17" style="top:' + (y0 + k * _J_KROK).toFixed(1) + 'px;left:' + (prava ? 9 : 1) + 'px;transform:rotate('
-        + (prava ? 188 : 172) + 'deg)' + (prava ? ' scaleX(-1)' : '') + '">' + _J_STOPA + '</svg>';
-    }
-    box.innerHTML = out;
-  });
+  document.querySelectorAll('#journey-path .journey-stopy').forEach(function (box) { stopyRozmisti(box, 'dolu'); });
 }
 window.addEventListener('resize', function () { var m = document.getElementById('journey-modal'); if (m && m.classList.contains('open')) _jStopyRozmisti(); });
 function _journeyPaint() {
