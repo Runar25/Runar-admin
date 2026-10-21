@@ -311,6 +311,11 @@ PRIPADY = [
  ('chyti', 'verify_nic_pred_prihlasenim.js', 'supabase/functions/claude-proxy/index.ts', 'replace', 'if (!userId) return json({ error: "unauthorized" }, 401);', 'if (prompt && body.stin && typeof body.stin === "object") stinPorovnej(body.stin, system, prompt); ' + 'if (!userId) return json({ error: "unauthorized" }, 401);'),
  ('chyti', 'verify_nic_pred_prihlasenim.js', 'supabase/functions/delete-account/index.ts', 'replace', '    if (authErr || !user) return json({ error: "Invalid session" }, 401);', '    await sb.from("bug_reports").insert({ x: 1 });\n    if (authErr || !user) return json({ error: "Invalid session" }, 401);'),
  ('nesmi', 'verify_nic_pred_prihlasenim.js', 'supabase/functions/claude-proxy/index.ts', 'replace', 'if (!userId) return json({ error: "unauthorized" }, 401);', 'await sb().rpc("check_rate_limit", { p_key: "x" }); ' + 'if (!userId) return json({ error: "unauthorized" }, 401);'),
+ # ㊐ Google Play bez nákupu (2026-10-21, CODE-read): značka AGNDOFA zase s odkazem · nápověda bez větve Play · okno cesty jako na webu
+ ('chyti', 'verify_play_bez_nakupu.js', 'v2/runar-app.js', 'replace', "var b = document.getElementById('ui-brand'); if (b) { b.removeAttribute('href');", "var b = null; if (b) { b.removeAttribute('href');"),
+ ('chyti', 'verify_play_bez_nakupu.js', 'v2/runar-help.html', 'regex', r'(<body[^>]*>)', r'\g<1><p><a href="https://agndofa.my' + 'shopify.com/">Shop</a></p>'),
+ ('nesmi', 'verify_play_bez_nakupu.js', 'v2/runar-help.html', 'regex', r'(<body[^>]*>)', r'\g<1><p><a href="https://therunekeeper' + '.com/kort/">Rúnakort</a></p>'),
+ ('chyti', 'verify_play_bez_nakupu.js', 'v2/runar-app.js', 'replace', "if (src === 'play') return 'play';", "if (src === 'play') return 'web';"),
 ]
 
 

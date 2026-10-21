@@ -1253,8 +1253,10 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   consumption-only appka smí o nákupu jinde jen INFORMOVAT textem; nesmí mít odkaz ani tlačítko na stránku, odkud se dá (i nepřímo)
   zaplatit. Opraveno CODE-tune 2026-10-21 v režimu `?src=play`: odkaz na obchod u pole kódu, značka AGNDOFA, odkazy a ceník v nápovědě.
   Zbývá hlídat: (1) appka v Play nesmí odkazovat na therunekeeper.com (po spuštění tam bude nákup); (2) popis appky v Google Play
-  nesmí vést k nákupu (i výpis v obchodě je podle pravidel kanál); (3) návrh stroje místo paměti (§30): kontrola, která ve v2/ najde
-  odkaz na obchodní domény mimo větev Play — předáno CODE-read (mapa vstupů a ochran).
+  nesmí vést k nákupu (i výpis v obchodě je podle pravidel kanál); ~~(3) stroj místo paměti~~ ✅ *(CODE-read 2026-10-21, owner „2. ano,
+  postav to“: smoke ㊐ `scripts/verify_play_bez_nakupu.js` — skutečný prohlížeč v režimu `?src=play`, JOURNEY_URL podvržené, appka + okno
+  cesty + IS + nápověda + zásady; viditelný odkaz na agndofa.is / therunekeeper.com / Shopify / Rapyd = FAIL.)* Pozn.: větev Play v nápovědě
+  převádí na text jen agndofa.is a therunekeeper.com — odkaz na Shopify by prošel do nápovědy, ㊐ ho ale zastaví.
 - [x] ✅ *(CODE-web 2026-10-16: běží na https://therunekeeper.com — formulář → waitlist-join → Brevo, dvojí potvrzení; ověřeno
   naostro z webu: hláška, potvrzovací e-mail došel. Zbývá jen limit Brevo pro rozeslání při spuštění, viz níž.)* **Registrace před spuštěním** (owner 2026-10-12: *„ano sbíráme“*). Landing „coming soon“ sbírá e-maily; každý dostane jeden
   e-mail, až Rúnar půjde ven. Napřed plán ownerovi (kam se ukládá, dvojí potvrzení, text do zásad soukromí, smazání po spuštění).

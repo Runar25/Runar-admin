@@ -1254,6 +1254,14 @@ radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola pred prihlasenim probehla'
 check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
 
+# ㊐ Google Play bez nákupu (CODE-read 2026-10-21, owner „2. ano, postav to“, návrh CODE-web): appka z Play (?src=play) nesmí mít odkaz
+# ani tlačítko na stránku, odkud se dá zaplatit (consumption-only, DECISIONS 2026-10-19 (4)). Skutečný prohlížeč, JOURNEY_URL podvržené.
+print('\n' + chr(0x3290) + ' GOOGLE PLAY BEZ NÁKUPU (verify_play_bez_nakupu.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_play_bez_nakupu.js')], capture_output=True, text=True, encoding='utf-8')
+radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola Google Play probehla'
+check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
