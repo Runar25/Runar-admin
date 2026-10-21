@@ -1428,7 +1428,7 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   `ops_events`; nezabere-li to, opravit mazání, nebo větu v zásadách.
 - [ ] **Zásady slibují upozornění v appce před změnou** (oddíl „If things change“) — mechanismus neexistuje, zásady se v říjnu měnily
   ~8×. Postavit, nebo větu změnit (čeká na ownera).
-- [ ] **Yggdrasil toast** (`yggdrasil_power_toast`) slibuje „full power returns December 14–28“ — v kódu nic takového není (prompt ani
+- [ ] **Yggdrasil toast** (`yggdrasil_power_toast`) slibuje, že plná síla se vrátí v okně kolem zimního slunovratu — v kódu nic takového není (prompt ani
   strom datum nečtou; plán „slunovrat = větší síla ve stromě“ nepostavený). EN „returns“ × IS „er mestur“ říkají každý něco jiného.
 - [ ] **Export účtu** (`scripts/utils/export_uctu.js`) nevyveze zprávy „Send Rúnar a line“ ani uložené mp3 hlasu, zásady slibují
   „everything linked to your account“.
