@@ -438,6 +438,17 @@ function applyContent() {
     return '<tr><td>' + cardPackName(p, lang) + '</td><td>' + p.credits + '</td><td>' + String(p.isk).replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' kr</td></tr>';
   }).join('');
   buildFaq(c.faq || []);
+  // Google Play (2026-10-21, nález CODE-web; Play consumption-only, DECISIONS 2026-10-19 (4)): appka z Play smí o obchodě INFORMOVAT
+  // textem, ne na něj odkazovat (Play Console Help 10281818 „Understanding Google Play's Payments policy“). Nápověda se otevírá z appky
+  // ve stejném okně, takže značku relace runar_src zná: odkazy na agndofa.is a webové odkazy na therunekeeper.com → prostý text, blok
+  // s cenami balíčků pryč (vedle zmínky o obchodě nejblíž „vedení k platbě“). E-mail runar@ zůstává — kontakt k platbě nevede.
+  var _play = false; try { _play = sessionStorage.getItem('runar_src') === 'play'; } catch (e) {}
+  if (_play) {
+    document.querySelectorAll('a[href*="agndofa.is"], a[href^="http"][href*="therunekeeper.com"]').forEach(function (a) {
+      var t = document.createElement('span'); t.textContent = a.textContent; a.replaceWith(t);
+    });
+    var _pt = document.getElementById('price-table'); if (_pt && _pt.parentNode) _pt.parentNode.style.display = 'none';
+  }
 }
 
 function buildFaq(items) {
