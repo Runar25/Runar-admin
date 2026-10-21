@@ -1243,6 +1243,9 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
 - [ ] **Stránka „The journey with Rúnar“ + nákup na webu (owner 2026-10-19, DECISIONS 2026-10-19 (7)):** všechny účty s cenami
   (měsíčně / ročně) a Rúnakort na therunekeeper.com; nákup (Rapyd / Shopify) jen tady, appka sem z prohlížeče odkazuje, z Google Play ne.
   Po zaplacení zpět do appky se stejným účtem (e-mail). Ceny ze stejného zdroje jako okno v appce (config), ne opsané.
+  Stav 2026-10-21: stránka běží SKRYTÁ na https://therunekeeper.com/ferdin/ (noindex, landing na ni neodkazuje) — owner ji chce
+  vyladit naostro před spuštěním. **Při spuštění:** odkaz z landingu, `noindex` pryč, tlačítka napojit na nákup a adresu dát do
+  `JOURNEY_URL` (config, CODE-tune).
 - [x] ✅ *(CODE-web 2026-10-16: běží na https://therunekeeper.com — formulář → waitlist-join → Brevo, dvojí potvrzení; ověřeno
   naostro z webu: hláška, potvrzovací e-mail došel. Zbývá jen limit Brevo pro rozeslání při spuštění, viz níž.)* **Registrace před spuštěním** (owner 2026-10-12: *„ano sbíráme“*). Landing „coming soon“ sbírá e-maily; každý dostane jeden
   e-mail, až Rúnar půjde ven. Napřed plán ownerovi (kam se ukládá, dvojí potvrzení, text do zásad soukromí, smazání po spuštění).
