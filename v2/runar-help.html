@@ -7,6 +7,7 @@
 <!-- 2026-10-10: písma u nás, ne z fonts.googleapis.com (IP návštěvníka šla Googlu; owner „hostuj u nás“, DECISIONS 2026-10-10 (32)) -->
 <link href="fonts/fonts.css" rel="stylesheet">
 <script src="runar-config.js"></script>
+<script src="runar-translations.js"></script>   <!-- 2026-10-21: jména výkladů (spread_mode_*) — jeden zdroj s appkou (§10, §18) -->
 <style>
 :root{
   --bg:#0a0c12;--card:#12161f;--border:#2E4A70;
@@ -127,6 +128,30 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
         <p>Then you draw. One rune from twenty-five — the Blank among them, the rune of the unknown. What follows is one reading, in a single flow: what the rune carries for you today, told through one image.</p>
         <p><em>The runes do not decide your path. They help you remember it.</em></p>
       </div>
+    </div>
+  </div>
+
+  <!-- 1b. SPREADS + ASK (2026-10-21, owner „7. ano“). Jména výkladů z UI_TEXT, počet run a cena z configu, tiery a počet otázek z TIERS. -->
+  <div class="help-section">
+    <div class="help-section-label" id="s9-lbl">SPREADS</div>
+    <div class="help-block">
+      <div class="help-block-body" id="s9-body">
+        <p>Besides a single rune, Rúnar lays out spreads: several runes at once, each in its own place, read together as one story. You choose the spread before you draw.</p>
+        <p>Every spread is open to everyone who walks with Rúnar, at any time of the year. The free reading you get when you join is for a single rune; a spread costs more {casts}, as listed below.</p>
+      </div>
+      <table class="price-table"><thead><tr><th id="sp-th1">SPREAD</th><th id="sp-th2">RUNES</th><th id="sp-th3">COST</th></tr></thead>
+        <tbody id="sp-body"></tbody></table>
+    </div>
+  </div>
+
+  <div class="help-section">
+    <div class="help-section-label" id="s10-lbl">ASK RÚNAR</div>
+    <div class="help-block">
+      <div class="help-block-body" id="s10-body">
+        <p>After a reading you can ask Rúnar about it — for example, what a rune means in this reading, or where the image points. He answers from that reading, and the question and his answer are kept with it in your journal.</p>
+        <p>Questions come with a subscription:</p>
+      </div>
+      <table class="price-table"><tbody id="ask-body"></tbody></table>
     </div>
   </div>
 
@@ -290,6 +315,12 @@ const CONTENT = {
       <p>Before the stones speak, Rúnar asks a few things: your name, the area of life you are moving through, and what you are seeking. Not to judge. To listen more precisely.</p>
       <p>Then you draw. One rune from twenty-five — the Blank among them, the rune of the unknown. What follows is one reading, in a single flow: what the rune carries for you today, told through one image.</p>
       <p><em>The runes do not decide your path. They help you remember it.</em></p>`,
+    // 2026-10-21 (owner „7. ano“): výklady a Ask; strom ne — vidí ho jen admin (treeVisibleFor). Tabulky plní applyContent z configu.
+    's9-lbl':        'SPREADS',
+    's9-body':       `<p>Besides a single rune, Rúnar lays out spreads: several runes at once, each in its own place, read together as one story. You choose the spread before you draw.</p><p>Every spread is open to everyone who walks with Rúnar, at any time of the year. The free reading you get when you join is for a single rune; a spread costs more {casts}, as listed below.</p>`,
+    'sp-th1': 'SPREAD', 'sp-th2': 'RUNES', 'sp-th3': 'COST',
+    's10-lbl':       'ASK RÚNAR',
+    's10-body':      `<p>After a reading you can ask Rúnar about it — for example, what a rune means in this reading, or where the image points. He answers from that reading, and the question and his answer are kept with it in your journal.</p><p>Questions come with a subscription:</p>`,
     's2-lbl':        'YOUR ACCOUNT',
     'th-tier':       'TIER', 'th-what': 'WHAT YOU GET',
     // 2026-10-10 (DECISIONS 2026-10-10 (1) bod 1): návštěvník čtení nedostává (od 2026-08-02) — „1 reading, no account needed“ pryč.
@@ -345,6 +376,12 @@ const CONTENT = {
       <p>Áður en steinarnir tala spyr Rúnar þig nokkurra spurninga. Hann spyr um nafnið þitt, um það svið lífsins sem þú ert að fást við og um það sem þú leitar að. Ekki til að dæma, heldur til að hlusta betur.</p>
       <p>Síðan dregurðu. Ein rún af tuttugu og fimm — Auða rúnin, rún hins óþekkta, er ein þeirra. Það sem kemur á eftir er einn samfelldur lestur: það sem rúnin ber þér í dag, sagt í gegnum eina mynd.</p>
       <p><em>Rúnirnar ákveða ekki leið þína. Þær hjálpa þér að muna hana.</em></p>`,
+    // 2026-10-21: Greynir OK; korpus „leggur út“ 745×, „spurt út í“ 1361×, „út frá lestrinum“ 13×, „í boði með“ 1221×, „með áskrift“ 2052×.
+    's9-lbl':        'LAGNIR',
+    's9-body':       `<p>Auk einnar rúnar leggur Rúnar út lagnir, nokkrar rúnir í einu, hverja á sínum stað, og les þær saman sem eina sögu. Þú velur lögnina áður en þú dregur.</p><p>Allar lagnir standa öllum opnar sem ganga með Rúnari, hvenær sem er ársins. Ókeypis lesturinn sem þú færð við skráningu er fyrir eina rún, en lögn kostar fleiri {casts}, eins og sést hér fyrir neðan.</p>`,
+    'sp-th1': 'LÖGN', 'sp-th2': 'RÚNIR', 'sp-th3': 'VERÐ',
+    's10-lbl':       'SPYRÐU RÚNAR',
+    's10-body':      `<p>Eftir lestur geturðu spurt Rúnar út í hann. Þú getur til dæmis spurt hvað rún merkir í lestrinum eða hvert myndin bendir. Hann svarar út frá lestrinum, og spurningin og svarið eru geymd með honum í dagbókinni.</p><p>Spurningar eru í boði með áskrift:</p>`,
     's2-lbl':        'REIKNINGUR ÞINN',
     'th-tier':       'STIG', 'th-what': 'HVAÐ FÆRÐ ÞÚ',
     'td-visitor':    'Dragðu rún og sjáðu hver kemur til þín; fimm rúnir í Safni rúna og lífsrúnin þín standa þér opnar. Rúnar les í rúnirnar fyrir þá sem ganga með honum — skráning er ókeypis.',
@@ -410,7 +447,8 @@ function applyContent() {
     // 2026-10-11: jméno položky v menu, kterou se zadává kód karty — appka ji skládá '+ ' + vl('card') (runar-app.js); nápověda psala
     // „+ Gift Card“ / „+ Gjafakort“, jméno, které appka nikde neukazuje (BACKLOG (o) 1). vl() tu není, stránka načítá jen config.
     card:         lang === 'is' ? VOCAB.card.is : VOCAB.card.en,
-    standard_acc: lang === 'is' ? TIERS.standard.label_is_acc : TIERS.standard.label };
+    standard_acc: lang === 'is' ? TIERS.standard.label_is_acc : TIERS.standard.label,
+    casts:        lang === 'is' ? VOCAB.unit.is_pl : VOCAB.unit.en_pl };
   Object.keys(c).forEach(id => {
     if (id === 'faq') return;
     const el = document.getElementById(id);
@@ -436,6 +474,22 @@ function applyContent() {
   var _pb = document.getElementById('pt-body');
   if (_pb && typeof CARD_PACKS !== 'undefined') _pb.innerHTML = CARD_PACKS.map(function (p) {
     return '<tr><td>' + cardPackName(p, lang) + '</td><td>' + p.credits + '</td><td>' + String(p.isk).replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' kr</td></tr>';
+  }).join('');
+  // Výklady (2026-10-21): jméno z UI_TEXT jako na tlačítku v appce, počet run SPREAD_CONFIG, cena SPREAD_COSTS — nic natvrdo.
+  var _sp = document.getElementById('sp-body'), _U = (typeof UI_TEXT !== 'undefined' && UI_TEXT[lang]) || {};
+  if (_sp) _sp.innerHTML = [['single', 'spread3_mode_single'], ['norns', 'spread_mode_norns'], ['cross', 'spread_mode_kriz'],
+    ['horseshoe', 'spread_mode_horseshoe'], ['yggdrasil', 'spread_mode_yggdrasil']].map(function (x) {
+    var n = SPREAD_CONFIG[x[0]].rune_count, k = SPREAD_COSTS[x[0]].credits;
+    var runy = lang === 'is' ? (n === 1 ? 'rún' : 'rúnir') : (n === 1 ? 'rune' : 'runes');
+    var cena = lang === 'is' ? (k === 1 ? VOCAB.unit.is : VOCAB.unit.is_pl) : (k === 1 ? VOCAB.unit.en : VOCAB.unit.en_pl);
+    return '<tr><td>' + (_U[x[1]] || x[0]) + '</td><td>' + n + ' ' + runy + '</td><td>' + k + ' ' + cena + '</td></tr>';
+  }).join('');
+  // Ask: účty s asks_per_reading > 0 (TIERS — jediná pravda o Asku), jméno účtu z TIERS.
+  var _ab = document.getElementById('ask-body');
+  if (_ab) _ab.innerHTML = ['standard', 'premium'].filter(function (id) { return TIERS[id].asks_per_reading > 0; }).map(function (id) {
+    var q = TIERS[id].asks_per_reading, jm = lang === 'is' ? TIERS[id].label_is : TIERS[id].label;
+    var co = lang === 'is' ? q + (q === 1 ? ' spurning' : ' spurningar') + ' við hvern lestur' : q + (q === 1 ? ' question' : ' questions') + ' on every reading';
+    return '<tr><td>' + jm.toUpperCase() + '</td><td>' + co + '</td></tr>';
   }).join('');
   buildFaq(c.faq || []);
   // Google Play (2026-10-21, nález CODE-web; Play consumption-only, DECISIONS 2026-10-19 (4)): appka z Play smí o obchodě INFORMOVAT
