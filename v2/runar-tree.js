@@ -727,9 +727,13 @@ function updateTreeTab() {
         : t('life_rune_free');
       if (balLbl)  balLbl.textContent  = t('tree_rs_balance');
       if (balVal)  balVal.textContent  = bal;
+      // 2026-10-21: zdarma = zůstatek ani řádek o volném čtení k věci nejsou (ukazovaly jen userCredits, menu jiné číslo)
+      var balWrap = document.getElementById('tree-rs-balance-wrap');
+      if (balWrap) balWrap.style.display = LIFE_RUNE_COST > 0 ? '' : 'none';
       // Free reading — oddelene od credits (credits_balance != onboarding free reading)
       var freeLineEl = document.getElementById('tree-rs-free-line');
-      if (freeLineEl && currentUser) {
+      if (freeLineEl && LIFE_RUNE_COST <= 0) freeLineEl.style.display = 'none';
+      else if (freeLineEl && currentUser) {
         var freeRem  = Math.max(0, userFreeBalance);
         if (freeRem > 0) {
           // 2026-10-10 (ráčna ㉸, CODE-read): text z UI_TEXT tree_rs_free_line, znění beze změny; dřív natvrdo podle jazyka.

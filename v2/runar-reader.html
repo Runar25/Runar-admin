@@ -712,16 +712,16 @@
             <button class="btn-upgrade" onclick="openAuthModal()" id="tree-visitor-btn"></button>
           </div>
 
-          <!-- Primary CTA: Life Rune for 3 credits -->
+          <!-- Primary CTA: čtení životní runy; cena ze SPREAD_COSTS.life_rune (dnes 0 = zdarma, pak se zůstatek neukazuje) -->
           <!-- id 2026-09-11: navstevnik vidi tentyz teaser, ale nabidka za kredity
                pro nej nedava smysl (nema ucet) — skryva se mu. -->
           <div class="tree-cta-block" id="tree-rs-cta-block">
             <button class="btn-full small" id="tree-rs-reveal-btn" onclick="_rsLifeRuneReading()">Read what it carries</button>
             <div class="tree-cta-cost">
               <span id="tree-rs-cost-label"></span>
-              &nbsp;·&nbsp;
+              <span id="tree-rs-balance-wrap">&nbsp;·&nbsp;
               <span id="tree-rs-balance-label"></span>
-              <span id="tree-rs-balance-val"></span>
+              <span id="tree-rs-balance-val"></span></span>
             </div>
             <div class="tree-cta-free" id="tree-rs-free-line" style="display:none;"></div>
           </div>

@@ -1855,7 +1855,9 @@ function _journeyPaint() {
     var ft = id === 'free_trial' ? [t('journey_visitor_ft')] : tierFeatures(id, lk);
     h += '<ul class="journey-ft">' + ft.map(function (x) { return '<li>' + String(x).split('{card}').join(vl('card', lang)) + '</li>'; }).join('') + '</ul>';
     if (env !== 'play') {
-      if (T.price_isk_month) {
+      // 2026-10-21 (revize textů, CODE-tune): tlačítka účtů jen s adresou nákupu. Bez JOURNEY_URL (prostředí 'soon') se dřív vykreslila
+      // s href="null" → stránka v2/null, a věta „Opens therunekeeper.com“ lhala. Owner 2026-10-20: žádné „Coming soon“ — tedy nic.
+      if (T.price_isk_month && env === 'web') {
         var tierUp = jm.toUpperCase();
         if (tady) { if (env === 'web') h += '<a class="tn-btn btn-upgrade" href="' + _jesc(JOURNEY_URL) + '" target="_blank" rel="noopener">' + _jesc(t('journey_manage')) + ' →</a>'; }
         // 2026-10-20 owner: u účtů žádné „Coming soon“ — až půjde appka do produkce, budou v nabídce všechny účty (do té doby tu stálo)

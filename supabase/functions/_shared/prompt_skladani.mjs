@@ -1560,7 +1560,7 @@ const UI_TEXT = {
                          'The meaning is yours to find. Read the image slowly and notice what stays with you — one detail, one movement. That is where the reading touches your life.',
                          'The last line is not advice, but a possibility or a question for you to weigh.',
                          'Rúnar carries the light and points to where you might look. The seeing is yours.',
-                         'In the Rune Collection, each rune has its own description.'],
+                         'In the Runes Collection, each rune has its own description.'],
     // Text runy pod statickou runou v Kolekci (KUKY 2026-09-23 „4. ano“ po schválení tónu na Fehu/Tiwaz/Hagalaz).
     // Z ownerových statických popisů (RUNAR_POPISY_RUN.md); 4 odstavce: co runa je · jak ji číst v obraze ·
     // co neslibuje · její otázka. IS psané nativně, ověřené is-grammar-qa + korpusem (workflow kolekce-texty).
@@ -1658,8 +1658,8 @@ const UI_TEXT = {
     ask_thinking:       'Rúnar listens…',
     ask_teaser:         'Your own questions to Rúnar open with {tier}.',   // 2026-09-25 KUKY (stavba jako q_teaser)
     ask_teaser_more:    'Another question opens with {tier}.',   // 2026-09-30 KUKY: po poslední otázce tarifu (Standard → Premium)
-    err_no_credits:     'No readings remain. Use a {card} to continue.',
-    err_monthly_limit: 'This month\u2019s readings are all drawn. They return with the new month.',
+    err_no_credits:     'What you have left is not enough for this reading. Use a {card} to continue.',   // 2026-10-21: i když chybí jen na spread (proxy 402 no_credits)
+    err_monthly_limit: 'What remains of this month’s readings is not enough for this one. They return with the new month.',   // 2026-10-21: proxy hlásí, když used + cena > strop
     renew_toast:       'Your readings have returned with the new month.',   // 2026-10-11: _renewalNotice (runar-app.js), dvojice s err_monthly_limit
     err_voice_month:   'The voice has spoken {n} times this month. It returns with the new month.',
     err_voice_quota:   'The voice is resting for now, but the words of the reading stay with you.',   // 2026-10-11: bezpečná hladina kvóty ElevenLabs (VOICE_SAFE_SHARE)
@@ -2211,8 +2211,8 @@ const UI_TEXT = {
     ask_thinking:       'Rúnar hlustar…',
     ask_teaser:         'Eigin spurningar þínar til Rúnars opnast með {tier}.',
     ask_teaser_more:    'Önnur spurning opnast með {tier}.',   // {tier} v 3. pádě (tierLabel); is-grammar-qa čisté, „önnur spurning“ 1572
-    err_no_credits:     'Þú átt enga spá eftir. Notaðu {card} til að halda áfram.',
-    err_monthly_limit: '\u00de\u00fa hefur nota\u00f0 alla lestrana \u00fe\u00edna \u00ed \u00feessum m\u00e1nu\u00f0i. \u00deeir koma aftur me\u00f0 n\u00fdjum m\u00e1nu\u00f0i.',
+    err_no_credits:     'Það sem þú átt eftir dugar ekki fyrir þessum lestri. Notaðu {card} til að halda áfram.',
+    err_monthly_limit: 'Það sem eftir er af lestrum mánaðarins dugar ekki fyrir þessum lestri. Þeir koma aftur með nýjum mánuði.',
     renew_toast:       'Lestrarnir þínir eru komnir aftur með nýjum mánuði.',
     err_voice_month:   'Röddin hefur talað {n} sinnum í þessum mánuði. Hún kemur aftur með nýjum mánuði.',
     err_voice_quota:   'Röddin hvílir um sinn, en orð spárinnar eru áfram hjá þér.',   // 2026-10-11: kontroly IS čisté (CLAUDE.md §2)
