@@ -6412,3 +6412,19 @@ nedostupné). Data mimo repo: `~/runar-eval/podoby-bez-delky-2026-10-09.json`, `
   protichůdnému pokynu v user promptu (tam může rozhodnout poloha a konkrétnost — výklad původního nálezu z června), IS.
 - **Co z toho:** CLAUDE.md „Reading systém“ přepsán; V3 může stálá pravidla nechat v systému (BACKLOG „Nápady pro V3“, bod 9).
   Data: `~/runar-eval/system-vs-user/` (mimo repo).
+
+## 2026-10-21 (1) — Vegvísir: runa × MÍSTO drží runu (8/9); otázka balíčku k místu čtení přetáhne k tématu balíčku (7/9)
+
+- **Proč:** směr DECISIONS 2026-10-21 (5) — rameno = vytažená runa × místo bez vlastního významu; riziko, že téma balíčku (The Thresholds ·
+  Under the Mountain · The Ties) přetáhne čtení jako 2026-09-27 (1), (2). Owner: *„pusť test teď“*, *„tady na 5.5 v EN“*.
+- **Jak:** prompt ramene = lab 2026-09-27 v3 (EN, bez středu), místo věty uživatele karta místa; systém produkční `buildSysPrompt` EN.
+  3 runy mimo témata balíčků (Isa, Fehu, Sowilo) × 3 místa (jedno z balíčku) × A bez otázky / B s otázkou balíčku (obrácená páka, §25).
+  Čtení psali dva subagenti Opus 5.5, každý jen jednu variantu a bez znalosti testu; slepý soudce (subagent) viděl runu, klíčová slova a místo,
+  ne variantu ani otázku. Data `docs/eval/2026-10-21-vegvisir-misto/`.
+- **Výsledek:** A — runa vede scénu 8/9 (průměr 1,89 z 2), únik k tématu balíčku 0/9, kvalita 4,0/5 · B — runa vede 6/9 (1,67), únik
+  k tématu balíčku 7/9, kvalita 3,3. Studené čtení 0/18, otevřený konec 8/9 v obou. Místo samo runu nepřebije; teprve otázka balíčku vnese
+  téma (The Ties → „co přechází mezi lidmi“: u Sowila se objevil druhý člověk na druhém konci lana, A ho nemá).
+- **Hranice:** n = 9 na variantu, jeden soudce, jen EN, jen Opus 5.5 (ne sol), runy vybrané MIMO témata balíčků — runa shodná s tématem
+  místa netestována (2026-08-25 tam vyšlo 0/4). Kritérium „jiné téma“ soudce znal i se jmény témat, ale variantu ne; rozdíl A × B je proto
+  platný, absolutní čísla méně. Netvrdí se nic o IS ani o tom, jak místo zadá uživatel (volba × los).
+- **Co z toho plyne pro směr:** karta místa BEZ otázky (owner bod 8, potvrzeno). Otázka patří do Asku, ne na kartu.
