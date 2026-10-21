@@ -112,6 +112,12 @@ var PK = 1, DES = 'o';   // zvolený balíček (index v CARD_PACKS) a vzhled kar
 var lang = LANG;   // pro t()/tp() z runar-utils.js
 var ORDER = ['free_trial', 'rune_seeker', 'standard', 'premium'];
 function cislo(x) { return x.toLocaleString('de-DE'); }   // tečka na tisíce (1.490), jednotku nese text UI_TEXT
+// „Spár með Rúnakorti, frá 1.490 kr.“ — cena = nejlevnější balíček, jednotka a karta z VOCAB (§10); první písmeno velké
+function seekerCena() {
+  var p0 = CARD_PACKS.reduce(function (a, b) { return b.isk < a.isk ? b : a; });
+  var t = tp('journey_seeker_card', { casts: vlp('cast', LANG), card: LANG === 'is' ? VOCAB.card.is_dat : vl('card', LANG), price: cislo(p0.isk) });
+  return t.charAt(0).toUpperCase() + t.slice(1);
+}
 function jmeno(T) { return (LANG === 'is' ? T.label_is : T.label.replace(/^Rune\s+/, '')).toUpperCase(); }
 function draw() {
   var U = UI_TEXT[LANG];
@@ -124,7 +130,8 @@ function draw() {
                        + '</small></div><div class="j-gift">' + U.journey_gift + '</div>';
     } else {
       // zdarma jen Visitor a Rune Seeker jmenovitě — placený účet bez načtené ceny nesmí ukázat „zdarma“ (owner 2026-10-19)
-      h += '<div class="j-pr"><small>' + ({ free_trial: U.journey_free, rune_seeker: U.journey_free_join }[id] || '') + '</small></div><div class="j-gift"></div>';
+      h += '<div class="j-pr"><small>' + ({ free_trial: U.journey_free, rune_seeker: U.journey_free_join }[id] || '') + '</small>'
+        + (id === 'rune_seeker' && U.journey_seeker_card ? '<small>' + seekerCena() + '</small>' : '') + '</div><div class="j-gift"></div>';
     }
     var f = id === 'free_trial' ? [U.journey_visitor_ft] : tierFeatures(id, LANG);
     h += '<ul class="j-ft">' + f.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>';
