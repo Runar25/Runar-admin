@@ -1,15 +1,13 @@
 # CLAUDE.md — Rúnar Project
-# Přečíst na začátku KAŽDÉ session. Zdrojová pravda pro kód.
-# Spolu s: RUNAR_DESIGN.md (design, mytologie, spready) · RUNAR_PRICING.md (business)
+# Přečíst na začátku KAŽDÉ session. Zdrojová pravda pro kód. Spolu s: RUNAR_DESIGN.md (design, mytologie, spready) · RUNAR_PRICING.md (business)
+# Důvody, doklady a historie pravidel → `docs/pravidla-duvody.md` (čti, když pravidlo nedává smysl nebo ho chceš měnit). Stav systémů → `docs/projekt-mapa.md`.
+# Sem patří jen příkazné pravidlo a past, kterou z kódu nepoznáš. Důvod nové věci → DECISIONS, ne sem (§28).
 
 ---
 
 ## Co je Rúnar
-AI-powered průvodce runami pro Agndofa (Island). Poetický hlas, nordická filozofie.
-Produkce: runar25.github.io/Runar-admin/v2/
-Lokální: C:\Users\zkuku\Downloads\Runar-admin\v2\
-Stack: HTML + CSS + vanilla JS · Supabase (projekt v `runar-config.js` SB_URL) · modely čtení přes edge funkci `claude-proxy`
-(který model čte, vlastní `SOL_MODEL` + záložní `MODELS` tam — do 2026-10-10 tu stálo „Claude API“, od 2026-10-09 čte GPT-6 sol) · ElevenLabs · IS primární + EN
+AI průvodce runami pro Agndofa (Island). Produkce: runar25.github.io/Runar-admin/v2/ · lokálně `C:\Users\zkuku\Downloads\Runar-admin\v2\`.
+Stack: HTML + CSS + vanilla JS · Supabase (`runar-config.js` SB_URL) · čtení přes edge funkci `claude-proxy` (model = `SOL_MODEL`, záloha `MODELS` tam) · ElevenLabs · IS primární + EN.
 
 ---
 
@@ -17,8 +15,7 @@ Stack: HTML + CSS + vanilla JS · Supabase (projekt v `runar-config.js` SB_URL) 
 
 ```
 runar-config.js       — TIERS, RUNAR_MODES, TIER_LIMITS, SPREAD_COSTS, SPREAD_CONFIG, VOCAB,
-                        VOICE_PROFILES + ACTIVE_VOICE_PROFILE (hlas), ADMIN_EMAILS, HEAVY_RUNES
-                        (úplný výčet má soubor sám; doc ho neopisuje, §20 — do 2026-10-09 tu stál i jejich počet)
+                        VOICE_PROFILES + ACTIVE_VOICE_PROFILE (hlas), ADMIN_EMAILS, HEAVY_RUNES (úplný výčet má soubor)
 runar-runes.js        — 25 Elder Futhark + calcLifeRune()
 runar-names.js        — severská jména: seznam, který rozhoduje o rozboru jména (ne model) · jen reader
 runar-names-registry.js — Mannanafnaskrá (GENEROVANÉ scripts/import_mannanafnaskra.js, needitovat) · jen reader
@@ -69,28 +66,17 @@ z configu §10 · UI §5 §32 · islandština §2 §6 · jeden zdroj a dokumenty
 §21 §23 · provoz §29 §30 §31. Sloučené: §3→§18 · §8, §15→§10 · §9→§2 · §22→§20 · §26→§21 · §27→§25.
 
 ### §1 — JS změny = Python skripty
-Edit tool kazí apostrofy `'` → curly quotes → SyntaxError.
-JS soubory: VŽDY přes Python patch skript. CSS + HTML (bez inline JS) + translations.js: Edit tool OK — u translations.js ne na řádku s `\uXXXX` ([[edit-tool-escapes-new-text]]).
-**Výjimka — sdílené soubory** (`_SDILENE` v `hooks/pre-commit.py`; z appky `runar-reading.js`, `runar-translations.js`, `runar-tree.js`,
-`runar-reader.html`, `runar-reader.css`): patch skript zapisuje přes `cv.zapis`, CSS/HTML/překlady přes `commit_vlastni.py uprav`,
-commit `commit_vlastni.py commit` — Edit a pathspec commit zastaví hooky (DECISIONS 2026-10-11 (60)).
-
-**Patch skript = VLASTNÍ gitignored slot session, NIKDY sdílený** (2026-07-21, po přechodu na 3 session,
-dvě v `[tune]`): `scripts/_patch.py` = CODE-tree · `scripts/_patch_tune.py` = CODE-tune ·
-`_patch_<session>.py` = další. Sdílený slot si session přepisovaly scratch pod rukama. Gitignored →
-`git add -A` ho nesebere; každý slot = jeden stabilní allowlist řádek (žádný permission-prompt treadmill).
-Kolize a předávání mezi session → sekce „N paralelních session" + memory `parallel-code-sessions-collision`.
+Edit tool kazí apostrofy `'` → curly quotes → SyntaxError. JS soubory: VŽDY přes Python patch skript. CSS + HTML (bez inline JS) +
+translations.js: Edit tool OK — u translations.js ne na řádku s `\uXXXX` ([[edit-tool-escapes-new-text]]).
+**Sdílené soubory** (`_SDILENE` v `hooks/pre-commit.py`): patch skript zapisuje přes `cv.zapis`, CSS/HTML/překlady přes `commit_vlastni.py uprav`,
+commit `commit_vlastni.py commit` — Edit a pathspec commit zastaví hooky.
+**Patch skript = VLASTNÍ gitignored slot session, NIKDY sdílený:** `scripts/_patch.py` = CODE-tree · `scripts/_patch_tune.py` = CODE-tune ·
+`_patch_<session>.py` = další.
 
 ### §2 — IS je primární jazyk
-IS musí být vždy perfektní. EN je vedlejší. NIKDY IS jako "překlad" EN.
-**Mysli islandsky od začátku** (Code i Cowork) — začni islandským obrazem, ne anglickou frází
-k přeložení; kalk z EN (vazba, slovosled, obraz) je vada, ne východisko. IS se **VYMÝŠLÍ**, ne
-překládá. „Líp to neumím" NENÍ přípustná odpověď: styl a hlas je řemeslo — udělá se a ověří (níže).
-Flaguje se **jen chybějící 🔒 fakt / 📜 lore** (§23), NIKDY vlastní formulace. IS se dělá **hotová a ověřená** (Code i Cowork),
-nikdy odhadem ani odkladem na rodilého mluvčího: ⚠️ **fronta „NATIVE EYE / Sigrún“ je ZRUŠENÁ (KUKY 2026-07-18)** — nesrozumitelný
-výstup se přepíše, dokud mu nástroj nerozumí (§19.2). Ruší to odkládání nedodělané IS na Sigrún, NE sbírání native oprav z živého
-testování do pravidel (opačný směr, `IS_NATIVE_CHECKLIST.md`). → [[is-done-together-not-for-sigrun]]
-(Do 2026-10-11 stála tahle věta v §2 dvakrát a potřetí v §19.2.)
+IS musí být vždy perfektní; EN je vedlejší; NIKDY IS jako „překlad“ EN. **Mysli islandsky od začátku** — kalk z EN (vazba, slovosled, obraz)
+je vada. IS se **vymýšlí, dělá hotová a ověřená** (Code i Cowork), nikdy odhadem ani odkladem na rodilého mluvčího; nesrozumitelný výstup
+se přepíše, dokud mu nástroj nerozumí (§19.2). Flaguje se **jen chybějící 🔒 fakt / 📜 lore** (§23). → [[is-done-together-not-for-sigrun]]
 **Kontrola IS — nástroje a pořadí (JEDINÉ místo, kde to stojí; paměť a docs sem odkazují, §20):**
 1. `python -X utf8 check-is.py` — ZDROJ (kód): známé chyby z `BAD_PATTERNS`, běží i v pre-commitu. Výstup modelu nevidí. Nová známá chyba → do `BAD_PATTERNS`.
 2. `python -X utf8 is-greynir.py --text "…"` (nebo soubor, text na řádek) — GreynirCorrect lokálně, zdarma, text neodchází ven. Překlepy a neznámá
@@ -98,46 +84,36 @@ testování do pravidel (opačný směr, `IS_NATIVE_CHECKLIST.md`). → [[is-don
 3. `is-gpt-check.py` — GPT korektor: shoda, pád, rod, kalky. Volá API → hlídač chce `RUNAR_API_ANO` + `RUNAR_API_ZAMER` (§30); náklady
    každého volání zapisuje sám, souhrn `node scripts/utils/is_gpt_naklady.js`. Idiomy nevidí (`--samotest` to dokládá).
 4. `python -X utf8 is-vazba.py --freq "<obrat>"` — korpus Risamálheild: idiomy, vazby, kolokace (0× = podezřelé); `is-vazba.py <slovo>` = slovník.
-Korekce v DB: `is-corr-qa.py` (BÍN). Do 2026-10-10 Yfirlestur přes is-grammar-qa — API zaniklo (DECISIONS 2026-10-10 (39), (43)).
-**Vazba ≠ tvar — rekci/pád/kolokaci/idiom NEHÁDEJ (vrstva NAD BÍN).** BÍN dá jen tvary; vazbu ověř nástrojem 4 výš (`is-vazba.py`), nikdy odhadem, z Wiktionary ani „pohledem". Recept + limity + zdroje → [[is-vazba-check]].
-Každé Claude generování v IS má **3 vrstvy** (všechny v promptu — korekce se řeší v kontextu):
-```js
-var sys    = buildSysPrompt(activeChar, lang);        // 1. IS system prompt
-var prompt = buildReadingPrompt(u, drawn, lang, ...); // 2. prompt přímo v IS (RP_* pack)
-if (getCorrPrompt(lang, corrections)) prompt += ...;  // 3. corrections blok DO promptu
-```
-⚠️ **Žádná 4. vrstva — a tohle je její JEDINÝ domov.** Slepý substring post-processor
-(`applyISCorrections` + flag `CORRECTIONS_POSTPROCESS`) byl vypnutý od 2026-07-10 a **odstraněn
-2026-08-09**: neuměl pád ani rod, takže „opravil" i tvar, který byl správně. Vypnutá funkce se
-ale pořád volala na 5 místech — kód četl, jako by se korekce aplikovaly (`text = applyIS…(text)`),
-a přitom neaplikovaly. **Post-processor na IS text už nikdy nezaváděj**; korekce patří do promptu
-(vrstva 3), kde je model ohne podle kontextu.
+Korekce v DB: `is-corr-qa.py` (BÍN).
+**Vazba ≠ tvar — rekci/pád/kolokaci/idiom NEHÁDEJ (vrstva NAD BÍN).** Vazbu ověř nástrojem 4, nikdy odhadem ani „pohledem“. → [[is-vazba-check]].
+Každé generování v IS má **3 vrstvy**, všechny v promptu: `buildSysPrompt` (IS system) · `buildReadingPrompt` (RP_* pack v IS) · `getCorrPrompt`
+(korekce DO promptu). ⚠️ **Žádná 4. vrstva:** post-processor na IS text (substring náhrady) už nikdy nezaváděj — neumí pád ani rod; korekce patří do promptu.
 
 ### §3 — Sdílené moduly = automatický sync
-→ §18 bod 6 (sloučeno 2026-10-11, DECISIONS 2026-10-11 (15)). Číslo zůstává kvůli odkazům.
+→ §18 bod 6.
 
 ### §4 — SW verze
-Auto-bump: git pre-commit hook (hooks/pre-commit.py). Po fresh clone: `python -X utf8 hooks/install-hooks.py`
-Ruční bump pokud je sw.js already staged před commitem.
+Auto-bump: git pre-commit hook (hooks/pre-commit.py). Po fresh clone: `python -X utf8 hooks/install-hooks.py`. Ruční bump, je-li sw.js už staged.
 
 ### §5 — UI invarianty
-`--dim` NIKDY pro text (smí jen ikony, šipky, oddělovače a placeholdery — `runar-reader.css`, KUKY 2026-09-24) · reader-content se NIKDY neskrývá
-(hodnoty tokenů bydlí v `runar-reader.css`, doc je neopisuje — §20)
-Runa ᚱ: vždy zlatá, NIKDY s ozdobami (◌ ᚱ ◌ zakázáno)
-**Runové glyfy = JEDEN zdroj kresby (RUNE_SVGS), rámování dle ROLE** — přes helper `runeSvg(rune,{frame})` (runar-utils.js, §3). Pravidlo (KUKY 2026-07-14): **`frame:true` = KÁMEN pro runy, které TAHÁŠ/DRŽÍŠ** (draw grid, kolekce, kolekce detail, reading strip single+spread, spread sloty, journal karty; **od 2026-09-14 i hlavička HOTOVÉHO čtení životní runy** — KUKY: „má tam být stejný svg glyf jako je u single a spreadu", DECISIONS 2026-09-14 (3)); **od 2026-09-23 i ŽIVOTNÍ RUNA VŠUDE** — odznak ve čtení i záložka Life Rune (ukázka/výzva/načítání); KUKY: „změnit glyf životních run na naše glyfy“, DECISIONS 2026-09-23 (15)); **od 2026-10-13 i runa v hlavičce oken** (Where to start, souhlas testera, smazání účtu — holá linka tam působila jako písmo, DECISIONS 2026-10-13 (2)); **`frame:false` = HOLÁ linka (#D6A85C) jen pro textové popisky (rune-info)**. NIKDY font glyf jako primární (nekonzistentní napříč zařízeními). Blank = orámované prázdno (kámen = prázdný kámen · holá = zlatý obrys), NIKDY `○`. Holá runa = jen hlavní tah (keep-mapa `RUNE_BARE_KEEP`, ozdůbky pryč). Tap popup kopíruje `g.innerHTML` (SVG), ne textContent. ᚱ brand = ZVLÁŠŤ (font, chrome v HTML, neřeší se přes runeSvg).
+`--dim` NIKDY pro text (jen ikony, šipky, oddělovače, placeholdery) · reader-content se NIKDY neskrývá (tokeny bydlí v `runar-reader.css`).
+Runa ᚱ: vždy zlatá, NIKDY s ozdobami (◌ ᚱ ◌ zakázáno); ᚱ brand = font v HTML, ne `runeSvg`.
+**Runové glyfy = JEDEN zdroj kresby (RUNE_SVGS) přes `runeSvg(rune,{frame})`:** `frame:true` = KÁMEN pro runy, které člověk táhne / drží / vidí
+jako runu (mřížka tahu, Kolekce, čtení single i spread, sloty, deník, životní runa všude, runa v hlavičce oken); `frame:false` = HOLÁ linka
+(#D6A85C) jen v textových popiscích. NIKDY font glyf jako primární. Blank = orámované prázdno, NIKDY `○`. Holá runa = jen hlavní tah
+(`RUNE_BARE_KEEP`). Tap popup kopíruje `g.innerHTML` (SVG).
 
 ### §6 — Záměrně anglické pojmy (NEPŘEKLÁDAT do IS)
-THE GATHERING · RÚNAR
-Jména tierů sem NEPIŠ — mají IS varianty a bydlí v `TIERS.*.label` / `.label_is` (§20).
+THE GATHERING · RÚNAR. Jména tierů sem nepiš — bydlí v `TIERS.*.label` / `.label_is`.
 
 ### §7 — Commit pravidla
-Jeden commit = jedna věc. Push ihned. Použít smoke test: `python -X utf8 smoke.py`
+Jeden commit = jedna věc. Push ihned. Smoke: `python -X utf8 smoke.py`.
 
 ### §8 — Tier hodnoty = vždy z configu
-→ §10 (sloučeno 2026-10-11, DECISIONS 2026-10-11 (15)). Číslo zůstává kvůli odkazům.
+→ §10.
 
 ### §9 — IS text = zkontrolovat před commitem
-→ §2, „Kontrola IS“ bod 1 (`check-is.py` pouští pre-commit sám). Číslo zůstává kvůli odkazům; do 2026-10-11 tu stála kopie bodu 1.
+→ §2, bod 1 (`check-is.py` pouští pre-commit sám).
 
 ### §10 — Texty, hodnoty a jména z UI_TEXT / VOCAB / TIERS / configu, NIKDY natvrdo
 ```
@@ -147,475 +123,202 @@ vn('cast', n, l)  ← plural z VOCAB: '3 casts' / '3 spár'
 vl('card', l)     ← label z VOCAB: 'Rune Card' / 'Rúnakort'
 TIER_LIMITS.rune_seeker.onboarding_label_en  // ✅   'five readings each month'  // ❌ NIKDY
 ```
-Přidání jazyka = jen nový blok v UI_TEXT + VOCAB. Žádné jiné soubory.
-**Hodnoty tierů** (limity, kapacity, štítky) jen z configu (do 2026-10-11 §8). **Název karty / jednotky / spá a jména tierů** přes
-`vl()`/`vlp()`/`vn()`/`tp({card})` / `TIERS[x].label`; štítky a tlačítka templatuj s `{card}`/`{unit}`, v dlouhé marketingové próze
-je brand jméno OK. Platí i pro hodnoty v translations.js (gift_card_btn, panely). Jak zbývající místa najít → working-style.md;
-seznam stavu se nevede (§20.4). (Do 2026-10-11 §15.)
+Přidání jazyka = jen nový blok v UI_TEXT + VOCAB. Hodnoty tierů (limity, kapacity, štítky) jen z configu. Název karty / jednotky a jména tierů
+přes `vl()`/`vlp()`/`vn()`/`tp({card})` / `TIERS[x].label`; štítky a tlačítka templatuj s `{card}`/`{unit}`. Platí i pro hodnoty v translations.js.
 
 ### §11 — IS text v Python skriptech = VŽDY literální znaky
-Escape sekvence NIKDY — pouze literal UTF-8 s `python -X utf8`. (detaily + příklady → working-style.md)
+Escape sekvence NIKDY — jen literal UTF-8 s `python -X utf8` (příklady → working-style.md).
 
 ### §12 — Jméno uživatele: fallback = "you" / "þú"
-NIKDY `email.split('@')[0]`. displayName() = jediný zdroj pravdy. (detaily → working-style.md)
+NIKDY `email.split('@')[0]`. `displayName()` = jediný zdroj pravdy.
 
 ### §13 — Nová věc musí projít VŠEMI cestami (Full-path rule)
-Nový field → všechny buildXxxPromptIS/EN · startReading() · resetReader() · shrine parts[]
-Nový spread → readRune() · drawAnother() · resetReader() · _setSpreadMode() · generateVoice()
-Migrace → grep starý text, aktualizovat VŠECHNY výskyty (sdílené i lokální)
-Před commitem: "Existuje jiná cesta kódem kde tohle chybí?"
+Nový field → všechny buildXxxPromptIS/EN · startReading() · resetReader() · shrine parts[].
+Nový spread → readRune() · drawAnother() · resetReader() · _setSpreadMode() · generateVoice().
+Migrace → grep starý text, aktualizovat VŠECHNY výskyty. Před commitem: „Existuje jiná cesta kódem, kde tohle chybí?“
 
 ### §14 — updateUIText() = POUZE statické překlady
-`updateUIText()` se volá na každém přepnutí jazyka — NIKDY sem nepřidávat state-dependent obsah.
-Dynamický obsah patří do dedikovaných funkcí:
-- `_updateReadingForm()` — `reader-card1-lbl` (heading) + `reader-note`
-- `_updateDobLabel()` — DOB pole
-Porušení způsobí přepsání personalizovaného textu při přepnutí jazyka.
+Volá se při každém přepnutí jazyka — NIKDY sem state-dependent obsah. Dynamický obsah: `_updateReadingForm()` (heading `reader-card1-lbl`
++ `reader-note`), `_updateDobLabel()` (DOB). Porušení přepíše personalizovaný text.
 
 ### §15 — Vocab/tier termíny = z VOCAB/TIERS, NIKDY natvrdo
-→ §10 (sloučeno 2026-10-11, DECISIONS 2026-10-11 (15)). Číslo zůstává kvůli odkazům.
+→ §10.
 
 ### §16 — Two-output rule + Reconciliation (doc sync)
-Task měnící chování/rozhodnutí (ne refactor/CSS) = Output A (práce) + Output B = 1 záznam do
-`RUNAR_DECISIONS.md` (append-only) + oprav špatnou sekci dotčeného docu **v tomtéž commitu**. Output B není formalita: nesplněný
-řádek `Affected doc(s)` je přesný mechanismus, který vyrobil 97 rozporů (§20).
-Reconciliation (owner-triggered): „Reconciliation: `<doc|modul>`" → Code každý rozpor (doc/komentář vs kód) ověří a **sám opraví**;
-co potřebuje ownera (rozhodnutí; nasazení a produkční DB jen tam, kde to chce `memory/working-style.md` „Explore → Plan → Implement“ —
-do 2026-10-14 tu stálo nasazení bez výjimky, DECISIONS 2026-10-14 (7)), zapíše do seznamu a **pokračuje dál** — owner to vyřeší najednou
-(KUKY 2026-10-09, kontrola architektury: *„ověříš si, že to máš všechno správně, a opravíš; pokud potřebuje můj zásah, zapíšeme
-a pokračuješ“*; do té doby Code vypsal seznam a zastavil, takže owner rozsuzoval i banality). Formáty polí + příklady → RUNAR_DECISIONS.md (RUNAR_DOC_SYNC.md nikdy neexistoval; v docs/archive/ je jen RUNAR_DOC_SYNC_CODE.md — do 2026-10-10 tu stálo „je v docs/archive/“).
+Task měnící chování/rozhodnutí = práce + 1 záznam do `RUNAR_DECISIONS.md` (append-only) + oprava dotčeného docu **v tomtéž commitu**
+(řádek `Affected doc(s)` hlídá smoke ⑮). Reconciliation („Reconciliation: <doc|modul>“): každý rozpor doc × kód ověř a **sám oprav**;
+co potřebuje ownera, zapiš do seznamu a **pokračuj** (rozsah schvalování → `memory/working-style.md` „Explore → Plan → Implement“).
 
 ### §17 — Doc sync: jediný zdroj = git repo, sdílená paměť přes junction
-Auto-paměť žije v `Downloads\Runar-admin\memory\` (MEMORY.md, working-style.md, runar-project.md,
-snapshots/ + tree paměti). Obě platformní pamětové složky (`AppData\Roaming\Claude\memory` = Cowork,
-`.claude\projects\C--Users-zkuku\memory` = Code) jsou **junction na `repo\memory\`** → oba agenti čtou i
-píší STEJNÉ soubory, git verzuje, žádný sync skript, žádný drift. `RUNAR_*.md` + `CLAUDE.md` zůstávají
-v rootu (čtou se on-demand, ne jako auto-paměť). Každá změna = malý commit + push IHNED, prefix `[docsync]`.
-Rozbitý junction (app přepsala složku) → spustit `memory\relink-memory.ps1`. Detail → RUNAR_DECISIONS.md (2026-07-04).
-**Kanonický doc žije JEN v repu (2026-07-17).** Cowork výstupy jdou do repa VÝHRADNĚ přes CODE. Zrcadlo
-(`C:\Users\zkuku\Claude\Projects\RÚNAR the rune keeper\`) NENÍ paralelní kopie — nanejvýš dočasný draft
-označený „→ CODE", který po převzetí zmizí. Zrcadlo-kopie = zdroj driftu (ověřeno 2026-07-17: zrcadlové
-`RUNAR_CONTEXT` a `working-style` se od repo verzí rozešly OBĚMA směry → nelze slít automaticky).
-⚠️ **Junction ≠ zrcadlo.** Junction (memory/) je JEDEN soubor přes link a funguje; kopie v Projects/ je něco
-jiného. Než se jakákoli zrcadlová kopie smaže, MUSÍ se ověřit diffem, co je v ní navíc — a přenést to.
+Paměť žije v `repo\memory\`; obě platformní složky (Cowork `AppData\Roaming\Claude\memory`, Code `.claude\projects\C--Users-zkuku\memory`)
+jsou **junction** na ni. Rozbitý junction → `memory\relink-memory.ps1`. Kanonický doc žije JEN v repu; Cowork píše do repa VÝHRADNĚ přes CODE.
+Zrcadlo `…\Projects\RÚNAR the rune keeper\` není kopie — nanejvýš dočasný draft „→ CODE“; před smazáním zrcadlové kopie diff, co je v ní navíc.
+Každá změna docs = malý commit + push IHNED, prefix `[docsync]`.
 
 ### §18 — Jeden zdroj pravdy, žádné paralelní kopie (ANTI-DRIFT)
-Kořen měsíce oprav = duplikace + rozsypané řetězce („všechno všude a nikde"). Prevence:
-1. **Každý řetězec/hodnota/chování žije na JEDNOM místě.** Jazykové / tier / spread varianty = **DATA** (per-jazyk packy `RP_*`, config, `VOCAB`/`TIERS`), konzumované JEDNOU cestou kódu. NIKDY „copy-paste-then-edit" dvě skoro stejné funkce — přesně tak se rozešly IS/EN buildery a vznikl měsíc oprav.
-2. **Než napíšeš druhou „skoro stejnou" věc → STOP:** dá se to jako data + jedna funkce? Přidání jazyka/spreadu = přeložit/přidat pack, ne nový builder.
-3. **Refaktor měnící generovaný výstup = golden-verify** (snapshot PŘED/PO přes `scripts/golden/`, diff = jen zamýšlené). Nikdy „přepiš a doufej".
-4. **Změny kvality čtení = MĚŘIT evalem** (Workflow: generuj → adversariální grader), ne hádat. Objektivní věci (IS gramatika) měř tvrdě; subjektivní styl = human judgment (auto-grader je moc přísný).
-5. **Nová věc → §13 full-path** (projít VŠECHNY cesty) PLUS zapsat do jednoho packu/configu, ne rozsypat po souborech.
-6. **Sdílené moduly:** `runar-character.js` a `runar-utils.js` načítají reader i shrine — NIKDY je neduplikovat do shrine (do 2026-10-11 §3).
+1. Každý řetězec/hodnota/chování žije na JEDNOM místě; jazykové / tier / spread varianty = **DATA** (packy `RP_*`, config, `VOCAB`/`TIERS`), jedna cesta kódu.
+2. Než napíšeš druhou „skoro stejnou“ věc → STOP: dá se to jako data + jedna funkce?
+3. Refaktor měnící generovaný výstup = golden-verify (`scripts/golden/`, diff = jen zamýšlené).
+4. Změny kvality čtení = MĚŘIT, ne hádat (objektivní tvrdě; subjektivní styl = human judgment).
+5. Nová věc → §13 full-path + zapsat do jednoho packu/configu.
+6. **Sdílené moduly:** `runar-character.js` a `runar-utils.js` načítají reader i shrine — NIKDY je neduplikovat do shrine.
 
 ### §19 — Ověřuj VÝSLEDEK, ne tvar kódu (anti-tichá-chyba)
-Měsíc tichých chyb (korekce běžely mrtvé, check-is skenoval špatnou plochu, `láta séð` prošlo) měl JEDEN kořen: každá kontrola ověřovala **tvar kódu** (parsuje? string existuje ve zdroji? builder dává stejné byty?), ale nic neprotlačilo známý vstup **reálnou cestou** a neověřilo **výsledek**. Rozsypání (§18) chyby jen schovalo.
-1. **Seed-and-assert na hranici.** Kde data přechází hranici (DB→kód, zdroj→prompt, stav→reset), měj JEDEN drobný fixture co protlačí známý vstup skrz produkční funkce a ověří výsledek (očekávané JE přítomno / špatné NENÍ). Vzor = `golden_contracts.js` (smoke.py kontrola ⑥): seed raw DB řádku → `normalizeCorrections`→`getCorrPrompt` → replacement přežil až do promptu, žádné „undefined". Fixture musí sám cvičit pravou hranici (ne test-double se špatnými klíči).  <!-- check-docs:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
-2. **Žádné tiché zelené.** Co nástroj **prokazatelně neposoudí** (subtilní IS gramatika — kauzativa, vazby) NESMÍ projít zeleně. Filtrovaný signál = **viditelný žlutý, ne zahozený** (`E001` = „nerozparsováno" ≠ „v pořádku"; nástroje v §2). Nesrozumitelný výstup se **přepíše, dokud mu nástroj nerozumí** (přesně tak byl vyřešen E001 2026-07-17 — přepsáním na plné věty), ne odloží na někoho jiného (zrušená fronta „NATIVE EYE / Sigrún“ → §2).
-3. **Kontrola běží na TÉ PLOŠE, kde bug žije.** Dynamický model-output ≠ zdrojový string; DOM stav ≠ builder output. Kontrola na proxy ploše se nepočítá jako pokrytí.
+1. **Seed-and-assert na hranici:** kde data přechází hranici (DB→kód, zdroj→prompt, stav→reset), protlač známý vstup produkčními funkcemi a ověř
+   výsledek (vzor `golden_contracts.js`, smoke ⑥). Fixture cvičí pravou hranici, ne test-double.
+2. **Žádné tiché zelené:** co nástroj prokazatelně neposoudí, NESMÍ projít zeleně; filtrovaný signál = viditelný žlutý (`E001` ≠ „v pořádku“).
+   Nesrozumitelný výstup se přepíše, dokud mu nástroj nerozumí.
+3. **Kontrola běží na TÉ PLOŠE, kde bug žije** (model-output ≠ zdrojový string; DOM ≠ builder).
 
 ### §20 — Jedna informace = jedno místo. Nikdy dvě.
-KUKY 2026-07-18: *„nechci aby žádné informace žily na více než 1 místě! už když to jsou dvě místa,
-tak nám to vytváří problémy. Žádné duplikáty!"* Není to úklid, je to **pravidlo pro psaní**.
-Doloženo: audit našel **97 rozporů nad ~12 fakty** (každý na 4–7 místech). Yggdrasil kvůli tomu
-musel owner opravovat **pětkrát** — opraví se tři výskyty, čtvrtý přežije a příští session ho
-přečte jako pravdu. **Dvě kopie nejsou riziko rozporu; jsou rozpor s odloženou splatností.**
-
 **Než napíšeš fakt do docu, zeptej se: kde tohle už bydlí?**
-1. **Bydlí v kódu → doc to NIKDY neopisuje**, jen odkáže. Čísla (`SPREAD_COSTS`, `TIERS`,
-   `monthly_readings`), labely (`VOCAB`, tier jména), délky čtení (buildery), model (proxy MODELS).
-   Doc smí říct „ceny jsou v `SPREAD_COSTS`", nesmí říct „Norns = 2 kredity".
-2. **Bydlí v jiném docu → odkaz, ne převyprávění.** Převyprávění vlastními slovy je taky kopie —
-   a rozejde se hůř, protože grep ho nenajde.
-3. **Nebydlí nikde → urči vlastníka a napiš to TAM.** Ne tam, kde to zrovna píšeš.
-4. **Stav („hotovo/TODO/nasazeno") vlastní kód a `git log`.** Do docu nepatří SW verze, commit hash
-   ani „čeká na push" — to zastará do druhého dne. `RUNAR_DECISIONS.md` vlastní *rozhodnutí*, ne stav.
-
-**Zakázaný druh dokumentu: „shrnutí všeho".** Nevlastní žádné téma, jen kopíruje cizí — a proto
-se NEMŮŽE nerozejít, nemá se čeho držet. Takhle umřel `memory/runar-project.md` (sám vygeneroval
-~15 nálezů auditu; 2026-07-18 vyprázdněn, zbyl jen důvod). Nový doc musí umět odpovědět: **co vlastní
-ten a žádný jiný?** Neumí-li, nevzniká.
-
-**Při sporu vyhrává PRODUKCE**, pak nejnovější datovaný záznam v `RUNAR_DECISIONS.md`.
-Na rozhodnutou a datovanou věc se ownera neptej — dohledej ji (KUKY 2026-07-18).
-(„§16 output B není formalita“ odtud přešlo do §16 — do 2026-10-11 tu stálo podruhé.)
-
-**Najdeš duplikát nebo chybu — i mimo zadání → hned oprav, nebo zapiš; nikdy tiše přejít** (do 2026-10-11 §22). KUKY 2026-08-02:
-*„pokud narazíš na duplikát, chybu, tak budeme opravovat nebo zapsat, ať se nezapomene."* Malé a v rozsahu úkolu → oprav hned;
-jinak **zapiš do `RUNAR_BACKLOG.md`** (příp. spawn_task chip) s dost kontextem, aby to šlo vyřešit bez téhle konverzace. Nikdy jen
-zmínit a nechat být.
+1. **Bydlí v kódu → doc to NIKDY neopisuje**, jen odkáže (čísla `SPREAD_COSTS`, `TIERS`, labely, délky čtení, model).
+2. **Bydlí v jiném docu → odkaz, ne převyprávění.**
+3. **Nebydlí nikde → urči vlastníka a napiš to TAM.**
+4. **Stav („hotovo/TODO/nasazeno“, SW verze, hash) vlastní kód a `git log`**; `RUNAR_DECISIONS.md` vlastní rozhodnutí, ne stav.
+Nový doc musí umět říct, **co vlastní on a žádný jiný** — „shrnutí všeho“ nevzniká. **Při sporu vyhrává PRODUKCE**, pak nejnovější datovaný
+záznam v `RUNAR_DECISIONS.md`; na rozhodnutou věc se ownera neptej — dohledej ji.
+**Najdeš duplikát nebo chybu, i mimo zadání → hned oprav, nebo zapiš do `RUNAR_BACKLOG.md`** (s kontextem); nikdy tiše přejít.
 
 ### §21 — Ownerův nápad = směr k dopracování, ne hotové zadání (platí pro VŠECHNY session)
-KUKY 2026-08-02: *„mám myšlenku, ale ta potřebuje korekci."* Když owner přinese nápad nebo rozhodnutí,
-**NEjen souhlasit a stavět.** Nejdřív dát **kritický pohled + proveditelnost**: kde to drhne, co je slabé,
-co je tautologie / riziko / „střecha před základy". Navrhnout **korekci nebo zúžení**, teprve pak konat.
-Souhlas bez kritiky ownerovi nepomáhá — výslovně ji chce slyšet. **Rozhodnutí = směr, ne zámek navždy**:
-mění se novým datovaným záznamem v `RUNAR_DECISIONS.md`; při rozporu dej **VAROVÁNÍ**, ne tichý drift.
-Detail → [[decisions-are-directions-not-locks]].
-
-**Opustit něco ≠ zavřít to navždy; návrat je povolený, ale JEN očištěný** (do 2026-10-11 §26). KUKY 2026-08-14: *„pokud od něčeho
-odejdeme má to v tu chvíli důvod, ale neznamená to že se k tomu nemůže v obměněné formě vrátit."* Když se od něčeho odejde, má to
-v tu chvíli **důvod**. Ten důvod nezaniká — ale ani nezakazuje návrat. Vracíš-li opuštěnou věc, **napřed dohledej, proč odešla**, a vrať
-ji tak, aby ta příčina byla odstraněná:
-1. Najdi datovaný záznam odchodu (`RUNAR_DECISIONS.md`, komentář u mrtvého kódu).
-2. Pojmenuj **konkrétní vadu**, kvůli které odešla.
-3. Vrať **očištěnou** verzi, kde ta vada prokazatelně není — ne kopii původního stavu.
-4. Zapiš nové datované rozhodnutí, které se na to staré odvolává.
-
-Návrat bez kroků 1–3 je recidiva, ne rozhodnutí. Mrtvý kód nechávaný „pro historii" je proto komentovaný důvodem odchodu —
-čti ten komentář dřív, než ho oživíš.
+Nejdřív **kritický pohled + proveditelnost** (kde to drhne, riziko, „střecha před základy“), návrh korekce, teprve pak konat. Rozhodnutí = směr,
+ne zámek: mění se novým datovaným záznamem; při rozporu VAROVÁNÍ, ne tichý drift. → [[decisions-are-directions-not-locks]]
+**Návrat k opuštěné věci jen očištěný:** najdi záznam odchodu, pojmenuj vadu, vrať verzi bez ní, zapiš nové rozhodnutí s odkazem na staré.
+Mrtvý kód „pro historii“ nese komentář s důvodem odchodu — čti ho, než ho oživíš.
 
 ### §22 — Duplikát / chyba → hned oprav, nebo zapiš (nikdy tiše přejít)
-→ §20, poslední odstavec (sloučeno 2026-10-11, DECISIONS 2026-10-11 (15)). Číslo zůstává kvůli odkazům.
+→ §20, poslední odstavec.
 
 ### §23 — Nevymýšlej fakta ani lore → zastav a flagni (platí pro VŠECHNY session, Code i Cowork)
-Chybí-li v kánonu 🔒 **fakt** (etymologie, IS gramatika, čísla, DB) nebo 📜 **lore** (Rúnar, mytologie,
-hlas), **zastav a řekni „nevím / chybí"** — nikdy nedomýšlej a nevydávej domněnku za pravdu. ⚠️ **Riziko
-roste s chytrostí modelu:** čím lepší model, tím sebejistěji zní i výmysl. Detail → [[dont-invent-fact-critical]].
+Chybí-li v kánonu 🔒 fakt (etymologie, IS gramatika, čísla, DB) nebo 📜 lore → „nevím / chybí“, nikdy domněnka za pravdu.
+Čím lepší model, tím sebejistěji zní výmysl. → [[dont-invent-fact-critical]]
 
 ### §24 — Ověř, než tvrdíš (měř, nehádej) (platí pro VŠECHNY session, Code i Cowork)
-Než něco prohlásíš za nález/pravdu, **změř / protlač produkční cestou / porovnej** — dojem z obrázku
-ani „vypadá to" se nepočítá. Kód: seed-and-assert na výsledek (§19). Obsah/data (Cowork): claim o
-datech/screenshotu opři o měření, ne o dojem; nejde-li změřit, řekni „nevím". Detail → [[measure-dont-eyeball]].
+Nález/pravdu nejdřív **změř / protlač produkční cestou / porovnej**; dojem se nepočítá. Nejde-li změřit, řekni „nevím“. → [[measure-dont-eyeball]]
 
 ### §25 — Napřed se sám vyvrať: obrácená páka a útok na nástroj (platí pro VŠECHNY session, Code i Cowork)
-**A) Vlastní domněnku zabij obrácenou pákou.**
-Než začneš **přidávat** obsah, aby se hypotéza potvrdila, **hni pákou na opačnou stranu** a zkontroluj,
-jestli platí obrácená předpověď. Je to o řád levnější a zabíjí to i domněnky, které znějí rozumně.
-
-- Hypotéza „X je málo, přidej X" → **uber X ještě víc**. Musí to zhoršit. Když se nic nestane, hypotéza padla.
-- Nevyšla-li predikce ani obráceně, **nález je „není to X"** — a ten se zapisuje stejně pečlivě jako potvrzení
-  (§16), jinak ho příští session zkusí podruhé.
-- Vždy uveď **hranici nálezu**: co přesně bylo vyloučeno (velikost řezu, `n`), a co se netvrdí.
-
-**Doloženo 2026-08-14:** hypotéza „IS prompt opisuje, protože zhubl". Přisypat islandský obsah = hodiny psaní
-a ověřování. Místo toho zkrácení o dalších 509 znaků: 32 % → 24 %, **p = 0,75**, navíc opačným směrem.
-Hypotéza padla za tři minuty a jednu dávku. Detail → `RUNAR_DECISIONS.md` 2026-08-14, [[falsify-by-reversing-the-lever]].
-
-**B) Nástroj se obhájí dřív než výsledek** (do 2026-10-11 §27). Než uvěříš číslu, **zaútoč na to, čím jsi ho naměřil**. Metrika,
-která prošla jen tím testem, kvůli kterému vznikla, není ověřená — je vybraná. Tři útoky, v tomhle pořadí:
-
-1. **Půlka proti půlce** — rozděl JEDNU dávku na dvě a spočítej metriku zvlášť. Liší-li se
-   půlky víc než dávky, které srovnáváš, je rozdíl šum.
-2. **Co JEŠTĚ odlišuje referenční dvojici** — zlatý standard může ukazovat obráceně, když se
-   ty dvě strany liší ještě něčím jiným než tím, co měříš.
-3. **Nulová transformace** — pusť změnu, která hýbe jen jednou dimenzí. Nepohne-li se číslo,
-   je slepota **dokázaná** a patří do dokumentace jako fakt, ne jako tušení.
-
-**Doloženo 2026-08-14** (metrika „stejnosti" čtení): útok 1 zabil **2 ze 3** metrik · útok 2
-odhalil, že **6 ze 7** samozřejmých signálů ukazovalo obráceně (měřily papouškování, ne
-stejnost) · útok 3 dokázal, že přeživší metrika nevidí rytmus (zamíchání slov uvnitř čtení
-změní číslo o **0,0000**). Detail → [[attack-the-metric-not-just-the-result]].
-**Párové metriky:** nikdy bootstrap s opakováním (duplikát = shoda 1,0), jen jackknife.
-
----
+**A) Obrácená páka:** hypotézu „X je málo, přidej X“ testuj tak, že X **ubereš**; musí to zhoršit. Nevyjde-li ani obráceně, nález je „není to X“
+a zapisuje se stejně pečlivě (§16). Vždy uveď hranici nálezu (co vyloučeno, `n`, co se netvrdí). → [[falsify-by-reversing-the-lever]]
+**B) Nástroj se obhájí dřív než výsledek:** (1) půlka proti půlce — liší-li se půlky víc než srovnávané dávky, je to šum; (2) co JEŠTĚ odlišuje
+referenční dvojici; (3) nulová transformace — nepohne-li se číslo, slepota je dokázaná. Párové metriky: jackknife, nikdy bootstrap
+s opakováním. → [[attack-the-metric-not-just-the-result]]
 
 ### §26 — Opustit něco ≠ zavřít to navždy; návrat je povolený, ale JEN očištěný
-→ §21, druhý odstavec (sloučeno 2026-10-11, DECISIONS 2026-10-11 (15)). Číslo zůstává kvůli odkazům.
+→ §21, druhý odstavec.
 
 ### §27 — Nástroj se obhájí dřív než výsledek
-→ §25 B (sloučeno 2026-10-11, DECISIONS 2026-10-11 (15)). Číslo zůstává kvůli odkazům.
+→ §25 B.
 
 ### §28 — Každá změna nese svůj DŮVOD tam, kde bydlí (platí pro VŠECHNY session)
-KUKY 2026-08-16: *„každá změna musí být označena proč se to dělo."* **Diff ukazuje CO se změnilo;
-proč se to stalo, nezachytí nic než ten, kdo to psal** — a ten za týden nebude k dispozici.
-
-Důvod se píše **k té změně**, ne do zvláštního seznamu (§20 — seznam by se rozešel):
-- **kód** → komentář na místě zásahu; u obrany navíc **doklad**, čím se to projevilo
-- **doc / mapa promptu** → řádka v changelogu daného docu, ne jen nový text
-- **rozhodnutí o chování** → datovaný záznam (§16); commit message nese totéž jednou větou
-- **výjimka z kontroly** → důvod + datum přímo ve značce
-
-⚠️ **Důvod NENÍ převyprávěný diff.** „Přepsán úhel [5]" není důvod; „úhel se ptal na RUNU, ne
-na obraz — táž vada už odstraněná z [0] a [1]" je. Nezní-li to jako věta, kterou by někdo řekl
-při obhajobě zásahu, není to důvod.
-
-**Není to nový nápad, jen zobecnění.** `verify_escape_marks.js` tohle vynucuje od 2026-07-19
-pro escape značky: *„Holá značka musí nést DŮVOD a DATUM."* Tam se to zavedlo proto, že 35 holých
-značek umlčelo červenou a nikdo nepoznal, která je legitimní. Beze změny principu, jen širší plocha.
+Důvod se píše k té změně, ne do zvláštního seznamu: **kód** → komentář na místě (u obrany i doklad) · **doc** → changelog daného docu ·
+**rozhodnutí** → datovaný záznam (§16) + věta v commitu · **výjimka z kontroly** → důvod + datum ve značce. Důvod NENÍ převyprávěný diff.
+⚠️ **CLAUDE.md nenese historii ani doklady** — „do X tu stálo …“, citace a příběhy patří do DECISIONS / `docs/pravidla-duvody.md`.
 
 ### §29 — Hlášení z appky: načíst → označit přečtené → udělat → hotové uzavřít, nehotové do BACKLOGu (platí pro VŠECHNY session)
-KUKY 2026-10-06: *„konečně začni označovat tak, abych je každá session i po compactu rozpoznala, že jsou hotová… načteš je, označ
-jako přečtené, uděláme je, co se neudělá, je backlog!“* Do té doby se stav hlášení v DB neměnil — 194 „new“ i po vyřešení, a každá
-session je četla znovu jako nová.
-- **Stav hlášení v DB (`bug_reports.status`) je jediný zdroj** (§20): `new` = nikdo nečetl · `triaged` = přečteno · `fixed` = hotovo.
-- **Načíst = `node scripts/nacti_cteni.js`** — ukáže jen `new` a hned je označí `triaged`. Hotové: `--hotovo <id8> "<co, commit>"`.
-  Nehotové: položka v `RUNAR_BACKLOG.md` + `--backlog <id8> "<položka>"`. Nikdy neřešit hlášení, které už `new` není.
-- **Zápis hned po načtení** (KUKY 2026-10-07: *„prostě si piš po načtení reportů, co jsme udělali“*): každé načtené hlášení dostane
-  v tomtéž tahu `--hotovo` nebo `--backlog` (i „čeká na ownera: …“). Seznam nezapsaných vede `nacti_cteni.js`; Stop-hook tah neukončí,
-  dokud v něm něco zbývá.
-- **✦ Keep = „nechat“** — uložený text, ne úkol; jen se označí přečtený.
+Stav v `bug_reports.status` je jediný zdroj (`new` / `triaged` / `fixed`). Načíst = `node scripts/nacti_cteni.js` (ukáže `new` a označí `triaged`).
+Každé načtené hlášení v tomtéž tahu dostane `--hotovo <id8> "<co, commit>"` nebo `--backlog <id8> "<položka>"` (i „čeká na ownera: …“);
+Stop-hook tah neukončí, dokud něco zbývá. Neřeš hlášení, které už `new` není. ✦ Keep = uložený text, jen se označí přečtený.
 
 ### §30 — Nic nesmí viset na paměti session: pravidlo, které se opakovaně porušuje, dělá stroj (platí pro VŠECHNY session)
-KUKY 2026-10-07: *„nikdy nic nechci, aby záviselo na tvé paměti!! to je nejhorší, co se může stát. Ty si to prostě nepamatuješ!!“*
-Session si nepamatuje nic z minulé konverzace ani z doby před compactem. Co se má dít pokaždé, proto nesmí stát jen v paměti nebo v docu —
-musí to buď **udělat skript samo**, nebo **zastavit práci**, když se to vynechá. Dnes hlídá stroj:
-- **Záloha všech čtení z pokusů** → Stop-hook (`scripts/utils/zaloha_cteni.js` → `~/runar-eval/zaloha`).
-- **Pokus přes API** → PreToolUse hook (`hooks/claude/runar-api-guard.py`) ho nepustí bez `RUNAR_API_ANO=<počet>`. To se píše až poté, co
-  `node scripts/utils/najdi_cteni.js` ukázal, že odpověď v datech (čtení, která udělal CODE i owner) není nebo je vzorek malý, **a owner
-  k tomu řekl ano**. Když data nestačí, řekni to ownerovi a domluvte se — nenavrhuj rovnou pokus.
-  Spolu s počtem musí příkaz nést `RUNAR_API_ZAMER="<co pokus rozhodne; když tak → …, jinak → …>"`; nad 50 volání navíc
-  `RUNAR_API_OWNER="<ownerova slova>"`. Každý puštěný pokus se zapíše do `~/.claude/runar-api-pokusy.log` (čas, počet, skript, záměr). <!-- doc-links:ok 2026-10-07 log je uživatelský soubor v ~/.claude, mimo repo -->
-  Malý vzorek napřed (KUKY 2026-10-07: *„vždycky se udělá malý vzorek… ZÁMĚR… PŘEDPOKLAD“*).
-- **Zpráva ownerovi** → Stop-hook (`hooks/claude/runar-zprava-check.py`): body a otázky číslované; zpráva s návrhem nebo otázkou na
-  rozhodnutí projde, jen když v témže tahu běžel `node scripts/utils/uz_vime.js <pojmy>` (co už je hotové, zamítnuté, zapsané);
-  co na ownera čeká, musí být v tom bodu položené jako otázka s otazníkem (pravidlo 6, KUKY 2026-10-14, DECISIONS 2026-10-14 (5)).
-- **Hlášení z appky** → §29 (`nacti_cteni.js` stav v DB; zápis hned po načtení hlídá týž Stop-hook). **Co je hotové, rozhodnuté nebo zapsané, se ownerovi znovu nepředkládá** —
-  vrací se, až se vada objeví v nových čteních a owner na ni upozorní.
-- **Konverzace se neztrácí** → přepisy se nemažou (`cleanupPeriodDays`), noční šifrovaná kopie `scripts/utils/zaloha_konverzaci.js`
-  (krok noční zálohy DB), hledání `node scripts/utils/najdi_v_konverzacich.js "<text>"` (i zprávy ownera poslané během práce).
-  Povinný snapshot zrušen — nic ho nevynucovalo a opakoval BACKLOG a DECISIONS. (KUKY 2026-10-11, DECISIONS 2026-10-11 (21).)
-  Osobní údaje v přepisech: výmaz na žádost a co session nevypisují → `RUNAR_PRIVACY.md` „Retence + práva“ (DECISIONS 2026-10-11 (30)).
-- **Sdílené docy commituje jen `scripts/utils/commit_vlastni.py`** → pre-commit (`hooks/pre-commit.py`) zastaví commit `RUNAR_*.md`,
-  `CLAUDE.md`, `memory/` nebo jiného sdíleného souboru (seznam = `_SDILENE` v pre-commitu, od 2026-10-11 i `scripts/protipriklady.py`) bez něj; pathspec commit bral i cizí necommitnuté kusy (3×). Výjimka `RUNAR_SDILENE_OK="<důvod>"` se loguje.
-  Nástroj Edit (a Write přes existující) na sdílený doc zastaví hook hned — změna by nešla commitnout; náhrada:
-  `commit_vlastni.py uprav <lane> <soubor> <stary.txt> <novy.txt>` (DECISIONS 2026-10-11 (42)).
-  (KUKY 2026-10-11, DECISIONS 2026-10-11 (23).)
-  Týž pre-commit zastaví i commit (jakéhokoli souboru), který maže řádky, jež za 24 h přidala jiná session; vědomě jen s
-  `RUNAR_CIZI_OK="<důvod>"` (DECISIONS 2026-10-11 (51)).
-- **Pravidla při dotyku** → PreToolUse hook (`scripts/utils/pravidla_pri_dotyku.py`): když session poprvé sáhne na soubor z mapy
-  `scripts/utils/pravidla_mapa.json`, úpravu jednou zastaví a vypíše AKTUÁLNÍ znění pravidel pro tu oblast (živě z CLAUDE.md, docs,
-  paměti); dlouhou sekci pustí až po Read; zápis do CLAUDE.md, `memory/` a `RUNAR_*.md` až po `uz_vime.js` puštěném po poslední
-  zprávě ownera, a nový text ze zapisujícího skriptu sám porovná s kánonem (DECISIONS 2026-10-11 (46)). Znovu po compactu. Mapu
-  hlídá smoke ㊴. Nové pravidlo k souborům → řádek do mapy, ne opis do hooku. (KUKY 2026-10-11, DECISIONS 2026-10-11 (17).)
-  Týž hook před prvním zápisem do docs/paměti po NOVÉ zprávě ownera prohledá kánon (CLAUDE.md, všechny RUNAR_*.md, memory/) slovy
-  z té zprávy a ukáže, kde už to stojí — pokyn se nezapíše jako nový, když platí. (KUKY 2026-10-11, DECISIONS 2026-10-11 (26).)
-- **Pasti v příkazech** → týž PreToolUse hook zastaví heredoc se zpětným lomítkem v těle, `grep … OK|FAIL … &&` jako podmínku
-  a zápis Edit/Write, který do souboru vkládá neviditelný znak (escape `\uXXXX` v parametru se změní na znak už při předání)
-  (obojí padlo 2026-10-11 znovu, ač stálo v paměti). **Neověřené tvrzení** → Stop-hook zprávy (`hooks/claude/runar-zprava-check.py`
-  pravidlo 4): věta s „nejspíš/pravděpodobně/zřejmě“ o kódu nebo souboru projde jen s „neověřeno“. (KUKY 2026-10-11, DECISIONS 2026-10-11 (36).)
-- **Kontroly pod útokem** → smoke ㊵ (`scripts/protipriklady.py`): podstrčená chyba v čisté kopii repa musí kontrolu shodit; pouští
-  se znovu, kdykoli se kontrola změní. Nová kontrola = aspoň jeden útok v `PRIPADY`, nebo jmenovitě s důvodem v `BEZ_UTOKU` —
-  jinak ㊵ spadne (od 2026-10-15; do té doby to nic nevynucovalo). (DECISIONS 2026-10-11 (44).)
-- **Kontroly při commitu** → `hooks/pre-commit.py` pustí rychlé textové kontroly (`scripts/utils/rychle_kontroly.py`, ~1 s) a zastaví
-  jen vadu na staged souboru; cizí necommitnutou práci jen vypíše (chytí ji pre-push v čisté kopii). Hlídá smoke ㊆. Tři dny po sobě
-  šel commit bez kontroly, která čte měněný soubor. (CODE-tune s CODE-read, DECISIONS 2026-10-14 (9).)
-- **Automatická mazání hlásí, kde a co smazala** → každé stojí v registru `MAZANI` (`supabase/functions/_shared/ops_souhrn.ts`) a každý
-  běh zapíše `ops_events` kind `purge` (i nulu); ops-watch ohlásí úlohu, která selhala nebo se neozvala, ranní souhrn ukáže „Deleted (24 h)“.
-  Mazání mimo registr nebo bez potvrzení shodí smoke ㊊ (`scripts/verify_mazani.js`). (KUKY 2026-10-16: *„chci vždy potvrzení … kde a co
-  smazala. musíme mít kontroly! to platí pro všechna podobné příkazy.“*, DECISIONS 2026-10-16 (2).) Úlohy, které nic nemažou, ale je dobré
-  vidět, že proběhly (zkouška obnovy zálohy), stojí v registru `BEHY` téhož souboru — selhání nebo neozvání hlásí ops-watch e-mailem
-  (KUKY 2026-10-18: *„cokoliv, co je třeba neviditelné, ale je dobré vidět, že to proběhlo, zapisovat emailem“*, DECISIONS 2026-10-18 (2)).
-- **Hooky Claude Code se verzují** → zdroj je `hooks/claude/` v repu; v `~/.claude` jsou jen jednořádkové odkazy, na které míří nastavení.
-  Hook měň v repu a commituj (DECISIONS 2026-10-14 (2)); do té doby žily jen v `~/.claude` a změnu nikdo neviděl.
-Najdeš nové pravidlo, které se porušilo podruhé? Nepiš ho jen do paměti — přidej mechanismus (hook, kontrola ve smoke, krok skriptu).
+Co se má dít pokaždé, udělá skript, nebo zastaví práci, když se vynechá. Úplný seznam nosičů (co hlídá které pravidlo):
+`node scripts/verify_nosice.js --vypis`. Co tě zastaví a jak dál:
+- **Pokus přes API** → hook ho nepustí bez `RUNAR_API_ANO=<počet>` + `RUNAR_API_ZAMER="<co rozhodne>"` (nad 50 i `RUNAR_API_OWNER`). Napřed
+  `node scripts/utils/najdi_cteni.js` (odpověď v datech?), pak ownerovo ano, malý vzorek napřed.
+- **Zpráva ownerovi** (Stop-hook): body a otázky číslované; návrh nebo otázka na rozhodnutí jen po `node scripts/utils/uz_vime.js <pojmy>`
+  v témže tahu; co čeká na ownera, polož jako otázku s otazníkem; „nejspíš/zřejmě“ o kódu jen s „neověřeno“.
+- **Sdílené docy** (`RUNAR_*.md`, `CLAUDE.md`, `memory/`, `_SDILENE`) commituje jen `commit_vlastni.py`; Edit na ně zastaví hook →
+  `commit_vlastni.py uprav <lane> <soubor> <stary.txt> <novy.txt>` nebo `cv.zapis`. Mazání cizích řádků z posledních 24 h jen s `RUNAR_CIZI_OK`.
+- **Pravidla při dotyku** (hook): první sáhnutí na soubor z `scripts/utils/pravidla_mapa.json` vypíše živá pravidla; zápis do docs/paměti až po
+  `uz_vime.js` puštěném po poslední zprávě ownera. Nové pravidlo k souborům → řádek do mapy.
+- **Pasti v příkazech** (hook): heredoc se zpětným lomítkem, `grep … OK|FAIL … &&` jako podmínka, neviditelný znak v Edit/Write.
+- **Kontroly:** pre-commit pustí rychlé kontroly na staged soubory; pre-push celý smoke v čisté kopii. Nová kontrola = útok v
+  `scripts/protipriklady.py` (`PRIPADY`) nebo důvod v `BEZ_UTOKU` (smoke ㊵).
+- **Automatické mazání** → registr `MAZANI` (`supabase/functions/_shared/ops_souhrn.ts`) + `ops_events` purge; neviditelné běhy → `BEHY`, selhání e-mailem.
+- **Konverzace se neztrácí:** `node scripts/utils/najdi_v_konverzacich.js "<text>"`. Hooky Claude Code: zdroj `hooks/claude/` v repu.
+Pravidlo porušené podruhé → nepiš ho jen do paměti, přidej mechanismus (hook, kontrola ve smoke, krok skriptu).
 
 ### §31 — Jazyk komunikace: veřejně i pro adminy jen IS a EN, česky jen owner ↔ Claude (platí pro VŠECHNY session)
-KUKY 2026-10-10: *„komunikace všude veřejně a pro adminy bude IS a EN. Jen já a ty komunikujeme česky. Štítky musí být EN,
-jelikož to je náš společný jazyk se Sigrún. Zapiš, vytvoř kontrolu, cokoliv, ale tohle už nechci řešit.“*
-- **IS + EN:** co uvidí uživatel, tester nebo model — appka, nápověda, soukromí, e-maily, odpovědi testerům (koncepty v Gmailu).
-- **EN:** co je pro adminy — shrine, štítky schránky runar@therunekeeper.com, logy edge funkcí, štítek verze promptu
-  (`RUNAR_PROMPT_VERSION`, admin ho vidí u čtení). Angličtina je společná řeč se Sigrún.
-- **Česky jen owner ↔ Claude:** chat, docs (`RUNAR_*.md`, `CLAUDE.md`), komentáře v kódu, commity, paměť, výstup skriptů
-  v `scripts/`, laby (`tree-lab-*`). Že je repo veřejné, z nich veřejnou komunikaci nedělá.
-- **Hlídá stroj — smoke ㉹** (`scripts/verify_jazyk_ui.js`): UI_TEXT, stránky v2/ a web/, jejich JS, edge funkce, šablony e-mailů.
-  Co neumí (česká věta bez háčků a bez slova ze seznamu), stojí v její hlavičce — minutou češtinu oprav a slovo přidej do
-  `CZ_SLOVA`. Gmail nevidí: štítky a postup → memory `schranka-runar-gmail`. Proč a co našla → `RUNAR_DECISIONS.md` 2026-10-10.
+- **IS + EN:** co uvidí uživatel, tester nebo model — appka, nápověda, soukromí, e-maily, odpovědi testerům.
+- **EN:** co je pro adminy — shrine, štítky schránky runar@, logy edge funkcí, štítek verze promptu (`RUNAR_PROMPT_VERSION`).
+- **Česky jen owner ↔ Claude:** chat, docs, komentáře v kódu, commity, paměť, výstup skriptů v `scripts/`, laby.
+- Hlídá smoke ㉹ (`scripts/verify_jazyk_ui.js`); minutou češtinu oprav a slovo přidej do `CZ_SLOVA`. Gmail → memory `schranka-runar-gmail`.
 
 ### §32 — Základ produkce se nesmí odebrat (platí pro VŠECHNY session)
-KUKY 2026-10-10: *„nikdy do produkce nebudeš sahat tak, že z ní odstraníš to, co je její základ!!! nikdy! tohle si budeš kontrolovat!“*
-Commit 2a3f03b (návštěvník rovnou k tahu) mu skryl Norny a po návratu do Spá Rúnarovu fotku; owner to našel v produkci sám.
-- **Základ** = co appka ukazuje vždy: Rúnarova fotka, záložky, všech pět výkladů, 25 run v tahu i v Safn rúna. Seznam vlastní
-  `scripts/verify_zaklad_produkce.js` (jedno místo); co owner označí za základ, přibude tam.
-- **Hlídá stroj — smoke ㉼:** skutečný prohlížeč bez okna, appka z pracovního stromu jako návštěvník i simulovaný přihlášený, ve všech
-  stavech (načtení, návrat z každé záložky, Start over, další tah, jazyk). Na 2a3f03b našla 10 vad.
-- **Změna toho, co uživatel vidí:** porovnej celou obrazovku PŘED a PO, ne jen prvek, který měníš. Co ze základu zmizí, je chyba, i když
-  to zdánlivě chce kód (Norny skryl komentář „jen pro přihlášené“) — napřed se zeptej ownera.
+**Základ** = Rúnarova fotka, záložky, všech pět výkladů, 25 run v tahu i v Safn rúna; seznam vlastní `scripts/verify_zaklad_produkce.js`
+(smoke ㉼, skutečný prohlížeč, návštěvník i přihlášený, všechny stavy). Změna toho, co uživatel vidí: porovnej celou obrazovku PŘED a PO;
+co ze základu zmizí, je chyba — napřed se zeptej ownera.
 
 ---
 
 ## Tier systém
-**Zdroj pravdy = `v2/runar-config.js`** (`TIERS` = jména EN/IS + flagy · `TIER_LIMITS` = pravidla
-· `TIERS.*.monthly_readings` = kapacity). **Tady se to NEOPISUJE** — §20. Jména se od 2026-07-05
-měnila dvakrát a každá opsaná tabulka to přežila jako zastaralá.
-
-DB hodnoty (neměnné): `free_trial` · `rune_seeker` · `standard` · `premium`.
-Identita: **všichni registrovaní jsou Rune Seeker**; standard/premium nejsou hodnosti, jen víc čtení.
-ADMIN → `isAdmin()` v `runar-utils.js`, seznam `ADMIN_EMAILS` v `runar-config.js`. **VŽDY testovat i jako visitor/rune_seeker.**
-**Účty (KUKY 2026-10-11, musel to opakovat):** testeři = **lidé ze seznamu** `allowed_emails` (role `tester` → premium + `is_tester` při registraci; kolik jich je,
-řekne DB: `select count(*) from public.allowed_emails where role = 'tester'` — číslo se sem nepíše, owner přidává další).
-Další **4 účty jsou týmu — ownera a Sigrún:** 2 admin (`ADMIN_EMAILS`) a 2 na test slabšího Rune Seekera (`is_tester`,
-mimo `allowed_emails`). Kapacitu a brzdy testerů (čtení, hlas) počítej **jen pro ně**; účty týmu mají strop testera taky a do nejhoršího cyklu se počítají. U každého ownerova pokynu dohledej, **o kom**
-mluví (testeři / produkce / tým) — pokyn pro testery se 2026-09-11 i 2026-10-11 omylem vztáhl na všechny (DECISIONS 2026-10-11 (49)).
-
----
+Zdroj pravdy = `v2/runar-config.js` (`TIERS` jména + flagy · `TIER_LIMITS` pravidla · `TIERS.*.monthly_readings` kapacity) — tady se neopisuje.
+DB hodnoty: `free_trial` · `rune_seeker` · `standard` · `premium`. Všichni registrovaní jsou Rune Seeker; standard/premium = víc čtení, ne hodnost.
+ADMIN → `isAdmin()` (`ADMIN_EMAILS`). **VŽDY testovat i jako visitor/rune_seeker.**
+**Účty:** testeři = lidé ze seznamu `allowed_emails` (role `tester` → premium + `is_tester`; počet z DB, nepiš ho). Další **4 účty jsou týmu**
+(owner, Sigrún): 2 admin + 2 na test Rune Seekera (`is_tester`, mimo `allowed_emails`). Kapacitu a brzdy testerů počítej jen pro ně.
+U každého ownerova pokynu dohledej, **o kom** mluví (testeři / produkce / tým).
 
 ## DB — user_profiles
-**Schéma vlastní databáze + `sql/` migrace. Tady se NEOPISUJE** (§20) — ručně vedený seznam
-se rozešel o 4 sloupce dřív, než si toho kdokoli všiml (2026-07-19: chyběly `address_gender`,
-`is_tester`, `analytics_opt_out`, `tester_consent_at` — a do všech tří klient zapisuje).
-Aktuální sloupce: `supabase db query --linked "select column_name from information_schema.columns
-where table_name='user_profiles'"`.
-
-Co databáze sama neřekne, a proto bydlí tady:
-- ⚠️ **`email` a `updated_at` v `user_profiles` NEEXISTUJÍ** — časté chybné hledání; e-mail je v `auth.users`.
-- **Zapisovatelnou plochu** (které sloupce smí klient měnit) vlastní `sql/2026-07-16_user_profiles_column_grants.sql`
-  a hlídá ji smoke ⑩. Peníze a oprávnění (`tier`, `credits_balance`, `free_balance`, `month_*`) píše
-  VÝHRADNĚ server přes service_role.
-
----
+Schéma vlastní DB + `sql/` migrace — neopisuje se. ⚠️ **`email` a `updated_at` v `user_profiles` NEEXISTUJÍ** (e-mail je v `auth.users`).
+Zapisovatelnou plochu vlastní `sql/2026-07-16_user_profiles_column_grants.sql` (smoke ⑩); peníze a oprávnění (`tier`, `credits_balance`,
+`free_balance`, `month_*`) píše VÝHRADNĚ server přes service_role.
 
 ## Reading systém — stav
-
-**Unified format**: 1 plynoucí blok, žádné `|||`. `layer1-lbl` = glyf + jméno runy.
-`_readingMode` = `'mine'` (ukládá — journal píše SERVER-SIDE claude-proxy hned po odečtu kreditu — dva zápisy, ne jedna transakce (do 2026-10-09 tu stálo „atomicky“); klient jen loadJournal) | `'someone'` (neukládá).
-`u.area/seeking/intention/question` → `parts[]` → Claude. Norns axis: `_intentionContext(intention,lang)` v runar-character.js.
-
-**Délky čtení**: zdroj pravdy = buildery v `runar-character.js` (RP_* packy + `closing()` věty). Docs čísla NEopakují — když měníš délku, uprav builder + přepočítej pricing (RUNAR_PRICING.md). Délka = znaky = EL náklad. Jméno ne vždy na začátek; životní runa jen kontext.
-
-**Obraznost**: `_seasonalImagery(lang, drawn)` vloží do čtení JEDEN obraz. Primární zdroj je
-`RUNE_IMAGES` — obrazy **klíčované runou**, obojí jazyk na témž řádku (od 2026-08-10 i pro EN).
-⚠️ **`SEASON_POOLS` se do čtení NEDOSTANE — ověřeno protlačením 2026-09-08.** Do té doby tu
-stálo „stojí na něm celá funkce: `if (!pool) return ''`". Obojí je mrtvé: **0 ze 150** dvojic (25 run × 6 sezón — ⚠️ do 2026-09-09 tu stálo 144, protože jsem runu **Blank** tiše vyřadil; má 3 obrazy a do výpočtu patří)
-runa × bucket je bez runového kandidáta (`runePhrase` je tedy vždy neprázdné a `phrase =
-runePhrase || …` po poolu nesáhne), a `_seasonBucket` vrací pool pro všech 12 měsíců, takže
-ani ten guard nezabere. Padá s tím i los klíčových slov (`pickedKws`), který visí na téže
-podmínce. Sezónní **sáček** se přesto čerpá při každém čtení — to je jediný živý účinek poolů.
-Sáček proti opakování má klíč per SADA run; u spreadu se losuje ze všech tažených, ne z první pozice.
-KLÍČ (2026-06-12, jeden test na Claudovi): konkrétní pokyn v user promptu vyhrál nad obecným pravidlem v systému. **Na solu neměřeno**
-a výrobci učí opak (OpenAI Model Spec: system/developer zpráva má vyšší autoritu než user; Anthropic: stálá pravidla do systému,
-krátká připomínka na konec) — rozhodovat mohla poloha a konkrétnost, ne role. **Změřeno na solu 2026-10-16** (RUNAR_EVAL_LOG 2026-10-16 (1)):
-jednoduché pravidlo v systému dodrženo 5/5 = v user promptu 5/5, bez pravidla 0/5 — sol systém NEignoruje (EN, n = 5, pravidlo bez konfliktu;
-pravidlo proti protichůdnému pokynu v user promptu neměřeno). Do 2026-10-16 tu stálo „user prompt model POSLECHNE, system prompt IGNORUJE“. Reader i shrine = `buildSysPrompt`.
+Jeden plynoucí blok (žádné `|||`). `_readingMode` = `'mine'` (journal píše server v `claude-proxy` po odečtu kreditu) | `'someone'` (neukládá).
+**Délky čtení** = buildery v `runar-character.js`; měníš délku → přepočítej pricing. **Obraznost:** `_seasonalImagery` bere obraz z `RUNE_IMAGES`
+(klíčované runou); `SEASON_POOLS` se do čtení nedostane. **KLÍČ** system × user prompt: sol pravidlo v systému dodrží stejně jako v user promptu
+(RUNAR_EVAL_LOG 2026-10-16 (1)); rozpor obou neměřen. Detail → `docs/projekt-mapa.md`.
 
 ### Spread systém
-Kredity = **per typ čtení**, NE počet run. Počty run i ceny = `SPREAD_COSTS` / `SPREAD_CONFIG`
-(config = zdroj pravdy, **tady se neopisují**). Předplatné počítá tytéž jednotky. Founding = Norns.
-
-Které spready existují, vlastní `SPREAD_COSTS` / `SPREAD_CONFIG` — **tady se to neopisuje**.
-Jediná výjimka je The Gathering: starý modul `runar-gathering.js` odstraněn 2026-09-28 (v aplikaci <!-- doc-links:ok 2026-09-28 soubor záměrně smazán, odkaz je historie -->
-neměl vstup, `RUNAR_DECISIONS.md` 2026-09-28 (1)); nová podoba čeká na `detectPatterns` → `RUNAR_BACKLOG.md`.
-<!-- 2026-08-18: tady stál výčet pěti spreadů + „= ✅ produkce", tedy STAV, který §20.4 zakazuje
-     a který navíc říkal totéž co tehdejší řádka o modulu Gatheringu o 326 řádek výš. Duplikát uvnitř
-     jednoho souboru; pět spreadů je v configu, takže se dá odkázat místo opisovat. -->
-
-**Gating:** blokuje se jen **Visitor** (nepřihlášený) — živé čtení ani hlas nemá, proxy ho odmítne (401, DECISIONS 2026-08-02);
-má jen statickou kolekci run a životní runu (výpočet). Do 2026-10-09 tu stálo „Visitor má Single 1×“ — neplatí od 2026-08-02;
-po tahu runy mu appka ukáže výzvu k registraci a proxy nevolá (od 2026-10-10, DECISIONS 2026-10-10 (1)). Každý přihlášený dosáhne
-na všechno; Rune Seeker platí kredity, předplatitelé to berou z měsíčních jednotek.
-⭐ **Yggdrasil = KDYKOLIV, KDOKOLIV přihlášený. Žádná brána na datum.** Zimní slunovrat = větší
-**síla ve stromě**, ne podmínka přístupu (rituální čtení; bude jich víc). KUKY 2026-07-18, po páté
-opravě téhož — detail `RUNAR_DECISIONS.md`. Kdo sem napíše „Dec 14–28" jako podmínku, dělá to znovu.  <!-- check-docs:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
-
----
+Kredity = per typ čtení (`SPREAD_COSTS` / `SPREAD_CONFIG`, neopisuje se). The Gathering čeká na `detectPatterns` (BACKLOG).
+**Gating:** blokuje se jen **Visitor** (proxy ho odmítne 401, po tahu dostane výzvu k registraci); každý přihlášený dosáhne na všechno.
+⭐ **Yggdrasil = KDYKOLIV, KDOKOLIV přihlášený** — slunovrat = větší síla ve stromě, ne podmínka přístupu.
 
 ## Tree of Life — stav
-Stav vlastní `RUNAR_TREE.md` (duše · zóny · stavba · co je a co není postavené) a `git log`.
-**Tady se neopisuje** — §20.4. Do 2026-08-18 tu stály čtyři řádky stavu, které týž fakt držely
-potřetí (vedle `RUNAR_TREE.md:222` a `RUNAR_BACKLOG.md`) a mezitím zastaraly: psalo se
-„admin-only beta / gating na `isAdmin()`", zatímco `renderLivingTree()` pouští i testery
-(`isAdmin(...) || isTester`). Nalezl CODE-tune; opravila si to CODE-tree ve své sekci. (To je historie — kdo strom vidí dnes, vlastní
-`renderLivingTree` v `runar-tree.js`; od 2026-10-11 zase jen admin, KUKY.)
-
-⚠️ **Past pro lane `[tune]`:** strom se krmí regexem přes text čtení (glyfy 0x16A0–0x16FF
-z `rune_glyph + short_text`). Změníš formát skládaného textu → CODE-tree tiše přijde o větve.
-Hlídá smoke ⑬ (`verify_tree_signals.js`), ale tahle věta je důvod, proč o tom vůbec víš.
-
-Kanonický vstupní bod = `RUNAR_TREE.md`. `RUNAR_TREE_LAB.md` = historie (docs/archive/tree/).
+Vlastní `RUNAR_TREE.md` a `git log`. ⚠️ **Past pro `[tune]`:** strom se krmí regexem přes text čtení (glyfy 0x16A0–0x16FF z `rune_glyph + short_text`)
+— změna formátu skládaného textu = CODE-tree tiše přijde o větve (smoke ⑬).
 
 ## Word Corrections
-Živá data: `python show_corrections.py` · nová korekce do DB přes shrine (ověří `is-corr-qa.py`, §2); známá chyba ve zdroji → `BAD_PATTERNS` (§2 bod 1).
-
----
+Živá data: `python show_corrections.py` · nová korekce do DB přes shrine (ověří `is-corr-qa.py`); známá chyba ve zdroji → `BAD_PATTERNS`.
 
 ## Kde hledat co
-**Vlastník = `memory/MEMORY.md`, sekce „Rozcestník".** Sem se nekopíruje.
-Do 2026-08-17 tu stál druhý rozcestník — a rozešel se: MEMORY.md mezitím dostal sloupec
-„druh pravdy" (🔒 externě ukotveno · 📜 kánon · 🔄 rozhodnuto · 🏛 architektonické), který tady
-nikdy nebyl. Dvě mapy téhož = přesně to, co §20 zakazuje.
-
-**Doc-owner pravidla (2026-07-05):**
-- **Čísla = jen v configu / builderech** (SPREAD_COSTS, TIERS, character.js). Docs je NEopakují — odkazují na zdroj (délky→character.js, ceny/kredity→config).
-- **1 téma = 1 vlastník doc.** Žádné nové samostatné docs — když téma patří jinam, jinde jen odkaz.
-- **Délka doku ~200 řádků** (250 OK, když to fakt pomáhá). Nad = rozdělit nebo přesunout detail.
-  ⚠️ **`CLAUDE.md` je z toho limitu VYŇATÝ** (KUKY 2026-08-17, po měření): samotná pravidla
-  §1+ **přesahují 200 řádků** (do 2026-10-11 tu stálo „§1–§28“ — pravidla mezitím přibyla, pevné číslo by zase ujelo) a jsou důvod, proč ten soubor existuje — pod 200 se nedostane, aniž
-  by přišel o to, co vlastní. Platí pro něj jen ten přísnější test o řádek výš: *způsobí jeho
-  chybění chybu?* Pokud ne → smazat.
-  ⚠️ **Přesný počet řádků tu schválně NESTOJÍ.** Do 2026-08-18 tu bylo „248 řádků" a za jediný
-  den to ujelo na 245 — číslo, které se mění s každou úpravou pravidel, je záruka dalšího driftu.
-  Ověřeno v oficiálních docs: „target under 200 lines per CLAUDE.md file" je **cíl**, ne strop,
-  a CLAUDE.md se načítá **celý bez ohledu na délku** (tvrdý limit 200 ř./25 KB má jen `MEMORY.md`). Vlastníkem tohohle pravidla je tenhle doc; `working-style.md`
-  na něj odkazuje a neopisuje ho.
+Vlastník = `memory/MEMORY.md`, „Rozcestník“. **Čísla jen v configu / builderech; 1 téma = 1 doc; délka doku ~200 řádků (250 OK)** —
+CLAUDE.md je z limitu vyňatý, platí pro něj test „způsobí jeho chybění chybu? ne → pryč“.
 
 ---
 
 ## N paralelních session — kdo o čem mluví
-Repo zpracovává VÍC session naráz: **4× CODE** (tune · read · tree · web), a ke každé **Cowork symbiont**,
-se kterým se radí (Cowork-tune · Cowork-read · Cowork-tree). Cowork je **read-only**, proto volnější —
-do repa píše výhradně přes svého CODE.
+Víc session naráz: **CODE** tune · read · tree · web a k nim **Cowork** (read-only, do repa jen přes svého CODE).
+⭐ **Každá session commituje pod svým jménem:** `git -c user.name='CODE-tune' commit -F <msg> -- <cesty>` (per-commit, ne `git config`; smoke ㉛).
+Sdílené docy jen `commit_vlastni.py` (§30).
 
-⭐ **KAŽDÁ SESSION COMMITUJE POD SVÝM JMÉNEM** (KUKY 2026-08-18: *„jak tohle hlídat?"*):
-```
-git -c user.name='CODE-tune' commit -F <msg> -- <cesty>
-```
-Per-commit, **ne `git config`** — strom je sdílený a session by si config přepisovaly.
-**Sdílené docy (`RUNAR_*.md`, `CLAUDE.md`, `memory/`) jen přes `commit_vlastni.py`** — pathspec commit pre-commit nepustí (§30);
-příkaz výš platí pro kód. (Doplněno 2026-10-11, kolo 3 kontroly: tady i níž stál jen pathspec commit pro všechno.)
-E-mail zůstává, takže atribuce na GitHubu se nemění. Hlídá to **smoke ㉛**.
-⚠️ **Do 2026-08-18 tu stálo, že autora rozliší prefix.** Přestalo to platit ve chvíli, kdy
-přibyla třetí CODE session a začala commitovat pod `[tune]` — a nevšiml si toho nikdo,
-protože to nic nehlídalo. Prefix zůstává jako čitelnost, ale **není to už jediná pojistka**.
-
-### ⭐ Vedoucí pravidlo: dělíme se podle toho, kdo co VIDÍ (2026-07-17, KUKY)
-- **Cowork mluví o DATECH** — čtení, evaly, screenshoty, copy, design, obsah. To vidí celé a správně.
-- **CODE mluví o KÓDU** — git, soubory, stav, chování. To vidí jen on.
-- **Cowork NIKDY nediagnostikuje kód. CODE NIKDY nerozhoduje o obsahu a designu.**
-
-Cokoli o kódu formuluje Cowork jako **otázku na CODE**, ne jako úkol: ne „přeformuluj angl na ř. 278", ale
-„vidím `already` ve 4 z 5 čtení — najdi zdroj". **Otázka nemůže být špatně; diagnóza ano.**
-**Proč:** 2026-07-17 stály ČTYŘI spory na tomtéž kořeni — useknutý claude-proxy · mrtvý `already` angl ·
-„hlavička tahá latinské PERTH" · „junction nežije". Pokaždé Cowork tvrdil něco o kódu, na který nevidí
-(vadný mount, vlastní kopie, nemůže commitnout). **Není to nekázeň, je to strukturální** — a owner to pak
-musí rozsuzovat, čímž mu den sežere koordinace.
-
-**Handoff začíná řádkou `psáno proti commitu <hash>`.** CODE ji porovná s HEAD a zastaralý handoff odmítne
-SÁM — bez ownera.
+### ⭐ Vedoucí pravidlo: dělíme se podle toho, kdo co VIDÍ
+**Cowork mluví o DATECH** (čtení, evaly, screenshoty, copy, design) · **CODE mluví o KÓDU** (git, soubory, stav, chování). Cowork kód nediagnostikuje,
+CODE nerozhoduje o obsahu a designu; o kódu se Cowork **ptá** („vidím X — najdi zdroj“). **Handoff začíná `psáno proti commitu <hash>`**;
+zastaralý CODE odmítne sám. Handoff má sekci `ZMĚNĚNO:` (i prázdnou).
 
 **Lanes (kdo co vlastní):**
-- **CODE-tune** → prefix `[tune]` (+ `[fix]`/`[pricing]` jako téma; `[reading]` se jako téma
-  UŽ NEPOUŽÍVÁ — plete se s lane `[read]` níž, viz důvod tam): reading systém, prompty (buildery v runar-character.js), config (TIERS/SPREAD_COSTS/SPREAD_CONFIG/VOCAB), pricing, translations, reader UI/CSS, reporter, auth, app, journal, eval-IMPLEMENTACE, copy. = vše KROMĚ tree vizuálu.
-  ⭐ **Od 2026-10-05 (KUKY): do produkce jen MALÉ ověřené opravy, po jedné.** Velké zásahy do promptu a zkoušky jiných modelů
-  (přemýšlení, 6.1, 5.5) napřed v labu CODE-read — sol 6.1 `low` produkci rozbil (DECISIONS 2026-10-05 (3)).
-- **CODE-reader** → prefix `[read]`: **čte, testuje, mapuje — produkční kód NESAHÁ**
-  (KUKY 2026-08-17: *„codování dělá CODE-tune, ty jsi code-reader"*). Jak má Rúnar znít,
-  hlas × model, pestrost čtení; nálezy píše do `RUNAR_EVAL_LOG.md` a `RUNAR_DESIGN.md`,
-  změny v kódu **předává CODE-tune**, nedělá je.
-  ⚠️ **`[read]`, ne `[reader]`** — `[reading]` je v historii 46× jako téma a `[reader]`
-  by se od něj v `git log` nedalo odlišit pohledem (změřeno 2026-08-18).
-- **CODE-tree** → prefix `[tree]`: vizuální engine — runar-tree-prod.js (generovaný `build_tree_production.py`), tree-lab composery (runar-branch.js, runar-trunk.js), build_*composer.py, tree-lab-*/, tree-snapshots/, `RUNAR_TREE_*` docs, `tree_state` DB. Doménový doc = RUNAR_TREE.md.
-- **CODE-web** → prefix `[web]` (od 2026-10-12, owner *„ano to zní dobře“*): veřejný web therunekeeper.com — složka `web/`, landing page,
-  coming soon, registrace před spuštěním, nákup Rúnakortu (Shopify / Rapyd), návrh fyzické karty. Appku (`v2/`) nesahá; co web
-  potřebuje z appky (texty, config, glyfy), jen ČTE (`UI_TEXT`, `CARD_PACKS`, `runeSvg`) a změny v nich předává lane, která je vlastní.
-- **`dverg-tarot/` (Dverg Tarot)** → prefix `[dverg]`: karty run s dvergy, **samostatný produkt mimo Rúnara** (owner 2026-10-21). Rúnarovy
-  session ho nesahají a nic z něj nepřebírají; pracuje na něm vlastní session (`dverg-tarot/README.md`).
-- **Cowork-tune · Cowork-read · Cowork-tree** → prefix `[cowork]`: design, docs, eval-OBSAH,
-  copy audit, handoffy. Každý je **symbiont své CODE session** — ta se s ním radí o obsahu. Repo **READ-ONLY přes `git show HEAD:`** (ne `git status`, ten zapisuje do indexu); do repa píše VÝHRADNĚ přes CODE. Další Cowork session = táž lane, táž pravidla.
+- **CODE-tune** `[tune]`: reading systém, prompty, config, pricing, translations, reader UI/CSS, reporter, auth, app, journal, eval-implementace, copy
+  (vše kromě tree vizuálu). Do produkce jen **malé ověřené opravy, po jedné**; velké zásahy do promptu a jiné modely napřed v labu CODE-read.
+- **CODE-read** `[read]`: čte, testuje, měří — **produkční kód nesahá**; nálezy do `RUNAR_EVAL_LOG.md` / `RUNAR_DESIGN.md`, změny předává CODE-tune.
+- **CODE-tree** `[tree]`: vizuální engine stromu (`runar-tree-prod.js` generovaný `build_tree_production.py`, tree-lab composery, `tree_state`); doc `RUNAR_TREE.md`.
+- **CODE-web** `[web]`: therunekeeper.com (`web/`), registrace, nákup Rúnakortu; appku (`v2/`) jen ČTE, změny předává vlastníkovi.
+- **`dverg-tarot/` (Dverg Tarot)** `[dverg]`: karty run s dvergy, **samostatný produkt mimo Rúnara**; Rúnarovy session nesahají (`dverg-tarot/README.md`).
+- **Cowork** `[cowork]`: design, docs, eval-obsah, copy, handoffy; repo READ-ONLY přes `git show HEAD:`.
 
-**Mechanika (co ZBYLO — zbytek obstará git):**
-- **Commit prefix = LANE. `git log` s prefixy JE akční log.** Samostatnou řádku do `RUNAR_DECISIONS.md` piš
-  jen pro to, co git NEVIDÍ: deploy, SQL puštěné ownerem, rozhodnutí. (Logovat každý commit dvakrát = práce navíc.)
-- Nejde commitnout — ŽIVÝ zámek (běží git proces / mladší 10 min) → čekat, nesahat. **SIROTEK** (starší, bez procesů) → `python -X utf8 scripts/git_zamek.py <lane>` — smaže ho s auditem do `.git/runar-zamky.log` (čte smoke ㉞). KUKY 2026-08-23: „musí se vynucovat odemčení" (2 sirotčí zámky za den blokovaly všechny). Kdo zámek VYTVOŘIL, git nezapisuje — session, které git spadl, se pozná sama (příští commit jí selže) a MUSÍ se ohlásit. Jiný důvod (přístup) → NESAHAT, jen ohlásit; neviditelná změna je horší než žádná.
-- Handoff má sekci `ZMĚNĚNO:` (co jsem změnil), i prázdnou.
-- ⭐ Pravidlo, které musí hlídat člověk → udělej z něj kontrolu (§30; vzory smoke ⑩ zapisovatelná plocha, ⑪ memory index).
+**Mechanika:**
+- Commit prefix = LANE; `git log` je akční log. Do DECISIONS jen co git nevidí (deploy, SQL ownera, rozhodnutí).
+- Zámek: ŽIVÝ (git běží / < 10 min) → čekat; **SIROTEK** → `python -X utf8 scripts/git_zamek.py <lane>` (audit, smoke ㉞); jiný důvod → ohlásit.
+- Pravidlo, které musí hlídat člověk → udělej z něj kontrolu (§30).
 
 **Hranice:**
-- **Sdílená sémantická vrstva (runa → růst).** Kanonická data run (`runar-runes.js`: aett/world/element/keywords, INTENTIONS; `AETTY` zatím nečte nic — rezervované pro Gathering, BACKLOG část 21) + config (SPREAD_CONFIG.norns_axis) čtou OBĚ session (do 2026-10-10 tu AETTY a INTENTIONS stály pod configem — bydlí v `runar-runes.js`). TREE růstové/tvarové mapování drž ve VLASTNÍM souboru (`runar-branch.js`). Když MUSÍŠ sáhnout do runar-runes.js/config kvůli růstu: **jen ADITIVNĚ** (přidej pole, neměň existující reading-pole), `[tree]` malý commit, push HNED + řádek do MEMORY.md (MAIN to musí vidět — sdílená data mění i výklad). Změna existujícího aett/element/world runy ovlivní i čtení → napřed flagni.
-- **Čistě MAIN (TREE needituje):** reading prompty (character.js reading buildery), pricing, translations UI, reader UI/CSS, auth. Life-rune logika (runar-tree.js generateLifeRuneReading, buildLifeRunePrompt) = MAIN.
-- `§1` (JS přes Python skript, NE Edit — kazí apostrofy) + `§13` (full-path) platí i pro TREE, když sahá do sdíleného JS.
-- CLAUDE.md: každá session edituje JEN svou sekci. Tree sekce = krátký ukazatel (detail v RUNAR_TREE.md). MAIN ho nepřepisuje.
+- Kanonická data run (`runar-runes.js`) a config čtou všichni; TREE do nich sahá **jen aditivně** (`[tree]`, push hned); změna existujícího pole = flagni.
+- Čistě MAIN (TREE needituje): reading prompty, pricing, translations, reader UI/CSS, auth, life-rune logika. §1 a §13 platí pro všechny.
+- CLAUDE.md: každá session edituje jen svou sekci.
 
-**Komunikace (session spolu nemluví → přes git + soubory):**
-- `git pull` PŘED prací (push ihned a malé commity → §7).
-- **Commit ÚZCE: `git commit -F <msg> -- <cesty>`** pro kód; sdílené docy jen `commit_vlastni.py` (pathspec bere celý soubor i s cizími
-  kusy — pre-commit ho u nich nepustí). (pathspec NA COMMITU, ne jen na `git add`). Holý `git commit` / `git add -A` bere CELÝ index — vč. cizí STALE staged změny jiné session. **2026-08-02: holý commit sebral cizí staged `sw.js` → downgrade v249→v248** (klienti by servírovali staré čtení). Pre-commit má teď guard proti sw.js downgrade, ale disciplína je levnější. Detail → memory `parallel-code-sessions-collision`.
-- Musíš sáhnout do cizí domény? Drž změnu minimální + zapiš „co a proč" do svého doc (RUNAR_TREE.md / snapshot) + push hned.
-- sw.js: git hook auto-bumpuje; když oba commitnou JS, vyšší číslo vyhrává (jen cache-buster, ne konflikt obsahu).
-- Git konflikt? Neforcuj — pull, vyřeš ručně JEN svou doménu.
-- Stav session **nepiš do docu** (§20.4 — SW verze i hash zastarají do druhého dne). Stav vlastní
-  `git log` (prefix = lane) a `v2/sw.js`. Signál hotovo pro druhou session = **push**, nic víc.
-  Před prací si přečti `git log` druhé lane, ne cizí doc.
-
-<!-- „Cowork sync" (zrcadlo do AppData/Cowork složky) ZRUŠENO — nahrazeno §17 (jediný zdroj = git repo). -->
-<!-- 2026-07-04 [docsync] -->
-
+**Komunikace (přes git + soubory):**
+- `git pull` PŘED prací; push ihned, malé commity.
+- **Commit ÚZCE:** `git commit -F <msg> -- <cesty>` pro kód (pathspec NA COMMITU); sdílené docy jen `commit_vlastni.py`. Holý `git commit` /
+  `git add -A` bere celý index i s cizí staged prací. → memory `parallel-code-sessions-collision`.
+- Cizí doména: změna minimální + „co a proč“ do svého docu + push. Git konflikt: neforcuj, vyřeš jen svou doménu.
+- Stav session nepiš do docu; stav = `git log` a `v2/sw.js`. Signál hotovo = push. Před prací čti `git log` druhé lane.

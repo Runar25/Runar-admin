@@ -12014,3 +12014,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Cestou opraveno:** `core.autocrlf` v bc2d988 převedl konce řádků uvnitř PDF a JPG karet (cover_photo.jpg 276 440 × 276 442 B) →
   `.gitattributes` *.pdf / *.jpg / *.png … binary, soubory znovu nahrány, otisky ověřeny (174cdb5).
 - Affected doc(s): `RUNAR_DESIGN.md`, `RUNAR_BACKLOG.md`, `CLAUDE.md` — v témže commitu.
+
+## 2026-10-21 (3) — CLAUDE.md jen příkazná pravidla; důvody a historie do `docs/pravidla-duvody.md`, stav do `docs/projekt-mapa.md`
+
+- **Rozhodl:** owner 2026-10-21: *„chci aby jsi ještě jednou provedl optimalizaci. udělat to systematicky tak, aby to opravdu pomohlo.
+  a nic nerozbilo.“* → na plán *„12. ano, začni“*.
+- **Proč:** CLAUDE.md se načítá do každé session celý a rostl (12,8 KB 2026-07-01 → 59 KB 2026-10-21). Většinu přírůstku tvořila historie
+  („do X tu stálo“), citace ownera a doklady — ty pravidlo nevynucují, jen ho ředí. Oficiální doporučení: krátký soubor s tím, co by bez
+  něj Claude udělal špatně.
+- **Co:** CLAUDE.md 59 071 → 27 083 B. Všechna § čísla a nadpisy zůstávají (odkazuje na ně hook `pravidla_pri_dotyku.py`, `verify_nosice.js`,
+  smoke ㊉ a 110+ míst v docs). Každý ubraný řádek je **doslova** v `docs/pravidla-duvody.md` (z §1–§32 a lanes) nebo `docs/projekt-mapa.md`
+  (popisné sekce) — kontrola přenosu: ztraceno 0 řádků. §28 doplněn: CLAUDE.md nenese historii ani doklady. MEMORY.md: popisy indexu na
+  jeden krátký řádek, všechny odkazy zůstávají (79, `verify_memory_index`), v rozcestníku nové docs a Dverg Tarot.
+- **Ověřeno:** smoke 94/94, `protipriklady.py --vse` všechny útoky prošly, hook vytáhne každé § z nového souboru.
+- Affected doc(s): `CLAUDE.md`, `memory/MEMORY.md`, `docs/pravidla-duvody.md` (nový), `docs/projekt-mapa.md` (nový) — v témže commitu.

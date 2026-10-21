@@ -1,146 +1,125 @@
 # Claude Memory Index
 # Zkukula (Kuky) — Agndofa / Rúnar project
 
-⚠️ **Tenhle soubor je INDEX, ne sklad faktů.** Vlastní jen **Session Start Protocol** a **rozcestník** (kde co bydlí).
-Žádná čísla, SW verze, commit hashe, stavy ani tier tabulky — všechno má vlastníka jinde (tabulka níž).
-
-**Proč tak přísně:** do 2026-07-18 tu fakta zastarala a odporovala si (audit: 97 rozporů nad ~12 fakty) — §20, `RUNAR_DECISIONS.md` 2026-07-18.
-
-**Přidáváš sem fakt? Nepřidávej.** Patří k vlastníkovi. Sem nanejvýš jednořádkový odkaz.
+⚠️ **INDEX, ne sklad faktů.** Vlastní jen Session Start Protocol a rozcestník. Žádná čísla, SW verze, hashe, stavy ani tier tabulky (§20).
+Přidáváš sem fakt? Nepřidávej — patří k vlastníkovi; sem nanejvýš jednořádkový odkaz.
 
 ---
 
 ## Session Start Protocol
-Na začátku každé session PŘEČÍST V TOMTO POŘADÍ:
-1. Tento soubor (MEMORY.md)
-2. [working-style.md](working-style.md) — jak spolu pracujeme (Explore→Plan→Implement)
-3. `CLAUDE.md` (repo root) — architektura + pravidla §1+
-4. `RUNAR_DECISIONS.md` (repo root) — **datovaný log rozhodnutí; při sporu vyhrává novější záznam**. Celý se nečte (přes 11 000 řádků):
-   hledá se podle tématu `node scripts/utils/uz_vime.js <pojmy>` (hook ho stejně chce před zápisem do docs) a čte se nalezený záznam.
-5. Doc podle úkolu (viz rozcestník) + cílový zdrojový soubor
-
-Po přečtení potvrdit: „Mám kontext — jsem připraven."
-
-⚠️ **Nová funkce nebo změna chování → napřed ownerem schválený plán.** Opravy rozporů, duplikátů a vlastních kontrol bez ptaní —
-rozsah vlastní `working-style.md` („Explore → Plan → Implement“).
-
-⭐ **Rozejdou-li se zdroje, nebo jde-li o už rozhodnutou věc → CLAUDE.md §20** (vyhrává produkce; neptat se, dohledat).
+1. Tento soubor · 2. [working-style.md](working-style.md) (Explore→Plan→Implement) · 3. `CLAUDE.md` (pravidla §1+) ·
+4. `RUNAR_DECISIONS.md` — při sporu vyhrává novější záznam; celý se nečte, hledá se `node scripts/utils/uz_vime.js <pojmy>` ·
+5. doc podle úkolu (rozcestník) + cílový soubor. Pak: „Mám kontext — jsem připraven."
+⚠️ Nová funkce nebo změna chování → napřed ownerem schválený plán; rozpory, duplikáty a vlastní kontroly oprav bez ptaní (working-style).
+⭐ Rozejdou-li se zdroje nebo jde-li o rozhodnutou věc → CLAUDE.md §20 (vyhrává produkce; dohledat, neptat se).
 
 ---
 
 ## Rozcestník — kde co bydlí (jediné místo)
-
-**Druh** = jak se to mění (kde smí náraz):
-- 🔒 **externě ukotveno** — pravda mimo nás (etymologie, zdroje, IS gramatika/BÍN). Změna = lepší zdroj / oprava přepisu; náraz proti externímu zdroji.
-- 📜 **vytvořený kánon** — pravda, kterou jsme stvořili a je zamčená (Rúnar, Agndofa, mytologie, hlas). Změna = rozhodnutí o kontinuitě + sweep; náraz proti vlastní konzistenci.
-- 🔄 **interně rozhodnuto** — proměnlivé páky (tiery, ceny, spready). Změna = nový datovaný DECISIONS.
-- 🏛 **architektonické** — pravidla §1+, lanes. One-way; mění datované rozhodnutí.
+Druh: 🔒 externě ukotveno (etymologie, IS gramatika) · 📜 vytvořený kánon (Rúnar, mytologie, hlas) · 🔄 interně rozhodnuto (tiery, ceny) · 🏛 architektonické (pravidla, lanes).
 
 | Co hledáš | Vlastník | Druh |
 |---|---|---|
-| Tiery, jejich jména, limity · ceny spreadů · VOCAB · SPREAD_CONFIG | `v2/runar-config.js` — **doky to NEOPISUJÍ** | 🔄 |
-| Runy, ætty, AREAS/SEEKS/INTENTIONS (+ `.norns` osy) | `v2/runar-runes.js` | 🔒 |
-| Prompty, buildery, délky čtení, IS gramatický blok | `v2/runar-character.js` | 🔒 gramatika · 📜 hlas (DEF_CHAR) |
-| Model čtení (`SOL_MODEL`) + záložní řetěz Claude (`MODELS`) | `supabase/functions/claude-proxy/index.ts` | 🔄 |
-| Architektura, pravidla §1+, DB sloupce, lanes a commit prefixy | `CLAUDE.md` | 🏛 |
-| Proč je něco tak, jak to je (datovaná rozhodnutí) | `RUNAR_DECISIONS.md` | log |
-| Business model, kredity, break-even, fyzické produkty | `RUNAR_PRICING.md` | 🔄 · fyz. produkt 🔒 |
-| Design, mytologie, význam částí | `RUNAR_DESIGN.md` | 📜 |
-| Popisy run pro člověka (jak se runa chová, jaké obrazy tvoří, jakou otázku klade) → podklad návodu | `RUNAR_POPISY_RUN.md` | 📜 |
-| Strom života — duše, zóny, signály, Gathering | `RUNAR_TREE.md` | 📜 |
-| Otevřené úkoly, blockery, priority | `RUNAR_BACKLOG.md` | stav |
-| GDPR, privacy, tester consent | `RUNAR_PRIVACY.md` | 🔒 |
-| Co owner řekl / co se dělalo v dřívější konverzaci (CODE i Cowork) | `node scripts/utils/najdi_v_konverzacich.js "<text>"` | stav |
-| Která pravidla platí pro který soubor (ukáže je hook při prvním dotyku) | `scripts/utils/pravidla_mapa.json` | 🏛 |
-| Prófsteinn — test čtení při stížnosti (soudci svět·soulad·chlad + kam poslat zbytek) | `scripts/profsteinn.js` (hlavička = celý postup) | 🔄 |
-| Aktuální SW verze / commit / co je nasazené | `v2/sw.js` a `git log` — **nikdy ne v docu** | stav |
+| Tiery, limity · ceny spreadů · VOCAB · SPREAD_CONFIG | `v2/runar-config.js` — **doky to NEOPISUJÍ** | 🔄 |
+| Runy, ætty, AREAS/SEEKS/INTENTIONS | `v2/runar-runes.js` | 🔒 |
+| Prompty, buildery, délky čtení, IS gramatika | `v2/runar-character.js` | 🔒 · 📜 hlas |
+| Model čtení (`SOL_MODEL`) + záloha (`MODELS`) | `supabase/functions/claude-proxy/index.ts` | 🔄 |
+| Pravidla §1+, lanes, commit prefixy | `CLAUDE.md` | 🏛 |
+| Proč pravidlo zní, jak zní (důvody, doklady, historie) · podrobnosti stavu systémů | `docs/pravidla-duvody.md` · `docs/projekt-mapa.md` (na požádání) | 🏛 |
+| Proč je něco tak (datovaná rozhodnutí) | `RUNAR_DECISIONS.md` | log |
+| Business, kredity, fyzické produkty | `RUNAR_PRICING.md` | 🔄 |
+| Design, mytologie | `RUNAR_DESIGN.md` | 📜 |
+| Popisy run pro člověka | `RUNAR_POPISY_RUN.md` | 📜 |
+| Strom života | `RUNAR_TREE.md` | 📜 |
+| Otevřené úkoly | `RUNAR_BACKLOG.md` | stav |
+| GDPR, privacy | `RUNAR_PRIVACY.md` | 🔒 |
+| Co owner řekl dřív | `node scripts/utils/najdi_v_konverzacich.js "<text>"` | stav |
+| Pravidla pro soubor (hook při dotyku) | `scripts/utils/pravidla_mapa.json` | 🏛 |
+| Prófsteinn — test čtení při stížnosti | `scripts/profsteinn.js` | 🔄 |
+| SW verze / commit / co je nasazené | `v2/sw.js` a `git log` — nikdy ne v docu | stav |
+| Dverg Tarot (karty s dvergy) — samostatný produkt mimo Rúnara | `dverg-tarot/README.md` | — |
 
----
-
-## Vrstvy pravdy
-Kanonická: root `RUNAR_*.md` · `memory/*.md` · `CLAUDE.md` · Historie: `memory/snapshots/` · `docs/archive/` · `RUNAR_DECISIONS.md` (append-only)
-Intake (NENÍ pravda): `docs/inbox/` · Mrtvá (scratch): mimo index.
+Vrstvy pravdy: kanonická = root `RUNAR_*.md`, `memory/*.md`, `CLAUDE.md` · historie = `memory/snapshots/`, `docs/archive/`, DECISIONS · intake (NENÍ pravda) = `docs/inbox/`.
 
 ---
 
 ## Index paměti
-- [working-style.md](working-style.md) — workflow, Python skripty, IS primární jazyk, verifikace
-- [is-done-together-not-for-sigrun.md](is-done-together-not-for-sigrun.md) — IS děláme rovnou pořádně a ověřeně; žádné „draft pro Sigrún"
-- [handoff-text-in-code-block.md](handoff-text-in-code-block.md) — text k předání jiné session VŽDY do code blocku
-- [paste-sql-explicitly.md](paste-sql-explicitly.md) — když má owner spustit SQL, vlož přesné SQL; žádné „jako minule"
-- [read-token-from-clipboard.md](read-token-from-clipboard.md) — eval token si načti ze schránky sám; owner ho do souboru nevkládá
-- [runar-api-key-file.md](runar-api-key-file.md) — Anthropic klíč bydlí v `~/.claude/runar-api-key.txt`, generátor si ho vezme sám; ownera nežádat
-- [cteni-generuj-tady-ne-pres-api.md](cteni-generuj-tady-ne-pres-api.md) — testovací čtení piš SÁM v konverzaci, ne přes API; prompt dál stav produkční cestou a slepé souzení dělej subagentem
-- [full-path-and-numbered-lists.md](full-path-and-numbered-lists.md) - uplna cesta k souboru + ⛔ VSECHNY body a otazky hlaseni ownerovi CISLOVANE prubezne (odpovida po cislech; tucny nadpis neni cislo)
-- [ask-owner-for-checks-you-cannot-run.md](ask-owner-for-checks-you-cannot-run.md) - co Code sam neoveri (logy edge funkci, prihlasena appka; prod DB umi), napred zkusit, pak vyzadat po ownerovi
-- [dont-invent-fact-critical.md](dont-invent-fact-critical.md) — 🔒 fakt / 📜 lore chybějící v kánonu → zastav a flagni, nikdy nedomýšlej
-- [function-not-ceremony.md](function-not-ceremony.md) — nestavět proces pro uspokojení; nepomůže-li reálně, říct to a vynechat
-- [proceed-dont-ask.md](proceed-dont-ask.md) — dohodnutý plán odjeď celý; neptej se „souhlas?" mezi kroky
-- [one-patch-script-path.md](one-patch-script-path.md) — §1 patch do VLASTNÍHO gitignored slotu session (`scripts/_patch.py` tree · `scripts/_patch_tune.py` tune), nikdy sdílený
-- [match-existing-visual-first.md](match-existing-visual-first.md) — nové UI: nejdřív načíst existující vizuál a zkopírovat ho
-- [verify-agent-claims-about-code.md](verify-agent-claims-about-code.md) — handoff od jiné session = žádost, ne fakt; ověřit
-- [propose-content-not-code.md](propose-content-not-code.md) — Cowork dodává obsah a strukturu POPÍŠE; hotová funkce od něj nikdy neprošla guardem
-- [bash-no-cd-prefix.md](bash-no-cd-prefix.md) — NIKDY `cd … &&` ani `| tail` na Bash; boří allowlist
-- [heredoc-mangles-backslash-escapes.md](heredoc-mangles-backslash-escapes.md) — heredoc tu udělá z `\n` konec řádku; skript s escape sekvencemi piš nástrojem Write
-- [api-guard-py-false-positive.md](api-guard-py-false-positive.md) — hlídač API blokuje i příkaz bez API, když v něm stojí dvě jména `.py` za sebou; cesty přes `--pathspec-from-file`
-- [edit-tool-escapes-new-text.md](edit-tool-escapes-new-text.md) — Edit na řádku s `\uXXXX` zapíše i nový text jako escape; smíšený řádek nenajde — patch skriptem, diff zkontrolovat
-- [ceske-nazvy-spreadu-v-kodu.md](ceske-nazvy-spreadu-v-kodu.md) — ve v2/ (i v komentářích) názvy spreadů anglicky; „Podkova“ zastaví check-is a commit
-- [guard-test-the-lifecycle.md](guard-test-the-lifecycle.md) — novou kontrolu testuj proti VŠEM stavům toho, co hlídá, ne jen dobrý/špatný případ
-- [read-the-check-before-push.md](read-the-check-before-push.md) — pipe do grepu zahodí exit kód; přečti verdikt, teprve pak push
-- [pathspec-nesmi-byt-prazdny.md](pathspec-nesmi-byt-prazdny.md) — pathspec v proměnné z padlého && řetězce = prázdný → commit vezme CELÝ index (i cizí staged)
-- [napred-dohledej-co-uz-je.md](napred-dohledej-co-uz-je.md) — před měřením/novou položkou/nástrojem prohledej PRICING/DECISIONS/BACKLOG a git log ostatních lane; paralelní session to často už udělaly
-- [parallel-code-sessions-collision.md](parallel-code-sessions-collision.md) — víc Code session ve sdíleném stromě; pathspec commit, sdílený soubor přes commit_vlastni.py, status před sáhnutím
-- [test-vstup-jako-v-produkci.md](test-vstup-jako-v-produkci.md) — test formulace přes API: napřed vytiskni jeden hotový prompt a porovnej s produkcí ([object Object] a ✦ z DB daly 2× týž den falešný vstup; v prohlížeči podvrhuj stav tam, kam ho píše produkce, ne do kreslicí funkce)
-- [prompt-directive-makes-model-copy.md](prompt-directive-makes-model-copy.md) — "pouzij tenhle text" v promptu = model ho opise doslova; ramuj jako zdroj (12 % -> 56 %, p=0,002)
-- [falsify-by-reversing-the-lever.md](falsify-by-reversing-the-lever.md) — hypotezu "pridej X" testuj tak, ze X jeste UBERES; obracena predpoved musi platit (CLAUDE.md §25)
-- [loading-a-page-proves-existence-not-authenticity.md](loading-a-page-proves-existence-not-authenticity.md) — nacteni URL overi ze existuje, ne ze je prava; zjisti kdo ji vlastni a jestli jsou ucty skutecne
-- [a-guard-that-refuses-is-a-detector.md](a-guard-that-refuses-is-a-detector.md) — kontrola "prepis jen kdyz je vyskyt PRAVE JEDEN" je detektor duplikatu, ne jen pojistka
-- [break-your-own-work-before-reporting.md](break-your-own-work-before-reporting.md) — po hotovem kusu na nej ZAUTOC SAM a teprve pak hlas; necekej na vyzvu ownera
-- [attack-the-metric-not-just-the-result.md](attack-the-metric-not-just-the-result.md) — utoc na NASTROJ driv nez na vysledek: pulka vs pulka, co jeste odlisuje referenci, nulova transformace (CLAUDE.md §27)
-- [soudce-vidi-jen-co-uzivatel.md](soudce-vidi-jen-co-uzivatel.md) — slepý soudce dostane jen to, co vidí uživatel (ne obraz z promptu); výstupy před nasazením čti sám jako uživatel
-- [you-neni-prohresek.md](you-neni-prohresek.md) — „you“ ve čtení není prohřešek; soudce, který ho hlásí bez kontextu, je vadný nástroj — oprav ho, ownerovi nehlas
-- [selhany-verifier-neni-vyvraceny-nalez.md](selhany-verifier-neni-vyvraceny-nalez.md) — ve workflow: agent, který spadl, není vyvrácený nález; spočítej a ohlas neověřené
-- [test-the-lever-that-binds.md](test-the-lever-that-binds.md) — ověř, že měníš tu vazbu, která výsledek opravdu drží (strop tokenů ≠ délková páka)
-- [rekni-kterou-variantu-testujes.md](rekni-kterou-variantu-testujes.md) — před testem jednou větou kterou variantu testuju; varianta z docu; test pro Vegvísir z JEHO rámce, ne z produkce
-- [ownerovo-slovo-neni-spec.md](ownerovo-slovo-neni-spec.md) — jeho konverzační přídavné jméno není zadání; převeď na číslo, nebo se zeptej
-- [measure-dont-eyeball.md](measure-dont-eyeball.md) — dojem z obrázku není nález; změř to, nebo řekni „nevím"
-- [glyph-text-vs-our-svg.md](glyph-text-vs-our-svg.md) — popis tvaru runy ověř proti NAŠÍ kresbě (runeSvg → ASCII mřížka v prohlížeči), ne proti učebnici
-- [sanity-check-measurements.md](sanity-check-measurements.md) — extrémní/čisté číslo (0/N, 100 %) = red flag; ověř měření protipříkladem, ne fragile bash-inline; přeměř, když tě opraví
-- [co-dela-cteni-silnym.md](co-dela-cteni-silnym.md) — ownerem POTVRZENO: definiční věta runy · otázka se dvěma skutečnými možnostmi · obraz s podstatou runy + dobrá Ask otázka
-- [oprava-promptu-odebira-vadu.md](oprava-promptu-odebira-vadu.md) — vadu v promptu odeber; přidaný požadavek se v textu projeví jako formule
-- [prompt-nepojmenuj-co-hned-zakazes.md](prompt-nepojmenuj-co-hned-zakazes.md) — prompt, který něco pojmenuje a hned to zakáže vyslovit, hlídá slovo, které tam sám napsal; odeber nálepku, ne přidej hlídače
-- [rozkaz-a-studene-cteni-hranice.md](rozkaz-a-studene-cteni-hranice.md) — „Look…" jako vstup do obrazu ani fyzický důsledek dřiny („knuckles have learned") NEJSOU porušení kánonu; porušení = rada do života / tvrzení o nitru
-- [gpt-rozbor-neni-zavazny.md](gpt-rozbor-neni-zavazny.md) — rozbor od GPT byl jen podnět (tlačítko zrušeno 2026-10-09); princip platí pro každého soudce
-- [strop-serveru-neni-narok.md](strop-serveru-neni-narok.md) — limit v proxy ≠ co tier dostane; nárok ověř tokem appky (Rune Seeker: 1 čtení = 1 hlas, jednou)
-- [admin-ucty-nejsou-nalez.md](admin-ucty-nejsou-nalez.md) — data admin účtů (rok narození, staré volby) nejsou nález o soukromí; ownerovi nehlásit, rok zůstává
-- [nacti-cteni-a-reporty.md](nacti-cteni-a-reporty.md) — owner řekne „načti čtení a reporty“ → `node scripts/nacti_cteni.js` (čtení + monitor ozvěn + hlášení); ⚠ a hlášení ohlas s textem
-- [schranka-runar-gmail.md](schranka-runar-gmail.md) — schránka runar@therunekeeper.com: třídit přes Gmail konektor do štítků, odpovědi jen jako koncepty, nic neodeslat bez ownerova ano
-- [emaily-kratke.md](emaily-kratke.md) — každý e-mail, který posíláme (provoz, přihlášení, web), se vejde na jednu obrazovku telefonu; owner 2026-10-14 „obecně“
-- [always-show-reading-samples.md](always-show-reading-samples.md) — ownerovi vždy ukázat konkrétní TEXT čtení a k němu instrukce, které do čtení vstoupily
-- [modelove-stromy-neposilat.md](modelove-stromy-neposilat.md) — ownerovi jeho strom před/po; stromy vymyšlených lidí jen pro měření, okrajovou poznámku k obrázku nerozebírat otázkami
-- [testovani-jedne-runy-je-zamer.md](testovani-jedne-runy-je-zamer.md) — owner testuje jednu runu opakovaně schválně; jeho „pořád stejné X“ nevysvětluj jeho metodou, dohledej konkrétní případ
-- [write-for-owner-not-process.md](write-for-owner-not-process.md) — ownerovi piš důležité/výsledek, ne proces „co jsi řekl / co budu hledat"
-- [cheapest-deciding-measurement-first.md](cheapest-deciding-measurement-first.md) — ⛔ 2026-09-24 3× spálený limit ownera: obsah dělám SÁM, agenti max 3–5 a víc jen s odhadem tokenů a ownerovým ano; API nad ~50 volání jen s jeho ano (2026-10-06: 480 bez ptaní); před KAŽDÝM měřením záměr + předpoklad + proč tolik, vždy malý vzorek (2026-10-07); spadlý běh nepouštět znovu bez ptaní
-- [work-efficiently-ask-if-simpler.md](work-efficiently-ask-if-simpler.md) — než spustíš těžký nástroj, zeptej se, jestli to nejde jednodušeji; dlouhý běh protlačí compactem a zabije úkol
-- [decisions-are-directions-not-locks.md](decisions-are-directions-not-locks.md) — rozhodnutí = směr + varování při rozporu, ne zámek navždy
-- [find-a-gap-close-it-now.md](find-a-gap-close-it-now.md) — najdeš díru → zavři ji v témže tahu; na vylepšení vlastních kontrol a paměti souhlas nepotřebuješ
-- [fix-substance-not-shape.md](fix-substance-not-shape.md) — security/metering: oprav podstatu ne tvar; ověř, že díra nejde obejít jinudy (2× stejná chyba)
-- [copy-always-in-runar-voice.md](copy-always-in-runar-voice.md) — veškerá copy VŽDY hlasem Rúnara (přečti charakter), nikdy slepé generické vymýšlení; spíš stručně
-- [read-design-before-voice-work.md](read-design-before-voice-work.md) — než sáhneš na hlas/prompt: RUNAR_DESIGN.md „Kdo je Rúnar" + nálady; vstup promptu / tip Asku → sekce „Slova, která dáváme modelu"
-- [prompt-map-artifact.md](prompt-map-artifact.md) — mapa promptu ZRUŠENA a archivována 2026-10-11; nepřekreslovat, pravda = kód
-- [cowork-handoff-quality-bar.md](cowork-handoff-quality-bar.md) — standard pro Cowork content/research/eval handoffy: 12 návyků (závěr napřed, živé ověření, značka původu, přiznané mezery)
-- [review-everything-first-pass.md](review-everything-first-pass.md) — revize textů: přečti VŠE v obou jazycích napoprvé, jeden seznam, opravy jako hotové věty
-- [runar-not-public-yet.md](runar-not-public-yet.md) — Rúnar není veřejně spuštěný; návrhy pro agndofa.is nesmí posílat zákazníky do appky
-- [is-grammar-adjective-gender.md](is-grammar-adjective-gender.md) — nejdřív rod podstatného, pak skloňuj přídavné
-- [en-formulace-overit-zdrojem.md](en-formulace-overit-zdrojem.md) — anglickou formulaci (sloveso u runy) ověř korpusem textů o runách jako IS; „Fehu exposes“ prošlo bez ověření, v korpusu 0×
-- [is-vazba-check.md](is-vazba-check.md) — islandskou vazbu (rekce/pád/kolokace/idiom) ověř `is-vazba.py` (nútímamálsorðabók API + korpus), vrstva nad BÍN, nehádej
-- [windows-ui-v-en.md](windows-ui-v-en.md) — owner má Windows v EN: cesty a tlačítka v Nastavení piš anglicky, jak je vidí
-- Strom (CODE-tree): [runar-tree-engine-lab.md](runar-tree-engine-lab.md) historie enginu · [runar-trunk-incremental-rule.md](runar-trunk-incremental-rule.md) celý strom měnit přírůstkově, engine nepředělávat, snapshot · [runar-tree-living-movement.md](runar-tree-living-movement.md) živý pohyb větví · [tree-roots-rebuild.md](tree-roots-rebuild.md) NIKDY neshlukovat větve, kořen s dev:0 = prut, po rebuildu tvrdý reload
+- [working-style.md](working-style.md) — workflow, Python skripty, verifikace
+- [is-done-together-not-for-sigrun.md](is-done-together-not-for-sigrun.md) — IS rovnou hotová a ověřená, žádný draft pro Sigrún
+- [handoff-text-in-code-block.md](handoff-text-in-code-block.md) — text k předání jiné session do code blocku
+- [paste-sql-explicitly.md](paste-sql-explicitly.md) — SQL pro ownera vlož celé, žádné „jako minule"
+- [read-token-from-clipboard.md](read-token-from-clipboard.md) — eval token si načti ze schránky sám
+- [runar-api-key-file.md](runar-api-key-file.md) — Anthropic klíč v `~/.claude/runar-api-key.txt`, ownera nežádat
+- [cteni-generuj-tady-ne-pres-api.md](cteni-generuj-tady-ne-pres-api.md) — testovací čtení piš sám, ne přes API; slepé souzení subagentem
+- [full-path-and-numbered-lists.md](full-path-and-numbered-lists.md) — úplná cesta k souboru; VŠECHNY body a otázky ownerovi číslované
+- [ask-owner-for-checks-you-cannot-run.md](ask-owner-for-checks-you-cannot-run.md) — co Code neověří, napřed zkusit, pak vyžádat od ownera
+- [dont-invent-fact-critical.md](dont-invent-fact-critical.md) — chybí fakt/lore → zastav a flagni
+- [function-not-ceremony.md](function-not-ceremony.md) — nestavět proces pro uspokojení
+- [proceed-dont-ask.md](proceed-dont-ask.md) — dohodnutý plán odjeď celý, neptej se mezi kroky
+- [one-patch-script-path.md](one-patch-script-path.md) — patch do vlastního gitignored slotu session
+- [match-existing-visual-first.md](match-existing-visual-first.md) — nové UI: napřed existující vizuál
+- [verify-agent-claims-about-code.md](verify-agent-claims-about-code.md) — handoff jiné session = žádost, ne fakt
+- [propose-content-not-code.md](propose-content-not-code.md) — Cowork dodává obsah, kód ne
+- [bash-no-cd-prefix.md](bash-no-cd-prefix.md) — NIKDY `cd … &&` ani `| tail` na Bash
+- [heredoc-mangles-backslash-escapes.md](heredoc-mangles-backslash-escapes.md) — skript s escape sekvencemi piš nástrojem Write
+- [api-guard-py-false-positive.md](api-guard-py-false-positive.md) — dvě jména `.py` v příkazu → hlídač API; cesty přes `--pathspec-from-file`
+- [edit-tool-escapes-new-text.md](edit-tool-escapes-new-text.md) — Edit na řádku s `\uXXXX` → patch skriptem
+- [ceske-nazvy-spreadu-v-kodu.md](ceske-nazvy-spreadu-v-kodu.md) — ve v2/ názvy spreadů anglicky
+- [guard-test-the-lifecycle.md](guard-test-the-lifecycle.md) — kontrolu testuj proti všem stavům hlídané věci
+- [read-the-check-before-push.md](read-the-check-before-push.md) — pipe do grepu zahodí exit kód; čti verdikt
+- [pathspec-nesmi-byt-prazdny.md](pathspec-nesmi-byt-prazdny.md) — prázdný pathspec = commit celého indexu
+- [napred-dohledej-co-uz-je.md](napred-dohledej-co-uz-je.md) — před měřením/položkou prohledej docs a git log ostatních lane
+- [parallel-code-sessions-collision.md](parallel-code-sessions-collision.md) — víc session ve sdíleném stromě: pathspec, commit_vlastni, status
+- [test-vstup-jako-v-produkci.md](test-vstup-jako-v-produkci.md) — test formulace: napřed jeden hotový prompt porovnej s produkcí
+- [prompt-directive-makes-model-copy.md](prompt-directive-makes-model-copy.md) — „použij tenhle text“ = opíše doslova; rámuj jako zdroj
+- [falsify-by-reversing-the-lever.md](falsify-by-reversing-the-lever.md) — hypotézu „přidej X“ testuj ubráním X (§25)
+- [loading-a-page-proves-existence-not-authenticity.md](loading-a-page-proves-existence-not-authenticity.md) — načtená URL ≠ pravá stránka
+- [a-guard-that-refuses-is-a-detector.md](a-guard-that-refuses-is-a-detector.md) — „přepiš jen při jednom výskytu“ = detektor duplikátu
+- [break-your-own-work-before-reporting.md](break-your-own-work-before-reporting.md) — na hotový kus zaútoč sám, pak hlas
+- [attack-the-metric-not-just-the-result.md](attack-the-metric-not-just-the-result.md) — útoč na nástroj dřív než na výsledek (§25 B)
+- [soudce-vidi-jen-co-uzivatel.md](soudce-vidi-jen-co-uzivatel.md) — slepý soudce vidí jen to, co uživatel
+- [you-neni-prohresek.md](you-neni-prohresek.md) — „you“ ve čtení není prohřešek
+- [selhany-verifier-neni-vyvraceny-nalez.md](selhany-verifier-neni-vyvraceny-nalez.md) — spadlý agent ≠ vyvrácený nález
+- [test-the-lever-that-binds.md](test-the-lever-that-binds.md) — měň vazbu, která výsledek opravdu drží
+- [rekni-kterou-variantu-testujes.md](rekni-kterou-variantu-testujes.md) — před testem řekni, kterou variantu testuješ
+- [ownerovo-slovo-neni-spec.md](ownerovo-slovo-neni-spec.md) — konverzační přídavné jméno není zadání
+- [measure-dont-eyeball.md](measure-dont-eyeball.md) — dojem není nález; změř, nebo „nevím"
+- [glyph-text-vs-our-svg.md](glyph-text-vs-our-svg.md) — tvar runy ověř proti NAŠÍ kresbě
+- [sanity-check-measurements.md](sanity-check-measurements.md) — extrémní číslo = red flag; ověř protipříkladem
+- [co-dela-cteni-silnym.md](co-dela-cteni-silnym.md) — co dělá čtení silným (ownerem potvrzeno)
+- [oprava-promptu-odebira-vadu.md](oprava-promptu-odebira-vadu.md) — vadu odeber; přidaný požadavek → formule
+- [prompt-nepojmenuj-co-hned-zakazes.md](prompt-nepojmenuj-co-hned-zakazes.md) — nepojmenuj v promptu, co hned zakážeš
+- [rozkaz-a-studene-cteni-hranice.md](rozkaz-a-studene-cteni-hranice.md) — „Look…“ ani fyzický důsledek nejsou porušení kánonu
+- [gpt-rozbor-neni-zavazny.md](gpt-rozbor-neni-zavazny.md) — rozbor soudce je podnět, ne verdikt
+- [strop-serveru-neni-narok.md](strop-serveru-neni-narok.md) — limit v proxy ≠ nárok tieru
+- [admin-ucty-nejsou-nalez.md](admin-ucty-nejsou-nalez.md) — data admin účtů nejsou nález o soukromí
+- [nacti-cteni-a-reporty.md](nacti-cteni-a-reporty.md) — „načti čtení a reporty“ → `node scripts/nacti_cteni.js`
+- [schranka-runar-gmail.md](schranka-runar-gmail.md) — schránka runar@: štítky, jen koncepty, nic neodeslat bez ano
+- [emaily-kratke.md](emaily-kratke.md) — každý e-mail na jednu obrazovku telefonu
+- [always-show-reading-samples.md](always-show-reading-samples.md) — ownerovi ukaž text čtení i instrukce, které do něj vstoupily
+- [modelove-stromy-neposilat.md](modelove-stromy-neposilat.md) — ownerovi jen jeho strom před/po
+- [testovani-jedne-runy-je-zamer.md](testovani-jedne-runy-je-zamer.md) — owner testuje jednu runu schválně
+- [write-for-owner-not-process.md](write-for-owner-not-process.md) — ownerovi výsledek, ne proces
+- [cheapest-deciding-measurement-first.md](cheapest-deciding-measurement-first.md) — ⛔ agenti max 3–5, API nad ~50 jen s ano, vždy záměr + malý vzorek
+- [work-efficiently-ask-if-simpler.md](work-efficiently-ask-if-simpler.md) — před těžkým nástrojem: nejde to jednodušeji?
+- [decisions-are-directions-not-locks.md](decisions-are-directions-not-locks.md) — rozhodnutí = směr, ne zámek
+- [find-a-gap-close-it-now.md](find-a-gap-close-it-now.md) — díru zavři v témže tahu
+- [fix-substance-not-shape.md](fix-substance-not-shape.md) — security: oprav podstatu, ne tvar
+- [copy-always-in-runar-voice.md](copy-always-in-runar-voice.md) — copy vždy hlasem Rúnara
+- [read-design-before-voice-work.md](read-design-before-voice-work.md) — před hlasem/promptem RUNAR_DESIGN „Kdo je Rúnar" + „Slova, která dáváme modelu"
+- [prompt-map-artifact.md](prompt-map-artifact.md) — mapa promptu zrušena, pravda = kód
+- [cowork-handoff-quality-bar.md](cowork-handoff-quality-bar.md) — standard Cowork handoffů
+- [review-everything-first-pass.md](review-everything-first-pass.md) — revize textů: vše v obou jazycích napoprvé
+- [runar-not-public-yet.md](runar-not-public-yet.md) — Rúnar není veřejně spuštěný
+- [is-grammar-adjective-gender.md](is-grammar-adjective-gender.md) — nejdřív rod podstatného, pak přídavné
+- [en-formulace-overit-zdrojem.md](en-formulace-overit-zdrojem.md) — anglickou formulaci ověř korpusem
+- [is-vazba-check.md](is-vazba-check.md) — islandskou vazbu ověř `is-vazba.py`, nehádej
+- [windows-ui-v-en.md](windows-ui-v-en.md) — owner má Windows v EN
+- Strom (CODE-tree): [runar-tree-engine-lab.md](runar-tree-engine-lab.md) · [runar-trunk-incremental-rule.md](runar-trunk-incremental-rule.md) · [runar-tree-living-movement.md](runar-tree-living-movement.md) · [tree-roots-rebuild.md](tree-roots-rebuild.md)
 
-## Index snapshots (nejnovější = poslední) — od 2026-10-11 dobrovolné, konverzace se zálohují a dají prohledat
-Snapshot = **historický záznam ke svému datu**, ne popis dneška. Nikdy z něj nepřebírej aktuální stav.
-- _Starší (2026-05-30 → 2026-09-26): složka `snapshots/` — sbaleno 2026-10-10, index se blížil limitu 200 řádků._
-- [snapshots/2026-10-05-vegvisir-odlozen.md](snapshots/2026-10-05-vegvisir-odlozen.md) — CODE-read: Vegvísir ODLOŽEN; rozhodnuto (cesta, bez středu, Ask nese vazbu, IS dělá CODE-read), změřeno 2026-09-27, co visí
-- [snapshots/2026-10-05-lab-co-uz-vime.md](snapshots/2026-10-05-lab-co-uz-vime.md) — CODE-read: LAB přestavby promptu — výtah všeho, co už bylo změřeno k bodům 4/5/6/8 a přemýšlení, s odkazy ← NEJNOVĚJŠÍ
-- [snapshots/2026-10-05-tree-proporce-strany-spicka.md](snapshots/2026-10-05-tree-proporce-strany-spicka.md) — CODE-tree: koště a oprava (obrázek 4), kmen roste s rozpětím ramen, čtení jeho stromu z dat (strany 9:4, Raidho nahoře) ← NEJNOVĚJŠÍ
-- [snapshots/2026-10-07-tune-audit-zaloha.md](snapshots/2026-10-07-tune-audit-zaloha.md) — CODE-tune: §30 „nic na paměti“ (hooky), v5.04 otázka runy, lab otázky na oblast v Asku; co čeká na ownera ← NEJNOVĚJŠÍ
+## Index snapshots — dobrovolné; historický záznam ke svému datu, ne popis dneška
+- Starší (2026-05-30 → 2026-09-26): složka `snapshots/`.
+- [snapshots/2026-10-05-vegvisir-odlozen.md](snapshots/2026-10-05-vegvisir-odlozen.md) — Vegvísir odložen
+- [snapshots/2026-10-05-lab-co-uz-vime.md](snapshots/2026-10-05-lab-co-uz-vime.md) — LAB přestavby promptu: co už je změřeno
+- [snapshots/2026-10-05-tree-proporce-strany-spicka.md](snapshots/2026-10-05-tree-proporce-strany-spicka.md) — strom: proporce, strany, špička
+- [snapshots/2026-10-07-tune-audit-zaloha.md](snapshots/2026-10-07-tune-audit-zaloha.md) — §30 hooky, v5.04, lab otázek v Asku
