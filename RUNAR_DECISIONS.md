@@ -12071,3 +12071,13 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   (5) Mazání v ElevenLabs ověří jeden hlas z admin účtu (krátký text) — čeká na token ownera.
 - **Proč:** nápověda a hlášky nemají slibovat, co appka nedělá; nový člověk má návod vidět hned, ale ne tři výzvy naráz.
 - Affected doc(s): `v2/runar-help.html` (c64f210), `RUNAR_BACKLOG.md` — v témže commitu.
+
+## 2026-10-21 (7) — Registrace čekatelů: přehled v Gmailu bez adres — e-mail při každé registraci + počet v ranním souhrnu
+
+- **Rozhodl:** owner 2026-10-21 po první registraci z webu: *„chceme waitlist sbírat na google, ať mám přehled o aktivitě“* → na korekci
+  CODE-read (kopie adres do Google = druhá kopie osobních údajů, zásady říkají „jen u Brevo“) *„4. obojí, předej to“*.
+- **Co:** (a) `waitlist-join` (CODE-web): po úspěšném předání do Brevo krátký e-mail do runar@therunekeeper.com, anglicky (§31),
+  BEZ adresy — jen „New waitlist signup“ a počet; tichý úspěch u opakované adresy e-mail neposílá. (b) ranní souhrn ops-watch (CODE-tune):
+  řádek s počtem nových registrací za 24 h. Zdroj počtu: `ops_events` kind `waitlist_signup` bez osobních údajů (zapisuje waitlist-join).
+- **Adresy dál jen v Brevu** — RUNAR_PRIVACY „registrace čekatelů“ beze změny. Plný seznam v Google jen s doplněním zásad (owner nechce).
+- Affected doc(s): žádný jiný (zásady se nemění; stav vlastní kód).
