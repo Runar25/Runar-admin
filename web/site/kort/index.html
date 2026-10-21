@@ -45,7 +45,7 @@ body{color:var(--white);font-family:'Cormorant Garamond',serif;font-size:19px;mi
 </style>
 </head>
 <body>
-<div class="nav"><a href="/">RÚNAR</a><span><button data-l="is">IS</button><button data-l="en">EN</button></span></div>
+<div class="nav"><a href="/" id="w-brand">RÚNAR</a><span><button data-l="is">IS</button><button data-l="en">EN</button></span></div>
 <div class="cards" id="cards"></div>
 <div class="tools" id="tools">
   <span id="des"></span>
@@ -60,7 +60,7 @@ body{color:var(--white);font-family:'Cormorant Garamond',serif;font-size:19px;mi
 <script src="https://runar25.github.io/Runar-admin/v2/runar-translations.js"></script>
 <script src="https://runar25.github.io/Runar-admin/v2/runar-svgs.js"></script>
 <script src="https://runar25.github.io/Runar-admin/v2/runar-utils.js"></script>
-<script src="../web.js?v=ba0b169088"></script>
+<script src="../web.js?v=91665ce4a5"></script>
 <script src="../runakort.js?v=d3fca33414"></script>
 <script>
 var TXT = {
@@ -116,6 +116,7 @@ document.querySelectorAll('.nav button').forEach(function (b) {
   b.onclick = function () { LANG = b.getAttribute('data-l'); save(); render(); };
 });
 document.getElementById('print').onclick = function () { window.print(); };
+document.getElementById('w-brand').href = RUNAR_HOME_URL;   // značka RÚNAR → domovská stránka (web.js)
 render();
 </script>
 </body>

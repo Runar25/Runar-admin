@@ -82,7 +82,7 @@
 </head>
 <body>
 <header class="topbar"><div class="topbar-inner">
-  <a class="brand" href="/">AGNDOFA</a>
+  <a class="brand" id="w-brand" href="/">RÚNAR</a>
   <span class="j-lang"><button data-l="is">IS</button><button data-l="en">EN</button></span>
 </div></header>
 <div class="j-page">
@@ -103,6 +103,7 @@
 <script src="https://runar25.github.io/Runar-admin/v2/runar-translations.js"></script>
 <script src="https://runar25.github.io/Runar-admin/v2/runar-svgs.js"></script>
 <script src="https://runar25.github.io/Runar-admin/v2/runar-utils.js"></script>
+<script src="../web.js?v=91665ce4a5"></script>
 <script src="../runakort.js?v=d3fca33414"></script>
 <script>
 var LANG = 'is', P = 'm';
@@ -178,6 +179,7 @@ document.querySelectorAll('.j-lang button').forEach(function (b) {
 document.querySelectorAll('#per span').forEach(function (s) {
   s.onclick = function () { setP(s.dataset.p); };
 });
+document.getElementById('w-brand').href = RUNAR_HOME_URL;   // značka RÚNAR → domovská stránka (web.js)
 render();
 if (location.hash === '#kort') setP('k');   // odkaz z domovské stránky (/heim/) rovnou na záložku Rúnakort
 </script>

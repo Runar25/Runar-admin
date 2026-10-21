@@ -35,7 +35,7 @@ a.btn-upgrade{display:inline-block;text-decoration:none;margin-top:6px}
 </head>
 <body>
 <header class="topbar"><div class="topbar-inner">
-  <a class="brand" href="https://agndofa.is" target="_blank" rel="noopener">AGNDOFA</a>
+  <a class="brand" id="w-brand">RÚNAR</a>
   <span class="w-lang"><button data-l="is">IS</button><button data-l="en">EN</button></span>
 </div></header>
 
@@ -82,7 +82,7 @@ a.btn-upgrade{display:inline-block;text-decoration:none;margin-top:6px}
 <script src="https://runar25.github.io/Runar-admin/v2/runar-translations.js"></script>
 <script src="https://runar25.github.io/Runar-admin/v2/runar-svgs.js"></script>
 <script src="https://runar25.github.io/Runar-admin/v2/runar-utils.js"></script>
-<script src="../web.js?v=ba0b169088"></script>
+<script src="../web.js?v=91665ce4a5"></script>
 <script src="../runakort.js?v=d3fca33414"></script>
 <script>
 // plans (owner 2026-10-21 „ano, see plans“: dřív tlačítko opakovalo nadpis WALK WITH RÚNAR a „nic neříká“; rešerše Spotify „View all plans“).
@@ -108,6 +108,7 @@ function render() {
   var enter = document.getElementById('w-enter');
   enter.textContent = WEB_TXT.enter[LANG] + ' →';
   enter.href = RUNAR_APP_URL;
+  document.getElementById('w-brand').href = RUNAR_HOME_URL;
   document.getElementById('w-journey-sub').textContent = tp('journey_sub', { casts: vlp('cast', LANG) });
   document.getElementById('w-journey').textContent = WEB_TXT.plans[LANG] + ' →';
   document.getElementById('w-card-h').textContent = vl('card', LANG).toUpperCase();
