@@ -49,6 +49,7 @@ a.btn-upgrade{display:inline-block;text-decoration:none;margin-top:6px}
         <div class="hero-eyebrow" data-k="hero_eyebrow"></div>
         <div class="hero-title">Rúnar</div>
       </div>
+      <blockquote class="hero-quote hero-quote-m" id="w-quote-m"></blockquote>   <!-- motto na mobilu u hlavy, jako appka -->
     </div>
     <div class="hero-text-col">
       <div class="hero-eyebrow hero-desk-only" data-k="hero_eyebrow"></div>
@@ -99,6 +100,7 @@ function render() {
     var v = U[el.getAttribute('data-k')] || '';
     if (el.getAttribute('data-html')) el.innerHTML = v; else el.textContent = v;
   });
+  document.getElementById('w-quote-m').innerHTML = String(U.hero_quote || '').replace(/<br\s*\/?>/g, ' ');
   var pool = U.hero_phrases || [];
   if (phraseIx === null) phraseIx = Math.floor(Math.random() * pool.length);
   document.getElementById('w-phrase').textContent = pool[phraseIx] || '';

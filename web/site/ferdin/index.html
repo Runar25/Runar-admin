@@ -129,6 +129,10 @@ function draw() {
     return h + '</div>';
   }).join('');
   kamenUctuVystred(document.getElementById('path'));   // bez živého účtu = bez pohybu
+  document.querySelectorAll('#path .kamen-uctu').forEach(function (svg) {
+    svg.style.cursor = 'pointer';
+    svg.onclick = function () { if (typeof kamenUctuOziv === 'function') kamenUctuOziv(svg, 5000); };
+  });
   document.querySelectorAll('[data-go]').forEach(function (b) { b.onclick = function () { setP(b.getAttribute('data-go')); }; });
 }
 // Záložka Rúnakort: dlaždice balíčků (volba) + vzhled + velký náhled líce karty, kreslený stejně jako /kort/ (runakort.js)
