@@ -19,7 +19,9 @@ ROOT = (os.environ.get('RUNAR_ROOT') or os.path.dirname(os.path.dirname(os.path.
 KONTROLY = ['verify_is_kontrola_jedno_misto.js', 'verify_doc_links.js', 'verify_opt_out.js', 'verify_runar_root.js', 'verify_jazyk_ui.js',
             'verify_zakazy_cesty.js', 'verify_code_doc_refs.js', 'verify_edge_imports.js',
             # 2026-10-21 (CODE-read, DECISIONS 2026-10-21 (4)): strop a zákaz historie v CLAUDE.md — zastavit už commit, ne až pre-push
-            'verify_doc_length.js']
+            'verify_doc_length.js',
+            # 2026-10-21 (CODE-read): ochrany edge funkcí — vypnutá brána nebo práce před přihlášením zastaví commit
+            'verify_mapa_ochran.js', 'verify_nic_pred_prihlasenim.js']
 CESTA = re.compile(r'((?:[A-Za-z]:[\\/])?(?:[\w.@-]+[\\/])*[\w.@-]+\.(?:js|py|md|html|css|ts|json|sql|sh|toml|txt|ps1))(?::\d+)?')
 
 
