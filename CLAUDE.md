@@ -32,7 +32,7 @@ runar-reporter.js     — in-app hlášení od testerů (bug_reports) · jen rea
 runar-verze.js        — verze běžícího kódu pro hlášení (GENEROVANÉ hooks/pre-commit.py při bumpu sw.js, needitovat) · jen reader
 runar-rune-popup.js   — ťuknutí na glyf runy ve čtení → popup se jménem a významem · jen reader
 runar-helper.js       — nápověda „?" (bublina: glyf-tap, Ask) + hesla zrcadla v UI_TEXT · jen reader
-runar-runakort.js/.css — kresba karty Rúnakort (okno cesty); web therunekeeper.com ji čte odsud · třídy rk-* · jen reader
+runar-runakort.js · runar-runakort.css — kresba karty Rúnakort (okno cesty); web ji čte odsud · třídy rk-* · jen reader
 runar-readings-admin.js — shrine: prohlížeč čtení (edge fn list-readings)
 runar-reports-admin.js  — shrine: prohlížeč hlášení (edge fn list-reports)
 runar-voice-admin.js    — shrine: záložka VOICE, stav ElevenLabs (edge fn voice-usage)
