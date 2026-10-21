@@ -1769,6 +1769,13 @@ var JOURNEY_PORADI = ['free_trial', 'rune_seeker', 'standard', 'premium'];
 var _journeyP = 'm';
 (function () {   // Google Play: značka ze startu appky přežije přechody v rámci relace
   try { if (new URLSearchParams(window.location.search).get('src') === 'play') sessionStorage.setItem('runar_src', 'play'); } catch (e) {}
+  // 2026-10-21 (nález CODE-web): v Play ani mimo okno cesty žádná cesta k nákupu — odkaz „Buy more … at Agndofa.is“ pod polem na kód
+  // pryč a značka AGNDOFA v liště bez odkazu na e-shop. Pole na kód zůstává (nevede k platbě). Do té doby skrývalo ceny jen okno cesty.
+  document.addEventListener('DOMContentLoaded', function () {
+    if (_journeyProstredi() !== 'play') return;
+    var w = document.getElementById('redeem-shop-link-wrap'); if (w) w.style.display = 'none';
+    var b = document.getElementById('ui-brand'); if (b) { b.removeAttribute('href'); b.removeAttribute('target'); b.style.cursor = 'default'; }
+  });
 })();
 function _journeyProstredi() {
   var src = ''; try { src = sessionStorage.getItem('runar_src') || ''; } catch (e) {}
