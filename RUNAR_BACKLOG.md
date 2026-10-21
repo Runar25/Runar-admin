@@ -1420,3 +1420,30 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
 - [ ] Až karty půjdou opakovaně (IS, tiskárna): generátor do repa nad `v2/runar-runes.js`, `v2/runar-svgs.js`, `v2/fonts/fonts.css`
   (dnes kopie + vlastní `fonts.css`), Cinzel 500 → 400/700, přebarvení kamene jednou funkcí vedle `runeSvg`, spadávka 3 mm;
   hotové podklady pak řádkem do `v2/assets/README.md` (tabulka designových podkladů).
+
+### Revize nápovědy, zásad a textů v appce (owner 2026-10-21 „můžou tam být staré věci“; CODE-tune)
+Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zásady soukromí), 95375a7 (texty v appce). Zbývá:
+- [ ] **Mazání v ElevenLabs neověřené:** od zavedení záznamu (2026-10-16) vznikl jeden hlas (16. 10. 09:32) a `ops_events` purge
+  `el_history` nemá ani jeden řádek — zásady přitom říkají „we delete the text and the audio“. Ověřit jedním hlasem a dotazem do
+  `ops_events`; nezabere-li to, opravit mazání, nebo větu v zásadách.
+- [ ] **Zásady slibují upozornění v appce před změnou** (oddíl „If things change“) — mechanismus neexistuje, zásady se v říjnu měnily
+  ~8×. Postavit, nebo větu změnit (čeká na ownera).
+- [ ] **Yggdrasil toast** (`yggdrasil_power_toast`) slibuje „full power returns December 14–28“ — v kódu nic takového není (prompt ani
+  strom datum nečtou; plán „slunovrat = větší síla ve stromě“ nepostavený). EN „returns“ × IS „er mestur“ říkají každý něco jiného.
+- [ ] **Export účtu** (`scripts/utils/export_uctu.js`) nevyveze zprávy „Send Rúnar a line“ ani uložené mp3 hlasu, zásady slibují
+  „everything linked to your account“.
+- [ ] **IP v `rate_limits`** nemá pevnou horní mez (úklid jen při ~5 % volání, řádky starší 1 h; 2026-10-21 nejstarší 18 h) — denní
+  úklid cronem by dal zásadám přesnou lhůtu.
+- [ ] **Ask u čtení „for someone“** (neuložené, ne-tester) nemá `reading_id` → proxy ho počítá jako čtení a strhne měsíční jednotku
+  (runar-reading.js ~1144, proxy ~532–657); TIER_FEATURES slibuje „one question on every reading“. Neověřeno během, jen čtením kódu.
+- [ ] **Rune Seeker a Ask:** `helper_ask` / `helper_ask2` ho zvou ptát se, pole je pro něj vypnuté (asks_per_reading 0).
+- [ ] **`qconsent_lbl`** (souhlas s odesláním otázky, čl. 9) jmenuje jen OpenAI; při výpadku jde otázka Anthropicu. Pole je dnes jen
+  pro admina (DECISIONS 2026-10-16 (5)), před otevřením ostatním opravit.
+- [ ] **`lock_become_rs`** „Become a Rune Seeker to unveil“ — registrace odemkne jen část oblastí a hledání, zbytek karta.
+- [ ] **Mrtvé texty:** `q_teaser` (pole jen admin), `tier_soon` (kreslí se do vždy skrytého `#sp-path-body`), `layer2_lbl` (jen staré
+  záznamy deníku), anglické `title` u slotů spreadů v runar-reader.html (vymaže je `_updateSpreadSlots`).
+- [ ] **Zastaralé komentáře / natvrdo:** runar-config.js ~276 („Only these emails can access … Yggdrasil“), ~101 (testeři „jsou
+  rune_seeker“, SQL jim dává premium); runar-reading.js ~1100 („tier != premium -> 403“); runar-journal.js ~274 natvrdo `count > 5`
+  místo `TIERS.rune_seeker.journal` (§10); runar-auth.js ~400 po uplatnění kódu nastaví `userTier = 'rune_seeker'` i předplatiteli
+  (dopad neověřen).
+- [ ] **Nápověda nepopisuje výklady (spready), Ask ani strom** — jen jednu runu (čeká na ownera, jestli doplnit).
