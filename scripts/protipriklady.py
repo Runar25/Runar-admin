@@ -136,7 +136,7 @@ PRIPADY = [
  ('chyti', 'verify_journal_glyphs.js', 'v2/runar-journal.js', 'replace',
   "runeSvg(r, { frame: true, cls: 'badge-stone' }) + ' ' + escapeHtml(jm)", "escapeHtml(k)"),
  ('chyti', 'verify_tier_features.js', 'v2/runar-config.js', 'replace', 'if (v !== null && v !== undefined) out.push(', 'out.push('),
- ('chyti', 'verify_new_duplicates.js', 'RUNAR_PRIVACY.md', 'append', '', '\n**Dvě kopie nejsou riziko rozporu; jsou rozpor s odloženou splatností.**\n'),
+ ('chyti', 'verify_new_duplicates.js', 'RUNAR_PRIVACY.md', 'append', '', '\n**Bydlí v jiném docu → odkaz, ne převyprávění.**\n'),
  ('chyti', 'verify_fresh_dates.js', 'RUNAR_DECISIONS.md', 'append', '', '\n## 2026-10-01 (99) — podstrčený záznam se starým datem\n\n- test\n'),
  # 2026-10-15 (CODE-read): pevná revize a4cc4b6 místo HEAD~40 — když posledních 40 commitů sw.js neměnilo (samé docs/skripty), byla
  # podstrčená verze stejná jako HEAD a útok padal na „podstrčení se neprojevilo“. Verze jsou monotónní, a4cc4b6 se od HEAD liší napořád.
