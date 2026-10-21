@@ -10,12 +10,12 @@
      stránku „Væntanlegt“ na therunekeeper.com; do té doby SKRYTÁ na /heim/ (noindex, nic na ni nevede).
      Web je vstup do appky a obchod — čtení se dělá jen v appce (adresy DECISIONS 2026-10-12 (6)).
      Vzhled = živé styly appky (runar-reader.css: lišta, hero s portrétem, .card, .btn-upgrade), texty z UI_TEXT (hero_eyebrow,
-     hero_phrases, hero_quote, guide_title/guide_lines, journey_*, sp_privacy_link), karta ze sdíleného runakort.js, adresa appky
+     hero_phrases, hero_quote, journey_*, sp_privacy_link), karta ze sdíleného runakort.js, adresa appky
      z web.js (§10, §20). Nová věta jen WEB_TXT.enter (IS „Gakktu inn“: Greynir OK, korpus 55×). -->
 <link rel="icon" type="image/png" sizes="96x96" href="https://runar25.github.io/Runar-admin/v2/icons/favicon-96x96.png">
 <link rel="stylesheet" href="https://runar25.github.io/Runar-admin/v2/fonts/fonts.css">
 <link rel="stylesheet" href="https://runar25.github.io/Runar-admin/v2/runar-reader.css">
-<link rel="stylesheet" href="../runakort.css">
+<link rel="stylesheet" href="../runakort.css?v=925ff1f0f9">
 <style>
 /* jen to, co appka nemá: přepínač jazyka v liště, sloupec sekcí pod hero, tlačítka-odkazy a patička */
 .w-lang button{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:3px;background:none;border:none;color:var(--gold);opacity:.5;cursor:pointer;margin-left:14px}
@@ -23,8 +23,6 @@
 .w-main{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:28px 16px 40px}
 .w-main .card{text-align:center}
 .w-main .card-lbl{margin-bottom:14px}
-.w-guide{list-style:none;text-align:left;margin:0}
-.w-guide li{font-size:1.02em;line-height:1.6;color:var(--white);margin-bottom:10px}
 a.btn-upgrade{display:inline-block;text-decoration:none;margin-top:6px}
 .hero-text-col a.btn-upgrade{align-self:flex-start}
 .w-card{display:flex;justify-content:center;margin:6px 0 18px}
@@ -64,10 +62,6 @@ a.btn-upgrade{display:inline-block;text-decoration:none;margin-top:6px}
 
 <main class="w-main">
   <section class="card">
-    <div class="card-lbl" id="w-guide-h"></div>
-    <ul class="w-guide" id="w-guide"></ul>
-  </section>
-  <section class="card">
     <div class="card-lbl" data-k="journey_title"></div>
     <p class="note" id="w-journey-sub"></p>
     <a class="btn-upgrade" id="w-journey" href="../ferdin/"></a>
@@ -87,8 +81,8 @@ a.btn-upgrade{display:inline-block;text-decoration:none;margin-top:6px}
 <script src="https://runar25.github.io/Runar-admin/v2/runar-translations.js"></script>
 <script src="https://runar25.github.io/Runar-admin/v2/runar-svgs.js"></script>
 <script src="https://runar25.github.io/Runar-admin/v2/runar-utils.js"></script>
-<script src="../web.js"></script>
-<script src="../runakort.js"></script>
+<script src="../web.js?v=85f560b7b0"></script>
+<script src="../runakort.js?v=d3fca33414"></script>
 <script>
 var WEB_TXT = { enter: { is: 'GAKKTU INN', en: 'STEP INSIDE' } };
 var LANG = 'is';
@@ -109,8 +103,6 @@ function render() {
   var enter = document.getElementById('w-enter');
   enter.textContent = WEB_TXT.enter[LANG] + ' →';
   enter.href = RUNAR_APP_URL;
-  document.getElementById('w-guide-h').textContent = (U.guide_title || '').toUpperCase();
-  document.getElementById('w-guide').innerHTML = (U.guide_lines || []).map(function (x) { return '<li>' + x + '</li>'; }).join('');
   document.getElementById('w-journey-sub').textContent = tp('journey_sub', { casts: vlp('cast', LANG) });
   document.getElementById('w-journey').textContent = (U.journey_title || '') + ' →';
   document.getElementById('w-card-h').textContent = vl('card', LANG).toUpperCase();
