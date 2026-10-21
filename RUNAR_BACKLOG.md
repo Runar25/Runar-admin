@@ -1272,6 +1272,9 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   menu účtu u Walkera a Wanderera ukáže např. „RUNE WANDERER · YEARLY“ a „renews 21 Oct 2027“ (texty z UI_TEXT, IS + EN; datum přes
   `datumUI`). Datum obnovy je pro člověka podstatnější než samotné „yearly“ — kdy se strhnou peníze a do kdy má čtení. Lane: platby CODE-web,
   menu CODE-tune.
+  **Okno cesty** (owner přes CODE-web 2026-10-21: *„mělo by se nějak odlišit, jestli má uživatel měsíční nebo roční předplatné. asi říct you
+  are here na tom místě, kde je, a ne obojí … měl bych teda vidět yearly“*): okno se otevře na kartě období, které člověk platí, a „you are
+  here“ stojí jen tam (na druhé kartě ne). Totéž pole z profilu jako menu. Web „you are here“ nemá, dokud nepozná přihlášeného.
 - [ ] **Pro OWNERA — Rapyd** *(owner 2026-10-12: totéž co Shopify — dodělá se, pak JEDEN souhrnný postup)*: smí účet Agndofy prodávat přes Rapyd Hosted Checkout / odkaz k platbě na therunekeeper.com, a jaký tarif
   má Shopify Agndofy (u cizí brány Shopify bere příplatek, Basic 2 %)? Rozhodne, jestli Rúnakort půjde přes Shopify, nebo rovnou Rapyd.
   Fyzické runy jdou přes Shopify vždy. Kupovat jde pět balíčků (`CARD_PACKS`).
