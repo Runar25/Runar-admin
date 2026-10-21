@@ -7,7 +7,7 @@ const UI_TEXT = {
 
   en: {
     // Header
-    brand:   'AGNDOFA · RÚNAR SYSTEM',
+    brand:   'RÚNAR SYSTEM',   // 2026-10-21 owner: AGNDOFA → Rúnar všude (shrine)
     title:   'Knowledge Shrine',
     sub:     'Teach Rúnar. Shape his voice. Feed his wisdom.',
 
@@ -583,7 +583,7 @@ const UI_TEXT = {
 
   is: {
     // Header
-    brand:   'AGNDOFA · RÚNAR KERFI',
+    brand:   'RÚNAR KERFI',
     title:   'Þekkingarskrínn',
     sub:     'Kenndu Rúnari. Mótaðu rödd hans. Fóðraðu hann af visku.',
 

@@ -1062,7 +1062,10 @@ function _updateGateTexts() {
 function updateUIText() {
   document.documentElement.lang = lang;
   _syncPillLang();   // MUSI predchazet _askPlaceholder() nize — duvod u te funkce
-  setText('ui-brand', 'AGNDOFA');
+  // 2026-10-21 (owner): značka RÚNAR → domovská stránka webu (RUNAR_HOME_URL); do té doby AGNDOFA → agndofa.is. V Play bez odkazu.
+  setText('ui-brand', 'RÚNAR');
+  var _brand = document.getElementById('ui-brand');
+  if (_brand && typeof RUNAR_HOME_URL === 'string' && RUNAR_HOME_URL && _journeyProstredi() !== 'play') _brand.setAttribute('href', RUNAR_HOME_URL);
   // ⚠️ Staticke upozorneni patri SEM, ne do _updateReadingForm: (a) §14 rika, ze
   // updateUIText vlastni staticke preklady, (b) `setLang` vola updateUIText, ale
   // _updateReadingForm NE — text by pri prepnuti jazyka zustal anglicky.

@@ -402,6 +402,10 @@ const TIER_LIMITS = {
 // Stránka nákupu účtů a Rúnakortu na webu (2026-10-19, DECISIONS 2026-10-19 (7): nákup jen na therunekeeper.com, appka má okno „Your journey
 // with Rúnar“). null = platby ještě neběží → u placených účtů v okně „Coming soon.“. Až CODE-web stránku spustí, sem její adresu.
 const JOURNEY_URL = null;
+// Domovská stránka webu, kam vede značka RÚNAR v liště appky (owner 2026-10-21: „agndofa přejmenujeme všude … na Rúnar a odkazuje na home
+// page“). Do spuštění skrytá /heim/, při spuštění „https://therunekeeper.com/“. Web (web/site/web.js) má touž adresu — CODE-web ji může
+// brát odtud. V Google Play se odkaz nenastaví (domovská stránka vede k nákupu, DECISIONS 2026-10-19 (4)).
+const RUNAR_HOME_URL = 'https://therunekeeper.com/heim/';
 
 const CARD_PACKS = [
   { name: 'Starter', name_is: 'Byrjandi', credits: 5,  isk: 1490 },
