@@ -11,7 +11,7 @@
      Web je vstup do appky a obchod — čtení se dělá jen v appce (adresy DECISIONS 2026-10-12 (6)).
      Vzhled = živé styly appky (runar-reader.css: lišta, hero s portrétem, .card, .btn-upgrade), texty z UI_TEXT (hero_eyebrow,
      hero_phrases, hero_quote, journey_*, sp_privacy_link), karta ze sdíleného runakort.js, adresa appky
-     z web.js (§10, §20). Nová věta jen WEB_TXT.enter (IS „Gakktu inn“: Greynir OK, korpus 55×). -->
+     z web.js (§10, §20). Nové věty jen WEB_TXT: enter (IS „Gakktu inn“: Greynir OK, korpus 55×) a plans (2026-10-21, viz u WEB_TXT). -->
 <link rel="icon" type="image/png" sizes="96x96" href="https://runar25.github.io/Runar-admin/v2/icons/favicon-96x96.png">
 <link rel="stylesheet" href="https://runar25.github.io/Runar-admin/v2/fonts/fonts.css">
 <link rel="stylesheet" href="https://runar25.github.io/Runar-admin/v2/runar-reader.css">
@@ -84,7 +84,9 @@ a.btn-upgrade{display:inline-block;text-decoration:none;margin-top:6px}
 <script src="../web.js?v=85f560b7b0"></script>
 <script src="../runakort.js?v=d3fca33414"></script>
 <script>
-var WEB_TXT = { enter: { is: 'GAKKTU INN', en: 'STEP INSIDE' } };
+// plans (owner 2026-10-21 „ano, see plans“: dřív tlačítko opakovalo nadpis WALK WITH RÚNAR a „nic neříká“; rešerše Spotify „View all plans“).
+// IS „Skoða áskriftarleiðir“: Greynir OK, „áskriftarleiðir“ 230×, „skoða leiðir“ 895×; infinitiv jako tlačítka appky (HEFJA LESTURINN).
+var WEB_TXT = { enter: { is: 'GAKKTU INN', en: 'STEP INSIDE' }, plans: { is: 'SKOÐA ÁSKRIFTARLEIÐIR', en: 'SEE PLANS' } };
 var LANG = 'is';
 var lang = LANG;   // t()/tp() z runar-utils.js čtou globální `lang` (v appce ji drží runar-app.js, který web nenačítá)
 var phraseIx = null;   // jedna náhodná věta z hero_phrases na návštěvu, jako appka (getHeroPhrase)
@@ -104,7 +106,7 @@ function render() {
   enter.textContent = WEB_TXT.enter[LANG] + ' →';
   enter.href = RUNAR_APP_URL;
   document.getElementById('w-journey-sub').textContent = tp('journey_sub', { casts: vlp('cast', LANG) });
-  document.getElementById('w-journey').textContent = (U.journey_title || '') + ' →';
+  document.getElementById('w-journey').textContent = WEB_TXT.plans[LANG] + ' →';
   document.getElementById('w-card-h').textContent = vl('card', LANG).toUpperCase();
   document.getElementById('w-card').innerHTML = rkFront({ design: 'o', lang: LANG, credits: CARD_PACKS[1].credits });
   document.getElementById('w-card-note').textContent = RK_TXT.note[LANG];
