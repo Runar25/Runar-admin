@@ -295,6 +295,9 @@ PRIPADY = [
  ('chyti', 'verify_komponenty.js', 'v2/runar-reader.css', 'append', '', '\n.fine{border-radius:6px;}\n'),
  ('chyti', 'verify_komponenty.js', 'v2/runar-reader.css', 'append', '', '\n.fine{color:#123abc;}\n'),
  ('chyti', 'verify_komponenty.js', 'v2/runar-reader.css', 'replace', '.fine{font-family', '.drobna{font-family'),
+ # ㊌ skládání promptu na serveru (2026-10-21, CODE-tune): změna builderu bez přegenerovaného balíčku · balíček s jinou náhodou
+ ('chyti', 'verify_prompt_skladani.js', 'v2/runar-character.js', 'replace', 'Lestu allar sjö sem eina samfellda frásögn', 'Lestu allar sjö sem eina frásögn'),
+ ('chyti', 'verify_prompt_skladani.js', 'supabase/functions/_shared/prompt_skladani.mjs', 'replace', 'Math.random = P.random || globalThis.Math.random;', 'Math.random = globalThis.Math.random;'),
 ]
 
 

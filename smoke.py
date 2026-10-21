@@ -1221,6 +1221,14 @@ radky = [l for l in (r2.stdout + r.stdout + r.stderr + r2.stderr).strip().split(
 prvni = radky[-1] if radky else 'kontrola soupisu komponent probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# ㊌ Skládání promptu pro server (CODE-tune 2026-10-21, krok 1 plánu infrastruktury „prompt na server“, owner „ok začni“): balíček
+# supabase/functions/_shared/prompt_skladani.mjs je aktuální a dává bajtově stejný prompt jako prohlížeč (40 golden vzorků).
+print('\n' + chr(0x328C) + ' SKLÁDÁNÍ PROMPTU NA SERVERU (verify_prompt_skladani.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_prompt_skladani.js')], capture_output=True, text=True, encoding='utf-8')
+radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola skladani promptu probehla'
+check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
