@@ -41,7 +41,8 @@
 .j-stone svg{width:100%;height:100%;display:block;overflow:visible}
 .j-nm{font-family:'Cinzel',serif;font-size:15px;letter-spacing:3px;color:var(--white);margin-bottom:6px}
 .j-pr{font-size:24px;color:var(--gold);min-height:1.5em}
-.j-pr small{font-size:16px;color:var(--muted)}
+/* dovětek (Ókeypis / měsíční částka u ročního) na vlastním řádku — v úzkém sloupci se „(2.900 kr. á mánuði)“ lámalo uprostřed (2026-10-21) */
+.j-pr small{display:block;font-size:16px;color:var(--muted)}
 .j-gift{font-style:italic;color:var(--ember, #D6A85C);font-size:16px;min-height:1.4em}
 .j-ft{list-style:none;font-size:17px;color:#c9d6e3;line-height:1.45;margin:12px 0 16px;max-width:15em}
 .j-ft li{margin-bottom:6px}
@@ -117,7 +118,8 @@ function draw() {
     var h = '<div class="j-st"><div class="j-stone">' + kamenUctuSvg(id) + '</div><div class="j-nm">' + jmeno(T) + '</div>';
     if (m) {
       h += P === 'm' ? '<div class="j-pr">' + tp('journey_price_m', { price: cislo(m) }) + '</div><div class="j-gift"></div>'
-                     : '<div class="j-pr">' + tp('journey_price_y', { price: cislo(Math.round(y / 12)), year: cislo(y) }) + '</div><div class="j-gift">' + U.journey_gift + '</div>';
+                     : '<div class="j-pr">' + tp('journey_price_y', { year: cislo(y) }) + ' <small>' + tp('journey_price_y_mesic', { price: cislo(Math.round(y / 12)) })
+                       + '</small></div><div class="j-gift">' + U.journey_gift + '</div>';
     } else {
       // zdarma jen Visitor a Rune Seeker jmenovitě — placený účet bez načtené ceny nesmí ukázat „zdarma“ (owner 2026-10-19)
       h += '<div class="j-pr"><small>' + ({ free_trial: U.journey_free, rune_seeker: U.journey_free_join }[id] || '') + '</small></div><div class="j-gift"></div>';
