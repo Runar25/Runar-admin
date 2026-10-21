@@ -38,7 +38,7 @@ for (const L of ['en', 'is']) {
 S = nacti();
 vm.runInContext('TIERS.standard.asks_per_reading = 3; TIERS.premium.asks_per_reading = 0;', S);
 const tf2 = vm.runInContext('tierFeatures', S);
-rekni(/Three questions/.test(tf2('standard', 'en').join(' ')) && /Þrjár eigin spurningar/.test(tf2('standard', 'is').join(' ')),
+rekni(/Three questions/.test(tf2('standard', 'en').join(' ')) && /spurt Rúnar þrisvar út í/.test(tf2('standard', 'is').join(' '))   /* 2026-10-21: IS věta Asku bez kalku (fb5d5d9) */,
       'změna asks_per_reading 1 → 3 se propíše do výpisu (en + is)');
 {
   const p = tf2('premium', 'en').join(' ') + ' ' + tf2('premium', 'is').join(' ');
