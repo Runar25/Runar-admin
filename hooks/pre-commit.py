@@ -170,6 +170,24 @@ if staged:
     if _r.returncode != 0:
         sys.exit(1)
 
+# ── Skládání promptu pro server (CODE-tune 2026-10-21, krok 1 plánu infrastruktury — prompt na server, owner „ok začni“) ──
+# supabase/functions/_shared/prompt_skladani.mjs je GENEROVANÝ z pěti souborů appky (scripts/build_prompt_skladani.js). Když commit
+# nese některý z nich, balíček se přegeneruje z INDEXU (ne z pracovního stromu — ten nese cizí necommitnutou práci) a jde do téhož
+# commitu. Bez toho by server po změně překladů nebo builderu skládal starý prompt. Shodu s prohlížečem hlídá smoke (verify_prompt_skladani.js).
+_PROMPT_ZDROJE = ['v2/runar-config.js', 'v2/runar-runes.js', 'v2/runar-translations.js', 'v2/runar-utils.js', 'v2/runar-character.js']
+if any(f in staged for f in _PROMPT_ZDROJE):
+    _cil = 'supabase/functions/_shared/prompt_skladani.mjs'
+    _g = subprocess.run(['node', os.path.join(REPO, 'scripts', 'build_prompt_skladani.js'), '--z-indexu'],
+                        cwd=REPO, capture_output=True, text=True, encoding='utf-8')
+    if _g.returncode != 0 or not _g.stdout:
+        print('[hook] prompt_skladani.mjs: generátor selhal — commit zastaven (' + (_g.stderr or '').strip()[:300] + ')')
+        sys.exit(1)
+    with open(os.path.join(REPO, _cil), 'w', encoding='utf-8', newline='\n') as _f:
+        _f.write(_g.stdout)
+    _h = subprocess.run(['git', 'hash-object', '-w', _cil], cwd=REPO, capture_output=True, text=True).stdout.strip()
+    subprocess.run(['git', 'update-index', '--add', '--cacheinfo', '100644,' + _h + ',' + _cil], cwd=REPO)
+    print('[hook] prompt_skladani.mjs přegenerován ze staged zdrojů a přidán do commitu')
+
 # Je změněno JS/CSS v v2/?
 js_css = [f for f in staged
           if (f.startswith('v2/') or f == 'v2/sw.js')
