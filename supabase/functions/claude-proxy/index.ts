@@ -41,7 +41,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.117.3";
 import { textKHlasu, normalizuj, podepis } from "../_shared/voice_ticket.ts";
-import { porovnejStin } from "../_shared/prompt_stin.mjs";   // 2026-10-21 prompt na server (F2 stín)
 
 const cors = {
   "Access-Control-Allow-Origin":  "*",
@@ -77,7 +76,10 @@ function logOps(kind: "model_fallback" | "model_error", detail: Record<string, u
 // text čtení ani otázka. Na pozadí (waitUntil), chyba stínu čtení nikdy nezastaví. Čtení dál jede na promptu z appky.
 function stinPorovnej(stin: unknown, system: unknown, prompt: unknown) {
   const prace = (async () => {
-    const detail = porovnejStin(stin, system, prompt);
+    // dynamicky: selhání načtení balíčku (520 KB, Deno) shodí jen stín, ne funkci a čtení (2026-10-21, první nasazení F2)
+    let detail: Record<string, unknown>;
+    try { const { porovnejStin } = await import("../_shared/prompt_stin.mjs"); detail = porovnejStin(stin, system, prompt); }
+    catch (e) { detail = { chyba: "import: " + String((e as Error)?.message || e).slice(0, 180) }; }
     const { error } = await sb().from("ops_events").insert({ kind: "prompt_stin", detail });
     if (error) console.error("ops_events prompt_stin insert failed:", error.message);
   })();
