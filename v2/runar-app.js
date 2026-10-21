@@ -1886,6 +1886,11 @@ function openJourney() {
 // Odkaz pod polem na kód (redeem-shop-link): okno cesty rovnou na kartě Rúnakort — balíčky, ceny a (s JOURNEY_URL) nákup na webu.
 // 2026-10-21: do té doby vedl na agndofa.is, kde se Rúnakort neprodává; nákup je jen na therunekeeper.com (DECISIONS 2026-10-19 (7)).
 function _kartaVOkne() { _journeyP = 'c'; openJourney(); return false; }
+// Klepnutí na kámen účtu v okně cesty ho na 5 s oživí (kamenUctuOziv, runar-utils.js; owner 2026-10-21).
+document.addEventListener('click', function (e) {
+  var k = e.target && e.target.closest ? e.target.closest('#journey-path svg.kamen-uctu') : null;
+  if (k) kamenUctuOziv(k, 5000);
+});
 function closeJourney() {
   var m = document.getElementById('journey-modal'); if (m) m.classList.remove('open');
 }

@@ -3453,16 +3453,32 @@ function kamenUctuVystred(root, zivyId) {
     var sc = u.vel / m;
     sg.setAttribute('transform', 'translate(' + (cx - sc * (b.x + b.width / 2)).toFixed(3) + ' ' + (cy - sc * (b.y + b.height / 2)).toFixed(3) + ') scale(' + sc.toFixed(4) + ')');
     if (!u.vypln) sg.setAttribute('stroke-width', (0.38 / sc).toFixed(2));
-    // Stezka se vlní přepočtem tvaru (vlnění nejde udělat jen CSS); smyčka skončí, když kámen zmizí ze stránky nebo přestane být živý.
-    if (u.stezka && svg.classList.contains('zivy') && !svg._stezkaBezi) {
-      var p = svg.querySelector('.zn-stezka'), t0 = null; svg._stezkaBezi = true;
-      (function krok(ts) {
-        if (!svg.isConnected || !svg.classList.contains('zivy')) { svg._stezkaBezi = false; return; }
-        if (ts) { if (!t0) t0 = ts; p.setAttribute('d', _stezkaUctu(Math.sin((ts - t0) / 1400) * 0.5)); }
-        requestAnimationFrame(krok);
-      })();
-    }
+    if (u.stezka && svg.classList.contains('zivy')) _stezkaSpust(svg);
   });
+}
+// Stezka se vlní přepočtem tvaru (vlnění nejde udělat jen CSS); smyčka skončí, když kámen zmizí ze stránky nebo přestane být živý.
+function _stezkaSpust(svg) {
+  var p = svg.querySelector('.zn-stezka'), t0 = null;
+  if (!p || svg._stezkaBezi) return;
+  svg._stezkaBezi = true;
+  (function krok(ts) {
+    if (!svg.isConnected || !svg.classList.contains('zivy')) { svg._stezkaBezi = false; return; }
+    if (ts) { if (!t0) t0 = ts; p.setAttribute('d', _stezkaUctu(Math.sin((ts - t0) / 1400) * 0.5)); }
+    requestAnimationFrame(krok);
+  })();
+}
+// Klepnutí na kámen účtu ho na chvíli oživí — owner 2026-10-21: „při kliknutí na runu účtu … na pár vteřin, třeba 5 s, rozanimoval,
+// jak umí, aby šlo vidět, že to něco dělá“. Kámen „you are here“ žije pořád (nic se nemění); prázdný kámen Visitora pohyb nemá;
+// bez animací (prefers-reduced-motion) v klidu. Jedno místo — okno v appce i web mohou volat totéž.
+function kamenUctuOziv(svg, ms) {
+  if (!svg || svg.classList.contains('zivy')) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var u = ZNACKY_UCTU[svg.getAttribute('data-ucet')];
+  if (!u || !(u.sym || u.stezka)) return;
+  svg.classList.add('zivy');
+  if (u.stezka) _stezkaSpust(svg);
+  clearTimeout(svg._ozivT);
+  svg._ozivT = setTimeout(function () { svg.classList.remove('zivy'); }, ms || 5000);
 }
 
 ;

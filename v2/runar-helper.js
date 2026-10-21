@@ -97,13 +97,17 @@
   }
 
   function init() {
+    // 2026-10-21 (owner): „helper není průhledný při a po tom, co se rozzáří … jakmile na něj kliknu, tak už je průhledný“ — pravidlo
+    // #hb-btn.svice{opacity:1} pryč, svítí jen prstenec (sviceRing). „Problikne jako čtverec“: backdrop-filter u kulatého prvku
+    // Chromium při změně průhlednosti vykreslí krátce v obdélníku → pryč (pozadí .82 je skoro plné, rozmazání nebylo vidět);
+    // a bez šedého obdélníku po ťuknutí na dotykovém displeji (tap highlight).
     var s = document.createElement("style");
     s.textContent =
       "#hb-btn{position:fixed;left:14px;bottom:14px;width:44px;height:44px;border-radius:50%;" +
       "background:rgba(14,22,34,.82);color:var(--gold,#FFBF00);border:1px solid var(--gold,#FFBF00);" +
       "font-family:Cinzel,serif;font-size:19px;line-height:44px;text-align:center;cursor:pointer;" +
-      "z-index:99998;opacity:.55;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);transition:opacity .2s}" +
-      "@media (hover:hover){#hb-btn:hover{opacity:1}}#hb-btn:focus-visible{opacity:1}#hb-btn.svice{opacity:1}";
+      "z-index:99998;opacity:.55;-webkit-tap-highlight-color:transparent;transition:opacity .2s}" +
+      "@media (hover:hover){#hb-btn:hover{opacity:1}}#hb-btn:focus-visible{opacity:1}";
     document.head.appendChild(s);
     btn = document.createElement("button");
     btn.id = "hb-btn"; btn.type = "button"; btn.textContent = "?";
