@@ -17,7 +17,8 @@ const { vyrob, CIL } = require('./build_prompt_skladani.js');
 
 (async () => {
   let vady = [];
-  if (!fs.existsSync(CIL) || fs.readFileSync(CIL, 'utf8') !== vyrob()) {
+  // bez \r: checkout s autocrlf dá souboru CRLF, generátor LF — obsah je týž (zjištěno v čisté kopii ㊵ 2026-10-21)
+  if (!fs.existsSync(CIL) || fs.readFileSync(CIL, 'utf8').replace(/\r\n/g, '\n') !== vyrob()) {
     console.log('FAIL  A) ' + path.relative(ROOT, CIL) + ' není aktuální — pusť node scripts/build_prompt_skladani.js');
     process.exit(1);
   }
