@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="is">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Rúnar · The Rune Keeper</title>
+<!-- 2026-10-21 CODE-web: domovská stránka webu PO SPUŠTĚNÍ (owner: „landingpage není potřeba, ale potřebujeme nějaký web pro Rúnara.
+     Měl by být v podobě appky… pasovat i na rozlišení mobilu“; na návrh struktury „ano, postav ji“). Až se Rúnar spustí, nahradí
+     stránku „Væntanlegt“ na therunekeeper.com; do té doby SKRYTÁ na /heim/ (noindex, nic na ni nevede).
+     Web je vstup do appky a obchod — čtení se dělá jen v appce (adresy DECISIONS 2026-10-12 (6)).
+     Vzhled = živé styly appky (runar-reader.css: lišta, hero s portrétem, .card, .btn-upgrade), texty z UI_TEXT (hero_eyebrow,
+     hero_phrases, hero_quote, guide_title/guide_lines, journey_*, sp_privacy_link), karta ze sdíleného runakort.js, adresa appky
+     z web.js (§10, §20). Nová věta jen WEB_TXT.enter (IS „Gakktu inn“: Greynir OK, korpus 55×). -->
+<link rel="icon" type="image/png" sizes="96x96" href="https://runar25.github.io/Runar-admin/v2/icons/favicon-96x96.png">
+<link rel="stylesheet" href="https://runar25.github.io/Runar-admin/v2/fonts/fonts.css">
+<link rel="stylesheet" href="https://runar25.github.io/Runar-admin/v2/runar-reader.css">
+<link rel="stylesheet" href="../runakort.css">
+<style>
+/* jen to, co appka nemá: přepínač jazyka v liště, sloupec sekcí pod hero, tlačítka-odkazy a patička */
+.w-lang button{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:3px;background:none;border:none;color:var(--gold);opacity:.5;cursor:pointer;margin-left:14px}
+.w-lang button.on{opacity:.9}
+.w-main{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:28px 16px 40px}
+.w-main .card{text-align:center}
+.w-main .card-lbl{margin-bottom:14px}
+.w-guide{list-style:none;text-align:left;margin:0}
+.w-guide li{font-size:1.02em;line-height:1.6;color:var(--white);margin-bottom:10px}
+a.btn-upgrade{display:inline-block;text-decoration:none;margin-top:6px}
+.hero-text-col a.btn-upgrade{align-self:flex-start}
+.w-card{display:flex;justify-content:center;margin:6px 0 18px}
+.w-card .rk-wrap{width:360px}
+.w-foot{position:relative;z-index:1;text-align:center;font-family:'Cinzel',serif;font-size:11px;letter-spacing:2.5px;color:var(--muted);padding:20px 16px 36px;border-top:1px solid rgba(46,74,112,0.3)}
+.w-foot a{color:inherit;text-decoration:none}
+.w-foot a:hover{color:var(--gold)}
+@media(max-width:768px){ .hero-text-col a.btn-upgrade{align-self:center} }
+</style>
+</head>
+<body>
+<header class="topbar"><div class="topbar-inner">
+  <a class="brand" href="https://agndofa.is" target="_blank" rel="noopener">AGNDOFA</a>
+  <span class="w-lang"><button data-l="is">IS</button><button data-l="en">EN</button></span>
+</div></header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-portrait-col">
+      <div class="hero-portrait-wrap">
+        <img src="https://pmitxjvkeovijreepror.supabase.co/storage/v1/object/public/runar-images/Runar_portrait.png" alt="Rúnar the Rune Keeper">
+      </div>
+      <div class="hero-mob-label">
+        <div class="hero-eyebrow" data-k="hero_eyebrow"></div>
+        <div class="hero-title">Rúnar</div>
+      </div>
+    </div>
+    <div class="hero-text-col">
+      <div class="hero-eyebrow hero-desk-only" data-k="hero_eyebrow"></div>
+      <h1 class="hero-title hero-desk-only">Rúnar</h1>
+      <p class="hero-sub" id="w-phrase"></p>
+      <blockquote class="hero-quote" data-k="hero_quote" data-html="1"></blockquote>
+      <a class="btn-upgrade" id="w-enter"></a>
+    </div>
+  </div>
+</section>
+
+<main class="w-main">
+  <section class="card">
+    <div class="card-lbl" id="w-guide-h"></div>
+    <ul class="w-guide" id="w-guide"></ul>
+  </section>
+  <section class="card">
+    <div class="card-lbl" data-k="journey_title"></div>
+    <p class="note" id="w-journey-sub"></p>
+    <a class="btn-upgrade" id="w-journey" href="../ferdin/"></a>
+  </section>
+  <section class="card">
+    <div class="card-lbl" id="w-card-h"></div>
+    <div class="w-card"><div class="rk-wrap" id="w-card"></div></div>
+    <p class="note" id="w-card-note"></p>
+    <a class="btn-upgrade" id="w-card-go" href="../ferdin/#kort"></a>
+  </section>
+</main>
+
+<footer class="w-foot">© 2026 AGNDOFA EHF. · <a href="mailto:runar@therunekeeper.com">RUNAR@THERUNEKEEPER.COM</a> · <a id="w-privacy" data-k="sp_privacy_link"></a></footer>
+
+<script src="https://runar25.github.io/Runar-admin/v2/runar-config.js"></script>
+<script src="https://runar25.github.io/Runar-admin/v2/runar-runes.js"></script>
+<script src="https://runar25.github.io/Runar-admin/v2/runar-translations.js"></script>
+<script src="https://runar25.github.io/Runar-admin/v2/runar-svgs.js"></script>
+<script src="https://runar25.github.io/Runar-admin/v2/runar-utils.js"></script>
+<script src="../web.js"></script>
+<script src="../runakort.js"></script>
+<script>
+var WEB_TXT = { enter: { is: 'GAKKTU INN', en: 'STEP INSIDE' } };
+var LANG = 'is';
+var lang = LANG;   // t()/tp() z runar-utils.js čtou globální `lang` (v appce ji drží runar-app.js, který web nenačítá)
+var phraseIx = null;   // jedna náhodná věta z hero_phrases na návštěvu, jako appka (getHeroPhrase)
+function render() {
+  lang = LANG;
+  var U = UI_TEXT[LANG];
+  document.documentElement.lang = LANG;
+  document.querySelectorAll('.w-lang button').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-l') === LANG); });
+  document.querySelectorAll('[data-k]').forEach(function (el) {
+    var v = U[el.getAttribute('data-k')] || '';
+    if (el.getAttribute('data-html')) el.innerHTML = v; else el.textContent = v;
+  });
+  var pool = U.hero_phrases || [];
+  if (phraseIx === null) phraseIx = Math.floor(Math.random() * pool.length);
+  document.getElementById('w-phrase').textContent = pool[phraseIx] || '';
+  var enter = document.getElementById('w-enter');
+  enter.textContent = WEB_TXT.enter[LANG] + ' →';
+  enter.href = RUNAR_APP_URL;
+  document.getElementById('w-guide-h').textContent = (U.guide_title || '').toUpperCase();
+  document.getElementById('w-guide').innerHTML = (U.guide_lines || []).map(function (x) { return '<li>' + x + '</li>'; }).join('');
+  document.getElementById('w-journey-sub').textContent = tp('journey_sub', { casts: vlp('cast', LANG) });
+  document.getElementById('w-journey').textContent = (U.journey_title || '') + ' →';
+  document.getElementById('w-card-h').textContent = vl('card', LANG).toUpperCase();
+  document.getElementById('w-card').innerHTML = rkFront({ design: 'o', lang: LANG, credits: CARD_PACKS[1].credits });
+  document.getElementById('w-card-note').textContent = RK_TXT.note[LANG];
+  document.getElementById('w-card-go').textContent = vl('card', LANG).toUpperCase() + ' →';
+  document.getElementById('w-privacy').href = RUNAR_APP_URL.replace(/[^/]*$/, '') + 'runar-privacy.html';
+}
+document.querySelectorAll('.w-lang button').forEach(function (b) {
+  b.onclick = function () { LANG = b.getAttribute('data-l'); render(); };
+});
+render();
+</script>
+</body>
+</html>

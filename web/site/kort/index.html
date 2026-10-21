@@ -59,10 +59,9 @@ body{color:var(--white);font-family:'Cormorant Garamond',serif;font-size:19px;mi
 <script src="https://runar25.github.io/Runar-admin/v2/runar-translations.js"></script>
 <script src="https://runar25.github.io/Runar-admin/v2/runar-svgs.js"></script>
 <script src="https://runar25.github.io/Runar-admin/v2/runar-utils.js"></script>
+<script src="../web.js"></script>
 <script src="../runakort.js"></script>
 <script>
-// Adresa appky — až přejde na app.therunekeeper.com, změní se jen tady (a na landingu).
-var APP_URL = 'https://runar25.github.io/Runar-admin/v2/runar-reader.html';
 var TXT = {
   print: { is: 'Prenta út eða vista sem PDF', en: 'Print or save as PDF' },
   hint:  { is: 'Kóðinn virkar einu sinni. Hver sem hefur hann getur notað hann. Gefðu hann því aðeins þeim sem á að fá kortið.',
@@ -80,7 +79,7 @@ var N = parseInt(P.get('n'), 10) || 0;
 // QR vede do appky s kódem za # (#kort=…): appka ho předvyplní do pole kódu (runar-auth.js _kortZAdresy), uplatní ho člověk sám.
 function qrSvg() {
   var q = qrcode(0, 'M');
-  q.addData(APP_URL + '#kort=' + CODE);
+  q.addData(RUNAR_APP_URL + '#kort=' + CODE);
   q.make();
   var m = q.getModuleCount(), d = '';
   for (var y = 0; y < m; y++) for (var x = 0; x < m; x++) if (q.isDark(y, x)) d += 'M' + x + ' ' + y + 'h1v1h-1z';

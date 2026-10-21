@@ -6,7 +6,10 @@
 // art = líc s postavou (rozložení rk-l2 v runakort.css). w = zimní slunovrat (owner 2026-10-20), IS „Vetur“ = zima.
 var RK_DESIGNS = { o: { is: 'Svart', en: 'Black' }, f: { is: 'Hvítt', en: 'White', art: true }, w: { is: 'Vetur', en: 'Winter', art: true } };
 var RK_TXT = {
-  steps: { is: ['Skannaðu QR kóðann', 'Skráðu þig inn', 'Sláðu inn kóðann'], en: ['Scan the QR code', 'Sign in', 'Enter the code'] }
+  steps: { is: ['Skannaðu QR kóðann', 'Skráðu þig inn', 'Sláðu inn kóðann'], en: ['Scan the QR code', 'Sign in', 'Enter the code'] },
+  // věta o kartě (stránka cesty, domovská stránka); IS ověřena 2026-10-19: Greynir OK, „rennur aldrei út“ 37×, „kaupa handa“ 2957×
+  note:  { en: 'No subscription, and the card never expires. Buy it for yourself, or give it to someone.',
+           is: 'Engin áskrift og kortið rennur aldrei út. Kauptu það handa þér eða gefðu það öðrum.' }
 };
 
 // Kámen na líci = runa z předpony kódu (shrine dává předponu podle runy); bez kódu nebo obecný RUNAR → ᚱ Raidho. Naše kresba, frame:true (§5).

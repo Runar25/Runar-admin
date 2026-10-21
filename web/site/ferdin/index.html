@@ -104,9 +104,6 @@
 <script src="https://runar25.github.io/Runar-admin/v2/runar-utils.js"></script>
 <script src="../runakort.js"></script>
 <script>
-// Jediná nová věta stránky (sekce karty); IS ověřena 2026-10-19: Greynir OK, „rennur aldrei út“ 37×, „kaupa handa“ 2957×, „gefðu það“ 43×.
-var J_CARD = { en: 'No subscription, and the card never expires. Buy it for yourself, or give it to someone.',
-               is: 'Engin áskrift og kortið rennur aldrei út. Kauptu það handa þér eða gefðu það öðrum.' };
 var LANG = 'is', P = 'm';
 var PK = 1, DES = 'o';   // zvolený balíček (index v CARD_PACKS) a vzhled karty (RK_DESIGNS)
 var lang = LANG;   // pro t()/tp() z runar-utils.js
@@ -164,7 +161,7 @@ function render() {
   document.querySelectorAll('.j-lang button').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-l') === LANG); });
   document.getElementById('j-sub').textContent = tp('journey_sub', { casts: vlp('cast', LANG) });
   document.getElementById('per-k').textContent = vl('card', LANG).toUpperCase();
-  document.getElementById('card-p').textContent = J_CARD[LANG];
+  document.getElementById('card-p').textContent = RK_TXT.note[LANG];
   karta();
   draw();
   setP(P);
@@ -176,6 +173,7 @@ document.querySelectorAll('#per span').forEach(function (s) {
   s.onclick = function () { setP(s.dataset.p); };
 });
 render();
+if (location.hash === '#kort') setP('k');   // odkaz z domovské stránky (/heim/) rovnou na záložku Rúnakort
 </script>
 </body>
 </html>
