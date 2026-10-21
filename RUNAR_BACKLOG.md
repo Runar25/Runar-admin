@@ -701,8 +701,8 @@ promptu v `claude-proxy` (už ověřuje přihlášení a odečítá kredity; pro
    GoDaddy přesměrovat jinam, nebo `rua` odebrat.
    Postup: export zóny z GoDaddy, nízké TTL den předem, zóna na Cloudflare, porovnat import s exportem i s tímhle výpisem, poštovní
    záznamy „DNS only“, přepnout nameservery, ověřit poštu (e-mail do i z runar@, přihlašovací kód z Brevo), pak zapnout DNSSEC v Cloudflare.
-   Nález mimo plán: **Google Workspace nemá DKIM** (`google._domainkey` neexistuje) — pošta z runar@ není podepsaná doménou. Zapnout
-   v administraci Google Workspace (Gmail, ověření e-mailu), nezávisle na přesunu.
+   ✅ *(2026-10-21, owner „dkim hotovo“; CODE-tune ověřil DNS: `google._domainkey` TXT `v=DKIM1; k=rsa`, klíč 2048 bit)* Google Workspace
+   DKIM — pošta z runar@ je podepsaná doménou. Při přesunu DNS na Cloudflare tenhle záznam přenést (DNS only).
 6. **Domény a přihlášení:** vlastní domény v Pages; Supabase Auth Site URL + Redirect URLs; Google OAuth origin a redirect; CORS funkcí.
 7. **Ověřit** hlavičky, přihlášení Googlem i kódem, smoke.
 8. **Stará adresa:** přesměrovat nebo vypnout, smazat DNS záznamy mířící na GitHub (převzetí domény). Nová adresa = nový origin →
