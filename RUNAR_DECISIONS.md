@@ -12040,3 +12040,23 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Hranice:** hlídá jen tvar (vzory a velikost); historii jinými slovy nepozná. Zastavuje při commitu, ne v okamžiku zápisu do souboru —
   všechny cesty zápisu (cv.zapis, uprav, Cowork přes CODE) se sejdou až v commitu.
 - Affected doc(s): žádný jiný (pravidlo §28 v CLAUDE.md už stojí z (3)).
+
+## 2026-10-21 (5) — Vegvísir: směr „runa × místo“ — scéna ramene = karta místa bez vlastního významu (hypotéza k testu)
+
+- **Rozhodl:** owner 2026-10-21 k nápadu „World Decks“ (tři balíčky prostředí vedle run: The Thresholds · Under the Mountain · The Ties;
+  islandská příroda jako společné prostředí, ne zvláštní balíček): *„líbí se mi jako možnost pro vegvísir … ta tvorba obrazu je zajímavá.
+  o něco takového jsem se pokoušel, ale nešlo to. tohle by to mohlo díru vyplnit.“* Na korekci CODE-read *„8. ano a jako vždy až test ukáže,
+  jestli je to správná hypotéza … všechno je předmětem změny, dokud to nebude fungovat.“*
+- **Díra, kterou to má vyplnit:** svět statických scén, ze kterého člověk vybírá (2026-09-27 (3)), se nikdy nepostavil; krajiny a graf míst
+  odloženy, protože *„nefungovalo to dohromady“* (owner 2026-10-21; přesně si to nepamatuje — konkrétní vada se nedohledala).
+- **Směr (hypotéza):** rameno = vytažená runa × MÍSTO. Místo je jen prostředí a okamžik (most přes ledovcovou řeku, zavřená pec, lano mezi
+  břehy) — **bez otázky pro čtenáře a bez výkladu**; význam nese runa, otázku Ask (2026-09-27 (6)). Kombinace náhodná nebo volbou člověka,
+  **nikdy párovaná podle tématu** (místo shodné s runou = runa nemá co dělat, 2026-08-25). Funguje stejně s fyzickými kartami i bez nich.
+- **Riziko k měření:** balíček nese téma runy (The Ties = Gebo, Thresholds = Raidho/Ehwaz/Dagaz, Under the Mountain = Perth/Kenaz) a téma scény
+  už jednou přetáhlo čtení (Gebo 3/4, cesta se středem 0/4 — EVAL_LOG 2026-09-27 (1), (2)).
+- **Test:** napřed jen tady — CODE-read na Opus 5.5 v konverzaci, EN; 3 runy × 3 místa (jedno z balíčku), vede čtení runa, nebo téma místa?
+  Obrácená páka: totéž místo s otázkou balíčku a bez ní. Teprve když to sedí, testy jinde přes API (owner: *„tady na 5.5 v EN, uvidíme,
+  jak to bude sedět, tak teprve testy jinde na API“*). Vegvísir zůstává odložený; tohle je zapsaný směr, ne úkol.
+- **Rúnar a další produkty:** owner *„hranice teď neřešíme. máme hlas Rúnara a toho chci využít pro další produkty. nechci, abys ty míchal
+  Rúnara a karty, ale já toho hodlám využít.“* Upřesňuje 2026-10-21 (2): session karty a Rúnara samy nemíchají; propojení řídí owner.
+- Affected doc(s): `docs/archive/RUNAR_BACKLOG_odlozene.md` (Vegvísir — ukazatel sem) — v témže commitu.

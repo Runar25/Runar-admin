@@ -856,6 +856,7 @@ Zákazy se vynucují samy, protože jsou měřitelné. Kladné pokyny ne. To je 
 ⏸ **ODLOŽENO 2026-10-05 (owner: „zatím odkládáme, vrátíme se k tomu").** Upřesněno 2026-10-10 (owner): *„na Vegvísiru se pořád pracuje, ale teď je doopravdy odložený na pár dní.“* — pauza, ne konec. Kde jsme skončili a co visí (neposouzená EN čtení
 z testu hranic, živel runy ve scéně, IS definice runy, prompt v3) → `memory/snapshots/2026-10-05-vegvisir-odlozen.md`;
 rozhodnutí DECISIONS 2026-09-27 (3) (4) (6); měření EVAL_LOG 2026-09-27 (1)–(4).
+⭐ **Směr 2026-10-21: rameno = runa × místo bez vlastního významu** (z nápadu World Decks) — hypotéza, test napřed CODE-read na 5.5 v EN → DECISIONS 2026-10-21 (5).
 
 ### ⭐ VARIANTY STAVBY — přepsáno 2026-09-12 (KUKY: „to je to stejné!" — měl pravdu)
 
