@@ -41,6 +41,8 @@ PRIPADY = [
  ('chyti', 'verify_soubory_claude.js', 'v2/runar-protipriklad-modul.js', 'create', '', '// modul bez řádku v mapě\n'),
  # ㉽ landing (CODE-read 2026-10-14, kolo 4): web/site čte klíč, který v UI_TEXT není (přejmenování v appce) → prázdné místo na webu
  ('chyti', 'verify_ui_text_used.js', 'web/site/index.html', 'replace', 'data-k="hero_eyebrow"', 'data-k="hero_eyebrow_v2"'),
+ # ㉽ od 2026-10-21 (CODE-web) čte i podstránky webu (/ferdin/, /heim/, /kort/) a jejich U.klíč / tp('klíč'): podstránka čte klíč, který v appce není
+ ('chyti', 'verify_ui_text_used.js', 'web/site/ferdin/index.html', 'replace', 'U.journey_gift', 'U.journey_giftZ'),
  # ㊇ ceník na serveru (CODE-tune 2026-10-14): cena změněná jen ve v2/ — zrcadlo nepřegenerované
  ('chyti', 'verify_ceny_server.js', 'v2/runar-config.js', 'replace', "    'gpt-6-sol':  [2, 0.2, 10],", "    'gpt-6-sol':  [3, 0.2, 10],"),
  # ㊊ automatická mazání (CODE-tune 2026-10-16, owner „musíme mít kontroly! to platí pro všechna podobné příkazy“): edge funkce mimo registr
