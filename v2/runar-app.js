@@ -1868,6 +1868,13 @@ function _journeyPaint() {
       }
     } else {
       h += '<div class="journey-pr"><small>' + _jesc(t(id === 'free_trial' ? 'journey_free' : 'journey_free_join')) + '</small></div>';
+      // 2026-10-21 (owner „ano, informační řádek s cenou“, ne tlačítko): Rune Seeker — čtení s Rúnakortem od nejlevnějšího balíčku; jako web
+      // (IS karta ve 3. pádě po „með“, první písmeno velké). V Play bez ceny.
+      if (id === 'rune_seeker' && env !== 'play' && CARD_PACKS.length) {
+        var _p0 = CARD_PACKS.reduce(function (a, b) { return b.isk < a.isk ? b : a; });
+        var _rs = tp('journey_seeker_card', { casts: vlp('cast', lang), card: lang === 'is' ? VOCAB.card.is_dat : vl('card', lang), price: _jkr(_p0.isk) });
+        h += '<div class="journey-pr"><small>' + _jesc(_rs.charAt(0).toUpperCase() + _rs.slice(1)) + '</small></div>';
+      }
     }
     var ft = id === 'free_trial' ? [t('journey_visitor_ft')] : tierFeatures(id, lk);
     // Jméno karty ve výpisu NENÍ odkaz — owner 2026-10-21 (po d6bac03): „takhle jsem to nechtěl. rune seeker to vidí a tím je to vyřešené“
