@@ -6443,3 +6443,15 @@ nedostupné). Data mimo repo: `~/runar-eval/podoby-bez-delky-2026-10-09.json`, `
 - **Hranice:** n = 5 + 5, jeden generátor viděl opakované prompty (mohl variovat schválně, ač zadání říkalo ne), jeden soudce, EN, Opus 5.5.
   TEST 37 (2026-08-25) měřil jiný mechanismus (místo vybrané podle runy v grafu krajin, se vstupem uživatele) — tohle ho nevyvrací, jen
   ukazuje, že u samotné karty místa se to neopakuje. Jestli je „cizí člověk“ vada, nebo poctivý obraz daru, je obsahová otázka (owner).
+
+## 2026-10-21 (3) — Vegvísir: celá cesta (8 ramen runa × místo) = osm pohlednic, ne cesta; owner: „moc se to nezměnilo“ — znovu odloženo
+
+- **Proč:** owner k (1)–(2): *„neprijde mi to az tak rozdilene od toho co delaji normalni cteni“* → *„poskládej celou cestu“*.
+- **Jak:** 8 run losem ze sáčku (všech 25) × 8 míst, jak by je vybral člověk (testovací texty CODE-read, ne kánon), prompt ramene (1) A, mezi rameny
+  nic nepřenášeno (2026-09-27 (3)), bez vstupu člověka. Jeden generátor Opus 5.5, EN. Data `docs/eval/2026-10-21-vegvisir-cesta/`.
+- **Výsledek (čteno CODE-read a ownerem, bez soudce):** ramena o sobě nevědí — celek nepřidá nic nad osm obrazů. Všech 8 začíná vzorcem
+  „<Runa> stands / finds / comes / rests…“ (runa vstupuje jako postava); stopy cizích lidí („where hands have gripped“, „many feet“) 4/8.
+  Runa silně u Isa, Sowilo, Blank, Fehu; slabě u Kenaz × lano, Ingwaz × loď, Ehwaz × lávka — náhodná dvojice si nemusí mít co říct.
+- **Owner 2026-10-21:** *„já jsem čekal, že to budou spíš pohlednice. moc se to nezměnilo od toho, co jsme měli předtím. zapiš a zase to odložíme.“*
+- **Kde navázat:** co z ramen udělá cestu, otevřené — vlastní věta člověka ke každému místu (2026-09-27 (3) „vlastní slova později“), nebo
+  nesená věc mezi rameny („materiálová fráze“, RUNAR_DESIGN Vegvísir, od 2026-09-27 jen varianta). Netestováno ani jedno.

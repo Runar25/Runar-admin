@@ -857,6 +857,7 @@ Zákazy se vynucují samy, protože jsou měřitelné. Kladné pokyny ne. To je 
 z testu hranic, živel runy ve scéně, IS definice runy, prompt v3) → `memory/snapshots/2026-10-05-vegvisir-odlozen.md`;
 rozhodnutí DECISIONS 2026-09-27 (3) (4) (6); měření EVAL_LOG 2026-09-27 (1)–(4).
 ⭐ **Směr 2026-10-21: rameno = runa × místo bez vlastního významu** (z nápadu World Decks) — hypotéza, test napřed CODE-read na 5.5 v EN → DECISIONS 2026-10-21 (5).
+⏸ **Změřeno a znovu odloženo 2026-10-21** (owner „zapiš a zase to odložíme“): rameno drží runu, otázka balíčku ne; celá cesta = osm pohlednic → EVAL_LOG 2026-10-21 (1)–(3).
 
 ### ⭐ VARIANTY STAVBY — přepsáno 2026-09-12 (KUKY: „to je to stejné!" — měl pravdu)
 
