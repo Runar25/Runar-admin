@@ -5,6 +5,8 @@
 // Rate limit: 5 pokusů / 15 min na IP (táž RPC jako redeem-code). Honeypot `website` = bot, odpověď jako úspěch.
 // Odpověď neprozradí, jestli e-mail už v seznamu je (duplicate → ok), ať se přes formulář nedá zjišťovat, kdo se registroval.
 // Logy anglicky (§31), bez adresy (2026-10-13: ani doména — kontrola zákazů (verify_zakazy_cesty.js, §12) hlídá split e-mailu a adresa do logu nepatří).
+// 2026-10-21 (owner „4. obojí, předej to“, DECISIONS 2026-10-21 (7)): po úspěšném předání do Brevo zápis ops_events
+// {kind:'waitlist_signup'} (ranní souhrn počítá registrace) a krátký e-mail do runar@ — oboje BEZ adresy (zásady: adresa jen v Brevu).
 // Deploy: supabase functions deploy waitlist-join --project-ref pmitxjvkeovijreepror --no-verify-jwt
 
 import { createClient } from "npm:@supabase/supabase-js@2.117.3";
@@ -92,7 +94,10 @@ Deno.serve(async (req) => {
     }),
   });
 
-  if (res.ok) return json({ ok: true });
+  if (res.ok) {
+    await Promise.allSettled([zapisUdalost(sb), oznam(sb, key)]);   // ani jedno nesmí registraci shodit
+    return json({ ok: true });
+  }
 
   const text = await res.text();
   // 2026-10-13: první zkouška vrátila 400 „An active DOI template does not exist“ — šablona #1 musí být v Brevu Active.
@@ -100,3 +105,31 @@ Deno.serve(async (req) => {
   console.error(`waitlist-join: Brevo ${res.status}: ${text.slice(0, 300)}`);
   return json({ error: "server_error" }, 502);
 });
+
+// Záznam pro ranní souhrn (CODE-tune počítá řádky waitlist_signup) — bez osobních údajů.
+async function zapisUdalost(sb: ReturnType<typeof createClient>) {
+  const { error } = await sb.from("ops_events").insert({ kind: "waitlist_signup", detail: {} });
+  if (error) console.error("waitlist-join: ops_events insert failed: " + error.message);
+}
+
+// E-mail do runar@ — anglicky (§31), na jednu obrazovku, stálý předmět kvůli filtru v Gmailu, BEZ adresy i domény.
+// Strop 2 oznámení za hodinu: oznámení berou z téže denní kvóty Brevo (300) jako potvrzovací e-maily a přihlašovací kódy appky.
+// Registrace mají strop nejvýš 207/den (výš); kdyby oznámení šla ke každé, bylo by to až 414/den a přihlašovací kódy by nedošly.
+// 2/h = nejvýš 48 oznámení za den (207 + 48 = 255, zbude ≥ 45 na kódy). Přes strop se registrace jen zapíše do ops_events —
+// ranní souhrn ji započte, takže přehled zůstane úplný. Při běžném provozu (pár registrací denně) přijde e-mail ke každé.
+async function oznam(sb: ReturnType<typeof createClient>, key: string) {
+  const { data: smi } = await sb.rpc("check_rate_limit", { p_key: "waitlist:notify", p_window_seconds: 3600, p_max_requests: 2 });
+  if (smi === false) return;
+  const r = await fetch("https://api.brevo.com/v3/smtp/email", {
+    method: "POST",
+    headers: { "api-key": key, "Content-Type": "application/json", "Accept": "application/json" },
+    body: JSON.stringify({
+      sender: { name: "Rúnar", email: "noreply@therunekeeper.com" },   // ověřený odesílatel v Brevu (jako send-line)
+      to: [{ email: "runar@therunekeeper.com", name: "Rúnar" }],
+      subject: "New waitlist signup",
+      textContent: "Someone joined the Rúnar waitlist (awaiting e-mail confirmation).",
+      tags: ["waitlist"],
+    }),
+  });
+  if (!r.ok) console.error("waitlist-join: notify Brevo " + r.status + ": " + (await r.text()).slice(0, 200));
+}
