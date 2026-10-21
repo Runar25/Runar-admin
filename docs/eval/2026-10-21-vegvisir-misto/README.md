@@ -10,3 +10,4 @@ Výsledek a hranice vlastní `RUNAR_EVAL_LOG.md` 2026-10-21 (1). Tady jen soubor
 | `cteni_A.txt`, `cteni_B.txt` | 9 + 9 čtení (Opus 5.5, EN) |
 | `slepe.js`, `slepe.txt`, `slepe_klic.json` | zamíchání pro slepého soudce a klíč |
 | `slepy_soudce.json` | verdikty soudce |
+| `shoda.js`, `vstup_shoda.txt`, `shoda_klic.json`, `cteni_shoda.txt`, `slepe_shoda.txt`, `slepy_soudce_shoda.json` | kolo 2: Gebo × lano (runa tématem místa) × Gebo × kovárna → EVAL_LOG 2026-10-21 (2) |
