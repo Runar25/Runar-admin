@@ -2,6 +2,14 @@
 # otisk by nesedl a prohlížeč knihovnu zablokuje — appka nenaběhne). Zjištěno 2026-10-10 (CODE-read) v čisté kopii pro pre-push smoke.
 v2/vendor/** -text
 *.woff2 binary
+# Obrázky a PDF jsou binární (2026-10-21, CODE-read): core.autocrlf=true převedl v commitu bc2d988 konce řádků uvnitř PDF a JPG karet run
+# (cover_photo.jpg v gitu 276 440 B × na disku 276 442 B) — soubor by se z gitu vrátil poškozený.
+*.pdf binary
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.gif binary
+*.webp binary
 
 # Shell skripty hooků Claude Code (hooks/claude, od 2026-10-14): bash s CRLF nejede ($'\r': command not found) — vždy LF.
 hooks/claude/*.sh text eol=lf
