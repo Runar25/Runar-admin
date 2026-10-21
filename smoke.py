@@ -1229,6 +1229,14 @@ radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola skladani promptu probehla'
 check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
 
+# ㊍ Stín skládání promptu (CODE-tune 2026-10-21, „prompt na server“ F2): co appka v prohlížeči zapíše (`stin`), z toho server složí
+# tentýž systém i prompt (skutečná appka v Chrome bez okna, 22 vzorků EN+IS) — jinak by F3 tiše změnilo čtení.
+print('\n' + chr(0x328D) + ' STÍN SKLÁDÁNÍ PROMPTU (verify_prompt_stin.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_prompt_stin.js')], capture_output=True, text=True, encoding='utf-8')
+radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola stinu promptu probehla'
+check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

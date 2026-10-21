@@ -298,6 +298,9 @@ PRIPADY = [
  # ㊌ skládání promptu na serveru (2026-10-21, CODE-tune): změna builderu bez přegenerovaného balíčku · balíček s jinou náhodou
  ('chyti', 'verify_prompt_skladani.js', 'v2/runar-character.js', 'replace', 'Lestu allar sjö sem eina samfellda frásögn', 'Lestu allar sjö sem eina frásögn'),
  ('chyti', 'verify_prompt_skladani.js', 'supabase/functions/_shared/prompt_skladani.mjs', 'replace', 'Math.random = P.random || globalThis.Math.random;', 'Math.random = globalThis.Math.random;'),
+ # ㊍ stín skládání promptu (2026-10-21, CODE-tune): záznamník nepošle sáček obrazů · nezapíše náhodu
+ ('chyti', 'verify_prompt_stin.js', 'v2/runar-app.js', 'replace', '    if (/^season(bag|motif|last)_/.test(k)) o[k] = localStorage.getItem(k); } } catch (e) {}', '    } } catch (e) {}'),
+ ('chyti', 'verify_prompt_stin.js', 'v2/runar-app.js', 'replace', 'Math.random = function () { var x = puv(); los.push(x); return x; };', 'Math.random = function () { return puv(); };'),
 ]
 
 
