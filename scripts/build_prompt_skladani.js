@@ -46,7 +46,8 @@ function vyrob(cti) {
     + '  if (P.engine) READ_ENGINE = P.engine;\n'
     + '  return { ' + VEN.map((n) => n + ': ' + n).join(', ') + ',\n'
     + '    nastav: function (k, v) { if (k === \'lang\') lang = v; else if (k === \'userGender\') userGender = v; else if (k === \'engine\') READ_ENGINE = v;\n'
-    + '      else if (k === \'userName\') userName = v; else if (k === \'currentUser\') currentUser = v; else if (k === \'corrections\') corrections = v; } };\n'
+    + '      else if (k === \'userName\') userName = v; else if (k === \'currentUser\') currentUser = v; else if (k === \'corrections\') corrections = v;\n'
+    + '      else if (k === \'pin\') IMG_PIN = v || null; else if (k === \'posledni\') _imgServerLast = v || {}; } };\n'
     + '}\n';
 }
 

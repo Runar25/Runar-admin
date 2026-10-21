@@ -41,6 +41,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.117.3";
 import { textKHlasu, normalizuj, podepis } from "../_shared/voice_ticket.ts";
+import { porovnejStin } from "../_shared/prompt_stin.mjs";   // 2026-10-21 prompt na server (F2 stín)
 
 const cors = {
   "Access-Control-Allow-Origin":  "*",
@@ -66,6 +67,22 @@ function logOps(kind: "model_fallback" | "model_error", detail: Record<string, u
     .then(({ error }: { error: { message: string } | null }) => { if (error) console.error("ops_events insert failed:", error.message); });
   const er = (globalThis as any).EdgeRuntime;
   if (er?.waitUntil) er.waitUntil(zapis);
+}
+
+// ── Stín skládání promptu (2026-10-21, krok 1 plánu infrastruktury „prompt na server“, F2; owner „ok začni“) ──────────────────────
+// Appka posílá vedle hotového promptu `stin`: s čím ho skládala (builder, argumenty s runami jménem, spotřebovaná náhoda, sáček obrazů,
+// místní čas, jazyk, oslovení, engine). Server prompt složí z balíčku _shared/prompt_skladani.mjs (týž kód jako appka) a porovná:
+// system = shoda celého textu, prompt = prompt z appky ZAČÍNÁ výstupem builderu (appka za něj přilepí myšlenku ✦ a připomínku délky —
+// to se přesune v F3; délka přilepku jde do záznamu). Do ops_events jde jen builder, jazyk, shoda, místo prvního rozdílu a délky — žádný
+// text čtení ani otázka. Na pozadí (waitUntil), chyba stínu čtení nikdy nezastaví. Čtení dál jede na promptu z appky.
+function stinPorovnej(stin: unknown, system: unknown, prompt: unknown) {
+  const prace = (async () => {
+    const detail = porovnejStin(stin, system, prompt);
+    const { error } = await sb().from("ops_events").insert({ kind: "prompt_stin", detail });
+    if (error) console.error("ops_events prompt_stin insert failed:", error.message);
+  })();
+  const er = (globalThis as any).EdgeRuntime;
+  if (er?.waitUntil) er.waitUntil(prace);
 }
 
 // (getISOWeekKey odstraněn 2026-10-09: nikdo ho nevolal — týdenní příděl skončil s modelem B 2026-06-12.)
@@ -388,6 +405,7 @@ serve(async (req: Request) => {
     // life_rune_reset (2026-09-14) nevola Clauda, prompt nema — stejna vyjimka jako resave.
     // Nalezeno sondou na zivem endpointu: reset s prazdnym promptem koncil 400 pred auth.
     if (!prompt && mode !== "resave" && mode !== "life_rune_reset") return json({ error: "Missing prompt" }, 400);
+    if (prompt && body.stin && typeof body.stin === "object") stinPorovnej(body.stin, system, prompt);   // F2 stín (na pozadí)
 
     // Strop delky promptu. Merene maximum LEGITIMNIHO provozu (2026-08-16): user prompt
     // 3942 znaku (yggdrasil IS, vse vyplnene) + az ~1800 korekcni blok = ~5750;

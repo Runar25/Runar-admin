@@ -6102,5 +6102,6 @@ function buildYggdrasilPrompt(u, runes, lang, corrections) { return buildYggdras
   if (P.engine) READ_ENGINE = P.engine;
   return { buildSysPrompt: buildSysPrompt, buildReadingPrompt: buildReadingPrompt, buildNornsPrompt: buildNornsPrompt, buildKrizPrompt: buildKrizPrompt, buildHorseshoePrompt: buildHorseshoePrompt, buildYggdrasilPrompt: buildYggdrasilPrompt, buildLifeRunePrompt: buildLifeRunePrompt, buildAskPrompt: buildAskPrompt, buildNameLorePrompt: buildNameLorePrompt, getCorrPrompt: getCorrPrompt, normalizeCorrections: normalizeCorrections, RUNES: RUNES, SPREAD_CONFIG: SPREAD_CONFIG, INTENTIONS: INTENTIONS, READING_ANGLES: READING_ANGLES, READING_ANGLES_IS: READING_ANGLES_IS,
     nastav: function (k, v) { if (k === 'lang') lang = v; else if (k === 'userGender') userGender = v; else if (k === 'engine') READ_ENGINE = v;
-      else if (k === 'userName') userName = v; else if (k === 'currentUser') currentUser = v; else if (k === 'corrections') corrections = v; } };
+      else if (k === 'userName') userName = v; else if (k === 'currentUser') currentUser = v; else if (k === 'corrections') corrections = v;
+      else if (k === 'pin') IMG_PIN = v || null; else if (k === 'posledni') _imgServerLast = v || {}; } };
 }

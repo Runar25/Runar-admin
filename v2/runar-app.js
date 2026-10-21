@@ -1648,6 +1648,51 @@ async function loadCorrections() {
   corrections = (typeof CORRECTIONS_IN_PROMPT !== 'undefined' && !CORRECTIONS_IN_PROMPT)
     ? [] : normalizeCorrections(raw);
 }
+// ─── STÍN SKLÁDÁNÍ PROMPTU (2026-10-21, krok 1 plánu infrastruktury „prompt na server“, F2; owner „ok začni“) ───
+// Appka dál skládá prompt sama a čtení jede na něm. Navíc si u každého builderu zapíše, s čím skládal: argumenty (runy jménem), náhodu,
+// kterou spotřeboval, sáček obrazů z localStorage, místní čas (sezóna obrazů je podle místního měsíce), jazyk, oslovení, engine, adminův
+// výběr obrazu a poslední obraz z DB. callProxy to pošle jako `stin`; claude-proxy prompt složí z balíčku
+// supabase/functions/_shared/prompt_skladani.mjs (týž kód) a shodu zapíše do ops_events „prompt_stin“ (bez textu). Až bude shoda trvalá,
+// přepne se server na vlastní prompt (F3). Chyba záznamu čtení nikdy nezastaví — obal vždy vrátí výstup builderu.
+var _STIN_BUILDERY = ['buildSysPrompt', 'buildReadingPrompt', 'buildNornsPrompt', 'buildKrizPrompt', 'buildHorseshoePrompt',
+  'buildYggdrasilPrompt', 'buildLifeRunePrompt', 'buildAskPrompt', 'buildNameLorePrompt'];
+var _stinZaznam = { sys: null, prompt: null }, _stinHloubka = 0;
+function _stinArg(x, d) {
+  if (d > 6 || x === null || x === undefined || typeof x === 'function') return null;
+  if (typeof x !== 'object') return x;
+  if (typeof RUNES !== 'undefined' && RUNES.indexOf(x) !== -1) return { __runa: x.n };
+  if (Array.isArray(x)) return x.map(function (y) { return _stinArg(y, d + 1); });
+  var o = {}; Object.keys(x).forEach(function (k) { var v = _stinArg(x[k], d + 1); if (v !== null) o[k] = v; }); return o;
+}
+function _stinUloziste() {
+  var o = {};
+  try { for (var i = 0; i < localStorage.length; i++) { var k = localStorage.key(i);
+    if (/^season(bag|motif|last)_/.test(k)) o[k] = localStorage.getItem(k); } } catch (e) {}
+  return o;
+}
+_STIN_BUILDERY.forEach(function (jm) {
+  var f = window[jm]; if (typeof f !== 'function') return;
+  window[jm] = function () {
+    if (_stinHloubka > 0) return f.apply(this, arguments);   // builder volaný z builderu — zapisuje jen vnější
+    var los = [], puv = Math.random, z = null;
+    try {
+      var c = new Date();
+      z = { builder: jm, args: [].slice.call(arguments).map(function (a) { return _stinArg(a, 0); }), uloziste: _stinUloziste(),
+            cas: [c.getFullYear(), c.getMonth(), c.getDate(), c.getHours(), c.getMinutes()],
+            stav: { lang: lang, userGender: typeof userGender !== 'undefined' ? userGender : 'hk',
+                    engine: typeof READ_ENGINE !== 'undefined' ? READ_ENGINE : '', pin: typeof IMG_PIN !== 'undefined' ? IMG_PIN : null,
+                    posledni: typeof _imgServerLast !== 'undefined' ? _imgServerLast : {} } };
+      Math.random = function () { var x = puv(); los.push(x); return x; };
+    } catch (e) { z = null; }
+    _stinHloubka++;
+    try { var out = f.apply(this, arguments); }
+    finally { _stinHloubka--; Math.random = puv; }
+    if (z) { z.los = los; if (jm === 'buildSysPrompt') _stinZaznam.sys = z; else _stinZaznam.prompt = z; }
+    return out;
+  };
+});
+function _stinVezmi() { var z = _stinZaznam; _stinZaznam = { sys: null, prompt: null }; return (z.sys || z.prompt) ? z : undefined; }
+
 // ─── PROXY ───────────────────────────────────────────────
 // use_credit: true = odečíst kredit na backendu (monthly slot vyčerpán)
 async function callProxy(sys, prompt, maxTokens, use_credit = false, credit_cost = 1, journal = null, mode = '') {
@@ -1659,6 +1704,7 @@ async function callProxy(sys, prompt, maxTokens, use_credit = false, credit_cost
     const res  = await fetch(PROXY, {
       method: 'POST', headers,
       body: JSON.stringify({ system: sys, prompt, max_tokens: maxTokens, use_credit, spread_cost: credit_cost, journal, mode,
+        stin: prompt ? _stinVezmi() : undefined,   // 2026-10-21 F2: s čím appka skládala prompt (server porovná; čtení beze změny)
         // Engine (od 2026-10-09 sol pro všechny, DECISIONS 2026-10-09 (13)): posílá se jen adminova volba 'opus' — u každého
         // volání modelu, i životní runy a rozboru jména. Co jde na sol, rozhoduje server; ne-admina s 'opus' ignoruje.
         // (Do 2026-10-08 se posílalo 'sol', jen u čtení, založení a Asku.)
