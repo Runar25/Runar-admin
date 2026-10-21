@@ -55,7 +55,7 @@ a.btn-upgrade{display:inline-block;text-decoration:none;margin-top:6px}
       <div class="hero-eyebrow hero-desk-only" data-k="hero_eyebrow"></div>
       <h1 class="hero-title hero-desk-only">Rúnar</h1>
       <p class="hero-sub" id="w-phrase"></p>
-      <blockquote class="hero-quote" data-k="hero_quote" data-html="1"></blockquote>
+      <blockquote class="hero-quote" id="w-quote"></blockquote>
       <a class="btn-upgrade" id="w-enter"></a>
     </div>
   </div>
@@ -82,7 +82,7 @@ a.btn-upgrade{display:inline-block;text-decoration:none;margin-top:6px}
 <script src="https://runar25.github.io/Runar-admin/v2/runar-translations.js"></script>
 <script src="https://runar25.github.io/Runar-admin/v2/runar-svgs.js"></script>
 <script src="https://runar25.github.io/Runar-admin/v2/runar-utils.js"></script>
-<script src="../web.js?v=85f560b7b0"></script>
+<script src="../web.js?v=ba0b169088"></script>
 <script src="../runakort.js?v=d3fca33414"></script>
 <script>
 // plans (owner 2026-10-21 „ano, see plans“: dřív tlačítko opakovalo nadpis WALK WITH RÚNAR a „nic neříká“; rešerše Spotify „View all plans“).
@@ -100,7 +100,8 @@ function render() {
     var v = U[el.getAttribute('data-k')] || '';
     if (el.getAttribute('data-html')) el.innerHTML = v; else el.textContent = v;
   });
-  document.getElementById('w-quote-m').innerHTML = String(U.hero_quote || '').replace(/<br\s*\/?>/g, ' ');
+  document.getElementById('w-quote').innerHTML = webUvozovky(U.hero_quote, LANG);
+  document.getElementById('w-quote-m').innerHTML = webUvozovky(U.hero_quote, LANG).replace(/<br\s*\/?>/g, ' ');
   var pool = U.hero_phrases || [];
   if (phraseIx === null) phraseIx = Math.floor(Math.random() * pool.length);
   document.getElementById('w-phrase').textContent = pool[phraseIx] || '';
