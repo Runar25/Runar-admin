@@ -92,6 +92,9 @@ const den = O.souhrn(D({ cteni: 12, spready: 2, asky: 3, modely: { 'gpt-6-sol': 
 ok(den.stav === 'WATCH' && den.subject === 'Rúnar Ops · WATCH · 12 readings · 7 voices · $0.31' && /2 unread app reports — ask CODE to load them\./.test(den.text)
   && /App reports \(24 h\) visual 2, crash 1 · Keep 4/.test(den.text), 'den s nepřečtenými hlášeními: WATCH, počty podle typu bez textu, Keep zvlášť');
 // 2026-10-14: hlášení za 24 h, ale všechna už načtená (první zkušební souhrn psal „Ask CODE to load“ u uzavřeného hlášení)
+// 2026-10-21 (DECISIONS (7)): registrace čekatelů — číslo, bez adres; nula se nevypisuje
+const cek = O.souhrn(D({ cekatele: 3 }));
+ok(/Waitlist \+3 \(24 h\)/.test(cek.text) && cek.stav === 'OK' && !/Waitlist/.test(klid.text), 'registrace čekatelů: „Waitlist +3 (24 h)“, nula nic, stav beze změny');
 const nacteno = O.souhrn(D({ hlaseni: { other: 1 } }));
 ok(nacteno.stav === 'OK' && /Nothing needs you/.test(nacteno.text) && /App reports \(24 h\) other 1/.test(nacteno.text),
   'hlášení za 24 h už načtená: v číslech ano, v „Needs you“ ne, stav OK');

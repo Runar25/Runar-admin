@@ -131,7 +131,7 @@ async function hlidka(db: any, ted: Date): Promise<Hlidka> {
 // deno-lint-ignore no-explicit-any
 async function den(db: any, ted: Date, h: Hlidka): Promise<Den> {
   const od = new Date(ted.getTime() - 864e5).toISOString();
-  const [rd, vu, br, chyb, zaloh, brzd, z, otevrene, raw, neprectena, pu] = await Promise.all([
+  const [rd, vu, br, chyb, zaloh, brzd, z, otevrene, raw, neprectena, pu, cekatele] = await Promise.all([
     db.from("readings").select("area, usage, follow_up").gte("drawn_at", od),
     db.from("voice_usage").select("model, chars").gte("created_at", od),
     db.from("bug_reports").select("type").gte("created_at", od),
@@ -145,6 +145,7 @@ async function den(db: any, ted: Date, h: Hlidka): Promise<Den> {
     // 2026-10-15: bez zpráv čtenářů („Send Rúnar a line“, typ message) — na ty owner odpovídá v Gmailu, CODE je nenačítá
     pocet(db.from("bug_reports").select("id", { count: "exact", head: true }).eq("status", "new").neq("type", "keep").neq("type", "message")),
     db.from("ops_events").select("created_at, detail").eq("kind", "purge").gte("created_at", od),
+    udalosti(db, "waitlist_signup", od),   // 2026-10-21 (7): registrace čekatelů — zapisuje waitlist-join (CODE-web), bez adres
   ]);
   for (const q of [rd, vu, br, pu]) if (q.error) throw new Error(q.error.message);
   // Mazání za 24 h podle úlohy (2026-10-16): počet běhů, smazáno, položky (id zpráv / názvy archivů), selhání; poslední běh vůbec z h.
@@ -194,7 +195,7 @@ async function den(db: any, ted: Date, h: Hlidka): Promise<Den> {
     od, do: ted.toISOString(), cteni: (rd.data ?? []).length, spready, asky, modely, cenaModelu: cena, bezCeny,
     hlasy: (vu.data ?? []).length, znakyHlasu: znaky, cenaHlasu: kredity * EL_KREDIT_USD, hlaseni, neprectena, ulozeno,
     chybModelu: chyb, zalohModelu: zaloh, brzd, kredity: kr, zaloha: z, otevrene,
-    mazani, vadyMazani: vadyMazani(h, stavy(h).backup), behy: h.behy, vadyBehu: vadyBehu(h),
+    mazani, vadyMazani: vadyMazani(h, stavy(h).backup), behy: h.behy, vadyBehu: vadyBehu(h), cekatele,
   };
 }
 

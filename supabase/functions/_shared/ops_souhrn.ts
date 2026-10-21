@@ -202,6 +202,7 @@ export type Den = {
   vadyMazani: string[];                        // vadyMazani() z kontroly — do „Needs you“, když je stav purge problem
   behy?: Record<string, BehPosledni>;          // poslední běh úloh z BEHY (z kontroly)
   vadyBehu?: string[];                         // vadyBehu() z kontroly — do „Needs you“, když je stav runs problem
+  cekatele?: number;                           // nové registrace čekatelů za 24 h (ops_events waitlist_signup, bez adres) — 2026-10-21 (7)
 };
 export type Email = { subject: string; html: string; text: string; stav: string };
 
@@ -244,6 +245,8 @@ export function souhrn(d: Den): Email {
   const nHlaseni = Object.values(d.hlaseni).reduce((a, b) => a + b, 0);
   if (nHlaseni || d.ulozeno) cisla.push("App reports (24 h) " + [nHlaseni ? seznam(d.hlaseni) : "", d.ulozeno ? "Keep " + d.ulozeno : ""]
     .filter(Boolean).join(" · "));
+  // Registrace čekatelů (DECISIONS 2026-10-21 (7)): jen počet, adresy jen v Brevu; nula vynechaná jako ostatní čísla.
+  if (d.cekatele) cisla.push("Waitlist +" + d.cekatele + " (24 h)");
   cisla.push(mazaniVeta(d.mazani));
   return obal(subject, stav, potreba, cisla);
 }
