@@ -687,6 +687,16 @@ promptu v `claude-proxy` (už ověřuje přihlášení a odečítá kredity; pro
 1. **Prompt na server** (CODE-tune): stavba promptu do `claude-proxy`, klient posílá jen vstupy; stav z prohlížeče (sáček obrazů,
    poslední obraz) do DB; shrine vlastní cesta jen pro admina; ověřit golden testem bajt po bajtu. Podklad = „Mapa: z čeho appka
    skládá prompt“ níž.
+   **Postup (CODE-tune 2026-10-21, owner „ok začni“):** ✅ F1 balíček `supabase/functions/_shared/prompt_skladani.mjs` = týž kód jako appka
+   (generuje `scripts/build_prompt_skladani.js`, pre-commit ho přegeneruje z indexu, smoke ㊌ 40/40 golden). ✅ F2 stínový režim: appka
+   posílá `stin` (s čím skládala), `claude-proxy` prompt složí souběžně a zapíše shodu do `ops_events` „prompt_stin“ (bez textu); smoke ㊍.
+   - [ ] **F2 vyhodnotit:** po pár dnech provozu `select detail from ops_events where kind='prompt_stin'` — každá neshoda = co záznamník
+     nebo balíček neumí (builder, místo rozdílu). Pak záznam z mé sondy 2026-10-21 17:21 (chyba „reading 'k'“) ignorovat.
+   - [ ] **F3 přepnout:** server skládá sám — appka posílá jen vstupy (+ tah run); myšlenka ✦ (`_thoughtFor`, runar-reading.js) a připomínka
+     délky do jedné skládací funkce v balíčku; sáček obrazů, poslední motiv a obraz z localStorage do DB (tabulka na uživatele); náhoda na
+     serveru; `prompt_draws` zapisuje server z losu. Zavře „libovolný prompt“ (níž).
+   - [ ] **F4 schovat:** buildery a RUNE_IMAGES z veřejných souborů appky pryč; shrine (laboratoř promptu) přes cestu jen pro admina;
+     pak soukromé repo (krok 3) a nové klíče Supabase (krok 9).
 2. **Supabase Free → Pro**, ověřit, že denní zálohy běží.
 3. **Repo soukromé.** Historie, klony a forky zůstanou — dnešní prompt brát jako vyzrazený (úsudek).
 4. **Cloudflare:** dva Pages projekty z jednoho repa, `_headers`, zkouška na `*.pages.dev`.
