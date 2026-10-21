@@ -1870,13 +1870,9 @@ function _journeyPaint() {
       h += '<div class="journey-pr"><small>' + _jesc(t(id === 'free_trial' ? 'journey_free' : 'journey_free_join')) + '</small></div>';
     }
     var ft = id === 'free_trial' ? [t('journey_visitor_ft')] : tierFeatures(id, lk);
-    // 2026-10-21 (owner): jméno karty ve výpisu = odkaz na záložku Rúnakort (i ohnuté tvary, IS „Rúnakorti“); v Play záložka není → text.
-    var _kartaJm = vl('card', lang), _kartaRe = new RegExp(_kartaJm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\w*', 'g');
-    h += '<ul class="journey-ft">' + ft.map(function (x) {
-      var r = String(x).split('{card}').join(_kartaJm);
-      if (env !== 'play') r = r.replace(_kartaRe, function (m) { return '<span class="klik" role="button" tabindex="0" onclick="_journeyObdobi(\'c\')">' + m + '</span>'; });
-      return '<li>' + r + '</li>';
-    }).join('') + '</ul>';
+    // Jméno karty ve výpisu NENÍ odkaz — owner 2026-10-21 (po d6bac03): „takhle jsem to nechtěl. rune seeker to vidí a tím je to vyřešené“
+    // (tlačítko na kartu Rúnakort u Rune Seekera níž).
+    h += '<ul class="journey-ft">' + ft.map(function (x) { return '<li>' + String(x).split('{card}').join(vl('card', lang)) + '</li>'; }).join('') + '</ul>';
     if (env !== 'play') {
       // 2026-10-21 (revize textů, CODE-tune): tlačítka účtů jen s adresou nákupu. Bez JOURNEY_URL (prostředí 'soon') se dřív vykreslila
       // s href="null" → stránka v2/null, a věta „Opens therunekeeper.com“ lhala. Owner 2026-10-20: žádné „Coming soon“ — tedy nic.
