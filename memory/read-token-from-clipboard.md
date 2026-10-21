@@ -18,15 +18,15 @@ owner ho **zkopíruje do schránky** a napíše „mám". Odtud je to na mně:
 schranky!! proc to zase menis?"* — poprvé jsem token vypsal místo zkopírování, podruhé
 jsem chtěl, aby ho vložil sám. Obojí je práce navíc pro ownera za něco, co umím udělat.
 
-**How to apply — tenhle příkaz a žádný jiný.** Do konzole shrine posílej VŽDY:
+**How to apply — tenhle příkaz a žádný jiný.** Do konzole (shrine i appka) posílej VŽDY:
 
 ```
-(await sb.auth.getSession()).data.session.access_token
+copy((await sb.auth.getSession()).data.session.access_token)
 ```
 
-⚠️ **Nevymýšlej variace.** Zkoušel jsem `copy(...)` a verzi hledající klíč v `localStorage` —
-obojí je zbytečná změna zavedeného rituálu a owner na ni musí reagovat. Tenhle příkaz funguje
-a je zavedený; drž se ho i po compactu.
+Token se rovnou zkopíruje do schránky a v konzoli se nevypíše. ⚠️ **Do 2026-10-21 tu stál příkaz bez `copy(…)`** — token
+vypsal do konzole a owner ho musel kopírovat ručně. KUKY 2026-10-21: *„dal jsi mi ten token vypsat místo uložit do schránky,
+kde si ho pak načteš!!“* Verzi hledající klíč v `localStorage` dál nezkoušet.
 
 Pak: `read_clipboard` → zapsat do souboru bez otisku tokenu v transkriptu přes
 `Get-Clipboard` → `Set-Content -Path 'C:\Users\zkuku\.runar-eval-token' -Encoding ascii -NoNewline`.
