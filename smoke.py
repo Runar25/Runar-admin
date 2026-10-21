@@ -1237,6 +1237,23 @@ radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola stinu promptu probehla'
 check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
 
+# ㊎ Mapa ochran edge funkcí (CODE-read 2026-10-21, zadání ownera přes CODE-tune: „místa, kde můžou být chyby a nebyly kontrolované“):
+# mutace ukázala, že vypnutí ochrany (i `if (!userId) return 401`) nepozná žádná kontrola. Každá ochrana, funkce a mode claude-proxy
+# musí stát v mapě s popisem; změněná nebo nezapsaná ochrana = FAIL.
+print('\n' + chr(0x328E) + ' MAPA OCHRAN EDGE FUNKCÍ (verify_mapa_ochran.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_mapa_ochran.js')], capture_output=True, text=True, encoding='utf-8')
+radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola mapy ochran probehla'
+check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
+
+# ㊏ Nic před přihlášením (CODE-read 2026-10-21): stín promptu se dostal před `if (!userId)` (4e966cc) a nic to nechytilo. Před bránou
+# identity žádný zápis, model, fetch ani práce na pozadí.
+print('\n' + chr(0x328F) + ' NIC PŘED PŘIHLÁŠENÍM (verify_nic_pred_prihlasenim.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_nic_pred_prihlasenim.js')], capture_output=True, text=True, encoding='utf-8')
+radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola pred prihlasenim probehla'
+check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

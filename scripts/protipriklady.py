@@ -301,6 +301,16 @@ PRIPADY = [
  # ㊍ stín skládání promptu (2026-10-21, CODE-tune): záznamník nepošle sáček obrazů · nezapíše náhodu
  ('chyti', 'verify_prompt_stin.js', 'v2/runar-app.js', 'replace', '    if (/^season(bag|motif|last)_/.test(k)) o[k] = localStorage.getItem(k); } } catch (e) {}', '    } } catch (e) {}'),
  ('chyti', 'verify_prompt_stin.js', 'v2/runar-app.js', 'replace', 'Math.random = function () { var x = puv(); los.push(x); return x; };', 'Math.random = function () { return puv(); };'),
+ # ㊎ mapa ochran (2026-10-21, CODE-read): vypnutá brána · obrácený limit · nová ochrana bez zápisu · nový mode · nová funkce
+ ('chyti', 'verify_mapa_ochran.js', 'supabase/functions/claude-proxy/index.ts', 'replace', 'if (!userId) return json({ error: "unauthorized" }, 401);', 'if (false && (!userId)) return json({ error: "unauthorized" }, 401);'),
+ ('chyti', 'verify_mapa_ochran.js', 'supabase/functions/send-line/index.ts', 'replace', 'if (zprava.length > MAX_ZNAKU)', 'if (zprava.length < MAX_ZNAKU)'),
+ ('chyti', 'verify_mapa_ochran.js', 'supabase/functions/reset-tree/index.ts', 'replace', '    if (!prof?.is_tester) return', '    if (!user.email) return json({ error: "x" }, 403);\n    if (!prof?.is_tester) return'),
+ ('chyti', 'verify_mapa_ochran.js', 'supabase/functions/claude-proxy/index.ts', 'replace', 'if (!prompt && mode !== "resave"', 'if (mode === "free" + "bie") return json({ ok: 1 });\n    if (!prompt && mode !== "resave"'),
+ ('chyti', 'verify_mapa_ochran.js', 'supabase/functions/proti-nova/index.ts', 'create', '', 'serve(async (req) => new Response("x"));\n'),
+ # ㊏ nic před přihlášením: dnešní chyba (stín před bránou) · zápis před bránou · rate limit podle IP před bránou smí
+ ('chyti', 'verify_nic_pred_prihlasenim.js', 'supabase/functions/claude-proxy/index.ts', 'replace', 'if (!userId) return json({ error: "unauthorized" }, 401);', 'if (prompt && body.stin && typeof body.stin === "object") stinPorovnej(body.stin, system, prompt); ' + 'if (!userId) return json({ error: "unauthorized" }, 401);'),
+ ('chyti', 'verify_nic_pred_prihlasenim.js', 'supabase/functions/delete-account/index.ts', 'replace', '    if (authErr || !user) return json({ error: "Invalid session" }, 401);', '    await sb.from("bug_reports").insert({ x: 1 });\n    if (authErr || !user) return json({ error: "Invalid session" }, 401);'),
+ ('nesmi', 'verify_nic_pred_prihlasenim.js', 'supabase/functions/claude-proxy/index.ts', 'replace', 'if (!userId) return json({ error: "unauthorized" }, 401);', 'await sb().rpc("check_rate_limit", { p_key: "x" }); ' + 'if (!userId) return json({ error: "unauthorized" }, 401);'),
 ]
 
 
@@ -413,6 +423,7 @@ def podstrc(W, rel, mode, a, b):
     if mode in ('create', 'create_cerstvy'):
         if os.path.exists(p):
             return 'soubor už existuje'
+        os.makedirs(os.path.dirname(p), exist_ok=True)   # 2026-10-21: nová edge funkce = nová složka s index.ts
         io.open(p, 'w', encoding='utf-8', newline='').write(b)
         if mode == 'create':
             stare = time.time() - 3 * 86400
