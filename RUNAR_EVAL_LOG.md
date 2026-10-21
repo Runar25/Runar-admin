@@ -6428,3 +6428,18 @@ nedostupné). Data mimo repo: `~/runar-eval/podoby-bez-delky-2026-10-09.json`, `
   místa netestována (2026-08-25 tam vyšlo 0/4). Kritérium „jiné téma“ soudce znal i se jmény témat, ale variantu ne; rozdíl A × B je proto
   platný, absolutní čísla méně. Netvrdí se nic o IS ani o tom, jak místo zadá uživatel (volba × los).
 - **Co z toho plyne pro směr:** karta místa BEZ otázky (owner bod 8, potvrzeno). Otázka patří do Asku, ne na kartu.
+
+## 2026-10-21 (2) — Vegvísir: runa, která tématem místa sedí (Gebo × lano), má pořád co dělat (4/5); v cizím místě si Gebo přimyslí člověka (5/5)
+
+- **Proč:** owner *„ano, otestuj i Gebo × lano“* — 2026-08-25 (TEST 37) vyšlo „shoda místa a runy = 0/4 pro runu“; kolo (1) testovalo jen runy
+  mimo témata balíčků.
+- **Jak:** stejný prompt jako (1), varianta A (místo bez otázky). Gebo × lano mezi břehy (The Ties, téma runy) a kontrola Gebo × kovárna
+  v jeskyni (Under the Mountain), 5 + 5 promptů zamíchaných, jeden generátor (Opus 5.5) a jeden soudce bez znalosti testu.
+  Data `docs/eval/2026-10-21-vegvisir-misto/` (shoda.js, cteni_shoda.txt, slepy_soudce_shoda.json).
+- **Výsledek:** lano — runa vede 1,8/2, přidává něco, co místo samo nemá, 4/5 (jednou jen popis lana), cizí člověk 1/5, kvalita 4,0 · kovárna —
+  runa vede 2,0, přidává 5/5, ale **cizí člověk 5/5** (oheň zahrabaný „pro toho, kdo přijde ráno“), kvalita 3,8. Studené čtení 0/10.
+  Gebo v místě svého tématu ukáže rovnováhu na věci samé (dva konce lana nesou jeden druhý); v cizím místě dar vyjádří přes nepřítomného
+  dárce nebo příjemce.
+- **Hranice:** n = 5 + 5, jeden generátor viděl opakované prompty (mohl variovat schválně, ač zadání říkalo ne), jeden soudce, EN, Opus 5.5.
+  TEST 37 (2026-08-25) měřil jiný mechanismus (místo vybrané podle runy v grafu krajin, se vstupem uživatele) — tohle ho nevyvrací, jen
+  ukazuje, že u samotné karty místa se to neopakuje. Jestli je „cizí člověk“ vada, nebo poctivý obraz daru, je obsahová otázka (owner).
