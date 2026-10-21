@@ -30,6 +30,7 @@ PRIPADY = [
     ('verify_zakazy_cesty.js', 'v2/runar-reading.js', 'replace', "} else if (_spreadMode === 'horse" + "shoe') {", "} else if (_spreadMode === 'horseshoe_x') {"),
     ('verify_code_doc_refs.js', 'v2/runar-app.js', 'append', '', '\n// podrobnosti viz docs/neexistuje-protipriklad-xyz' + '.md\n'),
     ('verify_edge_imports.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'regex', r'npm:@supabase/supabase-js@[0-9.]+', 'npm:@supabase/supabase-js@' + '2'),
+    ('verify_doc_length.js', 'CLAUDE.md', 'append', '', '\nZ historie: do 2026-01-01 tu st' + 'álo něco jiného.\n'),
 ]
 sys.path.insert(0, R + '/scripts/utils')
 import rychle_kontroly as rk

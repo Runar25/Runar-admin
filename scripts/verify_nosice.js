@@ -63,8 +63,8 @@ const MAPA = {
            castecne: 'B (útok na kontroly) drží ㊵; A (obrácená páka u hypotéz) je metoda, nevynutí ji nic' },
   '§26': { slouceno: '§21' },
   '§27': { slouceno: '§25' },
-  '§28': { drzi: [{ smoke: 'verify_escape_marks.js' }],
-           castecne: 'jen výjimky z kontrol (značky s důvodem a datem); důvod u změny kódu nehlídá nic' },
+  '§28': { drzi: [{ smoke: 'verify_escape_marks.js' }, { smoke: 'verify_doc_length.js' }],   // 2026-10-21: CLAUDE.md bez historie + strop B
+           castecne: 'jen výjimky z kontrol a historie v CLAUDE.md (i při commitu, rychle_kontroly); důvod u změny kódu nehlídá nic' },
   '§29': { drzi: [{ nastroj: 'scripts/nacti_cteni.js' }, { hook: ZPRAVA, co: 'tah neskončí s nezapsaným hlášením' }] },
   '§30': { drzi: [{ hook: 'hooks/pre-commit.py', co: '_SDILENE, mazání cizích řádků' }, { hook: PDD, co: 'pravidla při dotyku, pasti' },
                   { hook: 'hooks/claude/runar-api-guard.py', co: 'pokus přes API' }, { smoke: 'verify_hooky_claude.py' }, { smoke: 'verify_pravidla_mapa.js' },
