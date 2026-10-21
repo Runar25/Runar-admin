@@ -1265,6 +1265,13 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   sdílí registrace s přihlašovacími kódy; rozeslání všem při spuštění se do něj nevejde. Owner 2026-10-18: tarif zvednout, až se k limitu přiblížíme
   (*„začínáme od základních tarifů a pokračujeme na vyšší, jakmile to potřebujeme. je to tak u ElevenLabs atd.“*).
   Útok pro smoke ㉹ na `web/` je v `scripts/protipriklady.py` (CODE-web 2026-10-19).
+- [ ] **Předplatné: měsíční / roční a datum obnovy v profilu a v menu** (owner 2026-10-21 nad rozbalovacím menu účtu: *„jména účtů — by mohlo
+  jít vidět, jestli je měsíční nebo roční subscription u Walker a Wanderer“* → *„4. ano, zapiš to“*). Dnes to nejde: `user_profiles` má jen
+  `tier`, žádnou délku předplatného ani datum obnovy (ověřeno 2026-10-21, CODE-read); platby neběží. Až poběží: server při platbě zapíše
+  do profilu délku (měsíc / rok) a datum obnovy (zapisuje jen service_role, jako `tier` — `sql/2026-07-16_user_profiles_column_grants.sql`);
+  menu účtu u Walkera a Wanderera ukáže např. „RUNE WANDERER · YEARLY“ a „renews 21 Oct 2027“ (texty z UI_TEXT, IS + EN; datum přes
+  `datumUI`). Datum obnovy je pro člověka podstatnější než samotné „yearly“ — kdy se strhnou peníze a do kdy má čtení. Lane: platby CODE-web,
+  menu CODE-tune.
 - [ ] **Pro OWNERA — Rapyd** *(owner 2026-10-12: totéž co Shopify — dodělá se, pak JEDEN souhrnný postup)*: smí účet Agndofy prodávat přes Rapyd Hosted Checkout / odkaz k platbě na therunekeeper.com, a jaký tarif
   má Shopify Agndofy (u cizí brány Shopify bere příplatek, Basic 2 %)? Rozhodne, jestli Rúnakort půjde přes Shopify, nebo rovnou Rapyd.
   Fyzické runy jdou přes Shopify vždy. Kupovat jde pět balíčků (`CARD_PACKS`).
