@@ -36,7 +36,8 @@
 .j-path{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
 .j-st{position:relative;text-align:center;display:flex;flex-direction:column;align-items:center}
 /* kousek cesty od tohoto kamene k dalšímu: od pravého okraje kamene přes mezeru k levému okraji dalšího */
-.j-st:not(:last-child)::after{content:"";position:absolute;top:36px;left:calc(50% + 34px);width:calc(100% + 22px - 68px);border-top:1px dashed var(--border)}
+/* box pro stopy (stopyRozmisti z runar-utils.js); do 2026-10-21 tu byla čárkovaná čára */
+.j-stopy{position:absolute;top:28px;left:calc(50% + 34px);width:calc(100% + 22px - 68px);height:16px;pointer-events:none}
 .j-stone{width:52px;height:72px;margin-bottom:14px}
 .j-stone svg{width:100%;height:100%;display:block;overflow:visible}
 .j-nm{font-family:'Cinzel',serif;font-size:15px;letter-spacing:3px;color:var(--white);margin-bottom:6px}
@@ -70,7 +71,7 @@
   .j-page{padding:22px 16px 40px}
   .j-path{grid-template-columns:1fr;gap:0}
   .j-st{display:grid;grid-template-columns:52px 1fr;column-gap:14px;text-align:left;align-items:start;padding-bottom:26px}
-  .j-st:not(:last-child)::after{top:80px;left:26px;width:0;bottom:4px;border-top:none;border-left:1px dashed var(--border)}
+  .j-stopy{top:80px;left:18px;width:16px;height:auto;bottom:4px}
   .j-stone{grid-row:span 6;margin:0}
   .j-ft{max-width:none}
   .j-st .btn-upgrade{justify-self:start}
@@ -116,7 +117,7 @@ function draw() {
   var U = UI_TEXT[LANG];
   document.getElementById('path').innerHTML = ORDER.map(function (id) {
     var T = TIERS[id], m = T.price_isk_month, y = T.price_isk_year;
-    var h = '<div class="j-st"><div class="j-stone">' + kamenUctuSvg(id) + '</div><div class="j-nm">' + jmeno(T) + '</div>';
+    var h = '<div class="j-st">' + (id !== ORDER[ORDER.length - 1] ? '<div class="j-stopy" aria-hidden="true"></div>' : '') + '<div class="j-stone">' + kamenUctuSvg(id) + '</div><div class="j-nm">' + jmeno(T) + '</div>';
     if (m) {
       h += P === 'm' ? '<div class="j-pr">' + tp('journey_price_m', { price: cislo(m) }) + '</div><div class="j-gift"></div>'
                      : '<div class="j-pr">' + tp('journey_price_y', { year: cislo(y) }) + ' <small>' + tp('journey_price_y_mesic', { price: cislo(Math.round(y / 12)) })
@@ -132,6 +133,7 @@ function draw() {
     return h + '</div>';
   }).join('');
   kamenUctuVystred(document.getElementById('path'));   // bez živého účtu = bez pohybu
+  stopy();
   document.querySelectorAll('#path .kamen-uctu').forEach(function (svg) {
     svg.style.cursor = 'pointer';
     svg.onclick = function () { if (typeof kamenUctuOziv === 'function') kamenUctuOziv(svg, 5000); };
@@ -153,6 +155,13 @@ function karta() {
   document.querySelectorAll('[data-pk]').forEach(function (b) { b.onclick = function () { PK = +b.getAttribute('data-pk'); karta(); }; });
   document.querySelectorAll('[data-des]').forEach(function (b) { b.onclick = function () { DES = b.getAttribute('data-des'); karta(); }; });
 }
+// Stopy mezi kameny: počet podle délky boxu, který zná až vykreslená stránka → po vykreslení a znovu při změně šířky.
+// Směr podle rozložení: mobil (≤ 760 px, kameny pod sebou) = dolů, počítač (vedle sebe) = doprava.
+function stopy() {
+  var smer = window.matchMedia('(max-width:760px)').matches ? 'dolu' : 'doprava';
+  document.querySelectorAll('#path .j-stopy').forEach(function (b) { if (typeof stopyRozmisti === 'function') stopyRozmisti(b, smer); });
+}
+window.addEventListener('resize', stopy);
 // Přepínač: m / y = cesta s cenami, k = balíčky Rúnakortu místo cesty
 function setP(p) {
   P = p;
