@@ -40,6 +40,8 @@ const docs = tracked.filter(p =>
   !p.startsWith('docs/findings/') &&
   !p.startsWith('docs/archive/') &&
   !p.startsWith('docs/inbox/') &&
+  // dverg-tarot/ (2026-10-21): samostatný produkt mimo Rúnara — „Rune Keeper“ je tam postava, ne tier.
+  !p.startsWith('dverg-tarot/') &&
   !p.startsWith('memory/snapshots/') &&
   p !== 'RUNAR_DECISIONS.md');          // append-only log smí citovat i retirovaná jména
 

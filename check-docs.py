@@ -31,8 +31,10 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 # doky -> 112 nalezu a ZABLOKOVANY push VSEM. Vyjimky nize se porovnavaji od korene repa,
 # takze 'docs/archive' se na '.claude/worktrees/<jmeno>/docs/archive' netrefi. Cizi kopie
 # se nekontroluje vubec: opravovat se ma original, ne necí odbocka.
+# 'dverg-tarot' (2026-10-21, DECISIONS 2026-10-21 (2)): samostatný produkt mimo Rúnara — „Rune Keeper“ je tam postava, ne tier;
+# Rúnarovy pojmy se na něj nevztahují.
 SKIP_DIRS  = ('docs/archive', 'docs/inbox', 'docs/findings', 'memory/snapshots', '_cowork_snap',
-              'node_modules', '.git', '.claude/worktrees')
+              'node_modules', '.git', '.claude/worktrees', 'dverg-tarot')
 SKIP_FILES = ('RUNAR_DECISIONS.md', 'check-docs.py')
 
 # (regex, proč je to špatně, slova která výskyt OMLUVÍ na témž řádku)
