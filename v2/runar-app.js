@@ -1860,7 +1860,9 @@ function _journeyPaint() {
     if (T.price_isk_month) {
       if (env !== 'play') {
         h += _journeyP === 'y'
-          ? '<div class="journey-pr">' + _jesc(tp('journey_price_y', { price: _jkr(Math.round(T.price_isk_year / 12)), year: _jkr(T.price_isk_year) })) + '</div>'
+          // 2026-10-21 (owner): roční cena napřed, měsíční „jen dodatečná informace“ — v závorce a menším písmem
+          ? '<div class="journey-pr">' + _jesc(tp('journey_price_y', { year: _jkr(T.price_isk_year) }))
+            + ' <small>' + _jesc(tp('journey_price_y_mesic', { price: _jkr(Math.round(T.price_isk_year / 12)) })) + '</small></div>'
             + '<div class="journey-gift">' + _jesc(t('journey_gift')) + '</div>'
           : '<div class="journey-pr">' + _jesc(tp('journey_price_m', { price: _jkr(T.price_isk_month) })) + '</div>';
       }

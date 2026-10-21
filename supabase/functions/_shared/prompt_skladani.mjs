@@ -483,7 +483,11 @@ const TIER_FEATURES = [
     is: function (v) { return v === 'all' ? 'Dagbók með öllum ' + VOCAB.cast.is_dat_pl + ' þínum, allt frá þeirri fyrstu.' : 'Dagbók með síðustu ' + v + ' ' + VOCAB.cast.is_dat_pl + ' þínum.'; } },
   { key: 'ask', hodnota: function (t) { return t.asks_per_reading > 0 ? t.asks_per_reading : null; },
     en: function (n) { return (_N_WORD.en[n] || n) + (n === 1 ? ' question' : ' questions') + ' of your own to Rúnar on every reading.'; },
-    is: function (n) { return (_N_WORD.is_f[n] || n) + ' eigin ' + (n === 1 ? 'spurning' : 'spurningar') + ' til Rúnars við hverja ' + VOCAB.cast.is + '.'; } },
+    // 2026-10-21 (owner: „eigin nemusí být použito … překlad z EN — pokud ano, je to velká, velká chyba!!“): do té doby „Ein eigin
+    // spurning til Rúnars við hverja spá“ = EN „One question of your own to Rúnar on every reading“ slovo po slově (88949d1, 2026-09-26;
+    // korpus „eigin spurning“ 3×, ověřené jen kontrolami bez idiomů). Islandsky od obrazu: člověk se Rúnara sám zeptá na spá —
+    // „Þú getur spurt Rúnar einu sinni út í hverja spá“; Greynir OK, korpus „getur spurt“ 1210×, „sinni út í“ 638×, „tvisvar út í“ 81×.
+    is: function (n) { return 'Þú getur spurt Rúnar ' + (['', 'einu sinni', 'tvisvar', 'þrisvar'][n] || n + ' sinnum') + ' út í hverja ' + VOCAB.cast.is + '.'; } },
 ];
 // Kdo stojí „nad“ kým: řádky shodné se základem se složí do jedné věty.
 const TIER_FEATURES_BASE = { premium: 'standard' };
@@ -1492,7 +1496,8 @@ const UI_TEXT = {
     journey_monthly:      'MONTHLY',
     journey_yearly:       'YEARLY',
     journey_price_m:      '{price} kr a month',
-    journey_price_y:      '{price} kr a month, {year} kr a year',
+    journey_price_y:      '{year} kr a year',   // 2026-10-21 owner: měsíční částka až za roční, v závorce a menším písmem (journey_price_y_mesic)
+    journey_price_y_mesic: '({price} kr a month)',
     journey_gift:         'Two months are a gift.',
     journey_here:         'you are here',
     journey_walk_on:      'WALK ON AS {tier}',
@@ -2054,7 +2059,8 @@ const UI_TEXT = {
     journey_monthly:      'MÁNAÐARLEGA',
     journey_yearly:       'ÁRLEGA',
     journey_price_m:      '{price} kr. á mánuði',
-    journey_price_y:      '{price} kr. á mánuði, {year} kr. á ári',
+    journey_price_y:      '{year} kr. á ári',
+    journey_price_y_mesic: '({price} kr. á mánuði)',
     journey_gift:         'Tveir mánuðir að gjöf.',
     journey_here:         'þú ert hér',
     journey_walk_on:      'GERAST {tier}',
