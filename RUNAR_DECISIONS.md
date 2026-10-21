@@ -12047,8 +12047,7 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   islandská příroda jako společné prostředí, ne zvláštní balíček): *„líbí se mi jako možnost pro vegvísir … ta tvorba obrazu je zajímavá.
   o něco takového jsem se pokoušel, ale nešlo to. tohle by to mohlo díru vyplnit.“* Na korekci CODE-read *„8. ano a jako vždy až test ukáže,
   jestli je to správná hypotéza … všechno je předmětem změny, dokud to nebude fungovat.“*
-- **Díra, kterou to má vyplnit:** svět statických scén, ze kterého člověk vybírá (2026-09-27 (3)), se nikdy nepostavil; krajiny a graf míst
-  odloženy, protože *„nefungovalo to dohromady“* (owner 2026-10-21; přesně si to nepamatuje — konkrétní vada se nedohledala).
+- **Díra, kterou to má vyplnit:** svět statických scén, ze kterého člověk vybírá (2026-09-27 (3)), se nikdy nepostavil.
 - **Směr (hypotéza):** rameno = vytažená runa × MÍSTO. Místo je jen prostředí a okamžik (most přes ledovcovou řeku, zavřená pec, lano mezi
   břehy) — **bez otázky pro čtenáře a bez výkladu**; význam nese runa, otázku Ask (2026-09-27 (6)). Kombinace náhodná nebo volbou člověka,
   **nikdy párovaná podle tématu** (místo shodné s runou = runa nemá co dělat, 2026-08-25). Funguje stejně s fyzickými kartami i bez nich.
