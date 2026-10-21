@@ -1708,7 +1708,7 @@ const UI_TEXT = {
     signin_spread_norns:     'Sign in to use the Norns spread.',
     yggdrasil_power_toast:   'Yggdrasil is open — its full power returns December 14–28.',
     voice_resting:        'The voice of Rúnar is resting — please try again in a moment.',
-    shop_buy_more:      '\u2192 Buy more {card} at Agndofa.is',
+    shop_buy_more:      '\u2192 {card}',   // 2026-10-21: otevře okno cesty na kartě Rúnakort; „at Agndofa.is“ pryč — tam se nekupuje
     dam_text:           'This will permanently erase your account, all rune readings, and your journal. This cannot be undone.',
     tree_intro: '<p class="tree-intro-title">THE LIFE RUNE</p><p>It is said that no tree reaches toward the sky without first sending its roots into the darkness below.<br>So it is with us.</p><p>The runes are not here to tell you who you are.<br>They are here to help you remember.</p><p>Your Life Rune is the first step.<br>To discover it, begin where your story began.</p><p>When were you born?</p>',
     sign_in_btn:      'SIGN IN',
@@ -2254,7 +2254,7 @@ const UI_TEXT = {
     signin_spread_norns:     'Skráðu þig inn til að nota Nornirnar.',
     yggdrasil_power_toast:   'Yggdrasil er opinn — en krafturinn er mestur 14.–28. desember.',
     voice_resting:        'Rödd Rúnars hvílir — reyndu aftur eftir andartak.',
-    shop_buy_more:      '→ Kaupa fleiri {card} á Agndofa.is',
+    shop_buy_more:      '→ {card}',
     dam_text:           'Þetta eyðir reikningi þínum, öllum spám þínum og dagbókinni að eilífu. Ekki er hægt að afturkalla þessa aðgerð.',
     tree_intro: '<p class="tree-intro-title">LÍFSRÚNIN</p><p>Sagt er að ekkert tré rísi til himins án þess að fyrst teygja rætur sínar niður í myrkrið.<br>Þannig er það einnig með okkur.</p><p>Rúnirnar eru ekki hér til að segja þér hver þú ert.<br>Þær eru hér til að hjálpa þér að muna.</p><p>Lífsrúnin er fyrsta skrefið.<br>Til að finna Lífsrúnina þína skaltu hefja leitina þar sem saga þín hófst.</p><p>Hvenær fæddist þú?</p>',
     sign_in_btn:      'SKR\u00c1 INN',
