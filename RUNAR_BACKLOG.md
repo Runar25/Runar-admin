@@ -1246,6 +1246,15 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   Stav 2026-10-21: stránka běží SKRYTÁ na https://therunekeeper.com/ferdin/ (noindex, landing na ni neodkazuje) — owner ji chce
   vyladit naostro před spuštěním. **Při spuštění:** odkaz z landingu, `noindex` pryč, tlačítka napojit na nákup a adresu dát do
   `JOURNEY_URL` (config, CODE-tune).
+- [ ] **Domovská stránka webu po spuštění** (owner 2026-10-21 „ano, postav ji“): běží SKRYTÁ na https://therunekeeper.com/heim/ —
+  hero appky s portrétem, „Gakktu inn →“ do appky, jak čtení funguje (guide_*), cesta (→ /ferdin/), Rúnakort (→ /ferdin/#kort), patička.
+  **Při spuštění:** /heim/ se stane úvodní stránkou místo „Væntanlegt“ (registrace pak není potřeba), `noindex` pryč.
+- [ ] **Google Play bez provize — co hlídat dál** (rešerše CODE-web 2026-10-21, Play Console Help 10281818 + Payments policy 9858738):
+  consumption-only appka smí o nákupu jinde jen INFORMOVAT textem; nesmí mít odkaz ani tlačítko na stránku, odkud se dá (i nepřímo)
+  zaplatit. Opraveno CODE-tune 2026-10-21 v režimu `?src=play`: odkaz na obchod u pole kódu, značka AGNDOFA, odkazy a ceník v nápovědě.
+  Zbývá hlídat: (1) appka v Play nesmí odkazovat na therunekeeper.com (po spuštění tam bude nákup); (2) popis appky v Google Play
+  nesmí vést k nákupu (i výpis v obchodě je podle pravidel kanál); (3) návrh stroje místo paměti (§30): kontrola, která ve v2/ najde
+  odkaz na obchodní domény mimo větev Play — předáno CODE-read (mapa vstupů a ochran).
 - [x] ✅ *(CODE-web 2026-10-16: běží na https://therunekeeper.com — formulář → waitlist-join → Brevo, dvojí potvrzení; ověřeno
   naostro z webu: hláška, potvrzovací e-mail došel. Zbývá jen limit Brevo pro rozeslání při spuštění, viz níž.)* **Registrace před spuštěním** (owner 2026-10-12: *„ano sbíráme“*). Landing „coming soon“ sbírá e-maily; každý dostane jeden
   e-mail, až Rúnar půjde ven. Napřed plán ownerovi (kam se ukládá, dvojí potvrzení, text do zásad soukromí, smazání po spuštění).
