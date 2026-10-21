@@ -697,8 +697,8 @@ promptu v `claude-proxy` (už ověřuje přihlášení a odečítá kredity; pro
    `dmarc_rua@onsecureserver.net` (služba GoDaddy) · apex A 185.199.108.153, www AAAA (obojí GitHub Pages) · `app.` neexistuje ·
    DNSSEC vypnutý (žádný DNSKEY) → krok „vypnout DNSSEC před přepnutím“ odpadá.
    ⚠️ **SPF stojí na záznamu, který spravuje GoDaddy** (`dc-aa8e722993._spfm` = `v=spf1 include:_spf.google.com ~all`) → v Cloudflare
-   zapsat SPF přímo `v=spf1 include:_spf.google.com ~all`, jinak po odchodu z GoDaddy DNS přestane platit. Hlášení DMARC na adresu
-   GoDaddy přesměrovat jinam, nebo `rua` odebrat.
+   zapsat SPF přímo `v=spf1 include:_spf.google.com ~all`, jinak po odchodu z GoDaddy DNS přestane platit. ✅ Hlášení DMARC *(2026-10-21, owner v GoDaddy;
+   ověřeno v DNS)* chodí na `runar@therunekeeper.com` (dřív `dmarc_rua@onsecureserver.net`, služba GoDaddy) — při přesunu přenést tak, jak je.
    Postup: export zóny z GoDaddy, nízké TTL den předem, zóna na Cloudflare, porovnat import s exportem i s tímhle výpisem, poštovní
    záznamy „DNS only“, přepnout nameservery, ověřit poštu (e-mail do i z runar@, přihlašovací kód z Brevo), pak zapnout DNSSEC v Cloudflare.
    ✅ *(2026-10-21, owner „dkim hotovo“; CODE-tune ověřil DNS: `google._domainkey` TXT `v=DKIM1; k=rsa`, klíč 2048 bit)* Google Workspace
