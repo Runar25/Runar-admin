@@ -351,6 +351,10 @@ const UI_TEXT = {
     journey_web_note:     'Opens therunekeeper.com. You return here with the same account.',
     journey_free:         'Free',
     journey_free_join:    'Registration is free',   // owner 2026-10-20 (CODE-web 6f6a1df); 2026-10-20 bez tečky — štítek jako „Free“
+    // 2026-10-21 owner (přes CODE-web, „ano, informační řádek s cenou“): u Rune Seekera pod „Registration is free“ menším písmem, kolik
+    // stojí čtení — jako měsíční dovětek u ročních cen; ne druhé tlačítko. {casts} = vlp('cast'), první písmeno velké v kódu; {card} = vl('card');
+    // {price} = nejlevnější balíček CARD_PACKS. V Play se nezobrazuje (ceny, consumption-only).
+    journey_seeker_card:  '{casts} with a {card}, from {price} kr',
     journey_card_note:    'From {price} kr for {casts}. Have a code? Enter it here.',
     journey_play_sub:     'Where you stand on the path, and what each step holds.',
     journey_play_foot:    'Rúnar asks nothing of you here.',
@@ -914,6 +918,9 @@ const UI_TEXT = {
     journey_web_note:     'Vefurinn therunekeeper.com opnast. Svo heldurðu áfram hér á sama aðgangi.',
     journey_free:         'Ókeypis',
     journey_free_join:    'Skráning er ókeypis',   // 2026-10-20: štítek bez tečky jako „Ókeypis“
+    // 2026-10-21: {card} = VOCAB.card.is_dat („með Rúnakorti“). Greynir OK (i s „gjafakorti“), „með gjafakorti“ 37×, „verð frá“ 947×,
+    // „kostar frá“ 1396× (cena „frá … kr.“).
+    journey_seeker_card:  '{casts} með {card}, frá {price} kr.',
     journey_card_note:    'Frá {price} kr. fyrir {casts}. Áttu kóða? Sláðu hann inn hér.',
     journey_play_sub:     'Hvar þú stendur á leiðinni og hvað hvert skref ber í sér.',
     journey_play_foot:    'Hér biður Rúnar þig ekki um neitt.',
