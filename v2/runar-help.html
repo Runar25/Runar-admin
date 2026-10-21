@@ -488,7 +488,7 @@ function applyContent() {
   var _ab = document.getElementById('ask-body');
   if (_ab) _ab.innerHTML = ['standard', 'premium'].filter(function (id) { return TIERS[id].asks_per_reading > 0; }).map(function (id) {
     var q = TIERS[id].asks_per_reading, jm = lang === 'is' ? TIERS[id].label_is : TIERS[id].label;
-    var co = lang === 'is' ? q + (q === 1 ? ' spurning' : ' spurningar') + ' við hvern lestur' : q + (q === 1 ? ' question' : ' questions') + ' on every reading';
+    var co = TIER_FEATURES.filter(function (r) { return r.key === 'ask'; })[0][lang === 'is' ? 'is' : 'en'](q);   // táž věta jako výpis účtů
     return '<tr><td>' + jm.toUpperCase() + '</td><td>' + co + '</td></tr>';
   }).join('');
   buildFaq(c.faq || []);
