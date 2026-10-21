@@ -1364,6 +1364,24 @@ function _wtsPaint() {
   setText('wts-note', tp('wts_note', { guide: t('guide_title') }));
   setText('wts-open', t('wts_open')); setText('wts-later', t('wts_later'));
 }
+// Svíčka u BEFORE WE BEGIN (2026-10-21, owner: „A, při otevření okna ji rozzáříme, jako how a reading works“): jednou za načtení appky
+// stejná svíčka jako u „How a reading works“ (window.rozsvit, runar-helper.js) — tři záblesky, pak doutná, dokud na ni člověk neklepne.
+// Formulář je pod Rúnarovou fotkou, proto až ve chvíli, kdy nadpis poprvé dojede na obrazovku (jinak by záblesky proběhly mimo dohled).
+// Když je otevřené okno (typicky „Where to start“, které samo rozsvěcí „How a reading works“), svíčka nesvítí — dvě záře naráz by se pletly.
+function _svickaPriOtevreni() {
+  var lbl = document.getElementById('reader-card1-lbl');
+  if (!lbl || typeof IntersectionObserver === 'undefined') return;
+  var io = new IntersectionObserver(function (zaznamy) {
+    if (!zaznamy.some(function (z) { return z.isIntersecting; })) return;
+    io.disconnect();
+    setTimeout(function () {
+      var s = document.getElementById('card1-svicka');
+      if (!s || document.querySelector('.modal-overlay.open') || typeof window.rozsvit !== 'function') return;
+      window.rozsvit(s);
+    }, 400);
+  }, { threshold: 0.9 });
+  io.observe(lbl);
+}
 function maybeShowWhereToStart() {
   var m = document.getElementById('wts-modal');
   if (!m || _wtsVidel() || m.classList.contains('open')) return;
@@ -2001,6 +2019,7 @@ window.addEventListener('DOMContentLoaded', () => {
     if (r) el.innerHTML = runeSvg(r, { frame: true, cls: 'modal-rune-svg' });
   });
   setTimeout(maybeShowWhereToStart, 1800);   // „Where to start“ — jednou, až se appka usadí (DECISIONS 2026-10-11 (65))
+  _svickaPriOtevreni();   // 2026-10-21: svíčka u BEFORE WE BEGIN se rozzáří, až nadpis poprvé dojede na obrazovku
   // ── Close topbar dropdown on outside click ──
   document.addEventListener('click', function(e) {
     const wrap = document.getElementById('auth-dropdown-wrap');
