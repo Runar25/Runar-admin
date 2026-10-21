@@ -1262,6 +1262,15 @@ radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola Google Play probehla'
 check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
 
+# ㊑ Web × appka — jména (CODE-read 2026-10-21, owner „5. ano, postav to“, návrh CODE-web): web načítá živé soubory appky do téhož prostoru
+# jmen; dvojí deklarace (const v appce × var ve webu) dnes shodila /heim/, /ferdin/, /kort/ na ~10 min. Hlídá i funkce, které web volá.
+print('\n' + chr(0x3291) + ' WEB × APPKA — JMÉNA (verify_web_appka_jmena.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_web_appka_jmena.js')], capture_output=True, text=True, encoding='utf-8')
+r2 = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_web_appka_jmena.js'), '--test'], capture_output=True, text=True, encoding='utf-8')
+radky = [l for l in (r2.stdout + r.stdout + r.stderr + r2.stderr).strip().split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola jmen web × appka probehla'
+check(prvni.strip(), r.returncode == 0 and r2.returncode == 0, '\n'.join(radky[:-1]) if (r.returncode or r2.returncode) else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
