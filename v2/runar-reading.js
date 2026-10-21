@@ -1543,12 +1543,15 @@ function _updateReadingForm() {
   if (btnSom)  { btnSom.classList.toggle('active', !isMine); btnSom.textContent = t('reading_mode_someone'); }
 
   // Card title — always BEFORE WE BEGIN; append name when user is fully known (MY READING mode)
+  // 2026-10-21 (owner „A“ — svíčka z náhledu docs/inbox/2026-10-21-svicka-lucerna-nahled.html): svíčka místo ✦, tenká linka jako ikony
+  // záložek, ve vlastním prvku #card1-svicka — rozzáří se jen ona (_svickaPriOtevreni v runar-app.js), ne celý nadpis.
   var titleEl = document.getElementById('reader-card1-lbl');
-  if (knownUser && userName && isMine) {
-    if (titleEl) titleEl.textContent = t('reader_card1_lbl') + ', ' + userName.toUpperCase();
-  } else {
-    if (titleEl) titleEl.textContent = t('reader_card1_lbl');
-  }
+  var nadpis = (knownUser && userName && isMine) ? t('reader_card1_lbl') + ', ' + userName.toUpperCase() : t('reader_card1_lbl');
+  if (titleEl) titleEl.innerHTML = '<span id="card1-svicka" style="display:inline-block;vertical-align:-0.42em;margin-right:0.45em">'
+    + '<svg class="atab-ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"'
+    + ' aria-hidden="true" style="margin-right:0;vertical-align:top"><path d="M9 11h6v9H9z"/><path d="M7 21h10"/><path d="M12 11V9.6"/>'
+    + '<path d="M12 3c1.6 2 2.2 3.3 2.2 4.4a2.2 2.2 0 0 1-4.4 0C9.8 6.3 10.4 5 12 3z"/></svg></span>'
+    + String(nadpis).replace(/&/g, '&amp;').replace(/</g, '&lt;');
 
   // Note text — same message for both known and unknown (MY READING); different for FOR SOMEONE
   var noteEl = document.getElementById('reader-note');

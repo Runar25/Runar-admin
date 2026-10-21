@@ -11989,3 +11989,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Proč:** owner s Coworkem kartu s dvergy řešil 18. 10., ale nikam se to nezapsalo a složka nebyla v gitu — dnes ji nikdo nenašel, dokud
   se nehledalo po souborech; hrozila ztráta. Rozpor s „dverg pod runou“ ohlásil už Cowork (DWARVES_25 § A) — hranice ho řeší.
 - Affected doc(s): `RUNAR_DESIGN.md` (katalog dvergů), `RUNAR_BACKLOG.md` — v témže commitu.
+
+## 2026-10-21 (1) — BEFORE WE BEGIN: svíčka místo ✦, při otevření appky se rozzáří
+
+- **Rozhodl:** owner 2026-10-20/21 nad náhledy `docs/inbox/2026-10-20-before-we-begin-symbol-nahled.html` a
+  `docs/inbox/2026-10-21-svicka-lucerna-nahled.html`: *„before we begin by si také zasloužilo hezčí symbol“* → *„A a C“* → *„dej mi návrhy
+  a já vyberu to lepší“* → *„A, při otevření okna ji rozzáříme. jako how a reading works.“*
+- **Co:** před BEFORE WE BEGIN / ÁÐUR EN VIÐ BYRJUM svíčka (A1 z náhledu, tenká linka jako ikony záložek) místo ✦; ✦ z `reader_card1_lbl`
+  pryč. Jednou za načtení appky se rozzáří tou svíčkou jako „How a reading works“ (`window.rozsvit`) — až nadpis poprvé dojede na
+  obrazovku (formulář je pod fotkou) a jen když není otevřené okno; svítí jen svíčka, ne nápis (`_svickaPriOtevreni`, `runar-app.js`).
+- **Výklad „A“:** svíčka A1 (bez misky a bez paprsků) — rozzáření jí dá život, paprsky A3 by byly navíc. Jiná varianta = výměna jedné kresby.
+- Affected doc(s): žádný jiný.

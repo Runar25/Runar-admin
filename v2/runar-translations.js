@@ -32,7 +32,7 @@ const UI_TEXT = {
     teach_voice_saving: 'Saving to memory…',
 
     // Reader tab
-    reader_card1_lbl: '✦ BEFORE WE BEGIN',
+    reader_card1_lbl: 'BEFORE WE BEGIN',   // 2026-10-21: ✦ → svíčka (kreslí _updateReadingForm v runar-reading.js)
     reader_note:      'Tell me where to look. The rune speaks for itself.',
     name_lbl:         'YOUR NAME OR PREFERRED NAME',
     name_ph:          'How shall I address you?',
@@ -608,7 +608,7 @@ const UI_TEXT = {
     teach_voice_saving: 'Vista í minni…',
 
     // Reader tab
-    reader_card1_lbl: '✦ ÁÐUR EN VIÐ BYRJUM',
+    reader_card1_lbl: 'ÁÐUR EN VIÐ BYRJUM',
     reader_note:      'Segðu mér hvert ég á að líta. Rúnin talar sínu máli.',
     name_lbl:         'NAFNIÐ ÞITT EÐA GÆLUNAFN',
     name_ph:          'Hvað á ég að kalla þig?',
