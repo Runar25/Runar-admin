@@ -1442,6 +1442,21 @@ function closeWhereToStart(doKolekce) {
   } else zasun();
 }
 
+// „How a reading works“ po PRVNÍM přihlášení rozbalené — owner 2026-10-21 přes CODE-web: „možná by to mělo být automaticky rozbalené
+// po prvním přihlášení s emailem a pak, jak to máme, zůstat zabalené“; na otázku s kolizemi „8. ano“ (DECISIONS 2026-10-21 (6)).
+// První přihlášení = účet založený před méně než dnem (přihlášení kódem účet zakládá) — na novém zařízení se starým účtem nic.
+// Jednou na účet a prohlížeč (klíč s id účtu). Ne, když „Where to start“ ještě nikdo neviděl: to se teď ukáže a na návod ukáže samo.
+function _navodPoPrvnimPrihlaseni() {
+  if (!currentUser || !currentUser.id) return;
+  var klic = 'runar_navod_' + currentUser.id;
+  try { if (localStorage.getItem(klic) === '1') return; localStorage.setItem(klic, '1'); } catch (e) { return; }
+  var zalozen = Date.parse(currentUser.created_at || '');
+  if (!zalozen || Date.now() - zalozen > 24 * 3600 * 1000) return;
+  var w = document.getElementById('wts-modal');
+  if (!_wtsVidel() || (w && w.classList.contains('open'))) return;
+  var box = document.getElementById('read-guide');
+  if (box && box.style.display === 'none') toggleGuide();
+}
 function toggleGuide() {
   var lbl = document.getElementById('read-guide-lbl'), box = document.getElementById('read-guide');
   if (!lbl || !box) return;
@@ -2155,6 +2170,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         loadJournal();
       }
       if (event === 'SIGNED_IN') {
+        _navodPoPrvnimPrihlaseni();   // 2026-10-21: návod rozbalený po prvním přihlášení (jednou)
         upsertProfile();
         fetchUserProfile(currentUser.id); // tier + credits
         syncFreeBalance(currentUser.id);

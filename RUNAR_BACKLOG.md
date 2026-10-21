@@ -1430,7 +1430,7 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   `ops_events`; nezabere-li to, opravit mazání, nebo větu v zásadách.
 - [ ] **Zásady slibují upozornění v appce před změnou** (oddíl „If things change“) — mechanismus neexistuje, zásady se v říjnu měnily
   ~8×. Postavit, nebo větu změnit (čeká na ownera).
-- [ ] **Yggdrasil toast** (`yggdrasil_power_toast`) slibuje, že plná síla se vrátí v okně kolem zimního slunovratu — v kódu nic takového není (prompt ani
+- [x] ✅ *(CODE-tune 2026-10-21: hláška odebrána, owner „ano odeber“, DECISIONS 2026-10-21 (6).)* **Yggdrasil toast** (`yggdrasil_power_toast`) slibuje, že plná síla se vrátí v okně kolem zimního slunovratu — v kódu nic takového není (prompt ani
   strom datum nečtou; plán „slunovrat = větší síla ve stromě“ nepostavený). EN „returns“ × IS „er mestur“ říkají každý něco jiného.
 - [ ] **Export účtu** (`scripts/utils/export_uctu.js`) nevyveze zprávy „Send Rúnar a line“ ani uložené mp3 hlasu, zásady slibují
   „everything linked to your account“.
@@ -1448,4 +1448,5 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   rune_seeker“, SQL jim dává premium); runar-reading.js ~1100 („tier != premium -> 403“); runar-journal.js ~274 natvrdo `count > 5`
   místo `TIERS.rune_seeker.journal` (§10); runar-auth.js ~400 po uplatnění kódu nastaví `userTier = 'rune_seeker'` i předplatiteli
   (dopad neověřen).
-- [ ] **Nápověda nepopisuje výklady (spready), Ask ani strom** — jen jednu runu (čeká na ownera, jestli doplnit).
+- [x] ✅ *(CODE-tune 2026-10-21, c64f210: výklady a Ask doplněné; strom ne, dokud ho vidí jen admin — DECISIONS 2026-10-21 (6).)*
+  **Nápověda nepopisovala výklady (spready), Ask ani strom** — jen jednu runu.

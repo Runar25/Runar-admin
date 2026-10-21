@@ -1706,7 +1706,6 @@ const UI_TEXT = {
     signin_spread_horseshoe: 'Sign in to use the Horseshoe spread.',
     signin_spread_yggdrasil: 'Sign in to use Yggdrasil.',
     signin_spread_norns:     'Sign in to use the Norns spread.',
-    yggdrasil_power_toast:   'Yggdrasil is open — its full power returns December 14–28.',
     voice_resting:        'The voice of Rúnar is resting — please try again in a moment.',
     shop_buy_more:      '\u2192 {card}',   // 2026-10-21: otevře okno cesty na kartě Rúnakort; „at Agndofa.is“ pryč — tam se nekupuje
     dam_text:           'This will permanently erase your account, all rune readings, and your journal. This cannot be undone.',
@@ -2252,7 +2251,6 @@ const UI_TEXT = {
     signin_spread_horseshoe: 'Skráðu þig inn til að nota Skeifuna.',
     signin_spread_yggdrasil: 'Skráðu þig inn til að nota Yggdrasil.',
     signin_spread_norns:     'Skráðu þig inn til að nota Nornirnar.',
-    yggdrasil_power_toast:   'Yggdrasil er opinn — en krafturinn er mestur 14.–28. desember.',
     voice_resting:        'Rödd Rúnars hvílir — reyndu aftur eftir andartak.',
     shop_buy_more:      '→ {card}',
     dam_text:           'Þetta eyðir reikningi þínum, öllum spám þínum og dagbókinni að eilífu. Ekki er hægt að afturkalla þessa aðgerð.',

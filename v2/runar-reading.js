@@ -718,15 +718,8 @@ async function readRune() {
       showToast(t('signin_spread_yggdrasil'));
       _setSpreadMode('single'); return;
     }
-    // Seasonal info: full power Dec 14–28, reading available year-round
-    var _ygNow = new Date();
-    var _ygM = _ygNow.getMonth() + 1;
-    var _ygD = _ygNow.getDate();
-    // 2026-10-19 (vada 5 z průchodu appkou): hláška běžela při KAŽDÉ přidané runě — až 9× za výklad. Teď jednou za načtení stránky.
-    if (!(_ygM === 12 && _ygD >= 14 && _ygD <= 28) && !isAdmin(currentUser.email) && !window._ygToastUkazan) {
-      window._ygToastUkazan = true;
-      showToast(t('yggdrasil_power_toast'));
-    }
+    // 2026-10-21 (owner „ano odeber“, DECISIONS 2026-10-21 (6)): hláška „its full power returns December 14–28“ pryč — sílu o slunovratu
+    // kód nemá (prompt ani strom datum nečtou), hláška slibovala, co není. Vrátit jen s postavenou silou (RUNAR_DESIGN „slunovrat“).
     if (_spreadCount(_spread9Runes) === _spreadN() && !readerRune) {
       _ukazVyklad();
       readerTexts = {}; voiceGenerated = {};

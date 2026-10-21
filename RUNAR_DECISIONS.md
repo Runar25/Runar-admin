@@ -12059,3 +12059,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Rúnar a další produkty:** owner *„hranice teď neřešíme. máme hlas Rúnara a toho chci využít pro další produkty. nechci, abys ty míchal
   Rúnara a karty, ale já toho hodlám využít.“* Upřesňuje 2026-10-21 (2): session karty a Rúnara samy nemíchají; propojení řídí owner.
 - Affected doc(s): `docs/archive/RUNAR_BACKLOG_odlozene.md` (Vegvísir — ukazatel sem) — v témže commitu.
+
+## 2026-10-21 (6) — Revize dokumentů: toast Yggdrasilu pryč, návod rozbalený po prvním přihlášení, nápověda o výkladech a Asku
+
+- **Rozhodl:** owner 2026-10-21 na otázky z revize nápovědy, zásad a textů v appce: *„4. ano odeber 5. ano 7. ano 8. ano“*.
+- **Co:** (4) Hláška „Yggdrasil is open — its full power returns December 14–28“ pryč (runar-reading.js, klíč `yggdrasil_power_toast`
+  zrušen) — slibovala sílu o slunovratu, kterou kód nemá; přístup k Yggdrasilu beze změny (kdykoli, kdokoli přihlášený). Vrátit jen
+  s postavenou silou. (7) Nápověda má oddíly o výkladech a o Asku; tabulky z configu (`SPREAD_CONFIG`, `SPREAD_COSTS`, `TIERS.*.asks_per_reading`)
+  a jmen výkladů z UI_TEXT. Strom do nápovědy nejde, dokud ho vidí jen admin. (8) „How a reading works“ se po prvním přihlášení
+  (účet mladší než den) jednou rozbalí — ne, když se ukazuje „Where to start“ (to na návod ukáže samo). Návrh CODE-web 2026-10-21.
+  (5) Mazání v ElevenLabs ověří jeden hlas z admin účtu (krátký text) — čeká na token ownera.
+- **Proč:** nápověda a hlášky nemají slibovat, co appka nedělá; nový člověk má návod vidět hned, ale ne tři výzvy naráz.
+- Affected doc(s): `v2/runar-help.html` (c64f210), `RUNAR_BACKLOG.md` — v témže commitu.
