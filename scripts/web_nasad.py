@@ -8,7 +8,7 @@
 # kopírováním jednotlivých souborů do repa Runar25/therunekeeper-web — snadno se jeden zapomněl.
 #
 # Co dělá: v HTML pod web/site/ přepíše ?v=… u sdílených souborů na hash obsahu (v repu, ať zdroj = nasazené), zkopíruje web/site/
-# do ../therunekeeper-web (kromě CNAME, ten si drží GitHub), commitne a pushne tam. Repo Runar-admin necommituje — to udělá session.
+# do ../therunekeeper-web (kromě CNAME, ten si drží GitHub), co ve web/site není, tam smaže (zrcadlo), commitne a pushne tam. Repo Runar-admin necommituje — to udělá session.
 #   python -X utf8 scripts/web_nasad.py "<zpráva commitu v EN>"      nasadit
 #   python -X utf8 scripts/web_nasad.py --jen-verze                  jen přepsat verze (bez kopírování)
 import hashlib, io, os, re, shutil, subprocess, sys
@@ -16,7 +16,8 @@ import hashlib, io, os, re, shutil, subprocess, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = os.path.join(ROOT, 'web', 'site')
 WEB = os.path.join(os.path.dirname(ROOT), 'therunekeeper-web')
-SDILENE = ['runakort.css', 'runakort.js', 'web.js']   # soubory, které načítá víc stránek
+SDILENE = ['web.js']   # soubory, které načítá víc stránek; runakort.* se 2026-10-21 přestěhovaly do appky (v2/runar-runakort.*)
+NECHAT = {'CNAME', '.git', '.nojekyll', 'README.md'}   # v repu webu, ale ne ve web/site — nemazat
 
 def h(p):
     return hashlib.sha256(open(os.path.join(SITE, p), 'rb').read()).hexdigest()[:10]
@@ -58,6 +59,15 @@ def main():
             dst = os.path.join(WEB, rel)
             os.makedirs(os.path.dirname(dst), exist_ok=True)
             shutil.copyfile(src, dst)
+    for d, ds, fs in os.walk(WEB):
+        ds[:] = [x for x in ds if x not in NECHAT]
+        for f in fs:
+            rel = os.path.relpath(os.path.join(d, f), WEB)
+            if rel.split(os.sep)[0] in NECHAT:
+                continue
+            if not os.path.exists(os.path.join(SITE, rel)):
+                os.remove(os.path.join(d, f))
+                print('web: smazáno (není ve web/site):', rel)
     subprocess.run(['git', '-C', WEB, 'add', '-A'], check=True)
     st = subprocess.run(['git', '-C', WEB, 'status', '--porcelain'], capture_output=True, text=True).stdout.strip()
     if not st:
