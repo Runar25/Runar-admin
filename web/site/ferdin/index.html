@@ -3,8 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>The journey with Rúnar · preview</title>
-<!-- 2026-10-19 CODE-web: NÁHLED stránky „The journey with Rúnar“ (DECISIONS 2026-10-19 (7)) — nevydává se, vzhled okna v appce čeká na ownera.
+<meta name="robots" content="noindex,nofollow">
+<title>Rúnar · Gakktu með Rúnari</title>
+<!-- 2026-10-19 CODE-web: stránka „The journey with Rúnar“ (DECISIONS 2026-10-19 (7)). Od 2026-10-21 na therunekeeper.com/ferdin/,
+     zatím SKRYTÁ (noindex, bez odkazu z landingu) — owner ji chce vyladit naostro, než se spustí.
      Verze 4 (týž den). v1 = vlastní vzhled, účty vedle sebe, kameny na čárkované cestě („grafika neodpovídá tomu, co je Rúnar“);
      v2 = celé ze tříd appky pod sebou s portrétem („moc dlouhá, Rúnar se tam nevleze“); v3 = v1 v kartách appky, kámen na rámečku
      („ty kameny se ti fakt nepovedly… líbila se mi první verze, tohle je hybrid“). → Tady v1 beze změny rozložení (bez karet, kameny
@@ -13,15 +15,15 @@
      která na přechodu pozadí appky byla vidět.
      Značky účtů (DECISIONS 2026-10-19 (8)) a texty (UI_TEXT journey_*, IS sada CODE-read) bere z appky: kamenUctuSvg / kamenUctuVystred
      v runar-utils.js (CODE-tune), bez pohybu (owner schválil pohyb jen pro „you are here“ v appce). Výpis = tierFeatures(), TIERS, CARD_PACKS.
-     Náhled načítá appku z pracovního stromu (../../v2/), ať je vidět hned; vydaná stránka ji načte z živé adresy jako landing.
+     Appku načítá z živé adresy jako landing (do 2026-10-21 byl náhled ve web/nahled/ a četl pracovní strom).
      Nová věta jen J_CARD (sekce karty; IS ověřena Greynirem a korpusem 2026-10-19). journey_web_note a druhá věta journey_card_note
      jsou jen pro appku (CODE-read) — web je nepoužívá.
      2026-10-20 (owner): záložka Rúnakort = volitelné dlaždice balíčků + velký náhled karty (vzhled a balíček), kresba karty sdílená
-     s /kort/ (../site/runakort.css|js); „Coming soon“ u účtů pryč; tlačítka = .btn-upgrade appky, všechna stejně široká.
+     s /kort/ (../runakort.css|js); „Coming soon“ u účtů pryč; tlačítka = .btn-upgrade appky, všechna stejně široká.
      Ceny předplatného z configu: TIERS.*.price_isk_month / price_isk_year (do 2026-10-19 tu byla dočasná kopie z RUNAR_PRICING). -->
-<link rel="stylesheet" href="../../v2/fonts/fonts.css">
-<link rel="stylesheet" href="../../v2/runar-reader.css">
-<link rel="stylesheet" href="../site/runakort.css">
+<link rel="stylesheet" href="https://runar25.github.io/Runar-admin/v2/fonts/fonts.css">
+<link rel="stylesheet" href="https://runar25.github.io/Runar-admin/v2/runar-reader.css">
+<link rel="stylesheet" href="../runakort.css">
 <style>
 .j-lang button{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:3px;background:none;border:none;color:var(--gold);opacity:.5;cursor:pointer;margin-left:14px}
 .j-lang button.on{opacity:.9}
@@ -79,7 +81,7 @@
 </head>
 <body>
 <header class="topbar"><div class="topbar-inner">
-  <a class="brand" href="../site/">AGNDOFA</a>
+  <a class="brand" href="/">AGNDOFA</a>
   <span class="j-lang"><button data-l="is">IS</button><button data-l="en">EN</button></span>
 </div></header>
 <div class="j-page">
@@ -95,12 +97,12 @@
   <div class="j-foot" data-k="journey_foot"></div>
 </div>
 
-<script src="../../v2/runar-config.js"></script>
-<script src="../../v2/runar-runes.js"></script>
-<script src="../../v2/runar-translations.js"></script>
-<script src="../../v2/runar-svgs.js"></script>
-<script src="../../v2/runar-utils.js"></script>
-<script src="../site/runakort.js"></script>
+<script src="https://runar25.github.io/Runar-admin/v2/runar-config.js"></script>
+<script src="https://runar25.github.io/Runar-admin/v2/runar-runes.js"></script>
+<script src="https://runar25.github.io/Runar-admin/v2/runar-translations.js"></script>
+<script src="https://runar25.github.io/Runar-admin/v2/runar-svgs.js"></script>
+<script src="https://runar25.github.io/Runar-admin/v2/runar-utils.js"></script>
+<script src="../runakort.js"></script>
 <script>
 // Jediná nová věta stránky (sekce karty); IS ověřena 2026-10-19: Greynir OK, „rennur aldrei út“ 37×, „kaupa handa“ 2957×, „gefðu það“ 43×.
 var J_CARD = { en: 'No subscription, and the card never expires. Buy it for yourself, or give it to someone.',
