@@ -113,6 +113,11 @@ PRIPADY = [
  ('chyti', 'verify_canonical_files.js', 'RUNAR_PROTI.md', 'create', '', '# podstrčený neverzovaný kanonický doc\n'),
  ('nesmi', 'verify_canonical_files.js', 'RUNAR_PROTI_CERSTVY.md', 'create_cerstvy', '', '# právě rozepsaný doc (rozdělaná práce)\n'),
  ('chyti', 'verify_doc_length.js', 'RUNAR_PRIVACY.md', 'append', '', ''.join('\nřádek %d navíc' % i for i in range(300))),
+ # 2026-10-21 (DECISIONS 2026-10-21 (4)): CLAUDE.md — historie a strop v bajtech; odkaz na záznam s datem historie není
+ ('chyti', 'verify_doc_length.js', 'CLAUDE.md', 'append', '', '\nZ historie: do 2026-01-01 tu st' + 'álo něco jiného.\n'),
+ ('chyti', 'verify_doc_length.js', 'CLAUDE.md', 'append', '', '\nPravidlo: ' + 'x' * 6000 + '\n'),
+ ('chyti', 'verify_doc_length.js', 'CLAUDE.md', 'append', '', '\nJak řekl KUKY 2026' + '-01-01: tohle.\n'),
+ ('nesmi', 'verify_doc_length.js', 'CLAUDE.md', 'append', '', '\nDůvod → RUNAR_DECISIONS.md 2026-10-21 (4).\n'),
  # kolo 3 / 4c (2026-10-11): jednorázové mutace z hlaviček kontrol převedené na opakované útoky (oprava (45))
  ('chyti', 'verify_image_pin.js', 'v2/runar-reading.js', 'replace', 'IMG_PIN = admin ? _imgPinMapa() : null;', 'IMG_PIN = _imgPinMapa();'),
  # zvolený obraz začne čerpat sáček (pin se uplatňuje dvakrát — `cand = [pin.row]` i `hit = pin.row`; mutace jen `cand` chování nemění)

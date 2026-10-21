@@ -12028,3 +12028,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   jeden krátký řádek, všechny odkazy zůstávají (79, `verify_memory_index`), v rozcestníku nové docs a Dverg Tarot.
 - **Ověřeno:** smoke 94/94, `protipriklady.py --vse` všechny útoky prošly, hook vytáhne každé § z nového souboru.
 - Affected doc(s): `CLAUDE.md`, `memory/MEMORY.md`, `docs/pravidla-duvody.md` (nový), `docs/projekt-mapa.md` (nový) — v témže commitu.
+
+## 2026-10-21 (4) — CLAUDE.md drží stroj: strop 32 000 B a zákaz historie, zastaví už commit
+
+- **Rozhodl:** owner 2026-10-21 na otázky z (3) *„11. ano 12. ano“* (11 = strop velikosti, který zastaví push; 12 = odmítnout zápis historie).
+- **Proč:** po (3) zbylo jen pravidlo v próze (§28) — a próza CLAUDE.md nezastavila ani předtím (59 KB, ač §20 stálo celou dobu). Fungují
+  jen věci, které zastaví čin (hooky na sdílené docy, pre-push).
+- **Co:** `scripts/verify_doc_length.js` (smoke ㉝) — CLAUDE.md nad 32 000 B nebo řádek s „do <datum> tu stálo“, „Doloženo“, „KUKY <datum>“
+  = FAIL s cestou; zařazeno i do rychlých kontrol při commitu (`scripts/utils/rychle_kontroly.py`), takže commit CLAUDE.md s vadou neprojde
+  (útok v `verify_rychle_kontroly.py` + 4 v `protipriklady.py`). Mapa nosičů: §28.
+- **Hranice:** hlídá jen tvar (vzory a velikost); historii jinými slovy nepozná. Zastavuje při commitu, ne v okamžiku zápisu do souboru —
+  všechny cesty zápisu (cv.zapis, uprav, Cowork přes CODE) se sejdou až v commitu.
+- Affected doc(s): žádný jiný (pravidlo §28 v CLAUDE.md už stojí z (3)).
