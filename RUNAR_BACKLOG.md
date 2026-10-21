@@ -1391,12 +1391,8 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
 - [x] ✅ *(CODE-tune 2026-10-19, fff8649)* QR na kartě (`runar-reader.html#kort=<KÓD>`) kód v appce předvyplní; uplatní ho člověk.
 - [x] ✅ *(CODE-tune 2026-10-19; SQL pustil owner týž den)* **Shrine: tisk dávky fyzických karet** — dávka ukládá `form='physical'`, `design`,
   `lang`, `channel`, `complimentary`; každý kód odkazuje na svou kartu k tisku na webu CODE-web (`therunekeeper.com/kort/`), CSV nese odkaz.
-### Karty run s dvergy — další produkt (owner 2026-10-20, DECISIONS 2026-10-20 (9))
-- [ ] **Návrh v0 čeká na ownera** (Cowork 2026-10-18, do té doby jen v nesledované složce; teď `docs/inbox/rune-cards/`): `NAVRH_trpaslici-
-  karty_v0_diskuse.md` (cs, `_old-cs/`) · `DWARVES_25_characterizations_v0_EN.md` · `ISA_scene_study_v0_EN.md`. Owner: *„další produkt jako
-  doplněk k Rúnarovi, ale i jako samostatná věc — pro někoho, kdo chce runové karty a udělat si čtení pro sebe, nebo při vybrání karty si ji
-  nechat přečíst od Rúnara.“* Zbývá: schválit přiřazení run → dverg; 12 pracovních jmen zapsat do katalogu v RUNAR_DESIGN a ověřit IS
-  tvary (§2); Sowilo / Dagaz (Cowork: Suðri na kraji stínu, Þjóðreyrir na prahu úsvitu); jak karta vede do appky (tah karty → čtení Rúnarem).
+### Karty run s dvergy (Dverg Tarot) — samostatný produkt mimo Rúnara (owner 2026-10-21, DECISIONS 2026-10-21 (2))
+- Vlastní složka a vlastní seznam otevřených věcí: `dverg-tarot/README.md`. Tady se nevede (§20).
 ### Karty run ke stažení — HANDOFF67, 68 (soubory od 2026-10-20 v `docs/inbox/rune-cards/`)
 - [ ] Owner: název · zadní strana (AGNDOFA) · 24 textů (rady proti `RUNAR_POPISY_RUN.md`) · kde vyhodit dvojí citát · originál fotky.
 - [ ] Až karty půjdou opakovaně (IS, tiskárna): generátor do repa nad `v2/runar-runes.js`, `v2/runar-svgs.js`, `v2/fonts/fonts.css`

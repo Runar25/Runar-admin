@@ -12000,3 +12000,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   obrazovku (formulář je pod fotkou) a jen když není otevřené okno; svítí jen svíčka, ne nápis (`_svickaPriOtevreni`, `runar-app.js`).
 - **Výklad „A“:** svíčka A1 (bez misky a bez paprsků) — rozzáření jí dá život, paprsky A3 by byly navíc. Jiná varianta = výměna jedné kresby.
 - Affected doc(s): žádný jiný.
+
+## 2026-10-21 (2) — Dverg Tarot oddělen od Rúnara: vlastní složka `dverg-tarot/`, vlastní lane; opravuje 2026-10-20 (9)
+
+- **Rozhodl:** owner 2026-10-21: *„jde o produkt, který toho moc společného s appkou a Rúnarem nemá. nemá být použit pro tvorbu Rúnara.
+  klidně to pořádně odděl, tak aby se to nepletlo. já to chci mít hlavně někde zapsané, aby se to neztratilo … dvergové budou na kartách
+  vyobrazení … v situacích, které mají vystihovat meaning runy, přesně jako v tarot kartách. já potřebuju všech 25 run. může k nim přidat
+  ještě další postavy jako Freya … dverg tarot oddělíme tak, aby na tom mohl pracovat někdo jiný než vy 4 code.“*
+- **Co:** podklady (Cowork 2026-10-18) z `docs/inbox/rune-cards/` → `dverg-tarot/` s README (co to je, hranice, vzhled z Rúnara jen jako
+  předloha, postup, otevřené věci); všech 25 run má dverga (Rúnarova pravidla „dverg pod runou“ a „světelné runy bez dverga“ tu neplatí);
+  RUNAR_DESIGN a BACKLOG jen ukazatel; v CLAUDE.md lane `[dverg]`. Opravuje (9) z 2026-10-20 („doplněk k Rúnarovi“, „jména do katalogu
+  v RUNAR_DESIGN“) — neplatí. Karty run ke stažení (2026-10-18 (4)) zůstávají v `docs/inbox/rune-cards/`, ty k Rúnarovi patří.
+- **Cestou opraveno:** `core.autocrlf` v bc2d988 převedl konce řádků uvnitř PDF a JPG karet (cover_photo.jpg 276 440 × 276 442 B) →
+  `.gitattributes` *.pdf / *.jpg / *.png … binary, soubory znovu nahrány, otisky ověřeny (174cdb5).
+- Affected doc(s): `RUNAR_DESIGN.md`, `RUNAR_BACKLOG.md`, `CLAUDE.md` — v témže commitu.
