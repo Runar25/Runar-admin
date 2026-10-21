@@ -12093,3 +12093,23 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   přešla z `web/site/` do `v2/runar-runakort.js` / `.css` (+ `v2/img/`), web ji čte odsud (návrh CODE-web; jedno místo, §20).
 - **Proč:** značka má vést tam, kde Rúnar bydlí, ne do e-shopu, kde se Rúnar neprodává; karta v appce ukáže, co si člověk kupuje.
 - Affected doc(s): `CLAUDE.md` (soubory, pořadí načítání) — v témže commitu.
+
+## 2026-10-21 (9) — Nižší účet až od konce období; vracení peněz podle islandského zákona 16/2016 (14 dní, poměrně)
+
+- **Rozhodl:** owner 2026-10-21 na otázku „jak může účet downgradovat … jak to budeme řešit, pokud někdo požádá o vrácení peněz?“
+  → návrh CODE-tune *„6. ano 7. ano 8. ano“* (8 = CODE-tune přečte zákon sám a pravidla upřesní).
+- **Nižší účet:** přechod platí od konce zaplaceného období (měsíc / rok); do té doby zůstává vše zaplacené; poměrně se nevrací. Technicky
+  změna plánu v portálu platební brány, server sníží účet podle její zprávy na konci období (brána ještě nevybrána — Shopify / Rapyd).
+- **Vracení peněz** — ověřeno proti zákonu 16/2016 (lög um neytendasamninga, althingi.is, znění 2026-10-21): 14 dní na odstoupení bez
+  udání důvodu od uzavření smlouvy o službě (16., 17. gr.); peníze zpět do 14 dní stejným platebním prostředkem (21. gr.); kdo si
+  vyžádal začátek služby ve lhůtě, zaplatí poměrnou část podle toho, co už dostal (23. gr.); výjimka jen pro službu poskytnutou CELOU
+  s výslovným předchozím souhlasem a potvrzením ztráty práva (18. gr. a), a pro digitální obsah bez hmotného nosiče se stejným souhlasem
+  (18. gr. m). Bez poučení o právu na odstoupení se lhůta prodlužuje o 12 měsíců (17. gr.).
+  - **Rúnakort, kód nepoužitý:** do 14 dní plné vrácení, kód se zruší.
+  - **Rúnakort, kód použitý:** do 14 dní vrácení **nevyčerpané části** (kredity, které zbývají). Celá vyčerpaná karta se souhlasem
+    u nákupu („chci začít hned, beru na vědomí ztrátu práva“) → nic. *Upřesnění proti návrhu 2026-10-21 („použitá karta se souhlasem =
+    nic“): zákon výjimku dává jen u služby poskytnuté celé (18. gr. a), u částečně použité platí poměr (23. gr.).*
+  - **Předplatné do 14 dní:** vrácení po odečtení poměrné části; po 14 dnech jen zrušení ke konci období.
+- **Neověřeno / otevřené:** čím se měří „poměrná část“ u předplatného (čas, nebo vyčerpaná čtení — zákon říká „podle toho, co bylo
+  dodáno“); zda Rúnakort je služba, nebo digitální obsah (pravidla výš platí pro oba případy).
+- Affected doc(s): `RUNAR_BACKLOG.md` (úkoly před spuštěním plateb) — v témže commitu.
