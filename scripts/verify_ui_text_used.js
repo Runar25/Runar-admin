@@ -19,6 +19,8 @@ function ctene_webem(src) {
   const out = new Set();
   for (const m of src.matchAll(/data-k="([A-Za-z0-9_]+)"/g)) out.add(m[1]);
   for (const m of src.matchAll(/\bT\.([A-Za-z_][A-Za-z0-9_]*)/g)) out.add(m[1]);
+  for (const m of src.matchAll(/\bU\.([a-z][A-Za-z0-9_]*)/g)) out.add(m[1]);                    // podstránky: U = UI_TEXT[LANG]
+  for (const m of src.matchAll(/\btp?\(\s*'([a-z][A-Za-z0-9_]*)'/g)) out.add(m[1]);           // tp('klíč') / t('klíč')
   return [...out];
 }
 
@@ -57,7 +59,11 @@ const ctx = { console, window: {} };
 vm.createContext(ctx);
 for (const f of ['runar-config.js', 'runar-runes.js', 'runar-translations.js']) vm.runInContext(fs.readFileSync(path.join(V2, f), 'utf8'), ctx);
 const keys = Object.keys(vm.runInContext('UI_TEXT.en', ctx));
-const webSrc = fs.existsSync(WEB) ? fs.readdirSync(WEB).filter((f) => /\.html$/.test(f)).map((f) => fs.readFileSync(path.join(WEB, f), 'utf8')).join('\n') : '';
+function htmlStrom(d) {   // všechny .html pod web/site včetně podsložek (stránky /ferdin/, /heim/, /kort/)
+  return fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => e.isDirectory() ? htmlStrom(path.join(d, e.name))
+    : /\.html$/.test(e.name) ? [path.join(d, e.name)] : []);
+}
+const webSrc = fs.existsSync(WEB) ? htmlStrom(WEB).map((f) => fs.readFileSync(f, 'utf8')).join('\n') : '';
 const src = fs.readdirSync(V2).filter((f) => /\.(js|html)$/.test(f) && f !== 'runar-translations.js')
   .map((f) => fs.readFileSync(path.join(V2, f), 'utf8')).join('\n') + '\n' + webSrc;
 const chybi = ctene_webem(webSrc).filter((k) => !keys.includes(k));
