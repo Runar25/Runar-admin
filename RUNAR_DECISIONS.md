@@ -12218,3 +12218,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   nepodařilo poslat, zkus to za chvíli, nebo napiš na runar@therunekeeper.com), technický text jen do konzole; (3) 401 → otevřít přihlášení
   s výzvou přihlásit se znovu.
 - Affected doc(s): žádný jiný.
+
+## 2026-10-22 (10) — Data, která rostou: hlášení 12 měsíců po vyřešení; historie plánovače a provozní události do registru mazání; hlas dál po dobu účtu
+
+- **Rozhodl:** owner 2026-10-22 na kolo (a) průchodu CODE-read (katalog produkční DB, jen čtení): *„6. po celou dobu účtu 7. ano, předej 8. 12 měsíců“*.
+- **Stav (2026-10-22):** DB 17 MB (čtení ~2 kB/kus, 596 čtení); uložený hlas ~0,5 MB/čtení (reading-voice) — jediné, co poroste znatelně
+  (Free 1 GB ≈ 2 000 hlasů; Pro 100 GB). Bez mazání: `cron.job_run_details` (~100 řádků/den, hlídání po 15 min) a `ops_events`. Samy se
+  uklízejí: `net._http_response`, `rate_limits`.
+- **Co:** (6) uložený hlas zůstává po dobu účtu (potvrzení 2026-10-11 (61)); úložiště přibude do registru kvót (2026-10-22 (6)).
+  (7) CODE-tune: mazání `cron.job_run_details` a `ops_events` (lhůta podle provozu, např. 30 / 90 dní) jako řádky registru `MAZANI` s hlášením
+  „purge“. (8) hlášení z appky (`bug_reports` mimo typ `message`) se smažou 12 měsíců po vyřešení (stav `fixed`, `resolved_at`); nevyřešená
+  zůstávají do vyřešení. Do toho dne „doba uchování nerozhodnuta“ (RUNAR_PRIVACY). Mazání téže cesty jako zprávy čtenářů (registr `MAZANI`),
+  zásady EN + IS doplní CODE-tune (BACKLOG „Před veřejným spuštěním“, bod 8).
+- Affected doc(s): `RUNAR_PRIVACY.md` (hlášení testerů — doba uchování) — v témže commitu.
