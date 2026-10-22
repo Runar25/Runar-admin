@@ -6,10 +6,10 @@
 // ═══════════════════════════════════════════════════════
 
 // ─── DB: JOURNAL ─────────────────────────────────────────
-// Limit podle tieru: z TIER_LIMITS configu — Rule §8
+// Limit podle tieru: TIERS.*.journal (číslo = posledních N, null = celý deník) — jediné místo (§10; 2026-10-22 bez TIER_LIMITS).
 function journalLimit() {
-  if (userTier === 'standard' || userTier === 'premium') return null;
-  return TIER_LIMITS.rune_seeker.journal_entries;  // zmenit v runar-config.js
+  var j = (TIERS[normalizeTier(userTier)] || TIERS.rune_seeker).journal;
+  return (typeof j === 'number' && j > 0) ? j : null;
 }
 
 async function loadJournal() {
@@ -262,8 +262,11 @@ function renderJournal(entries) {
 }
 
 // Teaser pro rune_seeker — kolik čtení celkem mají v DB
+// 2026-10-22 (DECISIONS 2026-10-22 (3) bod 5): věta, že vyšší účet má celý deník, VŽDY (do té doby až od 6. čtení) —
+// nižší účet má vědět, co vyšší dostane. S počtem, když je čtení víc, než deník ukáže.
 async function updateJournalTeaser() {
-  if (userTier === 'standard' || userTier === 'premium') return;
+  var lim = journalLimit();
+  if (lim === null) return;
   const teaser = document.getElementById('journal-standard-teaser');
   const txt    = document.getElementById('journal-teaser-txt');
   if (!teaser || !txt || !currentUser) return;
@@ -271,11 +274,11 @@ async function updateJournalTeaser() {
     const { count } = await sb.from('readings')
       .select('id', { count: 'exact', head: true })
       .eq('user_id', currentUser.id);
-    if (count && count > 5) {
-      // 2026-09-30: text z překladů (dřív natvrdo tady, druhá kopie journal_teaser); IS tarif ve 4. pádě („yfir í Vegfaranda“).
-      txt.innerHTML = tp('journal_teaser_count', { count: count, tier: tierLabel('standard', lang, 'acc') });
-      teaser.style.display = 'block';
-    }
+    // 2026-09-30: text z překladů (dřív natvrdo tady, druhá kopie journal_teaser); IS tarif ve 4. pádě („yfir í Vegfaranda“).
+    txt.innerHTML = (count && count > lim)
+      ? tp('journal_teaser_count', { count: count, tier: tierLabel('standard', lang, 'acc') })
+      : tp('journal_teaser', { tier: tierLabel('standard', lang, 'acc') });
+    teaser.style.display = 'block';
   } catch { /* silent */ }
 }
 

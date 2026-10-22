@@ -198,12 +198,10 @@ const TIERS = {
     // ↓ VOICE FLAGS — flip here to enable/disable without touching logic
     // voice_monthly: návštěvník živý hlas NEMÁ — čtení od 2026-08-02 nedostane a elevenlabs-proxy nepřihlášeného odmítne (401).
     // 2026-10-10 false; do té doby true s komentářem, že návštěvník slyší hlas u svého čtení (neplatilo, CODE-read, DECISIONS (42)).
-    // canUseVoice() sem padá i pro neznámý tier, takže „bez hlasu“ je i bezpečnější výchozí. Audio v Kolekci = voice_static.
+    // canUseVoice() sem padá i pro neznámý tier, takže „bez hlasu“ je i bezpečnější výchozí.
     voice_monthly:    false,
     voice_credits:    false,      // n/a pro Visitor (nemůže mít kredity)
-    voice_static:     true,       // pre-generované audio v Collection
     journal:          false,
-    ceremonial:       false,
     asks_per_reading: 0,   // Ask otázek na jedno čtení, všechny zdarma (KUKY 2026-09-24); 0 = Ask jen jako teaser; JEDINÁ pravda o Asku tieru (2026-09-26)
     reading_thought:  false,   // myšlenka ✦ na konec čtení (KUKY 2026-09-30: „Standard a Premium“); čte _thoughtFor v runar-reading.js
     languages:        ['en', 'is'],
@@ -219,9 +217,7 @@ const TIERS = {
     // Až budeme limitovat: flip na false → hlas jen při kreditech
     voice_monthly:    true,       // ← aktuálně otevřeno; připraveno pro gating
     voice_credits:    true,       // hlas při kreditním čtení — vždy
-    voice_static:     true,       // pre-generované audio v Collection
     journal:          5,          // last N readings
-    ceremonial:       false,
     asks_per_reading: 0,   // Ask otázek na jedno čtení, všechny zdarma (KUKY 2026-09-24); 0 = Ask jen jako teaser; JEDINÁ pravda o Asku tieru (2026-09-26)
     reading_thought:  false,   // myšlenka ✦ na konec čtení (KUKY 2026-09-30: „Standard a Premium“); čte _thoughtFor v runar-reading.js
     languages:        ['en', 'is'],
@@ -238,9 +234,7 @@ const TIERS = {
     price_isk_year:   34800,
     voice_monthly:    true,
     voice_credits:    true,
-    voice_static:     true,
     journal:          null,
-    ceremonial:       false,
     asks_per_reading: 1,   // Ask otázek na jedno čtení, všechny zdarma (KUKY 2026-09-24); 0 = Ask jen jako teaser; JEDINÁ pravda o Asku tieru (2026-09-26)
     reading_thought:  true,   // myšlenka ✦ na konec čtení (KUKY 2026-09-30: „Standard a Premium“); čte _thoughtFor v runar-reading.js
     languages:        ['en', 'is'],
@@ -257,14 +251,10 @@ const TIERS = {
     price_isk_year:   49000,
     voice_monthly:    true,
     voice_credits:    true,
-    voice_static:     true,
     journal:          null,
-    ceremonial:       true,
     asks_per_reading: 2,   // Ask otázek na jedno čtení, všechny zdarma (KUKY 2026-09-24); 0 = Ask jen jako teaser; JEDINÁ pravda o Asku tieru (2026-09-26)
     reading_thought:  true,   // myšlenka ✦ na konec čtení (KUKY 2026-09-30: „Standard a Premium“); čte _thoughtFor v runar-reading.js
     languages:        ['en', 'is'],
-    physical_unlock:  true,       // QR/NFC product linking
-    seasonal_content: true,       // solstices, equinoxes, lunar events
   },
 };
 
@@ -373,21 +363,21 @@ const TIER_LIMITS = {
   },
   rune_seeker: {
     onboarding:   1,     // 1 free reading at registration
+    // 2026-10-22 (DECISIONS 2026-10-22 (3) bod 6): limit deníku jen v TIERS.*.journal — journal_entries zde (tatáž 5) zrušeno.
+    // Příznaky voice_static / ceremonial / physical_unlock / seasonal_content z TIERS taky pryč: nic je nečetlo (grep v2/,
+    // supabase/), ceremonial navíc tvrdil „jen Wanderer“, přitom Yggdrasil mají všichni přihlášení (2026-07-18).
     // Volné čtení má zúžené volby: prvních N oblastí a hledání (_volneCteniDalsi, runar-app.js). Do 2026-10-13 natvrdo 3 a 1 v buildPills (§10).
     free_reading_areas: 3,
     free_reading_seeks: 1,
-    journal_entries: 5,
     onboarding_label_en: 'one free reading',
     onboarding_label_is: 'ein ókeypis spá',   // 2026-10-10: „frjáls“ = svobodný (kalk z EN „free“), zdarma = ókeypis („ókeypis aðgangur“ 596×)
     // panel_props + journal_label_* ODEBRÁNY 2026-09-26 — výpis featur skládá tierFeatures() z TIER_FEATURES (níž).
   },
   standard: {
     onboarding:    null,
-    journal_entries: null,
   },
   premium: {
     onboarding:    null,
-    journal_entries: null,
   },
 };
 
@@ -426,7 +416,7 @@ function cardPackName(p, lng) {
 // přihlášený), Ceremonial mode (nepostaveno), The Gathering (nahrazuje se), Ask chyběl úplně, čísla opsaná natvrdo.
 // Jak to funguje: každá featura = JEDEN řádek níž; `hodnota(tier, id)` čte nastavení tieru a vrací null (featura se neukáže) nebo
 // hodnotu, ze které `en`/`is` složí větu. Číslo v nastavení se změní → věta se změní sama. Nová featura = nový řádek; zrušená =
-// smazat řádek nebo vypnout její flag v TIERS. Nepostavené věci (ceremonial, seasonal_content, physical_unlock) tu ŘÁDEK NEMAJÍ —
+// smazat řádek nebo vypnout její flag v TIERS. Nepostavené věci (obřad, sezónní obsah, propojení s fyzickým produktem) tu ŘÁDEK NEMAJÍ —
 // přibude, až budou postavené a budou mít ověřenou islandštinu.
 // Premium: řádky, které má stejné jako Standard, se složí do „Everything a Rune Walker has.“ (TIER_FEATURES_BASE).
 // IS šablony počítají s ženským „spá“ (VOCAB.cast, i `is_acc_def` + „þína“) — kdyby se slovo změnilo, přečíst znovu pády.

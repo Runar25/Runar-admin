@@ -785,6 +785,18 @@ function _paintThought(afterId, thought) {
   var el = document.getElementById('reading-thought');
   if (!el) { el = document.createElement('p'); el.id = 'reading-thought'; el.className = 'reading-thought'; }
   var kotva = document.getElementById(afterId);
+  el.className = 'reading-thought';
+  // 2026-10-22 (DECISIONS 2026-10-22 (3) bod 5): účet bez myšlenky ji vidí jako teaser — nejnižší účet, který ji má (TIERS).
+  if (!thought && kotva && currentUser && !_thoughtAllowed()) {
+    var vyssi = ['rune_seeker', 'standard', 'premium'].filter(function (x) { return (TIERS[x] || {}).reading_thought; })[0];
+    if (vyssi) {
+      kotva.after(el);
+      el.className = 'ask-teaser';   // vzhled jako teaser Asku (vzor zamčeného Asku Rune Seekera)
+      el.textContent = '\u2726 ' + tp('thought_teaser', { tier: tierLabel(vyssi, lang, 'dat') });
+      el.style.display = '';
+      return;
+    }
+  }
   if (!thought || !kotva) { el.textContent = ''; el.style.display = 'none'; return; }
   kotva.after(el);
   el.textContent = '\u2726 ' + thought;
