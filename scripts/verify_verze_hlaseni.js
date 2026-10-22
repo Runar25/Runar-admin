@@ -117,7 +117,12 @@ const srv = http.createServer((req, res) => {
     // 2. worker se zaregistruje a převezme okno (první převzetí: bez výzvy a bez nového načtení, runar-auth.js)
     await cmd('Page.navigate', { url: URL_APP });
     const ma = await cekej(`!!(navigator.serviceWorker && navigator.serviceWorker.controller) && ${pripraven}`, 30000);
-    await sleep(1500); await cekej(pripraven);   // případné samo-načtení po převzetí okna
+    await sleep(1500); await cekej(pripraven);
+    // druhá návštěva: stránka načtená POD workerem (jako další otevření appky). Do 2026-10-22 ji obstaral samo-reload po převzetí okna;
+    // bez ní by se sw.js přes worker nikdy nestáhl a vada „sw.js z cache“ (útok v protipriklady.py) by prošla.
+    await cmd('Page.navigate', { url: URL_APP });
+    await cekej(pripraven);
+    await cekej(`window._reportVersion() !== 'unknown'`, 5000);
     const r2 = await odesli();
     rekni(ma && r2 && r2.worker && r2.app_version === vN, '(B) 2. pod workerem: „' + vN + '“', JSON.stringify(r2));
 
