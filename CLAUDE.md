@@ -29,6 +29,7 @@ runar-auth.js         — updateAuthUI(), PWA, sign-in, redeem
 runar-reading.js      — startReading(), _generateReading(), generateVoice()
 runar-app.js          — state, DB init, fetchUserProfile(), showAppTab()
 runar-reporter.js     — in-app hlášení od testerů (bug_reports) · jen reader
+runar-client-errors.js — chyby JS u uživatelů → edge fn client-error (ops_events client_error) · jen reader, hned po configu
 runar-verze.js        — verze běžícího kódu pro hlášení (GENEROVANÉ hooks/pre-commit.py při bumpu sw.js, needitovat) · jen reader
 runar-rune-popup.js   — ťuknutí na glyf runy ve čtení → popup se jménem a významem · jen reader
 runar-helper.js       — nápověda „?" (bublina: glyf-tap, Ask) + hesla zrcadla v UI_TEXT · jen reader
@@ -49,7 +50,7 @@ sw.js                 — Service Worker (auto-bump via git hook · hooks/pre-co
 
 ### Load order
 ```
-runar-config.js → runar-runes.js → [reader: runar-names.js → runar-names-registry.js] → runar-translations.js → runar-character.js
+runar-config.js → [reader: runar-client-errors.js] → runar-runes.js → [reader: runar-names.js → runar-names-registry.js] → runar-translations.js → runar-character.js
 → runar-utils.js → runar-svgs.js → [reader: runar-runakort.js]
 → [reader]: runar-journal.js → runar-tree.js
             → runar-auth.js → runar-reading.js → runar-app.js

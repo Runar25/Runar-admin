@@ -118,6 +118,10 @@ a souhlasí na pravdivém textu. Detail → `RUNAR_DECISIONS.md` 2026-09-11 (8).
   politika `bug_reports_insert` → `authenticated`, `RUNAR_BACKLOG.md` „Kontrola architektury“, bod 9). **Doba uchování: 12 měsíců po vyřešení**
   (stav `fixed`), nevyřešená do vyřešení (owner 2026-10-22, DECISIONS 2026-10-22 (10)). Maže denně `public.purge_ops_data()` (pg_cron,
   `sql/2026-10-22_mazani_provoz.sql`, úloha `reports_db` v MAZANI — běží, až ji owner spustí); zásady EN + IS mají řádek v tabulce dat.
+- **Chyby appky u uživatelů (`ops_events` kind `client_error`, od 2026-10-22, DECISIONS 2026-10-22 (11)):** text chyby ≤ 200 znaků bez e-mailů,
+  adres a dlouhých čísel (čistí `v2/runar-client-errors.js` i edge fn `client-error`), náš soubor a řádek, verze, obrazovka, jazyk, přihlášený
+  ano/ne — žádné id, e-mail ani text čtení. Smaže se po 90 dnech (úloha `ops_events`, `sql/2026-10-22_mazani_provoz.sql`). IP jen v klíči limitu
+  četnosti (`rate_limits`, jako dárkové kódy). Zásady EN + IS: dva řádky v tabulce dat.
 - **Zprávy čtenářů (`bug_reports`, typ `message`, od 2026-10-15):** smažou se 6 měsíců po poslední odpovědi, bez odpovědi po přijetí.
   DB denně `public.purge_reader_messages()` (pg_cron, `sql/2026-10-16_mazani_hlasi.sql`); kopie ve schránce runar@ (štítek Messages)
   přesouvá do koše týdenní plánovaná úloha Claude (`scripts/ulohy/zpravy-gmail.md`), koš Gmailu se vysype po 30 dnech. Každé mazání

@@ -1,8 +1,8 @@
-// Rúnar Service Worker — v794
+// Rúnar Service Worker — v795
 // HTML: network-first (always fresh). JS/CSS/icons: cache-first (fast, offline ok).
 // External (Supabase, ElevenLabs, fonts): pass-through, never intercepted.
 
-const CACHE = 'runar-v794';
+const CACHE = 'runar-v795';
 const JS_SHELL = [
   '/Runar-admin/v2/runar-reader.css',
   '/Runar-admin/v2/runar-utils.js',
@@ -14,6 +14,7 @@ const JS_SHELL = [
   '/Runar-admin/v2/runar-reading.js',
   '/Runar-admin/v2/runar-app.js',
   '/Runar-admin/v2/runar-config.js',
+  '/Runar-admin/v2/runar-client-errors.js',   // 2026-10-22: chyby appky → client-error
   '/Runar-admin/v2/runar-runes.js',
   '/Runar-admin/v2/runar-translations.js',
   '/Runar-admin/v2/runar-character.js',
