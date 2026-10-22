@@ -64,6 +64,8 @@ Rúnar nepředpověděl ani neutěšil — *„Perth cannot tell you whether you
 *„the wait can carry real weight … it does not make what is at stake any smaller“* — hranice a soucit v jedné větě, stavěné jako
 SMĚNA (bod 4). ⚠️ Táž forma „runa neřekne“ je jinde vada (pojistka, RUNAR_EVAL_LOG 2026-10-06 (7)); tady odpovídá na žádost
 o věštbu. Hypotéza, n = 1: forma je správná, když otázka chce předpověď, a vadná jako únik u běžné otázky — neměřeno.
+Owner k mým výtkám téhož čtení: ✦ *„Can you leave room for what has not shown itself?“* — *„úplně v pohodě“* (ano/ne otázka
+k zamyšlení tedy nemusí stavět před volbu jako bod 2); „Perth cannot tell you“ u otázky po budoucnosti — *„taky dobrý“*.
 
 **Vrstvy kvality:** obraz (vidím to místo) → runa (co runa je) → otázka (význam dokončí člověk).
 Souvisí: [[always-show-reading-samples]] · [[copy-always-in-runar-voice]].
