@@ -695,6 +695,10 @@ promptu v `claude-proxy` (už ověřuje přihlášení a odečítá kredity; pro
    - [ ] **F3 přepnout:** server skládá sám — appka posílá jen vstupy (+ tah run); myšlenka ✦ (`_thoughtFor`, runar-reading.js) a připomínka
      délky do jedné skládací funkce v balíčku; sáček obrazů, poslední motiv a obraz z localStorage do DB (tabulka na uživatele); náhoda na
      serveru; `prompt_draws` zapisuje server z losu. Zavře „libovolný prompt“ (níž).
+     **Připsáno 2026-10-22 (owner „6. ano, připiš to tune“, kolo (b) průchodu CODE-read — kde server věří prohlížeči):** (a) cenu čtení
+     (`spread_cost`) server spočítá z typu čtení, které sám skládá (`SPREAD_COSTS`), ne z čísla od prohlížeče — dnes zaplatí upravený
+     prohlížeč Yggdrasil jako jednu runu (známé od 2026-10-09 (18)); (b) `rune_name`, `rune_glyph` a popis spreadu (`rune_display`) do deníku
+     zapíše server z vlastního losu, ne z `journal` od prohlížeče (dnes jen vlastní deník a strom, ale po F3 to jde zadarmo).
    - [ ] **F4 schovat:** buildery a RUNE_IMAGES z veřejných souborů appky pryč; shrine (laboratoř promptu) přes cestu jen pro admina;
      pak soukromé repo (krok 3) a nové klíče Supabase (krok 9).
 2. **Supabase Free → Pro**, ověřit, že denní zálohy běží.
