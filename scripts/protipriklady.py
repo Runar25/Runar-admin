@@ -212,7 +212,7 @@ PRIPADY = [
  # kolo 3 / 4i (2026-10-11): Ask nápověda, kolekce, páky promptu, databáze čtení. Kontroly bez útoku → BEZ_UTOKU níž.
  ('chyti', 'verify_ask_hints.js', 'v2/runar-reading.js', 'replace', 'var many = dr.length > 1, life = u.lifeRune;', 'var many = true, life = u.lifeRune;'),
  ('chyti', 'verify_coll_shape.js', 'v2/runar-app.js', 'replace', "document.getElementById('cd-shape').textContent    = (_tv && typeof _tv === 'object' && _tv[r.n]) || '';", "document.getElementById('cd-shape').textContent    = '';"),
- ('chyti', 'verify_prompt_levers.js', 'v2/runar-character.js', 'regex', r'    _addressContext\(lang\),(\r?\n    // _describeRule)', r'\g<1>'),
+ ('chyti', 'verify_prompt_levers.js', 'v2/runar-character.js', 'regex', r"    _kus\('ADDRESS', 'address \(gender\)', 'whole', _addressContext\(lang\)\),(\r?\n    // _describeRule)", r'\g<1>'),   # 2026-10-22: řádek obalený _kus
  ('chyti', 'verify_readings_db.js', 'v2/runar-readings-admin.js', 'replace', "var rows = (typeof RUNE_IMAGES !== 'undefined') ? RUNE_IMAGES : [];", 'var rows = [];'),
  # kolo 3 / 4j (2026-10-11). Kontroly bez útoku jmenovitě s důvodem → BEZ_UTOKU (od 2026-10-15; do té doby výčet stál tady).
  ('chyti', 'verify_pill_lang.js', 'v2/runar-app.js', 'replace', 'function _syncPillLang() {', 'function _syncPillLang() { return;'),
