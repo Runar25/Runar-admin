@@ -12144,3 +12144,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   v configu (u každé funkce od kterého účtu a co vidí nižší: teaser / nic) + jedna funkce, kterou se appka ptá; vlastní podmínky podle jména
   účtu mimo ni hlídá rychlá kontrola. Po kouscích, audit PŘED a PO.
 - Affected doc(s): žádný jiný (stav vlastní kód; výpis funkcí účtů dál `TIER_FEATURES`).
+
+## 2026-10-22 (4) — Návštěvník: spready jako jedna runa (vidí, které runy přišly, + karta), místo hlášek „Sign in…“ jednotná pozvánka
+
+- **Rozhodl:** owner 2026-10-22 na krok 2 průchodu CODE-read (návštěvník akci po akci v prohlížeči): *„8. b 9. ano 10. ano, předej tune“*.
+- **Nález:** spready si návštěvník vybere bez zámku, vyplní formulář a vytáhne runu — teprve pak mizející hláška `signin_spread_*` („Sign in to
+  use the Compass spread.“) a appka ho potichu přepne na jednu runu (`readRune`, `_setSpreadMode('single')`). Zamčená runa v Kolekci taky
+  hláškou (`coll_locked_toast` „Sign in, and all twenty-five runes await you.“). Všude jinde pozvánka „Become a Rune Seeker“ (2026-10-19 (9)).
+- **Co (CODE-tune):** (8b) návštěvník vytáhne runy spreadu jako u jedné runy a dostane tutéž kartu (které runy přišly, čtení je pro Rune
+  Seekery). (9) místo hlášek „Sign in…“ (spready, zamčená runa v Kolekci) se rozsvítí stejná pozvánka jako jinde (svíčka, 2026-10-19 (9)) —
+  mění hlášku u zamčené runy z 2026-10-12 (BACKLOG „Procházka appky“: dřív klepnutí nedělalo nic; reakce zůstává, jen jednotná).
+  (10) návštěvník je nejnižší řádek tabulky přístupu (2026-10-22 (3)) — jeho podoba teaseru = pozvánka.
+- **Mimo:** „free to join“ → „{onboarding} when you join“ ve `vcn_text` a `journal_gate_txt` je otevřené v BACKLOGu (Účty vypadají stejně).
+- Affected doc(s): žádný jiný.
