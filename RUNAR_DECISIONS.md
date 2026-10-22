@@ -12182,3 +12182,13 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   `MAZANI`/`BEHY` v `_shared/ops_souhrn.ts`, CODE-tune): ElevenLabs (API, už čteno), Brevo (`GET /v3/account`), Supabase **připomínkou v ranním
   souhrnu** (veřejné API se spotřebou nenalezeno), modely stropy v konzolích (2026-10-10). Prahy 50 % souhrn / 80 % upozornění.
 - Affected doc(s): `RUNAR_BACKLOG.md` (Plán infrastruktury — návrh → schváleno) — v témže commitu.
+
+## 2026-10-22 (7) — Zvuky run v Kolekci zatím ve Storage, ale s ročním cachováním; přesun pryč ze Storage až s Cloudflare
+
+- **Rozhodl:** owner 2026-10-22 *„4. b“* — z návrhu CODE-read (a) soubory do repa · (b) dlouhé cachování ve Storage, přesun s Cloudflare.
+  (a) by znamenal krok navíc (export do repa) po každém novém zvuku ze shrine.
+- **Co:** `elevenlabs-static` nahrává s `cacheControl` na rok a do `runar_static_audio.audio_url` píše adresu s `?v=<čas nahrání>` (upsert
+  přepisuje soubor pod týmž jménem; bez otisku by prohlížeč hrál starý zvuk). 53 stávajících souborů: SQL ownera na `storage.objects.metadata`.
+- **Hranice:** ubírá opakovaná stažení téhož posluchače; první stažení se do „cached egress“ počítá dál. Měřeno 2026-10-22 (GET): zvuky šly
+  s `public, max-age=3600` (hlavička z `metadata.cacheControl`), ne `private, no-cache` — tu vrací jen dotaz HEAD.
+- Affected doc(s): `RUNAR_BACKLOG.md` (Plán infrastruktury — ponaučení: změřená hlavička, stav zvuků) — v témže commitu.

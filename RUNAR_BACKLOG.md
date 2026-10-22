@@ -746,9 +746,11 @@ promptu v `claude-proxy` (už ověřuje přihlášení a odečítá kredity; pro
 
 **Ponaučení z přetažení Supabase Free (2026-10-22, „Cached Egress“ 11,4 / 5 GB, grace do 20. 11.; owner „3. ano, zapiš“)** — platí pro přechod
 na Cloudflare a placenou Supabase:
-- [ ] **Statické soubory nikdy ze Supabase Storage.** Portrét (2,1 MB) i zvuky run (53 × ~0,3 MB) šly ze Storage s `Cache-Control: private,
-  no-cache` — každé otevření je stáhlo znovu. Na Cloudflare Pages se `_headers` a dlouhým cachováním; Supabase jen data uživatelů (hlasy čtení, DB).
-  Portrét: web už z vlastní kopie, appka CODE-tune; zvuky run CODE-tune (2026-10-22).
+- [ ] **Statické soubory nikdy ze Supabase Storage.** Portrét (2,1 MB) i zvuky run (53 × ~0,3 MB) šly ze Storage s `Cache-Control: public,
+  max-age=3600` (měřeno GET 2026-10-22; HEAD vrací `private, no-cache`) — prohlížeč s čistým profilem je stáhl pokaždé. Na Cloudflare Pages
+  se `_headers` a dlouhým cachováním; Supabase jen data uživatelů (hlasy čtení, DB).
+  Portrét: web z vlastní kopie, appka z repa (9335d57). Zvuky run: zatím ve Storage s ročním cachováním (DECISIONS 2026-10-22 (7));
+  **přesun pryč ze Storage zbývá — s přechodem na Cloudflare** (krok exportu nových zvuků ze shrine do repa).
 - [x] ✅ *(CODE-read 2026-10-22, 7ab6bfd: blokace `*supabase.co*` v `scripts/utils/prohlizec_pojistky.js` pro všechny kontroly v prohlížeči,
   výjimka `povolSupabase` s důvodem.)* **Testy nikdy proti produkci.** Nejpravděpodobnější příčina přetažení: kontroly s čistým profilem stahovaly
   portrét při každém běhu (~5 300×).
