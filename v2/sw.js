@@ -1,8 +1,8 @@
-// Rúnar Service Worker — v793
+// Rúnar Service Worker — v794
 // HTML: network-first (always fresh). JS/CSS/icons: cache-first (fast, offline ok).
 // External (Supabase, ElevenLabs, fonts): pass-through, never intercepted.
 
-const CACHE = 'runar-v793';
+const CACHE = 'runar-v794';
 const JS_SHELL = [
   '/Runar-admin/v2/runar-reader.css',
   '/Runar-admin/v2/runar-utils.js',
@@ -30,9 +30,7 @@ const JS_SHELL = [
   // hlida kontrola ㉧ (verify_sw_shell.js) proti <script src> v runar-reader.html.
   '/Runar-admin/v2/runar-names.js',
   '/Runar-admin/v2/runar-names-registry.js',
-  '/Runar-admin/v2/runar-tree-prod.js',
-  '/Runar-admin/v2/tree-lab-trunk-composer/runar-trunk.js',
-  '/Runar-admin/v2/tree-lab-branch-composer/runar-branch.js',
+  // engine kresby stromu tu od 2026-10-22 není — načítá ho runar-tree.js jen tomu, kdo strom vidí (DECISIONS 2026-10-22 (12))
   '/Runar-admin/v2/runar-reporter.js',
   // 2026-10-11: verze běžícího kódu pro hlášení (píše ji hook) — musí jít z TÉŽE cache jako ostatní JS, jinak by hlásila nasazenou.
   '/Runar-admin/v2/runar-verze.js',

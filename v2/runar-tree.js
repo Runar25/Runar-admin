@@ -469,10 +469,31 @@ function treeVisibleFor() {
   return !!(currentUser && typeof isAdmin === 'function' && isAdmin(currentUser.email));
 }
 
+// Engine kresby stromu se načte AŽ tomu, kdo strom vidí (2026-10-22, owner „bod 3 … strom života“, DECISIONS 2026-10-22 (12)). Do té doby
+// ho reader načítal každému při startu a sw.js ho dával do precache (~263 kB), ačkoli strom vidí jen admin. Pořadí je povinné (CODE-tree):
+// RunarTreeProd.render() bez RunarTrunk/RunarBranch vrátí null a readingsToTreeLog bez RunarBranch tiše vynechá větve — proto postupně,
+// každý soubor až po načtení předchozího, a renderLivingTree čeká, než se zeptá na window.RunarTreeProd. Jednou za relaci (sdílený slib);
+// selhání se nepamatuje, další kresba to zkusí znovu. ?v= = verze běžícího kódu, ať HTTP cache nevrátí engine z jiné verze.
+var TREE_ENGINE = ['tree-lab-trunk-composer/runar-trunk.js', 'tree-lab-branch-composer/runar-branch.js', 'runar-tree-prod.js'];
+var _treeEngine = null;
+function _nactiTreeEngine() {
+  if (window.RunarTrunk && window.RunarBranch && window.RunarTreeProd) return Promise.resolve(true);
+  if (_treeEngine) return _treeEngine;
+  var v = (typeof RUNAR_VERZE === 'string') ? '?v=' + RUNAR_VERZE : '';
+  _treeEngine = TREE_ENGINE.reduce(function (p, src) {
+    return p.then(function () { return new Promise(function (ok, chyba) {
+      var s = document.createElement('script'); s.src = src + v; s.onload = ok;
+      s.onerror = function () { chyba(new Error(src)); }; document.head.appendChild(s);
+    }); });
+  }, Promise.resolve()).then(function () { return true; }, function (e) { console.warn('treeEngine', e && e.message); _treeEngine = null; return false; });
+  return _treeEngine;
+}
+
 async function renderLivingTree(rune) {
   try {
     var wrap = document.getElementById('tree-living');
     var cv   = document.getElementById('tree-living-canvas');
+    if (wrap && cv && rune && treeVisibleFor() && !window.RunarTreeProd) await _nactiTreeEngine();   // engine jen tomu, kdo strom vidí
     // ZIVY STROM JEN PRO ADMINA (KUKY 2026-10-11: "strom by testeri videt nemeli, aspon zatim. dam jim ho, az se seznami s Runarem.").
     // Do 2026-10-11 i testeri (is_tester). Az je owner pusti, vrati se sem `|| isTester` — nic jineho na tom nevisi.
     if (!wrap || !cv || !window.RunarTreeProd || !rune || !treeVisibleFor()) {

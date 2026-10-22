@@ -51,11 +51,10 @@ sw.js                 — Service Worker (auto-bump via git hook · hooks/pre-co
 ```
 runar-config.js → runar-runes.js → [reader: runar-names.js → runar-names-registry.js] → runar-translations.js → runar-character.js
 → runar-utils.js → runar-svgs.js → [reader: runar-runakort.js]
-→ [reader]: runar-journal.js
-            → tree-lab-trunk-composer/runar-trunk.js → tree-lab-branch-composer/runar-branch.js
-            → runar-tree-prod.js → runar-tree.js
+→ [reader]: runar-journal.js → runar-tree.js
             → runar-auth.js → runar-reading.js → runar-app.js
             → runar-verze.js → runar-reporter.js → runar-rune-popup.js → runar-helper.js
+[jen kdo strom vidí, dynamicky z runar-tree.js]: runar-trunk.js → runar-branch.js → runar-tree-prod.js
 ```
 
 ---
