@@ -12157,3 +12157,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   (10) návštěvník je nejnižší řádek tabulky přístupu (2026-10-22 (3)) — jeho podoba teaseru = pozvánka.
 - **Mimo:** „free to join“ → „{onboarding} when you join“ ve `vcn_text` a `journal_gate_txt` je otevřené v BACKLOGu (Účty vypadají stejně).
 - Affected doc(s): žádný jiný.
+
+## 2026-10-22 (5) — Seznam adminů na třech hlídaných místech místo jedenácti: config · sdílený soubor edge funkcí · funkce v databázi
+
+- **Rozhodl:** owner 2026-10-22 na krok 3 průchodu CODE-read: *„4. ano, připrav to“*.
+- **Nález:** seznam adminů stál na 11 místech — config, 6 vlastních kopií v edge funkcích, 4 pravidla přístupu (RLS) v databázi s e-maily
+  natvrdo, zapsaná dvojím způsobem (`auth.jwt() ->> 'email'` × `auth.email()`). Kontrola ㉚ hlídala jen kód; změna adminů by v databázi
+  tiše zůstala stará (odebraný admin by dál měnil korekce a dárkové kódy).
+- **Co:** (b) `sql/2026-10-22_admin_jedno_misto.sql` (CODE-read, **spustí owner**): funkce `public.je_admin()` a čtyři pravidla ji volají;
+  kdo smí co, se nemění (ověřeno na testovací DB v transakci s ROLLBACK: admin projde i s velkými písmeny, cizí ne). (c) kontrola ㉚
+  (`verify_admin_emails.js`) čte živou databázi: seznam v `je_admin()` = config, po migraci žádné pravidlo s e-mailem natvrdo; bez přístupu
+  k DB „neověřeno“, ne FAIL; samotest stavů před a po. Čte i `_shared/*.ts`. (a) CODE-tune: jeden sdílený soubor se seznamem pro edge funkce.
+- **Cestou:** tabulky `gpt_reviews` a `runar_character` nic nečte; ponechané kvůli datům (2026-10-09 (8), BACKLOG 2026-10-14) — beze změny.
+- Affected doc(s): žádný jiný.
