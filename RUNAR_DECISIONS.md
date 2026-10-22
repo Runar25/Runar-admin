@@ -12258,4 +12258,4 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Co:** CODE-tune — tři skripty pryč ze startu i z předem ukládaného seznamu `sw.js`; načíst je až když `treeVisibleFor()` a strom se má
   kreslit (`renderLivingTree`), jednou za relaci. `runar-tree.js` (životní runa) zůstává pro všechny. Soubory enginu se nemění (CODE-tree).
   Pozor: kontroly, které čtou `window.RunarTreeProd` při startu (㉧ seznam precache, ⑬ signály stromu, založení stromu), upravit, ne vypnout.
-- Affected doc(s): žádný jiný (načítání vlastní `runar-reader.html` a `sw.js`; mapa Load order v CLAUDE.md upraví CODE-tune s kódem).
+- Affected doc(s): žádný jiný (načítání vlastní `runar-reader.html` a `sw.js`; pořadí načítání v hlavním dokumentu pravidel upraví CODE-tune v commitu s kódem).
