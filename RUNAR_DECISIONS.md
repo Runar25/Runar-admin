@@ -12129,3 +12129,18 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   `disclaimer`, od 2026-08-16) zrušen — jeho obsah nese `ai_note`, kterou vidí každý. Upřesňuje 2026-10-19 (13) (znění věty).
 - **Proč:** dvě upozornění pod sebou; „his words are made new each time“ znělo divně. Povinná část pro AI Act (čl. 50) zůstává na začátku.
 - Affected doc(s): žádný (texty vlastní UI_TEXT).
+
+## 2026-10-22 (3) — Kdo co vidí: vyšší účet vidí vše, co nižší; nižší vyšší jako teaser — jedna tabulka přístupu místo ~70 podmínek
+
+- **Rozhodl:** owner 2026-10-21/22: *„ja potrebuju videt vsechno co vidi ostatni … rune seeker ma videt to co vidi walker, ale s tim ze je to
+  teaser. aby videl proc ma jit na vyssi verzi. walker ma videt vsechno co vidi wanderer, ale na co nema povoleni tak jako teaser“* → po auditu
+  CODE-read a tabulce dnešního stavu *„5. ano 6. ano, předej 7. ano, předej plán tune“*.
+- **Audit (CODE-read, prohlížeč bez okna, 5 účtů, 4 záložky + obrazovka po čtení):** vyšší účet nikde nevidí méně než nižší; admin vidí vše
+  co Wanderer + své nástroje. Proti pravidlu: myšlenka ✦ (Rune Seeker ji nevidí ani jako teaser), deník (RS neví, že vyšší má celý). Strom života
+  a pole „The situation“ jen admin — záměr do konce testu (2026-10-11, 2026-10-16). Nástroje: `scripts/utils/kdo_co_vidi.js`, `kdo_co_vidi_po_cteni.js`.
+- **Co (CODE-tune):** (5) Rune Seeker uvidí myšlenku ✦ jako teaser a u deníku, že vyšší účet má celý. (6) úklid configu: mrtvé příznaky
+  `ceremonial` (tvrdil „jen Wanderer“, Yggdrasil mají všichni přihlášení — 2026-07-18), `physical_unlock`, `seasonal_content`, `voice_static`
+  pryč; limit deníku jen na jednom místě (dnes `TIERS.journal` pro výpis i `TIER_LIMITS.journal_entries` pro appku). (7) plán: tabulka přístupu
+  v configu (u každé funkce od kterého účtu a co vidí nižší: teaser / nic) + jedna funkce, kterou se appka ptá; vlastní podmínky podle jména
+  účtu mimo ni hlídá rychlá kontrola. Po kouscích, audit PŘED a PO.
+- Affected doc(s): žádný jiný (stav vlastní kód; výpis funkcí účtů dál `TIER_FEATURES`).
