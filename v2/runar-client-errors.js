@@ -14,12 +14,14 @@
       .replace(/[^\s@]+@[^\s@]+\.[^\s@]+/g, '<email>').replace(/https?:\/\/\S+/g, '<url>').replace(/\d{6,}/g, '<n>')
       .replace(/\s+/g, ' ').trim().slice(0, max);
   }
-  // náš soubor z adresy (jen stejný původ a .js) — „runar-app.js“ nebo „tree-lab-branch-composer/runar-branch.js“; cizí = null
+  // náš soubor z adresy (jen stejný původ, .js nebo .html) — „runar-app.js“, „tree-lab-branch-composer/runar-branch.js“, „runar-reader.html“;
+  // cizí = null. .html od 2026-10-22 (CODE-read): chyba v inline onclick (funkce po přejmenování neexistuje = mrtvé tlačítko) má filename
+  // stránky — do té doby se zahodila jako cizí.
   function nasSoubor(adresa) {
     try {
       var u = new URL(adresa, location.href);
       if (u.origin !== location.origin) return null;
-      var m = u.pathname.match(/\/v2\/((?:[\w-]+\/)?[\w-]+\.js)$/);
+      var m = u.pathname.match(/\/v2\/((?:[\w-]+\/)?[\w-]+\.(?:js|html))$/);
       return m ? m[1] : null;
     } catch (e) { return null; }
   }

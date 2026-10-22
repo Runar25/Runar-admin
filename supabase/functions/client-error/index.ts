@@ -31,7 +31,7 @@ export function cisti(t: unknown, max: number): string {
 export function zaznam(b: Record<string, unknown>): Record<string, unknown> | null {
   const msg = cisti(b.msg, 200);
   if (!msg) return null;
-  const src = typeof b.src === "string" && /^[\w-]+(\/[\w-]+)?\.js$/.test(b.src) ? b.src : "";
+  const src = typeof b.src === "string" && /^[\w-]+(\/[\w-]+)?\.(js|html)$/.test(b.src)   /* .html = inline onclick (2026-10-22) */ ? b.src : "";
   const line = Number.isInteger(b.line) && (b.line as number) > 0 && (b.line as number) < 1e6 ? b.line : null;
   const ver = typeof b.ver === "string" && /^v\d{1,6}$/.test(b.ver) ? b.ver : "";
   const tab = typeof b.tab === "string" && /^[a-z]{2,20}$/.test(b.tab) ? b.tab : "";
