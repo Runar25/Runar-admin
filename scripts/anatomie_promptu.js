@@ -98,10 +98,11 @@ function rozbor(druh, L) {
   const prazdne = {}, plne = {};
   jmena.forEach((k) => { prazdne[k] = V[k][0]; plne[k] = V[k][1]; });
   const vPrazdnem = new Set(klice(postav(druh, prazdne, L, 1).kusy));
-  const sVstupem = {}, bezVstupu = {};
+  const sVstupem = {}, bezVstupu = {}, jenSamotne = {};
   for (const k of jmena) {
     const v = Object.assign({}, prazdne, { [k]: V[k][1] });
-    const ks = new Set(klice(postav(druh, v, L, 1).kusy));
+    const tk = postav(druh, v, L, 1), ks = new Set(klice(tk.kusy));
+    klice(tk.kusy).forEach((x, i) => { if (!jenSamotne[x]) jenSamotne[x] = tk.kusy[i]; });
     ks.forEach((x) => { if (!vPrazdnem.has(x)) (sVstupem[x] = sVstupem[x] || []).push(k); });
     vPrazdnem.forEach((x) => { if (!ks.has(x)) (bezVstupu[x] = bezVstupu[x] || []).push(k); });
   }
@@ -115,11 +116,14 @@ function rozbor(druh, L) {
   for (const x of vPrazdnem) if (!poradi.some(([k]) => k === x)) {   // kus, který se s vyplněným vstupem ztratí (např. NO-QUESTION)
     const t = postav(druh, prazdne, L, 1); const kk = klice(t.kusy); const i = kk.indexOf(x); poradi.splice(Math.min(i, poradi.length), 0, [x, t.kusy[i]]);
   }
+  // kus, který je jen při jednom vstupu, ale při všech naráz ne (jiný vstup ho vypne) — na konec, s poznámkou
+  for (const x of Object.keys(jenSamotne)) if (!poradi.some(([k]) => k === x)) poradi.push([x, Object.assign({ jenSamotny: true }, jenSamotne[x])]);
   for (const [k, kus] of poradi) {
     if (videno.has(k)) continue; videno.add(k);
     const kdy = vPrazdnem.has(k) ? (bezVstupu[k] ? 'jen bez: ' + bezVstupu[k].join(', ') : 'vždy')
       : (sVstupem[k] ? 's: ' + sVstupem[k].join(' / ') : 'jen s více vstupy naráz');
     const n = znen[k] ? znen[k].size : 1;
+    if (kus.jenSamotny) { radky.push({ k, vstup: kus.vstup, veta: kus.veta, kdy: kdy + ' — při všech vstupech naráz NE (jiný vstup ho vypne)', los: '—', slov: slov(kus.text), text: kus.text }); continue; }
     radky.push({ k, vstup: kus.vstup, veta: kus.veta, kdy, los: n > 1 ? n + ' / 20' : 'pevný', slov: slov(kus.text), text: kus.text });
   }
   return { radky, plny, jmena, slovCelkem: slov(plny.text) };
