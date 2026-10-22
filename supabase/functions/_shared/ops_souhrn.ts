@@ -308,6 +308,9 @@ export function souhrn(d: Den): Email {
       const dniBez = nap ? Math.floor((Date.parse(d.do) - Date.parse(nap)) / 864e5) : null;
       if (dniBez != null && dniBez >= RDAP_BEZ_CTENI_DNI)
         potreba.push("Domain " + dm.jmeno + ": expiry not checked for " + dniBez + " days — the RDAP lookup keeps failing; check the date by hand.");
+      // nikdy nepřečteno (2026-10-22, nález CODE-read): doména nově v DOMENY se špatnou adresou nebo událostí — šedý řádek by visel navždy.
+      // Falešný poplach nehrozí: úspěch se zapíše v tomtéž běhu, takže „nikdy“ znamená, že RDAP té domény neodpověděl ani jednou.
+      if (dniBez == null) potreba.push("Domain " + dm.jmeno + ": expiry never read — check the RDAP address and event in DOMENY.");
       continue;
     }
     const dni = Math.floor((Date.parse(iso) - Date.parse(d.do)) / 864e5);

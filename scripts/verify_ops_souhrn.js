@@ -189,7 +189,7 @@ ok(O.stavy(H({ nedostupne: [] })).uptime === 'ok' && O.stavy(H({ nedostupne: ['a
 const upMail = O.upozorneni(vse('ok'), Object.assign(vse('ok'), { uptime: 'problem' }), H({ nedostupne: ['app'] }));
 ok(upMail && /Website or app not reachable/.test(upMail.subject) && /Not answering: app\./.test(upMail.text), 'dostupnost: upozornění říká, co neodpovídá');
 const dom = (iso) => O.souhrn(D({ domeny: { 'therunekeeper.com': '2028-06-11T18:48:19Z', 'agndofa.is': iso } }));
-const dOk = dom('2027-10-16T00:00:00+00:00'), d30 = dom('2026-11-13T05:00:00Z'), d10 = dom('2026-10-24T05:00:00Z'), dNull = dom(null);
+const dOk = dom('2027-10-16T00:00:00+00:00'), d30 = dom('2026-11-13T05:00:00Z'), d10 = dom('2026-10-24T05:00:00Z'), dNull = O.souhrn(D({ domeny: { 'therunekeeper.com': '2028-06-11T18:48:19Z', 'agndofa.is': null }, domenyNaposledy: { 'agndofa.is': hod(26) } }));   // včera se přečetla
 ok(dOk.stav === 'OK' && !/Domain/.test(dOk.text) && d30.stav === 'WATCH' && /Domain agndofa\.is expires 2026-11-13 \(30 days\) — renew it\./.test(d30.text)
   && d10.stav === 'PROBLEM' && dNull.stav === 'OK' && /Domain lookup failed: agndofa\.is/.test(dNull.text),
   'domény: daleko nic, 30 dní WATCH, 10 dní PROBLEM, selhaný dotaz RDAP jen šedě mezi čísly');
@@ -199,7 +199,8 @@ ok(O.stranaZije(200, '<title>Rúnar</title>', 'Rúnar') && !O.stranaZije(200, '<
 const rd = (nap) => O.souhrn(D({ domeny: { 'therunekeeper.com': '2028-06-11T18:48:19Z', 'agndofa.is': null }, domenyNaposledy: { 'agndofa.is': nap } }));
 const rd1 = rd(hod(26)), rd3 = rd(hod(3 * 24 + 1)), rdNikdy = rd(null);
 ok(rd1.stav === 'OK' && !/not checked/.test(rd1.text) && rd3.stav === 'WATCH' && /Domain agndofa\.is: expiry not checked for 3 days/.test(rd3.text)
-  && rdNikdy.stav === 'OK', 'RDAP: selhání den = jen šedě, tři dny po sobě = WATCH s doménou, bez historie = bez poplachu');
+  && rdNikdy.stav === 'WATCH' && /Domain agndofa\.is: expiry never read/.test(rdNikdy.text),
+  'RDAP: selhání den = jen šedě, tři dny po sobě = WATCH s doménou, nikdy nepřečteno = WATCH');
 const pondeli = kvJindy('2026-10-19T05:00:00.000Z');
 ok(pondeli.text.indexOf(O.EGRESS_PRIPOMINKA) !== -1 && klid.text.indexOf(O.EGRESS_PRIPOMINKA) === -1 && pondeli.stav === 'WATCH',
   'egress Supabase: připomínka jen v pondělí (API ho neukazuje)');
