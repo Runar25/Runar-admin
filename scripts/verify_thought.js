@@ -71,8 +71,9 @@ for (const L of ['en', 'is']) {
   ocek(L + ' _promptDraws.thought', (S._promptDraws('X\n' + s1, L) || {}).thought === 1);
 }
 // 4) zapojení v toku čtení (funkce výš jsou vyříznuté, tyhle řádky ne): prompt, oddělení, vykreslení MIMO výstup (hlas ho nečte)
-for (const [jm, kus] of [['single prompt', "var _thL = _thoughtFor('SINGLE', [drawn], lang); if (_thL) prompt += '\\n' + _thL;"],
-                          ['spread prompt', "var _thS = _thoughtFor(o.kind, o.runes, lang); if (_thS) prompt += '\\n' + _thS;"],
+// 2026-10-22: řádek obalený _kus (označený kus promptu pro rozbor, runar-character.js) — text promptu stejný
+for (const [jm, kus] of [['single prompt', "var _thL = _kus('THOUGHT-✦', 'account (reading_thought)', '✦ line', _thoughtFor('SINGLE', [drawn], lang)); if (_thL) prompt += '\\n' + _thL;"],
+                          ['spread prompt', "var _thS = _kus('THOUGHT-✦', 'account (reading_thought)', '✦ line', _thoughtFor(o.kind, o.runes, lang)); if (_thS) prompt += '\\n' + _thS;"],
                           ['single split + kresba', "_paintThought('out-short', _th.thought);"],
                           ['spread split + kresba', "_paintThought(o.outId, _thX.thought);"],
                           ['soused výstupu, ne uvnitř', "kotva.after(el);"]])
