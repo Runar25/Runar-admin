@@ -329,6 +329,8 @@ PRIPADY = [
     ('chyti', 'verify_anatomie_promptu.js', 'v2/runar-character.js', 'replace',
      "_kus('AREA', 'area + face draw', 'whole (where the image lands)', u.area ? _domainContext(u.area, lang, areaFace) : '')",
      "u.area ? _domainContext(u.area, lang, areaFace) : ''"),
+ # ㊓ appka na telefonu (2026-10-22, CODE-read): tlačítko širší než telefon (dřív slepé: oříznutí v kartě + innerWidth po oddálení)
+ ('chyti', 'verify_telefon.js', 'v2/runar-reader.css', 'append', '', '\n#begin-btn{min-width:520px}\n'),
 ]
 
 
