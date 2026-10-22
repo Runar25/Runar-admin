@@ -1123,3 +1123,6 @@ body:has(.modal-overlay.open) #hb-btn{display:none;}
 .toast.ok{border-color:var(--teal);}
 .toast.err{border-color:var(--gold);}
 @media (prefers-reduced-motion:reduce){.toast{transition:none;}}
+/* 2026-10-22: výzva k obnovení na novou verzi (runar-auth.js _swNabidniObnovu) — týž toast, ale zůstane a dá se klepnout. */
+.toast.toast-klik{pointer-events:auto;cursor:pointer;}
+.toast.toast-klik:focus-visible{outline:1px solid var(--gold);outline-offset:3px;}
