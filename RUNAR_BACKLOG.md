@@ -744,6 +744,28 @@ promptu v `claude-proxy` (už ověřuje přihlášení a odečítá kredity; pro
 - [ ] **CODE-read:** Actions „jen hlášení“ (které kontroly poběží bez tajných hodnot, kolik minut spotřebují) — připravit, spustit s přechodem na soukromé repo.
 - [ ] **CODE-tune:** krok 1 (prompt na server) a krok 9 (klíče Supabase).
 
+**Ponaučení z přetažení Supabase Free (2026-10-22, „Cached Egress“ 11,4 / 5 GB, grace do 20. 11.; owner „3. ano, zapiš“)** — platí pro přechod
+na Cloudflare a placenou Supabase:
+- [ ] **Statické soubory nikdy ze Supabase Storage.** Portrét (2,1 MB) i zvuky run (53 × ~0,3 MB) šly ze Storage s `Cache-Control: private,
+  no-cache` — každé otevření je stáhlo znovu. Na Cloudflare Pages se `_headers` a dlouhým cachováním; Supabase jen data uživatelů (hlasy čtení, DB).
+  Portrét: web už z vlastní kopie, appka CODE-tune; zvuky run CODE-tune (2026-10-22).
+- [x] ✅ *(CODE-read 2026-10-22, 7ab6bfd: blokace `*supabase.co*` v `scripts/utils/prohlizec_pojistky.js` pro všechny kontroly v prohlížeči,
+  výjimka `povolSupabase` s důvodem.)* **Testy nikdy proti produkci.** Nejpravděpodobnější příčina přetažení: kontroly s čistým profilem stahovaly
+  portrét při každém běhu (~5 300×).
+- [ ] **Každý měřený zdroj má hlídače** (registr kvót, návrh níž) — o přetažení jsme se dozvěděli až z banneru Supabase.
+- [ ] **Placená Supabase = černá díra se projeví fakturou, ne výpadkem** → při přechodu nastavit strop útraty a upozornění na rozpočet (owner v konzoli).
+- [ ] **Cloudflare Pages Free: 500 sestavení za měsíc, 1 naráz** (developers.cloudflare.com/pages/platform/limits, čteno 2026-10-22). Máme ~900 commitů
+  za 2 týdny — sestavení z gitu na každý push limit přetáhne. Nasazovat jinak (Direct Upload / jen z vybrané větve / dávkově); jestli se Direct
+  Upload do limitu počítá, stránka neříká — ověřit.
+- [ ] **NÁVRH — registr kvót v ranním souhrnu** (owner „2. ano, navrhni“, čeká na schválení): v `supabase/functions/_shared/ops_souhrn.ts`
+  registr `KVOTY` vedle `MAZANI` a `BEHY` — služba, limit, odkud číslo, prahy 50 % (WATCH v souhrnu) a 80 % (upozornění e-mailem při změně).
+  Zdroje čísel (stav ověření 2026-10-22): ElevenLabs — API předplatného, už se čte (brzda hlasu) · Brevo — `GET /v3/account` vrací plán a
+  kredity (developers.brevo.com/reference/get-account; přesná pole a denní strop Free ověřit naživo) · Supabase — veřejné API s využitím
+  organizace jsem nenašel (Management API má limity požadavků, endpoint na egress ne); náhrada: měsíční připomínka v souhrnu „zkontroluj
+  Usage“, nebo upozornění, které umí sama Supabase (ověřit) · API modelů — Anthropic a OpenAI umí náklady jen s admin klíčem (tajná hodnota
+  navíc v Supabase); útratu drží stropy v konzolích z 2026-10-10 (OpenAI 100 $, Anthropic 20 $ — archiv kontroly architektury, část 15).
+  Rozhodnout: které služby hlídat strojem, které stropem v konzoli.
+
 **Zdroje (čteno 2026-10-15):** Cloudflare: developers.cloudflare.com/pages/platform/limits · /pages/configuration/custom-domains ·
 /pages/configuration/headers · /pages/get-started/git-integration · /pages/configuration/monorepos · /dns/zone-setups/full-setup/setup ·
 /workers/platform/limits · /workers/platform/pricing. GitHub: docs.github.com/en/site-policy/github-terms/github-terms-for-additional-products-and-features ·
