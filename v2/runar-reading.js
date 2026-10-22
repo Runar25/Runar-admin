@@ -675,11 +675,7 @@ function _ukazVyklad() {
 }
 async function readRune() {
   if (_spreadMode === 'kriz') {
-    // Tier check — block Visitor (anonymous) only
-    if (!currentUser) {
-      showToast(t('signin_spread_kriz'));   // 2026-10-10: texty toastů z UI_TEXT (ráčna ㉸)
-      _setSpreadMode('single'); return;
-    }
+    // Návštěvník táhne jako přihlášený; kartu po tahu dá _generateSpreadReading (2026-10-22, DECISIONS 2026-10-22 (4) bod 8b).
     if (_spreadCount(_spread5Runes) === _spreadN() && !readerRune) {
       _ukazVyklad();
       readerTexts = {}; voiceGenerated = {};
@@ -694,11 +690,7 @@ async function readRune() {
     return;
   }
   if (_spreadMode === 'horseshoe') {
-    // Tier check — block Visitor (anonymous) only; rune_seeker can use with rune readings
-    if (!currentUser) {
-      showToast(t('signin_spread_horseshoe'));
-      _setSpreadMode('single'); return;
-    }
+    // Návštěvník táhne jako přihlášený; kartu po tahu dá _generateSpreadReading (2026-10-22, DECISIONS 2026-10-22 (4) bod 8b).
     if (_spreadCount(_spread7Runes) === _spreadN() && !readerRune) {
       _ukazVyklad();
       readerTexts = {}; voiceGenerated = {};
@@ -713,11 +705,7 @@ async function readRune() {
     return;
   }
   if (_spreadMode === 'yggdrasil') {
-    // Visitor gate — block anonymous only; all signed-in tiers can access (RS via credits)
-    if (!currentUser) {
-      showToast(t('signin_spread_yggdrasil'));
-      _setSpreadMode('single'); return;
-    }
+    // Návštěvník táhne jako přihlášený; kartu po tahu dá _generateSpreadReading (2026-10-22, DECISIONS 2026-10-22 (4) bod 8b).
     // 2026-10-21 (owner „ano odeber“, DECISIONS 2026-10-21 (6)): hláška „its full power returns December 14–28“ pryč — sílu o slunovratu
     // kód nemá (prompt ani strom datum nečtou), hláška slibovala, co není. Vrátit jen s postavenou silou (RUNAR_DESIGN „slunovrat“).
     if (_spreadCount(_spread9Runes) === _spreadN() && !readerRune) {
@@ -734,11 +722,7 @@ async function readRune() {
     return;
   }
   if (_spreadMode === 'norns') {
-    // Visitor gate — block anonymous users
-    if (!currentUser) {
-      showToast(t('signin_spread_norns'));
-      _setSpreadMode('single'); return;
-    }
+    // Návštěvník táhne jako přihlášený; kartu po tahu dá _generateSpreadReading (2026-10-22, DECISIONS 2026-10-22 (4) bod 8b).
     if (_spreadCount(_spread3Runes) === _spreadN() && !readerRune) {
       _ukazVyklad();
       readerTexts = {}; voiceGenerated = {};
@@ -1373,6 +1357,15 @@ async function _generateSpreadReading(o) {
   var _out0 = document.getElementById(o.outId); if (_out0) _out0.innerHTML = '';
   _clearThought();
   _renderLifeBadge(readerUser.lifeRune);
+  // 2026-10-22 (DECISIONS 2026-10-22 (4) bod 8b, owner „8. b“): návštěvník — runy výkladu v hlavičce a tatáž karta jako po jedné runě
+  // (_visitorJoin: čtení je pro Rune Seekery). Proxy se nevolá. Do té doby ho readRune hláškou přepnul zpět na jednu runu.
+  if (!currentUser) {
+    var _vb = document.getElementById('btn-generate-voice'); if (_vb) _vb.style.display = 'none';
+    _hdr = { lblId: o.lblId, outId: o.outId, runes: o.runes.slice(), single: false, cast: _castIdx(readerUser) };
+    _paintReadingHeader();
+    _visitorJoin(true);
+    return;
+  }
 
   var rdLoad = document.getElementById('reading-loading');
   var rdLoadTxt = document.getElementById('reading-loading-txt');
@@ -1647,7 +1640,7 @@ function _konecZalozeni() {
 }
 
 function _syncNornsGate() {
-  // Norny vidí každý, i návštěvník — jako ostatní spready; klepnutí mu řekne, ať se přihlásí (readRune, signin_spread_norns).
+  // Norny vidí každý, i návštěvník — jako ostatní spready; runy vytáhne a dostane kartu jako po jedné runě (2026-10-22, _generateSpreadReading).
   // KUKY 2026-10-10: „proč jsi smazal NORN?“ Do té doby has = !!currentUser: návštěvníkovi se Norny skryly po přepnutí záložky
   // a CODE-tune je 2a3f03b skryl i při čerstvém načtení. Founding rozlišuje _foundingPending, ne viditelnost.
   var has = true;

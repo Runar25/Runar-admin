@@ -529,7 +529,7 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 .tree-cta-cost #tree-rs-balance-val{color:var(--gold);}
 .tree-cta-free{font-size:0.7em;color:var(--muted);margin-top:3px;opacity:0.75;letter-spacing:0.06em;}
 /* Locked rune cells */
-/* 2026-10-12: bez pointer-events:none — klepnutí na zamčenou runu ukáže hlášku coll_locked_toast (runar-app.js renderCollection) */
+/* 2026-10-12: bez pointer-events:none — klepnutí na zamčenou runu rozsvítí pozvánku (od 2026-10-22 _kolekceZamek v runar-app.js; dřív hláška) */
 .coll-cell.locked{opacity:0.28;cursor:not-allowed;}
 .coll-cell.locked:hover{background:transparent;border-color:var(--border);}
 .coll-audio-player{margin-top:10px;}.coll-audio-player .cap,.jcard-audio-player .cap{margin-top:0;}

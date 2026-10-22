@@ -1284,7 +1284,8 @@ async function loadCollection() {
     cell.dataset.rune = r.n;
     // 2026-10-12 (owner „ano“, BACKLOG „Procházka appky“): klepnutí na zamčenou runu nedělalo nic — návštěvník měl dojem, že appka
     // nefunguje. Teď krátká hláška, co runu odemkne (CSS .locked už nemá pointer-events:none).
-    cell.onclick = locked ? () => showToast(t('coll_locked_toast')) : () => openCollDetail(r, cell);
+    // 2026-10-22 (DECISIONS 2026-10-22 (4) bod 9): zamčená runa rozsvítí pozvánku nad mřížkou (jako zamčené pilulky) — dřív hláška.
+    cell.onclick = locked ? () => _kolekceZamek() : () => openCollDetail(r, cell);
     grid.appendChild(cell);
   });
 
@@ -1624,6 +1625,13 @@ function buildPills() {
 // Klepnutí návštěvníka na zamčenou pilulku (2026-10-19, DECISIONS 2026-10-19 (9)): štítek té skupiny se ukáže a rozsvítí svíčkou (rozsvit,
 // runar-helper.js) a s ním tlačítko BECOME A RUNE SEEKER v horním pruhu. K pruhu se neposouvá — na mobilu může být mimo obraz, štítek pod
 // prstem informaci nese. Pilulka se nevybere.
+// Zamčená runa v Kolekci (2026-10-22, DECISIONS 2026-10-22 (4) bod 9): rozsvítí tlačítko pozvánky nad mřížkou; je-li pozvánka mimo
+// obrazovku (dole v mřížce), dojede k ní — jinak by klepnutí zase nedělalo nic viditelného (důvod hlášky z 2026-10-12).
+function _kolekceZamek() {
+  const n = document.getElementById('visitor-coll-notice'), b = document.getElementById('vcn-btn');
+  if (n) { const r = n.getBoundingClientRect(); if (r.top < 56 || r.bottom > (window.innerHeight || 0)) _posunPodListu(n, false, 8); }
+  if (b && typeof window.rozsvit === 'function') window.rozsvit(b);
+}
 function _zamekKlep(type) {
   const h = document.getElementById(type + '-lock');
   if (h) { h.classList.remove('lock-skryty'); if (typeof window.rozsvit === 'function') window.rozsvit(h); }
