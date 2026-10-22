@@ -125,7 +125,22 @@ async function hlidka(db: any, ted: Date): Promise<Hlidka> {
     behyPosledni(db),
   ]);
   return { ted: ted.toISOString(), chybModelu60: chyb, zalohModelu60: zaloh, cteni60: cteni, brzd60: brzd, zaloha: z, mazani: mz, zpravyPoLhute: poLhute,
-    behy: bh, kvoty: await kvoty(db) };
+    behy: bh, kvoty: await kvoty(db), chybAppky60: await udalosti(db, "client_error", od) };
+}
+
+// Chyby appky u uživatelů za 24 h (client-error → ops_events): počet a nejčastější podle textu + místa. Bez osobních údajů (čistí appka i funkce).
+// deno-lint-ignore no-explicit-any
+async function chybyAppky(db: any, od: string): Promise<{ pocet: number; top: [string, number][] }> {
+  const { data, error } = await db.from("ops_events").select("detail").eq("kind", "client_error").gte("created_at", od).limit(1000);
+  if (error || !data) return { pocet: 0, top: [] };
+  const n: Record<string, number> = {};
+  // deno-lint-ignore no-explicit-any
+  for (const r of data as any[]) {
+    const d = r.detail || {};
+    const k = String(d.msg || "?") + (d.src ? " (" + d.src + (d.line ? ":" + d.line : "") + ")" : "");
+    n[k] = (n[k] || 0) + 1;
+  }
+  return { pocet: data.length, top: Object.entries(n).sort((a, b) => b[1] - a[1]).slice(0, 3) as [string, number][] };
 }
 
 // Kvóty (KVOTY, ops_souhrn.ts) z public.ops_kvoty() — bez funkce (SQL ještě nespuštěno) nebo při chybě null = neznámo, žádný poplach (2026-10-22).
@@ -204,6 +219,7 @@ async function den(db: any, ted: Date, h: Hlidka): Promise<Den> {
     hlasy: (vu.data ?? []).length, znakyHlasu: znaky, cenaHlasu: kredity * EL_KREDIT_USD, hlaseni, neprectena, ulozeno,
     chybModelu: chyb, zalohModelu: zaloh, brzd, kredity: kr, zaloha: z, otevrene,
     mazani, vadyMazani: vadyMazani(h, stavy(h).backup), behy: h.behy, vadyBehu: vadyBehu(h), cekatele, kvoty: h.kvoty,
+    chybyAppky: await chybyAppky(db, od),
   };
 }
 

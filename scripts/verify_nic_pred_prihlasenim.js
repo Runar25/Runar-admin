@@ -17,6 +17,8 @@ const R = process.env.RUNAR_ROOT || path.resolve(__dirname, '..');
 const DIR = path.join(R, 'supabase', 'functions');
 
 const BEZ_PRIHLASENI = {
+  'client-error': 'chyby appky u uživatelů (2026-10-22, DECISIONS 2026-10-22 (11)) — přihlášení z principu nemá (chyba přijde i od návštěvníka); '
+    + 'drží ho limity check_rate_limit (10 / h na IP, 60 / h celkem), 2 kB a jen vybraná pole',
   'waitlist-join': 'veřejný zápis na čekací listinu z webu — přihlášení z principu nemá; drží ho tři limity check_rate_limit a dvojí opt-in Brevo',
 };
 const BRANA = /if\s*\(\s*(!userId\b|authErr\s*\|\|\s*!user\b|!user\b|!caller\b)|x-ops-secret/;

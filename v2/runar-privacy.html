@@ -301,6 +301,9 @@ const C = {
       ['Messages you send us with “Send Rúnar a line” — the text, your e-mail address, the app version and your device', 'To answer you', 'Deleted 6 months after our last reply, or 6 months after it arrived if we did not reply'],
       // 2026-10-22 (owner „8. 12 měsíců“, DECISIONS 2026-10-22 (10)): hlášení z appky 12 měsíců po vyřešení (sql/2026-10-22_mazani_provoz.sql)
       ['Reports you send us from the app — what you write, the passage you marked, the name you give, the screen, language, app version and your device', 'To find faults and fix them', 'Deleted 12 months after the fault is fixed; kept until then'],
+      // 2026-10-22 (DECISIONS 2026-10-22 (11)): chyby appky → edge fn client-error (ops_events client_error, 90 dní); IP jen v limitu četnosti
+      ['Error messages the app sends us when something breaks — what went wrong and where (e-mail addresses and long numbers removed), the app version, screen, language and whether you were signed in', 'To find faults and fix them', 'Deleted after 90 days'],
+      ['IP address, when the app sends an error message', 'To limit how many error messages one device can send', 'Deleted automatically, usually within a few days; kept in our encrypted backups for up to 30 days'],
     ],
 
     // 2026-10-12 (DECISIONS 2026-10-12 (7), krok 2): u souhlasu i otázka — výslovný souhlas (čl. 9), odvolání v menu. IS: greynir, gpt-check.
@@ -413,6 +416,10 @@ const C = {
       // 2026-10-22: Greynir čisté; korpus „í þeim er“ 3113 · „koma líka fram“ 147 · „sem þú merktir“ 13 · „finna villur og“ 18 · „laga þær“ 743
       // · „hefur verið löguð“ 51 · „fram að því“ 10101 · „eru þær geymdar“ 33
       ['Tilkynningar sem þú sendir okkur úr forritinu. Í þeim er það sem þú skrifar, textinn sem þú merktir og nafnið sem þú gefur upp. Þar koma líka fram skjárinn, tungumálið, útgáfa appsins og tækið.', 'Til að finna villur og laga þær', 'Eytt tólf mánuðum eftir að villan hefur verið löguð. Fram að því eru þær geymdar.'],
+      // 2026-10-22: Greynir čisté; korpus „þegar eitthvað bilar“ 53 · „hvað fór úrskeiðis“ 2069 · „hvar það gerðist“ 28 · „langar tölur“ 48 · „eru fjarlægðar“ 138
+      // · „einnig er skráð“ 38 · „á hvaða tungumáli“ 427 · „kemur fram hvort“ 577 · „var í gangi“ 9023 · „takmarka fjölda“ 1038 · „frá hverju tæki“ 6
+      ['Villuboð sem forritið sendir okkur þegar eitthvað bilar. Þar kemur fram hvað fór úrskeiðis og hvar það gerðist. Netföng og langar tölur eru fjarlægðar. Einnig er skráð hvaða útgáfa forritsins var notuð, á hvaða skjá og á hvaða tungumáli. Loks kemur fram hvort innskráning var í gangi.', 'Til að finna villur og laga þær', 'Eytt eftir 90 daga'],
+      ['IP-tala þegar forritið sendir villuboð', 'Til að takmarka fjölda villuboða frá hverju tæki', 'Eytt sjálfkrafa, oftast innan fárra daga, en geymt í dulkóðuðu öryggisafritunum okkar í allt að 30 daga'],
     ],
 
     s3Lbl:  'ÁSTÆÐAN FYRIR GEYMSLU',

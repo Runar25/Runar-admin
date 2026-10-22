@@ -171,6 +171,18 @@ const MAPA = {
       'if (!user.email || !ADMIN_EMAILS.includes(user.email.toLowerCase())) return json({ error: "Forbidden" }, 403);': ADMIN,
     },
   },
+  'client-error': {
+    kdo: 'kdokoli (chyba JS appky, i návštěvník) — přihlášení z principu nemá', velikost: 'tělo 2 kB; uloží se jen vybraná pole (text ≤ 200 znaků)',
+    cetnost: '10 / h na IP · celkem 60 / h (nad limit tichá 204)',
+    log: 'jen „hourly cap“ a chyba zápisu — bez obsahu chyby', pozn: 'ukládá do ops_events kind client_error; čištění e-mailů, adres a čísel v appce i tady',
+    ochrany: {
+      'if (req.method !== "POST") return new Response(null, { status: 405, headers: h });': POST,
+      'if (origin && !ORIGINS.has(origin)) return new Response(null, { status: 403, headers: h });': 'jen z původu appky (Origin)',
+      'if (text.length > MAX_BODY) return new Response(null, { status: 413, headers: h });': 'velikost těla 2 kB',
+      'if (!z) return new Response(null, { status: 400, headers: h });': 'bez textu chyby nic',
+      'if (origin && ORIGINS.has(origin)) h["Access-Control-Allow-Origin"] = origin;': 'CORS jen pro původ appky (nevrací 4xx, ale stojí nad návratem)',
+    },
+  },
   'waitlist-join': {
     kdo: 'kdokoli (veřejný formulář webu) — přihlášení z principu nemá', velikost: 'e-mail 254 znaků',
     cetnost: '5 / 15 min na IP · táž adresa 2 / h (tichý úspěch) · celkem 12 / h ve dne, 3 / h v noci (503)',

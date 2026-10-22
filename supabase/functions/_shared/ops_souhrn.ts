@@ -19,6 +19,7 @@ export const PRAHY = {
   kredityMaloPodil: 0.1,        // do brzdy hlasu zbývá < 10 % tarifu = pozor v souhrnu
   kvotaPozor: 0.5,              // kvóta (KVOTY) od 50 % = řádek v „Needs you“ (WATCH)
   kvotaProblem: 0.8,            // od 80 % = stav „quota“ problem → upozornění e-mailem (jen při změně)
+  chybAppkyZaHodinu: 10,        // chyby JS u uživatelů (client-error) ≥ 10 za hodinu = skok → upozornění (DECISIONS 2026-10-22 (11))
 };
 
 // Kvóty služeb, které jdou změřit strojem (owner 2026-10-22 „1. ano, schvaluji, připomínkou v souhrnu“, DECISIONS 2026-10-22 (6)). Proč: o
@@ -83,9 +84,10 @@ export type Hlidka = {
   behy?: Record<string, BehPosledni>;          // poslední záznam každé úlohy z BEHY
   zpravyPoLhute: number;                        // zprávy čtenářů v DB déle než 6 měsíců + 2 dny po poslední odpovědi (nezávislá kontrola výsledku)
   kvoty?: Record<string, number | null>;       // bajty podle KVOTY (public.ops_kvoty); null = funkce ještě není / selhala
+  chybAppky60?: number;                        // chyby JS u uživatelů za hodinu (ops_events client_error)
 };
 export type Stav = "ok" | "problem" | "unknown";
-export const KLICE = ["model", "voice_brake", "backup", "purge", "runs", "quota"] as const;
+export const KLICE = ["model", "voice_brake", "backup", "purge", "runs", "quota", "app_errors"] as const;
 
 export function stavy(h: Hlidka): Record<string, Stav> {
   const pokusy = Math.max(1, h.cteni60 + h.chybModelu60);
@@ -102,7 +104,8 @@ export function stavy(h: Hlidka): Record<string, Stav> {
   } else if (h.zaloha.posledniChyba) backup = "problem";
   return { model: model ? "problem" : "ok", voice_brake: h.brzd60 > 0 ? "problem" : "ok", backup, purge: stavMazani(h, backup),
     runs: vadyBehu(h).length ? "problem" : Object.values(h.behy ?? {}).some((p) => p && p.kdy) ? "ok" : "unknown",
-    quota: kvotyNad(h.kvoty, PRAHY.kvotaProblem).length ? "problem" : Object.values(h.kvoty ?? {}).some((v) => v != null) ? "ok" : "unknown" };
+    quota: kvotyNad(h.kvoty, PRAHY.kvotaProblem).length ? "problem" : Object.values(h.kvoty ?? {}).some((v) => v != null) ? "ok" : "unknown",
+    app_errors: (h.chybAppky60 ?? 0) >= PRAHY.chybAppkyZaHodinu ? "problem" : "ok" };
 }
 
 // Kvóty nad podílem: [„DB 410 MB of 500 MB (82 %)“, …]. Neznámé číslo (null) se přeskočí — bez poplachu, dokud SQL funkce není.
@@ -184,6 +187,11 @@ const POPIS: Record<string, { problem: string; resolved: string; co: string }> =
     resolved: "Supabase usage back under 80 %",
     co: "free space (old data, files) or move to the Pro plan before the limit is hit.",   // která kvóta a kolik, řekne kvotyNad()
   },
+  app_errors: {
+    problem: "App errors are piling up in readers' browsers",
+    resolved: "App errors back to normal",
+    co: "something in the app is breaking for readers; the most frequent errors are in the morning digest (ops_events client_error).",
+  },
 };
 
 // Změny stavu → jeden e-mail (víc změn najednou = jeden e-mail). Bez změny → null (nic se neposílá).
@@ -208,6 +216,7 @@ function detail(k: string, h: Hlidka): string {
   if (k === "purge") return " " + vadyMazani(h, stavy(h).backup).join("; ") + ".";
   if (k === "runs") return " " + vadyBehu(h).join("; ") + ".";
   if (k === "quota") return " " + kvotyNad(h.kvoty, PRAHY.kvotaProblem).join("; ") + ".";
+  if (k === "app_errors") return " Last hour: " + (h.chybAppky60 ?? 0) + " errors.";
   return "";
 }
 
@@ -239,6 +248,7 @@ export type Den = {
   vadyBehu?: string[];                         // vadyBehu() z kontroly — do „Needs you“, když je stav runs problem
   cekatele?: number;                           // nové registrace čekatelů za 24 h (ops_events waitlist_signup, bez adres) — 2026-10-21 (7)
   kvoty?: Record<string, number | null>;       // z kontroly (KVOTY) — 2026-10-22
+  chybyAppky?: { pocet: number; top: [string, number][] };   // chyby JS u uživatelů za 24 h: počet a nejčastější („text (soubor:řádek)“, kolikrát)
 };
 export type Email = { subject: string; html: string; text: string; stav: string };
 
@@ -295,6 +305,9 @@ export function souhrn(d: Den): Email {
     .filter(Boolean).join(" · "));
   // Registrace čekatelů (DECISIONS 2026-10-21 (7)): jen počet, adresy jen v Brevu; nula vynechaná jako ostatní čísla.
   if (d.cekatele) cisla.push("Waitlist +" + d.cekatele + " (24 h)");
+  // Chyby appky u uživatelů (DECISIONS 2026-10-22 (11)): počet a nejčastější 3, nula vynechaná
+  if (d.chybyAppky && d.chybyAppky.pocet) cisla.push("App errors (24 h) " + d.chybyAppky.pocet + " · "
+    + d.chybyAppky.top.slice(0, 3).map(([m, n]) => (m.length > 60 ? m.slice(0, 59) + "…" : m) + " ×" + n).join("; "));
   cisla.push(mazaniVeta(d.mazani));
   return obal(subject, stav, potreba, cisla);
 }

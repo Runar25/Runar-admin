@@ -175,6 +175,14 @@ const kl1 = kvJindy('2026-11-05T05:00:00.000Z'), kl2 = kvJindy('2026-12-02T05:00
 ok(!O.KLICE_SUPABASE.vymeneno ? (!/legacy API keys/.test(klid.text) && kl1.stav === 'WATCH' && /legacy API keys end by 2026-12-31 \(57 days\)/.test(kl1.text)
   && kl2.stav === 'PROBLEM' && /\(30 days\)/.test(kl2.text)) : !/legacy API keys/.test(kl2.text),
   'staré klíče Supabase: před 1. 11. nic, 5. 11. WATCH s odpočtem, od 1. 12. PROBLEM; po výměně (vymeneno) nic');
+// 2026-10-22: chyby appky u uživatelů (client-error, DECISIONS 2026-10-22 (11)) — skok ≥ 10 za hodinu = upozornění, souhrn: počet a nejčastější 3
+ok(O.stavy(H({ chybAppky60: 10 })).app_errors === 'problem' && O.stavy(H({ chybAppky60: 9 })).app_errors === 'ok' && O.stavy(H({})).app_errors === 'ok',
+  'chyby appky: 10 za hodinu = problém, 9 ne, bez záznamu v pořádku');
+const chMail = O.upozorneni(vse('ok'), Object.assign(vse('ok'), { app_errors: 'problem' }), H({ chybAppky60: 12 }));
+ok(chMail && /App errors are piling up/.test(chMail.subject) && /Last hour: 12 errors/.test(chMail.text), 'chyby appky: upozornění s počtem za hodinu');
+const chDen = O.souhrn(D({ chybyAppky: { pocet: 7, top: [['TypeError: x is undefined (runar-app.js:120)', 4], ['ReferenceError: y (runar-tree.js:9)', 2], ['Error: z', 1]] } }));
+ok(/App errors \(24 h\) 7 · TypeError: x is undefined \(runar-app\.js:120\) ×4; ReferenceError: y \(runar-tree\.js:9\) ×2; Error: z ×1/.test(chDen.text)
+  && !/App errors/.test(klid.text) && radku(chDen) <= 6, 'chyby appky: souhrn počet a nejčastější 3, nula vynechaná');
 const pondeli = kvJindy('2026-10-19T05:00:00.000Z');
 ok(pondeli.text.indexOf(O.EGRESS_PRIPOMINKA) !== -1 && klid.text.indexOf(O.EGRESS_PRIPOMINKA) === -1 && pondeli.stav === 'WATCH',
   'egress Supabase: připomínka jen v pondělí (API ho neukazuje)');
