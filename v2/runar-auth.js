@@ -305,22 +305,47 @@ function closeInstallModal() {
   document.getElementById('install-modal').classList.remove('open');
 }
 
-// Register service worker + auto-reload when a new SW takes over old stale content
+// Service worker + nová verze appky.
+// 2026-10-22 (CODE-read, owner „6. ano, předej 7. s výzvou.“, DECISIONS 2026-10-22 (8)): do té doby (1) nová verze se hledala jen při
+// načtení stránky — nainstalovaná appka uspaná v pozadí ji neviděla dny; (2) controllerchange hned volal location.reload(), i uprostřed
+// psaní otázky nebo běžícího čtení. Teď: hledat i po návratu z pozadí (nejvýš jednou za 5 min) a nabídnout obnovení klepnutím.
+// sw.js dál dělá skipWaiting: HTML jde ze sítě první, takže ČEKAJÍCÍ worker by při ručním obnovení smíchal nové HTML se starým JS
+// z cache. Běžící stránka má kód v paměti, nový worker jen podává soubory pro příští načtení.
 if ('serviceWorker' in navigator) {
-  // If the page is being served by an outdated SW, reload once the new one activates
-  let _swRefreshing = false;
+  // controllerchange přijde i při PRVNÍ instalaci (clients.claim) — to není nová verze, jen první převzetí stránky.
+  let _swMelKontrolu = !!navigator.serviceWorker.controller;
   navigator.serviceWorker.addEventListener('controllerchange', () => {
-    if (_swRefreshing) return;
-    _swRefreshing = true;
-    console.log('New service worker activated — reloading for fresh content.');
-    window.location.reload();
+    if (!_swMelKontrolu) { _swMelKontrolu = true; return; }
+    _swNabidniObnovu();
   });
 
+  let _swReg = null, _swPosledniKontrola = Date.now();
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/Runar-admin/v2/sw.js', { scope: '/Runar-admin/v2/' })
-      .then(() => _updateInstallBtn())
+      .then((reg) => { _swReg = reg; _updateInstallBtn(); })
       .catch(e => console.warn('SW:', e));
   });
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState !== 'visible' || !_swReg) return;
+    if (Date.now() - _swPosledniKontrola < 5 * 60 * 1000) return;
+    _swPosledniKontrola = Date.now();
+    _swReg.update().catch(e => console.warn('SW update:', e));
+  });
+}
+// Výzva „nová verze — klepni pro obnovení“ (komponenta toast, trvalá a klikatelná: .toast-klik). Obnoví se až po klepnutí.
+function _swNabidniObnovu() {
+  let el = document.getElementById('sw-update');
+  if (!el) {
+    el = document.createElement('button');
+    el.id = 'sw-update';
+    el.type = 'button';
+    el.className = 'toast toast-klik';
+    el.setAttribute('role', 'status');
+    el.addEventListener('click', () => window.location.reload());
+    document.body.appendChild(el);
+  }
+  el.textContent = t('sw_update');
+  requestAnimationFrame(() => el.classList.add('show'));
 }
 
 
