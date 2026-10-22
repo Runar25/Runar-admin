@@ -52,6 +52,8 @@ def _save(d, z):
     io.open(os.path.join(d, 'zaznam.json'), 'w', encoding='utf8').write(json.dumps(z, ensure_ascii=False, indent=1))
 
 def _lf(b):
+    # 2026-10-22: binární soubor (bajt NUL — obrázek, PDF) beze změny; převod CRLF→LF poškodil WebP portrétu v 9335d57
+    if b'\0' in b: return b
     return b.replace(b'\r\n', b'\n')   # core.autocrlf=true: pracovní kopie od gitu má CRLF, blob v repu LF
 
 def cti(path, R=None):
@@ -206,6 +208,10 @@ def _test():
             pridej('a.md', 'T', R); check(False, 'pridej měl trackovaný soubor odmítnout')
         except SystemExit as e:
             check('je v gitu' in str(e), 'pridej: trackovaný soubor odmítnut')
+        # 5b) pridej binárního souboru s bajty CR LF uvnitř: do gitu bajt po bajtu (2026-10-22, poškozený WebP v 9335d57)
+        bdata = b'RIFF\0\1\r\n\2\r\n\0WEBP'
+        io.open(os.path.join(R, 'obr.webp'), 'wb').write(bdata); pridej('obr.webp', 'T', R); commit('T', msg, R)
+        check(sh('show', 'HEAD:obr.webp').stdout == bdata, 'pridej: binární soubor commitnut bajt po bajtu (CR LF uvnitř zůstane)')
         # 6) soubor s CRLF (jak ho vybalí git s autocrlf): cti vrátí LF, víceřádková kotva sedí, commit projde
         io.open(os.path.join(R, 'crlf.md'), 'wb').write(b'X1\r\nX2\r\nX3\r\n'); sh('add', 'crlf.md'); sh('commit', '-q', '-m', 'crlf')
         s = cti('crlf.md', R); check(s == 'X1' + NL_ + 'X2' + NL_ + 'X3' + NL_, 'cti vrací LF i ze souboru s CRLF')
