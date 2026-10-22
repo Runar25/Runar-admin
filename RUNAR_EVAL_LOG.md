@@ -6469,3 +6469,16 @@ nedostupné). Data mimo repo: `~/runar-eval/podoby-bez-delky-2026-10-09.json`, `
   od štěstí odpověď drží už text čtení (skryté, „out of sight“). Forma „Perth cannot tell you“ nese pravidlo „no new divination“,
   ne klíčové slovo.
 - **Hranice:** jedno čtení, jedna otázka, EN, sol, n = 5 na verzi; Ask 2 netestován; neplatí pro čtení, jehož text význam nenese.
+
+## 2026-10-22 (2) — Ask bez věty „Do NOT give a new divination“: 3/3 dál nevěští (drží to charakter a text čtení) — pravidlo zatím netestované jinde
+
+- **Proč:** owner: *„když odstraníme nevěštit, máme vůbec otestováno, že to potřebuje? udělej 3 čtení bez nevěštit.“* Dohledáno: test
+  neexistoval. Zákaz stojí dvakrát — v `RP_ASK.rules` („Do NOT give a new divination“) a v charakteru (`DEF_CHAR_EN.never`: „Rúnar never
+  predicts fate“).
+- **Pokus:** jako 2026-10-22 (1) verze (a) (produkce, Perth, „Will i get the job a applied for?“), jen v pravidlech Asku místo „Do NOT give
+  a new divination and do not draw new runes.“ stojí „Do not draw new runes.“; charakter beze změny. gpt-6-sol, 3 odpovědi.
+  Data: `docs/eval/2026-10-22-ask-bez-nevestit.json`.
+- **Výsledek:** 3/3 bez předpovědi („Perth does not say / cannot tell you / does not show whether you get the job“), stejná stavba jako
+  s pravidlem (5/5 v 2026-10-22 (1)).
+- **Závěr / hranice:** u této otázky a tohoto čtení věta v Asku nic nepřidává — drží to charakter a text čtení. Netestováno: tlačivější
+  otázky („just tell me yes or no“), jiné runy, IS, odebrání i věty v charakteru; n = 3.
