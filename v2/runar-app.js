@@ -997,7 +997,10 @@ function _updateTrialTexts() {
   // texty počítadla zkušebních čtení a auth-gate (ten se nikde nezobrazoval — z HTML pryč).
   const ob = TIER_LIMITS.rune_seeker['onboarding_label_' + (lang === 'is' ? 'is' : 'en')];
   const ten = document.getElementById('trial-end-note');
-  if (ten) ten.innerHTML = tp('visitor_join_note', { onboarding: ob });
+  // 2026-10-22 (owner „5. ano“): po výkladu množné číslo — podle hlavičky čtení (_hdr, runar-reading.js); volá se i z _visitorJoin,
+  // takže po přepnutí jazyka zůstane správná varianta (§14: text odpovídá stavu, nepřepisuje ho).
+  const _vykl = (typeof _hdr !== 'undefined' && _hdr && !_hdr.single);
+  if (ten) ten.innerHTML = tp(_vykl ? 'visitor_join_note_pl' : 'visitor_join_note', { onboarding: ob });
   // 2026-10-10 (KUKY: „mělo by tam být přesměrování na rune collection“) — týž popisek jako záložka; nadpis karty pryč (styl pruhu)
   setText('trial-end-coll', t('atab_collection'));
   setText('trial-end-btn', t('become_rs_btn'));

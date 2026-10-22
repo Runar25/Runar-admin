@@ -445,6 +445,7 @@ function _showVisitorJoin() {
 function _visitorJoin(on) {
   var p = document.getElementById('apane-reading');
   if (p) p.classList.toggle('host-drawn', !!on);
+  if (on && typeof _updateTrialTexts === 'function') _updateTrialTexts();   // jednotné / množné číslo karty podle _hdr (2026-10-22)
   var el = document.getElementById('trial-end');
   // 2026-10-13 (owner: „platí všude“): výzva horní hranou pod lištou jako ostatní skoky, dřív na střed obrazovky
   if (on && el) setTimeout(function () { _posunPodListu(el, false, 8); }, DELAY_SCROLL);

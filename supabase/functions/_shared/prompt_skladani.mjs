@@ -1675,6 +1675,7 @@ const UI_TEXT = {
     // 2026-10-10 (KUKY: „runa thurisaz bez jakékoliv zprávy o tom, že nemůžu udělat jako visitor žádné čtení… přesměrování na rune
     // collection“): karta po tahu řekne napřímo, že čtení je pro Rune Seekery, a ukáže Safn rúna. Do té doby jen „Rúnar reads the runes
     // for those who walk with him“. Nadpis THE RUNE IS DRAWN pryč — karta má styl pruhu návštěvníka a ten nadpis nemá; runa stojí nad ní.
+    visitor_join_note_pl: 'As a <strong>Visitor</strong>, you see which runes came to you. The reading itself is for <strong>Rune Seekers</strong> — {onboarding} when you join.<br><br>Meanwhile, the Runes Collection waits for you.',   // 2026-10-22 po výkladu (owner „5. ano“)
     visitor_join_note:  'As a <strong>Visitor</strong>, you see which rune came to you. The reading itself is for <strong>Rune Seekers</strong> — {onboarding} when you join.<br><br>Meanwhile, the Runes Collection waits for you.',
     redeem_ok_msg:      '\u2746 {units} added{rune} \u2014 balance: {bal}',
     redeem_toast_msg:   '\u2746 {UNITS} ADDED',
@@ -2224,6 +2225,7 @@ const UI_TEXT = {
     err_save_failed:    'Ekki tókst að vista — athugaðu nettenginguna og reyndu aftur.',
     visitor_desc:       'Þú ert hér <strong>Gestur</strong>. Dragðu rún og sjáðu hver kemur til þín.<br><br>Rúnar les í rúnirnar fyrir þá sem ganga með honum. Gerðu þig að <strong>Leitanda</strong> — {onboarding} þegar þú skráir þig.',
     // 2026-10-10: viz EN. Korpus: „sem gestur“ 1361×, „sérðu hvaða“ 217×, „kom til þín“ 1240×, „lesturinn sjálfur“ 6×, „bíður þín“ 704×.
+    visitor_join_note_pl: 'Sem <strong>Gestur</strong> sérðu hvaða rúnir komu til þín. Lesturinn sjálfur er fyrir <strong>Leitendur</strong> — {onboarding} þegar þú skráir þig.<br><br>Á meðan bíður þín Safn rúna.',   // Greynir OK; „komu til þín“ 124×
     visitor_join_note:  'Sem <strong>Gestur</strong> sérðu hvaða rún kom til þín. Lesturinn sjálfur er fyrir <strong>Leitendur</strong> — {onboarding} þegar þú skráir þig.<br><br>Á meðan bíður þín Safn rúna.',
     redeem_ok_msg:      '\u2746 {units} bætt við{rune} \u2014 staða: {bal}',
     redeem_toast_msg:   '\u2746 {UNITS} BÆTT VIÐ',
