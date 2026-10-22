@@ -12188,9 +12188,11 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Rozhodl:** owner 2026-10-22 *„4. b“* — z návrhu CODE-read (a) soubory do repa · (b) dlouhé cachování ve Storage, přesun s Cloudflare.
   (a) by znamenal krok navíc (export do repa) po každém novém zvuku ze shrine.
 - **Co:** `elevenlabs-static` nahrává s `cacheControl` na rok a do `runar_static_audio.audio_url` píše adresu s `?v=<čas nahrání>` (upsert
-  přepisuje soubor pod týmž jménem; bez otisku by prohlížeč hrál starý zvuk). 53 stávajících souborů: SQL ownera na `storage.objects.metadata`.
+  přepisuje soubor pod týmž jménem; bez otisku by prohlížeč hrál starý zvuk). 53 stávajících souborů: SQL ownera na `storage.objects.metadata`
+  hlavičku NEZMĚNIL (Supabase ji bere z uloženého souboru, ne z řádku v DB — ověřeno MISS s `max-age=3600` po SQL); proto přenahrány
+  Storage API (`PUT`, x-upsert, stejné bajty — záloha a kontrola velikostí před tím, součet 21 811 883 B beze změny).
 - **Hranice:** ubírá opakovaná stažení téhož posluchače; první stažení se do „cached egress“ počítá dál. Měřeno 2026-10-22 (GET): zvuky šly
-  s `public, max-age=3600` (hlavička z `metadata.cacheControl`), ne `private, no-cache` — tu vrací jen dotaz HEAD.
+  s `public, max-age=3600` (hlavička z uloženého souboru), ne `private, no-cache` — tu vrací jen dotaz HEAD.
 - Affected doc(s): `RUNAR_BACKLOG.md` (Plán infrastruktury — ponaučení: změřená hlavička, stav zvuků) — v témže commitu.
 
 ## 2026-10-22 (8) — Nová verze appky: kontrola i po návratu z pozadí, obnovení jen s výzvou „klepni pro obnovení“
