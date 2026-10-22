@@ -1785,7 +1785,7 @@ var RP_SINGLE = {
     // fyrirsagnir.“ (tytéž stojí v řádku rozpočtu _lengthBudget) a „Haltu þig innan orðafjöldans — stuttar setningar“ (rozpočet
     // + připomínka délky na konci). „Ekkert uppfyllingarefni“ ZŮSTÁVÁ jako věta — islandský systémový prompt ji na rozdíl od EN
     // nemá. is-grammar-qa čisté, korpus „sleppa öllu“ 1135.
-    closing:function(name){ var nm = _namePlacement(name, 'is'); return (nm ? nm + ' ' : '') + 'Slepptu öllu uppfyllingarefni.'; },
+    closing:function(name){ var nm = _namePlacement(name, 'is'); return (nm ? nm + ' ' : '') + _kus('NO-FILLER', 'fixed (IS only)', 'whole', 'Slepptu öllu uppfyllingarefni.'); },
     json:'Skilaðu EINGÖNGU þessu JSON-fylki, engu á undan eða eftir: [{"rune": "(nafn rúnarinnar)", "text": "(lesturinn nákvæmlega eins og fyrirmælin að ofan segja, einn samfelldur texti)"}]',
   },
   en: {
@@ -2226,7 +2226,7 @@ function buildAskPrompt(reading, question, runes, lang, corrections, life, cast,
         var al = _asp.toLowerCase();
         var rest = String(k).split(',').map(function (x) { return x.trim(); })
           .filter(function (x) { return x && al.indexOf(x.toLowerCase()) === -1; });
-        return h + '. ' + S.aspect(h, _asp, rest);
+        return h + '. ' + _kus('ASPECT', 'reading keyword (image aspect)', 'whole', S.aspect(h, _asp, rest));   // vnořený kus (v READING+RUNES)
       }
       return h + ' — ' + k;   // 2026-09-24: holé jméno (h), ne „Gebo (Félagsskapur)“ — viz rnPrompt()
     }).filter(Boolean).join('; ');
