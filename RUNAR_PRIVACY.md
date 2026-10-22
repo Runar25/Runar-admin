@@ -116,7 +116,8 @@ a souhlasí na pravdivém textu. Detail → `RUNAR_DECISIONS.md` 2026-09-11 (8).
   hlášení nesmaže. Číst je smí jen admin přes `list-reports` (RLS bez SELECT politiky); do Slacku nejde nic (upozornění `notify-report`
   zrušeno 2026-10-14). Vložit hlášení smí od 2026-10-10 jen přihlášený (do té doby i nepřihlášený;
   politika `bug_reports_insert` → `authenticated`, `RUNAR_BACKLOG.md` „Kontrola architektury“, bod 9). **Doba uchování: 12 měsíců po vyřešení**
-  (stav `fixed`), nevyřešená do vyřešení (owner 2026-10-22, DECISIONS 2026-10-22 (10); mazání staví CODE-tune — do té doby se nemaže nic).
+  (stav `fixed`), nevyřešená do vyřešení (owner 2026-10-22, DECISIONS 2026-10-22 (10)). Maže denně `public.purge_ops_data()` (pg_cron,
+  `sql/2026-10-22_mazani_provoz.sql`, úloha `reports_db` v MAZANI — běží, až ji owner spustí); zásady EN + IS mají řádek v tabulce dat.
 - **Zprávy čtenářů (`bug_reports`, typ `message`, od 2026-10-15):** smažou se 6 měsíců po poslední odpovědi, bez odpovědi po přijetí.
   DB denně `public.purge_reader_messages()` (pg_cron, `sql/2026-10-16_mazani_hlasi.sql`); kopie ve schránce runar@ (štítek Messages)
   přesouvá do koše týdenní plánovaná úloha Claude (`scripts/ulohy/zpravy-gmail.md`), koš Gmailu se vysype po 30 dnech. Každé mazání
