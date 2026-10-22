@@ -12248,3 +12248,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   a ISNIC. (3) `nasazene_vs_repo.py` potřebuje Supabase CLI s ownerovým přihlášením → běží na PC týdně (plánovač jako noční záloha), výsledek
   do `ops_events` jako úloha registru `BEHY` (`deploy_drift`, ok + seznam rozdílů); souhrn „Deployed ≠ repo“, neozvání do 8 dní = problém.
 - Affected doc(s): `RUNAR_PRIVACY.md` doplní CODE-tune s chybami appky (věta do zásad EN + IS, owner bod 9).
+
+## 2026-10-22 (12) — Kreslení Stromu života se načte jen tomu, kdo strom vidí (dnes admin), ne každému při startu
+
+- **Rozhodl:** owner 2026-10-22 na bod 3 rozboru CODE-read (velikost appky): *„bod 3 u předchozí. strom života“*.
+- **Proč:** při startu appky se stáhne ~1,6 MB JS; z toho 263 kB je kreslení stromu (`runar-tree-prod.js` 229 kB, `runar-trunk.js` 15 kB,
+  `runar-branch.js` 19 kB — `runar-reader.html` je načítá vždy a `sw.js` je ukládá do mezipaměti), přitom strom vidí jen admin
+  (`treeVisibleFor`, 2026-10-11 (24)). Každý uživatel ho zbytečně stahuje a pomalý telefon čeká.
+- **Co:** CODE-tune — tři skripty pryč ze startu i z předem ukládaného seznamu `sw.js`; načíst je až když `treeVisibleFor()` a strom se má
+  kreslit (`renderLivingTree`), jednou za relaci. `runar-tree.js` (životní runa) zůstává pro všechny. Soubory enginu se nemění (CODE-tree).
+  Pozor: kontroly, které čtou `window.RunarTreeProd` při startu (㉧ seznam precache, ⑬ signály stromu, založení stromu), upravit, ne vypnout.
+- Affected doc(s): žádný jiný (načítání vlastní `runar-reader.html` a `sw.js`; mapa Load order v CLAUDE.md upraví CODE-tune s kódem).
