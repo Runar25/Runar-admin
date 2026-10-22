@@ -114,9 +114,13 @@ const MD = (o) => Object.assign({ messages_db: { behu: 1, smazano: 0, polozky: [
   backups_pc: { behu: 1, smazano: 2, polozky: ['runar-db-2026-09-16.7z'], chyb: 0, posledni: hod(4) },
   gmail_messages: { behu: 0, smazano: 0, polozky: [], chyb: 0, posledni: '2026-10-12T07:05:00.000Z' },
   el_history: { behu: 3, smazano: 3, polozky: [], chyb: 0, posledni: hod(1) },
-  restore_copy: { behu: 0, smazano: 0, polozky: [], chyb: 0, posledni: '2026-10-12T04:20:00.000Z' } }, o);
+  restore_copy: { behu: 0, smazano: 0, polozky: [], chyb: 0, posledni: '2026-10-12T04:20:00.000Z' },
+  // 2026-10-22: denní mazání provozních dat (sql/2026-10-22_mazani_provoz.sql) — hlášení po vyřešení s id, ostatní nulou
+  cron_history: { behu: 1, smazano: 0, polozky: [], chyb: 0, posledni: hod(3) },
+  ops_events: { behu: 1, smazano: 0, polozky: [], chyb: 0, posledni: hod(3) },
+  reports_db: { behu: 1, smazano: 1, polozky: ['a1b2c3d4'], chyb: 0, posledni: hod(3) } }, o);
 const smaz = O.souhrn(D({ mazani: MD({}), vadyMazani: [] }));
-ok(/^Deleted \(24 h\) messages DB 0 · backups PC\+Drive 2 \(runar-db-2026-09-16\.7z\) · Gmail Messages last run 2026-10-12 · ElevenLabs 3 · restore copy last run 2026-10-12$/m.test(smaz.text),
+ok(/^Deleted \(24 h\) messages DB 0 · backups PC\+Drive 2 \(runar-db-2026-09-16\.7z\) · Gmail Messages last run 2026-10-12 · ElevenLabs 3 · restore copy last run 2026-10-12 · cron history 0 · ops events 0 · reports DB 1 \(a1b2c3d4\)$/m.test(smaz.text),
   'souhrn: řádek Deleted — nula = proběhla, archivy jménem, týdenní Gmail a kopie zkoušky s posledním během, hlas počtem');
 ok(/Deleted \(24 h\) messages DB no run yet · backups PC\+Drive no run yet · Gmail Messages no run yet · ElevenLabs 0/.test(klid.text),
   'souhrn: úlohy, které ještě nehlásily — „no run yet“, řádek je i v klidný den');

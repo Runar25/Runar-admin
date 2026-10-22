@@ -299,6 +299,8 @@ const C = {
       ['IP address, when you redeem a gift card', 'To prevent guessing of codes', 'Deleted automatically, usually within a few days; kept in our encrypted backups for up to 30 days'],
       // 2026-10-15 „Send Rúnar a line“ (owner „8. ano 9. ano 10. ano“): zpráva z menu → DB + schránka runar@, smaže se 6 měsíců po odpovědi
       ['Messages you send us with “Send Rúnar a line” — the text, your e-mail address, the app version and your device', 'To answer you', 'Deleted 6 months after our last reply, or 6 months after it arrived if we did not reply'],
+      // 2026-10-22 (owner „8. 12 měsíců“, DECISIONS 2026-10-22 (10)): hlášení z appky 12 měsíců po vyřešení (sql/2026-10-22_mazani_provoz.sql)
+      ['Reports you send us from the app — what you write, the passage you marked, the name you give, the screen, language, app version and your device', 'To find faults and fix them', 'Deleted 12 months after the fault is fixed; kept until then'],
     ],
 
     // 2026-10-12 (DECISIONS 2026-10-12 (7), krok 2): u souhlasu i otázka — výslovný souhlas (čl. 9), odvolání v menu. IS: greynir, gpt-check.
@@ -408,6 +410,9 @@ const C = {
       ['IP-tala og óafturkræft stafrænt fingrafar netfangsins við skráningu á therunekeeper.com', 'Til að koma í veg fyrir sjálfvirkar og ítrekaðar skráningar', 'Eytt sjálfkrafa, oftast innan fárra daga, en geymt í dulkóðuðu öryggisafritunum okkar í allt að 30 daga'],
       ['IP-tala við innlausn gjafakorts', 'Til að koma í veg fyrir að reynt sé að giska á kóða', 'Eytt sjálfkrafa, oftast innan fárra daga, en geymt í dulkóðuðu öryggisafritunum okkar í allt að 30 daga'],
       ['Skilaboð sem þú sendir okkur með „Sendu Rúnari línu“ — textinn, netfangið þitt, útgáfa appsins og tækið', 'Til að svara þér', 'Eytt sex mánuðum eftir síðasta svar okkar, eða sex mánuðum eftir að þau bárust ef við svöruðum ekki'],
+      // 2026-10-22: Greynir čisté; korpus „í þeim er“ 3113 · „koma líka fram“ 147 · „sem þú merktir“ 13 · „finna villur og“ 18 · „laga þær“ 743
+      // · „hefur verið löguð“ 51 · „fram að því“ 10101 · „eru þær geymdar“ 33
+      ['Tilkynningar sem þú sendir okkur úr forritinu. Í þeim er það sem þú skrifar, textinn sem þú merktir og nafnið sem þú gefur upp. Þar koma líka fram skjárinn, tungumálið, útgáfa appsins og tækið.', 'Til að finna villur og laga þær', 'Eytt tólf mánuðum eftir að villan hefur verið löguð. Fram að því eru þær geymdar.'],
     ],
 
     s3Lbl:  'ÁSTÆÐAN FYRIR GEYMSLU',

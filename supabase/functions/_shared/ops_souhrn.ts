@@ -33,6 +33,10 @@ export const MAZANI: Record<string, { kratce: string; lhutaH: number | null; zdr
   // 2026-10-18 (CODE-tune, na dotaz CODE-read): zkouška obnovy maže po sobě kopii produkce ve zkušebním projektu — nese skutečné osobní
   // údaje, takže „proběhlo a je pryč“ musí být vidět stejně jako u ostatních mazání. Běží jednou za 4 týdny → lhůta 35 dní.
   restore_copy: { kratce: "restore copy", lhutaH: 35 * 24, zdroj: "scripts/utils/obnova_db.js" },
+  // 2026-10-22 (DECISIONS 2026-10-22 (10)): data, která jinak rostou bez konce — jedna denní funkce, tři úlohy, každá hlásí sama.
+  cron_history: { kratce: "cron history", lhutaH: 26, zdroj: "sql/2026-10-22_mazani_provoz.sql" },
+  ops_events: { kratce: "ops events", lhutaH: 26, zdroj: "sql/2026-10-22_mazani_provoz.sql" },
+  reports_db: { kratce: "reports DB", lhutaH: 26, zdroj: "sql/2026-10-22_mazani_provoz.sql" },
 };
 
 // Pravidelné úlohy, které nic nemažou, ale je dobré vidět, že proběhly (owner 2026-10-18: „všechna a jakákoliv další důležité zálohy
