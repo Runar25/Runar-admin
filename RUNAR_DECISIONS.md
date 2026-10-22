@@ -12231,3 +12231,20 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   zůstávají do vyřešení. Do toho dne „doba uchování nerozhodnuta“ (RUNAR_PRIVACY). Mazání téže cesty jako zprávy čtenářů (registr `MAZANI`),
   zásady EN + IS doplní CODE-tune (BACKLOG „Před veřejným spuštěním“, bod 8).
 - Affected doc(s): `RUNAR_PRIVACY.md` (hlášení testerů — doba uchování) — v témže commitu.
+
+## 2026-10-22 (11) — Hlídání provozu: chyby appky u uživatelů, doména a dostupnost webu, nasazené funkce proti repu
+
+- **Rozhodl:** owner 2026-10-22 na rozbor CODE-read (co nikdo nehlídá): *„8. 1, 2 a 3, předej tune 9. ano — najdi nejlepší řešení!“*
+  (9 = appka smí posílat text chyby a obrazovku do naší DB, bez osobních údajů a textu čtení; věta do zásad).
+- **Proč:** o pádu appky u uživatele víme jen z ručního hlášení; propadlá doména shodí web, e-mail runar@ i přihlašovací kódy naráz; edge funkce
+  v produkci se můžou lišit od repa (`scripts/utils/nasazene_vs_repo.py` existuje, jen ručně).
+- **Řešení (ověřeno 2026-10-22):** (1) vlastní edge funkce pro chyby z appky, ne cizí služba (Sentry = další zpracovatel v USA) — appka
+  zachytí `error` i `unhandledrejection`, pošle jen text chyby (zkrácený, bez e-mailů a adres), soubor:řádek našeho kódu, verzi, obrazovku;
+  max pár za relaci, `sendBeacon`; server limit na IP i celkový strop za hodinu (vzor waitlist-join), `ops_events` kind `client_error`,
+  mazání po 90 dnech (registr `MAZANI`), souhrn počet + nejčastější; šum (rozšíření prohlížeče, „Script error.“ bez detailu) pryč.
+  (2) doména přes RDAP denně v ops-watch: therunekeeper.com (rdap.verisign.com, konec 2028-06-11) a agndofa.is (rdap.isnic.is, „soft
+  expiration“ 2027-10-16) — WATCH pod 60 dní, PROBLEM pod 14; k tomu dostupnost webu a appky po 15 min (výpadek DNS, certifikátu i hostingu
+  se projeví jako nedostupnost — lepší než číst data certifikátu, Let's Encrypt se obnovuje sám). Owner jednou: automatické prodloužení u GoDaddy
+  a ISNIC. (3) `nasazene_vs_repo.py` potřebuje Supabase CLI s ownerovým přihlášením → běží na PC týdně (plánovač jako noční záloha), výsledek
+  do `ops_events` jako úloha registru `BEHY` (`deploy_drift`, ok + seznam rozdílů); souhrn „Deployed ≠ repo“, neozvání do 8 dní = problém.
+- Affected doc(s): `RUNAR_PRIVACY.md` doplní CODE-tune s chybami appky (věta do zásad EN + IS, owner bod 9).
