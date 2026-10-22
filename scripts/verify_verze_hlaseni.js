@@ -10,7 +10,8 @@
 //  (B) skutečný prohlížeč se service workerem — appka pod /Runar-admin/v2/ jako na GitHub Pages, databáze zablokovaná (nic se
 //      neodesílá); hlášení odeslané skutečným panelem (zůstane ve frontě prohlížeče): 1. první návštěva bez workeru → „vN“ ·
 //      2. pod workerem → „vN“ · 3. nasazená vN+1, okno pořád běží na vN (worker nový ještě nemá) → „vN (now vN+1)“ ·
-//      4. worker se aktualizuje, okno se samo načte znovu → „vN+1“.
+//      4. worker se aktualizuje → okno ukáže výzvu „nová verze“ a do klepnutí běží dál na vN; po klepnutí → „vN+1“ (od 2026-10-22,
+//      DECISIONS 2026-10-22 (8): dřív se okno načetlo samo, i uprostřed psaní).
 // Neumí: telefon (iOS a Android aktualizují worker po svém); stav, kdy CDN vrátí část JS novou a část starou.
 // Útok: scripts/protipriklady.py → PRIPADY.
 //   node scripts/verify_verze_hlaseni.js
@@ -113,7 +114,7 @@ const srv = http.createServer((req, res) => {
     rekni(r1 && !r1.worker && r1.app_version === vN, '(B) 1. první návštěva bez workeru: „' + vN + '“', JSON.stringify(r1));
     await cmd('Page.removeScriptToEvaluateOnNewDocument', { identifier: stop.result && stop.result.identifier });
 
-    // 2. worker se zaregistruje a převezme okno (runar-auth.js pak stránku sám načte znovu)
+    // 2. worker se zaregistruje a převezme okno (první převzetí: bez výzvy a bez nového načtení, runar-auth.js)
     await cmd('Page.navigate', { url: URL_APP });
     const ma = await cekej(`!!(navigator.serviceWorker && navigator.serviceWorker.controller) && ${pripraven}`, 30000);
     await sleep(1500); await cekej(pripraven);   // případné samo-načtení po převzetí okna
@@ -129,13 +130,17 @@ const srv = http.createServer((req, res) => {
     rekni(nas && r3 && r3.worker && r3.bezi === vN && r3.app_version === vN + ' (now ' + vN1 + ')',
       '(B) 3. nasazená ' + vN1 + ', okno běží na ' + vN + ': „' + vN + ' (now ' + vN1 + ')“', JSON.stringify(r3) + ' · dotazů workeru na skript: ' + proWorker);
 
-    // 4. worker se aktualizuje, okno se samo načte znovu a běží na vN+1
+    // 4. worker se aktualizuje → výzva, okno do klepnutí běží na vN; klepnutí → nové načtení na vN+1
     rezim = 4;
     await ev(`navigator.serviceWorker.getRegistration().then(function (r) { return r && r.update(); }).then(function () { return true; }, function () { return false; })`);
+    const vyzva = await cekej(`!!document.getElementById('sw-update')`, 30000);
+    const drzi = await ev(`typeof RUNAR_VERZE === 'string' && RUNAR_VERZE === '${vN}'`);
+    rekni(vyzva && drzi === true, '(B) 4a. nová verze: výzva k obnovení, okno se samo neobnovilo (běží „' + vN + '“)', 'výzva ' + vyzva + ' · běží vN ' + drzi);
+    await ev(`document.getElementById('sw-update').click(), true`);
     const nove = await cekej(`typeof RUNAR_VERZE === 'string' && RUNAR_VERZE === '${vN1}' && ${pripraven}`, 30000);
     await cekej(`window._reportVersion() === '${vN1}'`, 8000);
     const r4 = await odesli();
-    rekni(nove && r4 && r4.worker && r4.app_version === vN1, '(B) 4. worker aktualizovaný, okno znovu načtené: „' + vN1 + '“', JSON.stringify(r4));
+    rekni(nove && r4 && r4.worker && r4.app_version === vN1, '(B) 4b. po klepnutí na výzvu okno znovu načtené: „' + vN1 + '“', JSON.stringify(r4));
   } catch (e) { rekni(false, '(B) prohlížeč spadl', String(e && e.message || e).slice(0, 200)); }
   const dialogy = poj ? poj.hotovo() : [];
   if (dialogy.length) rekni(false, 'stránka otevřela dialog (sám potvrzen, jinak by kontrolu zablokoval)', dialogy.join(' · '));
