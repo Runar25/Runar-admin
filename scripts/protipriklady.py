@@ -91,7 +91,8 @@ PRIPADY = [
  # kolo 3 / 4a (2026-10-11)
  ('chyti', 'verify_doc_links.js', 'RUNAR_DESIGN.md', 'append', '', '\n\nOdkaz do prázdna: `docs/neexistuje-xyz.md`\n'),
  ('chyti', 'verify_escape_marks.js', 'RUNAR_DESIGN.md', 'append', '', '\n\nřádek s holou značkou <!-- doc-links:ok -->\n'),
- ('chyti', 'verify_admin_emails.js', 'supabase/functions/list-reports/index.ts', 'regex', r'"[\w.+-]+@agndofa\.is"', '"jiny@agndofa.is"'),
+ ('chyti', 'verify_admin_emails.js', 'supabase/functions/_shared/admini.ts', 'regex', r'"[\w.+-]+@agndofa\.is"', '"jiny@agndofa.is"'),   # 2026-10-22: seznam jen v _shared
+ ('obchazka', 'verify_admin_emails.js', 'supabase/functions/list-reports/index.ts', 'replace', 'import { ADMIN_EMAILS } from "../_shared/admini.ts";', 'const ADMIN_EMAILS = ["kukula@agndofa.is", "info@agndofa.is"];'),   # vlastní kopie místo importu
  ('chyti', 'verify_memory_index.js', 'memory/MEMORY.md', 'append', '', '\n- [neexistuje-xyz.md](neexistuje-xyz.md) — podstrčený odkaz\n'),
  ('chyti', 'verify_decisions_numbers.js', 'RUNAR_DECISIONS.md', 'append', '', '\n## 2026-10-11 (1) — podstrčené zdvojené číslo\n\n- test\n'),
  ('chyti', 'verify_spread_prices.js', 'v2/runar-config.js', 'regex', r'(yggdrasil:\s*\{\s*free:\s*null,\s*credits:\s*)\d+', r'\g<1>97'),
