@@ -233,7 +233,9 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
      šipkou záložky, na nižším byla šipka pod okrajem. Pevné mezery pod podtitulkem 28 + 32 → 12 + 12 px (bod 1 návrhu mezer).
      .hidden: min-height by jinak přebil max-height:0 a skryté hero by drželo prázdné místo. */
   .hero{display:flex;flex-direction:column;min-height:calc(100vh - 50px);min-height:calc(100svh - 50px);}
-  .hero.hidden{min-height:0;}
+  /* overflow:hidden 2026-10-22 (owner: při přepnutí záložky „na pozadí se na chvilku objeví Rúnarova fotka“): mobilní .hero má overflow
+     visible → skryté (výška 0) dál kreslilo obrázek přes obsah po dobu zhasínání (0,45 s). */
+  .hero.hidden{min-height:0;overflow:hidden;}
   .hero-inner{flex:1 0 auto;}
   .hero-text-col{flex:1 0 auto;justify-content:center;padding-bottom:12px;}
   .hero-sub{margin-bottom:12px;}
