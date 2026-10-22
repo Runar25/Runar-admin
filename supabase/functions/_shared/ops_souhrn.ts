@@ -17,7 +17,23 @@ export const PRAHY = {
   podilZalohModelu: 0.3,        // …a zároveň ≥ 30 % pokusů
   zalohaDbMaxHodin: 26,         // noční záloha: bez úspěšné zálohy déle než 26 h = problém (pozná i zálohu, která vůbec neběžela)
   kredityMaloPodil: 0.1,        // do brzdy hlasu zbývá < 10 % tarifu = pozor v souhrnu
+  kvotaPozor: 0.5,              // kvóta (KVOTY) od 50 % = řádek v „Needs you“ (WATCH)
+  kvotaProblem: 0.8,            // od 80 % = stav „quota“ problem → upozornění e-mailem (jen při změně)
 };
+
+// Kvóty služeb, které jdou změřit strojem (owner 2026-10-22 „1. ano, schvaluji, připomínkou v souhrnu“, DECISIONS 2026-10-22 (6)). Proč: o
+// přetažení egressu Supabase Free jsme se dozvěděli až z banneru. Limity = Supabase Free (supabase.com/pricing, čteno 2026-10-22: databáze
+// 500 MB, soubory 1 GB) v desítkových jednotkách, tedy o kus přísněji. Čísla dodá SQL funkce public.ops_kvoty() (zdroj). Egress Supabase
+// veřejné API neukazuje → pondělní připomínka v souhrnu (EGRESS_PRIPOMINKA). ElevenLabs hlídá brzda hlasu (kredity), modely stropy v konzolích.
+// Brevo (e-maily) zatím ne: počet e-mailů je malý a pole odpovědi /v3/account nejsou ověřená naživo (BACKLOG).
+export const KVOTY: Record<string, { kratce: string; limit: number; zdroj: string }> = {
+  db: { kratce: "DB", limit: 500e6, zdroj: "sql/2026-10-22_kvoty.sql" },
+  storage: { kratce: "storage", limit: 1e9, zdroj: "sql/2026-10-22_kvoty.sql" },
+};
+// Staré klíče Supabase (anon, service_role) končí „do konce roku 2026“ (supabase.com/docs/guides/api/api-keys, čteno 2026-10-22; přesné datum
+// docs neuvádí) — krok 9 plánu infrastruktury. Odpočet v souhrnu od pozorOd, od problemOd stav souhrnu PROBLEM. Po výměně klíčů vymeneno: true.
+export const KLICE_SUPABASE = { vymeneno: false, konec: "2026-12-31", pozorOd: "2026-11-01", problemOd: "2026-12-01" };
+export const EGRESS_PRIPOMINKA = "Monday check: Supabase egress has no API — look at Usage in the Supabase dashboard (Free 5 GB).";
 
 // Automatická mazání — JEDINÉ místo, kde stojí, co se kde samo maže (owner 2026-10-16: „chci vždy potvrzení, že úloha … proběhla, kde
 // a co smazala. musíme mít kontroly! to platí pro všechna podobné příkazy“). Každý běh zapíše do ops_events událost kind „purge“
@@ -66,9 +82,10 @@ export type Hlidka = {
   mazani: Record<string, MazaniPosledni>;      // poslední záznam „purge“ každé úlohy z MAZANI
   behy?: Record<string, BehPosledni>;          // poslední záznam každé úlohy z BEHY
   zpravyPoLhute: number;                        // zprávy čtenářů v DB déle než 6 měsíců + 2 dny po poslední odpovědi (nezávislá kontrola výsledku)
+  kvoty?: Record<string, number | null>;       // bajty podle KVOTY (public.ops_kvoty); null = funkce ještě není / selhala
 };
 export type Stav = "ok" | "problem" | "unknown";
-export const KLICE = ["model", "voice_brake", "backup", "purge", "runs"] as const;
+export const KLICE = ["model", "voice_brake", "backup", "purge", "runs", "quota"] as const;
 
 export function stavy(h: Hlidka): Record<string, Stav> {
   const pokusy = Math.max(1, h.cteni60 + h.chybModelu60);
@@ -84,8 +101,16 @@ export function stavy(h: Hlidka): Record<string, Stav> {
     backup = hodin > PRAHY.zalohaDbMaxHodin || chybaPo ? "problem" : "ok";
   } else if (h.zaloha.posledniChyba) backup = "problem";
   return { model: model ? "problem" : "ok", voice_brake: h.brzd60 > 0 ? "problem" : "ok", backup, purge: stavMazani(h, backup),
-    runs: vadyBehu(h).length ? "problem" : Object.values(h.behy ?? {}).some((p) => p && p.kdy) ? "ok" : "unknown" };
+    runs: vadyBehu(h).length ? "problem" : Object.values(h.behy ?? {}).some((p) => p && p.kdy) ? "ok" : "unknown",
+    quota: kvotyNad(h.kvoty, PRAHY.kvotaProblem).length ? "problem" : Object.values(h.kvoty ?? {}).some((v) => v != null) ? "ok" : "unknown" };
 }
+
+// Kvóty nad podílem: [„DB 410 MB of 500 MB (82 %)“, …]. Neznámé číslo (null) se přeskočí — bez poplachu, dokud SQL funkce není.
+export function kvotyNad(kv: Record<string, number | null> | undefined, podil: number): string[] {
+  return Object.entries(KVOTY).filter(([k, q]) => kv?.[k] != null && kv[k]! / q.limit >= podil)
+    .map(([k, q]) => q.kratce + " " + mb(kv![k]!) + " of " + mb(q.limit) + " (" + Math.round(100 * kv![k]! / q.limit) + " %)");
+}
+function mb(b: number): string { return b >= 1e9 ? (b / 1e9).toFixed(b % 1e9 ? 1 : 0) + " GB" : Math.round(b / 1e6) + " MB"; }
 
 // Co je s úlohami z BEHY špatně — stejné pravidlo jako u mazání: bez záznamu nic (ještě neběžela), pak selhání nebo neozvání do lhůty.
 export function vadyBehu(h: Hlidka): string[] {
@@ -154,6 +179,11 @@ const POPIS: Record<string, { problem: string; resolved: string; co: string }> =
     resolved: "Scheduled checks reporting again",
     co: "",   // která a od kdy, řekne vadyBehu()
   },
+  quota: {
+    problem: "Supabase Free limit nearly used",
+    resolved: "Supabase usage back under 80 %",
+    co: "free space (old data, files) or move to the Pro plan before the limit is hit.",   // která kvóta a kolik, řekne kvotyNad()
+  },
 };
 
 // Změny stavu → jeden e-mail (víc změn najednou = jeden e-mail). Bez změny → null (nic se neposílá).
@@ -177,6 +207,7 @@ function detail(k: string, h: Hlidka): string {
   if (k === "backup") return zalohaVeta(h.zaloha);
   if (k === "purge") return " " + vadyMazani(h, stavy(h).backup).join("; ") + ".";
   if (k === "runs") return " " + vadyBehu(h).join("; ") + ".";
+  if (k === "quota") return " " + kvotyNad(h.kvoty, PRAHY.kvotaProblem).join("; ") + ".";
   return "";
 }
 
@@ -207,6 +238,7 @@ export type Den = {
   behy?: Record<string, BehPosledni>;          // poslední běh úloh z BEHY (z kontroly)
   vadyBehu?: string[];                         // vadyBehu() z kontroly — do „Needs you“, když je stav runs problem
   cekatele?: number;                           // nové registrace čekatelů za 24 h (ops_events waitlist_signup, bez adres) — 2026-10-21 (7)
+  kvoty?: Record<string, number | null>;       // z kontroly (KVOTY) — 2026-10-22
 };
 export type Email = { subject: string; html: string; text: string; stav: string };
 
@@ -214,7 +246,16 @@ export function souhrn(d: Den): Email {
   const potreba: string[] = [];
   for (const k of KLICE) if (d.otevrene[k] === "problem") potreba.push(POPIS[k].problem + " — " + POPIS[k].co
     + (k === "backup" ? zalohaVeta(d.zaloha) : k === "purge" ? (d.vadyMazani.join("; ") || "see the next check.")
-      : k === "runs" ? ((d.vadyBehu ?? []).join("; ") || "see the next check.") : ""));
+      : k === "runs" ? ((d.vadyBehu ?? []).join("; ") || "see the next check.")
+      : k === "quota" ? kvotyNad(d.kvoty, PRAHY.kvotaProblem).join("; ") + "." : ""));
+  // Kvóty 50–80 % (nad 80 % už stojí výš jako problém) · odpočet starých klíčů Supabase · pondělní připomínka egressu (2026-10-22)
+  if (d.otevrene.quota !== "problem") { const nad = kvotyNad(d.kvoty, PRAHY.kvotaPozor); if (nad.length) potreba.push("Supabase Free: " + nad.join("; ") + "."); }
+  const dnes = d.do.slice(0, 10);
+  const klicePozde = !KLICE_SUPABASE.vymeneno && dnes >= KLICE_SUPABASE.problemOd;
+  if (!KLICE_SUPABASE.vymeneno && dnes >= KLICE_SUPABASE.pozorOd)
+    potreba.push("Supabase legacy API keys end by " + KLICE_SUPABASE.konec + " (" + Math.ceil((Date.parse(KLICE_SUPABASE.konec + "T23:59:59Z") - Date.parse(d.do)) / 864e5)
+      + " days) — swap them (infrastructure plan, step 9).");
+  if (new Date(d.do).getUTCDay() === 1) potreba.push(EGRESS_PRIPOMINKA);
   // 2026-10-14: jen nepřečtená (stav new) — první souhrn posílal ownera načítat hlášení, které session týž den uzavřela.
   if (d.neprectena) potreba.push(d.neprectena + " unread app report" + (d.neprectena > 1 ? "s" : "") + " — ask CODE to load " + (d.neprectena > 1 ? "them." : "it."));
   const doBrzdy = d.kredity && d.kredity.hladina != null ? d.kredity.hladina - d.kredity.spotreba : null;
@@ -223,7 +264,7 @@ export function souhrn(d: Den): Email {
   if (d.bezCeny) potreba.push(d.bezCeny + " model call" + (d.bezCeny > 1 ? "s have" : " has") + " no price in MODEL_PRICES — cost below is incomplete.");
   // Jen když záloha ještě není hlášená jako problém — jinak by o ní stály dva řádky (souhrn 2026-10-15).
   if (!d.zaloha.posledniOk && d.otevrene.backup !== "problem") potreba.push("No database backup has reported yet — check the nightly backup task on the PC.");
-  const problem = KLICE.some((k) => d.otevrene[k] === "problem");
+  const problem = KLICE.some((k) => d.otevrene[k] === "problem") || klicePozde;
   const stav = problem ? "PROBLEM" : (potreba.length || d.chybModelu || d.zalohModelu || d.brzd ? "WATCH" : "OK");
 
   const celkem = d.cenaModelu + d.cenaHlasu;
@@ -241,7 +282,10 @@ export function souhrn(d: Den): Email {
   cisla.push((d.kredity ? "ElevenLabs " + cislo(d.kredity.spotreba) + (d.kredity.limit ? " of " + cislo(d.kredity.limit) : "") + " used"
     + (doBrzdy != null ? " · " + cislo(doBrzdy) + " to the brake" : "") + (d.kredity.reset ? " · resets " + d.kredity.reset.slice(0, 10) : "")
     : "ElevenLabs status unavailable") + (d.brzd ? " · brake hits " + d.brzd : ""));
-  if (d.zaloha.posledniOk) cisla.push("Backup " + kdy(d.zaloha.posledniOk) + (d.zaloha.bajtu ? " · " + (d.zaloha.bajtu / 1e6).toFixed(1) + " MB" : ""));
+  // Kvóty na řádku zálohy (velikost DB patří k záloze; vlastní řádek by e-mail prodloužil — ㊈)
+  const kv = Object.entries(KVOTY).filter(([k]) => d.kvoty?.[k] != null).map(([k, q]) => q.kratce + " " + mb(d.kvoty![k]!) + " of " + mb(q.limit)).join(" · ");
+  if (d.zaloha.posledniOk || kv) cisla.push([d.zaloha.posledniOk ? "Backup " + kdy(d.zaloha.posledniOk) + (d.zaloha.bajtu ? " · " + (d.zaloha.bajtu / 1e6).toFixed(1) + " MB" : "") : "",
+    kv ? "Supabase " + kv : ""].filter(Boolean).join(" · "));
   // Úlohy z BEHY na jednom řádku (2026-10-19). Den předtím jela zkouška obnovy na řádku zálohy, aby e-mail nenarostl; s aktualizací
   // Greyniru tam už nepatří — jeden řádek navíc, vždy (owner 2026-10-18: „je dobré vidět, že to proběhlo“).
   const behy = behyVeta(d.behy);

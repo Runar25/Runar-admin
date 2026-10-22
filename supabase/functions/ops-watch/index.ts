@@ -125,7 +125,15 @@ async function hlidka(db: any, ted: Date): Promise<Hlidka> {
     behyPosledni(db),
   ]);
   return { ted: ted.toISOString(), chybModelu60: chyb, zalohModelu60: zaloh, cteni60: cteni, brzd60: brzd, zaloha: z, mazani: mz, zpravyPoLhute: poLhute,
-    behy: bh };
+    behy: bh, kvoty: await kvoty(db) };
+}
+
+// Kvóty (KVOTY, ops_souhrn.ts) z public.ops_kvoty() — bez funkce (SQL ještě nespuštěno) nebo při chybě null = neznámo, žádný poplach (2026-10-22).
+// deno-lint-ignore no-explicit-any
+async function kvoty(db: any): Promise<Record<string, number | null>> {
+  const { data, error } = await db.rpc("ops_kvoty");
+  if (error || !data) { if (error) console.warn("ops_kvoty:", error.message); return { db: null, storage: null }; }
+  return { db: typeof data.db_bytes === "number" ? data.db_bytes : null, storage: typeof data.storage_bytes === "number" ? data.storage_bytes : null };
 }
 
 // deno-lint-ignore no-explicit-any
@@ -195,7 +203,7 @@ async function den(db: any, ted: Date, h: Hlidka): Promise<Den> {
     od, do: ted.toISOString(), cteni: (rd.data ?? []).length, spready, asky, modely, cenaModelu: cena, bezCeny,
     hlasy: (vu.data ?? []).length, znakyHlasu: znaky, cenaHlasu: kredity * EL_KREDIT_USD, hlaseni, neprectena, ulozeno,
     chybModelu: chyb, zalohModelu: zaloh, brzd, kredity: kr, zaloha: z, otevrene,
-    mazani, vadyMazani: vadyMazani(h, stavy(h).backup), behy: h.behy, vadyBehu: vadyBehu(h), cekatele,
+    mazani, vadyMazani: vadyMazani(h, stavy(h).backup), behy: h.behy, vadyBehu: vadyBehu(h), cekatele, kvoty: h.kvoty,
   };
 }
 

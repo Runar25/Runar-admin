@@ -13,7 +13,7 @@ process.removeAllListeners('warning'); process.on('warning', () => {});
 const src = fs.readFileSync(path.join(ROOT, 'supabase', 'functions', '_shared', 'ops_souhrn.ts'), 'utf8');
 const js = strip(src).replace(/^export\s+/gm, '');
 const S = {}; vm.createContext(S);
-vm.runInContext(js + '\n;globalThis.__o = { PRAHY, KLICE, MAZANI, BEHY, stavy, upozorneni, souhrn, vadyMazani, mazaniVeta, vadyBehu, behyVeta };', S);
+vm.runInContext(js + '\n;globalThis.__o = { PRAHY, KLICE, MAZANI, BEHY, KVOTY, KLICE_SUPABASE, EGRESS_PRIPOMINKA, stavy, upozorneni, souhrn, vadyMazani, mazaniVeta, vadyBehu, behyVeta, kvotyNad };', S);
 const O = S.__o;
 let fail = 0;
 const ok = (c, p) => { if (c) console.log('OK    ' + p); else { fail++; console.log('FAIL  ' + p); } };
@@ -157,6 +157,27 @@ ok(radku(klid) <= 5 && radku(obn) <= 5 && radku(den) <= 9 && [klid, den, nacteno
   'krátké e-maily: klidný den ≤ 5 řádků, běžný ≤ 9, čísla ≤ 7, upozornění ≤ 2, bez tabulky, HTML ≤ 1 kB (owner 2026-10-14, 2026-10-16, 2026-10-18)');
 const cz = [klid, den, nacteno, zle, malo, bez, p, r, jeden, pm, pb, smaz, smazZle, obn, obnBez, obnZle].map((e) => e.subject + e.html + e.text).join(' ');
 ok(!/[ěščřžůňťďĚŠČŘŽŮŇŤĎ]/.test(cz), 'e-maily bez češtiny (§31 — admini EN)');
+
+// 2026-10-22: registr kvót (DECISIONS 2026-10-22 (6)) — Supabase Free databáze 500 MB, soubory 1 GB; 50 % = WATCH v souhrnu, 80 % = upozornění
+ok(O.stavy(H({ kvoty: { db: 410e6, storage: 1e6 } })).quota === 'problem' && O.stavy(H({ kvoty: { db: 300e6, storage: 1e6 } })).quota === 'ok'
+  && O.stavy(H({})).quota === 'unknown' && O.stavy(H({ kvoty: { db: null, storage: null } })).quota === 'unknown',
+  'kvóty: DB 82 % = problém, 60 % ne; bez funkce ops_kvoty (null) = neznámo, bez poplachu');
+const kvKlid = O.souhrn(D({ kvoty: { db: 17e6, storage: 45e6 } }));
+ok(kvKlid.stav === 'OK' && /Backup 2026-10-14 02:00 UTC · 5\.0 MB · Supabase DB 17 MB of 500 MB · storage 45 MB of 1 GB/.test(kvKlid.text) && radku(kvKlid) <= 5,
+  'kvóty: čísla na řádku zálohy (žádný řádek navíc), klidný den zůstane OK');
+const kvPul = O.souhrn(D({ kvoty: { db: 300e6, storage: 45e6 } }));
+ok(kvPul.stav === 'WATCH' && /Supabase Free: DB 300 MB of 500 MB \(60 %\)\./.test(kvPul.text), 'kvóty: 60 % = WATCH s řádkem v „Needs you“');
+const kvMail = O.upozorneni(vse('ok'), Object.assign(vse('ok'), { quota: 'problem' }), H({ kvoty: { db: 1e6, storage: 850e6 } }));
+ok(kvMail && /Supabase Free limit nearly used/.test(kvMail.subject) && /storage 850 MB of 1 GB \(85 %\)/.test(kvMail.text),
+  'kvóty: přes 80 % upozornění e-mailem s tím, která kvóta a kolik');
+const kvJindy = (iso) => O.souhrn(D({ od: iso, do: iso, otevrene: vse('ok') }));
+const kl1 = kvJindy('2026-11-05T05:00:00.000Z'), kl2 = kvJindy('2026-12-02T05:00:00.000Z');
+ok(!O.KLICE_SUPABASE.vymeneno ? (!/legacy API keys/.test(klid.text) && kl1.stav === 'WATCH' && /legacy API keys end by 2026-12-31 \(57 days\)/.test(kl1.text)
+  && kl2.stav === 'PROBLEM' && /\(30 days\)/.test(kl2.text)) : !/legacy API keys/.test(kl2.text),
+  'staré klíče Supabase: před 1. 11. nic, 5. 11. WATCH s odpočtem, od 1. 12. PROBLEM; po výměně (vymeneno) nic');
+const pondeli = kvJindy('2026-10-19T05:00:00.000Z');
+ok(pondeli.text.indexOf(O.EGRESS_PRIPOMINKA) !== -1 && klid.text.indexOf(O.EGRESS_PRIPOMINKA) === -1 && pondeli.stav === 'WATCH',
+  'egress Supabase: připomínka jen v pondělí (API ho neukazuje)');
 
 console.log(fail ? '\nFAIL  hlídání provozu: ' + fail + ' případů nesedí'
   : '\nOK    hlídání provozu: prahy, e-mail jen při změně stavu, ranní souhrn (OK / WATCH / PROBLEM, co potřebuje ownera, čísla) — krátké, EN, escapované');
