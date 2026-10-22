@@ -1419,31 +1419,31 @@ function buildLifeRuneBase(name, rune, day, month, year, lang) {
   // instrukce zada seversky vyznam KAZDEHO jmena, takze u nesevrskeho vynucuje vymysl (§23).
   var nameInstr = '';
   var parts = [
-    S.header,
+    _kus('HEADER', 'fixed (life rune)', '—', S.header),
     '',
-    S.intro(name),
+    _kus('INTRO', 'name', '—', S.intro(name)),
     '',
-    _skutecneJmeno(name) ? S.PERSON + ': ' + name : '',
-    S.LIFE + ': ' + S.rname(rune),
+    _kus('PERSON', 'name', '—', _skutecneJmeno(name) ? S.PERSON + ': ' + name : ''),
+    _kus('RUNE', 'birth date → rune', '—', S.LIFE + ': ' + S.rname(rune)),
     // 2026-09-30 (KUKY „tak to můžeme vynechat“): rok narození do promptu nejde — čtení ho nepotřebuje a jel by k modelu do USA
     // navíc (čl. 5 GDPR, minimalizace). Rok dál počítá islandský měsíc výš (getBirthMonth), do promptu jde jen jeho jméno.
-    S.BORN + ': ' + S.birth(day, month),
-    S.MONTH + ': ' + monthDesc,
+    _kus('BIRTH-DATE', 'birth date', '—', S.BORN + ': ' + S.birth(day, month)),
+    _kus('BIRTH-MONTH', 'birth month', 'part 1', S.MONTH + ': ' + monthDesc),
     // 2026-10-10 (KUKY „element runy vůbec do čtení jít nemá“): řádek ELEMENT / FRUMEFNI pryč. Model z něj dělal další význam runy —
     // Isa: „Shadow belongs here as the part that remains out of sight…“ (report 048c14c1). Element je třídění stromu, ne význam.
     // V IS navíc šel anglicky („FRUMEFNI: Shadow“). Návrat jen očištěný (§26).
-    S.CORE + ': ' + S.rcore(rune),   // významy runy — část 2 se na ně odkazuje („listed above“ / „hér að ofan“), 2026-09-27
+    _kus('RUNE-MEANING', 'rune', 'part 2', S.CORE + ': ' + S.rcore(rune)),   // významy runy — část 2 se na ně odkazuje („listed above“ / „hér að ofan“), 2026-09-27
     '',
-    S.sections,
+    _kus('PARTS', 'fixed (life rune)', '—', S.sections),
     '',
-    S.p1Label,
-    S.p1(S.rname(rune), lifeRuneSpan(rune, L), monthDesc.split(' — ')[0], name),
+    _kus('PART-1-LABEL', 'fixed (life rune)', 'part 1', S.p1Label),
+    _kus('PART-1', 'rune + span + month + name', 'part 1', S.p1(S.rname(rune), lifeRuneSpan(rune, L), monthDesc.split(' — ')[0], name)),
     '',
-    S.p2Label,
-    S.p2(S.rname(rune), S.rcore(rune), name, rune),
+    _kus('PART-2-LABEL', 'fixed (life rune)', 'part 2', S.p2Label),
+    _kus('PART-2', 'rune + meanings + name', 'part 2', S.p2(S.rname(rune), S.rcore(rune), name, rune)),
     '',
     (nameInstr ? nameInstr + '\n' : ''),
-  ].concat(S.rules).concat([S.langInstr]);
+  ].concat(S.rules.map(function (b) { return _kus('RULE', 'fixed (life rune)', 'whole', b); })).concat([_kus('LANGUAGE', 'fixed', 'whole', S.langInstr)]);
   return parts.join('\n');
 }
 
@@ -1460,10 +1460,10 @@ function buildLifeRunePrompt(name, rune, day, month, year, lang, corrections) {
     // zaroven prikazuje 2. osobu, u ktere islandstina rozlisuje rod pridavneho jmena.
     // Do 2026-08-17 to byla JEDINA IS cesta bez nej (zmereno na slozenem promptu vsech sedmi),
     // takze si model rod ctenare volil sam. EN vraci '' a filter(Boolean) to zahodi.
-    _addressContext(lang),
+    _kus('ADDRESS', 'address (gender)', 'whole', _addressContext(lang)),
     // _describeRule (esenční řádek „after the picture…“) ODEBRÁN 2026-09-27 — patří čtení s obrazem; tady rozporoval „vysvětli“.
-    _noColdRead(lang, true),
-    getCorrPrompt(lang, corrections),
+    _kus('NO-COLD-READING', 'fixed (explanatory)', 'whole', _noColdRead(lang, true)),
+    _kus('CORRECTIONS', 'corrections', 'whole', getCorrPrompt(lang, corrections)),
   ].filter(Boolean).join('\n\n');
 }
 
@@ -1639,27 +1639,17 @@ function buildSysPrompt(c, lang, profileKey) {
     }
   }
 
-  return `You are Rúnar, the rune keeper of Agndofa.
-
-IDENTITY & APPEARANCE
-${base.identity}
-
-PERSONALITY
-${base.personality}
-
-PURPOSE
-${base.purpose}
-
-HOW YOU SPEAK
-${_getVoiceProfile(profileKey, lang)}
-
-WHAT YOU NEVER DO
-${base.never}
-
-YOUR STANCE
-${_profileRule('philosophy', lang, profileKey) || base.philosophy}
-
-${base.format ? 'RESPONSE FORMAT\n' + base.format + '\n\n' : ''}${base.grammar ? base.grammar + '\n\n' : ''}${_spine(lang)}`;
+  var CH = 'character (shrine / default)';
+  return _kus('SYS-OPENING', 'fixed', '—', 'You are Rúnar, the rune keeper of Agndofa.') + '\n\n'
+    + _kus('SYS-IDENTITY', CH, 'whole', 'IDENTITY & APPEARANCE\n' + base.identity) + '\n\n'
+    + _kus('SYS-PERSONALITY', CH, 'whole', 'PERSONALITY\n' + base.personality) + '\n\n'
+    + _kus('SYS-PURPOSE', CH, 'whole', 'PURPOSE\n' + base.purpose) + '\n\n'
+    + _kus('SYS-VOICE', 'voice profile', 'whole', 'HOW YOU SPEAK\n' + _getVoiceProfile(profileKey, lang)) + '\n\n'
+    + _kus('SYS-NEVER', CH, 'whole', 'WHAT YOU NEVER DO\n' + base.never) + '\n\n'
+    + _kus('SYS-STANCE', 'voice profile / ' + CH, 'whole', 'YOUR STANCE\n' + (_profileRule('philosophy', lang, profileKey) || base.philosophy)) + '\n\n'
+    + (base.format ? _kus('SYS-FORMAT', CH, '—', 'RESPONSE FORMAT\n' + base.format) + '\n\n' : '')
+    + (base.grammar ? _kus('SYS-GRAMMAR', CH, 'whole', base.grammar) + '\n\n' : '')
+    + _kus('SYS-SPINE', 'fixed', 'whole', _spine(lang));
 }
 
 // ─── IS CORRECTION HELPERS ────────────────────────────────
@@ -1825,6 +1815,23 @@ var RP_SINGLE = {
   },
 };
 
+// ─── SKLADBA PROMPTU: označené kusy (2026-10-22, owner: „důležité je vědět přesně, z čeho se skládá čtení pro každou část“) ─────────────
+// Každý kus, ze kterého builder skládá prompt, projde _kus(jméno, vstup, věta, text): vrátí text BEZE ZMĚNY (model dostane totéž, golden
+// bajt po bajtu) a jen když běží rozbor (_skladba), zapíše {kus, vstup, veta, text}. `vstup` = co kus přidalo (name, area, seeking,
+// intention, question, image draw…, „fixed“ = vždy), `veta` = na kterou větu čtení míří („1“, „2“, „last“, „whole“, „—“ = formát / pravidlo
+// bez věty). Štítky jsou anglicky: uvidí je admin ve shrine (skladač), §31. Z toho se generuje anatomie (scripts/anatomie_promptu.mjs), recept čtení a skladač ve shrine — jeden zdroj (§18).
+var _KUSY = null;
+function _kus(jmeno, vstup, veta, text) {
+  if (_KUSY && text) _KUSY.push({ kus: jmeno, vstup: vstup, veta: veta, text: String(text) });
+  return text;
+}
+// Rozbor: zavolá builder (fn) s argumenty a vrátí { text, kusy }. Kusy jsou v pořadí, v jakém v promptu stojí.
+function _skladba(fn, args) {
+  var predtim = _KUSY; _KUSY = [];
+  try { var text = fn.apply(null, args || []); return { text: text, kusy: _KUSY }; }
+  finally { _KUSY = predtim; }
+}
+
 function buildReadingPromptSingle(u, drawn, lang, corrections) {
   var S = RP_SINGLE[lang] || RP_SINGLE.en;
   // 2026-08-22: obraz se vybira PRED klici a islandske klice se vazou na jeho stranku.
@@ -1849,15 +1856,15 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
     // z životní runy (Isa: z elementu Shadow se stal význam, report 048c14c1); single dostával týž údaj v hlavičce tažené runy.
     ;
   var parts = [
-    _skutecneJmeno(u.name) ? S.PERSON + ': ' + u.name : '',
+    _kus('PERSON', 'name', '—', _skutecneJmeno(u.name) ? S.PERSON + ': ' + u.name : ''),
     // drawn == life: NEopakovat tutéž runu podruhé jako kontext a NEpřidávat hotovou
     // větu o „významném okamžiku" — model tu citovanou větu opisoval doslova (24/25,
     // stejná třída úniku jako pojmenovaná zakázaná slova). Čočka už ustupuje sama
     // (_lensContext), takže se to čte jako normální single. KUKY 2026-08-08 (varianta C).
-    drawnCtx,
+    _kus('RUNE-MEANING', 'image draw (aspect)', '2', drawnCtx),
     // v4.3 (2026-08-22): zamer se vraci (krok 3/3 navratu pak, mereno — viz
     // docs/eval/2026-08-22-navrat-pak/). Priorita + cocka zustavaji VEN.
-    u.intention ? _intentionContext(u.intention, lang) : '',
+    _kus('INTENTION', 'intention', 'whole', u.intention ? _intentionContext(u.intention, lang) : ''),
   ].filter(Boolean).join('\n');
   // Uhel se losuje JEDNOU a predava i losu konce (vylouceni uhel[6] x open[1], bod C).
   var angleDraw = _randomAngle(lang);
@@ -1865,34 +1872,35 @@ function buildReadingPromptSingle(u, drawn, lang, corrections) {
   var areaFace = _drawAreaFace(u.area);
   return [
     parts,
-    S.angleIntro + angleDraw,
-    _imageBlock(lang, imgLine),
-    _describeRule(lang, undefined, drawn),   // 2026-09-22: runa kvuli Prazdne rune (ESSENCE_BLANK)
-    _noColdRead(lang),
-    _lengthBudget(lang),   // 2026-08-21: delka je losovana paka, ne pevna radka packu
+    _kus('ANGLE', 'angle draw', '1', S.angleIntro + angleDraw),
+    _kus('IMAGE', 'image draw', '1 (carried through the reading)', _imageBlock(lang, imgLine)),
+    _kus('ESSENCE', 'rune + verb draw', '2', _describeRule(lang, undefined, drawn)),   // 2026-09-22: runa kvuli Prazdne rune (ESSENCE_BLANK)
+    _kus('NO-COLD-READING', 'fixed', 'whole', _noColdRead(lang)),
+    _kus('LENGTH', 'length draw', 'whole', _lengthBudget(lang)),   // 2026-08-21: delka je losovana paka, ne pevna radka packu
     // v4.1 (2026-08-22): OBLAST SE VRACI — prvni z odlozenych pak (owner: "at se
     // propisou do cteni"), nad kostrou a uz s PREPSANYM znenim _domainContext (cil
     // obrazu, ne vlastni obrazky; puvodni zneni bylo na zebriku 21.8. nejhorsi krok,
     // svety 1,50). Mereni navratu -> docs/eval/2026-08-22-navrat-pak/.
-    u.area ? _domainContext(u.area, lang, areaFace) : '',
+    _kus('AREA', 'area + face draw', 'whole (where the image lands)', u.area ? _domainContext(u.area, lang, areaFace) : ''),
     // v4.2 (2026-08-22): "co hledam" se vraci (krok 2/3), zmerene — viz
     // docs/eval/2026-08-22-navrat-pak/. Zamer + priorita/cocka zatim VEN.
-    u.seeking ? _registerContext(u.seeking, lang) : '',
+    _kus('SEEKING', 'seeking', 'whole (register)', u.seeking ? _registerContext(u.seeking, lang) : ''),
     // `worldRef` se otevírací větvi pořád předává, ale ta ho už NEVYPISUJE: popis světa
     // stojí v hlavičce `DRAWN RUNE` a do 2026-08-13 se opakoval i tady (nález
     // `lint_prompts.js --dup`). Parametr zůstal, aby se neměnila signatura packu.
     // 2026-09-26: rnPromptAcc — IS větve mají jméno v akuzativu (u Blank „auðu rúnina“, ne „Auða rúnin“); EN = rnPrompt.
-    hasQ ? S.qBranch(rnPromptAcc(drawn, lang), drawn.g, _questionSafe(u.question)) : S.noqBranch(rnPromptAcc(drawn, lang), drawn.g, worldRef),
+    hasQ ? _kus('QUESTION', 'question', 'whole + rune name', S.qBranch(rnPromptAcc(drawn, lang), drawn.g, _questionSafe(u.question)))
+         : _kus('NO-QUESTION', 'fixed (no question)', 'whole + rune name', S.noqBranch(rnPromptAcc(drawn, lang), drawn.g, worldRef)),
     // 2026-09-20: most bere REJSTRIK (tvar) a OBLAST (kam dosedne) misto uhlu — uhel
     // potreboval jen zrusena vyluka uhel[6] x open[1].
     // hasQ: 2026-09-26 návrat k otázce jen s otázkou. Otázka runy jako zdroj poslední věty (2026-09-24) — jen bez vlastní otázky tazatele
     // a od 2026-10-07 ne u konce ve tvaru otázky (sol ji tam opisoval) → _konecSOtazkouRuny, runar-utils.js.
-    _konecSOtazkouRuny(_endingShape(drawn, lang, u.seeking, u.area, areaFace, hasQ), drawn, lang, hasQ),
+    _kus('ENDING', 'ending draw + seeking/area/question', 'last', _konecSOtazkouRuny(_endingShape(drawn, lang, u.seeking, u.area, areaFace, hasQ), drawn, lang, hasQ)),
     // Čočka životní runy (v4.4–v4.59) z builderu ODEBRÁNA 2026-09-26 (úklid) — od v4.60 byla vypnutá (životní runa jen
     // v Asku); _lensContext zůstává jako laboratorní funkce, návrat jen podle §26.
-    S.closing(u.name) + (S.langInstr ? S.langInstr : '') + getCorrPrompt(lang, corrections),
-    _addressContext(lang, u),
-    S.json,
+    _kus('NAME-PLACEMENT', 'name + draw', 'whole', S.closing(u.name)) + _kus('LANGUAGE', 'fixed', 'whole', S.langInstr ? S.langInstr : '') + _kus('CORRECTIONS', 'corrections', 'whole', getCorrPrompt(lang, corrections)),
+    _kus('ADDRESS', 'address (gender)', 'whole', _addressContext(lang, u)),
+    _kus('FORMAT', 'fixed', '—', S.json),
   ].filter(Boolean).join('\n');
 }
 
@@ -2167,11 +2175,11 @@ function _nameFacts(z, lang) {
 function buildNameLorePrompt(name, zaznam, lang, corrections) {
   var S = RP_NAME[lang] || RP_NAME.en;
   return [
-    S.task(name),
-    _nameFacts(zaznam, lang),
-    _addressContext(lang),
-    _noColdRead(lang, true),
-    getCorrPrompt(lang, corrections),
+    _kus('TASK', 'name', 'whole', S.task(name)),
+    _kus('NAME-FACTS', 'name record (Mannanafnaskrá / list)', 'whole', _nameFacts(zaznam, lang)),
+    _kus('ADDRESS', 'address (gender)', 'whole', _addressContext(lang)),
+    _kus('NO-COLD-READING', 'fixed (explanatory)', 'whole', _noColdRead(lang, true)),
+    _kus('CORRECTIONS', 'corrections', 'whole', getCorrPrompt(lang, corrections)),
   ].filter(Boolean).join('\n\n');
 }
 
@@ -2224,25 +2232,25 @@ function buildAskPrompt(reading, question, runes, lang, corrections, life, cast,
     }).filter(Boolean).join('; ');
   }
   return [
-    S.intro(reading, runyText),
-    _askEarlier(earlier, S),   // krok 2 (2026-10-04): předchozí výměna stojí mezi čtením a novou otázkou
+    _kus('READING+RUNES', 'reading text + runes (+ aspect = reading keyword)', 'whole', S.intro(reading, runyText)),
+    _kus('ASK-EARLIER', 'previous exchange', 'whole', _askEarlier(earlier, S)),   // krok 2 (2026-10-04): předchozí výměna stojí mezi čtením a novou otázkou
     // 2026-09-27: otázka Asku je DATA jako úvodní otázka čtení — _questionSafe (zalomení, rovná uvozovka, délka). Do té doby šla
     // syrově: uvozovka ukončila úsek v „…question about it: \"<q>\"“ a zalomení podvrhlo nový řádek instrukce (verify_question_injection).
-    S.q(_questionSafe(question)),
-    S.rules,
+    _kus('QUESTION', 'Ask question', 'whole', S.q(_questionSafe(question))),
+    _kus('ASK-RULES', 'fixed (Ask)', 'whole', S.rules),
     // Jediné místo, kde se dvergar dostanou do promptu — a jen když se na ně otázka ptá.
     // Stojí ZA `S.rules`, protože ta říká „nesouvisející otázky neodpovídej"; tohle je
     // vymezená výjimka a musí ji přebít, ne naopak.
-    _dvergarContext(question, lang),
-    _askSpreadContext(spread, lang),
-    _askLifeContext(life, lang),
-    _askCastContext(cast, lang),
+    _kus('DVERGAR', 'question (dvergar)', 'whole', _dvergarContext(question, lang)),
+    _kus('ASK-SPREAD', 'spread (rune positions)', 'whole', _askSpreadContext(spread, lang)),
+    _kus('ASK-LIFE-RUNE', 'life rune', 'whole', _askLifeContext(life, lang)),
+    _kus('ASK-CAST', 'cast', 'whole', _askCastContext(cast, lang)),
     // 2026-09-18: _describeRule z Ask ODEBRANO — tlouklo se s vetvi rozlouceni/odmitnuti
     // a jeho „Never tell the seeker what it means for them" nechalo Runara odmitnout
     // primou otazku „what does it mean for me". RP_ASK.rules zustavaji cele.
-    _noColdRead(lang),
-    getCorrPrompt(lang, corrections),
-    _addressContext(lang),
+    _kus('NO-COLD-READING', 'fixed', 'whole', _noColdRead(lang)),
+    _kus('CORRECTIONS', 'corrections', 'whole', getCorrPrompt(lang, corrections)),
+    _kus('ADDRESS', 'address (gender)', 'whole', _addressContext(lang)),
   ].filter(Boolean).join('\n\n');
 }
 
@@ -2315,8 +2323,8 @@ function buildKrizPromptCross(u, runes, lang, corrections) {
   var S = RP_KRIZ[lang] || RP_KRIZ.en;
   var rCtr = runes[0], rAbo = runes[1], rBel = runes[2], rBeh = runes[3], rAhe = runes[4];
   var ctx = [
-    _skutecneJmeno(u.name) ? S.seeker + ': ' + u.name : '',
-    u.area    ? S.area + ': ' + u.area : '',
+    _kus('PERSON', 'name', '—', _skutecneJmeno(u.name) ? S.seeker + ': ' + u.name : ''),
+    _kus('AREA-HEADER', 'area', '—', u.area    ? S.area + ': ' + u.area : ''),
     // 2026-09-08: hlavicka „Seeking: X" odebrana. Spready hodnotu pojmenovavaly
     // DVAKRAT (tady + nalepka v _registerContext), single jen jednou — dolozeno
     // uz 2026-08-15 (docs/findings/2026-08-15-wf_62679055-021.md): „prompt tu vec
@@ -2324,7 +2332,7 @@ function buildKrizPromptCross(u, runes, lang, corrections) {
     // maji spready TYZ tvar registru jako single — tedy ten, na kterem se merilo.
     // Popisky S.seeking/seekJoin v packach zustavaji: jsou to data, ne chovani.
     // 2026-10-16 v5.11: záměr (časový rámec) do spreadu nejde — spread má vlastní časovou osu v pozicích (owner, DECISIONS 2026-10-16 (3)).
-    u.question ? S.question + ': ' + _questionSafe(u.question) : '',
+    _kus('QUESTION-HEADER', 'question', '—', u.question ? S.question + ': ' + _questionSafe(u.question) : ''),
   ].filter(Boolean).join('\n');
   var P = S.positions;
   var runesBlock = [
@@ -2335,23 +2343,23 @@ function buildKrizPromptCross(u, runes, lang, corrections) {
   var ctrName = rnPrompt(rCtr, lang);
   return [
     ctx, '',
-    S.intro, '',
-    runesBlock, '',
-    _imageBlock(lang, _seasonalImagery(lang, runes, u && u.area)),
+    _kus('INTRO', 'fixed (spread)', '—', S.intro), '',
+    _kus('RUNES-POSITIONS', 'rune draw (positions + meanings)', 'each rune its part', runesBlock), '',
+    _kus('IMAGE', 'image draw (spread runes + area)', '1 (carried through the reading)', _imageBlock(lang, _seasonalImagery(lang, runes, u && u.area))),
     // v4.9 (2026-08-23): esencni radek VEN ze spreadu — rikal "pojmenuj runu" proti
     // zamernemu "nejmenuj" tehoz promptu (dve protichudne instrukce; mereno vitezilo
     // nejmenuj a radek jel mrtvy). Jmena nese UI pozic. Misto nej vztahova vazba:
-    _spreadThread(lang),
-    _noColdRead(lang),
-    u.area ? _domainContext(u.area, lang) : '',
-    u.seeking ? _registerContext(u.seeking, lang) : '',
+    _kus('THREAD', 'fixed', 'whole', _spreadThread(lang)),
+    _kus('NO-COLD-READING', 'fixed', 'whole', _noColdRead(lang)),
+    _kus('AREA', 'area', 'whole (where the image lands)', u.area ? _domainContext(u.area, lang) : ''),
+    _kus('SEEKING', 'seeking', 'whole (register)', u.seeking ? _registerContext(u.seeking, lang) : ''),
     // v4.14 (2026-08-23, KUKY): dosednutí — S.landing nahrazuje otázkový los (viz yggdrasil v4.13).
-    S.landing,
-    (u.area || u.seeking) ? _priorityContext(false, runes, lang) : '',   // false = bez čočky (odebrána 2026-09-26)
-  ].concat(S.instructions(ctrName)).concat([
-    S.closing(u.name) + (S.langInstr ? ' ' + S.langInstr : '') + getCorrPrompt(lang, corrections),
-    _addressContext(lang, u),
-    S.json,
+    _kus('LANDING', 'fixed (spread)', 'last', S.landing),
+    _kus('PRIORITY', 'area / seeking', 'whole', (u.area || u.seeking) ? _priorityContext(false, runes, lang) : ''),   // false = bez čočky (odebrána 2026-09-26)
+  ].concat(S.instructions(ctrName).map(function (b) { return _kus('INSTRUCTION', 'fixed (spread) + centre rune', 'whole', b); })).concat([
+    _kus('LENGTH+NAME', 'name + draw', 'whole', S.closing(u.name)) + _kus('LANGUAGE', 'fixed', 'whole', S.langInstr ? ' ' + S.langInstr : '') + _kus('CORRECTIONS', 'corrections', 'whole', getCorrPrompt(lang, corrections)),
+    _kus('ADDRESS', 'address (gender)', 'whole', _addressContext(lang, u)),
+    _kus('FORMAT', 'fixed', '—', S.json),
   ]).filter(Boolean).join('\n');
 }
 
@@ -2410,8 +2418,8 @@ function buildNornsPromptFate(u, runes, lang, corrections) {
   var S = RP_NORNS[lang] || RP_NORNS.en;
   var rUrd = runes[0], rVerd = runes[1], rSkul = runes[2];
   var ctx = [
-    _skutecneJmeno(u.name) ? S.seeker + ': ' + u.name : '',
-    u.area    ? S.area + ': ' + u.area : '',
+    _kus('PERSON', 'name', '—', _skutecneJmeno(u.name) ? S.seeker + ': ' + u.name : ''),
+    _kus('AREA-HEADER', 'area', '—', u.area    ? S.area + ': ' + u.area : ''),
     // 2026-09-08: hlavicka „Seeking: X" odebrana. Spready hodnotu pojmenovavaly
     // DVAKRAT (tady + nalepka v _registerContext), single jen jednou — dolozeno
     // uz 2026-08-15 (docs/findings/2026-08-15-wf_62679055-021.md): „prompt tu vec
@@ -2419,32 +2427,32 @@ function buildNornsPromptFate(u, runes, lang, corrections) {
     // maji spready TYZ tvar registru jako single — tedy ten, na kterem se merilo.
     // Popisky S.seeking/seekJoin v packach zustavaji: jsou to data, ne chovani.
     // 2026-10-16 v5.11: záměr (časový rámec) do spreadu nejde — spread má vlastní časovou osu v pozicích (owner, DECISIONS 2026-10-16 (3)).
-    u.question ? S.question + ': ' + _questionSafe(u.question) : '',
+    _kus('QUESTION-HEADER', 'question', '—', u.question ? S.question + ': ' + _questionSafe(u.question) : ''),
   ].filter(Boolean).join('\n');
   var L = S.labels;
   var runesBlock = [ _spreadBlock(rUrd, L[0], lang), '', _spreadBlock(rVerd, L[1], lang), '', _spreadBlock(rSkul, L[2], lang) ].join('\n');
   return [
     ctx, '',
-    S.intro, '',
-    runesBlock, '',
-    _imageBlock(lang, _seasonalImagery(lang, runes, u && u.area)),
-    _imgPostava ? _postavaPokyn(lang, true) : '',   // 2026-09-30: zvíře v hlavní roli → B2 (IMG_POSTAVA); čte se AŽ po losu obrazu výš
+    _kus('INTRO', 'fixed (spread)', '—', S.intro), '',
+    _kus('RUNES-POSITIONS', 'rune draw (positions + meanings)', 'each rune its part', runesBlock), '',
+    _kus('IMAGE', 'image draw (spread runes + area)', '1 (carried through the reading)', _imageBlock(lang, _seasonalImagery(lang, runes, u && u.area))),
+    _kus('FIGURE', 'image draw (animal as protagonist)', 'whole', _imgPostava ? _postavaPokyn(lang, true) : ''),   // 2026-09-30: zvíře v hlavní roli → B2 (IMG_POSTAVA); čte se AŽ po losu obrazu výš
     // v4.9 (2026-08-23): esencni radek VEN ze spreadu — rikal "pojmenuj runu" proti
     // zamernemu "nejmenuj" tehoz promptu (dve protichudne instrukce; mereno vitezilo
     // nejmenuj a radek jel mrtvy). Jmena nese UI pozic. Misto nej vztahova vazba:
-    _spreadThread(lang),
-    _noColdRead(lang),
-    u.area ? _domainContext(u.area, lang) : '',
-    u.seeking ? _registerContext(u.seeking, lang) : '',
+    _kus('THREAD', 'fixed', 'whole', _spreadThread(lang)),
+    _kus('NO-COLD-READING', 'fixed', 'whole', _noColdRead(lang)),
+    _kus('AREA', 'area', 'whole (where the image lands)', u.area ? _domainContext(u.area, lang) : ''),
+    _kus('SEEKING', 'seeking', 'whole (register)', u.seeking ? _registerContext(u.seeking, lang) : ''),
     // v4.14 (2026-08-23, KUKY): dosednutí — S.landing nahrazuje otázkový los (viz yggdrasil v4.13).
-    S.landing,
-    (u.area || u.seeking) ? _priorityContext(false, runes, lang) : '',   // false = bez čočky (odebrána 2026-09-26)
-  ].concat(S.beats).concat([
-    S.bigInstruction(u.name, _imgPostava),   // 2026-09-30: s B2 jméno jen pozdě / vůbec — „uprostřed“ odporuje „k tazateli až poslední věta“
-    (S.langInstr ? S.langInstr : ''),
-    _addressContext(lang, u),
-    getCorrPrompt(lang, corrections),   // 2026-10-16 (A3.8): před pokynem JSON, jako single a Kříž
-    S.json,
+    _kus('LANDING', 'fixed (spread)', 'last', S.landing),
+    _kus('PRIORITY', 'area / seeking', 'whole', (u.area || u.seeking) ? _priorityContext(false, runes, lang) : ''),   // false = bez čočky (odebrána 2026-09-26)
+  ].concat(S.beats.map(function (b) { return _kus('INSTRUCTION', 'fixed (spread)', 'whole', b); })).concat([
+    _kus('LENGTH+NAME', 'name + draw + figure', 'whole', S.bigInstruction(u.name, _imgPostava)),   // 2026-09-30: s B2 jméno jen pozdě / vůbec — „uprostřed“ odporuje „k tazateli až poslední věta“
+    _kus('LANGUAGE', 'fixed', 'whole', (S.langInstr ? S.langInstr : '')),
+    _kus('ADDRESS', 'address (gender)', 'whole', _addressContext(lang, u)),
+    _kus('CORRECTIONS', 'corrections', 'whole', getCorrPrompt(lang, corrections)),   // 2026-10-16 (A3.8): před pokynem JSON, jako single a Kříž
+    _kus('FORMAT', 'fixed', '—', S.json),
   ]).filter(Boolean).join('\n');
 }
 
@@ -2489,8 +2497,8 @@ var RP_HORSESHOE = {
 function buildHorseshoePromptSeven(u, runes, lang, corrections) {
   var S = RP_HORSESHOE[lang] || RP_HORSESHOE.en;
   var ctx = [
-    _skutecneJmeno(u.name) ? S.seeker + ': ' + u.name : '',
-    u.area    ? S.area + ': ' + u.area : '',
+    _kus('PERSON', 'name', '—', _skutecneJmeno(u.name) ? S.seeker + ': ' + u.name : ''),
+    _kus('AREA-HEADER', 'area', '—', u.area    ? S.area + ': ' + u.area : ''),
     // 2026-09-08: hlavicka „Seeking: X" odebrana. Spready hodnotu pojmenovavaly
     // DVAKRAT (tady + nalepka v _registerContext), single jen jednou — dolozeno
     // uz 2026-08-15 (docs/findings/2026-08-15-wf_62679055-021.md): „prompt tu vec
@@ -2498,7 +2506,7 @@ function buildHorseshoePromptSeven(u, runes, lang, corrections) {
     // maji spready TYZ tvar registru jako single — tedy ten, na kterem se merilo.
     // Popisky S.seeking/seekJoin v packach zustavaji: jsou to data, ne chovani.
     // 2026-10-16 v5.11: záměr (časový rámec) do spreadu nejde — spread má vlastní časovou osu v pozicích (owner, DECISIONS 2026-10-16 (3)).
-    u.question ? S.question + ': ' + _questionSafe(u.question) : '',
+    _kus('QUESTION-HEADER', 'question', '—', u.question ? S.question + ': ' + _questionSafe(u.question) : ''),
   ].filter(Boolean).join('\n');
   var P = S.positions;
   var runesBlock = [
@@ -2507,25 +2515,25 @@ function buildHorseshoePromptSeven(u, runes, lang, corrections) {
   ].join('\n');
   return [
     ctx, '',
-    S.intro, '',
-    runesBlock, '',
-    _imageBlock(lang, _seasonalImagery(lang, runes, u && u.area)),
+    _kus('INTRO', 'fixed (spread)', '—', S.intro), '',
+    _kus('RUNES-POSITIONS', 'rune draw (positions + meanings)', 'each rune its part', runesBlock), '',
+    _kus('IMAGE', 'image draw (spread runes + area)', '1 (carried through the reading)', _imageBlock(lang, _seasonalImagery(lang, runes, u && u.area))),
     // v4.9 (2026-08-23): esencni radek VEN ze spreadu — rikal "pojmenuj runu" proti
     // zamernemu "nejmenuj" tehoz promptu (dve protichudne instrukce; mereno vitezilo
     // nejmenuj a radek jel mrtvy). Jmena nese UI pozic. Misto nej vztahova vazba:
-    _spreadThread(lang),
-    _noColdRead(lang),
-    u.area ? _domainContext(u.area, lang) : '',
-    u.seeking ? _registerContext(u.seeking, lang) : '',
+    _kus('THREAD', 'fixed', 'whole', _spreadThread(lang)),
+    _kus('NO-COLD-READING', 'fixed', 'whole', _noColdRead(lang)),
+    _kus('AREA', 'area', 'whole (where the image lands)', u.area ? _domainContext(u.area, lang) : ''),
+    _kus('SEEKING', 'seeking', 'whole (register)', u.seeking ? _registerContext(u.seeking, lang) : ''),
     // v4.14 (2026-08-23, KUKY): dosednutí — S.landing nahrazuje otázkový los (viz yggdrasil v4.13).
-    S.landing,
-    (u.area || u.seeking) ? _priorityContext(false, runes, lang) : '',   // false = bez čočky (odebrána 2026-09-26)
-  ].concat(S.beats).concat([
-    S.closing(u.name),
-    (S.langInstr ? S.langInstr : ''),
-    _addressContext(lang, u),
-    getCorrPrompt(lang, corrections),   // 2026-10-16 (A3.8): před pokynem JSON, jako single a Kříž
-    S.json,
+    _kus('LANDING', 'fixed (spread)', 'last', S.landing),
+    _kus('PRIORITY', 'area / seeking', 'whole', (u.area || u.seeking) ? _priorityContext(false, runes, lang) : ''),   // false = bez čočky (odebrána 2026-09-26)
+  ].concat(S.beats.map(function (b) { return _kus('INSTRUCTION', 'fixed (spread)', 'whole', b); })).concat([
+    _kus('LENGTH+NAME', 'name + draw', 'whole', S.closing(u.name)),
+    _kus('LANGUAGE', 'fixed', 'whole', (S.langInstr ? S.langInstr : '')),
+    _kus('ADDRESS', 'address (gender)', 'whole', _addressContext(lang, u)),
+    _kus('CORRECTIONS', 'corrections', 'whole', getCorrPrompt(lang, corrections)),   // 2026-10-16 (A3.8): před pokynem JSON, jako single a Kříž
+    _kus('FORMAT', 'fixed', '—', S.json),
   ]).filter(Boolean).join('\n');
 }
 
@@ -2582,8 +2590,8 @@ var RP_YGGDRASIL = {
 function buildYggdrasilPromptNine(u, runes, lang, corrections) {
   var S = RP_YGGDRASIL[lang] || RP_YGGDRASIL.en;
   var ctx = [
-    _skutecneJmeno(u.name) ? S.seeker + ': ' + u.name : '',
-    u.area    ? S.area + ': ' + u.area : '',
+    _kus('PERSON', 'name', '—', _skutecneJmeno(u.name) ? S.seeker + ': ' + u.name : ''),
+    _kus('AREA-HEADER', 'area', '—', u.area    ? S.area + ': ' + u.area : ''),
     // 2026-09-08: hlavicka „Seeking: X" odebrana. Spready hodnotu pojmenovavaly
     // DVAKRAT (tady + nalepka v _registerContext), single jen jednou — dolozeno
     // uz 2026-08-15 (docs/findings/2026-08-15-wf_62679055-021.md): „prompt tu vec
@@ -2591,7 +2599,7 @@ function buildYggdrasilPromptNine(u, runes, lang, corrections) {
     // maji spready TYZ tvar registru jako single — tedy ten, na kterem se merilo.
     // Popisky S.seeking/seekJoin v packach zustavaji: jsou to data, ne chovani.
     // 2026-10-16 v5.11: záměr (časový rámec) do spreadu nejde — spread má vlastní časovou osu v pozicích (owner, DECISIONS 2026-10-16 (3)).
-    u.question ? S.question + ': ' + _questionSafe(u.question) : '',
+    _kus('QUESTION-HEADER', 'question', '—', u.question ? S.question + ': ' + _questionSafe(u.question) : ''),
   ].filter(Boolean).join('\n');
   var T = S.tiers, P = S.positions;
   var runesBlock = [
@@ -2604,26 +2612,26 @@ function buildYggdrasilPromptNine(u, runes, lang, corrections) {
   ].join('\n');
   return [
     ctx, '',
-    S.intro, '',
-    runesBlock, '',
-    _imageBlock(lang, _seasonalImagery(lang, runes, u && u.area)),
+    _kus('INTRO', 'fixed (spread)', '—', S.intro), '',
+    _kus('RUNES-POSITIONS', 'rune draw (positions + meanings)', 'each rune its part', runesBlock), '',
+    _kus('IMAGE', 'image draw (spread runes + area)', '1 (carried through the reading)', _imageBlock(lang, _seasonalImagery(lang, runes, u && u.area))),
     // v4.9 (2026-08-23): esencni radek VEN ze spreadu — rikal "pojmenuj runu" proti
     // zamernemu "nejmenuj" tehoz promptu (dve protichudne instrukce; mereno vitezilo
     // nejmenuj a radek jel mrtvy). Jmena nese UI pozic. Misto nej vztahova vazba:
-    _spreadThread(lang),
-    _noColdRead(lang),
-    u.area ? _domainContext(u.area, lang) : '',
-    u.seeking ? _registerContext(u.seeking, lang) : '',
+    _kus('THREAD', 'fixed', 'whole', _spreadThread(lang)),
+    _kus('NO-COLD-READING', 'fixed', 'whole', _noColdRead(lang)),
+    _kus('AREA', 'area', 'whole (where the image lands)', u.area ? _domainContext(u.area, lang) : ''),
+    _kus('SEEKING', 'seeking', 'whole (register)', u.seeking ? _registerContext(u.seeking, lang) : ''),
     // v4.13 (2026-08-23, KUKY): dosednutí — S.landing NAHRAZUJE otázkový los _endingShape.
     // Dvě protichůdné instrukce konce = jedna jede mrtvá (vzor v4.9). Oblouk se MĚŘÍ (scripts/oblouk.py).
-    S.landing,
-    (u.area || u.seeking) ? _priorityContext(false, runes, lang) : '',   // false = bez čočky (odebrána 2026-09-26)
-  ].concat(S.beats).concat([
-    S.closing(u.name),
-    (S.langInstr ? S.langInstr : ''),
-    _addressContext(lang, u),
-    getCorrPrompt(lang, corrections),   // 2026-10-16 (A3.8): před pokynem JSON, jako single a Kříž
-    S.json,
+    _kus('LANDING', 'fixed (spread)', 'last', S.landing),
+    _kus('PRIORITY', 'area / seeking', 'whole', (u.area || u.seeking) ? _priorityContext(false, runes, lang) : ''),   // false = bez čočky (odebrána 2026-09-26)
+  ].concat(S.beats.map(function (b) { return _kus('INSTRUCTION', 'fixed (spread)', 'whole', b); })).concat([
+    _kus('LENGTH+NAME', 'name + draw', 'whole', S.closing(u.name)),
+    _kus('LANGUAGE', 'fixed', 'whole', (S.langInstr ? S.langInstr : '')),
+    _kus('ADDRESS', 'address (gender)', 'whole', _addressContext(lang, u)),
+    _kus('CORRECTIONS', 'corrections', 'whole', getCorrPrompt(lang, corrections)),   // 2026-10-16 (A3.8): před pokynem JSON, jako single a Kříž
+    _kus('FORMAT', 'fixed', '—', S.json),
   ]).filter(Boolean).join('\n');
 }
 

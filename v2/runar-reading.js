@@ -320,9 +320,9 @@ async function _generateReading() {
   const sys = buildSysPrompt(activeChar, lang);
   await _loadServerLastImage(drawn);   // 2026-09-27: obraz z posledního čtení téže runy (jakékoli zařízení) → los ho vyřadí
   var prompt = buildReadingPrompt(u, drawn, lang, corrections);
-  var _thL = _thoughtFor('SINGLE', [drawn], lang); if (_thL) prompt += '\n' + _thL;   // 2026-09-30: myšlenka ✦ (Standard/Premium)
+  var _thL = _kus('THOUGHT-✦', 'account (reading_thought)', '✦ line', _thoughtFor('SINGLE', [drawn], lang)); if (_thL) prompt += '\n' + _thL;   // 2026-09-30: myšlenka ✦ (Standard/Premium)
   // 2026-10-04 (audit promptu bod 2): připomínka délky s číslem ÚPLNĚ na konci — za ✦ (Anthropic k Opusu 5, viz _lengthReminder).
-  var _dR = _lengthReminder(lang); if (_dR) prompt += '\n' + _dR;
+  var _dR = _kus('LENGTH-REMINDER', 'fixed', 'whole', _lengthReminder(lang)); if (_dR) prompt += '\n' + _dR;
   _lastGen = { sys: sys, prompt: prompt, lang: lang, kind: 'single' };   // pro rozbor GPT-6 sol (jen admin)
 
   // Journal meta for the SERVER-SIDE save (proxy saves it right after the deduction; two writes, not atomic).
@@ -1384,7 +1384,7 @@ async function _generateSpreadReading(o) {
   var _castNowS = _castIdx(u);
   var sys = buildSysPrompt(activeChar, lang);
   var prompt = o.buildPrompt(u, o.runes, lang, corrections);
-  var _thS = _thoughtFor(o.kind, o.runes, lang); if (_thS) prompt += '\n' + _thS;   // 2026-09-30: myšlenka ✦ (Kříž, Norny; od 2026-10-03 i Horseshoe a Yggdrasil)
+  var _thS = _kus('THOUGHT-✦', 'account (reading_thought)', '✦ line', _thoughtFor(o.kind, o.runes, lang)); if (_thS) prompt += '\n' + _thS;   // 2026-09-30: myšlenka ✦ (Kříž, Norny; od 2026-10-03 i Horseshoe a Yggdrasil)
   _lastGen = { sys: sys, prompt: prompt, lang: lang, kind: o.kind };   // pro rozbor GPT-6 sol (jen admin)
 
   // Journal meta for the SERVER-SIDE save (proxy saves it right after the deduction; two writes, not atomic).
