@@ -42,7 +42,7 @@ const SBER = `(() => { const out = [];
   let id = 0; const wait = {}; ws.onmessage = (m) => { const d = JSON.parse(m.data); if (d.id && wait[d.id]) { wait[d.id](d); delete wait[d.id]; } };
   const cmd = (method, params) => new Promise((ok) => { const i = ++id; wait[i] = ok; ws.send(JSON.stringify({ id: i, method, params: params || {} })); });
   const ev = async (e) => { const r = await cmd('Runtime.evaluate', { expression: e, awaitPromise: true, returnByValue: true }); const x = r.result || {}; return x.exceptionDetails ? 'ERR ' + ((x.exceptionDetails.exception || {}).description || x.exceptionDetails.text) : (x.result || {}).value; };
-  await cmd('Page.enable'); await cmd('Runtime.enable');
+  await cmd('Page.enable'); await cmd('Runtime.enable'); await cmd('Network.enable'); await cmd('Network.setBlockedURLs', { urls: ['*supabase.co*'] });   // 2026-10-22: žádný provoz na produkční Supabase (egress)
   const vysl = {};
   for (const [u, nast] of Object.entries(UCTY)) {
     await cmd('Page.navigate', { url: BASE }); for (let k = 0; k < 100; k++) { await sleep(150); if (await ev(`typeof _generateReading === 'function' && document.readyState === 'complete'`)) break; } await sleep(1200);

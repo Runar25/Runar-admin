@@ -10,11 +10,21 @@
 //   const poj = require('./utils/prohlizec_pojistky').zabezpec({ ws, proc, jmeno: 'okno Where to start (㊺)', limitS: 180 });
 //   poj.krok('3. nasazená verze');  …  const dialogy = poj.hotovo();   // před zabitím Chrome; prázdné = v pořádku
 //   node scripts/utils/prohlizec_pojistky.js --test
+// (4) od 2026-10-22: žádný požadavek na produkční Supabase (*supabase.co*) — Network.setBlockedURLs pro každou kontrolu, která pojistku
+//     zapojí. Proč: Supabase Free přetáhl „Cached Egress“ 11,4 / 5 GB (owner 2026-10-22 „problém, musíme vyřešit“); nejpravděpodobnější
+//     příčina — kontroly s čistým profilem stahovaly při každém běhu 2,1 MB portrét ze Storage (~5 300×). Blokovaly to jen ㉜ a ㊾. Kontrola,
+//     která produkci opravdu potřebuje, ať předá { povolSupabase: true } a napíše proč.
 'use strict';
 
-function zabezpec({ ws, proc, jmeno, limitS }) {
+function zabezpec({ ws, proc, jmeno, limitS, povolSupabase }) {
   let krok = 'start', skoncilo = false, idDialogu = 990000;
   const dialogy = [];
+  if (!povolSupabase) {
+    try {
+      ws.send(JSON.stringify({ id: ++idDialogu, method: 'Network.enable', params: {} }));
+      ws.send(JSON.stringify({ id: ++idDialogu, method: 'Network.setBlockedURLs', params: { urls: ['*supabase.co*'] } }));
+    } catch (e) {}
+  }
   const selhani = (zprava) => {
     if (skoncilo) return;
     skoncilo = true;
@@ -50,7 +60,13 @@ if (require.main === module && process.argv.includes('--test')) {
   const P = [
     ['dialog se potvrdí a zapíše', pust(`const p = zabezpec({ ws, proc, jmeno: 't', limitS: 5 }); p.krok('k1');
       ws.zprava({ method: 'Page.javascriptDialogOpening', params: { type: 'alert', message: 'ahoj' } });
-      const d = p.hotovo(); console.log(d.length === 1 && /k1: alert/.test(d[0]) && ws.poslano[0].method === 'Page.handleJavaScriptDialog' ? 'ANO' : 'NE');`),
+      const d = p.hotovo(); console.log(d.length === 1 && /k1: alert/.test(d[0]) && ws.poslano.some((x) => x.method === 'Page.handleJavaScriptDialog') ? 'ANO' : 'NE');`),
+      (r) => r.status === 0 && /ANO/.test(r.stdout)],
+    ['produkční Supabase blokovaná (výchozí)', pust(`const p = zabezpec({ ws, proc, jmeno: 't', limitS: 5 }); p.hotovo();
+      const b = ws.poslano.find((x) => x.method === 'Network.setBlockedURLs'); console.log(b && b.params.urls.indexOf('*supabase.co*') >= 0 ? 'ANO' : 'NE');`),
+      (r) => r.status === 0 && /ANO/.test(r.stdout)],
+    ['povolSupabase: nic se neblokuje', pust(`const p = zabezpec({ ws, proc, jmeno: 't', limitS: 5, povolSupabase: true }); p.hotovo();
+      console.log(ws.poslano.some((x) => x.method === 'Network.setBlockedURLs') ? 'NE' : 'ANO');`),
       (r) => r.status === 0 && /ANO/.test(r.stdout)],
     ['spojení zavřené před koncem = FAIL a kód 1', pust(`zabezpec({ ws, proc, jmeno: 't', limitS: 5 }); ws.zavri();`),
       (r) => r.status === 1 && /FAIL  t: spojení/.test(r.stdout)],
