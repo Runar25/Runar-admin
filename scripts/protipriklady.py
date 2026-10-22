@@ -325,6 +325,10 @@ PRIPADY = [
  # ㊒ bez Supabase Storage (2026-10-22, CODE-read): portrét zpět ze Storage v appce · obrázek ze Storage ve webu
  ('chyti', 'verify_bez_storage.js', 'v2/runar-reader.html', 'regex', r'src="img/runar-portrait\.webp"', 'src="https://x.supabase.co/storage/v1/object/' + 'public/runar-images/Runar_portrait.png"'),
  ('chyti', 'verify_bez_storage.js', 'web/site/heim/index.html', 'regex', r'(<body[^>]*>)', r'\g<1><img src="https://x.supabase.co/storage/v1/object/' + 'public/a.png">'),
+    # 2026-10-22 (CODE-tune): řádek builderu bez _kus — anatomie ho nesmí tiše vynechat (oblast v jedné runě)
+    ('chyti', 'verify_anatomie_promptu.js', 'v2/runar-character.js', 'replace',
+     "_kus('AREA', 'area + face draw', 'whole (where the image lands)', u.area ? _domainContext(u.area, lang, areaFace) : '')",
+     "u.area ? _domainContext(u.area, lang, areaFace) : ''"),
 ]
 
 

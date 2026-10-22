@@ -1281,6 +1281,14 @@ radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola storage probehla'
 check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
 
+# ㊓ Anatomie promptu (CODE-tune 2026-10-22, owner: „vědět přesně, z čeho se skládá čtení“): každý řádek promptu patří označenému kusu
+# (_kus) — jinak by anatomie, recept čtení i skladač ve shrine tiše vynechaly, co model dostal.
+print('\n' + chr(0x3293) + ' ANATOMIE PROMPTU (verify_anatomie_promptu.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_anatomie_promptu.js')], capture_output=True, text=True, encoding='utf-8')
+radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola anatomie probehla'
+check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
