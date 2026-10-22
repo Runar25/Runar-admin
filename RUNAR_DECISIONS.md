@@ -12203,3 +12203,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   obnovení drobná výzva „nová verze — klepni pro obnovení“ (UI_TEXT, IS + EN), obnoví se až po klepnutí. Ověřit v prohlížeči: stará verze →
   návrat z pozadí → výzva, rozepsaný text nezmizí.
 - Affected doc(s): žádný jiný.
+
+## 2026-10-22 (9) — Výpadky služeb: přihlášení nesmí viset, hlášky lidsky v obou jazycích, vypršelé přihlášení = přihlas se znovu
+
+- **Rozhodl:** owner 2026-10-22 na kolo (c) průchodu CODE-read (co člověk uvidí při výpadku): *„1. ano, předej tune“*.
+- **Ověřeno v prohlížeči (odpovědi serveru podvržené):** čtení při výpadku sítě / 500 / 503 / nedostupném modelu → „Rúnar is resting…“, kredit
+  se nestrhne; hlas při výpadku ElevenLabs srozumitelně, text čtení zůstane. **Vady:** (1) `sendLoginCode` (runar-auth.js) při výpadku sítě
+  hodí výjimku a nechá „Sending…“ navždy; (2) nedoručený e-mail (Brevo / SMTP) → `auth_failed` s technickým textem Supabase („Error sending
+  magic link email“) i v IS a se slovem „magic link“, které od 2026-10-10 (14) nepoužíváme; (3) vypršelé přihlášení (401) během čtení → táž
+  hláška „try again“, člověk zkouší dokola.
+- **Co (CODE-tune):** (1) chyba sítě → srozumitelná hláška, tlačítko znovu volné; (2) vlastní věta EN + IS místo technického textu (např. kód se
+  nepodařilo poslat, zkus to za chvíli, nebo napiš na runar@therunekeeper.com), technický text jen do konzole; (3) 401 → otevřít přihlášení
+  s výzvou přihlásit se znovu.
+- Affected doc(s): žádný jiný.
