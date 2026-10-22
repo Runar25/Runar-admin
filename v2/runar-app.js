@@ -1070,7 +1070,6 @@ function updateUIText() {
   // updateUIText vlastni staticke preklady, (b) `setLang` vola updateUIText, ale
   // _updateReadingForm NE — text by pri prepnuti jazyka zustal anglicky.
   // `data-i18n` v HTML preklad nedela; cte ho jen runar-reporter.js.
-  setText('reader-disclaimer', t('disclaimer'));
   // 2026-10-19 (owner „13. pod BEGIN THE READING“): uživatel ví, že mluví s AI, dřív než čte (EU AI Act čl. 50 od 2. 8. 2026;
   // text CODE-read). Do té doby to appka říkala jen v souhlasu u otázky, v nápovědě a v zásadách.
   setText('ai-note', t('ai_note'));

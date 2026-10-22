@@ -1306,9 +1306,10 @@ const UI_TEXT = {
     // Staticke upozorneni — NENI Runarovym hlasem zamerne. Runar sam na popis
     // priznaku reagovat nema: komentoval by tim necí telo, coz mu _noColdRead
     // a zakaz rad zakazuji (rozhodnuto s ownerem 2026-08-16). Tohle mluvi APPKA.
-    disclaimer:       'Rúnar offers a reading to reflect on, not professional advice.',
     // 2026-10-19 (owner „13. pod BEGIN THE READING“, text CODE-read): uživatel ví, že mluví s AI (EU AI Act čl. 50 od 2. 8. 2026).
-    ai_note:          'Rúnar is an AI. The runes are old; his words are made new each time.',
+    // 2026-10-22 (owner „5. c“, návrh CODE-read): jedna věta místo dvou — AI (EU AI Act čl. 50) + „ne odborná rada“ (do té doby zvlášť
+    // klíč disclaimer, #reader-disclaimer); „his words are made new each time“ znělo divně (made new = obnovené).
+    ai_note:          'Rúnar is an AI. His readings are for reflection, not professional advice.',
     opt:              '(OPTIONAL)',
     begin_btn:        'BEGIN THE READING',
     draw_lbl:         'ᚠ DRAW YOUR RUNE',
@@ -1876,9 +1877,10 @@ const UI_TEXT = {
                        'Ég er að ákveða hvort ég eigi að taka að mér meiri vinnu.'],
     // Vymysleno islandsky, ne prelozeno (§2). Overeno: 'til umhugsunar' 10432 vyskytu,
     // 'faglega ráðgjöf' 626 (Risamalheild 2000-2021); GreynirCorrect 0 priznaku.
-    disclaimer:       'Rúnar býður lestur til umhugsunar, ekki faglega ráðgjöf.',
     // 2026-10-19: viz EN. Greynir bez nálezu; korpus „er gervigreind“ 78×, „eru fornar“ 63×, „verða til ný“ 197×, „orð hans verða“ 14×.
-    ai_note:          'Rúnar er gervigreind. Rúnirnar eru fornar en orð hans verða til ný í hvert sinn.',
+    // 2026-10-22 (CODE-read): Greynir OK (s čárkou „…umhugsunar, ekki fagleg ráðgjöf“ P_NT_SvigaInnihaldNl → „en ekki“); korpus
+    // „til umhugsunar“ 10 432×, „umhugsunar en ekki“ 11×, „fagleg ráðgjöf“ 72×.
+    ai_note:          'Rúnar er gervigreind. Lestrar hans eru til umhugsunar en ekki fagleg ráðgjöf.',
     opt:              '(VALKVÆTT)',
     begin_btn:        'HEFJA LESTURINN',
     draw_lbl:         'ᚠ DRAGÐU RÚNINA ÞÍNA',

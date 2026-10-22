@@ -12120,3 +12120,12 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Co:** kdo od předplatného odstoupí do 14 dní (zákon 16/2016, 23. gr.), zaplatí podíl ceny období podle uplynulých dní; zbytek se vrací.
   Počet vyčerpaných čtení se nezohledňuje. Uzavírá bod „Neověřeno / otevřené“ v 2026-10-21 (9) (část o předplatném).
 - Affected doc(s): `RUNAR_BACKLOG.md` (Před spuštěním plateb) — v témže commitu.
+
+## 2026-10-22 (2) — Pod BEGIN THE READING jedna věta: AI + „ne odborná rada“; druhé upozornění pryč
+
+- **Rozhodl:** owner 2026-10-22 18:14 (CODE-read předal, citát ověřen v přepisu): *„5. c, předej to tune“* (varianta c z návrhu CODE-read).
+- **Co:** `ai_note` = EN *„Rúnar is an AI. His readings are for reflection, not professional advice.“* / IS *„Rúnar er gervigreind. Lestrar
+  hans eru til umhugsunar en ekki fagleg ráðgjöf.“* (IS CODE-read: Greynir, korpus — doklad u klíče). Řádek `#reader-disclaimer` (klíč
+  `disclaimer`, od 2026-08-16) zrušen — jeho obsah nese `ai_note`, kterou vidí každý. Upřesňuje 2026-10-19 (13) (znění věty).
+- **Proč:** dvě upozornění pod sebou; „his words are made new each time“ znělo divně. Povinná část pro AI Act (čl. 50) zůstává na začátku.
+- Affected doc(s): žádný (texty vlastní UI_TEXT).
