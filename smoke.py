@@ -1273,6 +1273,14 @@ radky = [l for l in (r2.stdout + r.stdout + r.stderr + r2.stderr).strip().split(
 prvni = radky[-1] if radky else 'kontrola jmen web × appka probehla'
 check(prvni.strip(), r.returncode == 0 and r2.returncode == 0, '\n'.join(radky[:-1]) if (r.returncode or r2.returncode) else '')
 
+# ㊒ Bez Supabase Storage (CODE-read 2026-10-22, DECISIONS 2026-10-22 (6)): portrét ze Storage přetáhl egress Supabase Free (11,4 / 5 GB).
+# Statické soubory appky a webu patří do repa; adresa „/storage/v1/object/public/“ v kódu = FAIL.
+print('\n' + chr(0x3292) + ' BEZ SUPABASE STORAGE (verify_bez_storage.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_bez_storage.js')], capture_output=True, text=True, encoding='utf-8')
+radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola storage probehla'
+check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

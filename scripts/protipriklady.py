@@ -322,6 +322,9 @@ PRIPADY = [
  # ㊑ web × appka (2026-10-21, CODE-read): dnešní chyba (web znovu deklaruje jméno z configu) · appka přejmenuje funkci, kterou web volá
  ('chyti', 'verify_web_appka_jmena.js', 'web/site/web.js', 'replace', "var RUNAR_APP_URL = ", "var RUNAR_HOME_URL = 'x';\nvar RUNAR_APP_URL = "),
  ('chyti', 'verify_web_appka_jmena.js', 'v2/runar-utils.js', 'replace', 'function kamenUctuSvg(', 'function kamenUctuSvgX('),
+ # ㊒ bez Supabase Storage (2026-10-22, CODE-read): portrét zpět ze Storage v appce · obrázek ze Storage ve webu
+ ('chyti', 'verify_bez_storage.js', 'v2/runar-reader.html', 'regex', r'src="img/runar-portrait\.webp"', 'src="https://x.supabase.co/storage/v1/object/' + 'public/runar-images/Runar_portrait.png"'),
+ ('chyti', 'verify_bez_storage.js', 'web/site/heim/index.html', 'regex', r'(<body[^>]*>)', r'\g<1><img src="https://x.supabase.co/storage/v1/object/' + 'public/a.png">'),
 ]
 
 
