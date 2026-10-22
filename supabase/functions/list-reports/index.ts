@@ -7,8 +7,8 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.117.3";
+import { ADMIN_EMAILS } from "../_shared/admini.ts";   // seznam adminů na jednom místě (2026-10-22, DECISIONS 2026-10-22 (5))
 
-const ADMIN_EMAILS = ["kukula@agndofa.is", "info@agndofa.is"];
 
 const cors = {
   "Access-Control-Allow-Origin":  "*",

@@ -41,6 +41,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.117.3";
 import { textKHlasu, normalizuj, podepis } from "../_shared/voice_ticket.ts";
+import { ADMIN_EMAILS } from "../_shared/admini.ts";   // seznam adminů na jednom místě (2026-10-22, DECISIONS 2026-10-22 (5))
 
 const cors = {
   "Access-Control-Allow-Origin":  "*",
@@ -452,7 +453,6 @@ serve(async (req: Request) => {
     let isAdmin = false;
     let creditsBalance = 0;
 
-    const ADMIN_EMAILS = ["kukula@agndofa.is", "info@agndofa.is"];
 
     if (authHeader) {
       const { data: { user } } = await sb().auth.getUser(authHeader.replace("Bearer ", ""));

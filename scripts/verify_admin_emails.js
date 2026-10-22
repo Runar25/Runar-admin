@@ -12,7 +12,7 @@
 const fs = require('fs'), path = require('path');
 const ROOT = path.join(__dirname, '..');
 const vytahni = (src) => {
-  const m = src.match(/ADMIN_EMAILS\s*=\s*\[([^\]]*)\]/);
+  const m = src.match(/ADMIN_EMAILS\s*(?::\s*[^=\n]+)?=\s*\[([^\]]*)\]/);   // 2026-10-22: i s typem (`: string[]` v _shared/admini.ts)
   if (!m) return null;
   return (m[1].match(/['"]([^'"]+)['"]/g) || []).map((s) => s.slice(1, -1).toLowerCase()).sort();
 };
@@ -65,6 +65,19 @@ for (const [d, f] of soubory) {
   if (!fs.existsSync(f)) continue;
   const src = fs.readFileSync(f, 'utf8');
   if (src.indexOf('ADMIN_EMAILS') === -1) continue;
+  // 2026-10-22 (DECISIONS 2026-10-22 (5) (a)): edge funkce seznam IMPORTUJÍ z _shared/admini.ts — vlastní kopie mimo _shared je vada
+  // (do té doby šest kopií, každou šlo změnit zvlášť). Funkce, která ADMIN_EMAILS používá, musí mít import ze sdíleného souboru.
+  const deklarace = /ADMIN_EMAILS\s*(?::\s*[^=\n]+)?=\s*\[/.test(src);
+  if (!d.startsWith('_shared/')) {
+    if (deklarace) { chyby++; kopie++; console.log('  ✘ ' + d + ': vlastní kopie seznamu adminů — importuj ADMIN_EMAILS z ../_shared/admini.ts'); }
+    else if (!/import\s*\{[^}]*ADMIN_EMAILS[^}]*\}\s*from\s*["']\.\.\/_shared\/admini\.ts["']/.test(src)) {
+      chyby++; console.log('  ✘ ' + d + ': používá ADMIN_EMAILS bez importu z ../_shared/admini.ts');
+    }
+    continue;
+  }
+  if (!deklarace) continue;
+  // generovaný balíček promptu = kopie v2/runar-config.js (build_prompt_skladani.js; aktuálnost hlídá ㊌), ne druhý seznam
+  if (d === '_shared/prompt_skladani.mjs') continue;
   const s = vytahni(src);
   kopie++;
   if (!s || s.join(',') !== kanon.join(',')) {
@@ -86,5 +99,6 @@ try {
   r.vady.forEach((v) => { chyby++; console.log('  ✘ ' + v); });
   db = r.popis;
 } catch (e) { db = 'neověřeno (' + String(e.message || e).split('\n')[0].replace(/postgres(ql)?:\/\/\S+/g, '<url>').slice(0, 80) + ')'; }
+if (!chyby && kopie !== 1) { chyby++; console.log('  ✘ seznam adminů pro edge funkce má stát právě jednou (_shared/admini.ts), je ' + kopie + '×'); }
 if (chyby) { console.log('FAIL  ADMIN_EMAILS: ' + chyby + ' rozdílů proti v2/runar-config.js (kód ' + kopie + ' kopií; databáze: ' + db + ')'); process.exit(1); }
-console.log('OK    ADMIN_EMAILS: ' + kopie + ' kopií v edge funkcích = v2/runar-config.js (' + kanon.length + ' adres); databáze: ' + db);
+console.log('OK    ADMIN_EMAILS: 1 seznam pro edge funkce (_shared/admini.ts, funkce ho importují) = v2/runar-config.js (' + kanon.length + ' adres); databáze: ' + db);

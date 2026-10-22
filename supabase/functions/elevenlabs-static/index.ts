@@ -9,6 +9,7 @@ import { logVoice, fetchQuota, saveQuota, brzdaHlasu } from "../_shared/voice_us
 // ID hlasu, modely a nastavení hlasu: JEDINÉ místo je _shared/el_voice.ts (2026-10-11) — dřív tu stály vlastní kopie včetně
 // nepoužitého ID pro IS s jinou hodnotou (důvod tam).
 import { EL_VOICE_ID, EL_VOICE_SETTINGS, elModel, kredityHlasu } from "../_shared/el_voice.ts"
+import { ADMIN_EMAILS } from "../_shared/admini.ts";   // seznam adminů na jednom místě (2026-10-22, DECISIONS 2026-10-22 (5))
 
 const EL_API_KEY     = Deno.env.get('ELEVENLABS_API_KEY')
 const SB_URL       = Deno.env.get('SUPABASE_URL')
@@ -32,7 +33,6 @@ serve(async (req) => {
     // ── Admin only — enforced here, not just claimed in a comment (was: not at all). ──
     // This tool spends the ElevenLabs key and overwrites shared Collection audio; a public
     // caller must not reach it. Verified against the real user JWT, same as claude-proxy.
-    const ADMIN_EMAILS = ['kukula@agndofa.is', 'info@agndofa.is']
     const authHeader = req.headers.get('Authorization')
     if (!authHeader) return new Response(JSON.stringify({ error: 'unauthorized' }),
       { status: 401, headers: { ...cors, 'Content-Type': 'application/json' } })

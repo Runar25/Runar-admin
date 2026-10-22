@@ -11,9 +11,9 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.117.3";
 import { fetchQuota, saveQuota, EL_DOBITI_KREDITY, EL_TARIF_KREDITY, EL_KREDIT_USD } from "../_shared/voice_usage.ts";
 import { kredityHlasu, EL_VOICE_ID } from "../_shared/el_voice.ts";
+import { ADMIN_EMAILS } from "../_shared/admini.ts";   // seznam adminů na jednom místě (2026-10-22, DECISIONS 2026-10-22 (5))
 
 // Kopie seznamu adminů (další: v2/runar-config.js a ostatní edge funkce). Shodu hlídá smoke ㉪ (scripts/verify_admin_emails.js).
-const ADMIN_EMAILS = ["kukula@agndofa.is", "info@agndofa.is"];
 
 const cors = {
   "Access-Control-Allow-Origin":  "*",

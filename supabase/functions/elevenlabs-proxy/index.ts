@@ -11,6 +11,7 @@ import { logVoice, denniSnimek, fetchQuota, saveQuota, brzdaHlasu } from "../_sh
 // ID hlasu, modely a nastavení hlasu: JEDINÉ místo je _shared/el_voice.ts (2026-10-11) — dřív tu stály vlastní kopie (důvod tam).
 import { EL_VOICE_ID, EL_VOICE_SETTINGS, elModel, kredityHlasu } from "../_shared/el_voice.ts";
 import { textKHlasu, normalizuj, over } from "../_shared/voice_ticket.ts";
+import { ADMIN_EMAILS } from "../_shared/admini.ts";   // seznam adminů na jednom místě (2026-10-22, DECISIONS 2026-10-22 (5))
 
 const EL_API_KEY     = Deno.env.get("ELEVENLABS_API_KEY");
 
@@ -23,7 +24,6 @@ const EL_API_KEY     = Deno.env.get("ELEVENLABS_API_KEY");
 const VOICE_MONTHLY_LIMIT_TESTER = 15;
 // Admin smí nechat přečíst text bez čtení — Teach ve shrine (text tam upravuje ručně, podpis mít nemůže). Kopie seznamu z configu
 // jako v ostatních funkcích; shodu hlídá scripts/verify_admin_emails.js.
-const ADMIN_EMAILS = ["kukula@agndofa.is", "info@agndofa.is"];
 // Úložiště hlasu uložených čtení — soukromé (sql/2026-10-11_hlas_ke_cteni.sql); přehrání přes podepsaný odkaz na hodinu.
 const BUCKET = "reading-voice";
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
