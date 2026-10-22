@@ -49,7 +49,9 @@ const srv = http.createServer((req, res) => {
   await cmd('Emulation.setDeviceMetricsOverride', { width: 390, height: 844, deviceScaleFactor: 3, mobile: true });
   krok = 'načtení appky';
   await cmd('Page.navigate', { url: 'http://127.0.0.1:' + port + '/v2/runar-reader.html' });
-  for (let k = 0; k < 100; k++) { await sleep(150); if (await ev(`typeof startTreeFounding === 'function' && !!window.RunarTreeProd && document.readyState === 'complete'`)) break; }
+  for (let k = 0; k < 100; k++) { await sleep(150); if (await ev(`typeof startTreeFounding === 'function' && typeof _nactiTreeEngine === 'function' && document.readyState === 'complete'`)) break; }
+  // engine stromu se od 2026-10-22 načítá až tomu, kdo strom vidí (runar-tree.js _nactiTreeEngine) — tady ho kontrola načte rovnou
+  await ev(`_nactiTreeEngine()`);
   await sleep(800);
   const res = []; const ok = (n, c, i) => res.push((c ? 'OK   ' : 'FAIL ') + n + (i ? ' — ' + i : ''));
   krok = 'příprava';
