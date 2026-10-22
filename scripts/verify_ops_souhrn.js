@@ -183,6 +183,16 @@ ok(chMail && /App errors are piling up/.test(chMail.subject) && /Last hour: 12 e
 const chDen = O.souhrn(D({ chybyAppky: { pocet: 7, top: [['TypeError: x is undefined (runar-app.js:120)', 4], ['ReferenceError: y (runar-tree.js:9)', 2], ['Error: z', 1]] } }));
 ok(/App errors \(24 h\) 7 · TypeError: x is undefined \(runar-app\.js:120\) ×4; ReferenceError: y \(runar-tree\.js:9\) ×2; Error: z ×1/.test(chDen.text)
   && !/App errors/.test(klid.text) && radku(chDen) <= 6, 'chyby appky: souhrn počet a nejčastější 3, nula vynechaná');
+// 2026-10-22: dostupnost webu a appky (po 15 min, 2 pokusy) a konec registrace domén z RDAP (DECISIONS 2026-10-22 (11) bod 2)
+ok(O.stavy(H({ nedostupne: [] })).uptime === 'ok' && O.stavy(H({ nedostupne: ['app'] })).uptime === 'problem' && O.stavy(H({})).uptime === 'unknown',
+  'dostupnost: vše odpovídá = OK, appka neodpovídá = problém, nekontrolováno = neznámo');
+const upMail = O.upozorneni(vse('ok'), Object.assign(vse('ok'), { uptime: 'problem' }), H({ nedostupne: ['app'] }));
+ok(upMail && /Website or app not reachable/.test(upMail.subject) && /Not answering: app\./.test(upMail.text), 'dostupnost: upozornění říká, co neodpovídá');
+const dom = (iso) => O.souhrn(D({ domeny: { 'therunekeeper.com': '2028-06-11T18:48:19Z', 'agndofa.is': iso } }));
+const dOk = dom('2027-10-16T00:00:00+00:00'), d30 = dom('2026-11-13T05:00:00Z'), d10 = dom('2026-10-24T05:00:00Z'), dNull = dom(null);
+ok(dOk.stav === 'OK' && !/Domain/.test(dOk.text) && d30.stav === 'WATCH' && /Domain agndofa\.is expires 2026-11-13 \(30 days\) — renew it\./.test(d30.text)
+  && d10.stav === 'PROBLEM' && dNull.stav === 'OK' && /Domain lookup failed: agndofa\.is/.test(dNull.text),
+  'domény: daleko nic, 30 dní WATCH, 10 dní PROBLEM, selhaný dotaz RDAP jen šedě mezi čísly');
 const pondeli = kvJindy('2026-10-19T05:00:00.000Z');
 ok(pondeli.text.indexOf(O.EGRESS_PRIPOMINKA) !== -1 && klid.text.indexOf(O.EGRESS_PRIPOMINKA) === -1 && pondeli.stav === 'WATCH',
   'egress Supabase: připomínka jen v pondělí (API ho neukazuje)');

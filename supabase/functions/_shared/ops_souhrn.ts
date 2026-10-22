@@ -20,7 +20,22 @@ export const PRAHY = {
   kvotaPozor: 0.5,              // kvóta (KVOTY) od 50 % = řádek v „Needs you“ (WATCH)
   kvotaProblem: 0.8,            // od 80 % = stav „quota“ problem → upozornění e-mailem (jen při změně)
   chybAppkyZaHodinu: 10,        // chyby JS u uživatelů (client-error) ≥ 10 za hodinu = skok → upozornění (DECISIONS 2026-10-22 (11))
+  domenaPozorDni: 60,           // doména vyprší do 60 dní = řádek v souhrnu (WATCH)
+  domenaProblemDni: 14,         // do 14 dní = souhrn PROBLEM
 };
+
+// Domény a dostupnost (DECISIONS 2026-10-22 (11) bod 2). Proč: o vypršelé doméně nebo spadlém webu by nás dnes nic neupozornilo. Konec
+// registrace z RDAP (veřejné, bez klíče; událost ověřena 2026-10-22: Verisign „expiration“ 2028-06-11, ISNIC „soft expiration“ 2027-10-16),
+// čte ho ranní souhrn. Dostupnost čte kontrola po 15 min — nedostupnost pokryje DNS, certifikát i hosting najednou (lepší než číst data
+// certifikátu; Let's Encrypt se obnovuje sám).
+export const DOMENY = [
+  { jmeno: "therunekeeper.com", rdap: "https://rdap.verisign.com/com/v1/domain/therunekeeper.com", udalost: "expiration" },
+  { jmeno: "agndofa.is", rdap: "https://rdap.isnic.is/rdap/domain/agndofa.is", udalost: "soft expiration" },
+];
+export const DOSTUPNOST = [
+  { jmeno: "therunekeeper.com", url: "https://therunekeeper.com/" },
+  { jmeno: "app", url: "https://runar25.github.io/Runar-admin/v2/runar-reader.html" },
+];
 
 // Kvóty služeb, které jdou změřit strojem (owner 2026-10-22 „1. ano, schvaluji, připomínkou v souhrnu“, DECISIONS 2026-10-22 (6)). Proč: o
 // přetažení egressu Supabase Free jsme se dozvěděli až z banneru. Limity = Supabase Free (supabase.com/pricing, čteno 2026-10-22: databáze
@@ -85,9 +100,10 @@ export type Hlidka = {
   zpravyPoLhute: number;                        // zprávy čtenářů v DB déle než 6 měsíců + 2 dny po poslední odpovědi (nezávislá kontrola výsledku)
   kvoty?: Record<string, number | null>;       // bajty podle KVOTY (public.ops_kvoty); null = funkce ještě není / selhala
   chybAppky60?: number;                        // chyby JS u uživatelů za hodinu (ops_events client_error)
+  nedostupne?: string[];                       // DOSTUPNOST.jmeno, které neodpověděly (2 pokusy); undefined = nekontrolováno
 };
 export type Stav = "ok" | "problem" | "unknown";
-export const KLICE = ["model", "voice_brake", "backup", "purge", "runs", "quota", "app_errors"] as const;
+export const KLICE = ["model", "voice_brake", "backup", "purge", "runs", "quota", "app_errors", "uptime"] as const;
 
 export function stavy(h: Hlidka): Record<string, Stav> {
   const pokusy = Math.max(1, h.cteni60 + h.chybModelu60);
@@ -105,7 +121,8 @@ export function stavy(h: Hlidka): Record<string, Stav> {
   return { model: model ? "problem" : "ok", voice_brake: h.brzd60 > 0 ? "problem" : "ok", backup, purge: stavMazani(h, backup),
     runs: vadyBehu(h).length ? "problem" : Object.values(h.behy ?? {}).some((p) => p && p.kdy) ? "ok" : "unknown",
     quota: kvotyNad(h.kvoty, PRAHY.kvotaProblem).length ? "problem" : Object.values(h.kvoty ?? {}).some((v) => v != null) ? "ok" : "unknown",
-    app_errors: (h.chybAppky60 ?? 0) >= PRAHY.chybAppkyZaHodinu ? "problem" : "ok" };
+    app_errors: (h.chybAppky60 ?? 0) >= PRAHY.chybAppkyZaHodinu ? "problem" : "ok",
+    uptime: h.nedostupne === undefined ? "unknown" : h.nedostupne.length ? "problem" : "ok" };
 }
 
 // Kvóty nad podílem: [„DB 410 MB of 500 MB (82 %)“, …]. Neznámé číslo (null) se přeskočí — bez poplachu, dokud SQL funkce není.
@@ -192,6 +209,11 @@ const POPIS: Record<string, { problem: string; resolved: string; co: string }> =
     resolved: "App errors back to normal",
     co: "something in the app is breaking for readers; the most frequent errors are in the morning digest (ops_events client_error).",
   },
+  uptime: {
+    problem: "Website or app not reachable",
+    resolved: "Website and app reachable again",
+    co: "check hosting (GitHub Pages), the domain and its certificate.",
+  },
 };
 
 // Změny stavu → jeden e-mail (víc změn najednou = jeden e-mail). Bez změny → null (nic se neposílá).
@@ -217,6 +239,7 @@ function detail(k: string, h: Hlidka): string {
   if (k === "runs") return " " + vadyBehu(h).join("; ") + ".";
   if (k === "quota") return " " + kvotyNad(h.kvoty, PRAHY.kvotaProblem).join("; ") + ".";
   if (k === "app_errors") return " Last hour: " + (h.chybAppky60 ?? 0) + " errors.";
+  if (k === "uptime") return " Not answering: " + (h.nedostupne ?? []).join(", ") + ".";
   return "";
 }
 
@@ -249,6 +272,7 @@ export type Den = {
   cekatele?: number;                           // nové registrace čekatelů za 24 h (ops_events waitlist_signup, bez adres) — 2026-10-21 (7)
   kvoty?: Record<string, number | null>;       // z kontroly (KVOTY) — 2026-10-22
   chybyAppky?: { pocet: number; top: [string, number][] };   // chyby JS u uživatelů za 24 h: počet a nejčastější („text (soubor:řádek)“, kolikrát)
+  domeny?: Record<string, string | null>;      // konec registrace z RDAP (ISO), null = dotaz selhal; undefined = nečteno
 };
 export type Email = { subject: string; html: string; text: string; stav: string };
 
@@ -262,6 +286,17 @@ export function souhrn(d: Den): Email {
   if (d.otevrene.quota !== "problem") { const nad = kvotyNad(d.kvoty, PRAHY.kvotaPozor); if (nad.length) potreba.push("Supabase Free: " + nad.join("; ") + "."); }
   const dnes = d.do.slice(0, 10);
   const klicePozde = !KLICE_SUPABASE.vymeneno && dnes >= KLICE_SUPABASE.problemOd;
+  // Domény (RDAP): pod 60 dní řádek, pod 14 dní PROBLEM; selhaný dotaz jen šedě mezi čísly (veřejné RDAP občas neodpoví)
+  let domenaPozde = false;
+  const domenySelhaly: string[] = [];
+  for (const dm of DOMENY) {
+    const iso = d.domeny?.[dm.jmeno];
+    if (iso === undefined) continue;
+    if (iso === null) { domenySelhaly.push(dm.jmeno); continue; }
+    const dni = Math.floor((Date.parse(iso) - Date.parse(d.do)) / 864e5);
+    if (dni <= PRAHY.domenaProblemDni) domenaPozde = true;
+    if (dni <= PRAHY.domenaPozorDni) potreba.push("Domain " + dm.jmeno + " expires " + iso.slice(0, 10) + " (" + dni + " days) — renew it.");
+  }
   if (!KLICE_SUPABASE.vymeneno && dnes >= KLICE_SUPABASE.pozorOd)
     potreba.push("Supabase legacy API keys end by " + KLICE_SUPABASE.konec + " (" + Math.ceil((Date.parse(KLICE_SUPABASE.konec + "T23:59:59Z") - Date.parse(d.do)) / 864e5)
       + " days) — swap them (infrastructure plan, step 9).");
@@ -274,7 +309,7 @@ export function souhrn(d: Den): Email {
   if (d.bezCeny) potreba.push(d.bezCeny + " model call" + (d.bezCeny > 1 ? "s have" : " has") + " no price in MODEL_PRICES — cost below is incomplete.");
   // Jen když záloha ještě není hlášená jako problém — jinak by o ní stály dva řádky (souhrn 2026-10-15).
   if (!d.zaloha.posledniOk && d.otevrene.backup !== "problem") potreba.push("No database backup has reported yet — check the nightly backup task on the PC.");
-  const problem = KLICE.some((k) => d.otevrene[k] === "problem") || klicePozde;
+  const problem = KLICE.some((k) => d.otevrene[k] === "problem") || klicePozde || domenaPozde;
   const stav = problem ? "PROBLEM" : (potreba.length || d.chybModelu || d.zalohModelu || d.brzd ? "WATCH" : "OK");
 
   const celkem = d.cenaModelu + d.cenaHlasu;
@@ -308,6 +343,7 @@ export function souhrn(d: Den): Email {
   // Chyby appky u uživatelů (DECISIONS 2026-10-22 (11)): počet a nejčastější 3, nula vynechaná
   if (d.chybyAppky && d.chybyAppky.pocet) cisla.push("App errors (24 h) " + d.chybyAppky.pocet + " · "
     + d.chybyAppky.top.slice(0, 3).map(([m, n]) => (m.length > 60 ? m.slice(0, 59) + "…" : m) + " ×" + n).join("; "));
+  if (domenySelhaly.length) cisla.push("Domain lookup failed: " + domenySelhaly.join(", "));
   cisla.push(mazaniVeta(d.mazani));
   return obal(subject, stav, potreba, cisla);
 }

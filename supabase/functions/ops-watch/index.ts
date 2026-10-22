@@ -11,7 +11,7 @@ import { createClient } from "npm:@supabase/supabase-js@2.117.3";
 import { fetchQuota, brzdaHlasu, EL_KREDIT_USD } from "../_shared/voice_usage.ts";
 import { kredityHlasu } from "../_shared/el_voice.ts";
 import { readingCostUsd } from "../_shared/ceny_modelu.ts";
-import { stavy, upozorneni, souhrn, vadyMazani, vadyBehu, KLICE, MAZANI, BEHY } from "../_shared/ops_souhrn.ts";
+import { stavy, upozorneni, souhrn, vadyMazani, vadyBehu, KLICE, MAZANI, BEHY, DOMENY, DOSTUPNOST } from "../_shared/ops_souhrn.ts";
 import type { Stav, Hlidka, Den, Email, Zaloha, Kredity, MazaniPosledni, MazaniDen, BehPosledni } from "../_shared/ops_souhrn.ts";
 
 const PRIJEMCE = "runar@therunekeeper.com";
@@ -125,7 +125,39 @@ async function hlidka(db: any, ted: Date): Promise<Hlidka> {
     behyPosledni(db),
   ]);
   return { ted: ted.toISOString(), chybModelu60: chyb, zalohModelu60: zaloh, cteni60: cteni, brzd60: brzd, zaloha: z, mazani: mz, zpravyPoLhute: poLhute,
-    behy: bh, kvoty: await kvoty(db), chybAppky60: await udalosti(db, "client_error", od) };
+    behy: bh, kvoty: await kvoty(db), chybAppky60: await udalosti(db, "client_error", od), nedostupne: await nedostupne() };
+}
+
+// Dostupnost webu a appky (DOSTUPNOST, 2026-10-22): 2 pokusy po 10 s s pauzou 3 s — jeden výpadek spojení nesmí poslat e-mail.
+async function odpovida(url: string): Promise<boolean> {
+  for (let i = 0; i < 2; i++) {
+    try {
+      const r = await fetch(url, { method: "GET", redirect: "follow", signal: AbortSignal.timeout(10000) });
+      await r.body?.cancel();
+      if (r.status < 400) return true;
+    } catch (_e) { /* další pokus */ }
+    if (i === 0) await new Promise((ok) => setTimeout(ok, 3000));
+  }
+  return false;
+}
+async function nedostupne(): Promise<string[]> {
+  const v = await Promise.all(DOSTUPNOST.map((s) => odpovida(s.url)));
+  return DOSTUPNOST.filter((_s, i) => !v[i]).map((s) => s.jmeno);
+}
+// Konec registrace domén z RDAP (DOMENY) — jen ranní souhrn. Selhání = null (souhrn ho ukáže šedě, ne jako problém).
+async function domeny(): Promise<Record<string, string | null>> {
+  const o: Record<string, string | null> = {};
+  await Promise.all(DOMENY.map(async (dm) => {
+    try {
+      const r = await fetch(dm.rdap, { headers: { Accept: "application/rdap+json" }, signal: AbortSignal.timeout(15000) });
+      // deno-lint-ignore no-explicit-any
+      const j: any = r.ok ? await r.json() : null;
+      // deno-lint-ignore no-explicit-any
+      const e = (j?.events ?? []).find((x: any) => x.eventAction === dm.udalost);
+      o[dm.jmeno] = e && typeof e.eventDate === "string" ? e.eventDate : null;
+    } catch (_e) { o[dm.jmeno] = null; }
+  }));
+  return o;
 }
 
 // Chyby appky u uživatelů za 24 h (client-error → ops_events): počet a nejčastější podle textu + místa. Bez osobních údajů (čistí appka i funkce).
@@ -219,7 +251,7 @@ async function den(db: any, ted: Date, h: Hlidka): Promise<Den> {
     hlasy: (vu.data ?? []).length, znakyHlasu: znaky, cenaHlasu: kredity * EL_KREDIT_USD, hlaseni, neprectena, ulozeno,
     chybModelu: chyb, zalohModelu: zaloh, brzd, kredity: kr, zaloha: z, otevrene,
     mazani, vadyMazani: vadyMazani(h, stavy(h).backup), behy: h.behy, vadyBehu: vadyBehu(h), cekatele, kvoty: h.kvoty,
-    chybyAppky: await chybyAppky(db, od),
+    chybyAppky: await chybyAppky(db, od), domeny: await domeny(),
   };
 }
 
