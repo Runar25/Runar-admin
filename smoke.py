@@ -1289,9 +1289,9 @@ radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola anatomie probehla'
 check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
 
-# ㊓ Appka na telefonu (CODE-read 2026-10-22, owner „5. 1 a 2, udělej to“): 375 px s dotykem, návštěvník i přihlášený — nic nepřečuhuje
+# ㊔ Appka na telefonu (CODE-read 2026-10-22, owner „5. 1 a 2, udělej to“): 375 px s dotykem, návštěvník i přihlášený — nic nepřečuhuje
 # přes okraj, stránka se neposouvá do strany. Kontroly dosud jely jen v okně počítače; owner appku používá hlavně na telefonu.
-print('\n' + chr(0x3293) + ' APPKA NA TELEFONU (verify_telefon.js)')
+print('\n' + chr(0x3294) + ' APPKA NA TELEFONU (verify_telefon.js)')
 r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_telefon.js')], capture_output=True, text=True, encoding='utf-8')
 radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola telefonu probehla'
