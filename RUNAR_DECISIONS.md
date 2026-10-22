@@ -12113,3 +12113,10 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Neověřeno / otevřené:** čím se měří „poměrná část“ u předplatného (čas, nebo vyčerpaná čtení — zákon říká „podle toho, co bylo
   dodáno“); zda Rúnakort je služba, nebo digitální obsah (pravidla výš platí pro oba případy).
 - Affected doc(s): `RUNAR_BACKLOG.md` (úkoly před spuštěním plateb) — v témže commitu.
+
+## 2026-10-22 (1) — Poměrná část předplatného při odstoupení se počítá podle uplynulého času
+
+- **Rozhodl:** owner 2026-10-22 na otevřenou otázku z 2026-10-21 (9): *„5. podle času.“*
+- **Co:** kdo od předplatného odstoupí do 14 dní (zákon 16/2016, 23. gr.), zaplatí podíl ceny období podle uplynulých dní; zbytek se vrací.
+  Počet vyčerpaných čtení se nezohledňuje. Uzavírá bod „Neověřeno / otevřené“ v 2026-10-21 (9) (část o předplatném).
+- Affected doc(s): `RUNAR_BACKLOG.md` (Před spuštěním plateb) — v témže commitu.

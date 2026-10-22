@@ -1470,4 +1470,4 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
 - [ ] **CODE-tune — postup vracení:** skript pro admina: zrušit nepoužitý kód / snížit účet / odepsat zbylé kredity, zápis do
   `credit_ledger`; peníze vrací platební brána do 14 dní stejným prostředkem (21. gr.).
 - [ ] **CODE-tune — nižší účet:** zpráva brány na konci období → server sníží `tier`; tlačítko „STEP BACK TO …“ vede do portálu brány.
-- [ ] **Owner:** „poměrná část“ předplatného — podle času, nebo podle vyčerpaných čtení?
+- [x] ✅ *(owner 2026-10-22 „podle času“, DECISIONS 2026-10-22 (1))* **Owner:** „poměrná část“ předplatného — podle času, nebo podle vyčerpaných čtení?
