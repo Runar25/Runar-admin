@@ -249,6 +249,7 @@ function _readingErrMsg(errorType) {
   if (errorType === 'rate_limited')  return t('err_rate_limited');
   if (errorType === 'no_credits')    return tp('err_no_credits', { card: vl('card', lang) });
   if (errorType === 'monthly_limit') return t('err_monthly_limit');
+  if (errorType === 'session_expired') return t('auth_expired');   // 2026-10-22: přihlášení otevřela callProxy
   return t('err_generic');
 }
 
@@ -1255,6 +1256,7 @@ function resetReader() {
 function _voiceErrMsg(data, status) {
   if (data && data.error === 'voice_monthly_limit') return tp('err_voice_month', { n: data.limit || VOICE_MONTHLY_LIMIT_TESTER });
   if (data && data.error === 'voice_quota_rest') return t('err_voice_quota');
+  if (_prihlaseniVyprselo(status)) return t('auth_expired');   // 2026-10-22: 401 přihlášenému — otevře přihlášení (čtení i deník)
   if (status === 429) return t('err_rate_limited');
   return t('voice_resting');
 }

@@ -1209,7 +1209,10 @@ const UI_TEXT = {
     auth_signing_in:      'SIGNING IN…',   // 2026-10-10: tlačítko při návratu z Google, do té doby natvrdo v runar-app.js
     auth_rate:            'Too many attempts — wait a little, or use Google above.',
     auth_code_wait:       'Your code is on its way. You can ask for a new one after a minute.',   // 2026-10-10: druhý kód do minuty
-    auth_failed:          'Sign-in did not work: {msg}',
+    auth_failed:          'Sign-in did not work. Try again, or write to runar@therunekeeper.com.',   // 2026-10-22: bez technického textu Supabase
+    auth_send_failed:     'Your code could not be sent. Try again in a moment, or write to runar@therunekeeper.com.',
+    auth_offline:         'Rúnar could not be reached. Check your connection and try again.',
+    auth_expired:         'Your sign-in has run out. Please sign in again.',
     q_teaser:             'Deeper questions open with {tier}.',
     journal_teaser:       'Every reading you take for yourself is kept. Move to {tier} to open your full journal.',   // 2026-10-10: čtení „pro někoho“ se neukládá (CODE-read (l))
     journal_teaser_count: 'Every reading you take for yourself is kept — {count} in total. Move to <strong style="color:var(--gold);font-style:normal;">{tier}</strong> to open your full journal.',   // 2026-09-30: dřív natvrdo v runar-journal.js
@@ -1790,7 +1793,12 @@ const UI_TEXT = {
     auth_rate:            'Of margar tilraunir — bíddu aðeins eða notaðu Google hér fyrir ofan.',
     // korpus: „er á leiðinni“ 14448 · „nýjan kóða“ 15 · „má biðja um“ 76 · „eftir mínútu“ 189 · „kóðinn er á“ 12
     auth_code_wait:       'Kóðinn er á leiðinni. Nýjan kóða má biðja um eftir mínútu.',
-    auth_failed:          'Innskráning tókst ekki: {msg}',
+    // 2026-10-22: Greynir čisté (4 věty); korpus „innskráning tókst“ 5 · „tókst að senda“ 119 · „aftur eftir smástund“ 45 · „náðist samband
+    // við“ 324 · „nettenginguna“ 380 · „er útrunnin“ 211 · „skráðu þig inn“ 104
+    auth_failed:          'Innskráning tókst ekki. Reyndu aftur eða skrifaðu á runar@therunekeeper.com.',
+    auth_send_failed:     'Ekki tókst að senda kóðann. Reyndu aftur eftir smástund eða skrifaðu á runar@therunekeeper.com.',
+    auth_offline:         'Ekki náðist samband við Rúnar. Athugaðu nettenginguna og reyndu aftur.',
+    auth_expired:         'Innskráningin þín er útrunnin. Skráðu þig inn aftur.',
     q_teaser:             'Dýpri spurningar opnast með {tier}.',
     journal_teaser:       'Allir þínir eigin lestrar eru geymdir. Farðu yfir í {tier} til að opna alla dagbókina þína.',   // 2026-10-10: jen vlastní čtení; „taka lestur“ byl kalk, krónika navíc s chybou v pravopisu
     journal_teaser_count: 'Allir þínir eigin lestrar eru geymdir — {count} samtals. Farðu yfir í <strong style="color:var(--gold);font-style:normal;">{tier}</strong> til að opna alla dagbókina þína.',   // {tier} ve 4. pádě (tierLabel)
