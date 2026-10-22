@@ -46,7 +46,7 @@ const SBER = `(() => { const out = [];
   const vysl = {};
   for (const [u, nast] of Object.entries(UCTY)) {
     await cmd('Page.navigate', { url: BASE }); for (let k = 0; k < 100; k++) { await sleep(150); if (await ev(`typeof _generateReading === 'function' && document.readyState === 'complete'`)) break; } await sleep(1200);
-    const st = await ev(`(async function(){ ${nast} setLang('en'); ${PODVRH} updateAuthUI(); updateUIText(); showAppTab('reading'); resetReader(); _readingMode = 'mine';
+    const st = await ev(`(async function(){ ${nast} setLang('en'); ${PODVRH} profileLoaded = true; updateAuthUI(); updateBanners(); updateUIText(); showAppTab('reading'); resetReader(); _readingMode = 'mine';
       userCredits = 5; startReading(); readerRune = RUNES.find(function (r) { return r.n === 'Fehu'; }); await readRune(); return 'ok'; })()`);
     await sleep(1500);
     vysl[u] = { stav: st, prvky: await ev(SBER), ask: await ev(`(function(){ var i = document.getElementById('ask-input'), b = document.getElementById('ask-btn'), t = document.getElementById('ask-teaser'), v = document.getElementById('btn-generate-voice');

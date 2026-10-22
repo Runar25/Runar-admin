@@ -45,7 +45,7 @@ const SBER = `(() => { const out = [];
     await cmd('Page.navigate', { url: BASE }); for (let k = 0; k < 100; k++) { await sleep(150); if (await ev(`typeof showAppTab === 'function' && document.readyState === 'complete'`)) break; } await sleep(1200);
     vysl[u] = {};
     for (const z of ZALOZKY) {
-      const e = await ev(`(function(){ try { ${nast} if (typeof updateAuthUI === 'function') updateAuthUI(); if (typeof updateUIText === 'function') updateUIText(); showAppTab('${z}'); if ('${z}' === 'reading' && typeof resetReader === 'function') resetReader(); return 'ok'; } catch (e) { return 'ERR ' + e.message; } })()`);
+      const e = await ev(`(function(){ try { ${nast} profileLoaded = !!currentUser; if (typeof updateAuthUI === 'function') updateAuthUI(); if (typeof updateBanners === 'function') updateBanners(); if (typeof updateUIText === 'function') updateUIText(); showAppTab('${z}'); if ('${z}' === 'reading' && typeof resetReader === 'function') resetReader(); return 'ok'; } catch (e) { return 'ERR ' + e.message; } })()`);
       await sleep(700);
       vysl[u][z] = { stav: e, prvky: await ev(SBER) };
     }
