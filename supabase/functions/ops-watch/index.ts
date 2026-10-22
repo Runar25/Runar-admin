@@ -11,7 +11,7 @@ import { createClient } from "npm:@supabase/supabase-js@2.117.3";
 import { fetchQuota, brzdaHlasu, EL_KREDIT_USD } from "../_shared/voice_usage.ts";
 import { kredityHlasu } from "../_shared/el_voice.ts";
 import { readingCostUsd } from "../_shared/ceny_modelu.ts";
-import { stavy, upozorneni, souhrn, vadyMazani, vadyBehu, KLICE, MAZANI, BEHY, DOMENY, DOSTUPNOST } from "../_shared/ops_souhrn.ts";
+import { stavy, upozorneni, souhrn, vadyMazani, vadyBehu, KLICE, MAZANI, BEHY, DOMENY, DOSTUPNOST, stranaZije } from "../_shared/ops_souhrn.ts";
 import type { Stav, Hlidka, Den, Email, Zaloha, Kredity, MazaniPosledni, MazaniDen, BehPosledni } from "../_shared/ops_souhrn.ts";
 
 const PRIJEMCE = "runar@therunekeeper.com";
@@ -129,20 +129,33 @@ async function hlidka(db: any, ted: Date): Promise<Hlidka> {
 }
 
 // Dostupnost webu a appky (DOSTUPNOST, 2026-10-22): 2 pokusy po 10 s s pauzou 3 s — jeden výpadek spojení nesmí poslat e-mail.
-async function odpovida(url: string): Promise<boolean> {
+async function odpovida(url: string, znacka: string): Promise<boolean> {
   for (let i = 0; i < 2; i++) {
     try {
       const r = await fetch(url, { method: "GET", redirect: "follow", signal: AbortSignal.timeout(10000) });
-      await r.body?.cancel();
-      if (r.status < 400) return true;
+      if (stranaZije(r.status, await r.text(), znacka)) return true;   // status i značka obsahu (parkovací stránka vrací 200)
     } catch (_e) { /* další pokus */ }
     if (i === 0) await new Promise((ok) => setTimeout(ok, 3000));
   }
   return false;
 }
 async function nedostupne(): Promise<string[]> {
-  const v = await Promise.all(DOSTUPNOST.map((s) => odpovida(s.url)));
+  const v = await Promise.all(DOSTUPNOST.map((s) => odpovida(s.url, s.znacka)));
   return DOSTUPNOST.filter((_s, i) => !v[i]).map((s) => s.jmeno);
+}
+// RDAP + paměť posledního úspěchu (2026-10-22, nález CODE-read): úspěch zapíše ops_events rdap_ok {job: doména} — job drží poslední záznam
+// každé domény i přes mazání ops_events po 90 dnech; u selhání se dohledá, kdy naposledy odpověděl (souhrn od 3 dnů WATCH).
+// deno-lint-ignore no-explicit-any
+async function domenyStav(db: any): Promise<{ domeny: Record<string, string | null>; domenyNaposledy: Record<string, string | null> }> {
+  const dm = await domeny();
+  const nap: Record<string, string | null> = {};
+  for (const [jm, iso] of Object.entries(dm)) {
+    if (iso) { await db.from("ops_events").insert({ kind: "rdap_ok", detail: { job: jm, konec: iso } }); continue; }
+    const { data } = await db.from("ops_events").select("created_at").eq("kind", "rdap_ok").eq("detail->>job", jm)
+      .order("created_at", { ascending: false }).limit(1);
+    nap[jm] = data && data[0] ? data[0].created_at : null;
+  }
+  return { domeny: dm, domenyNaposledy: nap };
 }
 // Konec registrace domén z RDAP (DOMENY) — jen ranní souhrn. Selhání = null (souhrn ho ukáže šedě, ne jako problém).
 async function domeny(): Promise<Record<string, string | null>> {
@@ -251,7 +264,7 @@ async function den(db: any, ted: Date, h: Hlidka): Promise<Den> {
     hlasy: (vu.data ?? []).length, znakyHlasu: znaky, cenaHlasu: kredity * EL_KREDIT_USD, hlaseni, neprectena, ulozeno,
     chybModelu: chyb, zalohModelu: zaloh, brzd, kredity: kr, zaloha: z, otevrene,
     mazani, vadyMazani: vadyMazani(h, stavy(h).backup), behy: h.behy, vadyBehu: vadyBehu(h), cekatele, kvoty: h.kvoty,
-    chybyAppky: await chybyAppky(db, od), domeny: await domeny(),
+    chybyAppky: await chybyAppky(db, od), ...(await domenyStav(db)),
   };
 }
 

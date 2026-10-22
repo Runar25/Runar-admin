@@ -7,28 +7,41 @@
 # Hlásí: ROZDÍL (soubor v produkci ≠ HEAD — nasazeno z necommitnuté práce, nebo commit nenasazený) · JEN V PRODUKCI · JEN V REPU (funkce
 # v repu, která nasazená není). Konce řádků se nepočítají. Síť → do smoke nepatří; pouštět po nasazení nebo při kontrole.
 #   python -X utf8 scripts/utils/nasazene_vs_repo.py [funkce …]
+#   python -X utf8 scripts/utils/nasazene_vs_repo.py --provoz   porovná s origin/main (po git fetch) a zapíše ops_events deploy_drift
+# --provoz (2026-10-22, DECISIONS 2026-10-22 (11) bod 3): týdně z noční zálohy (scripts/utils/zaloha_db.js, pondělí), úloha deploy_drift
+# v registru BEHY (supabase/functions/_shared/ops_souhrn.ts) — rozdíl nebo neozvání do 8 dní ohlásí hlídání provozu. Proti origin/main,
+# ne HEAD: v produkci má být to, co je pushnuté; lokální HEAD sdíleného stromu může být pozadu i napřed.
 import json, os, subprocess, sys, tempfile, shutil
 
 R = (os.environ.get('RUNAR_ROOT') or os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..')).replace('\\', '/')
 REF = 'pmitxjvkeovijreepror'
+PROVOZ = '--provoz' in sys.argv
+STROM = 'origin/main' if PROVOZ else 'HEAD'
+# CLI s plnou cestou (plánovač nemá scoop v PATH) — jako zaloha_db.js a is-greynir.py
+SUPABASE = os.environ.get('RUNAR_SUPABASE') or ('supabase' if not PROVOZ else os.path.join(os.path.expanduser('~'), 'scoop', 'shims', 'supabase.exe'))
 
 
 def head(rel):
-    r = subprocess.run(['git', '-C', R, 'show', 'HEAD:' + rel], capture_output=True)
+    r = subprocess.run(['git', '-C', R, 'show', STROM + ':' + rel], capture_output=True)
     return r.stdout.replace(b'\r\n', b'\n') if r.returncode == 0 else None
 
 
 def main():
-    out = subprocess.run('supabase functions list --project-ref ' + REF + ' -o json', shell=True, capture_output=True, text=True, encoding='utf-8')
+    if PROVOZ:
+        subprocess.run(['git', '-C', R, 'fetch', '-q', 'origin'], capture_output=True)
+    out = subprocess.run('"' + SUPABASE + '" functions list --project-ref ' + REF + ' -o json', shell=True, capture_output=True, text=True, encoding='utf-8')
     try:
         nasazene = {f['slug']: f for f in json.loads(out.stdout[out.stdout.index('['):] if '[' in out.stdout else '[]')}
     except Exception:
         try:
             nasazene = {f['slug']: f for f in json.loads(out.stdout).get('functions', [])}
         except Exception:
-            print('FAIL  seznam funkcí ze Supabase nejde přečíst: ' + (out.stderr or out.stdout)[-200:]); return 2
+            print('FAIL  seznam funkcí ze Supabase nejde přečíst: ' + (out.stderr or out.stdout)[-200:])
+            if PROVOZ:
+                provoz({'ok': False, 'chyba': 'functions list failed'})
+            return 2
     v_repu = sorted(d for d in os.listdir(R + '/supabase/functions') if not d.startswith('_') and os.path.isdir(R + '/supabase/functions/' + d))
-    chtene = sys.argv[1:] or sorted(set(nasazene) | set(v_repu))
+    chtene = [a for a in sys.argv[1:] if not a.startswith('--')] or sorted(set(nasazene) | set(v_repu))
     tmp = tempfile.mkdtemp(prefix='nasazene-')
     nalezy, ok = [], []
     try:
@@ -39,7 +52,7 @@ def main():
                 nalezy.append('JEN V PRODUKCI ' + fn + ' — nasazená, v repu chybí'); continue
             d = os.path.join(tmp, fn)
             os.makedirs(d, exist_ok=True)   # CLI chce existující --workdir (jinak NotFound: FileSystem.realPath)
-            r = subprocess.run('supabase functions download ' + fn + ' --project-ref ' + REF + ' --workdir "' + d + '"', shell=True,
+            r = subprocess.run('"' + SUPABASE + '" functions download ' + fn + ' --project-ref ' + REF + ' --workdir "' + d + '"', shell=True,
                                capture_output=True, text=True, encoding='utf-8')
             koren = os.path.join(d, 'supabase', 'functions')
             if r.returncode != 0 or not os.path.isdir(koren):
@@ -64,9 +77,25 @@ def main():
         shutil.rmtree(tmp, ignore_errors=True)
     for n in nalezy:
         print(n)
-    print(('OK    ' if not nalezy else 'POZOR ') + 'nasazené = HEAD: ' + str(len(ok)) + ' funkcí' + (' (' + ', '.join(ok) + ')' if ok else '')
+    if PROVOZ:
+        jmena = sorted(set(n.split()[1] for n in nalezy if len(n.split()) > 1))
+        provoz({'ok': not nalezy, 'functions': len(ok), 'rozdily': jmena} if not nalezy
+               else {'ok': False, 'rozdily': jmena, 'chyba': 'Deployed ≠ repo: ' + ', '.join(jmena)})
+    print(('OK    ' if not nalezy else 'POZOR ') + 'nasazené = ' + STROM + ': ' + str(len(ok)) + ' funkcí' + (' (' + ', '.join(ok) + ')' if ok else '')
           + ('' if not nalezy else ' · ' + str(len(nalezy)) + ' nálezů výš'))
     return 1 if nalezy else 0
+
+
+# Výsledek do ops_events (kind deploy_drift, úloha BEHY) — stejná cesta jako is-greynir.py.
+def provoz(detail):
+    sql = ("insert into public.ops_events (kind, detail) values ('deploy_drift', '" + json.dumps(detail, ensure_ascii=False).replace("'", "''") + "'::jsonb)")
+    try:
+        r = subprocess.run([SUPABASE, 'db', 'query', '--linked', sql, '--workdir', R, '--output-format', 'json'], capture_output=True, text=True,
+                           encoding='utf-8', timeout=180, env=dict(os.environ, AI_AGENT=os.environ.get('AI_AGENT', 'runar-deploy-drift')))
+        if r.returncode != 0:
+            print('ops_events nezapsáno: ' + ((r.stderr or r.stdout or '')[:150]))
+    except Exception as e:
+        print('ops_events nezapsáno: %s' % e)
 
 
 if __name__ == '__main__':

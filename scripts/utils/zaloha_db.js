@@ -266,7 +266,16 @@ function konverzace() {
     return false;
   }
 }
+// Pondělí: nasazené edge funkce proti origin/main (2026-10-22, DECISIONS 2026-10-22 (11) bod 3) — týdenní krok tady, ne nová úloha plánovače.
+// Výsledek zapíše skript sám (ops_events deploy_drift, BEHY); jeho selhání zálohu neshodí.
+function nasazeniProtiRepu() {
+  if (new Date().getDay() !== 1 && !process.env.RUNAR_DEPLOY_DRIFT_VZDY) return;
+  const py = process.env.RUNAR_PYTHON || 'python';
+  const r = require('child_process').spawnSync(py, ['-X', 'utf8', path.join(__dirname, 'nasazene_vs_repo.py'), '--provoz'],
+    { encoding: 'utf8', timeout: 15 * 60 * 1000 });
+  log('nasazené funkce × origin/main: ' + String((r.stdout || '') + (r.error ? r.error.message : '')).trim().split('\n').slice(-1)[0].slice(0, 200));
+}
 if (process.env.RUNAR_ZALOHA_TEST_DB_SELZE) main = async () => { throw new Error('test: záloha DB selhala'); };   // jen samotest kroku 7
-main().then(() => { if (!konverzace()) process.exitCode = 2; })
+main().then(() => { if (!konverzace()) process.exitCode = 2; nasazeniProtiRepu(); })
   .catch((e) => { log('CHYBA: ' + e.message); hlasProvoz('backup_fail', { error: String(e.message).replace(/\S+@\S+/g, '[e-mail]').slice(0, 200) });
-    konverzace(); process.exit(1); });
+    konverzace(); nasazeniProtiRepu(); process.exit(1); });

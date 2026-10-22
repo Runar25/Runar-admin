@@ -32,10 +32,16 @@ export const DOMENY = [
   { jmeno: "therunekeeper.com", rdap: "https://rdap.verisign.com/com/v1/domain/therunekeeper.com", udalost: "expiration" },
   { jmeno: "agndofa.is", rdap: "https://rdap.isnic.is/rdap/domain/agndofa.is", udalost: "soft expiration" },
 ];
+// znacka: text, který skutečná stránka obsahuje (2026-10-22, nález CODE-read) — parkovací stránka registrátora po vypršení domény nebo cizí
+// stránka vrátí 200 taky; samotný status by výpadek domény propustil. Změřeno: obě stránky „Rúnar“ obsahují, 404 GitHub Pages ne.
 export const DOSTUPNOST = [
-  { jmeno: "therunekeeper.com", url: "https://therunekeeper.com/" },
-  { jmeno: "app", url: "https://runar25.github.io/Runar-admin/v2/runar-reader.html" },
+  { jmeno: "therunekeeper.com", url: "https://therunekeeper.com/", znacka: "Rúnar" },
+  { jmeno: "app", url: "https://runar25.github.io/Runar-admin/v2/runar-reader.html", znacka: "Rúnar" },
 ];
+export function stranaZije(status: number, text: string, znacka: string): boolean {
+  return status >= 200 && status < 400 && text.indexOf(znacka) !== -1;
+}
+export const RDAP_BEZ_CTENI_DNI = 3;   // RDAP dané domény neodpovídá tolik dní po sobě = WATCH (jinak by šedý řádek visel navždy)
 
 // Kvóty služeb, které jdou změřit strojem (owner 2026-10-22 „1. ano, schvaluji, připomínkou v souhrnu“, DECISIONS 2026-10-22 (6)). Proč: o
 // přetažení egressu Supabase Free jsme se dozvěděli až z banneru. Limity = Supabase Free (supabase.com/pricing, čteno 2026-10-22: databáze
@@ -80,6 +86,9 @@ export const BEHY: Record<string, { kratce: string; lhutaH: number; zdroj: strin
   // 2026-10-19: týdenní aktualizace GreynirCorrect (úloha Windows, neděle → pondělí 4:30). Ten den aktualizace rozbila nástroj a návrat
   // selhal — věděl to jen log na PC; kontroly islandštiny (§2) by tiše padaly. Týden + 2 h rezerva jako Gmail.
   greynir_update: { kratce: "Greynir update", lhutaH: 8 * 24 + 2, zdroj: "is-greynir.py" },
+  // 2026-10-22 (DECISIONS 2026-10-22 (11) bod 3): nasazené edge funkce proti origin/main — pondělní krok noční zálohy; rozdíl = ok:false
+  // s „Deployed ≠ repo: …“. Týden + 2 h rezerva jako Gmail.
+  deploy_drift: { kratce: "deploy vs repo", lhutaH: 8 * 24 + 2, zdroj: "scripts/utils/nasazene_vs_repo.py" },
 };
 export type BehPosledni = { kdy: string | null; ok: boolean | null; chyba: string | null; info: string | null };
 // Poslední záznam úlohy (kontrola každých 15 min) a součty za 24 h (ranní souhrn).
@@ -273,6 +282,7 @@ export type Den = {
   kvoty?: Record<string, number | null>;       // z kontroly (KVOTY) — 2026-10-22
   chybyAppky?: { pocet: number; top: [string, number][] };   // chyby JS u uživatelů za 24 h: počet a nejčastější („text (soubor:řádek)“, kolikrát)
   domeny?: Record<string, string | null>;      // konec registrace z RDAP (ISO), null = dotaz selhal; undefined = nečteno
+  domenyNaposledy?: Record<string, string | null>;   // u selhaného dotazu: kdy RDAP té domény naposledy odpověděl (ops_events rdap_ok); null = nikdy
 };
 export type Email = { subject: string; html: string; text: string; stav: string };
 
@@ -292,7 +302,14 @@ export function souhrn(d: Den): Email {
   for (const dm of DOMENY) {
     const iso = d.domeny?.[dm.jmeno];
     if (iso === undefined) continue;
-    if (iso === null) { domenySelhaly.push(dm.jmeno); continue; }
+    if (iso === null) {
+      domenySelhaly.push(dm.jmeno);
+      const nap = d.domenyNaposledy?.[dm.jmeno];
+      const dniBez = nap ? Math.floor((Date.parse(d.do) - Date.parse(nap)) / 864e5) : null;
+      if (dniBez != null && dniBez >= RDAP_BEZ_CTENI_DNI)
+        potreba.push("Domain " + dm.jmeno + ": expiry not checked for " + dniBez + " days — the RDAP lookup keeps failing; check the date by hand.");
+      continue;
+    }
     const dni = Math.floor((Date.parse(iso) - Date.parse(d.do)) / 864e5);
     if (dni <= PRAHY.domenaProblemDni) domenaPozde = true;
     if (dni <= PRAHY.domenaPozorDni) potreba.push("Domain " + dm.jmeno + " expires " + iso.slice(0, 10) + " (" + dni + " days) — renew it.");
