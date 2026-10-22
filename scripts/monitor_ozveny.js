@@ -312,6 +312,12 @@ function vypis(S2, nadpis, doZnacka) {
   return md;
 }
 
+// 2026-10-22: require z jiného nástroje (odkud_slova.js — původ slov po čteních) → jen funkce, bez testu a bez načítání z DB
+if (require.main !== module) {
+  module.exports = { rozber, odkud, bloky, slova, kmen, STOP, otazkaRuny, telo, kdeVeta, nejdelsiShoda, G, RUNES, AREAS, FACES, ANG, END,
+    SLOVESA_LOS, JMENA_RUN, CTENI, ROOT };
+  return;
+}
 if (process.argv.includes('--test')) {
   // Smyšlená čtení se ZNÁMÝMI ozvěnami (repo je veřejné, skutečná čtení sem nepatří). Kontrola musí každou poznat a nic si nevymyslet.
   const hag = RUNES.find((r) => r.n === 'Hagalaz');
