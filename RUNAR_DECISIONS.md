@@ -12170,3 +12170,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   k DB „neověřeno“, ne FAIL; samotest stavů před a po. Čte i `_shared/*.ts`. (a) CODE-tune: jeden sdílený soubor se seznamem pro edge funkce.
 - **Cestou:** tabulky `gpt_reviews` a `runar_character` nic nečte; ponechané kvůli datům (2026-10-09 (8), BACKLOG 2026-10-14) — beze změny.
 - Affected doc(s): žádný jiný.
+
+## 2026-10-22 (6) — Přetažení Supabase Free (egress): kontroly bez produkce, statické soubory pryč ze Storage, registr kvót v ranním souhrnu
+
+- **Rozhodl:** owner 2026-10-22 nad bannerem Supabase („Cached Egress“ 11,4 / 5 GB, grace do 20. 11.): *„problém. musíme vyřešit.“* →
+  *„6. ano, předej to 7. zatím ne“* (Pro zatím ne) → *„1. ano, předej 2. ano, navrhni 3. ano, zapiš“* → *„1. ano, schvaluji, připomínkou v souhrnu“*.
+- **Příčina (nejpravděpodobnější, z čísel):** portrét 2,1 MB ze Storage s `Cache-Control: private, no-cache`; kontroly v prohlížeči s čistým
+  profilem ho stahovaly při každém běhu (~5 300× ≈ 11,4 GB, 4 uživatelé). Denní graf Supabase neviděn.
+- **Co:** kontroly v prohlížeči blokují `*supabase.co*` (7ab6bfd) · portrét: web z vlastní kopie (CODE-web), appka CODE-tune · zvuky run
+  (runar-audio) CODE-tune · ponaučení pro Cloudflare a placenou Supabase v BACKLOG „Plán infrastruktury“ · **registr kvót** (`KVOTY` vedle
+  `MAZANI`/`BEHY` v `_shared/ops_souhrn.ts`, CODE-tune): ElevenLabs (API, už čteno), Brevo (`GET /v3/account`), Supabase **připomínkou v ranním
+  souhrnu** (veřejné API se spotřebou nenalezeno), modely stropy v konzolích (2026-10-10). Prahy 50 % souhrn / 80 % upozornění.
+- Affected doc(s): `RUNAR_BACKLOG.md` (Plán infrastruktury — návrh → schváleno) — v témže commitu.
