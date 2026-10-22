@@ -1297,6 +1297,14 @@ radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola telefonu probehla'
 check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
 
+# ㊕ Funkce z inline handlerů (CODE-read 2026-10-22, ověření (11) bod 1): každé jméno volané z onclick/onchange… v readeru a v šablonách
+# jeho skriptů v běžící appce existuje. Přejmenovaná funkce = mrtvé tlačítko; lapač chyb appky chybu z HTML handleru neodeslal.
+print('\n' + chr(0x3295) + ' FUNKCE Z INLINE HANDLERŮ (verify_onclick_funkce.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_onclick_funkce.js')], capture_output=True, text=True, encoding='utf-8')
+radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola inline handleru probehla'
+check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
