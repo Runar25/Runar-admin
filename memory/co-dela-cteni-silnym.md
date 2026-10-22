@@ -57,5 +57,13 @@ takže formule mohla znít „mimo záběr" nebo „trvání". Rozhodla dvojice,
 ⚠️ **Hranice:** n = 6 dvojic, jeden soudce (owner), jen EN, věty psané mnou (ne produkcí). Neplatí to jako pravidlo
 o modelu, jen o tom, co owner pozná jako dobré. Protokol → `RUNAR_EVAL_LOG.md` 2026-09-20 (9).
 
+**5. Ask na otázku po budoucnosti: poctivé „to runa neřekne“ + uznání toho, co je ve hře** (KUKY 2026-10-22, hlášení 9690cf12:
+*„dobré odpovědi na konkrétní otázky. Speciálně 2. ask je velmi zajímavý“*; čtení Perth 0d445541, v5.20). Na „Will I get the job?“
+Rúnar nepředpověděl ani neutěšil — *„Perth cannot tell you whether you will get the job“* a vrátil se k tomu, co čtení nese. Na
+„But I really need the job!“ neopakoval první odpověď a nepřitakal (pravidla `earlier` a „do not mirror“ v RP_ASK), ale uznal váhu:
+*„the wait can carry real weight … it does not make what is at stake any smaller“* — hranice a soucit v jedné větě, stavěné jako
+SMĚNA (bod 4). ⚠️ Táž forma „runa neřekne“ je jinde vada (pojistka, RUNAR_EVAL_LOG 2026-10-06 (7)); tady odpovídá na žádost
+o věštbu. Hypotéza, n = 1: forma je správná, když otázka chce předpověď, a vadná jako únik u běžné otázky — neměřeno.
+
 **Vrstvy kvality:** obraz (vidím to místo) → runa (co runa je) → otázka (význam dokončí člověk).
 Souvisí: [[always-show-reading-samples]] · [[copy-always-in-runar-voice]].
