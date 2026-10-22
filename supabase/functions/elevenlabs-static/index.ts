@@ -100,6 +100,9 @@ serve(async (req) => {
       .upload(fileName, audioBuffer, {
         contentType: 'audio/mpeg',
         upsert: true,  // přepíše existující
+        // 2026-10-22 (owner „4. b“, DECISIONS 2026-10-22 (7)): rok v prohlížeči místo výchozí hodiny — Supabase Free přetažen na egressu
+        // a každé přehrání stahovalo celý soubor znovu. Bezpečné, protože URL níž nese otisk času nahrání.
+        cacheControl: '31536000',
       })
 
     if (uploadError) throw new Error(`Storage upload failed: ${uploadError.message}`)
@@ -109,7 +112,8 @@ serve(async (req) => {
       .from('runar-audio')
       .getPublicUrl(fileName)
 
-    const audioUrl = urlData.publicUrl
+    // ?v=<čas nahrání>: upsert přepíše soubor pod TÝMŽ jménem (stejná verze) — bez otisku by prohlížeč s rokem v cache hrál starý zvuk.
+    const audioUrl = urlData.publicUrl + '?v=' + Date.now()
 
     // 4. Ulož záznam do runar_static_audio
     const { error: dbError } = await sb
