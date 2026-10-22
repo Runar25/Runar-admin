@@ -1204,7 +1204,20 @@ function showAppTab(tab) {
     // (2026-10-10 večer: výjimka pro mřížku návštěvníka `data-host` pryč spolu s _syncVisitorDraw — návštěvník má zase formulář.)
     const inReading = document.getElementById('reader-output')?.style.display !== 'none'
                    || document.getElementById('reader-rune-card')?.style.display !== 'none';
-    if (!inReading) document.getElementById('reader-hero').classList.remove('hidden');
+    // 2026-10-22 (hlášení 6deb9bb3): fotka nad záložkami se vrací → stránka se posune o její výšku, ať záložky zůstanou na místě
+    // (do té doby obrazovka „skočila na Rúnarův profil“). Jen když fotka byla skrytá — při načtení appky se nehýbe nic.
+    var _hero = document.getElementById('reader-hero'), _zal = document.getElementById('atab-reading');
+    if (!inReading && _hero && _hero.classList.contains('hidden')) {
+      var _pred = _zal ? _zal.getBoundingClientRect().top : null;
+      _hero.classList.remove('hidden');
+      if (_zal && _pred !== null) {   // fotka na počítači roste 0,65 s (runar-reader.css .hero transition) → držet po celou dobu
+        var _t0 = Date.now();
+        (function _drz() {
+          var d = _zal.getBoundingClientRect().top - _pred; if (Math.abs(d) > 0.5) window.scrollBy(0, d);
+          if (Date.now() - _t0 < 800) requestAnimationFrame(_drz);
+        })();
+      }
+    } else if (!inReading && _hero) _hero.classList.remove('hidden');
     // Update reading form mode/state when switching to reading tab
     if (typeof _updateReadingForm === 'function') _updateReadingForm();
   }
@@ -1841,7 +1854,9 @@ function _journeyPaint() {
         return '<button type="button" class="' + (k === _jDes ? 'on' : '') + '" onclick="_jDes=\'' + k + '\';_journeyPaint()">'
           + _jesc(RK_DESIGNS[k][lang === 'is' ? 'is' : 'en'].toUpperCase()) + '</button>';
       }).join('') + '</div><div class="rk-wrap" style="margin:4px auto 16px">'
-        + rkFront({ design: _jDes, lang: lang === 'is' ? 'is' : 'en', credits: CARD_PACKS[_jPk].credits }) + '</div>';
+        + rkFront({ design: _jDes, lang: lang === 'is' ? 'is' : 'en', credits: CARD_PACKS[_jPk].credits }) + '</div>'
+        // 2026-10-22 (hlášení 05ea40ab): „nikdy nevyprší“ — táž věta jako na webu (RK_TXT.note)
+        + '<div class="journey-note">' + _jesc(RK_TXT.note[lang === 'is' ? 'is' : 'en']) + '</div>';
     }
     if (env === 'web') h += '<a class="tn-btn btn-upgrade" href="' + _jesc(JOURNEY_URL) + '" target="_blank" rel="noopener">' + _jesc(tp('gift_card_btn', { card: vl('card', lang).toUpperCase() })) + ' →</a>';   // → = vede jinam (web), CODE-read §4
     // bez JOURNEY_URL nic (owner 2026-10-20: „v appce taky pryč“ — „Coming soon“ ani u Rúnakortu; klíč journey_soon zrušen)

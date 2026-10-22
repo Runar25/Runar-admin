@@ -464,16 +464,18 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 /* 2026-10-20: tlačítkem je celý popisek (owner „neobjeví se ručička jako u how a reading works“) — proto dědí i rozestup a velká písmena. */
 .hint-tgl:focus-visible{outline:1px solid var(--gold);outline-offset:3px;}
 /* ── ROZBALOVAČ (2026-10-20, CODE-read jednotný vzhled §4; owner „výraznější“, vzor „+“ u počtu čtení Rune Seekera) ──
-   Jeden znak pro rozbalení na místě: „+“ ZA textem, zlatý, o stupeň větší než text; otevřením se otočí o 45° na „×“ (0,25 s; bez
+   Jeden znak pro rozbalení na místě: „+“ ZA textem, v barvě svého textu (2026-10-22, owner hlášení 162cffe1: „plus zlaté místo toho,
+   abys ho nechal bílé jako text“ — do té doby zlatý všude), o stupeň větší než text; otevřením se otočí o 45° na „×“ (0,25 s; bez
    animací jen výměna). Nositel je vždy tlačítko (<button> nebo role="button" + tabindex) s aria-expanded — CSS točí podle něj.
    Dvě podoby: ::after u textových tlačítek (.guide-lbl, .hint-tgl, .ask-lbl) a <span class="xp-plus"> tam, kde text plní JS.
    Do té doby šest podob: „+/−“ přepínané textem, „+“ otočené, „▾“ otočené o 180°, šedé i zlaté, před textem i za ním.
    „▾“ zůstává jen u nabídky pod jménem (výběr z nabídky), „→“ = vede jinam. */
 .guide-lbl::after,.hint-tgl::after,.ask-lbl::after,.xp-plus{content:"+";display:inline-block;margin-left:.4em;font-family:'Cinzel',serif;
-  font-size:1.35em;line-height:1;color:var(--gold);opacity:1;position:relative;top:-.08em;transition:transform .25s ease;}
+  font-size:1.35em;line-height:1;color:inherit;opacity:1;position:relative;top:-.08em;transition:transform .25s ease;}
 /* top −0,08em: střed inkoustu „+“ ležel o 1,1 px pod středem inkoustu textu (změřeno u počtu čtení i How a reading works,
    účaří + metriky písma); owner 2026-10-10 vytkl tentýž posun (2,3 px) u starého „+“. Otáčí se kolem středu inkoustu (odchylka 0,4 px). */
-.xp-plus{font-size:.85em;margin-left:0;flex-shrink:0;}   /* span stojí vedle textu (Cinzel ~.62em), ne v něm: .85em ≈ 1,35 × text */
+.xp-plus{font-size:.85em;margin-left:0;flex-shrink:0;color:var(--gold);}   /* span stojí vedle textu (Cinzel ~.62em), ne v něm: .85em ≈ 1,35 × text;
+   barva = barva textu vedle (všude zlatý: počet čtení, jméno životní runy, účet v panelu, karta deníku) — inherit by vzal rodiče */
 .guide-lbl[aria-expanded="true"]::after,.hint-tgl[aria-expanded="true"]::after,.ask-lbl[aria-expanded="true"]::after,
 [aria-expanded="true"] .xp-plus{transform:rotate(45deg);}
 [role="button"][aria-expanded]:focus-visible{outline:1px solid var(--gold);outline-offset:3px;}
@@ -543,7 +545,7 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 .tn-compact .tn-row{display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
 .tn-compact .tn-counter{margin-bottom:0;}
 /* Zarovnání a barvu „+“ u počtu (KUKY 2026-10-10: „plus není zarovnané s textem“, „plus nemá stejnou barvu“) řeší od 2026-10-20
-   společný rozbalovač .xp-plus — zlatý všude, srovnaný na inkoust textu. */
+   společný rozbalovač .xp-plus — v barvě textu (2026-10-22), srovnaný na inkoust textu. */
 .tn-compact .tn-text{margin:12px 0 0;}
 .tier-notice.curious .tn-btn{border-color:rgba(255,191,0,0.35);}
 
