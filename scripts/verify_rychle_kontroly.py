@@ -33,6 +33,7 @@ PRIPADY = [
     ('verify_doc_length.js', 'CLAUDE.md', 'append', '', '\nZ historie: do 2026-01-01 tu st' + 'álo něco jiného.\n'),
     ('verify_mapa_ochran.js', 'supabase/functions/send-line/index.ts', 'replace', 'if (zprava.length > MAX_ZNAKU)', 'if (zprava.length < MAX_ZNAKU)'),
     ('verify_web_appka_jmena.js', 'v2/runar-config.js', 'append', '', "\nconst RUNAR_APP_URL = 'x';\n"),
+    ('verify_bez_storage.js', 'v2/runar-app.js', 'append', '', "\nvar _protiImg = 'https://x.supabase.co/storage/v1/object/" + "public/a.png';\n"),
     ('verify_nic_pred_prihlasenim.js', 'supabase/functions/delete-account/index.ts', 'replace', '    if (authErr || !user) return json({ error: "Invalid session" }, 401);',
      '    await sb.from("bug_reports").insert({ x: 1 });\n    if (authErr || !user) return json({ error: "Invalid session" }, 401);'),
 ]
