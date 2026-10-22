@@ -1,0 +1,41 @@
+{
+  "datum": "2026-10-22",
+  "model": "gpt-6-sol",
+  "otazka": "Will i get the job a applied for?",
+  "cteni": "Beneath the grass, old footprints lie out of sight until the low sun catches each shallow hollow across the field. For a moment, you can see where someone walked; then the light shifts and the trail disappears again. Perth is the rune of what comes into view without staying visible. Kuky, what you cannot yet name may be hidden, or it may still be taking shape.",
+  "verze": {
+    "a": {
+      "aspekt": "the hidden coming to light",
+      "radek": "The rune of this reading: Perth. In this reading Perth carries the sense of the hidden coming to light. Its other senses are chance, fate in the making, luck, the unseen.",
+      "odpovedi": [
+        "Kuky, Perth cannot tell you whether you’ll get the job. In this reading, something is still out of sight. You may learn more about the decision soon, but the rune does not say which way it will go.",
+        "Perth cannot tell you whether you will get the job, Kuky. In this reading, something is still out of sight: the decision, the reasons behind it, or what the role would mean for you. More may become clear, but the rune does not settle the outcome.",
+        "Kuky, Perth cannot tell you whether you will get the job. In this reading, what is hidden may come into view for a moment, but the outcome remains unknown. You may learn something about where your application stands, though that is different from knowing the decision.",
+        "Perth cannot tell you whether you get the job. The decision is still out of sight. In this reading, something hidden may come to light, but what it shows is not yet clear.",
+        "Kuky, Perth cannot tell you whether you will get the job. In this reading, something hidden may come into view, but the outcome remains uncertain. That may be news about the decision, or a detail you could not see when you applied. Neither is a promise of an offer."
+      ]
+    },
+    "b": {
+      "aspekt": "",
+      "radek": "The rune of this reading: Perth — chance, the hidden coming to light, fate in the making, luck, the unseen.",
+      "odpovedi": [
+        "Perth cannot tell you whether you will get the job. You may see a sign of how your application is being received, but that sign may not settle the outcome. For now, the decision remains out of sight.",
+        "Kuky, Perth cannot tell you whether you’ll get the job. The decision is still out of sight, and the reading leaves room for what has not yet come to light.",
+        "Kuky, Perth does not tell you whether you will get the job. The decision is still out of sight, and the reading leaves room for what has not yet become clear.",
+        "Kuky, Perth cannot tell you whether you will get the job. Your application is with people whose decision you cannot yet see. The rune leaves that outcome open, rather than calling it in either direction.",
+        "You may get the job, or you may not. Perth cannot settle that question. The decision is still out of sight, and what becomes visible later may differ from what you can see now."
+      ]
+    },
+    "c": {
+      "aspekt": "luck",
+      "radek": "The rune of this reading: Perth. In this reading Perth carries the sense of luck. Its other senses are chance, the hidden coming to light, fate in the making, the unseen.",
+      "odpovedi": [
+        "Kuky, Perth does not tell you whether you will get the job. It holds room for chance, and for parts of the decision you cannot see yet. An offer may come, or it may not. For now, the outcome remains hidden.",
+        "Kuky, Perth cannot tell you whether you will get the job. In this reading, luck means that chance has a part in what remains unseen. The outcome is not visible yet, and the rune does not turn that uncertainty into a yes or a no.",
+        "Kuky, Perth cannot tell you whether you’ll get the job. It holds a moment when something hidden becomes visible, while the outcome remains open. Luck may play a part, but this reading makes no promise either way.",
+        "Kuky, Perth cannot tell you whether you will get the job. It holds chance and what remains out of sight: a decision may be taking shape, but the reading does not show its outcome.",
+        "Kuky, Perth cannot tell you whether you will get the job. Luck and chance have a place in this reading, but neither promises an outcome. For now, the decision remains out of sight."
+      ]
+    }
+  }
+}

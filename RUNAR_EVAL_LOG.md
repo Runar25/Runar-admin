@@ -6455,3 +6455,17 @@ nedostupné). Data mimo repo: `~/runar-eval/podoby-bez-delky-2026-10-09.json`, `
 - **Owner 2026-10-21:** *„já jsem čekal, že to budou spíš pohlednice. moc se to nezměnilo od toho, co jsme měli předtím. zapiš a zase to odložíme.“*
 - **Kde navázat:** co z ramen udělá cestu, otevřené — vlastní věta člověka ke každému místu (2026-09-27 (3) „vlastní slova později“), nebo
   nesená věc mezi rameny („materiálová fráze“, RUNAR_DESIGN Vegvísir, od 2026-09-27 jen varianta). Netestováno ani jedno.
+
+## 2026-10-22 (1) — Ask: řádek aspektu (klíčové slovo) váhu má — „luck“ ho 5/5 přetáhne; u čtení Perth ale „skryté“ drží hlavně text čtení
+
+- **Proč:** owner nad čtením Perth 0d445541 (hlášení 9690cf12): *„kam se prokreslilo klíčové slovo? … pokud tohle má váhu na odpověď“*;
+  test *„6. ano“*. Kódem dohledáno: Ask 1 bral slova z textu čtení („out of sight“, „comes into view“), Ask 2 nit z Ask 1.
+- **Pokus (obrácená páka, §25):** týž Ask 1 („Will i get the job a applied for?“) nad týmž čtením, prompt z produkčního balíčku
+  (`prompt_skladani.mjs`), gpt-6-sol jako `claude-proxy`, 5× na verzi: (a) produkce — aspekt „the hidden coming to light“; (b) bez aspektu
+  (jen seznam klíčů runy, „chance“ první); (c) aspekt „luck“. Data: `docs/eval/2026-10-22-ask-aspekt.json` (všech 15 odpovědí).
+- **Výsledek:** luck / chance / fate v odpovědi — (a) 0/5 · (b) 0/5 · (c) **5/5**. „Perth cannot tell you …“ 15/15 ve všech verzích.
+  Půlka „coming to light / into view“ (a) 3/5 · (b) 2/5 — při n = 5 šum.
+- **Závěr:** aspekt v Asku váhu má — přesunutý na „luck“ změní význam odpovědi pokaždé. U tohoto čtení ho ale (a) proti (b) neodliší:
+  od štěstí odpověď drží už text čtení (skryté, „out of sight“). Forma „Perth cannot tell you“ nese pravidlo „no new divination“,
+  ne klíčové slovo.
+- **Hranice:** jedno čtení, jedna otázka, EN, sol, n = 5 na verzi; Ask 2 netestován; neplatí pro čtení, jehož text význam nenese.
