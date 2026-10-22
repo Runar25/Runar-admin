@@ -72,7 +72,9 @@ const SBER = `(() => {
       ['okno cesty — měsíčně', `(_journeyP = 'm', openJourney(), true)`],
       ['okno cesty — ročně', `(_journeyObdobi('y'), true)`],
       ['okno cesty — karta Rúnakort', `(_journeyObdobi('c'), true)`],
-      ['islandsky, okno cesty', `(setLang('is'), _journeyObdobi('m'), true)`],
+      // 2026-10-22 (CODE-tune): appka startuje islandsky, takže samotné setLang('is') hned skončilo (l === lang) a přepnutí jazyka — kde
+      // updateUIText znovu nastaví odkaz značky — se nikdy neprovedlo; útok na podmínku značky (protipriklady.py) proto prošel. Teď EN → IS.
+      ['po přepnutí jazyka EN → IS, okno cesty', `(setLang('en'), setLang('is'), _journeyObdobi('m'), true)`],
     ];
     const vada = (kde, nal) => nal.map((x) => kde + ': <' + x.tag + (x.id ? '#' + x.id : '') + '> „' + x.text + '“ → ' + x.cil);
 

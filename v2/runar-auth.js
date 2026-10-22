@@ -472,7 +472,7 @@ function _authMsg(err) {
   if ((err && err.status === 429) || /rate|too many/i.test(m)) return t('auth_rate');
   // 2026-10-22 (CODE-read, DECISIONS 2026-10-22 (9)): neznámá chyba = vlastní věta, technický text jen do konzole. Do té doby
   // „Sign-in did not work: Error sending magic link email“ (nedoručený e-mail, Brevo/SMTP) — i v IS a se slovem, které nepoužíváme.
-  console.warn('auth:', m);
+  console.warn('_authMsg', m);
   return t('auth_send_failed');
 }
 // Přihlášení vypršelo: server odmítl volání 401, ačkoli appka člověka vede jako přihlášeného. Otevře přihlášení s výzvou; vrací true,
@@ -502,7 +502,7 @@ async function sendLoginCode() {
   var res;
   // 2026-10-22: výjimka (síť) dřív nechala „Sending…“ navždy a nikde se neukázala
   try { res = await sb.auth.signInWithOtp({ email: email, options: { shouldCreateUser: true, data: { lang: lang } } }); }
-  catch (e) { console.warn('auth send:', e && e.message); setSt('st-auth', t('auth_offline'), 'err'); return; }
+  catch (e) { console.warn('sendLoginCode', e && e.message); setSt('st-auth', t('auth_offline'), 'err'); return; }
   if (res.error) { setSt('st-auth', _authMsg(res.error), 'err'); return; }
   _authCodeEmail = email;
   var k = document.getElementById('auth-code'); if (k) k.value = '';
@@ -517,7 +517,7 @@ async function verifyLoginCode() {
   setSt('st-auth', t('auth_checking'));
   var res;
   try { res = await sb.auth.verifyOtp({ email: _authCodeEmail, token: code, type: 'email' }); }   // 2026-10-22: výpadek sítě jako u sendLoginCode
-  catch (e) { console.warn('auth verify:', e && e.message); setSt('st-auth', t('auth_offline'), 'err'); return; }
+  catch (e) { console.warn('verifyLoginCode', e && e.message); setSt('st-auth', t('auth_offline'), 'err'); return; }
   if (res.error) {
     setSt('st-auth', /closed_test/i.test(res.error.message || '') ? t('auth_closed_test') : t('auth_code_bad'), 'err');
     return;
@@ -574,7 +574,7 @@ function _authRedirectError() {
   var desc = q.get('error_description') || h.get('error_description') || err;
   history.replaceState({}, document.title, window.location.pathname);
   openAuthModal();
-  if (!/closed_test/i.test(desc)) console.warn('auth redirect:', desc);   // technický text jen do konzole (2026-10-22)
+  if (!/closed_test/i.test(desc)) console.warn('_authRedirectError', desc);   // technický text jen do konzole (2026-10-22)
   setSt('st-auth', /closed_test/i.test(desc) ? t('auth_closed_test') : t('auth_failed'), 'err');
 }
 
