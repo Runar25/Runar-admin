@@ -4,7 +4,7 @@
 //
 // Proto kontrola běží v SKUTEČNÉM prohlížeči (Chrome / Edge bez okna, DevTools protokol přes vestavěný WebSocket — žádné balíčky):
 // appka z pracovního stromu na 127.0.0.1, čistý profil = návštěvník. Základ (rozšiřovat jen sem, jedno místo):
-//   · Rúnarova fotka (#reader-hero s Runar_portrait, ne .hidden) · čtyři záložky (Lífsrúnin, Spá, Lestrar, Safn rúna)
+//   · Rúnarova fotka (#reader-hero s runar-portrait, ne .hidden) · čtyři záložky (Lífsrúnin, Spá, Lestrar, Safn rúna)
 //   · všech pět výkladů (Ein rún, Nornir, Áttaviti, Skeifa, Yggdrasil) · 25 run v mřížce tahu · 25 run v Safn rúna
 // Stavy: po načtení · po návratu do Spá z každé záložky · Start over (resetReader) · tah návštěvníka (startReading) · další tah
 // (drawAnother) · přepnutí jazyka v tahu i na začátku ·
@@ -81,7 +81,7 @@ const ZAKLAD = String.raw`(function (stav) {
   var ch = [];
   var vid = function (el) { if (!el) return false; var cs = getComputedStyle(el); if (cs.display === 'none' || cs.visibility === 'hidden') return false; var r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
   var hero = document.getElementById('reader-hero');
-  var foto = hero && hero.querySelector('img[src*="Runar_portrait"]');
+  var foto = hero && hero.querySelector('img[src*="runar-portrait"]');   // 2026-10-22: z repa (img/runar-portrait.webp), ne ze Supabase Storage
   if (!hero || !foto) ch.push(stav + ': Rúnarova fotka v HTML chybí');
   else if (hero.classList.contains('hidden')) ch.push(stav + ': Rúnarova fotka skrytá (.hidden)');
   ['atab-liferune', 'atab-reading', 'atab-journal', 'atab-collection'].forEach(function (id) { if (!vid(document.getElementById(id))) ch.push(stav + ': záložka ' + id + ' není vidět'); });

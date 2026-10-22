@@ -23,6 +23,8 @@ const JS_SHELL = [
   '/Runar-admin/v2/runar-runakort.css',
   '/Runar-admin/v2/img/runar-bile.jpg',
   '/Runar-admin/v2/img/runar-zima.jpg',
+  // 2026-10-22: Rúnarův portrét z repa (dřív Supabase Storage, 2,1 MB při každém čistém načtení — přetažený egress)
+  '/Runar-admin/v2/img/runar-portrait.webp',
   // 2026-09-14: sedm souboru, ktere reader nacita a tady chybely — nebyly v precache, takze je
   // fetch handler ukladal az za behu PRES HTTP CACHE (stare byty pod novou verzi). Seznam ted
   // hlida kontrola ㉧ (verify_sw_shell.js) proti <script src> v runar-reader.html.
