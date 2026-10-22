@@ -763,7 +763,10 @@ na Cloudflare a placenou Supabase:
 - [ ] **Cloudflare Pages Free: 500 sestavení za měsíc, 1 naráz** (developers.cloudflare.com/pages/platform/limits, čteno 2026-10-22). Máme ~900 commitů
   za 2 týdny — sestavení z gitu na každý push limit přetáhne. Nasazovat jinak (Direct Upload / jen z vybrané větve / dávkově); jestli se Direct
   Upload do limitu počítá, stránka neříká — ověřit.
-- [ ] **Registr kvót v ranním souhrnu — SCHVÁLENO** (owner 2026-10-22 „1. ano, schvaluji, připomínkou v souhrnu“ — Supabase připomínkou; DECISIONS 2026-10-22 (6); staví CODE-tune): v `supabase/functions/_shared/ops_souhrn.ts`
+- [ ] **Registr kvót — POSTAVENO 2026-10-22 kromě Brevo** (`KVOTY` v `_shared/ops_souhrn.ts`: databáze a soubory Supabase z `public.ops_kvoty()`,
+  `sql/2026-10-22_kvoty.sql` — pouští owner; pondělní připomínka egressu; odpočet starých klíčů Supabase `KLICE_SUPABASE`, po kroku 9 `vymeneno: true`).
+  **Zbývá:** Brevo `GET /v3/account` — pole ověřit naživo, pak řádek do `KVOTY`. Původní zadání:
+  **Registr kvót v ranním souhrnu — SCHVÁLENO** (owner 2026-10-22 „1. ano, schvaluji, připomínkou v souhrnu“ — Supabase připomínkou; DECISIONS 2026-10-22 (6); staví CODE-tune): v `supabase/functions/_shared/ops_souhrn.ts`
   registr `KVOTY` vedle `MAZANI` a `BEHY` — služba, limit, odkud číslo, prahy 50 % (WATCH v souhrnu) a 80 % (upozornění e-mailem při změně).
   Zdroje čísel (stav ověření 2026-10-22): ElevenLabs — API předplatného, už se čte (brzda hlasu) · Brevo — `GET /v3/account` vrací plán a
   kredity (developers.brevo.com/reference/get-account; přesná pole a denní strop Free ověřit naživo) · Supabase — veřejné API s využitím
