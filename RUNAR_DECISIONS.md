@@ -12192,3 +12192,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Hranice:** ubírá opakovaná stažení téhož posluchače; první stažení se do „cached egress“ počítá dál. Měřeno 2026-10-22 (GET): zvuky šly
   s `public, max-age=3600` (hlavička z `metadata.cacheControl`), ne `private, no-cache` — tu vrací jen dotaz HEAD.
 - Affected doc(s): `RUNAR_BACKLOG.md` (Plán infrastruktury — ponaučení: změřená hlavička, stav zvuků) — v témže commitu.
+
+## 2026-10-22 (8) — Nová verze appky: kontrola i po návratu z pozadí, obnovení jen s výzvou „klepni pro obnovení“
+
+- **Rozhodl:** owner 2026-10-22 na krok 4 průchodu CODE-read (prostředí appky): *„6. ano, předej 7. s výzvou.“*
+- **Nález:** appka hledá novou verzi jen při spuštění (`navigator.serviceWorker.register` po `load`, `runar-auth.js`); nainstalovaná na ploše
+  zůstává uspaná dny a bez nového spuštění jede na staré verzi (nejpravděpodobnější vysvětlení, proč owner jako admin neviděl novou větu
+  pod BEGIN THE READING — neověřeno). Když nová verze dorazí, `controllerchange` obnoví stránku hned — i uprostřed psaní otázky nebo čtení.
+- **Co (CODE-tune):** (a) hledat novou verzi i při návratu z pozadí (`visibilitychange` → `registration.update()`); (b) místo okamžitého
+  obnovení drobná výzva „nová verze — klepni pro obnovení“ (UI_TEXT, IS + EN), obnoví se až po klepnutí. Ověřit v prohlížeči: stará verze →
+  návrat z pozadí → výzva, rozepsaný text nezmizí.
+- Affected doc(s): žádný jiný.
