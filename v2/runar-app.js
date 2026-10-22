@@ -1757,6 +1757,8 @@ async function callProxy(sys, prompt, maxTokens, use_credit = false, credit_cost
     if (res.status === 402) return { error: data.error || 'no_credits', message: data.message || 'No credits remaining.' };
     // 429 = rate limited
     if (res.status === 429) return { error: 'rate_limited', message: data.message || 'Too many requests. Please wait a moment.' };
+    // 401 přihlášenému = přihlášení vypršelo → výzva přihlásit se znovu (_prihlaseniVyprselo, runar-auth.js; 2026-10-22)
+    if (res.status === 401 && _prihlaseniVyprselo(401)) return { error: 'session_expired', status: 401 };
     if (!res.ok || data.error) return { error: data.error || 'server_error', status: res.status };
 
     // Sync credits balance if backend returned updated value

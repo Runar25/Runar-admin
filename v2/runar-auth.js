@@ -470,7 +470,20 @@ function _authMsg(err) {
   // Owner na tom narazil a myslel, že nefunguje islandština (DECISIONS 2026-10-10 (13)).
   if (/request this after/i.test(m)) return t('auth_code_wait');
   if ((err && err.status === 429) || /rate|too many/i.test(m)) return t('auth_rate');
-  return tp('auth_failed', { msg: m });
+  // 2026-10-22 (CODE-read, DECISIONS 2026-10-22 (9)): neznámá chyba = vlastní věta, technický text jen do konzole. Do té doby
+  // „Sign-in did not work: Error sending magic link email“ (nedoručený e-mail, Brevo/SMTP) — i v IS a se slovem, které nepoužíváme.
+  console.warn('auth:', m);
+  return t('auth_send_failed');
+}
+// Přihlášení vypršelo: server odmítl volání 401, ačkoli appka člověka vede jako přihlášeného. Otevře přihlášení s výzvou; vrací true,
+// když to tak bylo (návštěvník bez přihlášení dostává 401 taky — ten má vlastní pozvánku, tady se nic neděje). Volá callProxy
+// (runar-app.js) a hláška hlasu (_voiceErrMsg, runar-reading.js). Do 2026-10-22 skončilo vypršelé přihlášení jako „Rúnar is resting —
+// try again“ a člověk zkoušel dokola.
+function _prihlaseniVyprselo(status) {
+  if (status !== 401 || !currentUser) return false;
+  openAuthModal();
+  setSt('st-auth', t('auth_expired'), 'err');
+  return true;
 }
 function _authCodeStep(on) {
   var a = document.getElementById('auth-step-email'), b = document.getElementById('auth-step-code');
@@ -486,7 +499,10 @@ async function sendLoginCode() {
   setSt('st-auth', t('auth_sending'));
   // data.lang: nový účet si ho nese od založení → první e-mail s kódem přijde v jazyce appky (KUKY 2026-10-10). Existující
   // účet data ignoruje (Supabase) — tomu jazyk zrcadlí _ulozJazykUctu (runar-app.js) po každém přihlášení a přepnutí jazyka.
-  var res = await sb.auth.signInWithOtp({ email: email, options: { shouldCreateUser: true, data: { lang: lang } } });
+  var res;
+  // 2026-10-22: výjimka (síť) dřív nechala „Sending…“ navždy a nikde se neukázala
+  try { res = await sb.auth.signInWithOtp({ email: email, options: { shouldCreateUser: true, data: { lang: lang } } }); }
+  catch (e) { console.warn('auth send:', e && e.message); setSt('st-auth', t('auth_offline'), 'err'); return; }
   if (res.error) { setSt('st-auth', _authMsg(res.error), 'err'); return; }
   _authCodeEmail = email;
   var k = document.getElementById('auth-code'); if (k) k.value = '';
@@ -499,7 +515,9 @@ async function verifyLoginCode() {
   // appka odmítla (owner 13:31: kód dorazil, přihlášení žádné). Délka se hlídá jen rozsahem, ne jedním číslem.
   if (!_authCodeEmail || code.length < 6 || code.length > 10) { setSt('st-auth', t('auth_code_bad'), 'err'); return; }
   setSt('st-auth', t('auth_checking'));
-  var res = await sb.auth.verifyOtp({ email: _authCodeEmail, token: code, type: 'email' });
+  var res;
+  try { res = await sb.auth.verifyOtp({ email: _authCodeEmail, token: code, type: 'email' }); }   // 2026-10-22: výpadek sítě jako u sendLoginCode
+  catch (e) { console.warn('auth verify:', e && e.message); setSt('st-auth', t('auth_offline'), 'err'); return; }
   if (res.error) {
     setSt('st-auth', /closed_test/i.test(res.error.message || '') ? t('auth_closed_test') : t('auth_code_bad'), 'err');
     return;
@@ -556,6 +574,7 @@ function _authRedirectError() {
   var desc = q.get('error_description') || h.get('error_description') || err;
   history.replaceState({}, document.title, window.location.pathname);
   openAuthModal();
-  setSt('st-auth', /closed_test/i.test(desc) ? t('auth_closed_test') : tp('auth_failed', { msg: desc }), 'err');
+  if (!/closed_test/i.test(desc)) console.warn('auth redirect:', desc);   // technický text jen do konzole (2026-10-22)
+  setSt('st-auth', /closed_test/i.test(desc) ? t('auth_closed_test') : t('auth_failed'), 'err');
 }
 
