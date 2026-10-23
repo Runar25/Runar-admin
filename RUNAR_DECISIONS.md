@@ -12270,4 +12270,4 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   `readings.prompt_draws` neukládají — recept u nich zatím ne.
 - **Ověřeno:** skutečné `_generateReading` a `_generateNornsReading` v prohlížeči s podvrženým `callProxy`: jedna runa 15 kusů, Norny 18;
   losy na místě; ㉱ a ㊓ OK.
-- Affected doc(s): žádný jiný (co recept nese, vlastní komentář u `_drawsSPinem` v `runar-reading.js`; anatomie `scripts/anatomie_promptu.js`).
+- Affected doc(s): žádný (co recept nese, vlastní komentář u `_drawsSPinem` v kódu čtení).
