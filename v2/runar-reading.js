@@ -123,9 +123,11 @@ function setImgPin() {
   _paintImgPin();
 }
 // Co si prompt vylosoval + značka, že obraz zvolil admin (los to nebyl — databáze čtení ho označí 📌).
-function _drawsSPinem(prompt, lang) {
+// + recept (2026-10-23, krok 4): kusy = jména kusů promptu v pořadí (_skladba) — spolu s losy výš přesně to, z čeho čtení vzniklo.
+function _drawsSPinem(prompt, lang, kusy) {
   var d = _promptDraws(prompt, lang);
   if (d && typeof _imgPinPouzit !== 'undefined' && _imgPinPouzit) d.pin = 1;
+  if (d && kusy && kusy.length) d.kusy = kusy;
   return d;
 }
 // ─── Složení čtení pro report (jen admin, 2026-09-25) ───────────────────────────────────
@@ -320,10 +322,15 @@ async function _generateReading() {
   var _castNow = _castIdx(u);
   const sys = buildSysPrompt(activeChar, lang);
   await _loadServerLastImage(drawn);   // 2026-09-27: obraz z posledního čtení téže runy (jakékoli zařízení) → los ho vyřadí
+  // 2026-10-23 recept čtení (krok 4, owner „10. ano 11. ano“): skládání v _skladba → kusy promptu v pořadí do prompt_draws.kusy; text beze změny.
+  var _sl = _skladba(function () {
   var prompt = buildReadingPrompt(u, drawn, lang, corrections);
   var _thL = _kus('THOUGHT-✦', 'account (reading_thought)', '✦ line', _thoughtFor('SINGLE', [drawn], lang)); if (_thL) prompt += '\n' + _thL;   // 2026-09-30: myšlenka ✦ (Standard/Premium)
   // 2026-10-04 (audit promptu bod 2): připomínka délky s číslem ÚPLNĚ na konci — za ✦ (Anthropic k Opusu 5, viz _lengthReminder).
   var _dR = _kus('LENGTH-REMINDER', 'fixed', 'whole', _lengthReminder(lang)); if (_dR) prompt += '\n' + _dR;
+  return prompt;
+  });
+  var prompt = _sl.text, _receptL = _sl.kusy.map(function (k) { return k.kus; });
   _lastGen = { sys: sys, prompt: prompt, lang: lang, kind: 'single' };   // pro rozbor GPT-6 sol (jen admin)
 
   // Journal meta for the SERVER-SIDE save (proxy saves it right after the deduction; two writes, not atomic).
@@ -337,7 +344,7 @@ async function _generateReading() {
     prompt_version: RUNAR_PROMPT_VERSION, address: userGender, reading_mode: _readingMode,
     // Co si prompt vylosoval (úhel · obraz · tvar konce · umístění jména). Bez toho
     // nejde u reálného čtení říct, která páka za výsledek může — viz _promptDraws.
-    draws: _drawsSPinem(prompt, lang)
+    draws: _drawsSPinem(prompt, lang, _receptL)
   } : null;
   _lastReadingId = null; _voiceTicket = null;
   const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens, shouldUseCredit(), SPREAD_COSTS.single.credits, _journal);
@@ -1385,8 +1392,13 @@ async function _generateSpreadReading(o) {
   var u = readerUser;
   var _castNowS = _castIdx(u);
   var sys = buildSysPrompt(activeChar, lang);
+  // 2026-10-23 recept čtení (krok 4): jako u jedné runy — kusy promptu do prompt_draws.kusy, text beze změny.
+  var _ss = _skladba(function () {
   var prompt = o.buildPrompt(u, o.runes, lang, corrections);
   var _thS = _kus('THOUGHT-✦', 'account (reading_thought)', '✦ line', _thoughtFor(o.kind, o.runes, lang)); if (_thS) prompt += '\n' + _thS;   // 2026-09-30: myšlenka ✦ (Kříž, Norny; od 2026-10-03 i Horseshoe a Yggdrasil)
+  return prompt;
+  });
+  var prompt = _ss.text, _receptS = _ss.kusy.map(function (k) { return k.kus; });
   _lastGen = { sys: sys, prompt: prompt, lang: lang, kind: o.kind };   // pro rozbor GPT-6 sol (jen admin)
 
   // Journal meta for the SERVER-SIDE save (proxy saves it right after the deduction; two writes, not atomic).
@@ -1396,7 +1408,7 @@ async function _generateSpreadReading(o) {
     area: 'spread', aol: u.area || null, seeking: u.seeking || null, intention: u.intention || null,
     question: u.question || null, life_rune: (u.lifeRune && u.lifeRune.n) || null,
     rune_display: _runeDisplay, prompt_version: RUNAR_PROMPT_VERSION, address: userGender,
-    reading_mode: _readingMode, draws: _drawsSPinem(prompt, lang)
+    reading_mode: _readingMode, draws: _drawsSPinem(prompt, lang, _receptS)
   } : null;
   _lastReadingId = null; _voiceTicket = null;
   // Zakladaci Norny: zdarma a BEZ HLASU (hlas = 95 % ceny cteni, proto se nekona).

@@ -12259,3 +12259,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   kreslit (`renderLivingTree`), jednou za relaci. `runar-tree.js` (životní runa) zůstává pro všechny. Soubory enginu se nemění (CODE-tree).
   Pozor: kontroly, které čtou `window.RunarTreeProd` při startu (㉧ seznam precache, ⑬ signály stromu, založení stromu), upravit, ne vypnout.
 - Affected doc(s): žádný jiný (načítání vlastní `runar-reader.html` a `sw.js`; pořadí načítání v hlavním dokumentu pravidel upraví CODE-tune v commitu s kódem).
+
+## 2026-10-23 (1) — Recept čtení: každé nové čtení nese seznam kusů promptu, ze kterých vzniklo
+
+- **Rozhodl:** owner 2026-10-22 *„10. ano 11. ano“* na plán „z čeho se skládá čtení“ (2 kusy → 3 anatomie → **4 recept u čtení** → 5 a 6
+  rozbor → 7 obrazy → 8 skladač), recept do produkce výslovně schválen.
+- **Co:** `prompt_draws.kusy` = jména kusů promptu v pořadí (`_skladba` v `runar-character.js`, kusy `_kus`), u jedné runy i výkladů,
+  včetně myšlenky ✦ a připomínky délky. Spolu s losy, které `prompt_draws` už nese (obraz, úhel, konec, délka, podoba oblasti, sloveso), je
+  to recept bez textu — z něj se dá složit přesně to, co model dostal. Text promptu beze změny. Ask, životní runa a rozbor jména se do
+  `readings.prompt_draws` neukládají — recept u nich zatím ne.
+- **Ověřeno:** skutečné `_generateReading` a `_generateNornsReading` v prohlížeči s podvrženým `callProxy`: jedna runa 15 kusů, Norny 18;
+  losy na místě; ㉱ a ㊓ OK.
+- Affected doc(s): žádný jiný (co recept nese, vlastní komentář u `_drawsSPinem` v `runar-reading.js`; anatomie `scripts/anatomie_promptu.js`).
