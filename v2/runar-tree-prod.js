@@ -1864,7 +1864,7 @@ function _lab(document, window, localStorage, getComputedStyle, requestAnimation
           var f2=Math.min(1, Math.log(1+rRet)/Math.log(41)), ex2=Math.max(0, (rPast/rRet-0.5)/0.5)*f2*Math.min(1, rRet/12); if(ex2>exMax) exMax=ex2; });
         var fR=Math.min(1, Math.log(1+rRet)/Math.log(41)); rTT.length*=1+0.5*fR+0.8*exMax;   /* koren se prohloubi: az +50 % delky, plny ucinek po 40 navratech, nic se nevraci zpet; minulost/nitro az +80 % navic */
         if(!dirO && rSpec.dev!=null){ rSpec.dev*=(1-0.35*fR-0.6*exMax); rdevUsed=rSpec.dev; } }   /* hlavni koren se s navraty stoci strmeji (hloubeji); sirka ne: rf ji prepocita na pramen u zeme */
-      /* NORNY = TRI HLAVNI KORENY (KUKY 2026-10-11 "ok, jdeme na Norny → 3 kořeny" a "6. n4, zapni v labu 7. ne."; kanon RUNAR_DESIGN.md "Tri Norny = tri koreny
+      /* NORNY = TRI HLAVNI KORENY (KUKY 2026-10-11 "ok, jdeme na Norny → 3 kořeny" a "6. n4, zapni v labu 7. ne."; kanon RUNAR_SPREADY.md (Norns) "Tri Norny = tri koreny
          Yggdrasilu", DECISIONS 2026-07-30 (a)): koren pramene zakladaci Norny se prodlouzi 1,4× a hlavni koren stoci 0,35× bliz svislici — jen prodlouzeni
          a ohnuti, stavba korene beze zmeny (2026-10-10 (23), (28)), tloustka u kmene dal = kmen. Dnes se od ostatnich nelisily (jeho strom: hloubka 215–255 px
          proti 450 u korenu hornich ramen). Silnejsi n2 (1,6×) owner nechtel; strana zustava podle ramene (bod 7 "ne"). */
@@ -1884,7 +1884,7 @@ function _lab(document, window, localStorage, getComputedStyle, requestAnimation
           var dx=q.x-rozA.x, dy=q.y-rozA.y; q.x=rozA.x+dx*rozC-dy*rozS; q.y=rozA.y+dx*rozS+dy*rozC; }); }); }
       /* KOREN JAKO CELEK (KUKY 2026-10-11 "vyjimecnych udalosti bude vic … abychom meli data, z kterych to pak poskladame — to je to stejne jako cteni pro
          vetev"): cteni, ve kterych se runa korene vratila po vzniku jeho vetve (oblast, zamer, seeking, minulost/nitro). Z nich se pozdeji skladaji vyjimecne
-         udalosti (napr. vsechny tri korenove runy v jednom cteni, RUNAR_DESIGN.md); ted je jen ukazuje inspekce. */
+         udalosti (napr. vsechny tri korenove runy v jednom cteni, RUNAR_TREE.md §7); ted je jen ukazuje inspekce. */
       var kRet=[]; if(_SL){ (_RI[runeK]||[]).forEach(function(ii){ if(ii<=bornR) return; var rd9=vlog[ii]||{};
         kRet.push({ i:ii, sp:rd9.spread||'single', a:rd9.area||null, it:rd9.intention||null, sk:rd9.seeking||null, p:!!((_RP[runeK]||{})[ii]) }); }); }
       var kInfo={ navraty:rRet, navratyMin:rPast, norna:(!dirO && be && be.nornName)||null, retl:kRet, sh:kSh, dev:rdevUsed, side:!!dirO };
