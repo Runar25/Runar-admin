@@ -49,6 +49,7 @@ Vrstvy pravdy: kanonická = root `RUNAR_*.md`, `memory/*.md`, `CLAUDE.md` · his
 - [working-style.md](working-style.md) — workflow, Python skripty, verifikace
 - [is-done-together-not-for-sigrun.md](is-done-together-not-for-sigrun.md) — IS rovnou hotová a ověřená, žádný draft pro Sigrún
 - [handoff-text-in-code-block.md](handoff-text-in-code-block.md) — text k předání jiné session do code blocku
+- [neposilat-praci-coworku.md](neposilat-praci-coworku.md) — co umí Code, udělá sám; žádný handoff Coworku přes ownera
 - [paste-sql-explicitly.md](paste-sql-explicitly.md) — SQL pro ownera vlož celé, žádné „jako minule"
 - [read-token-from-clipboard.md](read-token-from-clipboard.md) — eval token si načti ze schránky sám
 - [runar-api-key-file.md](runar-api-key-file.md) — Anthropic klíč v `~/.claude/runar-api-key.txt`, ownera nežádat
