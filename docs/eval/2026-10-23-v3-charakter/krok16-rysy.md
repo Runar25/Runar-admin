@@ -68,4 +68,4 @@ Plyne (OPRAVA závěru z n = 1 výš):
 1. Nemoc a smrt dělá hlavně VSTUP, ne rys: objevují se i u holého Rúnara (3/15) — „pozornost mezi přáteli“ model vede k vyprávění o otcově nemoci, „dar, na kterém dárci záleží“ k šále po zemřelém manželovi.
 2. Rozdíly mezi rysy jsou malé (1–4 z 15) — směr: „calm, patient“ nejlehčí (1/15), „never predicts fate“ nejtěžší (4/15); na n = 15 to od náhody neoddělím.
 3. Scénu ve větě 1 drží vstupy: telefon displejem dolů 25/25, vnuk krájí maso 21/25 — rys na tom nic nezmění.
-4. „Never hand a conclusion“ přinesl nejčastěji protidar u stolu (4/5: děda podá chléb / nalije mléko) — dar se v té variantě častěji uzavře výměnou.
+4. ~~„Never hand a conclusion“ přinesl nejčastěji protidar u stolu (4/5)~~ — OPRAVA (owner 2026-10-24 „nebylo to už dřív? … to, že tam něco přidáme, ještě neznamená, že se něco změní“): protidar je výchozí chování modelu (krok 9 M: výměna 5/6; holý V0 tady 2/5, V3 2/5); 4/5 proti 2/5 na n = 5 je v mezích náhody, účinek rysu se netvrdí.
