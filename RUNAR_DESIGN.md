@@ -63,7 +63,7 @@ Rúnar má genuinní hloubku: runy a starý svět **skutečně** jsou numinózn�
 bydlí — ale nikdy ho **nepředvádí** ani neprodává. Věcné podání, žádný okultní prodejní rejstřík
 (`dulspekingur` / *spiritual guide* / *Icelandic mysticism* je právě to předvádění, které tahle
 kotva odmítá). Platí v **obou** jazycích — esence je jedna, slova se skládají nativně (§2).
-Ta věta je proto **definice**, ne ozdoba, a z kánonu se nemaže. V promptu stojí v bloku „THE VOICE“ (`runar-character.js`; do 2026-10-20 tu stálo `DEF_CHAR.personality`). ⚠️ **Z islandského promptu je od v5.18 pryč** (owner 2026-10-20 *„9. vyndat“*, DECISIONS 2026-10-20 (4)): „dulspeki“ by ve čtení vadilo, sol bere vstup doslova. EN prompt a tenhle kánon beze změny — nevracet ji do IS bez nového rozhodnutí.
+Ta věta je proto **definice**, ne ozdoba, a z kánonu se nemaže. V promptu stojí v bloku „THE VOICE“ (`runar-character.js`). ⚠️ **Z islandského promptu je od v5.18 pryč** (owner 2026-10-20 *„9. vyndat“*, DECISIONS 2026-10-20 (4)): „dulspeki“ by ve čtení vadilo, sol bere vstup doslova. EN prompt a tenhle kánon beze změny — nevracet ji do IS bez nového rozhodnutí.
 
 Jeden princip ze dvou stran: **proč** (projekce → zrcadlo) a **jak zní** (*inhabits, not performs*).
 
@@ -355,7 +355,7 @@ Souvisí: tři beaty výš.
 ---
 
 ### Image pool — register obrazů (D/E/P)
-*(kritéria vlastní Cowork — handoff 2026-08-23; CODE jen ukládá; hodnoty hlídá smoke ㉠ — `verify_image_register.js`; do 2026-10-10 tu stálo „㊱“, ale smoke od ㉟ pokračuje znaky ㉠, ㉡… a „㊱“ ve výpisu nenajdeš,
+*(kritéria vlastní Cowork — handoff 2026-08-23; CODE jen ukládá; hodnoty hlídá smoke ㉠ — `verify_image_register.js`;
 sloupec 7 v `RUNE_IMAGES`)*
 - **D = DOMÁCÍ/INTIMNÍ:** uvnitř, lidské ruce, krb, malé (káva, chléb, lampa, ponk, klíče, hodiny, telefon, pletení).
 - **E = ŽIVELNÉ/VELKÉ:** syrová příroda, počasí, obloha, velké (ledovec, kroupy, láva, hver, fjord, půlnoční slunce).
@@ -574,9 +574,7 @@ a především **žádná penalizace za brzké nebo časté čtení** (KUKY 2026
 penalizace nebude existovat"). Strom neposuzuje ani nepřítomnost — **pauza dává bonus**, ale její
 absence nic nebere.
 
-⚠️ Do 2026-07-18 tu stála sekce „Filozofie rituální kadence" s tabulkou doporučené frekvence
-a větou „větev, která přišla příliš brzy = slabší". KUKY ji zrušil už dřív, ale v tomhle docu
-přežila — a byla znovu odcitována jako platný princip. Autorita → `RUNAR_DECISIONS.md` 2026-07-18.
+⚠️ Doporučená kadence ani „větev, která přišla příliš brzy = slabší“ neplatí — zrušeno, `RUNAR_DECISIONS.md` 2026-07-18.
 
 ---
 
@@ -727,7 +725,7 @@ Jednorázové okno „Where to start“ (první otevření appky, ne přihláše
 
 **Pravidlo priority** (proti přeplácanosti i mizení): když se faktory neslijí do jednoho obrazu → tažená runa vepředu, drž rejstřík + doménu, čočka klidně ustoupí — nikdy nenutit, nikdy nevršit jako oddělené věty. **Délka se tím nemění.**
 
-Zdroj pravdy = helpery v `runar-character.js` (`_domainContext` / `_registerContext` / `_intentionContext`, u spreadů navíc `_priorityContext`). Rozhodnutí + validace naživo → RUNAR_DECISIONS.md (2026-07-09). Single i všechny spready už je berou. ⚠️ Do 2026-10-10 tu stálo „`RP_SINGLE.priority`, zatím jen single, spready TODO“ — pole `priority` v kódu není a spready doménu i rejstřík mají; čočka odešla (řádek výš).
+Zdroj pravdy = helpery v `runar-character.js` (`_domainContext` / `_registerContext` / `_intentionContext`, u spreadů navíc `_priorityContext`). Rozhodnutí + validace naživo → RUNAR_DECISIONS.md (2026-07-09). Single i všechny spready už je berou.
 
 ---
 
@@ -760,13 +758,12 @@ Tři Norny = tři kořeny. Jedno čtení zasadí všechny tři kořeny najednou.
 - Skuld → třetí kořen: co pohání tvůj růst, co musí přijít
 
 Zakládací Norny jsou **zdarma pro každého přihlášeného, jednou** — server je bere jako rituál (`claude-proxy` `isRitual`,
-bez odečtu a bez měsíčního stropu). ⚠️ Do 2026-10-10 tu stálo „Rune Seeker platí kredity, Standard/Premium 3 z limitu“.
+bez odečtu a bez měsíčního stropu).
 Po dokončení se kořeny uzamknou navždy — nelze je změnit.
 
 ### Větve, kořeny, výška, strana, element — kánon v `RUNAR_TREE.md`
 Jak čtení roste do stromu (kořeny a jejich prohlubování, výška = Norny, strana = oblast, element = barva, ætt = charakter růstu)
-vlastní `RUNAR_TREE.md` §2–§5 a kód. Tady to do 2026-10-24 stálo podruhé a starší verzí, která se s kánonem hádala (oblast a
-hledání do výšky, strana podle seznamu run — neplatí od 2026-10-09/10).
+vlastní `RUNAR_TREE.md` §2–§5 a kód.
 
 ### Kmen (trunk) — jak se odhalí
 Kmen je Life Rune — vždy tam byl, od prvního dne, z data narození.

@@ -1,8 +1,7 @@
 # Working Style — Kuky / Rúnar sessions
 
 ## Jazyk
-Kdo s kým mluví jakým jazykem → CLAUDE.md §31. Identifikátory v kódu anglicky.
-(Do 2026-10-11 tu stálo „Kód: vždy anglicky“ — odporovalo §31, podle kterého jsou komentáře v kódu česky.)
+Kdo s kým mluví jakým jazykem → CLAUDE.md §31. Identifikátory v kódu anglicky, komentáře česky (§31).
 
 ---
 
@@ -55,8 +54,7 @@ plán se odjede celý bez ptaní mezi kroky ([[proceed-dont-ask]]). DECISIONS 20
 → *„ano zapiš“*): oprava už schváleného chování se zeleným smoke se **nasadí bez ptaní a ohlásí** (verze, bez přihlášení 401 /
 preflight 204, `scripts/utils/nasazene_vs_repo.py`). Ownera se ptát jen u: nového chování nebo nové funkce · čehokoli, co mění peníze
 (kredity ElevenLabs, model, ceny), soukromí nebo platby · SQL, které mění databázi (mimo zápisy, které owner session svěřil — korekce
-IS, DECISIONS 2026-09-23 (6), (7)) · nasazení, které se předem ověřit nedá. Do té doby šlo každé nasazení na „nasaď“ ze zvyku, pravidlo
-to nebylo. DECISIONS 2026-10-14 (7).
+IS, DECISIONS 2026-09-23 (6), (7)) · nasazení, které se předem ověřit nedá. DECISIONS 2026-10-14 (7).
 1. Ty popíšeš záměr (nemusí být technicky přesně)
 2. Claude ukáže co to znamená v praxi — kde to sáhne, co ovlivní, co je nejdřív
 3. Ty doplníš / upřesníš / zamítneš
@@ -78,9 +76,7 @@ Caveat: transientní toasty co vyblednou = false-positive; rune názvy/gender js
 - Příklad: "uprav line 45 v runar-app.js — POUZE tuto část, nic jiného" > "oprav bug"
 
 ### Délka doků
-**Vlastník = `CLAUDE.md`, sekce „Doc-owner pravidla".** Sem se nekopíruje.
-Do 2026-08-17 tu stála druhá verze („cíl pod 200 řádků") a rozešla se s tou v CLAUDE.md
-(„~200, 250 OK") — dvě čísla pro totéž pravidlo ve dvou souborech.
+**Vlastník = `CLAUDE.md` „Kde hledat co“** (pravidlo) · podrobnosti `docs/projekt-mapa.md` „Doc-owner pravidla“. Sem se nekopíruje.
 Co platí pořád a co CLAUDE.md nemá: **historie „Hotovo" nepatří do doků** — vlastní ji `git log` a DECISIONS.
 
 ---
@@ -104,8 +100,7 @@ Hardcoded výskyty mimo translations.js / VOCAB nejsou smoke testem zachyceny �
 ty od 2026-10-09 hlídá ráčna smoke ㉸ (`scripts/verify_lang_ternary.js`, počet na soubor nesmí stoupnout; stav tam v BASELINE).
 
 ## Vocab/tier termíny natvrdo — jak je najít (k CLAUDE.md §15)
-Seznam „zbývajících míst“ se tu nevede: stav vlastní kód (§20.4). Do 2026-10-11 tu stál seznam ze 2026-06-12 a ze tří čtvrtin
-neplatil (`tree_rs_cost` neexistuje, `tree_rs_balance` už starou jednotku neříká, `visitor_exhausted` je pryč). Aktuální stav dá audit:
+Seznam „zbývajících míst“ se tu nevede: stav vlastní kód (§20.4). Aktuální stav dá audit:
 ```
 grep -nE "rune stones?|rúnastein|Rune (Seeker|Walker|Keeper)|rune reading" v2/*.js v2/*.html  <!-- check-docs:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
 ```
@@ -208,7 +203,7 @@ Jako visitor a rune_seeker (CLAUDE.md „Tier systém“) — admin má premium 
 ---
 
 ## ⚡ IS JE PRIMÁRNÍ JAZYK
-Pravidlo, tři vrstvy generování a kontrola IS → CLAUDE.md §2 (do 2026-10-11 tu stála kopie i s blokem kódu). Co tam není:
+Pravidlo, tři vrstvy generování a kontrola IS → CLAUDE.md §2. Co tam není:
 - NIKDY „Respond entirely in Icelandic“ jako jediná IS instrukce.
 
 ### Korekce = frázová (nese kontext) > jednoslovná (slepá) — lekce 2026-07-07
@@ -221,10 +216,9 @@ Korekce X→Y se aplikuje VŠUDE naslepo. V silně flektivní IS: Y správné v 
 **IS QC toolkit — nástroje a jejich pořadí vlastní `CLAUDE.md` §2 („Kontrola IS“); tady se neopisují (§20).**
 Co tam není a patří sem: plochy se nezaměňují — kontrola zdrojového kódu nevidí výstup modelu a naopak (která je která, říká §2).
 **E001 = nerozparsováno → přepsat, dokud tomu nástroj nerozumí** (fronta „NATIVE EYE“ zrušena 2026-07-18, §19.2).
-(Do 2026-10-11 tu stál vlastní seznam se zaniklým `is-grammar-qa.py` a s „E001 → NATIVE EYE“ — obojí neplatilo.)
 
 ### Islandská gramatika — rod podstatného před přídavným
-→ [[is-grammar-adjective-gender]] (postup, ověřené případy, slovník rodu). Do 2026-10-11 stálo totéž i tady.
+→ [[is-grammar-adjective-gender]] (postup, ověřené případy, slovník rodu).
 
 ---
 
@@ -251,12 +245,9 @@ NIKDY nepředpokládat že obsah dokumentu je zachycen jen proto, že jsme o ně
 Kontext v chatu zmizí při /compact — důležité musí být v souborech.
 
 ## runar-shrine.html = admin, NE lab
-⚠️ **„V2 lab" NEEXISTUJE od 2026-07-10** (commit `c6eb89c`, −971 řádků). Do 2026-08-17 tu stál
-popis jeho reader UI (`#reader-setup`, `#reader-rune-card`, `#reader-output`) a věta „nové změny
-čtení se testují nejdřív v shrine". Ta tři ID v souboru **nejsou ani jednou** — pět týdnů to
-posílalo čtenáře testovat do smazaného kódu.
+⚠️ **„V2 lab" NEEXISTUJE od 2026-07-10** (commit `c6eb89c`) — změny čtení se v shrine netestují; `#reader-setup`, `#reader-rune-card` ani `#reader-output` tam nejsou.
 
-Které taby shrine má, říká `showTab(` v `runar-shrine.html` (do 2026-10-11 tu stálo „šest“ — mezitím přibyl `voice`).
+Které taby shrine má, říká `showTab(` v `runar-shrine.html`.
 
 ⭐ **`teach` NENÍ testovací plocha — píše do produkce.** `invokeRunar()` vygeneruje statické čtení
 runy a uloží ho do `runar_static_audio`; produkční reader i journal je pak servírují uživatelům
@@ -279,8 +270,7 @@ převyprávění, které zastará a opakuje BACKLOG a DECISIONS (CLAUDE.md §20)
 ⭐ **Stop-hook dál hlídá neverzovaný soubor v `memory/`** (od 2026-08-20) — ten, který vznikl v TÉHLE session; blokne jednou za session.
 
 ⚠️ **NEVYPISOVAT ownerovi `/compact Zachovej: …` řádku k zkopírování — ANI na `/zabal`.**
-Do 2026-08-17 tu stála výjimka „na `/zabal` se vypisuje". Byla to vada: důvod zákazu (owner by
-ji musel držet v hlavě do okamžiku, který nikdo netrefí) platí na `/zabal` úplně stejně.
+Na `/zabal` platí stejně: owner by ji musel držet v hlavě do okamžiku, který nikdo netrefí.
 KUKY 2026-08-17 na ni řekl: *„tohle mi dáváš k čemu?"* — **nemá konzumenta.** Co by nesla, už
 leží v přepisu konverzace (nemaže se, dá se prohledat) a v DECISIONS/BACKLOG; řádka je jen druhá kopie
 téhož přes kanál, který nefunguje (§20). Owner píše **holé `/compact`**, nic víc.
@@ -307,7 +297,7 @@ rozdělané **k tomu dni**. Aktuální stav vlastní produkce, `git log` a doky 
 - **Rúnar reflektuje, nikdy nepředpovídá.** Zrcadlo pozornosti, ne věštba. V hlase: přítomný čas o vzorcích a směřování („pořád se vracíš k…", „táhne tě k…"), NIKDY „stane se ti…". Pozn.: **skuld = záměr / k čemu se táhneš**, ne budoucí události.
 
 ## Two-output rule a Reconciliation
-Vlastník = CLAUDE.md §16 (do 2026-10-09 tu stála kopie, která po změně postupu §16 odporovala; DECISIONS 2026-10-09 (15)).
+Vlastník = CLAUDE.md §16.
 
 ---
 
@@ -316,8 +306,7 @@ Vlastník = CLAUDE.md §16 (do 2026-10-09 tu stála kopie, která po změně pos
 Při každé změně systému (příběh, design, pricing, code, workflow) — tato tabulka říká KAM.
 
 Kdo co vlastní → **rozcestník v `MEMORY.md`** (jediná mapa). Jak psát, aby informace žila na jednom místě, a kdo vyhrává při
-sporu → CLAUDE.md §20. Do 2026-10-11 tu stála druhá mapa a kopie §20 — přesně to, co §20 zakazuje (CLAUDE.md svůj rozcestník
-zrušil ze stejného důvodu 2026-08-17).
+sporu → CLAUDE.md §20.
 
 ### Trigger: kdy zapsat
 

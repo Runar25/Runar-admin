@@ -75,8 +75,8 @@ Strom: větev → kmen. Zakládací rituál.
 4  za tebou   — co přichází z minulosti
 5  před tebou — kam situace směřuje
 ```
-IS pozice: Miðja/Kjarni · Of an/Á leit · Undir/Rót · Að baki/Fortíð · Framar/Stefna
-Strom: větev s centrálním uzlem a čtyřmi výhonky. (Do 2026-10-10 tu stálo „Standard+“ — přístup vlastní CLAUDE.md „Gating“.)
+IS pozice: zdroj pravdy `RP_KRIZ.is.positions` (`v2/runar-character.js`), doc je NEOPISUJE (§20).
+Strom: větev s centrálním uzlem a čtyřmi výhonky.
 
 ### Horseshoe (7 run)
 ```
@@ -97,9 +97,8 @@ IS pozice: hotové v produkci — zdroj pravdy `RP_HORSESHOE.is.positions` (`v2/
 doc je NEOPISUJE (§20).
 Tvar podkovy U (levé rameno 1-2-3, pravé 5-6-7, čtyřka dole uprostřed mezi 3 a 5, o půl kroužku níž; sousední pozice stejně daleko)
 je v appce od 2026-10-11 — KUKY: *„4 runa mezi 3-5. ať jsou runy v podkově od sebe stejně vzdálené všemi směry“* a *„udělej to jako U,
-takže 4. mírně, asi na půl velikosti čísla v kroužku, pod 3-5“*, `RUNAR_DECISIONS.md` 2026-10-11 (31), (37). Do té doby tu i v appce
-stála řada `[1] … [7]`, mezi tím krátce ⊔ s rovným dnem.
-Strom: větvená větev se sedmi body → sezónní rituál kmene. (Do 2026-10-10 tu stálo „Standard+“ — přístup vlastní CLAUDE.md „Gating“.)
+takže 4. mírně, asi na půl velikosti čísla v kroužku, pod 3-5“*, `RUNAR_DECISIONS.md` 2026-10-11 (31), (37).
+Strom: větvená větev se sedmi body → sezónní rituál kmene.
 
 ### Yggdrasil (9 run) — všichni přihlášení, KDYKOLIV
 ```
@@ -110,11 +109,9 @@ Strom: větvená větev se sedmi body → sezónní rituál kmene. (Do 2026-10-1
           [9]            kořeny (9 = Hel)
 ```
 Strom v appce od 2026-10-11 (KUKY: *„to má být podle toho, jak je yggdrasil spread vykládán… ok udělej strom“*, `RUNAR_DECISIONS.md`
-2026-10-11 (40)): tradiční rozložení neexistuje, runové weby kladou Ásgarðr nahoru a Hel dolů; patra jsou patra výkladu. Do té doby
-tu stál kosočtverec světů z června (Niðavellir v řadě s Miðgarðrem, původně Múspellsheimr) a appka kreslila řady 3/2/4.
+2026-10-11 (40)): tradiční rozložení neexistuje, runové weby kladou Ásgarðr nahoru a Hel dolů; patra jsou patra výkladu.
 **Významy pozic vlastní `RP_YGGDRASIL` v `v2/runar-character.js` — doc je NEOPISUJE** (§20;
-táž poznámka jako u Horseshoe níž). Do 2026-08-23 tu stál opis a rozešel se v 5 z 9 světů
-(nalezl Cowork handoff #35) — který směr je kánon, řeší RUNAR_BACKLOG.md, verdikt owner.
+táž poznámka jako u Horseshoe výš).
 Nejde do větve — jde do kořenů stromu. **Kdykoliv, žádná brána na datum.**
 Strom: devítibodový uzel v kořenech — nejsilnější bod celého stromu.
 
@@ -149,13 +146,10 @@ Kdo na co dosáhne, vlastní `CLAUDE.md` („Spread systém → Gating“) a č�
 `TIERS.*.monthly_readings`) — tady se neopisují (§20). Ve zkratce: blokuje se jen nepřihlášený; každý přihlášený dosáhne na
 všechny spready — Rune Seeker za kredity (volné čtení jen na single), předplatitelé z měsíčních jednotek (počítají se jednotky
 čtení, ne runy). Yggdrasil kdykoli; zimní slunovrat = větší síla ve stromě, NE podmínka přístupu (KUKY 2026-07-18).
-⚠️ Do 2026-10-10 tu stálo „Kříž a Horseshoe jen Standard+, Rune Seeker ani za kredity“ a „limit 50/75 run“ — kód obojí dávno
-dělá jinak (`readRune` blokuje jen nepřihlášeného; měsíční strop počítá jednotky).
 
 ### Tree of Life per tier
 
-Stav vlastní `RUNAR_TREE.md` a kód. Ověřeno 2026-10-10: záložka Strom je jen pro admina (`runar-auth.js`, od 2026-09-11);
+Stav vlastní `RUNAR_TREE.md` a kód (kdo záložku Strom vidí: `renderLivingTree` v `runar-tree.js`);
 životní runu (výpočet) vidí každý i bez účtu, její čtení až po přihlášení a pro všechny stejné (builder tarif nedostává —
 nepoužitý parametr `isPremium` a nečinný režim `life_rune_premium` zrušeny 2026-10-11, DECISIONS 2026-10-11 (22)); zakládací Norny i rozbor jména jsou rituály — zdarma pro každého přihlášeného, jednou (`claude-proxy`
-`isRitual`). ⚠️ Do 2026-10-10 tu stála tabulka podle tarifů (strom jako teaser pro Rune Seekera, životní runa „hlubší“ pro
-Premium, Norny za kredity) — nic z toho kód nedělá.
+`isRitual`).

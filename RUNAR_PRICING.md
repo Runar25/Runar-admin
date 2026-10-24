@@ -55,22 +55,18 @@ záloha), ceník `MODEL_PRICES` + výpočet `readingCostUsd` (v2/), model hlasu 
   medián je hrubý. Přeměřit, až poběží rozklady se solem a islandská čtení ve větším počtu.
 - **Hlas je 81–94 % ceny čtení s hlasem** (nejméně IS Single, nejvíc EN Yggdrasil; do 2026-10-11 84–95 % při sazbě $0.10). Model sol stojí na Single EN $0.0036 (Opus stál $0.012 — EN čtení 2026-09-23, n = 70).
 - **IS model je ~2× dražší než EN:** islandský prompt má ~3 100 vstupních tokenů proti ~1 220 (islandština se tokenizuje hůř + IS gramatický blok).
-- **EN hlas stojí stejně jako IS** — obojí sazba multilingual/v3. Do 2026-10-11 tu EN stál za sazbu Flash (poloviční), kterou appka nepoužívá.
+- **EN hlas stojí stejně jako IS** — obojí sazba multilingual/v3.
 - **Hlas ke každému čtení, jednou** (DECISIONS 2026-10-11 (61)): předplatitel u všech čtení, Rune Seeker u volného čtení a čtení z karty
-  (`TIER_FEATURES`); uložený hlas se přehrává zdarma. Do 2026-10-11 tu stál strop `VOICE_MONTHLY_LIMIT` (5) — pokyn pro testery (49).
+  (`TIER_FEATURES`); uložený hlas se přehrává zdarma.
 - **Délka:** Single má dnes medián 373 EN / 423 IS znaků (v srpnu 272); délku vlastní buildery (`LENGTH_BUDGETS`, věty v `RP_*`).
 - **Cache:** sol běží s explicitní cache bez zarážek (zápis vypnut 2026-10-04, komentář u `callSol`) — v datech 0 tokenů z cache.
   Poznámky o cache Claude-éry (Opus, minima tokenů, bod zvratu 5min/1h cache) → `git log -p RUNAR_PRICING.md` a `stats.js`.
 
-*(Do 2026-10-11 tu stály poznámky k červnové tabulce — Single 272 znaků, sloupec Claude přepočtený ×5/3 z Sonnetu, nezměřené spready
-a nález, že dražší Opus čtení nezdražil. Platily pro tabulku, která už neplatí; historie → `git log -p RUNAR_PRICING.md`.)*
-
 **Kreditová stupnice (`SPREAD_COSTS`) dnes NEodpovídá poměru nákladů.** Náklad na jeden kredit (čtení z karty s hlasem): Single
 $0.034 EN / $0.042 IS, Norns $0.022 / $0.024, Kříž $0.020* / $0.021*, Horseshoe $0.021* / $0.026*, Yggdrasil $0.023* / $0.026*
-(sazba hlasu $0.08; do 2026-10-11 tu stálo Single $0.041 / $0.050 … při $0.10). Rozklady
+(sazba hlasu $0.08). Rozklady
 jsou tedy na kredit levnější než Single; při nejlevnějším kreditu (`CARD_PACKS`, ~200 ISK ≈ $1.62) je marže ~97 % u Single a ~98 % u rozkladů.
-*(Do 2026-10-11 tu stálo, že stupnice vznikla zaokrouhlením poměru nákladů a marže na kredit je jednotná ~98 % — platilo pro červnové délky
-čtení a hlas na každém čtení. Jestli stupnici měnit, je ownerova volba; náklady ji nenutí — marže je vysoká všude.)*
+*(Jestli stupnici měnit, je ownerova volba; náklady ji nenutí — marže je vysoká všude.)*
 
 **Life Rune is FREE — 0 credits (KUKY 2026-07-19).** It is text-only, so the voice never happens, and voice is
 84–95 % of what a reading costs us; the true cost is ~$0.006 EN / ~$0.010 IS (odhad, `scripts/utils/pricing_tabulka.js`). This is deliberate acquisition spend, not a pricing
@@ -92,7 +88,7 @@ Nejdražší na jednotku je **Single** (373 EN / 423 IS znaků hlasu na jednotku
 Owner 2026-08-17: **sonnet-5 zrušit jako fallback** (nepředvídatelný thinking, viz níž). Kandidáti
 dál: opus-4-8 (produkce), opus-4-7, opus-5, sonnet-4-5. Výčet modelů vlastní `MODELS`
 v `claude-proxy/index.ts` — tady se NEOPISUJE (§20). ✅ Sonnet 5 z řetězu odstraněn a nasazen týž den (proxy v59,
-snapshot `memory/snapshots/2026-08-17-sonnet5-drop-deployed.md`; do 2026-10-09 tu stálo „⏳ … `index.ts:674`“). Od 2026-10-09
+snapshot `memory/snapshots/2026-08-17-sonnet5-drop-deployed.md`). Od 2026-10-09
 čte všechny GPT-6 sol a Claude je záloha (DECISIONS 2026-10-09 (13)) — tabulka níž je historické měření Claude modelů.
 
 Změřeno simulátorem (single „Fehu", **májový/úsporný prompt**, n=2, dnešní ceník: opus $5/$25 ·
@@ -127,8 +123,7 @@ opus-4-8 in 1889 / out 96 · sonnet-5 in 1889 / out **560** (thinking blow-up, ~
 
 ### Visitor (free_trial)
 - Živé čtení ani hlas nemá — proxy nepřihlášeného odmítne; po tahu runy appka ukáže výzvu k registraci. Má statickou kolekci run
-  a výpočet životní runy. Vlastník pravidla = CLAUDE.md „Gating“ (do 2026-10-11 tu stálo „1 reading total, voice included, Single (Fehu)“
-  — neplatí od 2026-08-02).
+  a výpočet životní runy. Vlastník pravidla = CLAUDE.md „Gating“.
 - Purpose: show what Rúnar is
 
 ### Rune Seeker (rune_seeker)
@@ -151,12 +146,11 @@ opus-4-8 in 1889 / out 96 · sonnet-5 in 1889 / out **560** (thinking blow-up, ~
   reading (KUKY 2026-07-18). Rune Seekers may be *gifted* founding credits as a marketing move
   (campaign, onboarding push), but that is promotion, not a product entitlement.
 - Full journal
-- Hlas: každé čtení, jednou (DECISIONS 2026-10-11 (61)); do 2026-10-11 tu stálo „nejvýš `VOICE_MONTHLY_LIMIT` čtení za měsíc“
-  (pětka byl pokyn pro testery, (49)), předtím „Voice included“
+- Hlas: každé čtení, jednou (DECISIONS 2026-10-11 (61))
 - Životní runa: stejné čtení jako u všech, zdarma
 - Purpose: main product, target for all funnels
 
-### Premium (~$40/month)  <!-- do 2026-10-19 tu stálo ~$36; tabulka předplatného níž: 4.900 ISK / 123,5 = ~$40 (CODE-read, průchod appkou) -->
+### Premium (~$40/month)  <!-- ~$40 = TIERS.premium.price_isk_month / kurz níž -->
 - 75 reading-units/month limit
 - Everything in Standard
 - Životní runa a rozbor jména: stejné jako u všech, zdarma a jednou. „Hlubší premium čtení (2000 tokenů)“ kód nikdy nedělal — tentýž
@@ -202,8 +196,7 @@ Credits are priced to make Standard subscription clearly more attractive.
 
 **Balíčky (jména, počty kreditů, ISK) vlastní `CARD_PACKS` v `v2/runar-config.js`** — nápověda z nich skládá tabulku. Tady se
 neopisují (§20). Cena za kredit klesá s velikostí balíčku; nejlevnější kredit je v největším balíčku.
-*2026-10-10: jména a ceny rozhodl KUKY (DECISIONS 2026-10-10 (22)); do té doby tu stála tabulka (a v `runar-help.html` druhá,
-starší — Elder 50 = 11.900 kr, ceny v €). Od b2f50b7 (CODE-tune) je jediným místem config.*
+*Jména a ceny rozhodl KUKY (DECISIONS 2026-10-10 (22)); jediným místem je config.*
 
 A credit buys a single reading; spread prices in credits = `SPREAD_COSTS`.
 A subscriber pays ~65–70 ISK/reading-unit (see below) — ~3× cheaper than the cheapest credit. This is the upgrade argument — real math.
@@ -213,8 +206,7 @@ A subscriber pays ~65–70 ISK/reading-unit (see below) — ~3× cheaper than th
 ## Subscription Pricing
 
 **Ceny v ISK bydlí v configu** — `TIERS.standard` / `TIERS.premium` → `price_isk_month`, `price_isk_year` (`v2/runar-config.js`), od 2026-10-19.
-Čte je okno „Your journey with Rúnar“, web i kalkulačka návratnosti ve shrine. Do té doby stály tady v tabulce (ISK/month, ISK/year,
-Annual/month equiv.) a kalkulačka je parsovala odtud — přesun DECISIONS 2026-10-19 (7) bod 4. Měsíční limit čtení = `monthly_readings`.
+Čte je okno „Your journey with Rúnar“, web i kalkulačka návratnosti ve shrine (DECISIONS 2026-10-19 (7) bod 4). Měsíční limit čtení = `monthly_readings`.
 Přibližné EUR/USD (ze směnného kurzu níž, jen orientačně):
 
 | | Standard | Premium |
@@ -250,9 +242,6 @@ Premium is slightly cheaper per reading (volume discount) + deeper features → 
 | standard | **$1.86 / $2.40** | $1.50 / $1.69 | $0.83 / $1.03 |
 | premium | **$3.05 / $4.09** | $2.25 / $2.54 | $0.90 / $1.15 |
 
-Do 2026-10-11 tu stála horní mez se stropem 5 hlasů (standard $1.03 / $1.45, premium $1.48 / $2.29), ještě dřív „50 × 358 znaků hlasu
-+ Claude ~$0.002 na čtení“ (standard IS $1.89, premium IS $2.84).
-
 ### Plan margins (horní mez nákladů, kurz $1 = 123.5 ISK)
 
 | Plan | ISK/month | USD/month | Cost IS | Margin IS | Cost EN | Margin EN |
@@ -266,8 +255,7 @@ Margins stay healthy even with voice on every reading in the worst month (~88–
 and Shopify fees the worst month keeps 81–85 % and a Rune Seeker credit 91–93 % (CODE-tune 2026-10-11, owner: *„jestli je cenová hladina
 dobře nastavená“*). Prices remain balanced — no change needed. (Until 2026-10-11: ~93–96 % with the 5-voice cap.)
 
-⚠️ Fixní náklady i break-even stojí jen v „Operating costs, taxes & break-even“ níž (§20). Do 2026-07-18 tu stálo ~$30 (jen Hetzner
-+ Supabase) a break-even 2 uživatelé; do 2026-10-11 tu stálo ~$202 — teď je tu jen odkaz, číslo by tu zase zastaralo.
+⚠️ Fixní náklady i break-even stojí jen v „Operating costs, taxes & break-even“ níž (§20) — číslo se tu neopakuje, zastaralo by.
 
 ### Revenue & profit projections (mix: 70 % Standard / 30 % Premium, 60 % ročně / 40 % měsíčně, 50 % IS / 50 % EN)
 
@@ -297,8 +285,7 @@ $0.08 / 1000 zn.; počítadlo účtu je v kreditech, 1 kredit = $0.0002 = 2,5 zn
 stálo $0.10 (Creator 220 000), chyběl Starter a „Overage rate = plan rate“: **Starter přečerpání nemá** — po vyčerpání kreditů EL hlas
 odmítne (`can_extend_character_limit` false); u vyšších tarifů přečerpání ověřit před spuštěním (BACKLOG „Náklady — zmapovat“).
 Hlas má každé čtení, jednou (DECISIONS 2026-10-11 (61)). Kredity na předplatitele a kapacitu tarifů počítá `pricing_tabulka.js`:
-**nejhorší měsíc Premium IS 12 690 kreditů** (75 Single s hlasem = 31 725 znaků), **ownerův vzor ~3 740**. Do 2026-10-11 tu stála
-kapacita se stropem 5 hlasů (horní mez ~7 390 znaků, běžně ~2 115) — strop byl pokyn pro testery (49).
+**nejhorší měsíc Premium IS 12 690 kreditů** (75 Single s hlasem = 31 725 znaků), **ownerův vzor ~3 740**.
 
 | Plan | $/month | Multilingual chars included | ~Users (nejhorší, Premium IS) | ~Users (vzor) | Upgrade at (nejhorší) |
 |------|---------|----------------------------|----------------|----------------|------------|
@@ -313,7 +300,7 @@ kapacita se stropem 5 hlasů (horní mez ~7 390 znaků, běžně ~2 115) — str
 na uživatele v horní mezi).
 **Start on Creator.** S hlasem ke každému čtení stačí Creator na ~8 předplatitelů v nejhorším měsíci a ~29 při vzoru; pak Pro (~39 / ~132).
 O tarifu ElevenLabs tak hlas rozhoduje dřív než o penězích — marže drží (Plan margins výš). Když kredity dojdou, brzda (DECISIONS (48))
-hlas zastaví všem; sledovat ve shrine (VOICE, TESTERS). Do 2026-10-11 tu stálo „Creator do ~167 platících“ — se stropem 5 hlasů. Testování běží na Starteru (owner 2026-10-11: *„nebudeme platit nic navíc“*) — brzda kreditů DECISIONS (48).
+hlas zastaví všem; sledovat ve shrine (VOICE, TESTERS). Testování běží na Starteru (owner 2026-10-11: *„nebudeme platit nic navíc“*) — brzda kreditů DECISIONS (48).
 
 ---
 
@@ -323,7 +310,7 @@ hlas zastaví všem; sledovat ve shrine (VOICE, TESTERS). Do 2026-10-11 tu stál
 > **Kalkulačka s posuvníky:** shrine, záložka „📈 PAYBACK“ (`v2/runar-payback-admin.js`, od 2026-10-13). Čte čísla PŘÍMO z tabulek
 > tohoto souboru — „Subscription Pricing“, „ElevenLabs Plan“ a „Fixed monthly costs“ (sloupec Po spuštění) —, takže je tu neměň tvarem
 > bez kontroly: smoke ㊃ pustí týž parser a hlídá i, že položky dají řádek „Celkem“. Daně, odvody a poplatek za platbu jsou konstanty
-> modelu v tom JS (z prózy níž). Do 2026-10-13 tu stál odkaz na soukromý artifact v claude.ai — owner: „payback nemá být odkaz na claude“.
+> modelu v tom JS (z prózy níž). Odkaz na soukromý artifact v claude.ai sem nepatří (owner 2026-10-13: „payback nemá být odkaz na claude“).
 > Rates change yearly and depend on company form. Sources at the end of this section.
 > All listed costs are tax-deductible business expenses (reduce taxable profit).
 
@@ -346,7 +333,7 @@ Změřená útrata modelů a hlasu = `node scripts/utils/stats.js` (z `readings.
 | ElevenLabs | 6 ✔ | 22 | Starter (snímek předplatného 2026-10-12: 2 % kreditů využito, reset 2026-11-10); po spuštění Creator („ElevenLabs Plan“ výš) |
 | Supabase | 0 ✔ | 25 | Free; Pro „až půjdeme ven“ (owner); Hetzner jako alternativa vypadl 2026-10-15 (DECISIONS 2026-10-15 (2)) |
 | Google Workspace (schránka runar@, Drive se zálohami) | 0 ✔ | 0 | ✔ je to Workspace (DNS: MX Google); platí ho Agndofa v rámci agndofa.is (owner 2026-10-12: „je to už v ceně agndofa.is“) — Rúnarovi nic navíc |
-| Brevo (e-mail s kódem) | 0 ✔ | 0 | free tarif (300 e-mailů denně); do 2026-10-12 tu stál Resend — zamítnut 2026-09-12 |
+| Brevo (e-mail s kódem) | 0 ✔ | 0 | free tarif (300 e-mailů denně); Resend zamítnut 2026-09-12 |
 | GitHub (repo) · Cloudflare Pages (hosting) | 0 ✔ | 0 | dnes veřejné repo + GitHub Pages; před spuštěním soukromé repo, hosting Cloudflare Pages Free, Actions jen hlášení (zdarma) — BACKLOG „Plán infrastruktury“ (2026-10-15); Slack zrušen 2026-10-14 |
 | Shopify (Basic) | 0 ✔ | 0 | platí ho obchod agndofa.is (owner 2026-10-12: „shopify taky obchod agndofa.is“) — Rúnarovi jen poplatky z plateb („Variable“ níž) |
 | Apple Developer ($99/rok) | 0 | 8.25 | až nativní appka |
@@ -388,7 +375,7 @@ Model: revenue − VAT − payment fees − operating costs = company money; −
 | 700.000 ISK | ~491 |
 
 - Mandatory contributions (both layers) roughly **double** the user count vs a naive gross model.
-- **Claude $100 zůstává** (owner 2026-10-12) — do 2026-10-12 tu stálo „temporary dev cost → drops post-launch“. Bez něj by break-even byl ~3.
+- **Claude $100 zůstává** (owner 2026-10-12). Bez něj by break-even byl ~3.
 - 2026-10-12 přepočteno (CODE-read): fixní po spuštění $186 (Shopify nese obchod agndofa.is, Workspace a doména v ceně agndofa.is, Hetzner dnes 0) → break-even 7,0 a řádky 147 / 250 / 354 / 491 (výpočet níž beze změny).
 - Margins on revenue stay high (~88–93 % with voice on every reading); the wedge to *personal net* is what raises the counts.
 - 2026-10-11: přepočteno týmž modelem — ověřeno, že s červnovými vstupy (fixní $202.45, variabilní $1.81) dá přesně 147 / 250 / 353 /
@@ -528,7 +515,7 @@ Premium = ceremonial mód (Rúnar ví že piješ kakao)
 ## PWA vs Native App
 
 ### Platby v appkách z obchodů — ⚠️ předpoklad z 2026-06-09 pro Island neplatí (CODE-web 2026-10-13, DECISIONS 2026-10-13 (3))
-Do 2026-10-13 tu stálo „Island je EEA → Apple musí umožnit external purchase link (DMA), žádný App Store cut“. Ověřeno u Applu:
+Neplatí „Island je EEA → Apple musí umožnit external purchase link (DMA), žádný App Store cut“. Ověřeno u Applu:
 platební volby EU platí pro islandský obchod **jen pro hudební streamovací appky**; jinde odkaz ani tlačítko na nákup mimo IAP
 nesmí (výjimka jen obchod USA). DMA navíc v EHP zatím převzaté není. Pravidla 3.1.1: odemknout funkci kódem/QR vlastním
 mechanismem nesmí; 3.1.3(b): co si člověk koupil na webu, smí v appce používat, jen když se to dá koupit i přes IAP.
