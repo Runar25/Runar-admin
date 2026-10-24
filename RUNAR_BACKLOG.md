@@ -280,10 +280,12 @@ atomický upsert, úklid starších než hodina; stejně tak `use_credit` (atomi
 ### 🟠 CODE — odblokované, v pořadí
 - [~] **Evidence pohybu kreditu (ledger)** — POLOŽKA BYLA ZASTARALÁ: ledger EXISTUJE od 2026-07-19 (trigger na user_profiles, append-only; odhaleno 22. 8., když ownerův běh mého duplikátního SQL narazil na existující tabulku — 29 řádků od 4. 8.). Zbývá FÁZE 2 = atribuce: `sql/2026-08-22_ledger_faze2_attribution.sql` (čeká na spuštění ownerem) + proxy posílá p_reason/p_ref (hotovo, deploy AŽ PO SQL). Pak ověřit: čtení za kredit → řádek s reason=reading a ref=id čtení. Původně: dnes NEEXISTUJE, takze na otazku "strhl se mi kredit?" nejde odpovedet ani u vlastniho uctu; `credits_balance` ukazuje jen aktualni stav, ne historii. Narazil na to owner 2026-07-19 pri prvnim zdarma cteni zivotni runy. Resi ZAROVEN starsi ownerovo zadani (2026-07-16): "musi byt za pouziti kodu, ten kod by se mel nekde zapsat. neni kod neni kredit. nikdy to nebude vic nez prodavame." **Podminka: zapis do evidence musi byt ATOMICKY se zmenou zustatku** — evidence, ktera muze chybet, lze, a lziva evidence je horsi nez zadna, protoze se podle ni rozhoduje.
 - [ ] **Obohatit řádek: pořadí tažených run + char_count** — ALTER už NEPOTŘEBUJE (2026-08-10). Řádek `readings` má sloupec `prompt_draws jsonb`, do kterého se dá přidat cokoli bez migrace; dnes v něm jede úhel, obraz, klíčová slova, tvar konce a umístění jména. Pořadí run je navíc jediné, co ještě chybí — model může sloty přeskládat, takže se musí ukládat strukturovaně.
-- [ ] **Readings viewer: flag/annotate** — dnes view-only (`initReadingsTab` = prázdný stub). Potřebuje review tabulku (owner ALTER).
+- [ ] **Readings viewer: flag/annotate** — prohlížeč čtení ve shrine je hotový (`runar-readings-admin.js`, edge fn `list-readings`);
+  chybí jen označit / okomentovat čtení — potřebuje review tabulku (owner ALTER). *(Úklid 2026-10-24: „prázdný stub“ už neplatilo.)*
 
 ### 🟡 OWNER rozhodnutí
-- [ ] **Retence čtení** — nerozhodnuto. Návrh: po dobu účtu; při zrušení smazat/anonymizovat pro eval. Blokuje konkrétní číslo v policy.
+- [x] ✅ **Retence čtení** — rozhodnuto: po dobu účtu (DECISIONS 2026-10-19 (3); RUNAR_PRIVACY „Retence“), opuštěné účty po 3 letech s
+  upozorněním (položka níž). *(Uzavřeno úklidem 2026-10-24; do té doby tu stálo „nerozhodnuto“.)*
 - [ ] **Living tree: sundat admin gate** (`renderLivingTree()` v `runar-tree.js`) — až uznáš betu za hotovou.
 
 ### 🔵 COWORK
