@@ -1372,3 +1372,31 @@ doslova — a pokaždé?* Sol bere vstup jako materiál k přepsání, Opus spí
 **Postup zkoušení slov (2026-10-07):** napřed data, která máme (`scripts/utils/najdi_cteni.js`); pak malý pokus — víc znění z úplně
 různých pohledů naráz (např. 5 otázek × 3 čtení × 2), se vstupem jako v produkci; spočítat pojistku, opakování slov otázky a začátky
 odpovědí, a **texty přečíst** — co zní dobře, rozhoduje owner podle textů, ne počty. Anglické znění ověřit zdrojem (bod 9). Owner 2026-10-07 k prvnímu takovému pokusu (otázka na oblast z pěti pohledů): *„to jsi výborně vyčetl, tohle bychom mohli dělat dál, třeba v jiné podobě, ale ten princip ti sedl.“*
+
+## Model čtení: gpt-6-sol × Opus 5 — co jsme kvůli solu měnili a co pomohlo (jediné místo, KUKY 2026-10-24)
+
+*Changelog: 2026-10-24 založeno — owner: „souhrn úprav pro sol 6 není na jednom místě“; do té doby jen odkazník v labu v3. Čísla a doklady
+vlastní uvedené záznamy (§20); tady jen co sol dělá jinak a čím se to řešilo. Pro v3 to nejsou pravidla, ale páky k novému ověření.*
+
+**Kde to bydlí v kódu:** model a jeho nastavení `supabase/functions/claude-proxy/index.ts` (`SOL_MODEL`, `SOL_EFFORTS`, rezerva tokenů pro
+přemýšlení, explicitní cache — komentář u `callSol` nese historii). Sol čte pro všechny od 2026-10-09, Opus 5 je přepínač admina
+(DECISIONS 2026-10-09 (13)).
+
+| co sol dělá jinak než Opus 5 | co pomohlo | doklad |
+|---|---|---|
+| bere vstup doslova: co dostane, objeví se ve výstupu (Opus skoro ne) | psát vstup tak, aby byl v pořádku i doslova | „Slova, která dáváme modelu“ bod 1 a 8 (výš) |
+| v auditu čtení od nasazení solu víc doslovného převzetí obrazu, hlavičky významu, podoby oblasti i otázky runy než Opus | společný kořen: pevný text na runu/oblast se vrací; viz řádky výš | EVAL_LOG 2026-10-07 (1) |
+| opisoval islandskou glosu jména runy | jméno runy v promptu bez glosy | EVAL_LOG 2026-09-24 (4) · DECISIONS 2026-09-24 (18) |
+| obraz převyprávěl svými slovy | „one detail the sentence does not name“ | EVAL_LOG 2026-09-23 (9) · DECISIONS 2026-09-24 (17) |
+| obraz zopakoval a přilepil „while…“; Opus obraz převidí detailem zevnitř scény | ⭐ „look closer, at what someone there would notice first“ | EVAL_LOG 2026-09-23 (6) |
+| bez seznamu klíčových slov runy ztrácí identitu runy | seznamy klíčových slov u solu nechat | EVAL_LOG 2026-09-23 (3) |
+| sloveso definiční věty bere z pokynu („Hagalaz names…“) | sloveso doložené v anglických textech o runách, losem | DECISIONS 2026-10-06 (7), (10) |
+| islandský konec bez „ástand“ utekl od člověka | most s „ástand“ + „sagt með orðum myndarinnar“ | EVAL_LOG 2026-09-22 (2) |
+| pravidla ze systémového promptu dodrží stejně jako z user promptu | stálá pravidla smí do systému | EVAL_LOG 2026-10-16 (1) |
+| přemýšlení: 6.1 na `low` si obrazy vymýšlel a protiřečil, pomalý | sol 6 bez přemýšlení (`none`/`minimal`); přemýšlející modely jen v labu | DECISIONS 2026-10-04 (3), 2026-10-05 (3) |
+| cache: implicitní zapisovala celý vstup a nečetla se | explicitní cache (jen cena, chování nemění) | komentář u `callSol` · EVAL_LOG 2026-10-04 (3) |
+| islandština a cena: sol méně tvrdých chyb v IS, levnější a rychlejší; soudci styl spíš pro Opus | výměna kvalita × cena × IS → sol | EVAL_LOG 2026-09-22 (2) |
+| (Opus 5, ne sol) píše delší, než má | připomínka délky s číslem úplně na konci promptu | DECISIONS 2026-10-04 (6) |
+| Ask: pojistka „does not say / leaves room“ (oba modely, Opus méně) | nese ji most čtení × zákazy verdiktu; pokyn ji neodklidí | EVAL_LOG 2026-10-06 (8) · „Slova“ bod 6 |
+
+Pro v3 věta 1: sol píše situaci plošší — tentýž jev jako „obraz bez vlastního vidění“ (2026-09-23 (6)); ta páka je kandidát k ověření.
