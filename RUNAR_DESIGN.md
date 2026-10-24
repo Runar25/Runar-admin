@@ -86,6 +86,20 @@ je přesně hodnocení *generického* textu jako osobního. Čtení se proto nes
 pocitu přesnosti; měřit jde jen to, co projekcí neprochází (papouškování, stejnost slovníku,
 porušení pravidel, stavba). Viz `CLAUDE.md` §24 a §27.
 
+### Co má čtení v člověku vyvolat (jediné místo; KUKY 2026-10-23/24)
+⭐ KUKY 2026-10-24: *„aby se v něm uživatel našel, položil si otázku, přemýšlel a vyvolalo to v něm něco.“*
+1. **Čtyři zážitky — každé čtení jiné, postupně všechny.** Ke čtyřem možnostem z rozhovoru s GPT (*„to znám, dotýká se to mého života“* ·
+   *„takhle jsem se na to nikdy nedíval“* · *„něco se ve mně otevřelo“* · *„chci chvíli zůstat s tím obrazem“*) KUKY 2026-10-23: *„je to
+   kombinace těchto možností … každé čtení má být jiné a tím postupně vyvolávat všechny tyto pocity.“* Žádný zážitek není povinný v každém čtení.
+2. **Poznat se ve scéně.** KUKY 2026-10-24: *„pokud se člověk v té scéně může poznat, tak je napůl vyhráno.“* Dobrý obraz *„se dotkne hodně
+   lidí“* (kluk posune poslední sušenku sestře a nic za to nechce); špatný je *„nic neříkající“* (pekařka podává chléb, chlapcovy ruce zůstanou dole).
+3. **Jak se to pozná na čtení** — znaky, které owner u konkrétních čtení potvrdil (definiční věta, ze které *„si člověk hned něco vezme“* · otázka,
+   nad kterou *„musí přemýšlet“* · obraz nese podstatu runy · druhá půlka věty ukáže, co v obraze není): doklady a hranice vlastní
+   memory `co-dela-cteni-silnym`.
+4. **Rámec:** zrcadlo, ne orákulum (sekce výš) — zážitek vzniká v člověku, Rúnar ho nevyhlašuje. Konce výkladů → „Co má uživatel cítit na konci“.
+⚠️ **Záměr, ne slovník promptu:** slova zážitků se do instrukcí nepíšou (model by je předváděl — táž zásada jako u pocitů výkladů). Jak toho
+dosáhnout, zkouší lab v3 (`docs/eval/2026-10-23-v3-charakter/`); ten je výzkum, ne kánon — kánon je tahle sekce.
+
 ### Úhel musí sednout KAŽDÉ runě (KUKY 2026-08-16)
 ⭐ **„Úhel musí být univerzální a pasovat na každou runu. Pokud nepasuje, nemůže být ani použit
 a musí se najít jiný."** Úhel je jeden ze sedmi způsobů, jak čtení otevřít, a losuje se **nezávisle
@@ -685,7 +699,7 @@ SPREAD            STROM                      RITUÁL
 | Horseshoe | direction | „Vidím, kam se to pohybuje." |
 | Yggdrasil | revelation | „Teď vidím celý obraz." |
 
-Je to **záměr, ne slovník promptu** — štítky se do instrukcí NEpíšou (model by je performoval
+Celek pro všechna čtení → „Co má čtení v člověku vyvolat“ (výš, u Kdo je Rúnar). Je to **záměr, ne slovník promptu** — štítky se do instrukcí NEpíšou (model by je performoval
 didakticky). Od v4.14 mají dosednutí (`landing` v packu) **všechny čtyři spready** — sdílená
 formule „co se stalo viditelným…", liší se jen strukturální část (pohyb v čase · síly kolem
 středu · celý oblouk · celý obraz naráz); single drží otázkový los (v4.11). Zda se čtyři

@@ -8,6 +8,9 @@ metadata:
   modified: 2026-08-26T20:37:29.405Z
 ---
 
+Co má čtení v člověku vyvolat celkově (čtyři zážitky, poznat se ve scéně) vlastní `RUNAR_DESIGN.md` „Co má čtení v člověku
+vyvolat“; tady jen znaky silného čtení s doklady.
+
 Owner opakovaně a nezávisle označil **dvě věci** za to, co čtení dělá silným — obojí jako
 POTVRZENÍ, ne opravu. Ne poetický popis, ne krásný odstavec.
 
