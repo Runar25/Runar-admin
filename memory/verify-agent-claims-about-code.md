@@ -40,3 +40,9 @@ ho někdo přečte — a přečte ho jako „ověřování se dá vynechat". Dol
 i tehdejší `is-grammar-qa.py` z prostředí CODE **fungovaly** (osm islandských vět, jedna vadná vazba chycena). A sama tahle věta
 pak zastarala: `is-grammar-qa.py` je od 2026-10-10 mrtvé (zaniklo API, CLAUDE.md §2) — přesně proto stav do paměti nepatří. Kdo ověřit nemůže, **řekne to a označí text jako neověřený** —
 ověření pak doplní ten, kdo na nástroje dosáhne. Nikdy „nešlo to, tak jsem to poslal tak."
+
+**Platí i pro MATERIÁL, nejen pro kód** (owner 2026-10-24: *„když ti dám materiál, i od GPT, máš zkontrolovat, jestli je to pravda.
+Je to stejné jako s handoff… pokud já něco napíšu, taky to kontroluješ.“*). Rozbor od GPT / Gemini / ownera / Coworku o runách,
+jazyce nebo modelech = tvrzení k ověření proti prameni (Hávamál, runové básně, etymologie, docs výrobce), ne podklad k přímému
+použití. Doklad: 2026-10-24 v materiálu GPT k Gebo stálo „a gift may create expectations, but this is not inevitable“ — Hávamál 145
+říká opak („ey sér til gildis gjöf“); Gemini psal „prasemitské“ místo pragermánské. Tabulka ověření: `docs/eval/2026-10-23-v3-charakter/krok5-namet-sceny.md`.
