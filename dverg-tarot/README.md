@@ -32,6 +32,7 @@ a dvou předloh výš; rodinné znaky (spletené vousy, roucho, runa na čele a 
 | `postavy/DWARVES_25_characterizations_v0_EN.md` | 25 postav v0 (Cowork 2026-10-18), EN; § A rozpory, § D rizika, § E co chce od ownera |
 | `postavy/ISA_scene_study_v0_EN.md` + `isa_panels_EN.png` | studie scény Isa |
 | `puvodni-cs/` | česká první verze návrhu (`NAVRH_trpaslici-karty_v0_diskuse.md`), charakteristik a studie Isy |
+| `podklady-2026-10-21/` | podklady z 2026-10-21 (Cowork, v0): `00_START` přehled a rozhodnutí (CZ) · `01` kritéria 25×5 · `02a` character sheets 25 · `02b` scény 25 run · `03` scény Uruz, Gebo, Thurisaz, Dagaz · `04` rodinné minimum · `05`–`07` GPT: světové balíčky a metody, srovnání s naším, opravený závěr · `DVERG_BRIEF` stav a pravidla |
 
 ## Otevřené (rozhoduje owner)
 1. **Projít 25 řádků „proč sedí runě“** a říct, kde dverg význam nevystihuje (Cowork § E — jádro práce).

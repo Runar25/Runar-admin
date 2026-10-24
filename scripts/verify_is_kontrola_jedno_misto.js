@@ -6,12 +6,14 @@
 // Co hlídá: řádka, která jmenuje DVA a víc nástrojů kontroly IS (výčet nebo pořadí = kopie postupu), smí stát jen v CLAUDE.md. Vlastní jméno
 // souboru se nepočítá (hlavička nástroje smí říct, kdo ji volá). Historie se nehlídá — DECISIONS, EVAL_LOG, BACKLOG, docs/, memory/snapshots,
 // „Claude outputs“, scripts/archive popisují, co platilo, ne jak se to dělá.
+// dverg-tarot/podklady-* (2026-10-24): podklady Dvergu přesunuté z „Claude outputs“ — týž druh textu (návrh z doby vzniku), jen jinde; Rúnarova
+// pravidla v Dverg Tarotu neplatí (dverg-tarot/README.md) a obsah podkladů Rúnarovy session neupravují.
 //   node scripts/verify_is_kontrola_jedno_misto.js       · --test = kontrola sama sebe (kopie musí padnout, odkaz projít)
 'use strict';
 const fs = require('fs'), path = require('path');
 const R = process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin';
 const NASTROJE = ['check-is', 'is-greynir', 'is-gpt-check', 'is-vazba', 'is-corr-qa', 'is-grammar-qa', 'is_gpt_naklady', 'GreynirCorrect'];
-const VYNECHAT = /^(CLAUDE\.md|RUNAR_DECISIONS\.md|RUNAR_EVAL_LOG\.md|RUNAR_BACKLOG\.md|is-audit-report\.txt)$|^(docs|memory\/snapshots|Claude outputs|scripts\/archive|node_modules|\.git|v2\/tree-snapshots)(\/|$)|(^|\/)_patch[^/]*\.py$/;
+const VYNECHAT = /^(CLAUDE\.md|RUNAR_DECISIONS\.md|RUNAR_EVAL_LOG\.md|RUNAR_BACKLOG\.md|is-audit-report\.txt)$|^(docs|memory\/snapshots|Claude outputs|dverg-tarot\/podklady-[^/]+|scripts\/archive|node_modules|\.git|v2\/tree-snapshots)(\/|$)|(^|\/)_patch[^/]*\.py$/;
 const SAM = 'scripts/verify_is_kontrola_jedno_misto.js';
 
 const vzory = NASTROJE.map((n) => ({ n, re: new RegExp('(^|[^\\w-])' + n.replace(/[-_]/g, '\\$&') + '(?![\\w-])') }));
