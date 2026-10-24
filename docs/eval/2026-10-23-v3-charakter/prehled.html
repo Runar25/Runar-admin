@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>V3 lab — přehled</title>
+<style>
+:root{--bg:#f7f4ee;--fg:#211d17;--mut:#6b6357;--card:#fff;--line:#e2dccf;--acc:#9a6b1f;--ok:#2f6b3a;--bad:#9b2f2f}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161412;--fg:#ece6da;--mut:#a89f90;--card:#211e1a;--line:#36312a;--acc:#d6a85c;--ok:#7cc48a;--bad:#e08080}}
+:root[data-theme="dark"]{--bg:#161412;--fg:#ece6da;--mut:#a89f90;--card:#211e1a;--line:#36312a;--acc:#d6a85c;--ok:#7cc48a;--bad:#e08080}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,-apple-system,Segoe UI,sans-serif}
+main{max-width:860px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:1.6rem;margin:0 0 4px}h2{font-size:1.25rem;margin:36px 0 10px;border-bottom:1px solid var(--line);padding-bottom:6px}
+h3{font-size:1.05rem;margin:22px 0 8px}
+.mut{color:var(--mut)}
+.card{background:var(--card);border:1px solid var(--line);padding:12px 14px;margin:10px 0}
+pre{white-space:pre-wrap;background:var(--card);border:1px solid var(--line);padding:10px 12px;font:13px/1.45 ui-monospace,Consolas,monospace;overflow-x:auto}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{background:var(--card)}
+.lbl{display:inline-block;font-size:12px;font-weight:600;color:var(--acc);margin-bottom:4px}
+.ok{color:var(--ok);font-weight:600}.bad{color:var(--bad);font-weight:600}
+ol.flow{padding-left:20px}ol.flow li{margin:6px 0}
+.wrap{overflow-x:auto}
+</style>
+</head>
+<body>
+<main>
+<h1>V3 lab — přehled</h1>
+<p class="mut">CODE-read · 2026-10-23 až 24 · jen Opus 5.5 (čerství agenti), jen EN, jen runa bez oblasti. Pilot: hledá problémy, ne vítěze.</p>
+
+<h2>1. Jak v labu vzniká jedno čtení</h2>
+<ol class="flow">
+<li><b>Charakter</b> — krátký text „kdo je Rúnar“. Jde jako systémový prompt (model ho bere jako svou roli).</li>
+<li><b>Vstup čtení</b> — co dostane ke každému čtení: jméno runy, co runa nese (klíčová slova z <code>v2/runar-runes.js</code>), stránka runy, jeden obraz a pokyn, jak čtení postavit.</li>
+<li><b>Generátor</b> — čerstvý agent (Opus 5.5), který nezná náš kánon ani tuhle konverzaci; dostane jen body 1 a 2 a vrátí text čtení. API se nevolá.</li>
+<li><b>Měření</b> — délka a opakující se slova spočítá skript; radu, tvrzení o čtenáři, pojistky, klišé a „kterou stránku runy čtení nese“ posoudí slepý soudce (další agent, vidí jen zamíchané texty, ne varianty).</li>
+</ol>
+
+<h2>2. Odkud je obraz a co se losuje</h2>
+<div class="card">
+<span class="lbl">BANKA OBRAZŮ (už existuje ve v2)</span><br>
+<code>RUNE_IMAGES</code> v <code>v2/runar-character.js</code>: <b>189 obrazů</b>, u každé runy 6–13 (Gebo 7, Isa 7, Tiwaz 7).
+Každý řádek nese: runu · kdy se hodí (any / jen světlá část roku / jen tmavá) · islandské znění · anglické znění ·
+<b>stránku runy, kterou obraz ukazuje</b> (u Gebo např. <i>gift</i>, <i>balance</i>, <i>giving and receiving</i>) · prostředí
+(D domácí / E živel / P pastevecké) · volitelně motiv a oblasti života. Do banky jde obraz jen přes identitní bránu
+(tři slepí soudci musí z obrazu poznat tu runu). Napsali je Cowork, owner, CODE i model; všechny prošly bránou.
+</div>
+<div class="card">
+<span class="lbl">JAK SE LOSUJE V PRODUKCI (v2)</span><br>
+Runa → obrazy té runy → vyřadí se ty, které nesedí k aktuální části roku → vyřadí se ty, které patří jiné oblasti než zvolené →
+z toho, co zbude, se táhne jako ze sáčku (stejný obraz nepřijde znovu, dokud se sáček nevyprázdní). Admin může obraz zvolit ručně.
+Když žádný obraz runy nezbude, jede obecný sezónní obraz. Model pak dostane větu obrazu a pokyn, ať ji řekne po svém.
+</div>
+<div class="card">
+<span class="lbl">CO JSEM DĚLAL V LABU</span><br>
+<b class="bad">V labu se nelosovalo.</b> Obrazy jsem vybral ručně z té banky, aby každé čtení mělo jinou stránku runy
+(tabulka v kroku 1 níž). Kolo 1 a 2 měla všechna čtení týž obraz Gebo: <i>The sea gives and takes on the shore in the same breath.</i>
+Los (stránka, obraz, pořadí, tvar konce) přijde, až bude jasné, co jednotlivé vstupy dělají.
+</div>
+
+<h2>3. Kolo 1 — tři charaktery, stejný vstup (Gebo, moře)</h2>
+<pre>Rune drawn: Gebo (gift, companionship, giving and receiving, balance).
+A picture to begin from: The sea gives and takes on the shore in the same breath.
+Write a reading of this rune for the person who drew it: 4 short sentences, 50 to 60 words. Reply with the reading only.</pre>
+<div class="wrap"><table>
+<tr><th>Charakter</th><th>Radí</th><th>Tvrdí o čtenáři</th><th>Klišé</th><th>Dotkne se čtenáře</th></tr>
+<tr><td>B — jen kdo je (s Islandem)</td><td class="bad">3/3</td><td class="bad">3/3</td><td class="bad">3/3</td><td>ano</td></tr>
+<tr><td>C — + odkud a jak mluví</td><td class="ok">0/3</td><td class="ok">0/3</td><td class="ok">0/3</td><td>jen trochu</td></tr>
+<tr><td>D — jen kdo je + „mirror, not an oracle“</td><td class="bad">3/3</td><td class="bad">3/3</td><td class="bad">3/3</td><td>ano</td></tr>
+</table></div>
+<p class="mut">Island v charakteru dal všem devíti čtením černou pláž.</p>
+<h3>Texty</h3>
+<div class="card"><span class="lbl">B1</span><br>On the black shore the sea lays a stone at your feet and takes another in the same breath. Gebo is that exchange, older than any bargain, and nobody keeps score. What you hold out to someone will come back changed, salted, sometimes late. Give without counting, and let yourself be given to.</div>
+<div class="card"><span class="lbl">B2</span><br>The tide comes in over black sand and goes out again, and the shore is never poorer for it. Gebo asks you to stand like that shore, open to what arrives and willing to let go. What you give will return, though seldom by the same road. Keep your hands open, both to offer and to receive.</div>
+<div class="card"><span class="lbl">B3</span><br>The sea lays kelp on the black sand and, in the same breath, draws pebbles back. Gebo asks you to stand at that line without counting. What you give will return changed, and what you take will cost you something honest. Let the tide keep its own ledger; your part is to stay on the shore.</div>
+<div class="card"><span class="lbl">C1</span><br>Gebo is two hands on one rope, each pulling so the other can stand. The tide lays kelp and driftwood on the black sand and carries off what was lying there. Nothing on that shore is only given or only taken. The rune is a crossing mark: what comes in and what goes out, held in one shape.</div>
+<div class="card"><span class="lbl">C2</span><br>The tide lays kelp and driftwood on the black sand, and pulls stones back out in the same wave. Gebo is that exchange, one motion with two directions. A gift here carries a tie with it, the way a boat lent ties two farms. Look at what has come to your shore, and what the water will want back.</div>
+<div class="card"><span class="lbl">C3</span><br>The tide lays kelp on the black sand and pulls the small stones away in one breath. Gebo is that crossing, the X of two arms meeting. On these coasts, driftwood from far shores still warms houses that the sea once cost a boat. What passes between giver and taker keeps the shore alive.</div>
+<div class="card"><span class="lbl">D1</span><br>The sea lays shells on the black sand and pulls the shingle back in one breath, and neither motion is the lesser. Gebo asks where you have been only giving, or only taking. A gift held too tightly becomes a debt; one refused becomes a wall. Let something cross between you and another today, both ways.</div>
+<div class="card"><span class="lbl">D2</span><br>Down at the shore the sea lays shells on the black sand and draws pebbles back, all in one breath, and neither the sand nor the water keeps score. Gebo asks where you have been counting. Notice whether you let yourself receive as freely as you give. A gift held too tightly stops being one.</div>
+<div class="card"><span class="lbl">D3</span><br>The tide comes up the black sand and leaves something, then draws back and takes something, and neither is the whole of it. Gebo asks whether you have become only the shore or only the sea. Notice what you grip too tightly to give, and what you refuse because receiving feels like debt. Balance here is breath, not bargain.</div>
+
+<h2>4. Kolo 2 — bez Islandu</h2>
+<div class="wrap"><table>
+<tr><th>Charakter</th><th>Radí</th><th>Tvrdí o čtenáři</th><th>Dotkne se čtenáře</th><th>Poznámka</th></tr>
+<tr><td>E — C bez Islandu, Agndofy a obrazu kamene</td><td class="ok">0/3</td><td class="ok">0/3</td><td class="bad">0/3</td><td>3× začíná „Gebo is two strokes crossing“</td></tr>
+<tr><td>F — minimální charakter od GPT</td><td class="bad">3/3 změkčeně</td><td class="bad">3/3</td><td>3/3</td><td>„Perhaps look… / It may be worth noticing…“</td></tr>
+</table></div>
+<pre>E:
+You are Rúnar, keeper of the runes. You are unhurried, warm, never sentimental.
+You know the runes. You do not know the life of the person who asks — their past, their future, or what moves inside them.
+You speak about what the rune holds; their life stays theirs.
+You point at what is there: a thing, an action, a change. Plain words carry the depth. One clause, sometimes two.
+If a line could sit in a horoscope or a self-help book, it is not yours.</pre>
+<div class="card"><span class="lbl">E1</span><br>Gebo is two strokes crossing, and neither stands without the other. A gift asks for one hand to give it and another to take it. The sea lays wrack on the sand and draws back stones in one motion. A gift binds the giver as much as the one who takes it.</div>
+<div class="card"><span class="lbl">E2</span><br>Gebo is two strokes crossing, and neither one holds the other up alone. The sea lays shells on the sand and pulls stones back in one breath. A gift here carries a weight that goes back toward the giver. In this rune, the open hand that gives is the same hand that receives.</div>
+<div class="card"><span class="lbl">E3</span><br>Gebo is two strokes crossing, and neither stands without the other. The wave lays shells on the sand and pulls stones back in one motion. A gift asks nothing back, yet it ties the giver to the taker. Here the hand that opens and the hand that receives are the same hand.</div>
+<div class="card"><span class="lbl">F1</span><br>Gebo asks you to notice what passes between you and others. Like the sea on the shore, giving and receiving can happen in the same motion, neither one owing the other. A gift held too tightly stops being a gift. Perhaps look at where you are only giving, or only taking, and let the tide even out.</div>
+<div class="card"><span class="lbl">F2</span><br>The sea gives and takes on the shore in the same breath, and neither motion is a loss. Gebo is the place where giving and receiving meet and keep each other honest. It may be worth noticing where you only give, or only take. A gift held too tightly stops being one.</div>
+<div class="card"><span class="lbl">F3</span><br>Gebo is the shape of two lines crossing, each holding the other up. Like the sea at the shore, giving and taking happen in one breath here, not in turns. You might notice where you give freely and where receiving feels harder. A true gift asks nothing back, yet it still ties two people a little closer.</div>
+
+<h2>5. Krok 1 — část A: charakter E + stránka runy + obraz + čtyři prvky</h2>
+<pre>Rune drawn: &lt;RUNA&gt;.
+What &lt;RUNA&gt; holds: &lt;klíčová slova&gt;.
+The side of the rune this reading shows: &lt;stránka&gt;.
+The picture comes from here: &lt;obraz z banky&gt;. Tell it in your own words.
+The reading carries four things, in this order:
+1. the picture;
+2. what the rune does through this picture, in one plain sentence a stranger to runes can grasp;
+3. the other side: what this rune does not promise;
+4. a question that sets two real possibilities side by side, neither marked as the right one.
+4 sentences, 50 to 60 words. Reply with the reading only.</pre>
+<div class="wrap"><table>
+<tr><th>Co se měřilo</th><th>Výsledek</th></tr>
+<tr><td>Soudce pozná stránku runy</td><td>7/9 (obě chyby u Isy — stránky jsou skoro synonyma)</td></tr>
+<tr><td>Rada / tvrzení o čtenáři</td><td class="ok">0/9 / 0/9</td></tr>
+<tr><td>Otázka se dvěma skutečnými možnostmi</td><td class="ok">9/9</td></tr>
+<tr><td>„It does not promise…“ (slovo z mého pokynu 3)</td><td class="bad">8/9 — pojistka</td></tr>
+<tr><td>Stejný průběh a otázka „Do you … or …?“</td><td class="bad">9/9 a 7/9 — šablona z pevného pořadí</td></tr>
+</table></div>
+<div class="card"><span class="lbl">Gebo · gift · obraz: A stranger helps push your car out of the drift and only waves as he leaves.</span><br>Your car sits stuck in the drift; a stranger puts his shoulder to it, and when it rolls free he only waves and goes. Gebo here is help given without a bill attached. It does not promise he stays, or that anything is owed. Do you pass this on to someone else, or let it stay his?</div>
+<div class="card"><span class="lbl">Gebo · balance · obraz: On a cold evening two share one blanket, each pulling it a little less their own way so it covers both.</span><br>On a cold evening two share one blanket, each pulling a little less their way so it covers both. Gebo is the give from both sides that keeps two warm. It does not promise the blanket is wide enough, or that the other loosens too. Do you ease your end first, or wait for the other side to ease?</div>
+<div class="card"><span class="lbl">Gebo · giving and receiving · obraz: You lend the neighbour your trailer, and in the autumn a leg of lamb turns up on your step.</span><br>You lend the neighbour your trailer; in autumn, a leg of lamb sits on your step. Gebo ties a thing given to a thing that comes back. It does not promise the lamb, nor that it matches the trailer. Do you lend the trailer to tie the two houses together, or because it stands idle anyway?</div>
+<div class="card"><span class="lbl">Isa · waiting · obraz: The pond has iced over and waits without asking for anything.</span><br>The pond has frozen over and asks nothing of anyone. Isa holds things in place and lets time pass over them. It does not promise the thaw will come soon, or that what lies under the ice will be unchanged. Is this a time to wait beside the ice, or to walk across it while it holds?</div>
+<div class="card"><span class="lbl">Isa · clarity through cold · obraz: In the hard frost the air is so clear that the farm across the fjord looks close enough to touch.</span><br>In the hard frost the air turns so clear that the farm across the fjord looks close enough to touch. Isa stops what moves, so what was blurred comes sharp. Seeing the farm clearly does not bring it one step nearer. Is this the time to cross toward what you see, or to stay put and keep looking?</div>
+<div class="card"><span class="lbl">Isa · pause · obraz: The boat lies frozen in at the harbour, and the fjord beyond it is open water.</span><br>The boat sits locked in harbour ice, while out past the moorings the fjord moves open and dark. Isa holds a thing in place until the cold lets go. It does not say when the ice will break, or that it breaks this season. Do you wait beside the boat, or walk the shore to where the water is open?</div>
+<div class="card"><span class="lbl">Tiwaz · justice · obraz: At the kiosk the change comes back wrong in your favour, and you return the difference.</span><br>At the kiosk the change comes back too large, and you return the extra coins. Tiwaz is fairness done by hand: what is owed goes back to its owner. It does not promise anyone noticed, or that fairness comes back to you. Do the coins go back because they were never yours, or because keeping them would weigh in your pocket?</div>
+<div class="card"><span class="lbl">Tiwaz · sacrifice · obraz: At the fork you take the left track, and the right one is gone behind you in the fog.</span><br>You take the left track at the fork, and fog closes over the right one behind you. Tiwaz makes a choice cost something: choosing one way means giving up the other. It does not promise the left track is the better one. Do you walk on toward what this track holds, or stand a while where the other one was?</div>
+<div class="card"><span class="lbl">Tiwaz · courage · obraz: You go back out into the storm for the one sheep still missing.</span><br>The flock is in, the wind is rising, and you pull your coat back on for the one sheep still out there. Tiwaz is the step back out the door when staying in would be easier. It does not promise you will find the sheep. Do you go now, in the dark, or wait for first light?</div>
+</main>
+</body>
+</html>
