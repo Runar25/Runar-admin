@@ -1981,8 +1981,6 @@ function _applyHigherPath() {
   body.style.display = 'none';
   if (arrow) arrow.textContent = '→';
 }
-function toggleHigherPath() { openJourney(); }
-
 // ─── VÝPIS FUNKCÍ ÚČTU (sbalený) ──────────────────────────
 // 2026-10-15 (owner přes CODE-read: „zabalit popis, co účet třeba Rune Seeker obsahuje za features. Schovat stejně jako upgrade your
 // journey.“): výpis funkcí účtu se rozbalí klepnutím na jméno účtu, stejně jako UPGRADE YOUR JOURNEY. Návštěvník vidí pozvánku celou
