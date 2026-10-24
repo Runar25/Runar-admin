@@ -4,13 +4,9 @@
 skládačku, která bude mít mnohem víc kombinací… čím méně vstupů od nás, tím víc pro kreativitu modelu… o co nám teď jde, je zjistit,
 jaké změny co mění u modelu. To je náš základ, stavební kámen.“
 
-## Co má čtení v člověku vyvolat (kde to je zapsané — owner: „tohle máme už někde zapsané, najdi to“)
-- memory `co-dela-cteni-silnym`: definiční věta, ze které „si člověk hned něco vezme“; otázka, nad kterou „člověk musí přemýšlet“.
-- RUNAR_DESIGN „Rúnarův rejstřík“: zrcadlo, ne orákulum — „reálný nástroj sebereflexe“.
-- Konverzace 2026-10-23 (podklad GPT + owner): čtyři zážitky — „to znám“ · „takhle jsem se na to nedíval“ · „něco se ve mně otevřelo“ ·
-  „chci s tím obrazem chvíli zůstat“; owner: „je to kombinace… každé čtení má být jiné a tím postupně vyvolávat všechny tyto pocity.“
-- Owner 2026-10-24 ke kroku 7: dobrý obraz se „dotkne hodně lidí“ (sušenka: dítě dá poslední kousek sestře a nic nechce); špatný je
-  „nic neříkající“ (pekařka a chléb, ruce dole).
+## Co má čtení v člověku vyvolat
+Jediné místo: `RUNAR_DESIGN.md`, sekce „Co má čtení v člověku vyvolat“ (CODE-tune 2026-10-24, na ownerův pokyn sesbíráno z paměti,
+DESIGN a konverzace). Tady se neopisuje (§20).
 
 ## Pokusy (stejná šablona jako krok 6; mění se prostředí a přítomnost definice)
 | # | možnost výkladu | prostředí |
