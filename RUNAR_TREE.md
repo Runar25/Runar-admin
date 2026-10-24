@@ -17,7 +17,7 @@
 
 ## 1. DUŠE — co strom vypovídá o člověku
 Z `RUNAR_TREE_BUILD.md`: *„Strom jsi ty. Větev není záznam toho, co bylo řečeno — je záznam toho, co se pohnulo. Strom je mapa významu, ne geometrie."*
-Z `RUNAR_DESIGN.md`: *„Kmen jsi ty. Vše ostatní roste ke kmeni, nebo od něj. Strom ví jednu věc: jestli rosteš ke svému kmeni, nebo od něj. Harmonie není cíl, napětí není selhání — rozdíl ti řekne, kde jsi."*
+Z `RUNAR_MYTOLOGIE.md` („Co každá část stromu znamená“): *„Kmen jsi ty. Vše ostatní roste ke kmeni, nebo od něj. Strom ví jednu věc: jestli rosteš ke svému kmeni, nebo od něj. Harmonie není cíl, napětí není selhání — rozdíl ti řekne, kde jsi."*
 
 Strom NEukazuje „87 % oheň". Ukazuje **kdo jsi (kmen) + kam dáváš pozornost + jestli k sobě rosteš, nebo od sebe.** Element je sice **kostra kresby** (seskupuje větve, nese barvu — §0 model), ale strom není *o* elementech; ty jsou jen řeč, kterou ten příběh mluví.
 
@@ -156,7 +156,7 @@ Runy jsou náhodné („Isa 3×" = šum). Vstupy náhodné **nejsou**: „táž 
 je reálný signál o pozornosti uživatele. Zrcadlíš jeho **doloženou pozornost** (pravda o něm),
 ne domluvu náhody. **OKNO, ne řetěz** (tři za sebou je nejslabší doklad — může to být jedno
 sezení). Tím Gathering zůstane zrcadlo, ne věštecký automat. Prahy a okna = spec v
-`RUNAR_BACKLOG.md`; **proč** = `RUNAR_DESIGN.md`, „Proč zrcadlo, ne věštba".
+`RUNAR_BACKLOG.md`; **proč** = `RUNAR_DESIGN.md`, „Rúnarův rejstřík — zrcadlo, ne orákulum“.
 
 **Zásada:** Rúnar = **zrcadlo tvé pozornosti, ne předpověď událostí.** Reflektuje, nepředpovídá (rule → working-style). Proto **skuld = záměr / k čemu se táhneš**, NE věštba budoucnosti.
 
@@ -172,7 +172,7 @@ Data pro tohle **už leží v journalu** (area/intention/runy každého čtení)
 
 ⭐ **VÝJIMEČNÉ UDÁLOSTI se skládají z dat, nestaví se po jedné (KUKY 2026-10-11).** *„výjimečných událostí bude víc, nemusíme je teď stavět, spíš
 jde o to, abychom měli data, z kterých to pak poskládáme — to je to stejné jako čtení pro větev.“* Příklad z kánonu: všechny tři kořenové runy
-v jednom čtení (`RUNAR_DESIGN.md`). Strom k tomu drží data po částech — **Větev jako celek** (čtení větve, 2026-10-09) a **Kořen jako celek**
+v jednom čtení (do 2026-10-24 i v `RUNAR_DESIGN.md`, dnes bydlí jen tady). Strom k tomu drží data po částech — **Větev jako celek** (čtení větve, 2026-10-09) a **Kořen jako celek**
 (čtení, ve kterých se runa kořene vrátila: oblast, záměr, seeking, minulost/nitro; 2026-10-11) — obojí ukazuje inspekce labu. Události samotné
 patří sem do Gatheringu, ne do enginu (`RUNAR_DECISIONS.md` 2026-10-11 (18)).
 
@@ -232,7 +232,7 @@ Ostatní (později, decentně): pulzy dominance (element/ætt), bloom fáze, lis
 |---|---|---|
 | **RUNAR_TREE.md** (tenhle) | duše + zóny + model + signály + stavba + Gathering | **★ KANONICKÝ — čti první** |
 | **RUNAR_TREE_RENDER.md** | materiál / vzhled (jak strom vypadá, art direction) | ŽIVÝ (foundation) |
-| RUNAR_DESIGN.md (tree části) | příběh, mytologie, „co část znamená" | ŽIVÝ pro příběh |
+| RUNAR_MYTOLOGIE.md · RUNAR_DESIGN.md (tree části) | příběh stromu, „co část znamená“, vzorce (Eagle, Níðhöggr) · designová rozhodnutí stromu | ŽIVÝ pro příběh |
 | RUNAR_BACKLOG.md | pozastavené tree úkoly (váha polí · kořeny: Norny → 3 kořeny a port živých kořenů do aplikace · prahy Gatheringu · katalog motivů) | ŽIVÝ (fronta) |
 | `docs/archive/tree/` | vstřebané / odložené / historické tree doky | ARCHIV (reference) |
 
