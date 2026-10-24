@@ -1009,7 +1009,7 @@ pozitivní půlka (osobní soudržnost, human judgment) zatím neměřena. Archi
 iteruje se reprezentace místa.
 
 ## 2026-08-24 — Data míst v1: uloženo + jazykový screen + hijack-riziková mapa
-Uloženo `docs/vegvisir-mista-v1.md` (24 míst od Cowork; formát identita+efni+stavy+≠; ≠ řádek
+Uloženo `docs/vegvisir/vegvisir-mista-v1.md` (24 míst od Cowork; formát identita+efni+stavy+≠; ≠ řádek
 je dobrá zbraň proti slévání). **Jazyk (is-vazba/slovník):** ⚠️ **„fuglstjórn" (identita
 Ansuz) vypadá jako chyba** — fugl+stjórn = „ptačí řízení"; zřejmě míněno fuglsrödd/fuglakvak
 → vrátit Coworkovi. Tvary: „vætl úr bergi" → lemma **vætla** (f.) · spegilslétt = tvar od
@@ -1112,7 +1112,7 @@ se konejšení, hypotéza padla a příčina je jinde.
 („under the moss on these fallen stones" — ticho→řeč, povrch→pod mech), ne tematická jako
 u hijacknuté Othily. Kontroly: 1/2 slabá ✓, 1/2 silná (havran-naslouchání→kořeny-držení —
 tematická komplementarita existuje i bez místa; týž jev jako 1/6 v TEST 34). Hranice: n=2+2.
-**Screen dat v2** (`docs/vegvisir-mista-v1.md`, přepisy tableau ✓): zbytkové flagy pro Cowork:
+**Screen dat v2** (`docs/vegvisir/vegvisir-mista-v1.md`, přepisy tableau ✓): zbytkové flagy pro Cowork:
 (a) Wunjo ≠ „ne prázdné" odporuje novému stavu „fullt af fólki↔tómt" · (b) Ehwaz ≠ „ne pevné
 místo" zastaralé (identita už JE místo-áfangi) · (c) Gebo stav „bið↔koma" je story-stav
 (čekání = Gebo děj) · (d) Sowilo „jörð sem bíður þess að birtan falli" = zbytková procesní
@@ -1362,7 +1362,7 @@ nástroj, ne pool). Korpus `~/runar-eval/momenty-v2-screen.json`. <!-- doc-links
   hefur fokið í skafla á ísnum". Soudce u Hagalazu: *„unese nejmíň tři odlišná čtení…
   zároveň to není vágní: má místo, materiál, barvu i čas."* → **limit zapsaný u nástroje
   („rozliší předurčený od částečně, ne dobrý od výborného") NEPLATÍ** — byl vlastností
-  tehdejších dat. Opraveno v `docs/vegvisir-rubrika-pouti.md`.
+  tehdejších dat. Opraveno v `docs/vegvisir/vegvisir-rubrika-pouti.md`.
 - **Vzorec dobrého momentu (z obou „otevřených"):** proměna látky bez děje s vyústěním —
   bílé mizí do tmavé skvrny · vítr už odešel a zbyl jen jeho otisk. Žádný směr, žádné
   hodnocení, a přesto ostrý obraz.
@@ -1376,7 +1376,7 @@ složenina hefill+spænir, v poolu byla už dřív).
 
 ## 2026-08-26 — Data pouti KOMPLETNÍ: momenty (24 míst) + krajiny (22) uloženy do repa
 Cowork dodal obě sady; **uloženo CODE-tune** (Cowork do repa nepíše):
-`docs/vegvisir-momenty-24-mist.md` · `docs/vegvisir-krajiny-22.md`.
+`docs/vegvisir/vegvisir-momenty-24-mist.md` · `docs/vegvisir/vegvisir-krajiny-22.md`.
 Berkana „brum springur út" PŘEPSÁNA na „regndropar hanga á neðstu greinunum eftir skúr"
 (Cowork přijal nález izolace a sám opravil i to, že jeho původní „nechat" stálo na
 supersedovaném soudci přes hotové čtení — správná aplikace §27).
@@ -1388,7 +1388,7 @@ vindrák · fífuhnoðri · bráðvatn. ⚠️ K potvrzení Coworkem, jestli ně
 **Stav mechaniky:** všech sedm prvků ramene má data i změřený blok — domov · krajina (22) ·
 moment (24 míst) · carry v2 · vstupní věc · stav · semínko návratu. Jediný neměřený prvek
 zůstává ČAS (9 nocí, hypotéza do živých testerů).
-**Připraveno k dlouhému běhu** (6–8 ramen, rubrika `docs/vegvisir-rubrika-pouti.md`) —
+**Připraveno k dlouhému běhu** (6–8 ramen, rubrika `docs/vegvisir/vegvisir-rubrika-pouti.md`) —
 čeká na rozhodnutí ownera o rozsahu (+ zda rovnou worst-case sekvence run).
 
 ## 2026-08-26 — TEST 49 · PRVNÍ PLNÁ POUŤ (8 ramen) — a ⚠️ NÁSTROJ NA TÉHLE DÉLCE NEOBSTÁL
@@ -1508,7 +1508,7 @@ zhruba **1× za pouť** — přesně to se stalo. **Mechanika je opravená, pom�
 místo život má (ovce, koně, havran, koliha, jespák, kajka, lundi na bjargu, silungur/bleikja
 v tůni, velryba jen ve fjordu). Kritéria stejná: moment je to, ČÍM se runa ukáže, ne příběh;
 tvor spíš zůstává, než aby odešel jako pointa; místo musí zůstat vidět.
-Korpus `~/runar-eval/pout8c.jsonl`; texty všech tří poutí → `docs/vegvisir-pouti-texty.md`
+Korpus `~/runar-eval/pout8c.jsonl`; texty všech tří poutí → `docs/vegvisir/vegvisir-pouti-texty.md`
 (uloženy 2026-08-26 na ownerův dotaz „kde je text pouti?" — dosud bylo v repu jen měření).
 
 ## 2026-08-26 — TEST P1 · Pozitivní učení (few-shot korpus) — BĚH ROZDĚLANÝ, soudy stopnuty ownerem
@@ -1664,7 +1664,7 @@ ne kámen). Sedí to na hypotézu, ale je to čtení po výsledku.
 JAKÁ otázka vznikne, ne jestli vůbec vznikne.
 
 ## 2026-09-06 — ÚKOL 3 (momenty 22 krajin) uložen · SCREEN ZAHOZEN, spadla pozitivní kontrola
-Cowork dodal momenty pro 22 krajin → `docs/vegvisir-momenty-22-krajin.md` (Cowork do repa
+Cowork dodal momenty pro 22 krajin → `docs/vegvisir/vegvisir-momenty-22-krajin.md` (Cowork do repa
 nepíše). Cowork predikoval 0 předurčených.
 Screen vzorku (12 momentů, z toho 8 vybráno jako rizikové) vyšel 2 otevřené / 10 částečně /
 0 předurčených — **ALE POZITIVNÍ KONTROLA SPADLA:** Berkana „brum springur út", kterou dva

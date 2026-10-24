@@ -4744,7 +4744,7 @@ Affected doc(s): RUNAR_DESIGN.md (rámce — parking poznámka) · RUNAR_BACKLOG
 Perth→Tiwaz→Wunjo · Uruz suť Isa→Ansuz→Raidho) — „jinak hezká čtení!"; GPT nezávisle
 „soudržnost ano". Negativní půlka (hijack) prošla materiálovou identitou (TEST 37).
 **Architektura ramene v1 — šest prvků, každý s vlastní rolí, žádný není „význam":**
-1. **místo** (identita světa; materiálová, data `docs/vegvisir-mista-v1.md` v3) — TESTy 34/37
+1. **místo** (identita světa; materiálová, data `docs/vegvisir/vegvisir-mista-v1.md` v3) — TESTy 34/37
 2. **losovaný stav** (proti monotónnosti) — TEST 35
 3. **nesená fráze** (co si cesta pamatuje; povinná, proměněná) — v2 4/4, T1, TEST 38
 4. **nová runa** (co s nesenou věcí udělá; relační jádro: „mění vztah člověka k tomu, co

@@ -19,7 +19,7 @@ jen funkční" (korekce mého přehnaného hodnocení). Bez textu tyhle nálezy 
 zůstane sebepotvrzující.
 
 **Jak to dělat:** text patří do odpovědi v chatu, ne jen do souboru v repu — a hned, ne až
-na vyžádání. Delší dávky navíc ulož do repa jako čitelný doc (`docs/vegvisir-pouti-texty.md`),
+na vyžádání. Delší dávky navíc ulož do repa jako čitelný doc (`docs/vegvisir/vegvisir-pouti-texty.md`),
 protože v repu dlouho leželo jen měření a owner se musel ptát „kde je text pouti?".
 ⭐ **K textu vždy i INSTRUKCE, které do čtení vstoupily** (KUKY 2026-09-14): *„to je právě to, co bych měl vidět,
 co všechno vstoupilo do čtení, pak nebudu mít blbé dotazy a uvidím přesně, co se děje. Takže mi vždy pošli, jaké
