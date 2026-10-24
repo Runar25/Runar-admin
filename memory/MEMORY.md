@@ -28,7 +28,9 @@ Druh: 🔒 externě ukotveno (etymologie, IS gramatika) · 📜 vytvořený kán
 | Proč pravidlo zní, jak zní (důvody, doklady, historie) · podrobnosti stavu systémů | `docs/pravidla-duvody.md` · `docs/projekt-mapa.md` (na požádání) | 🏛 |
 | Proč je něco tak (datovaná rozhodnutí) | `RUNAR_DECISIONS.md` | log |
 | Business, kredity, fyzické produkty | `RUNAR_PRICING.md` | 🔄 |
-| Design, mytologie | `RUNAR_DESIGN.md` | 📜 |
+| Design: hlas Rúnara, stavba čtení, obraz, Vegvísir | `RUNAR_DESIGN.md` | 📜 |
+| Spready — pozice, místo ve stromě, přístup | `RUNAR_SPREADY.md` | 📜 |
+| Mytologie — bytosti, katalog dvergů, islandský kalendář | `RUNAR_MYTOLOGIE.md` | 📜 · 🔒 |
 | Popisy run pro člověka | `RUNAR_POPISY_RUN.md` | 📜 |
 | Strom života | `RUNAR_TREE.md` | 📜 |
 | Otevřené úkoly | `RUNAR_BACKLOG.md` | stav |

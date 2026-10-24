@@ -716,7 +716,7 @@ async function readRune() {
   if (_spreadMode === 'yggdrasil') {
     // Návštěvník táhne jako přihlášený; kartu po tahu dá _generateSpreadReading (2026-10-22, DECISIONS 2026-10-22 (4) bod 8b).
     // 2026-10-21 (owner „ano odeber“, DECISIONS 2026-10-21 (6)): hláška „its full power returns December 14–28“ pryč — sílu o slunovratu
-    // kód nemá (prompt ani strom datum nečtou), hláška slibovala, co není. Vrátit jen s postavenou silou (RUNAR_DESIGN „slunovrat“).
+    // kód nemá (prompt ani strom datum nečtou), hláška slibovala, co není. Vrátit jen s postavenou silou (RUNAR_SPREADY.md, Yggdrasil „Slunovrat sem nepatří“).
     if (_spreadCount(_spread9Runes) === _spreadN() && !readerRune) {
       _ukazVyklad();
       readerTexts = {}; voiceGenerated = {};

@@ -12271,3 +12271,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno:** skutečné `_generateReading` a `_generateNornsReading` v prohlížeči s podvrženým `callProxy`: jedna runa 15 kusů, Norny 18;
   losy na místě; ㉱ a ㊓ OK.
 - Affected doc(s): žádný (co recept nese, vlastní komentář u `_drawsSPinem` v kódu čtení).
+
+## 2026-10-24 (1) — RUNAR_DESIGN.md rozdělen: spready a mytologie mají vlastní doc
+
+- **Rozhodl:** owner 2026-10-24 *„7. ano“* na návrh úklidu (DESIGN 1402 řádků proti limitu ~250, šestnáct témat v jednom docu).
+- **Co:** `RUNAR_SPREADY.md` = spready (pozice, místo ve stromě, co má který vyvolat, vztahy mezi runami, přístup — dřív „Tier systém“).
+  `RUNAR_MYTOLOGIE.md` = mytologický základ (bytosti, katalog dvergů, vzorce stromu) a islandský kalendář. Obsah se přesunul beze změny
+  věty; upravené jsou jen tři odkazy, které by po přesunu vedly do prázdna (kontrola: každý řádek původního DESIGN je právě v jednom ze tří
+  docs). **Vegvísir zůstal v DESIGN** jako vlastní sekce — owner 2026-08-24 „Vegvísir NENÍ spread“, do docu spreadů proto nepatří.
+  Formulář čtení a faktory čtení (dřív pod Spreads) jsou v DESIGN v sekci „Formulář a faktory čtení“.
+- **Zbývá:** DESIGN má pořád ~1000 řádků (hlas, stavba čtení a obraz, Vegvísir, strom) — dluh délky v `scripts/verify_doc_length.js`
+  běží dál; další dělení je obsahové rozhodnutí ownera.
+- **Ověřeno:** golden beze změny (měnily se jen komentáře v kódu), odkazy v docích OK, interní tagy OK, check-docs OK.
+- Affected doc(s): RUNAR_DESIGN.md, RUNAR_SPREADY.md, RUNAR_MYTOLOGIE.md, CLAUDE.md (hlavička), memory/MEMORY.md (rozcestník), RUNAR_POPISY_RUN.md (hlavička)

@@ -419,7 +419,7 @@ summary = warn[0].strip() if warn else (outl[-1].strip() if outl else 'inbox che
 check(summary, True)   # VŽDY True — informační, nikdy neblokuje push
 
 # ── Interní tagy: provenience [kánon]/[Agndofa] nesmí prosáknout do user-facing ──
-# 2026-07-30: Yggdrasil bytosti přišly do RUNAR_DESIGN.md s tagy [kánon]/[Agndofa].
+# 2026-07-30: Yggdrasil bytosti přišly do RUNAR_DESIGN.md s tagy [kánon]/[Agndofa] (katalog od 2026-10-24 v RUNAR_MYTOLOGIE.md).
 # Ty jsou INTERNÍ — nesmí do UI/promptu/HTML, jinak je uživatel uvidí ve čtení.
 # (KUKY: „aby se Agndofa nikde nezobrazovala. je to jen interní poznámka.")
 print('\n' + chr(0x3254) + ' INTERNÍ TAGY (verify_internal_tags.js)')

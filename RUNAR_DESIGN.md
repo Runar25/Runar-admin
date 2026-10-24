@@ -4,6 +4,8 @@
 #
 # Viz také:
 #   CLAUDE.md          — technická pravidla, absolutní zákazy, load order
+#   RUNAR_SPREADY.md   — spready: pozice, místo ve stromě, přístup
+#   RUNAR_MYTOLOGIE.md — bytosti světa, katalog dvergů, islandský kalendář
 #   RUNAR_PRICING.md   — business model, tier ceny, EL kalkulace
 #   RUNAR_TREE.md      — Strom života: založení, větve, kořeny, elementy
 #   docs/archive/tree/runar-patterns.md — Pattern detection (Eagle/Níðhöggr, The Gathering) ⚠️ archiv, pracovní verze
@@ -565,247 +567,6 @@ Jména znamenají „hltaví"; u Óðinova stolu patří všechno maso jim.
 
 ---
 
-## Mytologický základ
-
-### Klíčové bytosti světa
-
-**Norny** — Urður, Verðandi, Skuld — tkají vlákna osudu pod kořeny Yggdrasilu.
-**Ódin** — hledač moudrosti, obětoval se na Yggdrasilu pro runy.
-**Álfar** — bytosti jemné inspirace a intuice.
-**Dísir** — ženské průvodkyně které střeží osud a rodové linie.
-**Landvættir** — duchové samotné země.
-**Jötnar** — prastaré síly tajemství, divokosti a prvotní moudrosti.
-**Huldufólk** — skrytý lid. 54–62 % Islanďanů jejich existenci nevylučuje.
-Rúnar je bere vážně. Velké kameny, kopce, staré stromy mají obyvatele.
-**Dvergar** — kováři kamene a paměti, nejstarší řemeslníci, kteří drží věci pohromadě od stvoření. Rúnar je jim příbuzný vzhledem (dwarf-like), ne věštec nad nimi.
-
-#### Dvergar — katalog
-
-**Kdo jsou Dvergar v Agndofě**
-[kánon] Zrodili se z těla prvního obra Ymiho a bohové jim dali rozum; bydlí v kameni, zemi a horách, jsou mistři řemesla, kovářství a skryté moudrosti.
-[Agndofa] V Agndofě vyšli z kamene ostrova — z hrauns, stuðlabergu a skály pod ledovci. Starší bratranci Huldufólku: huldufólk je skrytý lid, dvergar ti, co v kameni kují a pamatují.
-
-*Jak to Rúnar nese:* zná je jako příbuzné a starší, ne jako trivii. Znát ≠ odříkávat — barví ho zezdola (jako životní runa je čočka, ne téma), nevytahuje je na požádání.
-
-> ⚙️ **Rúnar o nich mluví jen na Ask Rúnar** (KUKY 2026-08-12) — a odpoví pár slovy.
-> Tenhle katalog je **lore**: kánon, zdroje, umístění. Do promptu se NEVKLÁDÁ.
-> Jedna věta na postavu, kterou Rúnar říct smí, žije v `v2/runar-character.js` (`DVERGAR`).
-> Přidáváš postavu? Nejdřív sem, teprve pak výtah do kódu.
-> 🃏 **Karty run s dvergy (Dverg Tarot) sem NEPATŘÍ** — samostatný produkt mimo Rúnara, `dverg-tarot/README.md` (owner 2026-10-21,
-> DECISIONS 2026-10-21 (2)). Tenhle katalog ani „dverg pod runou“ z něj nic nepřebírají a nic mu nedávají.
-
-**Katalog** (co dělá · odkud · kde; „(Agndofa)" = naše umístění, skutek nad ním kánon):
-- [kánon] **Norðri · Suðri · Austri · Vestri** — drží nebe na čtyřech světových stranách (ze čtyř koutů Ymiho lebky), z prvního kamene. (Agndofa) každý u konce ostrova: Norðri pod severním ledovcem, Suðri v černých píscích, Austri v mlžných fjordech, Vestri na západních útesech.
-- [kánon] **Mótsognir** — první a největší z dvergů, z něhož vzešel celý rod; z Ymiho krve. (Agndofa) v nejhlubší skále pod středem ostrova.
-- [kánon] **Durinn** — druhý po Mótsognim, podle něj se tvořili další. (Agndofa) v prastarém bazaltu, kde stuðlaberg stojí v řadách.
-- [kánon] **Dvalin** — jeden z prvních; spjatý s runami a s tím, co „dřímá" pod povrchem (jméno ≈ dřímající). (Agndofa) spí v kameni pod mechem, probouzí se pomalu.
-- [kánon] **Brokkr a Eitri** (Eitri též Sindri) — bratři-kováři; ukovali Mjölni, Draupni a kance Gullinbursti. (Agndofa) v žáru geotermální hlubiny, kde kámen pamatuje oheň.
-- [kánon] **Synové Ivaldiho** — kováři; ukovali Gungni (Ódinovo kopí) a loď Skíðblaðni. (Agndofa) ve výhni pod činnou zemí.
-- [kánon] **Fjalar a Galar** (temní) — zabili Kvasira a z jeho krve s medem uvařili básnickou mjöð („nápoj dvergů"). (Agndofa) v jeskyni u moře.
-- [kánon] **Alvíss** („vševědoucí") — znal jména všech věcí; Thór ho ukecal do svítání a slunce ho proměnilo v kámen. (Agndofa) osamělá skála na východním vřesovišti.
-- [kánon] **Andvari** — střežil zlato v podzemní vodě; když mu ho vzali, proklel prsten i poklad. (Agndofa) pod vodopádem.
-- [Agndofa] **Móberg** — mladý dverg tufu (móberg = islandská hornina z ohně a vody); tvaruje měkký kámen, co pamatuje sopku. V mladých lávových polích.
-- [Agndofa] **Lyngri** — nejmenší; pečuje o kořeny lyngu ve spárách hraunů, nosí zprávy mezi kamenem a povrchem.
-
-- [kánon] **Brísingar — Alfrigg · Berlingr · Grér · Dvalinn** — čtyři, kteří ukovali Freyin náhrdelník Brísingamen; cenou byla noc s každým z nich (Sörla þáttr). (Agndofa) v žíle zlata pod ledovcovou řekou. ⚠️ Dvalinn je **týž** dverg jako výš — jeden dverg ve dvou mýtech, ne dva stejnojmenní.
-
-**Další známí dvergové** (jedním řádkem):
-- [kánon] **Dáinn** — podílel se na kanci Hildisvíni; jméno „mrtvý"; sdílí ho jeden ze čtyř jelenů Yggdrasilu.
-- [kánon] **Regin** — kovář, pěstoun Sigurða, ukoval meč Gram; bratr Fáfniho.
-- [kánon] **Fáfnir** — z chamtivosti po prokletém zlatě se proměnil v draka, zabil ho Sigurð. (Spíš drak — hraniční.)
-- [kánon] **Hreiðmar** — otec Fáfniho, Regina a Otra; mág. (Rod na hraně dverg/mág.)
-- [kánon] **Otr** — Hreiðmarův syn, měnil se ve vydru; Loki ho zabil, tím spustil kletbu zlata.
-- [kánon] **Litr** — dverg, kterého Thór kopl na Baldrovu hranici.
-- [kánon] **Nabbi** — s Dáinnem ukoval Freyova kance Hildisvíni (Hyndluljóð).
-- [kánon] **Þjóðreyrir** — zaříkává „fyrir Dellings durum", u prahu úsvitu (Hávamál 160); jediný dverg spjatý se DNEM, ne s kamenem.
-- [kánon] **Gandálfr** — jen jméno z Dvergatalu (gandr + álfr); slavné přes Tolkiena, v mýtu bez příběhu.
-- [kánon-ish] **Völundr** (Wayland) — mistr-kovář pomsty; obvykle řazen k álfům, ne čistý dverg — pro úplnost.
-
-**Roll-call z Dvergatalu** (jen jména): ~60+ dvergů je ve Völuspá jen jména bez příběhu (Þorinn, Fíli, Kíli, Óinn, Glóinn, Bifur, Bófur, Bömbur, Nóri, Náinn, Eikinskjaldi/Oakenshield…). Obsah nevymýšlet; až některý dostane roli, rozepíše se.
-
-*Zdroje (kánon): Grímnismál 33 · World History Encyclopedia · vikingr.org · The Warrior Lodge · Wikipedia (čtyři jeleni) · Sörla þáttr (Brísingar) · Hyndluljóð (Nabbi) · Hávamál 160 (Þjóðreyrir) · Gould „Dwarf-Names" PMLA 1929 · „Little Glory…" ScanCan 2026 · Ármann Jakobsson „Beware of the Elf!" Folklore 126/2 (2015) · Guide to Iceland / Visit Austurland (dvergasteinn, álfasteinn) · Prose Edda — typy álfů.*
-
-#### Dvergasteinn — kámen, ve kterém dverg bydlí
-
-🔒 **Reálná islandská místa, ne naše výmysl.** „Kameny dvergů" jsou skutečná jména skutečných skal:
-**Álftafjörður** (Západní fjordy) — skála se prý sama přeplavila přes fjord, když se stěhoval kostel,
-protože dvergové odmítli zůstat · **Seyðisfjörður** (východ) · **Dverghamrar** (čedičové sloupy, jih).
-Chrání se stejně jako kameny elfí.
-
-*Proč je tohle z celé vrstvy nejcennější:* dělá to „dverg pod runou" **doslovným**. Dverg nebydlí
-v příběhu — bydlí v kameni. Materiálová vrstva runy je pak ten kámen a to, co v něm spí.
-
-⚠️ **Právní hranice:** folklor a geografie jsou volné. **Nekopírovat provedení Arctic Henge**
-(72 dvergů jako kalendář, Haukur Halldórsson) — to je autorský nápad, ne mýtus.
-⚠️ **Jednozdrojové, nekříženo:** „léčivé kameny v Bolungavíku" a teze „Island neměl doly, tak dvergy
-přesunul do kamenů". Zajímavé, ale zatím stojí na jednom zdroji.
-
-#### Dverg pod runou — jak se to používá
-
-📜 **Rozhodnuto (KUKY 2026-08-22/23).** Dverg nesedí na rameni Vegvísiru ani na světové straně —
-sedí **POD RUNOU** a cestuje s ní. Kamkoli ta runa padne, nese ho s sebou; rameno Vegvísiru pak
-zdědí povahu runy, která ho pojmenovala. **Žádná nová mechanika.**
-
-⭐ **Dverg je MATERIÁL, ne postava.** Dává runě druhé patro téhož: Isa sama = zastaveno ·
-Isa s Dvalinem = *zastaveno nahoře, dole to žije*. Není to víc obsahu, je to hloubka — a to je
-důvod, proč smí čtení Vegvísiru znít jinak než běžné single.
-
-**Dvě tvrdá pravidla, obojí z měření** (→ `RUNAR_EVAL_LOG.md` 2026-08-23):
-1. **Nikdy jménem.** Jakmile je z dverga bytost se skutkem, pojmenuje se sám.
-2. **Nesmí přijít jako přirovnání.** Dává-li věta smysl po „patient as…", je špatně — dverg má být
-   **vlastnost toho, co v obraze UŽ je**, ne druhý obrázek vedle. Přesně tak to jednou uniklo:
-   *„patient as the stone dozing under the bank"* — simile nalepené na obraz, což kánon zakazuje.
-
-**Ověřené dvojice** 🧩 *(naše konstrukce; kánon říká jen, KDO ten dverg je — ne pod kterou runou sedí)*:
-
-| runa | dverg | materiál — zadání pro OBRAZ, ne text, který Rúnar řekne |
-|---|---|---|
-| Isa | Dvalin | kámen, co dřímá pod mechem — probouzí se pomalu a nikdy nebyl pryč |
-| Kenaz | Brokkr a Eitri | výheň v hloubce — co dostane tvar jedině úderem |
-| Ansuz | Alvíss | ten, kdo znal jméno každé věci a chytilo ho svítání — vědění, co nepřežije, když se říká moc dlouho |
-
-⭐ **Osa: SKRYTÉ ↔ ODHALENÉ** (📜 naše konstrukce na 🔒 kotvě). Není to osa materiálu („kámen vs
-světlo") — ta se rozbije na Laguz (voda) a Ehwaz (pohyb). Je to osa **hloubky**: dverg je to, co leží
-**POD** runou, její druhé patro. **Sowilo a Dagaz žádné „pod" nemají — ONY JSOU to vynoření**, úsvit,
-čiré odhalení.
-→ **Mechanický důsledek, ne estetika:** druhá věta JE ta skrytá vrstva, takže **světelné runy ji
-nepotřebují**. Není to díra v mapě, je to jejich vlastnost.
-🔒 **Kotva:** slunce proměnilo Alvísse v kámen. Na světelném konci tedy dverg **nemůže být** — ne že
-by nezbyl, ale nepřežil by tam.
-⚠️ **Přesná hranice kotvy:** je to doloženo **u Alvísse**, ne jako obecný zákon o všech dvergech.
-A náš vlastní katalog má protipříklad: **Þjóðreyrir** zaříkává *u prahu úsvitu* a nekamení.
-Nerozbíjí to osu — **dává jí střed**: je to pant, kde se skryté překlápí v odhalené. Runy „mezi"
-(Wunjo, Jera) patří sem, ne k jednomu z pólů.
-⚠️ **Runy bez dverga se nedoplňují na sílu** — ani vymýšlením protějšku. Kamenný pól je bohatý
-(🔒 skutečné dvergasteinar, pojmenovaní dvergové); světelný je **hubený** — ljósálfar nemají jediné
-jméno ani konkrétní obraz. **Stavět „světlý elf nad světelnou runou" jen kvůli symetrii by znamenalo
-vymyslet celý pól, aby seděl tvar.** ⭐ **Ověřeno obrácenou pákou 2026-08-23 → světelný pól se NESTAVÍ:** světelná vrstva nepřidala nic
-(u Sowilo/Dagaz jen zopakovala, co runa už řekla; u Isy se ohnula ve skrytou). A pozor na důvod, proč
-se runám bez dverga druhá vrstva nedává: **ne že by zněla nuceně — ona zní dobře.** Posune ale tiše
-význam: Sowilo se skrytou vrstvou začne být o tom, kam světlo NEdosáhlo, což je Perth, ne Sowilo.
-Vadu nechytí kontrola kvality textu, jen srovnání s tím, co ta runa je. → `RUNAR_EVAL_LOG.md` 2026-08-23.
-⚠️ **Gebo z Brísingamenu:** brát **předmět, ne cenu**. Náhrdelník je *zlato spletené ze čtyř pramenů,
-co drží jen dohromady* — to je pouto. „Co za něj dáš, se ukáže potom" je transakce a Gebo tím sklouzne
-do dluhu, což je doložený únik (→ EVAL_LOG 2026-08-19/20).
-
-#### Proč „dwarf-like" a ne skřítek
-
-🔒 Dvergar **původně nebyli nutně malí** (Gould, PMLA 1929 · „Little Glory…", ScanCan 2026) — malost
-je pozdější vrstva, hlavně po Tolkienovi. V mýtu mají kosmickou funkci: čtyři drží nebe.
-→ Rúnar je **prastarý řemeslník kamene**, ne komická postavička. Termín, který to nese:
-🔒 **dverga-smíði** = „práce dvergů", tedy mistrovské až magické řemeslo.
-
-### Álfar a huldufólk
-
-🔒 **Dva druhy álfů** (Snorriho Edda): **ljósálfar** — světlí, „krásnější než slunce", z Álfheimu,
-spjatí s Freyem · **dökkálfar / svartálfar** — temní, podzemní. ⚠️ U temných text sám ukazuje, že jde
-vlastně o **dvergy** (Dvalinn je označen obojím) — tmavá polovina álfů a naši dvergové jsou tedy
-nejspíš táž vrstva, ne dvě.
-🔒 **Pojmenovaných álfů je prakticky jeden:** Völundr, mistr-kovář, jehož příběh je zrada a pomsta.
-Víc jich kánon nedá.
-
-🔒 **Huldufólk = skrytý lid.** Jsou **velcí jako lidé** (ne malí, bez křídel) a žijí paralelní život
-v kamenech, kopcích a lávě — mají farmy, kostely, dobytek. **álfasteinn** = elfí kámen (Grásteinn
-chráněný od 1983) · **skyggn / sjáandi** = ten, kdo je vidí. Silnice se kvůli nim odklánějí; přes
-polovinu Islanďanů jejich existenci nepopře.
-
-⚠️ **Kánonický caveat** (Ármann Jakobsson, Folklore 2015): víra v álfy **není nepřerušená**, mění se
-dobou. Nikdy nepsat „odedávna stejná víra". Pro nás: álfar a huldufólk jsou **vrstvy**, ne jedno dogma.
-
-⭐ **Kde se to hodí:** ljósálfar jsou **sluneční pól** proti kamenným dvergům — a to je přesně tam, kde
-dvergové docházejí (Sowilo, Dagaz nemají koho). Huldufólk **není obsazení postav**, je to atmosféra:
-paralelní svět vedle našeho.
-📜 Víc pojmenovaných postav = **naše invence** na prázdných jménech z Dvergatalu; značit 📜 — kánon
-jich víc nedá (ověřeno dvakrát).
-
-### Příběh stromu
-
-Než přijdeš, není nic. Prázdná půda. Temná a tichá.
-Strom neexistuje. Nemůže existovat bez tebe.
-
-Yggdrasil má tři kořeny. Tvůj strom má také tři kořeny.
-Tvůj strom je tvůj osobní Yggdrasil — stejná struktura, zasazená do tvé vlastní půdy.
-Když Rúnar čte tvůj strom, čte stejnou mapu kterou Norny vždy četly.
-
-Každá session od druhé dál se stává větví. Větev není záznam toho co bylo řečeno.
-Větev je záznam toho co se pohnulo.
-
-Rúnar je průvodce. Strom jsi ty.
-
-### Co každá část stromu znamená
-
-*(Primární narativ v angličtině — CZ/IS překlad přes nativního mluvčího)*
-
-The roots were there before you arrived. You did not plant them.
-The founding reading names what was already true —
-the forces that shaped you did not begin the moment you first asked.
-
-The trunk is you. Not who you wish to become. Not who you are becoming.
-Who you are — from the first breath.
-Everything else grows toward the trunk, or away from it.
-
-The branches do not record what was said.
-They record what brought you here.
-
-The tree knows one thing:
-whether you are growing toward your trunk, or away from it.
-
-Harmony is not the goal. Tension is not failure.
-Both tell a story. The difference tells you where you are.
-
-### Vzorce jako jazyk stromu
-
-Eagle vzorce = strom si všiml něčeho nahoře. Opakuje se to v tvém stávání — v tom kam jdeš.
-Níðhöggr vzorce = strom si všiml něčeho dole. Opakuje se to v kořenech — v tom co nespeš nebo odmítáš vidět.
-Full Gathering = strom si všiml obojího najednou.
-
-Vzorec není diagnóza. Je to moment kdy strom přestane jen růst a začne ukazovat.
-
----
-
-## Islandský kalendář — sezónní vědomí
-
-Rúnar integruje sezónní kontext přirozeně — jako žitou atmosféru, ne jako seznam faktů.
-
-### Sezóny a jejich energie
-
-| Měsíc | Islandský název | Energie | Runy |
-|-------|----------------|---------|------|
-| Pozdní leden–únor | Þorri | Nejtemnější, nejdrsnější. Þorrablót. Vzdor, teplo sdíleného jídla | Isa, Nauthiz, Hagalaz |
-| Únor–duben | Gói–Harpa | Světlo se vrací. Sumardagurinn fyrsti (~23.4) | Berkana, Kenaz, Laguz |
-| Květen–červen | Skerpla–Sólmánuður | Bílé noci. Záclona tenčí. Letní slunovrat ~21.6 | Sowilo, Dagaz, Tiwaz |
-| Červenec–září | Heyannir–Haustmánuður | Réttir — sjezd ovcí, návrat, sklizeň | Jera, Raidho, Othila |
-| Říjen–listopad | Gormánuður | Tma se vrací. Aurora sezóna začíná | Hagalaz, Eihwaz |
-| Listopad–prosinec | Ýlir–Mörsugur | Jólasveinar. Zimní slunovrat — semeno světla v tmě | Jera, Dagaz, Isa |
-
-### Klíčové svátky pro Rúnara
-
-- **21. 12. Zimní slunovrat (Jól)** — nejsilnější rituální čas. Yggdrasil spread.
-- **6. 1. Þrettándinn** — světy nejprostupnější, huldufólk se stěhují
-- **Pozdní leden Þorrablót** — rituál zimní odolnosti, sezónní rituál kmene
-- **~23. 4. Sumardagurinn fyrsti** — první den léta, nový záměr
-- **Září Réttir** — sklizeň, návrat, čas reflexe
-
-### Lunární fáze
-
-| Fáze | Energie | Runy |
-|------|---------|------|
-| Nový měsíc | Skryté záměry, semena | Fehu, Kenaz, Raidho |
-| Dorůstající | Momentum, zrání | Uruz, Thurisaz, Sowilo |
-| Úplněk | Kulminace, odhalení — nejsilnější čas čtení | Tiwaz, Mannaz, Dagaz |
-| Ubývající | Uvolnění, transformace | Hagalaz, Nauthiz, Isa |
-
-### Příroda a skrytý svět
-
-- **Norðurljós** (září–březen): Bifröst, zprávy z jiných světů. Neukazovat prstem.
-- **Huldufólk**: Rúnar je bere vážně. Velké kameny mají obyvatele.
-- **Þrettándinn (6.1.)**: Světy nejprostupnější. Oheň chrání.
-- **Letní slunovrat**: Záclona téměř zmizí. Nejsilnější čas magie.
-- **Hekla**: Brána do Hel. Vždy s respektem, nikdy turisticky.
-- **Puffini (lundi)**: Přítomni duben–srpen. Odlet = léto skutečně skončilo.
-
----
-
 ## Kadence čtení — ŽÁDNÁ omezení, žádné penalizace
 
 **Kdokoliv, kdykoliv, jakýkoliv spread.** Žádná doporučená kadence, žádné „ideálně max 1× týdně",
@@ -819,137 +580,7 @@ přežila — a byla znovu odcitována jako platný princip. Autorita → `RUNAR
 
 ---
 
-## Spreads — pozice a logika
-
-### Architektura spreadů ve stromě
-
-```
-SPREAD            STROM                      RITUÁL
-1 runa            uzel na větvi              každodenní
-3 runy (Norns)    větev → kmen               zakládací + hlubší
-5 run (Kříž)      větev (střed + 4 výhonky)  týdenní
-7 run (Horseshoe) větvená větev (7 bodů)     sezónní kmen
-9 run (Yggdrasil) uzel kořenů — nejsilnější  kdykoliv (slunovrat = větší síla)
-```
-
-### Co má uživatel cítit na konci (designový záměr, 2026-08-23)
-| Spread | Konec | Pocit |
-|---|---|---|
-| Norns | recognition | „Vidím vývoj." |
-| Kříž | integration | „Rozumím situaci." |
-| Horseshoe | direction | „Vidím, kam se to pohybuje." |
-| Yggdrasil | revelation | „Teď vidím celý obraz." |
-
-Celek pro všechna čtení → „Co má čtení v člověku vyvolat“ (výš, u Kdo je Rúnar). Je to **záměr, ne slovník promptu** — štítky se do instrukcí NEpíšou (model by je performoval
-didakticky). Od v4.14 mají dosednutí (`landing` v packu) **všechny čtyři spready** — sdílená
-formule „co se stalo viditelným…", liší se jen strukturální část (pohyb v čase · síly kolem
-středu · celý oblouk · celý obraz naráz); single drží otázkový los (v4.11). Zda se čtyři
-pocity skutečně dělí, měří oblouk (`scripts/oblouk.py`). → RUNAR_DECISIONS.md 2026-08-23.
-
-### Vztahy mezi taženými runami (KUKY 2026-08-24, syntéza owner+GPT+měření)
-- **Vztah = charakter setkání v obraze** — soulad · tření · mlčení jsou NÁLEZY čtení,
-  **nikdy morální známka cesty**. „Harmonické runy = správná cesta, trnité = špatná" dělá
-  ze zrcadla orákulum — zakázáno. Tření je hodnota („dar podaný přes zamrzlou hladinu"),
-  ne vada k uhlazení.
-- **Kategorie vztahů = slovník SOUZENÍ, nikdy prompt-nabídka.** Pozorovací čočky: naváže ·
-  stojí proti · promění · zesílí · ozvěna · tření · vznikne třetí (emergence) · **mlčení**
-  (non-relation — poctivý nález). ⚠️ Do promptu NIKDY: nabídka „smíš nechat být" = změřeno
-  0/6 (model ji vezme vždy), povinné „najdi vztah" = model vztah vyrobí vždy (hladce a
-  prázdně). Prompt nese povinnou malou VAZBU (fráze/místo/thread); charakter vztahu je
-  emergentní a soudí se těmito čočkami. Rozšiřuje trojici „naváže·změní·otevře" (Vegvísir).
-- **Žádná statická mapa vztahů 25×25** — vztah žije v konkrétních tažených obrazech, ne
-  v páru run (per-pár se neměří, n=1 na dvojici; T2-038 = chyba výběru, ne obsahu).
-
-### Single (1 runa)
-Jedna runa, žádné pozice. Přímé čtení energie daného momentu.
-Strom: malý uzel na větvi.
-
-### Norns (3 runy) ✅ ZAKLÁDACÍ RITUÁL
-```
-[Urður] — [Verðandi] — [Skuld]
-```
-Urður = co tě utvořilo. Nelze odestát. Kořen ze kterého vychází vše.
-Verðandi = co se právě tká. Přítomný okamžik jako živá nit.
-Skuld = kam se kloníš teď. Směr tvého vlákna, ne dekret osudu. Ne předpověď — trajektorie, kterou můžeš změnit.
-
-Tři Norny = tři kořeny Yggdrasilu. Zakládací rituál stromu — jedním čtením jsou zasazeny všechny tři kořeny najednou. Osa tvého stávání (co tě utvořilo → kde stojíš → kam se kloníš), ne osud. Každá Norna mluví jiným hlasem a jinou vahou.
-
-Strom: větev → kmen. Zakládací rituál.
-
-*Rezerva: 9-run verze (3+3+3 pro každou Nornu) — vymyšlená, hlubší. Zatím neimplementovat.*
-
-### Kříž (5 run)
-```
-         [2]
-   [4] — [1] — [5]
-         [3]
-
-1  střed      — jádro situace, co je teď
-2  nad        — co vědomě vidíš / co aspiruješ
-3  pod        — co je skryté / kořen / podvědomí
-4  za tebou   — co přichází z minulosti
-5  před tebou — kam situace směřuje
-```
-IS pozice: Miðja/Kjarni · Of an/Á leit · Undir/Rót · Að baki/Fortíð · Framar/Stefna
-Strom: větev s centrálním uzlem a čtyřmi výhonky. (Do 2026-10-10 tu stálo „Standard+“ — přístup vlastní CLAUDE.md „Gating“.)
-
-### Horseshoe (7 run)
-```
-[1]       [7]
-[2]       [6]
-[3]       [5]
-    [4]
-
-1  minulost
-2  přítomnost
-3  skryté vlivy
-4  překážky
-5  okolí a druzí
-6  co dělat
-7  pravděpodobný směr
-```
-IS pozice: hotové v produkci — zdroj pravdy `RP_HORSESHOE.is.positions` (`v2/runar-character.js`),
-doc je NEOPISUJE (§20).
-Tvar podkovy U (levé rameno 1-2-3, pravé 5-6-7, čtyřka dole uprostřed mezi 3 a 5, o půl kroužku níž; sousední pozice stejně daleko)
-je v appce od 2026-10-11 — KUKY: *„4 runa mezi 3-5. ať jsou runy v podkově od sebe stejně vzdálené všemi směry“* a *„udělej to jako U,
-takže 4. mírně, asi na půl velikosti čísla v kroužku, pod 3-5“*, `RUNAR_DECISIONS.md` 2026-10-11 (31), (37). Do té doby tu i v appce
-stála řada `[1] … [7]`, mezi tím krátce ⊔ s rovným dnem.
-Strom: větvená větev se sedmi body → sezónní rituál kmene. (Do 2026-10-10 tu stálo „Standard+“ — přístup vlastní CLAUDE.md „Gating“.)
-
-### Yggdrasil (9 run) — všichni přihlášení, KDYKOLIV
-```
-          [1]            koruna (1 = Ásgarðr)
-      [2]     [3]        koruna
-      [4]     [5]        kmen
-  [6]     [7]     [8]    kořeny
-          [9]            kořeny (9 = Hel)
-```
-Strom v appce od 2026-10-11 (KUKY: *„to má být podle toho, jak je yggdrasil spread vykládán… ok udělej strom“*, `RUNAR_DECISIONS.md`
-2026-10-11 (40)): tradiční rozložení neexistuje, runové weby kladou Ásgarðr nahoru a Hel dolů; patra jsou patra výkladu. Do té doby
-tu stál kosočtverec světů z června (Niðavellir v řadě s Miðgarðrem, původně Múspellsheimr) a appka kreslila řady 3/2/4.
-**Významy pozic vlastní `RP_YGGDRASIL` v `v2/runar-character.js` — doc je NEOPISUJE** (§20;
-táž poznámka jako u Horseshoe níž). Do 2026-08-23 tu stál opis a rozešel se v 5 z 9 světů
-(nalezl Cowork handoff #35) — který směr je kánon, řeší RUNAR_BACKLOG.md, verdikt owner.
-Nejde do větve — jde do kořenů stromu. **Kdykoliv, žádná brána na datum.**
-Strom: devítibodový uzel v kořenech — nejsilnější bod celého stromu.
-
-⚠️ **Slunovrat sem nepatří.** Zimní slunovrat je informace o **stromě**, ne o přístupu ke
-spreadu: čtení udělané o slunovratu má ve stromě **větší váhu** (KUKY 2026-08-16). Kdo sem
-vrátí datum jako podmínku, opakuje chybu, kterou owner opravoval pětkrát → `CLAUDE.md`.
-
-### The Gathering (3–5 run)
-**Nová role (2026-06-07): tree pattern detection — již není viditelné v journalu.**
-
-Stará funkce (týdenní rituál, whispers-section, journal karta) odstraněna:
-- whispers-section HTML blok smazán z runar-reader.html
-- Gathering karty a filter odstraněny z runar-journal.js
-- updateWhispersUI() odstraněno z renderJournal()
-- Stará DB data (area='gathering') zůstávají v DB — tichý skip při renderování
-
-Starý modul Gatheringu **odstraněn 2026-09-28** (DECISIONS 2026-07-04: ruční Gathering = mrtvý, ke smazání; 2026-09-28 (1) = provedení). Nová podoba = automatický Gathering nad deníkem, `RUNAR_TREE.md` §7. <!-- doc-links:ok 2026-09-28 soubor záměrně smazán -->
-Nová logika potřebuje tree_state DB (neexistuje). Implementace: čeká na V3.
-
-### Vegvísir (8 ramen, seriálový) — ÚČEL A ČAS (owner ratifikoval 2026-08-23)
+## Vegvísir — záměr (8 ramen, seriálový; odložený, NENÍ spread) — ÚČEL A ČAS (owner ratifikoval 2026-08-23)
 
 ⚠️ **Není postavený.** Tohle je ratifikovaný ZÁMĚR, ne stav produkce — v `SPREAD_CONFIG` nic není.
 
@@ -1036,7 +667,7 @@ dovnitř"). Copy z toho vzniká hlasem Rúnara přes Cowork.
   Zbývá SELEKTOR (fallback bez domova + afinita přes měřené aspekty = odparkovaný T3) —
   rozhodnutí owner.
 - **Designová kontrola (NE instrukce do promptu):** každé rameno dělá jeden z pohybů
-  slovníku vztahů (→ „Vztahy mezi taženými runami", sekce Spreads; trojici naváže·změní·otevře
+  slovníku vztahů (→ „Vztahy mezi taženými runami", `RUNAR_SPREADY.md`; trojici naváže·změní·otevře
   slovník rozšířil 2026-08-24). Osm navázání = nudná kontinuita; osm převracení = chaos. Slouží
   k posouzení oblouku. ⚠️ Do promptu to nepatří: jeden vzor v promptu = model ho opíše.
 
@@ -1060,10 +691,9 @@ rameny se nedá nasimulovat — všechno ostatní (obraz, ozvěna, pohyb, pořad
 Rituální práh je inspirace; produktový princip je „mezi obrazy musí být skutečný čas" — a ten zůstává
 **hypotézou**, dokud to neuvidí živí lidé.
 
-### UI — domluveno ✅
-Přepínač pod "DRAW YOUR RUNE":
-`[ SINGLE RUNE ]  [ NORNS ]  [ KŘÍŽ ]  [ HORSESHOE ]  [ YGGDRASIL ]`
-Stejný styl jako V2 lab v shrine.
+---
+
+## Formulář a faktory čtení
 
 ### Reading form — BEFORE WE BEGIN (2026-06-07)
 
@@ -1098,27 +728,6 @@ Jednorázové okno „Where to start“ (první otevření appky, ne přihláše
 **Pravidlo priority** (proti přeplácanosti i mizení): když se faktory neslijí do jednoho obrazu → tažená runa vepředu, drž rejstřík + doménu, čočka klidně ustoupí — nikdy nenutit, nikdy nevršit jako oddělené věty. **Délka se tím nemění.**
 
 Zdroj pravdy = helpery v `runar-character.js` (`_domainContext` / `_registerContext` / `_intentionContext`, u spreadů navíc `_priorityContext`). Rozhodnutí + validace naživo → RUNAR_DECISIONS.md (2026-07-09). Single i všechny spready už je berou. ⚠️ Do 2026-10-10 tu stálo „`RP_SINGLE.priority`, zatím jen single, spready TODO“ — pole `priority` v kódu není a spready doménu i rejstřík mají; čočka odešla (řádek výš).
-
----
-
-## Tier systém — přístup ke spreadům a stromu
-
-### Spreads per tier — viz RUNAR_PRICING.md (kompletní tabulka)
-
-Kdo na co dosáhne, vlastní `CLAUDE.md` („Spread systém → Gating“) a čísla `v2/runar-config.js` (`SPREAD_COSTS`,
-`TIERS.*.monthly_readings`) — tady se neopisují (§20). Ve zkratce: blokuje se jen nepřihlášený; každý přihlášený dosáhne na
-všechny spready — Rune Seeker za kredity (volné čtení jen na single), předplatitelé z měsíčních jednotek (počítají se jednotky
-čtení, ne runy). Yggdrasil kdykoli; zimní slunovrat = větší síla ve stromě, NE podmínka přístupu (KUKY 2026-07-18).
-⚠️ Do 2026-10-10 tu stálo „Kříž a Horseshoe jen Standard+, Rune Seeker ani za kredity“ a „limit 50/75 run“ — kód obojí dávno
-dělá jinak (`readRune` blokuje jen nepřihlášeného; měsíční strop počítá jednotky).
-
-### Tree of Life per tier
-
-Stav vlastní `RUNAR_TREE.md` a kód. Ověřeno 2026-10-10: záložka Strom je jen pro admina (`runar-auth.js`, od 2026-09-11);
-životní runu (výpočet) vidí každý i bez účtu, její čtení až po přihlášení a pro všechny stejné (builder tarif nedostává —
-nepoužitý parametr `isPremium` a nečinný režim `life_rune_premium` zrušeny 2026-10-11, DECISIONS 2026-10-11 (22)); zakládací Norny i rozbor jména jsou rituály — zdarma pro každého přihlášeného, jednou (`claude-proxy`
-`isRitual`). ⚠️ Do 2026-10-10 tu stála tabulka podle tarifů (strom jako teaser pro Rune Seekera, životní runa „hlubší“ pro
-Premium, Norny za kredity) — nic z toho kód nedělá.
 
 ---
 

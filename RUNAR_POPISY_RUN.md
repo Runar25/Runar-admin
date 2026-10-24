@@ -1,7 +1,7 @@
 # RUNAR_POPISY_RUN.md
 # Uživatelské popisy run — jak se runa chová, co může naznačovat, jaké obrazy tvoří, jakou otázku klade.
 # Vlastní tenhle doc a žádný jiný (§20). Jinde bydlí: data run (aett, keywords, element, svět)
-# = `v2/runar-runes.js` · mytologie a kánon hlasu = `RUNAR_DESIGN.md` · obrazy do promptu
+# = `v2/runar-runes.js` · mytologie = `RUNAR_MYTOLOGIE.md` · kánon hlasu = `RUNAR_DESIGN.md` · obrazy do promptu
 # = `RUNE_IMAGES` v `v2/runar-character.js` · rozhodnutí = `RUNAR_DECISIONS.md`.
 
 **Pojmy (KUKY 2026-09-23):** tomuhle se říká **statický popis run** — dlouhý text o tom, co runa

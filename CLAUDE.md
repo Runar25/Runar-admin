@@ -1,5 +1,5 @@
 # CLAUDE.md — Rúnar Project
-# Přečíst na začátku KAŽDÉ session. Zdrojová pravda pro kód. Spolu s: RUNAR_DESIGN.md (design, mytologie, spready) · RUNAR_PRICING.md (business)
+# Přečíst na začátku KAŽDÉ session. Zdrojová pravda pro kód. Spolu s: RUNAR_DESIGN.md (hlas, stavba čtení) · RUNAR_SPREADY.md · RUNAR_MYTOLOGIE.md · RUNAR_PRICING.md (business)
 # Důvody, doklady a historie pravidel → `docs/pravidla-duvody.md` (čti, když pravidlo nedává smysl nebo ho chceš měnit). Stav systémů → `docs/projekt-mapa.md`.
 # Sem patří jen příkazné pravidlo a past, kterou z kódu nepoznáš. Důvod nové věci → DECISIONS, ne sem (§28).
 

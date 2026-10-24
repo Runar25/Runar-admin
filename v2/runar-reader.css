@@ -1073,7 +1073,7 @@ body:has(.modal-overlay.open) #hb-btn{display:none;}
 @media(max-width:480px){ #spread7-slots{padding-bottom:calc(8px + var(--s7-dip));} }
 /* Yggdrasil jako strom 1-2-2-3-1 (2026-10-11, owner: „to má být podle toho, jak je yggdrasil spread vykládán… ok udělej strom“): Ásgarðr
    sám nahoře, Hel sám dole, mezi nimi patra výkladu shora dolů — koruna 1–3, kmen 4–5, kořeny 6–9 (RP_YGGDRASIL.tiers). Tradiční rozklad
-   neexistuje; runové weby kladou Ásgarðr nahoru a Hel dolů, tak to drží i strom (RUNAR_DESIGN.md). Do té doby řady 3/2/4. Poloviční sloupce,
+   neexistuje; runové weby kladou Ásgarðr nahoru a Hel dolů, tak to drží i strom (RUNAR_SPREADY.md). Do té doby řady 3/2/4. Poloviční sloupce,
    aby liché řady stály na středu; sousední pozice v řadě i pod sebou dál o buňku + mezeru. */
 .spread9-slots{grid-template-columns:repeat(6,calc((var(--slot-cell) - var(--slot-gap)) / 2));grid-auto-rows:var(--slot-cell);gap:var(--slot-gap);justify-content:center;place-items:center;}
 #s9slot1{grid-area:1/3/2/5;}
