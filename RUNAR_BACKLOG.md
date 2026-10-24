@@ -840,7 +840,7 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   jedna postava (gesto otevřené dlaně jako u bílé karty), aspoň ~1500 px na výšku, průhledné nebo čistě bílé pozadí; pak vyměnit
   `web/site/img/runar-zima.jpg`. Další vzhledy podle oblečení (letní slavnost, půlnoční slunce, polární záře, cestovatel) stejně.
 
-## Z Coworku 2026-10-18 (HANDOFF66 v `Claude outputs/`, 67 a 68 od 2026-10-20 v `docs/inbox/rune-cards/`; ověřeno CODE-tune proti repu, DECISIONS 2026-10-18 (4))
+## Z Coworku 2026-10-18 (HANDOFF66 v `docs/inbox/2026-10-18-HANDOFF66_ucty-vypadaji-stejne-visitor-plus-a-formular_COWORK_to_CODE-read-tune.md`, 67 a 68 v `docs/inbox/rune-cards/`; ověřeno CODE-tune proti repu, DECISIONS 2026-10-18 (4))
 ### Účty vypadají a ovládají se stejně — HANDOFF66 (owner: rozdíl jen tam, kde ho chce funkce)
 - [ ] **CODE-read: matice stav × plocha** (Visitor · Rune Seeker · Standard · Premium/tester · admin × menu, formulář, spready, Ask, hlas,
   Kolekce, Životní runa, okna, toasty, ⚑ a „?“) — z kódu; Standard v DB nemá nikdo (2026-10-18: 4× rune_seeker, 1× premium).
