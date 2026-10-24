@@ -238,7 +238,7 @@ Ostatní (později, decentně): pulzy dominance (element/ætt), bloom fáze, lis
 
 **Konsolidováno do `docs/archive/tree/` 2026-07-30:** `RUNAR_TREE_BUILD.md` · `runar-tree-placement.md` · `RUNAR_TREE_TODO.md` · `RUNAR_TREE_SPECIALS.md` · `runar-tree-forces.md` · `tree-of-life.md` · `runar-patterns.md`. Živý obsah přenesen **sem** (model, signály, Gathering) nebo do **RUNAR_BACKLOG** (úkoly, prahy, katalog motivů). Dřív archivováno (2026-07-04): `RUNAR_TREE_BOUGHS` · `RUNAR_TREE_GROWTH_MAP` · `RUNAR_TREE_HANDOFF` · `RUNAR_TREE_LAB`. Nic se neztratilo — jen uklizeno.
 
-**Historické lab poznámky** = `memory/runar-tree-engine-lab.md` · `memory/runar-tree-living-movement.md` · `memory/runar-trunk-incremental-rule.md` (indexováno v MEMORY.md) + `docs/TREE_BRIEF_CODE_2026-07-04.md`. **Stav labu / enginu vlastní `git log` (prefix `[tree]`) + snapshoty, ne doc** (§20.4).
+**Historické lab poznámky** = `memory/runar-tree-engine-lab.md` · `memory/runar-tree-living-movement.md` · `memory/runar-trunk-incremental-rule.md` (indexováno v MEMORY.md) + `docs/archive/tree/TREE_BRIEF_CODE_2026-07-04.md`. **Stav labu / enginu vlastní `git log` (prefix `[tree]`) + snapshoty, ne doc** (§20.4).
 
 ---
 *Když se něco z tohoto změní rozhodnutím → nový záznam do RUNAR_DECISIONS.md + oprava tady (§16). Tento soubor drží „co a proč"; „co zrovna děláme" vlastní `git log` (prefix `[tree]`) + RUNAR_BACKLOG.md.*

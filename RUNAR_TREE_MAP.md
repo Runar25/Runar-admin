@@ -2,7 +2,8 @@
 # Vlastník: CODE-tree. Popisuje VZTAHY v kódu labu — `build_crown_composer.py` (generuje `v2/tree-lab-crown-composer/crown-composer.html`)
 # + `runar-branch.js` (tvar větve) + `runar-trunk.js` (kmen). Hodnoty NEOPISUJE (§20) — bydlí v kódu; tady je, KTERÁ funkce/páka
 # rozhoduje a KAM se změna promítne. Pravidla, která strom musí splnit, vlastní `RUNAR_TREE.md` (§2–§5); tady jen odkaz.
-# Aplikace (`build_tree_production.py` → `runar-tree-prod.js`) je zatím STARÝ model — tahle mapa platí pro LAB.
+# Aplikace (`build_tree_production.py` → `runar-tree-prod.js`) je od portu 2026-10-11 tentýž kód labu (`RUNAR_DECISIONS.md`
+# 2026-10-11 (55)) — mapa platí pro lab i aplikaci.
 # Přepsáno 2026-10-03 (KUKY: „chceš si zmapovat, co se tady staví, abys to taky věděl? … co se kde promítne, když to změníš?“).
 # Předchozí verze (vrstvy A–I, 2026-08-07 + dodatky) popisovala model před zónami a hlavně NEvysvětlovala tvar ramene po délce —
 # proto se opravy překryvů točily v kruhu (měnilo se jen místo výstupu, ne tvar). Starší verze: `git log -- RUNAR_TREE_MAP.md`.
