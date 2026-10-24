@@ -8,6 +8,9 @@ metadata:
   modified: 2026-09-30T21:06:49.766Z
 ---
 
+Definici „tvrzení o člověku × povzbuzení × fakt“ vlastní `RUNAR_DESIGN.md` „Cold reading“ (bod Definice, KUKY 2026-10-16);
+tahle paměť jen přidává, jak to neměřit přísněji.
+
 „You“ ve čtení je postava scény, oslovení, obraz — samo o sobě NIC neznamená. Soudce (luna, rubrika, slepý grader), který
 hlásí „you“ bez čtení celého kontextu, měří slovo, ne vadu — stejná past jako honba za „already“ (problém promptu + chybějící
 kontext, ne slovo).

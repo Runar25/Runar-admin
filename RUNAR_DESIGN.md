@@ -247,6 +247,10 @@ jestli je z hor, nebo z hlavy.
 
 ### Co je OBRAZ — a dva jeho druhy (KUKY 2026-09-12)
 
+**Obraz v tomhle docu — rozcestník** (sekce leží na dvou místech): tady „Co je OBRAZ“ · „Obraz — dvě síta“ · „Jak Rúnar skládá čtení — tři
+beaty“ · „Obraz nese podstatu runy“; dál „Image pool — register obrazů“ · „Typ obrazu“ · „Obraz od modelu“ · „Délka a tvar obrazu“ ·
+„Stavba Single čtení“. Banku obrazů vlastní `RUNE_IMAGES` (`v2/runar-character.js`).
+
 📜 **Obraz je jakýkoli POHYB, i myšlenka.** Nemusí to být scéna, na kterou se dá namířit foťák.
 *„Something has been getting on with itself in the ground you left behind"* je obraz stejně jako
 *„the door stands open and coffee waits on the table for two"* — jen není z nábytku.

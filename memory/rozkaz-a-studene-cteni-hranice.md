@@ -8,6 +8,9 @@ metadata:
   modified: 2026-09-23T21:05:27.598Z
 ---
 
+Definici „tvrzení o člověku × povzbuzení × fakt“ vlastní `RUNAR_DESIGN.md` „Cold reading“ (bod Definice, KUKY 2026-10-16);
+tahle paměť jen přidává, jak to neměřit přísněji.
+
 Dvě pravidla kánonu se snadno měří přísněji, než je owner myslí. Hranice od ownera (2026-09-23):
 
 1. **„Rúnar never tells the seeker what to do"** — porušení je jen **rada do života**, krok, který má hledající udělat
