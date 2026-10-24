@@ -27,6 +27,9 @@ Výčet souborů, commit hashů a „co jsem kde změnil" je PROCES — ownerovi
 říká, co se změnilo V PRODUKTU (co uvidí, co teď funguje jinak) a co potřebuju od něj.
 Hash patří jen do handoffů pro jiné session (protokol „psáno proti commitu"), ne ownerovi.
 
+**KUKY 2026-10-24: „nevím, proč mi vypisuješ to, co dělá CODE-read.“** Zpráva od jiné session (potvrzení, ověření, „hotovo“) není
+zpráva pro ownera. Ownerovi jen to, co z ní plyne pro NĚJ (rozhodnutí, výsledek v produktu); jinak ji vezmi na vědomí a pracuj dál.
+
 **KUKY 2026-09-23: „co je sekce 6. nechápu" · „nevím o který úhel jde".** Napsal jsem mu
 *„nasadit celý návrh z auditu (sekce 6)?"* a *„úhel [0] přepsat?"* — štítky, které zná jen dokument
 a kód. **Nikdy se ownera neptej na něco, co jmenuješ interní značkou** (číslo sekce, index úhlu,

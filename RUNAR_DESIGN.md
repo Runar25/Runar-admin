@@ -1,14 +1,12 @@
 # RUNAR_DESIGN.md
 # Domluvená designová rozhodnutí — co a proč, ne jak.
 # Přečíst vždy když pracujeme na Tree, Spreads, promptech nebo novém generování.
-# Poslední aktualizace: 2026-06-07
 #
 # Viz také:
 #   CLAUDE.md          — technická pravidla, absolutní zákazy, load order
 #   RUNAR_PRICING.md   — business model, tier ceny, EL kalkulace
-#   tree-of-life.md    — Tree of Life detaily: zakládací rituál, větve, kořeny, bloom, elementy
-#   runar-patterns.md  — Pattern detection: Eagle/Níðhöggr, transformační páry, The Gathering ⚠️ pracovní verze
-
+#   RUNAR_TREE.md      — Strom života: založení, větve, kořeny, elementy
+#   docs/archive/tree/runar-patterns.md — Pattern detection (Eagle/Níðhöggr, The Gathering) ⚠️ archiv, pracovní verze
 ---
 
 ## Kdo je Rúnar
@@ -245,11 +243,12 @@ Vegvísir o pěší chůzi. Ta obecnost se ztratí v prvním obraze s krupobití
 **Ukotvení osy nesmí vynucovat doslovný terén** — má pojmenovat vztah, a obraz ať si najde,
 jestli je z hor, nebo z hlavy.
 
+## Stavba čtení a obraz
+*(Oddíl sestaven 2026-10-24 úklidem: obraz a stavba jedné runy ležely na dvou koncích docu.)*
+
 ### Co je OBRAZ — a dva jeho druhy (KUKY 2026-09-12)
 
-**Obraz v tomhle docu — rozcestník** (sekce leží na dvou místech): tady „Co je OBRAZ“ · „Obraz — dvě síta“ · „Jak Rúnar skládá čtení — tři
-beaty“ · „Obraz nese podstatu runy“; dál „Image pool — register obrazů“ · „Typ obrazu“ · „Obraz od modelu“ · „Délka a tvar obrazu“ ·
-„Stavba Single čtení“. Banku obrazů vlastní `RUNE_IMAGES` (`v2/runar-character.js`).
+Banku obrazů vlastní `RUNE_IMAGES` (`v2/runar-character.js`).
 
 📜 **Obraz je jakýkoli POHYB, i myšlenka.** Nemusí to být scéna, na kterou se dá namířit foťák.
 *„Something has been getting on with itself in the ground you left behind"* je obraz stejně jako
@@ -352,6 +351,144 @@ Souvisí: tři beaty výš.
 > 2026-08-18 až 2026-08-20. Návrhová mapa → `docs/archive/runar-engine-map.html`.
 
 ---
+
+### Image pool — register obrazů (D/E/P)
+*(kritéria vlastní Cowork — handoff 2026-08-23; CODE jen ukládá; hodnoty hlídá smoke ㉠ — `verify_image_register.js`; do 2026-10-10 tu stálo „㊱“, ale smoke od ㉟ pokračuje znaky ㉠, ㉡… a „㊱“ ve výpisu nenajdeš,
+sloupec 7 v `RUNE_IMAGES`)*
+- **D = DOMÁCÍ/INTIMNÍ:** uvnitř, lidské ruce, krb, malé (káva, chléb, lampa, ponk, klíče, hodiny, telefon, pletení).
+- **E = ŽIVELNÉ/VELKÉ:** syrová příroda, počasí, obloha, velké (ledovec, kroupy, láva, hver, fjord, půlnoční slunce).
+- **P = PASTORÁLNÍ/STŘED:** obdělaná půda, zvíře, rostlina, člověk jdoucí krajinou — přemosťuje (ovce, jeřáb, kořen, varða, kindagata, torfveggur).
+- **Test:** „nepatřičné vedle ledovce?" = D · „nepatřičné vedle šálku na stole?" = E · „sedí vedle obojího?" = P.
+- **Hraniční (rozhodnuto):** venkovní lidské stavby (torfveggur, varða, leiðarsteinn) = P (D je jen vnitřek) · nebeské (polárka, norðurljós, miðnætursól) = E · geotermál/láva = E · osvětlená krajina (slunce do údolí) = P · ⚠️ abstraktní obraz (chování, ne scéna — Tiwaz „stojíš za slovem") = D nejblíž; od 2026-09-10 je to řádný TYP (situační), viz „Typ obrazu" níž.
+- Zamýšlené použití = výběr-kongruence při skládání spreadů (D×E kolize → volit kongruentní variantu; SMĚR, nestaví se do rozhodnutí o Vegvísiru).
+
+### Typ obrazu — fyzický · situační · slovní (KUKY 2026-09-10, ratifikováno)
+Druhá osa vedle D/E/P: **D/E/P říká KDE obraz stojí, typ říká JAK nese význam.** Vzniklo z měření
+identity a z povahy chybějící práce (87 % nepokrytých stránek run jsou abstrakce — čísla vlastní
+`RUNAR_EVAL_LOG.md` 2026-09-09/10, tady se neopisují, §20).
+
+1. **FYZICKÁ SCÉNA** — věc/živel koná. Nese runy, jejichž jádro JE věc (Isa-led, Laguz-voda,
+   Berkana-bříza, Kenaz-oheň…). ⚠️ Věc musí KONAT, ne stát — nehybná věc sklouzává k Ise.
+2. **SITUAČNÍ OBRAZ** — člověk koná; čin s cenou; žádná rekvizita, která patří jiné runě.
+   Nese abstraktní stránky (justice, strength, courage…). Doloženo u nejtěžších run
+   (Uruz „You lift the end…", Tiwaz „You give back the change…").
+3. **SLOVNÍ/VÝPOVĚDNÍ OBRAZ** — výpověď o stavu, bez věci i bez děje. **První pilot prošel
+   branou 3/3** (2026-09-10, Mannaz-`mind`) — „nula měření" už neplatí, ale **jeden kandidát
+   není doklad typu**; před širším použitím pořád platí pilot + měření pestrosti.
+   ⚠️ **V produkci (2026-10-01):** slovní obraz Mannaz *„Hugurinn ber mann hálfa leið“* dostal jedno čtení — model ho pominul
+   a postavil si vlastní scénu; brána s popisy ho dala k Ehwaz („mysl nese“ = kůň nese jezdce). Z banky odešel
+   (DECISIONS 2026-10-01 (1), měření EVAL_LOG 2026-10-01 (1)). Jedno čtení — doklad, ne pravidlo.
+
+**Pravidla:** typ se **páruje s povahou stránky runy** (živel→fyzický · ctnost/čin→situační ·
+stav/přechod→kandidát na slovní), nikdy plošná preference — ⭐ **doloženo obráceně dvakrát:**
+u tří abstraktních run vyhrál situační, u pěti run s konkrétní kotvou vyhrál fyzický (86 % vs
+67 %). Kdo si vybere jeden typ plošně, spadne na té druhé skupině · **žádné kvóty typů předem** — počty
+ať vyjdou z mapy mezer a z brány · **každý obraz jakéhokoli typu projde identitní branou**
+(generátor navrhuje, soudce rozhoduje; přebytek kandidátů = normální provoz, ne selhání) ·
+plus dvě síta výš a kontrola „čí je to pozemek" (předmět/sloveso nesmí být jádrem sousední runy).
+
+### Obraz od modelu (KUKY 2026-10-03)
+*Changelog: 2026-10-03 založeno — owner: „pokud model sám něco vymyslí a zní to dobře, tak to můžeme použít" (u scény,
+kterou model vymyslel v jeho Asku ke Kenazu). Rozhodnutí `RUNAR_DECISIONS.md` 2026-10-03 (14).*
+- Scénu, kterou si model sám vymyslí ve čtení nebo v Asku, smí banka převzít. Kandidáty sbírá reportér: **✦ Keep this**.
+- Jde stejnou cestou jako každý obraz: identitní brána (výš), islandština psaná od začátku a ověřená, register, oblast.
+  **„Zní dobře" bránu nenahrazuje:** první kandidát (Kenaz, stůl pod lampou a prázdná židle) zněl dobře a soudci ho dali
+  k Othile 2/3 — scéna doma táhne k domovu (`RUNAR_EVAL_LOG.md` 2026-10-03 (4)). Přepsané znění (rozsvícení, které židli
+  odhalí) šlo do banky **bez brány, na ownerovo slovo** — výjimka pro ten jeden řádek (`RUNAR_DECISIONS.md` 2026-10-04 (1)).
+
+### Délka a tvar obrazu — klíč ke zkrácení (KUKY 2026-09-28, změřeno)
+*Changelog: 2026-09-28 založeno — owner: „najdi k tomu klíč jak to zkrátit… už máme dost informací o tom, co zní dobře
+a co dělá problémy“. Důvod: obrazy kola 3 měly medián 17 slov (starší banka 13) a skládaly se z příběhů o dvou událostech.*
+
+1. **Jedna scéna, jeden, kdo koná.** Obraz patří runě toho, kdo v něm koná — ledovcová řeka valící balvany šla 3/3 k Laguz,
+   ne k Uruz (síla v obraze JE voda). U Uruz musí konat tělo.
+2. **Žádná druhá událost.** „…a pak se stalo ještě…“ (trajekt nepluje **a** svatba je s polovinou hostů) je příběh, ne obraz.
+   Pokračování téhož děje smí zůstat („the track bends round the lava and comes back to its line“).
+3. **Žádné časové ani kalendářní slovo, které runu nenese.** Kdy se obraz smí ukázat, řídí sloupec sezóny, ne text
+   („…no one will open it before midwinter“ — owner: *„vůbec se mi nelíbí“*). **Výjimka = slovo, které runu nese:**
+   Dagaz „morning… all at once“ — zkrácený bez nich spadl z 3/3 na **0/3** (zbylo obyčejné světlo → Kenaz/Sowilo).
+4. **Slovo, které nese runu, zůstává; ostatní jde pryč.** Po zkrácení obraz vždy znovu projde branou — kratší obraz může
+   identitu ztratit (2026-09-28: 12/15 drželo, 3 ne).
+5. **Délka kolem 12 slov** (medián zkrácených, které prošly branou; obrazy, které owner označil za dobré, mají 11–16).
+   ⚠️ **Délka obrazu NEřídí délku první věty čtení** (r = 0,02, n = 72; DECISIONS 2026-09-23 (10)) — důvod ke krácení je
+   tvar a opisování (z dlouhého obrazu model převzal 5 ze 7 slov, EVAL_LOG 2026-09-14), ne první věta.
+
+
+
+---
+
+### Stavba Single čtení — základ (2026-09-20, KUKY + CODE-read; měření vlastní `RUNAR_EVAL_LOG.md` 2026-09-18 až 20)
+
+*Changelog: 2026-09-20 založeno — owner: „vytvořili jsme tu základ něčeho, co jsem chtěl posunout" a ten základ nesmí
+žít jen v konverzaci a v měřicích protokolech. Tady bydlí SMĚR; čísla a doklady v EVAL_LOGu, soupis všech pák u CODE-tune.*
+
+**Čtení = scéna × vztah runy × most k člověku.**
+1. **Runa do čtení vstupuje VZTAHEM (slovesem), ne rekvizitou.** „Něco drží, zatímco zbytek jde dál" je Isa; led si
+   doplní scéna. Doklad: jedna scéna (průsmyk) unesla čtyři runy a nepletly se; bez dodané scény se runa sjede do svého
+   živlu (Isa → led, Laguz → potok). Proto jádro obrazu + místo z losu (v produkci od v4.30 u Raidha).
+2. **Věty mají v praxi role, i když je nikdo nepředepisuje** (předepsat je bylo měřeno a zamítnuto — dražší, nic nedá):
+   věta 1 = úhel + místo/scéna · věta 2 = esence (jméno runy; NEJPŘETÍŽENĚJŠÍ — padá tam i jméno člověka a aspekt) ·
+   poslední = konec/most; „you stand" na začátku dělá úhel [6], na konci dělal konec (vypuštěno).
+3. **Most k člověku** — jediné místo, kde smí čtení **tvrdit** něco o životě člověka, vždy jako MOŽNOST („this may be…"),
+   nikdy diagnóza ani krok. ⚠️ **Věta před mostem smí nést pohyb obrazu do zvolené oblasti** (KUKY 2026-09-24: *„pořád
+   mluví skrze obraz, neříká, co člověk dělá, ale co se děje v obraze"*) — to tvrzení není; hranici vlastní sekce
+   „Cold reading" výš. **Od 2026-09-20 není most losovaný naslepo — řídí ho to, co člověk zadal:**
+
+   ⭐ **Most: AREA určuje KAM dosedne, SEEKING určuje JAKÝ TVAR vezme** (KUKY 2026-09-20: *„ano, most ať dosedne
+   do AREA a tvar ať určuje SEEKING"*). Není to nová myšlenka — je to první mechanismus ke kánonu **„runa je základ,
+   oblast je otázka, kterou musí runa vzít v potaz"** (KUKY 2026-08-16, výš v tomhle docu), který byl dosud nenaplněný
+   a **změřený jako nenaplněný**: oblast se ve čtení projevovala hlavně ozvěnou svého slova, tři měření kolem nuly.
+   Stejně tak `seeking` už v „Reading contract" (níž, u Spreads) vlastní roli **rejstřík — mód výkladu**; tady dostává místo,
+   kde se ten mód projeví, místo aby ho uprostřed čtení rušilo NO COLD READING (doloženo skládačkou, EVAL_LOG 2026-09-20).
+
+   **Tvar je 1:1 odvozený ze znění, které rejstřík UŽ má v `_registerContext` — nic se nevymýšlí:**
+   | SEEKING | co rejstřík dnes žádá | tvar mostu |
+   |---|---|---|
+   | Clarity | *„bring one thing into focus, not one answer"* | **věta** — jedna věc pojmenovaná |
+   | Confirmation | *„neither confirm nor refute"* | **dvě možnosti** (jediný čestný tvar, když nesmím ani potvrdit, ani vyvrátit) |
+   | Insight into Challenge | *„name the friction honestly, without softening it into comfort"* | **těžká věta** bez útěchy |
+   | Reflection | *„open a mirror, not an answer; turn them inward"* | **otázka** |
+   | General Guidance | *„let the rune lead where it will"* | **los** ze všech tvarů: věta · dvě možnosti · otázka · **napětí** (od 2026-09-26) · s vlastní otázkou tazatele i **návrat k otázce** |
+
+   **Kam dosedne:** mění se JEDINÁ fráze v mostu (`in the seeker's life` → fráze oblasti), zbytek znění je společný —
+   jedna cesta kódem, oblast jako data (§18). **Od 2026-09-25 má každá oblast 3–5 PODOB** (KUKY: „podoby jsou dobré"):
+   na čtení se losuje jedna a nese ji řádek oblasti i most — proti opakování slova oblasti (Career „work" 8/8). Proč a
+   měření → `RUNAR_DECISIONS.md` 2026-09-25 (1). Oblast v ostatních větách zůstává tím, čím je dnes: **zdrojem obrazu**,
+   ne cílem tvrzení. Tím se nevrací studené čtení, které ta změna v srpnu srazila (EN 10/16 → 2,3/16).
+
+   ⚠️ **Čtyři stavy, protože obě pole jsou NEPOVINNÁ a nezávislá:** nic (los tvaru, most bez oblasti) · jen AREA
+   (los tvaru, dosedne do oblasti) · jen SEEKING (tvar z rejstříku, bez oblasti) · obojí.
+   ⚠️ **Přednost při sporu: těžkost runy > rejstřík.** Těžká runa nikdy nedostane útěšný tvar — vezme se těžké znění
+   TOHO tvaru, který rejstřík zvolil (otázka bez útěchy, dvě možnosti bez útěchy). Jinak by Reflection změkčila Hagalaz.
+   ⚠️ **Rameno Reflection hlídat:** otázkový tvar umí navádět a v Asku dělal doslovové ocásky — vlastní kontrola v testu.
+   ⚠️ **Dvě možnosti = pravidlo pro čočku životní runy** — čočka se projeví jako jedna z možností, nejmenovaná.
+   **Z čeho most vyrůstá (od v4.53, KUKY 2026-09-24 „zkus to"):** z **otázky runy** — té, kterou končí ownerův popis
+   runy a text v Kolekci. Model ji dostane jako zdroj, ne jako větu k vyslovení; jen single a jen bez vlastní otázky
+   tazatele. Proč a měření → `RUNAR_DECISIONS.md` 2026-09-24 (16). **Od v5.04 ne u konce ve tvaru otázky** — tam ji sol znovu
+   položil skoro doslova (`RUNAR_DECISIONS.md` 2026-10-07 (4)).
+   **Znění vlastní KÓD, doc ho neopisuje (§20):** `SEEK_SHAPE` · `AREA_FACES` (podoby oblastí, od 2026-09-25) · `ENDING_OPEN/HEAVY(_IS)` ·
+   `_runeQuestion` v `v2/runar-utils.js`, výjimka v `_domainContext` (`runar-character.js`). Nasazeno v4.36 + v4.37.
+   Oba pooly mají tytéž tvary ve stejném pořadí, takže **každý tvar má i těžký protějšek** — těžkost runy
+   volí pool, rejstřík volí tvar. **Napětí** (dvě věci naráz, nevyřešené — ne volba „X, nebo Y") padá jen v losu:
+   owner chce *„více různých konců, ne stejné"* — tvary se PŘIDÁVAJÍ, pevné tvary rejstříků zůstávají. Proč a měření →
+   `RUNAR_DECISIONS.md` 2026-09-26 (1).
+   <!-- changelog 2026-09-26: „tři tvary" → tvary bez počtu (počet vlastní kód); řádek General nese napětí. -->
+   <!-- changelog 2026-09-20: při vkládání mechanismu mi tu zůstal osiřelý odstavec z původního znění bodu 3
+        („tři tvary + zvláštní znění pro těžké runy") — dvakrát totéž a navíc zastaralé, protože v4.34 dodala
+        těžký protějšek každému tvaru. Sloučeno; ukazatel na backlog nahrazen ukazatelem na kód, znění je nasazené. -->
+4. **Délka: 4 věty; strop slov se nemění** (KUKY: „když bude víc, bude víc — proč bys mu číslem říkal, že může ještě
+   víc"). Průměr se NEzapisuje do docu — počítá ho `scripts/delky_cteni.js` z exportu DB; los délky se od 2026-09-20
+   zapisuje do `prompt_draws.len`.
+5. **Sezóna v promptu NENÍ** (od v4.32-bez-sezony, KUKY 2026-09-20 nad „A child crosses the late-summer floor":
+   „zabírá místo… v místnosti je to naprosto nedůležitá informace"). Řádek, funkce i štítky smazány — **34 ze 108**
+   obrazů (31 %) je registr D = domácí scéna, kam roční období nemá kam dosednout. Sezóna dál rozhoduje o VÝBĚRU
+   obrazu (filtr drží u 36/108 řádků, které sezónu nesou), jen už není pokynem v textu. Kdo ji oživí, musí napřed
+   vyřešit domácí scény. Detail: DECISIONS 2026-09-20 (3) a (5).
+   <!-- opravila CODE-tune 2026-09-20: bod popisoval stav „podmínka + owner zvažuje odebrání", ale produkce už
+        sezónu odebranou měla (§20 — při sporu vyhrává produkce). Minimální zásah do cizí domény, §13. -->
+6. **Co je vědomě NEvyřešené:** závěr spreadů (vlastní stavba per spread, NE kopie mostu ze single — viz backlog) ·
+   tvar esence (spona „<Runa> is" — dělá ji dvojice pokynů „pojmenuj + řekni, co dělá"; řešení = los rámů, znění je
+   obsah ownera) · umístění jména člověka mimo esenční větu · LIST RUNY (6 polí) · volba modelu až po pravidlech.
 
 ## Příběh uživatele — Rune Seeker sleduje cestu Ódina
 
@@ -1017,115 +1154,10 @@ Zakládací Norny jsou **zdarma pro každého přihlášeného, jednou** — ser
 bez odečtu a bez měsíčního stropu). ⚠️ Do 2026-10-10 tu stálo „Rune Seeker platí kredity, Standard/Premium 3 z limitu“.
 Po dokončení se kořeny uzamknou navždy — nelze je změnit.
 
-### Kořeny — jak silí
-Kořeny nejsou statické. Prohlubují se s každou session.
-Když se runa z kořenové session vrátí v pozdější session → posílí kořen.
-Vzácný moment: všechny tři kořenové runy v jedné session → výjimečná událost.
-
-### Branch systém — jak každá session ovlivní strom
-Výpočet je deterministický, bez Claude API.
-
-**Směr větve:**
-```
-Nahoru        průlom, jasnost, nový začátek
-Dolů          kořeny, minulost, původ
-Do strany     rozšíření, nová perspektiva
-Zpět k kmeni  návrat, uzavření, integrace
-```
-
-**Délka větve** = váha session (krátká = ticho, dlouhá = průlom)
-
-**Charakter větve:**
-- Tenká, rovná: přímá session, jasné pojmenování
-- Kroucená: napětí, nevyřešené otázky
-- Silná: velká osobní váha
-- Rozeklnaná: hloubka bez uzavření
-
-**Co určuje charakter větve:**
-- **Norns osa** (intention + area + seeking) → **VÝŠKA** větve (urð = kořeny · verðandi = střed · skuld = koruna)
-  Priorita: intention (nejsilnější) › area › seeking; fallback = world runy.
-- **Element runy** → **BARVA** větve (Fire/Water/Air/Earth/Shadow). Life Rune = KMEN (uživatel), NE barva-element.
-- **Ætt runy** → **CHARAKTER** větve (způsob růstu, ne výška):
-  Freyjina = pevné/nesoucí · Heimdallova = kroucené/uzlovité · Týrova = světlé/průlomové
-- **Area of Life** → **STRANA** (levá = vnitřní svět / pravá = vnější svět)
-- **Seeking** → modifikátor Norns osy (Insight/Reflection→urð · Clarity/Confirmation→verðandi · General=neutrál)
-- **Počet vyplněných polí** → váha větve
-- **Čas od posledního čtení** → **jen bonus** za pauzu. Penalizace za brzké čtení NEEXISTUJE
-  a existovat nebude (KUKY 2026-07-18).
-
-Sezónní textura a lunární záře větve: vrstva smyslu, plánováno — implementace: druhá fáze.
-
-### Svislá osa — Norny (výška větve)
-
-Výška větve = Norns osa = kde ve tvém příběhu čtení žije.
-Větev roste nahoru ke skuld nebo dolů k urð podle **kontextu čtení** — ne podle runové rodiny.
-
-```
-SKULD    → koruna     co musí být · záměr · pohon · budoucnost
-VERÐANDI → střed      co se právě tká · přítomný okamžik · živá nit
-URÐ      → kořeny     co bylo utkáno · základ · původ · minulost
-```
-
-Výpočet: intention (nejsilnější) + area + seeking → vážené hlasování urð(−1)…skuld(+1).
-Fallback (prázdný formulář): world runy (Asgard→skuld · Midgard→verðandi · Hel→urð).
-→ Výška funguje vždy, i u rychlého single, a pořád je "osudová", ne jen taxonomie.
-
-Prázdná zóna = informace sama o sobě. Člověk bez korunních větví teprve ohlíží zpátky.
-
-**Ætty = charakter větve (způsob růstu, ne výška):**
-
-| Ætt | Runy | Charakter větve |
-|-----|------|----------------|
-| Freyjina (1. Ætt) | Fehu–Wunjo | pevné, nesoucí váhu — energie světa a těla |
-| Heimdallova (2. Ætt) | Hagalaz–Sowilo | kroucené, uzlovité — transformace a skryté |
-| Týrova (3. Ætt) | Tiwaz–Dagaz | světlé, průlomové — spravedlnost a završení |
-
-Ætta dominance (3+ run ze stejné skupiny) = vzorec → pulz větví dané skupiny.
-Implementace: vrstva smyslu, plánováno.
-
-### 5 elementů (barva větve)
-
-5 barev-elementů: **Fire · Water · Air · Earth · Shadow** (Shadow = studené/skryté runy: Isa, Hagalaz, Perth, Eihwaz, Blank).
-Element = barva + růstová obraznost (Fire: jiskra→sopka · Water: kapka→oceán · Air: vánek→polární záře · Earth: láva→louka · Shadow: šero→led→propast).
-**Life Rune = KMEN = uživatel, NE barva-element.** Kanonický rune→element mapping = `runar-runes.js` (některé runy dvojelementové).
-
-### Levá a pravá strana stromu
-
-**Levá strana — vnitřní svět**
-Introspekce, minulost, vztah se sebou, stín. Runy vody a země.
-`Isa, Perth, Hagalaz, Nauthiz, Berkana, Ingwaz, Laguz`
-
-**Pravá strana — vnější svět**
-Vztahy, komunikace, cesta, akce. Runy vzduchu a ohně.
-`Raidho, Ehwaz, Mannaz, Ansuz, Kenaz, Tiwaz, Sowilo`
-
-### Pre-reading formulář → strom
-
-Area of Life → strana + příspěvek k Norns ose:
-
-| Area of Life | Element | Strana | Norns příspěvek |
-|---|---|---|---|
-| Inner Growth | Water/Earth | levá (dovnitř) | urð |
-| Healing & Wellbeing | Water/Earth | levá (dovnitř) | urð |
-| Family & Home | Earth | levá (dovnitř) | urð |
-| Love & Relationships | Water/Air | pravá (ven) | verðandi |
-| Crossroads & Decisions | Fire/Air | střed | verðandi |
-| Purpose & Path | Air | pravá (ven) | skuld |
-| Career & Creativity | Fire | pravá (ven) | skuld |
-| Spirituality | Air | střed | skuld |
-
-Seeking → modifikátor Norns osy (ne multiplikátor váhy):
-
-| Seeking | Norns modifikátor |
-|---|---|
-| General Guidance | neutrál |
-| Confirmation | → verðandi |
-| Clarity | → verðandi |
-| Insight into Challenge | → urð |
-| Reflection | → urð |
-
-Nejsilnější urð kombinace (čtení jde hluboko ke kořenům):
-Intention: Understanding the past + Area: Inner Growth / Healing + Seeking: Reflection / Insight
+### Větve, kořeny, výška, strana, element — kánon v `RUNAR_TREE.md`
+Jak čtení roste do stromu (kořeny a jejich prohlubování, výška = Norny, strana = oblast, element = barva, ætt = charakter růstu)
+vlastní `RUNAR_TREE.md` §2–§5 a kód. Tady to do 2026-10-24 stálo podruhé a starší verzí, která se s kánonem hádala (oblast a
+hledání do výšky, strana podle seznamu run — neplatí od 2026-10-09/10).
 
 ### Kmen (trunk) — jak se odhalí
 Kmen je Life Rune — vždy tam byl, od prvního dne, z data narození.
@@ -1269,144 +1301,6 @@ Implementováno ve všech 3 generováních ✅:
 
 Každý nový prompt musí žít v mytologickém světě.
 Rúnar není asistent. Je průvodce na cestě Rune Seekera.
-
-## Image pool — register obrazů (D/E/P)
-*(kritéria vlastní Cowork — handoff 2026-08-23; CODE jen ukládá; hodnoty hlídá smoke ㉠ — `verify_image_register.js`; do 2026-10-10 tu stálo „㊱“, ale smoke od ㉟ pokračuje znaky ㉠, ㉡… a „㊱“ ve výpisu nenajdeš,
-sloupec 7 v `RUNE_IMAGES`)*
-- **D = DOMÁCÍ/INTIMNÍ:** uvnitř, lidské ruce, krb, malé (káva, chléb, lampa, ponk, klíče, hodiny, telefon, pletení).
-- **E = ŽIVELNÉ/VELKÉ:** syrová příroda, počasí, obloha, velké (ledovec, kroupy, láva, hver, fjord, půlnoční slunce).
-- **P = PASTORÁLNÍ/STŘED:** obdělaná půda, zvíře, rostlina, člověk jdoucí krajinou — přemosťuje (ovce, jeřáb, kořen, varða, kindagata, torfveggur).
-- **Test:** „nepatřičné vedle ledovce?" = D · „nepatřičné vedle šálku na stole?" = E · „sedí vedle obojího?" = P.
-- **Hraniční (rozhodnuto):** venkovní lidské stavby (torfveggur, varða, leiðarsteinn) = P (D je jen vnitřek) · nebeské (polárka, norðurljós, miðnætursól) = E · geotermál/láva = E · osvětlená krajina (slunce do údolí) = P · ⚠️ abstraktní obraz (chování, ne scéna — Tiwaz „stojíš za slovem") = D nejblíž; od 2026-09-10 je to řádný TYP (situační), viz „Typ obrazu" níž.
-- Zamýšlené použití = výběr-kongruence při skládání spreadů (D×E kolize → volit kongruentní variantu; SMĚR, nestaví se do rozhodnutí o Vegvísiru).
-
-### Typ obrazu — fyzický · situační · slovní (KUKY 2026-09-10, ratifikováno)
-Druhá osa vedle D/E/P: **D/E/P říká KDE obraz stojí, typ říká JAK nese význam.** Vzniklo z měření
-identity a z povahy chybějící práce (87 % nepokrytých stránek run jsou abstrakce — čísla vlastní
-`RUNAR_EVAL_LOG.md` 2026-09-09/10, tady se neopisují, §20).
-
-1. **FYZICKÁ SCÉNA** — věc/živel koná. Nese runy, jejichž jádro JE věc (Isa-led, Laguz-voda,
-   Berkana-bříza, Kenaz-oheň…). ⚠️ Věc musí KONAT, ne stát — nehybná věc sklouzává k Ise.
-2. **SITUAČNÍ OBRAZ** — člověk koná; čin s cenou; žádná rekvizita, která patří jiné runě.
-   Nese abstraktní stránky (justice, strength, courage…). Doloženo u nejtěžších run
-   (Uruz „You lift the end…", Tiwaz „You give back the change…").
-3. **SLOVNÍ/VÝPOVĚDNÍ OBRAZ** — výpověď o stavu, bez věci i bez děje. **První pilot prošel
-   branou 3/3** (2026-09-10, Mannaz-`mind`) — „nula měření" už neplatí, ale **jeden kandidát
-   není doklad typu**; před širším použitím pořád platí pilot + měření pestrosti.
-   ⚠️ **V produkci (2026-10-01):** slovní obraz Mannaz *„Hugurinn ber mann hálfa leið“* dostal jedno čtení — model ho pominul
-   a postavil si vlastní scénu; brána s popisy ho dala k Ehwaz („mysl nese“ = kůň nese jezdce). Z banky odešel
-   (DECISIONS 2026-10-01 (1), měření EVAL_LOG 2026-10-01 (1)). Jedno čtení — doklad, ne pravidlo.
-
-**Pravidla:** typ se **páruje s povahou stránky runy** (živel→fyzický · ctnost/čin→situační ·
-stav/přechod→kandidát na slovní), nikdy plošná preference — ⭐ **doloženo obráceně dvakrát:**
-u tří abstraktních run vyhrál situační, u pěti run s konkrétní kotvou vyhrál fyzický (86 % vs
-67 %). Kdo si vybere jeden typ plošně, spadne na té druhé skupině · **žádné kvóty typů předem** — počty
-ať vyjdou z mapy mezer a z brány · **každý obraz jakéhokoli typu projde identitní branou**
-(generátor navrhuje, soudce rozhoduje; přebytek kandidátů = normální provoz, ne selhání) ·
-plus dvě síta výš a kontrola „čí je to pozemek" (předmět/sloveso nesmí být jádrem sousední runy).
-
-### Obraz od modelu (KUKY 2026-10-03)
-*Changelog: 2026-10-03 založeno — owner: „pokud model sám něco vymyslí a zní to dobře, tak to můžeme použít" (u scény,
-kterou model vymyslel v jeho Asku ke Kenazu). Rozhodnutí `RUNAR_DECISIONS.md` 2026-10-03 (14).*
-- Scénu, kterou si model sám vymyslí ve čtení nebo v Asku, smí banka převzít. Kandidáty sbírá reportér: **✦ Keep this**.
-- Jde stejnou cestou jako každý obraz: identitní brána (výš), islandština psaná od začátku a ověřená, register, oblast.
-  **„Zní dobře" bránu nenahrazuje:** první kandidát (Kenaz, stůl pod lampou a prázdná židle) zněl dobře a soudci ho dali
-  k Othile 2/3 — scéna doma táhne k domovu (`RUNAR_EVAL_LOG.md` 2026-10-03 (4)). Přepsané znění (rozsvícení, které židli
-  odhalí) šlo do banky **bez brány, na ownerovo slovo** — výjimka pro ten jeden řádek (`RUNAR_DECISIONS.md` 2026-10-04 (1)).
-
-### Délka a tvar obrazu — klíč ke zkrácení (KUKY 2026-09-28, změřeno)
-*Changelog: 2026-09-28 založeno — owner: „najdi k tomu klíč jak to zkrátit… už máme dost informací o tom, co zní dobře
-a co dělá problémy“. Důvod: obrazy kola 3 měly medián 17 slov (starší banka 13) a skládaly se z příběhů o dvou událostech.*
-
-1. **Jedna scéna, jeden, kdo koná.** Obraz patří runě toho, kdo v něm koná — ledovcová řeka valící balvany šla 3/3 k Laguz,
-   ne k Uruz (síla v obraze JE voda). U Uruz musí konat tělo.
-2. **Žádná druhá událost.** „…a pak se stalo ještě…“ (trajekt nepluje **a** svatba je s polovinou hostů) je příběh, ne obraz.
-   Pokračování téhož děje smí zůstat („the track bends round the lava and comes back to its line“).
-3. **Žádné časové ani kalendářní slovo, které runu nenese.** Kdy se obraz smí ukázat, řídí sloupec sezóny, ne text
-   („…no one will open it before midwinter“ — owner: *„vůbec se mi nelíbí“*). **Výjimka = slovo, které runu nese:**
-   Dagaz „morning… all at once“ — zkrácený bez nich spadl z 3/3 na **0/3** (zbylo obyčejné světlo → Kenaz/Sowilo).
-4. **Slovo, které nese runu, zůstává; ostatní jde pryč.** Po zkrácení obraz vždy znovu projde branou — kratší obraz může
-   identitu ztratit (2026-09-28: 12/15 drželo, 3 ne).
-5. **Délka kolem 12 slov** (medián zkrácených, které prošly branou; obrazy, které owner označil za dobré, mají 11–16).
-   ⚠️ **Délka obrazu NEřídí délku první věty čtení** (r = 0,02, n = 72; DECISIONS 2026-09-23 (10)) — důvod ke krácení je
-   tvar a opisování (z dlouhého obrazu model převzal 5 ze 7 slov, EVAL_LOG 2026-09-14), ne první věta.
-
-
-
----
-
-## Stavba Single čtení — základ (2026-09-20, KUKY + CODE-read; měření vlastní `RUNAR_EVAL_LOG.md` 2026-09-18 až 20)
-
-*Changelog: 2026-09-20 založeno — owner: „vytvořili jsme tu základ něčeho, co jsem chtěl posunout" a ten základ nesmí
-žít jen v konverzaci a v měřicích protokolech. Tady bydlí SMĚR; čísla a doklady v EVAL_LOGu, soupis všech pák u CODE-tune.*
-
-**Čtení = scéna × vztah runy × most k člověku.**
-1. **Runa do čtení vstupuje VZTAHEM (slovesem), ne rekvizitou.** „Něco drží, zatímco zbytek jde dál" je Isa; led si
-   doplní scéna. Doklad: jedna scéna (průsmyk) unesla čtyři runy a nepletly se; bez dodané scény se runa sjede do svého
-   živlu (Isa → led, Laguz → potok). Proto jádro obrazu + místo z losu (v produkci od v4.30 u Raidha).
-2. **Věty mají v praxi role, i když je nikdo nepředepisuje** (předepsat je bylo měřeno a zamítnuto — dražší, nic nedá):
-   věta 1 = úhel + místo/scéna · věta 2 = esence (jméno runy; NEJPŘETÍŽENĚJŠÍ — padá tam i jméno člověka a aspekt) ·
-   poslední = konec/most; „you stand" na začátku dělá úhel [6], na konci dělal konec (vypuštěno).
-3. **Most k člověku** — jediné místo, kde smí čtení **tvrdit** něco o životě člověka, vždy jako MOŽNOST („this may be…"),
-   nikdy diagnóza ani krok. ⚠️ **Věta před mostem smí nést pohyb obrazu do zvolené oblasti** (KUKY 2026-09-24: *„pořád
-   mluví skrze obraz, neříká, co člověk dělá, ale co se děje v obraze"*) — to tvrzení není; hranici vlastní sekce
-   „Cold reading" výš. **Od 2026-09-20 není most losovaný naslepo — řídí ho to, co člověk zadal:**
-
-   ⭐ **Most: AREA určuje KAM dosedne, SEEKING určuje JAKÝ TVAR vezme** (KUKY 2026-09-20: *„ano, most ať dosedne
-   do AREA a tvar ať určuje SEEKING"*). Není to nová myšlenka — je to první mechanismus ke kánonu **„runa je základ,
-   oblast je otázka, kterou musí runa vzít v potaz"** (KUKY 2026-08-16, výš v tomhle docu), který byl dosud nenaplněný
-   a **změřený jako nenaplněný**: oblast se ve čtení projevovala hlavně ozvěnou svého slova, tři měření kolem nuly.
-   Stejně tak `seeking` už v „Reading contract" (výš) vlastní roli **rejstřík — mód výkladu**; tady dostává místo,
-   kde se ten mód projeví, místo aby ho uprostřed čtení rušilo NO COLD READING (doloženo skládačkou, EVAL_LOG 2026-09-20).
-
-   **Tvar je 1:1 odvozený ze znění, které rejstřík UŽ má v `_registerContext` — nic se nevymýšlí:**
-   | SEEKING | co rejstřík dnes žádá | tvar mostu |
-   |---|---|---|
-   | Clarity | *„bring one thing into focus, not one answer"* | **věta** — jedna věc pojmenovaná |
-   | Confirmation | *„neither confirm nor refute"* | **dvě možnosti** (jediný čestný tvar, když nesmím ani potvrdit, ani vyvrátit) |
-   | Insight into Challenge | *„name the friction honestly, without softening it into comfort"* | **těžká věta** bez útěchy |
-   | Reflection | *„open a mirror, not an answer; turn them inward"* | **otázka** |
-   | General Guidance | *„let the rune lead where it will"* | **los** ze všech tvarů: věta · dvě možnosti · otázka · **napětí** (od 2026-09-26) · s vlastní otázkou tazatele i **návrat k otázce** |
-
-   **Kam dosedne:** mění se JEDINÁ fráze v mostu (`in the seeker's life` → fráze oblasti), zbytek znění je společný —
-   jedna cesta kódem, oblast jako data (§18). **Od 2026-09-25 má každá oblast 3–5 PODOB** (KUKY: „podoby jsou dobré"):
-   na čtení se losuje jedna a nese ji řádek oblasti i most — proti opakování slova oblasti (Career „work" 8/8). Proč a
-   měření → `RUNAR_DECISIONS.md` 2026-09-25 (1). Oblast v ostatních větách zůstává tím, čím je dnes: **zdrojem obrazu**,
-   ne cílem tvrzení. Tím se nevrací studené čtení, které ta změna v srpnu srazila (EN 10/16 → 2,3/16).
-
-   ⚠️ **Čtyři stavy, protože obě pole jsou NEPOVINNÁ a nezávislá:** nic (los tvaru, most bez oblasti) · jen AREA
-   (los tvaru, dosedne do oblasti) · jen SEEKING (tvar z rejstříku, bez oblasti) · obojí.
-   ⚠️ **Přednost při sporu: těžkost runy > rejstřík.** Těžká runa nikdy nedostane útěšný tvar — vezme se těžké znění
-   TOHO tvaru, který rejstřík zvolil (otázka bez útěchy, dvě možnosti bez útěchy). Jinak by Reflection změkčila Hagalaz.
-   ⚠️ **Rameno Reflection hlídat:** otázkový tvar umí navádět a v Asku dělal doslovové ocásky — vlastní kontrola v testu.
-   ⚠️ **Dvě možnosti = pravidlo pro čočku životní runy** — čočka se projeví jako jedna z možností, nejmenovaná.
-   **Z čeho most vyrůstá (od v4.53, KUKY 2026-09-24 „zkus to"):** z **otázky runy** — té, kterou končí ownerův popis
-   runy a text v Kolekci. Model ji dostane jako zdroj, ne jako větu k vyslovení; jen single a jen bez vlastní otázky
-   tazatele. Proč a měření → `RUNAR_DECISIONS.md` 2026-09-24 (16). **Od v5.04 ne u konce ve tvaru otázky** — tam ji sol znovu
-   položil skoro doslova (`RUNAR_DECISIONS.md` 2026-10-07 (4)).
-   **Znění vlastní KÓD, doc ho neopisuje (§20):** `SEEK_SHAPE` · `AREA_FACES` (podoby oblastí, od 2026-09-25) · `ENDING_OPEN/HEAVY(_IS)` ·
-   `_runeQuestion` v `v2/runar-utils.js`, výjimka v `_domainContext` (`runar-character.js`). Nasazeno v4.36 + v4.37.
-   Oba pooly mají tytéž tvary ve stejném pořadí, takže **každý tvar má i těžký protějšek** — těžkost runy
-   volí pool, rejstřík volí tvar. **Napětí** (dvě věci naráz, nevyřešené — ne volba „X, nebo Y") padá jen v losu:
-   owner chce *„více různých konců, ne stejné"* — tvary se PŘIDÁVAJÍ, pevné tvary rejstříků zůstávají. Proč a měření →
-   `RUNAR_DECISIONS.md` 2026-09-26 (1).
-   <!-- changelog 2026-09-26: „tři tvary" → tvary bez počtu (počet vlastní kód); řádek General nese napětí. -->
-   <!-- changelog 2026-09-20: při vkládání mechanismu mi tu zůstal osiřelý odstavec z původního znění bodu 3
-        („tři tvary + zvláštní znění pro těžké runy") — dvakrát totéž a navíc zastaralé, protože v4.34 dodala
-        těžký protějšek každému tvaru. Sloučeno; ukazatel na backlog nahrazen ukazatelem na kód, znění je nasazené. -->
-4. **Délka: 4 věty; strop slov se nemění** (KUKY: „když bude víc, bude víc — proč bys mu číslem říkal, že může ještě
-   víc"). Průměr se NEzapisuje do docu — počítá ho `scripts/delky_cteni.js` z exportu DB; los délky se od 2026-09-20
-   zapisuje do `prompt_draws.len`.
-5. **Sezóna v promptu NENÍ** (od v4.32-bez-sezony, KUKY 2026-09-20 nad „A child crosses the late-summer floor":
-   „zabírá místo… v místnosti je to naprosto nedůležitá informace"). Řádek, funkce i štítky smazány — **34 ze 108**
-   obrazů (31 %) je registr D = domácí scéna, kam roční období nemá kam dosednout. Sezóna dál rozhoduje o VÝBĚRU
-   obrazu (filtr drží u 36/108 řádků, které sezónu nesou), jen už není pokynem v textu. Kdo ji oživí, musí napřed
-   vyřešit domácí scény. Detail: DECISIONS 2026-09-20 (3) a (5).
-   <!-- opravila CODE-tune 2026-09-20: bod popisoval stav „podmínka + owner zvažuje odebrání", ale produkce už
-        sezónu odebranou měla (§20 — při sporu vyhrává produkce). Minimální zásah do cizí domény, §13. -->
-6. **Co je vědomě NEvyřešené:** závěr spreadů (vlastní stavba per spread, NE kopie mostu ze single — viz backlog) ·
-   tvar esence (spona „<Runa> is" — dělá ji dvojice pokynů „pojmenuj + řekni, co dělá"; řešení = los rámů, znění je
-   obsah ownera) · umístění jména člověka mimo esenční větu · LIST RUNY (6 polí) · volba modelu až po pravidlech.
 
 ## Slova, která dáváme modelu — směr pro formulace (KUKY 2026-10-06)
 
