@@ -1,4 +1,4 @@
-// Provenienční tagy [kánon] / [Agndofa] jsou INTERNÍ poznámky (žijí v RUNAR_DESIGN.md).
+// Provenienční tagy [kánon] / [Agndofa] jsou INTERNÍ poznámky (žijí v RUNAR_DESIGN.md a RUNAR_MYTOLOGIE.md).
 // NESMÍ prosáknout do user-facing plochy — UI stringy (translations), prompty
 // (character.js → text čtení), HTML. Kdyby ano, uživatel by je viděl v appce nebo
 // přímo ve čtení od Rúnara.
@@ -28,7 +28,7 @@ for (const f of files) {
 if (hits.length) {
   console.log('CHYBA: interní provenienční tag [kánon]/[Agndofa] v user-facing ploše:');
   hits.forEach(h => console.log('  ' + h));
-  console.log('Tagy patří JEN do RUNAR_DESIGN.md. Z user-facing (UI/prompt/HTML) odstranit.');
+  console.log('Tagy patří JEN do RUNAR_DESIGN.md a RUNAR_MYTOLOGIE.md. Z user-facing (UI/prompt/HTML) odstranit.');
   process.exit(1);
 }
 console.log('OK    ' + files.length + ' user-facing souborů (v2/*.js,*.html), žádný interní tag neprosákl.');

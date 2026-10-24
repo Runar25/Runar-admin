@@ -1408,7 +1408,7 @@ var RP_LIFE = {
 };
 
 // 2026-10-11: parametr isPremium pryč — builder ho nikdy nepoužil (golden: liferune_prem_* = liferune_* bajt po bajtu) a čtení
-// životní runy je pro všechny stejné: premium je „jen víc čtení“ (CLAUDE.md Tier systém, RUNAR_DESIGN.md „Tree of Life per tier“).
+// životní runy je pro všechny stejné: premium je „jen víc čtení“ (CLAUDE.md Tier systém, RUNAR_SPREADY.md „Tree of Life per tier“).
 function buildLifeRuneBase(name, rune, day, month, year, lang) {
   var L = (lang === 'is') ? 'is' : 'en';
   var S = RP_LIFE[L];
@@ -1472,9 +1472,9 @@ function buildLifeRunePrompt(name, rune, day, month, year, lang, corrections) {
 // (KUKY 2026-08-12). Do čtení se to nikdy nedostane: `_dvergarContext` se volá výhradně
 // z `buildAskPrompt` a bez shody vrací ''.
 //
-// ⚠️ Vlastnictví (§20): LORE — kánon, zdroje, umístění v Agndofě — bydlí v `RUNAR_DESIGN.md`
+// ⚠️ Vlastnictví (§20): LORE — kánon, zdroje, umístění v Agndofě — bydlí v `RUNAR_MYTOLOGIE.md`
 // („Dvergar — katalog"). Tady je jen JEDNA věta na postavu: to, co smí Rúnar říct.
-// Přidáváš postavu? Napřed do DESIGN, sem až výtah.
+// Přidáváš postavu? Napřed do MYTOLOGIE, sem až výtah.
 //
 // `a` = na co to reaguje v otázce (malými písmeny, stačí podřetězec — pokryje i pády).
 var DVERGAR = [
