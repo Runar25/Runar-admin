@@ -3515,6 +3515,43 @@ function kamenUctuOziv(svg, ms) {
   svg._ozivT = setTimeout(function () { svg.classList.remove('zivy'); }, ms || 5000);
 }
 
+// ── PROUŽEK POD HERO (#hero-down) — appka i web therunekeeper.com ─────────────
+// Od 2026-10-26 tady, ne v runar-app.js: web načítá jen runar-utils.js (owner 2026-10-26 přes CODE-web: „chci pro therunekeeper.com
+// mobil stejnou lištu s posuvníkem jako je v runar app“). Na stránce bez #hero-down (shrine) posluchač nic nedělá.
+// Prvek: <button class="hero-down" id="hero-down" onclick="scrollToReading()">; cíl dolů = hned pod lepkavou .topbar.
+// 2026-10-09 (KUKY: „proužek, na který při kliknutí se celá obrazovka posune na runy pod ní… tak aby nebyla potřeba prstem
+// posouvat, abych se dostal dolů na čtení“ · druhé kolo: „když ho použiji a skočí dolů, tak na druhé straně by měla být šipka
+// nahoru a při kliknutí najet zase zpět k Rúnarovi“). Proužek (#hero-down) je JEDEN a otáčí se: dokud stojí pod lištou níž na
+// obrazovce, ukazuje dolů a sjede tak, že zůstane hned pod lepící horní lištou (.topbar) nad záložkami čtení; jakmile je u lišty
+// nebo nad ní, ukazuje nahoru a vrátí stránku k Rúnarovi (začátek). Bez animace, když si ji člověk vypnul.
+function _heroDownNahoru() {
+  var p = document.getElementById('hero-down');
+  if (!p) return false;
+  var lista = document.querySelector('.topbar');
+  return p.getBoundingClientRect().top <= (lista ? lista.offsetHeight : 0) + 4;
+}
+function _heroDownStav() {
+  var p = document.getElementById('hero-down');
+  if (!p) return;
+  var nahoru = _heroDownNahoru();
+  if (p.classList.contains('nahoru') === nahoru) return;
+  p.classList.toggle('nahoru', nahoru);
+  p.setAttribute('aria-label', t(nahoru ? 'hero_up_aria' : 'hero_down_aria'));
+}
+function scrollToReading() {
+  var p = document.getElementById('hero-down');
+  if (!p) return;
+  var lista = document.querySelector('.topbar');
+  var cil = _heroDownNahoru() ? 0 : p.getBoundingClientRect().top + window.pageYOffset - (lista ? lista.offsetHeight : 0);
+  var bezPohybu = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.scrollTo({ top: Math.max(0, cil), behavior: bezPohybu ? 'auto' : 'smooth' });
+}
+var _heroDownRaf = 0;
+window.addEventListener('scroll', function () {
+  if (_heroDownRaf) return;
+  _heroDownRaf = requestAnimationFrame(function () { _heroDownRaf = 0; _heroDownStav(); });
+}, { passive: true });
+
 ;
 /* ===== v2/runar-character.js ===== */
 // ═══════════════════════════════════════════════════════

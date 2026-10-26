@@ -877,25 +877,8 @@ function openSidePanel() {
 // simply tell the truth“, „The stones have been keeping something for you“) — proti citátu o řádek níž i proti RUNAR_DESIGN
 // „zrcadlo, ne orákulum“; přepsány. IS „tilbúinn“ (jen mužský rod) nahrazeno „þegar þér hentar“.
 let _heroPhrase = null;
-// 2026-10-09 (KUKY: „proužek, na který při kliknutí se celá obrazovka posune na runy pod ní… tak aby nebyla potřeba prstem
-// posouvat, abych se dostal dolů na čtení“ · druhé kolo: „když ho použiji a skočí dolů, tak na druhé straně by měla být šipka
-// nahoru a při kliknutí najet zase zpět k Rúnarovi“). Proužek (#hero-down) je JEDEN a otáčí se: dokud stojí pod lištou níž na
-// obrazovce, ukazuje dolů a sjede tak, že zůstane hned pod lepící horní lištou (.topbar) nad záložkami čtení; jakmile je u lišty
-// nebo nad ní, ukazuje nahoru a vrátí stránku k Rúnarovi (začátek). Bez animace, když si ji člověk vypnul.
-function _heroDownNahoru() {
-  var p = document.getElementById('hero-down');
-  if (!p) return false;
-  var lista = document.querySelector('.topbar');
-  return p.getBoundingClientRect().top <= (lista ? lista.offsetHeight : 0) + 4;
-}
-function _heroDownStav() {
-  var p = document.getElementById('hero-down');
-  if (!p) return;
-  var nahoru = _heroDownNahoru();
-  if (p.classList.contains('nahoru') === nahoru) return;
-  p.classList.toggle('nahoru', nahoru);
-  p.setAttribute('aria-label', t(nahoru ? 'hero_up_aria' : 'hero_down_aria'));
-}
+// Proužek #hero-down (_heroDownNahoru, _heroDownStav, scrollToReading, posluchač scrollu) bydlí od 2026-10-26 v runar-utils.js —
+// sdílí ho web therunekeeper.com (owner: „stejnou lištu s posuvníkem jako je v runar app“).
 // Posune stránku tak, aby horní (nebo spodní) hrana prvku stála hned pod lepkavou lištou. 2026-10-13 (hlášení ownera c68119ac,
 // 1e562586): popis runy v Kolekci přistával dolů a po Begin ležela obrazovka na konci mřížky run — první runy mimo dohled.
 // Jeden pomocník pro všechna taková místa; bez animace, když si to systém nepřeje (jako scrollToReading).
@@ -910,20 +893,6 @@ function _posunNa(y) {
   var klid = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   window.scrollTo({ top: Math.max(0, y), behavior: klid ? 'auto' : 'smooth' });
 }
-function scrollToReading() {
-  var p = document.getElementById('hero-down');
-  if (!p) return;
-  var lista = document.querySelector('.topbar');
-  var cil = _heroDownNahoru() ? 0 : p.getBoundingClientRect().top + window.pageYOffset - (lista ? lista.offsetHeight : 0);
-  var bezPohybu = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  window.scrollTo({ top: Math.max(0, cil), behavior: bezPohybu ? 'auto' : 'smooth' });
-}
-var _heroDownRaf = 0;
-window.addEventListener('scroll', function () {
-  if (_heroDownRaf) return;
-  _heroDownRaf = requestAnimationFrame(function () { _heroDownRaf = 0; _heroDownStav(); });
-}, { passive: true });
-
 function getHeroPhrase() {
   const pool = t('hero_phrases');
   if (_heroPhrase === null) {
