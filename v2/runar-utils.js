@@ -1251,7 +1251,8 @@ function scrollToReading() {
   window.scrollTo({ top: Math.max(0, cil), behavior: bezPohybu ? 'auto' : 'smooth' });
 }
 var _heroDownRaf = 0;
-window.addEventListener('scroll', function () {
+// Jen ve skutečném prohlížeči: utils načítají i kontroly v sandboxu Node, kde window nemá addEventListener (smoke 2026-10-26).
+if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') window.addEventListener('scroll', function () {
   if (_heroDownRaf) return;
   _heroDownRaf = requestAnimationFrame(function () { _heroDownRaf = 0; _heroDownStav(); });
 }, { passive: true });
