@@ -62,9 +62,15 @@ legitimizace stavu, prompt se vzorem Fehu).
    *popis mechanismu* („ruka v křeči ztrácí cit pro materiál“) je obraz; *závěr* („Přesnost nevzniká tlakem, ale oporou“) je skrytá rada a
    poučka (E: „if a line could sit in a self-help book, it is not yours“). Lab: ubraný rozkaz se vrací jako „Notice / Consider“ (kroky
    17–18); totéž přiznává Gemini ve vlastní kritice. → měřit mechanismus bez závěru × se závěrem.
-4. **Psychická metafora** — ⚠️ obecný popis duševního stavu („člověk se snaží spočítat každý krok dopředu…“) má tvar položek Forerova testu
-   (obecný popis, který sedí na každého). Fyzický obraz to riziko nemá. Hypotéza k testu: psychický obraz jen jako pokračování konkrétní
-   scény, ne samostatný popis mysli.
+4. **Psychická metafora** — ~~„má tvar položek Forerova testu“~~ OPRAVA 2026-10-26 (owner: „tohle není popis duševního stavu, nebo jak to
+   myslíš? … ověř si to tam, kde tomu rozumí“). Ověřeno ve zdrojích (otevřeno: Dickson & Kelly 1985, Hyman 1977, Kuiken, Miall & Sikora
+   2004): **samotná věta Barnumův výrok NENÍ** — není oslovená čtenáři, není vágní ani dvojsečná, nelichotí. Barnumovou se stává **rámcem**:
+   stejný text označený „pro tebe“ se přijímá víc než „platí pro lidi obecně“ (Snyder & Larson 1972 přes Dickson & Kelly; Hyman: totéž
+   z „testu“ = osobní, z „astrologie“ = obecné). V osobním čtení a místo rady „nepřemýšlej“ přebírá předpoklad, že to čtenář dělá.
+   Vysoká četnost rozpoznání nevadí — *„People accept many Barnum statements because they do fit“* (Dickson & Kelly); klam je až závěr
+   „zná mě“. Scéna se sušenkou je jiný mechanismus: čtenář si sám vybaví podobnost s vlastní vzpomínkou (Kuiken et al., „simile-like“).
+   → psychický obraz podat **skrze konkrétní scénu nebo postavu**, ne jako výklad stavu, který tiše patří čtenáři. Kritéria k testu:
+   tvrdí/předpokládá text něco o čtenáři · seděl by stejně komukoli · pojmenovává stav, nebo ukazuje postavu, předmět a čin.
 5. **Legitimizace stavu** — jako obraz („zima není selhání léta“) v pořádku; jako pokyn „dej uživateli pochopit, že jeho stav je
    přirozený“ ne: tvrdí jeho stav a utěšuje (proti povaze bod 3).
 6. **Prompt Gemini** — nepřebírat: vzor Fehu by model opsal (krok 5 7/8; memory prompt-directive-makes-model-copy); seznam zakázaných slov
