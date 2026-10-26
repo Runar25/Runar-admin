@@ -59,6 +59,9 @@ a.btn-upgrade{display:inline-block;text-decoration:none;margin-top:6px}
       <a class="btn-upgrade" id="w-enter"></a>
     </div>
   </div>
+  <button type="button" class="hero-down" id="hero-down" onclick="scrollToReading()" aria-label="Scroll down">   <!-- proužek jako appka (2026-10-26) -->
+    <svg viewBox="0 0 24 12" aria-hidden="true" focusable="false"><path d="M2 2l10 8 10-8"/></svg>
+  </button>
 </section>
 
 <main class="w-main">
@@ -108,6 +111,8 @@ function render() {
   var enter = document.getElementById('w-enter');
   enter.textContent = WEB_TXT.enter[LANG] + ' →';
   enter.href = RUNAR_APP_URL;
+  var hd = document.getElementById('hero-down');
+  if (hd) hd.setAttribute('aria-label', U[hd.classList.contains('nahoru') ? 'hero_up_aria' : 'hero_down_aria'] || '');
   document.getElementById('w-brand').href = RUNAR_HOME_URL;
   document.getElementById('w-journey-sub').textContent = tp('journey_sub', { casts: vlp('cast', LANG) });
   document.getElementById('w-journey').textContent = WEB_TXT.plans[LANG] + ' →';
