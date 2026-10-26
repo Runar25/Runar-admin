@@ -104,6 +104,7 @@
     8. **Poměr zákazů a kladných pokynů** (systém ~62 % vět se zákazem) · Anthropic radí říkat, co dělat; OpenAI varuje jen před opakováním ·
        přepis po blocích s měřením · riziko: zákazy drží kánon (NO COLD READING) — přepsat znění, ne obsah.
     9. **Výsledek testu „systém × user“** (výš) rozhodne, kam v V3 patří stálá pravidla a kam per-čtení pokyny.
+    10. **Nová volba vedle AREA: „How I feel“** (owner 2026-10-26, hypotéza: *„jako máme AREA, tak by bylo how I feel — pod ním by byli třeba tired, lonely atd. … impuls pro Rúnara tomu přizpůsobit výklad“*; zapsat: *„12. ano“*). Co: člověk vybere, jak se teď cítí, a Rúnar podle toho upraví podání čtení · proč: materiál tazatele projekci poctivě kotví a co člověk sám zadal, smí Rúnar říct (DESIGN „zrcadlo“, „Cold reading“ definice bod 3) · jak: lab, až bude stát stavba v3; měřit, co volba ve čtení změní · rizika: přitakávání (Ask „Do not mirror the seeker“, tip „Does this confirm what I already feel?“ odstraněn DECISIONS 2026-10-06 (13)) · smutek a osamění blízko krize (pravidlo 112 v charakteru) · překryv se SEEKS (co člověk hledá) — rozhodnout, jestli vedle sebe, nebo místo.
 Owner 2026-10-12: *„prompt už je prakticky hotovo. takže pozor na to, co tam leží.“* Výzkum a nápady k promptu, obrazům, Asku a Vegvísiru
 (dřív „Reading quality“, nálady, HANDOFF57, audity obrazů, Vegvísir, testy „obrazy se potkávají“ a prompt z „Nálezů z workflow“) leží doslova
 v `docs/archive/RUNAR_BACKLOG_odlozene.md` jako ⏸ — nejsou to úkoly. Vrací se, až se vada objeví v nových čteních a owner na ni upozorní
