@@ -6482,3 +6482,25 @@ nedostupné). Data mimo repo: `~/runar-eval/podoby-bez-delky-2026-10-09.json`, `
   s pravidlem (5/5 v 2026-10-22 (1)).
 - **Závěr / hranice:** u této otázky a tohoto čtení věta v Asku nic nepřidává — drží to charakter a text čtení. Netestováno: tlačivější
   otázky („just tell me yes or no“), jiné runy, IS, odebrání i věty v charakteru; n = 3.
+
+## 2026-10-26 (1) — Opakované fráze v posledních 100 čteních: 3 ze 4 přijdou z promptu té doby (los), jedna je modelu; rámec „this may be“ stojí v každém pokynu konce
+
+- **Proč:** krok 6 plánu „z čeho se skládá čtení“ (owner 2026-10-22 „10. ano 11. ano“) — odkud se berou opakované fráze, bez nových volání.
+  Owner 2026-10-26: *„11 je málo. tak to vem na posledních 100 čtení.“* (11 = EN čtení pod posledním EN promptem v5.17–v5.20.)
+- **Jak:** `node scripts/fraze_z_historie.js --posledni 100 --min 5`. Každé čtení dostane prompt SVÉ verze (`scripts/utils/prompt_doby.js`:
+  commit podle `prompt_version`, builder té doby + losy z `prompt_draws`); u všech 100 se prompt složit povedlo. Fráze = 4+ slov ve ≥ 5
+  čteních. Pokus: výskyt, kde fráze v promptu stála, proti čtením, kde nestála — zvlášť sol a Claude.
+- **Data:** 100 EN čtení jedné runy 2026-09-25 → 2026-10-23 (sol 77, Claude 23), bez odhlášených z analýzy. Výstup s frázemi mimo repo
+  (složka runar-eval v domovské složce; skript ho vytvoří znovu stejným příkazem).
+- **Výsledek:**
+  1. „is the rune of“ (10 čtení) — **z promptu**: sol 5/5, kde ji esenční řádek předepsal („begins "<Runa> is the rune of"“, los slovesa),
+     4/72 bez ní. Obrácená páka sedí: bez fráze v promptu skoro zmizí.
+  2. „at the edge of (the)“ (7 čtení) — **z promptu**: pokyn úhlu „Open at the edge of the image…“ (los úhlu); sol 3/12 s ním, 3/65 bez něj.
+  3. „you see the whole“ (5 čtení, 5 run) — **model sám**: v promptu žádného z těch čtení nestála.
+  4. „this may be a“ (8 čtení) — samá pomocná slova, filtr ji nebere; „this may be“ ale stojí ve VŠECH pokynech konce (`ENDING_HEAVY` /
+     `ENDING_OPEN`, „names what this may be {L}“) → v promptu všech 100 čtení, srovnání bez ní nejde.
+- **Útok na nástroj (§25 B):** výpis n-gramů bez filtrů — čtveřic ve ≥ 5 čteních je jen 5 (medián čtení 61 slov); první verze filtru
+  (2 plnovýznamová slova) vyhodila právě rámce „is the rune of“ a „at the edge of the“ → filtr na 1 slovo. Známá kladná fráze („is the rune
+  of“ z losu slovesa) vyšla jako „z promptu“ — nástroj ji pozná.
+- **Hranice:** n malé (3–12 čtení s frází v promptu); verze nesou víc změn naráz a model se v čase střídal (proto zvlášť sol/Claude);
+  fráze kratší než 4 slova a myšlenka ✦ se neměřily; jen EN (IS jedné runy pod posledním promptem 2 čtení).
