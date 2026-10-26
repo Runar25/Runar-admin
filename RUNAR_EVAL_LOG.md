@@ -6504,3 +6504,23 @@ nedostupné). Data mimo repo: `~/runar-eval/podoby-bez-delky-2026-10-09.json`, `
   of“ z losu slovesa) vyšla jako „z promptu“ — nástroj ji pozná.
 - **Hranice:** n malé (3–12 čtení s frází v promptu); verze nesou víc změn naráz a model se v čase střídal (proto zvlášť sol/Claude);
   fráze kratší než 4 slova a myšlenka ✦ se neměřily; jen EN (IS jedné runy pod posledním promptem 2 čtení).
+
+## 2026-10-26 (2) — Kontrola kroku 6 (2026-10-26 (1)): nástroj měří správně, ale otázka byla položená na špatných datech a špatnou optikou
+
+- **Proč:** owner: *„projdi to kontrolou nejen výstupy, ale i jestli celá metodika byla správná, jestli je to vůbec k něčemu.“*
+- **Nástroj (obstál):** délka složeného promptu proti vstupním tokenům, které model účtoval, u všech 100 čtení: sol 4,1–4,4 znaku na token
+  ve všech verzích, Claude 4,7–5,3 (jiný tokenizér) — žádné čtení mimo vzorec svého modelu. Délka nedokazuje obsah, ale hrubou chybu
+  skládání (chybějící blok, jiná verze) by ukázala. „is the rune of“ 5/5 vs 4/72 drží (Fisherův test p ≈ 6·10⁻⁶).
+- **Vady metodiky:**
+  1. **Data jsou ownerovy testy, ne čtení lidí:** 94 ze 100 čtení je z jednoho účtu, 2 účty celkem; Hagalaz 28/100 (owner testuje jednu
+     runu záměrně); 19 obrazů taženo víckrát (54 čtení). Opakování frází tu odráží plán testů, ne chování appky u lidí.
+  2. **Doslovné čtveřice slov jsou špatná optika:** čtení mají medián 61 slov, doslovně se opakuje málo. Co se opakuje doopravdy, je
+     KOSTRA: začátky čtení („at the“ 8×, „you stand“ 7×, „beneath the“ 6×), začátky vět („what you“ 12×, „Hagalaz names“ 11×) a obraz
+     opsaný doslova (≥ 4 slova obrazu ve 30/100 čtení — to už měří monitor ozvěn). Kratší fráze („what remains“ 11×, „you cannot see“ 7×)
+     filtr 4+ slov nevidí.
+  3. **Nález = známé páky:** 2 ze 3 „z promptu“ jsou losy, které tam dáváme záměrně (sloveso esenčního řádku, úhel); nové je jen „you see
+     the whole“ (n = 5). „at the edge of“ 3/12 vs 3/65 je na hraně (p ≈ 0,045) a fráze byly vybrané podle četnosti — výběr sílu přeceňuje.
+  4. **Silná stránka, která zůstává:** u losovaných pák je „v promptu / mimo“ rozdělené náhodou uvnitř téže verze — to je skutečný
+     randomizovaný pokus, ne jen shoda v čase. U pevného textu promptu (mění se jen s verzí) takový pokus z historie nejde.
+- **Závěr:** `prompt_doby.js` (prompt čtení své doby) je k užitku — přesně přiřadí slovo ke kusu promptu, ověřeno. Hledání doslovných frází
+  na ownerových testech k rozhodování o promptu nestačí. Užitečné bude až na čteních lidí a měřené po kusech promptu a kostře věty.
