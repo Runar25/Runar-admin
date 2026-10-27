@@ -12347,3 +12347,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   (THE RUNE KEEPER, věta, motto, GAKKTU INN), sekce cesty s malou cestou čtyř kamenů (značka, jméno, cena; data jako okno appky) a karta,
   patička. Do 768 px beze změny (styly appky). Stránka je dál skrytá na /heim/; při spuštění nahradí landing (BACKLOG).
 - Affected doc(s): žádný (stav vlastní `web/site/heim/index.html` a `git log`).
+
+## 2026-10-27 (7) — Domovská stránka na počítači bez rámečků a bez šipky: posouvá se jen text, Rúnar je pevné pozadí (mění (6))
+
+- **Rozhodl:** owner 2026-10-27 k verzi podle (6): *„nechci to dělat jako oddělené panely. Rúnarovo pozadí chci zachovat… necháš tam šipku
+  z mobilu… rámečky už jsem ti omlátil o hlavu. odstraň ty rámečky. posouvat se bude čistě text. pozadí zůstává.“*
+- **Co:** od 769 px žádné rámečky sekcí ani proužek se šipkou (ten zůstává jen na mobilu). Rúnar je pevné pozadí vlevo jako na landingu
+  (portrét přes celou výšku, ukotvený tak, aby ve vysokém okně zůstal obličej i natažená ruka), vpravo ubíhá jen text: úvod, cesta
+  s kameny, karta, patička. Do 768 px beze změny.
+- **Proč to selhalo napoprvé:** sekce jsem převzal z mobilu i s rámečky appky a proužkem — přestože owner rámečky odmítl už 2026-10-19
+  (náhled stránky cesty, verze 3). Novou plochu je třeba stavět podle toho, co owner u stejné věci už řekl, ne převzít mobil.
+- Affected doc(s): žádný (stav vlastní `web/site/heim/index.html`).
