@@ -800,8 +800,9 @@ function updateSidePanel() {
   const giftEl = document.getElementById('sp-gift');
   const hide   = userTier === 'standard' || userTier === 'premium';
   if (giftEl) giftEl.style.display = hide ? 'none' : 'block';
-  // 2026-10-27: „ENTER … CODE“ z redeem_card_code (jeden zdroj s polem pro kód), bez úvodní runy — položky menu jsou bez značek
-  setText('sp-gift', tp('redeem_card_code', { card: vl('card', lang, 'dat_def').toUpperCase() }).replace(/^\u16a0\s*/, ''));
+  // 2026-10-27: „ENTER … CODE“ z redeem_card_code (jeden zdroj s polem pro kód), bez úvodní runy — položky menu jsou bez značek.
+  // setRuneText, ne setText (smoke ㉻, §5): kdyby se ořez runy minul, runa se nakreslí naším SVG, ne písmem.
+  setRuneText('sp-gift', tp('redeem_card_code', { card: vl('card', lang, 'dat_def').toUpperCase() }).replace(/^\u16a0\s*/, ''));
   setText('sp-delete-account', t('sp_delete_account'));
 
   // Topbar dropdown (logged-in only)
