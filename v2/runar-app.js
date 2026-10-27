@@ -738,11 +738,7 @@ function updateSidePanel() {
   if (!accEl) return;
   _updateInstallBtn();
   // 2026-10-19 (DECISIONS 2026-10-19 (9)): návštěvník účet nemá → bez nadpisu „YOUR ACCOUNT“ (visibility, ať ✕ zůstane vpravo) a s přihlášením.
-  setText('sp-tier-header', t('sp_account_title'));
-  const _hdr = document.getElementById('sp-tier-header');
-  if (_hdr) _hdr.style.visibility = 'hidden';   // 2026-10-27: účet je v nabídce pod jménem — hlavička menu jen s ✕
-  var _pathSec = document.getElementById('sp-path-section');   // cesta v menu jen návštěvníkovi (přihlášený ji má pod jménem)
-  if (_pathSec) _pathSec.style.display = currentUser ? 'none' : '';
+  setText('sp-tier-header', t('sp_menu_title'));   // 2026-10-27: nadpis MENU / VALMYND (účet je v nabídce pod jménem)
   setText('sp-signin-btn', t('sign_in_btn'));
   const _spIn = document.getElementById('sp-signin');
   if (_spIn) _spIn.style.display = currentUser ? 'none' : 'block';
@@ -759,6 +755,14 @@ function updateSidePanel() {
   if (lineMail) lineMail.style.display = currentUser ? 'none' : 'block';
   // Render current tier + higher path (PANEL_TIERS — single source of truth)
   _renderYourPath();
+  // 2026-10-27 (owner: „chci upgrade your journey zpět do menu. Také bude na dvou místech“): přihlášený má UPGRADE YOUR JOURNEY v menu
+  // i pod jménem — v menu vždy, jako pod jménem (otevře okno cesty). Název účtu s „+“ jen pod jménem.
+  if (currentUser) {
+    ['sp-curr-toggle', 'sp-tier-desc'].forEach(function (id) { var el = document.getElementById(id); if (el) el.style.display = 'none'; });
+    var _up = document.getElementById('sp-higher-toggle'); if (_up) _up.style.display = '';
+  } else {
+    var _ct = document.getElementById('sp-curr-toggle'); if (_ct) _ct.style.display = '';
+  }
 
   // Show/hide session + danger + personal actions sections
   const dangerEl  = document.getElementById('sp-danger');
@@ -783,7 +787,6 @@ function updateSidePanel() {
   // Admin link
   const adminSec = document.getElementById('sp-admin');   // 2026-10-27: admin sekce se štítkem ADMIN
   if (adminSec) adminSec.style.display = isAdmin(currentUser.email) ? 'block' : 'none';
-  setText('sp-admin-lbl', t('sp_admin_lbl'));
   const adminLink = document.getElementById('sp-admin-link');
   if (adminLink) adminLink.style.display = isAdmin(currentUser.email) ? 'block' : 'none';
   // 2026-10-11: rychlý odkaz na záložku TESTERS ve shrine (owner chtěl rychlejší přístup) — jen admin, jako odkaz na shrine výš.
@@ -800,9 +803,8 @@ function updateSidePanel() {
   const giftEl = document.getElementById('sp-gift');
   const hide   = userTier === 'standard' || userTier === 'premium';
   if (giftEl) giftEl.style.display = hide ? 'none' : 'block';
-  // 2026-10-27: „ENTER … CODE“ z redeem_card_code (jeden zdroj s polem pro kód), bez úvodní runy — položky menu jsou bez značek.
-  // setRuneText, ne setText (smoke ㉻, §5): kdyby se ořez runy minul, runa se nakreslí naším SVG, ne písmem.
-  setRuneText('sp-gift', tp('redeem_card_code', { card: vl('card', lang, 'dat_def').toUpperCase() }).replace(/^\u16a0\s*/, ''));
+  // 2026-10-27: „ᚠ ENTER … CODE“ z redeem_card_code — týž popisek i runa (naše SVG) jako u pole pro kód.
+  setRuneText('sp-gift', tp('redeem_card_code', { card: vl('card', lang, 'dat_def').toUpperCase() }));
   setText('sp-delete-account', t('sp_delete_account'));
 
   // Topbar dropdown (logged-in only)
