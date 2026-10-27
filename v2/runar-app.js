@@ -1084,7 +1084,6 @@ function updateUIText() {
   setText('badge-life-note', t('badge_life_note'));
   if (typeof _paintReadingHeader === 'function') _paintReadingHeader();
   setText('layer2-lbl', t('layer2_lbl'));
-  setText('draw-another-btn', t('draw_another'));
   setText('start-over-btn', t('start_over'));
   setText('opus-toggle-lbl', t('opus_toggle'));   // staticky popisek prepinace Opus 5 (jen admin ho vidi; do 2026-10-08 prepinac solu)
   setText('img-pin-lbl', t('img_pin_lbl'));     // staticky popisek volby obrazu (jen admin ji vidi, 2026-10-06)
@@ -1152,21 +1151,21 @@ function showAppTab(tab) {
   if (tab === 'collection') {
     document.getElementById('reader-hero').classList.add('hidden');
     loadCollection();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo(0, 0);   // okamžitě, ne plynule — hlášení 51efe091 (2026-10-27)
   } else if (tab === 'liferune') {
     // Stavy zivotni runy ridi dal `updateTreeTab()` — prvky se presunuly v DOM, ale
     // funkce je hleda pres getElementById, takze ji to nevadi (2026-09-11).
     document.getElementById('reader-hero').classList.add('hidden');
     updateTreeTab();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo(0, 0);   // okamžitě, ne plynule — hlášení 51efe091 (2026-10-27)
   } else if (tab === 'tree') {
     document.getElementById('reader-hero').classList.add('hidden');
     updateTreeTab();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo(0, 0);   // okamžitě, ne plynule — hlášení 51efe091 (2026-10-27)
   } else if (tab === 'journal') {
     document.getElementById('reader-hero').classList.add('hidden');
     loadJournal();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo(0, 0);   // okamžitě, ne plynule — hlášení 51efe091 (2026-10-27)
     if (typeof _peroVDeniku === 'function') setTimeout(_peroVDeniku, 450);   // 2026-10-20: pero zapíše do knihy (owner „3 pero“)
   } else {
     // Owner request: reset stale spread output/label/mode to clean single on tab entry

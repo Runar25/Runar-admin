@@ -4,8 +4,8 @@
 //   (B) §5  reader-content se NIKDY neskrývá — z JS jen display 'block' / '', žádná třída ani CSS display:none
 //   (C) §12 jméno uživatele nikdy z e-mailu — žádné split('@') ani odříznutí za zavináčem ve v2/ a v edge funkcích
 // Každá hláška začíná cestou souboru (2026-10-14): pre-commit (scripts/utils/rychle_kontroly.py) zastaví commit jen podle ní.
-//   (D) §13 nový výklad musí projít VŠEMI cestami — každý režim z _SPREAD_COST_KEY (kromě single) se objeví v readRune, drawAnother,
-//           resetReader, _setSpreadMode i generateVoice (runar-reading.js). Dnes je to pravda pro všechny čtyři výklady.
+//   (D) §13 nový výklad musí projít VŠEMI cestami — každý režim z _SPREAD_COST_KEY (kromě single) se objeví v readRune,
+//           resetReader, _setSpreadMode i generateVoice (runar-reading.js). drawAnother od 2026-10-27 není (DRAW ANOTHER RUNE pryč). Dnes je to pravda pro všechny čtyři výklady.
 // Postaveno CODE-read 2026-10-13 na ownerovo „co s tím? … pokračuj v kontrole“ nad výpisem mapy nosičů.
 //   node scripts/verify_zakazy_cesty.js     · --test = kontrola sama sebe
 'use strict';
@@ -52,7 +52,7 @@ function telo(s, jmeno) {
   for (let k = j; k < s.length; k++) { if (s[k] === '{') d++; else if (s[k] === '}') { d--; if (!d) return s.slice(i, k + 1); } }
   return null;
 }
-const CESTY = ['readRune', 'drawAnother', 'resetReader', '_setSpreadMode', 'generateVoice'];
+const CESTY = ['readRune', 'resetReader', '_setSpreadMode', 'generateVoice'];
 function castD(reading) {
   const v = [];
   const m = reading.match(/_SPREAD_COST_KEY\s*=\s*\{([^}]*)\}/);

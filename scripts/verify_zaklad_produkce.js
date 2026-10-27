@@ -6,8 +6,8 @@
 // appka z pracovního stromu na 127.0.0.1, čistý profil = návštěvník. Základ (rozšiřovat jen sem, jedno místo):
 //   · Rúnarova fotka (#reader-hero s runar-portrait, ne .hidden) · čtyři záložky (Lífsrúnin, Spá, Lestrar, Safn rúna)
 //   · všech pět výkladů (Ein rún, Nornir, Áttaviti, Skeifa, Yggdrasil) · 25 run v mřížce tahu · 25 run v Safn rúna
-// Stavy: po načtení · po návratu do Spá z každé záložky · Start over (resetReader) · tah návštěvníka (startReading) · další tah
-// (drawAnother) · přepnutí jazyka v tahu i na začátku ·
+// Stavy: po načtení · po návratu do Spá z každé záložky · Start over (resetReader) · tah návštěvníka (startReading) ·
+// přepnutí jazyka v tahu i na začátku ·
 // simulovaný přihlášený (currentUser podvržený jen v prohlížeči testu; nic se nenačítá ani neukládá): Spá s fotkou, po startu tahu
 // všech pět výkladů. Samotest na konci: kontrola sama rozbije Norny a fotku a musí to poznat.
 // Chyby JS za běhu (od 2026-10-10): každá nezachycená výjimka během celého běhu — i při načítání stránky, v setTimeout a v promise
@@ -139,7 +139,6 @@ async function main() {
       (await ev(ZAKLAD + '(' + JSON.stringify(popis) + ')')).filter((c) => !/Rúnarova fotka skrytá/.test(c)).forEach((c) => chyby.push(c));
     };
     await tahKrok('návštěvník: tah', 'resetReader(); startReading();');
-    await tahKrok('další tah', 'drawAnother();');
     await tahKrok('tah po přepnutí jazyka', "setLang(lang === 'is' ? 'en' : 'is');");
     await krok('po přepnutí jazyka', "resetReader(); setLang(lang === 'is' ? 'en' : 'is');");
     // Safn rúna: všech 25 run (zamčené návštěvníkovi taky — jsou vidět, jen se nedají otevřít)

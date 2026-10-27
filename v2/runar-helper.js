@@ -107,13 +107,15 @@
       "background:rgba(14,22,34,.82);color:var(--gold,#FFBF00);border:1px solid var(--gold,#FFBF00);" +
       "font-family:Cinzel,serif;font-size:19px;line-height:44px;text-align:center;cursor:pointer;" +
       "z-index:99998;opacity:.55;-webkit-tap-highlight-color:transparent;transition:opacity .2s}" +
-      "@media (hover:hover){#hb-btn:hover{opacity:1}}#hb-btn:focus-visible{opacity:1}";
+      "@media (hover:hover){#hb-btn:hover{opacity:1}}#hb-btn:focus-visible,#hb-btn:active,#hb-btn.stisk{opacity:1}";
+    // 2026-10-27 (hlášení c7ca6a41): na dotyku nebylo poznat ťuknutí — :active a .stisk (500 ms) dají tutéž odezvu jako hover.
     document.head.appendChild(s);
     btn = document.createElement("button");
     btn.id = "hb-btn"; btn.type = "button"; btn.textContent = "?";
     btn.title = t("helper_btn");
     btn.setAttribute("aria-label", t("helper_btn"));
     btn.addEventListener("click", svitit);
+    btn.addEventListener("click", function () { btn.classList.add("stisk"); setTimeout(function () { btn.classList.remove("stisk"); }, 500); });
     document.body.appendChild(btn);
     // Testovaci prusvit: ciste funkce bez UI (vzor _runePopKw v rune-popup).
     window._helperTest = { cile: CILE, svitit: svitit, viditelny: viditelny, rozsvit: rozsvit, zhasni: zhasni };
