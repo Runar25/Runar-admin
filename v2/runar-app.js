@@ -1840,9 +1840,8 @@ function _journeyPaint() {
     }
     if (env === 'web') h += '<a class="tn-btn btn-upgrade" href="' + _jesc(JOURNEY_URL) + '" target="_blank" rel="noopener">' + _jesc(tp('gift_card_btn', { card: vl('card', lang).toUpperCase() })) + ' →</a>';   // → = vede jinam (web), CODE-read §4
     // bez JOURNEY_URL nic (owner 2026-10-20: „v appce taky pryč“ — „Coming soon“ ani u Rúnakortu; klíč journey_soon zrušen)
-    var p0 = CARD_PACKS.reduce(function (a, b) { return b.isk < a.isk ? b : a; });
     h += '<div class="journey-note klik" role="button" tabindex="0" onclick="closeJourney();showAppTab(\'reading\');toggleRedeem()">'
-      + _jesc(tp('journey_card_note', { price: _jkr(p0.isk), casts: vn('cast', p0.credits, lang) })) + '</div>';
+      + _jesc(t('journey_card_note')) + '</div>';   // 2026-10-27 (owner): bez ceny, jen cesta k zadání kódu
     var pathC = document.getElementById('journey-path');
     if (pathC) pathC.innerHTML = h;
     setText('journey-foot', t('journey_foot'));
