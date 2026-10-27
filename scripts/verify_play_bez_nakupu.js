@@ -17,7 +17,9 @@
 const fs = require('fs'), path = require('path'), http = require('http'), os = require('os'), cp = require('child_process');
 const ROOT = path.resolve(process.env.RUNAR_ROOT || path.join(__dirname, '..')).replace(/\\/g, '/');
 const WEB = 'https://therunekeeper.com/journey/';   // podvržené JOURNEY_URL (tvar adresy webu; skutečná stránka nemusí existovat)
-const OBCHOD = 'agndofa\\.is|therunekeeper\\.com|shopify|rapyd';
+// instagram.com (2026-10-27, CODE-web přes CODE-tune): v profilu Instagramu Rúnara bude odkaz na therunekeeper.com, kde po spuštění
+// poběží nákup — odkaz na Instagram je tedy nepřímá cesta k platbě (BACKLOG „Google Play bez provize“ bod 1). Config RUNAR_INSTAGRAM_URL.
+const OBCHOD = 'agndofa\\.is|therunekeeper\\.com|shopify|rapyd|instagram\\.com';
 const TYPY = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.png': 'image/png',
   '.jpg': 'image/jpeg', '.svg': 'image/svg+xml', '.json': 'application/json', '.webmanifest': 'application/manifest+json', '.woff2': 'font/woff2' };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
