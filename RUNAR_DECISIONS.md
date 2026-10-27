@@ -12358,3 +12358,18 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Proč to selhalo napoprvé:** sekce jsem převzal z mobilu i s rámečky appky a proužkem — přestože owner rámečky odmítl už 2026-10-19
   (náhled stránky cesty, verze 3). Novou plochu je třeba stavět podle toho, co owner u stejné věci už řekl, ne převzít mobil.
 - Affected doc(s): žádný (stav vlastní `web/site/heim/index.html`).
+
+## 2026-10-27 (8) — Oprava 2026-10-27 (5) a (4): ikonky menu zpět, bez štítku ADMIN, nahoře MENU, UPGRADE i v menu; „+“ a ▾ podle zavedeného vzoru
+
+- **Rozhodl:** owner 2026-10-27 nad screenshotem: *„odstranil jsi ikonky v menu, ale ty tomu aspoň slušely, teď je to úplně holé … co dělá
+  ten ADMIN … má to nějakou funkci? … jak to, že jsi nenačetl, jak má být velké plus? … šipka se má točit kolem své osy … všechno se má
+  dělat stejně tak, jak už je to vytvořené“*, *„něco bych nahoru dal, buď MENU, nebo AGNDOFA“*, *„chci upgrade your journey zpět do menu.
+  Také bude na dvou místech“*.
+- **Co bylo špatně (moje):** ikonky jsem v (5) odstranil bez ownerova rozhodnutí; štítek ADMIN neměl funkci; „+“ u BEFORE WE BEGIN v (4)
+  byl `<span>` v menším písmu místo `::after` jako všechny ostatní rozbalovače; ▾ se otáčel kolem boxu znaku, ne kolem sebe.
+- **Co:** ikonky položek zpět (✦ ✎ ? ⬇ ✉ ⚿ 👥 ×, kód karty s ᚠ jako pole pro kód); štítek ADMIN pryč; nahoře v menu MENU / VALMYND
+  (AGNDOFA v appce od 2026-10-21 (8) není — jen landing, karta, firma); UPGRADE YOUR JOURNEY v menu u každého přihlášeného i pod jménem;
+  „+“ u BEFORE WE BEGIN = `#reader-card1-lbl::after` v pravidle rozbalovače (1,35 × písmo nadpisu, jako How a reading works); ▾ =
+  trojúhelník kreslený ve čtverci, střed na středu verzálek (odchylka 0,02 px změřená v prohlížeči), otáčí se kolem svého středu.
+- **Ověřeno:** náhled — menu návštěvníka, Rune Seekera, Premium, admina v EN i IS; geometrie ▾ a „+“; smoke ㉼ zelené.
+- Affected doc(s): žádný.

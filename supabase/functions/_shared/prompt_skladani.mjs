@@ -1398,14 +1398,14 @@ const UI_TEXT = {
     install_body_other: 'In Chrome or Brave: tap the <strong>⋮ menu</strong> in the top right and select <strong>Install app</strong> or <strong>Add to Home Screen</strong>.',
     sw_update:          'A new version of Rúnar is here. Tap to refresh the page.',   // 2026-10-22: výzva místo okamžitého reloadu (runar-auth.js)
     sp_account_title:   'YOUR ACCOUNT',
-    sp_guide_link:      'GUIDE & FAQ',   // 2026-10-27: položky menu bez značek (owner „11. ano“)
+    sp_guide_link:      '? GUIDE & FAQ',
     sp_higher_path:     'UPGRADE YOUR JOURNEY',   // 2026-09-29 KUKY: „dáme Upgrade your journey“ (dřív THE JOURNEY BEYOND)
-    sp_install_btn:     'INSTALL RÚNAR',
+    sp_install_btn:     '\u2b07 INSTALL R\u00daNAR',
     sp_privacy_link:    'PRIVACY POLICY',
     // 2026-10-15 „Send Rúnar a line“ (owner „8. ano“): menu, okno se zprávou, hlášky (openLine / sendLine v runar-app.js)
-    line_menu:          'SEND RÚNAR A LINE',
-    line_menu_visitor:  'WRITE TO runar@therunekeeper.com',
-    sp_admin_lbl:       'ADMIN',   // 2026-10-27: štítek admin sekce menu (§31 admin anglicky)
+    line_menu:          '✉ SEND RÚNAR A LINE',
+    line_menu_visitor:  '✉ WRITE TO runar@therunekeeper.com',
+    sp_menu_title:      'MENU',   // 2026-10-27: nadpis menu (owner „něco bych nahoru dal, buď MENU…“)
     line_title:         'SEND RÚNAR A LINE',
     line_sub:           'Write what is on your mind. You will get the answer by email.',
     line_ph:            'What happened, or what would you like to say?',
@@ -1727,9 +1727,9 @@ const UI_TEXT = {
     name_modal_call_lbl:   'RÚNAR CALLS YOU BY',
     name_modal_call_norse: 'NORSE NAME',
     name_modal_call_name:  'NAME',
-    sp_names_btn:          'MY NAMES',
-    sp_journal_link:       'MY JOURNAL',      // 2026-10-10: dřív natvrdo v updateSidePanel (is ? … — ㉸ alias neviděl)
-    sp_delete_account:     'DELETE ACCOUNT',
+    sp_names_btn:          '✎ MY NAMES',
+    sp_journal_link:       '✦ MY JOURNAL',      // 2026-10-10: dřív natvrdo v updateSidePanel (is ? … — ㉸ alias neviděl)
+    sp_delete_account:     '× DELETE ACCOUNT',
     name_modal_skip:  'Continue without a name',
     name_modal_btn:   'LET THE RUNE READING BEGIN',
     name_modal_ph:    'Your name or nickname',
@@ -1974,14 +1974,14 @@ const UI_TEXT = {
     install_body_other: 'Í Chrome eða Brave: ýttu á <strong>⋮ valmynd</strong> efst til hægri og veldu <strong>Setja upp forrit</strong> eða <strong>Bæta við heimaskjá</strong>.',
     sw_update:          'Ný útgáfa af Rúnari er komin. Ýttu hér til að endurhlaða síðuna.',   // 2026-10-22: Greynir čisté; „ýttu hér“ 20, „útgáfa er komin“ 11, „endurhlaða síðuna“ 43 (Risamálheild)
     sp_account_title:   'REIKNINGUR \u00dEINN',
-    sp_guide_link:      'LEIÐBEININGAR & SPURNINGAR',
+    sp_guide_link:      '? LEI\u00d0BEININGAR & SPURNINGAR',
     sp_higher_path:     'TAKTU FERÐINA LENGRA',   // 2026-09-29 viz EN; obrat „taka X lengra“ (korpus 158×), dřív FERÐIN HANDAN
-    sp_install_btn:     'SETJA INN RÚNAR',
+    sp_install_btn:     '\u2b07 SETJA INN R\u00daNAR',
     sp_privacy_link:    'PERS\u00d3NUVERNDARSTEFNA',
     // 2026-10-15 „Sendu Rúnari línu“ — IS ověřeno Greynirem a korpusem (čísla v popisu commitu)
-    line_menu:          'SENDU RÚNARI LÍNU',
-    line_menu_visitor:  'SKRIFAÐU Á runar@therunekeeper.com',
-    sp_admin_lbl:       'ADMIN',
+    line_menu:          '✉ SENDU RÚNARI LÍNU',
+    line_menu_visitor:  '✉ SKRIFAÐU Á runar@therunekeeper.com',
+    sp_menu_title:      'VALMYND',   // korpus „valmynd“ 475×
     line_title:         'SENDU RÚNARI LÍNU',
     line_sub:           'Skrifaðu það sem þér liggur á hjarta. Þú færð svarið í tölvupósti.',
     line_ph:            'Hvað gerðist, eða hvað viltu segja?',
@@ -2283,9 +2283,9 @@ const UI_TEXT = {
     name_modal_call_lbl:   'RÚNAR ÁVARPAR ÞIG MEÐ',
     name_modal_call_norse: 'NORRÆNA NAFNINU',
     name_modal_call_name:  'NAFNINU ÞÍNU',
-    sp_names_btn:          'NÖFNIN MÍN',
-    sp_journal_link:       'LESTRAR MÍNIR',   // 2026-10-10: viz EN; znění beze změny
-    sp_delete_account:     'EYÐA REIKNINGI',
+    sp_names_btn:          '✎ NÖFNIN MÍN',
+    sp_journal_link:       '✦ LESTRAR MÍNIR',   // 2026-10-10: viz EN; znění beze změny
+    sp_delete_account:     '× EYÐA REIKNINGI',
     name_modal_skip:  'Halda \u00e1fram \u00e1n nafns',
     name_modal_btn:   'L\u00c1TA SP\u00c1NA HEFJAST',
     name_modal_ph:    'Nafn \u00feitt e\u00f0a g\u00e6lunafn',

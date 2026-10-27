@@ -291,8 +291,12 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 .name-card-skip:hover{color:var(--white);}
 
 /* ── TOPBAR DROPDOWN ── */
-/* 2026-10-27 (owner: „u jména by mohlo jít lépe vidět, že se dá rozbalit“): ▾ zlatá jako jméno, větší, při otevření otočená. */
-.auth-user::after{content:'▾';display:inline-block;margin-left:.45em;font-size:1em;opacity:1;transition:transform .2s;}
+/* 2026-10-27 (owner: „u jména by mohlo jít lépe vidět, že se dá rozbalit“; „šipka se má točit kolem své osy“): šipka nabídky je
+   trojúhelník kreslený ve čtverci .6em (clip-path, střed trojúhelníku = střed čtverce), ne znak ▾ — znak písma má střed inkoustu jinde
+   než střed svého boxu a při otočení poskočí. Svisle: střed čtverce na středu verzálek Cinzel (výška verzálek 0,694 em změřená
+   v prohlížeči → 0,347 − 0,3 = 0,05 em nad účařím). Otáčí se kolem středu (transform-origin 50 % 50 %). */
+.auth-user::after{content:'';display:inline-block;width:.6em;height:.6em;margin-left:.45em;vertical-align:.05em;background:currentColor;
+  clip-path:polygon(10% 25%,90% 25%,50% 75%);transition:transform .2s;}
 .auth-dropdown-wrap:has(.auth-dropdown.open) .auth-user::after{transform:rotate(180deg);}
 @media (prefers-reduced-motion:reduce){.auth-user::after{transition:none;}}
 .auth-dropdown-wrap{position:relative;}
@@ -479,16 +483,16 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
    Dvě podoby: ::after u textových tlačítek (.guide-lbl, .hint-tgl, .ask-lbl) a <span class="xp-plus"> tam, kde text plní JS.
    Do té doby šest podob: „+/−“ přepínané textem, „+“ otočené, „▾“ otočené o 180°, šedé i zlaté, před textem i za ním.
    „▾“ zůstává jen u nabídky pod jménem (výběr z nabídky), „→“ = vede jinam. */
-.guide-lbl::after,.hint-tgl::after,.ask-lbl::after,.xp-plus{content:"+";display:inline-block;margin-left:.4em;font-family:'Cinzel',serif;
+.guide-lbl::after,.hint-tgl::after,.ask-lbl::after,#reader-card1-lbl::after,.xp-plus{content:"+";display:inline-block;margin-left:.4em;font-family:'Cinzel',serif;
   font-size:1.35em;line-height:1;color:inherit;opacity:1;position:relative;top:-.08em;transition:transform .25s ease;}
 /* top −0,08em: střed inkoustu „+“ ležel o 1,1 px pod středem inkoustu textu (změřeno u počtu čtení i How a reading works,
    účaří + metriky písma); owner 2026-10-10 vytkl tentýž posun (2,3 px) u starého „+“. Otáčí se kolem středu inkoustu (odchylka 0,4 px). */
 .xp-plus{font-size:.85em;margin-left:0;flex-shrink:0;color:var(--gold);}   /* span stojí vedle textu (Cinzel ~.62em), ne v něm: .85em ≈ 1,35 × text;
    barva = barva textu vedle (všude zlatý: počet čtení, jméno životní runy, účet v panelu, karta deníku) — inherit by vzal rodiče */
-.guide-lbl[aria-expanded="true"]::after,.hint-tgl[aria-expanded="true"]::after,.ask-lbl[aria-expanded="true"]::after,
+.guide-lbl[aria-expanded="true"]::after,.hint-tgl[aria-expanded="true"]::after,.ask-lbl[aria-expanded="true"]::after,#reader-card1-lbl[aria-expanded="true"]::after,
 [aria-expanded="true"] .xp-plus{transform:rotate(45deg);}
 [role="button"][aria-expanded]:focus-visible{outline:1px solid var(--gold);outline-offset:3px;}
-@media (prefers-reduced-motion:reduce){.guide-lbl::after,.hint-tgl::after,.ask-lbl::after,.xp-plus{transition:none;}}
+@media (prefers-reduced-motion:reduce){.guide-lbl::after,.hint-tgl::after,.ask-lbl::after,#reader-card1-lbl::after,.xp-plus{transition:none;}}
 .form-hint{margin:-2px 0 10px;}
 .guide{margin-top:14px;}
 /* „Where to start“ (2026-10-11, DECISIONS (65)) — okno appky (.modal); zavření ho zmenší a zasune do „How a reading works“

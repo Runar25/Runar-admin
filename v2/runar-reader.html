@@ -198,7 +198,7 @@
             <div class="dd-email" id="dd-email"></div>
             <div class="dd-balance" id="dd-balance"></div>
             <!-- 2026-10-27 (owner „11. ano“): co je účtu, je pod jménem — jména, cesta dál, odhlášení -->
-            <button type="button" class="sp-item" id="dd-names" onclick="toggleDropdown();openNamesEdit()">MY NAMES</button>
+            <button type="button" class="sp-item" id="dd-names" onclick="toggleDropdown();openNamesEdit()">✎ MY NAMES</button>
             <!-- 2026-10-19: z rozbalovacího okna se jménem vede cesta dál (owner nad screenshotem: „žádné tlačítko Upgrade“) -->
             <button type="button" class="btn-upgrade dd-journey" id="dd-journey" onclick="openJourney()"></button>
             <button type="button" class="sp-item" id="dd-signout" onclick="toggleDropdown();handleAuthBtn()">SIGN OUT</button>
@@ -909,7 +909,7 @@
 
   <!-- Header: tier name -->
   <div class="side-panel-head">
-    <span class="side-panel-brand" id="sp-tier-header">VISITOR</span>
+    <span class="side-panel-brand" id="sp-tier-header">MENU</span>
     <button class="side-panel-close" onclick="closeSidePanel()">✕</button>
   </div>
 
@@ -951,7 +951,7 @@
   <!-- Deník a kód karty — jen přihlášený -->
   <div id="sp-account" style="display:none;">
     <div class="side-panel-section">
-      <button class="sp-item journal" id="sp-journal-link" onclick="openJournalFromPanel()">MY JOURNAL</button>
+      <button class="sp-item journal" id="sp-journal-link" onclick="openJournalFromPanel()">✦ MY JOURNAL</button>
       <button class="sp-item" id="sp-gift" onclick="showAppTab('reading');toggleRedeem();closeSidePanel()"></button>
     </div>
   </div>
@@ -976,18 +976,17 @@
   <!-- Pomoc — vždy. „Send Rúnar a line“ (2026-10-15, owner „8. ano“): přihlášený okno se zprávou, návštěvník odkaz na e-mail (texty
        a viditelnost: updateSidePanel, runar-app.js). -->
   <div class="side-panel-section">
-    <a class="sp-item" id="sp-guide-link"   href="runar-help.html"    style="text-decoration:none;">GUIDE &amp; FAQ</a>
+    <a class="sp-item" id="sp-guide-link"   href="runar-help.html"    style="text-decoration:none;">? GUIDE &amp; FAQ</a>
     <button class="sp-item" id="sp-line-btn" type="button" onclick="openLine()" style="display:none;"></button>
     <a class="sp-item" id="sp-line-mail" href="mailto:runar@therunekeeper.com" style="text-decoration:none;display:none;"></a>
-    <button class="sp-item" id="sp-install-btn" onclick="installPWA();closeSidePanel();" style="display:none;">INSTALL RÚNAR</button>
+    <button class="sp-item" id="sp-install-btn" onclick="installPWA();closeSidePanel();" style="display:none;">⬇ INSTALL RÚNAR</button>
   </div>
 
   <!-- Admin — jen admin (2026-10-11 rovnou i záložka TESTERS: „rychlejší přístup než se proklikávat shrine“) -->
   <div id="sp-admin" style="display:none;">
     <div class="side-panel-section">
-      <div class="side-panel-lbl" id="sp-admin-lbl">ADMIN</div>
-      <a class="sp-item" id="sp-admin-link" href="runar-shrine.html" style="text-decoration:none;">KNOWLEDGE SHRINE</a>
-      <a class="sp-item" id="sp-testers-link" href="runar-shrine.html#testers" style="text-decoration:none;">TESTERS</a>
+      <a class="sp-item" id="sp-admin-link" href="runar-shrine.html" style="text-decoration:none;">⚿ KNOWLEDGE SHRINE</a>
+      <a class="sp-item" id="sp-testers-link" href="runar-shrine.html#testers" style="text-decoration:none;">👥 TESTERS</a>
     </div>
   </div>
 
