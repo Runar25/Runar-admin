@@ -357,6 +357,9 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 .tree-rune-name-row .rlbl-glyph{-webkit-tap-highlight-color:initial;}
 .tree-rune-name{font-family:'Cinzel',serif;font-size:1.1em;letter-spacing:1px;color:var(--gold);margin-bottom:6px;}   /* 2026-10-20: dvě definice → jedna */
 .tree-rune-glyph-inline{font-size:1.6em;color:var(--gold);opacity:0.85;}
+/* 2026-10-27: „+“ vedle jména (1.1em) o stupeň větší jako všude (1,35 × text = 1.485em rodiče) — do té doby .xp-plus .85em = 0,77 × jména
+   (změřila kontrola rozbalovačů v ㉼). */
+.tree-rune-name-row .xp-plus{font-size:1.485em;}
 /* 2026-10-27 (hlášení f624f328): na mobilu věta „You carry the life rune …“ na střed a kámen runy pod ní, ne vedle. */
 @media(max-width:480px){ .tree-rune-header{text-align:center;} .tree-rune-name-row{flex-direction:column;justify-content:center;} }
 .tree-static-open{font-family:'Cinzel',serif;font-size:0.85em;letter-spacing:0.5px;color:var(--muted);padding:12px 0 4px;}

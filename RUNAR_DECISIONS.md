@@ -12373,3 +12373,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   trojúhelník kreslený ve čtverci, střed na středu verzálek (odchylka 0,02 px změřená v prohlížeči), otáčí se kolem svého středu.
 - **Ověřeno:** náhled — menu návštěvníka, Rune Seekera, Premium, admina v EN i IS; geometrie ▾ a „+“; smoke ㉼ zelené.
 - Affected doc(s): žádný.
+
+## 2026-10-27 (9) — Rozbalovače hlídá stroj: ㉼ měří každé „+“ (1,35 × text) a ▾ u jména (kreslená) ve všech 11 stavech
+
+- **Proč:** owner 2026-10-27 k zápisu opravy 2026-10-27 (8): *„to něčemu pomůže? budeš to dodržovat?“* Zápis nepomůže — pravidlo „dělej to
+  stejně jako to, co už je“ stojí v paměti (`match-existing-visual-first`) i v CLAUDE.md a dnes jsem ho porušil dvakrát; §30: podruhé
+  porušené pravidlo = mechanismus.
+- **Co:** `scripts/verify_zaklad_produkce.js` (smoke ㉼, skutečný prohlížeč) v každém stavu: každé viditelné „+“ rozbalovače
+  (`::after` nebo `.xp-plus` vedle textu) musí být 1,30–1,40 × svého textu; ▾ u jména musí být kreslená (`clip-path`). Samotest obojí
+  podstrčí. Proti chybné verzi 8e7ef69 kontrola spadla (0,85× u BEFORE WE BEGIN, ▾ znak písma).
+- **Cestou:** „+“ u zakládacích Norn (`tree-founding-head`) bylo 0,77 × jména → `.tree-rune-name-row .xp-plus` 1.485em (1,35 × 1.1em).
+- **Neumí:** posoudit, jestli něco ubrat (ikonky) — to zůstává na ownerovi a na tom, že se napřed ptám.
+- Affected doc(s): žádný (vlastník = hlavička a kód kontroly).
