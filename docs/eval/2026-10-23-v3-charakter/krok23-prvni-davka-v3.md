@@ -49,3 +49,14 @@ Reply with the reading only.
 6. **Otázky:** otevřené a čtené víc směry spíš u směrů možnost/pouto (2, 3, 7, 8); u zvyku a ceny předpokládají, že čtenář něco dělá
    (1 „what do you wait for?“, 6 „Where do you lean from habit…“).
 7. Délka 54–59 slov (7/8 v 50–58), konec vždy otázka (všechny vylosované směry jsou otázky).
+
+## Ownerův verdikt (2026-10-27)
+- Zajímavá jsou všechna; nejlepší **6 (klenba)** a **8 (opřená prkna)**, dobré i **2 (spojené nádoby)**. Všechny tři jsou fyzická scéna
+  jako metafora rovnováhy — ukáže princip Gebo tak, že ho člověk vidí: vyndáš jeden kámen a klenba nestojí. Situační obrazy (autobus 3×,
+  krabice) nevybral ani jeden. (Jeden soudce, n = 8 — směr, ne pravidlo.)
+- Pořadí obrazu a jádra **nechat losovat** (střídání mu nevadí; čtení 8 s jádrem napřed patří k nejlepším).
+- U situačního obrazu **losovat druh činu**, ať není pořád místo v autobuse.
+
+## Další krok (krok 24)
+Mění se jediná věc: k typu obrazu přibude los **druhu** — u situačního obrazu druh činu, u fyzického druh děje. Ostatní losy tytéž jako tady
+(párové srovnání). „But…“ na začátku hranice a slovo „picture“ ve výstupu se řeší až potom, zvlášť.
