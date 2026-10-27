@@ -41,6 +41,12 @@
       "hlavicky": ["scripts/verify_page_copies.js"]
     },
     {
+      "oblast": "web therunekeeper.com",
+      "cesty": ["web/site/**"],
+      "pravidla": ["§2", "§10", "§20", "§31"],
+      "hlavicky": ["scripts/verify_web_hlavicky.js", "scripts/web_nasad.py"]
+    },
+    {
       "oblast": "UI readeru a shrine",
       "cesty": ["v2/runar-reader.html", "v2/runar-reader.css", "v2/runar-shrine.html"],
       "pravidla": ["§5", "§32", "§31"],
