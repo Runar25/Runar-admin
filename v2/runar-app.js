@@ -1088,7 +1088,9 @@ function updateUIText() {
   setText('opus-toggle-lbl', t('opus_toggle'));   // staticky popisek prepinace Opus 5 (jen admin ho vidi; do 2026-10-08 prepinac solu)
   setText('img-pin-lbl', t('img_pin_lbl'));     // staticky popisek volby obrazu (jen admin ji vidi, 2026-10-06)
   var _ipBox = document.getElementById('img-pin'); if (_ipBox) _ipBox.title = t('img_pin_title');
-  setText('read-guide-lbl', t('guide_title'));   // staticky nadpis navodu — od 2026-09-23 v zalozce cteni
+  setText('read-guide-lbl', t('guide_title'));
+  var _rit = document.getElementById('ritual-box');   // 2026-10-27: rituál pod BEFORE WE BEGIN — statický text (§14)
+  if (_rit) { _rit.innerHTML = ''; var _rp = document.createElement('p'); _rp.textContent = t('ritual_text'); _rit.appendChild(_rp); }   // staticky nadpis navodu — od 2026-09-23 v zalozce cteni
   setText('audio-player-lbl', t('voice_player_lbl'));
   setText('ask-lbl', t('ask_lbl'));
   var _askInp = document.getElementById('ask-input'); if (_askInp && typeof _askPlaceholder === 'function') _askInp.placeholder = _askPlaceholder();
@@ -1443,6 +1445,14 @@ function _navodPoPrvnimPrihlaseni() {
   if (!_wtsVidel() || (w && w.classList.contains('open'))) return;
   var box = document.getElementById('read-guide');
   if (box && box.style.display === 'none') toggleGuide();
+}
+// Rituál pod BEFORE WE BEGIN (owner 2026-10-27): nadpis je rozbalovač, jako „How a reading works“.
+function toggleRitual() {
+  var lbl = document.getElementById('reader-card1-lbl'), box = document.getElementById('ritual-box');
+  if (!lbl || !box) return;
+  var otevrit = box.style.display === 'none';
+  box.style.display = otevrit ? '' : 'none';
+  lbl.setAttribute('aria-expanded', otevrit ? 'true' : 'false');
 }
 function toggleGuide() {
   var lbl = document.getElementById('read-guide-lbl'), box = document.getElementById('read-guide');
