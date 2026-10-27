@@ -323,6 +323,12 @@ PRIPADY = [
  # ㊑ web × appka (2026-10-21, CODE-read): dnešní chyba (web znovu deklaruje jméno z configu) · appka přejmenuje funkci, kterou web volá
  ('chyti', 'verify_web_appka_jmena.js', 'web/site/web.js', 'replace', "var RUNAR_APP_URL = ", "var RUNAR_HOME_URL = 'x';\nvar RUNAR_APP_URL = "),
  ('chyti', 'verify_web_appka_jmena.js', 'v2/runar-utils.js', 'replace', 'function kamenUctuSvg(', 'function kamenUctuSvgX('),
+ # ㊖ hlavičky webu (2026-10-27, CODE-web): stránka bez ikony · veřejný landing bez og:image · rozbitý místní odkaz ·
+ #   komentář s falešnou značkou a odkazem kontrolu nezastaví (čte stránku bez komentářů)
+ ('chyti', 'verify_web_hlavicky.js', 'web/site/ferdin/index.html', 'replace', '<link rel="icon" ', '<link rel="x-icon" '),
+ ('chyti', 'verify_web_hlavicky.js', 'web/site/index.html', 'replace', '<meta property="og:image" ', '<meta property="og:imageX" '),
+ ('chyti', 'verify_web_hlavicky.js', 'web/site/heim/index.html', 'replace', 'href="../ferdin/"', 'href="../ferdinX/"'),
+ ('nesmi', 'verify_web_hlavicky.js', 'web/site/kort/index.html', 'replace', '<title>', '<!-- <meta data-meta="neni_klic" content=""> <a href="nikam/"> -->\n<title>'),
  # ㊒ bez Supabase Storage (2026-10-22, CODE-read): portrét zpět ze Storage v appce · obrázek ze Storage ve webu
  ('chyti', 'verify_bez_storage.js', 'v2/runar-reader.html', 'regex', r'src="img/runar-portrait\.webp"', 'src="https://x.supabase.co/storage/v1/object/' + 'public/runar-images/Runar_portrait.png"'),
  ('chyti', 'verify_bez_storage.js', 'web/site/heim/index.html', 'regex', r'(<body[^>]*>)', r'\g<1><img src="https://x.supabase.co/storage/v1/object/' + 'public/a.png">'),

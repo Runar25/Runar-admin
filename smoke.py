@@ -1305,6 +1305,19 @@ radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola inline handleru probehla'
 check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
 
+# ㊖ Hlavičky webu (CODE-web 2026-10-27, owner: „na co jsi ještě nepřišel, protože jsi to neskontroloval?“): každá stránka therunekeeper.com
+# má ikony, veřejná i náhled při sdílení (og), popisy z UI_TEXT, místní odkazy vedou na soubory, 404.html a favicon.ico existují.
+# Rozdílný popis od UI_TEXT je jen žluté ⚠ (text mění tune, srovná ho příští nasazení webu) — vypíše se i při úspěchu (§19.2).
+print('\n' + chr(0x3296) + ' HLAVIČKY WEBU (verify_web_hlavicky.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_web_hlavicky.js')], capture_output=True, text=True, encoding='utf-8')
+r2 = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_web_hlavicky.js'), '--test'], capture_output=True, text=True, encoding='utf-8')
+for _l in r.stdout.splitlines():
+    if _l.startswith('⚠'):
+        print('  ' + _l)
+radky = [l for l in (r2.stdout + r.stdout + r.stderr + r2.stderr).strip().split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola hlavicek webu probehla'
+check(prvni.strip(), r.returncode == 0 and r2.returncode == 0, '\n'.join(radky[:-1]) if (r.returncode or r2.returncode) else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
