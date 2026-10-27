@@ -396,6 +396,9 @@ const JOURNEY_URL = null;
 // page“). Do spuštění skrytá /heim/, při spuštění „https://therunekeeper.com/“. Web (web/site/web.js) má touž adresu — CODE-web ji může
 // brát odtud. V Google Play se odkaz nenastaví (domovská stránka vede k nákupu, DECISIONS 2026-10-19 (4)).
 const RUNAR_HOME_URL = 'https://therunekeeper.com/heim/';
+// Instagram Rúnara (owner 2026-10-27: „odkaz na insta bychom měli mít i v appce“) — jediné místo; čte ho web (patička) a menu appky.
+// Čistá adresa: owner poslal odkaz se sledovacím ?obrf=…, ten sem nepatří.
+const RUNAR_INSTAGRAM_URL = 'https://www.instagram.com/runartherunekeeper/';
 
 const CARD_PACKS = [
   { name: 'Starter', name_is: 'Byrjandi', credits: 5,  isk: 1490 },
