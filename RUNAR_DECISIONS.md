@@ -12315,3 +12315,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   cena nejlevnějšího balíčku dál u Rune Seekera (`journey_seeker_card`). „Dvojité podtržení“ = podtržení odkazu + horní čára patičky
   `.journey-foot` 2 px pod ním → věta na střed a 14 px od čáry. Ověřeno v náhledu (text, zarovnání, mezera 14 px).
 - Affected doc(s): žádný (texty bydlí v `runar-translations.js`).
+
+## 2026-10-27 (4) — Rituál pod BEFORE WE BEGIN: nadpis se rozbalí „+“ a ukáže čtyři věty, co udělat před tahem (EN + IS)
+
+- **Rozhodl:** owner (hlášení 5439bcc1, 36f14a03 — návrh od Gemini), znění 2026-10-27 *„12. ano“*; vonná tyčinka podle ownera: *„pleasant
+  scent bylo kvůli vonné tyčince, což je přirozená věc, co spousta lidí má a používá“*.
+- **Co:** BEFORE WE BEGIN je tlačítko-rozbalovač (komponenta `.xp-plus`, `aria-expanded`), pod ním `#ritual-box` (`.guide` jako „How a
+  reading works“). Text `ritual_text` v `runar-translations.js`; IS psaná islandsky a ověřená (Greynir + korpus, doklady v komentáři u
+  klíče); kalky z návrhu Gemini („í rólegu rými“, „þægilegum ilmi“, „gefðu þér augnablik“, „finnur fyrir einbeitingu“, všechny 0×) pryč.
+- **Zbývá:** owner chce k rituálu Rúnarův hlas (zatím jen text).
+- **Ověřeno:** náhled — otevření/zavření, „+“ → ×, IS text, vzhled nadpisu beze změny; smoke ㉼ zelené.
+- Affected doc(s): žádný (text bydlí v `runar-translations.js`).

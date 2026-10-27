@@ -564,6 +564,10 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
    tady zůstalo“. Desktop si oba rámečky nechává. */
 @media(max-width:480px){#reader-setup,#reader-rune-card{background:none;border:none;padding:0;}}
 .card-lbl{font-family:'Cinzel',serif;font-size:0.7em;letter-spacing:2px;color:var(--gold);margin-bottom:16px;}
+/* 2026-10-27: BEFORE WE BEGIN je rozbalovač rituálu — tlačítko bez vlastního vzhledu, vypadá jako dřív (vzor .guide-lbl). */
+button.card-lbl{background:none;border:0;padding:0;cursor:pointer;display:block;text-align:left;}
+button.card-lbl:focus-visible{outline:1px solid var(--gold);outline-offset:4px;}
+#ritual-box{margin:-6px 0 16px;}
 .flbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--gold);display:block;margin:16px 0 6px;}
 .flbl:first-child{margin-top:0;}
 /* 2026-09-24: „THE SITUATION“ je první dítě #q-section → pravidlo výš mu vzalo horní mezeru a lepilo se

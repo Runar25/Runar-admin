@@ -945,7 +945,7 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   uzavření, nebo zůstává.
 - [ ] **Menu (burger) přestavět (c9976b4e):** *„pořadí je takové divné, ať to má víc design menu“*. Napřed soupis dnešních položek a
   návrh pořadí a vzhledu ownerovi (komponenty z `scripts/verify_komponenty.js`), pak stavět.
-- [ ] **Rituál pod BEFORE WE BEGIN (5439bcc1, 36f14a03):** rozbalovač „+“ (komponenta `.xp-plus`) s krátkým textem, co udělat před tahem;
+- [x] ✅ *(CODE-tune 2026-10-27, DECISIONS 2026-10-27 (4); zbývá Rúnarův hlas k rituálu)* **Rituál pod BEFORE WE BEGIN (5439bcc1, 36f14a03):** rozbalovač „+“ (komponenta `.xp-plus`) s krátkým textem, co udělat před tahem;
   owner navrhl EN znění (svíčka, vůně, ticho, nádech, myšlenka na otázku, pak tah). Napřed kritický pohled (§21) a znění v EN i IS
   hlasem Rúnara, schválení ownerem, pak stavět.
 - [ ] **Norny a3692c86 — „voice“ skřípe, význam nesedí (d65a6bb4, bf44ef3d):** Ansuz (Verðandi) dostal ze seznamu `k` význam „voice“

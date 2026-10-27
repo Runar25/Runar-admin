@@ -1538,7 +1538,8 @@ function _updateReadingForm() {
     + '<svg class="atab-ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"'
     + ' aria-hidden="true" style="margin-right:0;vertical-align:top;filter:drop-shadow(0 0 2.5px rgba(255,191,0,0.55))"><path d="M9 11h6v9H9z"/><path d="M12 11V9.6"/>'
     + '<path d="M12 3c1.6 2 2.2 3.3 2.2 4.4a2.2 2.2 0 0 1-4.4 0C9.8 6.3 10.4 5 12 3z"/></svg></span>'
-    + String(nadpis).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+    + String(nadpis).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    + ' <span class="xp-plus" aria-hidden="true">+</span>';   // 2026-10-27: nadpis rozbalí rituál (toggleRitual v runar-app.js)
 
   // Note text — same message for both known and unknown (MY READING); different for FOR SOMEONE
   var noteEl = document.getElementById('reader-note');

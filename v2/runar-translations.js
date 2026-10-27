@@ -32,7 +32,9 @@ const UI_TEXT = {
     teach_voice_saving: 'Saving to memory…',
 
     // Reader tab
-    reader_card1_lbl: 'BEFORE WE BEGIN',   // 2026-10-21: ✦ → svíčka (kreslí _updateReadingForm v runar-reading.js)
+    reader_card1_lbl: 'BEFORE WE BEGIN',
+    // 2026-10-27 (owner, hlášení 5439bcc1 / 36f14a03): rituál pod BEFORE WE BEGIN, rozbalí se „+“.
+    ritual_text: 'Find a quiet place before you draw. Light a candle or some incense if you like, or simply sit in silence. Breathe in deeply and think of what you are asking. When your mind settles, draw a rune.',   // 2026-10-21: ✦ → svíčka (kreslí _updateReadingForm v runar-reading.js)
     reader_note:      'Tell me where to look. The rune speaks for itself.',
     name_lbl:         'YOUR NAME OR PREFERRED NAME',
     name_ph:          'How shall I address you?',
@@ -614,6 +616,9 @@ const UI_TEXT = {
 
     // Reader tab
     reader_card1_lbl: 'ÁÐUR EN VIÐ BYRJUM',
+    // 2026-10-27: ověřeno Greynirem a korpusem („finna rólegan stað“ 7, „kveikja á reykelsi“ 33, „vertu bara í“ 175, „hugsaðu um það“ 176,
+    // „sem þú spyrð“ 367, „hugurinn kyrrist“ 6). Kalky z návrhu Gemini („í rólegu rými“, „þægilegum ilmi“ … 0×) nahrazeny.
+    ritual_text: 'Finndu rólegan stað áður en þú dregur. Kveiktu á kerti eða reykelsi ef þú vilt, eða vertu bara í þögn. Dragðu andann djúpt og hugsaðu um það sem þú spyrð um. Þegar hugurinn kyrrist, dragðu rún.',
     reader_note:      'Segðu mér hvert ég á að líta. Rúnin talar sínu máli.',
     name_lbl:         'NAFNIÐ ÞITT EÐA GÆLUNAFN',
     name_ph:          'Hvað á ég að kalla þig?',

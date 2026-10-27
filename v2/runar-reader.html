@@ -317,7 +317,9 @@
         <button class="reading-mode-btn active" id="rmode-btn-mine"    onclick="switchReadingMode('mine')">MY READING</button>
         <button class="reading-mode-btn"        id="rmode-btn-someone" onclick="switchReadingMode('someone')">FOR SOMEONE</button>
       </div>
-      <div class="card-lbl" id="reader-card1-lbl">BEFORE WE BEGIN</div>
+      <!-- 2026-10-27: nadpis rozbalí rituál před tahem (owner, hlášení 5439bcc1 / 36f14a03); text maluje updateUIText (ritual_text) -->
+      <button type="button" class="card-lbl" id="reader-card1-lbl" aria-expanded="false" aria-controls="ritual-box" onclick="toggleRitual()">BEFORE WE BEGIN</button>
+      <div class="guide" id="ritual-box" style="display:none;"></div>
       <p class="note" id="reader-note"></p><!-- text z UI_TEXT (reader_note / setup_someone_note) dává _updateReadingForm; do 2026-10-12 tu stála anglická výchozí věta, kterou nikdo neviděl -->
       <!-- NAME ROW — hidden in 'mine' mode when name + life rune known -->
       <div id="setup-name-row">
