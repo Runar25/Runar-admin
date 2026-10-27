@@ -12385,3 +12385,23 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Cestou:** „+“ u zakládacích Norn (`tree-founding-head`) bylo 0,77 × jména → `.tree-rune-name-row .xp-plus` 1.485em (1,35 × 1.1em).
 - **Neumí:** posoudit, jestli něco ubrat (ikonky) — to zůstává na ownerovi a na tom, že se napřed ptám.
 - Affected doc(s): žádný (vlastník = hlavička a kód kontroly).
+
+## 2026-10-27 (10) — Web: tablet bez rozdělení, AI poznámka, náhled při sdílení, jazyk napříč stránkami, velké obrazovky; Instagram z configu
+
+- **Rozhodl:** owner 2026-10-27 na seznam pěti mezer, které jsem našel na otázku *„je to tak správně? je to nejlépe, jak to může být?“*:
+  *„udělej všech pět“*; k Instagramu: *„odkaz na insta bychom měli mít i v appce… jak to udělat pořádně?“*
+- **Co (web/site, commit 1e31667):**
+  1. /heim/: pod GAKKTU INN poznámka appky `ai_note` (Rúnar je AI, čtení k zamyšlení).
+  2. Rozdělení s Rúnarem jako pevným pozadím jen od 1000 px a v okně ne užším než 4:5. Jinde hero appky (portrét vedle textu)
+     bez rámečků, linky a šipky; sloupec portrétu se rozplyne do stránky. **Odchylka od návrhu:** tabletu na výšku jsem navrhl
+     mobilní rozložení. Emulace iPadu 820×1180 ale ukázala GAKKTU INN pod okrajem první obrazovky (1294 px při výšce 1106), takže
+     zamítnuto. Hero appky ukáže obličej, ruku i tlačítko a je to, co na tomtéž iPadu ukazuje appka.
+  3. Náhled při sdílení (og, twitter, meta description) na landingu a na /heim/. Popis = `hero_quote` (IS) a doplňuje ho
+     `scripts/web_nasad.py` z UI_TEXT, ručně se nepíše. Obrázek `web/site/img/og.jpg` skládá `scripts/web_og_obrazek.py`.
+     og:url na /heim/ přibude až při spuštění (BACKLOG).
+  4. Volba jazyka platí na všech stránkách webu: localStorage `runar_web_lang`, jen ta volba; první návštěva je islandsky.
+     Odkaz na kartu s `#l=` má přednost.
+  5. Od 1920 px písmo, karta a lišta rostou se šířkou okna (2560 px → 21 px místo 16).
+  6. Instagram: adresa bydlí jen v configu appky (`RUNAR_INSTAGRAM_URL`, lane CODE-tune). Web ji čte a odkaz v patičce ukáže,
+     až tam bude; do té doby je skrytý.
+- Affected doc(s): žádný (stav vlastní `web/site/*` a `git log`).
