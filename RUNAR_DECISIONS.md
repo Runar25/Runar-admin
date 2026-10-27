@@ -12338,3 +12338,12 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   ✦ ✎ ? ⬇ ✉ ⚿ 👥 × z položek pryč (EN i IS). ▾ u jména zlatá, plná, větší, při otevření otočená (`:has`).
 - **Ověřeno:** náhled — pořadí u návštěvníka, přihlášeného i admina, nabídka pod jménem, IS texty, otočení ▾; smoke ㉼, komponenty, jazyk UI zelené.
 - Affected doc(s): žádný (menu vlastní `runar-reader.html` a `updateSidePanel` / `updateDropdown` v `runar-app.js`).
+
+## 2026-10-27 (6) — Domovská stránka webu na počítači: Rúnar stojí vlevo, obsah se posouvá vpravo; mobil beze změny
+
+- **Rozhodl:** owner 2026-10-27 k /heim/ na počítači („tohle je dobré na mobil, ale webovka?“): *„založíme to na therunekeeper.com, celý panel
+  bude možné skrolovat na pravé straně a Rúnar zůstane stále v pozadí. jeho natažená ruka stále nabízí. mobil by zůstal, jak je.“*
+- **Co:** od 769 px portrét pevně vlevo přes celou výšku pod lištou (rozplyne se doprava do pozadí jako na landingu), vpravo ubíhá úvod
+  (THE RUNE KEEPER, věta, motto, GAKKTU INN), sekce cesty s malou cestou čtyř kamenů (značka, jméno, cena; data jako okno appky) a karta,
+  patička. Do 768 px beze změny (styly appky). Stránka je dál skrytá na /heim/; při spuštění nahradí landing (BACKLOG).
+- Affected doc(s): žádný (stav vlastní `web/site/heim/index.html` a `git log`).
