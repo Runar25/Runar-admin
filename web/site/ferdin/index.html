@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>Rúnar · Gakktu með Rúnari</title>
+<link rel="icon" type="image/png" sizes="96x96" href="https://runar25.github.io/Runar-admin/v2/icons/favicon-96x96.png">
+<link rel="apple-touch-icon" href="https://runar25.github.io/Runar-admin/v2/icons/apple-touch-icon.png">
 <!-- 2026-10-19 CODE-web: stránka „The journey with Rúnar“ (DECISIONS 2026-10-19 (7)). Od 2026-10-21 na therunekeeper.com/ferdin/,
      zatím SKRYTÁ (noindex, bez odkazu z landingu) — owner ji chce vyladit naostro, než se spustí.
      Verze 4 (týž den). v1 = vlastní vzhled, účty vedle sebe, kameny na čárkované cestě („grafika neodpovídá tomu, co je Rúnar“);
@@ -104,10 +106,10 @@
 <script src="https://runar25.github.io/Runar-admin/v2/runar-translations.js"></script>
 <script src="https://runar25.github.io/Runar-admin/v2/runar-svgs.js"></script>
 <script src="https://runar25.github.io/Runar-admin/v2/runar-utils.js"></script>
-<script src="../web.js?v=7bbba3044e"></script>
+<script src="../web.js?v=803050c8bd"></script>
 <script src="https://runar25.github.io/Runar-admin/v2/runar-runakort.js"></script>
 <script>
-var LANG = 'is', P = 'm';
+var LANG = webJazyk(), P = 'm';   // jazyk napříč stránkami webu (web.js, 2026-10-27)
 var PK = 1, DES = 'o';   // zvolený balíček (index v CARD_PACKS) a vzhled karty (RK_DESIGNS)
 var lang = LANG;   // pro t()/tp() z runar-utils.js
 var ORDER = ['free_trial', 'rune_seeker', 'standard', 'premium'];
@@ -191,7 +193,7 @@ function render() {
   setP(P);
 }
 document.querySelectorAll('.j-lang button').forEach(function (b) {
-  b.onclick = function () { LANG = b.getAttribute('data-l'); render(); };
+  b.onclick = function () { LANG = webJazyk(b.getAttribute('data-l')); render(); };
 });
 document.querySelectorAll('#per span').forEach(function (s) {
   s.onclick = function () { setP(s.dataset.p); };

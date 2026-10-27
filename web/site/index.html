@@ -4,6 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Rúnar · The Rune Keeper</title>
+<!-- Náhled při sdílení (owner 2026-10-27 „udělej všech pět“, bod 3): Facebook, Instagram, Messenger, iMessage a další JS nespouštějí,
+     čtou jen tyhle značky. Popis = hero_quote z UI_TEXT (IS); obsah doplní scripts/web_nasad.py při nasazení, ať text bydlí jen
+     v překladech (§20) — ručně ho nepiš. Obrázek img/og.jpg (1200×630) skládá scripts/web_og_obrazek.py. -->
+<meta name="description" data-meta="hero_quote" content="Rúnirnar spá ekki fyrir um örlög þín. Þær minna þig á veginn sem þú gengur nú þegar.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://therunekeeper.com/">
+<meta property="og:site_name" content="Rúnar · The Rune Keeper">
+<meta property="og:title" content="Rúnar · The Rune Keeper">
+<meta property="og:description" data-meta="hero_quote" content="Rúnirnar spá ekki fyrir um örlög þín. Þær minna þig á veginn sem þú gengur nú þegar.">
+<meta property="og:locale" content="is_IS">
+<meta property="og:image" content="https://therunekeeper.com/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Rúnar the Rune Keeper">
+<meta name="twitter:card" content="summary_large_image">
 <!-- web/site = PŘESNĚ to, co jde na therunekeeper.com (repo Runar25/therunekeeper-web je jen kopie téhle složky; měnit se smí jen tady).
      2026-10-12/13 CODE-web: landing „coming soon“ — styl A (Noc) + „Væntanlegt“ v bronzu přezky (owner „bronze je dobrý“).
      Texty hero_eyebrow / hero_quote / sp_privacy_link / redeem_err_rate / err_generic, config (SB_URL) a písma bere ŽIVĚ z appky
@@ -70,12 +85,13 @@ body{background:var(--bg);color:var(--white);font-family:'Cormorant Garamond',se
     <div class="fine" id="wl-msg" role="status" aria-live="polite" style="display:none;color:#F2F5F7;font-style:normal"></div>
     <div class="fine" data-is="Skráðu þig núna og þú færð tölvupóst þegar Rúnar fer í loftið." data-en="Register now and you will get an email when Rúnar launches."></div>
   </div>
-  <div class="foot">© 2026 AGNDOFA EHF. · <a href="mailto:runar@therunekeeper.com">RUNAR@THERUNEKEEPER.COM</a> · <a href="https://runar25.github.io/Runar-admin/v2/runar-privacy.html" data-k="sp_privacy_link"></a></div>
+  <div class="foot">© 2026 AGNDOFA EHF. · <a href="mailto:runar@therunekeeper.com">RUNAR@THERUNEKEEPER.COM</a> · <a href="https://runar25.github.io/Runar-admin/v2/runar-privacy.html" data-k="sp_privacy_link"></a> · <a id="w-ig" style="display:none">INSTAGRAM</a></div>
 </section>
 <script src="https://runar25.github.io/Runar-admin/v2/runar-config.js"></script>
 <script src="https://runar25.github.io/Runar-admin/v2/runar-translations.js"></script>
+<script src="web.js?v=803050c8bd"></script>
 <script>
-var LANG = 'is';
+var LANG = webJazyk();   // volba jazyka platí na všech stránkách webu (web.js, 2026-10-27)
 var PH = { is: 'Netfangið þitt', en: 'Your email' };
 function render() {
   var T = UI_TEXT[LANG];
@@ -89,11 +105,12 @@ function render() {
   // motto na mobilu u Rúnarovy hlavy (jako appka): týž text jako .quote, <br> → mezera, ať se zalomí podle úzkého pole
   document.getElementById('quote-m').innerHTML = document.querySelector('.txt .quote').innerHTML.replace(/<br\s*\/?>/g, ' ');
   document.documentElement.lang = LANG;
+  document.querySelectorAll('.nav button').forEach(function (x) { x.classList.toggle('on', x.getAttribute('data-l') === LANG); });
+  webInstagram(document.getElementById('w-ig'));
 }
 document.querySelectorAll('.nav button').forEach(function (b) {
   b.onclick = function () {
-    LANG = b.getAttribute('data-l');
-    document.querySelectorAll('.nav button').forEach(function (x) { x.classList.toggle('on', x === b); });
+    LANG = webJazyk(b.getAttribute('data-l'));
     render();
   };
 });

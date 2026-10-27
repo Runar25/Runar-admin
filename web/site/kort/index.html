@@ -14,6 +14,7 @@
      VOCAB, CARD_PACKS, runeSvg) jako landing (§18, §20); nové věty jen tady v TXT.
      2026-10-20: kresba karty (vzhled i skládání líce/rubu) bydlí v ../runakort.css a ../runakort.js — sdílí ji stránka cesty. -->
 <link rel="icon" type="image/png" sizes="96x96" href="https://runar25.github.io/Runar-admin/v2/icons/favicon-96x96.png">
+<link rel="apple-touch-icon" href="https://runar25.github.io/Runar-admin/v2/icons/apple-touch-icon.png">
 <link rel="stylesheet" href="https://runar25.github.io/Runar-admin/v2/fonts/fonts.css">
 <link rel="stylesheet" href="https://runar25.github.io/Runar-admin/v2/runar-runakort.css">
 <style>
@@ -60,7 +61,7 @@ body{color:var(--white);font-family:'Cormorant Garamond',serif;font-size:19px;mi
 <script src="https://runar25.github.io/Runar-admin/v2/runar-translations.js"></script>
 <script src="https://runar25.github.io/Runar-admin/v2/runar-svgs.js"></script>
 <script src="https://runar25.github.io/Runar-admin/v2/runar-utils.js"></script>
-<script src="../web.js?v=7bbba3044e"></script>
+<script src="../web.js?v=803050c8bd"></script>
 <script src="https://runar25.github.io/Runar-admin/v2/runar-runakort.js"></script>
 <script>
 var TXT = {
@@ -74,7 +75,7 @@ var P = new URLSearchParams(location.hash.replace(/^#/, ''));
 var CODE = (P.get('k') || '').trim().toUpperCase();
 if (!/^[A-Z]{3,12}-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(CODE)) CODE = '';   // formát z makeCode() ve shrine
 var DES = RK_DESIGNS[P.get('v')] ? P.get('v') : 'o';
-var LANG = P.get('l') === 'en' ? 'en' : 'is';
+var LANG = P.get('l') === 'en' ? 'en' : P.get('l') === 'is' ? 'is' : webJazyk();   // #l= z odkazu má přednost (2026-10-27)
 var N = parseInt(P.get('n'), 10) || 0;
 
 // QR vede do appky s kódem za # (#kort=…): appka ho předvyplní do pole kódu (runar-auth.js _kortZAdresy), uplatní ho člověk sám.
@@ -113,7 +114,7 @@ function save() {
   history.replaceState(null, '', '#' + P.toString());
 }
 document.querySelectorAll('.nav button').forEach(function (b) {
-  b.onclick = function () { LANG = b.getAttribute('data-l'); save(); render(); };
+  b.onclick = function () { LANG = webJazyk(b.getAttribute('data-l')); save(); render(); };
 });
 document.getElementById('print').onclick = function () { window.print(); };
 document.getElementById('w-brand').href = RUNAR_HOME_URL;   // značka RÚNAR → domovská stránka (web.js)

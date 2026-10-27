@@ -5,6 +5,21 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>Rúnar · The Rune Keeper</title>
+<!-- Náhled při sdílení (owner 2026-10-27 „udělej všech pět“, bod 3): Facebook, Instagram, Messenger, iMessage a další JS nespouštějí,
+     čtou jen tyhle značky. Popis = hero_quote z UI_TEXT (IS); obsah doplní scripts/web_nasad.py při nasazení, ať text bydlí jen
+     v překladech (§20) — ručně ho nepiš. Obrázek img/og.jpg (1200×630) skládá scripts/web_og_obrazek.py. -->
+<meta name="description" data-meta="hero_quote" content="Rúnirnar spá ekki fyrir um örlög þín. Þær minna þig á veginn sem þú gengur nú þegar.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Rúnar · The Rune Keeper">
+<meta property="og:title" content="Rúnar · The Rune Keeper">
+<meta property="og:description" data-meta="hero_quote" content="Rúnirnar spá ekki fyrir um örlög þín. Þær minna þig á veginn sem þú gengur nú þegar.">
+<meta property="og:locale" content="is_IS">
+<meta property="og:image" content="https://therunekeeper.com/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Rúnar the Rune Keeper">
+<meta name="twitter:card" content="summary_large_image">
+<!-- og:url doplnit při spuštění, až stránka bude na https://therunekeeper.com/ (BACKLOG) -->
 <!-- 2026-10-21 CODE-web: domovská stránka webu PO SPUŠTĚNÍ (owner: „landingpage není potřeba, ale potřebujeme nějaký web pro Rúnara.
      Měl by být v podobě appky… pasovat i na rozlišení mobilu“; na návrh struktury „ano, postav ji“). Až se Rúnar spustí, nahradí
      stránku „Væntanlegt“ na therunekeeper.com; do té doby SKRYTÁ na /heim/ (noindex, nic na ni nevede).
@@ -13,6 +28,7 @@
      hero_phrases, hero_quote, journey_*, sp_privacy_link), karta ze sdíleného runakort.js, adresa appky
      z web.js (§10, §20). Nové věty jen WEB_TXT: enter (IS „Gakktu inn“: Greynir OK, korpus 55×) a plans (2026-10-21, viz u WEB_TXT). -->
 <link rel="icon" type="image/png" sizes="96x96" href="https://runar25.github.io/Runar-admin/v2/icons/favicon-96x96.png">
+<link rel="apple-touch-icon" href="https://runar25.github.io/Runar-admin/v2/icons/apple-touch-icon.png">
 <link rel="stylesheet" href="https://runar25.github.io/Runar-admin/v2/fonts/fonts.css">
 <link rel="stylesheet" href="https://runar25.github.io/Runar-admin/v2/runar-reader.css">
 <link rel="stylesheet" href="https://runar25.github.io/Runar-admin/v2/runar-runakort.css">
@@ -30,33 +46,63 @@ a.btn-upgrade{display:inline-block;text-decoration:none;margin-top:6px}
 .w-foot{position:relative;z-index:1;text-align:center;font-family:'Cinzel',serif;font-size:11px;letter-spacing:2.5px;color:var(--muted);padding:20px 16px 36px;border-top:1px solid rgba(46,74,112,0.3)}
 .w-foot a{color:inherit;text-decoration:none}
 .w-foot a:hover{color:var(--gold)}
-@media(max-width:768px){ .hero-text-col a.btn-upgrade{align-self:center} .w-path{display:none} }
-/* desktop (owner 2026-10-27): Rúnar stojí vlevo jako pevné pozadí, vpravo se posouvá ČISTĚ TEXT.
-   Verze 2 téhož dne — owner k verzi 1: „nechci to dělat jako oddělené panely… ten rámeček kolem není úplně dobrý… necháš tam šipku
-   z mobilu… rámečky už jsem ti omlátil o hlavu. odstraň ty rámečky. posouvat se bude čistě text. pozadí zůstává.“ Verze 1 měla sekce
-   v rámečcích (.card appky), proužek se šipkou z mobilu a portrét ve sloupci 48vw, který vysoké okno ořízlo uprostřed obličeje
-   (object-position appky 40 %). Teď: portrét jako pozadí landingu (cover) s ukotvením 85 % vodorovně: ve vysokém okně (zkoušeno
-   1390×1466) se ořízne kus hole, obličej i natažená ruka zůstanou celé; v širokém (1280–1920) je vidět celá postava; doprava se rozplyne až od 80 % (ruka je na 85 % obrazu). Do 768 px beze změny. */
-@media(min-width:769px){
-  .hero{border-bottom:none;overflow:visible;max-height:none;background:none}
-  .hero-inner{display:block;max-width:none;min-height:0}
-  .hero-portrait-col{position:fixed;left:0;top:0;bottom:0;width:52vw;z-index:0;overflow:visible;
-    background:url(../img/runar.jpg) 85% 22%/cover no-repeat;
-    -webkit-mask-image:linear-gradient(90deg,#000 80%,transparent 100%);mask-image:linear-gradient(90deg,#000 80%,transparent 100%)}
-  .hero-portrait-wrap,.hero-down{display:none}
-  .hero-text-col{margin-left:54vw;min-height:0;padding:64px 6vw 0 0;justify-content:flex-start}
-  .w-main{margin:0 0 0 54vw;max-width:none;padding:56px 6vw 8px 0}
-  .w-main .card{background:none;border:none;padding:0;margin:0 0 56px;text-align:left;max-width:640px}
-  .w-main .card-lbl{font-size:0.9em;letter-spacing:5px;margin-bottom:12px}
-  .w-card{justify-content:flex-start}
-  .w-foot{margin-left:54vw;border-top:none;text-align:left;padding:0 6vw 40px 0}
-}
 /* malá cesta kamenů (desktop): značka účtu, jméno, cena — kreslí kamenUctuSvg z runar-utils.js jako okno appky */
 .w-path{list-style:none;margin:6px 0 16px;text-align:left}
 .w-path li{display:grid;grid-template-columns:40px 1fr;column-gap:14px;align-items:center;padding:6px 0}
 .w-path .kamen-uctu{width:34px;height:auto;cursor:pointer}
 .w-path .nm{font-family:'Cinzel',serif;font-size:0.8em;letter-spacing:2px;color:var(--gold)}
 .w-path .pr{font-style:italic;color:var(--muted);font-size:0.95em}
+@media(max-width:768px){ .hero-text-col a.btn-upgrade{align-self:center} .w-path{display:none} }
+/* desktop (owner 2026-10-27): Rúnar stojí vlevo jako pevné pozadí, vpravo se posouvá ČISTĚ TEXT.
+   Verze 2 téhož dne — owner k verzi 1: „nechci to dělat jako oddělené panely… ten rámeček kolem není úplně dobrý… necháš tam šipku
+   z mobilu… rámečky už jsem ti omlátil o hlavu. odstraň ty rámečky. posouvat se bude čistě text. pozadí zůstává.“ Verze 1 měla sekce
+   v rámečcích (.card appky), proužek se šipkou z mobilu a portrét ve sloupci 48vw, který vysoké okno ořízlo uprostřed obličeje
+   (object-position appky 40 %). Teď: portrét jako pozadí landingu (cover) s ukotvením 85 % vodorovně: ve vysokém okně (zkoušeno
+   1390×1466) se ořízne kus hole, obličej i natažená ruka zůstanou celé; v širokém (1280–1920) je vidět celá postava; doprava se rozplyne až od 80 % (ruka je na 85 % obrazu). Do 768 px beze změny.
+   Od 769 px bez rámečků, linky a šipky VŽDY — i tam, kde se nerozděluje (tam zůstane hero appky: portrét vedle textu). */
+@media(min-width:769px){
+  .hero{border-bottom:none}
+  .hero-down{display:none}
+  /* sloupec portrétu bez vlastního pozadí a bez tmavých přechodů appky: zakrývaly záři stránky (body::before), takže vedle textu
+     stála tvrdá svislá hrana jako rámeček (iPad na výšku, 2026-10-27). Maska obrázku appky nechá okraj z ~60 % krytý → sloupec se
+     navíc rozplyne doprava (od 80 %, ruka je na 74–86 % sloupce a musí zůstat jasná) a dolů — jako pevné pozadí při rozdělení. */
+  .hero-portrait-col{background:none;
+    -webkit-mask-image:linear-gradient(90deg,#000 80%,transparent 100%),linear-gradient(180deg,#000 72%,transparent 100%);-webkit-mask-composite:source-in;
+    mask-image:linear-gradient(90deg,#000 80%,transparent 100%),linear-gradient(180deg,#000 72%,transparent 100%);mask-composite:intersect}
+  .hero-portrait-wrap::before,.hero-portrait-wrap::after{background:none}
+  .w-main .card{background:none;border:none;padding:0;margin:0 0 56px}
+  .w-main .card-lbl{font-size:0.9em;letter-spacing:5px;margin-bottom:12px}
+  .w-path{width:fit-content;margin-left:auto;margin-right:auto}
+  .w-foot{border-top:none}
+  .hero-text-col .ai-note{text-align:left}
+}
+/* Rozdělení jen tam, kde se vejde obličej i natažená ruka: okno aspoň 1000 px (užší sloupec textu nese kartu 360 px jen zmenšenou)
+   a ne užší než 4:5 — užší okno ořízne obličej (iPad na výšku 820×1180, iPad Pro 1024×1366; měřeno 2026-10-27). Pod tím hero appky
+   jako v appce na tomtéž zařízení: portrét vedle textu, obličej, ruka i GAKKTU INN na první obrazovce. Mobilní rozložení roztažené
+   na tablet (zkoušeno přes meta viewport 768) to nedalo — tlačítko spadlo pod okraj. */
+@media(min-width:1000px) and (min-aspect-ratio:4/5){
+  .hero{overflow:visible;max-height:none;background:none}
+  .hero-inner{display:block;max-width:none;min-height:0}
+  .hero-portrait-col{position:fixed;left:0;top:0;bottom:0;width:52vw;z-index:0;overflow:visible;
+    background:url(../img/runar.jpg) 85% 22%/cover no-repeat;
+    -webkit-mask-image:linear-gradient(90deg,#000 80%,transparent 100%);mask-image:linear-gradient(90deg,#000 80%,transparent 100%)}
+  .hero-portrait-wrap{display:none}
+  .hero-text-col{margin-left:54vw;min-height:0;padding:64px 6vw 0 0;justify-content:flex-start}
+  .w-main{margin:0 0 0 54vw;max-width:none;padding:56px 6vw 8px 0}
+  .w-main .card{text-align:left;max-width:40em}
+  .w-path{margin-left:0}
+  .w-card{justify-content:flex-start}
+  .w-foot{margin-left:54vw;text-align:left;padding:0 6vw 40px 0}
+  /* Velká obrazovka (bod 5): do 1920 px písmo appky (16 px); nad tím roste s šířkou okna (2560 px → 21 px), ať text a karta
+     drží poměr k Rúnarovi jako na 1920 (na 2560 působily drobně, měřeno 2026-10-27). Rozměry uvnitř sloupce jsou proto v em. */
+  .topbar,.hero-text-col,.w-main{font-size:clamp(16px,0.8333vw,24px)}
+  .topbar-inner{max-width:71.25em}
+  .hero-quote{max-width:23.15em}
+  .w-card .rk-wrap{width:22.5em}
+  .w-path li{grid-template-columns:2.5em 1fr}
+  .w-path .kamen-uctu{width:2.125em}
+  .w-foot{font-size:clamp(11px,0.573vw,16.5px)}
+}
 </style>
 </head>
 <body>
@@ -83,6 +129,7 @@ a.btn-upgrade{display:inline-block;text-decoration:none;margin-top:6px}
       <p class="hero-sub" id="w-phrase"></p>
       <blockquote class="hero-quote" id="w-quote"></blockquote>
       <a class="btn-upgrade" id="w-enter"></a>
+      <p class="fine ai-note" data-k="ai_note"></p>   <!-- jako appka u čtení: Rúnar je AI (owner 2026-10-27, bod 1) -->
     </div>
   </div>
   <button type="button" class="hero-down" id="hero-down" onclick="scrollToReading()" aria-label="Scroll down">   <!-- proužek jako appka (2026-10-26) -->
@@ -105,20 +152,20 @@ a.btn-upgrade{display:inline-block;text-decoration:none;margin-top:6px}
   </section>
 </main>
 
-<footer class="w-foot">© 2026 AGNDOFA EHF. · <a href="mailto:runar@therunekeeper.com">RUNAR@THERUNEKEEPER.COM</a> · <a id="w-privacy" data-k="sp_privacy_link"></a></footer>
+<footer class="w-foot">© 2026 AGNDOFA EHF. · <a href="mailto:runar@therunekeeper.com">RUNAR@THERUNEKEEPER.COM</a> · <a id="w-privacy" data-k="sp_privacy_link"></a> · <a id="w-ig" style="display:none">INSTAGRAM</a></footer>
 
 <script src="https://runar25.github.io/Runar-admin/v2/runar-config.js"></script>
 <script src="https://runar25.github.io/Runar-admin/v2/runar-runes.js"></script>
 <script src="https://runar25.github.io/Runar-admin/v2/runar-translations.js"></script>
 <script src="https://runar25.github.io/Runar-admin/v2/runar-svgs.js"></script>
 <script src="https://runar25.github.io/Runar-admin/v2/runar-utils.js"></script>
-<script src="../web.js?v=7bbba3044e"></script>
+<script src="../web.js?v=803050c8bd"></script>
 <script src="https://runar25.github.io/Runar-admin/v2/runar-runakort.js"></script>
 <script>
 // plans (owner 2026-10-21 „ano, see plans“: dřív tlačítko opakovalo nadpis WALK WITH RÚNAR a „nic neříká“; rešerše Spotify „View all plans“).
 // IS „Skoða áskriftarleiðir“: Greynir OK, „áskriftarleiðir“ 230×, „skoða leiðir“ 895×; infinitiv jako tlačítka appky (HEFJA LESTURINN).
 var WEB_TXT = { enter: { is: 'GAKKTU INN', en: 'STEP INSIDE' }, plans: { is: 'SKOÐA ÁSKRIFTARLEIÐIR', en: 'SEE PLANS' } };
-var LANG = 'is';
+var LANG = webJazyk();   // volba jazyka platí na všech stránkách webu (web.js, 2026-10-27)
 var lang = LANG;   // t()/tp() z runar-utils.js čtou globální `lang` (v appce ji drží runar-app.js, který web nenačítá)
 var phraseIx = null;   // jedna náhodná věta z hero_phrases na návštěvu, jako appka (getHeroPhrase)
 function render() {
@@ -149,6 +196,7 @@ function render() {
   document.getElementById('w-card-note').textContent = RK_TXT.note[LANG];
   document.getElementById('w-card-go').textContent = vl('card', LANG).toUpperCase() + ' →';
   document.getElementById('w-privacy').href = RUNAR_APP_URL.replace(/[^/]*$/, '') + 'runar-privacy.html';
+  webInstagram(document.getElementById('w-ig'));
 }
 // Malá cesta: čtyři účty v pořadí okna appky; ceny z TIERS.price_isk_month, texty zdarma z UI_TEXT (journey_free / _free_join)
 function cesta(U) {
@@ -163,7 +211,7 @@ function cesta(U) {
   p.querySelectorAll('.kamen-uctu').forEach(function (svg) { svg.onclick = function () { kamenUctuOziv(svg, 5000); }; });
 }
 document.querySelectorAll('.w-lang button').forEach(function (b) {
-  b.onclick = function () { LANG = b.getAttribute('data-l'); render(); };
+  b.onclick = function () { LANG = webJazyk(b.getAttribute('data-l')); render(); };
 });
 render();
 </script>

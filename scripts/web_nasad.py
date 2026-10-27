@@ -9,9 +9,10 @@
 #
 # Co dělá: v HTML pod web/site/ přepíše ?v=… u sdílených souborů na hash obsahu (v repu, ať zdroj = nasazené), zkopíruje web/site/
 # do ../therunekeeper-web (kromě CNAME, ten si drží GitHub), co ve web/site není, tam smaže (zrcadlo), commitne a pushne tam. Repo Runar-admin necommituje — to udělá session.
+# Taky doplní popis do <meta … data-meta="klíč" content="…"> z UI_TEXT.is (náhled při sdílení, 2026-10-27) — viz popisy().
 #   python -X utf8 scripts/web_nasad.py "<zpráva commitu v EN>"      nasadit
 #   python -X utf8 scripts/web_nasad.py --jen-verze                  jen přepsat verze (bez kopírování)
-import hashlib, io, os, re, shutil, subprocess, sys
+import hashlib, html, io, json, os, re, shutil, subprocess, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = os.path.join(ROOT, 'web', 'site')
@@ -39,10 +40,50 @@ def verze():
                 zmeneno.append(os.path.relpath(p, ROOT))
     return hashe, zmeneno
 
+# Náhled při sdílení (owner 2026-10-27, „udělej všech pět“, bod 3): Facebook, Instagram, Messenger ani iMessage JS nespouštějí, čtou jen
+# <meta> v HTML. Stránka si texty bere z UI_TEXT až v prohlížeči, takže popis v <meta> by byl druhá kopie textu (§20) — proto ho
+# nepíšeme ručně: <meta … data-meta="hero_quote" content=""> dostane při nasazení UI_TEXT.is.hero_quote (islandština = výchozí
+# jazyk webu, §2), bez uvozovek a zalomení. Změní-li tune text v appce, srovná ho příští nasazení webu.
+def ui_text():
+    js = ("var s=require('fs').readFileSync(process.argv[1],'utf8');"
+          "process.stdout.write(JSON.stringify(new Function(s+';return UI_TEXT;')()))")
+    r = subprocess.run(['node', '-e', js, os.path.join(ROOT, 'v2', 'runar-translations.js')],
+                       capture_output=True, encoding='utf-8', check=True)
+    return json.loads(r.stdout)
+
+def cisty(v):
+    v = re.sub(r'<br\s*/?>', ' ', v)
+    v = re.sub(r'<[^>]+>', '', v)
+    v = re.sub(r'\s+', ' ', v).strip().strip('"„“”').strip()
+    return html.escape(v, quote=True)
+
+def popisy():
+    U, zmeneno = None, []
+    for d, _, fs in os.walk(SITE):
+        for f in fs:
+            p = os.path.join(d, f)
+            if not f.endswith('.html'):
+                continue
+            s = io.open(p, encoding='utf-8').read()
+            if 'data-meta="' not in s:
+                continue
+            if U is None:
+                U = ui_text()['is']
+            def nahrad(m):
+                if not U.get(m.group(2)):
+                    sys.exit('web_nasad: klíč %s (%s) v UI_TEXT.is není' % (m.group(2), os.path.relpath(p, ROOT)))
+                return m.group(1) + cisty(U[m.group(2)]) + m.group(3)
+            n = re.sub(r'(<meta\b[^>]*\bdata-meta="(\w+)"[^>]*\bcontent=")[^"]*(")', nahrad, s)
+            if n != s:
+                io.open(p, 'w', encoding='utf-8', newline='\n').write(n)
+                zmeneno.append(os.path.relpath(p, ROOT))
+    return zmeneno
+
 def main():
     hashe, zmeneno = verze()
     print('verze:', ', '.join('%s=%s' % kv for kv in hashe.items()))
     print('přepsané stránky:', ', '.join(zmeneno) or 'žádné (verze sedí)')
+    print('popisy pro sdílení:', ', '.join(popisy()) or 'beze změny')
     if '--jen-verze' in sys.argv:
         return
     if len(sys.argv) < 2 or sys.argv[1].startswith('--'):
