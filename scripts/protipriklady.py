@@ -319,6 +319,7 @@ PRIPADY = [
  ('chyti', 'verify_play_bez_nakupu.js', 'v2/runar-help.html', 'regex', r'(<body[^>]*>)', r'\g<1><p><a href="https://agndofa.my' + 'shopify.com/">Shop</a></p>'),
  ('nesmi', 'verify_play_bez_nakupu.js', 'v2/runar-help.html', 'regex', r'(<body[^>]*>)', r'\g<1><p><a href="https://therunekeeper' + '.com/kort/">Rúnakort</a></p>'),
  ('chyti', 'verify_play_bez_nakupu.js', 'v2/runar-app.js', 'replace', "if (src === 'play') return 'play';", "if (src === 'play') return 'web';"),
+ ('chyti', 'verify_play_bez_nakupu.js', 'v2/runar-help.html', 'regex', r'(<body[^>]*>)', r'\g<1><p><a href="https://www.insta' + 'gram.com/runartherunekeeper/">Instagram</a></p>'),   # 2026-10-27: Instagram = nepřímá cesta k nákupu
  # ㊑ web × appka (2026-10-21, CODE-read): dnešní chyba (web znovu deklaruje jméno z configu) · appka přejmenuje funkci, kterou web volá
  ('chyti', 'verify_web_appka_jmena.js', 'web/site/web.js', 'replace', "var RUNAR_APP_URL = ", "var RUNAR_HOME_URL = 'x';\nvar RUNAR_APP_URL = "),
  ('chyti', 'verify_web_appka_jmena.js', 'v2/runar-utils.js', 'replace', 'function kamenUctuSvg(', 'function kamenUctuSvgX('),
