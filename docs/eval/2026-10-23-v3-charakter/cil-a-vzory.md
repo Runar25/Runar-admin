@@ -25,6 +25,18 @@ opsána 7/8; DECISIONS 2026-08-23 „žádné vzorové věty do promptu“). Slo
 | 11 | What strength is already in you? | ✔ 2026-10-16 „není na tom nic špatného“ | povzbuzení otázkou, ne tvrzení | 4 konec |
 | 12 | You put down the knife and sit with your father, the soup left to simmer. | ✘ 2026-10-24 „zbytečně zavádějící“ | detail (nůž) táhne pozornost mimo dar | 1 obraz |
 
+## Návrh celých vzorových čtení v3 (CODE-read 2026-10-27, NEschváleno — čeká na ownera)
+Owner: „obrazy … by měly být víc metaforické; esence může být první i druhá; konce cca jako v2; zkus obraz jako metaforu runy podle vzoru Gemini“.
+Obraz = známý fyzický děj jako metafora runy (Gemini) · esence = rámec v2 se slovesem z korpusu („is the rune of“, „stands for“) · věta 3 =
+stín jako vnitřní cena principu (SMĚNA), o obrazu, ne o čtenáři · konec = tvar z v2 (`ENDING_OPEN`) nebo detail.
+1. On a seesaw, one end rises only when the other comes down. Gebo is the rune of the gift that binds two people, each giving and each
+   receiving. Neither can step off without dropping the other. This may be a bond that lifts you, or one that keeps you seated where you are.
+2. Gebo stands for the gift that ties two people, given freely and taken freely. Two playing cards lean into each other and stand where
+   neither could stand alone. Take one away, and the other falls with it. Is the weight between you shared, or does one side carry it?
+3. Two people carry a sofa up the stairs, and at each turn the weight passes from one to the other. Gebo is the rune of exchange, of what
+   moves between two and holds them together. The one in front sees the way; the one behind takes the weight. On the last step, someone
+   has to let go first.
+
 ## Z materiálu GPT (2026-10-23) — NEschváleno ownerem, jen ilustrace rozdílu
 - zrcadlo: „Voda se mezi nimi nezastavila. Předmět přešel z jedné ruky do druhé, ale proud pokračoval dál.“ × orákulum: „Tato runa ti říká,
   že musíš ve svých vztazích obnovit rovnováhu.“ × psychologický vykladač: „Možná dáváš příliš mnoho a bojíš se požádat o něco na oplátku.“
