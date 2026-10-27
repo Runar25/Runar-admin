@@ -86,6 +86,7 @@ Vrstvy pravdy: kanonická = root `RUNAR_*.md`, `memory/*.md`, `CLAUDE.md` · his
 - [test-the-lever-that-binds.md](test-the-lever-that-binds.md) — měň vazbu, která výsledek opravdu drží
 - [rekni-kterou-variantu-testujes.md](rekni-kterou-variantu-testujes.md) — před testem řekni, kterou variantu testuješ
 - [ownerovo-slovo-neni-spec.md](ownerovo-slovo-neni-spec.md) — konverzační přídavné jméno není zadání
+- [ownerovo-hodnoceni-zapis-smysl.md](ownerovo-hodnoceni-zapis-smysl.md) — verdikt ownera zapiš srozumitelně, ne jeho slova; příklad = směr
 - [measure-dont-eyeball.md](measure-dont-eyeball.md) — dojem není nález; změř, nebo „nevím"
 - [glyph-text-vs-our-svg.md](glyph-text-vs-our-svg.md) — tvar runy ověř proti NAŠÍ kresbě
 - [sanity-check-measurements.md](sanity-check-measurements.md) — extrémní číslo = red flag; ověř protipříkladem
