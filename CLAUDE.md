@@ -136,7 +136,7 @@ NIKDY `email.split('@')[0]`. `displayName()` = jediný zdroj pravdy.
 
 ### §13 — Nová věc musí projít VŠEMI cestami (Full-path rule)
 Nový field → všechny buildXxxPromptIS/EN · startReading() · resetReader() · shrine parts[].
-Nový spread → readRune() · drawAnother() · resetReader() · _setSpreadMode() · generateVoice().
+Nový spread → readRune() · resetReader() · _setSpreadMode() · generateVoice().
 Migrace → grep starý text, aktualizovat VŠECHNY výskyty. Před commitem: „Existuje jiná cesta kódem, kde tohle chybí?“
 
 ### §14 — updateUIText() = POUZE statické překlady

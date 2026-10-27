@@ -95,9 +95,9 @@ Strom: větev s centrálním uzlem a čtyřmi výhonky.
 ```
 IS pozice: hotové v produkci — zdroj pravdy `RP_HORSESHOE.is.positions` (`v2/runar-character.js`),
 doc je NEOPISUJE (§20).
-Tvar podkovy U (levé rameno 1-2-3, pravé 5-6-7, čtyřka dole uprostřed mezi 3 a 5, o půl kroužku níž; sousední pozice stejně daleko)
-je v appce od 2026-10-11 — KUKY: *„4 runa mezi 3-5. ať jsou runy v podkově od sebe stejně vzdálené všemi směry“* a *„udělej to jako U,
-takže 4. mírně, asi na půl velikosti čísla v kroužku, pod 3-5“*, `RUNAR_DECISIONS.md` 2026-10-11 (31), (37).
+Tvar podkovy: oválné U — levé rameno 1-2-3, pravé 5-6-7, 2 a 6 o půl kroku víc do stran (nejširší řada), čtyřka dole uprostřed mezi
+3 a 5 o půl kroužku níž. Owner 2026-10-27: *„2 a 6 více do vnějších stran … zaoblené U, ale více oválné jako O“* (`RUNAR_DECISIONS.md`
+2026-10-27 (2)); dno a čtyřka z 2026-10-11 (31), (37).
 Strom: větvená větev se sedmi body → sezónní rituál kmene.
 
 ### Yggdrasil (9 run) — všichni přihlášení, KDYKOLIV

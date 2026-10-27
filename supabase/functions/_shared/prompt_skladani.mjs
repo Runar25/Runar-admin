@@ -1326,7 +1326,6 @@ const UI_TEXT = {
     badge_life_note:  'your life rune',
     layer1_lbl:       '✦ RÚNAR SPEAKS',
     layer2_lbl:       '~ DEEPER REFLECTION',
-    draw_another:     'DRAW ANOTHER RUNE',
     start_over:       'START OVER',
 
     // Voice
@@ -1900,7 +1899,6 @@ const UI_TEXT = {
     badge_life_note:  'lífsrúnin þín',
     layer1_lbl:       '✦ RÚNAR TALAR',
     layer2_lbl:       '~ DÝPRI HUGLEIÐING',
-    draw_another:     'DRAGA AÐRA RÚN',
     start_over:       'BYRJA AFTUR',
 
     // Voice

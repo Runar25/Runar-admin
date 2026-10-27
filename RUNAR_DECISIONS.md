@@ -12294,3 +12294,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Nedělá se:** krok 7 (pokrytí 123 významů obrazy, nese obraz svůj význam) a krok 8 (Skladač ve shrine). Návrat jen novým rozhodnutím.
 - **Netýká se:** tabulky přístupu „kdo co vidí“ — ta je samostatné rozhodnutí 2026-10-22 (3) bod 7 a tímhle se neuzavírá.
 - Affected doc(s): žádný (stav plánu nesly jen záznamy DECISIONS a EVAL_LOG).
+
+## 2026-10-27 (2) — Opravy z hlášení 23. a 27. 10.: DRAW ANOTHER RUNE pryč, oválná podkova, záložky bez skoku, helper „?“ s odezvou, životní runa na střed
+
+- **Rozhodl:** owner v hlášeních (načtena 2026-10-27, `node scripts/nacti_cteni.js`); DRAW ANOTHER RUNE už rozhodnuto 2026-10-20 (1),
+  hlášení 737150f1: *„Stále vidím draw another rune. Přitom jsem to rušil.“*
+- **Co:** (1) DRAW ANOTHER RUNE i funkce `drawAnother()` pryč, START OVER = `.btn-voice` jako HEAR RÚNAR SPEAK, aktivní MY READING /
+  FOR SOMEONE vyplněné (zlaté, černé písmo) — §13 v CLAUDE.md a kontroly ㉼ a (D) bez cesty drawAnother. (2) Podkova oválné U, 2 a 6
+  o půl kroku ven (889be739). (3) Kolekce, životní runa, strom a deník začnou nahoře hned, bez plynulého posunu — deník se dřív ukázal
+  dole a pak sjel nahoru (51efe091). (4) Helper „?“ na dotyk plně viditelný jako při najetí myší, podrženo 500 ms (c7ca6a41). (5) Životní
+  runa na mobilu: věta na střed, kámen pod ní (f624f328).
+- **Ověřeno:** v náhledu 375 px změřené polohy a spočtené styly; smoke ㉼ (základ produkce v prohlížeči) a (D) zelené.
+- Affected doc(s): RUNAR_SPREADY.md (tvar podkovy), CLAUDE.md (§13 cesty nového výkladu)

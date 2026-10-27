@@ -449,7 +449,7 @@ function _showVisitorJoin() {
 }
 // Karta po tahu návštěvníka MÍSTO horního pruhu návštěvníka (KUKY 2026-10-10: „dva rámečky become a rune seeker asi zbytečné“).
 // Obojí řídí třída .host-drawn na #apane-reading (runar-reader.css); tohle je jediné místo, které ji mění. Vypíná ji každý návrat
-// k tahu: drawAnother, resetReader, _resetReadingTab. Do 2026-10-10 _showTrialEnd: inline display karty, horní pruh zůstával.
+// k tahu: resetReader, _resetReadingTab. Do 2026-10-10 _showTrialEnd: inline display karty, horní pruh zůstával.
 function _visitorJoin(on) {
   var p = document.getElementById('apane-reading');
   if (p) p.classList.toggle('host-drawn', !!on);
@@ -1175,36 +1175,8 @@ async function askRunar() {
   }
 }
 
-function drawAnother() {
-  _clearThought();   // 2026-09-30: myšlenka ✦ patří jen k čtení, které ji neslo (§13)
-  _konecZalozeni();
-  // Restore layer2 + reset layer1 label for next reading
-  var _daL2 = document.getElementById('single-layer2');
-  var _daLbl = document.getElementById('layer1-lbl');
-  if (_daL2) _daL2.style.display = '';
-  _hdr = null;
-  if (_daLbl) _daLbl.textContent = t('layer1_lbl');
-  if (_spreadMode === 'norns') { _spread3Runes = []; _updateSpread3Slots(); }
-  if (_spreadMode === 'kriz') { _spread5Runes = []; _updateSpread5Slots(); }
-  if (_spreadMode === 'horseshoe') { _spread7Runes = []; _updateSpread7Slots(); }
-  if (_spreadMode === 'yggdrasil') { _spread9Runes = []; _updateSpread9Slots(); }
-  readerRune = null; readerTexts = {}; voiceGenerated = {};
-  document.getElementById('reader-output').style.display = 'none';
-  _visitorJoin(false);
-  // 2026-10-19 (vada 6 z průchodu appkou): Rune Seeker bez čtení končil na prázdné obrazovce — návrat sem zbyl z června (df3a424), kdy
-  // místo formuláře stál panel „konec zkoušky“. Dnes vysvětlení a cestu k Rúnakortu ukazuje formulář (startReading → no_credits), takže
-  // bez čtení vede DRAW ANOTHER zpět na formulář s touž větou, ne k tahu, který by čtení stejně nedostal.
-  if (currentUser && lacksCredits((SPREAD_COSTS[_SPREAD_COST_KEY[_spreadMode] || 'single'] || {}).credits)) {
-    resetReader(); setSt('st-setup', _readingErrMsg('no_credits'));
-    _posunPodListu(document.getElementById('begin-btn'), false, 8);   // věta stojí u tlačítka; Start over by jinak skončil u fotky
-    return;
-  }
-  document.getElementById('reader-rune-card').style.display = 'block';
-  _posunPodListu(document.getElementById('reader-rune-card'), false, 8);   // táž vada jako po Begin: čtení nad mřížkou zmizelo (2026-10-13)
-  document.querySelectorAll('#reader-grid .rb').forEach(b => b.classList.remove('on'));
-  document.getElementById('reader-rune-info').textContent = '';
-  document.getElementById('btn-speak').disabled = true;
-}
+// drawAnother() (DRAW ANOTHER RUNE) pryč 2026-10-27 — owner 2026-10-20 „draw another rune můžeme asi zrušit a nechat jen jedno velké
+// Start over“ (DECISIONS 2026-10-20 (1)). Další tah = START OVER (resetReader).
 
 // Owner request: on (re)entering the Rune Reading tab, clear any STALE spread output /
 // label / mode from a previous reading, so a spread result never lingers over a new single.
@@ -1240,7 +1212,7 @@ function resetReader() {
   document.getElementById('reader-output').style.display = 'none';
   document.getElementById('reader-rune-card').style.display = 'none';
   _visitorJoin(false);
-  // 2026-10-19 (vada 6): bez čtení se formulář dřív neukázal (návrat z června, viz drawAnother) — Start over končil prázdnou obrazovkou.
+  // 2026-10-19 (vada 6): bez čtení se formulář dřív neukázal (návrat z června) — Start over končil prázdnou obrazovkou.
   if (currentUser && userTier === 'rune_seeker' && userFreeBalance <= 0 && userCredits <= 0) updateAuthUI();
   document.getElementById('reader-setup').style.display = 'block';
   ['r-name','r-question'].forEach(id => {   // r-day/r-month/r-year v HTML nejsou (2026-10-09)

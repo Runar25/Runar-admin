@@ -350,6 +350,8 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 .tree-rune-name-row .rlbl-glyph{-webkit-tap-highlight-color:initial;}
 .tree-rune-name{font-family:'Cinzel',serif;font-size:1.1em;letter-spacing:1px;color:var(--gold);margin-bottom:6px;}   /* 2026-10-20: dvě definice → jedna */
 .tree-rune-glyph-inline{font-size:1.6em;color:var(--gold);opacity:0.85;}
+/* 2026-10-27 (hlášení f624f328): na mobilu věta „You carry the life rune …“ na střed a kámen runy pod ní, ne vedle. */
+@media(max-width:480px){ .tree-rune-header{text-align:center;} .tree-rune-name-row{flex-direction:column;justify-content:center;} }
 .tree-static-open{font-family:'Cinzel',serif;font-size:0.85em;letter-spacing:0.5px;color:var(--muted);padding:12px 0 4px;}
 .tree-reading-text{font-size:1.1875em;line-height:1.8;color:var(--white);padding:12px 0 20px;font-style:italic;}
 .tree-reveal-intro{text-align:center;font-style:italic;color:var(--muted);font-size:0.95em;line-height:1.7;padding:8px 16px 20px;}
@@ -361,7 +363,9 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 .reading-mode-row{display:flex;gap:0;margin-bottom:16px;border:1px solid rgba(46,74,112,0.4);}
 .reading-mode-btn{flex:1;font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2px;padding:10px 8px;background:transparent;border:none;color:var(--muted);cursor:pointer;transition:all 0.2s;text-align:center;border-bottom:2px solid transparent;}
 .reading-mode-btn:hover{color:var(--gold);}
-.reading-mode-btn.active{color:var(--gold);background:rgba(255,191,0,0.05);border-bottom-color:var(--gold);}
+/* 2026-10-27 (owner 2026-10-20, DECISIONS 2026-10-20 (1)): aktivní volba vyplněná jako BEGIN THE READING (.btn-full), ať je vidět, kde
+   člověk je; velikost zůstává menší než u hlavního tlačítka. Hover nesmí dát zlaté písmo na zlaté pozadí. */
+.reading-mode-btn.active,.reading-mode-btn.active:hover{color:#000;background:var(--gold);border-bottom-color:var(--gold);font-weight:700;}
 /* ── ADMIN BAR ── */
 /* Přehrávání růstu stromu. Posuvník sám je .cap-seek (týž, co audio seek) —
    jeden vizuál, ne druhá skoro stejná kopie (§18). Tady jen obal a popisek. */
@@ -1060,9 +1064,12 @@ body:has(.modal-overlay.open) #hb-btn{display:none;}
    Norny jsou jedna řada se stejnými mezerami už dřív. Zobrazení: _updateSpreadSlots (cfg.display 'grid' pro Horseshoe a Yggdrasil). */
 .spread7-slots, .s5-cross, .spread9-slots{--slot-cell:46px;--slot-gap:10px;}
 @media(max-width:480px){ .spread7-slots, .s5-cross, .spread9-slots{--slot-cell:40px;--slot-gap:8px;} }
-.spread7-slots{grid-template-columns:repeat(3,var(--slot-cell));grid-auto-rows:var(--slot-cell);gap:var(--slot-gap);justify-content:center;place-items:center;}
-#s7slot1{grid-area:1/1;} #s7slot2{grid-area:2/1;} #s7slot3{grid-area:3/1;} #s7slot4{grid-area:3/2;}
-#s7slot5{grid-area:3/3;} #s7slot6{grid-area:2/3;} #s7slot7{grid-area:1/3;}
+/* 2026-10-27 (hlášení 889be739, owner: „2 a 6 více do vnějších stran … zaoblené U, ale více oválné jako O“): poloviční sloupce jako
+   Yggdrasil — krok = půl buňky + půl mezery; 2 a 6 o krok ven od ramen, takže řada 2–6 je nejširší a tvar se zaoblí. Kámen zabírá
+   dva sloupce (šířka buňky). Do té doby rovná ramena 1-2-3 / 5-6-7 ve třech sloupcích. */
+.spread7-slots{grid-template-columns:repeat(8,calc((var(--slot-cell) - var(--slot-gap)) / 2));grid-auto-rows:var(--slot-cell);gap:var(--slot-gap);justify-content:center;place-items:center;}
+#s7slot1{grid-area:1/2/2/4;} #s7slot2{grid-area:2/1/3/3;} #s7slot3{grid-area:3/2/4/4;} #s7slot4{grid-area:3/4/4/6;}
+#s7slot5{grid-area:3/6/4/8;} #s7slot6{grid-area:2/7/3/9;} #s7slot7{grid-area:1/6/2/8;}
 /* Dno podkovy jako U, ne ⊔ (2026-10-11, owner: „udělej to jako U, takže 4. mírně, asi na půl velikosti čísla v kroužku, pod 3-5“).
    Čtyřka o čtvrtinu buňky níž ≈ půl kroužku (kroužek 1.4em ≈ 22 px → 11,5 px; na telefonu 1.15em ≈ 18 px → 10 px). Tvar runové podkovy:
    1 nahoře vlevo, 4 dole uprostřed, 7 nahoře vpravo. Posun přes transform mřížku nemění, proto je o týž kus vyšší spodní okraj rámečku
