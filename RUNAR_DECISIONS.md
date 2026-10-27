@@ -12326,3 +12326,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Zbývá:** owner chce k rituálu Rúnarův hlas (zatím jen text).
 - **Ověřeno:** náhled — otevření/zavření, „+“ → ×, IS text, vzhled nadpisu beze změny; smoke ㉼ zelené.
 - Affected doc(s): žádný (text bydlí v `runar-translations.js`).
+
+## 2026-10-27 (5) — Menu přeskládané: účet pod jménem, v menu jazyk nahoře, položky bez značek, admin zvlášť; ▾ u jména výraznější
+
+- **Rozhodl:** owner 2026-10-27 *„11. ano“* k návrhu (hlášení c9976b4e: *„pořadí je takové divné, ať to má víc design menu“*) a k připomínce
+  *„nezapomeň, že máme i účet uživatele pod jeho jménem. Ten má zůstat … co by mělo být schované pod jménem a co v menu. U jména by mohlo
+  jít lépe vidět, že se dá rozbalit.“*
+- **Co:** pod jménem: účet, e-mail, zůstatky, MY NAMES, UPGRADE YOUR JOURNEY →, SIGN OUT. Menu: (návštěvník: cesta a SIGN IN) · LANGUAGE ·
+  MY JOURNAL, ENTER … CODE (`redeem_card_code` bez runy, jen Rune Seeker jako dřív) · PRIVACY · GUIDE & FAQ, SEND RÚNAR A LINE, INSTALL ·
+  ADMIN (štítek, jen admin) · dole PRIVACY POLICY a DELETE ACCOUNT. Hlavička menu bez „YOUR ACCOUNT“ (účet je pod jménem). Značky
+  ✦ ✎ ? ⬇ ✉ ⚿ 👥 × z položek pryč (EN i IS). ▾ u jména zlatá, plná, větší, při otevření otočená (`:has`).
+- **Ověřeno:** náhled — pořadí u návštěvníka, přihlášeného i admina, nabídka pod jménem, IS texty, otočení ▾; smoke ㉼, komponenty, jazyk UI zelené.
+- Affected doc(s): žádný (menu vlastní `runar-reader.html` a `updateSidePanel` / `updateDropdown` v `runar-app.js`).

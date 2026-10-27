@@ -197,8 +197,11 @@
             <div class="dd-tier" id="dd-tier"></div>
             <div class="dd-email" id="dd-email"></div>
             <div class="dd-balance" id="dd-balance"></div>
+            <!-- 2026-10-27 (owner „11. ano“): co je účtu, je pod jménem — jména, cesta dál, odhlášení -->
+            <button type="button" class="sp-item" id="dd-names" onclick="toggleDropdown();openNamesEdit()">MY NAMES</button>
             <!-- 2026-10-19: z rozbalovacího okna se jménem vede cesta dál (owner nad screenshotem: „žádné tlačítko Upgrade“) -->
             <button type="button" class="btn-upgrade dd-journey" id="dd-journey" onclick="openJourney()"></button>
+            <button type="button" class="sp-item" id="dd-signout" onclick="toggleDropdown();handleAuthBtn()">SIGN OUT</button>
           </div>
         </div>
         <button class="auth-btn signin" id="auth-action-btn" onclick="handleAuthBtn()">SIGN IN</button>
@@ -926,20 +929,32 @@
     <div id="sp-path-body" class="sp-path-body" style="display:none;"></div>
   </div>
 
-  <!-- ② Personal actions — logged-in only -->
-  <div id="sp-account" style="display:none;">
+  <!-- 2026-10-27 (owner „11. ano“, hlášení c9976b4e): přihlášený má účet v nabídce pod jménem (MY NAMES, cesta dál, SIGN OUT) — v menu
+       cesta (výš) a přihlášení jen pro návštěvníka. Pořadí: jazyk · deník a kód karty · soukromí · pomoc · admin · dole zásady a smazání.
+       Položky bez značek; skupiny oddělují štítky (.side-panel-lbl). -->
+  <!-- 2026-10-19 (DECISIONS 2026-10-19 (9)): návštěvník má v menu přihlášení (dřív jen v horní liště); text sign_in_btn (updateSidePanel). -->
+  <div id="sp-signin" style="display:none;">
     <div class="side-panel-section">
-      <button class="sp-item journal" id="sp-journal-link" onclick="openJournalFromPanel()">✦ MY JOURNAL</button>
-      <button class="sp-item" id="sp-names-btn" onclick="openNamesEdit()">✎ MY NAMES</button>
-      <button class="sp-item" id="sp-gift" onclick="showAppTab('reading');toggleRedeem();closeSidePanel()">+ READING GIFT CARD</button>
-      <a class="sp-item" id="sp-admin-link" href="runar-shrine.html" style="display:none;text-decoration:none;">⚿ KNOWLEDGE SHRINE</a>
-      <!-- 2026-10-11 (owner: „rychlejší přístup než se proklikávat shrine… na mobil i počítač“): rovnou záložka TESTERS, jen admin. -->
-      <a class="sp-item" id="sp-testers-link" href="runar-shrine.html#testers" style="display:none;text-decoration:none;">👥 TESTERS</a>
+      <button class="sp-item" id="sp-signin-btn" onclick="closeSidePanel();openAuthModal()">SIGN IN</button>
     </div>
   </div>
 
-  <!-- Prepinac „life rune colour the ending" tu BYVAL (②b, KUKY 2026-09-10) — od 2026-09-15
-       zije v okne zivotni runy (KUKY: „presuneme … z postraniho panelu do life rune okna"). -->
+  <!-- Jazyk — nahoře, mění se nejčastěji -->
+  <div class="side-panel-section">
+    <div class="side-panel-lbl" id="sp-lang-lbl">LANGUAGE</div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="sp-btn-en" onclick="setLang('en');closeSidePanel()">EN</button>
+      <button class="lang-btn"        id="sp-btn-is" onclick="setLang('is');closeSidePanel()">IS</button>
+    </div>
+  </div>
+
+  <!-- Deník a kód karty — jen přihlášený -->
+  <div id="sp-account" style="display:none;">
+    <div class="side-panel-section">
+      <button class="sp-item journal" id="sp-journal-link" onclick="openJournalFromPanel()">MY JOURNAL</button>
+      <button class="sp-item" id="sp-gift" onclick="showAppTab('reading');toggleRedeem();closeSidePanel()"></button>
+    </div>
+  </div>
 
   <!-- ②b Privacy settings — logged-in only -->
   <div id="sp-privacy-settings" style="display:none;">
@@ -958,41 +973,28 @@
     </div>
   </div>
 
-  <!-- ③ Navigation — always visible -->
+  <!-- Pomoc — vždy. „Send Rúnar a line“ (2026-10-15, owner „8. ano“): přihlášený okno se zprávou, návštěvník odkaz na e-mail (texty
+       a viditelnost: updateSidePanel, runar-app.js). -->
   <div class="side-panel-section">
-    <a class="sp-item" id="sp-guide-link"   href="runar-help.html"    style="text-decoration:none;">? GUIDE &amp; FAQ</a>
-    <!-- 2026-10-15 „Send Rúnar a line“ (owner „8. ano“): přihlášený otevře okno se zprávou, návštěvník dostane odkaz na e-mail
-         (bod 5 plánu: jeho adresu neznáme a veřejný formulář by lákal spam). Texty a viditelnost: updateSidePanel (runar-app.js). -->
+    <a class="sp-item" id="sp-guide-link"   href="runar-help.html"    style="text-decoration:none;">GUIDE &amp; FAQ</a>
     <button class="sp-item" id="sp-line-btn" type="button" onclick="openLine()" style="display:none;"></button>
     <a class="sp-item" id="sp-line-mail" href="mailto:runar@therunekeeper.com" style="text-decoration:none;display:none;"></a>
-    <button class="sp-item" id="sp-install-btn" onclick="installPWA();closeSidePanel();" style="display:none;">⬇ INSTALL RÚNAR</button>
+    <button class="sp-item" id="sp-install-btn" onclick="installPWA();closeSidePanel();" style="display:none;">INSTALL RÚNAR</button>
+  </div>
+
+  <!-- Admin — jen admin (2026-10-11 rovnou i záložka TESTERS: „rychlejší přístup než se proklikávat shrine“) -->
+  <div id="sp-admin" style="display:none;">
+    <div class="side-panel-section">
+      <div class="side-panel-lbl" id="sp-admin-lbl">ADMIN</div>
+      <a class="sp-item" id="sp-admin-link" href="runar-shrine.html" style="text-decoration:none;">KNOWLEDGE SHRINE</a>
+      <a class="sp-item" id="sp-testers-link" href="runar-shrine.html#testers" style="text-decoration:none;">TESTERS</a>
+    </div>
+  </div>
+
+  <!-- Dole: zásady soukromí a smazání účtu -->
+  <div class="side-panel-section" style="margin-top:auto;">
     <a class="sp-item" id="sp-privacy-link" href="runar-privacy.html" style="text-decoration:none;">PRIVACY POLICY</a>
   </div>
-
-  <!-- ④ Sign out — logged-in only -->
-  <!-- 2026-10-19 (DECISIONS 2026-10-19 (9)): návštěvník má v menu přihlášení (dřív jen v horní liště); text sign_in_btn (updateSidePanel). -->
-  <div id="sp-signin" style="display:none;">
-    <div class="side-panel-section">
-      <button class="sp-item" id="sp-signin-btn" onclick="closeSidePanel();openAuthModal()">SIGN IN</button>
-    </div>
-  </div>
-  <div id="sp-session" style="display:none;">
-    <div class="side-panel-section">
-      <button class="sp-item" id="sp-signout-btn" onclick="handleAuthBtn();closeSidePanel()">SIGN OUT</button>
-    </div>
-  </div>
-
-  <!-- ⑤ Language — always last, pushed to bottom -->
-  <div class="side-panel-section" style="margin-top:auto;">
-    <div class="side-panel-lbl" id="sp-lang-lbl">LANGUAGE</div>
-    <div class="lang-toggle">
-      <button class="lang-btn active" id="sp-btn-en" onclick="setLang('en');closeSidePanel()">EN</button>
-      <button class="lang-btn"        id="sp-btn-is" onclick="setLang('is');closeSidePanel()">IS</button>
-    </div>
-  </div>
-
-  <!-- Address gender is chosen at name entry (setup-gender-row), not here. -->
-
   <!-- ⑥ Danger zone — logged-in only, separated at very bottom -->
   <div id="sp-danger" style="display:none;">
     <div class="sp-danger-zone">
