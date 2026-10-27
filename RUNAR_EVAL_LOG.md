@@ -6524,3 +6524,19 @@ nedostupné). Data mimo repo: `~/runar-eval/podoby-bez-delky-2026-10-09.json`, `
      randomizovaný pokus, ne jen shoda v čase. U pevného textu promptu (mění se jen s verzí) takový pokus z historie nejde.
 - **Závěr:** `prompt_doby.js` (prompt čtení své doby) je k užitku — přesně přiřadí slovo ke kusu promptu, ověřeno. Hledání doslovných frází
   na ownerových testech k rozhodování o promptu nestačí. Užitečné bude až na čteních lidí a měřené po kusech promptu a kostře věty.
+
+## 2026-10-27 (1) — Výklad: věta „každá runa vstoupí do scény detailem“ přenese význam Ansuz z abstraktního slova do zvuku scény (4/5 → 0/5 abstraktně)
+
+- **Proč:** Norny a3692c86 (Hagalaz · Ansuz · Sowilo, Career & Creativity): *„a voice is taking shape among the fallen branches“*. Owner:
+  *„voice tam klidně být může, ale měl by být spojený s tím, že je slyšet praskání větví … najdi řešení, nejlepší řešení!“*, test „13. ano“.
+  Data předem: Ansuz = „voice“ v 8/11 výkladů a 5/11 čtení jedné runy (volbu významu tedy nebereme); „voices“ z pokynu Norny neprosakuje
+  (v 59 Nornách bez Ansuz „voice“ 2×).
+- **Pokus:** `docs/eval/2026-10-27-vyklad-detail/` (test.js, prompt_A/B, vystup, slepe + klíč, slepý soudce). Tentýž vstup jako a3692c86
+  (runy, oblast, záměr, obraz z losu), produkční `buildNornsPrompt`, gpt-6-sol jako proxy, 5 + 5. B = A + za řádek obrazu: *„Each rune
+  enters this same scene through something the scene itself can do — a sound, a light, a movement, a mark. Its meaning is read from that
+  detail; never lay the meaning on the scene as an abstract word.“* Předpověď předem: v B ponese Ansuz a Sowilo význam detailem častěji.
+- **Výsledek (slepý soudce, subagent, viděl jen texty):** Ansuz abstraktně A 4/5 → B 0/5 (B 5/5 „mixed“: zvuk větví ve větru + slovo
+  „voice“ navrch — přesně ownerovo „spojený s praskáním větví“); Sowilo detailem A 3/5 → B 5/5; „patří do scény“ průměr A 2,8 → B 4,2
+  (B nejhůř 4, A nejlíp 3). Ansuz abstraktně 4/5 vs 0/5: Fisher jednostranně p ≈ 0,024.
+- **Hranice:** jeden vstup (Norny, jedna trojice run, jeden obraz), n = 5 na variantu, jeden soudce; EN; jen Norny — Kříž, Horseshoe
+  a Yggdrasil mají týž blok obrazu, netestováno; řádek ✦ vynechán. Volba „voice“ zůstává (B ji drží, jen ji ukotví ve zvuku).
