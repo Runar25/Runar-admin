@@ -12284,3 +12284,13 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   běží dál; další dělení je obsahové rozhodnutí ownera.
 - **Ověřeno:** golden beze změny (měnily se jen komentáře v kódu), odkazy v docích OK, interní tagy OK, check-docs OK.
 - Affected doc(s): RUNAR_DESIGN.md, RUNAR_SPREADY.md, RUNAR_MYTOLOGIE.md, CLAUDE.md (hlavička), memory/MEMORY.md (rozcestník), RUNAR_POPISY_RUN.md (hlavička)
+
+## 2026-10-27 (1) — Plán „z čeho se skládá čtení“ uzavřen; kroky 7 (obrazy × významy) a 8 (Skladač ve shrine) se nedělají
+
+- **Rozhodl:** owner 2026-10-27 *„uzavřít teď celkově“* po kontrole kroku 6 (RUNAR_EVAL_LOG 2026-10-26 (2)).
+- **Hotové a zůstává:** kusy promptu se jménem a vstupem (`_kus` / `_skladba`), anatomie promptu (`scripts/anatomie_promptu.js`), recept
+  u každého nového čtení (`prompt_draws.kusy`, 2026-10-23 (1)), prompt čtení složený kódem své doby (`scripts/utils/prompt_doby.js`) a nástroje
+  `odkud_vyznam.js`, `rodiny_vyznamu.js`, `fraze_z_historie.js`.
+- **Nedělá se:** krok 7 (pokrytí 123 významů obrazy, nese obraz svůj význam) a krok 8 (Skladač ve shrine). Návrat jen novým rozhodnutím.
+- **Netýká se:** tabulky přístupu „kdo co vidí“ — ta je samostatné rozhodnutí 2026-10-22 (3) bod 7 a tímhle se neuzavírá.
+- Affected doc(s): žádný (stav plánu nesly jen záznamy DECISIONS a EVAL_LOG).
