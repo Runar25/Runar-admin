@@ -878,7 +878,7 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   EVAL_LOG — starší baseline do archivu (CODE-read); DESIGN a PRICING — rozdělení je obsahové rozhodnutí ownera; working-style — část do
   samostatných memory souborů. Další obnova bez zkrácení ne.
 
-- [ ] **Tlačítka po čtení a přepínač MY READING / FOR SOMEONE (owner 2026-10-20, DECISIONS 2026-10-20 (1)) → CODE-tune.**
+- [x] ✅ *(CODE-tune 2026-10-27, DECISIONS 2026-10-27 (2))* **Tlačítka po čtení a přepínač MY READING / FOR SOMEONE (owner 2026-10-20, DECISIONS 2026-10-20 (1)) → CODE-tune.**
   DRAW ANOTHER RUNE pryč, zůstává jedno velké START OVER ve stylu HEAR RÚNAR SPEAK (`.btn-voice`, přes celou šířku); ASK beze změny. Aktivní
   MY READING / FOR SOMEONE vyplněné jako BEGIN THE READING (`.btn-full`), aby bylo vidět, kde člověk je. Velikost tlačítka podle důležitosti
   (owner: *„všechno nemá být stejné“*). Pozor §32 / smoke ㉼: stav „další tah“ (drawAnother) se testuje — upravit kontrolu, ne ji obejít.
@@ -935,3 +935,20 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
 - [ ] **CODE-tune — postup vracení:** skript pro admina: zrušit nepoužitý kód / snížit účet / odepsat zbylé kredity, zápis do
   `credit_ledger`; peníze vrací platební brána do 14 dní stejným prostředkem (21. gr.).
 - [ ] **CODE-tune — nižší účet:** zpráva brány na konci období → server sníží `tier`; tlačítko „STEP BACK TO …“ vede do portálu brány.
+
+### Hlášení z appky 2026-10-23 / 27 — čeká na ownera (načtena 2026-10-27, CODE-tune; hotové v DECISIONS 2026-10-27 (2))
+- [ ] **Věta v okně cesty „From 1.490 kr for 5 rune readings. Have a code? Enter it here.“ (41004321):** owner: *„odstranit, pokud za tím
+  není myšlenka“*. Myšlenka je: ťuknutí zavře okno a otevře pole pro kód Rúnakortu (`journey_card_note`, `runar-app.js` u záložky karty);
+  cena = nejlevnější balíček. Rozhodnout: nechat, nechat jen „Have a code? Enter it here.“, nebo pryč.
+- [ ] **Skladač promptu v appce (f9b5b7f2, 2026-10-23):** owner chtěl skládat prompt sám a vidět, co se mění. Plán „z čeho se skládá čtení“
+  uzavřen 2026-10-27 (DECISIONS 2026-10-27 (1)) i s krokem 8 Skladač — hlášení je starší než uzavření. Potvrdit, jestli Skladač patří do
+  uzavření, nebo zůstává.
+- [ ] **Menu (burger) přestavět (c9976b4e):** *„pořadí je takové divné, ať to má víc design menu“*. Napřed soupis dnešních položek a
+  návrh pořadí a vzhledu ownerovi (komponenty z `scripts/verify_komponenty.js`), pak stavět.
+- [ ] **Rituál pod BEFORE WE BEGIN (5439bcc1, 36f14a03):** rozbalovač „+“ (komponenta `.xp-plus`) s krátkým textem, co udělat před tahem;
+  owner navrhl EN znění (svíčka, vůně, ticho, nádech, myšlenka na otázku, pak tah). Napřed kritický pohled (§21) a znění v EN i IS
+  hlasem Rúnara, schválení ownerem, pak stavět.
+- [ ] **Norny a3692c86 — „voice“ skřípe, význam nesedí (d65a6bb4, bf44ef3d):** Ansuz (Verðandi) dostal ze seznamu `k` význam „voice“
+  („a voice is taking shape among the fallen branches“) uvnitř obrazu bouře, který nese celý výklad; owner: stačilo *„message“*, konec
+  nesedí, *„jak udělat, aby lépe volil významy run pro určité čtení?“*. Hypotéza (neověřeno): jeden obraz pro tři runy nutí druhou a třetí
+  runu mluvit uvnitř cizí scény. Zásah do promptu výkladů → lab CODE-read, ne tichý tune.
