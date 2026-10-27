@@ -31,19 +31,25 @@ a.btn-upgrade{display:inline-block;text-decoration:none;margin-top:6px}
 .w-foot a{color:inherit;text-decoration:none}
 .w-foot a:hover{color:var(--gold)}
 @media(max-width:768px){ .hero-text-col a.btn-upgrade{align-self:center} .w-path{display:none} }
-/* desktop: Rúnar stojí vlevo, pravý panel se posouvá (owner 2026-10-27) */
+/* desktop (owner 2026-10-27): Rúnar stojí vlevo jako pevné pozadí, vpravo se posouvá ČISTĚ TEXT.
+   Verze 2 téhož dne — owner k verzi 1: „nechci to dělat jako oddělené panely… ten rámeček kolem není úplně dobrý… necháš tam šipku
+   z mobilu… rámečky už jsem ti omlátil o hlavu. odstraň ty rámečky. posouvat se bude čistě text. pozadí zůstává.“ Verze 1 měla sekce
+   v rámečcích (.card appky), proužek se šipkou z mobilu a portrét ve sloupci 48vw, který vysoké okno ořízlo uprostřed obličeje
+   (object-position appky 40 %). Teď: portrét jako pozadí landingu (cover) s ukotvením 85 % vodorovně: ve vysokém okně (zkoušeno
+   1390×1466) se ořízne kus hole, obličej i natažená ruka zůstanou celé; v širokém (1280–1920) je vidět celá postava; doprava se rozplyne až od 80 % (ruka je na 85 % obrazu). Do 768 px beze změny. */
 @media(min-width:769px){
-  .hero{border-bottom:none;overflow:visible;max-height:none}
+  .hero{border-bottom:none;overflow:visible;max-height:none;background:none}
   .hero-inner{display:block;max-width:none;min-height:0}
-  .hero-portrait-col{position:fixed;left:0;top:50px;bottom:0;width:48vw;z-index:0}
-  .hero-portrait-col{background:none}
-  .hero-portrait-wrap::before,.hero-portrait-wrap::after{display:none}
-  .hero-portrait-wrap img{-webkit-mask-image:linear-gradient(90deg,#000 58%,transparent 100%);mask-image:linear-gradient(90deg,#000 58%,transparent 100%)}
-  .hero-text-col{margin-left:48vw;min-height:calc(100vh - 50px);padding:60px 6vw;justify-content:center}
-  .hero-down{margin-left:48vw;width:auto}   /* 52vw přetékalo o šířku posuvníku (100vw ji počítá) */
-  .w-main{margin:0 0 0 48vw;max-width:none;padding:24px 6vw 60px}
-  .w-main .card{max-width:620px;margin-left:0}
-  .w-foot{margin-left:48vw}
+  .hero-portrait-col{position:fixed;left:0;top:0;bottom:0;width:52vw;z-index:0;overflow:visible;
+    background:url(../img/runar.jpg) 85% 22%/cover no-repeat;
+    -webkit-mask-image:linear-gradient(90deg,#000 80%,transparent 100%);mask-image:linear-gradient(90deg,#000 80%,transparent 100%)}
+  .hero-portrait-wrap,.hero-down{display:none}
+  .hero-text-col{margin-left:54vw;min-height:calc(100vh - 50px);padding:40px 6vw 40px 0;justify-content:center}
+  .w-main{margin:0 0 0 54vw;max-width:none;padding:0 6vw 20px 0}
+  .w-main .card{background:none;border:none;padding:0;margin:0 0 120px;text-align:left;max-width:640px}
+  .w-main .card-lbl{font-size:0.9em;letter-spacing:5px;margin-bottom:12px}
+  .w-card{justify-content:flex-start}
+  .w-foot{margin-left:54vw;border-top:none;text-align:left;padding:0 6vw 40px 0}
 }
 /* malá cesta kamenů (desktop): značka účtu, jméno, cena — kreslí kamenUctuSvg z runar-utils.js jako okno appky */
 .w-path{list-style:none;margin:6px 0 16px;text-align:left}
