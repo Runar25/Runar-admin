@@ -49,15 +49,24 @@ nebo nechat, rozhodne owner).
    whose. Neither can grow straight again. What has grown around you so closely that standing alone would now feel like cold wind?
 
 ## Kolo 2 — doplnění GPT a ownerův verdikt nad ukázkou 2 (2026-10-27)
-**Owner k ukázce 2 (dveře):**
-- esence *„Gebo is the rune of the gift that only lives while it keeps moving“* — ✘ *„pořád to stejné dokola … vadí mi, že to zní stejně;
-  dá se to říct jinak, líp“*;
-- obraz *„A door held open for someone behind you stays open for the next one too, and the hand forgets it is holding anything“* — ✔
-  *„perfektní, vzorová: ukazuje malé věci, činnosti, které každý ocení, a přitom je to taková blbost“*; s takovým obrazem mu pohyb v esenci nevadí;
-- rub *„The one holding the door no longer sees the room ahead“* — ~ *„takové ok“*;
-- otázka *„Which door are you still holding out of habit, long after the last person passed?“* — ✔ *„vede k zamyšlení více směry“*
-  (hodný · zvyk · držím dveře někomu, komu bych už neměl) — *„o to nám jde: vyvolat zamyšlení, které může být různě vnímané“*;
-- délka: **50–58 slov** (jako v2).
+**Co owner na ukázce 2 (dveře) posoudil a proč:**
+- **Esence** („Gebo is the rune of the gift that only lives while it keeps moving“) — vadná: začíná stejně jako všechny ostatní esence
+  („Gebo is …“), takže čtení po čtení zní stejně. Obsah (dar žije jen v pohybu) nevadí; vadí stálý tvar.
+- **Obraz** („A door held open for someone behind you stays open for the next one too, and the hand forgets it is holding anything“) —
+  vzorový. Ukazuje drobný úkon, který zná a ocení každý, i když je sám o sobě bezvýznamný; druhá půlka („the hand forgets…“) nese
+  pohyb mysli bez vysvětlování. Je to **ukázka směru, ne jediné kritérium**: platí i obrazy z v2, které owner dřív chválil (viz níž).
+- **Rub** („The one holding the door no longer sees the room ahead“) — použitelný, ne silný.
+- **Otázka** („Which door are you still holding out of habit, long after the last person passed?“) — vzorová, protože ji každý čtenář
+  může vztáhnout k sobě jinak (laskavost, zvyk, držení dveří někomu, kdo už si to nezaslouží). Cílem konce je takové zamyšlení, které
+  nemá jednu správnou odpověď.
+- **Délka:** zůstává 50–58 slov jako ve v2.
+
+**Obraz není jen „drobný všední úkon“ — co platí dál z v2** (`RUNAR_DESIGN.md` „Typ obrazu“, „Co je OBRAZ“, memory co-dela-cteni-silnym):
+obraz je jakýkoli pohyb, i myšlenka; typ obrazu se páruje s povahou runy — **fyzická scéna** (věc koná: hřeben drží vítr a závětří zůstává
+tiché; druhý hrnek čeká na někoho, kdo nemusí přijít) · **situační obraz** (člověk koná a čin něco stojí: Uruz „You lift the end no one
+else could get under, and it comes up“, Tiwaz vrácené drobné, sušenka sestře, dveře) · **slovní obraz** (výpověď o stavu, zatím jen pilot).
+Ownerem chválené obrazy mají společné: jedna věc nebo jeden čin, který jde vidět, nese vztah runy (sloveso, ne rekvizitu) a ukazuje i to,
+co v záběru není. Nově owner chce obrazy metaforičtější (fyzický děj jako metafora runy, podle Gemini).
 
 **Gemini × GPT:**
 | | Gemini | GPT | lab / owner |
