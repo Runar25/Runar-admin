@@ -90,6 +90,20 @@ const ZAKLAD = String.raw`(function (stav) {
     ['single', 'norns', 'kriz', 'horseshoe', 'yggdrasil'].forEach(function (m) { if (!vid(document.getElementById('mode-btn-' + m))) ch.push(stav + ': výklad mode-btn-' + m + ' není vidět'); });
     var n = document.querySelectorAll('#reader-grid .rb').length; if (n !== 25) ch.push(stav + ': mřížka tahu má ' + n + ' run, ne 25');
   }
+  // 2026-10-27 (owner: „jak to, že jsi nenačetl, jak má být velké plus? … šipka se má točit kolem své osy“ — §30, pravidlo porušené
+  // podruhé = stroj): každé viditelné „+“ rozbalovače 1,35 × svého textu (::after jako .guide-lbl, nebo .xp-plus vedle textu);
+  // ▾ u jména kreslená (clip-path), ne znak písma — znak má střed inkoustu jinde než střed boxu a při otočení poskočí.
+  document.querySelectorAll('[aria-expanded]').forEach(function (el) {
+    if (!vid(el)) return;
+    var a = getComputedStyle(el, '::after'), x = el.querySelector('.xp-plus'), plus = 0, text = 0;
+    if (a.content === '"+"') { plus = parseFloat(a.fontSize); text = parseFloat(getComputedStyle(el).fontSize); }
+    else if (x && vid(x)) { plus = parseFloat(getComputedStyle(x).fontSize); var s = x.previousElementSibling; text = s ? parseFloat(getComputedStyle(s).fontSize) : 0; }
+    else return;
+    var pom = text ? plus / text : 0;
+    if (pom < 1.3 || pom > 1.4) ch.push(stav + ': „+“ u #' + (el.id || el.className) + ' je ' + pom.toFixed(2) + '× text, vzor 1,35× (::after jako .guide-lbl, nebo .xp-plus vedle textu)');
+  });
+  var jm = document.getElementById('auth-user-label');
+  if (jm && getComputedStyle(jm, '::after').clipPath === 'none') ch.push(stav + ': ▾ u jména je znak písma — otáčí se mimo svou osu (má být kreslená, clip-path)');
   return ch;
 })`;
 
@@ -154,6 +168,12 @@ async function main() {
     await cekej(300);
     const st = await ev(ZAKLAD + '("samotest")');
     if (!sabot || !st.some((c) => /mode-btn-norns/.test(c)) || !st.some((c) => /fotka skrytá/.test(c))) chyby.push('SAMOTEST: kontrola nepoznala skryté Norny nebo fotku — ' + JSON.stringify(st));
+    // Samotest rozbalovačů (2026-10-27): zmenšené „+“ u How a reading works a ▾ jako znak písma musí kontrola poznat.
+    await ev("(function(){ resetReader(); var st = document.createElement('style'); st.id = '__rozbSab'; st.textContent = '.guide-lbl::after{font-size:1em !important}.auth-user::after{clip-path:none !important}'; document.head.appendChild(st); var l = document.getElementById('auth-user-label'); if (l) l.style.display = 'block'; return 1; })()");
+    await cekej(300);
+    const sr = await ev(ZAKLAD + '("samotest rozbalovačů")');
+    await ev("(function(){ var st = document.getElementById('__rozbSab'); if (st) st.remove(); return 1; })()");
+    if (!sr.some((c) => /„\+“ u #read-guide-lbl/.test(c)) || !sr.some((c) => /▾ u jména/.test(c))) chyby.push('SAMOTEST: kontrola nepoznala zmenšené „+“ nebo ▾ jako znak písma — ' + JSON.stringify(sr));
     // Samotest chyb za běhu: volání funkce, která neexistuje, mimo ev() (v setTimeout) — musí ho zachytit Runtime.exceptionThrown
     await ev("setTimeout(function () { __zakladSamotestNeexistuje(); }, 0); 1");
     await cekej(400);
@@ -168,6 +188,6 @@ async function main() {
     console.log('FAIL  základ produkce: ' + chyby.length + ' vad — fotka, záložky, výklady a runy nesmí z appky zmizet a appka nesmí padat (KUKY 2026-10-10)');
     process.exit(1);
   }
-  console.log('OK    základ produkce v prohlížeči: fotka, 4 záložky, 5 výkladů, 25 run (tah i Safn rúna), žádná chyba JS za běhu — 11 stavů návštěvníka i přihlášeného, samotest chytá skryté Norny, fotku i chybu JS');
+  console.log('OK    základ produkce v prohlížeči: fotka, 4 záložky, 5 výkladů, 25 run (tah i Safn rúna), žádná chyba JS za běhu — 11 stavů návštěvníka i přihlášeného, rozbalovače podle vzoru (+ 1,35×, ▾ kreslená), samotest chytá skryté Norny, fotku i chybu JS');
 }
 main().catch((e) => { console.log('FAIL  základ produkce: ' + e.message); process.exit(1); });
