@@ -804,6 +804,12 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
 - [ ] **Domovská stránka webu po spuštění** (owner 2026-10-21 „ano, postav ji“): běží SKRYTÁ na https://therunekeeper.com/heim/ —
   hero appky s portrétem, „Gakktu inn →“ do appky, jak čtení funguje (guide_*), cesta (→ /ferdin/), Rúnakort (→ /ferdin/#kort), patička.
   **Při spuštění:** /heim/ se stane úvodní stránkou místo „Væntanlegt“ (registrace pak není potřeba), `noindex` pryč.
+  Dál (CODE-web 2026-10-27, DECISIONS 2026-10-27 (10)): na /heim/ doplnit `og:url` = https://therunekeeper.com/ (ostatní značky
+  náhledu už tam jsou); `RUNAR_HOME_URL` v configu z /heim/ na kořen (CODE-tune); `robots.txt` + `sitemap.xml` (kořen, /ferdin/)
+  a sitemapu odeslat v Google Search Console (doména je ověřená TXT záznamem `google-site-verification`).
+- [ ] **Facebook Rúnara** (owner 2026-10-27: *„musíme založit facebook“*) — zakládá owner (stránka, ne osobní profil; stejné jméno
+  @runartherunekeeper; propojit s Instagramem v Meta Business Suite). Pak adresu do configu vedle `RUNAR_INSTAGRAM_URL` (CODE-tune)
+  a odkaz do patičky webu (CODE-web, `webInstagram()` ve web.js zobecnit na víc sítí) i do menu appky; v režimu Play skrytý jako Instagram.
 - [ ] **Google Play bez provize — co hlídat dál** (rešerše CODE-web 2026-10-21, Play Console Help 10281818 + Payments policy 9858738):
   consumption-only appka smí o nákupu jinde jen INFORMOVAT textem; nesmí mít odkaz ani tlačítko na stránku, odkud se dá (i nepřímo)
   zaplatit. Opraveno CODE-tune 2026-10-21 v režimu `?src=play`: odkaz na obchod u pole kódu, značka AGNDOFA, odkazy a ceník v nápovědě.
