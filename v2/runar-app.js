@@ -740,7 +740,9 @@ function updateSidePanel() {
   // 2026-10-19 (DECISIONS 2026-10-19 (9)): návštěvník účet nemá → bez nadpisu „YOUR ACCOUNT“ (visibility, ať ✕ zůstane vpravo) a s přihlášením.
   setText('sp-tier-header', t('sp_account_title'));
   const _hdr = document.getElementById('sp-tier-header');
-  if (_hdr) _hdr.style.visibility = currentUser ? '' : 'hidden';
+  if (_hdr) _hdr.style.visibility = 'hidden';   // 2026-10-27: účet je v nabídce pod jménem — hlavička menu jen s ✕
+  var _pathSec = document.getElementById('sp-path-section');   // cesta v menu jen návštěvníkovi (přihlášený ji má pod jménem)
+  if (_pathSec) _pathSec.style.display = currentUser ? 'none' : '';
   setText('sp-signin-btn', t('sign_in_btn'));
   const _spIn = document.getElementById('sp-signin');
   if (_spIn) _spIn.style.display = currentUser ? 'none' : 'block';
@@ -759,14 +761,13 @@ function updateSidePanel() {
   _renderYourPath();
 
   // Show/hide session + danger + personal actions sections
-  const sessionEl = document.getElementById('sp-session');
   const dangerEl  = document.getElementById('sp-danger');
   var privEl = document.getElementById('sp-privacy-settings');
   if (!currentUser) {
     accEl.style.display = 'none';
-    if (sessionEl) sessionEl.style.display = 'none';
     if (dangerEl)  dangerEl.style.display  = 'none';
     if (privEl)    privEl.style.display    = 'none';
+    var _admN = document.getElementById('sp-admin'); if (_admN) _admN.style.display = 'none';
     return;
   }
   accEl.style.display = 'block';
@@ -777,10 +778,12 @@ function updateSidePanel() {
     setText('sp-qconsent-label', t('sp_qconsent_lbl'));
     _syncPrivacyUI();
   }
-  if (sessionEl) sessionEl.style.display = 'block';
   if (dangerEl)  dangerEl.style.display  = 'block';
 
   // Admin link
+  const adminSec = document.getElementById('sp-admin');   // 2026-10-27: admin sekce se štítkem ADMIN
+  if (adminSec) adminSec.style.display = isAdmin(currentUser.email) ? 'block' : 'none';
+  setText('sp-admin-lbl', t('sp_admin_lbl'));
   const adminLink = document.getElementById('sp-admin-link');
   if (adminLink) adminLink.style.display = isAdmin(currentUser.email) ? 'block' : 'none';
   // 2026-10-11: rychlý odkaz na záložku TESTERS ve shrine (owner chtěl rychlejší přístup) — jen admin, jako odkaz na shrine výš.
@@ -791,14 +794,14 @@ function updateSidePanel() {
   const journalLink = document.getElementById('sp-journal-link');
   if (journalLink) {
     setText('sp-journal-link', t('sp_journal_link'));   // 2026-10-10 z UI_TEXT (dřív `is ? … : …` natvrdo, ㉸ alias neviděl)
-    setText('sp-names-btn', t('sp_names_btn'));
   }
 
   // Gift card visibility (upgrade handled in YOUR PATH)
   const giftEl = document.getElementById('sp-gift');
   const hide   = userTier === 'standard' || userTier === 'premium';
   if (giftEl) giftEl.style.display = hide ? 'none' : 'block';
-  setText('sp-gift', '+ ' + vl('card', lang));
+  // 2026-10-27: „ENTER … CODE“ z redeem_card_code (jeden zdroj s polem pro kód), bez úvodní runy — položky menu jsou bez značek
+  setText('sp-gift', tp('redeem_card_code', { card: vl('card', lang, 'dat_def').toUpperCase() }).replace(/^\u16a0\s*/, ''));
   setText('sp-delete-account', t('sp_delete_account'));
 
   // Topbar dropdown (logged-in only)
@@ -1114,7 +1117,6 @@ function updateUIText() {
   // Dynamic reader/tree/panel strings must refresh on language switch too
   if (typeof _updateReadingForm === 'function') _updateReadingForm();
   setText('tree-dob-btn', t('tree_reveal_btn') + ' →');
-  setText('sp-signout-btn', t('sign_out'));
   var _tgq = document.getElementById('tree-growth-quote');
   if (_tgq) _tgq.innerHTML = t('tree_growth_quote');
   // Okno se jmeny: texty nastavuje JEDNO misto, ktere zna rezim uprav (2026-09-12). Driv tu stalo
@@ -2000,7 +2002,9 @@ function updateDropdown() {
     tierNames[k] = (TIERS[k][_lkDD] || TIERS[k].label || k).toUpperCase();
   });
   if (tierEl)  tierEl.textContent  = tierNames[userTier] || userTier.toUpperCase();
-  setText('dd-journey', t('sp_higher_path') + ' →');   // 2026-10-19: cesta dál z rozbalovacího okna (openJourney)
+  setText('dd-journey', t('sp_higher_path') + ' →');
+  setText('dd-names', t('sp_names_btn'));   // 2026-10-27: jména a odhlášení v nabídce pod jménem
+  setText('dd-signout', t('sign_out'));   // 2026-10-19: cesta dál z rozbalovacího okna (openJourney)
   if (emailEl) emailEl.textContent = currentUser.email;
   if (balEl) {
     if (!profileLoaded) {
