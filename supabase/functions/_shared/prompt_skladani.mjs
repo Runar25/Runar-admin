@@ -1509,7 +1509,7 @@ const UI_TEXT = {
     // stojí čtení — jako měsíční dovětek u ročních cen; ne druhé tlačítko. {casts} = vlp('cast'), první písmeno velké v kódu; {card} = vl('card');
     // {price} = nejlevnější balíček CARD_PACKS. V Play se nezobrazuje (ceny, consumption-only).
     journey_seeker_card:  '{casts} with a {card}, from {price} kr',
-    journey_card_note:    'From {price} kr for {casts}. Have a code? Enter it here.',
+    journey_card_note:    'Have a code? Enter it here.',   // 2026-10-27 owner: bez ceny (cena stojí u Rune Seekera v journey_seeker_card)
     journey_play_sub:     'Where you stand on the path, and what each step holds.',
     journey_play_foot:    'Rúnar asks nothing of you here.',
     journey_foot:         'Prices in Icelandic krónur. Cancel any time.',
@@ -2078,7 +2078,7 @@ const UI_TEXT = {
     // 2026-10-21: {card} = VOCAB.card.is_dat („með Rúnakorti“). Greynir OK (i s „gjafakorti“), „með gjafakorti“ 37×, „verð frá“ 947×,
     // „kostar frá“ 1396× (cena „frá … kr.“).
     journey_seeker_card:  '{casts} með {card}, frá {price} kr.',
-    journey_card_note:    'Frá {price} kr. fyrir {casts}. Áttu kóða? Sláðu hann inn hér.',
+    journey_card_note:    'Áttu kóða? Sláðu hann inn hér.',
     journey_play_sub:     'Hvar þú stendur á leiðinni og hvað hvert skref ber í sér.',
     journey_play_foot:    'Hér biður Rúnar þig ekki um neitt.',
     journey_foot:         'Verð í íslenskum krónum. Þú getur sagt upp hvenær sem er.',

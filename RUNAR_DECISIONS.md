@@ -12306,3 +12306,12 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   runa na mobilu: věta na střed, kámen pod ní (f624f328).
 - **Ověřeno:** v náhledu 375 px změřené polohy a spočtené styly; smoke ㉼ (základ produkce v prohlížeči) a (D) zelené.
 - Affected doc(s): RUNAR_SPREADY.md (tvar podkovy), CLAUDE.md (§13 cesty nového výkladu)
+
+## 2026-10-27 (3) — Okno cesty, záložka karty: pod kartou jen „Have a code? Enter it here.“, na střed a oddělené od patičky
+
+- **Rozhodl:** owner 2026-10-27 k hlášení 41004321: *„jen ‚Have a code? Enter it here‘, ale problém je v tom, že to vypadá jako dvakrát
+  podtržené. A zarovnat do středu.“*
+- **Co:** `journey_card_note` bez ceny (EN „Have a code? Enter it here.“, IS „Áttu kóða? Sláðu hann inn hér.“ — IS beze změny znění);
+  cena nejlevnějšího balíčku dál u Rune Seekera (`journey_seeker_card`). „Dvojité podtržení“ = podtržení odkazu + horní čára patičky
+  `.journey-foot` 2 px pod ním → věta na střed a 14 px od čáry. Ověřeno v náhledu (text, zarovnání, mezera 14 px).
+- Affected doc(s): žádný (texty bydlí v `runar-translations.js`).

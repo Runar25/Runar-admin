@@ -937,7 +937,7 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
 - [ ] **CODE-tune — nižší účet:** zpráva brány na konci období → server sníží `tier`; tlačítko „STEP BACK TO …“ vede do portálu brány.
 
 ### Hlášení z appky 2026-10-23 / 27 — čeká na ownera (načtena 2026-10-27, CODE-tune; hotové v DECISIONS 2026-10-27 (2))
-- [ ] **Věta v okně cesty „From 1.490 kr for 5 rune readings. Have a code? Enter it here.“ (41004321):** owner: *„odstranit, pokud za tím
+- [x] ✅ *(CODE-tune 2026-10-27, DECISIONS 2026-10-27 (3))* **Věta v okně cesty „From 1.490 kr for 5 rune readings. Have a code? Enter it here.“ (41004321):** owner: *„odstranit, pokud za tím
   není myšlenka“*. Myšlenka je: ťuknutí zavře okno a otevře pole pro kód Rúnakortu (`journey_card_note`, `runar-app.js` u záložky karty);
   cena = nejlevnější balíček. Rozhodnout: nechat, nechat jen „Have a code? Enter it here.“, nebo pryč.
 - [ ] **Skladač promptu v appce (f9b5b7f2, 2026-10-23):** owner chtěl skládat prompt sám a vidět, co se mění. Plán „z čeho se skládá čtení“

@@ -882,7 +882,7 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 .journey-ft li{margin-bottom:3px;}
 .journey-st .tn-btn{margin-top:8px;display:inline-block;text-decoration:none;}
 .journey-note{font-size:0.85em;color:var(--muted);font-style:italic;margin-top:5px;}
-.journey-note.klik{cursor:pointer;text-decoration:underline;text-decoration-color:rgba(255,191,0,0.4);text-underline-offset:3px;}
+.journey-note.klik{cursor:pointer;text-decoration:underline;text-decoration-color:rgba(255,191,0,0.4);text-underline-offset:3px;text-align:center;margin-bottom:14px;}   /* 2026-10-27: na střed a s mezerou — čára patičky 2 px pod podtržením vypadala jako druhé podtržení */
 .journey-foot{border-top:1px solid var(--border);margin:2px 0 0;padding-top:12px;font-size:0.85em;color:var(--muted);font-style:italic;text-align:center;}
 /* 2026-10-20 (owner: „upgrade your journey by mělo dělat to stejné co dělá v menu … stejný styl. už jsme to řešili“): v nabídce pod
    jménem totéž tlačítko jako v menu (.btn-upgrade — rámeček, na střed, hover zlatou); tady jen rozložení. Do té doby holý text vlevo. */
