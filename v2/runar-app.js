@@ -743,13 +743,19 @@ function updateSidePanel() {
   const _spIn = document.getElementById('sp-signin');
   if (_spIn) _spIn.style.display = currentUser ? 'none' : 'block';
   // Side panel navigation links — switch with language
-  setText('sp-guide-link',   t('sp_guide_link'));
+  _spText('sp-guide-link',   t('sp_guide_link'));
   setText('sp-higher-lbl',   t('sp_higher_path'));
-  setText('sp-install-btn', t('sp_install_btn'));
-  setText('sp-privacy-link', t('sp_privacy_link'));
+  _spText('sp-install-btn', t('sp_install_btn'));
+  setText('sp-privacy-txt', t('sp_privacy_link'));   // § je v HTML: klíč sdílí patička webu
   // 2026-10-15 „Send Rúnar a line“ (owner „8. ano“): přihlášený otevře okno (openLine), návštěvník má odkaz na e-mail (bod 5).
-  setText('sp-line-btn', t('line_menu'));
-  setText('sp-line-mail', t('line_menu_visitor'));
+  _spText('sp-line-btn', t('line_menu'));
+  _spText('sp-line-mail', t('line_menu_visitor'));
+  // 2026-10-28: Instagram a web — adresy z configu; v Google Play skryté (vedou k nákupu, ㊐)
+  var _play = _journeyProstredi() === 'play', _ig = document.getElementById('sp-instagram'), _web = document.getElementById('sp-web');
+  if (_ig) { _ig.style.display = (!_play && typeof RUNAR_INSTAGRAM_URL === 'string' && RUNAR_INSTAGRAM_URL) ? 'block' : 'none'; if (typeof RUNAR_INSTAGRAM_URL === 'string') _ig.href = RUNAR_INSTAGRAM_URL; }
+  setText('sp-instagram-txt', t('sp_instagram'));
+  if (_web) { _web.style.display = (!_play && typeof RUNAR_HOME_URL === 'string' && RUNAR_HOME_URL) ? 'block' : 'none';
+    if (typeof RUNAR_HOME_URL === 'string' && RUNAR_HOME_URL) { _web.href = RUNAR_HOME_URL; try { setText('sp-web-txt', new URL(RUNAR_HOME_URL).hostname.toUpperCase()); } catch (e) {} } }
   const lineBtn = document.getElementById('sp-line-btn'), lineMail = document.getElementById('sp-line-mail');
   if (lineBtn) lineBtn.style.display = currentUser ? 'block' : 'none';
   if (lineMail) lineMail.style.display = currentUser ? 'none' : 'block';
@@ -771,6 +777,7 @@ function updateSidePanel() {
     accEl.style.display = 'none';
     if (dangerEl)  dangerEl.style.display  = 'none';
     if (privEl)    privEl.style.display    = 'none';
+    setText('sp-privacy-lbl', t('sp_privacy_settings_lbl'));   // štítek a zásady vidí i návštěvník (2026-10-28)
     var _admN = document.getElementById('sp-admin'); if (_admN) _admN.style.display = 'none';
     return;
   }
@@ -793,19 +800,13 @@ function updateSidePanel() {
   const testersLink = document.getElementById('sp-testers-link');
   if (testersLink) testersLink.style.display = isAdmin(currentUser.email) ? 'block' : 'none';
 
-  // Journal link
-  const journalLink = document.getElementById('sp-journal-link');
-  if (journalLink) {
-    setText('sp-journal-link', t('sp_journal_link'));   // 2026-10-10 z UI_TEXT (dřív `is ? … : …` natvrdo, ㉸ alias neviděl)
-  }
-
   // Gift card visibility (upgrade handled in YOUR PATH)
   const giftEl = document.getElementById('sp-gift');
   const hide   = userTier === 'standard' || userTier === 'premium';
   if (giftEl) giftEl.style.display = hide ? 'none' : 'block';
-  // 2026-10-27: „ᚠ ENTER … CODE“ z redeem_card_code — týž popisek i runa (naše SVG) jako u pole pro kód.
-  setRuneText('sp-gift', tp('redeem_card_code', { card: vl('card', lang, 'dat_def').toUpperCase() }));
-  setText('sp-delete-account', t('sp_delete_account'));
+  // 2026-10-28: „ENTER … CODE“ z redeem_card_code (týž popisek jako pole pro kód) bez runy — ikona je kreslená karta (fc708c38)
+  setRuneText('sp-gift-txt', tp('redeem_card_code', { card: vl('card', lang, 'dat_def').toUpperCase() }).replace(/^\u16a0\s*/, ''));
+  _spText('sp-delete-account', t('sp_delete_account'));
 
   // Topbar dropdown (logged-in only)
   updateDropdown();
@@ -1041,9 +1042,7 @@ function updateUIText() {
   document.documentElement.lang = lang;
   _syncPillLang();   // MUSI predchazet _askPlaceholder() nize — duvod u te funkce
   // 2026-10-21 (owner): značka RÚNAR → domovská stránka webu (RUNAR_HOME_URL); do té doby AGNDOFA → agndofa.is. V Play bez odkazu.
-  setText('ui-brand', 'RÚNAR');
-  var _brand = document.getElementById('ui-brand');
-  if (_brand && typeof RUNAR_HOME_URL === 'string' && RUNAR_HOME_URL && _journeyProstredi() !== 'play') _brand.setAttribute('href', RUNAR_HOME_URL);
+  setText('ui-brand', 'RÚNAR');   // 2026-10-28 (228c8f1c): vede domů v appce (_domuAppky), web je v menu
   // ⚠️ Staticke upozorneni patri SEM, ne do _updateReadingForm: (a) §14 rika, ze
   // updateUIText vlastni staticke preklady, (b) `setLang` vola updateUIText, ale
   // _updateReadingForm NE — text by pri prepnuti jazyka zustal anglicky.
@@ -1998,6 +1997,49 @@ function toggleTierDesc() {
 }
 
 // ─── TOPBAR DROPDOWN ─────────────────────────────────────
+// ─── ÚČET V LIŠTĚ (2026-10-28, schválený návrh docs/inbox/2026-10-28-ucet-a-menu-navrh.html) ───
+// Položka menu: úvodní značka textu („? GUIDE & FAQ“) do vlastního <span class="sp-ik"> (1,35 × text) — značka zůstává v překladu (jedno místo).
+// Značka = první slovo bez písmene a číslice (\p{L}\p{N}); rozsah À–ɏ bral i × (U+00D7) za písmeno a „× DELETE ACCOUNT“ zůstal bez ikony.
+function _spText(id, v) {
+  var el = document.getElementById(id); if (!el || v === undefined) return;
+  var m = /^(\S+)\s+([\s\S]*)$/.exec(String(v));
+  if (m && !/[\p{L}\p{N}]/u.test(m[1])) el.innerHTML = '<span class="sp-ik" aria-hidden="true">' + escapeHtml(m[1]) + '</span>' + escapeHtml(m[2]);
+  else el.textContent = v;
+}
+// RÚNAR v liště = domů v appce: záložka čtení, nahoru k Rúnarovi (hlášení 228c8f1c).
+function _domuAppky() {
+  if (typeof closeSidePanel === 'function') closeSidePanel();
+  showAppTab('reading');
+  var klid = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.scrollTo({ top: 0, behavior: klid ? 'auto' : 'smooth' });
+}
+// Kolik čtení zbývá — JEDNO místo pro kolečko v liště i nabídku pod jménem: Rune Seeker volné + kredity, předplatitel zbytek měsíce.
+// null = nevíme (profil se načítá) nebo účet čtení nepočítá.
+function _zbyvaCteni() {
+  if (!currentUser || !profileLoaded) return null;
+  if (normalizeTier(userTier) === 'rune_seeker') return Math.max(0, userFreeBalance) + Math.max(0, userCredits);
+  if (TIERS[userTier] && TIERS[userTier].monthly_readings > 0) {
+    var mesic = new Date().toISOString().slice(0, 7), pouzito = userMonthKey === mesic ? Math.max(0, userMonthUnits) : 0;
+    return Math.max(0, TIERS[userTier].monthly_readings - pouzito);
+  }
+  return null;
+}
+// Kolečko za jménem; když číslo stoupne (dobití kartou, nový měsíc), rozzáří se a doběhne z dosavadního na nové (owner, hlášení 85d5ea31).
+var _pocetMinule = null;
+function _pocetCteni() {
+  var el = document.getElementById('pocet-cteni'); if (!el) return;
+  var n = _zbyvaCteni();
+  if (n === null) { el.style.display = 'none'; _pocetMinule = null; return; }
+  el.style.display = '';
+  el.setAttribute('aria-label', tp('rs_credits_counter', { units: vn('unit', n, lang) }));
+  var od = _pocetMinule; _pocetMinule = n;
+  var klid = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (od === null || n <= od || klid) { el.textContent = String(n); return; }
+  el.classList.remove('rozzar'); void el.offsetWidth; el.classList.add('rozzar');
+  var t0 = null, delka = 1200;
+  (function krok(ts) { if (t0 === null) t0 = ts; var p = Math.min(1, (ts - t0) / delka);
+    el.textContent = String(Math.round(od + (n - od) * p)); if (p < 1) requestAnimationFrame(krok); })(performance.now());
+}
 function toggleDropdown() {
   const dd = document.getElementById('auth-dropdown');
   if (!dd || !currentUser) return;
@@ -2018,7 +2060,8 @@ function updateDropdown() {
   });
   if (tierEl)  tierEl.textContent  = tierNames[userTier] || userTier.toUpperCase();
   setText('dd-journey', t('sp_higher_path') + ' →');
-  setText('dd-names', t('sp_names_btn'));   // 2026-10-27: jména a odhlášení v nabídce pod jménem
+  var _tz = document.getElementById('topbar-tuzka'); if (_tz) _tz.setAttribute('aria-label', t('sp_names_btn').replace(/^\S+\s+/, ''));   // tužka = úprava jména (2026-10-28)
+  _pocetCteni();   // kolečko za jménem
   setText('dd-signout', t('sign_out'));   // 2026-10-19: cesta dál z rozbalovacího okna (openJourney)
   if (emailEl) emailEl.textContent = currentUser.email;
   if (balEl) {

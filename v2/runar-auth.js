@@ -149,9 +149,11 @@ function updateBanners() {
     // počítadlo ukazuje, kolik čtení zbývá CELKEM (volné + kredity), jako menu pod jménem; vysvětlení je za „+“ (toggleFreeNote).
     const celkemTxt = tp('rs_credits_counter', { units: vn('unit', remaining + Math.max(0, userCredits), lang) });
 
+    // 2026-10-28 (hlášení 85d5ea31: „číslo by mohlo stačit … vedle jména uživatele nahoru do lišty“): počet je v kolečku za jménem — pruh
+    // nad formulářem jen při nule (vede ke kartě).
     if (remaining > 0) {
       // Má volné měsíční sloty
-      freeBanner.style.display = 'block';
+      freeBanner.style.display = 'none';
       const cntEl = document.getElementById('free-user-count');
       if (cntEl) {
         cntEl.textContent = celkemTxt;
@@ -168,7 +170,7 @@ function updateBanners() {
 
     } else if (userCredits > 0) {
       // Měsíční vyčerpány, ale má kredity → čtení pokračuje pomocí kreditů
-      freeBanner.style.display = 'block';
+      freeBanner.style.display = 'none';   // počet je v liště (2026-10-28)
       const cntEl = document.getElementById('free-user-count');
       if (cntEl) {
         cntEl.textContent = celkemTxt;

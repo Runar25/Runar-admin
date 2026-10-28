@@ -27,11 +27,14 @@
 // poznámka          .note                                                 vysvětlení pod polem
 // drobná poznámka   .fine                                                 upozornění, poznámka v okně
 // glyf runy         .rune-svg  (runeSvg v runar-utils.js, §5)             kámen = tahaná runa, holá = popisek
+// ikona položky     .sp-ik     (_spText v runar-app.js)                    značka / kreslená ikona položky menu, 1,35 × text (2026-10-28)
 //
 // VLASTNÍ (třída mimo komponenty, s důvodem):
 // VLASTNÍ .xp-plus — sám je komponenta rozbalovače (span tam, kde text plní JS a ::after nejde)
 // VLASTNÍ .pero-let — animované pero v deníku (owner 2026-10-20 „3 pero“), jediný prvek, který letí přes stránku; žádná komponenta to nedělá
 // VLASTNÍ .toast-klik — modifikátor toastu: výzva k obnovení na novou verzi zůstane a dá se klepnout (2026-10-22, DECISIONS 2026-10-22 (8))
+// VLASTNÍ .topbar-tuzka .tz-cara .tz-pero — tužka u jména v liště: jen při otevřené nabídce, „podepíše“ dvě písmena (owner 2026-10-28)
+// VLASTNÍ .pocet-cteni .rozzar — počet čtení v kolečku za jménem; po dobití se rozzáří a doběhne (owner 2026-10-28, hlášení 85d5ea31)
 //
 // PRAVIDLA, KTERÁ KONTROLA HLÍDÁ:
 //   A) každá třída z tabulky v runar-reader.css existuje (soupis nehnije)
