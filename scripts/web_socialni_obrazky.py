@@ -8,12 +8,12 @@
 # Co vznikne:
 #   fb-titulni.jpg   1640×624 — titulní fotka Facebooku. Facebook ji ukazuje 820×312 na počítači a 640×360 na telefonu (ořízne
 #                    boky); obě zobrazení společně vidí jen střed ~1110 px, proto Rúnar i nápis stojí uvnitř (POJISTKA níž to měří).
-#   profil-ikona.jpg  720×720 — DOPORUČENÁ profilovka (owner 2026-10-28 „nejde to udělat ještě lépe?“): kresba ikony appky (Rúnar
-#                    s kamenem ᚱ, kruh zářících run, v2/assets/runar-app-icon.svg). Srovnáno ve skutečných velikostech 176 / 110 / 40 px
-#                    na tmavém i bílém pozadí: čitelná i ve 40 px, kruh run ji odliší na obou pozadích a je to tentýž obrázek, jaký
-#                    lidé uvidí na ploše telefonu. Výřez uvnitř zaobleného čtverce (černý okraj ikony do kruhu nesmí, měřeno 11–15 px).
-#   profil-svetly.jpg 720×720 — Rúnar do pasu na světlém pozadí (v2/assets/runar-portrait.png); na bílém pozadí (světlý režim) splyne.
-#   profil-tmavy.jpg  640×640 — týž výřez z tmavého portrétu appky (v2/img/runar-portrait.webp), jako web a náhled při sdílení.
+#   profil-ikona.jpg  720×720 — profilovka (owner 2026-10-28 „nejde to udělat ještě lépe?“): kresba ikony appky (Rúnar s kamenem ᚱ,
+#                    kruh zářících run, v2/assets/runar-app-icon.svg). Srovnáno ve skutečných velikostech 176 / 110 / 40 px na tmavém
+#                    i bílém pozadí: čitelná i ve 40 px, kruh run ji odliší na obou pozadích a je to tentýž obrázek, jaký lidé uvidí
+#                    na ploše telefonu. Výřez uvnitř zaobleného čtverce (černý okraj ikony do kruhu nesmí, měřeno 11–15 px).
+#                    Výřezy z portrétů s holí owner zamítl (2026-10-28: „profilovka A a B má Rúnara s uříznutou holí… A je úplně mimo“) —
+#                    čtverec kolem obličeje hůl vždy přetne. Do profilovky proto jen záběr, kde Rúnar nic nedrží přes okraj.
 #   python -X utf8 scripts/web_socialni_obrazky.py
 import base64, io, os, re, shutil, subprocess, sys, tempfile
 from PIL import Image
@@ -21,7 +21,6 @@ from PIL import Image
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CIL = os.path.join(ROOT, 'web', 'socialni')
 TMAVY = os.path.join(ROOT, 'v2', 'img', 'runar-portrait.webp')        # 1024×1536, scéna s polární září
-SVETLY = os.path.join(ROOT, 'v2', 'assets', 'runar-portrait.png')     # 1254×1254, do pasu na bílém
 IKONA = os.path.join(ROOT, 'v2', 'assets', 'runar-app-icon.svg')      # obal kolem jednoho PNG 1254×1254 v base64 (README assets)
 PISMA = os.path.join(ROOT, 'v2', 'fonts', 'fonts.css')
 CHROME = [r'C:\Program Files\Google\Chrome\Application\chrome.exe',
@@ -85,14 +84,12 @@ def main():
         im.save(os.path.join(CIL, 'fb-titulni.jpg'), 'JPEG', quality=88, optimize=True, progressive=True)
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
-    # Profilovky: obličej mírně nad středem kruhu (oči ~42 % výšky), hlava i vousy celé; souřadnice změřené na zdrojích 2026-10-28.
+    # Profilovka z ikony appky: střed obrázku, strana 1174 px = ikona bez černého okraje (11–15 px, změřeno 2026-10-28).
     m = re.search(r'data:image/png;base64,([A-Za-z0-9+/=]+)', io.open(IKONA, encoding='utf-8').read())
     ikona = os.path.join(tempfile.gettempdir(), 'runar-app-icon-1254.png')
     io.open(ikona, 'wb').write(base64.b64decode(m.group(1)))
     vyrez(ikona, 627, 627, 1174, 720).save(os.path.join(CIL, 'profil-ikona.jpg'), 'JPEG', quality=90, optimize=True)
     os.remove(ikona)
-    vyrez(SVETLY, 612, 470, 800, 720).save(os.path.join(CIL, 'profil-svetly.jpg'), 'JPEG', quality=90, optimize=True)
-    vyrez(TMAVY, 405, 560, 640, 640).save(os.path.join(CIL, 'profil-tmavy.jpg'), 'JPEG', quality=90, optimize=True)
     for f in sorted(os.listdir(CIL)):
         p = os.path.join(CIL, f)
         print('%-18s %s  %d kB' % (f, '%dx%d' % Image.open(p).size, os.path.getsize(p) // 1024))
