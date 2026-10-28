@@ -911,7 +911,7 @@ audio::-webkit-media-controls-volume-slider{accent-color:var(--gold);}
 /* Tužka v liště: jen při otevřené nabídce pod jménem; „podepíše“ dvě písmena ve velikosti jména a zůstane (owner: „animace upozorní, že se
    tam dá něco změnit, už svým pohybem“). Bez animace, když si ji člověk vypnul. */
 .auth-dropdown-wrap{display:flex;align-items:center;}
-.topbar-tuzka{display:none;position:relative;width:2.2em;height:1.15em;margin-right:.6em;padding:0;border:0;background:none;color:var(--gold);cursor:pointer;
+.topbar-tuzka{display:none;position:absolute;right:100%;top:50%;transform:translateY(-50%);width:2.2em;height:1.15em;margin-right:.6em;padding:0;border:0;background:none;color:var(--gold);cursor:pointer;
   font-size:0.72em;-webkit-tap-highlight-color:transparent;}
 .auth-dropdown-wrap:has(.auth-dropdown.open) .topbar-tuzka{display:inline-block;}
 .topbar-tuzka svg{position:absolute;fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;}
