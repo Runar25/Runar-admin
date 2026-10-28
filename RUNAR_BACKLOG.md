@@ -822,7 +822,7 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   jít vidět, jestli je měsíční nebo roční subscription u Walker a Wanderer“* → *„4. ano, zapiš to“*). Dnes to nejde: `user_profiles` má jen
   `tier`, žádnou délku předplatného ani datum obnovy (ověřeno 2026-10-21, CODE-read); platby neběží. Až poběží: server při platbě zapíše
   do profilu délku (měsíc / rok) a datum obnovy (zapisuje jen service_role, jako `tier` — `sql/2026-07-16_user_profiles_column_grants.sql`);
-  menu účtu u Walkera a Wanderera ukáže např. „RUNE WANDERER · YEARLY“ a „renews 21 Oct 2027“ (texty z UI_TEXT, IS + EN; datum přes
+  okno UPGRADE YOUR JOURNEY (owner 2026-10-28: správa předplatného patří tam — do kdy platí, zrušit, historie plateb) a menu účtu u Walkera a Wanderera ukáže např. „RUNE WANDERER · YEARLY“ a „renews 21 Oct 2027“ (texty z UI_TEXT, IS + EN; datum přes
   `datumUI`). Datum obnovy je pro člověka podstatnější než samotné „yearly“ — kdy se strhnou peníze a do kdy má čtení. Lane: platby CODE-web,
   menu CODE-tune.
   **Okno cesty** (owner přes CODE-web 2026-10-21: *„mělo by se nějak odlišit, jestli má uživatel měsíční nebo roční předplatné. asi říct you
@@ -960,7 +960,7 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   runu mluvit uvnitř cizí scény. Zásah do promptu výkladů → lab CODE-read, ne tichý tune.
 
 ### Hlášení z appky 2026-10-28 — účet a menu: návrh čeká na ownera (načtena 2026-10-28, CODE-tune; hotové: 01fc1c13, 8a6f3ff6 — 44d2388)
-- [ ] **Architektura účtu a menu — návrh ke schválení:** `docs/inbox/2026-10-28-ucet-a-menu-navrh.html` (skutečné styly appky). Hlášení
+- [x] ✅ *(CODE-tune 2026-10-28, DECISIONS 2026-10-28 (2))* **Architektura účtu a menu — návrh ke schválení:** `docs/inbox/2026-10-28-ucet-a-menu-navrh.html` (skutečné styly appky). Hlášení
   8b554620 (menu znovu, zarovnání, velikost, privacy dvakrát), b026bd00 (co menu obvykle má a co chybí), 8bc29ee1 (ikonky malé — 1,35 × text),
   fc708c38 (runa před kódem karty → kreslená karta), e1c2ebdd (MY NAMES → jméno s ✎, kde je délka předplatného — data zatím nejsou),
   228c8f1c (RÚNAR vlevo = domů v appce, web do menu, v Play skrytý), 85d5ea31 / 366d49e4 / b3118792 / 025f5d2d (počet čtení v kolečku za
@@ -973,5 +973,7 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   Lífsrúnin a Safn rúna, ťuknutí vrátí k Rúnarovi. Potvrdit, pak postavit.
 - [ ] **Před spuštěním projít, že všechno sedí (owner 2026-10-28: „bude se to muset projít, že všechno sedí před spuštěním!“):** zásady, nápověda,
   texty a jazyky (EN i IS), menu, okna — celá appka očima uživatele na telefonu i počítači; nález = oprava nebo položka sem.
-- [ ] **Animace symbolů (owner 2026-10-28):** *„budeme hledat animace pro skoro všechny naše symboly“* — první: tužka u jména v nabídce pod jménem
-  (při rozbalení krátce „podepíše“ dvě písmena ve velikosti jména, ať je vidět, že jde upravit); ikony menu „pokud to v menu dává smysl“.
+- [ ] **Animace symbolů (owner 2026-10-28):** *„budeme hledat animace pro skoro všechny naše symboly“* — tužka u jména v liště hotová (DECISIONS 2026-10-28 (2)); další je nota
+  u hlasu rituálu. Ikony menu zatím bez animace — owner 2026-10-28: *„jen tužka a nota“*.
+- [ ] **Menu — co přibude, až bude co ukázat (b026bd00, návrh 2026-10-28 schválen):** podmínky užití · o Rúnarovi / o nás · sdílet a pozvat
+  přítele · v Google Play ohodnotit appku · verze appky drobně dole · upozornění. Dnes pro ně chybí obsah.

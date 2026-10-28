@@ -254,7 +254,8 @@ const UI_TEXT = {
     // 2026-10-15 „Send Rúnar a line“ (owner „8. ano“): menu, okno se zprávou, hlášky (openLine / sendLine v runar-app.js)
     line_menu:          '✉ SEND RÚNAR A LINE',
     line_menu_visitor:  '✉ WRITE TO runar@therunekeeper.com',
-    sp_menu_title:      'MENU',   // 2026-10-27: nadpis menu (owner „něco bych nahoru dal, buď MENU…“)
+    sp_menu_title:      'MENU',
+    sp_instagram:       'INSTAGRAM',   // 2026-10-28: značka, EN i IS stejně   // 2026-10-27: nadpis menu (owner „něco bych nahoru dal, buď MENU…“)
     line_title:         'SEND RÚNAR A LINE',
     line_sub:           'Write what is on your mind. You will get the answer by email.',
     line_ph:            'What happened, or what would you like to say?',
@@ -577,7 +578,6 @@ const UI_TEXT = {
     name_modal_call_norse: 'NORSE NAME',
     name_modal_call_name:  'NAME',
     sp_names_btn:          '✎ MY NAMES',
-    sp_journal_link:       '✦ MY JOURNAL',      // 2026-10-10: dřív natvrdo v updateSidePanel (is ? … — ㉸ alias neviděl)
     sp_delete_account:     '× DELETE ACCOUNT',
     name_modal_skip:  'Continue without a name',
     name_modal_btn:   'LET THE RUNE READING BEGIN',
@@ -829,7 +829,8 @@ const UI_TEXT = {
     // 2026-10-15 „Sendu Rúnari línu“ — IS ověřeno Greynirem a korpusem (čísla v popisu commitu)
     line_menu:          '✉ SENDU RÚNARI LÍNU',
     line_menu_visitor:  '✉ SKRIFAÐU Á runar@therunekeeper.com',
-    sp_menu_title:      'VALMYND',   // korpus „valmynd“ 475×
+    sp_menu_title:      'VALMYND',
+    sp_instagram:       'INSTAGRAM',   // korpus „valmynd“ 475×
     line_title:         'SENDU RÚNARI LÍNU',
     line_sub:           'Skrifaðu það sem þér liggur á hjarta. Þú færð svarið í tölvupósti.',
     line_ph:            'Hvað gerðist, eða hvað viltu segja?',
@@ -1132,7 +1133,6 @@ const UI_TEXT = {
     name_modal_call_norse: 'NORRÆNA NAFNINU',
     name_modal_call_name:  'NAFNINU ÞÍNU',
     sp_names_btn:          '✎ NÖFNIN MÍN',
-    sp_journal_link:       '✦ LESTRAR MÍNIR',   // 2026-10-10: viz EN; znění beze změny
     sp_delete_account:     '× EYÐA REIKNINGI',
     name_modal_skip:  'Halda \u00e1fram \u00e1n nafns',
     name_modal_btn:   'L\u00c1TA SP\u00c1NA HEFJAST',

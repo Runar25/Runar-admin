@@ -12417,3 +12417,22 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno:** náhled — proužek v deníku 49 px pod horní hranou se šipkou nahoru, ťuknutí → čtení, posun 0; bez sjetí v jiné záložce není;
   smoke ㉼ a ㊎ (telefon, i zásady a nápověda EN/IS) zelené.
 - Affected doc(s): žádný.
+
+## 2026-10-28 (2) — Účet v liště a menu podle schváleného návrhu: tužka, počet čtení v kolečku, RÚNAR = domů, Instagram a web v menu
+- **Rozhodl:** owner 2026-10-28 k návrhu `docs/inbox/2026-10-28-ucet-a-menu-navrh.html`: *„ano postav to, ale nabídka pod jménem — jméno je
+  opakování toho, co je v horní liště, a tu tužku jsem chtěl dát právě do té horní lišty, ale až po tom, co uživatel klikne na to jméno
+  a lišta se rozbalí“* · *„jen tužka a nota“* (animované) · *„my journal tak asi být nemusí“*. Hlášení 8b554620, b026bd00, 8bc29ee1,
+  fc708c38, e1c2ebdd, 228c8f1c, 85d5ea31, 366d49e4, b3118792, 025f5d2d, 912b92ad.
+- **Co:** (1) Lišta: za jménem tužka, viditelná jen při otevřené nabídce; při otevření krátce „podepíše“ dvě písmena (ve velikosti jména).
+  Ťuknutí otevře úpravu jména. Jméno se upravuje jen tady: MY NAMES z nabídky a tužka u životní runy odešly. (2) Za jménem je kolečko
+  s počtem zbývajících čtení (Rune Seeker = volná + kredity, předplatitel = zbytek měsíce; jedno místo `_zbyvaCteni`). Když číslo stoupne,
+  rozzáří se a doběhne z dosavadního. Pruh nad formulářem jen při nule. (3) RÚNAR vlevo = domů v appce (čtení, nahoru), ne web.
+  (4) Menu: MY JOURNAL pryč. Kód karty s kreslenou kartou místo ᚠ. Soukromí pod jedním štítkem (přepínač + § PRIVACY POLICY, štítek
+  i pro návštěvníka). Přibyl INSTAGRAM (ikona Instagramu) a THERUNEKEEPER.COM (glóbus), oba z configu a ve verzi pro Play skryté.
+  Ikony mají 1,35 × písmo položky a zalomený řádek začíná pod textem. (5) Správa předplatného není v nabídce: patří do UPGRADE YOUR JOURNEY,
+  až poběží platby (owner: *„správa předplatného — není to upgrade your journey?“*; BACKLOG „Předplatné: měsíční / roční a datum obnovy“).
+- **Ověřeno:** náhled — tužka zavřeno `none` / otevřeno vidět, výška 13 px u jména 11,5 px, běží jen `tzKresli`/`tzZmiz`/`tzJed`. Kolečko
+  ukazuje 3 (1 + 2); po dobití na 7 dostane `rozzar`. Pruh: 0/0 vidět, 1/0 a 0/4 skrytý. Play: Instagram i web `none`. Ikony 13 px
+  u písma 9,9 px. Zalomení EN i IS pod textem (x 163, ikony 140). × u DELETE ACCOUNT bral test písmen za písmeno (rozsah À–ɏ obsahuje
+  U+00D7), opraveno na `\p{L}\p{N}`. Smoke ㉼, ㊎, ㊋, ㉻ a mrtvé klíče jsou zelené.
+- Affected doc(s): RUNAR_BACKLOG.md (návrh uzavřen, animace symbolů, předplatné v okně cesty).

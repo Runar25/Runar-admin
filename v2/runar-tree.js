@@ -982,7 +982,7 @@ function _renderNameLore() {
   // Obecny nadpis zbyva jen tomu, kdo nema jmeno zadne.
   var nadpis = jm || ((typeof userName !== 'undefined' && userName) ? userName : '');
   if (lbl) lbl.textContent = nadpis ? String(nadpis).toLocaleUpperCase() : t('name_lore_lbl');
-  if (edit) { edit.style.display = nadpis ? '' : 'none'; edit.textContent = t('tree_name_edit'); }
+  if (edit) edit.style.display = 'none';   // 2026-10-28 (hlášení 912b92ad): jméno se mění jen tužkou v horní liště (prvek z HTML pryč)
 
   // 1) severske jmeno jeste neni → pozvanka, tlacitko otevre okno se jmeny
   if (!jm) { zobraz(t('name_lore_intro_add'), t('name_lore_add_btn'), ''); return; }
