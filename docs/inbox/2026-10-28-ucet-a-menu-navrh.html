@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Účet a menu — návrh</title>
+<!-- Návrh k hlášením 2026-10-28 (8b554620, b026bd00, 8bc29ee1, fc708c38, e1c2ebdd, 228c8f1c, 85d5ea31, b3118792, 025f5d2d, 912b92ad).
+     Stylují ho SKUTEČNÉ styly appky (runar-reader.css + písma) — co je tu, je vzhled appky, ne kresba. Nic z toho zatím v appce není. -->
+<link rel="stylesheet" href="../../v2/fonts/fonts.css">
+<link rel="stylesheet" href="../../v2/runar-reader.css">
+<style>
+  body{background:#07090f;color:var(--white);margin:0;padding:24px;font-family:'Cormorant Garamond',Georgia,serif;}
+  .lista{display:flex;gap:28px;flex-wrap:wrap;align-items:flex-start;}
+  .tel{width:375px;background:var(--bg,#0b0f18);border:1px solid #2e4a70;position:relative;overflow:hidden;}
+  .tel h3{font-family:'Cinzel',serif;font-size:.7em;letter-spacing:3px;color:#9fb0c8;margin:0;padding:10px 14px;border-bottom:1px solid #1d2a40;background:#05070c;}
+  .tb{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(46,74,112,.4);}
+  .tb .vpravo{display:flex;align-items:center;gap:14px;}
+  .pocet{display:inline-flex;align-items:center;justify-content:center;min-width:1.9em;height:1.9em;padding:0 .35em;border:1px solid var(--gold);border-radius:50%;
+    font-family:'Cinzel',serif;font-size:.62em;letter-spacing:0;color:var(--gold);box-shadow:0 0 8px rgba(255,191,0,.35);}
+  .ham{display:flex;flex-direction:column;gap:4px;}.ham i{display:block;width:22px;height:2px;background:var(--gold);}
+  .dd{position:static;display:block;margin:0 18px 18px auto;width:250px;}
+  .dd .radek{display:flex;align-items:center;justify-content:space-between;padding:10px 18px 4px;}
+  .dd .jm{font-family:'Cinzel',serif;font-size:.72em;letter-spacing:3px;color:var(--white);}
+  .dd .tuzka{font-size:1.1em;color:var(--gold);opacity:.85;}
+  .dd .obnova{font-size:.78em;font-style:italic;color:var(--muted);padding:0 18px 12px;}
+  .panel{position:static;transform:none;width:100%;height:auto;display:flex;flex-direction:column;box-shadow:none;}
+  .ik{display:inline-block;width:1.45em;text-align:center;font-size:1.35em;line-height:1;vertical-align:-.12em;margin-right:.35em;}
+  .ik svg{width:1em;height:1em;vertical-align:-.1em;}
+  .skryte{opacity:.45;}
+  .pozn{max-width:520px;font-size:1.05em;line-height:1.55;color:#d6cbb3;}
+  .pozn h2{font-family:'Cinzel',serif;font-size:.9em;letter-spacing:3px;color:var(--gold);margin:18px 0 6px;}
+  .pozn ol{padding-left:1.3em;margin:0;}.pozn li{margin:0 0 8px;}
+  .stitek{font-family:'Cinzel',serif;font-size:.55em;letter-spacing:2px;color:#9fb0c8;margin:6px 18px 0;}
+</style>
+</head>
+<body>
+<div class="lista">
+
+  <!-- 1 — přihlášený: lišta + nabídka pod jménem -->
+  <div class="tel">
+    <h3>1 · PŘIHLÁŠENÝ — LIŠTA A NABÍDKA POD JMÉNEM</h3>
+    <div class="tb">
+      <span class="brand">RÚNAR</span>
+      <span class="vpravo"><span class="auth-user" style="display:inline-block">KUKY</span><span class="pocet">10</span><span class="ham"><i></i><i></i><i></i></span></span>
+    </div>
+    <div class="auth-dropdown dd open">
+      <div class="dd-tier">RUNE SEEKER</div>
+      <div class="radek"><span class="jm">KUKY</span><span class="tuzka"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l3.5-.8L19 7.7a1.8 1.8 0 0 0 0-2.5l-.2-.2a1.8 1.8 0 0 0-2.5 0L4.8 16.5z"/><path d="M14.5 6.5l3 3"/></svg></span></div>
+      <div class="dd-email">kukula@agndofa.is</div>
+      <div class="dd-balance"><span class="pocet" style="font-size:.95em;margin-right:8px">10</span> 10 rune readings remaining</div>
+      <div class="obnova">předplatitel: „Renews 1 November“ — data o předplatném zatím nejsou (platby nejedou)</div>
+      <button type="button" class="btn-upgrade dd-journey">UPGRADE YOUR JOURNEY →</button>
+      <button type="button" class="sp-item" style="padding:12px 18px;border-top:1px solid rgba(46,74,112,0.3)">SIGN OUT</button>
+    </div>
+  </div>
+
+  <!-- 2 — menu -->
+  <div class="tel">
+    <h3>2 · MENU (☰)</h3>
+    <nav class="side-panel panel">
+      <div class="side-panel-head"><span class="side-panel-brand">MENU</span><span class="side-panel-close">✕</span></div>
+      <div class="side-panel-section">
+        <button class="sp-path-toggle" style="justify-content:flex-start;gap:10px"><span style="font-size:1.4em;letter-spacing:0;line-height:1">→</span><span>UPGRADE YOUR JOURNEY</span></button>
+      </div>
+      <div class="side-panel-section">
+        <div class="side-panel-lbl">LANGUAGE</div>
+        <div class="lang-toggle"><button class="lang-btn active">EN</button><button class="lang-btn">IS</button></div>
+      </div>
+      <div class="side-panel-section">
+        <button class="sp-item journal"><span class="ik">✦</span>MY JOURNAL</button>
+        <button class="sp-item"><span class="ik"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="6" width="17" height="12" rx="0"/><path d="M3.5 10h17"/><path d="M7 14.5h4"/></svg></span>ENTER RUNE READING CARD CODE</button>
+      </div>
+      <div class="side-panel-section">
+        <div class="side-panel-lbl">PRIVACY</div>
+        <label class="sp-toggle"><input type="checkbox" checked> <span>Help improve Rúnar with my readings</span></label>
+        <a class="sp-item" style="text-decoration:none"><span class="ik">§</span>PRIVACY POLICY</a>
+      </div>
+      <div class="side-panel-section">
+        <a class="sp-item" style="text-decoration:none"><span class="ik">?</span>GUIDE &amp; FAQ</a>
+        <button class="sp-item"><span class="ik">✉</span>SEND RÚNAR A LINE</button>
+        <button class="sp-item"><span class="ik">⬇</span>INSTALL RÚNAR</button>
+        <a class="sp-item" style="text-decoration:none"><span class="ik"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".9" fill="currentColor" stroke="none"/></svg></span>INSTAGRAM</a>
+        <a class="sp-item" style="text-decoration:none"><span class="ik"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.6 2.4 3.9 5.2 3.9 8.5s-1.3 6.1-3.9 8.5M12 3.5C9.4 5.9 8.1 8.7 8.1 12s1.3 6.1 3.9 8.5"/></svg></span>THERUNEKEEPER.COM</a>
+        <div class="stitek">INSTAGRAM A WEB V GOOGLE PLAY SKRYTÉ</div>
+      </div>
+      <div class="sp-danger-zone"><button class="sp-delete-btn">× DELETE ACCOUNT</button></div>
+    </nav>
+  </div>
+
+  <div class="pozn">
+    <h2>CO SE MĚNÍ — KE SCHVÁLENÍ</h2>
+    <ol>
+      <li><b>RÚNAR vlevo nahoře = domů v appce</b> (záložka čtení, nahoru k fotce), ne web. Web je v menu jako THERUNEKEEPER.COM — v Google Play skrytý (228c8f1c).</li>
+      <li><b>Počet čtení v kolečku hned za jménem</b> v liště. Po dobití kartou se kolečko rozzáří a číslo doběhne z dosavadního na nový stav (85d5ea31, b3118792, 025f5d2d). U předplatitele kolečko = kolik čtení zbývá tento měsíc.</li>
+      <li><b>Nabídka pod jménem:</b> účet (RUNE SEEKER) · jméno s ✎ — ťuknutím se upraví (náhrada za „MY NAMES“, e1c2ebdd) · e-mail · počet čtení · u předplatitele „Renews …“ · UPGRADE · SIGN OUT.</li>
+      <li><b>Jméno se mění jen na jednom místě</b> — pod jménem. Z životní runy úprava jména odejde (912b92ad). Severské jméno patří k témuž oknu jako dnes.</li>
+      <li><b>Soukromí na jednom místě:</b> přepínač i PRIVACY POLICY pod štítkem PRIVACY (8b554620: „privacy je dvakrát“).</li>
+      <li><b>Ikonky jako dnešní, ale velké jako písmo</b> (8bc29ee1: obálka malá) — 1,35 × text, jako „+“. Kód karty: místo runy ᚠ kreslená karta (fc708c38). Instagram a web: kreslené ikonky tenkou linkou jako ikony záložek (Instagram — tvar, který má Instagram).</li>
+      <li><b>Menu nahoře:</b> UPGRADE, pak jazyk, pak tvoje věci, soukromí, pomoc, dole smazání účtu.</li>
+    </ol>
+    <h2>CO MENU OBVYKLE MÁ A NÁM CHYBÍ (b026bd00)</h2>
+    <ol>
+      <li><b>Podmínky užití</b> (Terms) — máme jen zásady soukromí; s placením budou nutné.</li>
+      <li><b>Správa předplatného</b> — do kdy platí, zrušit, historie plateb; až poběží platby.</li>
+      <li><b>O Rúnarovi / o nás</b> — kdo appku dělá (Agndofa ehf.).</li>
+      <li><b>Sdílet Rúnara / pozvat přítele</b> a v Play <b>ohodnotit appku</b>.</li>
+      <li><b>Verze appky</b> drobně dole (pomáhá u hlášení).</li>
+      <li><b>Upozornění</b> (zapnout/vypnout) — až budou existovat.</li>
+    </ol>
+  </div>
+</div>
+</body>
+</html>
