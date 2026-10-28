@@ -43,3 +43,37 @@ ve významu slabých a z obrazu to nešlo úplně poznat.“ GPT navrhl losovat 
 Tytéž losy jako kroky 23–27, jen místo losu typu a druhu obrazu **los směru** (6 ověřených výše); obraz si model postaví sám, aby směr
 nesl. Měřit: (a) **pozná slepý soudce ze čtení, který směr byl vylosován?** (obraz nese význam) · (b) kolik jader je pořád „dar váže“ ·
 (c) tvrzení o čtenáři · (d) ozvěna slov směru · ownerovo čtení textů.
+
+## Kolo 2 (2026-10-28): Gemini verze, prověření kánonu Gebo
+**Owner:** Gemini popsal totéž, možná líp · „runové básně? co to má společného s tím, co řešíme? kánon Gebo pořádně prověř“ · k riziku
+tvrzení o čtenáři: „my to nedokážeme napsat tak, aby to znělo líp?“
+
+**Náš kánon Gebo (vlastník = owner a kód, ne vnější texty):**
+- `RUNAR_POPISY_RUN.md` „Gebo“ (ownerův text): dar vzniká mezi dvěma stranami a vzniká tím vztah, výměna, závazek, spojení · dar má smysl
+  proto, že něco opouští ruku (čas, důvěra, pozornost, práce, část sebe) · přijmout se dá, i když člověk neví, co s tím · **Gebo není
+  obchod ani účetnictví — je to vzájemnost** · **svoboda: vynucený dar není dar; vztah, kde jedna strana musí pořád platit, aby mohla
+  zůstat, není výměna** · něco, co nejde vlastnit · otázka runy: co dáš bez jistoty návratu a co přijmeš, aniž bys musel hned vracet.
+- `v2/runar-runes.js`: klíčová slova gift · companionship · giving and receiving · balance; IS vzorec „rún tengsla, gjafa og þess sem flæðir
+  á milli fólks af einlægni“.
+
+**K čemu vnější zdroje:** k ničemu jinému než ke kontrole, že si směr nevymýšlíme (§23). Runové básně jsou jediné staré texty, které
+runy vykládají; Gebo má jen anglosaská (severské básně ji nemají, mladší futhark ji vypustil). Hávamál o runě není, je o daru v severské
+kultuře. Kánonem zůstává ownerův popis; vnější texty mu tady neodporují: „dar hledá oplátku“ (Hávamál 145) je vzájemnost, ne účetnictví.
+
+**Směry Gebo přímo z ownerova popisu (návrh pro test místo GPT/Gemini seznamu):**
+1. Co se tím vytvoří mezi dvěma — vztah, závazek, spojení.
+2. Co opouští ruku — dar je dar, protože se ho člověk vzdá.
+3. Přijmout, i když člověk neví, co s tím.
+4. Vzájemnost bez účtů (Gebo není obchod).
+5. Svoboda daru — vynucený dar přestane být darem.
+6. Něco, co nejde vlastnit.
+GPT/Gemini „skrytý dluh, tichá kalkulace“ je v kánonu **druhá strana** bodu 4 („není obchod“) — patří do věty hranice, ne jako hlavní směr.
+
+**Gemini × GPT:** Gemini popisuje mechanismus přesněji (co se děje + co to v člověku pohne), ale (a) jeho uzly u jiných run nejsou kánon
+těch run (Raidho = setrvačnost z povinnosti, Kenaz = mikromanagement — kánon to netvrdí, §23), (b) chce do promptu cílové emoce a
+terapeutický jazyk („servisní odstávka“, „sundání masky hrdiny“) — DESIGN: slova zážitků do promptu nepatří, model je předvádí, a věta ze
+self-help knihy není Rúnarova, (c) jeho otázka „V jaké dohodě teď čekáš na splátku, o kterou sis nikdy neřekl?“ předpokládá, že čtenář
+skrytě kalkuluje — obvinění. Z Gemini brát: popis mechanismu jedním řádkem; z GPT: losovat typ napětí, ne příběh.
+
+**K „napsat to líp“:** ano — riziko není ve znění směru, ale v tom, kdo ho ve čtení nese. Směr napíšeme jako dění mezi lidmi (3. osoba,
+bez „you“); model ho ukáže na postavě ve scéně; „you“ dostane jen otázka.
