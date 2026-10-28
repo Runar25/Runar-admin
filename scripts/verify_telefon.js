@@ -95,11 +95,10 @@ const MERENI = `(() => {
     // 2026-10-28 (hlášení 8a6f3ff6): statické stránky — zásady a nápověda (EN i IS), týž telefon a táž měření.
     const STRANKY = ['runar-privacy.html', 'runar-help.html'];
     for (const st of STRANKY) for (const jaz of ['en', 'is']) {
+      await ev(`localStorage.setItem('runar_lang', '${jaz}'); 1`);   // stránka je v jazyce appky (přepínač na ní od 2026-10-28 není)
       await cmd('Page.navigate', { url: URL.replace('runar-reader.html', st) });
       for (let k = 0; k < 60; k++) { await sleep(150); if (await ev(`document.readyState === 'complete'`)) break; }
       await sleep(500);
-      await ev(`(function(){ var b = document.getElementById('btn-' + '${jaz}'); if (b) b.click(); return 1; })()`);
-      await sleep(400);
       const m = await ev(MERENI);
       const jm = st + ' (' + jaz + ')';
       if (!m) { vady.push(jm + ': nešlo změřit'); continue; }

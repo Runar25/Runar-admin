@@ -27,10 +27,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 .back-btn:hover{opacity:1;}
 
 /* LANG TOGGLE */
-.lang-toggle{display:flex;border:1px solid var(--border);overflow:hidden;margin-left:14px;}
-.lang-btn{padding:7px 14px;font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;border:none;cursor:pointer;transition:all 0.2s;}
-.lang-btn.active{background:var(--gold);color:#000;}
-.lang-btn:not(.active){background:transparent;color:var(--muted);}
 
 /* CONTENT */
 .app{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:40px 24px 100px;}
@@ -100,10 +96,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
         <div class="brand">RÚNAR</div>
         <div class="topbar-sub" id="tp-sub">GUIDE & FAQ</div>
       </div>
-      <div class="lang-toggle">
-        <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
-        <button class="lang-btn" id="btn-is" onclick="setLang('is')">IS</button>
-      </div>
+      <!-- 2026-10-28 (owner): bez přepínače jazyka — stránka je v jazyce appky (runar_lang) -->
     </div>
     <a class="back-btn" href="runar-reader.html" id="back-btn">← BACK</a>
   </div>
@@ -429,9 +422,7 @@ const CONTENT = {
 
 function setLang(l) {
   lang = l;
-  localStorage.setItem('runar_lang', l);
-  document.getElementById('btn-en').classList.toggle('active', l === 'en');
-  document.getElementById('btn-is').classList.toggle('active', l === 'is');
+  // 2026-10-28: jazyk volí appka (runar_lang); stránka ho jen čte, nemění.
   document.documentElement.lang = l;
   applyContent();
 }
