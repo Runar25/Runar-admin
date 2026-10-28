@@ -2044,6 +2044,7 @@ function toggleDropdown() {
   const dd = document.getElementById('auth-dropdown');
   if (!dd || !currentUser) return;
   dd.classList.toggle('open');
+  var g = document.getElementById('topbar-greeting'); if (g && dd.classList.contains('open')) g.classList.remove('show');   // tužka stojí na jeho místě (2026-10-28)
 }
 function updateDropdown() {
   const dd      = document.getElementById('auth-dropdown');

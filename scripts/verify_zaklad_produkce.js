@@ -163,6 +163,22 @@ async function main() {
     await ev("startReading(); 0");
     await cekej(500);
     (await ev(ZAKLAD + '("přihlášený: tah")')).filter((c) => !/Rúnarova fotka skrytá/.test(c)).forEach((c) => chyby.push(c));   // tah přihlášeného fotku schovává záměrně (startReading)
+    // 2026-10-28 (owner k tužce vpravo od jména: „tohle tě mělo napadnout samotného, že to není žádoucí … nekontroluješ si to po sobě?“):
+    // otevření nabídky pod jménem nesmí v liště pohnout ničím, co tam už stojí (jméno, kolečko s počtem čtení, ☰, RÚNAR). Ověřoval jsem jen
+    // to nové (tužka je vidět, animace běží), ne to, co se kolem ní posunulo. Měří se, co v liště vidíš (prvky bez vnořených prvků; obal se smí rozšířit), bez nabídky samé a bez tužky.
+    // Počítá se i průhledný pozdrav (#topbar-greeting): když se ukáže, nesmí uskočit (proto je tužka mimo tok řádku).
+    const LISTA = "(async function(sab){ currentUser = { id: 'smoke-zaklad', email: 'smoke@example.invalid' }; userTier = 'rune_seeker'; profileLoaded = true; userFreeBalance = 1; userCredits = 2;"
+      + " updateAuthUI(); updateDropdown(); var g0 = document.getElementById('topbar-greeting'); if (g0) { g0.textContent = 'Good to see you.'; g0.classList.add('show'); } var dd = document.getElementById('auth-dropdown'); dd.classList.remove('open');"
+      + " var tz = document.getElementById('topbar-tuzka'); if (sab) { tz.style.position = 'static'; tz.style.transform = 'none'; }"
+      + " var mer = function(){ var m = {}; document.querySelectorAll('.topbar *').forEach(function(e,i){ if (e.children.length || dd.contains(e) || e.closest('#topbar-tuzka') || !e.getClientRects().length) return; var r = e.getBoundingClientRect(); if (r.width < 1) return; m[(e.id || e.className || e.tagName) + '#' + i] = [r.left, r.top]; }); return m; };"
+      + " var pred = mer(); toggleDropdown(); await new Promise(function(r){ setTimeout(r, 50); }); var po = mer(); dd.classList.remove('open');"
+      + " return Object.keys(pred).filter(function(k){ return !po[k] || Math.abs(po[k][0] - pred[k][0]) > 1 || Math.abs(po[k][1] - pred[k][1]) > 1; })"
+      + "   .map(function(k){ return k.split('#')[0] + (po[k] ? ' o ' + Math.round(po[k][0] - pred[k][0]) + ' px' : ' zmizelo'); }); })";
+    const pohyb = await ev(LISTA + '(false)');
+    if (pohyb.length) chyby.push('otevření nabídky pod jménem pohne v liště: ' + pohyb.join(', ') + ' (nové se přidává tak, aby stávající stálo)');
+    const pohybSab = await ev(LISTA + '(true)');
+    if (!pohybSab.length) chyby.push('SAMOTEST: tužka v toku řádku (pozdrav nebo jméno při otevření uskočí) kontrola nepoznala — ' + JSON.stringify(pohybSab));
+    await ev("(function(){ var tz = document.getElementById('topbar-tuzka'); tz.style.position = ''; tz.style.transform = ''; return 1; })()");
     // Samotest: kontrola musí poznat skryté Norny i skrytou fotku (jinak by mlčela, i kdyby byly pryč)
     const sabot = await ev("(function(){ resetReader(); currentUser = null; startReading(); document.getElementById('mode-btn-norns').style.display = 'none'; document.getElementById('reader-hero').classList.add('hidden'); return 1; })()");
     await cekej(300);
@@ -188,6 +204,6 @@ async function main() {
     console.log('FAIL  základ produkce: ' + chyby.length + ' vad — fotka, záložky, výklady a runy nesmí z appky zmizet a appka nesmí padat (KUKY 2026-10-10)');
     process.exit(1);
   }
-  console.log('OK    základ produkce v prohlížeči: fotka, 4 záložky, 5 výkladů, 25 run (tah i Safn rúna), žádná chyba JS za běhu — 11 stavů návštěvníka i přihlášeného, rozbalovače podle vzoru (+ 1,35×, ▾ kreslená), samotest chytá skryté Norny, fotku i chybu JS');
+  console.log('OK    základ produkce v prohlížeči: fotka, 4 záložky, 5 výkladů, 25 run (tah i Safn rúna), žádná chyba JS za běhu — 11 stavů návštěvníka i přihlášeného, rozbalovače podle vzoru (+ 1,35×, ▾ kreslená), otevření nabídky pod jménem lištou nepohne, samotest chytá skryté Norny, fotku i chybu JS');
 }
 main().catch((e) => { console.log('FAIL  základ produkce: ' + e.message); process.exit(1); });
