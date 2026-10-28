@@ -809,10 +809,10 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   a sitemapu odeslat v Google Search Console (doména je ověřená TXT záznamem `google-site-verification`).
 - [ ] **Sociální sítě Rúnara** (owner 2026-10-27: *„musíme založit facebook… budu s tebou pak řešit všechna sociální, které Rúnar má“*;
   2026-10-28: *„13.–19. zapiš do backlog“* a *„Co jsem připravil 9–15“* do backlogu). Instagram 2026-10-28 (veřejný profil): jméno
-  „Rúnar - the Rune Keeper“, 0 příspěvků, bio „Rune readings ✧ Nordic mysticism ✧ Ancient wisdom / Welcome to the world of Agndofa. /
+  „Rúnar - the Rune Keeper“, 0 příspěvků, bio „Rune readings ✧ Nordic mysticism ✧ Ancient wisdom / Welcome to the world of Agndofa. /  <!-- doc-values:ok 2026-10-28: značka účtu „The Rune Keeper“, ne vyřazený tier Rune Keeper -->
   Daily guidance from Rúnar ✧ @agndofa“, **bez odkazu na web**; typ účtu (osobní / profesionální) bez přihlášení vidět není.
   **Doporučení (CODE-web 2026-10-27):**
-  1. Facebook = stránka, ne osobní profil, přes Meta Business Suite; jméno „Rúnar · The Rune Keeper“, uživatelské jméno
+  1. Facebook = stránka, ne osobní profil, přes Meta Business Suite; jméno „Rúnar · The Rune Keeper“, uživatelské jméno  <!-- doc-values:ok 2026-10-28: značka účtu „The Rune Keeper“, ne vyřazený tier Rune Keeper -->
      @runartherunekeeper, propojit s Instagramem (ten musí být profesionální účet — ověřit v jeho nastavení). Zakládá owner. Pak adresu
      do configu vedle `RUNAR_INSTAGRAM_URL` (CODE-tune), do patičky webu (CODE-web, `webInstagram()` ve web.js zobecnit na víc sítí)
      a do menu appky; v režimu Play skrytý jako Instagram.
@@ -831,7 +831,7 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   9. Profilovka: doporučená `profil-ikona.jpg` (kresba ikony appky — kámen ᚱ, kruh run). Srovnáno ve 176 / 110 / 40 px na tmavém
      i bílém pozadí: čitelná i ve 40 px a je to týž obrázek, jaký lidé uvidí na ploše telefonu. Alternativy `profil-svetly.jpg`
      (na bílém pozadí splyne) a `profil-tmavy.jpg`. Tutéž na Facebook i Instagram. Runy v kruhu jsou kresba generátoru jako u ikony appky.
-  10. Jméno všude „Rúnar · The Rune Keeper“ (jako web, 23 / 30 znaků).
+  10. Jméno všude „Rúnar · The Rune Keeper“ (jako web, 23 / 30 znaků).  <!-- doc-values:ok 2026-10-28: značka účtu „The Rune Keeper“, ne vyřazený tier Rune Keeper -->
   11. Bio Instagramu (≤ 150 znaků): první řádek = ownerova věta o světle z `UI_TEXT.guide_lines` (IS i EN v produkci); druhý řádek
       IS „Rúnalestur á íslensku og ensku ✧ Rúnar er gervigreind ✧ @agndofa“ (celé bio 137) · EN „Rune readings in Icelandic and
       English ✧ Rúnar is an AI ✧ @agndofa“ (celé bio 147).
