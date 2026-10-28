@@ -26,3 +26,13 @@ to, jestli čtení dělají lepší. Tady: zadání kroku 26 + jedna věta úhlu
    (táž vada jako ve v2 „at the edge of“ z úhlu [5], EVAL_LOG 2026-10-21).
 4. **„Okraj“** vede k okamžiku přechodu („When the last stone drops into the arch…“, „At the open sluice…“), „Where … meets“ 2/8.
 5. Čas jako cena: základ 2/4 situační · detail 1 · mimo dohled 1 („you need it Saturday“) · okraj 0 — zbytek nese los druhu (krok 26).
+
+## Ownerova rozhodnutí ke stavbě v3 (2026-10-28, k návrhu z kroku 26)
+- **SEEKING** zůstane, ale projde úpravami. **Zrcadlení (otázka ke čtenáři) má být v každém čtení**; nemusí stát jako samostatná 4. věta —
+  smí být mimo čtyři věty nebo součástí některé předchozí. Pořadí vět se dá skládat libovolně.
+- **INTENTION** zůstane.
+- **AREA** se otestuje obojí: uvnitř vět i mimo ně (např. v Asku).
+- **Jméno** zkusit (v oslovení v otázce).
+- **Úhly z v2** zkusit jako los pro obraz (tenhle krok).
+- **Ochrana čtenáře** stavbou místo zákazu NO COLD READING: věty o scéně, ke čtenáři jen otázka; tvrzení o čtenáři se měří v každém kroku
+  a pravidlo přibude, jen když ho měření ukáže jako potřebné.
