@@ -503,7 +503,9 @@ function showTopbarGreeting() {
     msg = t(_novyUcet() ? 'greet_hello' : 'greet_again');
   }
   el.textContent = msg;
-  setTimeout(() => el.classList.add('show'), DELAY_TOAST_IN);
+  // 2026-10-28 (owner: „jméno může být jakékoli délky“): na telefonu dlouhé jméno pozdrav smrskne na „G…“ nalepené na RÚNAR —
+  // nevejde-li se celý, neukáže se (jméno vedle stojí tak jako tak).
+  setTimeout(() => { if (el.scrollWidth <= el.clientWidth + 1) el.classList.add('show'); }, DELAY_TOAST_IN);
   setTimeout(() => el.classList.remove('show'), DURATION_TOAST);
 }
 
@@ -2044,7 +2046,9 @@ function toggleDropdown() {
   const dd = document.getElementById('auth-dropdown');
   if (!dd || !currentUser) return;
   dd.classList.toggle('open');
-  var g = document.getElementById('topbar-greeting'); if (g && dd.classList.contains('open')) g.classList.remove('show');   // tužka stojí na jeho místě (2026-10-28)
+  // Tužka stojí na místě pozdravu: otevřená nabídka ho schová HNED — doznívání (0,7 s) by běželo pod tužkou (㊎, 2026-10-28).
+  var g = document.getElementById('topbar-greeting');
+  if (g && dd.classList.contains('open') && g.classList.contains('show')) { g.style.transition = 'none'; g.classList.remove('show'); void g.offsetWidth; g.style.transition = ''; }
 }
 function updateDropdown() {
   const dd      = document.getElementById('auth-dropdown');
