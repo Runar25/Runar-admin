@@ -966,8 +966,12 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   228c8f1c (RÚNAR vlevo = domů v appce, web do menu, v Play skrytý), 85d5ea31 / 366d49e4 / b3118792 / 025f5d2d (počet čtení v kolečku za
   jménem, rozzáření a doběhnutí čísla po dobití), 912b92ad (jméno se mění jen pod jménem, ze životní runy pryč). Owner: *„pokud tam něco
   nesedělo, máš se mě zeptat, jak to upravíme“* — staví se až po schválení návrhu.
-- [ ] **Hlas Rúnara i pro „How a reading works“ (5fdcca95):** *„How a reading works taky nemluvíme Rúnarem jako statické čtení“* — týž postup jako
+- [ ] **Hlas Rúnara i pro „How a reading works“ (5fdcca95) — owner 2026-10-28 „ano, taky uděláme hlas a ikonu; ikona bude taky animovaná“:** *„How a reading works taky nemluvíme Rúnarem jako statické čtení“* — týž postup jako
   hlas rituálu (varianty čekají na ownerův poslech, `docs/eval/2026-10-27-ritual-hlas/gen.js`). Potvrdit, že jde o tohle.
-- [ ] **Proužek #hero-down přes záložky (47b63e3f):** *„když se posunu z hlavní stránky dolů posuvníkem, který se na druhé straně obrátí nahoru,
+- [x] ✅ *(CODE-tune 2026-10-28, DECISIONS 2026-10-28 (1))* **Proužek #hero-down přes záložky (47b63e3f):** *„když se posunu z hlavní stránky dolů posuvníkem, který se na druhé straně obrátí nahoru,
   chci, aby tam zůstal, i když překliknu na jiné okno“* — výklad (neověřeno s ownerem): proužek se šipkou nahoru zůstane pod lištou i v Lestrar,
   Lífsrúnin a Safn rúna, ťuknutí vrátí k Rúnarovi. Potvrdit, pak postavit.
+- [ ] **Před spuštěním projít, že všechno sedí (owner 2026-10-28: „bude se to muset projít, že všechno sedí před spuštěním!“):** zásady, nápověda,
+  texty a jazyky (EN i IS), menu, okna — celá appka očima uživatele na telefonu i počítači; nález = oprava nebo položka sem.
+- [ ] **Animace symbolů (owner 2026-10-28):** *„budeme hledat animace pro skoro všechny naše symboly“* — první: tužka u jména v nabídce pod jménem
+  (při rozbalení krátce „podepíše“ dvě písmena ve velikosti jména, ať je vidět, že jde upravit); ikony menu „pokud to v menu dává smysl“.

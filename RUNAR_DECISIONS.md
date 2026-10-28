@@ -12405,3 +12405,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   6. Instagram: adresa bydlí jen v configu appky (`RUNAR_INSTAGRAM_URL`, lane CODE-tune). Web ji čte a odkaz v patičce ukáže,
      až tam bude; do té doby je skrytý.
 - Affected doc(s): žádný (stav vlastní `web/site/*` a `git log`).
+
+## 2026-10-28 (1) — Proužek se šipkou zůstane i v ostatních záložkách; zásady a nápověda bez přepínače jazyka
+
+- **Rozhodl:** owner 2026-10-28 k hlášení 47b63e3f *„7. ano“* (*„chci, aby tam zůstal, i když překliknu na jiné okno“*) a k zásadám: *„nevidím
+  důvod mít měnič jazyka v zásadách o soukromí. Má se zobrazit v jazyku appky. Bude se to muset projít, že všechno sedí před spuštěním!“*
+- **Co:** (1) Když proužek #hero-down ukazuje nahoru (člověk sjel dolů), při přechodu do Lestrar / Lífsrúnin / Safn rúna se týž prvek přestěhuje
+  do `#hero-down-mimo` za sekcí s fotkou (ta se v jiných záložkách sbalí); ťuknutí vrátí čtení nahoru k Rúnarovi; zpět v čtení se vrátí na místo.
+  Ven ze sekce trvale nejde — na telefonu je sekce vysoká jako obrazovka. (2) Zásady i nápověda bez přepínače EN/IS — jazyk z `runar_lang`
+  (zapisuje appka); přepínač tu navíc přepínal jazyk celé appky.
+- **Ověřeno:** náhled — proužek v deníku 49 px pod horní hranou se šipkou nahoru, ťuknutí → čtení, posun 0; bez sjetí v jiné záložce není;
+  smoke ㉼ a ㊎ (telefon, i zásady a nápověda EN/IS) zelené.
+- Affected doc(s): žádný.
