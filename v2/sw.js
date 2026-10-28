@@ -1,8 +1,8 @@
-// Rúnar Service Worker — v826
+// Rúnar Service Worker — v827
 // HTML: network-first (always fresh). JS/CSS/icons: cache-first (fast, offline ok).
 // External (Supabase, ElevenLabs, fonts): pass-through, never intercepted.
 
-const CACHE = 'runar-v826';
+const CACHE = 'runar-v827';
 const JS_SHELL = [
   '/Runar-admin/v2/runar-reader.css',
   '/Runar-admin/v2/runar-utils.js',
@@ -76,6 +76,8 @@ self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
   // sw.js sám nikdy z cache: hlášení z něj čte NASAZENOU verzi (2026-10-11, runar-reporter.js); cache-first ho dřív vracel starý.
   if (url.pathname.endsWith('/sw.js')) return;
+  // Zvuk (v2/audio/) jde rovnou ze sítě: přehrávač žádá kusy (Range, 206) a ty cache-first neumí — Safari pak nehraje (2026-10-28).
+  if (url.pathname.indexOf('/audio/') !== -1) return;
 
   // ── HTML pages: network-first so user always gets latest code ──
   if (url.pathname.endsWith('.html') || url.pathname.endsWith('/')) {

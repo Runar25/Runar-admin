@@ -418,6 +418,15 @@ const RUNAR_HOME_URL = 'https://therunekeeper.com/heim/';
 // Čistá adresa: owner poslal odkaz se sledovacím ?obrf=…, ten sem nepatří.
 const RUNAR_INSTAGRAM_URL = 'https://www.instagram.com/runartherunekeeper/';
 
+// Hlas rituálu pod BEFORE WE BEGIN (owner 2026-10-28: „EN a IS F verze jako rituál moc dobrá … můžeme se od ní odrážet dál pro další
+// rituální čtení“; recept = varianta F v docs/eval/2026-10-27-ritual-hlas/gen.js, DECISIONS 2026-10-28 (3)). Soubory leží u appky
+// (GitHub Pages), ne ve Storage (smoke ㊒). text_sha1 = otisk ritual_text, ze kterého se nahrávka namluvila: změníš-li text, smoke ㊗
+// spadne — nahrávku vyrob znovu (gen.js --jen F, pak --do-appky F) a otisk sem.
+const RUNAR_RITUAL_HLAS = {
+  en: { src: 'audio/ritual_en.mp3', text_sha1: '19793215a2817b95af8fb40b8c4e0946f7d3ae1b' },
+  is: { src: 'audio/ritual_is.mp3', text_sha1: 'ead43f82f4265a267321de79ce034b92e7b57dfc' },
+};
+
 const CARD_PACKS = [
   { name: 'Starter', name_is: 'Byrjandi', credits: 5,  isk: 1490 },
   { tier: 'rune_seeker', credits: 10, isk: 2490 },

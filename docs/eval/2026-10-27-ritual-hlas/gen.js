@@ -10,7 +10,10 @@
 //       stejně jako C, trochu delší pauza před … When your mind settles“; „D IS je trochu hrubší hlas než v C, jde ho zjemnit?“)
 //   F = E, ale delší pauza značkou [long pause] — dokumentace v4 uvádí pro pauzy výpustky; [long pause] jen v seznamu značek
 //       „bez záruky“ (elevenlabs.io/docs/product/prompting/pauses, 2026-10-28), proto obě cesty vedle sebe
-//   E/F berou text NOVÝ (TEXT2, ownerův s opravou: „what on your heart“ → „what is on your heart“, IS „liggur þér á hjarta“), ne ritual_text
+//   E/F: text z ritual_text (od 2026-10-28 ownerova věta s „what is on your heart“ / „liggur þér á hjarta“; 28. 10. stál zvlášť)
+//   ⭐ F = HLAS RITUÁLU V APPCE (owner 2026-10-28: „EN a IS F verze jako rituál moc dobrá … odrážet dál pro další rituální čtení“)
+//   node docs/eval/2026-10-27-ritual-hlas/gen.js --do-appky F   zkopíruje ritual_<l>_F.mp3 do v2/audio/ a vypíše otisky textu pro config
+//       (RUNAR_RITUAL_HLAS.*.text_sha1; smoke ㊗ hlídá, že nahrávka sedí na text)
 //   node docs/eval/2026-10-27-ritual-hlas/gen.js --jen E,F   jen vybrané varianty; poslech.html pak ukáže všechny soubory ve složce
 // Hlas, nastavení: supabase/functions/_shared/el_voice.ts (čte se odtud, ne kopie). Text: ritual_text v runar-translations.js.
 // Klíč: ~/.claude/runar-elevenlabs-key.txt (nikdy se nevypisuje). Výstup MIMO repo: ~/runar-eval/ritual-hlas/ (mp3 + poslech.html).
@@ -25,9 +28,6 @@ const S = {}; S.window = S; vm.createContext(S);
 vm.runInContext(fs.readFileSync(path.join(R, 'v2/runar-translations.js'), 'utf8') + '\n;this.__UI = UI_TEXT;', S);
 const TEXT = { en: S.__UI.en.ritual_text, is: S.__UI.is.ritual_text };
 const pauzy = (t) => t.replace(/([.!?])\s+/g, '$1 … ');
-const TEXT2 = {
-  en: 'Find a quiet place before you draw. Light a candle or some incense if you like, or simply sit in silence. Breathe in deeply and think about what is on your heart. When your mind settles, draw a rune.',
-  is: 'Finndu rólegan stað áður en þú dregur. Kveiktu á kerti eða reykelsi ef þú vilt, eða vertu bara í þögn. Dragðu andann djúpt og hugsaðu um það sem liggur þér á hjarta. Þegar hugurinn kyrrist, dragðu rún.' };
 const POSLEDNI = { en: 'When your mind settles', is: 'Þegar hugurinn kyrrist' };
 const delsi = (l, t, co) => { const i = t.lastIndexOf(' … ' + POSLEDNI[l]); if (i < 0) throw new Error('poslední věta nenalezena ' + l); return t.slice(0, i) + co + POSLEDNI[l] + t.slice(i + 3 + POSLEDNI[l].length); };
 const ZNACKA = { en: '[calm, slow, low and gentle voice] ', is: '[calm, slow, low and gentle voice] ' };
@@ -37,12 +37,21 @@ const VAR = [
   { k: 'C', popis: 'v3, rychlost 0,85, pauzy, značka klidného hlasu, stabilita 0,5', model: () => 'eleven_v3', text: (l) => ZNACKA[l] + pauzy(TEXT[l]), nast: () => Object.assign({}, NAST, { speed: 0.85, stability: 0.5 }) },
   { k: 'D', popis: 'v4, rychlost 0,85, pauzy', model: () => 'eleven_v4', text: (l) => pauzy(TEXT[l]), nast: () => Object.assign({}, NAST, { speed: 0.85 }) },
   { k: 'E', popis: 'v4 jako C (značka, stabilita 0,5, rychlost 0,85), delší pauza „… …“ před poslední větou, nový text', model: () => 'eleven_v4',
-    text: (l) => ZNACKA[l] + delsi(l, pauzy(TEXT2[l]), ' … … '), nast: () => Object.assign({}, NAST, { speed: 0.85, stability: 0.5 }) },
+    text: (l) => ZNACKA[l] + delsi(l, pauzy(TEXT[l]), ' … … '), nast: () => Object.assign({}, NAST, { speed: 0.85, stability: 0.5 }) },
   { k: 'F', popis: 'jako E, delší pauza značkou [long pause]', model: () => 'eleven_v4',
-    text: (l) => ZNACKA[l] + delsi(l, pauzy(TEXT2[l]), ' … [long pause] '), nast: () => Object.assign({}, NAST, { speed: 0.85, stability: 0.5 }) },
+    text: (l) => ZNACKA[l] + delsi(l, pauzy(TEXT[l]), ' … [long pause] '), nast: () => Object.assign({}, NAST, { speed: 0.85, stability: 0.5 }) },
 ];
 const OUT = path.join(os.homedir(), 'runar-eval', 'ritual-hlas');
 fs.mkdirSync(OUT, { recursive: true });
+if (process.argv.includes('--do-appky')) {
+  const k = process.argv[process.argv.indexOf('--do-appky') + 1];
+  for (const l of ['en', 'is']) {
+    fs.copyFileSync(path.join(OUT, 'ritual_' + l + '_' + k + '.mp3'), path.join(R, 'v2', 'audio', 'ritual_' + l + '.mp3'));
+    console.log(l + ": { src: 'audio/ritual_" + l + ".mp3', text_sha1: '" + require('crypto').createHash('sha1').update(TEXT[l], 'utf8').digest('hex') + "' },");
+  }
+  console.log('↑ otisky do RUNAR_RITUAL_HLAS (v2/runar-config.js); nahrávka musí být namluvená z TÉHOŽ textu (vyrob ji napřed: --jen ' + k + ')');
+  process.exit(0);
+}
 const plan = [];
 const JEN = (process.argv[process.argv.indexOf('--jen') + 1] || '').split(',').filter((k) => process.argv.includes('--jen') && k);
 for (const l of ['en', 'is']) for (const v of VAR) if (!JEN.length || JEN.includes(v.k)) plan.push({ l, v, text: v.text(l), model: v.model(l), nast: v.nast() });

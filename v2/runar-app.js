@@ -354,6 +354,7 @@ function _capWire(p, doPlay) {
 // ─── LANGUAGE ────────────────────────────────────────────
 function setLang(l) {
   if (l === lang) return;
+  _ritualHlasStop();   // hlas rituálu je v jazyce appky (2026-10-28)
   localStorage.setItem('runar_lang', l);
   // Save to profile async (best-effort)
   _ulozJazykUctu(l);
@@ -1097,7 +1098,8 @@ function updateUIText() {
   var _ipBox = document.getElementById('img-pin'); if (_ipBox) _ipBox.title = t('img_pin_title');
   setText('read-guide-lbl', t('guide_title'));
   var _rit = document.getElementById('ritual-box');   // 2026-10-27: rituál pod BEFORE WE BEGIN — statický text (§14)
-  if (_rit) { _rit.innerHTML = ''; var _rp = document.createElement('p'); _rp.textContent = t('ritual_text'); _rit.appendChild(_rp); }   // staticky nadpis navodu — od 2026-09-23 v zalozce cteni
+  if (_rit) { _rit.innerHTML = ''; var _rp = document.createElement('p'); _rp.textContent = t('ritual_text'); _rit.appendChild(_rp); }
+  var _rh = document.getElementById('ritual-voice'); if (_rh) _rh.setAttribute('aria-label', t('ritual_listen'));   // staticky nadpis navodu — od 2026-09-23 v zalozce cteni
   setText('audio-player-lbl', t('voice_player_lbl'));
   setText('ask-lbl', t('ask_lbl'));
   var _askInp = document.getElementById('ask-input'); if (_askInp && typeof _askPlaceholder === 'function') _askInp.placeholder = _askPlaceholder();
@@ -1463,6 +1465,25 @@ function _navodPoPrvnimPrihlaseni() {
   if (!_wtsVidel() || (w && w.classList.contains('open'))) return;
   var box = document.getElementById('read-guide');
   if (box && box.style.display === 'none') toggleGuide();
+}
+// Hlas rituálu (owner 2026-10-28: ♪ za „+“, přehrát může každý i návštěvník; nahrávka = varianta F, RUNAR_RITUAL_HLAS v configu).
+// Ťuknutí přehraje / zastaví; přepnutí jazyka zastaví (příště hraje nahrávka nového jazyka).
+var _ritualZvuk = null;
+function _ritualHlasStop() {
+  if (_ritualZvuk) { _ritualZvuk.pause(); _ritualZvuk.currentTime = 0; }
+  var b = document.getElementById('ritual-voice'); if (b) { b.classList.remove('hraje'); b.setAttribute('aria-pressed', 'false'); }
+}
+function toggleRitualHlas() {
+  if (typeof RUNAR_RITUAL_HLAS === 'undefined') return;
+  var b = document.getElementById('ritual-voice'), h = RUNAR_RITUAL_HLAS[lang] || RUNAR_RITUAL_HLAS.en;
+  if (_ritualZvuk && !_ritualZvuk.paused) { _ritualHlasStop(); return; }
+  if (!_ritualZvuk || _ritualZvuk.getAttribute('data-lang') !== lang) {
+    if (_ritualZvuk) _ritualZvuk.pause();
+    _ritualZvuk = new Audio(h.src); _ritualZvuk.setAttribute('data-lang', lang);
+    _ritualZvuk.addEventListener('ended', _ritualHlasStop); _ritualZvuk.addEventListener('error', _ritualHlasStop);
+  }
+  if (b) { b.classList.add('hraje'); b.setAttribute('aria-pressed', 'true'); }
+  var pr = _ritualZvuk.play(); if (pr && pr.catch) pr.catch(_ritualHlasStop);
 }
 // Rituál pod BEFORE WE BEGIN (owner 2026-10-27): nadpis je rozbalovač, jako „How a reading works“.
 function toggleRitual() {
