@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Účet a menu — návrh</title>
+<!-- ZDROJ návrhu. Hotový soubor bez odkazů ven (styly appky a písma vložené dovnitř, aby se ukázal i v prohlížeči souborů) dělá
+     docs/inbox/2026-10-28-ucet-a-menu-navrh.build.js → 2026-10-28-ucet-a-menu-navrh.html. První verze (odkazy na ../../v2/*.css) se ownerovi
+     ukázala bez stylů: „šílený, kdo se v tom má vyznat“ (2026-10-28). -->
+<link rel="stylesheet" href="../../v2/fonts/fonts.css">
+<link rel="stylesheet" href="../../v2/runar-reader.css">
+<style>
+  body{background:#07090f;color:var(--white);margin:0;padding:24px 16px;font-family:'Cormorant Garamond',Georgia,serif;}
+  .uvod{max-width:1180px;margin:0 auto 22px;font-size:1.1em;line-height:1.5;color:#d6cbb3;}
+  .uvod h1{font-family:'Cinzel',serif;font-size:1em;letter-spacing:4px;color:var(--gold);margin:0 0 6px;}
+  .krok{display:flex;gap:28px;flex-wrap:wrap;align-items:flex-start;max-width:1180px;margin:0 auto 34px;}
+  .tel{width:375px;flex:0 0 375px;background:var(--bg,#0b0f18);border:1px solid #2e4a70;}
+  .tel h3{font-family:'Cinzel',serif;font-size:.68em;letter-spacing:3px;color:#9fb0c8;margin:0;padding:10px 14px;border-bottom:1px solid #1d2a40;background:#05070c;}
+  .tb{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(46,74,112,.4);}
+  .tb .vpravo{display:flex;align-items:center;gap:12px;}
+  .pocet{display:inline-flex;align-items:center;justify-content:center;min-width:1.9em;height:1.9em;padding:0 .35em;border:1px solid var(--gold);border-radius:50%;
+    font-family:'Cinzel',serif;font-size:.62em;letter-spacing:0;color:var(--gold);box-shadow:0 0 8px rgba(255,191,0,.35);}
+  .ham{display:flex;flex-direction:column;gap:4px;}.ham i{display:block;width:22px;height:2px;background:var(--gold);}
+  .dd{position:static;display:block;margin:0 18px 18px auto;width:255px;}
+  .jmrad{display:flex;align-items:center;gap:10px;padding:12px 18px 2px;}
+  .jmrad .jm{font-family:'Cinzel',serif;font-size:.72em;letter-spacing:3px;color:var(--white);}
+  .podpis{position:relative;display:inline-block;width:2.2em;height:1em;font-size:.95em;color:var(--gold);}
+  .podpis svg.cara{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible;}
+  .podpis svg.cara path{fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-dasharray:60;stroke-dashoffset:60;}
+  .podpis svg.tuz{position:absolute;top:-.15em;left:0;width:1em;height:1em;}
+  .hraj .podpis svg.cara path{animation:kresli .9s ease-out .25s forwards, zmiz .5s ease 1.6s forwards;}
+  .hraj .podpis svg.tuz{animation:jed .9s ease-out .25s forwards;}
+  @keyframes kresli{to{stroke-dashoffset:0;}}
+  @keyframes zmiz{to{opacity:0;}}
+  @keyframes jed{from{left:0;}to{left:1.4em;}}
+  .podpis.hotovo svg.cara{opacity:0;}.podpis.hotovo svg.tuz{left:1.4em;}
+  .obnova{font-size:.78em;font-style:italic;color:var(--muted);padding:0 18px 12px;}
+  .panel{position:static;transform:none;width:100%;height:auto;display:flex;flex-direction:column;box-shadow:none;}
+  .ik{display:inline-block;width:1.45em;text-align:center;font-size:1.35em;line-height:1;vertical-align:-.12em;margin-right:.35em;}
+  .ik svg{width:1em;height:1em;vertical-align:-.1em;}
+  .stitek{font-family:'Cinzel',serif;font-size:.55em;letter-spacing:2px;color:#9fb0c8;margin:6px 0 0;}
+  .c{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:#2e4a70;color:#fff;
+    font-family:Georgia,serif;font-size:11px;font-style:normal;letter-spacing:0;margin-left:6px;vertical-align:middle;}
+  .pozn{flex:1 1 360px;min-width:300px;font-size:1.08em;line-height:1.55;color:#d6cbb3;}
+  .pozn h2{font-family:'Cinzel',serif;font-size:.85em;letter-spacing:3px;color:var(--gold);margin:0 0 10px;}
+  .pozn ol{padding-left:0;margin:0;list-style:none;}.pozn li{margin:0 0 10px;display:flex;gap:10px;}.pozn li .c{flex:0 0 18px;margin:3px 0 0;}
+  .btn-hraj{font-family:'Cinzel',serif;font-size:.6em;letter-spacing:2px;color:var(--gold);background:none;border:1px solid var(--gold);padding:8px 14px;cursor:pointer;margin:0 0 0 18px;}
+</style>
+</head>
+<body>
+<div class="uvod">
+  <h1>ÚČET A MENU — NÁVRH KE SCHVÁLENÍ</h1>
+  Vlevo je, jak to bude vypadat na telefonu (styly appky), vpravo co je co. Čísla v kroužcích se shodují. V appce zatím nic z toho není.
+</div>
+
+<!-- 1 — lišta -->
+<div class="krok">
+  <div class="tel">
+    <h3>1 · HORNÍ LIŠTA (PŘIHLÁŠENÝ)</h3>
+    <div class="tb">
+      <span class="brand">RÚNAR<span class="c">1</span></span>
+      <span class="vpravo"><span class="auth-user" style="display:inline-block">KUKY</span><span class="c">2</span><span class="pocet">10</span><span class="c">3</span><span class="ham"><i></i><i></i><i></i></span><span class="c">4</span></span>
+    </div>
+  </div>
+  <div class="pozn">
+    <h2>HORNÍ LIŠTA</h2>
+    <ol>
+      <li><span class="c">1</span><span><b>RÚNAR</b> vede domů v appce (čtení, nahoru k fotce) — ne na web (228c8f1c).</span></li>
+      <li><span class="c">2</span><span><b>Jméno</b> se šipkou ▾ — ťuknutím se otevře nabídka účtu (krok 2).</span></li>
+      <li><span class="c">3</span><span><b>Počet čtení v kolečku</b> hned za jménem. Po dobití kartou se kolečko rozzáří a číslo doběhne z dosavadního na nový stav (85d5ea31, 025f5d2d). U předplatitele = kolik zbývá tento měsíc.</span></li>
+      <li><span class="c">4</span><span><b>Menu ☰</b> (krok 3).</span></li>
+    </ol>
+  </div>
+</div>
+
+<!-- 2 — nabídka pod jménem -->
+<div class="krok">
+  <div class="tel" id="t2">
+    <h3>2 · NABÍDKA POD JMÉNEM (OTEVŘENÁ)</h3>
+    <div class="tb">
+      <span class="brand">RÚNAR</span>
+      <span class="vpravo"><span class="auth-user" style="display:inline-block">KUKY</span><span class="pocet">10</span><span class="ham"><i></i><i></i><i></i></span></span>
+    </div>
+    <div class="auth-dropdown dd open">
+      <div class="dd-tier">RUNE SEEKER<span class="c">1</span></div>
+      <div class="jmrad"><span class="jm">KUKY</span>
+        <span class="podpis" id="podpis"><svg class="cara" viewBox="0 0 30 14"><path d="M1 11 C3 3,6 2,6 11 M6 7 C9 3,11 4,10 11 C12 6,14 5,16 9 C18 12,21 6,24 5"/></svg>
+          <svg class="tuz" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l3.5-.8L19 7.7a1.8 1.8 0 0 0 0-2.5l-.2-.2a1.8 1.8 0 0 0-2.5 0L4.8 16.5z"/><path d="M14.5 6.5l3 3"/></svg></span><span class="c">2</span></div>
+      <div class="dd-email">kukula@agndofa.is<span class="c">3</span></div>
+      <div class="dd-balance"><span class="pocet" style="font-size:.95em;margin-right:8px">10</span>10 rune readings remaining<span class="c">4</span></div>
+      <button type="button" class="btn-upgrade dd-journey">UPGRADE YOUR JOURNEY →</button>
+      <button type="button" class="sp-item" style="padding:12px 18px;border-top:1px solid rgba(46,74,112,0.3)">SIGN OUT</button>
+    </div>
+    <button class="btn-hraj" onclick="hraj()">▶ PŘEHRÁT OTEVŘENÍ</button><div style="height:16px"></div>
+  </div>
+  <div class="pozn">
+    <h2>NABÍDKA POD JMÉNEM</h2>
+    <ol>
+      <li><span class="c">1</span><span><b>Účet</b> (RUNE SEEKER / STANDARD / PREMIUM).</span></li>
+      <li><span class="c">2</span><span><b>Jméno s tužkou.</b> Při otevření nabídky tužka krátce „podepíše“ dvě písmena ve velikosti jména a zůstane vedle — je vidět, že jméno jde upravit. Ťuknutí na jméno nebo tužku = úprava jména (místo dnešního MY NAMES, e1c2ebdd). Jméno se mění jen tady — ze životní runy úprava zmizí (912b92ad). Tlačítkem ▶ si animaci pustíš znovu.</span></li>
+      <li><span class="c">3</span><span><b>E-mail.</b></span></li>
+      <li><span class="c">4</span><span><b>Počet čtení</b> (totéž kolečko jako v liště). U předplatitele pod ním „Renews 1 November“ — data o předplatném ale zatím nejsou (platby neběží).</span></li>
+    </ol>
+  </div>
+</div>
+
+<!-- 3 — menu -->
+<div class="krok">
+  <div class="tel">
+    <h3>3 · MENU (☰)</h3>
+    <nav class="side-panel panel">
+      <div class="side-panel-head"><span class="side-panel-brand">MENU</span><span class="side-panel-close">✕</span></div>
+      <div class="side-panel-section">
+        <button class="sp-path-toggle" style="justify-content:flex-start;gap:10px"><span style="font-size:1.4em;letter-spacing:0;line-height:1">→</span><span>UPGRADE YOUR JOURNEY</span><span class="c">1</span></button>
+      </div>
+      <div class="side-panel-section">
+        <div class="side-panel-lbl">LANGUAGE<span class="c">2</span></div>
+        <div class="lang-toggle"><button class="lang-btn active">EN</button><button class="lang-btn">IS</button></div>
+      </div>
+      <div class="side-panel-section">
+        <button class="sp-item journal"><span class="ik">✦</span>MY JOURNAL</button>
+        <button class="sp-item"><span class="ik"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="6" width="17" height="12"/><path d="M3.5 10h17"/><path d="M7 14.5h4"/></svg></span>ENTER RUNE READING CARD CODE<span class="c">3</span></button>
+      </div>
+      <div class="side-panel-section">
+        <div class="side-panel-lbl">PRIVACY<span class="c">4</span></div>
+        <label class="sp-toggle"><input type="checkbox" checked> <span>Help improve Rúnar with my readings</span></label>
+        <a class="sp-item" style="text-decoration:none"><span class="ik">§</span>PRIVACY POLICY</a>
+      </div>
+      <div class="side-panel-section">
+        <a class="sp-item" style="text-decoration:none"><span class="ik">?</span>GUIDE &amp; FAQ</a>
+        <button class="sp-item"><span class="ik">✉</span>SEND RÚNAR A LINE</button>
+        <button class="sp-item"><span class="ik">⬇</span>INSTALL RÚNAR</button>
+        <a class="sp-item" style="text-decoration:none"><span class="ik"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".9" fill="currentColor" stroke="none"/></svg></span>INSTAGRAM<span class="c">5</span></a>
+        <a class="sp-item" style="text-decoration:none"><span class="ik"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.6 2.4 3.9 5.2 3.9 8.5s-1.3 6.1-3.9 8.5M12 3.5C9.4 5.9 8.1 8.7 8.1 12s1.3 6.1 3.9 8.5"/></svg></span>THERUNEKEEPER.COM<span class="c">5</span></a>
+      </div>
+      <div class="sp-danger-zone"><button class="sp-delete-btn">× DELETE ACCOUNT</button></div>
+    </nav>
+  </div>
+  <div class="pozn">
+    <h2>MENU</h2>
+    <ol>
+      <li><span class="c">1</span><span><b>UPGRADE YOUR JOURNEY</b> nahoře (i v nabídce pod jménem).</span></li>
+      <li><span class="c">2</span><span><b>Jazyk</b> hned pod ním.</span></li>
+      <li><span class="c">3</span><span><b>Kód karty</b> s kreslenou kartou místo runy ᚠ (fc708c38). Všechny ikony 1,35 × písmo položky — dnešní jsou malé (8bc29ee1).</span></li>
+      <li><span class="c">4</span><span><b>Soukromí na jednom místě</b> — přepínač i PRIVACY POLICY pod jedním štítkem (dnes dvakrát na různých místech, 8b554620).</span></li>
+      <li><span class="c">5</span><span><b>Instagram</b> s ikonou, jakou má Instagram, a <b>web</b> s glóbem. Ve verzi pro Google Play obojí skryté (nesmí vést k nákupu).</span></li>
+    </ol>
+    <h2 style="margin-top:18px">CO PŘIBUDE, AŽ BUDE MÍT CO UKÁZAT</h2>
+    <ol>
+      <li><span class="c">·</span><span>Podmínky užití · o Rúnarovi / o nás · sdílet a pozvat přítele · v Google Play ohodnotit appku · verze appky drobně dole · upozornění.</span></li>
+      <li><span class="c">·</span><span>Správa předplatného (do kdy platí, zrušit, historie plateb) — patří do okna UPGRADE YOUR JOURNEY, až poběží platby.</span></li>
+    </ol>
+  </div>
+</div>
+<script>
+  function hraj(){ var t = document.getElementById('t2'), p = document.getElementById('podpis'); p.classList.remove('hotovo'); t.classList.remove('hraj'); void t.offsetWidth; t.classList.add('hraj');
+    setTimeout(function(){ t.classList.remove('hraj'); p.classList.add('hotovo'); }, 2300); }
+  window.addEventListener('load', function(){ setTimeout(hraj, 600); });
+</script>
+</body>
+</html>
