@@ -92,8 +92,23 @@ const MERENI = `(() => {
       if (m.docW > m.W + 1) vady.push(jm + ': stránka je širší než telefon (' + m.docW + ' > ' + m.W + ' px) — posouvá se do strany');
       if (m.pocet) vady.push(jm + ': ' + m.pocet + ' prvků přes okraj — ' + m.mimo.join(' · '));
     }
+    // 2026-10-28 (hlášení 8a6f3ff6): statické stránky — zásady a nápověda (EN i IS), týž telefon a táž měření.
+    const STRANKY = ['runar-privacy.html', 'runar-help.html'];
+    for (const st of STRANKY) for (const jaz of ['en', 'is']) {
+      await cmd('Page.navigate', { url: URL.replace('runar-reader.html', st) });
+      for (let k = 0; k < 60; k++) { await sleep(150); if (await ev(`document.readyState === 'complete'`)) break; }
+      await sleep(500);
+      await ev(`(function(){ var b = document.getElementById('btn-' + '${jaz}'); if (b) b.click(); return 1; })()`);
+      await sleep(400);
+      const m = await ev(MERENI);
+      const jm = st + ' (' + jaz + ')';
+      if (!m) { vady.push(jm + ': nešlo změřit'); continue; }
+      if (m.docW > m.W + 1) vady.push(jm + ': stránka je širší než telefon (' + m.docW + ' > ' + m.W + ' px) — posouvá se do strany');
+      if (m.pocet) vady.push(jm + ': ' + m.pocet + ' prvků přes okraj — ' + m.mimo.join(' · '));
+      if (process.env.RUNAR_TEL_SNIMEK) { const sn = await cmd('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true }); fs.writeFileSync(path.join(process.env.RUNAR_TEL_SNIMEK, st.replace('.html', '') + '_' + jaz + '.png'), Buffer.from(sn.result.data, 'base64')); }
+    }
     vady.forEach((v) => console.log('        ' + v));
-    rekni(!vady.length, 'telefon ' + SIRKA + ' px: v ' + STAVY.length + ' stavech nic nepřetéká přes okraj a stránka se neposouvá do strany', vady.length + ' vad(a)');
+    rekni(!vady.length, 'telefon ' + SIRKA + ' px: v ' + STAVY.length + ' stavech appky a na zásadách i nápovědě (EN, IS) nic nepřetéká přes okraj a stránka se neposouvá do strany', vady.length + ' vad(a)');
     rekni(!exc.length, 'bez chyb JS', exc.map((x) => (x.exception && x.exception.description || x.text || '').split('\n')[0]).join(' | ').slice(0, 300));
   } catch (e) { rekni(false, 'prohlížeč spadl', String(e && e.message || e).slice(0, 200)); }
   const dialogy = poj ? poj.hotovo() : [];

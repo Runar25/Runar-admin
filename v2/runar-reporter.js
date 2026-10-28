@@ -115,8 +115,8 @@
       '#br-btn{position:fixed;right:14px;bottom:14px;width:44px;height:44px;border-radius:50%;' +
       'background:rgba(14,22,34,.82);color:var(--gold,#FFBF00);border:1px solid var(--gold,#FFBF00);' +
       'font-size:20px;line-height:44px;text-align:center;cursor:pointer;z-index:99998;opacity:.55;' +
-      '-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);transition:opacity .2s}' +
-      '#br-btn:hover,#br-btn:focus{opacity:1}' +
+      '-webkit-tap-highlight-color:transparent;transition:opacity .2s}' +   // 2026-10-28 (01fc1c13): bez backdrop-filter jako helper „?“
+      '@media (hover:hover){#br-btn:hover{opacity:1}}#br-btn:focus-visible,#br-btn:active{opacity:1}' +
       '#br-ov{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:99999;display:none;' +
       'align-items:flex-end;justify-content:center}' +
       '#br-ov.on{display:flex}' +

@@ -82,6 +82,16 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
   .app{padding:28px 18px 80px;}
   .help-title{font-size:1.3em;}
   .data-table{font-size:0.82em;}
+  /* 2026-10-28 (hlášení 8a6f3ff6): na telefonu se tři sloupce nevejdou (nowrap 1. sloupce roztáhl tabulku na 1 300 px, IS 1 900) — řádek
+     je blok: CO nahoře, pod ním PROČ a JAK DLOUHO se štítkem ze záhlaví (data-l, plní JS). Lišta: menší odsazení, ať se vejde ← TIL BAKA. */
+  .data-table thead{display:none;}
+  .data-table,.data-table tbody,.data-table tr,.data-table td{display:block;width:100%;}
+  .data-table tr{padding:12px 0;border-bottom:1px solid rgba(46,74,112,0.2);}
+  .data-table td{padding:3px 0;border-bottom:none;}
+  .data-table td:first-child{white-space:normal;padding-bottom:6px;}
+  .data-table td[data-l]::before{content:attr(data-l);display:block;font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:2px;color:var(--gold);opacity:0.6;}
+  .back-btn{padding:6px 10px;letter-spacing:1px;}
+  .lang-toggle{margin-left:8px;}
   .rights-list .right-name{min-width:80px;}
 }
 </style>
@@ -507,7 +517,7 @@ function applyContent() {
   document.getElementById('s2-th3').textContent    = t.s2Th[2];
   const tbody = document.getElementById('s2-tbody');
   tbody.innerHTML = t.s2Rows.map(([what, why, how]) =>
-    `<tr><td>${what}</td><td>${why}</td><td>${how}</td></tr>`
+    `<tr><td>${what}</td><td data-l="${t.s2Th[1]}">${why}</td><td data-l="${t.s2Th[2]}">${how}</td></tr>`   // data-l = štítek na telefonu (2026-10-28)
   ).join('');
 
   document.getElementById('s3-lbl').textContent    = t.s3Lbl;
