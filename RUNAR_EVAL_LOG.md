@@ -6540,3 +6540,24 @@ nedostupné). Data mimo repo: `~/runar-eval/podoby-bez-delky-2026-10-09.json`, `
   (B nejhůř 4, A nejlíp 3). Ansuz abstraktně 4/5 vs 0/5: Fisher jednostranně p ≈ 0,024.
 - **Hranice:** jeden vstup (Norny, jedna trojice run, jeden obraz), n = 5 na variantu, jeden soudce; EN; jen Norny — Kříž, Horseshoe
   a Yggdrasil mají týž blok obrazu, netestováno; řádek ✦ vynechán. Volba „voice“ zůstává (B ji drží, jen ji ukotví ve zvuku).
+
+## 2026-10-28 (1) — Hlas ve čtení: v4, nastavení rituálu a intonační značky od modelu výkladu — měřitelně se mění jen výška a tempo, ne intonace
+
+- **Otázka (owner 2026-10-28):** *„dají se pro čtení měnit intonace hlasu? Dokázal by to model pro výklad udělat? … najdi možnosti a ověř je“*.
+- **Pokus:** `docs/eval/2026-10-28-hlas-cteni/gen.js`, 2 skutečná single čtení (EN Hagalaz 349 zn., IS Isa 333 zn.), 4 varianty: R0 dnešek
+  (EN v2 / IS v3, `el_voice.ts`), R1 v4 s dnešním nastavením, R2 v4 jako rituál pro čtení (značka klidného hlasu, stabilita 0,5, rychlost 0,9,
+  „…“ mezi větami), R3 = R2 + 2–4 značky ze seznamu, které vložil model výkladu (sol). 8 nahrávek ≈ 1 100 kreditů, sol 2× ~350 tokenů.
+- **Výsledek (Web Audio: ticho, výška autokorelací po 40 ms):**
+  | | délka s | nejdelší pauza s | průměrná výška Hz | rozsah výšky 5–95 % (půltóny) |
+  |---|---|---|---|---|
+  | EN R0 / R1 / R2 / R3 | 27,0 / 24,3 / 23,6 / 24,1 | 1,28 / 1,10 / 0,86 / 1,08 | 103 / 110 / 117 / 112 | 13,1 / 16,4 / 17,2 / 15,2 |
+  | IS R0 / R1 / R2 / R3 | 29,1 / 27,7 / 25,3 / 25,8 | 1,22 / 0,98 / 0,92 / 1,02 | 101 / 128 / 132 / 128 | 13,3 / 17,1 / 16,5 / 14,6 |
+- **Útok na měřák (§25 B):** půlka proti půlce téže nahrávky: výška se liší o 0–9 Hz, rozsah až o 4,4 půltónu (IS R0 17,6 / 13,2).
+  Rozdíly rozsahu mezi variantami (2–4 pt) jsou tedy **v šumu** — „víc intonace“ se tvrdit nedá. Nad šumem je jen **výška**: v4 mluví
+  ve čtení výš (EN +14 Hz, IS +27–31 Hz ≈ 4 půltóny) a rychleji (dnešek je nejpomalejší). U rituálu (s pauzou `[long pause]`) IS C/F
+  112/115 Hz — tam výš ne.
+- **Model výkladu značky umí:** sol vložil 3 značky v EN i IS a **ani jedno slovo nezměnil** (pojistka: text bez značek = originál, 2/2).
+  Měřitelný účinek oproti R2 ale žádný (výška, pauzy i rozsah v šumu). Nové volání stojí zlomek centu.
+- **Co se netvrdí:** n = 1 čtení na jazyk, jen single; jak to zní, rozhodne poslech (`~/runar-eval/hlas-cteni/poslech.html` — doc-links:ok 2026-10-28 mimo repo, nese texty čtení). Že je
+  intonace „stejná“, netvrdím — měřák rozdíl pod 4 půltóny nerozliší.
+- **Pauza funguje jen značkou:** rituál ukázal, že v4 dlouhou pauzu udělá na `[long pause]` (1,50 s), ne na „… …“ (0,90) — DECISIONS 2026-10-28 (3).
