@@ -234,8 +234,8 @@ for (const L of ['en', 'is']) {
     // KUKY 2026-09-12 (prezdivka, severske jmeno zadne, na screenshotu „YOUR NORSE NAME"): „nevidim svoje jmeno!!!"
     const prezdivka = stavNL({ severske: '', osloveni: 'Kuky', L });
     rekni(prezdivka.lbl === 'KUKY', L + '  jen přezdívka → nadpis ukáže PŘEZDÍVKU („KUKY"), ne „' + T.name_lore_lbl + '"');
-    rekni(prezdivka.btn === T.name_lore_add_btn && prezdivka.cta === '' && prezdivka.edit === '',
-          L + '  …a dál zve k zadání severského jména, s odkazem na úpravu');
+    rekni(prezdivka.btn === T.name_lore_add_btn && prezdivka.cta === '' && prezdivka.edit === 'none',
+          L + '  …a dál zve k zadání severského jména; odkaz na úpravu tu není (jméno jen tužkou v liště, 912b92ad)');
     const obe = stavNL({ severske: 'Sigrún', osloveni: 'Trpaslík', L });
     rekni(obe.lbl === 'SIGRÚN', L + '  obě jména → nadpis nese SEVERSKÉ (sekce je o něm), ne oslovení');
 
@@ -251,7 +251,7 @@ for (const L of ['en', 'is']) {
     // Nadpis nese SAMO jmeno. KUKY 2026-09-12: „melo by tam byt uz napsane me uvedene jmeno Kuky a ne YOUR NAME!"
     const kuky = stavNL({ severske: 'Kuky', L });
     rekni(kuky.lbl === 'KUKY', L + '  nadpis ukáže JMÉNO („KUKY"), ne „' + T.name_lore_lbl + '"');
-    rekni(kuky.edit === '', L + '  …a vedle je odkaz na úpravu');
+    rekni(kuky.edit === 'none', L + '  …a odkaz na úpravu vedle NENÍ — jméno se mění jen tužkou v liště (owner 2026-10-28, 912b92ad)');
     rekni(kuky.txt === 'block' && kuky.cta === 'none' && kuky.obsah === T.name_no_norse,
           L + '  neznámé jméno → hotová věta HNED, bez tlačítka');
 
