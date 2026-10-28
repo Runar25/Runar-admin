@@ -958,3 +958,16 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   („a voice is taking shape among the fallen branches“) uvnitř obrazu bouře, který nese celý výklad; owner: stačilo *„message“*, konec
   nesedí, *„jak udělat, aby lépe volil významy run pro určité čtení?“*. Hypotéza (neověřeno): jeden obraz pro tři runy nutí druhou a třetí
   runu mluvit uvnitř cizí scény. Zásah do promptu výkladů → lab CODE-read, ne tichý tune.
+
+### Hlášení z appky 2026-10-28 — účet a menu: návrh čeká na ownera (načtena 2026-10-28, CODE-tune; hotové: 01fc1c13, 8a6f3ff6 — 44d2388)
+- [ ] **Architektura účtu a menu — návrh ke schválení:** `docs/inbox/2026-10-28-ucet-a-menu-navrh.html` (skutečné styly appky). Hlášení
+  8b554620 (menu znovu, zarovnání, velikost, privacy dvakrát), b026bd00 (co menu obvykle má a co chybí), 8bc29ee1 (ikonky malé — 1,35 × text),
+  fc708c38 (runa před kódem karty → kreslená karta), e1c2ebdd (MY NAMES → jméno s ✎, kde je délka předplatného — data zatím nejsou),
+  228c8f1c (RÚNAR vlevo = domů v appce, web do menu, v Play skrytý), 85d5ea31 / 366d49e4 / b3118792 / 025f5d2d (počet čtení v kolečku za
+  jménem, rozzáření a doběhnutí čísla po dobití), 912b92ad (jméno se mění jen pod jménem, ze životní runy pryč). Owner: *„pokud tam něco
+  nesedělo, máš se mě zeptat, jak to upravíme“* — staví se až po schválení návrhu.
+- [ ] **Hlas Rúnara i pro „How a reading works“ (5fdcca95):** *„How a reading works taky nemluvíme Rúnarem jako statické čtení“* — týž postup jako
+  hlas rituálu (varianty čekají na ownerův poslech, `docs/eval/2026-10-27-ritual-hlas/gen.js`). Potvrdit, že jde o tohle.
+- [ ] **Proužek #hero-down přes záložky (47b63e3f):** *„když se posunu z hlavní stránky dolů posuvníkem, který se na druhé straně obrátí nahoru,
+  chci, aby tam zůstal, i když překliknu na jiné okno“* — výklad (neověřeno s ownerem): proužek se šipkou nahoru zůstane pod lištou i v Lestrar,
+  Lífsrúnin a Safn rúna, ťuknutí vrátí k Rúnarovi. Potvrdit, pak postavit.
