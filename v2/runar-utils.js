@@ -1245,6 +1245,13 @@ function _heroDownStav() {
 function scrollToReading() {
   var p = document.getElementById('hero-down');
   if (!p) return;
+  // 2026-10-28 (hlášení 47b63e3f): v jiné záložce appky proužek vede zpět do čtení nahoru k Rúnarovi (web záložky nemá)
+  if (typeof activeAppTab !== 'undefined' && activeAppTab !== 'reading' && typeof showAppTab === 'function') {
+    showAppTab('reading');
+    var _klid = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: _klid ? 'auto' : 'smooth' });
+    return;
+  }
   var lista = document.querySelector('.topbar');
   var cil = _heroDownNahoru() ? 0 : p.getBoundingClientRect().top + window.pageYOffset - (lista ? lista.offsetHeight : 0);
   var bezPohybu = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;

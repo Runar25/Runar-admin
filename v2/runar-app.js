@@ -1141,7 +1141,19 @@ function updateUIText() {
 // ─── APP TABS ────────────────────────────────────────────
 let activeAppTab = 'reading';
 
+// 2026-10-28 (hlášení 47b63e3f): proužek #hero-down zůstane i v ostatních záložkách, když už ukazoval nahoru (člověk sjel dolů) — týž prvek
+// se přestěhuje do #hero-down-mimo za sekcí s fotkou (ta se v jiných záložkách sbalí) a při návratu do čtení zpět.
+var _heroDownZustane = false;
+function _heroDownPresun(pred, tab) {
+  var p = document.getElementById('hero-down'), hero = document.getElementById('reader-hero'), mimo = document.getElementById('hero-down-mimo');
+  if (!p || !hero || !mimo) return;
+  if (tab === 'reading') { if (p.parentNode !== hero) hero.appendChild(p); return; }
+  if (pred === 'reading') _heroDownZustane = typeof _heroDownNahoru === 'function' && _heroDownNahoru();
+  if (_heroDownZustane) mimo.appendChild(p); else if (p.parentNode !== hero) hero.appendChild(p);
+}
 function showAppTab(tab) {
+  var _predTab = activeAppTab;
+  _heroDownPresun(_predTab, tab);
   activeAppTab = tab;
   document.getElementById('apane-reading').style.display    = tab === 'reading'    ? 'block' : 'none';
   document.getElementById('apane-collection').style.display = tab === 'collection' ? 'block' : 'none';
