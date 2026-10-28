@@ -1318,6 +1318,15 @@ radky = [l for l in (r2.stdout + r.stdout + r.stderr + r2.stderr).strip().split(
 prvni = radky[-1] if radky else 'kontrola hlavicek webu probehla'
 check(prvni.strip(), r.returncode == 0 and r2.returncode == 0, '\n'.join(radky[:-1]) if (r.returncode or r2.returncode) else '')
 
+# ㊗ Hlas rituálu (CODE-tune 2026-10-28, owner: varianta F = hlas rituálu): nahrávka u appky (v2/audio/) je namluvená z dnešního
+# ritual_text — otisk textu v RUNAR_RITUAL_HLAS. Změněný text bez nové nahrávky by zněl starým textem a nikdo by to nepoznal.
+print('\n' + chr(0x3297) + ' HLAS RITUÁLU (verify_ritual_hlas.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_ritual_hlas.js')], capture_output=True, text=True, encoding='utf-8')
+r2 = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_ritual_hlas.js'), '--test'], capture_output=True, text=True, encoding='utf-8')
+radky = [l for l in (r2.stdout + r.stdout + r.stderr + r2.stderr).strip().split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola hlasu ritualu probehla'
+check(prvni.strip(), r.returncode == 0 and r2.returncode == 0, '\n'.join(radky[:-1]) if (r.returncode or r2.returncode) else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

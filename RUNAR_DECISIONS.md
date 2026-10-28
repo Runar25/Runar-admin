@@ -12436,3 +12436,22 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   u písma 9,9 px. Zalomení EN i IS pod textem (x 163, ikony 140). × u DELETE ACCOUNT bral test písmen za písmeno (rozsah À–ɏ obsahuje
   U+00D7), opraveno na `\p{L}\p{N}`. Smoke ㉼, ㊎, ㊋, ㉻ a mrtvé klíče jsou zelené.
 - Affected doc(s): RUNAR_BACKLOG.md (návrh uzavřen, animace symbolů, předplatné v okně cesty).
+
+## 2026-10-28 (3) — Hlas rituálu = varianta F (eleven_v4, klidný hlas, delší pauza před poslední větou); ♪ za „+“ u BEFORE WE BEGIN
+- **Rozhodl:** owner 2026-10-28 po poslechu: *„EN a IS F verze jako rituál moc dobrá. Zapíšeme pro rituál a můžeme se od ní odrážet dál pro
+  další rituální čtení“*; k textu *„2. ano“* (EN „think about what is on your heart“). Zadání ♪ z 2026-10-27: *„přehrávání bude mít ikonku
+  noty. Bude za plus v before we begin“* · *„uživatel ji uvidí bez toho, aby otevíral +“* · *„přehrávat si ho může každý uživatel, od visitora“*.
+- **Co:** (1) Recept rituálního hlasu = varianta **F** v `docs/eval/2026-10-27-ritual-hlas/gen.js` (vlastník receptu; čísla se sem neopisují):
+  eleven_v4, úvodní značka klidného hlasu, nižší stabilita a rychlost, výpustky mezi větami a `[long pause]` před poslední větou. Výchozí bod
+  pro další rituální čtení. (2) Nový `ritual_text` EN i IS (IS „hugsaðu um það sem liggur þér á hjarta“, doklady u klíče). (3) Nahrávky
+  leží u appky `v2/audio/ritual_{en,is}.mp3` (GitHub Pages; Storage ne, smoke ㊒); service worker zvuk nechytá (Range/206). (4) ♪ (`.hlas-btn`)
+  za nadpisem s „+“ — přehraje / zastaví, při hraní se nota houpe; přepnutí jazyka zastaví. Komponenta „hlas k nadpisu“ (`.hlas-radek`)
+  je v soupisu pro další nadpisy (How a reading works, BACKLOG). (5) Smoke ㊗ (`verify_ritual_hlas.js`): nahrávka je namluvená z dnešního
+  `ritual_text` (otisk v `RUNAR_RITUAL_HLAS`), jinak FAIL — změna textu bez nové nahrávky by tiše zněla starým textem.
+- **Ověřeno:** pauza před poslední větou změřená ze zvuku (s, EN/IS): D 0,76/0,86 · E „… …“ 0,90/0,88 · **F `[long pause]` 1,50/1,44** · C 1,50/1,30
+  — výpustky v4 pauzu skoro neprodlouží, značka ano. Náhled: návštěvník, ♪ 12 px za nadpisem, na středu, 1,34 × písmo; hraje EN i IS,
+  stop i přepnutí jazyka. Smoke ㉼, ㊎, ㊋, ㉹, ㊗, čitelnost, SW, mrtvé klíče zelené.
+- **Cena:** sazby vlastní 2026-10-11 (43). Nově změřeno: v4 stojí jako v2 a v3, 0,4 kreditu na znak v EN i IS (přehled ElevenLabs
+  27. a 28. 10.: v4 399 zn. = 160 kr., 994 zn. = 398 kr.). `EL_KREDITY_NA_ZNAK` v4 zatím nezná (počítá 1 kredit — víc, ne míň):
+  doplnit, až v4 půjde do čtení.
+- Affected doc(s): RUNAR_BACKLOG.md (rituál bez hlasu uzavřen, „How a reading works“ teď stejnou komponentou).

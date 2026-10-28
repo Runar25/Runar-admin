@@ -982,7 +982,7 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   uzavření, nebo zůstává.
 - [x] ✅ *(CODE-tune 2026-10-27, DECISIONS 2026-10-27 (5))* **Menu (burger) přestavět (c9976b4e):** *„pořadí je takové divné, ať to má víc design menu“*. Napřed soupis dnešních položek a
   návrh pořadí a vzhledu ownerovi (komponenty z `scripts/verify_komponenty.js`), pak stavět.
-- [x] ✅ *(CODE-tune 2026-10-27, DECISIONS 2026-10-27 (4); zbývá Rúnarův hlas k rituálu)* **Rituál pod BEFORE WE BEGIN (5439bcc1, 36f14a03):** rozbalovač „+“ (komponenta `.xp-plus`) s krátkým textem, co udělat před tahem;
+- [x] ✅ *(CODE-tune 2026-10-27, DECISIONS 2026-10-27 (4); hlas 2026-10-28, DECISIONS 2026-10-28 (3))* **Rituál pod BEFORE WE BEGIN (5439bcc1, 36f14a03):** rozbalovač „+“ (komponenta `.xp-plus`) s krátkým textem, co udělat před tahem;
   owner navrhl EN znění (svíčka, vůně, ticho, nádech, myšlenka na otázku, pak tah). Napřed kritický pohled (§21) a znění v EN i IS
   hlasem Rúnara, schválení ownerem, pak stavět.
 - [ ] **Norny a3692c86 — „voice“ skřípe, význam nesedí (d65a6bb4, bf44ef3d):** Ansuz (Verðandi) dostal ze seznamu `k` význam „voice“
@@ -998,13 +998,14 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   jménem, rozzáření a doběhnutí čísla po dobití), 912b92ad (jméno se mění jen pod jménem, ze životní runy pryč). Owner: *„pokud tam něco
   nesedělo, máš se mě zeptat, jak to upravíme“* — staví se až po schválení návrhu.
 - [ ] **Hlas Rúnara i pro „How a reading works“ (5fdcca95) — owner 2026-10-28 „ano, taky uděláme hlas a ikonu; ikona bude taky animovaná“:** *„How a reading works taky nemluvíme Rúnarem jako statické čtení“* — týž postup jako
-  hlas rituálu (varianty čekají na ownerův poslech, `docs/eval/2026-10-27-ritual-hlas/gen.js`). Potvrdit, že jde o tohle.
+  hlas rituálu — hotový jako varianta F (DECISIONS 2026-10-28 (3)): text do UI_TEXT, nahrávka gen.js, ♪ komponentou `.hlas-radek` /
+  `.hlas-btn` a otisk do `RUNAR_RITUAL_HLAS` (smoke ㊗ pak hlídá i tenhle). Potvrdit, že jde o tohle.
 - [x] ✅ *(CODE-tune 2026-10-28, DECISIONS 2026-10-28 (1))* **Proužek #hero-down přes záložky (47b63e3f):** *„když se posunu z hlavní stránky dolů posuvníkem, který se na druhé straně obrátí nahoru,
   chci, aby tam zůstal, i když překliknu na jiné okno“* — výklad (neověřeno s ownerem): proužek se šipkou nahoru zůstane pod lištou i v Lestrar,
   Lífsrúnin a Safn rúna, ťuknutí vrátí k Rúnarovi. Potvrdit, pak postavit.
 - [ ] **Před spuštěním projít, že všechno sedí (owner 2026-10-28: „bude se to muset projít, že všechno sedí před spuštěním!“):** zásady, nápověda,
   texty a jazyky (EN i IS), menu, okna — celá appka očima uživatele na telefonu i počítači; nález = oprava nebo položka sem.
-- [ ] **Animace symbolů (owner 2026-10-28):** *„budeme hledat animace pro skoro všechny naše symboly“* — tužka u jména v liště hotová (DECISIONS 2026-10-28 (2)); další je nota
-  u hlasu rituálu. Ikony menu zatím bez animace — owner 2026-10-28: *„jen tužka a nota“*.
+- [ ] **Animace symbolů (owner 2026-10-28):** *„budeme hledat animace pro skoro všechny naše symboly“* — tužka u jména v liště hotová (DECISIONS 2026-10-28 (2)); nota u hlasu rituálu
+  hotová (DECISIONS 2026-10-28 (3)). Ikony menu zatím bez animace — owner 2026-10-28: *„jen tužka a nota“*.
 - [ ] **Menu — co přibude, až bude co ukázat (b026bd00, návrh 2026-10-28 schválen):** podmínky užití · o Rúnarovi / o nás · sdílet a pozvat
   přítele · v Google Play ohodnotit appku · verze appky drobně dole · upozornění. Dnes pro ně chybí obsah.
