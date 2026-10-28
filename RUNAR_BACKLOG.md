@@ -809,10 +809,10 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   a sitemapu odeslat v Google Search Console (doména je ověřená TXT záznamem `google-site-verification`).
 - [ ] **Sociální sítě Rúnara** (owner 2026-10-27: *„musíme založit facebook… budu s tebou pak řešit všechna sociální, které Rúnar má“*;
   2026-10-28: *„13.–19. zapiš do backlog“* a *„Co jsem připravil 9–15“* do backlogu). Instagram 2026-10-28 (veřejný profil): jméno
-  „Rúnar - the Rune Keeper“, 0 příspěvků, bio „Rune readings ✧ Nordic mysticism ✧ Ancient wisdom / Welcome to the world of Agndofa. /  <!-- doc-values:ok 2026-10-28: značka účtu „The Rune Keeper“, ne vyřazený tier Rune Keeper -->
+  stejné jako titulek webu, jen s pomlčkou místo tečky a malým „the“; 0 příspěvků, bio „Rune readings ✧ Nordic mysticism ✧ Ancient wisdom / Welcome to the world of Agndofa. /
   Daily guidance from Rúnar ✧ @agndofa“, **bez odkazu na web**; typ účtu (osobní / profesionální) bez přihlášení vidět není.
   **Doporučení (CODE-web 2026-10-27):**
-  1. Facebook = stránka, ne osobní profil, přes Meta Business Suite; jméno „Rúnar · The Rune Keeper“, uživatelské jméno  <!-- doc-values:ok 2026-10-28: značka účtu „The Rune Keeper“, ne vyřazený tier Rune Keeper -->
+  1. Facebook = stránka, ne osobní profil, přes Meta Business Suite; jméno = titulek webu (`og:site_name` ve `web/site/index.html`), uživatelské jméno
      @runartherunekeeper, propojit s Instagramem (ten musí být profesionální účet — ověřit v jeho nastavení). Zakládá owner. Pak adresu
      do configu vedle `RUNAR_INSTAGRAM_URL` (CODE-tune), do patičky webu (CODE-web, `webInstagram()` ve web.js zobecnit na víc sítí)
      a do menu appky; v režimu Play skrytý jako Instagram.
@@ -828,10 +828,11 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   **Připraveno (CODE-web 2026-10-28; soubory `web/socialni/`, generátor `scripts/web_socialni_obrazky.py`; owner nahrává ručně):**
   8. Titulní fotka Facebooku `fb-titulni.jpg` 1640×624: Rúnar i nápis stojí ve středu, který vidí počítač (820×312) i telefon
      (640×360) — nápis končí na 1301 px, telefon ořezává za 1375 px (změřeno).
-  9. Profilovka: doporučená `profil-ikona.jpg` (kresba ikony appky — kámen ᚱ, kruh run). Srovnáno ve 176 / 110 / 40 px na tmavém
-     i bílém pozadí: čitelná i ve 40 px a je to týž obrázek, jaký lidé uvidí na ploše telefonu. Alternativy `profil-svetly.jpg`
-     (na bílém pozadí splyne) a `profil-tmavy.jpg`. Tutéž na Facebook i Instagram. Runy v kruhu jsou kresba generátoru jako u ikony appky.
-  10. Jméno všude „Rúnar · The Rune Keeper“ (jako web, 23 / 30 znaků).  <!-- doc-values:ok 2026-10-28: značka účtu „The Rune Keeper“, ne vyřazený tier Rune Keeper -->
+  9. Profilovka `profil-ikona.jpg` (kresba ikony appky — kámen ᚱ, kruh run; tutéž na Facebook i Instagram). Srovnáno ve 176 / 110 /
+     40 px na tmavém i bílém pozadí: čitelná i ve 40 px a je to týž obrázek, jaký lidé uvidí na ploše telefonu. Runy v kruhu jsou
+     kresba generátoru jako u ikony appky. Výřezy z portrétů s holí owner zamítl (2026-10-28: *„má Rúnara s uříznutou holí“*) —
+     čtverec kolem obličeje hůl vždy přetne; do profilovky jen záběr, kde Rúnar nic nedrží přes okraj.
+  10. Jméno všude stejné jako titulek webu (`og:site_name` ve `web/site/index.html`; na Instagramu 23 / 30 znaků).
   11. Bio Instagramu (≤ 150 znaků): první řádek = ownerova věta o světle z `UI_TEXT.guide_lines` (IS i EN v produkci); druhý řádek
       IS „Rúnalestur á íslensku og ensku ✧ Rúnar er gervigreind ✧ @agndofa“ (celé bio 137) · EN „Rune readings in Icelandic and
       English ✧ Rúnar is an AI ✧ @agndofa“ (celé bio 147).
@@ -839,7 +840,7 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
       (IS 94, EN 96 znaků).
   13. Nová IS část ověřena: Greynir bez nálezu; korpus „rúnalestur“ 19×, „á íslensku og“ 7345×, „íslensku og ensku“ 2790×.
   14. therunekeeper.com do odkazů na Instagramu a do pole Web na Facebooku.
-  Čeká na ownera: volba profilovky (doporučena `profil-ikona.jpg`) a jazyk bia na Instagramu (doporučeno EN na Instagram, IS na Facebook).
+  Čeká na ownera: souhlas s profilovkou `profil-ikona.jpg` a jazyk bia na Instagramu (doporučeno EN na Instagram, IS na Facebook).
 - [ ] **Google Play bez provize — co hlídat dál** (rešerše CODE-web 2026-10-21, Play Console Help 10281818 + Payments policy 9858738):
   consumption-only appka smí o nákupu jinde jen INFORMOVAT textem; nesmí mít odkaz ani tlačítko na stránku, odkud se dá (i nepřímo)
   zaplatit. Opraveno CODE-tune 2026-10-21 v režimu `?src=play`: odkaz na obchod u pole kódu, značka AGNDOFA, odkazy a ceník v nápovědě.
