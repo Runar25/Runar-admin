@@ -2,7 +2,7 @@
 //
 // Proč (owner 2026-10-29, hlášení 9c7d57f1 + 63278a3a; náhledy docs/inbox/2026-10-29-prehravac-svicka.*): přehrávač má být svíčka
 // ve stylu run — nota přehraje, jiskra na knotu zapálí, hoří zleva doprava s časem, za plamenem zůstává vosk stékající ze spodní
-// hrany jako nesouměrné rampouchy, pauza = poryv větru sfoukne plamen, dohoří → 3 s vosk → složí se zpátky. „Když posunu na nějaké
+// hrany jako nesouměrné rampouchy, pauza = znovu nota: plamen zhasne a vzletí kouřek, dohoří → 3 s vosk → složí se zpátky. „Když posunu na nějaké
 // místo svíčky, tak by se tam měl vrátit i přehrávač“ → svíčka je zároveň posuvník: ťuknutí / tažení přesune zvuk i svíčku
 // (dozadu svíčka doroste a vosk za tím místem zmizí, dopředu odhoří a vosk začne stékat).
 // Rozložení (owner téhož dne: „zbytečně velké mezery mezi play, časovou osou… pruh stopy je tím asymetricky menší“): nota · čas ·
@@ -18,7 +18,6 @@
 
 var _SVG_NS = 'http://www.w3.org/2000/svg';
 var _SVICKY = {};   // prefix → instance; hraje nejvýš jedna
-var VITR_KLID = 0.4;   // vítr (symbol sfouknutí), když nehraje: vidět, ale tlumeně
 var _SVICKA_NOTA = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5.5l10-2V16"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg>';
 
 function _svickaEsc(s) { return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;'); }
@@ -57,8 +56,9 @@ function svickaNapoj(prefix) {
   var ct = document.getElementById(prefix + '-ct'), dr = document.getElementById(prefix + '-dr');
 
   // Souřadnice: výška 34 jednotek, šířka podle skutečného poměru stran → 1 jednotka = stejně px na šířku i výšku, svíčka vyplní celé místo.
-  // vitrW: čáry větru vlevo (symbol sfouknutí); x0: začátek svíčky = za větrem místo pro knot a plamen v 0 %
-  var H = 34, W = 240, vy = 9, yt = H / 2 - vy / 2, yb = yt + vy, vitrW = 18, x0 = vitrW + 8, x1, L;
+  // x0: místo pro knot a plamen v 0 %. Vítr (symbol sfouknutí) vlevo od svíčky a poryv k plameni pryč (owner 2026-10-29, po náhledu 3:
+  // „odstraníme foukanec, všechno bude řídit nota… plamen zhasne, jak je to teď. To je čisté“) — jedno ovládání a žádné místo navíc vlevo.
+  var H = 34, W = 240, vy = 9, yt = H / 2 - vy / 2, yb = yt + vy, x0 = 6, x1, L;
   // Přepočet i při ťuknutí / posunu / načtení délky, ne jen z ResizeObserveru (ten na skryté stránce neběží, změřeno 2026-10-29).
   function rozmer() {
     var r = svg.getBoundingClientRect();
@@ -79,14 +79,6 @@ function svickaNapoj(prefix) {
   _svickaEl('path', { 'class': 'svp-jadro', d: 'M0,-1 C-1.6,-3 -1.6,-6 0,-9 C1.6,-6 1.6,-3 0,-1 Z' }, plamen);
   var jiskra = _svickaEl('path', { 'class': 'svp-jiskra', opacity: 0, d: _svickaHvezda(9, 2.2, 8) }, g);
   var kour = _svickaEl('path', { 'class': 'svp-kour', d: 'M0,0 C-3,-5 3,-9 0,-14 C-3,-19 2,-22 0,-26' }, g);
-  var fouk = _svickaEl('g', { 'class': 'svp-fouk' }, g), f1 = _svickaEl('path', {}, fouk), f2 = _svickaEl('path', {}, fouk);
-  // Vítr = zatočené čáry, fouká doprava (náhled 2, owner „1. čáry“). Opacity jako ATRIBUT: kontrola mezer (smoke ㊎) bere za neviditelné
-  // jen [opacity="0"] — kdyby vítr v klidu zmizel, nesouměrnost pozná.
-  var vitr = _svickaEl('g', { 'class': 'svp-vitr', opacity: VITR_KLID, transform: 'translate(1,' + (H / 2 - 6) + ')' }, g);
-  _svickaEl('path', { d: 'M0,3 L11,3 C14,3 15,0 13,-1 C11,-2 9,0 10.5,1' }, vitr);
-  _svickaEl('path', { d: 'M0,6.5 L15,6.5' }, vitr);
-  _svickaEl('path', { d: 'M0,10 L9,10 C12,10 13,13 11,14 C9,15 7.5,13 9,12' }, vitr);
-  function vitrHraje(ano) { vitr.setAttribute('opacity', ano ? 1 : VITR_KLID); }
 
   // Vosk podle délky stopy (owner 2026-10-29 po náhledu 3: „na delší časové stopy by mělo být více tekoucího vosku. U rituálu trošku
   // vosku ubrat“): rampouchů ≈ sekundy zvuku × √(délka svíčky / 200), nejméně 6, nejvýš jeden na 5 jednotek (hustší splynou v pruh).
@@ -141,11 +133,11 @@ function svickaNapoj(prefix) {
   }
   function spust() { if (!S.bezi) { S.bezi = true; requestAnimationFrame(smycka); } }
   function zastavAnim() { if (S.zrusAnim) { S.zrusAnim(); S.zrusAnim = null; } clearTimeout(S.casovac); }
-  function zhasniNotu() { nota.classList.remove('hraje'); nota.setAttribute('aria-pressed', 'false'); vitrHraje(false); }
+  function zhasniNotu() { nota.classList.remove('hraje'); nota.setAttribute('aria-pressed', 'false'); }
   function celaZnovu() {   // svíčka celá, bez vosku a plamene (nová stopa, konec dohoření, vyprázdnění)
     zastavAnim(); S.p = 0; S.js = null; S.ky = 0; S.stav = 'klid';
     kapky.forEach(function (r) { r.t0 = null; r.zpet = null; });
-    plamen.setAttribute('opacity', 0); jiskra.setAttribute('opacity', 0); kour.style.opacity = 0; f1.style.opacity = f2.style.opacity = 0;
+    plamen.setAttribute('opacity', 0); jiskra.setAttribute('opacity', 0); kour.style.opacity = 0;
     zhasniNotu(); kresli();
   }
   function zapal(potom) {
@@ -156,18 +148,10 @@ function svickaNapoj(prefix) {
       plamen.setAttribute('opacity', Math.max(0, (q - 0.45) / 0.55));
     }, function () { S.zrusAnim = null; S.js = null; jiskra.setAttribute('opacity', 0); plamen.setAttribute('opacity', 1); potom(); });
   }
-  function sfoukni() {   // poryv (dvě čáry) přiletí zleva k plameni, plamen zhasne, vzletí kouřek
-    S.stav = 'zhasina'; spust();
-    var cil = x0 + L * S.p - 6, y = H / 2 - 4, start = Math.min(vitrW + 2, cil);   // od větru k plameni
-    S.zrusAnim = _svickaAnim(380, function (q) {
-      var x = start + (cil - start) * q;
-      f1.setAttribute('d', 'M' + (x - 9) + ',' + y + ' L' + x + ',' + y); f2.setAttribute('d', 'M' + (x - 11) + ',' + (y + 3.5) + ' L' + (x - 2) + ',' + (y + 3.5));
-      f1.style.opacity = f2.style.opacity = (q < 0.85 ? 0.8 : (1 - q) / 0.15 * 0.8);
-    }, function () {
-      f1.style.opacity = f2.style.opacity = 0; plamen.setAttribute('opacity', 0); S.stav = 'klid';
-      S.zrusAnim = _svickaAnim(1100, function (q) { kour.style.opacity = (q < 0.2 ? q / 0.2 : (1 - q) / 0.8) * 0.7; S.ky = -q * 6; kresli(); },
-        function () { S.zrusAnim = null; kour.style.opacity = 0; S.ky = 0; kresli(); });
-    });
+  function sfoukni() {   // plamen zhasne a vzletí kouřek
+    plamen.setAttribute('opacity', 0); S.stav = 'klid'; spust();
+    S.zrusAnim = _svickaAnim(1100, function (q) { kour.style.opacity = (q < 0.2 ? q / 0.2 : (1 - q) / 0.8) * 0.7; S.ky = -q * 6; kresli(); },
+      function () { S.zrusAnim = null; kour.style.opacity = 0; S.ky = 0; kresli(); });
   }
   function dohor() {   // dohořelo: 3 s jen vosk, pak se za ~1,8 s z vosku složí celá (zprava doleva zpátky ke knotu)
     zastavAnim(); S.stav = 'dohorela'; S.p = 1; plamen.setAttribute('opacity', 0); zhasniNotu(); kresli();
@@ -184,8 +168,8 @@ function svickaNapoj(prefix) {
     rozmer();
     if (S.stav === 'dohorela') { celaZnovu(); a.currentTime = 0; }
     ztisOstatni();
-    zastavAnim(); kour.style.opacity = 0; f1.style.opacity = f2.style.opacity = 0;
-    nota.classList.add('hraje'); nota.setAttribute('aria-pressed', 'true'); vitrHraje(true);
+    zastavAnim(); kour.style.opacity = 0;
+    nota.classList.add('hraje'); nota.setAttribute('aria-pressed', 'true');
     zapal(function () {
       S.stav = 'hori'; spust();
       var pr = a.play(); if (pr && pr.catch) pr.catch(function () { plamen.setAttribute('opacity', 0); S.stav = 'klid'; zhasniNotu(); kresli(); });
@@ -203,7 +187,7 @@ function svickaNapoj(prefix) {
   function naPlay() {
     ztisOstatni(); rozmer();
     if (S.stav !== 'zapaluje') { S.stav = 'hori'; plamen.setAttribute('opacity', 1); }   // spuštění zvenku (autoplay deníku)
-    nota.classList.add('hraje'); nota.setAttribute('aria-pressed', 'true'); vitrHraje(true); spust();
+    nota.classList.add('hraje'); nota.setAttribute('aria-pressed', 'true'); spust();
   }
   function naPause() {
     if (a.ended || S.stav === 'dohorela') return;
@@ -218,7 +202,6 @@ function svickaNapoj(prefix) {
   function naNotu() { if (!a.paused) a.pause(); else hraj(); }
   function naDolu(e) {
     if (!delka()) return; rozmer();
-    if (qZBodu(e) * L < -5) { if (!a.paused) a.pause(); e.preventDefault(); return; }   // vítr vlevo od knotu
     S.tah = true; try { svg.setPointerCapture(e.pointerId); } catch (x) {} posun(qZBodu(e)); e.preventDefault(); }
   function naTah(e) { if (S.tah) posun(qZBodu(e)); }
   function naNahoru() { S.tah = false; }
@@ -255,7 +238,7 @@ function svickaNapoj(prefix) {
     ztis: function () { S.tise = true; a.pause(); },
     zrus: function () { zastavAnim(); S.bezi = false; udalosti.forEach(function (u) { u[0].removeEventListener(u[1], u[2]); });
       if (ro) ro.disconnect(); else window.removeEventListener('resize', prekresli); if (_SVICKY[prefix] === api) delete _SVICKY[prefix]; },
-    _stav: function () { return { p: S.p, stav: S.stav, W: W, x0: x0, x1: x1, rampouchu: kapky.length, vitr: +vitr.getAttribute('opacity'),
+    _stav: function () { return { p: S.p, stav: S.stav, W: W, x0: x0, x1: x1, rampouchu: kapky.length,
       vosk: kapky.filter(function (r) { return r.t0 !== null; }).length }; }   // jen pro kontroly
   };
   _SVICKY[prefix] = api;

@@ -341,8 +341,8 @@ PRIPADY = [
      "u.area ? _domainContext(u.area, lang, areaFace) : ''"),
  # ㊔ appka na telefonu (2026-10-22, CODE-read; ㊓ = anatomie promptu): tlačítko širší než telefon (dřív slepé: oříznutí v kartě + innerWidth po oddálení)
  ('chyti', 'verify_telefon.js', 'v2/runar-reader.css', 'append', '', '\n#begin-btn{min-width:520px}\n'),
- # přehrávač-svíčka (CODE-tune 2026-10-29): vítr v klidu zmizí = prázdné místo vlevo, nesouměrné mezery (vada náhledu 2) · posun po svíčce nehne zvukem
- ('chyti', 'verify_telefon.js', 'v2/runar-svicka.js', 'replace', 'var VITR_KLID = 0.4;', 'var VITR_KLID = 0;'),
+ # přehrávač-svíčka (CODE-tune 2026-10-29): prázdné místo vlevo (jako náhled 2) = nesouměrné mezery · posun po svíčce nehne zvukem
+ ('chyti', 'verify_telefon.js', 'v2/runar-svicka.js', 'replace', 'yb = yt + vy, x0 = 6, x1, L;', 'yb = yt + vy, x0 = 30, x1, L;'),
  ('chyti', 'verify_telefon.js', 'v2/runar-svicka.js', 'replace', '    S.p = nq; a.currentTime = Math.min(nq * dl, Math.max(0, dl - 0.05));', '    S.p = nq;'),
  ('chyti', 'verify_telefon.js', 'v2/runar-svicka.js', 'replace', "    if (max > 0 && fs > 0) ct.style.width = dr.style.width =", "    if (false) ct.style.width = dr.style.width ="),   # čas bez pevné šířky posouvá svíčku
  # verify_onclick_funkce.js (CODE-read 2026-10-22): přejmenovaná funkce v onclick v HTML · v šabloně v JS · metoda po tečce není funkce appky

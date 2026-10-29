@@ -31,7 +31,7 @@
 // hlas k nadpisu    .hlas-radek                                           nadpis s „+“ a za ním malý přehrávač (.svp-mala)
 // přehrávač         .svp .svp-nota .svp-cas .svp-svicka (.svp-mala .hraje)   JEDINÝ přehrávač hlasu (runar-svicka.js, owner 2026-10-29): nota ·
 //                   .svp-lesk .svp-vosk .svp-plamen .svp-jadro .svp-jiskra   čas · svíčka (= posuvník) · délka; .svp-mala = bez času (rituál);
-//                   .svp-kour .svp-fouk .svp-vitr                         části kresby svíčky (vítr = symbol sfouknutí); .hraje = nota se houpe
+//                   .svp-kour                                             části kresby svíčky; .hraje = nota se houpe (nota řídí vše)
 //
 // VLASTNÍ (třída mimo komponenty, s důvodem):
 // VLASTNÍ .xp-plus — sám je komponenta rozbalovače (span tam, kde text plní JS a ::after nejde)

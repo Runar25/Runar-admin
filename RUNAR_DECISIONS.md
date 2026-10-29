@@ -12521,3 +12521,12 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   Bez toho „0:00“ → „0:12“ posunulo svíčku o 3,3 px; teď během hraní 0:00–0:11 stojí na místě. Hlídá ㊎ + útok.
 - **Otevřené:** owner napsal i *„jak se mění čas stopy, tak se mění délka svíčky“* — čteno jako popis (svíčka ubývá s časem); položeno jako otázka.
 - Affected doc(s): žádný jiný (vzhled vlastní `v2/runar-svicka.js` a `v2/runar-reader.css`).
+
+## 2026-10-29 (5) — Svíčka: vítr i poryv pryč, všechno řídí nota
+
+- **Rozhodl:** owner 2026-10-29 nad náhledem 3: *„odstraníme foukanec. Všechno bude řídit nota. Foukanec už nepoletí k plamenu, ale plamen
+  zhasne, jak je to teď. To je čisté.“* Mění 2026-10-29 (4) bod (1) (vítr natrvalo vlevo).
+- **Co:** nota = přehrát i zastavit; zastavení = plamen zhasne a vzletí kouřek. Čáry větru vlevo a poryv k plameni z `runar-svicka.js`
+  i CSS pryč; svíčka začíná hned za časem (mezery na 375 px 10 / 13 / 12 px). Ťuknutí na svíčku dál posouvá; nápověda („ťukni znovu
+  na notu“) platí beze změny. Útok ㊎ zase míří na vyhrazené prázdné místo vlevo.
+- Affected doc(s): žádný jiný (vzhled vlastní `v2/runar-svicka.js` a `v2/runar-reader.css`).
