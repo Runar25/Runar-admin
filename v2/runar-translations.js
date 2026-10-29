@@ -189,7 +189,7 @@ const UI_TEXT = {
     voice_btn_loading: 'ᚢ RÚNAR IS SPEAKING…',
     voice_btn_regen:   'ᚢ REGENERATE VOICE',
     voice_btn_done:    '♪ RÚNAR HAS SPOKEN',
-    voice_player_lbl:  '♪ RÚNAR SPEAKS',
+    voice_player_lbl:  'RÚNAR SPEAKS',   // 2026-10-29 bez ♪ (owner „odeber notu“ — nota je hned pod nadpisem v přehrávači)
 
     spread3_mode_single:      "SINGLE RUNE",
     spread_mode_norns:        "NORNS",
@@ -767,7 +767,7 @@ const UI_TEXT = {
     voice_btn_loading: 'ᚢ RÚNAR TALAR…',
     voice_btn_regen:   'ᚢ ENDURGERA RÖDD',
     voice_btn_done:    '♪ RÚNAR HEFUR TALAÐ',
-    voice_player_lbl:  '♪ RÚNAR TALAR',
+    voice_player_lbl:  'RÚNAR TALAR',
 
     // Ritual names — change here, reflects everywhere
     spread3_mode_single:      "EIN RÚN",

@@ -1094,6 +1094,7 @@ function _heroDownPresun(pred, tab) {
 }
 function showAppTab(tab) {
   var _predTab = activeAppTab;
+  if (_predTab !== tab) svickaZtisVse();   // hlas se při přepnutí záložky zastaví (owner 2026-10-29, runar-svicka.js)
   _heroDownPresun(_predTab, tab);
   activeAppTab = tab;
   document.getElementById('apane-reading').style.display    = tab === 'reading'    ? 'block' : 'none';
@@ -1418,6 +1419,7 @@ function _ritualHlas() {
   var h = RUNAR_RITUAL_HLAS[lang] || RUNAR_RITUAL_HLAS.en;
   host.setAttribute('data-lang', lang);
   host.innerHTML = svickaHtml('rit', h.src, { mala: true }); svickaNapoj('rit');
+  svickaNazev('rit', function () { var e = document.getElementById('reader-card1-lbl'); return e ? e.textContent.trim() : ''; });
 }
 // Rituál pod BEFORE WE BEGIN (owner 2026-10-27): nadpis je rozbalovač, jako „How a reading works“.
 function toggleRitual() {
@@ -1468,6 +1470,7 @@ function loadCollAudio(l) {
   } else {
     playerEl.innerHTML = _makeCapPlayer('coll', pick.audio_url, false);
     _capWire('coll');
+    if (activeCollRune) svickaNazev('coll', rnSplit(activeCollRune).name);
   }
 }
 

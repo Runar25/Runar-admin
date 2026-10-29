@@ -177,6 +177,13 @@ const MERENI = `(() => {
       if (Math.abs(q1 - 0.7) > 0.03 || Math.abs(s1.p - 0.7) > 0.03) v.push('posun na 70 %: zvuk ' + q1.toFixed(2) + ', svíčka ' + s1.p.toFixed(2));
       if (Math.abs(q2 - 0.2) > 0.03 || Math.abs(s2.p - 0.2) > 0.03) v.push('posun zpět na 20 %: zvuk ' + q2.toFixed(2) + ', svíčka ' + s2.p.toFixed(2));
       if (!(s1.vosk > s2.vosk)) v.push('vosk za místem po posunu zpět nezmizel (' + s1.vosk + ' → ' + s2.vosk + ' rampouchů)');
+      // owner 2026-10-29: ovládání na zamčené obrazovce („zamčený ok“) a hlas se při přepnutí záložky zastaví („má se zastavit“)
+      _capPlay('cap'); await sl(1000);
+      if (a.paused) v.push('hlas se po notě nerozehrál');
+      var md = ('mediaSession' in navigator) ? navigator.mediaSession.metadata : undefined;
+      if (md === undefined) v.push('prohlížeč kontroly nemá mediaSession — zamčená obrazovka neověřena');
+      else if (!md || !md.title) v.push('zamčená obrazovka: hlas hraje bez názvu');
+      showAppTab('journal'); await sl(150); if (!a.paused) v.push('hlas hraje dál po přepnutí záložky'); showAppTab('reading');
       _capStop('cap'); ap.classList.remove('visible');
       setLang('is'); await sl(300); var rs = document.getElementById('rit-sv'), rr = rs && rs.getBoundingClientRect();
       if (!rs) v.push('malá svíčka rituálu chybí'); else if (rr.right > ${SIRKA} - 1 || rr.width < 20) v.push('malá svíčka rituálu (IS) ' + Math.round(rr.left) + '–' + Math.round(rr.right) + ' px');

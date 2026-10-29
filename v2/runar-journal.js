@@ -132,6 +132,7 @@ async function playReadingVoice(i) {
     const blob = await fetch(data.audio_url).then(function (r) { return r.blob(); });
     player.innerHTML = _makeCapPlayer('jv' + i, URL.createObjectURL(blob), true);
     _capWire('jv' + i, true);
+    svickaNazev('jv' + i, e.rune_name || '');   // název na zamčené obrazovce
     setRuneText(btn, t('voice_btn_done'));
     if (!data.stored && typeof syncFreeBalance === 'function') syncFreeBalance(currentUser.id);   // menu testera: počet hlasů
   } catch (err) {

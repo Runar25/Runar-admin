@@ -346,6 +346,8 @@ PRIPADY = [
  ('chyti', 'verify_telefon.js', 'v2/runar-svicka.js', 'replace', '    S.p = nq; a.currentTime = Math.min(nq * dl, Math.max(0, dl - 0.05));', '    S.p = nq;'),
  ('chyti', 'verify_telefon.js', 'v2/runar-svicka.js', 'replace', "    if (max > 0 && fs > 0) ct.style.width = dr.style.width =", "    if (false) ct.style.width = dr.style.width ="),   # čas bez pevné šířky posouvá svíčku
  ('chyti', 'verify_telefon.js', 'v2/runar-svicka.js', 'replace', "(o.mala ? ' svp-skryta' : '')", "''"),   # rituál: svíčka vidět už před notou
+ ('chyti', 'verify_telefon.js', 'v2/runar-app.js', 'replace', '  if (_predTab !== tab) svickaZtisVse();', '  if (false) svickaZtisVse();'),   # hlas mluví dál po přepnutí záložky
+ ('chyti', 'verify_telefon.js', 'v2/runar-svicka.js', 'replace', 'ukaz(true); rozmer(); zamcena();', 'ukaz(true); rozmer();'),   # zamčená obrazovka bez názvu a ovládání
  # verify_onclick_funkce.js (CODE-read 2026-10-22): přejmenovaná funkce v onclick v HTML · v šabloně v JS · metoda po tečce není funkce appky
  ('chyti', 'verify_onclick_funkce.js', 'v2/runar-reader.html', 'replace', 'onclick="treeZoomAll()"', 'onclick="treeZoomVse()"'),
  ('chyti', 'verify_onclick_funkce.js', 'v2/runar-journal.js', 'replace', 'onclick="playReadingVoice(', 'onclick="playReadingVoiceX('),

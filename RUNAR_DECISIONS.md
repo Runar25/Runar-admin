@@ -12540,3 +12540,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Hlídá:** smoke ㊎ — před notou skrytá, po notě vidět, po skutečném dohrání skrytá, místo v řádku stejné; + útok. Kontrola pouští Chrome
   s `--autoplay-policy=no-user-gesture-required` (ťuknutí v ní nepřijde od člověka).
 - Affected doc(s): žádný jiný (vzhled vlastní `v2/runar-svicka.js` a `v2/runar-reader.css`).
+
+## 2026-10-29 (7) — Přehrávač: ovládání na zamčené obrazovce, hlas se při přepnutí záložky zastaví, nadpis přehrávače bez ♪
+
+- **Rozhodl:** owner 2026-10-29 na otázky k přehrávači: *„zamčený ok … má se zastavit … odeber notu“*.
+- **Co:** (1) Zamčená obrazovka / notifikace (Media Session): název = nadpis čtení (jméno runy / výkladu), v Kolekci jméno runy, v deníku
+  runa záznamu, u rituálu jeho nadpis; přehrát, pauza, posun. Na skryté stránce animace jiskry proběhne hned (jinak by hlas z lišty nezačal).
+  (2) Přepnutí záložky zastaví každý hrající přehrávač (bez poryvu). (3) `voice_player_lbl` EN + IS bez ♪ — nota je hned pod nadpisem.
+  Tlačítko po hlasu (`voice_btn_done` „♪ RÚNAR HAS SPOKEN“) beze změny — owner mluvil o nadpisu.
+- **Hlídá:** smoke ㊎ — po notě hraje, má název na zamčené obrazovce, přepnutí záložky ho zastaví; 2 útoky.
+- **Neověřeno:** skutečný zamčený telefon (iOS / Android) — kontrola vidí jen, že název a ovládání appka prohlížeči předala.
+- Affected doc(s): žádný jiný (chování vlastní `v2/runar-svicka.js`, `v2/runar-app.js`).

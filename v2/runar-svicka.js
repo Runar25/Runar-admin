@@ -29,6 +29,9 @@ function _svickaRnd(seed) { var h = 2166136261; for (var i = 0; i < seed.length;
 function _svickaEl(tag, at, rodic) { var e = document.createElementNS(_SVG_NS, tag); for (var k in at) e.setAttribute(k, at[k]); if (rodic) rodic.appendChild(e); return e; }
 function _svickaHvezda(r1, r2, n) { var d = ''; for (var i = 0; i < n * 2; i++) { var r = i % 2 ? r2 : r1, a = Math.PI * i / n - Math.PI / 2; d += (i ? 'L' : 'M') + (r * Math.cos(a)).toFixed(2) + ',' + (r * Math.sin(a)).toFixed(2); } return d + 'Z'; }
 function _svickaAnim(ms, krok, hotovo) {
+  // Skrytá stránka (zamčený telefon, jiná záložka prohlížeče) nekreslí — rAF nepřijde a jiskra by čekala věčně, takže by hlas
+  // z ovládání na zamčené obrazovce nikdy nezačal. Tam proběhne hned.
+  if (document.hidden) { krok(1); if (hotovo) hotovo(); return function () {}; }
   if (_svickaKlid()) ms = 1;
   var t0 = null, zrus = false;
   function f(ts) { if (zrus) return; if (t0 === null) t0 = ts; var q = Math.min(1, (ts - t0) / ms); krok(q); if (q < 1) requestAnimationFrame(f); else if (hotovo) hotovo(); }
@@ -99,7 +102,28 @@ function svickaNapoj(prefix) {
       dur: 700 + rnd() * 700, t0: null, zpet: null });
   }
 
-  var S = { p: 0, stav: 'klid', tise: false, tah: false, bezi: false, js: null, jr: 0, ky: 0, zrusAnim: null, casovac: null };
+  var S = { p: 0, stav: 'klid', tise: false, tah: false, bezi: false, js: null, jr: 0, ky: 0, zrusAnim: null, casovac: null, nazev: '' };
+
+  // Zamčená obrazovka / notifikace (owner 2026-10-29 „zamčený ok“: dřív tam nebyl název ani pauza). Název dává volající (svickaNazev —
+  // jméno runy, výkladu, nadpis rituálu; text i funkce, ať se vezme v chvíli přehrání). Ovládání patří přehrávači, který hrál naposled.
+  function zamcena() {
+    if (!('mediaSession' in navigator)) return;
+    var ms = navigator.mediaSession, n = typeof S.nazev === 'function' ? S.nazev() : S.nazev;
+    try {
+      if (window.MediaMetadata) ms.metadata = new MediaMetadata({ title: n || 'Rúnar', artist: n ? 'Rúnar' : '',
+        artwork: [{ src: 'icons/web-app-manifest-512x512.png', sizes: '512x512', type: 'image/png' }] });
+      ms.setActionHandler('play', function () { if (a.paused) hraj(); });
+      ms.setActionHandler('pause', function () { if (!a.paused) a.pause(); });
+      ms.setActionHandler('seekto', function (d) { if (delka()) posun(d.seekTime / delka()); });
+      ms.setActionHandler('seekbackward', function (d) { if (delka()) posun((a.currentTime - (d.seekOffset || 10)) / delka()); });
+      ms.setActionHandler('seekforward', function (d) { if (delka()) posun((a.currentTime + (d.seekOffset || 10)) / delka()); });
+    } catch (x) {}
+  }
+  function zamcenaPoloha() {
+    try { if ('mediaSession' in navigator && navigator.mediaSession.setPositionState && delka())
+      navigator.mediaSession.setPositionState({ duration: delka(), position: Math.min(a.currentTime, delka()), playbackRate: a.playbackRate || 1 }); } catch (x) {}
+  }
+  function zamcenaStav(hraje) { try { if ('mediaSession' in navigator) navigator.mediaSession.playbackState = hraje ? 'playing' : 'paused'; } catch (x) {} }
 
   function delka() { return isFinite(a.duration) && a.duration > 0 ? a.duration : 0; }
   function kresli() {
@@ -193,11 +217,12 @@ function svickaNapoj(prefix) {
   function qZBodu(e) { var r = svg.getBoundingClientRect(); return ((e.clientX - r.left) * W / r.width - x0) / L; }
 
   function naPlay() {
-    ztisOstatni(); ukaz(true); rozmer();
+    ztisOstatni(); ukaz(true); rozmer(); zamcena(); zamcenaStav(true); zamcenaPoloha();
     if (S.stav !== 'zapaluje') { S.stav = 'hori'; plamen.setAttribute('opacity', 1); }   // spuštění zvenku (autoplay deníku)
     nota.classList.add('hraje'); nota.setAttribute('aria-pressed', 'true'); spust();
   }
   function naPause() {
+    zamcenaStav(false);
     if (a.ended || S.stav === 'dohorela') return;
     zhasniNotu(); zastavAnim();
     if (S.tise || _svickaKlid()) { S.tise = false; plamen.setAttribute('opacity', 0); S.stav = 'klid'; kresli(); return; }
@@ -219,7 +244,7 @@ function svickaNapoj(prefix) {
     if (krok !== undefined) posun((a.currentTime + krok) / dl); else if (e.key === 'Home') posun(0); else if (e.key === 'End') posun(1); else return;
     e.preventDefault();
   }
-  var udalosti = [[a, 'play', naPlay], [a, 'pause', naPause], [a, 'timeupdate', naCas], [a, 'seeked', naCas], [a, 'loadedmetadata', naDelku],
+  var udalosti = [[a, 'play', naPlay], [a, 'pause', naPause], [a, 'timeupdate', naCas], [a, 'seeked', naCas], [a, 'seeked', zamcenaPoloha], [a, 'loadedmetadata', naDelku],
     [a, 'durationchange', naDelku], [a, 'emptied', naPrazdno], [a, 'ended', naKonec], [nota, 'click', naNotu], [svg, 'pointerdown', naDolu],
     [svg, 'pointermove', naTah], [svg, 'pointerup', naNahoru], [svg, 'pointercancel', naNahoru], [svg, 'keydown', naKlavesu]];
   udalosti.forEach(function (u) { u[0].addEventListener(u[1], u[2]); });
@@ -242,6 +267,7 @@ function svickaNapoj(prefix) {
   var api = {
     a: a,
     prepni: naNotu,
+    nazev: function (n) { S.nazev = n || ''; },
     reset: celaZnovu,
     ztis: function () { S.tise = true; a.pause(); },
     zrus: function () { zastavAnim(); S.bezi = false; udalosti.forEach(function (u) { u[0].removeEventListener(u[1], u[2]); });
@@ -262,6 +288,9 @@ function svickaPopisky() {   // aria popisky v jazyce appky (volá updateUIText 
   }
 }
 function svickaPrepni(prefix) { var s = _SVICKY[prefix]; if (s) s.prepni(); }
+function svickaNazev(prefix, nazev) { var s = _SVICKY[prefix]; if (s) s.nazev(nazev); }   // název na zamčené obrazovce (text nebo funkce)
+// Přepnutí záložky zastaví hlas (owner 2026-10-29 „má se zastavit“): svíčka mizí z očí, hlas by mluvil dál bez ovládání. Bez poryvu.
+function svickaZtisVse() { for (var k in _SVICKY) { var s = _SVICKY[k]; if (s && s.a && !s.a.paused) s.ztis(); } }
 function svickaReset(prefix) { var s = _SVICKY[prefix]; if (s) s.reset(); }
 function svickaStop(prefix) {   // zastavit a vyprázdnit (nové čtení, jiný jazyk); removeAttribute + load(), ne src='' (viz svickaHtml)
   var a = document.getElementById(prefix + '-a'), s = _SVICKY[prefix];

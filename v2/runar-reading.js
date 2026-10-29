@@ -1288,6 +1288,9 @@ async function generateVoice() {
     const audio = document.getElementById('cap-a');   // přehrávač hlasu = _makeCapPlayer('cap') (runar-app.js)
     audio.src = URL.createObjectURL(blob);
     _capReset('cap');
+    // název na zamčené obrazovce = nadpis čtení, který je vidět (jméno runy / výkladu), bez ozdob
+    svickaNazev('cap', function () { var l = [].find.call(document.querySelectorAll('#reader-output .layer1-lbl'), function (e) { return e.offsetParent !== null; });
+      return l ? l.textContent.replace(/[✦~]/g, '').trim() : ''; });
     document.getElementById('audio-player').classList.add('visible');
     voiceGenerated[lang] = true;
     setRuneText(btn, t('voice_btn_done'));
