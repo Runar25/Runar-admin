@@ -14,9 +14,14 @@
 #                    na ploše telefonu. Výřez uvnitř zaobleného čtverce (černý okraj ikony do kruhu nesmí, měřeno 11–15 px).
 #                    Výřezy z portrétů s holí owner zamítl (2026-10-28: „profilovka A a B má Rúnara s uříznutou holí… A je úplně mimo“) —
 #                    čtverec kolem obličeje hůl vždy přetne. Do profilovky proto jen záběr, kde Rúnar nic nedrží přes okraj.
+#   profil-r.jpg      720×720 — druhá profilovka do zásoby: zlaté R jako nová ikona appky (owner 2026-10-29 k otázce, zda profilovka
+#                    bude R, nebo tvář: „ještě nevím. připravíme to a rozhodnu se, až to budeme dělat“). Kreslí ji ikona_appky.profil()
+#                    — táž předloha jako ikona appky, rámeček je kruh u okraje, protože Instagram i Facebook profilovku ořízne do kruhu.
 #   python -X utf8 scripts/web_socialni_obrazky.py
 import base64, io, os, re, shutil, subprocess, sys, tempfile
 from PIL import Image
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import ikona_appky
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CIL = os.path.join(ROOT, 'web', 'socialni')
@@ -90,6 +95,7 @@ def main():
     io.open(ikona, 'wb').write(base64.b64decode(m.group(1)))
     vyrez(ikona, 627, 627, 1174, 720).save(os.path.join(CIL, 'profil-ikona.jpg'), 'JPEG', quality=90, optimize=True)
     os.remove(ikona)
+    ikona_appky.profil(os.path.join(CIL, 'profil-r.jpg'))
     for f in sorted(os.listdir(CIL)):
         p = os.path.join(CIL, f)
         print('%-18s %s  %d kB' % (f, '%dx%d' % Image.open(p).size, os.path.getsize(p) // 1024))
