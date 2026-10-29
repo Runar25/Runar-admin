@@ -62,7 +62,7 @@ S.window = S; S.self = S; S.globalThis = S;
 // ve stejném pořadí.
 let code = '';
 for (const f of ['runar-config.js', 'runar-runes.js', 'runar-translations.js',
-                 'runar-names.js', 'runar-names-registry.js', 'runar-character.js', 'runar-utils.js', 'runar-svgs.js', 'runar-tree.js',
+                 'runar-names.js', 'runar-names-registry.js', 'runar-character.js', 'runar-utils.js', 'runar-svgs.js', 'runar-svicka.js', 'runar-tree.js',
                  'runar-app.js', 'runar-rune-popup.js']) {
   code += '\n/* ' + f + ' */\n' + fs.readFileSync(DIR + f, 'utf8') + '\n;\n';
 }
