@@ -54,6 +54,7 @@ Vrstvy pravdy: kanonická = root `RUNAR_*.md`, `memory/*.md`, `CLAUDE.md` · his
 - [read-token-from-clipboard.md](read-token-from-clipboard.md) — eval token si načti ze schránky sám
 - [runar-api-key-file.md](runar-api-key-file.md) — Anthropic klíč v `~/.claude/runar-api-key.txt`, ownera nežádat
 - [cteni-generuj-tady-ne-pres-api.md](cteni-generuj-tady-ne-pres-api.md) — testovací čtení piš sám, ne přes API; slepé souzení subagentem
+- [ukladej-cteni-a-hlasy.md](ukladej-cteni-a-hlasy.md) — každé čtení i hlas z pokusu uložit s tím, z čeho vznikl (archiv hlasů)
 - [full-path-and-numbered-lists.md](full-path-and-numbered-lists.md) — úplná cesta k souboru; VŠECHNY body a otázky ownerovi číslované
 - [ask-owner-for-checks-you-cannot-run.md](ask-owner-for-checks-you-cannot-run.md) — co Code neověří, napřed zkusit, pak vyžádat od ownera
 - [dont-invent-fact-critical.md](dont-invent-fact-critical.md) — chybí fakt/lore → zastav a flagni
