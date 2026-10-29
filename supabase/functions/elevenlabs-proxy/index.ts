@@ -11,6 +11,7 @@ import { logVoice, denniSnimek, fetchQuota, saveQuota, brzdaHlasu } from "../_sh
 // ID hlasu, modely a nastavení hlasu: JEDINÉ místo je _shared/el_voice.ts (2026-10-11) — dřív tu stály vlastní kopie (důvod tam).
 import { EL_VOICE_ID, EL_VOICE_SETTINGS, elModel, kredityHlasu } from "../_shared/el_voice.ts";
 import { textKHlasu, normalizuj, over } from "../_shared/voice_ticket.ts";
+import { hlasovyText } from "../_shared/voice_direction.ts";   // recept hlasu výkladu (2026-10-29, owner „R3 zní dobře pro výklad“)
 import { ADMIN_EMAILS } from "../_shared/admini.ts";   // seznam adminů na jednom místě (2026-10-22, DECISIONS 2026-10-22 (5))
 
 const EL_API_KEY     = Deno.env.get("ELEVENLABS_API_KEY");
@@ -191,11 +192,17 @@ serve(async (req) => {
     // lang determines model — NEVER trust frontend for voice/model selection. Model je potřeba už pro brzdu (kredity na znak).
     const resolvedModel = elModel(lang);
 
+    // ── Text pro hlas: úvodní značka, pauzy a intonační značky od modelu výkladu (_shared/voice_direction.ts). Slova = čtení (pojistka
+    // overZnacky); selže-li režie, jde hlas bez značek. Brzda, ElevenLabs, evidence i úklid historie počítají s TÍMHLE textem.
+    const hlas = await hlasovyText(text, lang, Deno.env.get("OPENAI_API_KEY"));
+    if (hlas.rezie !== "tagged") console.warn("voice direction " + hlas.rezie + " — reading voiced without tags");
+    const recText = hlas.text;
+
     // ── Brzda kreditů ElevenLabs (2026-10-11, DECISIONS (48): převod se smí vyčerpat, dobití ne) ──
     // Podle JEJICH počítadla (vidí i audio Kolekce a pokusy na webu EL), v kreditech. Pravidlo a důvod: brzdaHlasu v _shared/voice_usage.ts.
     // Stav nezjištěn → pustit (fail open); osobní strop výš platí dál.
     const kvota = await fetchQuota(EL_API_KEY);
-    const brzda = brzdaHlasu(kvota, kredityHlasu(resolvedModel, text.length));
+    const brzda = brzdaHlasu(kvota, kredityHlasu(resolvedModel, recText.length));
     if (!brzda.pustit) {
       console.warn(`voice brake: ${brzda.spotreba} + ${brzda.novych} > ${brzda.hladina}`);
       await saveQuota(sb(), kvota!, "brake");   // každé zastavení brzdou = snímek — owner to musí vidět (48)
@@ -228,7 +235,7 @@ serve(async (req) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          text,
+          text: recText,
           model_id: resolvedModel,
           voice_settings: EL_VOICE_SETTINGS,
         }),
@@ -252,7 +259,7 @@ serve(async (req) => {
     // Evidence hlasu (2026-09-25, handoff CODE-read): znaky × model × jazyk × uživatel — bez ní nejde hlas rozdělit na
     // admin / tester / uživatel ani ocenit podle modelu. Plus nejvýš jednou denně snímek stavu EL (od 2026-10-11, do té doby týdně —
     // DECISIONS (48), owner to musí vidět); uloží se stav, který proxy přečetla kvůli brzdě. Obojí jen loguje chyby, hlas už se ozval.
-    await logVoice(sb(), { user_id: userId, source: "dynamic", lang: lang === "is" ? "is" : "en", model: resolvedModel, chars: text.length });
+    await logVoice(sb(), { user_id: userId, source: "dynamic", lang: lang === "is" ? "is" : "en", model: resolvedModel, chars: recText.length });
     await denniSnimek(sb(), kvota);
 
     // Convert to base64
@@ -270,7 +277,7 @@ serve(async (req) => {
     }
 
     // Položka z historie ElevenLabs pryč — na pozadí (EdgeRuntime.waitUntil), čtenář na hlas nečeká.
-    const uklid = smazHistorii(text, odUnix, reqId);
+    const uklid = smazHistorii(recText, odUnix, reqId);
     const er = (globalThis as any).EdgeRuntime;
     if (er?.waitUntil) er.waitUntil(uklid); else await uklid;
 

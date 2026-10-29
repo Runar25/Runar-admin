@@ -43,6 +43,11 @@ const EL_KREDIT = Number(vytahni('supabase/functions/_shared/voice_usage.ts', /e
 const EL_TARIFY = Object.fromEntries([...vytahni('supabase/functions/_shared/voice_usage.ts', /export const EL_TARIF_KREDITY[^=]*=\s*\{([^}]*)\}/, 'EL_TARIF_KREDITY')
   .matchAll(/(\w+):\s*(\d+)/g)].map((m) => [m[1], Number(m[2])]));
 const EL_SAZBA_1K = JSON.parse(vytahni('scripts/utils/stats.js', /const EL_PRECERPANI = (\{[^}]*\})/, 'EL_PRECERPANI').replace(/'/g, '"'));
+// Hlas výkladu (2026-10-29, _shared/voice_direction.ts): do ElevenLabs jde čtení prodloužené o úvodní značku, pauzy a značky
+// (HLAS_NAVYSENI_ZNAKU, změřeno) a před tím jedno volání režie (HLAS_REZIE_MODEL): vstup = zadání ~125 tokenů + text, výstup = text + značky
+// (z R5 2026-10-29: EN 208/89, IS 255/131 tokenů na čtení 349/333 znaků). Obojí je v ceně hlasu.
+const NAVYSENI = JSON.parse(vytahni('supabase/functions/_shared/voice_direction.ts', /export const HLAS_NAVYSENI_ZNAKU[^=]*=\s*(\{[^}]*\})/, 'HLAS_NAVYSENI_ZNAKU').replace(/(\w+):/g, '"$1":'));
+const REZIE_MODEL = vytahni('supabase/functions/_shared/voice_direction.ts', /export const HLAS_REZIE_MODEL = "([^"]+)"/, 'HLAS_REZIE_MODEL');
 const sazbaHlasu = (l) => { const s = EL_SAZBA_1K[EL_MODEL[l]]; if (s == null) throw new Error('model hlasu ' + EL_MODEL[l] + ' nemá sazbu v EL_PRECERPANI'); return s / 1000; };
 // samotest výpočtu (§19.1) — týž příklad drží stats.js
 if (Math.abs(cena({ model: 'gpt-6-sol', prompt_tokens: 1000, prompt_tokens_details: { cached_tokens: 200 }, completion_tokens: 100 }) - 0.00264) > 1e-9) throw new Error('readingCostUsd rozbitý');
@@ -118,7 +123,10 @@ for (const t of TYPY) for (const l of ['en', 'is']) {
     o.model = cena({ model: SOL, prompt_tokens: Math.round(k.vstupSingle + (t.run - 1) * k.naRunu), completion_tokens: Math.round(o.zn / k.znNaToken) });
     o.odhad = true;
   }
-  o.hlas = o.zn != null ? o.zn * sazbaHlasu(l) : null;
+  // hlasEL = ElevenLabs (kredity), rezie = OpenAI (režie hlasu) — kredity EL níž se počítají jen z hlasEL.
+  o.hlasEL = o.zn != null ? o.zn * NAVYSENI[l] * sazbaHlasu(l) : null;
+  o.rezie = o.zn != null && k.znNaToken ? cena({ model: REZIE_MODEL, prompt_tokens: Math.round(125 + o.zn / k.znNaToken), completion_tokens: Math.round(o.zn / k.znNaToken + 15) }) : 0;
+  o.hlas = o.hlasEL != null ? o.hlasEL + o.rezie : null;
   o.ask = median(ASK[l]);
   RADKY.push(o);
 }
@@ -129,7 +137,7 @@ for (const l of ['en', 'is']) { const k = K[l], zn = median(life.filter((x) => x
     usd: cena({ model: SOL, prompt_tokens: Math.round(((G['system_' + l] || '').length + (G['liferune_' + l] || '').length) / k.promptZnNaToken), completion_tokens: Math.round(zn / k.znNaToken) }) }; }
 
 console.log('Model čtení ' + SOL + ' (bez přemýšlení), čtení za ' + DNY + ' dní: ' + rows.length + (vynech ? ' (' + vynech + ' s přemýšlením vynecháno)' : '') +
-  ' · hlas EN ' + EL_MODEL.en + ' / IS ' + EL_MODEL.is + ' · hlas ke každému čtení, jednou (strop jen testeři, VOICE_MONTHLY_LIMIT_TESTER)');
+  ' · hlas EN ' + EL_MODEL.en + ' / IS ' + EL_MODEL.is + ' (text × ' + NAVYSENI.en + ' / ' + NAVYSENI.is + ' + režie ' + REZIE_MODEL + ') · hlas ke každému čtení, jednou (strop jen testeři, VOICE_MONTHLY_LIMIT_TESTER)');
 console.log('\n| Čtení | Jazyk | n | Znaky (hlas) | Model | Hlas | Celkem s hlasem | Bez hlasu | Jednotky |');
 console.log('|---|---|---|---|---|---|---|---|---|');
 for (const o of RADKY) { const hv = o.odhad ? '*' : '';
@@ -159,8 +167,8 @@ for (const tier of ['standard', 'premium']) {
     const naJedn = (t) => { const o = radek(t.k, l); return o && o.model != null ? (o.model + o.hlas + asky * ask) / SPREAD_COSTS[t.k].credits : 0; };
     const nej = TYPY.reduce((a, t) => (naJedn(t) > naJedn(a) ? t : a), TYPY[0]), o = radek(nej.k, l), kolik = jednotek / SPREAD_COSTS[nej.k].credits;
     let vzor = 0, vzorHlas = 0;
-    for (const [k, n] of Object.entries(VZOR)) { const r = radek(k, l); vzor += n * (r.model + r.hlas + asky * ask); vzorHlas += n * r.hlas; }
-    MES[tier][l] = { nej: kolik * o.hlas / EL_KREDIT, vzor: vzorHlas / EL_KREDIT };
+    for (const [k, n] of Object.entries(VZOR)) { const r = radek(k, l); vzor += n * (r.model + r.hlas + asky * ask); vzorHlas += n * r.hlasEL; }
+    MES[tier][l] = { nej: kolik * o.hlasEL / EL_KREDIT, vzor: vzorHlas / EL_KREDIT };
     console.log('| ' + (T.label || tier) + ' (' + jednotek + ' jedn., Ask ×' + asky + ') | ' + l.toUpperCase() + ' | **' + usd(kolik * naJedn(nej), 2) + '** (' + Math.round(kolik) + '× ' + nej.jm + ') | ' +
       usd(kolik * o.hlas, 2) + ' | ' + Math.round(MES[tier][l].nej) + ' | ' + usd(vzor, 2) + ' | ' + Math.round(MES[tier][l].vzor) + ' |');
   }

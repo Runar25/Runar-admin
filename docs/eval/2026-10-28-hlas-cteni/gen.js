@@ -6,6 +6,7 @@
 //   R2 = v4 jako rituál, ale čtení není rituál: úvodní značka klidného hlasu, stabilita 0,5, rychlost 0,9, „…“ mezi větami
 //   R3 = R2 + intonační značky, které do textu vloží MODEL VÝKLADU (sol, SOL_MODEL v claude-proxy). Pojistka: po odebrání značek musí
 //        text sedět slovo od slova na originál — jinak varianta padá (model nesmí čtení přepsat).
+//   R5 = R3 na eleven_v4_turbo — ověření, že Turbo značky nečte nahlas (délka proti R4), než recept půjde do produkce
 //   R4 = R2 na eleven_v4_turbo (owner 2026-10-29: „dej mi i čtení EN a IS v4 turbo“; poloviční cena, umí IS)
 // Každá nahrávka jde i do archivu hlasů (scripts/utils/hlas_archiv.js) i s textem, který zazněl — u R3 i se značkami od modelu.
 // Texty čtení: ~/runar-eval/hlas-cteni/{en,is}.txt (z produkce přes najdi_cteni.js; do repa nepatří, DECISIONS 2026-08-08).
@@ -56,6 +57,9 @@ const VAR = [
     nast: Object.assign({}, NAST, { stability: 0.5, speed: 0.9 }) },
   { k: 'R4', popis: 'R2 na v4 Turbo (poloviční cena)', model: () => 'eleven_v4_turbo',
     text: async (l) => ZNACKA + pauzy(TEXT[l]), nast: Object.assign({}, NAST, { stability: 0.5, speed: 0.9 }) },
+  { k: 'R5', popis: 'R3 na v4 Turbo — recept pro výklad (owner 2026-10-29: „v4 Turbo je dobré i pro IS. použijeme“ · „R3 zní dobře pro výklad“)', model: () => 'eleven_v4_turbo',
+    text: async (l, info) => { const r = await reziser(l); info.reziser = r; if (!r.shoda || r.cizi.length) throw new Error('režisér změnil text nebo použil cizí značku: ' + JSON.stringify(r.cizi)); return ZNACKA + pauzy(r.t); },
+    nast: Object.assign({}, NAST, { stability: 0.5, speed: 0.9 }) },
 ];
 
 (async () => {

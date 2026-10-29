@@ -79,6 +79,7 @@ if (!/if \(vprof\?\.is_tester && vUsed >= VOICE_MONTHLY_LIMIT_TESTER\)/.test(elP
   if (!cT || !pT || cT !== pT) { fail++; console.log('FAIL  hlas testera: config ' + cT + ' × proxy ' + pT); }
   else console.log('OK    hlas testera: ' + cT + ' za mesic (config == proxy)');
   // Brzda kreditu (2026-10-11, DECISIONS (48): prevod se smi vycerpat, dobiti ne; bez prevodu sama 30 000 tarifu). Hlida se:
+  // (recText = text hlasu výkladu po přípravě, _shared/voice_direction.ts, 2026-10-29)
   // (a) VOICE_SAFE_SHARE nikde nezustala, (b) obe funkce brzdu volaji a podle ni vraceji (mrtva brzda by prosla zelene),
   // (c) brzda na znamych vstupech dela, co owner rozhodl — spousti se doslova jeji kod z _shared (seed-and-assert §19, ne vlastni opis),
   // (d) oba modely appky maji kredity na znak a sedi se sazbou EL_PRECERPANI ve stats.js (kredit = $0.0002).
@@ -88,7 +89,7 @@ if (!/if \(vprof\?\.is_tester && vUsed >= VOICE_MONTHLY_LIMIT_TESTER\)/.test(elP
     if (/^const VOICE_SAFE_SHARE/m.test(s)) { fail++; console.log('FAIL  brzda: VOICE_SAFE_SHARE zustala v ' + jm + ' (nahradila ji brzdaHlasu)'); }
   }
   for (const [jm, s] of [['proxy', elProxy], ['static', elStatic]]) {
-    if (!/const brzda = brzdaHlasu\(kvota, kredityHlasu\(resolvedModel, text\.length\)\)/.test(s) || !/if \(!brzda\.pustit\)/.test(s)) {
+    if (!/const brzda = brzdaHlasu\(kvota, kredityHlasu\(resolvedModel, (text|recText)\.length\)\)/.test(s) || !/if \(!brzda\.pustit\)/.test(s)) {
       fail++; console.log('FAIL  brzda: ' + jm + ' ji nevola nebo podle ni nevraci');
     }
   }
