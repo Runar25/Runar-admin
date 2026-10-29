@@ -34,7 +34,9 @@ const mk = (id) => ({
   getBoundingClientRect: () => ({ top: 0, left: 0, width: 0, height: 0 }),
 });
 const doc = {
-  getElementById: (id) => (prvky[id] || (prvky[id] = mk(id))),
+  // Hostitel přehrávače rituálu chybí schválně: updateUIText() do něj staví svíčku (SVG, měření písma, ResizeObserver — 2026-10-29)
+  // a tahle kontrola testuje záložku životní runy, ne přehrávač; ten hlídá smoke ㊎ ve skutečném prohlížeči.
+  getElementById: (id) => (id === 'ritual-voice' ? null : (prvky[id] || (prvky[id] = mk(id)))),
   querySelector: () => null, querySelectorAll: () => [],
   addEventListener() {}, createElement: () => mk('x'), body: mk('body'),
   // updateUIText() nastavuje <html lang> — bez tohohle by test okna x jazyka spadl v sandboxu, ne v appce.
