@@ -1681,7 +1681,6 @@ const UI_TEXT = {
     ask_btn:            'ASK',
     ask_thinking:       'Rúnar listens…',
     ask_teaser:         'Your own questions to Rúnar open with {tier}.',   // 2026-09-25 KUKY (stavba jako q_teaser)
-    thought_teaser:     'With {tier}, each reading brings a thought to carry with you.',   // 2026-10-22: myšlenka ✦ jako teaser (DECISIONS 2026-10-22 (3))
     ask_teaser_more:    'Another question opens with {tier}.',   // 2026-09-30 KUKY: po poslední otázce tarifu (Standard → Premium)
     err_no_credits:     'What you have left is not enough for this reading. Use a {card} to continue.',   // 2026-10-21: i když chybí jen na spread (proxy 402 no_credits)
     err_monthly_limit: 'What remains of this month’s readings is not enough for this one. They return with the new month.',   // 2026-10-21: proxy hlásí, když used + cena > strop
@@ -2245,7 +2244,6 @@ const UI_TEXT = {
     ask_btn:            'SPYRJA',
     ask_thinking:       'Rúnar hlustar…',
     ask_teaser:         'Eigin spurningar þínar til Rúnars opnast með {tier}.',
-    thought_teaser:     'Með {tier} fylgir hverjum lestri hugsun til að taka með sér.',   // {tier} 3. pád; Greynir OK, „taka með sér“ 7327×, „fylgir hverjum“ 227×
     ask_teaser_more:    'Önnur spurning opnast með {tier}.',   // {tier} v 3. pádě (tierLabel); is-grammar-qa čisté, „önnur spurning“ 1572
     err_no_credits:     'Það sem þú átt eftir dugar ekki fyrir þessum lestri. Notaðu {card} til að halda áfram.',
     err_monthly_limit: 'Það sem eftir er af lestrum mánaðarins dugar ekki fyrir þessum lestri. Þeir koma aftur með nýjum mánuði.',

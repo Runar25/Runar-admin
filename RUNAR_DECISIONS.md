@@ -12455,3 +12455,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   27. a 28. 10.: v4 399 zn. = 160 kr., 994 zn. = 398 kr.). `EL_KREDITY_NA_ZNAK` v4 zatím nezná (počítá 1 kredit — víc, ne míň):
   doplnit, až v4 půjde do čtení.
 - Affected doc(s): RUNAR_BACKLOG.md (rituál bez hlasu uzavřen, „How a reading works“ teď stejnou komponentou).
+
+## 2026-10-29 (1) — Myšlenka ✦ i pro Rune Seekera; teaser „With Rune Walker, each reading brings a thought…“ pryč
+
+- **Rozhodl:** owner 2026-10-29, hlášení 17245e7e nad teaserem myšlenky: *„Tady je nějaký text, který nenabízí vysvětlení, co to znamená.
+  Myšlenka bude jen text. Dáme ji i pro Rune Seeker.“* Mění 2026-10-22 (3) bod 5 (Rune Seeker viděl myšlenku jako teaser).
+- **Co:** `TIERS.rune_seeker.reading_thought` = true → myšlenku má každý přihlášený účet; návštěvník čtení nemá. Větev teaseru
+  v `_paintThought` (`runar-reading.js`) a klíč `thought_teaser` (EN, IS) pryč — nikdy by nenastaly. Kontrola `verify_thought.js` čeká
+  myšlenku i u Rune Seekera; útok na `_thoughtAllowed` dál chytí (návštěvník a free_trial ji mít nesmí).
+- **Cena:** myšlenka je jedna věta do 12 slov v témže výstupu modelu (2026-10-05 (2)) — náklad čtení se měřitelně nemění; hlas ji nečte.
+- **Co se mění pro účty:** Rune Walker tím ztrácí jednu výhodu proti Rune Seekerovi; zbývá Ask, víc čtení a deník (tabulka přístupu, `TIERS`).
+- Affected doc(s): žádný jiný (přístup vlastní `TIERS` v configu).

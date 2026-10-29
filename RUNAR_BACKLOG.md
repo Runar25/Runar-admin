@@ -1009,3 +1009,16 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   hotová (DECISIONS 2026-10-28 (3)). Ikony menu zatím bez animace — owner 2026-10-28: *„jen tužka a nota“*.
 - [ ] **Menu — co přibude, až bude co ukázat (b026bd00, návrh 2026-10-28 schválen):** podmínky užití · o Rúnarovi / o nás · sdílet a pozvat
   přítele · v Google Play ohodnotit appku · verze appky drobně dole · upozornění. Dnes pro ně chybí obsah.
+
+### Hlášení z appky 2026-10-29 — design (načtena 2026-10-29, CODE-tune; hotové: 17245e7e — DECISIONS 2026-10-29 (1))
+- [ ] **Ask pro Rune Seekera zřetelněji (d8358547, 85aa90bf):** teaser „Your own questions to Rúnar open with Rune Walker.“ vysvětluje, ale
+  owner chce upozornit víc: *„mít možnost vybrat otázku, kliknout na ASK, kde se pak uživateli označí právě řádek your own question … změnit
+  barvu na zlatou a pulsovat, jak to máme už jinde, a změnit barvu zase na tu originální. Otestujeme, jak to bude fungovat a vypadat. Jestli to
+  potenciálně použijeme jako základ pro ostatní podobné funkce.“* → napřed náhled (vzor záře: svíčka `window.rozsvit`, `runar-helper.js`).
+- [ ] **Nové logo appky — zlaté Rúnarovo R (e98e5e68):** *„mame ho například v rune reading card“* (kresba Rúnakortu, `runar-runakort.js`)
+  → návrh ikony appky (PWA, Play) ve všech velikostech, napřed náhled.
+- [ ] **Přehrávač čtení jako svíčka (9c7d57f1, 63278a3a):** po ťuknutí na ♪ okénko *„tap again to stop“*; přehrávač čtení ve stylu našich run
+  bez kamenů, naležato: nota · čas 0 · jiskra · svíčka · konec stopy. Jiskra se objeví po ťuknutí na notu přesně na knotu a zapálí svíčku;
+  svíčka během přehrávání ubývá (vosk nerovně stéká po spodní hraně); pauza = obláček, který fouká ke špičce — ťuknutí krátce sfoukne plamen;
+  dohoří → 3 s zůstane, pak se za 1,5–2 s z vosku zase složí celá. Rituál: táž svíčka zmenšená, bez času. *„Uvidíme, jak to bude vypadat,
+  popřípadě upravíme.“* → napřed náhled (animovaný, telefon), pak stavba.
