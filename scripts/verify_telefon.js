@@ -166,7 +166,7 @@ const MERENI = `(() => {
         if (!vidi()) v.push('malá svíčka rituálu se po ťuknutí na notu neukázala');
         ra.currentTime = Math.max(0, ra.duration - 0.3);   // délku nenačtené MP3 prohlížeč jen odhadne → čekat na skutečný konec
         for (var k3 = 0; k3 < 120 && !ra.ended; k3++) await sl(100);
-        if (!ra.ended) v.push('rituál nedohrál (zvuk ' + ra.currentTime.toFixed(1) + ' z ' + ra.duration.toFixed(1) + ' s)'); else await sl(4000);
+        if (!ra.ended) v.push('rituál nedohrál (zvuk ' + ra.currentTime.toFixed(1) + ' z ' + ra.duration.toFixed(1) + ' s; paused ' + ra.paused + ', readyState ' + ra.readyState + ', network ' + ra.networkState + ', chyba ' + (ra.error && ra.error.code) + ')'); else await sl(4000);
         if (!rs.classList.contains('svp-skryta')) v.push('malá svíčka rituálu po dohrání nezmizela');
         if (Math.abs(rs.getBoundingClientRect().width - rr.width) > 0.5) v.push('skrytá svíčka rituálu nedrží místo v řádku'); }
       setLang('en'); return v; })`;
