@@ -237,7 +237,7 @@ const TIERS = {
     voice_credits:    true,       // hlas při kreditním čtení — vždy
     journal:          5,          // last N readings
     asks_per_reading: 0,   // Ask otázek na jedno čtení, všechny zdarma (KUKY 2026-09-24); 0 = Ask jen jako teaser; JEDINÁ pravda o Asku tieru (2026-09-26)
-    reading_thought:  false,   // myšlenka ✦ na konec čtení (KUKY 2026-09-30: „Standard a Premium“); čte _thoughtFor v runar-reading.js
+    reading_thought:  true,    // myšlenka ✦ (2026-10-29 owner, hlášení 17245e7e: „myšlenka bude jen text. Dáme ji i pro Rune Seeker“ — dřív teaser)
     languages:        ['en', 'is'],
   },
   standard: {

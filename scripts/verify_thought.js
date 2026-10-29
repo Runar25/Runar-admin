@@ -41,7 +41,7 @@ const bez = S._splitThought('Plain reading.', [{ rune: 'Isa', text: 'Plain readi
 ocek('bez ✦ beze změny', bez.reading === 'Plain reading.' && bez.thought === '');
 // 2) kdo ji dostane
 const stav = (tier, email) => vm.runInContext('currentUser = ' + (email ? '{ email: ' + JSON.stringify(email) + ', id: "x" }' : 'null') + '; userTier = ' + JSON.stringify(tier) + ';', S);
-for (const [tier, email, ma] of [['', null, false], ['free_trial', 'a@example.com', false], ['rune_seeker', 'a@example.com', false],
+for (const [tier, email, ma] of [['', null, false], ['free_trial', 'a@example.com', false], ['rune_seeker', 'a@example.com', true],   // 2026-10-29: i Rune Seeker (17245e7e)
                                    ['standard', 'a@example.com', true], ['premium', 'a@example.com', true], ['rune_seeker', ADMIN, true]]) {
   stav(tier, email);
   const t = S._thoughtFor('SINGLE', [runa('Uruz')], 'en');
@@ -101,4 +101,4 @@ for (const [jm, kus] of [['single prompt', "var _thL = _kus('THOUGHT-✦', 'acco
     && th[1].indexOf('Hverju') !== -1 && th.every((x) => x.indexOf('✦') === 0), JSON.stringify(th));
 }
 if (vady.length) { vady.forEach((v) => console.log('FAIL  ' + v)); console.log('CELKEM ' + vady.length + ' vad v myšlence ✦'); process.exit(1); }
-console.log('OK    myšlenka ✦: jen Standard/Premium/admin, single·Kříž·Norny·Podkova·Yggdrasil se správnou zdrojovou runou (EN+IS), oddělená od textu a hlasu — i v deníku (zlatý řádek)');
+console.log('OK    myšlenka ✦: Rune Seeker/Standard/Premium/admin (návštěvník ne), single·Kříž·Norny·Podkova·Yggdrasil se správnou zdrojovou runou (EN+IS), oddělená od textu a hlasu — i v deníku (zlatý řádek)');
