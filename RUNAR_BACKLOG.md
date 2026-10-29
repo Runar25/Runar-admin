@@ -828,10 +828,13 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   **Připraveno (CODE-web 2026-10-28; soubory `web/socialni/`, generátor `scripts/web_socialni_obrazky.py`; owner nahrává ručně):**
   8. Titulní fotka Facebooku `fb-titulni.jpg` 1640×624: Rúnar i nápis stojí ve středu, který vidí počítač (820×312) i telefon
      (640×360) — nápis končí na 1301 px, telefon ořezává za 1375 px (změřeno).
-  9. Profilovka `profil-ikona.jpg` (kresba ikony appky — kámen ᚱ, kruh run; tutéž na Facebook i Instagram). Srovnáno ve 176 / 110 /
-     40 px na tmavém i bílém pozadí: čitelná i ve 40 px a je to týž obrázek, jaký lidé uvidí na ploše telefonu. Runy v kruhu jsou
-     kresba generátoru jako u ikony appky. Výřezy z portrétů s holí owner zamítl (2026-10-28: *„má Rúnara s uříznutou holí“*) —
-     čtverec kolem obličeje hůl vždy přetne; do profilovky jen záběr, kde Rúnar nic nedrží přes okraj.
+  9. Profilovka — dvě možnosti, owner vybere při zakládání profilů (2026-10-29: *„ještě nevím. připravíme to a rozhodnu se, až to
+     budeme dělat“*); tutéž na Facebook i Instagram, oba ji ořízne do kruhu.
+     `profil-ikona.jpg` — Rúnarova tvář z dnešní ikony appky (kámen ᚱ, kruh run kreslený generátorem obrázku); srovnáno ve 176 / 110 /
+     40 px na tmavém i bílém pozadí, čitelná i ve 40 px. Po výměně ikony appky už nebude tatáž jako na ploše telefonu.
+     `profil-r.jpg` — zlaté R jako nová ikona appky, zlatý kruh u okraje (`ikona_appky.profil()`).
+     Výřezy z portrétů s holí owner zamítl (2026-10-28: *„má Rúnara s uříznutou holí“*) — čtverec kolem obličeje hůl vždy přetne;
+     do profilovky jen záběr, kde Rúnar nic nedrží přes okraj.
   10. Jméno všude stejné jako titulek webu (`og:site_name` ve `web/site/index.html`; na Instagramu 23 / 30 znaků).
   11. Bio Instagramu (≤ 150 znaků): první řádek = ownerova věta o světle z `UI_TEXT.guide_lines` (IS i EN v produkci); druhý řádek
       IS „Rúnalestur á íslensku og ensku ✧ Rúnar er gervigreind ✧ @agndofa“ (celé bio 137) · EN „Rune readings in Icelandic and
@@ -840,7 +843,7 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
       (IS 94, EN 96 znaků).
   13. Nová IS část ověřena: Greynir bez nálezu; korpus „rúnalestur“ 19×, „á íslensku og“ 7345×, „íslensku og ensku“ 2790×.
   14. therunekeeper.com do odkazů na Instagramu a do pole Web na Facebooku.
-  Čeká na ownera: souhlas s profilovkou `profil-ikona.jpg` a jazyk bia na Instagramu (doporučeno EN na Instagram, IS na Facebook).
+  Čeká na ownera: volba profilovky (při zakládání profilů) a jazyk bia na Instagramu (doporučeno EN na Instagram, IS na Facebook).
 - [ ] **Google Play bez provize — co hlídat dál** (rešerše CODE-web 2026-10-21, Play Console Help 10281818 + Payments policy 9858738):
   consumption-only appka smí o nákupu jinde jen INFORMOVAT textem; nesmí mít odkaz ani tlačítko na stránku, odkud se dá (i nepřímo)
   zaplatit. Opraveno CODE-tune 2026-10-21 v režimu `?src=play`: odkaz na obchod u pole kódu, značka AGNDOFA, odkazy a ceník v nápovědě.
@@ -1017,6 +1020,12 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   potenciálně použijeme jako základ pro ostatní podobné funkce.“* → napřed náhled (vzor záře: svíčka `window.rozsvit`, `runar-helper.js`).
 - [ ] **Nové logo appky — zlaté Rúnarovo R (e98e5e68):** *„mame ho například v rune reading card“* (kresba Rúnakortu, `runar-runakort.js`)
   → návrh ikony appky (PWA, Play) ve všech velikostech, napřed náhled.
+  Generátor `scripts/ikona_appky.py` (CODE-web). Owner 2026-10-29 k prvnímu náhledu (R v kameni): *„bez kamene. ale můžeme udělat
+  zlatý rámeček po okraji ikony. tvar asi záleží na tvaru ikony v mobilu. necháme i s kamenem.“* → druhý náhled: A holé R + zlatý
+  rámeček v tvaru ikony na telefonu (výchozí) · B kámen + rámeček (`--kamen`) · C první náhled (`--kamen --bez-ramecku`). Po volbě:
+  `--cil v2/icons` + ruční bump `v2/sw.js` v témže commitu (ikony jsou v precache, hook verzi u PNG nezvedne) + `web/site/favicon.ico` +
+  smazat nepoužitý `v2/icons/site.webmanifest`; při volbě B přegenerovat i `web/socialni/profil-r.jpg` s kamenem. Až se bude stavět
+  balíček pro Google Play, ověřit jeho adaptivní ikonu proti rámečku — jak velký výřez z maskable obrázku ukáže, není ověřené.
 - [ ] **Přehrávač čtení jako svíčka (9c7d57f1, 63278a3a):** po ťuknutí na ♪ okénko *„tap again to stop“*; přehrávač čtení ve stylu našich run
   bez kamenů, naležato: nota · čas 0 · jiskra · svíčka · konec stopy. Jiskra se objeví po ťuknutí na notu přesně na knotu a zapálí svíčku;
   svíčka během přehrávání ubývá (vosk nerovně stéká po spodní hraně); pauza = obláček, který fouká ke špičce — ťuknutí krátce sfoukne plamen;
