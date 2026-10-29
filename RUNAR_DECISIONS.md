@@ -12516,5 +12516,8 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   Mezery zůstaly souměrné, protože vítr je nakreslený i v klidu (10 / 11 / 11 px na 375 px). (2) Rampouchů ≈ sekundy zvuku × √(délka
   svíčky / 200), nejméně 6, nejvýš jeden na 5 jednotek: rituál 17 s 11 (dřív 18), čtení 24 s 24 (dřív 17), od ~40 s strop 39.
 - **Hlídá:** smoke ㊎ (mezery počítají vítr jako viditelný jen s `opacity` ≠ 0); útok „vítr v klidu zmizí“ místo útoku na pevný začátek svíčky.
+- **Čas bez poskakování** (owner téhož večera: *„čas stopy stále posouvá teď už i sfouknutí a svíčku… nastav na 0:00 ty nejtlustší a ať se to
+  už konečně nepohybuje“*): oba časy mají pevnou šířku podle nejširší číslice (Cinzel má číslice různě široké, tabular-nums nepomůže).
+  Bez toho „0:00“ → „0:12“ posunulo svíčku o 3,3 px; teď během hraní 0:00–0:11 stojí na místě. Hlídá ㊎ + útok.
 - **Otevřené:** owner napsal i *„jak se mění čas stopy, tak se mění délka svíčky“* — čteno jako popis (svíčka ubývá s časem); položeno jako otázka.
 - Affected doc(s): žádný jiný (vzhled vlastní `v2/runar-svicka.js` a `v2/runar-reader.css`).

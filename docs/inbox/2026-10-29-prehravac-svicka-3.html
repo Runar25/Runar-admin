@@ -927,7 +927,7 @@ input:autofill{filter:none;}
 .svp-nota svg{width:1.9em;height:1.9em;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;transform-origin:50% 80%;}
 .svp-nota.hraje svg{animation:notaHoupe 1.4s ease-in-out infinite;filter:drop-shadow(0 0 2.5px rgba(255,191,0,0.55));}
 .svp-nota:focus-visible,.svp-svicka:focus-visible{outline:1px solid var(--gold);outline-offset:2px;}
-.svp-cas{flex:none;line-height:1;font-variant-numeric:tabular-nums;}
+.svp-cas{flex:none;line-height:1;text-align:center;font-variant-numeric:tabular-nums;}   /* šířku (nejširší číslice) dává runar-svicka.js */
 .svp-svicka{flex:1;min-width:0;height:2.6em;overflow:visible;display:block;cursor:pointer;touch-action:pan-y;-webkit-tap-highlight-color:transparent;}
 .svp-svicka path{fill:none;stroke:var(--gold-soft);stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round;}
 .svp-svicka .svp-lesk{stroke-width:1;opacity:0.35;}
@@ -1363,7 +1363,7 @@ body:has(.modal-overlay.open) #hb-btn{display:none;}
     <ol>
       <li><b>Jeden přehrávač pro celou appku</b>: hlas čtení, Kolekce, deník i rituál. Starý pruh zmizí všude.</li>
       <li><b>Svíčka je posuvník.</b> Ťuknutí nebo tažení po svíčce přesune zvuk i svíčku na to místo. Dozadu svíčka doroste a vosk za tím místem zmizí, dopředu odhoří a vosk začne stékat. Jde to i při pauze.</li>
-      <li><b>Mezery jsou stejné</b>: nota, čas, svíčka a délka mají mezi sebou kolem 10–12 px (dřív 20 / 36 / 21 px). Svíčka vyplní celé místo mezi časy. Čísla pod řádky měří tahle stránka.</li>
+      <li><b>Mezery jsou stejné</b>: nota, čas, svíčka a délka mají mezi sebou 10–13 px (dřív 20 / 36 / 21 px). Svíčka vyplní celé místo mezi časy. Čísla pod řádky měří tahle stránka.</li>
       <li><b>Hraje vždy jen jeden.</b> Když pustíš rituál, hlas čtení se ztiší (bez poryvu) a naopak.</li>
       <li><b>Pauza = vítr vlevo nebo znovu nota.</b> Vítr stojí u svíčky pořád — v klidu tlumeně, při hraní naplno. Poryv od něj doletí k plameni, zhasne ho, vzletí kouřek.</li>
       <li><b>Vosku přibývá s délkou stopy:</b> rituál (17 s) má 11 rampouchů, dřív 18; tohle čtení (24 s) 24, dřív 17; delší čtení až 39 — víc by splynulo v pruh.</li>
@@ -1374,6 +1374,7 @@ body:has(.modal-overlay.open) #hb-btn{display:none;}
     <ol>
       <li>Symbol sfouknutí je zpátky (vítr vlevo). Kreslí se pořád, takže mezery zůstanou souměrné.</li>
       <li>Vosk podle délky stopy; u rituálu ubráno.</li>
+      <li>Čas má pevnou šířku podle nejširší číslice — když běží, svíčka ani vítr se už nehnou.</li>
     </ol>
   </div>
 </div>
@@ -2771,7 +2772,19 @@ function svickaNapoj(prefix) {
     [a, 'durationchange', naDelku], [a, 'emptied', naPrazdno], [a, 'ended', naKonec], [nota, 'click', naNotu], [svg, 'pointerdown', naDolu],
     [svg, 'pointermove', naTah], [svg, 'pointerup', naNahoru], [svg, 'pointercancel', naNahoru], [svg, 'keydown', naKlavesu]];
   udalosti.forEach(function (u) { u[0].addEventListener(u[1], u[2]); });
-  function prekresli() { rozmer(); vosk(); kresli(); }
+  // Pevná šířka obou časů = nejširší číslice (owner 2026-10-29: „čas stopy stále posouvá teď už i sfouknutí a svíčku… nastav na 0:00
+  // ty nejtlustší a ať se to už konečně nepohybuje“). Cinzel má číslice různě široké a tabular-nums u něj nepomůže, takže „0:07“ → „0:12“
+  // měnilo šířku času a posouvalo vítr i svíčku. Měří se „d:dd“ pro každou číslici (nejširší číslice na všech místech), v em, ať sedí
+  // i při zvětšení písma; skrytý přehrávač (šířka 0) se změří, až se ukáže (prekresli z ResizeObserveru) nebo až dorazí písmo.
+  function sirkaCasu() {
+    if (!ct || !dr) return;
+    var puv = ct.textContent, fs = parseFloat(getComputedStyle(ct).fontSize) || 0, max = 0;
+    ct.style.width = '';
+    for (var c = 0; c < 10; c++) { ct.textContent = c + ':' + c + c; max = Math.max(max, ct.getBoundingClientRect().width); }
+    ct.textContent = puv;
+    if (max > 0 && fs > 0) ct.style.width = dr.style.width = (max / fs + 0.02).toFixed(3) + 'em';
+  }
+  function prekresli() { sirkaCasu(); rozmer(); vosk(); kresli(); }
   var ro = window.ResizeObserver ? new ResizeObserver(prekresli) : null;
   if (ro) ro.observe(svg); else window.addEventListener('resize', prekresli);
 
@@ -2787,6 +2800,7 @@ function svickaNapoj(prefix) {
   };
   _SVICKY[prefix] = api;
   prekresli(); naDelku();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { if (_SVICKY[prefix] === api) prekresli(); });
   return api;
 }
 function svickaPopisky() {   // aria popisky v jazyce appky (volá updateUIText — statický překlad, §14)

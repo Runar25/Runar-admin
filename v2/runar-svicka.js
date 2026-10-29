@@ -232,7 +232,19 @@ function svickaNapoj(prefix) {
     [a, 'durationchange', naDelku], [a, 'emptied', naPrazdno], [a, 'ended', naKonec], [nota, 'click', naNotu], [svg, 'pointerdown', naDolu],
     [svg, 'pointermove', naTah], [svg, 'pointerup', naNahoru], [svg, 'pointercancel', naNahoru], [svg, 'keydown', naKlavesu]];
   udalosti.forEach(function (u) { u[0].addEventListener(u[1], u[2]); });
-  function prekresli() { rozmer(); vosk(); kresli(); }
+  // Pevná šířka obou časů = nejširší číslice (owner 2026-10-29: „čas stopy stále posouvá teď už i sfouknutí a svíčku… nastav na 0:00
+  // ty nejtlustší a ať se to už konečně nepohybuje“). Cinzel má číslice různě široké a tabular-nums u něj nepomůže, takže „0:07“ → „0:12“
+  // měnilo šířku času a posouvalo vítr i svíčku. Měří se „d:dd“ pro každou číslici (nejširší číslice na všech místech), v em, ať sedí
+  // i při zvětšení písma; skrytý přehrávač (šířka 0) se změří, až se ukáže (prekresli z ResizeObserveru) nebo až dorazí písmo.
+  function sirkaCasu() {
+    if (!ct || !dr) return;
+    var puv = ct.textContent, fs = parseFloat(getComputedStyle(ct).fontSize) || 0, max = 0;
+    ct.style.width = '';
+    for (var c = 0; c < 10; c++) { ct.textContent = c + ':' + c + c; max = Math.max(max, ct.getBoundingClientRect().width); }
+    ct.textContent = puv;
+    if (max > 0 && fs > 0) ct.style.width = dr.style.width = (max / fs + 0.02).toFixed(3) + 'em';
+  }
+  function prekresli() { sirkaCasu(); rozmer(); vosk(); kresli(); }
   var ro = window.ResizeObserver ? new ResizeObserver(prekresli) : null;
   if (ro) ro.observe(svg); else window.addEventListener('resize', prekresli);
 
@@ -248,6 +260,7 @@ function svickaNapoj(prefix) {
   };
   _SVICKY[prefix] = api;
   prekresli(); naDelku();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { if (_SVICKY[prefix] === api) prekresli(); });
   return api;
 }
 function svickaPopisky() {   // aria popisky v jazyce appky (volá updateUIText — statický překlad, §14)

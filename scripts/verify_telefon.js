@@ -143,7 +143,12 @@ const MERENI = `(() => {
       if (vnut) { sv.style.marginLeft = ''; return v; }
       var bod = function(q){ var r = sv.getBoundingClientRect(), st = _SVICKY.cap._stav(); return r.left + (st.x0 + (st.x1 - st.x0) * q) * r.width / st.W; };
       var tah = function(q, typ){ sv.dispatchEvent(new PointerEvent(typ, { clientX: bod(q), clientY: sv.getBoundingClientRect().top + 10, pointerId: 1, bubbles: true })); };
-      tah(0.7, 'pointerdown'); tah(0.7, 'pointerup'); await sl(150); var s1 = _SVICKY.cap._stav(), q1 = a.currentTime / a.duration;
+      var poloha = function(){ var b = function(id){ return Math.round(document.getElementById(id).getBoundingClientRect().left * 10) / 10; };
+        return [b('cap-ct'), b('cap-sv'), b('cap-dr'), document.getElementById('cap-ct').textContent]; }, p0 = poloha();
+      tah(0.7, 'pointerdown'); tah(0.7, 'pointerup'); await sl(150); var s1 = _SVICKY.cap._stav(), q1 = a.currentTime / a.duration, p1 = poloha();
+      // owner 2026-10-29: „čas stopy stále posouvá i sfouknutí a svíčku“ — jiné číslice nesmí pohnout svíčkou ani časem vpravo
+      if (p0[3] === p1[3]) v.push('posun nezměnil čas (' + p0[3] + ') — pohyb se nedá ověřit');
+      else if (Math.abs(p0[1] - p1[1]) > 0.5 || Math.abs(p0[2] - p1[2]) > 0.5) v.push('čas ' + p0[3] + ' → ' + p1[3] + ' posunul svíčku o ' + (p1[1] - p0[1]).toFixed(1) + ' px a délku o ' + (p1[2] - p0[2]).toFixed(1) + ' px');
       tah(0.2, 'pointerdown'); tah(0.2, 'pointerup'); await sl(150); var s2 = _SVICKY.cap._stav(), q2 = a.currentTime / a.duration;
       if (Math.abs(q1 - 0.7) > 0.03 || Math.abs(s1.p - 0.7) > 0.03) v.push('posun na 70 %: zvuk ' + q1.toFixed(2) + ', svíčka ' + s1.p.toFixed(2));
       if (Math.abs(q2 - 0.2) > 0.03 || Math.abs(s2.p - 0.2) > 0.03) v.push('posun zpět na 20 %: zvuk ' + q2.toFixed(2) + ', svíčka ' + s2.p.toFixed(2));
