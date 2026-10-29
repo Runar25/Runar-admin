@@ -15,5 +15,7 @@ dalším běhu přepsal jen novými variantami a text R3 (značky od modelu) neb
   → `~/runar-eval/hlasy/` + katalog + stránka k poslechu se vším (doc-links:ok 2026-10-29 mimo repo). Nikdy nepřepíše starší nahrávku.
 - Čtení: `scripts/utils/zaloha_cteni.js` (Stop-hook) kopíruje výstupy pokusů do `~/runar-eval/zaloha/`.
 - Pojistka: tentýž Stop-hook zachytí i `.mp3` uložené mimo archiv (`hlasy/zachyceno/`) — bez textu, proto `uloz()` je pravidlo, ne pojistka.
-- Ownerovi pouštěj poslech z archivu (stránka archivu přes server `hlasy` v uživatelském launch.json), ne ze složky jednoho pokusu.
+- Ownerovi dávej poslech jako SAMOSTATNÝ soubor s nahrávkami uvnitř: `node scripts/utils/hlas_archiv.js --samostatny eval_out/hlasy-poslech.html`,
+  otevřít v jeho prohlížeči a poslat soubor. Panel prohlížeče ani stránka přes server mu nehrají (owner 2026-10-29: *„takhle to přehrávání
+  nefunguje. Včera jsi to řešil a dnes mi dáš to stejné!“*).
 Souvisí: [[cteni-generuj-tady-ne-pres-api]], [[always-show-reading-samples]].
