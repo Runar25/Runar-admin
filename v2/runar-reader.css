@@ -10,6 +10,7 @@
   --bg:#0a0c12; --card:#12161f; --card2:#171b26;
   --border:#2E4A70; --border2:#3a5a85;
   --gold:#FFBF00; --gold2:rgba(255,191,0,0.12); --gold-dim:#b38a00;
+  --flame-core:#fff3c4;   /* 2026-10-29: jádro plamene svíčky přehrávače (runar-svicka.js) */
   --gold-soft:#D6A85C;   /* 2026-10-20: zlatá kreseb run (RUNE_SVGS) a textu k nim — do té doby natvrdo #D6A85C (CODE-read, jednotný vzhled) */
   --white:#F2F5F7; --muted:#8ba5c0; --dim:#3a4a60;
   --danger:#e07070; --panel:#0d1220;   /* 2026-10-20: chyba a tmavý panel (boční menu, odznak, sloty) — do té doby natvrdo (CODE-read) */
@@ -544,7 +545,7 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 /* 2026-10-12: bez pointer-events:none — klepnutí na zamčenou runu rozsvítí pozvánku (od 2026-10-22 _kolekceZamek v runar-app.js; dřív hláška) */
 .coll-cell.locked{opacity:0.28;cursor:not-allowed;}
 .coll-cell.locked:hover{background:transparent;border-color:var(--border);}
-.coll-audio-player{margin-top:10px;}.coll-audio-player .cap,.jcard-audio-player .cap{margin-top:0;}
+.coll-audio-player{margin-top:10px;}
 
 /* ── TRIAL BANNER ── */
 /* ── TIER NOTICES (Visitor + Rune Seeker) ── */
@@ -576,16 +577,10 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 button.card-lbl{background:none;border:0;padding:0;cursor:pointer;display:block;text-align:left;}
 button.card-lbl:focus-visible{outline:1px solid var(--gold);outline-offset:4px;}
 #ritual-box{margin:-6px 0 16px;}
-/* 2026-10-28 nadpis s hlasem: nadpis (rozbalovač „+“) a za ním ♪; ikona 1,35 × písmo nadpisu jako ikony menu (.sp-ik) */
+/* 2026-10-28 nadpis s hlasem: nadpis (rozbalovač „+“) a za ním hlas; od 2026-10-29 malá svíčka přehrávače (.svp-mala, runar-svicka.js) */
 .hlas-radek{display:flex;align-items:center;gap:.75em;margin-bottom:16px;}
 .hlas-radek > .card-lbl{margin-bottom:0;}
-.hlas-btn{display:inline-flex;align-items:center;justify-content:center;padding:0;border:0;background:none;color:var(--gold);cursor:pointer;
-  font-size:0.7em;width:1.9em;height:1.9em;-webkit-tap-highlight-color:transparent;}
-.hlas-btn svg{width:1.35em;height:1.35em;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;transform-origin:50% 80%;}
-.hlas-btn:focus-visible{outline:1px solid var(--gold);outline-offset:2px;}
-.hlas-btn.hraje svg{animation:notaHoupe 1.4s ease-in-out infinite;filter:drop-shadow(0 0 2.5px rgba(255,191,0,0.55));}
 @keyframes notaHoupe{0%,100%{transform:rotate(-7deg) translateY(0);}50%{transform:rotate(7deg) translateY(-1.5px);}}
-@media (prefers-reduced-motion:reduce){.hlas-btn.hraje svg{animation:none;}}
 .flbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--gold);display:block;margin:16px 0 6px;}
 .flbl:first-child{margin-top:0;}
 /* 2026-09-24: „THE SITUATION“ je první dítě #q-section → pravidlo výš mu vzalo horní mezeru a lepilo se
@@ -825,12 +820,38 @@ input:autofill{filter:none;}
 .audio-player{display:none;margin-top:14px;background:transparent;border:1px solid rgba(255,191,0,0.3);border-radius:0;padding:16px 18px;}
 .audio-player.visible{display:block;}
 .audio-player-lbl{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:3px;color:var(--gold);margin-bottom:12px;opacity:0.9;}
-/* ── PŘEHRÁVAČ — jediný v appce (hlas čtení, kolekce, deník; staví ho _makeCapPlayer v runar-app.js) ── */
+/* ── PŘEHRÁVAČ = SVÍČKA — jediný v appce (hlas čtení, Kolekce, deník, rituál); staví ho runar-svicka.js (owner 2026-10-29) ──
+   Owner: „zbytečně velké mezery mezi play, časovou osou… pruh stopy je tím asymetricky menší“ (dřív 20 / 36 / 21 px na 375 px).
+   Teď stejné viditelné mezery: nota má plochu pro prst 2,6em, ale glyf (1,9em) sedí na okraji řádku a u času — záporný okraj
+   o vnitřní odsazení glyfu (0,35em); časy jen na šířku textu; svíčka kreslí přes celou svou šířku (viewBox podle velikosti). */
+.svp{display:flex;align-items:center;gap:10px;font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:1px;color:var(--gold-soft);}
+.svp-nota{flex:none;display:inline-flex;align-items:center;justify-content:center;width:2.6em;height:2.6em;margin:0 -0.35em;padding:0;border:0;
+  background:none;color:var(--gold);font-size:1em;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.svp-nota svg{width:1.9em;height:1.9em;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;transform-origin:50% 80%;}
+.svp-nota.hraje svg{animation:notaHoupe 1.4s ease-in-out infinite;filter:drop-shadow(0 0 2.5px rgba(255,191,0,0.55));}
+.svp-nota:focus-visible,.svp-svicka:focus-visible{outline:1px solid var(--gold);outline-offset:2px;}
+.svp-cas{flex:none;line-height:1;font-variant-numeric:tabular-nums;}
+.svp-svicka{flex:1;min-width:0;height:2.6em;overflow:visible;display:block;cursor:pointer;touch-action:pan-y;-webkit-tap-highlight-color:transparent;}
+.svp-svicka path{fill:none;stroke:var(--gold-soft);stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round;}
+.svp-svicka .svp-lesk{stroke-width:1;opacity:0.35;}
+.svp-svicka .svp-vosk{opacity:0.8;}
+.svp-svicka .svp-plamen{fill:var(--gold);stroke:none;filter:drop-shadow(0 0 4px rgba(255,191,0,0.75));transform-box:fill-box;transform-origin:50% 100%;
+  animation:svpMihot 0.9s ease-in-out infinite alternate;}
+.svp-svicka .svp-jadro{fill:var(--flame-core);stroke:none;opacity:0.9;}
+@keyframes svpMihot{0%{transform:scale(1,1) rotate(-3deg);}50%{transform:scale(0.92,1.08) rotate(2deg);}100%{transform:scale(1.04,0.95) rotate(-1deg);}}
+.svp-svicka .svp-jiskra{fill:var(--gold);stroke:none;filter:drop-shadow(0 0 6px rgba(255,191,0,0.95));}
+.svp-svicka .svp-kour{stroke:var(--muted);stroke-width:1;opacity:0;}
+.svp-svicka .svp-fouk path{stroke:var(--white);stroke-width:1;opacity:0;}
+/* rituál: kratší svíčka bez času, jinak táž velikost jako u čtení (náhled 2, owner 2026-10-29 „teď je to dobré“) — tělo svíčky
+   ~ výška verzálek nadpisu vedle. Na úzkém telefonu se zkrátí (islandský nadpis je delší: na 320 px by přetekla). */
+.svp-mala .svp-svicka{flex:0 1 8.5em;min-width:3.5em;}
+.hlas-radek > span{min-width:0;}
+@media (prefers-reduced-motion:reduce){.svp-svicka .svp-plamen,.svp-nota.hraje svg{animation:none;}}
+/* Ovládání přehrávání růstu stromu (runar-tree.js): šipky .cap-btn a posuvník .cap-seek v řádku .cap — do 2026-10-29 i přehrávač hlasu. */
 .cap{display:flex;align-items:center;gap:12px;}
 /* 2026-10-11 pevná šířka: ▶ a ⏸ jsou různě široké, pruh přehrávání při přepnutí poskakoval (owner). */
 .cap-btn{background:none;border:none;color:var(--gold);font-size:1.15em;cursor:pointer;padding:2px 0;width:1.7em;text-align:center;line-height:1;flex-shrink:0;transition:opacity 0.15s;}
 .cap-btn:hover{opacity:0.75;}
-.cap-time{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:1px;color:var(--gold);flex-shrink:0;min-width:38px;}
 /* 2026-10-10 (KUKY: „kolečko posuvníku není vycentrované… uděláme svislou čáru velikosti kuličky přesně uprostřed čáry zvukové
    stopy“): jezdec = svislá čárka 3×16 px. Stopu (5 px) kreslí pseudo-prvek stopy, ne samotný input: do té doby ji WebKit neměl
    výslovně danou, odsazení jezdce (−5,5 px) se počítalo od jiného boxu a kulička seděla 2,7 px nad středem (změřeno při 10×

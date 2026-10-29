@@ -278,83 +278,21 @@ async function syncFreeBalance(userId) {
   } catch(e) { console.warn('syncFreeBalance:', e.message); }
 }
 
-// ─── PŘEHRÁVAČ — JEDINÝ v appce (hlas čtení, kolekce, deník) ─────────────
-// 2026-10-10 (KUKY: „přehrávač je na více místech. Měl by se používat jen jeden typ.“): do té doby měl hlas čtení vlastní
-// přehrávač (statický HTML + capToggle/capSeek/capMute v runar-reading.js) a kolekce s deníkem tenhle — dva kódy, jiná ikona
-// pauzy, zlatý průběh ve stopě a ztlumení jen u čtení. Teď jeden tvar i jeden kód; hlas čtení má prefix 'cap'.
-// prefix = unique string (e.g. 'cap', 'coll', 'j0')
-// 2026-10-11: pauza zpět na úzké ⏸ (owner: „proč jsi změnil pauzu na tenhle široký nesmysl, co mění i pruh přehrávání“) — při
-// sjednocení přehrávačů 2026-10-10 (9eb5492) se převzalo ▮▮ z Kolekce, 44 px proti 24 px u ▶, takže pruh při pauze poskočil o 20 px.
-// Hlas ve čtení měl do té doby ⏸. Zbytek rozdílu (⏸ 26 px) srovnává pevná šířka .cap-btn v runar-reader.css.
-var _CAP_PLAY = '&#9654;&#xFE0E;', _CAP_PAUSE = '&#9208;&#xFE0E;';   // FE0E: znak, ne barevné emoji (iOS)
-// preload="metadata" (2026-10-10, KUKY: „není vidět, jak dlouhá je stopa hlasu, vypadá to, že tam žádný hlas není“): délka se načte hned
-// a ukáže se vpravo. Do té doby preload="none" → 0:00 až do přehrání. Celý zvuk se nestahuje, jen hlavička.
-function _makeCapPlayer(prefix, src, autoplay) {
-  // bez src žádný atribut: src="" by prohlížeč načítal stránku jako zvuk
-  return '<audio id="' + prefix + '-a"' + (src ? ' src="' + src + '"' : '') + ' preload="metadata"' + (autoplay ? ' autoplay' : '') + '></audio>'
-       + '<div class="cap" style="margin-top:0;">'
-       + '<button class="cap-btn" id="' + prefix + '-pb" onclick="_capPlay(\'' + prefix + '\')" title="Play / Pause">' + _CAP_PLAY + '</button>'
-       + '<span class="cap-time" id="' + prefix + '-ct">0:00</span>'
-       + '<input type="range" class="cap-seek" id="' + prefix + '-sk" value="0" min="0" max="100" step="0.1" oninput="_capSeekTo(\'' + prefix + '\',this.value)" title="Seek">'
-       + '<span class="cap-time" id="' + prefix + '-dr">0:00</span>'
-       + '</div>';
-}
-function _capFmt(s) { var m = Math.floor(s / 60); return m + ':' + String(Math.floor(s % 60)).padStart(2, '0'); }
-function _capPct(p, pct) {   // zlatý průběh ve stopě: --p (0–1) čte ::-webkit-slider-runnable-track (Firefox má ::-moz-range-progress)
-  // 2026-10-11: číslo místo procent — výplň končí na středu jezdce, a ten se z procent spočítat nedal (vysvětlení u .cap-seek v CSS).
-  var sk = document.getElementById(p + '-sk');
-  if (sk) sk.style.setProperty('--p', Math.min(1, Math.max(0, (+pct || 0) / 100)).toFixed(4));
-}
-function _capPlay(p) {
-  var a = document.getElementById(p + '-a');
-  if (!a || !a.getAttribute('src')) return;
-  if (a.paused) a.play(); else a.pause();   // ikonu tlačítka nastaví události play/pause (_capWire), ne klik
-}
-function _capSeekTo(p, v) {
-  var a = document.getElementById(p + '-a');
-  if (a && a.duration) a.currentTime = (v / 100) * a.duration;
-  _capPct(p, v);
-}
-function _capReset(p) {
-  var sk = document.getElementById(p + '-sk'), ct = document.getElementById(p + '-ct'), pb = document.getElementById(p + '-pb');
-  if (pb) pb.innerHTML = _CAP_PLAY;
-  if (sk) sk.value = 0;
-  if (ct) ct.textContent = '0:00';
-  _capPct(p, 0);
-}
-function _capStop(p) {   // zastavit a vyprázdnit (nové čtení, jiný jazyk); removeAttribute + load(), ne src='' (viz _makeCapPlayer)
-  var a = document.getElementById(p + '-a'), dr = document.getElementById(p + '-dr');
-  if (a) { a.pause(); a.removeAttribute('src'); a.load(); }
-  if (dr) dr.textContent = '0:00';
-  _capReset(p);
-}
-function _capWire(p, doPlay) {
-  var a  = document.getElementById(p + '-a');
-  var sk = document.getElementById(p + '-sk');
-  var ct = document.getElementById(p + '-ct');
-  var dr = document.getElementById(p + '-dr');
-  var pb = document.getElementById(p + '-pb');
-  if (!a) return;
-  a.addEventListener('timeupdate', function() {
-    if (ct) ct.textContent = _capFmt(a.currentTime);
-    if (sk && a.duration) { sk.value = (a.currentTime / a.duration) * 100; _capPct(p, sk.value); }
-  });
-  // Délka stopy (viz _makeCapPlayer): durationchange ji u MP3 někdy zpřesní; NaN/Infinity (prázdný přehrávač) se nevypisuje.
-  function _dr() { if (dr && isFinite(a.duration) && a.duration > 0) dr.textContent = _capFmt(a.duration); }
-  a.addEventListener('loadedmetadata', _dr);
-  a.addEventListener('durationchange', _dr);
-  a.addEventListener('play',  function() { if (pb) pb.innerHTML = _CAP_PAUSE; });
-  a.addEventListener('pause', function() { if (pb) pb.innerHTML = _CAP_PLAY; });
-  a.addEventListener('ended', function() { _capReset(p); });
-  if (doPlay) {
-    a.addEventListener('canplay', function() { _capPlay(p); }, { once: true });
-  }
-}
+// ─── PŘEHRÁVAČ — JEDINÝ v appce (hlas čtení, kolekce, deník, rituál) ─────────────
+// 2026-10-10 (KUKY: „přehrávač je na více místech. Měl by se používat jen jeden typ.“): jeden tvar i jeden kód; hlas čtení má prefix 'cap'.
+// 2026-10-29 (owner, hlášení 9c7d57f1 + 63278a3a): přehrávač je svíčka — kód v runar-svicka.js; tady jen jména, která volají čtení,
+// Kolekce a deník (▶/⏸ a pruh .cap-seek do té doby; .cap-seek a .cap-btn dál nese přehrávání růstu stromu).
+// preload="metadata" (2026-10-10, KUKY: „není vidět, jak dlouhá je stopa hlasu“): délka se načte hned, celý zvuk se nestahuje.
+function _makeCapPlayer(prefix, src, autoplay) { return svickaHtml(prefix, src, { autoplay: autoplay }); }
+function _capWire(prefix) { svickaNapoj(prefix); }   // autoplay deníku spustí <audio autoplay>, svíčka se zapálí na jeho play
+function _capPlay(p) { svickaPrepni(p); }
+function _capReset(p) { svickaReset(p); }
+function _capStop(p) { svickaStop(p); }
 
 // ─── LANGUAGE ────────────────────────────────────────────
 function setLang(l) {
   if (l === lang) return;
-  _ritualHlasStop();   // hlas rituálu je v jazyce appky (2026-10-28)
+  _ritualHlas(l);   // hlas rituálu je v jazyce appky (2026-10-28): přehrávač s nahrávkou nového jazyka (a tím zastavený)
   localStorage.setItem('runar_lang', l);
   // Save to profile async (best-effort)
   _ulozJazykUctu(l);
@@ -1099,7 +1037,7 @@ function updateUIText() {
   setText('read-guide-lbl', t('guide_title'));
   var _rit = document.getElementById('ritual-box');   // 2026-10-27: rituál pod BEFORE WE BEGIN — statický text (§14)
   if (_rit) { _rit.innerHTML = ''; var _rp = document.createElement('p'); _rp.textContent = t('ritual_text'); _rit.appendChild(_rp); }
-  var _rh = document.getElementById('ritual-voice'); if (_rh) _rh.setAttribute('aria-label', t('ritual_listen'));   // staticky nadpis navodu — od 2026-09-23 v zalozce cteni
+  svickaPopisky();   // aria popisky přehrávačů (nota, svíčka) v jazyce appky — statický překlad
   setText('audio-player-lbl', t('voice_player_lbl'));
   setText('ask-lbl', t('ask_lbl'));
   var _askInp = document.getElementById('ask-input'); if (_askInp && typeof _askPlaceholder === 'function') _askInp.placeholder = _askPlaceholder();
@@ -1467,23 +1405,13 @@ function _navodPoPrvnimPrihlaseni() {
   if (box && box.style.display === 'none') toggleGuide();
 }
 // Hlas rituálu (owner 2026-10-28: ♪ za „+“, přehrát může každý i návštěvník; nahrávka = varianta F, RUNAR_RITUAL_HLAS v configu).
-// Ťuknutí přehraje / zastaví; přepnutí jazyka zastaví (příště hraje nahrávka nového jazyka).
-var _ritualZvuk = null;
-function _ritualHlasStop() {
-  if (_ritualZvuk) { _ritualZvuk.pause(); _ritualZvuk.currentTime = 0; }
-  var b = document.getElementById('ritual-voice'); if (b) { b.classList.remove('hraje'); b.setAttribute('aria-pressed', 'false'); }
-}
-function toggleRitualHlas() {
-  if (typeof RUNAR_RITUAL_HLAS === 'undefined') return;
-  var b = document.getElementById('ritual-voice'), h = RUNAR_RITUAL_HLAS[lang] || RUNAR_RITUAL_HLAS.en;
-  if (_ritualZvuk && !_ritualZvuk.paused) { _ritualHlasStop(); return; }
-  if (!_ritualZvuk || _ritualZvuk.getAttribute('data-lang') !== lang) {
-    if (_ritualZvuk) _ritualZvuk.pause();
-    _ritualZvuk = new Audio(h.src); _ritualZvuk.setAttribute('data-lang', lang);
-    _ritualZvuk.addEventListener('ended', _ritualHlasStop); _ritualZvuk.addEventListener('error', _ritualHlasStop);
-  }
-  if (b) { b.classList.add('hraje'); b.setAttribute('aria-pressed', 'true'); }
-  var pr = _ritualZvuk.play(); if (pr && pr.catch) pr.catch(_ritualHlasStop);
+// 2026-10-29 (owner: „svíčka pro rituál bude kratší… stejně vysoká jako text“): týž přehrávač jako čtení (runar-svicka.js), malý, bez času.
+function _ritualHlas(l) {
+  var host = document.getElementById('ritual-voice');
+  if (!host || typeof RUNAR_RITUAL_HLAS === 'undefined') return;
+  if (_SVICKY.rit) svickaStop('rit');
+  var h = RUNAR_RITUAL_HLAS[l] || RUNAR_RITUAL_HLAS.en;
+  host.innerHTML = svickaHtml('rit', h.src, { mala: true }); svickaNapoj('rit');
 }
 // Rituál pod BEFORE WE BEGIN (owner 2026-10-27): nadpis je rozbalovač, jako „How a reading works“.
 function toggleRitual() {
@@ -2190,6 +2118,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // na #runar-audio a `if (!a) return` by při chybějícím přehrávači přeskočil i zbytek téhle funkce.
   const capHost = document.getElementById('cap-host');
   if (capHost) { capHost.innerHTML = _makeCapPlayer('cap', '', false); _capWire('cap'); }
+  _ritualHlas(lang);
   // Runy v oknech (souhlas testera ᛏ, smazání účtu ᚾ): naše SVG místo znaku písma — týmž setRuneText (bod 11, 2026-10-10).
   // 2026-10-13 (hlášení ownera 0681916e): runa v hlavičce okna je KÁMEN jako v Kolekci (runeSvg frame:true), ne holá linka
   // (setRuneText) — ta v okně „Where to start“ působila jako runa písmem. Holá linka zůstává jen u runy uvnitř textu (CLAUDE.md §5).

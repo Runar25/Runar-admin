@@ -1199,7 +1199,8 @@ const UI_TEXT = {
     // 2026-10-28 (owner „2. ano“): „think about what is on your heart“ — ownerova věta s doplněným „is“ (Google Books: „what is on your heart“
     // doloženo; „in your heart“ 11× častější, ale znamená city, „on“ = co tě tíží, k tahu sedí). Namluvené: v2/audio/ritual_en.mp3.
     ritual_text: 'Find a quiet place before you draw. Light a candle or some incense if you like, or simply sit in silence. Breathe in deeply and think about what is on your heart. When your mind settles, draw a rune.',
-    ritual_listen: 'Listen to Rúnar',   // ♪ za „+“ u BEFORE WE BEGIN (aria-label)
+    player_listen: 'Listen to Rúnar',   // nota přehrávače-svíčky (aria-label) — hlas čtení, Kolekce, deník, rituál
+    player_seek: 'Recording',           // svíčka jako posuvník (aria-label; hodnotu čte čtečka jako „0:12 / 1:30“)
     reader_note:      'Tell me where to look. The rune speaks for itself.',
     name_lbl:         'YOUR NAME OR PREFERRED NAME',
     name_ph:          'How shall I address you?',
@@ -1784,7 +1785,8 @@ const UI_TEXT = {
     // „sem þú spyrð“ 367, „hugurinn kyrrist“ 6). Kalky z návrhu Gemini („í rólegu rými“, „þægilegum ilmi“ … 0×) nahrazeny.
     // 2026-10-28: „hugsaðu um það sem liggur þér á hjarta“ (korpus „liggur á hjarta“ 724, „liggur þér á“ 116, „þér á hjarta“ 111; Greynir čistý).
     ritual_text: 'Finndu rólegan stað áður en þú dregur. Kveiktu á kerti eða reykelsi ef þú vilt, eða vertu bara í þögn. Dragðu andann djúpt og hugsaðu um það sem liggur þér á hjarta. Þegar hugurinn kyrrist, dragðu rún.',
-    ritual_listen: 'Hlustaðu á Rúnar',   // korpus „hlustaðu á“ 1709, Greynir čistý
+    player_listen: 'Hlustaðu á Rúnar',   // korpus „hlustaðu á“ 1709, Greynir čistý
+    player_seek: 'Upptaka',              // holé podstatné jméno: „spóla í upptökunni“ korpusem nedoloženo (2026-10-29)
     reader_note:      'Segðu mér hvert ég á að líta. Rúnin talar sínu máli.',
     name_lbl:         'NAFNIÐ ÞITT EÐA GÆLUNAFN',
     name_ph:          'Hvað á ég að kalla þig?',

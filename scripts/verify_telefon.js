@@ -9,13 +9,15 @@
 // tlačítko nesahá přes levý / pravý okraj — kromě prvků uvnitř kontejneru, který posouvání do strany dovoluje (overflow-x auto/scroll; oříznutí hidden/clip je vada).
 // Prvek celý mimo obrazovku (zavřené boční menu čeká za pravým okrajem) se nepočítá — vada je přečuhování přes okraj.
 // Neumí: překryv dvou prvků přes sebe, velikost písma, výšku (posouvání dolů je v pořádku).
+// Přehrávač-svíčka (2026-10-29): stejné viditelné mezery nota → čas → svíčka → délka, svíčka přes většinu řádku, posun po svíčce
+// (události ukazatele) přesune zvuk i svíčku tam a zpět a vosk za místem zmizí; malá svíčka rituálu se v IS vejde vedle nadpisu.
 //   node scripts/verify_telefon.js
 'use strict';
 const fs = require('fs'), path = require('path'), http = require('http'), os = require('os'), cp = require('child_process');
 const ROOT = path.resolve(process.env.RUNAR_ROOT || path.join(__dirname, '..')).replace(/\\/g, '/');
 const SIRKA = 375, VYSKA = 812;
 const TYPY = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.png': 'image/png',
-  '.jpg': 'image/jpeg', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.json': 'application/json', '.webmanifest': 'application/manifest+json', '.woff2': 'font/woff2' };
+  '.jpg': 'image/jpeg', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.json': 'application/json', '.webmanifest': 'application/manifest+json', '.woff2': 'font/woff2', '.mp3': 'audio/mpeg' };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 let fail = 0;
 const rekni = (ok, popis, info) => { if (ok) console.log('OK    ' + popis); else { fail++; console.log('FAIL  ' + popis + (info ? ' — ' + info : '')); } };
@@ -23,7 +25,13 @@ const rekni = (ok, popis, info) => { if (ok) console.log('OK    ' + popis); else
 const srv = http.createServer((req, res) => {
   const f = path.join(ROOT, decodeURIComponent(req.url.split('?')[0]));
   if (!f.startsWith(path.normalize(ROOT)) || !fs.existsSync(f) || fs.statSync(f).isDirectory()) { res.writeHead(404); res.end(); return; }
-  res.writeHead(200, { 'Content-Type': TYPY[path.extname(f).toLowerCase()] || 'application/octet-stream', 'Cache-Control': 'no-store' });
+  const typ = TYPY[path.extname(f).toLowerCase()] || 'application/octet-stream', vel = fs.statSync(f).size;
+  // Range jako GitHub Pages / Supabase (2026-10-29): bez něj prohlížeč v nenačteném MP3 neskočí a posun po svíčce by nešel ověřit.
+  const rg = /^bytes=(\d*)-(\d*)$/.exec(req.headers.range || '');
+  if (rg) { const od = rg[1] ? +rg[1] : vel - +rg[2], po = rg[1] && rg[2] ? Math.min(+rg[2], vel - 1) : vel - 1;
+    res.writeHead(206, { 'Content-Type': typ, 'Content-Range': 'bytes ' + od + '-' + po + '/' + vel, 'Content-Length': po - od + 1, 'Accept-Ranges': 'bytes', 'Cache-Control': 'no-store' });
+    fs.createReadStream(f, { start: od, end: po }).pipe(res); return; }
+  res.writeHead(200, { 'Content-Type': typ, 'Content-Length': vel, 'Accept-Ranges': 'bytes', 'Cache-Control': 'no-store' });
   fs.createReadStream(f).pipe(res);
 });
 
@@ -113,6 +121,41 @@ const MERENI = `(() => {
     }
     const vSab = await ev(LISTA_PREKRYV + '(' + JSON.stringify('Aðalheiður Sigurðardóttir') + ', true)');   // samotest: pozdrav vnucený i u dlouhého jména
     if (!vSab || !vSab.some((x) => /topbar-greeting/.test(x))) vady.push('SAMOTEST: vnucený pozdrav u dlouhého jména (useknutý „G…“ u RÚNAR) kontrola nepoznala — ' + JSON.stringify(vSab));
+    // 2026-10-29 (owner: „přehrávač na mobilu má zbytečně velké mezery mezi play, časovou osou… pruh stopy je tím asymetricky menší“;
+    // „když posunu na nějaké místo svíčky, tak by se tam měl vrátit i přehrávač“): přehrávač-svíčka (runar-svicka.js) na telefonu.
+    // Mezery = od konce viditelné věci k začátku další (glyf noty, text času, kresba svíčky); dřív pruh .cap-seek 20 / 36 / 21 px.
+    const PREHRAVAC = `(async function(vnut){ var v = [], sl = function(ms){ return new Promise(function(r){ setTimeout(r, ms); }); };
+      showAppTab('reading'); document.getElementById('reader-output').style.display = 'block';
+      var ap = document.getElementById('audio-player'); ap.classList.add('visible');
+      var a = document.getElementById('cap-a'); a.muted = true; a.src = 'audio/ritual_en.mp3'; _capReset('cap');
+      for (var k = 0; k < 50 && !(isFinite(a.duration) && a.duration > 0); k++) await sl(100);
+      if (!(isFinite(a.duration) && a.duration > 0)) return ['zvuk se nenačetl (délka ' + a.duration + ')'];
+      var sv = document.getElementById('cap-sv'); if (vnut) sv.style.marginLeft = '26px'; await sl(150);
+      var txt = function(e){ var r = document.createRange(); r.selectNodeContents(e); return r.getBoundingClientRect(); };
+      var kr = function(s){ var l = 1e9, p = -1e9; s.querySelectorAll('path').forEach(function(x){ if (!x.getAttribute('d') || x.closest('[opacity="0"]') || getComputedStyle(x).opacity === '0') return;
+        var b = x.getBoundingClientRect(); if (b.width || b.height) { l = Math.min(l, b.left); p = Math.max(p, b.right); } }); return { left: l, right: p }; };
+      var ng = document.querySelector('#cap-pb svg').getBoundingClientRect(), c1 = txt(document.getElementById('cap-ct')), k1 = kr(sv), c2 = txt(document.getElementById('cap-dr'));
+      var m = [c1.left - ng.right, k1.left - c1.right, c2.left - k1.right].map(Math.round), cs = getComputedStyle(ap);
+      var vnitr = ap.getBoundingClientRect().width - 2 * (parseFloat(cs.paddingLeft) + parseFloat(cs.borderLeftWidth)), podil = (k1.right - k1.left) / vnitr;
+      if (Math.max.apply(null, m) - Math.min.apply(null, m) > 3 || Math.min.apply(null, m) < 6 || Math.max.apply(null, m) > 16)
+        v.push('mezery nota → čas · čas → svíčka · svíčka → délka ' + m.join(' · ') + ' px (mají být stejné ±3 px a 6–16 px)');
+      if (podil < 0.55) v.push('svíčka zabírá jen ' + Math.round(podil * 100) + ' % řádku');
+      if (vnut) { sv.style.marginLeft = ''; return v; }
+      var bod = function(q){ var r = sv.getBoundingClientRect(), W = _SVICKY.cap._stav().W; return r.left + (6 + (W - 7.5) * q) * r.width / W; };
+      var tah = function(q, typ){ sv.dispatchEvent(new PointerEvent(typ, { clientX: bod(q), clientY: sv.getBoundingClientRect().top + 10, pointerId: 1, bubbles: true })); };
+      tah(0.7, 'pointerdown'); tah(0.7, 'pointerup'); await sl(150); var s1 = _SVICKY.cap._stav(), q1 = a.currentTime / a.duration;
+      tah(0.2, 'pointerdown'); tah(0.2, 'pointerup'); await sl(150); var s2 = _SVICKY.cap._stav(), q2 = a.currentTime / a.duration;
+      if (Math.abs(q1 - 0.7) > 0.03 || Math.abs(s1.p - 0.7) > 0.03) v.push('posun na 70 %: zvuk ' + q1.toFixed(2) + ', svíčka ' + s1.p.toFixed(2));
+      if (Math.abs(q2 - 0.2) > 0.03 || Math.abs(s2.p - 0.2) > 0.03) v.push('posun zpět na 20 %: zvuk ' + q2.toFixed(2) + ', svíčka ' + s2.p.toFixed(2));
+      if (!(s1.vosk > s2.vosk)) v.push('vosk za místem po posunu zpět nezmizel (' + s1.vosk + ' → ' + s2.vosk + ' rampouchů)');
+      _capStop('cap'); ap.classList.remove('visible');
+      setLang('is'); await sl(300); var rs = document.getElementById('rit-sv'), rr = rs && rs.getBoundingClientRect();
+      if (!rs) v.push('malá svíčka rituálu chybí'); else if (rr.right > ${SIRKA} - 1 || rr.width < 20) v.push('malá svíčka rituálu (IS) ' + Math.round(rr.left) + '–' + Math.round(rr.right) + ' px');
+      setLang('en'); return v; })`;
+    const vPs = await ev(PREHRAVAC + '(true)');   // samotest: svíčka odsunutá o 26 px (vyhrazené místo vlevo, jako náhled 2) se musí poznat
+    if (!vPs || !vPs.some((x) => /mezery/.test(x))) vady.push('SAMOTEST: odsunutou svíčku (nesouměrné mezery) kontrola nepoznala — ' + JSON.stringify(vPs));
+    const vP = await ev(PREHRAVAC + '(false)');
+    if (!vP) vady.push('přehrávač: nešlo změřit'); else vP.forEach((x) => vady.push('přehrávač: ' + x));
     // 2026-10-28 (hlášení 8a6f3ff6): statické stránky — zásady a nápověda (EN i IS), týž telefon a táž měření.
     const STRANKY = ['runar-privacy.html', 'runar-help.html'];
     for (const st of STRANKY) for (const jaz of ['en', 'is']) {
@@ -128,7 +171,7 @@ const MERENI = `(() => {
       if (process.env.RUNAR_TEL_SNIMEK) { const sn = await cmd('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true }); fs.writeFileSync(path.join(process.env.RUNAR_TEL_SNIMEK, st.replace('.html', '') + '_' + jaz + '.png'), Buffer.from(sn.result.data, 'base64')); }
     }
     vady.forEach((v) => console.log('        ' + v));
-    rekni(!vady.length, 'telefon ' + SIRKA + ' px: v ' + STAVY.length + ' stavech appky a na zásadách i nápovědě (EN, IS) nic nepřetéká přes okraj a stránka se neposouvá do strany; lišta s krátkým i dlouhým jménem bez překryvu', vady.length + ' vad(a)');
+    rekni(!vady.length, 'telefon ' + SIRKA + ' px: v ' + STAVY.length + ' stavech appky a na zásadách i nápovědě (EN, IS) nic nepřetéká přes okraj a stránka se neposouvá do strany; lišta s krátkým i dlouhým jménem bez překryvu; přehrávač se stejnými mezerami a posunem po svíčce', vady.length + ' vad(a)');
     rekni(!exc.length, 'bez chyb JS', exc.map((x) => (x.exception && x.exception.description || x.text || '').split('\n')[0]).join(' | ').slice(0, 300));
   } catch (e) { rekni(false, 'prohlížeč spadl', String(e && e.message || e).slice(0, 200)); }
   const dialogy = poj ? poj.hotovo() : [];

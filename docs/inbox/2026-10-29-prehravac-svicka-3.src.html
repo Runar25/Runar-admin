@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Přehrávač svíčka v appce</title>
+<!-- Náhled 3 (owner 2026-10-29: „postav svíčku do appky… když posunu na nějaké místo svíčky, tak by se tam měl vrátit i přehrávač…
+     přehrávač na mobilu má zbytečně velké mezery… ukaž návrh“). Běží SKUTEČNÝ kód appky: v2/runar-svicka.js, v2/runar-reader.css,
+     v2/runar-translations.js — build je vloží dovnitř (2026-10-29-prehravac-svicka-3.build.js). Mezery pod řádky měří stránka sama. -->
+<!--FONTY-->
+<!--CSS-APPKY-->
+<style>
+.nahled{max-width:960px;margin:0 auto;padding:24px 16px 60px;display:grid;grid-template-columns:375px minmax(0,1fr);gap:32px;align-items:start;}
+@media (max-width:760px){.nahled{grid-template-columns:minmax(0,375px);}}
+.nahled h1{grid-column:1/-1;font-family:'Cinzel',serif;font-weight:400;letter-spacing:3px;color:var(--gold);font-size:1.1em;margin:0;}
+.nahled .uvod{grid-column:1/-1;color:var(--muted);margin:0;font-size:1.05em;font-family:'Cormorant Garamond',serif;}
+.telefon{width:100%;max-width:375px;background:var(--bg,#0a0c12);border:1px solid rgba(46,74,112,0.55);padding:20px 16px 24px;}
+.stitek{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:2.5px;color:var(--muted);margin:22px 0 8px;}
+.stitek:first-child{margin-top:0;}
+.mereni{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:1px;color:var(--muted);margin-top:8px;}
+.mereni b{color:var(--white);font-weight:400;}
+.vyklad{color:var(--muted);font-family:'Cormorant Garamond',serif;font-size:1.05em;line-height:1.55;}
+.vyklad h2{font-family:'Cinzel',serif;font-weight:400;letter-spacing:2px;color:var(--gold);font-size:0.78em;margin:22px 0 8px;}
+.vyklad h2:first-child{margin-top:0;}
+.vyklad ol{margin:0;padding-left:1.3em;}
+.vyklad li{margin:0 0 7px;}
+.vyklad b{color:var(--white);font-weight:600;}
+.cap-time{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:1px;color:var(--gold);flex-shrink:0;min-width:38px;}
+</style>
+</head>
+<body>
+<div class="nahled">
+  <h1>PŘEHRÁVAČ SVÍČKA — NÁHLED 3 (KÓD APPKY)</h1>
+  <p class="uvod">Vlevo telefon 375 px se skutečným kódem a styly appky. Hraje nahrávka rituálu. Ťukni na notu, pak ťukni nebo táhni po svíčce.</p>
+
+  <div class="telefon">
+    <div class="stitek">PŘED — DNEŠNÍ PŘEHRÁVAČ</div>
+    <div class="audio-player visible">
+      <div class="audio-player-lbl">♪ RÚNAR SPEAKS</div>
+      <div class="cap" id="stary">
+        <button class="cap-btn" type="button">&#9654;&#xFE0E;</button>
+        <span class="cap-time" id="st-ct">0:00</span>
+        <input type="range" class="cap-seek" value="0" min="0" max="100" step="0.1" aria-label="Seek">
+        <span class="cap-time" id="st-dr">0:17</span>
+      </div>
+    </div>
+    <div class="mereni" id="m-stary"></div>
+
+    <div class="stitek">PO — SVÍČKA (ČTENÍ, KOLEKCE, DENÍK)</div>
+    <div class="audio-player visible">
+      <div class="audio-player-lbl">♪ RÚNAR SPEAKS</div>
+      <div id="host-cap"></div>
+    </div>
+    <div class="mereni" id="m-novy"></div>
+
+    <div class="stitek">PO — RITUÁL (MALÁ, BEZ ČASU)</div>
+    <div class="hlas-radek">
+      <button type="button" class="card-lbl" aria-expanded="false">BEFORE WE BEGIN</button>
+      <span id="host-rit"></span>
+    </div>
+  </div>
+
+  <div class="vyklad">
+    <h2>CO JE POSTAVENÉ</h2>
+    <ol>
+      <li><b>Jeden přehrávač pro celou appku</b>: hlas čtení, Kolekce, deník i rituál. Starý pruh zmizí všude.</li>
+      <li><b>Svíčka je posuvník.</b> Ťuknutí nebo tažení po svíčce přesune zvuk i svíčku na to místo. Dozadu svíčka doroste a vosk za tím místem zmizí, dopředu odhoří a vosk začne stékat. Jde to i při pauze.</li>
+      <li><b>Mezery jsou stejné</b>: nota, čas, svíčka a délka mají mezi sebou kolem 10–12 px (dřív 20 / 36 / 21 px). Svíčka vyplní celé místo mezi časy. Čísla pod řádky měří tahle stránka.</li>
+      <li><b>Hraje vždy jen jeden.</b> Když pustíš rituál, hlas čtení se ztiší (bez poryvu) a naopak.</li>
+      <li><b>Pauza = znovu nota.</b> Poryv přiletí zleva k plameni, zhasne ho, vzletí kouřek.</li>
+      <li><b>Dohoří</b> → 3 s jen vosk → svíčka se složí zpátky celá.</li>
+      <li>Ovládá se i klávesnicí a čtečkou obrazovky (šipky ±5 s, Home / End; čtečka řekne „0:12 / 0:17“).</li>
+    </ol>
+    <h2>ZMĚNA PROTI NÁHLEDU 2</h2>
+    <ol>
+      <li><b>Čáry větru už nestojí trvale vlevo od svíčky.</b> Kvůli nim musel vlevo zůstat volný pruh, a to byla přesně ta nesouměrnost, kterou jsi viděl na mobilu. Vítr se teď ukáže jen jako poryv ve chvíli pauzy. Stejné čáry, jen jako pohyb.</li>
+    </ol>
+  </div>
+</div>
+
+<!--AUDIO-->
+<script>var lang = 'en';</script>
+<!--JS-PREKLADY-->
+<script>if (typeof t !== 'function') { var t = function (k) { return (UI_TEXT[lang] && UI_TEXT[lang][k]) || k; }; }</script>
+<!--JS-SVICKA-->
+<script>
+(function () {
+  var zdroj = document.getElementById('zdroj-zvuku').getAttribute('src');
+  document.getElementById('host-cap').innerHTML = svickaHtml('cap', zdroj, {});
+  svickaNapoj('cap');
+  document.getElementById('host-rit').innerHTML = svickaHtml('rit', zdroj, { mala: true });
+  svickaNapoj('rit');
+  // Viditelné mezery (od konce viditelné věci k začátku další), ať čísla nejsou dojem.
+  function text(e) { var r = document.createRange(); r.selectNodeContents(e); return r.getBoundingClientRect(); }
+  function kresba(svg) { var l = 1e9, p = -1e9; svg.querySelectorAll('path').forEach(function (x) { if (!x.getAttribute('d') || x.closest('[opacity="0"]')) return;
+    var cs = getComputedStyle(x); if (cs.opacity === '0') return; var b = x.getBoundingClientRect(); if (b.width || b.height) { l = Math.min(l, b.left); p = Math.max(p, b.right); } }); return { left: l, right: p }; }
+  function pruh(inp) { var r = inp.getBoundingClientRect(), s = getComputedStyle(inp), vn = parseFloat(s.getPropertyValue('--seek-side')) + parseFloat(s.getPropertyValue('--seek-line')) / 2; return { left: r.left + vn, right: r.right - vn }; }
+  function zmer() {
+    var st = document.getElementById('stary'), b = st.querySelector('.cap-btn'), c1 = text(document.getElementById('st-ct')), pr = pruh(st.querySelector('.cap-seek')), c2 = text(document.getElementById('st-dr'));
+    var bg = text(b);
+    document.getElementById('m-stary').innerHTML = 'MEZERY: ▶ → čas <b>' + Math.round(c1.left - bg.right) + '</b> · čas → pruh <b>' + Math.round(pr.left - c1.right) + '</b> · pruh → délka <b>' + Math.round(c2.left - pr.right) + '</b> px · pruh <b>' + Math.round(pr.right - pr.left) + '</b> px';
+    var ng = document.querySelector('#cap-pb svg').getBoundingClientRect(), n1 = text(document.getElementById('cap-ct')), k = kresba(document.getElementById('cap-sv')), n2 = text(document.getElementById('cap-dr'));
+    document.getElementById('m-novy').innerHTML = 'MEZERY: nota → čas <b>' + Math.round(n1.left - ng.right) + '</b> · čas → svíčka <b>' + Math.round(k.left - n1.right) + '</b> · svíčka → délka <b>' + Math.round(n2.left - k.right) + '</b> px · svíčka <b>' + Math.round(k.right - k.left) + '</b> px';
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { setTimeout(zmer, 300); }); else setTimeout(zmer, 600);
+  window.addEventListener('resize', function () { setTimeout(zmer, 100); });
+  window.__zmer = zmer;
+})();
+</script>
+</body>
+</html>

@@ -1026,7 +1026,7 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   `--cil v2/icons` + ruční bump `v2/sw.js` v témže commitu (ikony jsou v precache, hook verzi u PNG nezvedne) + `web/site/favicon.ico` +
   smazat nepoužitý `v2/icons/site.webmanifest`; při volbě B přegenerovat i `web/socialni/profil-r.jpg` s kamenem. Až se bude stavět
   balíček pro Google Play, ověřit jeho adaptivní ikonu proti rámečku — jak velký výřez z maskable obrázku ukáže, není ověřené.
-- [ ] **Přehrávač čtení jako svíčka (9c7d57f1, 63278a3a):** po ťuknutí na ♪ okénko *„tap again to stop“*; přehrávač čtení ve stylu našich run
+- [x] **Přehrávač čtení jako svíčka (9c7d57f1, 63278a3a):** po ťuknutí na ♪ okénko *„tap again to stop“*; přehrávač čtení ve stylu našich run
   bez kamenů, naležato: nota · čas 0 · jiskra · svíčka · konec stopy. Jiskra se objeví po ťuknutí na notu přesně na knotu a zapálí svíčku;
   svíčka během přehrávání ubývá (vosk nerovně stéká po spodní hraně); pauza = obláček, který fouká ke špičce — ťuknutí krátce sfoukne plamen;
   dohoří → 3 s zůstane, pak se za 1,5–2 s z vosku zase složí celá. Rituál: táž svíčka zmenšená, bez času. *„Uvidíme, jak to bude vypadat,
@@ -1035,3 +1035,5 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   s časem a výšky textu, vosk až po odhoření jako nesouměrné rampouchy ze spodní hrany, pauza = čáry větru (*„1. čáry“*), jiskra rovnou
   na knotu (*„2. teď je to dobré“*), svíčka nahrazuje přehrávač (stejné proporce, rituál kratší). Okénko „Tap again to stop“ **pryč** —
   *„bude to napsané někde v návodu“* → při stavbě řádek do nápovědy (`runar-help.html`, EN + IS).
+  ✅ *(CODE-tune 2026-10-29: postaveno — `v2/runar-svicka.js` pro čtení, Kolekci, deník i rituál, svíčka je posuvník, stejné mezery
+  na telefonu, nápověda EN + IS; DECISIONS 2026-10-29 (3). Náhled s kódem appky: `docs/inbox/2026-10-29-prehravac-svicka-3.html`.)*

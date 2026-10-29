@@ -32,6 +32,7 @@ runar-reporter.js     — in-app hlášení od testerů (bug_reports) · jen rea
 runar-client-errors.js — chyby JS u uživatelů → edge fn client-error (ops_events client_error) · jen reader, hned po configu
 runar-verze.js        — verze běžícího kódu pro hlášení (GENEROVANÉ hooks/pre-commit.py při bumpu sw.js, needitovat) · jen reader
 runar-rune-popup.js   — ťuknutí na glyf runy ve čtení → popup se jménem a významem · jen reader
+runar-svicka.js       — JEDINÝ přehrávač hlasu (svíčka = posuvník): čtení, Kolekce, deník, rituál · jen reader
 runar-helper.js       — nápověda „?" (bublina: glyf-tap, Ask) + hesla zrcadla v UI_TEXT · jen reader
 runar-runakort.js · runar-runakort.css — kresba karty Rúnakort (okno cesty); web ji čte odsud · třídy rk-* · jen reader
 runar-readings-admin.js — shrine: prohlížeč čtení (edge fn list-readings)
@@ -52,7 +53,7 @@ sw.js                 — Service Worker (auto-bump via git hook · hooks/pre-co
 ```
 runar-config.js → [reader: runar-client-errors.js] → runar-runes.js → [reader: runar-names.js → runar-names-registry.js] → runar-translations.js → runar-character.js
 → runar-utils.js → runar-svgs.js → [reader: runar-runakort.js]
-→ [reader]: runar-journal.js → runar-tree.js
+→ [reader]: runar-svicka.js → runar-journal.js → runar-tree.js
             → runar-auth.js → runar-reading.js → runar-app.js
             → runar-verze.js → runar-reporter.js → runar-rune-popup.js → runar-helper.js
 [jen kdo strom vidí, dynamicky z runar-tree.js]: tree-lab-trunk-composer/runar-trunk.js → tree-lab-branch-composer/runar-branch.js

@@ -28,7 +28,10 @@
 // drobná poznámka   .fine                                                 upozornění, poznámka v okně
 // glyf runy         .rune-svg  (runeSvg v runar-utils.js, §5)             kámen = tahaná runa, holá = popisek
 // ikona položky     .sp-ik     (_spText v runar-app.js)                    značka / kreslená ikona položky menu, 1,35 × text (2026-10-28)
-// hlas k nadpisu    .hlas-radek .hlas-btn (.hraje)                         ♪ za nadpisem s „+“: přehraje Rúnarův hlas; .hraje = nota se houpe
+// hlas k nadpisu    .hlas-radek                                           nadpis s „+“ a za ním malý přehrávač (.svp-mala)
+// přehrávač         .svp .svp-nota .svp-cas .svp-svicka (.svp-mala .hraje)   JEDINÝ přehrávač hlasu (runar-svicka.js, owner 2026-10-29): nota ·
+//                   .svp-lesk .svp-vosk .svp-plamen .svp-jadro .svp-jiskra   čas · svíčka (= posuvník) · délka; .svp-mala = bez času (rituál);
+//                   .svp-kour .svp-fouk                                   části kresby svíčky; .hraje = nota se houpe
 //
 // VLASTNÍ (třída mimo komponenty, s důvodem):
 // VLASTNÍ .xp-plus — sám je komponenta rozbalovače (span tam, kde text plní JS a ::after nejde)

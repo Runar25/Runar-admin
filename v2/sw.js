@@ -1,13 +1,14 @@
-// Rúnar Service Worker — v831
+// Rúnar Service Worker — v832
 // HTML: network-first (always fresh). JS/CSS/icons: cache-first (fast, offline ok).
 // External (Supabase, ElevenLabs, fonts): pass-through, never intercepted.
 
-const CACHE = 'runar-v831';
+const CACHE = 'runar-v832';
 const JS_SHELL = [
   '/Runar-admin/v2/runar-reader.css',
   '/Runar-admin/v2/runar-utils.js',
   // 2026-10-10: supabase-js u nás (dřív cdn.jsdelivr.net, SW externí nechytal) — bez precache by offline appka nenaběhla.
   '/Runar-admin/v2/vendor/supabase.min.js',
+  '/Runar-admin/v2/runar-svicka.js',   // 2026-10-29: přehrávač-svíčka (čtení, Kolekce, deník, rituál)
   '/Runar-admin/v2/runar-journal.js',
   '/Runar-admin/v2/runar-tree.js',
   '/Runar-admin/v2/runar-auth.js',

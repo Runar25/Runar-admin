@@ -12485,3 +12485,25 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Nasazeno 2026-10-29** (owner: *„ano, zapiš a nasaď“*): `elevenlabs-proxy` v48, `elevenlabs-static` v23; `nasazene_vs_repo.py` nasazené = HEAD,
   bez přihlášení 401. **Neověřeno:** první skutečný hlas čtení po nasazení (log funkce: „voice direction …“ = šlo bez značek).
 - Affected doc(s): RUNAR_PRICING.md (přepočet v témže commitu).
+
+## 2026-10-29 (3) — Přehrávač appky = svíčka (hlas čtení, Kolekce, deník, rituál); svíčka je posuvník; stejné mezery na telefonu
+
+- **Rozhodl:** owner 2026-10-29 po náhledu 2: *„postav svíčku do appky. Když posunu na nějaké místo svíčky, tak by se tam měl vrátit i přehrávač.“*
+  a *„přehrávač na mobilu má zbytečně velké mezery mezi play, časovou osou, samotný pruh stopy je tím asymetricky menší… ukaž návrh.“*
+  Hlášení 9c7d57f1, 63278a3a; náhled 2 a ownerovy volby v `RUNAR_BACKLOG.md` (položka svíčky).
+  **Mění** 2026-10-10 (12) (jeden přehrávač zůstává, jen má podobu svíčky; jezdec-čárka a pruh pryč) a v 2026-10-28 (3) bod ♪ za „+“
+  (za notou je teď malá svíčka; nahrávka F beze změny).
+- **Co:** (1) Jediný přehrávač appky je `v2/runar-svicka.js` (nota · čas · svíčka · délka; rituál `.svp-mala` bez času). `_makeCapPlayer` /
+  `_capWire` / `_capPlay` / `_capReset` / `_capStop` v `runar-app.js` zůstaly jako jména, která volají čtení, Kolekce a deník. Starý ▶/⏸ s pruhem
+  `.cap-seek` zmizel; `.cap`, `.cap-btn` a `.cap-seek` dál nese přehrávání růstu stromu. (2) **Svíčka = posuvník:** ťuknutí / tažení přesune
+  zvuk i svíčku (dozadu doroste a vosk za místem zmizí, dopředu odhoří), i v pauze; klávesnice ±5 s, čtečka „0:12 / 0:17“. (3) **Mezery:**
+  na 375 px dřív 20 / 36 / 21 px a pruh 142 px, teď 10 / 12 / 11 px a svíčka 199 px (svíčka kreslí v jednotkách své skutečné šířky).
+  (4) Hraje jen jeden přehrávač; spuštění jiného ztiší předchozí bez poryvu. (5) Rituál: ♪ za nadpisem nahradila malá svíčka; na úzkém
+  telefonu se zkrátí (IS nadpis je delší). (6) Nápověda „Rúnarův hlas“: jak zastavit a posouvat (EN + IS, místo okénka „Tap again to stop“).
+- **Změna proti náhledu 2:** čáry větru už nestojí trvale vlevo — vyhrazené místo pro ně byla právě ta nesouměrnost; vítr se ukáže jako poryv
+  při pauze. Ownerovi položeno jako otázka.
+- **Hlídá:** smoke ㊎ `verify_telefon.js` (skutečný Chrome, 375 px): stejné mezery ±3 px, svíčka ≥ 55 % řádku, posun na 70 % a zpět na 20 %
+  (zvuk i svíčka, vosk zmizí), malá svíčka rituálu v IS v řádku; samotest odsunuté svíčky + 2 útoky v `protipriklady.py`. Testovací server
+  kontroly umí Range — bez něj prohlížeč v nenačteném MP3 neskočí (produkce: GitHub Pages, Supabase a blob hlasu skočí).
+- **Neověřeno:** skutečný telefon (iOS Safari: dotyk a tažení po svíčce, zvuk) — kontrola jede v Chrome s emulací dotyku.
+- Affected doc(s): RUNAR_BACKLOG.md (položka svíčky odškrtnuta), CLAUDE.md (soubory a pořadí načítání), v2/runar-help.html (nápověda).
