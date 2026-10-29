@@ -36,15 +36,18 @@ function uloz({ pokus, jmeno, popis, jazyk, model, nastaveni, text, mp3, datum }
   return zaznam.soubor;
 }
 
-function poslech() {
-  const vse = nactiKatalog();
+// samostatny = nahrávky VLOŽENÉ do stránky (data URI): ownerovi se přehraje kdekoli, bez serveru i panelu prohlížeče (owner 2026-10-29:
+// „takhle to přehrávání nefunguje. Včera jsi to řešil a dnes mi dáš to stejné!“ — stránka přes server v panelu mu nehrála).
+// Zachycené zálohou (bez textu) se do samostatné stránky nedávají — jsou to hlavně zvuky run a stránka by byla obrovská.
+function poslech(samostatny) {
+  const vse = nactiKatalog().filter((z) => !samostatny || z.pokus !== 'zachyceno');
   const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
   const pokusy = [...new Set(vse.map((z) => z.pokus))].sort().reverse();
   const html = pokusy.map((p) => '<h2>' + esc(p) + '</h2>\n' + vse.filter((z) => z.pokus === p).map((z) =>
     '<div class="r"><b>' + esc(z.jazyk.toUpperCase() + ' · ' + z.jmeno) + '</b> <span>' + esc(z.popis) + ' · ' + esc(z.model)
     + (z.nastaveni ? ' · ' + esc(JSON.stringify(z.nastaveni)) : '') + ' · ' + z.znaku + ' zn. · ' + esc(z.datum.slice(0, 16).replace('T', ' ')) + '</span><br>'
-    + '<audio controls preload="metadata" src="' + esc(z.soubor) + '"></audio><div class="t">' + esc(z.text) + '</div></div>').join('\n')).join('\n');
-  const out = path.join(DIR, 'poslech.html');
+    + '<audio controls preload="metadata" src="' + (samostatny ? 'data:audio/mpeg;base64,' + fs.readFileSync(path.join(DIR, z.soubor)).toString('base64') : esc(z.soubor)) + '"></audio><div class="t">' + esc(z.text) + '</div></div>').join('\n')).join('\n');
+  const out = typeof samostatny === 'string' ? samostatny : path.join(DIR, 'poslech.html');
   fs.mkdirSync(DIR, { recursive: true });
   fs.writeFileSync(out, '<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Archiv hlasů Rúnara</title>'
     + '<style>body{font-family:Georgia,serif;background:#0f141f;color:#e8dcc2;max-width:820px;margin:24px auto;padding:0 16px}h2{color:#d6a85c;font-weight:normal;border-bottom:1px solid #2e4a70;padding-bottom:6px;margin-top:36px}'
@@ -75,4 +78,8 @@ function zachytVolne(koreny, opts) {
 }
 
 module.exports = { uloz, poslech, nactiKatalog, zachytVolne, DIR };
-if (require.main === module) console.log('poslech:', poslech());
+//   node scripts/utils/hlas_archiv.js --samostatny <soubor.html>   stránka s nahrávkami uvnitř (pro ownera)
+if (require.main === module) {
+  const i = process.argv.indexOf('--samostatny');
+  console.log('poslech:', i > 0 ? poslech(process.argv[i + 1]) : poslech());
+}
