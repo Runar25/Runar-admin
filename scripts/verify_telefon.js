@@ -141,7 +141,7 @@ const MERENI = `(() => {
       await cmd('Page.navigate', { url: URL });
       for (let k = 0; k < 100; k++) { await sleep(150); if (await ev(`typeof showAppTab === 'function' && document.readyState === 'complete'`)) break; }
       await sleep(900);
-      const r = await ev(`({ lang: lang, src: (document.getElementById('rit-a') || { getAttribute: function(){ return null; } }).getAttribute('src') })`);
+      const r = await ev(`({ lang: lang, src: (document.getElementById('rit-a') || { getAttribute: function(){ return null; } }).getAttribute('src'), host: (document.getElementById('ritual-voice') || {}).outerHTML })`);
       if (!r || r.lang !== jaz || !new RegExp('ritual_' + jaz + '\\.mp3').test(r.src || '')) vady.push('rituál po startu s uloženým jazykem ' + jaz + ': ' + JSON.stringify(r));
     }
     await nacti();
