@@ -123,6 +123,28 @@ const MERENI = `(() => {
     }
     const vSab = await ev(LISTA_PREKRYV + '(' + JSON.stringify('Aðalheiður Sigurðardóttir') + ', true)');   // samotest: pozdrav vnucený i u dlouhého jména
     if (!vSab || !vSab.some((x) => /topbar-greeting/.test(x))) vady.push('SAMOTEST: vnucený pozdrav u dlouhého jména (useknutý „G…“ u RÚNAR) kontrola nepoznala — ' + JSON.stringify(vSab));
+    // 2026-10-29 večer (owner: „mám nastavenou appku na EN, ale dostanu IS rituál?“): nahrávka rituálu = jazyk appky. Dvě cesty, kde se
+    // rozešly: přepnutí jazyka u hotového čtení se zrušeným oknem „Speak again in …?“ (appka zůstane v EN) a start s uloženou volbou.
+    const RIT_OKNO = await ev(`(function(){ setLang(lang === 'en' ? 'is' : 'en'); var m = document.getElementById('lang-switch-modal');
+      var r = { lang: lang, src: (document.getElementById('rit-a') || { getAttribute: function(){ return null; } }).getAttribute('src'), okno: !!(m && m.classList.contains('open')) };
+      if (m) m.classList.remove('open'); pendingLang = null; applyLangToggle(lang); return r; })()`);
+    if (!RIT_OKNO || !RIT_OKNO.okno) vady.push('rituál × okno přepnutí jazyka: okno se neotevřelo, větev neověřena — ' + JSON.stringify(RIT_OKNO));
+    else if (!new RegExp('ritual_' + RIT_OKNO.lang + '\\.mp3').test(RIT_OKNO.src || '')) vady.push('rituál po zrušeném přepnutí jazyka u čtení: appka ' + RIT_OKNO.lang + ', nahrávka ' + RIT_OKNO.src);
+    // obyčejné přepnutí jazyka (owner: „když přepnu na jiný, tak se musí i rituál nastavit… všechno má být v té jazykové mutaci“)
+    await nacti();
+    for (const jaz of ['is', 'en']) {
+      const r = await ev(`(function(){ setLang('${jaz}'); return { lang: lang, src: (document.getElementById('rit-a') || { getAttribute: function(){ return null; } }).getAttribute('src') }; })()`);
+      if (!r || r.lang !== jaz || !new RegExp('ritual_' + jaz + '\\.mp3').test(r.src || '')) vady.push('rituál po přepnutí jazyka na ' + jaz + ': ' + JSON.stringify(r));
+    }
+    for (const jaz of ['en', 'is']) {
+      await ev(`localStorage.setItem('runar_lang', '${jaz}'); 1`);
+      await cmd('Page.navigate', { url: URL });
+      for (let k = 0; k < 100; k++) { await sleep(150); if (await ev(`typeof showAppTab === 'function' && document.readyState === 'complete'`)) break; }
+      await sleep(900);
+      const r = await ev(`({ lang: lang, src: (document.getElementById('rit-a') || { getAttribute: function(){ return null; } }).getAttribute('src') })`);
+      if (!r || r.lang !== jaz || !new RegExp('ritual_' + jaz + '\\.mp3').test(r.src || '')) vady.push('rituál po startu s uloženým jazykem ' + jaz + ': ' + JSON.stringify(r));
+    }
+    await nacti();
     // 2026-10-29 (owner: „přehrávač na mobilu má zbytečně velké mezery mezi play, časovou osou… pruh stopy je tím asymetricky menší“;
     // „když posunu na nějaké místo svíčky, tak by se tam měl vrátit i přehrávač“): přehrávač-svíčka (runar-svicka.js) na telefonu.
     // Mezery = od konce viditelné věci k začátku další (glyf noty, text času, kresba svíčky); dřív pruh .cap-seek 20 / 36 / 21 px.

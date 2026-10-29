@@ -292,7 +292,6 @@ function _capStop(p) { svickaStop(p); }
 // ─── LANGUAGE ────────────────────────────────────────────
 function setLang(l) {
   if (l === lang) return;
-  _ritualHlas(l);   // hlas rituálu je v jazyce appky (2026-10-28): přehrávač s nahrávkou nového jazyka (a tím zastavený)
   localStorage.setItem('runar_lang', l);
   // Save to profile async (best-effort)
   _ulozJazykUctu(l);
@@ -1038,6 +1037,7 @@ function updateUIText() {
   var _rit = document.getElementById('ritual-box');   // 2026-10-27: rituál pod BEFORE WE BEGIN — statický text (§14)
   if (_rit) { _rit.innerHTML = ''; var _rp = document.createElement('p'); _rp.textContent = t('ritual_text'); _rit.appendChild(_rp); }
   svickaPopisky();   // aria popisky přehrávačů (nota, svíčka) v jazyce appky — statický překlad
+  _ritualHlas();     // nahrávka rituálu v jazyce appky (staví se jen při změně jazyka)
   setText('audio-player-lbl', t('voice_player_lbl'));
   setText('ask-lbl', t('ask_lbl'));
   var _askInp = document.getElementById('ask-input'); if (_askInp && typeof _askPlaceholder === 'function') _askInp.placeholder = _askPlaceholder();
@@ -1406,11 +1406,17 @@ function _navodPoPrvnimPrihlaseni() {
 }
 // Hlas rituálu (owner 2026-10-28: ♪ za „+“, přehrát může každý i návštěvník; nahrávka = varianta F, RUNAR_RITUAL_HLAS v configu).
 // 2026-10-29 (owner: „svíčka pro rituál bude kratší… stejně vysoká jako text“): týž přehrávač jako čtení (runar-svicka.js), malý, bez času.
-function _ritualHlas(l) {
+// Nahrávka = jazyk, ve kterém appka OPRAVDU běží (`lang`), a staví se jen při jeho změně — volá ji updateUIText, kterým projde každá změna
+// jazyka (uložená volba při startu, profil po přihlášení, přepínač, potvrzené okno „Speak again in …?“). Do 2026-10-29 večer ji stavěl
+// setLang z NOVÉHO jazyka hned na začátku a start appky z výchozího IS před načtením uložené volby → appka v EN, rituál islandsky
+// (owner: „mám nastavenou appku na EN, ale dostanu IS rituál?“): po zrušeném okně přepnutí u čtení i po každém otevření appky.
+function _ritualHlas() {
   var host = document.getElementById('ritual-voice');
   if (!host || typeof RUNAR_RITUAL_HLAS === 'undefined') return;
+  if (host.getAttribute('data-lang') === lang) return;
   if (_SVICKY.rit) svickaStop('rit');
-  var h = RUNAR_RITUAL_HLAS[l] || RUNAR_RITUAL_HLAS.en;
+  var h = RUNAR_RITUAL_HLAS[lang] || RUNAR_RITUAL_HLAS.en;
+  host.setAttribute('data-lang', lang);
   host.innerHTML = svickaHtml('rit', h.src, { mala: true }); svickaNapoj('rit');
 }
 // Rituál pod BEFORE WE BEGIN (owner 2026-10-27): nadpis je rozbalovač, jako „How a reading works“.
@@ -2118,7 +2124,6 @@ window.addEventListener('DOMContentLoaded', () => {
   // na #runar-audio a `if (!a) return` by při chybějícím přehrávači přeskočil i zbytek téhle funkce.
   const capHost = document.getElementById('cap-host');
   if (capHost) { capHost.innerHTML = _makeCapPlayer('cap', '', false); _capWire('cap'); }
-  _ritualHlas(lang);
   // Runy v oknech (souhlas testera ᛏ, smazání účtu ᚾ): naše SVG místo znaku písma — týmž setRuneText (bod 11, 2026-10-10).
   // 2026-10-13 (hlášení ownera 0681916e): runa v hlavičce okna je KÁMEN jako v Kolekci (runeSvg frame:true), ne holá linka
   // (setRuneText) — ta v okně „Where to start“ působila jako runa písmem. Holá linka zůstává jen u runy uvnitř textu (CLAUDE.md §5).
@@ -2148,6 +2153,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     updateSidePanelLang();
   }
   applyLangToggle(lang);   // 2026-10-10: výchozí jazyk je IS — i bez uložené volby, jinak by svítilo EN z HTML
+  _ritualHlas();   // hned po uložené volbě jazyka: první updateUIText čeká na přihlášení (pomalá síť = rituál by chyběl)
 
   // Restore address gender from localStorage
   userGender = localStorage.getItem('runar_gender') || 'hk';
