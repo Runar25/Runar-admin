@@ -61,7 +61,9 @@ const MERENI = `(() => {
     'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe', 'C:/Program Files/Microsoft/Edge/Application/msedge.exe'].find((p) => fs.existsSync(p));
   if (!EXE) { rekni(false, 'prohlížeč (Chrome/Edge) nenalezen'); srv.close(); process.exit(1); }
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'tel-'));
-  const proc = cp.spawn(EXE, ['--headless=new', '--disable-gpu', '--no-first-run', '--remote-debugging-port=0', '--user-data-dir=' + dir, 'about:blank'], { stdio: 'ignore' });
+  // --autoplay-policy (2026-10-29): ťuknutí na notu tu nepřijde od člověka → bez přepínače bezhlavý Chrome play() odmítne a dohrání rituálu
+  // nejde ověřit. Člověk na notu ťukne, gesto má.
+  const proc = cp.spawn(EXE, ['--headless=new', '--disable-gpu', '--no-first-run', '--autoplay-policy=no-user-gesture-required', '--remote-debugging-port=0', '--user-data-dir=' + dir, 'about:blank'], { stdio: 'ignore' });
   let poj = null;
   try {
     let dp = null; for (let i = 0; i < 100 && !dp; i++) { await sleep(100); try { dp = fs.readFileSync(path.join(dir, 'DevToolsActivePort'), 'utf8').split(/\r?\n/)[0]; } catch (e) {} }
@@ -156,6 +158,17 @@ const MERENI = `(() => {
       _capStop('cap'); ap.classList.remove('visible');
       setLang('is'); await sl(300); var rs = document.getElementById('rit-sv'), rr = rs && rs.getBoundingClientRect();
       if (!rs) v.push('malá svíčka rituálu chybí'); else if (rr.right > ${SIRKA} - 1 || rr.width < 20) v.push('malá svíčka rituálu (IS) ' + Math.round(rr.left) + '–' + Math.round(rr.right) + ' px');
+      // rituál (owner 2026-10-29): svíčka až po ťuknutí na notu, po dohrání zmizí; místo v řádku drží
+      if (rs) { var vidi = function(){ return getComputedStyle(rs).opacity !== '0' && !rs.classList.contains('svp-skryta'); }, ra = document.getElementById('rit-a');
+        if (vidi()) v.push('malá svíčka rituálu je vidět před ťuknutím na notu');
+        ra.muted = true; for (var k2 = 0; k2 < 50 && !(isFinite(ra.duration) && ra.duration > 0); k2++) await sl(100);
+        document.getElementById('rit-pb').click(); await sl(900);
+        if (!vidi()) v.push('malá svíčka rituálu se po ťuknutí na notu neukázala');
+        ra.currentTime = Math.max(0, ra.duration - 0.3);   // délku nenačtené MP3 prohlížeč jen odhadne → čekat na skutečný konec
+        for (var k3 = 0; k3 < 120 && !ra.ended; k3++) await sl(100);
+        if (!ra.ended) v.push('rituál nedohrál (zvuk ' + ra.currentTime.toFixed(1) + ' z ' + ra.duration.toFixed(1) + ' s)'); else await sl(4000);
+        if (!rs.classList.contains('svp-skryta')) v.push('malá svíčka rituálu po dohrání nezmizela');
+        if (Math.abs(rs.getBoundingClientRect().width - rr.width) > 0.5) v.push('skrytá svíčka rituálu nedrží místo v řádku'); }
       setLang('en'); return v; })`;
     const vPs = await ev(PREHRAVAC + '(true)');   // samotest: svíčka odsunutá o 26 px (vyhrazené místo vlevo, jako náhled 2) se musí poznat
     if (!vPs || !vPs.some((x) => /mezery/.test(x))) vady.push('SAMOTEST: odsunutou svíčku (nesouměrné mezery) kontrola nepoznala — ' + JSON.stringify(vPs));

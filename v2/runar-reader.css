@@ -843,7 +843,8 @@ input:autofill{filter:none;}
 .svp-svicka .svp-kour{stroke:var(--muted);stroke-width:1;opacity:0;}
 /* rituál: kratší svíčka bez času, jinak táž velikost jako u čtení (náhled 2, owner 2026-10-29 „teď je to dobré“) — tělo svíčky
    ~ výška verzálek nadpisu vedle. Na úzkém telefonu se zkrátí (islandský nadpis je delší: na 320 px by přetekla). */
-.svp-mala .svp-svicka{flex:0 1 8.5em;min-width:3.5em;}
+.svp-mala .svp-svicka{flex:0 1 8.5em;min-width:3.5em;transition:opacity .6s;}
+.svp-svicka.svp-skryta{opacity:0;pointer-events:none;}   /* rituál: svíčka až po ťuknutí na notu, po dohrání zmizí (runar-svicka.js) */
 .hlas-radek > span{min-width:0;}
 @media (prefers-reduced-motion:reduce){.svp-svicka .svp-plamen,.svp-nota.hraje svg{animation:none;}}
 /* Ovládání přehrávání růstu stromu (runar-tree.js): šipky .cap-btn a posuvník .cap-seek v řádku .cap — do 2026-10-29 i přehrávač hlasu. */

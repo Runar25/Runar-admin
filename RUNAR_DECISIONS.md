@@ -12530,3 +12530,13 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   i CSS pryč; svíčka začíná hned za časem (mezery na 375 px 10 / 13 / 12 px). Ťuknutí na svíčku dál posouvá; nápověda („ťukni znovu
   na notu“) platí beze změny. Útok ㊎ zase míří na vyhrazené prázdné místo vlevo.
 - Affected doc(s): žádný jiný (vzhled vlastní `v2/runar-svicka.js` a `v2/runar-reader.css`).
+
+## 2026-10-29 (6) — Rituál: svíčka až po ťuknutí na notu, po dohrání zmizí
+
+- **Rozhodl:** owner 2026-10-29: *„v rituálu se má svíčka objevit až po kliknutí na notu. A po dohrání zmizet.“*
+- **Co:** malá svíčka (`.svp-mala`) startuje skrytá (`.svp-skryta`, jen průhlednost — místo v řádku drží, nic neposkočí; nejde chytit ani
+  zaměřit). Nota ji ukáže; po konci dohoří, 3 s vosk a rozplyne se (místo skládání zpátky). V pauze zůstane vidět. Odmítne-li prohlížeč
+  přehrání, schová se zase. Přehrávač čtení, Kolekce a deníku beze změny.
+- **Hlídá:** smoke ㊎ — před notou skrytá, po notě vidět, po skutečném dohrání skrytá, místo v řádku stejné; + útok. Kontrola pouští Chrome
+  s `--autoplay-policy=no-user-gesture-required` (ťuknutí v ní nepřijde od člověka).
+- Affected doc(s): žádný jiný (vzhled vlastní `v2/runar-svicka.js` a `v2/runar-reader.css`).

@@ -345,6 +345,7 @@ PRIPADY = [
  ('chyti', 'verify_telefon.js', 'v2/runar-svicka.js', 'replace', 'yb = yt + vy, x0 = 6, x1, L;', 'yb = yt + vy, x0 = 30, x1, L;'),
  ('chyti', 'verify_telefon.js', 'v2/runar-svicka.js', 'replace', '    S.p = nq; a.currentTime = Math.min(nq * dl, Math.max(0, dl - 0.05));', '    S.p = nq;'),
  ('chyti', 'verify_telefon.js', 'v2/runar-svicka.js', 'replace', "    if (max > 0 && fs > 0) ct.style.width = dr.style.width =", "    if (false) ct.style.width = dr.style.width ="),   # čas bez pevné šířky posouvá svíčku
+ ('chyti', 'verify_telefon.js', 'v2/runar-svicka.js', 'replace', "(o.mala ? ' svp-skryta' : '')", "''"),   # rituál: svíčka vidět už před notou
  # verify_onclick_funkce.js (CODE-read 2026-10-22): přejmenovaná funkce v onclick v HTML · v šabloně v JS · metoda po tečce není funkce appky
  ('chyti', 'verify_onclick_funkce.js', 'v2/runar-reader.html', 'replace', 'onclick="treeZoomAll()"', 'onclick="treeZoomVse()"'),
  ('chyti', 'verify_onclick_funkce.js', 'v2/runar-journal.js', 'replace', 'onclick="playReadingVoice(', 'onclick="playReadingVoiceX('),

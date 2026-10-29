@@ -43,7 +43,7 @@ function svickaHtml(prefix, src, o) {
     + '<div class="svp' + (o.mala ? ' svp-mala' : '') + '" id="' + prefix + '-svp">'
     + '<button type="button" class="svp-nota" id="' + prefix + '-pb" aria-pressed="false" aria-label="' + _svickaEsc(t('player_listen')) + '">' + _SVICKA_NOTA + '</button>'
     + (o.mala ? '' : '<span class="svp-cas" id="' + prefix + '-ct">0:00</span>')
-    + '<svg class="svp-svicka" id="' + prefix + '-sv" role="slider" tabindex="0" aria-label="' + _svickaEsc(t('player_seek'))
+    + '<svg class="svp-svicka' + (o.mala ? ' svp-skryta' : '') + '" id="' + prefix + '-sv" role="slider" tabindex="' + (o.mala ? '-1' : '0') + '" aria-label="' + _svickaEsc(t('player_seek'))
     + '" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0" aria-valuetext="0:00"></svg>'
     + (o.mala ? '' : '<span class="svp-cas" id="' + prefix + '-dr">0:00</span>')
     + '</div>';
@@ -54,6 +54,11 @@ function svickaNapoj(prefix) {
   if (!a || !svg || !nota) return null;
   if (_SVICKY[prefix]) _SVICKY[prefix].zrus();
   var ct = document.getElementById(prefix + '-ct'), dr = document.getElementById(prefix + '-dr');
+  // Rituál (malá svíčka): svíčka se objeví až po ťuknutí na notu a po dohrání zmizí (owner 2026-10-29: „v rituálu se má svíčka objevit
+  // až po kliknutí na notu. A po dohrání zmizet.“). V pauze zůstane — je vidět, kde hlas stojí. Místo v řádku drží (jen průhlednost),
+  // takže se nic nehne; skrytá svíčka nejde chytit ani zaměřit klávesnicí.
+  var mizi = !!svg.closest('.svp-mala');
+  function ukaz(ano) { if (!mizi) return; svg.classList.toggle('svp-skryta', !ano); svg.setAttribute('tabindex', ano ? '0' : '-1'); }
 
   // Souřadnice: výška 34 jednotek, šířka podle skutečného poměru stran → 1 jednotka = stejně px na šířku i výšku, svíčka vyplní celé místo.
   // x0: místo pro knot a plamen v 0 %. Vítr (symbol sfouknutí) vlevo od svíčky a poryv k plameni pryč (owner 2026-10-29, po náhledu 3:
@@ -134,7 +139,8 @@ function svickaNapoj(prefix) {
   function spust() { if (!S.bezi) { S.bezi = true; requestAnimationFrame(smycka); } }
   function zastavAnim() { if (S.zrusAnim) { S.zrusAnim(); S.zrusAnim = null; } clearTimeout(S.casovac); }
   function zhasniNotu() { nota.classList.remove('hraje'); nota.setAttribute('aria-pressed', 'false'); }
-  function celaZnovu() {   // svíčka celá, bez vosku a plamene (nová stopa, konec dohoření, vyprázdnění)
+  function celaZnovu() {   // svíčka celá, bez vosku a plamene (nová stopa, konec dohoření, vyprázdnění); rituál ji schová
+    ukaz(false);
     zastavAnim(); S.p = 0; S.js = null; S.ky = 0; S.stav = 'klid';
     kapky.forEach(function (r) { r.t0 = null; r.zpet = null; });
     plamen.setAttribute('opacity', 0); jiskra.setAttribute('opacity', 0); kour.style.opacity = 0;
@@ -156,6 +162,7 @@ function svickaNapoj(prefix) {
   function dohor() {   // dohořelo: 3 s jen vosk, pak se za ~1,8 s z vosku složí celá (zprava doleva zpátky ke knotu)
     zastavAnim(); S.stav = 'dohorela'; S.p = 1; plamen.setAttribute('opacity', 0); zhasniNotu(); kresli();
     S.casovac = setTimeout(function () {
+      if (mizi) { ukaz(false); S.casovac = setTimeout(function () { celaZnovu(); a.currentTime = 0; }, _svickaKlid() ? 0 : 650); return; }   // rituál: rozplyne se
       S.zrusAnim = _svickaAnim(1800, function (q) { S.p = 1 - q; kapky.forEach(function (r) { r.zpet = 1 - q; }); kresli(); },
         function () { S.zrusAnim = null; celaZnovu(); a.currentTime = 0; });
     }, _svickaKlid() ? 0 : 3000);
@@ -167,12 +174,13 @@ function svickaNapoj(prefix) {
     if (!a.getAttribute('src') || S.stav === 'zapaluje') return;
     rozmer();
     if (S.stav === 'dohorela') { celaZnovu(); a.currentTime = 0; }
-    ztisOstatni();
+    ztisOstatni(); ukaz(true);
     zastavAnim(); kour.style.opacity = 0;
     nota.classList.add('hraje'); nota.setAttribute('aria-pressed', 'true');
     zapal(function () {
       S.stav = 'hori'; spust();
-      var pr = a.play(); if (pr && pr.catch) pr.catch(function () { plamen.setAttribute('opacity', 0); S.stav = 'klid'; zhasniNotu(); kresli(); });
+      // prohlížeč přehrání odmítl (bez gesta, chyba zvuku) → zpátky do klidu; rituál svíčku zase schová
+      var pr = a.play(); if (pr && pr.catch) pr.catch(function () { plamen.setAttribute('opacity', 0); S.stav = 'klid'; zhasniNotu(); if (!a.currentTime) ukaz(false); kresli(); });
     });
   }
   function posun(nq) {   // posun na místo svíčky: zvuk i svíčka tam (dozadu svíčka doroste, dopředu odhoří)
@@ -185,7 +193,7 @@ function svickaNapoj(prefix) {
   function qZBodu(e) { var r = svg.getBoundingClientRect(); return ((e.clientX - r.left) * W / r.width - x0) / L; }
 
   function naPlay() {
-    ztisOstatni(); rozmer();
+    ztisOstatni(); ukaz(true); rozmer();
     if (S.stav !== 'zapaluje') { S.stav = 'hori'; plamen.setAttribute('opacity', 1); }   // spuštění zvenku (autoplay deníku)
     nota.classList.add('hraje'); nota.setAttribute('aria-pressed', 'true'); spust();
   }
