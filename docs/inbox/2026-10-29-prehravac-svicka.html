@@ -161,7 +161,6 @@ h1{grid-column:1/-1;font-family:'Cinzel',serif;font-weight:400;letter-spacing:3p
       <svg class="svicka" data-svicka viewBox="0 0 240 34" aria-hidden="true"></svg>
       <span class="cas" data-konec>0:00</span>
     </div>
-    <div class="okenko" data-okenko>Tap again to stop</div>
 
     <div class="oddel"></div>
 
@@ -170,27 +169,25 @@ h1{grid-column:1/-1;font-family:'Cinzel',serif;font-weight:400;letter-spacing:3p
       <button class="nota" type="button" aria-label="Listen to Rúnar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5.5l10-2V16"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg></button>
       <svg class="svicka" data-svicka viewBox="0 0 120 34" aria-hidden="true"></svg>
     </div>
-    <div class="okenko" data-okenko>Tap again to stop</div>
 
     <div class="ovl">
       <button type="button" id="b-konec">PŘESKOČIT NA KONEC (dohoření)</button>
-      <button type="button" id="b-is">OKÉNKO: EN / IS</button>
     </div>
   </div>
 
   <div class="legenda">
     <h2>JEDEN PŘEHRÁVAČ PRO ČTENÍ I RITUÁL</h2>
     <ol>
-      <li><b>Nota</b> = přehrát; během hraní se houpe. Na <b>knotu</b> se objeví <b>jiskra</b>, zableskne se a zapálí svíčku. Vyskočí okénko <b>„Tap again to stop“</b>.</li>
+      <li><b>Nota</b> = přehrát; během hraní se houpe. Na <b>knotu</b> se objeví <b>jiskra</b>, zableskne se a zapálí svíčku. Okénko „Tap again to stop“ není (owner 2026-10-29) — jak zastavit, bude v návodu.</li>
       <li><b>Svíčka leží v řádce s časem</b>, vysoká jako text. <b>Knot je vlevo</b> a hoří <b>zleva doprava</b> spolu s časem — co zbývá, je délka svíčky.</li>
       <li><b>Vosk</b> zůstává až za plamenem: kus svíčky odhoří a z <b>linie její spodní hrany</b> začne stékat vosk dolů — rampouchy, jeden delší, druhý kratší, nesouměrné, nejvýš do výšky svíčky.</li>
       <li><b>Pauza = vítr</b> (zatočené čáry, obvyklý znak foukání) vlevo u začátku, fouká doprava. Ťuknutí na vítr nebo znovu na notu: poryv doletí přesně k plameni, ten zhasne, vzletí kouřek. Svíčka s knotem čeká na další jiskru.</li>
       <li><b>Dohoří</b> → 3 s zůstane jen vosk, pak se svíčka za ~1,8 s z vosku složí zpátky celá.</li>
       <li><b>Rituál</b>: táž svíčka, kratší, bez času.</li>
     </ol>
-    <h2>K ROZHODNUTÍ</h2>
+    <h2>ROZHODNUTO</h2>
     <ol>
-      <li>Vítr: čáry (teď), nebo <b>foukající hlava</b> jako na starých mapách (Boreas) — víc severské, ale v téhle velikosti hůř čitelná?</li>
+      <li>Vítr čárami (owner 2026-10-29 „1. čáry“).</li>
     </ol>
   </div>
 </div>
@@ -319,9 +316,8 @@ h1{grid-column:1/-1;font-family:'Cinzel',serif;font-weight:400;letter-spacing:3p
     return api;
   }
 
-  var ok = document.querySelectorAll('[data-okenko]');
-  var a = Svicka(document.getElementById('p-cteni'), ok[0]);
-  var b = Svicka(document.getElementById('p-ritual'), ok[1]);
+  var a = Svicka(document.getElementById('p-cteni'));
+  var b = Svicka(document.getElementById('p-ritual'));
   function smycka() { a.tik(); b.tik(); requestAnimationFrame(smycka); }
   requestAnimationFrame(smycka);
   window.__tik = function () { a.tik(); b.tik(); };   // jen pro ověření ve skrytém panelu (rAF tam stojí)
@@ -329,7 +325,6 @@ h1{grid-column:1/-1;font-family:'Cinzel',serif;font-weight:400;letter-spacing:3p
   zvuk.addEventListener('loadedmetadata', function () { a.delka(); });
   if (zvuk.readyState >= 1) a.delka();
   document.getElementById('b-konec').addEventListener('click', function () { a.skoc(); });
-  document.getElementById('b-is').addEventListener('click', function () { jazykIS = !jazykIS; ok.forEach(function (o) { o.textContent = jazykIS ? 'Ýttu aftur til að stöðva' : 'Tap again to stop'; o.classList.add('vidi'); clearTimeout(o.t); o.t = setTimeout(function () { o.classList.remove('vidi'); }, 2600); }); });
 })();
 </script>
 </body>
