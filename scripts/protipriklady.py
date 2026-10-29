@@ -102,7 +102,7 @@ PRIPADY = [
  ('chyti', 'verify_monthly_limits.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'replace', '    if (!brzda.pustit) {', '    if (false) {'),
  ('chyti', 'verify_monthly_limits.js', 'supabase/functions/_shared/voice_usage.ts', 'replace', '  const hladina = lim - EL_DOBITI_KREDITY;', '  const hladina = lim;'),
  ('chyti', 'verify_monthly_limits.js', 'supabase/functions/elevenlabs-static/index.ts', 'replace', '    const brzda = brzdaHlasu(kvota, kredityHlasu(resolvedModel, text.length))', '    const brzda = { pustit: true, spotreba: null, hladina: null, novych: 0 }'),
- ('chyti', 'verify_monthly_limits.js', 'scripts/utils/stats.js', 'regex', r"('eleven_v3': )0\.08", r"\g<1>0.10"),
+ ('chyti', 'verify_monthly_limits.js', 'scripts/utils/stats.js', 'regex', r"('eleven_v4_turbo': )0\.04", r"\g<1>0.08"),   # 2026-10-29: sazba modelu, kterým hlas mluví (do té doby v3)
  # kolo 3 / 4b (2026-10-11)
  ('chyti', 'verify_internal_tags.js', 'v2/runar-translations.js', 'append', '', '\n// [kánon] podstrčený interní tag\n'),
  ('chyti', 'verify_doc_values.js', 'RUNAR_PRIVACY.md', 'append', '', '\nTier Rune Master dostane víc čtení.\n'),
@@ -321,7 +321,7 @@ PRIPADY = [
  ('chyti', 'verify_play_bez_nakupu.js', 'v2/runar-app.js', 'replace', "if (src === 'play') return 'play';", "if (src === 'play') return 'web';"),
 ('chyti', 'verify_ritual_hlas.js', 'v2/runar-translations.js', 'replace', 'and think about what is on your heart. When', 'and think about what is in your heart. When'),   # 2026-10-28: text rituálu změněný bez nové nahrávky
 ('chyti', 'verify_hlas_rezie.js', 'supabase/functions/_shared/voice_direction.ts', 'replace', '  return bezZnacek(znackovany) === bezZnacek(puvodni);', '  return true;'),   # 2026-10-29: pojistka značek vypnutá — model by smel změnit slovo
-('chyti', 'verify_hlas_rezie.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'replace', '          text: recText,\n', '          text,\n'),   # 2026-10-29: proxy pošle do ElevenLabs syrový text místo připraveného
+('chyti', 'verify_hlas_rezie.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'replace', 'text: recText,', 'text,'),   # 2026-10-29: proxy pošle do ElevenLabs syrový text místo připraveného
  ('chyti', 'verify_play_bez_nakupu.js', 'v2/runar-help.html', 'regex', r'(<body[^>]*>)', r'\g<1><p><a href="https://www.insta' + 'gram.com/runartherunekeeper/">Instagram</a></p>'),   # 2026-10-27: Instagram = nepřímá cesta k nákupu
  # ㊑ web × appka (2026-10-21, CODE-read): dnešní chyba (web znovu deklaruje jméno z configu) · appka přejmenuje funkci, kterou web volá
  ('chyti', 'verify_web_appka_jmena.js', 'web/site/web.js', 'replace', "var RUNAR_APP_URL = ", "var RUNAR_HOME_URL = 'x';\nvar RUNAR_APP_URL = "),
