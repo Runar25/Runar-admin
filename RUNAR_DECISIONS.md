@@ -12507,3 +12507,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   kontroly umí Range — bez něj prohlížeč v nenačteném MP3 neskočí (produkce: GitHub Pages, Supabase a blob hlasu skočí).
 - **Neověřeno:** skutečný telefon (iOS Safari: dotyk a tažení po svíčce, zvuk) — kontrola jede v Chrome s emulací dotyku.
 - Affected doc(s): RUNAR_BACKLOG.md (položka svíčky odškrtnuta), CLAUDE.md (soubory a pořadí načítání), v2/runar-help.html (nápověda).
+
+## 2026-10-29 (4) — Svíčka: vítr (symbol sfouknutí) zpátky natrvalo; vosku přibývá s délkou stopy, u rituálu méně
+
+- **Rozhodl:** owner 2026-10-29 nad náhledem 3: *„chybí symbol sfouknutí… na delší časové stopy by mělo být více tekoucího vosku. U rituálu
+  trošku vosku ubrat.“* Mění 2026-10-29 (3) bod „Změna proti náhledu 2“ (vítr jen jako poryv).
+- **Co:** (1) Čáry větru stojí vlevo od svíčky pořád — v klidu tlumeně (`VITR_KLID`), při hraní naplno; ťuknutí na ně při hraní = sfouknutí.
+  Mezery zůstaly souměrné, protože vítr je nakreslený i v klidu (10 / 11 / 11 px na 375 px). (2) Rampouchů ≈ sekundy zvuku × √(délka
+  svíčky / 200), nejméně 6, nejvýš jeden na 5 jednotek: rituál 17 s 11 (dřív 18), čtení 24 s 24 (dřív 17), od ~40 s strop 39.
+- **Hlídá:** smoke ㊎ (mezery počítají vítr jako viditelný jen s `opacity` ≠ 0); útok „vítr v klidu zmizí“ místo útoku na pevný začátek svíčky.
+- **Otevřené:** owner napsal i *„jak se mění čas stopy, tak se mění délka svíčky“* — čteno jako popis (svíčka ubývá s časem); položeno jako otázka.
+- Affected doc(s): žádný jiný (vzhled vlastní `v2/runar-svicka.js` a `v2/runar-reader.css`).

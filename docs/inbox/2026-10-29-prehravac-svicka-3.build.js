@@ -10,11 +10,16 @@ const cti = (f) => fs.readFileSync(path.join(V2, f), 'utf8');
 let html = fs.readFileSync(path.join(D, '2026-10-29-prehravac-svicka-3.src.html'), 'utf8');
 const fonty = cti('fonts/fonts.css').replace(/url\(([^)]+\.woff2)\)/g, (m, f) => 'url(data:font/woff2;base64,' + fs.readFileSync(path.join(V2, 'fonts', f)).toString('base64') + ')');
 const zvuk = 'data:audio/mpeg;base64,' + fs.readFileSync(path.join(V2, 'audio', 'ritual_en.mp3')).toString('base64');
+// Hlas čtení z archivu pokusů (mimo repo, scripts/utils/hlas_archiv.js): skutečná délka čtení, ať je vidět, kolik vosku dá dlouhá stopa.
+// Bez archivu (jiný počítač) hraje i čtení nahrávku rituálu.
+const CTENI = path.join(require('os').homedir(), 'runar-eval', 'hlasy', '2026-10-29-cteni', 'cteni_en_R5.mp3');
+const zvukCteni = fs.existsSync(CTENI) ? 'data:audio/mpeg;base64,' + fs.readFileSync(CTENI).toString('base64') : zvuk;
 const skript = (s) => '<script>\n' + s.replace(/<\/script/gi, '<\\/script') + '\n</script>';
 const vlozit = {
   '<!--FONTY-->': '<style>\n' + fonty + '\n</style>',
   '<!--CSS-APPKY-->': '<style>\n' + cti('runar-reader.css') + '\n.nahled{position:relative;z-index:1;}\n</style>',
   '<!--AUDIO-->': '<audio id="zdroj-zvuku" preload="none" src="' + zvuk + '"></audio>',
+  '<!--AUDIO-CTENI-->': '<audio id="zdroj-cteni" preload="none" src="' + zvukCteni + '"></audio>',
   '<!--JS-PREKLADY-->': skript(cti('runar-translations.js')),
   '<!--JS-SVICKA-->': skript(cti('runar-svicka.js')),
 };

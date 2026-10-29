@@ -842,6 +842,7 @@ input:autofill{filter:none;}
 .svp-svicka .svp-jiskra{fill:var(--gold);stroke:none;filter:drop-shadow(0 0 6px rgba(255,191,0,0.95));}
 .svp-svicka .svp-kour{stroke:var(--muted);stroke-width:1;opacity:0;}
 .svp-svicka .svp-fouk path{stroke:var(--white);stroke-width:1;opacity:0;}
+.svp-svicka .svp-vitr{transition:opacity .35s;}   /* vítr = symbol sfouknutí: v klidu tlumeně, při hraní naplno (runar-svicka.js) */
 /* rituál: kratší svíčka bez času, jinak táž velikost jako u čtení (náhled 2, owner 2026-10-29 „teď je to dobré“) — tělo svíčky
    ~ výška verzálek nadpisu vedle. Na úzkém telefonu se zkrátí (islandský nadpis je delší: na 320 px by přetekla). */
 .svp-mala .svp-svicka{flex:0 1 8.5em;min-width:3.5em;}

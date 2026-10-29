@@ -141,7 +141,7 @@ const MERENI = `(() => {
         v.push('mezery nota → čas · čas → svíčka · svíčka → délka ' + m.join(' · ') + ' px (mají být stejné ±3 px a 6–16 px)');
       if (podil < 0.55) v.push('svíčka zabírá jen ' + Math.round(podil * 100) + ' % řádku');
       if (vnut) { sv.style.marginLeft = ''; return v; }
-      var bod = function(q){ var r = sv.getBoundingClientRect(), W = _SVICKY.cap._stav().W; return r.left + (6 + (W - 7.5) * q) * r.width / W; };
+      var bod = function(q){ var r = sv.getBoundingClientRect(), st = _SVICKY.cap._stav(); return r.left + (st.x0 + (st.x1 - st.x0) * q) * r.width / st.W; };
       var tah = function(q, typ){ sv.dispatchEvent(new PointerEvent(typ, { clientX: bod(q), clientY: sv.getBoundingClientRect().top + 10, pointerId: 1, bubbles: true })); };
       tah(0.7, 'pointerdown'); tah(0.7, 'pointerup'); await sl(150); var s1 = _SVICKY.cap._stav(), q1 = a.currentTime / a.duration;
       tah(0.2, 'pointerdown'); tah(0.2, 'pointerup'); await sl(150); var s2 = _SVICKY.cap._stav(), q2 = a.currentTime / a.duration;
