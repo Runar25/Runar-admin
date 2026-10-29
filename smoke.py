@@ -1327,6 +1327,18 @@ radky = [l for l in (r2.stdout + r.stdout + r.stderr + r2.stderr).strip().split(
 prvni = radky[-1] if radky else 'kontrola hlasu ritualu probehla'
 check(prvni.strip(), r.returncode == 0 and r2.returncode == 0, '\n'.join(radky[:-1]) if (r.returncode or r2.returncode) else '')
 
+# ㊘ Hlas výkladu (CODE-tune 2026-10-29, owner: „R3 zní dobře pro výklad“): do ElevenLabs jde text, do kterého model výkladu vložil
+# intonační značky (_shared/voice_direction.ts). Pojistka: text bez značek = čtení slovo od slova, jinak hlas bez značek — Rúnar nesmí
+# nahlas říct, co ve čtení nestojí. Modul se importuje a pouští na podstrčených odpovědích modelu (model se nevolá).
+print('\n' + chr(0x3298) + ' HLAS VÝKLADU (verify_hlas_rezie.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_hlas_rezie.js')], capture_output=True, text=True, encoding='utf-8')
+for _l in r.stdout.splitlines():
+    if _l.startswith('⚠'):
+        print('  ' + _l)
+radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola hlasu vykladu probehla'
+check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

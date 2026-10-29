@@ -1,8 +1,8 @@
 # Rúnar — Pricing & Business Model
 # Language: English (working document)
 # Status: In progress — numbers subject to change
-# Last updated: 2026-10-11 — náklady přepočteny na GPT-6 sol z produkčních dat (`node scripts/utils/pricing_tabulka.js`);
-#   hlas se stropem na měsíc, EN hlas za skutečnou sazbu, projekce s fixními náklady ~$202. Owner: „přepočítej pricing na sol“.
+# Last updated: 2026-10-29 — hlas eleven_v4_turbo (EN i IS, poloviční sazba) + recept hlasu výkladu (text o ~21–23 % delší, režie sol);
+#   owner: „v4 Turbo je dobré i pro IS. Použijeme. Přepočítej ceny.“ Do té doby 2026-10-11 (přepočet na sol).
 # ElevenLabs sazby: `EL_PRECERPANI` ve `scripts/utils/stats.js` (zdroj a datum ověření stojí u nich)
 # Reading costs: `node scripts/utils/pricing_tabulka.js` (do 2026-10-11 ruční měření z 2026-06-14)
 
@@ -33,43 +33,47 @@ Standard subscription is the product.
 
 ## Cost per Reading (production cost)
 
-**Přepočteno 2026-10-11 na GPT-6 sol** (owner: *„přepočítej pricing na sol“*) — `node scripts/utils/pricing_tabulka.js`, z `readings.usage`
+**Přepočteno 2026-10-29 na hlas v4 Turbo s receptem výkladu** (owner: *„v4 Turbo je dobré i pro IS. Použijeme. Přepočítej ceny.“*; předtím
+2026-10-11 na GPT-6 sol) — `node scripts/utils/pricing_tabulka.js`, z `readings.usage`
 za 30 dní, bez volání API; tabulku níž vypíše tentýž příkaz, přepočet = spustit znovu. Model čtení vlastní `SOL_MODEL` (claude-proxy, Claude je
-záloha), ceník `MODEL_PRICES` + výpočet `readingCostUsd` (v2/), model hlasu `EL_MODEL_EN/IS` (elevenlabs-proxy), sazbu hlasu `EL_PRECERPANI`
-(`scripts/utils/stats.js`) — tady se neopisují (§20). Cenu KAŽDÉHO čtení appka počítá sama (admin ji vidí v deníku), souhrny `stats.js`.
+záloha), ceník `MODEL_PRICES` + výpočet `readingCostUsd` (v2/), model hlasu `EL_MODEL_EN/IS` (`_shared/el_voice.ts`), sazbu hlasu `EL_PRECERPANI`
+(`scripts/utils/stats.js`), prodloužení textu a model režie `HLAS_NAVYSENI_ZNAKU` / `HLAS_REZIE_MODEL` (`_shared/voice_direction.ts`) — tady se
+neopisují (§20). Cenu KAŽDÉHO čtení appka počítá sama (admin ji vidí v deníku), souhrny `stats.js`. **Hlas** = znaky čtení × prodloužení
+(úvodní značka, pauzy, značky) × sazba + jedna režie (sol, zlomek centu).
 
-| Čtení | Znaky hlasu EN / IS | Model EN / IS | Hlas EN / IS | **Celkem s hlasem EN / IS** | n se solem EN / IS |
+| Čtení | Znaky čtení EN / IS | Model EN / IS | Hlas EN / IS | **Celkem s hlasem EN / IS** | n se solem EN / IS |
 |---|---|---|---|---|---|
-| Single | 373 / 423 | $0.0036 / $0.0078 | $0.037 / $0.042 | **$0.041 / $0.050** | 59 / 5 ⚠️ |
-| Norns (3) | 484 / 486 | $0.0046 / $0.0083 | $0.048 / $0.049 | **$0.053 / $0.057** | 7 / 1 ⚠️ |
-| Kříž (5) | 607* / 662* | $0.0042* / $0.0090* | $0.061* / $0.066* | **$0.065* / $0.075*** | 0 / 0 |
-| Horseshoe (7) | 1 073* / 1 172* | $0.0055* / $0.0110* | $0.107* / $0.117* | **$0.113* / $0.128*** | 0 / 0 |
-| Yggdrasil (9) | 1 353* / 1 478* | $0.0063* / $0.0123* | $0.135* / $0.148* | **$0.142* / $0.160*** | 0 / 0 |
-| Ask (otázka ke čtení, bez hlasu) | – | $0.0036 / $0.0064 | – | $0.0036 / $0.0064 | 93 / 2 ⚠️ |
-| Životní runa (text, bez hlasu) | – | $0.0063* / $0.0097* | – | $0.0063* / $0.0097* | z 2 / 1 uložených textů |
+| Single | 390 / 420 | $0.0036 / $0.0078 | $0.021 / $0.023 | **$0.024 / $0.031** | 72 / 14 |
+| Norns (3) | 523 / 496 | $0.0048 / $0.0073 | $0.027 / $0.027 | **$0.032 / $0.034** | 6 / 4 ⚠️ |
+| Kříž (5) | 705 / 594 | $0.0046 / $0.0090 | $0.037 / $0.032 | **$0.041 / $0.041** | 1 / 1 ⚠️ |
+| Horseshoe (7) | 975 / 1 145* | $0.0055 / $0.0071* | $0.051 / $0.062* | **$0.056 / $0.069*** | 1 / 0 ⚠️ |
+| Yggdrasil (9) | 1 396* / 1 444* | $0.0073* / $0.0070* | $0.072* / $0.078* | **$0.080* / $0.085*** | 0 / 0 |
+| Ask (otázka ke čtení, bez hlasu) | – | $0.0033 / $0.0063 | – | $0.0033 / $0.0063 | 86 / 7 ⚠️ |
+| Životní runa (text, bez hlasu) | – | $0.0061* / $0.0100* | – | $0.0061* / $0.0100* | z 2 / 2 uložených textů |
 | Founding ritual (= Norns) | jako Norns | | | | |
 
 - **\* = odhad** — sol tenhle typ v datech zatím nemá. Znaky = cílový počet vět, který předepisuje prompt, × změřené znaky na větu (EN 93,
   IS 102); výstup = znaky ÷ změřené znaky na token; vstup = Single + přírůstek na runu z Noren. **Hranice odhadu** (nástroj puštěný na typy,
   které změřené jsou): znaky −0 až +6 % (Norns IS n = 1: +15 %), model −5 až −16 % → na celkové ceně s hlasem do ±5 %. ⚠️ = málo čtení,
   medián je hrubý. Přeměřit, až poběží rozklady se solem a islandská čtení ve větším počtu.
-- **Hlas je 81–94 % ceny čtení s hlasem** (nejméně IS Single, nejvíc EN Yggdrasil; do 2026-10-11 84–95 % při sazbě $0.10). Model sol stojí na Single EN $0.0036 (Opus stál $0.012 — EN čtení 2026-09-23, n = 70).
+- **Hlas je 74–92 % ceny čtení s hlasem** (nejméně IS Single, nejvíc IS Yggdrasil; do 2026-10-29 81–94 % se sazbou v2/v3 $0.08,
+  do 2026-10-11 84–95 % při $0.10). Model sol stojí na Single EN $0.0036 (Opus stál $0.012 — EN čtení 2026-09-23, n = 70).
 - **IS model je ~2× dražší než EN:** islandský prompt má ~3 100 vstupních tokenů proti ~1 220 (islandština se tokenizuje hůř + IS gramatický blok).
-- **EN hlas stojí stejně jako IS** — obojí sazba multilingual/v3.
+- **EN hlas stojí stejně jako IS** — obojí eleven_v4_turbo (od 2026-10-29; do té doby EN v2 / IS v3, obojí dvojnásobná sazba).
 - **Hlas ke každému čtení, jednou** (DECISIONS 2026-10-11 (61)): předplatitel u všech čtení, Rune Seeker u volného čtení a čtení z karty
   (`TIER_FEATURES`); uložený hlas se přehrává zdarma.
-- **Délka:** Single má dnes medián 373 EN / 423 IS znaků (v srpnu 272); délku vlastní buildery (`LENGTH_BUDGETS`, věty v `RP_*`).
+- **Délka:** Single má dnes medián 390 EN / 420 IS znaků čtení (v srpnu 272); do hlasu jde o 21 / 23 % víc (recept výkladu); délku vlastní buildery (`LENGTH_BUDGETS`, věty v `RP_*`).
 - **Cache:** sol běží s explicitní cache bez zarážek (zápis vypnut 2026-10-04, komentář u `callSol`) — v datech 0 tokenů z cache.
   Poznámky o cache Claude-éry (Opus, minima tokenů, bod zvratu 5min/1h cache) → `git log -p RUNAR_PRICING.md` a `stats.js`.
 
 **Kreditová stupnice (`SPREAD_COSTS`) dnes NEodpovídá poměru nákladů.** Náklad na jeden kredit (čtení z karty s hlasem): Single
-$0.034 EN / $0.042 IS, Norns $0.022 / $0.024, Kříž $0.020* / $0.021*, Horseshoe $0.021* / $0.026*, Yggdrasil $0.023* / $0.026*
-(sazba hlasu $0.08). Rozklady
-jsou tedy na kredit levnější než Single; při nejlevnějším kreditu (`CARD_PACKS`, ~200 ISK ≈ $1.62) je marže ~97 % u Single a ~98 % u rozkladů.
+$0.024 EN / $0.031 IS, Norns $0.016 / $0.017, Kříž $0.014 / $0.014, Horseshoe $0.014 / $0.017*, Yggdrasil $0.016* / $0.017*
+(hlas v4 Turbo, 2026-10-29). Rozklady
+jsou tedy na kredit levnější než Single; při nejlevnějším kreditu (`CARD_PACKS`, ~200 ISK ≈ $1.62) je marže ~98 % u Single a ~99 % u rozkladů.
 *(Jestli stupnici měnit, je ownerova volba; náklady ji nenutí — marže je vysoká všude.)*
 
 **Life Rune is FREE — 0 credits (KUKY 2026-07-19).** It is text-only, so the voice never happens, and voice is
-84–95 % of what a reading costs us; the true cost is ~$0.006 EN / ~$0.010 IS (odhad, `scripts/utils/pricing_tabulka.js`). This is deliberate acquisition spend, not a pricing
+74–92 % of what a reading costs us; the true cost is ~$0.006 EN / ~$0.010 IS (odhad, `scripts/utils/pricing_tabulka.js`). This is deliberate acquisition spend, not a pricing
 accident: the Life Rune is the gateway into the Tree of Life, and the Tree is what brings people back.
 The earlier rationale („3 credits reflects perceived value“) is **retired** — it priced against cost while every
 other row in the table priced with it, and an exception nobody remembers choosing eventually reads as a bug.
@@ -77,11 +81,11 @@ other row in the table priced with it, and an exception nobody remembers choosin
 ⚠️ Enforced by the PROXY (`mode === "life_rune"`), not by the number in `SPREAD_COSTS`. The client may not
 declare its own reading free — that is why `Math.max(1, spread_cost)` stays.
 
-**Náklad na získání uživatele = volné čtení při registraci (1 Single s hlasem): ~$0.041 EN / ~$0.050 IS.** Jediné místo tohoto čísla
+**Náklad na získání uživatele = volné čtení při registraci (1 Single s hlasem): ~$0.024 EN / ~$0.031 IS** (do 2026-10-29 $0.041 / $0.050). Jediné místo tohoto čísla
 (sekce Bundle níž na něj odkazuje).
 
-Hlas: model vlastní `EL_MODEL_EN/IS` v elevenlabs-proxy; EN i IS mají tutéž sazbu. Hlas jde podle jazyka appky. ✅ implemented.
-Nejdražší na jednotku je **Single** (373 EN / 423 IS znaků hlasu na jednotku); rozklady mají na jednotku méně (Yggdrasil ~271* / ~296*).
+Hlas: model vlastní `EL_MODEL_EN/IS` v `_shared/el_voice.ts`; EN i IS mají tutéž sazbu. Hlas jde podle jazyka appky. ✅ implemented.
+Nejdražší na jednotku je **Single** (390 EN / 420 IS znaků čtení na jednotku); rozklady mají na jednotku méně (Yggdrasil ~279* / ~289*).
 
 ### Volba modelu čtení — měření per model (2026-08-17)
 
@@ -185,7 +189,7 @@ value and returns 402 `monthly_limit` when exceeded. Guarded by smoke ⑨.)*
 
 **Credit cost = per reading type.** Konkrétní čísla vlastní `SPREAD_COSTS` v `v2/runar-config.js` — zde se
 neopisují (§20). Pravidlo, které je pod nimi: **platí se za hlas.** Textové čtení je zdarma, protože
-84–95 % ceny čtení s hlasem je TTS (tabulka v „Cost per Reading“).
+74–92 % ceny čtení s hlasem je TTS (tabulka v „Cost per Reading“).
 Decoupled from rune count (old model was 1 rune = 1 credit).
 
 ---
@@ -239,20 +243,21 @@ Premium is slightly cheaper per reading (volume discount) + deeper features → 
 
 | Tarif | **Nejhorší měsíc EN / IS** | z toho hlas EN / IS | Vzor EN / IS |
 |---|---|---|---|
-| standard | **$1.86 / $2.40** | $1.50 / $1.69 | $0.83 / $1.03 |
-| premium | **$3.05 / $4.09** | $2.25 / $2.54 | $0.90 / $1.15 |
+| standard | **$1.37 / $1.86** | $1.02 / $1.15 | $0.61 / $0.77 |
+| premium | **$2.30 / $3.26** | $1.54 / $1.72 | $0.67 / $0.90 |
 
 ### Plan margins (horní mez nákladů, kurz $1 = 123.5 ISK)
 
 | Plan | ISK/month | USD/month | Cost IS | Margin IS | Cost EN | Margin EN |
 |------|-----------|-----------|---------|-----------|---------|-----------|
-| Standard monthly | 3.490 ISK | $28.26 | $2.40 | **92%** | $1.86 | **93%** |
-| Standard annual (equiv.) | 2.900 ISK | $23.48 | $2.40 | **90%** | $1.86 | **92%** |
-| Premium monthly | 4.900 ISK | $39.68 | $4.09 | **90%** | $3.05 | **92%** |
-| Premium annual (equiv.) | 4.083 ISK | $33.06 | $4.09 | **88%** | $3.05 | **91%** |
+| Standard monthly | 3.490 ISK | $28.26 | $1.86 | **93%** | $1.37 | **95%** |
+| Standard annual (equiv.) | 2.900 ISK | $23.48 | $1.86 | **92%** | $1.37 | **94%** |
+| Premium monthly | 4.900 ISK | $39.68 | $3.26 | **92%** | $2.30 | **94%** |
+| Premium annual (equiv.) | 4.083 ISK | $33.06 | $3.26 | **90%** | $2.30 | **93%** |
 
-Margins stay healthy even with voice on every reading in the worst month (~88–92 % IS / ~91–93 % EN of the gross price). After 24 % VAT
-and Shopify fees the worst month keeps 81–85 % and a Rune Seeker credit 91–93 % (CODE-tune 2026-10-11, owner: *„jestli je cenová hladina
+Margins stay healthy even with voice on every reading in the worst month (~90–93 % IS / ~93–95 % EN of the gross price; until 2026-10-29
+~88–92 % / ~91–93 %). After 24 % VAT and Shopify fees the worst month kept 81–85 % and a Rune Seeker credit 91–93 % — that step is
+not recomputed for the cheaper voice (it can only go up) (CODE-tune 2026-10-11, owner: *„jestli je cenová hladina
 dobře nastavená“*). Prices remain balanced — no change needed. (Until 2026-10-11: ~93–96 % with the 5-voice cap.)
 
 ⚠️ Fixní náklady i break-even stojí jen v „Operating costs, taxes & break-even“ níž (§20) — číslo se tu neopakuje, zastaralo by.
@@ -261,16 +266,16 @@ dobře nastavená“*). Prices remain balanced — no change needed. (Until 2026
 
 **Hrubě** (owner 2026-10-11: *„teď na hrubo a později to uděláme pořádně“*). Příjem = **3 518 ISK ≈ $28.49 na uživatele** včetně DPH
 (vzorec v „Operating costs“ níž). DPH 24 % až nad ~47 uživatelů (obrat 2 000 000 ISK/rok), poplatky za platby $0.96, model + hlas horní
-mez $2.56 na uživatele (hlas ke každému čtení; do 2026-10-11 $1.43 se stropem 5), fixní náklady po spuštění („Operating costs“). Zisk = zisk firmy před mzdou a daní z příjmu. Hlas je v nákladech
+mez $1.97 na uživatele (hlas v4 Turbo ke každému čtení; do 2026-10-29 $2.56, do 2026-10-11 $1.43 se stropem 5), fixní náklady po spuštění („Operating costs“). Zisk = zisk firmy před mzdou a daní z příjmu. Hlas je v nákladech
 na uživatele a plán ElevenLabs ve fixních jako základ — dvojí započtení do výše plánu pro hrubý odhad nevadí.
 
 | Users | Příjem | DPH | Platby | Model + hlas | Fixní | Zisk firmy | % příjmu |
 |-------|--------|-----|--------|-----------|-------|-----------|--------|
-| 10 | ~$285 | – | ~$10 | ~$26 | ~$230 | ~$19 | 7% |
-| 50 | ~$1.424 | ~$276 | ~$48 | ~$128 | ~$230 | ~$742 | 52% |
-| 100 | ~$2.849 | ~$551 | ~$96 | ~$256 | ~$230 | ~$1.716 | 60% |
-| 200 | ~$5.697 | ~$1.103 | ~$192 | ~$512 | ~$230 | ~$3.660 | 64% |
-| 500 | ~$14.243 | ~$2.757 | ~$480 | ~$1.281 | ~$230 | ~$9.495 | 67% |
+| 10 | ~$285 | – | ~$10 | ~$20 | ~$230 | ~$25 | 9% |
+| 50 | ~$1.424 | ~$276 | ~$48 | ~$98 | ~$230 | ~$772 | 54% |
+| 100 | ~$2.849 | ~$551 | ~$96 | ~$197 | ~$230 | ~$1.775 | 62% |
+| 200 | ~$5.697 | ~$1.103 | ~$192 | ~$394 | ~$230 | ~$3.778 | 66% |
+| 500 | ~$14.243 | ~$2.757 | ~$480 | ~$985 | ~$230 | ~$9.791 | 69% |
 
 Do 2026-10-11 tu tabulka počítala ~$24 příjmu na uživatele — výpočet k tomu v dokumentu nebyl (owner: *„nevím, odkud je to číslo“*;
 po odečtení DPH vychází ~$23, takže to mohl být příjem po DPH — ověřit nejde), bez DPH a poplatků a s fixními $30, pak $202 →
@@ -280,20 +285,21 @@ uváděné marže 77–92 % byly nadsazené.
 
 ## ElevenLabs Plan — When to Upgrade
 
-Sazba hlasu `EL_PRECERPANI` (`stats.js`), EN i IS stejná. Zahrnuté znaky = cena tarifu ÷ sazba (ceník API v účtu ElevenLabs: v2 i v3
-$0.08 / 1000 zn.; počítadlo účtu je v kreditech, 1 kredit = $0.0002 = 2,5 znaku — `RUNAR_DECISIONS.md` 2026-10-11 (43)). Do 2026-10-11 tu
+Sazba hlasu `EL_PRECERPANI` (`stats.js`), EN i IS stejná. Zahrnuté znaky = cena tarifu ÷ sazba (od 2026-10-29 eleven_v4_turbo $0.04 / 1000 zn.,
+násobek ceny 0,5 z `/v1/models`; v2 i v3 byly $0.08; počítadlo účtu je v kreditech, 1 kredit = $0.0002 = 5 znaků Turbo, 2,5 znaku v2/v3 — `RUNAR_DECISIONS.md` 2026-10-11 (43)). Do 2026-10-11 tu
 stálo $0.10 (Creator 220 000), chyběl Starter a „Overage rate = plan rate“: **Starter přečerpání nemá** — po vyčerpání kreditů EL hlas
 odmítne (`can_extend_character_limit` false); u vyšších tarifů přečerpání ověřit před spuštěním (BACKLOG „Náklady — zmapovat“).
 Hlas má každé čtení, jednou (DECISIONS 2026-10-11 (61)). Kredity na předplatitele a kapacitu tarifů počítá `pricing_tabulka.js`:
-**nejhorší měsíc Premium IS 12 690 kreditů** (75 Single s hlasem = 31 725 znaků), **ownerův vzor ~3 740**.
+**nejhorší měsíc Premium IS 7 749 kreditů** (75 Single s hlasem = 75 × 420 × 1,23 ≈ 38 700 znaků pro hlas), **ownerův vzor ~2 280**
+(do 2026-10-29 12 690 / ~3 740).
 
-| Plan | $/month | Multilingual chars included | ~Users (nejhorší, Premium IS) | ~Users (vzor) | Upgrade at (nejhorší) |
+| Plan | $/month | v4 Turbo chars included | ~Users (nejhorší, Premium IS) | ~Users (vzor) | Upgrade at (nejhorší) |
 |------|---------|----------------------------|----------------|----------------|------------|
-| Starter | $6 | 75.000 | ~2 | ~8 | — (bez přečerpání: nad ~2 hlas stojí) |
-| Creator | $22 | 275.000 | ~8 | ~29 | ~39 users |
-| Pro | $99 | 1.237.500 | ~39 | ~132 | ~117 users |
-| Scale | $299 | 3.737.500 | ~117 | ~399 | ~390 users |
-| Business | $990 | 12.375.000 | ~390 | ~1.322 | 390+ → Enterprise |
+| Starter | $6 | 150.000 | ~3 | ~13 | — (bez přečerpání: nad ~3 hlas stojí) |
+| Creator | $22 | 550.000 | ~14 | ~48 | ~63 users |
+| Pro | $99 | 2.475.000 | ~63 | ~217 | ~192 users |
+| Scale | $299 | 7.475.000 | ~192 | ~656 | ~638 users |
+| Business | $990 | 24.750.000 | ~638 | ~2.172 | 638+ → Enterprise |
 | Enterprise | Custom | Custom | — | — | Contact ElevenLabs |
 
 **Upgrade logic:** Stay on current plan until monthly overages + plan cost exceed next plan price (= cena dalšího plánu ÷ náklad hlasu

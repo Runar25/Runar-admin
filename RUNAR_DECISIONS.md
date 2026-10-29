@@ -12466,3 +12466,20 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Cena:** myšlenka je jedna věta do 12 slov v témže výstupu modelu (2026-10-05 (2)) — náklad čtení se měřitelně nemění; hlas ji nečte.
 - **Co se mění pro účty:** Rune Walker tím ztrácí jednu výhodu proti Rune Seekerovi; zbývá Ask, víc čtení a deník (tabulka přístupu, `TIERS`).
 - Affected doc(s): žádný jiný (přístup vlastní `TIERS` v configu).
+
+## 2026-10-29 (2) — Hlas: eleven_v4_turbo pro EN i IS a recept výkladu R3 (klidný hlas, pauzy, intonační značky od modelu výkladu)
+
+- **Rozhodl:** owner 2026-10-29 po poslechu archivu: *„v4 Turbo je dobré i pro IS. Použijeme, přepočítej ceny. R3 zní dobře pro výklad.“*
+- **Co:** (1) `EL_MODEL_EN/IS` = `eleven_v4_turbo` (do té doby EN v2 / IS v3), nastavení stabilita 0,5 + rychlost 0,9 (`_shared/el_voice.ts`;
+  platí i pro `elevenlabs-static`). (2) Recept výkladu `_shared/voice_direction.ts`: úvodní značka klidného hlasu, „ … “ mezi větami a 2–4
+  značky, které vloží model výkladu (sol). **Pojistka:** text bez značek = čtení slovo od slova, jinak hlas bez značek (= R4); selže-li model
+  (chyba, 8 s), totéž — hlas nikdy nepadne kvůli režii. Brzda, ElevenLabs, evidence i úklid historie počítají s připraveným textem.
+  (3) `EL_KREDITY_NA_ZNAK` zná v4 (0,4) a v4 Turbo (0,2). (4) Smoke ㊘ `verify_hlas_rezie.js` + 2 útoky. (5) Ceník přepočten
+  (`RUNAR_PRICING.md`, `pricing_tabulka.js` teď počítá prodloužení textu i režii).
+- **Ověřeno:** Turbo značky nečte nahlas — čistá řeč R5 (R3 na Turbo) 17,9 / 18,5 s = R4 bez značek 17,8 / 18,6 s (EN / IS). Produkční
+  `hlasovyText` se skutečným sol na dvou čteních: značky 4 / 3, slova beze změny, **režie trvá ~2 s** (o tolik déle čeká člověk na hlas).
+  Turbo: islandštinu umí a stojí polovinu (`/v1/models`, násobek 0,5).
+- **Cena:** Single s hlasem $0.041 → **$0.024 EN**, $0.050 → **$0.031 IS**; nejhorší měsíc Premium IS $4.09 → $3.26; kredity EL na nejhorší
+  měsíc Premium IS 12 690 → 7 749 (víc uživatelů na tarif EL). Text pro hlas je o 21 / 23 % delší (značky, pauzy) — v ceně je.
+- **Mimo:** hlas rituálu zůstává nahrávka F (v4, DECISIONS 2026-10-28 (3)); G = táž na Turbo je v archivu.
+- Affected doc(s): RUNAR_PRICING.md (přepočet v témže commitu).
