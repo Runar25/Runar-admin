@@ -1022,3 +1022,7 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   svíčka během přehrávání ubývá (vosk nerovně stéká po spodní hraně); pauza = obláček, který fouká ke špičce — ťuknutí krátce sfoukne plamen;
   dohoří → 3 s zůstane, pak se za 1,5–2 s z vosku zase složí celá. Rituál: táž svíčka zmenšená, bez času. *„Uvidíme, jak to bude vypadat,
   popřípadě upravíme.“* → napřed náhled (animovaný, telefon), pak stavba.
+  **Náhled 2 (2026-10-29, `docs/inbox/2026-10-29-prehravac-svicka.html`), owner:** hoří zleva doprava, nota se houpe, svíčka v řádce
+  s časem a výšky textu, vosk až po odhoření jako nesouměrné rampouchy ze spodní hrany, pauza = čáry větru (*„1. čáry“*), jiskra rovnou
+  na knotu (*„2. teď je to dobré“*), svíčka nahrazuje přehrávač (stejné proporce, rituál kratší). Okénko „Tap again to stop“ **pryč** —
+  *„bude to napsané někde v návodu“* → při stavbě řádek do nápovědy (`runar-help.html`, EN + IS).

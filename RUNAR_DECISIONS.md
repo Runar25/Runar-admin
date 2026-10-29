@@ -12482,4 +12482,6 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Cena:** Single s hlasem $0.041 → **$0.024 EN**, $0.050 → **$0.031 IS**; nejhorší měsíc Premium IS $4.09 → $3.26; kredity EL na nejhorší
   měsíc Premium IS 12 690 → 7 749 (víc uživatelů na tarif EL). Text pro hlas je o 21 / 23 % delší (značky, pauzy) — v ceně je.
 - **Mimo:** hlas rituálu zůstává nahrávka F (v4, DECISIONS 2026-10-28 (3)); G = táž na Turbo je v archivu.
+- **Nasazeno 2026-10-29** (owner: *„ano, zapiš a nasaď“*): `elevenlabs-proxy` v48, `elevenlabs-static` v23; `nasazene_vs_repo.py` nasazené = HEAD,
+  bez přihlášení 401. **Neověřeno:** první skutečný hlas čtení po nasazení (log funkce: „voice direction …“ = šlo bez značek).
 - Affected doc(s): RUNAR_PRICING.md (přepočet v témže commitu).
