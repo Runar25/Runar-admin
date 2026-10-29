@@ -8,6 +8,8 @@
 //   D = eleven_v4, rychlost 0,85, pauza „…“ mezi větami
 //   E = D s nastavením C (značka klidného hlasu, stabilita 0,5) + delší pauza před poslední větou „… …“ (owner 2026-10-28: „zkus D EN a IS
 //       stejně jako C, trochu delší pauza před … When your mind settles“; „D IS je trochu hrubší hlas než v C, jde ho zjemnit?“)
+//   G = F na eleven_v4_turbo (owner 2026-10-29: „dej mi i … v4 turbo … rituál“; Turbo = poloviční cena, umí IS — /v1/models 2026-10-29)
+//   Každá nahrávka jde i do archivu hlasů (scripts/utils/hlas_archiv.js, owner 2026-10-29: „vždy ukládat … ať máme s čím porovnávat“).
 //   F = E, ale delší pauza značkou [long pause] — dokumentace v4 uvádí pro pauzy výpustky; [long pause] jen v seznamu značek
 //       „bez záruky“ (elevenlabs.io/docs/product/prompting/pauses, 2026-10-28), proto obě cesty vedle sebe
 //   E/F: text z ritual_text (od 2026-10-28 ownerova věta s „what is on your heart“ / „liggur þér á hjarta“; 28. 10. stál zvlášť)
@@ -40,6 +42,8 @@ const VAR = [
     text: (l) => ZNACKA[l] + delsi(l, pauzy(TEXT[l]), ' … … '), nast: () => Object.assign({}, NAST, { speed: 0.85, stability: 0.5 }) },
   { k: 'F', popis: 'jako E, delší pauza značkou [long pause]', model: () => 'eleven_v4',
     text: (l) => ZNACKA[l] + delsi(l, pauzy(TEXT[l]), ' … [long pause] '), nast: () => Object.assign({}, NAST, { speed: 0.85, stability: 0.5 }) },
+  { k: 'G', popis: 'F na v4 Turbo (poloviční cena)', model: () => 'eleven_v4_turbo',
+    text: (l) => ZNACKA[l] + delsi(l, pauzy(TEXT[l]), ' … [long pause] '), nast: () => Object.assign({}, NAST, { speed: 0.85, stability: 0.5 }) },
 ];
 const OUT = path.join(os.homedir(), 'runar-eval', 'ritual-hlas');
 fs.mkdirSync(OUT, { recursive: true });
@@ -66,7 +70,10 @@ const KEY = fs.readFileSync(path.join(os.homedir(), '.claude', 'runar-elevenlabs
       body: JSON.stringify({ text: p.text, model_id: p.model, voice_settings: p.nast }) });
     if (!res.ok) { const e = (await res.text()).slice(0, 200); console.log(p.l, p.v.k, 'CHYBA', res.status, e); hotovo.push({ ...p, chyba: res.status + ' ' + e }); continue; }
     const f = 'ritual_' + p.l + '_' + p.v.k + '.mp3';
-    fs.writeFileSync(path.join(OUT, f), Buffer.from(await res.arrayBuffer()));
+    const zvuk = Buffer.from(await res.arrayBuffer());
+    fs.writeFileSync(path.join(OUT, f), zvuk);
+    require('../../../scripts/utils/hlas_archiv').uloz({ pokus: new Date().toISOString().slice(0, 10) + '-ritual', jmeno: 'ritual_' + p.l + '_' + p.v.k,
+      popis: p.v.popis, jazyk: p.l, model: p.model, nastaveni: p.nast, text: p.text, mp3: zvuk });
     console.log(p.l, p.v.k, 'ok', f); hotovo.push({ ...p, f });
   }
   const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
@@ -80,4 +87,5 @@ const KEY = fs.readFileSync(path.join(os.homedir(), '.claude', 'runar-elevenlabs
     + (p.f ? '<audio controls preload="none" src="' + p.f + '"></audio>' : '<i>chyba: ' + esc(p.chyba) + '</i>') + '<div class="t">' + esc(p.text) + '</div></div>').join('\n');
   fs.writeFileSync(path.join(OUT, 'poslech.html'), '<!doctype html><meta charset="utf-8"><title>Hlas rituálu — varianty</title><style>body{font-family:Georgia,serif;background:#0f141f;color:#e8dcc2;max-width:760px;margin:24px auto;padding:0 16px}.r{border-bottom:1px solid #2e4a70;padding:14px 0}span{color:#9fb0c8;font-size:.9em}audio{width:100%;margin:8px 0}.t{font-size:.85em;color:#9fb0c8}</style><h1>Hlas rituálu — varianty</h1><p>A dnešní hlas appky · B v3 pomaleji s pauzami · C jako B + značka klidného hlasu · D v4 pomaleji s pauzami · E v4 jako C, delší pauza „… …“ před poslední větou · F jako E, pauza značkou [long pause]</p>\n' + radky);
   console.log('poslech:', path.join(OUT, 'poslech.html'));
+  console.log('archiv:', require('../../../scripts/utils/hlas_archiv').poslech());
 })();

@@ -76,3 +76,10 @@ for (const f of zdroje()) {
 if (!SUCHY) fs.writeFileSync(MAN, JSON.stringify(man, null, 1));
 const celkem = Object.keys(man.soubory).length;
 if (!(TICHY && !nove)) console.log('záloha čtení: +' + nove + ' souborů (' + Math.round(bajty / 1024) + ' kB) · celkem ' + celkem + ' · ' + CIL + (SUCHY ? ' (nanečisto)' : ''));
+// Hlasy z pokusů (owner 2026-10-29: „vždy ukládat, jak čtení, která generujeme, tak hlasy“): .mp3 mimo archiv → scripts/utils/hlas_archiv.js.
+try {
+  const ha = require('./hlas_archiv');
+  const tmp = path.join(os.tmpdir(), 'claude');
+  const nh = ha.zachytVolne([tmp, path.join(os.homedir(), 'runar-eval'), path.join(REPO, 'eval_out')], { suchy: SUCHY });
+  if (!(TICHY && !nh)) console.log('záloha hlasů: +' + nh + ' nahrávek mimo archiv · ' + ha.DIR + (SUCHY ? ' (nanečisto)' : ''));
+} catch (e) { console.log('záloha hlasů selhala: ' + e.message); }

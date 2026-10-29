@@ -6,6 +6,8 @@
 //   R2 = v4 jako rituál, ale čtení není rituál: úvodní značka klidného hlasu, stabilita 0,5, rychlost 0,9, „…“ mezi větami
 //   R3 = R2 + intonační značky, které do textu vloží MODEL VÝKLADU (sol, SOL_MODEL v claude-proxy). Pojistka: po odebrání značek musí
 //        text sedět slovo od slova na originál — jinak varianta padá (model nesmí čtení přepsat).
+//   R4 = R2 na eleven_v4_turbo (owner 2026-10-29: „dej mi i čtení EN a IS v4 turbo“; poloviční cena, umí IS)
+// Každá nahrávka jde i do archivu hlasů (scripts/utils/hlas_archiv.js) i s textem, který zazněl — u R3 i se značkami od modelu.
 // Texty čtení: ~/runar-eval/hlas-cteni/{en,is}.txt (z produkce přes najdi_cteni.js; do repa nepatří, DECISIONS 2026-08-08).
 // Klíče: ~/.claude/runar-elevenlabs-key.txt, ~/.claude/runar-openai-key.txt (nikdy se nevypisují). Výstup ~/runar-eval/hlas-cteni/.
 //   node docs/eval/2026-10-28-hlas-cteni/gen.js [--dry] [--jen R2,R3]
@@ -52,6 +54,8 @@ const VAR = [
   { k: 'R3', popis: 'R2 + intonační značky od modelu výkladu (' + SOL + ')', model: () => 'eleven_v4',
     text: async (l, info) => { const r = await reziser(l); info.reziser = r; if (!r.shoda || r.cizi.length) throw new Error('režisér změnil text nebo použil cizí značku: ' + JSON.stringify(r.cizi)); return ZNACKA + pauzy(r.t); },
     nast: Object.assign({}, NAST, { stability: 0.5, speed: 0.9 }) },
+  { k: 'R4', popis: 'R2 na v4 Turbo (poloviční cena)', model: () => 'eleven_v4_turbo',
+    text: async (l) => ZNACKA + pauzy(TEXT[l]), nast: Object.assign({}, NAST, { stability: 0.5, speed: 0.9 }) },
 ];
 
 (async () => {
@@ -70,7 +74,10 @@ const VAR = [
       body: JSON.stringify({ text, model_id: v.model(l), voice_settings: v.nast }) });
     if (!res.ok) { const e = (await res.text()).slice(0, 200); console.log(l, v.k, 'CHYBA', res.status, e); hotovo.push({ l, v, chyba: res.status + ' ' + e, info }); continue; }
     const f = 'cteni_' + l + '_' + v.k + '.mp3';
-    fs.writeFileSync(path.join(OUT, f), Buffer.from(await res.arrayBuffer()));
+    const zvuk = Buffer.from(await res.arrayBuffer());
+    fs.writeFileSync(path.join(OUT, f), zvuk);
+    require('../../../scripts/utils/hlas_archiv').uloz({ pokus: new Date().toISOString().slice(0, 10) + '-cteni', jmeno: 'cteni_' + l + '_' + v.k,
+      popis: v.popis + (info.reziser ? ' · značky ' + info.reziser.zn.join(' ') : ''), jazyk: l, model: v.model(l), nastaveni: v.nast, text, mp3: zvuk });
     console.log(l, v.k, 'ok', f, text.length, 'zn', info.reziser ? '· značky ' + info.reziser.zn.join(' ') : '');
     hotovo.push({ l, v, f, text, model: v.model(l), info });
   }
@@ -81,4 +88,5 @@ const VAR = [
   fs.writeFileSync(path.join(OUT, 'poslech.html'), '<!doctype html><meta charset="utf-8"><title>Hlas ve čtení — varianty</title><style>body{font-family:Georgia,serif;background:#0f141f;color:#e8dcc2;max-width:760px;margin:24px auto;padding:0 16px}.r{border-bottom:1px solid #2e4a70;padding:14px 0}span{color:#9fb0c8;font-size:.9em}audio{width:100%;margin:8px 0}.t{font-size:.85em;color:#9fb0c8}</style><h1>Hlas Rúnara ve čtení — R0 až R3</h1><p>R0 dnešek · R1 v4 s dnešním nastavením · R2 v4 jako rituál pro čtení · R3 R2 + intonační značky od modelu výkladu</p>\n' + radky);
   fs.writeFileSync(path.join(OUT, 'vysledek.json'), JSON.stringify(hotovo.map((p) => ({ l: p.l, k: p.v.k, f: p.f, chyba: p.chyba, zn: p.info.reziser && p.info.reziser.zn, usage: p.info.reziser && p.info.reziser.usage })), null, 1));
   console.log('poslech:', path.join(OUT, 'poslech.html'));
+  console.log('archiv:', require('../../../scripts/utils/hlas_archiv').poslech());
 })();
