@@ -17,7 +17,7 @@ const ok = (c, p) => { if (c) console.log('OK    ' + p); else { fail++; console.
 
 const src = fs.readFileSync(SRC, 'utf8');
 // Volání: id požadavku z odpovědi ElevenLabs musí dojít až do úklidu (jinak by zbylo jen hledání podle textu, které 14. 10. selhalo).
-ok(/const reqId = elRes\.headers\.get\("request-id"\)/.test(src) && /smazHistorii\(text, odUnix, reqId\)/.test(src),
+ok(/const reqId = elRes\.headers\.get\("request-id"\)/.test(src) && /smazHistorii\((text|recText), odUnix, reqId\)/.test(src),
   'proxy čte hlavičku request-id a předává ji úklidu historie');
 
 let strip;
