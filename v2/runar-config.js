@@ -408,6 +408,12 @@ const RUNAR_RITUAL_HLAS = {
   en: { src: 'audio/ritual_en.mp3', text_sha1: '19793215a2817b95af8fb40b8c4e0946f7d3ae1b' },
   is: { src: 'audio/ritual_is.mp3', text_sha1: 'ead43f82f4265a267321de79ce034b92e7b57dfc' },
 };
+// Hlas návodu „How a reading works“ (owner 2026-10-30: „chci taky s hlasem“, text verze B = Rúnar v 1. osobě; DECISIONS 2026-10-30 (1)).
+// Týž recept jako rituál (F); otisk = guide_lines spojené \n. Změníš-li návod, smoke ㊗ spadne — gen.js --navod, pak --navod --do-appky F.
+const RUNAR_NAVOD_HLAS = {
+  en: { src: 'audio/navod_en.mp3', text_sha1: '4ca46f41885cd0bf4a30b0e65a831734b1076839' },
+  is: { src: 'audio/navod_is.mp3', text_sha1: '38cb664f3773462b064cd8d4c64456e45747b11d' },
+};
 
 const CARD_PACKS = [
   { name: 'Starter', name_is: 'Byrjandi', credits: 5,  isk: 1490 },

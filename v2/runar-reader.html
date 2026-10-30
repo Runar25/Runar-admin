@@ -317,8 +317,11 @@
     <div class="card" id="reader-setup">
       <!-- Návod „jak čtení funguje“ — nad přepínačem, ne v něm (přepínač návštěvník nevidí, návod ano).
            KUKY 2026-09-23. Texty = UI_TEXT guide_title / guide_lines; maluje _paintGuide() v runar-app.js. -->
-      <button class="guide-lbl" id="read-guide-lbl" type="button" aria-expanded="false"
-              aria-controls="read-guide" onclick="toggleGuide()">How a reading works</button>
+      <div class="hlas-radek" id="read-guide-row">
+        <button class="guide-lbl" id="read-guide-lbl" type="button" aria-expanded="false"
+                aria-controls="read-guide" onclick="toggleGuide()">How a reading works</button>
+        <span id="guide-voice"></span><!-- 2026-10-30: hlas návodu, malá svíčka (runar-svicka.js), staví _hlasyTextu v runar-app.js -->
+      </div>
       <div class="guide" id="read-guide" style="display:none;"></div>
       <!-- READING MODE TOGGLE — shown for RS+ only -->
       <div class="reading-mode-row" id="reading-mode-row" style="display:none;">

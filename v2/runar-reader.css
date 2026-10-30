@@ -580,6 +580,10 @@ button.card-lbl:focus-visible{outline:1px solid var(--gold);outline-offset:4px;}
 /* 2026-10-28 nadpis s hlasem: nadpis (rozbalovač „+“) a za ním hlas; od 2026-10-29 malá svíčka přehrávače (.svp-mala, runar-svicka.js) */
 .hlas-radek{display:flex;align-items:center;gap:.75em;margin-bottom:16px;}
 .hlas-radek > .card-lbl{margin-bottom:0;}
+/* 2026-10-30 návod s hlasem: řádek vlevo jako rituál pod ním (dřív samotný nadpis na střed). Na střed nešlo: skrytá svíčka drží místo
+   vpravo (nesmí se nic hýbat, owner 2026-10-29), takže viditelný nadpis s notou stál o 50 px mimo střed. Okraje nese řádek, ne štítek. */
+#read-guide-row{margin:4px 0 14px;}
+#read-guide-row > .guide-lbl{width:auto;margin:0;flex:none;}
 @keyframes notaHoupe{0%,100%{transform:rotate(-7deg) translateY(0);}50%{transform:rotate(7deg) translateY(-1.5px);}}
 .flbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--gold);display:block;margin:16px 0 6px;}
 .flbl:first-child{margin-top:0;}

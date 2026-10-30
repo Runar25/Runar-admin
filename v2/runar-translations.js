@@ -414,15 +414,18 @@ const UI_TEXT = {
     guide_title:        'How a reading works',
     // 2026-09-29 (report KUKY 10:04 „mělo by být: you bring the question… in area of life, pak pojmenovat seeking a intention“):
     // první řádek nahrazen čtyřmi o tom, co člověk volí a co to ve čtení dělá (oblast · tón · čas · volitelné).
-    guide_lines:        ['You bring the question, and you choose where it lives: the area of life the reading turns to.',
-                         'What you are seeking sets how Rúnar speaks: one thing brought into focus, a difficulty named honestly, or a mirror held up.',
-                         'What the reading is for sets its time: what is happening now, what lies ahead, or what has already passed.',
-                         'All three are optional. Leave them open, and the rune leads on its own.',
+    // 2026-10-30 (owner „5. B“): mluví Rúnar sám, 1. osoba, krátké věty pro poslech (návod má i hlas, RUNAR_NAVOD_HLAS v configu);
+    // výčty u hledání a času pryč (owner: „nemusíme úplně vypisovat každé zvlášť, je to logická volba“). Do té doby 3. osoba
+    // („sets how Rúnar speaks“) a z pěti voleb hledání jen tři jmenované.
+    guide_lines:        ['You bring the question. Then you show me where it lives: the part of your life I should look at.',
+                         'Tell me what you are seeking, and I will know how to speak.',
+                         'Tell me what the reading is for, and I will know where in time to look.',
+                         'You do not have to choose any of it. Leave it open, and the rune will lead you.',
                          'The rune opens a way of looking at your question: an angle you might not have taken on your own.',   // 2026-09-29: „it“ po nových řádcích nemělo k čemu patřit
-                         'Rúnar gives the rune a voice. It speaks through an image of a place or a moment, something happening out in nature or at a kitchen table. A rune holds more than one word can.',
+                         'I give the rune a voice. It speaks through an image of a place or a moment, something happening out in nature or at a kitchen table. A rune holds more than one word can.',
                          'The meaning is yours to find. Read the image slowly and notice what stays with you — one detail, one movement. That is where the reading touches your life.',
                          'The last line is not advice, but a possibility or a question for you to weigh.',
-                         'Rúnar carries the light and points to where you might look. The seeing is yours.',
+                         'I carry the light and point to where you might look. The seeing is yours.',
                          'In the Runes Collection, each rune has its own description.'],
     // Text runy pod statickou runou v Kolekci (KUKY 2026-09-23 „4. ano“ po schválení tónu na Fehu/Tiwaz/Hagalaz).
     // Z ownerových statických popisů (RUNAR_POPISY_RUN.md); 4 odstavce: co runa je · jak ji číst v obraze ·
@@ -986,15 +989,18 @@ const UI_TEXT = {
     wts_later:          'SEINNA',
     guide_title:        'Hvernig lestur verður til',
     // 2026-09-29 viz EN; psáno islandsky, is-grammar-qa čisté.
-    guide_lines:        ['Þú kemur með spurninguna og velur hvar hún á heima, það svið lífsins sem lesturinn snýr að.',
-                         'Það sem þú leitar að ræður því hvernig Rúnar talar: hann dregur eitt atriði fram, nefnir erfiðleika eins og þeir eru eða er þér spegill.',
-                         'Tilgangur lestursins ræður því um hvaða tíma hann talar, það sem gerist núna, það sem er framundan eða það sem er liðið.',
-                         'Ekkert af þessu er skylda. Ef þú velur ekkert leiðir rúnin sjálf.',
+    // 2026-10-30 viz EN (Rúnar v 1. osobě). Greynir čisté; korpus: „hluta lífs þíns“ 24 · „á að líta“ 3860 · „hvað þú leitar“ 9 ·
+    // „til hvaða tíma“ 33 („hvar/hvert í tímanum“ 0 → pryč) · „lætur það vera“ 112 · „leiðir þig“ 430 · „gefa rödd“ 22 · „ber ljósið“ 7.
+    // „leiðir rúnin þig sjálf“ zkráceno na „leiðir rúnin þig“: „sjálf“ šlo číst jako „ty sama“ i „runa sama“.
+    guide_lines:        ['Þú kemur með spurninguna. Svo sýnirðu mér hvar hún á heima, þann hluta lífs þíns sem ég á að líta til.',
+                         'Segðu mér hvað þú leitar að. Þá veit ég hvernig ég á að tala.',
+                         'Segðu mér hver tilgangur lestursins er. Þá veit ég til hvaða tíma ég á að líta.',
+                         'Þú þarft ekki að velja neitt af þessu. Ef þú lætur það vera opið leiðir rúnin þig.',
                          'Rúnin opnar nýtt sjónarhorn á spurninguna, leið til að horfa sem þú hefðir kannski ekki valið.',   // 2026-09-29 viz EN („hana“ bez předchůdce)
-                         'Rúnar gefur rúninni rödd. Hún talar í gegnum mynd af stað eða andartaki, af einhverju sem gerist úti í náttúrunni eða við eldhúsborðið. Rún rúmar meira en eitt orð.',
+                         'Ég gef rúninni rödd. Hún talar í gegnum mynd af stað eða andartaki, af einhverju sem gerist úti í náttúrunni eða við eldhúsborðið. Rún rúmar meira en eitt orð.',
                          'Merkinguna finnur þú. Lestu myndina hægt og sjáðu hvað situr eftir í þér, eitt smáatriði eða ein hreyfing. Þar snertir lesturinn líf þitt.',
                          'Síðasta línan er ekki ráð, heldur möguleiki eða spurning sem þú vegur og metur.',
-                         'Rúnar ber ljósið og bendir hvert þú getur horft. En það ert þú sem sérð.',
+                         'Ég ber ljósið og bendi hvert þú getur horft. En það ert þú sem sérð.',
                          'Í safninu er lýsing á hverri rún.'],
     // Tvar runy (viz EN). Psáno islandsky; is-grammar-qa čisté (E001 u holých vět bez slovesa → přepsáno), vazby z korpusu (tvary ověřeny proti naší kresbě glyfů 2026-09-30; „skerast“ 2044 × „krossast“ 82):
     // „undir sig hausinn“ 328 · „slagbrandur“ 19 · „innan túngarðs“ 10 · „takast í hendur“ 535 · „verður á vegi“ 776 · „á alla vegu“ 1577.

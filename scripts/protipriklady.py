@@ -348,6 +348,9 @@ PRIPADY = [
  ('chyti', 'verify_telefon.js', 'v2/runar-svicka.js', 'replace', "(o.mala ? ' svp-skryta' : '')", "''"),   # rituál: svíčka vidět už před notou
  ('chyti', 'verify_telefon.js', 'v2/runar-app.js', 'replace', '  if (_predTab !== tab) svickaZtisVse();', '  if (false) svickaZtisVse();'),   # hlas mluví dál po přepnutí záložky
  ('chyti', 'verify_telefon.js', 'v2/runar-svicka.js', 'replace', 'ukaz(true); rozmer(); zamcena();', 'ukaz(true); rozmer();'),   # zamčená obrazovka bez názvu a ovládání
+ # hlas návodu „How a reading works“ (owner 2026-10-30): nahrávka bez hostitele v appce · návod změněný bez nové nahrávky
+ ('chyti', 'verify_telefon.js', 'v2/runar-app.js', 'replace', "{ prefix: 'nav', host: 'guide-voice',", "{ prefix: 'nav', host: 'guide-voice-x',"),
+ ('chyti', 'verify_ritual_hlas.js', 'v2/runar-translations.js', 'replace', "'Segðu mér hvað þú leitar að. Þá veit ég hvernig ég á að tala.'", "'Segðu mér hvað þú leitar að. Þá veit ég hvernig ég tala.'"),
  # verify_onclick_funkce.js (CODE-read 2026-10-22): přejmenovaná funkce v onclick v HTML · v šabloně v JS · metoda po tečce není funkce appky
  ('chyti', 'verify_onclick_funkce.js', 'v2/runar-reader.html', 'replace', 'onclick="treeZoomAll()"', 'onclick="treeZoomVse()"'),
  ('chyti', 'verify_onclick_funkce.js', 'v2/runar-journal.js', 'replace', 'onclick="playReadingVoice(', 'onclick="playReadingVoiceX('),

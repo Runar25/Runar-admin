@@ -1037,7 +1037,7 @@ function updateUIText() {
   var _rit = document.getElementById('ritual-box');   // 2026-10-27: rituál pod BEFORE WE BEGIN — statický text (§14)
   if (_rit) { _rit.innerHTML = ''; var _rp = document.createElement('p'); _rp.textContent = t('ritual_text'); _rit.appendChild(_rp); }
   svickaPopisky();   // aria popisky přehrávačů (nota, svíčka) v jazyce appky — statický překlad
-  _ritualHlas();     // nahrávka rituálu v jazyce appky (staví se jen při změně jazyka)
+  _hlasyTextu();     // nahrávky rituálu a návodu v jazyce appky (staví se jen při změně jazyka)
   setText('audio-player-lbl', t('voice_player_lbl'));
   setText('ask-lbl', t('ask_lbl'));
   var _askInp = document.getElementById('ask-input'); if (_askInp && typeof _askPlaceholder === 'function') _askInp.placeholder = _askPlaceholder();
@@ -1411,15 +1411,21 @@ function _navodPoPrvnimPrihlaseni() {
 // jazyka (uložená volba při startu, profil po přihlášení, přepínač, potvrzené okno „Speak again in …?“). Do 2026-10-29 večer ji stavěl
 // setLang z NOVÉHO jazyka hned na začátku a start appky z výchozího IS před načtením uložené volby → appka v EN, rituál islandsky
 // (owner: „mám nastavenou appku na EN, ale dostanu IS rituál?“): po zrušeném okně přepnutí u čtení i po každém otevření appky.
-function _ritualHlas() {
-  var host = document.getElementById('ritual-voice');
-  if (!host || typeof RUNAR_RITUAL_HLAS === 'undefined') return;
-  if (host.getAttribute('data-lang') === lang) return;
-  if (_SVICKY.rit) svickaStop('rit');
-  var h = RUNAR_RITUAL_HLAS[lang] || RUNAR_RITUAL_HLAS.en;
-  host.setAttribute('data-lang', lang);
-  host.innerHTML = svickaHtml('rit', h.src, { mala: true }); svickaNapoj('rit');
-  svickaNazev('rit', function () { var e = document.getElementById('reader-card1-lbl'); return e ? e.textContent.trim() : ''; });
+// 2026-10-30 (owner „How a reading works … chci taky s hlasem“): týmž způsobem i návod — nahrávky textů jsou data, cesta jedna.
+var _HLASY_TEXTU = [
+  { prefix: 'rit', host: 'ritual-voice', nadpis: 'reader-card1-lbl', hlas: function () { return typeof RUNAR_RITUAL_HLAS === 'undefined' ? null : RUNAR_RITUAL_HLAS; } },
+  { prefix: 'nav', host: 'guide-voice', nadpis: 'read-guide-lbl', hlas: function () { return typeof RUNAR_NAVOD_HLAS === 'undefined' ? null : RUNAR_NAVOD_HLAS; } },
+];
+function _hlasyTextu() {
+  _HLASY_TEXTU.forEach(function (x) {
+    var host = document.getElementById(x.host), H = x.hlas();
+    if (!host || !H || host.getAttribute('data-lang') === lang) return;
+    if (_SVICKY[x.prefix]) svickaStop(x.prefix);
+    var h = H[lang] || H.en;
+    host.setAttribute('data-lang', lang);
+    host.innerHTML = svickaHtml(x.prefix, h.src, { mala: true }); svickaNapoj(x.prefix);
+    svickaNazev(x.prefix, function () { var e = document.getElementById(x.nadpis); return e ? e.textContent.trim() : ''; });
+  });
 }
 // Rituál pod BEFORE WE BEGIN (owner 2026-10-27): nadpis je rozbalovač, jako „How a reading works“.
 function toggleRitual() {
@@ -2156,7 +2162,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     updateSidePanelLang();
   }
   applyLangToggle(lang);   // 2026-10-10: výchozí jazyk je IS — i bez uložené volby, jinak by svítilo EN z HTML
-  _ritualHlas();   // hned po uložené volbě jazyka: první updateUIText čeká na přihlášení (pomalá síť = rituál by chyběl)
+  _hlasyTextu();   // hned po uložené volbě jazyka: první updateUIText čeká na přihlášení (pomalá síť = rituál a návod by chyběly)
 
   // Restore address gender from localStorage
   userGender = localStorage.getItem('runar_gender') || 'hk';

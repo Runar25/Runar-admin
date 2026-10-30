@@ -126,23 +126,26 @@ const MERENI = `(() => {
     // 2026-10-29 večer (owner: „mám nastavenou appku na EN, ale dostanu IS rituál?“): nahrávka rituálu = jazyk appky. Dvě cesty, kde se
     // rozešly: přepnutí jazyka u hotového čtení se zrušeným oknem „Speak again in …?“ (appka zůstane v EN) a start s uloženou volbou.
     const RIT_OKNO = await ev(`(function(){ setLang(lang === 'en' ? 'is' : 'en'); var m = document.getElementById('lang-switch-modal');
-      var r = { lang: lang, src: (document.getElementById('rit-a') || { getAttribute: function(){ return null; } }).getAttribute('src'), okno: !!(m && m.classList.contains('open')) };
+      var r = { lang: lang, src: (document.getElementById('rit-a') || { getAttribute: function(){ return null; } }).getAttribute('src'), nav: (document.getElementById('nav-a') || { getAttribute: function(){ return null; } }).getAttribute('src'), okno: !!(m && m.classList.contains('open')) };
       if (m) m.classList.remove('open'); pendingLang = null; applyLangToggle(lang); return r; })()`);
     if (!RIT_OKNO || !RIT_OKNO.okno) vady.push('rituál × okno přepnutí jazyka: okno se neotevřelo, větev neověřena — ' + JSON.stringify(RIT_OKNO));
     else if (!new RegExp('ritual_' + RIT_OKNO.lang + '\\.mp3').test(RIT_OKNO.src || '')) vady.push('rituál po zrušeném přepnutí jazyka u čtení: appka ' + RIT_OKNO.lang + ', nahrávka ' + RIT_OKNO.src);
+    else if (!new RegExp('navod_' + RIT_OKNO.lang + '\\.mp3').test(RIT_OKNO.nav || '')) vady.push('návod po zrušeném přepnutí jazyka u čtení: appka ' + RIT_OKNO.lang + ', nahrávka ' + RIT_OKNO.nav);
     // obyčejné přepnutí jazyka (owner: „když přepnu na jiný, tak se musí i rituál nastavit… všechno má být v té jazykové mutaci“)
     await nacti();
     for (const jaz of ['is', 'en']) {
-      const r = await ev(`(function(){ setLang('${jaz}'); return { lang: lang, src: (document.getElementById('rit-a') || { getAttribute: function(){ return null; } }).getAttribute('src') }; })()`);
+      const r = await ev(`(function(){ setLang('${jaz}'); return { lang: lang, src: (document.getElementById('rit-a') || { getAttribute: function(){ return null; } }).getAttribute('src'), nav: (document.getElementById('nav-a') || { getAttribute: function(){ return null; } }).getAttribute('src') }; })()`);
       if (!r || r.lang !== jaz || !new RegExp('ritual_' + jaz + '\\.mp3').test(r.src || '')) vady.push('rituál po přepnutí jazyka na ' + jaz + ': ' + JSON.stringify(r));
+      if (!r || !new RegExp('navod_' + jaz + '\\.mp3').test(r.nav || '')) vady.push('návod po přepnutí jazyka na ' + jaz + ': ' + JSON.stringify(r));
     }
     for (const jaz of ['en', 'is']) {
       await ev(`localStorage.setItem('runar_lang', '${jaz}'); 1`);
       await cmd('Page.navigate', { url: URL });
       for (let k = 0; k < 100; k++) { await sleep(150); if (await ev(`typeof showAppTab === 'function' && document.readyState === 'complete'`)) break; }
       await sleep(900);
-      const r = await ev(`({ lang: lang, src: (document.getElementById('rit-a') || { getAttribute: function(){ return null; } }).getAttribute('src'), host: (document.getElementById('ritual-voice') || {}).outerHTML })`);
+      const r = await ev(`({ lang: lang, src: (document.getElementById('rit-a') || { getAttribute: function(){ return null; } }).getAttribute('src'), nav: (document.getElementById('nav-a') || { getAttribute: function(){ return null; } }).getAttribute('src'), host: (document.getElementById('ritual-voice') || {}).outerHTML })`);
       if (!r || r.lang !== jaz || !new RegExp('ritual_' + jaz + '\\.mp3').test(r.src || '')) vady.push('rituál po startu s uloženým jazykem ' + jaz + ': ' + JSON.stringify(r));
+      if (!r || !new RegExp('navod_' + jaz + '\\.mp3').test(r.nav || '')) vady.push('návod po startu s uloženým jazykem ' + jaz + ': ' + JSON.stringify(r));
     }
     await nacti();
     // 2026-10-29 (owner: „přehrávač na mobilu má zbytečně velké mezery mezi play, časovou osou… pruh stopy je tím asymetricky menší“;
@@ -198,6 +201,14 @@ const MERENI = `(() => {
         if (!ra.ended) v.push('rituál nedohrál (zvuk ' + ra.currentTime.toFixed(1) + ' z ' + ra.duration.toFixed(1) + ' s; paused ' + ra.paused + ', readyState ' + ra.readyState + ', network ' + ra.networkState + ', chyba ' + (ra.error && ra.error.code) + ')'); else await sl(4000);
         if (!rs.classList.contains('svp-skryta')) v.push('malá svíčka rituálu po dohrání nezmizela');
         if (Math.abs(rs.getBoundingClientRect().width - rr.width) > 0.5) v.push('skrytá svíčka rituálu nedrží místo v řádku'); }
+      // návod (owner 2026-10-30 „How a reading works … chci taky s hlasem“): nadpis a svíčka se vejdou (IS má delší nadpis), svíčka až po notě
+      var ns = document.getElementById('nav-sv'), nl = document.getElementById('read-guide-lbl');
+      if (!ns) v.push('malá svíčka návodu chybí'); else { var nr = ns.getBoundingClientRect(), lr = nl.getBoundingClientRect();
+        if (nr.right > ${SIRKA} - 1 || nr.width < 20 || lr.left < 0 || lr.right > nr.left) v.push('návod (IS): nadpis ' + Math.round(lr.left) + '–' + Math.round(lr.right) + ' px, svíčka ' + Math.round(nr.left) + '–' + Math.round(nr.right) + ' px');
+        if (!ns.classList.contains('svp-skryta')) v.push('malá svíčka návodu je vidět před ťuknutím na notu');
+        var na = document.getElementById('nav-a'); na.muted = true; document.getElementById('nav-pb').click(); await sl(900);
+        if (ns.classList.contains('svp-skryta')) v.push('malá svíčka návodu se po ťuknutí na notu neukázala');
+        if (na.paused) v.push('hlas návodu se po notě nerozehrál'); svickaStop('nav'); }
       setLang('en'); return v; })`;
     const vPs = await ev(PREHRAVAC + '(true)');   // samotest: svíčka odsunutá o 26 px (vyhrazené místo vlevo, jako náhled 2) se musí poznat
     if (!vPs || !vPs.some((x) => /mezery/.test(x))) vady.push('SAMOTEST: odsunutou svíčku (nesouměrné mezery) kontrola nepoznala — ' + JSON.stringify(vPs));

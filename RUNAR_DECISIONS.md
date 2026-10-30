@@ -12551,3 +12551,20 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Hlídá:** smoke ㊎ — po notě hraje, má název na zamčené obrazovce, přepnutí záložky ho zastaví; 2 útoky.
 - **Neověřeno:** skutečný zamčený telefon (iOS / Android) — kontrola vidí jen, že název a ovládání appka prohlížeči předala.
 - Affected doc(s): žádný jiný (chování vlastní `v2/runar-svicka.js`, `v2/runar-app.js`).
+
+## 2026-10-30 (1) — „How a reading works“ mluví Rúnar sám a má hlas (malá svíčka jako rituál)
+
+- **Rozhodl:** owner 2026-10-30 nad návrhem dvou verzí: *„5. B“* (Rúnar v 1. osobě, krátké věty pro poslech) a *„6. … nemusíme úplně
+  vypisovat každé zvlášť, je to logická volba, takže to zkrátíme“*; zadání 2026-10-29 *„how a reading works — chci taky s hlasem“*
+  (BACKLOG, hlášení 5fdcca95, 2026-10-28 *„taky nemluvíme Rúnarem jako statické čtení“*).
+- **Co:** (1) `guide_lines` EN + IS: řádky 1–4 nově (otázka · co hledáš → jak mluvím · k čemu čtení → kam v čase se dívám · nic není povinné),
+  bez výčtu voleb; řádky 6 a 9 z „Rúnar …“ na „I / Ég“, ať celý návod mluví jedním hlasem. Dřív návod jmenoval jen 3 z 5 voleb hledání.
+  (2) Hlas: recept rituálu F (`eleven_v4`, značka klidného hlasu, stabilita 0,5, rychlost 0,85), mezi řádky delší pauza „… …“;
+  `gen.js --navod`, soubory `v2/audio/navod_<l>.mp3`, otisk textu v `RUNAR_NAVOD_HLAS`. Nahrávky i v archivu hlasů.
+  (3) Za nadpisem návodu malá svíčka jako u rituálu (nota, svíčka až po ťuknutí, po dohrání zmizí); rituál a návod staví jedna funkce
+  `_hlasyTextu` z dat. Řádek návodu je nově vlevo jako rituál pod ním: na střed by viditelný nadpis s notou stál ~50 px mimo osu, protože
+  skrytá svíčka drží místo (nic se nesmí hýbat, 2026-10-29 (5)).
+- **Hlídá:** smoke ㊗ (nahrávka návodu sedí na text) a ㊎ (jazyk nahrávky po přepnutí, startu i zrušeném okně; nadpis a svíčka se vejdou
+  na 375 px v IS; svíčka až po notě); 2 útoky.
+- **Ověřeno:** IS Greynir čisté, vazby korpusem (čísla u textu v `runar-translations.js`); „hvar/hvert í tímanum“ 0× → „til hvaða tíma“.
+- Affected doc(s): žádný jiný (text vlastní `v2/runar-translations.js`, nahrávku `v2/runar-config.js` + `v2/audio/`).

@@ -1000,7 +1000,8 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   228c8f1c (RÚNAR vlevo = domů v appce, web do menu, v Play skrytý), 85d5ea31 / 366d49e4 / b3118792 / 025f5d2d (počet čtení v kolečku za
   jménem, rozzáření a doběhnutí čísla po dobití), 912b92ad (jméno se mění jen pod jménem, ze životní runy pryč). Owner: *„pokud tam něco
   nesedělo, máš se mě zeptat, jak to upravíme“* — staví se až po schválení návrhu.
-- [ ] **Hlas Rúnara i pro „How a reading works“ (5fdcca95) — owner 2026-10-28 „ano, taky uděláme hlas a ikonu; ikona bude taky animovaná“:** *„How a reading works taky nemluvíme Rúnarem jako statické čtení“* — týž postup jako
+- [x] ✅ *(CODE-tune 2026-10-30, DECISIONS 2026-10-30 (1): text verze B Rúnarovým hlasem, nahrávka receptem F, malá svíčka za nadpisem)*
+  **Hlas Rúnara i pro „How a reading works“ (5fdcca95) — owner 2026-10-28 „ano, taky uděláme hlas a ikonu; ikona bude taky animovaná“:** *„How a reading works taky nemluvíme Rúnarem jako statické čtení“* — týž postup jako
   hlas rituálu — hotový jako varianta F (DECISIONS 2026-10-28 (3)): text do UI_TEXT, nahrávka gen.js, ♪ komponentou `.hlas-radek` /
   `.hlas-btn` a otisk do `RUNAR_RITUAL_HLAS` (smoke ㊗ pak hlídá i tenhle). Potvrdit, že jde o tohle.
 - [x] ✅ *(CODE-tune 2026-10-28, DECISIONS 2026-10-28 (1))* **Proužek #hero-down přes záložky (47b63e3f):** *„když se posunu z hlavní stránky dolů posuvníkem, který se na druhé straně obrátí nahoru,
