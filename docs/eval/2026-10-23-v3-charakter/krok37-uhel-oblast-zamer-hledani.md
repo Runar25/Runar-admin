@@ -40,6 +40,20 @@ Návrh, ze kterého test vychází: `krok36-podklad-bez-obrazu.md`, oddíl 4 (ow
 1. n = 12, jedno čtení na kombinaci; soudce jeden (Opus). 10/12 je silné proti náhodě, ale 4 čtení oblast prozradila slovem.
 2. Úhly významu napsal CODE-read z ownerových popisů — obsah ke schválení ownerem, ne kánon.
 
+## 4a. Ownerův verdikt (2026-10-30)
+
+1. Většina čtení je dobrá; kazí je drobnosti navíc.
+2. **Isa:** definice v první větě dobrá, ale čtení pak sklouzne do „frozen“ a „ice“, i když situace (skica, kolem které ruka chodí) s ledem
+   nemá nic společného — totéž u ostatních Isa. Ani skica s míjející rukou ownerovi nesedí.
+   Rozbor CODE-read: led v těch čteních nebyl v pokynu (úhel ani obraz z oblasti ho nenesly) — model si ho přinesl z vlastního povědomí
+   o runě Isa a přilepil k obrazu jako druhý obraz. „Ruka, která kolem chodí“ = vložka času „the image shows something happening now“.
+3. **Gebo, student:** velmi dobrý, přesně řečený obraz; jen zavírající se dveře jsou navíc („o dvě slova míň a je to dobré“).
+   Rozbor CODE-read: „just before the door closes“ = vložka času „the image shows something about to happen“ (záměr Decision ahead);
+   totéž „about to meet the stairs“ u Fehu.
+4. **Fehu, koleno po týdnech na gauči:** zajímavé a ownerovi přijde trochu humorné → otázka, jestli dát Rúnarovi občas trochu humoru.
+5. Příklady druhů obrazu brát jen přesné a výstižné — owner vybral „lungs must let their breath go before they can draw the next“
+   a „a bridge stands only when both banks bear its weight“.
+
 ## 5. Druhy obrazu, které vysvětlují význam (odpověď na ownerovu otázku)
 
 Ve v2 jsou ratifikované tři typy (`RUNAR_DESIGN.md` „Typ obrazu“): **fyzický** (věc koná — děj), **situační** (člověk koná a čin něco
