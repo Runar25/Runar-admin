@@ -68,15 +68,19 @@ h1{font-family:'Cinzel',serif;font-weight:400;letter-spacing:3px;color:var(--gol
   filter:drop-shadow(0 0 2.5px rgba(255,191,0,0.55))}
 .kad .klidny{transition:opacity .6s ease}
 .kad .zhava{fill:var(--gold);stroke:none;opacity:0}
-.kad .dym{fill:none;stroke:#cfc8b8;stroke-linecap:round;opacity:0;filter:url(#mlhaOpar);stroke-dasharray:64;stroke-dashoffset:64}
+.kad .dym{fill:none;stroke:#cfc8b8;stroke-linecap:round;opacity:0;filter:url(#mlhaOpar);stroke-dasharray:100;stroke-dashoffset:100}
 .kad .d1{stroke-width:3.2}.kad .d2{stroke-width:4.6}.kad .d3{stroke-width:2.6}
 .kad.hori .klidny{opacity:0;transition-delay:0s}
 .kad.hori .zhava{animation:zhava 3s ease-in-out both}
-.kad.hori .d1{animation:dym 2.4s ease-in-out both}
-.kad.hori .d2{animation:dym 2.6s ease-in-out .9s both}
-.kad.hori .d3{animation:dym 2.4s ease-in-out 1.8s both}
+/* délka kouře roste rovnoměrně 3 s (pathLength=100 → odkrytí odpovídá skutečné délce, nevystřelí); vítr = pramínky se střídají, každý víc ohnutý */
+.kad.hori .d1{animation:dymRust 3s cubic-bezier(.35,.15,.6,1) both,dymO1 3.6s ease-in-out both}
+.kad.hori .d2{animation:dymRust 3s cubic-bezier(.35,.15,.6,1) both,dymO2 3.6s ease-in-out both}
+.kad.hori .d3{animation:dymRust 3s cubic-bezier(.35,.15,.6,1) both,dymO3 3.6s ease-in-out both}
 @keyframes zhava{0%{opacity:0}12%,80%{opacity:1}100%{opacity:0}}
-@keyframes dym{0%{opacity:0;stroke-dashoffset:64}25%{opacity:.3}65%{opacity:.24;stroke-dashoffset:0}100%{opacity:0;stroke-dashoffset:0}}
+@keyframes dymRust{0%{stroke-dashoffset:100}100%{stroke-dashoffset:0}}
+@keyframes dymO1{0%{opacity:0}12%{opacity:.3}45%{opacity:.26}68%,100%{opacity:0}}
+@keyframes dymO2{0%,22%{opacity:0}48%{opacity:.28}75%{opacity:.22}92%,100%{opacity:0}}
+@keyframes dymO3{0%,48%{opacity:0}72%{opacity:.28}88%{opacity:.2}100%{opacity:0}}
 .velke{display:flex;gap:24px;align-items:flex-end;margin:12px 0 4px}
 .velke svg{width:96px;height:96px;color:var(--gold)}
 .tl,.var button{font-family:'Cinzel',serif;font-size:0.64em;letter-spacing:2px;color:var(--gold);background:none;border:1px solid rgba(214,168,92,0.55);padding:8px 12px;cursor:pointer;margin:4px 6px 0 0}
