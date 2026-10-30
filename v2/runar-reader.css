@@ -586,7 +586,11 @@ button.card-lbl:focus-visible{outline:1px solid var(--gold);outline-offset:4px;}
 .svitek .sv-radky{opacity:0;transition:opacity .35s ease;}
 [aria-expanded="true"] > .svitek .sv-list{transform:none;}
 [aria-expanded="true"] > .svitek .sv-radky{opacity:1;transition-delay:.4s;}
-@media (prefers-reduced-motion:reduce){.svitek .sv-list,.svitek .sv-radky{transition:none;}}
+.sv-ukazka > .svitek .sv-list{animation:svUkazka 2.4s ease-in-out;}
+.sv-ukazka > .svitek .sv-radky{animation:svRadky 2.4s ease-in-out;}
+@keyframes svUkazka{0%{transform:scaleY(.18);}35%,65%{transform:none;}100%{transform:scaleY(.18);}}
+@keyframes svRadky{0%,25%{opacity:0;}40%,60%{opacity:1;}75%,100%{opacity:0;}}
+@media (prefers-reduced-motion:reduce){.svitek .sv-list,.svitek .sv-radky{transition:none;}.sv-ukazka > .svitek .sv-list,.sv-ukazka > .svitek .sv-radky{animation:none;}}
 /* 2026-10-30 návod s hlasem: řádek vlevo jako rituál pod ním (dřív samotný nadpis na střed). Na střed nešlo: skrytá svíčka drží místo
    vpravo (nesmí se nic hýbat, owner 2026-10-29), takže viditelný nadpis s notou stál o 50 px mimo střed. Okraje nese řádek, ne štítek. */
 #read-guide-row{margin:4px 0 14px;}

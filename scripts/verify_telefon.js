@@ -198,7 +198,12 @@ const MERENI = `(() => {
         for (var k4 = 0; k4 < 30 && obrRuny().indexOf('data:image/png') !== 0; k4++) await sl(100);
         var art = obrRuny();
         if (art.indexOf('data:image/png') !== 0 || art.length < 5000) v.push('zamčená obrazovka u jedné runy bez kresby runy (' + art.slice(0, 40) + ')'); }
-      readerRune = null;
+      // výklad (owner „u výkladu více run mohou být všechny runy“): obraz se složí z run výkladu, je jiný než u jedné runy
+      if (typeof obrRuny === 'function') { _lastDrawn = RUNES.slice(0, 5); svickaNazev('cap', 'Kriz', function () { return (_lastDrawn || []).filter(Boolean); });
+      a.pause(); await sl(300); _capPlay('cap'); await sl(600);
+      for (var k5 = 0; k5 < 30 && obrRuny() === art; k5++) await sl(100);
+      if (obrRuny().indexOf('data:image/png') !== 0 || obrRuny() === art) v.push('zamčená obrazovka u výkladu bez obrazu run výkladu'); }
+      readerRune = null; _lastDrawn = [];
       showAppTab('journal'); await sl(150); if (!a.paused) v.push('hlas hraje dál po přepnutí záložky'); showAppTab('reading');
       _capStop('cap'); ap.classList.remove('visible');
       setLang('is'); await sl(300); var rs = document.getElementById('rit-sv'), rr = rs && rs.getBoundingClientRect();

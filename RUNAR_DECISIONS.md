@@ -12614,3 +12614,13 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   rituál a návod mají ikonu appky.
 - **Hlídá:** smoke ㊎ (svitek zavřený / rozvinutý, obraz runy předaný telefonu) + 2 útoky. **Neověřeno:** skutečný zamčený iPhone / Android.
 - Affected doc(s): žádný jiný.
+
+## 2026-10-30 (6) — Zamčená obrazovka: u výkladu všechny runy; svitek se jednou sám rozvine
+
+- **Rozhodl:** owner 2026-10-30: *„3. u výkladu více run mohou být všechny runy, ne? Jinak ano.“* · *„7. ano“* (svitek se jednou sám
+  rozvine, jako se rozzáří kadidlo).
+- **Co:** (1) Obraz na zamčené obrazovce = všechny runy výkladu v řadách po třech (Norny 3, Kříž 3+2, Podkova 3+3+1, Yggdrasil 3×3),
+  jedna runa přes celý obraz; čtení bere runy z `_lastDrawn`, deník u výkladu ze `short_text`. Opravuje (5) bod 3 („výklady = ikona“).
+  (2) Když nadpis „How a reading works“ poprvé dojede na obrazovku, svitek se rozvine a svine (2,4 s); ne přes okno, ne u otevřeného návodu.
+- **Hlídá:** smoke ㊎ (obraz výkladu je jiný než obraz jedné runy).
+- Affected doc(s): žádný jiný.

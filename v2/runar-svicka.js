@@ -29,27 +29,42 @@ function _svickaRnd(seed) { var h = 2166136261; for (var i = 0; i < seed.length;
   return function () { h += 0x6D2B79F5; var x = h; x = Math.imul(x ^ (x >>> 15), x | 1); x ^= x + Math.imul(x ^ (x >>> 7), x | 61); return ((x ^ (x >>> 14)) >>> 0) / 4294967296; }; }
 function _svickaEl(tag, at, rodic) { var e = document.createElementNS(_SVG_NS, tag); for (var k in at) e.setAttribute(k, at[k]); if (rodic) rodic.appendChild(e); return e; }
 function _svickaHvezda(r1, r2, n) { var d = ''; for (var i = 0; i < n * 2; i++) { var r = i % 2 ? r2 : r1, a = Math.PI * i / n - Math.PI / 2; d += (i ? 'L' : 'M') + (r * Math.cos(a)).toFixed(2) + ',' + (r * Math.sin(a)).toFixed(2); } return d + 'Z'; }
-// Obraz na zamčené obrazovce (owner 2026-10-30 „6. ok“): kde hraje hlas jedné runy (čtení jedné runy, Kolekce, deník), tažená runa naší
-// kresbou (runeSvg, kámen, §5) místo ikony appky. Kresba se jednou za runu vykreslí do PNG 512 px na pozadí appky; než je hotová, ikona.
+// Obraz na zamčené obrazovce (owner 2026-10-30 „6. ok“; „u výkladu více run mohou být všechny runy“): tažené runy naší kresbou
+// (runeSvg, kámen, §5) místo ikony appky — jedna runa přes celý obraz, výklad všechny v řadách (3 run v řadě, Kříž 3+2, Yggdrasil 3×3).
+// Kresba se jednou za sestavu run vykreslí do PNG 512 px na pozadí appky; než je hotová, ikona. Rituál a návod runu nemají → ikona.
 // Na skutečném zamčeném iPhonu / Androidu neověřeno — kontrola vidí jen, co appka prohlížeči předala.
 var _SVICKA_OBRAZY = {};
-function _svickaObrazRuny(runa, hotovo) {
-  var k = runa && (runa.svg || runa.n);
-  if (!k || typeof runeSvg !== 'function') return null;
+function _svickaObrazRuny(runy, hotovo) {
+  runy = (Array.isArray(runy) ? runy : [runy]).filter(function (r) { return r && (r.svg || r.n); });
+  if (!runy.length || typeof runeSvg !== 'function') return null;
+  var k = runy.map(function (r) { return r.svg || r.n; }).join('|');
   if (_SVICKA_OBRAZY[k]) return _SVICKA_OBRAZY[k];
-  var svg = runeSvg(runa, { frame: true });
-  if (svg.indexOf('<svg') !== 0) return null;   // runa bez kresby (záložní glyf) → ikona
-  var img = new Image();
-  img.onload = function () {
+  if (_SVICKA_OBRAZY[k] === false) return null;   // kresba se právě skládá
+  var svgy = runy.map(function (r) { return runeSvg(r, { frame: true }); });
+  if (svgy.some(function (s) { return s.indexOf('<svg') !== 0; })) return null;   // runa bez kresby (záložní glyf) → ikona
+  _SVICKA_OBRAZY[k] = false;
+  var n = runy.length, sl = n <= 3 ? n : Math.ceil(Math.sqrt(n)), ra = Math.ceil(n / sl);
+  var bunka = Math.min(400, 460 / Math.max(sl, ra)), obrazy = [], nacteno = 0;
+  function sloz() {
     try {
       var c = document.createElement('canvas'); c.width = c.height = 512;
       var x = c.getContext('2d');
       x.fillStyle = getComputedStyle(document.body).backgroundColor || 'black'; x.fillRect(0, 0, 512, 512);
-      x.drawImage(img, 56, 56, 400, 400);
+      var y0 = (512 - ra * bunka) / 2;
+      for (var i = 0; i < n; i++) {
+        var radek = Math.floor(i / sl), vRadku = Math.min(sl, n - radek * sl), x0 = (512 - vRadku * bunka) / 2;
+        x.drawImage(obrazy[i], x0 + (i % sl) * bunka, y0 + radek * bunka, bunka, bunka);
+      }
       _SVICKA_OBRAZY[k] = c.toDataURL('image/png'); hotovo();
-    } catch (e) {}
-  };
-  img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg.replace('<svg ', '<svg width="400" height="400" ' + (svg.indexOf('xmlns=') < 0 ? 'xmlns="http://www.w3.org/2000/svg" ' : '')));
+    } catch (e) { delete _SVICKA_OBRAZY[k]; }
+  }
+  svgy.forEach(function (svg, i) {
+    var img = new Image();
+    img.onload = function () { if (++nacteno === n) sloz(); };
+    img.onerror = function () { delete _SVICKA_OBRAZY[k]; };
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg.replace('<svg ', '<svg width="400" height="400" ' + (svg.indexOf('xmlns=') < 0 ? 'xmlns="http://www.w3.org/2000/svg" ' : '')));
+    obrazy[i] = img;
+  });
   return null;
 }
 function _svickaAnim(ms, krok, hotovo) {

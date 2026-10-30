@@ -41,7 +41,7 @@
 // VLASTNÍ .topbar-tuzka .tz-cara .tz-pero — tužka u jména v liště: jen při otevřené nabídce, „podepíše“ dvě písmena (owner 2026-10-28)
 // VLASTNÍ .pocet-cteni .rozzar — počet čtení v kolečku za jménem; po dobití se rozzáří a doběhne (owner 2026-10-28, hlášení 85d5ea31)
 // VLASTNÍ .myslenka-pero — pírko Huginna před myšlenkou na konci čtení a v deníku (owner 2026-10-30), jediná kresba myšlenky
-// VLASTNÍ .svitek .sv-list .sv-radky — svitek před „How a reading works“, rozvine se s návodem (owner 2026-10-30 „N3“)
+// VLASTNÍ .svitek .sv-list .sv-radky .sv-ukazka — svitek před „How a reading works“, rozvine se s návodem a jednou sám (owner 2026-10-30)
 //
 // PRAVIDLA, KTERÁ KONTROLA HLÍDÁ:
 //   A) každá třída z tabulky v runar-reader.css existuje (soupis nehnije)

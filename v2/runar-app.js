@@ -1330,6 +1330,22 @@ function _svickaPriOtevreni() {
   }, { threshold: 0.9 });
   io.observe(lbl);
 }
+// Svitek u „How a reading works“ (owner 2026-10-30 „7. ano“ na otázku, jestli se má jednou rozvinout sám jako kadidlo rozzáří): když nadpis
+// poprvé dojede na obrazovku, svitek se rozvine a zase svine (.sv-ukazka, 2,4 s). Ne přes otevřené okno a ne u otevřeného návodu.
+function _svitekPriOtevreni() {
+  var lbl = document.getElementById('read-guide-lbl');
+  if (!lbl || typeof IntersectionObserver === 'undefined') return;
+  var io = new IntersectionObserver(function (zaznamy) {
+    if (!zaznamy.some(function (z) { return z.isIntersecting; })) return;
+    io.disconnect();
+    setTimeout(function () {
+      if (document.querySelector('.modal-overlay.open') || lbl.getAttribute('aria-expanded') === 'true') return;
+      lbl.classList.add('sv-ukazka');
+      setTimeout(function () { lbl.classList.remove('sv-ukazka'); }, 2600);
+    }, 400);
+  }, { threshold: 0.9 });
+  io.observe(lbl);
+}
 function maybeShowWhereToStart() {
   var m = document.getElementById('wts-modal');
   if (!m || _wtsVidel() || m.classList.contains('open')) return;
@@ -2142,6 +2158,7 @@ window.addEventListener('DOMContentLoaded', () => {
   });
   setTimeout(maybeShowWhereToStart, 1800);   // „Where to start“ — jednou, až se appka usadí (DECISIONS 2026-10-11 (65))
   _svickaPriOtevreni();   // 2026-10-21: svíčka u BEFORE WE BEGIN se rozzáří, až nadpis poprvé dojede na obrazovku
+  _svitekPriOtevreni();   // 2026-10-30: svitek u „How a reading works“ se jednou sám rozvine
   // ── Close topbar dropdown on outside click ──
   document.addEventListener('click', function(e) {
     const wrap = document.getElementById('auth-dropdown-wrap');

@@ -132,7 +132,11 @@ async function playReadingVoice(i) {
     const blob = await fetch(data.audio_url).then(function (r) { return r.blob(); });
     player.innerHTML = _makeCapPlayer('jv' + i, URL.createObjectURL(blob), true);
     _capWire('jv' + i, true);
-    svickaNazev('jv' + i, e.rune_name || '', (typeof RUNES !== 'undefined' && RUNES.find(function (x) { return x.n === e.rune_name; })) || null);   // název a runa na zamčené obrazovce
+    // název a runy na zamčené obrazovce: výklad nese runy v short_text „ᛈ PERTH · ᛇ EIHWAZ“ (jako _jSpreadRunes), jedna runa v rune_name
+    const _jRuny = typeof RUNES === 'undefined' ? [] : (e.area === 'spread'
+      ? String(e.short_text || '').split(' · ').map(function (kus) { const g = kus.trim().split(' ')[0]; return RUNES.find(function (x) { return x.g === g; }); })
+      : [RUNES.find(function (x) { return x.n === e.rune_name; })]).filter(Boolean);
+    svickaNazev('jv' + i, e.rune_name || '', _jRuny.length ? _jRuny : null);
     setRuneText(btn, t('voice_btn_done'));
     if (!data.stored && typeof syncFreeBalance === 'function') syncFreeBalance(currentUser.id);   // menu testera: počet hlasů
   } catch (err) {

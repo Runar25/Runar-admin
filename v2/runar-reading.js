@@ -1297,7 +1297,7 @@ async function generateVoice() {
     // název na zamčené obrazovce = nadpis čtení, který je vidět (jméno runy / výkladu), bez ozdob
     svickaNazev('cap', function () { var l = [].find.call(document.querySelectorAll('#reader-output .layer1-lbl'), function (e) { return e.offsetParent !== null; });
       return l ? l.textContent.replace(/[✦~]/g, '').trim() : ''; },
-      function () { return _spreadMode === 'single' ? readerRune : null; });   // runa na zamčené obrazovce jen u jedné runy (výklad = ikona)
+      function () { return (_lastDrawn || []).filter(Boolean); });   // runy na zamčené obrazovce: jedna runa i všechny runy výkladu
     document.getElementById('audio-player').classList.add('visible');
     voiceGenerated[lang] = true;
     setRuneText(btn, t('voice_btn_done'));
