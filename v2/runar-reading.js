@@ -1296,7 +1296,8 @@ async function generateVoice() {
     svickaHotovo('cap');   // svíčka se dotvoří a jiskra blikne (bez tvoření = jako dřív _capReset)
     // název na zamčené obrazovce = nadpis čtení, který je vidět (jméno runy / výkladu), bez ozdob
     svickaNazev('cap', function () { var l = [].find.call(document.querySelectorAll('#reader-output .layer1-lbl'), function (e) { return e.offsetParent !== null; });
-      return l ? l.textContent.replace(/[✦~]/g, '').trim() : ''; });
+      return l ? l.textContent.replace(/[✦~]/g, '').trim() : ''; },
+      function () { return _spreadMode === 'single' ? readerRune : null; });   // runa na zamčené obrazovce jen u jedné runy (výklad = ikona)
     document.getElementById('audio-player').classList.add('visible');
     voiceGenerated[lang] = true;
     setRuneText(btn, t('voice_btn_done'));
@@ -1535,10 +1536,12 @@ function _updateReadingForm() {
   var nadpis = (knownUser && userName && isMine) ? t('reader_card1_lbl') + ', ' + userName.toUpperCase() : t('reader_card1_lbl');
   // 2026-10-21 (owner „není vycentrovaná … odstraň ten podtácek … celá svíčka s plamenem bude mírně zářit“): bez podtácku; vertical-align 0
   // změřeno inkoustem na střed textu (−0.42em dávalo 5,1 px níž); stálá jemná záře drop-shadow.
-  if (titleEl) titleEl.innerHTML = '<span id="card1-svicka" style="display:inline-block;vertical-align:0;margin-right:0.45em">'
+  // 2026-10-30 (owner „Z3 — svíčka kadidlo, to by šlo“; náhled docs/inbox/2026-10-30-pirko-a-symboly.html): kadidlo místo svíčky — rituál
+  // nabízí „svíčku nebo kadidlo“ a svíčka teď znamená přehrávač hlasu. Rozzáření beze změny (#card1-ikona).
+  if (titleEl) titleEl.innerHTML = '<span id="card1-ikona" style="display:inline-block;vertical-align:0;margin-right:0.45em">'
     + '<svg class="atab-ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"'
-    + ' aria-hidden="true" style="margin-right:0;vertical-align:top;filter:drop-shadow(0 0 2.5px rgba(255,191,0,0.55))"><path d="M9 11h6v9H9z"/><path d="M12 11V9.6"/>'
-    + '<path d="M12 3c1.6 2 2.2 3.3 2.2 4.4a2.2 2.2 0 0 1-4.4 0C9.8 6.3 10.4 5 12 3z"/></svg></span>'
+    + ' aria-hidden="true" style="margin-right:0;vertical-align:top;filter:drop-shadow(0 0 2.5px rgba(255,191,0,0.55))"><path d="M12 21v-6"/><path d="M10 21h4"/>'
+    + '<path d="M12 13c-2-1.5-2-3 0-4.5s2-3 0-4.5"/><path d="M14.5 11c-1.2-.9-1.2-1.8 0-2.7"/></svg></span>'
     + String(nadpis).replace(/&/g, '&amp;').replace(/</g, '&lt;');   // „+“ rozbalovače = ::after jako u ostatních (runar-reader.css)
 
   // Note text — same message for both known and unknown (MY READING); different for FOR SOMEONE

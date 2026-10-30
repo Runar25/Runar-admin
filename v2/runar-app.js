@@ -1033,7 +1033,7 @@ function updateUIText() {
   setText('opus-toggle-lbl', t('opus_toggle'));   // staticky popisek prepinace Opus 5 (jen admin ho vidi; do 2026-10-08 prepinac solu)
   setText('img-pin-lbl', t('img_pin_lbl'));     // staticky popisek volby obrazu (jen admin ji vidi, 2026-10-06)
   var _ipBox = document.getElementById('img-pin'); if (_ipBox) _ipBox.title = t('img_pin_title');
-  setText('read-guide-lbl', t('guide_title'));
+  setText('read-guide-txt', t('guide_title'));   // text vedle svitku (2026-10-30) — celé tlačítko by svitek smazalo
   var _rit = document.getElementById('ritual-box');   // 2026-10-27: rituál pod BEFORE WE BEGIN — statický text (§14)
   if (_rit) { _rit.innerHTML = ''; var _rp = document.createElement('p'); _rp.textContent = t('ritual_text'); _rit.appendChild(_rp); }
   svickaPopisky();   // aria popisky přehrávačů (nota, svíčka) v jazyce appky — statický překlad
@@ -1279,7 +1279,7 @@ function _paintCollRuneText(r) {
 // patří do záložky čtení“). Maluje se při rozbalení; nadpis je statický překlad (updateUIText).
 function _paintGuide() {
   var lbl = document.getElementById('read-guide-lbl'), box = document.getElementById('read-guide');
-  if (lbl) lbl.textContent = t('guide_title');
+  setText('read-guide-txt', t('guide_title'));   // svitek v nadpisu zůstává (2026-10-30)
   if (!box || box.style.display === 'none') return;
   box.innerHTML = '';
   var radky = t('guide_lines');
@@ -1312,7 +1312,7 @@ function _wtsPaint() {
   setText('wts-note', tp('wts_note', { guide: t('guide_title') }));
   setText('wts-open', t('wts_open')); setText('wts-later', t('wts_later'));
 }
-// Svíčka u BEFORE WE BEGIN (2026-10-21, owner: „A, při otevření okna ji rozzáříme, jako how a reading works“): jednou za načtení appky
+// Ikona u BEFORE WE BEGIN (2026-10-21 svíčka, od 2026-10-30 kadidlo; owner: „A, při otevření okna ji rozzáříme, jako how a reading works“): jednou za načtení appky
 // stejná svíčka jako u „How a reading works“ (window.rozsvit, runar-helper.js) — tři záblesky, pak doutná, dokud na ni člověk neklepne.
 // Formulář je pod Rúnarovou fotkou, proto až ve chvíli, kdy nadpis poprvé dojede na obrazovku (jinak by záblesky proběhly mimo dohled).
 // Když je otevřené okno (typicky „Where to start“, které samo rozsvěcí „How a reading works“), svíčka nesvítí — dvě záře naráz by se pletly.
@@ -1323,7 +1323,7 @@ function _svickaPriOtevreni() {
     if (!zaznamy.some(function (z) { return z.isIntersecting; })) return;
     io.disconnect();
     setTimeout(function () {
-      var s = document.getElementById('card1-svicka');
+      var s = document.getElementById('card1-ikona');
       if (!s || document.querySelector('.modal-overlay.open') || typeof window.rozsvit !== 'function') return;
       window.rozsvit(s);
     }, 400);
@@ -1476,7 +1476,7 @@ function loadCollAudio(l) {
   } else {
     playerEl.innerHTML = _makeCapPlayer('coll', pick.audio_url, false);
     _capWire('coll');
-    if (activeCollRune) svickaNazev('coll', rnSplit(activeCollRune).name);
+    if (activeCollRune) svickaNazev('coll', rnSplit(activeCollRune).name, activeCollRune);
   }
 }
 

@@ -318,8 +318,10 @@
       <!-- Návod „jak čtení funguje“ — nad přepínačem, ne v něm (přepínač návštěvník nevidí, návod ano).
            KUKY 2026-09-23. Texty = UI_TEXT guide_title / guide_lines; maluje _paintGuide() v runar-app.js. -->
       <div class="hlas-radek" id="read-guide-row">
+        <!-- 2026-10-30 (owner „N3 — svitek, který se rozbalí“): svitek před nadpisem; otevřením návodu se list rozvine (.svitek v CSS).
+             Text nadpisu nese #read-guide-txt (updateUIText, _paintGuide), ať přepis jazyka nesmaže svitek. -->
         <button class="guide-lbl" id="read-guide-lbl" type="button" aria-expanded="false"
-                aria-controls="read-guide" onclick="toggleGuide()">How a reading works</button>
+                aria-controls="read-guide" onclick="toggleGuide()"><span class="svitek" style="display:inline-block;vertical-align:0;margin-right:0.45em"><svg class="atab-ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:0;vertical-align:top;filter:drop-shadow(0 0 2.5px rgba(255,191,0,0.55))"><g class="sv-list"><path d="M7 4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h11V8"/><path class="sv-radky" d="M9 12h6M9 15h4"/></g><path d="M7 4h11a2 2 0 0 1 0 4H7"/></svg></span><span id="read-guide-txt">How a reading works</span></button>
         <span id="guide-voice"></span><!-- 2026-10-30: hlas návodu, malá svíčka (runar-svicka.js), staví _hlasyTextu v runar-app.js -->
       </div>
       <div class="guide" id="read-guide" style="display:none;"></div>

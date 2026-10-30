@@ -12601,3 +12601,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   nahrazuje snesení z (2). Bez animací stojí. Náhled `docs/inbox/2026-10-30-pirko-a-symboly.html` bere kresbu i CSS z appky.
   Svíčka zůstává jen u zvuku (hlas, rituál, návod); čekání na čtení a Ask = pulzující ᚱ.
 - Affected doc(s): žádný jiný.
+
+## 2026-10-30 (5) — Svitek před „How a reading works“, kadidlo před BEFORE WE BEGIN, tažená runa na zamčené obrazovce
+
+- **Rozhodl:** owner 2026-10-30 nad náhledem `docs/inbox/2026-10-30-pirko-a-symboly.html`: *„N3 — svitek, který se rozbalí“* · *„Z3 —
+  svíčka kadidlo, to by šlo“* · k nápadu runy na zamčené obrazovce *„6. ok“* · k vibraci *„7. to už je moc“* (zamítnuto) · lucerna
+  *„symbol je tak malý, že lucerna nejde poznat … třeba ji budeme moci použít větší někde jinde“*.
+- **Co:** (1) Před „How a reading works“ svitek; zavřený návod = svinutý, otevřením se list rozvine a objeví se řádky, zavřením se svine
+  (`.svitek`, text nadpisu v `#read-guide-txt`). (2) Před BEFORE WE BEGIN kadidlo místo svíčky (svíčka = přehrávač hlasu; rituál nabízí
+  „svíčku nebo kadidlo“), rozzáření při otevření appky beze změny (`#card1-ikona`). Svíčka z 2026-10-21 (1) tím odchází. (3) Hraje-li hlas
+  jedné runy (čtení jedné runy, Kolekce, deník), na zamčené obrazovce je tažená runa naší kresbou (PNG z `runeSvg`, 512 px); výklady,
+  rituál a návod mají ikonu appky.
+- **Hlídá:** smoke ㊎ (svitek zavřený / rozvinutý, obraz runy předaný telefonu) + 2 útoky. **Neověřeno:** skutečný zamčený iPhone / Android.
+- Affected doc(s): žádný jiný.

@@ -29,6 +29,29 @@ function _svickaRnd(seed) { var h = 2166136261; for (var i = 0; i < seed.length;
   return function () { h += 0x6D2B79F5; var x = h; x = Math.imul(x ^ (x >>> 15), x | 1); x ^= x + Math.imul(x ^ (x >>> 7), x | 61); return ((x ^ (x >>> 14)) >>> 0) / 4294967296; }; }
 function _svickaEl(tag, at, rodic) { var e = document.createElementNS(_SVG_NS, tag); for (var k in at) e.setAttribute(k, at[k]); if (rodic) rodic.appendChild(e); return e; }
 function _svickaHvezda(r1, r2, n) { var d = ''; for (var i = 0; i < n * 2; i++) { var r = i % 2 ? r2 : r1, a = Math.PI * i / n - Math.PI / 2; d += (i ? 'L' : 'M') + (r * Math.cos(a)).toFixed(2) + ',' + (r * Math.sin(a)).toFixed(2); } return d + 'Z'; }
+// Obraz na zamčené obrazovce (owner 2026-10-30 „6. ok“): kde hraje hlas jedné runy (čtení jedné runy, Kolekce, deník), tažená runa naší
+// kresbou (runeSvg, kámen, §5) místo ikony appky. Kresba se jednou za runu vykreslí do PNG 512 px na pozadí appky; než je hotová, ikona.
+// Na skutečném zamčeném iPhonu / Androidu neověřeno — kontrola vidí jen, co appka prohlížeči předala.
+var _SVICKA_OBRAZY = {};
+function _svickaObrazRuny(runa, hotovo) {
+  var k = runa && (runa.svg || runa.n);
+  if (!k || typeof runeSvg !== 'function') return null;
+  if (_SVICKA_OBRAZY[k]) return _SVICKA_OBRAZY[k];
+  var svg = runeSvg(runa, { frame: true });
+  if (svg.indexOf('<svg') !== 0) return null;   // runa bez kresby (záložní glyf) → ikona
+  var img = new Image();
+  img.onload = function () {
+    try {
+      var c = document.createElement('canvas'); c.width = c.height = 512;
+      var x = c.getContext('2d');
+      x.fillStyle = getComputedStyle(document.body).backgroundColor || 'black'; x.fillRect(0, 0, 512, 512);
+      x.drawImage(img, 56, 56, 400, 400);
+      _SVICKA_OBRAZY[k] = c.toDataURL('image/png'); hotovo();
+    } catch (e) {}
+  };
+  img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg.replace('<svg ', '<svg width="400" height="400" ' + (svg.indexOf('xmlns=') < 0 ? 'xmlns="http://www.w3.org/2000/svg" ' : '')));
+  return null;
+}
 function _svickaAnim(ms, krok, hotovo) {
   // Skrytá stránka (zamčený telefon, jiná záložka prohlížeče) nekreslí — rAF nepřijde a jiskra by čekala věčně, takže by hlas
   // z ovládání na zamčené obrazovce nikdy nezačal. Tam proběhne hned.
@@ -103,16 +126,18 @@ function svickaNapoj(prefix) {
       dur: 700 + rnd() * 700, t0: null, zpet: null });
   }
 
-  var S = { p: 0, stav: 'klid', tise: false, tah: false, bezi: false, js: null, jr: 0, ky: 0, zrusAnim: null, casovac: null, nazev: '', tv0: 0 };
+  var S = { p: 0, stav: 'klid', tise: false, tah: false, bezi: false, js: null, jr: 0, ky: 0, zrusAnim: null, casovac: null, nazev: '', runa: null, tv0: 0 };
 
   // Zamčená obrazovka / notifikace (owner 2026-10-29 „zamčený ok“: dřív tam nebyl název ani pauza). Název dává volající (svickaNazev —
   // jméno runy, výkladu, nadpis rituálu; text i funkce, ať se vezme v chvíli přehrání). Ovládání patří přehrávači, který hrál naposled.
   function zamcena() {
     if (!('mediaSession' in navigator)) return;
     var ms = navigator.mediaSession, n = typeof S.nazev === 'function' ? S.nazev() : S.nazev;
+    var runa = typeof S.runa === 'function' ? S.runa() : S.runa;
+    var obr = runa ? _svickaObrazRuny(runa, function () { if (!a.paused) zamcena(); }) : null;   // kresba hotová → obraz vyměnit, hraje-li dál
     try {
       if (window.MediaMetadata) ms.metadata = new MediaMetadata({ title: n || 'Rúnar', artist: n ? 'Rúnar' : '',
-        artwork: [{ src: 'icons/web-app-manifest-512x512.png', sizes: '512x512', type: 'image/png' }] });
+        artwork: [{ src: obr || 'icons/web-app-manifest-512x512.png', sizes: '512x512', type: 'image/png' }] });
       ms.setActionHandler('play', function () { if (a.paused) hraj(); });
       ms.setActionHandler('pause', function () { if (!a.paused) a.pause(); });
       ms.setActionHandler('seekto', function (d) { if (delka()) posun(d.seekTime / delka()); });
@@ -288,7 +313,7 @@ function svickaNapoj(prefix) {
   var api = {
     a: a,
     prepni: naNotu,
-    nazev: function (n) { S.nazev = n || ''; },
+    nazev: function (n, runa) { S.nazev = n || ''; S.runa = runa || null; },
     reset: celaZnovu,
     tvor: tvor,
     hotovo: hotovo,
@@ -311,7 +336,7 @@ function svickaPopisky() {   // aria popisky v jazyce appky (volá updateUIText 
   }
 }
 function svickaPrepni(prefix) { var s = _SVICKY[prefix]; if (s) s.prepni(); }
-function svickaNazev(prefix, nazev) { var s = _SVICKY[prefix]; if (s) s.nazev(nazev); }   // název na zamčené obrazovce (text nebo funkce)
+function svickaNazev(prefix, nazev, runa) { var s = _SVICKY[prefix]; if (s) s.nazev(nazev, runa); }   // název (a runa) na zamčené obrazovce — text/objekt nebo funkce
 // Přepnutí záložky zastaví hlas (owner 2026-10-29 „má se zastavit“): svíčka mizí z očí, hlas by mluvil dál bez ovládání. Bez poryvu.
 function svickaZtisVse() { for (var k in _SVICKY) { var s = _SVICKY[k]; if (s && s.a && !s.a.paused) s.ztis(); } }
 function svickaReset(prefix) { var s = _SVICKY[prefix]; if (s) s.reset(); }

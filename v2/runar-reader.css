@@ -580,6 +580,13 @@ button.card-lbl:focus-visible{outline:1px solid var(--gold);outline-offset:4px;}
 /* 2026-10-28 nadpis s hlasem: nadpis (rozbalovač „+“) a za ním hlas; od 2026-10-29 malá svíčka přehrávače (.svp-mala, runar-svicka.js) */
 .hlas-radek{display:flex;align-items:center;gap:.75em;margin-bottom:16px;}
 .hlas-radek > .card-lbl{margin-bottom:0;}
+/* 2026-10-30 svitek před „How a reading works“ (owner „N3 — svitek, který se rozbalí“; náhled docs/inbox/2026-10-30-pirko-a-symboly.html):
+   zavřený návod = svinutý svitek (list stažený pod válečkem), otevřením se list rozvine a objeví se řádky; zavřením se svine zpátky. */
+.svitek .sv-list{transform-box:view-box;transform-origin:12px 6px;transform:scaleY(.18);transition:transform .7s ease;}
+.svitek .sv-radky{opacity:0;transition:opacity .35s ease;}
+[aria-expanded="true"] > .svitek .sv-list{transform:none;}
+[aria-expanded="true"] > .svitek .sv-radky{opacity:1;transition-delay:.4s;}
+@media (prefers-reduced-motion:reduce){.svitek .sv-list,.svitek .sv-radky{transition:none;}}
 /* 2026-10-30 návod s hlasem: řádek vlevo jako rituál pod ním (dřív samotný nadpis na střed). Na střed nešlo: skrytá svíčka drží místo
    vpravo (nesmí se nic hýbat, owner 2026-10-29), takže viditelný nadpis s notou stál o 50 px mimo střed. Okraje nese řádek, ne štítek. */
 #read-guide-row{margin:4px 0 14px;}

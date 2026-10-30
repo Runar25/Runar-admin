@@ -1007,6 +1007,9 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
 - [x] ✅ *(CODE-tune 2026-10-28, DECISIONS 2026-10-28 (1))* **Proužek #hero-down přes záložky (47b63e3f):** *„když se posunu z hlavní stránky dolů posuvníkem, který se na druhé straně obrátí nahoru,
   chci, aby tam zůstal, i když překliknu na jiné okno“* — výklad (neověřeno s ownerem): proužek se šipkou nahoru zůstane pod lištou i v Lestrar,
   Lífsrúnin a Safn rúna, ťuknutí vrátí k Rúnarovi. Potvrdit, pak postavit.
+- [ ] **Lucerna větší někde jinde (owner 2026-10-30):** *„symbol je tak malý, že lucerna nejde poznat. Jinak by to byl dobrý nápad, ale třeba
+  ji budeme moci použít větší někde jinde.“* Kresba N1 v `docs/inbox/2026-10-30-pirko-a-symboly.html`; návod končí větou „I carry the light“.
+  Místo zatím nevybrané — nabídnout, až bude větší symbol potřeba.
 - [ ] **Před spuštěním projít, že všechno sedí (owner 2026-10-28: „bude se to muset projít, že všechno sedí před spuštěním!“):** zásady, nápověda,
   texty a jazyky (EN i IS), menu, okna — celá appka očima uživatele na telefonu i počítači; nález = oprava nebo položka sem.
 - [ ] **Animace symbolů (owner 2026-10-28):** *„budeme hledat animace pro skoro všechny naše symboly“* — tužka u jména v liště hotová (DECISIONS 2026-10-28 (2)); nota u hlasu rituálu

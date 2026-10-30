@@ -187,11 +187,18 @@ const MERENI = `(() => {
       if (Math.abs(q2 - 0.2) > 0.03 || Math.abs(s2.p - 0.2) > 0.03) v.push('posun zpět na 20 %: zvuk ' + q2.toFixed(2) + ', svíčka ' + s2.p.toFixed(2));
       if (!(s1.vosk > s2.vosk)) v.push('vosk za místem po posunu zpět nezmizel (' + s1.vosk + ' → ' + s2.vosk + ' rampouchů)');
       // owner 2026-10-29: ovládání na zamčené obrazovce („zamčený ok“) a hlas se při přepnutí záložky zastaví („má se zastavit“)
+      // owner 2026-10-30 „6. ok“: u jedné runy je na zamčené obrazovce tažená runa naší kresbou (PNG z runeSvg), ne ikona appky
+      readerRune = RUNES[0]; _spreadMode = 'single'; svickaNazev('cap', 'Fehu', function () { return _spreadMode === 'single' ? readerRune : null; });
       _capPlay('cap'); await sl(1000);
       if (a.paused) v.push('hlas se po notě nerozehrál');
       var md = ('mediaSession' in navigator) ? navigator.mediaSession.metadata : undefined;
       if (md === undefined) v.push('prohlížeč kontroly nemá mediaSession — zamčená obrazovka neověřena');
       else if (!md || !md.title) v.push('zamčená obrazovka: hlas hraje bez názvu');
+      else { var obrRuny = function () { return (((navigator.mediaSession.metadata || {}).artwork || [{}])[0].src || ''); };   // bez regexu: lomítko by šablona PREHRAVAC snědla
+        for (var k4 = 0; k4 < 30 && obrRuny().indexOf('data:image/png') !== 0; k4++) await sl(100);
+        var art = obrRuny();
+        if (art.indexOf('data:image/png') !== 0 || art.length < 5000) v.push('zamčená obrazovka u jedné runy bez kresby runy (' + art.slice(0, 40) + ')'); }
+      readerRune = null;
       showAppTab('journal'); await sl(150); if (!a.paused) v.push('hlas hraje dál po přepnutí záložky'); showAppTab('reading');
       _capStop('cap'); ap.classList.remove('visible');
       setLang('is'); await sl(300); var rs = document.getElementById('rit-sv'), rr = rs && rs.getBoundingClientRect();
@@ -207,6 +214,13 @@ const MERENI = `(() => {
         if (!ra.ended) v.push('rituál nedohrál (zvuk ' + ra.currentTime.toFixed(1) + ' z ' + ra.duration.toFixed(1) + ' s; paused ' + ra.paused + ', readyState ' + ra.readyState + ', network ' + ra.networkState + ', chyba ' + (ra.error && ra.error.code) + ')'); else await sl(4000);
         if (!rs.classList.contains('svp-skryta')) v.push('malá svíčka rituálu po dohrání nezmizela');
         if (Math.abs(rs.getBoundingClientRect().width - rr.width) > 0.5) v.push('skrytá svíčka rituálu nedrží místo v řádku'); }
+      // svitek před návodem (owner 2026-10-30 „N3 — svitek, který se rozbalí“): zavřený návod = svinutý, otevřený = rozvinutý
+      var svl = document.querySelector('#read-guide-lbl .sv-list'), gb = document.getElementById('read-guide');
+      if (!svl) v.push('svitek před „How a reading works“ chybí'); else {
+        var rozvin = function () { var m = new DOMMatrix(getComputedStyle(svl).transform); return m.d; };
+        if (gb.style.display !== 'none') toggleGuide();
+        await sl(900); var z1 = rozvin(); toggleGuide(); await sl(900); var z2 = rozvin(); toggleGuide();
+        if (!(z1 < 0.5 && z2 > 0.95)) v.push('svitek se s návodem nerozvine (zavřený ' + z1.toFixed(2) + ', otevřený ' + z2.toFixed(2) + ')'); }
       // návod (owner 2026-10-30 „How a reading works … chci taky s hlasem“): nadpis a svíčka se vejdou (IS má delší nadpis), svíčka až po notě
       var ns = document.getElementById('nav-sv'), nl = document.getElementById('read-guide-lbl');
       if (!ns) v.push('malá svíčka návodu chybí'); else { var nr = ns.getBoundingClientRect(), lr = nl.getBoundingClientRect();
