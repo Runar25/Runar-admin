@@ -814,9 +814,17 @@ input:autofill{filter:none;}
    textu, jednou se snese a usadí; čtení i deník (myslenkaSvg v runar-utils.js). */
 .myslenka-pero{width:1.05em;height:1.05em;vertical-align:-0.14em;margin-right:.45em;fill:none;stroke:currentColor;stroke-width:1.5;
   stroke-linecap:round;stroke-linejoin:round;overflow:visible;}
-.myslenka-pero g{animation:peroSnese 1.6s ease-out both;transform-origin:20% 90%;}
-@keyframes peroSnese{0%{opacity:0;transform:translate(-6px,6px) rotate(-18deg);}60%{opacity:1;transform:translate(0,0) rotate(5deg);}100%{transform:rotate(0);}}
-@media (prefers-reduced-motion:reduce){.myslenka-pero g{animation:none;}}
+/* 2026-10-30 (owner „chtěl bych vidět to pírko animované, jako by padalo… ve vzduchu ze strany na stranu, pomalu, 3 s: pravá, levá, pravá“):
+   pírko padá shora a houpe se — u krajů zpomalí (ease-in-out mezi snímky), nakloní se po směru a dosedne před text. Dřív 1,6 s snesení. */
+.myslenka-pero{animation:peroPada 3s both;transform-origin:50% 10%;}
+@keyframes peroPada{
+  0%{opacity:0;transform:translate(.1em,-1.7em) rotate(8deg);animation-timing-function:ease-in-out;}
+  10%{opacity:1;}
+  27%{transform:translate(.6em,-1.3em) rotate(22deg);animation-timing-function:ease-in-out;}
+  57%{transform:translate(-.55em,-.65em) rotate(-20deg);animation-timing-function:ease-in-out;}
+  83%{transform:translate(.35em,-.15em) rotate(12deg);animation-timing-function:ease-out;}
+  100%{opacity:1;transform:translate(0,0) rotate(0);}}
+@media (prefers-reduced-motion:reduce){.myslenka-pero{animation:none;}}
 /* Myšlenka ✦ po čtení (2026-09-30) — oddělená od textu čtení a mimo jeho prvek (hlas ji nečte); písmo čtení, zlatě. */
 .reading-thought{font-size:1.1875em;line-height:1.8;font-style:italic;color:var(--gold);text-align:center;margin:22px 8px 6px;}
 .stream-cur{display:none;}

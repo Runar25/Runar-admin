@@ -12592,3 +12592,12 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   a „Rúnar listens…“ jako čtení. Po „11. ne“ zůstává stejný jako čtení; jiná podoba jen na ownerovo slovo.
 - **Hlídá:** smoke ㊎ (tvoří se, bez vosku, sama se nedotvoří; po zvuku celá a v klidu) + útok.
 - Affected doc(s): žádný jiný (chování vlastní `v2/runar-svicka.js`, `v2/runar-reading.js` generateVoice).
+
+## 2026-10-30 (4) — Pírko myšlenky padá a houpe se (3 s: pravá, levá, pravá); Ask při čekání zůstává jako čtení
+
+- **Rozhodl:** owner 2026-10-30: *„chtěl bych vidět to pírko animované, jako by padalo. Takže padat ve vzduchu ze strany na stranu.
+  Pomalu. 3 sec pravá, levá, pravá.“* · k Asku *„stejný jako čtení“* / *„zůstane jak je, svíčka je jen audio“* · k řádku návodu vlevo *„ok“*.
+- **Co:** `.myslenka-pero` (`v2/runar-reader.css`) — pád shora s houpáním, u krajů zpomalí a nakloní se po směru, dosedne před myšlenku;
+  nahrazuje snesení z (2). Bez animací stojí. Náhled `docs/inbox/2026-10-30-pirko-a-symboly.html` bere kresbu i CSS z appky.
+  Svíčka zůstává jen u zvuku (hlas, rituál, návod); čekání na čtení a Ask = pulzující ᚱ.
+- Affected doc(s): žádný jiný.
