@@ -1033,9 +1033,8 @@ function updateUIText() {
   setText('opus-toggle-lbl', t('opus_toggle'));   // staticky popisek prepinace Opus 5 (jen admin ho vidi; do 2026-10-08 prepinac solu)
   setText('img-pin-lbl', t('img_pin_lbl'));     // staticky popisek volby obrazu (jen admin ji vidi, 2026-10-06)
   var _ipBox = document.getElementById('img-pin'); if (_ipBox) _ipBox.title = t('img_pin_title');
-  setText('read-guide-txt', t('guide_title'));   // text vedle svitku (2026-10-30) — celé tlačítko by svitek smazalo
-  var _rit = document.getElementById('ritual-box');   // 2026-10-27: rituál pod BEFORE WE BEGIN — statický text (§14)
-  if (_rit) { _rit.innerHTML = ''; var _rp = document.createElement('p'); _rp.textContent = t('ritual_text'); _rit.appendChild(_rp); }
+  _paintGuide();   // návod a rituál v papíru — statický text (§14); odstavce vidět, je-li papír otevřený (2026-10-30)
+  _paintPapirText('ritual-box', [t('ritual_text')], 'ritual');   // 2026-10-27: rituál pod BEFORE WE BEGIN
   svickaPopisky();   // aria popisky přehrávačů (nota, svíčka) v jazyce appky — statický překlad
   _hlasyTextu();     // nahrávky rituálu a návodu v jazyce appky (staví se jen při změně jazyka)
   setText('audio-player-lbl', t('voice_player_lbl'));
@@ -1276,18 +1275,17 @@ function _paintCollRuneText(r) {
   box.style.display = odst.length ? '' : 'none';
 }
 // Návod „jak čtení funguje“ — od 2026-09-23 v záložce čtení nad „My reading / For someone“ (KUKY: „obecný návod
-// patří do záložky čtení“). Maluje se při rozbalení; nadpis je statický překlad (updateUIText).
+// patří do záložky čtení“). Od 2026-10-30 v papíru: text je v něm vždy, zavřený papír ho skrývá; nadpis = statický překlad.
 function _paintGuide() {
-  var lbl = document.getElementById('read-guide-lbl'), box = document.getElementById('read-guide');
-  setText('read-guide-txt', t('guide_title'));   // svitek v nadpisu zůstává (2026-10-30)
-  if (!box || box.style.display === 'none') return;
-  box.innerHTML = '';
+  setText('read-guide-txt', t('guide_title'));
   var radky = t('guide_lines');
-  (Array.isArray(radky) ? radky : []).forEach(function (r) {
-    var p = document.createElement('p');
-    p.textContent = r;
-    box.appendChild(p);
-  });
+  _paintPapirText('read-guide', Array.isArray(radky) ? radky : [], 'guide');
+}
+function _paintPapirText(id, radky, k) {
+  var box = document.getElementById(id); if (!box) return;
+  var videt = _papirOtevreny(k);
+  box.innerHTML = '';
+  radky.forEach(function (r) { var p = document.createElement('p'); p.textContent = r; if (videt) p.className = 'videt'; box.appendChild(p); });
 }
 // Jedna věta pod popiskem oblasti / hledání / záměru (2026-09-29, report KUKY 11:32; owner: „tohle stačí“).
 function toggleFormHint(k) {
@@ -1312,10 +1310,10 @@ function _wtsPaint() {
   setText('wts-note', tp('wts_note', { guide: t('guide_title') }));
   setText('wts-open', t('wts_open')); setText('wts-later', t('wts_later'));
 }
-// Ikona u BEFORE WE BEGIN (2026-10-21 svíčka, od 2026-10-30 kadidlo; owner: „A, při otevření okna ji rozzáříme, jako how a reading works“): jednou za načtení appky
-// stejná svíčka jako u „How a reading works“ (window.rozsvit, runar-helper.js) — tři záblesky, pak doutná, dokud na ni člověk neklepne.
-// Formulář je pod Rúnarovou fotkou, proto až ve chvíli, kdy nadpis poprvé dojede na obrazovku (jinak by záblesky proběhly mimo dohled).
-// Když je otevřené okno (typicky „Where to start“, které samo rozsvěcí „How a reading works“), svíčka nesvítí — dvě záře naráz by se pletly.
+// Ikona u BEFORE WE BEGIN (2026-10-21 svíčka rozzářená jednou za načtení appky; od 2026-10-30 kadidlo, které místo rozzáření jednou
+// vypustí kouř — owner nad náhledem docs/inbox/2026-10-30-papir.html: „insent kouř výborně“, „K1 … dej to do appky“). Formulář je pod
+// Rúnarovou fotkou, proto až ve chvíli, kdy nadpis poprvé dojede na obrazovku (jinak by kouř proběhl mimo dohled). Když je otevřené okno
+// (typicky „Where to start“, které samo rozsvěcí „How a reading works“), kadidlo nehoří — dvě věci naráz by se pletly.
 function _svickaPriOtevreni() {
   var lbl = document.getElementById('reader-card1-lbl');
   if (!lbl || typeof IntersectionObserver === 'undefined') return;
@@ -1323,25 +1321,10 @@ function _svickaPriOtevreni() {
     if (!zaznamy.some(function (z) { return z.isIntersecting; })) return;
     io.disconnect();
     setTimeout(function () {
-      var s = document.getElementById('card1-ikona');
-      if (!s || document.querySelector('.modal-overlay.open') || typeof window.rozsvit !== 'function') return;
-      window.rozsvit(s);
-    }, 400);
-  }, { threshold: 0.9 });
-  io.observe(lbl);
-}
-// Svitek u „How a reading works“ (owner 2026-10-30 „7. ano“ na otázku, jestli se má jednou rozvinout sám jako kadidlo rozzáří): když nadpis
-// poprvé dojede na obrazovku, svitek se rozvine a zase svine (.sv-ukazka, 2,4 s). Ne přes otevřené okno a ne u otevřeného návodu.
-function _svitekPriOtevreni() {
-  var lbl = document.getElementById('read-guide-lbl');
-  if (!lbl || typeof IntersectionObserver === 'undefined') return;
-  var io = new IntersectionObserver(function (zaznamy) {
-    if (!zaznamy.some(function (z) { return z.isIntersecting; })) return;
-    io.disconnect();
-    setTimeout(function () {
-      if (document.querySelector('.modal-overlay.open') || lbl.getAttribute('aria-expanded') === 'true') return;
-      lbl.classList.add('sv-ukazka');
-      setTimeout(function () { lbl.classList.remove('sv-ukazka'); }, 2600);
+      var s = document.querySelector('#card1-ikona svg');
+      if (!s || document.querySelector('.modal-overlay.open')) return;
+      s.classList.add('kad-hori');   // ~4 s kouř (runar-reader.css), pak zpátky klidná ikona
+      setTimeout(function () { s.classList.remove('kad-hori'); }, 4200);
     }, 400);
   }, { threshold: 0.9 });
   io.observe(lbl);
@@ -1418,8 +1401,7 @@ function _navodPoPrvnimPrihlaseni() {
   if (!zalozen || Date.now() - zalozen > 24 * 3600 * 1000) return;
   var w = document.getElementById('wts-modal');
   if (!_wtsVidel() || (w && w.classList.contains('open'))) return;
-  var box = document.getElementById('read-guide');
-  if (box && box.style.display === 'none') toggleGuide();
+  if (!_papirOtevreny('guide')) toggleGuide();
 }
 // Hlas rituálu (owner 2026-10-28: ♪ za „+“, přehrát může každý i návštěvník; nahrávka = varianta F, RUNAR_RITUAL_HLAS v configu).
 // 2026-10-29 (owner: „svíčka pro rituál bude kratší… stejně vysoká jako text“): týž přehrávač jako čtení (runar-svicka.js), malý, bez času.
@@ -1439,26 +1421,85 @@ function _hlasyTextu() {
     if (_SVICKY[x.prefix]) svickaStop(x.prefix);
     var h = H[lang] || H.en;
     host.setAttribute('data-lang', lang);
-    host.innerHTML = svickaHtml(x.prefix, h.src, { mala: true }); svickaNapoj(x.prefix);
+    host.innerHTML = svickaHtml(x.prefix, h.src, { svisla: true }); svickaNapoj(x.prefix);   // kresba = <svg id="<prefix>-sv"> v papíru (HTML)
     svickaNazev(x.prefix, function () { var e = document.getElementById(x.nadpis); return e ? e.textContent.trim() : ''; });
   });
 }
-// Rituál pod BEFORE WE BEGIN (owner 2026-10-27): nadpis je rozbalovač, jako „How a reading works“.
-function toggleRitual() {
-  var lbl = document.getElementById('reader-card1-lbl'), box = document.getElementById('ritual-box');
-  if (!lbl || !box) return;
-  var otevrit = box.style.display === 'none';
-  box.style.display = otevrit ? '' : 'none';
-  lbl.setAttribute('aria-expanded', otevrit ? 'true' : 'false');
+// Rituál pod BEFORE WE BEGIN (owner 2026-10-27) a „How a reading works“: nadpis je rozbalovač. Od 2026-10-30 PAPÍR (owner nad náhledem
+// docs/inbox/2026-10-30-papir.html: „papír super, svíčka super“; „before we begin se rozbalí na papír stejně“): zavřený proužek
+// s nadpisem a notou; otevřený se rozvine dolů PŘES formulář a řádky se objevují, jak list sjíždí; ťuknutí kamkoli vedle ho rychle
+// stáhne a hlas utichne (owner „7. ano“). Nota zavřený papír napřed rozvine, pak se vytáhne svíčka a hraje. Dlouhý text: papír nejvýš
+// do 72 % výšky okna, dál se v něm posouvá.
+var _PAPIRY = {
+  guide:  { obal: 'read-guide-papir', lbl: 'read-guide-lbl',   hlas: 'guide-voice',  prefix: 'nav' },
+  ritual: { obal: 'ritual-papir',     lbl: 'reader-card1-lbl', hlas: 'ritual-voice', prefix: 'rit' },
+};
+var _PAPIR_ZAVRENY = 44;   // výška zavřeného proužku (runar-reader.css .papir)
+function _papirS(k) {
+  var c = _PAPIRY[k]; if (c.s) return c.s;
+  var obal = document.getElementById(c.obal), list = obal && obal.querySelector('.papir-list'), txt = obal && obal.querySelector('.papir-text');
+  if (!list || !txt) return null;
+  // natržené boky: nepravidelný ořez listu (procenta výšky → drží i při rozvíjení), pro každý papír jiný a pořád stejný
+  var rnd = _svickaRnd(c.obal), bok = function () { var b = []; for (var y = 0; y <= 100; y += 2.5) b.push([(rnd() < .22 ? 1.5 + rnd() * 3 : rnd() * 1.2).toFixed(2), y]); return b; };
+  var Lb = bok(), Pb = bok().reverse();
+  list.style.clipPath = 'polygon(' + Lb.map(function (b) { return b[0] + 'px ' + b[1] + '%'; })
+    .concat(Pb.map(function (b) { return 'calc(100% - ' + b[0] + 'px) ' + b[1] + '%'; })).join(',') + ')';
+  c.s = { obal: obal, list: list, txt: txt, h: _PAPIR_ZAVRENY, zrus: null };
+  return c.s;
 }
-function toggleGuide() {
-  var lbl = document.getElementById('read-guide-lbl'), box = document.getElementById('read-guide');
-  if (!lbl || !box) return;
-  var otevrit = box.style.display === 'none';
-  box.style.display = otevrit ? '' : 'none';
-  lbl.setAttribute('aria-expanded', otevrit ? 'true' : 'false');
-  _paintGuide();
+function _papirOtevreny(k) { var l = document.getElementById(_PAPIRY[k].lbl); return !!l && l.getAttribute('aria-expanded') === 'true'; }
+function _papirAnim(s, cil, ms, hotovo) {
+  if (s.zrus) s.zrus();
+  var od = s.h, t0 = null, stop = false, odst = s.txt.querySelectorAll('p');
+  s.zrus = function () { stop = true; };
+  if (document.hidden || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) ms = 1;
+  function f(ts) {
+    if (stop) return;
+    if (t0 === null) t0 = ts;
+    var q = Math.min(1, (ts - t0) / ms), e = cil > od ? (q < .5 ? 2 * q * q : 1 - Math.pow(-2 * q + 2, 2) / 2) : 1 - Math.pow(1 - q, 2);
+    s.h = od + (cil - od) * e; s.list.style.height = s.h + 'px';
+    [].forEach.call(odst, function (p) { p.classList.toggle('videt', _PAPIR_ZAVRENY + p.offsetTop + 16 < s.h); });
+    if (q < 1) requestAnimationFrame(f); else { s.zrus = null; if (hotovo) hotovo(); }
+  }
+  requestAnimationFrame(f);
 }
+function _papirOtevri(k, potom) {
+  var s = _papirS(k), lbl = document.getElementById(_PAPIRY[k].lbl);
+  if (!s || !lbl) return;
+  if (_papirOtevreny(k)) { if (potom) potom(); return; }
+  for (var j in _PAPIRY) if (j !== k && _papirOtevreny(j)) _papirZavri(j);   // jeden papír naráz
+  lbl.setAttribute('aria-expanded', 'true'); s.obal.classList.add('pohyb', 'otevreny');
+  var cil = Math.min(_PAPIR_ZAVRENY + s.txt.scrollHeight, Math.round(window.innerHeight * 0.72));
+  _papirAnim(s, cil, 1900, function () { [].forEach.call(s.txt.querySelectorAll('p'), function (p) { p.classList.add('videt'); }); if (potom) potom(); });
+}
+function _papirZavri(k) {
+  var s = _papirS(k), lbl = document.getElementById(_PAPIRY[k].lbl);
+  if (!s || !lbl) return;
+  lbl.setAttribute('aria-expanded', 'false'); s.obal.classList.remove('otevreny'); s.txt.scrollTop = 0;
+  if (typeof svickaZtis === 'function') svickaZtis(_PAPIRY[k].prefix);   // smotaný papír = hlas utichne (owner „7. ano“)
+  _papirAnim(s, _PAPIR_ZAVRENY, 380, function () { s.obal.classList.remove('pohyb'); [].forEach.call(s.txt.querySelectorAll('p'), function (p) { p.classList.remove('videt'); }); });
+}
+function _papiryNapoj() {
+  Object.keys(_PAPIRY).forEach(function (k) {
+    var c = _PAPIRY[k], obal = document.getElementById(c.obal), host = document.getElementById(c.hlas);
+    if (!obal || !_papirS(k)) return;
+    // nota na zavřeném papíru: napřed papír rozvinout, pak hrát (svíčka se vytahuje do hotového okraje). Zachyceno na hostiteli dřív,
+    // než notu uslyší přehrávač; hostitel zůstává, i když _hlasyTextu při změně jazyka vymění jeho obsah.
+    if (host) host.addEventListener('click', function (e) {
+      if (!e.target.closest('#' + c.prefix + '-pb') || _papirOtevreny(k)) return;
+      e.stopPropagation(); e.preventDefault();
+      _papirOtevri(k, function () { svickaPrepni(c.prefix); });
+    }, true);
+  });
+  document.addEventListener('click', function (e) {   // ťuknutí kamkoli vedle papír stáhne
+    Object.keys(_PAPIRY).forEach(function (k) {
+      var obal = document.getElementById(_PAPIRY[k].obal);
+      if (obal && _papirOtevreny(k) && !obal.contains(e.target)) _papirZavri(k);
+    });
+  });
+}
+function toggleRitual() { if (_papirOtevreny('ritual')) _papirZavri('ritual'); else _papirOtevri('ritual'); }
+function toggleGuide() { _paintGuide(); if (_papirOtevreny('guide')) _papirZavri('guide'); else _papirOtevri('guide'); }
 
 function closeCollDetail() {
   document.getElementById('coll-detail').style.display = 'none';
@@ -2157,8 +2198,8 @@ window.addEventListener('DOMContentLoaded', () => {
     if (r) el.innerHTML = runeSvg(r, { frame: true, cls: 'modal-rune-svg' });
   });
   setTimeout(maybeShowWhereToStart, 1800);   // „Where to start“ — jednou, až se appka usadí (DECISIONS 2026-10-11 (65))
-  _svickaPriOtevreni();   // 2026-10-21: svíčka u BEFORE WE BEGIN se rozzáří, až nadpis poprvé dojede na obrazovku
-  _svitekPriOtevreni();   // 2026-10-30: svitek u „How a reading works“ se jednou sám rozvine
+  _svickaPriOtevreni();   // kadidlo u BEFORE WE BEGIN jednou vypustí kouř, až nadpis poprvé dojede na obrazovku (2026-10-30)
+  _papiryNapoj();         // papíry návodu a rituálu: natržený tvar, ťuknutí vedle je stáhne, nota je rozvine (2026-10-30)
   // ── Close topbar dropdown on outside click ──
   document.addEventListener('click', function(e) {
     const wrap = document.getElementById('auth-dropdown-wrap');

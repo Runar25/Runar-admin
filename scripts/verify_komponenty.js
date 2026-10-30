@@ -28,11 +28,11 @@
 // drobná poznámka   .fine                                                 upozornění, poznámka v okně
 // glyf runy         .rune-svg  (runeSvg v runar-utils.js, §5)             kámen = tahaná runa, holá = popisek
 // ikona položky     .sp-ik     (_spText v runar-app.js)                    značka / kreslená ikona položky menu, 1,35 × text (2026-10-28)
-// hlas k nadpisu    .hlas-radek                                           nadpis s „+“ a za ním malý přehrávač (.svp-mala)
-// přehrávač         .svp .svp-nota .svp-cas .svp-svicka (.svp-mala .hraje)   JEDINÝ přehrávač hlasu (runar-svicka.js, owner 2026-10-29): nota ·
-//                   .svp-lesk .svp-vosk .svp-plamen .svp-jadro .svp-jiskra   čas · svíčka (= posuvník) · délka; .svp-mala = bez času (rituál);
-//                   .svp-kour .svp-skryta                                 části kresby svíčky; .hraje = nota se houpe (nota řídí vše);
-//                                                                         .svp-skryta = rituál před notou a po dohrání
+// papír            .papir .papir-list .papir-hlava .papir-text           nadpis s „+“ a notou, rozvine se přes obsah pod ním („How a reading
+//                   (.otevreny .pohyb .videt)                             works“, BEFORE WE BEGIN; owner 2026-10-30); .videt = odkrytý odstavec
+// přehrávač         .svp .svp-nota .svp-cas .svp-svicka .svp-svisla (.hraje)  JEDINÝ přehrávač hlasu (runar-svicka.js, owner 2026-10-29): nota ·
+//                   .svp-lesk .svp-vosk .svp-plamen .svp-jadro .svp-jiskra   čas · svíčka (= posuvník) · délka; .svp-svisla = svíčka v okraji
+//                   .svp-kour .svp-telo                                   papíru (bez času); části kresby svíčky; .hraje = nota se houpe
 //
 // VLASTNÍ (třída mimo komponenty, s důvodem):
 // VLASTNÍ .xp-plus — sám je komponenta rozbalovače (span tam, kde text plní JS a ::after nejde)
@@ -41,7 +41,7 @@
 // VLASTNÍ .topbar-tuzka .tz-cara .tz-pero — tužka u jména v liště: jen při otevřené nabídce, „podepíše“ dvě písmena (owner 2026-10-28)
 // VLASTNÍ .pocet-cteni .rozzar — počet čtení v kolečku za jménem; po dobití se rozzáří a doběhne (owner 2026-10-28, hlášení 85d5ea31)
 // VLASTNÍ .myslenka-pero — pírko Huginna před myšlenkou na konci čtení a v deníku (owner 2026-10-30), jediná kresba myšlenky
-// VLASTNÍ .svitek .sv-list .sv-radky .sv-ukazka — svitek před „How a reading works“, rozvine se s návodem a jednou sám (owner 2026-10-30)
+// VLASTNÍ .kad-zhava .kad-dym .kad-d1 .kad-d2 .kad-d3 .kad-hori — kadidlo u BEFORE WE BEGIN a jeho kouř (owner 2026-10-30), jediná ikona, která kouří
 //
 // PRAVIDLA, KTERÁ KONTROLA HLÍDÁ:
 //   A) každá třída z tabulky v runar-reader.css existuje (soupis nehnije)

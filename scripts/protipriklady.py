@@ -345,12 +345,13 @@ PRIPADY = [
  ('chyti', 'verify_telefon.js', 'v2/runar-svicka.js', 'replace', 'yb = yt + vy, x0 = 6, x1, L;', 'yb = yt + vy, x0 = 30, x1, L;'),
  ('chyti', 'verify_telefon.js', 'v2/runar-svicka.js', 'replace', '    S.p = nq; a.currentTime = Math.min(nq * dl, Math.max(0, dl - 0.05));', '    S.p = nq;'),
  ('chyti', 'verify_telefon.js', 'v2/runar-svicka.js', 'replace', "    if (max > 0 && fs > 0) ct.style.width = dr.style.width =", "    if (false) ct.style.width = dr.style.width ="),   # čas bez pevné šířky posouvá svíčku
- ('chyti', 'verify_telefon.js', 'v2/runar-svicka.js', 'replace', "(o.mala ? ' svp-skryta' : '')", "''"),   # rituál: svíčka vidět už před notou
+ ('chyti', 'verify_telefon.js', 'v2/runar-svicka.js', 'replace', "    if (svisla && S.delka < 1) {   // svislá: napřed se od knotu dolů vytáhne", "    if (false) {   // svislá: napřed se od knotu dolů vytáhne"),   # svislá svíčka se nevytáhne
  ('chyti', 'verify_telefon.js', 'v2/runar-app.js', 'replace', '  if (_predTab !== tab) svickaZtisVse();', '  if (false) svickaZtisVse();'),   # hlas mluví dál po přepnutí záložky
  ('chyti', 'verify_telefon.js', 'v2/runar-svicka.js', 'replace', 'ukaz(true); rozmer(); zamcena();', 'ukaz(true); rozmer();'),   # zamčená obrazovka bez názvu a ovládání
- # runa na zamčené obrazovce (owner 2026-10-30 „6. ok“) · svitek se s návodem nerozvine (owner „N3“)
+ # runa na zamčené obrazovce (owner 2026-10-30 „6. ok“) · papír (owner 2026-10-30): ťuknutí vedle ho nestáhne · nota ho nerozvine
  ('chyti', 'verify_telefon.js', 'v2/runar-svicka.js', 'replace', "    var obr = runa ? _svickaObrazRuny(runa,", "    var obr = false ? _svickaObrazRuny(runa,"),
- ('chyti', 'verify_telefon.js', 'v2/runar-reader.css', 'replace', '[aria-expanded="true"] > .svitek .sv-list{transform:none;}', ''),
+ ('chyti', 'verify_telefon.js', 'v2/runar-app.js', 'replace', "      if (obal && _papirOtevreny(k) && !obal.contains(e.target)) _papirZavri(k);", ""),   # ťuknutí vedle papír nestáhne
+ ('chyti', 'verify_telefon.js', 'v2/runar-app.js', 'replace', "      _papirOtevri(k, function () { svickaPrepni(c.prefix); });", "      svickaPrepni(c.prefix);"),   # nota papír nerozvine
  # čekání na hlas (owner 2026-10-30 „10. ok“): svíčka se při čekání netvoří
  ('chyti', 'verify_telefon.js', 'v2/runar-svicka.js', 'replace', "    if (S.stav === 'tvori') S.p = tvorP(performance.now() - S.tv0);", "    if (false) S.p = tvorP(performance.now() - S.tv0);"),
  # hlas návodu „How a reading works“ (owner 2026-10-30): nahrávka bez hostitele v appce · návod změněný bez nové nahrávky

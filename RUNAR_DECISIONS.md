@@ -12624,3 +12624,24 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   (2) Když nadpis „How a reading works“ poprvé dojede na obrazovku, svitek se rozvine a svine (2,4 s); ne přes okno, ne u otevřeného návodu.
 - **Hlídá:** smoke ㊎ (obraz výkladu je jiný než obraz jedné runy).
 - Affected doc(s): žádný jiný.
+
+## 2026-10-30 (7) — „How a reading works“ a BEFORE WE BEGIN jsou papír se svislou svíčkou; kadidlo K1 jednou vypustí kouř
+
+- **Rozhodl:** owner 2026-10-30 nad náhledem `docs/inbox/2026-10-30-papir.html` (šest kol): *„papír super. Svíčka super.“* ·
+  *„before we begin se rozbalí na papír stejně“* · *„oddeláme ty zlaté okraje“* · *„insent kouř výborně“* · *„K1 je dobrý, dej to do
+  appky, ale bez těch čárek nad tyčkou“* · dřív *„7. ano“* (smotaný papír = hlas utichne).
+- **Co:** (1) Oba nadpisy jsou PAPÍR: zavřený proužek s nadpisem (+) a notou drží místo v řádku; otevřený se rozvine dolů PŘES formulář
+  (nic neroztahuje), řádky se objevují, jak list sjíždí, nejvýš do 72 % výšky okna (dál se v něm posouvá); boky lehce natržené, bez
+  zlatých okrajů; ťuknutí kamkoli vedle ho rychle stáhne a hlas utichne. Jeden papír naráz. (2) Nota zavřený papír napřed rozvine; pak
+  se v pravém okraji od knotu dolů vytáhne svislá svíčka (nejvýš 230 px), jiskra ji zapálí, hoří s časem až na dno, po stranách
+  i zepředu stéká vosk, který cestou dolů roste a zůstává, kde vznikl; u paty kaluž, která přeteče přes hranu podložky. Po dohrání chvíli
+  oharek, pak zmizí. Je to týž přehrávač jako u čtení (`runar-svicka.js`, `.svp-svisla`) — zamčená obrazovka, ztišení při přepnutí
+  záložky i posun tažením platí. (3) Kadidlo K1 (tyčinka šikmo v misce) místo tyčinky s podstavcem, v klidu bez obláčků; jednou za
+  načtení appky, když nadpis dojede na obrazovku, ~4 s kouř (pomalu roste 3 s, vychází z konce tyčinky, vítr ho ohýbá doprava) — místo
+  rozzáření z 2026-10-21 (1).
+- **Odchází:** malá vodorovná svíčka za nadpisem (2026-10-29 (6), 2026-10-30 (1) bod 3) — její chování (svíčka až po notě, po dohrání
+  zmizí) svislá převzala; symbol svitku a jeho samovolné rozvinutí (2026-10-30 (5) bod 1, (6) bod 2) — nadpis je teď sám papír.
+  Papír se sám nerozvine (rozvinul by se přes formulář); po prvním přihlášení se dál otevře návod (2026-10-21 (6)).
+- **Hlídá:** smoke ㊎ (oba papíry: zavřený se vejde na 375 px i v IS, nota ho rozvine, obsah pod ním se nehne, svíčka se vytáhne a hraje,
+  po dohrání zmizí, ťuknutí vedle ho stáhne) + 3 útoky; ㊋ soupis komponent (papír, svislá svíčka, kadidlo).
+- Affected doc(s): žádný jiný (vzhled a chování vlastní `v2/runar-reader.html`, `v2/runar-reader.css`, `v2/runar-app.js`, `v2/runar-svicka.js`).

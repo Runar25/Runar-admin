@@ -11,6 +11,7 @@
   --border:#2E4A70; --border2:#3a5a85;
   --gold:#FFBF00; --gold2:rgba(255,191,0,0.12); --gold-dim:#b38a00;
   --flame-core:#fff3c4;   /* 2026-10-29: jádro plamene svíčky přehrávače (runar-svicka.js) */
+  --kour:#cfc8b8;         /* 2026-10-30: kouř kadidla u BEFORE WE BEGIN — teplá šedá, světlejší než --muted (to je modré) */
   --gold-soft:#D6A85C;   /* 2026-10-20: zlatá kreseb run (RUNE_SVGS) a textu k nim — do té doby natvrdo #D6A85C (CODE-read, jednotný vzhled) */
   --white:#F2F5F7; --muted:#8ba5c0; --dim:#3a4a60;
   --danger:#e07070; --panel:#0d1220;   /* 2026-10-20: chyba a tmavý panel (boční menu, odznak, sloty) — do té doby natvrdo (CODE-read) */
@@ -576,25 +577,43 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 /* 2026-10-27: BEFORE WE BEGIN je rozbalovač rituálu — tlačítko bez vlastního vzhledu, vypadá jako dřív (vzor .guide-lbl). */
 button.card-lbl{background:none;border:0;padding:0;cursor:pointer;display:block;text-align:left;}
 button.card-lbl:focus-visible{outline:1px solid var(--gold);outline-offset:4px;}
-#ritual-box{margin:-6px 0 16px;}
-/* 2026-10-28 nadpis s hlasem: nadpis (rozbalovač „+“) a za ním hlas; od 2026-10-29 malá svíčka přehrávače (.svp-mala, runar-svicka.js) */
-.hlas-radek{display:flex;align-items:center;gap:.75em;margin-bottom:16px;}
-.hlas-radek > .card-lbl{margin-bottom:0;}
-/* 2026-10-30 svitek před „How a reading works“ (owner „N3 — svitek, který se rozbalí“; náhled docs/inbox/2026-10-30-pirko-a-symboly.html):
-   zavřený návod = svinutý svitek (list stažený pod válečkem), otevřením se list rozvine a objeví se řádky; zavřením se svine zpátky. */
-.svitek .sv-list{transform-box:view-box;transform-origin:12px 6px;transform:scaleY(.18);transition:transform .7s ease;}
-.svitek .sv-radky{opacity:0;transition:opacity .35s ease;}
-[aria-expanded="true"] > .svitek .sv-list{transform:none;}
-[aria-expanded="true"] > .svitek .sv-radky{opacity:1;transition-delay:.4s;}
-.sv-ukazka > .svitek .sv-list{animation:svUkazka 2.4s ease-in-out;}
-.sv-ukazka > .svitek .sv-radky{animation:svRadky 2.4s ease-in-out;}
-@keyframes svUkazka{0%{transform:scaleY(.18);}35%,65%{transform:none;}100%{transform:scaleY(.18);}}
-@keyframes svRadky{0%,25%{opacity:0;}40%,60%{opacity:1;}75%,100%{opacity:0;}}
-@media (prefers-reduced-motion:reduce){.svitek .sv-list,.svitek .sv-radky{transition:none;}.sv-ukazka > .svitek .sv-list,.sv-ukazka > .svitek .sv-radky{animation:none;}}
-/* 2026-10-30 návod s hlasem: řádek vlevo jako rituál pod ním (dřív samotný nadpis na střed). Na střed nešlo: skrytá svíčka drží místo
-   vpravo (nesmí se nic hýbat, owner 2026-10-29), takže viditelný nadpis s notou stál o 50 px mimo střed. Okraje nese řádek, ne štítek. */
-#read-guide-row{margin:4px 0 14px;}
-#read-guide-row > .guide-lbl{width:auto;margin:0;flex:none;}
+/* ── PAPÍR (owner 2026-10-30 nad náhledem docs/inbox/2026-10-30-papir.html: „papír super, svíčka super“; „before we begin se rozbalí na
+   papír stejně“): „How a reading works“ a BEFORE WE BEGIN. Zavřený = proužek s nadpisem a notou (drží místo v řádku); otevřený list leží
+   NAD formulářem (nic neroztahuje), boky lehce natržené (tvar listu, bez zlatých okrajů — owner „oddeláme ty zlaté okraje“). Vlevo text,
+   vpravo okraj pro svislou svíčku. Ovládá _papir* v runar-app.js, svíčku runar-svicka.js. */
+.papir{position:relative;height:44px;margin:4px 0 14px;}
+#read-guide-papir{z-index:4;}
+#ritual-papir{z-index:3;}
+.papir-list{position:absolute;left:-6px;right:-6px;top:0;height:44px;overflow:hidden;background:var(--card);}
+.papir.otevreny .papir-list,.papir.pohyb .papir-list{box-shadow:0 12px 26px rgba(0,0,0,.6);}
+.papir-hlava{display:flex;align-items:center;justify-content:space-between;gap:.6em;height:44px;padding:0 6px 0 14px;}
+.papir-hlava > .guide-lbl,.papir-hlava > .card-lbl{width:auto;margin:0;flex:0 1 auto;min-width:0;text-align:left;}
+.papir-text{position:absolute;top:44px;left:0;right:0;bottom:0;overflow:hidden;padding:2px 52px 8px 16px;}
+.papir.otevreny .papir-text{overflow-y:auto;}
+.papir .guide{margin:0;}
+.papir .guide p{font-style:italic;font-size:1.02em;line-height:1.65;color:var(--white);margin:0 0 10px;opacity:0;transform:translateY(4px);
+  transition:opacity .4s ease,transform .4s ease;}
+.papir .guide p.videt{opacity:1;transform:none;}
+/* svislá svíčka v pravém okraji papíru (runar-svicka.js, .svp-svisla) */
+.svp-svisla{position:absolute;right:8px;top:50px;width:34px;height:min(230px,calc(100% - 60px));overflow:visible;   /* výška jako v náhledu (230 px), u krátkého textu menší; SVG se mezi top/bottom nenatáhne */
+  cursor:pointer;touch-action:none;-webkit-tap-highlight-color:transparent;}
+@media (prefers-reduced-motion:reduce){.papir .guide p{transition:none;}}
+/* Kadidlo před BEFORE WE BEGIN (owner 2026-10-30: K1 „tyčinka šikmo v misce… bez těch čárek nad tyčkou“; kouř z náhledu „výborně“):
+   v klidu jen miska a tyčinka; jednou za načtení appky, když nadpis dojede na obrazovku, tyčinka chytne žár a ~4 s z ní stoupá měkký kouř —
+   délka roste rovnoměrně 3 s (pathLength=100), pořád vychází z konce tyčinky a vítr ho jen postupně víc ohýbá doprava přes první písmena. */
+.kad-zhava{fill:var(--gold);stroke:none;opacity:0;}
+.kad-dym{fill:none;stroke:var(--kour);stroke-linecap:round;opacity:0;stroke-dasharray:100;stroke-dashoffset:100;}
+.kad-d1{stroke-width:3.2;}.kad-d2{stroke-width:4.6;}.kad-d3{stroke-width:2.6;}
+.kad-hori .kad-zhava{animation:kadZhava 3s ease-in-out both;}
+.kad-hori .kad-d1{animation:kadRust 3s cubic-bezier(.35,.15,.6,1) both,kadO1 3.6s ease-in-out both;}
+.kad-hori .kad-d2{animation:kadRust 3s cubic-bezier(.35,.15,.6,1) both,kadO2 3.6s ease-in-out both;}
+.kad-hori .kad-d3{animation:kadRust 3s cubic-bezier(.35,.15,.6,1) both,kadO3 3.6s ease-in-out both;}
+@keyframes kadZhava{0%{opacity:0;}12%,80%{opacity:1;}100%{opacity:0;}}
+@keyframes kadRust{0%{stroke-dashoffset:100;}100%{stroke-dashoffset:0;}}
+@keyframes kadO1{0%{opacity:0;}12%{opacity:.3;}45%{opacity:.26;}68%,100%{opacity:0;}}
+@keyframes kadO2{0%,22%{opacity:0;}48%{opacity:.28;}75%{opacity:.22;}92%,100%{opacity:0;}}
+@keyframes kadO3{0%,48%{opacity:0;}72%{opacity:.28;}88%{opacity:.2;}100%{opacity:0;}}
+@media (prefers-reduced-motion:reduce){.kad-hori .kad-dym,.kad-hori .kad-zhava{animation:none;}}
 @keyframes notaHoupe{0%,100%{transform:rotate(-7deg) translateY(0);}50%{transform:rotate(7deg) translateY(-1.5px);}}
 .flbl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--gold);display:block;margin:16px 0 6px;}
 .flbl:first-child{margin-top:0;}
@@ -859,24 +878,21 @@ input:autofill{filter:none;}
   background:none;color:var(--gold);font-size:1em;cursor:pointer;-webkit-tap-highlight-color:transparent;}
 .svp-nota svg{width:1.9em;height:1.9em;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;transform-origin:50% 80%;}
 .svp-nota.hraje svg{animation:notaHoupe 1.4s ease-in-out infinite;filter:drop-shadow(0 0 2.5px rgba(255,191,0,0.55));}
-.svp-nota:focus-visible,.svp-svicka:focus-visible{outline:1px solid var(--gold);outline-offset:2px;}
+.svp-nota:focus-visible,.svp-svicka:focus-visible,.svp-svisla:focus-visible{outline:1px solid var(--gold);outline-offset:2px;}
 .svp-cas{flex:none;line-height:1;text-align:center;font-variant-numeric:tabular-nums;}   /* šířku (nejširší číslice) dává runar-svicka.js */
 .svp-svicka{flex:1;min-width:0;height:2.6em;overflow:visible;display:block;cursor:pointer;touch-action:pan-y;-webkit-tap-highlight-color:transparent;}
-.svp-svicka path{fill:none;stroke:var(--gold-soft);stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round;}
-.svp-svicka .svp-lesk{stroke-width:1;opacity:0.35;}
+.svp-svicka path,.svp-svisla path{fill:none;stroke:var(--gold-soft);stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round;}
+.svp-svicka .svp-lesk,.svp-svisla .svp-lesk{stroke-width:1;opacity:0.35;}
 .svp-svicka .svp-vosk{opacity:0.8;}
-.svp-svicka .svp-plamen{fill:var(--gold);stroke:none;filter:drop-shadow(0 0 4px rgba(255,191,0,0.75));transform-box:fill-box;transform-origin:50% 100%;
+.svp-svisla .svp-telo,.svp-svisla .svp-vosk{fill:var(--card);}   /* svislá: vosk a tělo zakryjí, co je za nimi (kaluž, podložku) */
+.svp-svisla .svp-vosk{stroke-width:1.2;}
+.svp-svicka .svp-plamen,.svp-svisla .svp-plamen{fill:var(--gold);stroke:none;filter:drop-shadow(0 0 4px rgba(255,191,0,0.75));transform-box:fill-box;transform-origin:50% 100%;
   animation:svpMihot 0.9s ease-in-out infinite alternate;}
-.svp-svicka .svp-jadro{fill:var(--flame-core);stroke:none;opacity:0.9;}
+.svp-svicka .svp-jadro,.svp-svisla .svp-jadro{fill:var(--flame-core);stroke:none;opacity:0.9;}
 @keyframes svpMihot{0%{transform:scale(1,1) rotate(-3deg);}50%{transform:scale(0.92,1.08) rotate(2deg);}100%{transform:scale(1.04,0.95) rotate(-1deg);}}
-.svp-svicka .svp-jiskra{fill:var(--gold);stroke:none;filter:drop-shadow(0 0 6px rgba(255,191,0,0.95));}
-.svp-svicka .svp-kour{stroke:var(--muted);stroke-width:1;opacity:0;}
-/* rituál: kratší svíčka bez času, jinak táž velikost jako u čtení (náhled 2, owner 2026-10-29 „teď je to dobré“) — tělo svíčky
-   ~ výška verzálek nadpisu vedle. Na úzkém telefonu se zkrátí (islandský nadpis je delší: na 320 px by přetekla). */
-.svp-mala .svp-svicka{flex:0 1 8.5em;min-width:3.5em;transition:opacity .6s;}
-.svp-svicka.svp-skryta{opacity:0;pointer-events:none;}   /* rituál: svíčka až po ťuknutí na notu, po dohrání zmizí (runar-svicka.js) */
-.hlas-radek > span{min-width:0;}
-@media (prefers-reduced-motion:reduce){.svp-svicka .svp-plamen,.svp-nota.hraje svg{animation:none;}}
+.svp-svicka .svp-jiskra,.svp-svisla .svp-jiskra{fill:var(--gold);stroke:none;filter:drop-shadow(0 0 6px rgba(255,191,0,0.95));}
+.svp-svicka .svp-kour,.svp-svisla .svp-kour{stroke:var(--muted);stroke-width:1;opacity:0;}
+@media (prefers-reduced-motion:reduce){.svp-svicka .svp-plamen,.svp-svisla .svp-plamen,.svp-nota.hraje svg{animation:none;}}
 /* Ovládání přehrávání růstu stromu (runar-tree.js): šipky .cap-btn a posuvník .cap-seek v řádku .cap — do 2026-10-29 i přehrávač hlasu. */
 .cap{display:flex;align-items:center;gap:12px;}
 /* 2026-10-11 pevná šířka: ▶ a ⏸ jsou různě široké, pruh přehrávání při přepnutí poskakoval (owner). */

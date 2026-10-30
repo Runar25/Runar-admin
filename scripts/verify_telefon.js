@@ -206,34 +206,35 @@ const MERENI = `(() => {
       readerRune = null; _lastDrawn = [];
       showAppTab('journal'); await sl(150); if (!a.paused) v.push('hlas hraje dál po přepnutí záložky'); showAppTab('reading');
       _capStop('cap'); ap.classList.remove('visible');
-      setLang('is'); await sl(300); var rs = document.getElementById('rit-sv'), rr = rs && rs.getBoundingClientRect();
-      if (!rs) v.push('malá svíčka rituálu chybí'); else if (rr.right > ${SIRKA} - 1 || rr.width < 20) v.push('malá svíčka rituálu (IS) ' + Math.round(rr.left) + '–' + Math.round(rr.right) + ' px');
-      // rituál (owner 2026-10-29): svíčka až po ťuknutí na notu, po dohrání zmizí; místo v řádku drží
-      if (rs) { var vidi = function(){ return getComputedStyle(rs).opacity !== '0' && !rs.classList.contains('svp-skryta'); }, ra = document.getElementById('rit-a');
-        if (vidi()) v.push('malá svíčka rituálu je vidět před ťuknutím na notu');
-        ra.muted = true; for (var k2 = 0; k2 < 50 && !(isFinite(ra.duration) && ra.duration > 0); k2++) await sl(100);
-        document.getElementById('rit-pb').click(); await sl(900);
-        if (!vidi()) v.push('malá svíčka rituálu se po ťuknutí na notu neukázala');
-        ra.currentTime = Math.max(0, ra.duration - 0.3);   // délku nenačtené MP3 prohlížeč jen odhadne → čekat na skutečný konec
-        for (var k3 = 0; k3 < 120 && !ra.ended; k3++) await sl(100);
-        if (!ra.ended) v.push('rituál nedohrál (zvuk ' + ra.currentTime.toFixed(1) + ' z ' + ra.duration.toFixed(1) + ' s; paused ' + ra.paused + ', readyState ' + ra.readyState + ', network ' + ra.networkState + ', chyba ' + (ra.error && ra.error.code) + ')'); else await sl(4000);
-        if (!rs.classList.contains('svp-skryta')) v.push('malá svíčka rituálu po dohrání nezmizela');
-        if (Math.abs(rs.getBoundingClientRect().width - rr.width) > 0.5) v.push('skrytá svíčka rituálu nedrží místo v řádku'); }
-      // svitek před návodem (owner 2026-10-30 „N3 — svitek, který se rozbalí“): zavřený návod = svinutý, otevřený = rozvinutý
-      var svl = document.querySelector('#read-guide-lbl .sv-list'), gb = document.getElementById('read-guide');
-      if (!svl) v.push('svitek před „How a reading works“ chybí'); else {
-        var rozvin = function () { var m = new DOMMatrix(getComputedStyle(svl).transform); return m.d; };
-        if (gb.style.display !== 'none') toggleGuide();
-        await sl(900); var z1 = rozvin(); toggleGuide(); await sl(900); var z2 = rozvin(); toggleGuide();
-        if (!(z1 < 0.5 && z2 > 0.95)) v.push('svitek se s návodem nerozvine (zavřený ' + z1.toFixed(2) + ', otevřený ' + z2.toFixed(2) + ')'); }
-      // návod (owner 2026-10-30 „How a reading works … chci taky s hlasem“): nadpis a svíčka se vejdou (IS má delší nadpis), svíčka až po notě
-      var ns = document.getElementById('nav-sv'), nl = document.getElementById('read-guide-lbl');
-      if (!ns) v.push('malá svíčka návodu chybí'); else { var nr = ns.getBoundingClientRect(), lr = nl.getBoundingClientRect();
-        if (nr.right > ${SIRKA} - 1 || nr.width < 20 || lr.left < 0 || lr.right > nr.left) v.push('návod (IS): nadpis ' + Math.round(lr.left) + '–' + Math.round(lr.right) + ' px, svíčka ' + Math.round(nr.left) + '–' + Math.round(nr.right) + ' px');
-        if (!ns.classList.contains('svp-skryta')) v.push('malá svíčka návodu je vidět před ťuknutím na notu');
-        var na = document.getElementById('nav-a'); na.muted = true; document.getElementById('nav-pb').click(); await sl(900);
-        if (ns.classList.contains('svp-skryta')) v.push('malá svíčka návodu se po ťuknutí na notu neukázala');
-        if (na.paused) v.push('hlas návodu se po notě nerozehrál'); svickaStop('nav'); }
+      // papíry „How a reading works“ a BEFORE WE BEGIN (owner 2026-10-30 nad náhledem docs/inbox/2026-10-30-papir.html): zavřený proužek
+      // se vejde (IS má delší nadpis), nota zavřený papír rozvine PŘES obsah (#reader-note se nehne), svislá svíčka se vytáhne a hraje,
+      // po dohrání zmizí; ťuknutí vedle papír stáhne
+      setLang('is'); await sl(300);
+      var PAP = [['read-guide-papir', 'nav'], ['ritual-papir', 'rit']], pozn = document.getElementById('reader-note');
+      for (var pi = 0; pi < PAP.length; pi++) {
+        var obal = document.getElementById(PAP[pi][0]), pre = PAP[pi][1];
+        if (!obal || !document.getElementById(pre + '-pb')) { v.push('papír ' + PAP[pi][0] + ' nebo jeho nota chybí'); continue; }
+        var li = obal.querySelector('.papir-list'), lb = li.getBoundingClientRect(), nb = document.getElementById(pre + '-pb').getBoundingClientRect(),
+          hl = obal.querySelector('.papir-hlava > button').getBoundingClientRect();
+        if (lb.left < 0 || lb.right > ${SIRKA} || Math.round(lb.height) !== 44) v.push('zavřený papír ' + pre + ': ' + Math.round(lb.left) + '–' + Math.round(lb.right) + ' px, výška ' + Math.round(lb.height));
+        if (hl.right > nb.left || nb.right > lb.right) v.push('papír ' + pre + ' (IS): nadpis ' + Math.round(hl.left) + '–' + Math.round(hl.right) + ' px, nota ' + Math.round(nb.left) + '–' + Math.round(nb.right) + ' px');
+        var au = document.getElementById(pre + '-a'); au.muted = true;
+        for (var k6 = 0; k6 < 50 && !(isFinite(au.duration) && au.duration > 0); k6++) await sl(100);
+        var poz0 = pozn.getBoundingClientRect().top;
+        document.getElementById(pre + '-pb').click(); await sl(3600);
+        var st = _SVICKY[pre]._stav(), lb2 = li.getBoundingClientRect();
+        if (lb2.height < 120 || !obal.querySelector('.papir-text p.videt')) v.push('nota papír ' + pre + ' nerozvinula (výška ' + Math.round(lb2.height) + ')');
+        if (Math.abs(pozn.getBoundingClientRect().top - poz0) > 0.5) v.push('rozvinutý papír ' + pre + ' posunul obsah pod sebou o ' + Math.round(pozn.getBoundingClientRect().top - poz0) + ' px');
+        if (st.delka < 1 || au.paused) v.push('papír ' + pre + ': svíčka se nevytáhla nebo hlas nehraje (' + JSON.stringify(st) + ', paused ' + au.paused + ')');
+        au.currentTime = Math.max(0, au.duration - 0.3);   // délku nenačtené MP3 prohlížeč jen odhadne → čekat na skutečný konec
+        for (var k7 = 0; k7 < 80 && !au.ended; k7++) await sl(100);
+        var dohral = au.ended, kde = au.currentTime;   // po zmizení svíčky se zvuk vrátí na začátek → konec číst hned
+        await sl(3800);
+        if (!dohral) v.push('papír ' + pre + ': hlas nedohrál (' + kde.toFixed(1) + ' z ' + au.duration.toFixed(1) + ' s)');
+        else if (_SVICKY[pre]._stav().delka !== 0) v.push('svíčka papíru ' + pre + ' po dohrání nezmizela');
+        document.body.click(); await sl(700);
+        if (Math.round(li.getBoundingClientRect().height) !== 44) v.push('ťuknutí vedle papír ' + pre + ' nestáhlo (výška ' + Math.round(li.getBoundingClientRect().height) + ')');
+      }
       setLang('en'); return v; })`;
     const vPs = await ev(PREHRAVAC + '(true)');   // samotest: svíčka odsunutá o 26 px (vyhrazené místo vlevo, jako náhled 2) se musí poznat
     if (!vPs || !vPs.some((x) => /mezery/.test(x))) vady.push('SAMOTEST: odsunutou svíčku (nesouměrné mezery) kontrola nepoznala — ' + JSON.stringify(vPs));

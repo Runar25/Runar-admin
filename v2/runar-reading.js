@@ -1536,12 +1536,19 @@ function _updateReadingForm() {
   var nadpis = (knownUser && userName && isMine) ? t('reader_card1_lbl') + ', ' + userName.toUpperCase() : t('reader_card1_lbl');
   // 2026-10-21 (owner „není vycentrovaná … odstraň ten podtácek … celá svíčka s plamenem bude mírně zářit“): bez podtácku; vertical-align 0
   // změřeno inkoustem na střed textu (−0.42em dávalo 5,1 px níž); stálá jemná záře drop-shadow.
-  // 2026-10-30 (owner „Z3 — svíčka kadidlo, to by šlo“; náhled docs/inbox/2026-10-30-pirko-a-symboly.html): kadidlo místo svíčky — rituál
-  // nabízí „svíčku nebo kadidlo“ a svíčka teď znamená přehrávač hlasu. Rozzáření beze změny (#card1-ikona).
+  // 2026-10-30 (owner „Z3 — svíčka kadidlo, to by šlo“): kadidlo místo svíčky — rituál nabízí „svíčku nebo kadidlo“ a svíčka teď znamená
+  // přehrávač hlasu. Tvar K1 z náhledu docs/inbox/2026-10-30-papir.html (owner „K1 je dobrý, dej to do appky, ale bez těch čárek nad
+  // tyčkou“): tyčinka šikmo v misce; kouř jen při zapálení (.kad-hori, _svickaPriOtevreni v runar-app.js), vychází z konce tyčinky
+  // (15.6, 9.4) — pramínky jsou kreslené od (12, 14), proto posun. Rozmazání kouře = filtr přímo v ikoně (jediná instance na stránce).
   if (titleEl) titleEl.innerHTML = '<span id="card1-ikona" style="display:inline-block;vertical-align:0;margin-right:0.45em">'
     + '<svg class="atab-ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"'
-    + ' aria-hidden="true" style="margin-right:0;vertical-align:top;filter:drop-shadow(0 0 2.5px rgba(255,191,0,0.55))"><path d="M12 21v-6"/><path d="M10 21h4"/>'
-    + '<path d="M12 13c-2-1.5-2-3 0-4.5s2-3 0-4.5"/><path d="M14.5 11c-1.2-.9-1.2-1.8 0-2.7"/></svg></span>'
+    + ' aria-hidden="true" style="margin-right:0;vertical-align:top;overflow:visible;filter:drop-shadow(0 0 2.5px rgba(255,191,0,0.55))">'
+    + '<defs><filter id="kadMlha" x="-80%" y="-50%" width="260%" height="200%"><feGaussianBlur stdDeviation="1.5"/></filter></defs>'
+    + '<path d="M5.5 17h13"/><path d="M6.5 17c.6 2.4 2.7 3.6 5.5 3.6s4.9-1.2 5.5-3.6"/><path d="M10.4 17l5.2-7.6"/>'
+    + '<g transform="translate(3.6 -4.6)"><circle class="kad-zhava" cx="12" cy="14.7" r="1.1"/><g filter="url(#kadMlha)">'
+    + '<path pathLength="100" class="kad-dym kad-d1" d="M12 14C11.7 10.5 12 7 12.6 4C13.2 1 14.4 -2 16 -5.5"/>'
+    + '<path pathLength="100" class="kad-dym kad-d2" d="M12 14C11.6 10 12.4 6.5 13.6 4C15.2 1 19.5 -2 28 -4.5"/>'
+    + '<path pathLength="100" class="kad-dym kad-d3" d="M12 14C12.4 10 14 7 16.4 5C19.5 2.6 25 1.8 35 1"/></g></g></svg></span>'
     + String(nadpis).replace(/&/g, '&amp;').replace(/</g, '&lt;');   // „+“ rozbalovače = ::after jako u ostatních (runar-reader.css)
 
   // Note text — same message for both known and unknown (MY READING); different for FOR SOMEONE
