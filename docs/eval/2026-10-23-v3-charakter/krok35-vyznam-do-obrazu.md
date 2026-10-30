@@ -33,6 +33,14 @@ Datum 2026-10-30 · CODE-read · Opus (čerstvý agent na každé čtení), bez 
 1. n = 3 na runu, jedno čtení na kombinaci losů — co je výš, je vidět na vzorku, ne změřený rozdíl. Kvalitu soudí owner.
 2. Jen angličtina, jen Opus.
 
+## 4a. Ownerův verdikt (2026-10-30)
+
+1. Vypadá to dobře a je to jiné než v2: víc popisuje samotnou runu a dává jeden pohled na její význam.
+2. Vysvětlení obrazu (věty 2–3) je zbytečně dlouhé — model si pak vymýšlí, co by ještě řekl. Stačí jasně řečený význam runy.
+3. Runa má víc významů: nápad pro Ask zeptat se na další významy runy (výhoda prémiového účtu proti Rune Seekerovi) → BACKLOG.
+4. Další krok: zasadit SEEKING, INTENTION a AREA; každá runa potřebuje od oblasti jiný vstup (vlídnější slova u run, kterým nesedí
+   třeba „work“). Prostředí obrazu u Gebo losovat šířeji. Pokračuje krok 36.
+
 ## 5. Návrh dalšího kroku
 
 1. Podklad o runě bez obrazů (jen co runa znamená a dělá), obraz nechat na losu — jinak každé čtení Fehu je voda a Isa led.
