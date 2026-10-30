@@ -57,7 +57,10 @@ const srv = http.createServer((req, res) => {
     const d = (p) => Math.hypot(p.x - cil.x, p.y - cil.y);
     const zive = vz.filter(p => p.open);
     const nejbliz = zive.length ? zive.reduce((a, p) => d(p) < d(a) ? p : a, zive[0]) : null;
-    return { d0: Math.round(d({ x: b0.left + b0.width / 2, y: b0.top + b0.height / 2 })), dMin: nejbliz ? Math.round(d(nejbliz)) : null,
+    // dy0 (2026-10-30): od řádku návodu vlevo (hlas za nadpisem) leží popisek i stranou od okna — celková vzdálenost tak zůstala nad prahem
+    // i s popiskem uprostřed výšky obrazovky, za oknem (útok „chci = vyska * 0.5“ prošel). Let musí vést i svisle.
+    return { d0: Math.round(d({ x: b0.left + b0.width / 2, y: b0.top + b0.height / 2 })), dy0: Math.round(Math.abs(b0.top + b0.height / 2 - cil.y)),
+             dMin: nejbliz ? Math.round(d(nejbliz)) : null,
              w0: Math.round(b0.width), wMin: zive.length ? Math.round(Math.min.apply(null, zive.map(p => p.w))) : null,
              zavreno: !m.classList.contains('open'), glow: lbl.classList.contains('svice'), seen: localStorage.getItem('runar_wts_seen'),
              cilVidet: tr.top > 0 && tr.bottom < innerHeight, tab: activeAppTab };
@@ -79,8 +82,8 @@ const srv = http.createServer((req, res) => {
     ok(jm + ' (A) islandsky: přepnutí jazyka přepíše i otevřené okno', isT && isT.ok, JSON.stringify(isT));
     // (B) „Later“ → let k popisku
     const b = await zavri(false);
-    ok(jm + ' (B) karta letí k textu „How a reading works“ a zmenšuje se', b && b.dMin !== null && b.dMin < b.d0 * 0.5 && b.wMin < b.w0 * 0.7 && b.d0 > 80,
-       JSON.stringify({ d0: b && b.d0, dMin: b && b.dMin, w0: b && b.w0, wMin: b && b.wMin }));
+    ok(jm + ' (B) karta letí k textu „How a reading works“ a zmenšuje se', b && b.dMin !== null && b.dMin < b.d0 * 0.5 && b.wMin < b.w0 * 0.7 && b.d0 > 80 && b.dy0 > 50,
+       JSON.stringify({ d0: b && b.d0, dy0: b && b.dy0, dMin: b && b.dMin, w0: b && b.w0, wMin: b && b.wMin }));
     ok(jm + ' (B) okno zmizí, popisek se rozzáří a je vidět, appka si to pamatuje', b && b.zavreno && b.glow && b.cilVidet && b.seen === '1', JSON.stringify(b));
     // (C) další načtení — okno už není
     await nacti(); await sleep(2600);

@@ -15,6 +15,7 @@
 //   svickaHtml(prefix, src, {autoplay, mala})  → markup (<audio id="<prefix>-a"> + .svp)
 //   svickaNapoj(prefix)                        → oživí přehrávač s tím prefixem (po vložení markupu do stránky)
 //   svickaPrepni(prefix) · svickaReset(prefix) · svickaStop(prefix)
+//   svickaTvor(prefix) · svickaHotovo(prefix)   čekání na hlas: svíčka se tvoří, po příchodu zvuku se dotvoří (níž u tvor())
 
 var _SVG_NS = 'http://www.w3.org/2000/svg';
 var _SVICKY = {};   // prefix → instance; hraje nejvýš jedna
@@ -102,7 +103,7 @@ function svickaNapoj(prefix) {
       dur: 700 + rnd() * 700, t0: null, zpet: null });
   }
 
-  var S = { p: 0, stav: 'klid', tise: false, tah: false, bezi: false, js: null, jr: 0, ky: 0, zrusAnim: null, casovac: null, nazev: '' };
+  var S = { p: 0, stav: 'klid', tise: false, tah: false, bezi: false, js: null, jr: 0, ky: 0, zrusAnim: null, casovac: null, nazev: '', tv0: 0 };
 
   // Zamčená obrazovka / notifikace (owner 2026-10-29 „zamčený ok“: dřív tam nebyl název ani pauza). Název dává volající (svickaNazev —
   // jméno runy, výkladu, nadpis rituálu; text i funkce, ať se vezme v chvíli přehrání). Ovládání patří přehrávači, který hrál naposled.
@@ -127,7 +128,7 @@ function svickaNapoj(prefix) {
 
   function delka() { return isFinite(a.duration) && a.duration > 0 ? a.duration : 0; }
   function kresli() {
-    var xs = x0 + L * S.p, k = yt + vy / 2, nyni = performance.now(), roste = false;
+    var xs = x0 + L * S.p, k = yt + vy / 2, nyni = performance.now(), roste = false, tvori = S.stav === 'tvori' || S.stav === 'dotvari';
     telo.setAttribute('d', x1 - xs < 0.5 ? '' : 'M' + xs + ',' + yt + ' L' + x1 + ',' + yt + ' L' + x1 + ',' + yb + ' L' + xs + ',' + yb);
     lesk.setAttribute('d', x1 - xs < 6 ? '' : 'M' + (xs + 3) + ',' + (yt + 2.2) + ' L' + (x1 - 3) + ',' + (yt + 2.2));
     krater.setAttribute('d', x1 - xs < 0.5 ? '' : 'M' + xs + ',' + yt + ' C' + (xs + 2.5) + ',' + (yt + 2) + ' ' + (xs + 2.5) + ',' + (yb - 2) + ' ' + xs + ',' + yb);
@@ -136,11 +137,11 @@ function svickaNapoj(prefix) {
     plamen.setAttribute('transform', tr);
     jiskra.setAttribute('transform', tr + (S.js ? ' scale(' + S.js + ') rotate(' + S.jr + ')' : ''));
     kour.setAttribute('transform', tr + ' translate(0,' + (S.ky - 2) + ')');
-    hrana.setAttribute('d', xs - x0 < 0.5 ? '' : 'M' + x0 + ',' + yb + ' L' + xs + ',' + yb);
+    hrana.setAttribute('d', tvori || xs - x0 < 0.5 ? '' : 'M' + x0 + ',' + yb + ' L' + xs + ',' + yb);   // tvořící se svíčka nemá odhořelou část
     while (ramp.firstChild) ramp.removeChild(ramp.firstChild);
     kapky.forEach(function (r) {
       var x = x0 + L * r.q;
-      if (x > xs - 2) { r.t0 = null; return; }            // ještě neodhořelo (nebo posun zpět svíčku doplnil) → vosk tu není
+      if (tvori || x > xs - 2) { r.t0 = null; return; }   // ještě neodhořelo (nebo posun zpět svíčku doplnil, nebo se tvoří) → vosk tu není
       if (r.t0 === null) r.t0 = nyni + 300;               // vosk začne stékat chvilku po odhoření
       var v = r.zpet !== null ? r.zpet : Math.max(0, Math.min(1, (nyni - r.t0) / r.dur));
       if (r.zpet === null && v < 1) roste = true;
@@ -157,8 +158,9 @@ function svickaNapoj(prefix) {
   function smycka() {
     if (!S.bezi) return;
     if (S.stav === 'hori' && !S.tah && delka()) S.p = Math.min(1, a.currentTime / delka());
+    if (S.stav === 'tvori') S.p = tvorP(performance.now() - S.tv0);
     var roste = kresli();
-    if (S.stav === 'hori' || S.stav === 'zapaluje' || S.stav === 'zhasina' || roste) requestAnimationFrame(smycka); else S.bezi = false;
+    if (S.stav === 'hori' || S.stav === 'zapaluje' || S.stav === 'zhasina' || S.stav === 'tvori' || roste) requestAnimationFrame(smycka); else S.bezi = false;
   }
   function spust() { if (!S.bezi) { S.bezi = true; requestAnimationFrame(smycka); } }
   function zastavAnim() { if (S.zrusAnim) { S.zrusAnim(); S.zrusAnim = null; } clearTimeout(S.casovac); }
@@ -191,6 +193,24 @@ function svickaNapoj(prefix) {
         function () { S.zrusAnim = null; celaZnovu(); a.currentTime = 0; });
     }, _svickaKlid() ? 0 : 3000);
   }
+  // Čekání na hlas (owner 2026-10-29: „při všech čekáních na model by mělo jít vidět, že se něco děje… svíčka by se mohla zvětšovat jako
+  // nahrávání“; 2026-10-30 „10. ok“): svíčka roste od konce ke knotu — napřed rychle, pak čím dál pomaleji a sama se nikdy nedotvoří,
+  // protože appka neví, kolik zbývá (server pošle hlas až celý). Za 6 s je ~58 %, za 12 s ~80 %, strop 92 %. Dorazí-li zvuk, dotvoří se
+  // za 0,6 s a jiskra na knotu dvakrát blikne — výzva „ťukni na notu“. Při tvoření žádný vosk ani okraj odhořelé části.
+  function tvorP(ms) { return 1 - 0.92 * (1 - Math.exp(-ms / 6000)); }
+  function tvor() {
+    celaZnovu(); ukaz(true); S.stav = 'tvori'; S.tv0 = performance.now(); S.p = 1; kresli(); spust();
+  }
+  function hotovo() {   // zvuk dorazil: dotvořit z místa, kde svíčka je; nebyla-li ve tvoření, prostě celá (jako reset)
+    if (S.stav !== 'tvori') { celaZnovu(); return; }
+    zastavAnim(); S.stav = 'dotvari'; var p0 = S.p;
+    S.zrusAnim = _svickaAnim(600, function (q) { S.p = p0 * Math.pow(1 - q, 2); kresli(); }, function () {
+      S.p = 0; S.stav = 'klid'; kresli();
+      S.zrusAnim = _svickaAnim(1400, function (q) {
+        var b = Math.sin(Math.PI * ((q * 2) % 1)); S.js = (0.3 + b * 0.9).toFixed(3); S.jr = (q * 90).toFixed(1); jiskra.setAttribute('opacity', b); kresli();
+      }, function () { S.zrusAnim = null; S.js = null; jiskra.setAttribute('opacity', 0); kresli(); });
+    });
+  }
   function ztisOstatni() {
     for (var k in _SVICKY) { var o = _SVICKY[k]; if (o !== api && !o.a.paused) { o.ztis(); } }
   }
@@ -198,6 +218,7 @@ function svickaNapoj(prefix) {
     if (!a.getAttribute('src') || S.stav === 'zapaluje') return;
     rozmer();
     if (S.stav === 'dohorela') { celaZnovu(); a.currentTime = 0; }
+    if (S.stav === 'dotvari') { zastavAnim(); S.p = 0; S.js = null; jiskra.setAttribute('opacity', 0); }   // ťuknutí ještě při dotváření
     ztisOstatni(); ukaz(true);
     zastavAnim(); kour.style.opacity = 0;
     nota.classList.add('hraje'); nota.setAttribute('aria-pressed', 'true');
@@ -230,7 +251,7 @@ function svickaNapoj(prefix) {
   }
   function naCas() { if (!S.tah && S.stav !== 'dohorela' && S.stav !== 'hori' && delka()) { S.p = Math.min(1, a.currentTime / delka()); kresli(); } }
   function naDelku() { if (dr) dr.textContent = _svickaCas(delka()); rozmer(); vosk(); kresli(); }
-  function naPrazdno() { if (dr) dr.textContent = '0:00'; celaZnovu(); }
+  function naPrazdno() { if (dr) dr.textContent = '0:00'; if (S.stav !== 'tvori' && S.stav !== 'dotvari') celaZnovu(); }   // nový zvuk při dotváření
   function naKonec() { dohor(); }
   function naNotu() { if (!a.paused) a.pause(); else hraj(); }
   function naDolu(e) {
@@ -269,6 +290,8 @@ function svickaNapoj(prefix) {
     prepni: naNotu,
     nazev: function (n) { S.nazev = n || ''; },
     reset: celaZnovu,
+    tvor: tvor,
+    hotovo: hotovo,
     ztis: function () { S.tise = true; a.pause(); },
     zrus: function () { zastavAnim(); S.bezi = false; udalosti.forEach(function (u) { u[0].removeEventListener(u[1], u[2]); });
       if (ro) ro.disconnect(); else window.removeEventListener('resize', prekresli); if (_SVICKY[prefix] === api) delete _SVICKY[prefix]; },
@@ -292,6 +315,8 @@ function svickaNazev(prefix, nazev) { var s = _SVICKY[prefix]; if (s) s.nazev(na
 // Přepnutí záložky zastaví hlas (owner 2026-10-29 „má se zastavit“): svíčka mizí z očí, hlas by mluvil dál bez ovládání. Bez poryvu.
 function svickaZtisVse() { for (var k in _SVICKY) { var s = _SVICKY[k]; if (s && s.a && !s.a.paused) s.ztis(); } }
 function svickaReset(prefix) { var s = _SVICKY[prefix]; if (s) s.reset(); }
+function svickaTvor(prefix) { var s = _SVICKY[prefix]; if (s) s.tvor(); }       // čekání na hlas: svíčka se tvoří
+function svickaHotovo(prefix) { var s = _SVICKY[prefix]; if (s) s.hotovo(); }   // hlas dorazil (src nastavený): dotvoří se a jiskra blikne
 function svickaStop(prefix) {   // zastavit a vyprázdnit (nové čtení, jiný jazyk); removeAttribute + load(), ne src='' (viz svickaHtml)
   var a = document.getElementById(prefix + '-a'), s = _SVICKY[prefix];
   if (s && a && !a.paused) s.ztis();

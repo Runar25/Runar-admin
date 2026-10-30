@@ -783,7 +783,7 @@ function _paintThought(afterId, thought) {
   //  myšlenku má od té doby i Rune Seeker, takže ji má každý přihlášený. DECISIONS 2026-10-29 (1).)
   if (!thought || !kotva) { el.textContent = ''; el.style.display = 'none'; return; }
   kotva.after(el);
-  el.textContent = '\u2726 ' + thought;
+  el.innerHTML = myslenkaSvg() + escapeHtml(thought);   // 2026-10-30: pírko Huginna místo ✦ (myslenkaSvg v runar-utils.js)
   el.style.display = '';
 }
 function _clearThought() { var el = document.getElementById('reading-thought'); if (el) { el.textContent = ''; el.style.display = 'none'; } }
@@ -1253,7 +1253,11 @@ async function generateVoice() {
   const btn = document.getElementById('btn-generate-voice');
   btn.disabled = true; setRuneText(btn, t('voice_btn_loading'));
   setSt('st-voice', '');
-  document.getElementById('audio-player').classList.remove('visible');
+  // 2026-10-30 (owner „10. ok“ k návrhu čekání): přehrávač se ukáže hned a svíčka se v něm tvoří, dokud hlas nedorazí (runar-svicka.js).
+  // Dřív se do příchodu hlasu změnil jen nápis tlačítka — owner: „po zmáčknutí… vlastně nejde poznat, jestli se něco děje“.
+  var _apl = document.getElementById('audio-player');
+  _capStop('cap'); _apl.classList.add('visible'); svickaTvor('cap');
+  var _bezHlasu = function () { _capStop('cap'); _apl.classList.remove('visible'); };   // chyba / hlas už zazněl: přehrávač zase pryč
   try {
     const { data: { session: elSession } } = await sb.auth.getSession();
     const elHeaders = { 'Content-Type': 'application/json' };
@@ -1273,12 +1277,14 @@ async function generateVoice() {
       try { data = await res.json(); } catch (_e) {}
       console.error('voice failed:', res.status, (data && data.error) || '');
       // Tohle čtení už jednou zaznělo (neuložené čtení, nebo druhé ťuknutí) — není to chyba, hlas se jen neopakuje.
+      _bezHlasu();
       if (data && data.error === 'voice_used') { setRuneText(btn, t('voice_btn_done')); btn.disabled = true; return; }
       setSt('st-voice', _voiceErrMsg(data, res.status), 'err');
       setRuneText(btn, t('voice_btn')); btn.disabled = false; return;
     }
     const data = await res.json();
     if (data.error) {
+      _bezHlasu();
       setSt('st-voice', data.error, 'err');
       setRuneText(btn, t('voice_btn')); btn.disabled = false; return;
     }
@@ -1287,7 +1293,7 @@ async function generateVoice() {
     const blob = await fetch(data.audio_url).then(r => r.blob());
     const audio = document.getElementById('cap-a');   // přehrávač hlasu = _makeCapPlayer('cap') (runar-app.js)
     audio.src = URL.createObjectURL(blob);
-    _capReset('cap');
+    svickaHotovo('cap');   // svíčka se dotvoří a jiskra blikne (bez tvoření = jako dřív _capReset)
     // název na zamčené obrazovce = nadpis čtení, který je vidět (jméno runy / výkladu), bez ozdob
     svickaNazev('cap', function () { var l = [].find.call(document.querySelectorAll('#reader-output .layer1-lbl'), function (e) { return e.offsetParent !== null; });
       return l ? l.textContent.replace(/[✦~]/g, '').trim() : ''; });
@@ -1300,6 +1306,7 @@ async function generateVoice() {
     // 2026-10-11: dřív „Voice error: …“ natvrdo anglicky i v islandské appce (technická hláška, třeba výpadek sítě). Člověk dostane hlášku
     // hlasu z UI_TEXT jako u chyby serveru, technický text jde do konzole. Našla ji ráčna ㊾ (anglický text natvrdo v JS readeru).
     console.error('voice error:', err && err.message);
+    _bezHlasu();
     setSt('st-voice', _voiceErrMsg(null, 0), 'err');
     setRuneText(btn, t('voice_btn')); btn.disabled = false;
   }

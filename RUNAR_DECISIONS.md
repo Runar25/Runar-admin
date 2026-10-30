@@ -12568,3 +12568,27 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   na 375 px v IS; svíčka až po notě); 2 útoky.
 - **Ověřeno:** IS Greynir čisté, vazby korpusem (čísla u textu v `runar-translations.js`); „hvar/hvert í tímanum“ 0× → „til hvaða tíma“.
 - Affected doc(s): žádný jiný (text vlastní `v2/runar-translations.js`, nahrávku `v2/runar-config.js` + `v2/audio/`).
+
+## 2026-10-30 (2) — Myšlenka na konci čtení: pírko Huginna místo ✦
+
+- **Rozhodl:** owner 2026-10-30 nad náhledem pěti návrhů (`docs/inbox/2026-10-29-symbol-myslenky.html`): *„12. huginn je moc dobrý nápad.
+  udělej pírko“*. Huginn = Myšlenka v kánonu (`RUNAR_DESIGN.md`, „Huginn a Muninn“); jeho role upozornění („drip“) tím zůstává — pírko
+  je jen značka myšlenky.
+- **Co:** kresba `myslenkaSvg()` (`v2/runar-utils.js`) před myšlenkou ve čtení i v deníku, tenká linka v barvě textu; při objevení se
+  jednou snese a usadí (`.myslenka-pero`, bez animací jen stojí). Model dál píše ✦ jako značku, prompt se nemění. Hlášení z appky nese
+  u myšlenky dál ✦ (kresba nemá text).
+- **Hlídá:** `verify_thought.js` (deník: řádek začíná pírkem, ne ✦); soupis komponent ㊋ (`.myslenka-pero` VLASTNÍ s důvodem).
+- Affected doc(s): žádný jiný (kresbu vlastní `v2/runar-utils.js`, vzhled `v2/runar-reader.css`).
+
+## 2026-10-30 (3) — Čekání na hlas: svíčka se v přehrávači tvoří; čtení dál s pulzujícím ᚱ
+
+- **Rozhodl:** owner 2026-10-29: *„po zmáčknutí na hear Rúnar speak vlastně nejde poznat, jestli se něco děje… svíčka by se mohla zvětšovat
+  jako nahrávání“*; nad návrhem 2026-10-30: *„10. ok“* (svíčka roste napřed rychle, pak pomaleji, sama se nedotvoří; po příchodu hlasu
+  se dotvoří a jiskra blikne) a *„11. ne“* (u čtení zůstává pulzující ᚱ s textem a heslem).
+- **Co:** po ťuknutí na hlas se přehrávač ukáže hned a svíčka v něm roste od konce ke knotu (`svickaTvor` / `svickaHotovo` v
+  `v2/runar-svicka.js`; za 6 s ~58 %, strop 92 % — appka neví, kolik zbývá, server pošle hlas celý). Hlas dorazí → za 0,6 s celá
+  a jiskra na knotu dvakrát blikne (výzva ťuknout na notu). Chyba nebo „hlas už zazněl“ → přehrávač zase pryč. Při tvoření žádný vosk.
+- **Ask beze změny:** návrh (bod 9) počítal s tím, že Ask při čekání ukazuje jen řádek stavu — neplatí, od 2026-09-28 má týž pulzující ᚱ
+  a „Rúnar listens…“ jako čtení. Po „11. ne“ zůstává stejný jako čtení; jiná podoba jen na ownerovo slovo.
+- **Hlídá:** smoke ㊎ (tvoří se, bez vosku, sama se nedotvoří; po zvuku celá a v klidu) + útok.
+- Affected doc(s): žádný jiný (chování vlastní `v2/runar-svicka.js`, `v2/runar-reading.js` generateVoice).

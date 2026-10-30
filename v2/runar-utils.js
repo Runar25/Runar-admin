@@ -63,6 +63,16 @@ function runeSvg(rune, opts) {
   return '<svg class="rune-svg ' + cls + '" viewBox="' + sd.vb + '" fill="none" xmlns="http://www.w3.org/2000/svg">' + paths + '</svg>';
 }
 
+// Pírko Huginna před myšlenkou na konci čtení (owner 2026-10-30 „12. huginn je moc dobrý nápad. udělej pírko“; náhled
+// docs/inbox/2026-10-29-symbol-myslenky.html, varianta 1). Huginn = Myšlenka v našem kánonu (RUNAR_DESIGN.md, „Huginn a Muninn“).
+// Do té doby ✦ z písma. Model dál píše ✦ jako značku v textu (prompt beze změny) — kresbu dává jen appka: čtení i deník odsud.
+// Pírko se při objevení jednou snese a usadí (.myslenka-pero v runar-reader.css).
+function myslenkaSvg() {
+  return '<svg class="myslenka-pero" viewBox="0 0 24 24" aria-hidden="true"><g><path d="M4.5 20.5 L18.5 4.5"/>'
+    + '<path d="M18.5 4.5 C20.2 9.5 16.5 15.2 9.6 17.3"/><path d="M18.5 4.5 C13.6 5.4 9.3 9.5 7.6 15.6"/>'
+    + '<path d="M15.2 11.6 L17.6 12.4 M12.6 14.4 L14.6 15.6 M12.4 8.7 L11.6 6.9"/></g></svg>';
+}
+
 // ─── DURABLE JOURNAL QUEUE — a reading survives a DB outage ───────────────────────
 // If the server-side save does not confirm (no reading_id / ask_saved — e.g. the DB was down),
 // stash the reading/ask (text + meta are both known here) in localStorage and re-send it,

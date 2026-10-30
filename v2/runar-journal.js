@@ -94,7 +94,7 @@ function _jThought(txt) {
   const sp = _splitThought(s, []);
   return { text: sp.reading, thought: sp.thought };
 }
-function _jThoughtHtml(th) { return th ? `<div class="jcard-thought">\u2726 ${escapeHtml(th)}</div>` : ''; }
+function _jThoughtHtml(th) { return th ? `<div class="jcard-thought">${myslenkaSvg()}${escapeHtml(th)}</div>` : ''; }   // pírko Huginna (2026-10-30)
 
 // Hlas čtení v deníku (2026-10-11, owner: „vytvoří se čtení, uloží do databáze a může přehrát znova v deníku ne?“; DECISIONS (61)).
 // Rúnar čtení přečte jednou a server hlas uloží — další přehrání (tady i ve čtení) je zdarma. Zakládací Norny hlas nemají (textový

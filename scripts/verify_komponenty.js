@@ -40,6 +40,7 @@
 // VLASTNÍ .toast-klik — modifikátor toastu: výzva k obnovení na novou verzi zůstane a dá se klepnout (2026-10-22, DECISIONS 2026-10-22 (8))
 // VLASTNÍ .topbar-tuzka .tz-cara .tz-pero — tužka u jména v liště: jen při otevřené nabídce, „podepíše“ dvě písmena (owner 2026-10-28)
 // VLASTNÍ .pocet-cteni .rozzar — počet čtení v kolečku za jménem; po dobití se rozzáří a doběhne (owner 2026-10-28, hlášení 85d5ea31)
+// VLASTNÍ .myslenka-pero — pírko Huginna před myšlenkou na konci čtení a v deníku (owner 2026-10-30), jediná kresba myšlenky
 //
 // PRAVIDLA, KTERÁ KONTROLA HLÍDÁ:
 //   A) každá třída z tabulky v runar-reader.css existuje (soupis nehnije)

@@ -348,6 +348,8 @@ PRIPADY = [
  ('chyti', 'verify_telefon.js', 'v2/runar-svicka.js', 'replace', "(o.mala ? ' svp-skryta' : '')", "''"),   # rituál: svíčka vidět už před notou
  ('chyti', 'verify_telefon.js', 'v2/runar-app.js', 'replace', '  if (_predTab !== tab) svickaZtisVse();', '  if (false) svickaZtisVse();'),   # hlas mluví dál po přepnutí záložky
  ('chyti', 'verify_telefon.js', 'v2/runar-svicka.js', 'replace', 'ukaz(true); rozmer(); zamcena();', 'ukaz(true); rozmer();'),   # zamčená obrazovka bez názvu a ovládání
+ # čekání na hlas (owner 2026-10-30 „10. ok“): svíčka se při čekání netvoří
+ ('chyti', 'verify_telefon.js', 'v2/runar-svicka.js', 'replace', "    if (S.stav === 'tvori') S.p = tvorP(performance.now() - S.tv0);", "    if (false) S.p = tvorP(performance.now() - S.tv0);"),
  # hlas návodu „How a reading works“ (owner 2026-10-30): nahrávka bez hostitele v appce · návod změněný bez nové nahrávky
  ('chyti', 'verify_telefon.js', 'v2/runar-app.js', 'replace', "{ prefix: 'nav', host: 'guide-voice',", "{ prefix: 'nav', host: 'guide-voice-x',"),
  ('chyti', 'verify_ritual_hlas.js', 'v2/runar-translations.js', 'replace', "'Segðu mér hvað þú leitar að. Þá veit ég hvernig ég á að tala.'", "'Segðu mér hvað þú leitar að. Þá veit ég hvernig ég tala.'"),

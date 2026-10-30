@@ -78,7 +78,7 @@
       if (cteniT) {
         var thEl = document.getElementById('reading-thought');
         var thT = (thEl && thEl.style.display !== 'none') ? (thEl.textContent || '').trim() : '';
-        cap.text = cteniT.trim() + (thT ? '\n' + thT : '');
+        cap.text = cteniT.trim() + (thT ? '\n\u2726 ' + thT : '');   // ✦ = myšlenka (v appce od 2026-10-30 pírko, kresba bez textu)
       } else if (tab === 'reading') {
         cap.text = '';
       } else {

@@ -154,8 +154,14 @@ const MERENI = `(() => {
     const PREHRAVAC = `(async function(vnut){ var v = [], sl = function(ms){ return new Promise(function(r){ setTimeout(r, ms); }); };
       showAppTab('reading'); document.getElementById('reader-output').style.display = 'block';
       var ap = document.getElementById('audio-player'); ap.classList.add('visible');
-      var a = document.getElementById('cap-a'); a.muted = true; a.src = 'audio/ritual_en.mp3'; _capReset('cap');
+      // čekání na hlas (owner 2026-10-30 „10. ok“): svíčka se tvoří, sama se nedotvoří, bez vosku; po příchodu zvuku se dotvoří
+      _capStop('cap'); svickaTvor('cap'); await sl(1500); var t1 = _SVICKY.cap._stav(); await sl(1500); var t2 = _SVICKY.cap._stav();
+      if (t1.stav !== 'tvori' || !(t1.p < 0.95 && t2.p < t1.p && t2.p > 0.3)) v.push('svíčka při čekání na hlas se netvoří (' + t1.stav + ' ' + t1.p.toFixed(2) + ' → ' + t2.p.toFixed(2) + ')');
+      if (t2.vosk) v.push('svíčka při čekání na hlas má vosk (' + t2.vosk + ' rampouchů)');
+      var a = document.getElementById('cap-a'); a.muted = true; a.src = 'audio/ritual_en.mp3'; svickaHotovo('cap');
       for (var k = 0; k < 50 && !(isFinite(a.duration) && a.duration > 0); k++) await sl(100);
+      await sl(2200); var t3 = _SVICKY.cap._stav();
+      if (t3.stav !== 'klid' || t3.p > 0.001) v.push('svíčka se po příchodu hlasu nedotvořila (' + t3.stav + ' ' + t3.p.toFixed(2) + ')');
       if (!(isFinite(a.duration) && a.duration > 0)) return ['zvuk se nenačetl (délka ' + a.duration + ')'];
       var sv = document.getElementById('cap-sv'); if (vnut) sv.style.marginLeft = '26px'; await sl(150);
       var txt = function(e){ var r = document.createRange(); r.selectNodeContents(e); return r.getBoundingClientRect(); };

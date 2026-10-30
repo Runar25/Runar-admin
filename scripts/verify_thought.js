@@ -95,10 +95,11 @@ for (const [jm, kus] of [['single prompt', "var _thL = _kus('THOUGHT-✦', 'acco
   ]);
   const html = el['journal-list'] ? el['journal-list'].innerHTML : '';
   const ex = [...html.matchAll(/class="jcard-excerpt" id="jex-\d+">([^<]*)</g)].map((m) => m[1]);
-  const th = [...html.matchAll(/class="jcard-thought">([^<]*)</g)].map((m) => m[1]);
+  // 2026-10-30: před myšlenkou pírko Huginna (myslenkaSvg), ne ✦ — řádek = kresba pírka + text
+  const th = [...html.matchAll(/class="jcard-thought">(<svg class="myslenka-pero"[\s\S]*?<\/svg>)?([^<]*)</g)].map((m) => (m[1] ? 'PÍRKO ' : '') + m[2]);
   ocek('deník: tři karty, text bez ✦', ex.length === 3 && ex.every((x) => x.indexOf('✦') === -1), JSON.stringify(ex));
   ocek('deník: zlatý řádek u single i spreadu, u starého čtení ne', th.length === 2 && th[0].indexOf('feel like enough') !== -1
-    && th[1].indexOf('Hverju') !== -1 && th.every((x) => x.indexOf('✦') === 0), JSON.stringify(th));
+    && th[1].indexOf('Hverju') !== -1 && th.every((x) => x.indexOf('PÍRKO ') === 0 && x.indexOf('✦') === -1), JSON.stringify(th));
 }
 if (vady.length) { vady.forEach((v) => console.log('FAIL  ' + v)); console.log('CELKEM ' + vady.length + ' vad v myšlence ✦'); process.exit(1); }
 console.log('OK    myšlenka ✦: Rune Seeker/Standard/Premium/admin (návštěvník ne), single·Kříž·Norny·Podkova·Yggdrasil se správnou zdrojovou runou (EN+IS), oddělená od textu a hlasu — i v deníku (zlatý řádek)');
