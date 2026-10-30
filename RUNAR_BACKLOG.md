@@ -1036,6 +1036,8 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   chytila 4 ze 4. Šum časování skutečného workeru (stav B3) → zpevnit čekání v kontrole, ať útok nezávisí na rychlosti stroje.
   **Podruhé 2026-10-30** (CODE-tune, lokální celý smoke při souběhu s prohlížečem kontrol: `…/20261030-072317_verify_verze_hlaseni.js_v2_sw.js.txt`),
   samotný útok hned poté 4 ze 4. Opakuje se → zpevnění čekání je na řadě, ne další přepuštění.
+  ✅ *(CODE-tune 2026-10-30 večer, potřetí — zastavilo push)* příčina: worker zapisuje sw.js do cache až po odpovědi; kontrola teď po
+  kroku 2 čeká, až zápis doběhne (nejvýš 3 s). Útok pak 10× po sobě — výsledek v commitu.
 - [x] **Přehrávač čtení jako svíčka (9c7d57f1, 63278a3a):** po ťuknutí na ♪ okénko *„tap again to stop“*; přehrávač čtení ve stylu našich run
   bez kamenů, naležato: nota · čas 0 · jiskra · svíčka · konec stopy. Jiskra se objeví po ťuknutí na notu přesně na knotu a zapálí svíčku;
   svíčka během přehrávání ubývá (vosk nerovně stéká po spodní hraně); pauza = obláček, který fouká ke špičce — ťuknutí krátce sfoukne plamen;

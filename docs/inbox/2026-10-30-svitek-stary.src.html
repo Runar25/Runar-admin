@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Starý svitek a kouř kadidla</title>
+<!-- Náhled k ownerovu 2026-10-30 (druhé kolo): „text How a reading works má být už taky ve svitku i s notou a svíčkou. Navrhni vizuálně lepší
+     svitek, trochu staře vypadající. Tam by samozřejmě vypadl symbol svitku před textem“ · „kadidlo nevypadá dobře, líbilo se mi to předtím.
+     Ten kouř musí být lepší, spíš podobně tomu, když zhasne svíčka, možná jen trochu širší kouř, ale jeden proud“. Jen náhled.
+     Zdroj; hotový soubor (písma, text a nahrávka návodu uvnitř) skládá 2026-10-30-svitek-stary.build.js. -->
+<link rel="stylesheet" href="../../v2/fonts/fonts.css">
+<style>
+:root{--bg:#0a0c12;--card:#10131b;--gold:#FFBF00;--gold-soft:#D6A85C;--white:#F2F5F7;--muted:#8ba5c0;--line:rgba(46,74,112,0.5);
+  --perg:#3b2e1d;--perg-tm:#2a2015;--inkoust:#f0e3c4;--inkoust-tm:#c9b48a;--drevo-sv:#6b4a2b;--drevo-tm:#2b1a0d;}
+*{box-sizing:border-box}
+body{margin:0;background:#05070b;color:var(--white);font-family:'Cormorant Garamond',Georgia,serif;}
+.obal{max-width:880px;margin:0 auto;padding:24px 16px 60px;display:grid;grid-template-columns:minmax(0,1fr);gap:22px}
+@media(min-width:800px){.obal{grid-template-columns:375px minmax(0,1fr);align-items:start}}
+h1{font-family:'Cinzel',serif;font-weight:400;letter-spacing:3px;color:var(--gold);font-size:1.05em;margin:0 0 6px}
+.popis p{color:var(--muted);font-size:1.04em;line-height:1.55;margin:0 0 10px}
+.popis b{color:var(--white);font-weight:600}
+.tel{background:var(--bg);border:1px solid var(--line);padding:22px 16px 30px;max-width:375px;width:100%;min-height:780px;overflow:hidden}
+.pod{position:relative}
+/* ── starý svitek: zavřený = proužek s nadpisem mezi válečky; rozvine se PŘES formulář ── */
+.svitek{position:absolute;left:-8px;right:-8px;top:0;z-index:5;filter:drop-shadow(0 10px 18px rgba(0,0,0,.65))}
+.valec{position:relative;height:13px;margin:0 2px;display:flex;align-items:center;z-index:2}
+.valec .tyc{flex:1;height:11px;background:linear-gradient(180deg,var(--drevo-sv),#4a301a 45%,var(--drevo-tm));border-top:1px solid rgba(214,168,92,.35);border-bottom:1px solid #120a04}
+.valec .hlavice{flex:none;width:15px;height:15px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#e9c27a,#9a6b2a 55%,#4b300f);border:1px solid #2b1a0d}
+.perg{position:relative;margin:0 9px;height:44px;overflow:hidden;color:var(--inkoust);
+  background-color:var(--perg);background-image:var(--zrno),radial-gradient(ellipse at 50% 40%,rgba(120,90,50,.35),transparent 70%),linear-gradient(90deg,rgba(0,0,0,.35),transparent 12%,transparent 88%,rgba(0,0,0,.35));
+  box-shadow:inset 0 0 22px rgba(0,0,0,.55),inset 0 6px 8px -4px rgba(0,0,0,.6),inset 0 -6px 8px -4px rgba(0,0,0,.6)}
+.hlava{display:flex;align-items:center;justify-content:space-between;gap:.6em;height:44px;padding:0 14px 0 16px}
+.nadpis{background:none;border:0;padding:0;cursor:pointer;font-family:'Cinzel',serif;font-size:0.66em;letter-spacing:2.2px;text-transform:uppercase;color:#e2b25a;
+  text-shadow:0 1px 0 rgba(0,0,0,.6);display:flex;align-items:center;gap:.4em;text-align:left}
+.nadpis .plus{font-size:1.35em;line-height:1;display:inline-block;transition:transform .25s ease}
+.nadpis[aria-expanded="true"] .plus{transform:rotate(45deg)}
+.nadpis:focus-visible,.nota:focus-visible{outline:1px solid var(--gold);outline-offset:4px}
+.nota{flex:none;background:none;border:0;padding:0;width:34px;height:30px;cursor:pointer;color:#e2b25a;display:flex;align-items:center;justify-content:center}
+.nota svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;transform-origin:50% 80%}
+.nota.hraje svg{animation:notaHoupe 1.4s ease-in-out infinite;filter:drop-shadow(0 0 2.5px rgba(255,191,0,0.55))}
+@keyframes notaHoupe{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg) translateY(-1.5px)}}
+.telo{position:relative;padding:4px 50px 8px 18px}
+.telo .cara{height:1px;margin:0 0 12px;background:linear-gradient(90deg,transparent,rgba(226,178,90,.5),transparent)}
+.telo p{font-style:italic;font-size:1.04em;line-height:1.62;margin:0 0 11px;color:var(--inkoust);opacity:0;transform:translateY(4px);
+  transition:opacity .4s ease,transform .4s ease;text-shadow:0 1px 0 rgba(0,0,0,.35)}
+.telo p.videt{opacity:1;transform:none}
+.telo p:first-of-type::first-letter{font-family:'Cinzel',serif;font-style:normal;font-size:1.9em;float:left;line-height:.9;margin:4px 6px 0 0;color:#e2b25a}
+/* svislá svíčka v pravém okraji svitku, pod notou */
+.svc{position:absolute;right:10px;top:-2px;width:34px;height:230px;overflow:visible;cursor:pointer;touch-action:none}
+.svc path{fill:none;stroke:#e2b25a;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
+.svc .telo-sv{fill:#2a2015}
+.svc .vosk{stroke-width:1.2;fill:#3b2e1d}
+.svc .plamen{fill:var(--gold);stroke:none;filter:drop-shadow(0 0 5px rgba(255,191,0,.8));transform-box:fill-box;transform-origin:50% 100%;animation:mihot .9s ease-in-out infinite alternate}
+.svc .jadro{fill:#fff3c4;stroke:none;opacity:.9}
+.svc .kour{stroke:#b9ab90;stroke-width:1;opacity:0}
+@keyframes mihot{0%{transform:scale(1,1) rotate(-3deg)}50%{transform:scale(.92,1.08) rotate(2deg)}100%{transform:scale(1.04,.95) rotate(-1deg)}}
+/* formulář pod zavřeným svitkem */
+.form{padding-top:84px}
+.card-lbl{font-family:'Cinzel',serif;font-size:0.7em;letter-spacing:2px;color:var(--gold);display:flex;align-items:center;gap:.45em;margin:0 0 12px}
+.fl{font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--gold);margin:18px 0 8px}
+.note{font-style:italic;color:var(--muted);font-size:1em;margin:0 0 6px}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.pill{border:1px solid var(--line);padding:5px 10px;font-style:italic;color:rgba(242,245,247,.35);font-size:.95em}
+.txt{border-bottom:1px solid var(--line);padding:6px 0;color:rgba(242,245,247,.3);font-style:italic;font-size:1.1em}
+/* ── kadidlo: ikona jako dnes; 3 s z ní stoupá JEDEN proud kouře (jako ze sfouknuté svíčky, jen širší) ── */
+.ik{width:1.45em;height:1.45em;flex:none;fill:none;stroke:currentColor;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round;overflow:visible;
+  filter:drop-shadow(0 0 2.5px rgba(255,191,0,0.55))}
+.kad .klidny{transition:opacity .5s ease}
+.kad .zhava{fill:var(--gold);stroke:none;opacity:0;filter:drop-shadow(0 0 3px rgba(255,191,0,.9))}
+.kad .proud{stroke:#c9c1b0;stroke-width:1.7;opacity:0;stroke-dasharray:30;stroke-dashoffset:30;filter:none}
+.kad.hori .klidny{opacity:0}
+.kad.hori .zhava{animation:zhava 3s ease-in-out both}
+.kad.hori .proud{animation:proud 3s ease-in-out both}
+@keyframes zhava{0%{opacity:0}12%,82%{opacity:1}100%{opacity:0}}
+@keyframes proud{0%{opacity:0;stroke-dashoffset:30;transform:translate(0,0)}15%{opacity:.75}55%{opacity:.6;stroke-dashoffset:0;transform:translate(.6px,-2px)}
+  100%{opacity:0;stroke-dashoffset:-14;transform:translate(1.4px,-6px)}}
+.velke{display:flex;gap:24px;align-items:flex-end;margin:12px 0 4px}
+.velke svg{width:96px;height:96px;color:var(--gold)}
+.tl{font-family:'Cinzel',serif;font-size:0.66em;letter-spacing:2px;color:var(--gold);background:none;border:1px solid rgba(214,168,92,0.55);padding:8px 12px;cursor:pointer;margin:4px 8px 0 0}
+@media (prefers-reduced-motion:reduce){.telo p{transition:none}.kad.hori .proud,.kad.hori .zhava{animation:none}.svc .plamen,.nota.hraje svg{animation:none}}
+</style>
+</head>
+<body>
+<div class="obal">
+  <div class="tel">
+    <div class="pod">
+      <div class="svitek" id="sv">
+        <div class="valec"><span class="hlavice"></span><span class="tyc"></span><span class="hlavice"></span></div>
+        <div class="perg" id="perg">
+          <div class="hlava">
+            <button type="button" class="nadpis" id="nadpis" aria-expanded="false" aria-controls="perg"><span>How a reading works</span><span class="plus">+</span></button>
+            <button type="button" class="nota" id="nota" aria-label="Listen" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5.5l10-2V16"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg></button>
+          </div>
+          <div class="telo" id="telo"><div class="cara"></div><!--NAVOD_EN--><svg class="svc" id="svc" viewBox="0 0 34 230" aria-hidden="true"></svg></div>
+        </div>
+        <div class="valec"><span class="hlavice"></span><span class="tyc"></span><span class="hlavice"></span></div>
+      </div>
+      <div class="form">
+        <div class="card-lbl"><svg class="ik kad" id="kadMale" viewBox="0 0 24 24" aria-hidden="true"><!--KADIDLO--></svg>BEFORE WE BEGIN +</div>
+        <p class="note">Tell me where to look. The rune speaks for itself.</p>
+        <div class="fl">YOUR NAME OR PREFERRED NAME</div>
+        <div class="txt">How shall I address you?</div>
+        <div class="fl">AREA OF LIFE +</div>
+        <div class="pills"><span class="pill">Love &amp; Relationships</span><span class="pill">Purpose &amp; Path</span><span class="pill">Career &amp; Creativity</span><span class="pill">Healing &amp; Wellbeing</span><span class="pill">The Unseen</span></div>
+        <div class="fl">WHAT ARE YOU SEEKING? +</div>
+        <div class="pills"><span class="pill">General Guidance</span><span class="pill">Clarity</span><span class="pill">Confirmation</span><span class="pill">Insight into Challenge</span><span class="pill">Reflection</span></div>
+        <div class="fl">THIS READING IS FOR +</div>
+        <div class="pills"><span class="pill">Right now</span><span class="pill">Decision ahead</span><span class="pill">Understanding the past</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="popis">
+    <h1>STARÝ SVITEK A KOUŘ KADIDLA</h1>
+    <p><b>Svitek.</b> Zavřený je to úzký proužek starého pergamenu mezi dvěma válečky s nadpisem a notou, místo dnešního řádku. Symbol svitku
+      před textem už není potřeba. Ťukni na nadpis: dolní váleček sjede dolů <b>přes</b> formulář a řádky se objevují, jak se list odvíjí.
+      Ťukni kamkoli vedle a svitek se rychle smotá zpátky do proužku.</p>
+    <p><b>Nota a svíčka.</b> Ťukni na notu. Zavřený svitek se sám rozvine, v pravém okraji se pod notou od knotu dolů vytáhne svíčka,
+      jiskra ji zapálí a hraje hlas návodu. Svíčka hoří shora dolů a po stranách z ní stéká vosk. Ťuknutím nebo tažením po svíčce se
+      posuneš. Smotáním svitku hlas utichne.</p>
+    <p><b>Kadidlo.</b> Ikona zůstává jako dnes. Když se zapálí, tyčinka chytne žár a 3 s z ní stoupá jeden proud kouře, jako ze sfouknuté
+      svíčky, jen o kousek širší. Pak se vrátí klidná ikona.</p>
+    <div class="velke"><svg class="ik kad" id="kadVelke" viewBox="0 0 24 24" aria-hidden="true"><!--KADIDLO--></svg></div>
+    <button type="button" class="tl" id="kadZnovu">ZAPÁLIT KADIDLO ZNOVU</button>
+    <p style="margin-top:14px"><b>Telefon:</b> zrno pergamenu je jeden malý obrázek, který se opakuje, a pohyb je jen posun a ořez. Svíčka se
+      kreslí jen, když hraje. Náročné to není.</p>
+  </div>
+</div>
+<audio id="zvuk" preload="auto" src="<!--AUDIO_EN-->"></audio>
+<script>
+(function () {
+  var klid = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // zrno starého pergamenu: malá dlaždice šumu, vyrobená jednou (levné i na telefonu)
+  (function () { var c = document.createElement('canvas'); c.width = c.height = 120; var x = c.getContext('2d'), d = x.createImageData(120, 120);
+    for (var i = 0; i < d.data.length; i += 4) { var v = Math.random(); d.data[i] = 30 + v * 40; d.data[i + 1] = 20 + v * 30; d.data[i + 2] = 8 + v * 16; d.data[i + 3] = 26 + v * 34; }
+    x.putImageData(d, 0, 0);
+    for (var k = 0; k < 14; k++) { x.fillStyle = 'rgba(15,8,2,' + (0.05 + Math.random() * 0.08) + ')'; x.beginPath(); x.arc(Math.random() * 120, Math.random() * 120, 4 + Math.random() * 16, 0, 7); x.fill(); }
+    document.documentElement.style.setProperty('--zrno', 'url(' + c.toDataURL() + ')'); })();
+  // ohlodané okraje listu (nepravidelné boky), procenta výšky → drží i při odvíjení
+  (function () { var L = [], P = [];
+    for (var y = 0; y <= 100; y += 4) { L.push((Math.random() * 3.5).toFixed(1) + 'px ' + y + '%'); P.push('calc(100% - ' + (Math.random() * 3.5).toFixed(1) + 'px) ' + (100 - y) + '%'); }
+    document.getElementById('perg').style.clipPath = 'polygon(' + L.concat(P).join(',') + ')'; })();
+
+  // ── kadidlo
+  function kadidlo() { ['kadMale', 'kadVelke'].forEach(function (id) { var k = document.getElementById(id); k.classList.remove('hori'); void k.getBoundingClientRect(); k.classList.add('hori'); }); }
+  document.getElementById('kadZnovu').addEventListener('click', kadidlo);
+  setTimeout(kadidlo, 900);
+
+  // ── svitek
+  var nadpis = document.getElementById('nadpis'), perg = document.getElementById('perg'), telo = document.getElementById('telo');
+  var odstavce = [].slice.call(telo.querySelectorAll('p')), ZAVRENY = 44, h = ZAVRENY, zrus = null;
+  function anim(cil, ms, hotovo) {
+    if (zrus) zrus(); var od = h, t0 = null, stop = false; zrus = function () { stop = true; };
+    if (klid) ms = 1;
+    function f(ts) { if (stop) return; if (t0 === null) t0 = ts; var q = Math.min(1, (ts - t0) / ms);
+      var e = cil > od ? (q < .5 ? 2 * q * q : 1 - Math.pow(-2 * q + 2, 2) / 2) : 1 - Math.pow(1 - q, 2);
+      h = od + (cil - od) * e; perg.style.height = h + 'px';
+      odstavce.forEach(function (p) { p.classList.toggle('videt', ZAVRENY + p.offsetTop + 16 < h); });
+      if (q < 1) requestAnimationFrame(f); else { zrus = null; if (hotovo) hotovo(); } }
+    requestAnimationFrame(f);
+  }
+  function otevreny() { return nadpis.getAttribute('aria-expanded') === 'true'; }
+  function otevri(potom) { if (otevreny()) { if (potom) potom(); return; } nadpis.setAttribute('aria-expanded', 'true'); perg.style.overflowY = 'hidden';
+    var cil = Math.min(ZAVRENY + telo.scrollHeight, Math.round(window.innerHeight * 0.72));
+    anim(cil, 1900, function () { perg.style.overflowY = 'auto'; odstavce.forEach(function (p) { p.classList.add('videt'); }); if (potom) potom(); }); }
+  function zavri() { nadpis.setAttribute('aria-expanded', 'false'); perg.style.overflowY = 'hidden'; perg.scrollTop = 0; if (!a.paused) a.pause();
+    anim(ZAVRENY, 380, function () { odstavce.forEach(function (p) { p.classList.remove('videt'); }); }); }
+  nadpis.addEventListener('click', function (e) { e.stopPropagation(); if (otevreny()) zavri(); else otevri(); });
+  document.getElementById('sv').addEventListener('click', function (e) { e.stopPropagation(); });
+  document.addEventListener('click', function () { if (otevreny()) zavri(); });
+
+  // ── svislá svíčka v okraji svitku
+  var NS = 'http://www.w3.org/2000/svg', svc = document.getElementById('svc'), nota = document.getElementById('nota'), a = document.getElementById('zvuk');
+  function el(t, at, rod) { var e = document.createElementNS(NS, t); for (var k in at) e.setAttribute(k, at[k]); (rod || svc).appendChild(e); return e; }
+  var X0 = 7, X1 = 27, TOP = 20, DNO = 218, OHAREK = 20;
+  var teloSv = el('path', { 'class': 'telo-sv' }), vosky = el('g', {}), lesk = el('path', { opacity: .35 }), krater = el('path', {}), knot = el('path', {});
+  var plamen = el('g', { opacity: 0 });
+  el('path', { 'class': 'plamen', d: 'M0,0 C-4.5,-4 -4.5,-11 0,-19 C4.5,-11 4.5,-4 0,0 Z' }, plamen);
+  el('path', { 'class': 'jadro', d: 'M0,-1 C-1.8,-3 -1.8,-6.5 0,-10 C1.8,-6.5 1.8,-3 0,-1 Z' }, plamen);
+  var jiskra = el('path', { fill: '#FFBF00', stroke: 'none', opacity: 0, d: 'M0,-6 L1.4,-1.4 L6,0 L1.4,1.4 L0,6 L-1.4,1.4 L-6,0 L-1.4,-1.4 Z' });
+  var kour = el('path', { 'class': 'kour', d: 'M0,0 C-3,-5 3,-9 0,-14 C-3,-19 2,-22 0,-26' });
+  var kapky = [], s0 = 7; function rnd() { s0 = (s0 * 16807) % 2147483647; return s0 / 2147483647; }
+  for (var i = 0; i < 9; i++) kapky.push({ strana: i % 2, kdy: 0.04 + i * 0.1 + rnd() * 0.05, max: 18 + rnd() * 46, w: 2 + rnd() * 2.2, dur: 1500 + rnd() * 1500, t0: null });
+  var S = { delka: 0, p: 0, stav: 'pryc', js: 0 };
+  function vrsek() { return TOP + (DNO - OHAREK - TOP) * S.p; }
+  function kresli() {
+    while (vosky.firstChild) vosky.removeChild(vosky.firstChild);
+    if (S.delka <= 0) { [teloSv, lesk, krater, knot].forEach(function (e) { e.setAttribute('d', ''); }); return false; }
+    var dno = TOP + (DNO - TOP) * S.delka, y = vrsek(), nyni = performance.now(), roste = false;
+    teloSv.setAttribute('d', 'M' + X0 + ',' + y + ' L' + X0 + ',' + dno + ' L' + X1 + ',' + dno + ' L' + X1 + ',' + y + ' Z');
+    lesk.setAttribute('d', dno - y > 14 ? 'M' + (X0 + 3.5) + ',' + (y + 6) + ' L' + (X0 + 3.5) + ',' + (dno - 6) : '');
+    krater.setAttribute('d', 'M' + X0 + ',' + y + ' C' + (X0 + 5) + ',' + (y + 3.5) + ' ' + (X1 - 5) + ',' + (y + 3.5) + ' ' + X1 + ',' + y);
+    knot.setAttribute('d', 'M17,' + (y + 2) + ' L17.6,' + (y - 3.5));
+    var tr = 'translate(17.6,' + (y - 3.5) + ')';
+    plamen.setAttribute('transform', tr); jiskra.setAttribute('transform', tr + ' scale(' + S.js + ')'); kour.setAttribute('transform', tr);
+    kapky.forEach(function (k) {
+      if (S.p < k.kdy || S.stav === 'tvori') { k.t0 = null; return; }
+      if (k.t0 === null) k.t0 = nyni;
+      var v = Math.min(1, (nyni - k.t0) / k.dur); if (v < 1) roste = true;
+      var d = Math.min(k.max * v, dno - y - 4); if (d < 1) return;
+      var x = k.strana ? X1 : X0, smer = k.strana ? 1 : -1;   // vosk stéká po vnější straně těla
+      el('path', { 'class': 'vosk', d: 'M' + x + ',' + y + ' C' + (x + smer * k.w) + ',' + (y + 2) + ' ' + (x + smer * k.w * .8) + ',' + (y + d * .7) + ' ' + (x + smer * k.w * .5) + ',' + (y + d)
+        + ' C' + (x + smer * k.w * .1) + ',' + (y + d + 2) + ' ' + (x - smer * .4) + ',' + (y + d * .8) + ' ' + x + ',' + (y + d * .55) }, vosky);
+    });
+    return roste;
+  }
+  var bezi = false;
+  function smycka() { if (S.stav === 'hori' && a.duration) S.p = Math.min(1, a.currentTime / a.duration);
+    var roste = kresli(); if (S.stav === 'hori' || S.stav === 'tvori' || S.stav === 'zapaluje' || roste) requestAnimationFrame(smycka); else bezi = false; }
+  function spust() { if (!bezi) { bezi = true; requestAnimationFrame(smycka); } }
+  function prubeh(ms, krok, hotovo) { var t0 = null; if (klid) ms = 1; function f(ts) { if (t0 === null) t0 = ts; var q = Math.min(1, (ts - t0) / ms); krok(q); if (q < 1) requestAnimationFrame(f); else hotovo(); } requestAnimationFrame(f); }
+  function hraj() {
+    nota.classList.add('hraje'); nota.setAttribute('aria-pressed', 'true');
+    var zapal = function () { S.stav = 'zapaluje'; spust();
+      prubeh(520, function (q) { S.js = q < .6 ? q / .6 * 1.6 : 1.6 - (q - .6) / .4 * 1.3; jiskra.setAttribute('opacity', q < .85 ? 1 : (1 - q) / .15); plamen.setAttribute('opacity', Math.max(0, (q - .45) / .55)); },
+        function () { jiskra.setAttribute('opacity', 0); plamen.setAttribute('opacity', 1); S.stav = 'hori'; spust(); a.play(); }); };
+    otevri(function () {
+      if (S.stav === 'pryc' || S.delka < 1) { S.stav = 'tvori'; S.p = 0; spust(); prubeh(900, function (q) { S.delka = 1 - Math.pow(1 - q, 3); }, zapal); }
+      else zapal();
+    });
+  }
+  function sfoukni() { nota.classList.remove('hraje'); nota.setAttribute('aria-pressed', 'false'); plamen.setAttribute('opacity', 0); S.stav = 'klid'; spust();
+    prubeh(1100, function (q) { kour.style.opacity = (q < .2 ? q / .2 : (1 - q) / .8) * .7; kour.setAttribute('transform', 'translate(17.6,' + (vrsek() - 4 - q * 6) + ')'); }, function () { kour.style.opacity = 0; }); }
+  nota.addEventListener('click', function (e) { e.stopPropagation(); if (!a.paused) a.pause(); else hraj(); });
+  a.addEventListener('pause', function () { if (!a.ended) sfoukni(); });
+  a.addEventListener('ended', function () { nota.classList.remove('hraje'); plamen.setAttribute('opacity', 0); S.stav = 'dohorela'; S.p = 1; kresli();
+    setTimeout(function () { prubeh(700, function (q) { svc.style.opacity = 1 - q; }, function () { S.delka = 0; S.p = 0; S.stav = 'pryc'; kapky.forEach(function (k) { k.t0 = null; }); kresli(); svc.style.opacity = 1; a.currentTime = 0; }); }, 2500); });
+  function qZBodu(e) { var r = svc.getBoundingClientRect(), y = (e.clientY - r.top) * 230 / r.height; return Math.max(0, Math.min(1, (y - TOP) / (DNO - OHAREK - TOP))); }
+  var tah = false;
+  svc.addEventListener('pointerdown', function (e) { if (S.delka < 1 || !a.duration) return; tah = true; try { svc.setPointerCapture(e.pointerId); } catch (x) {} posun(qZBodu(e)); });
+  svc.addEventListener('pointermove', function (e) { if (tah) posun(qZBodu(e)); });
+  svc.addEventListener('pointerup', function () { tah = false; });
+  function posun(q) { S.p = q; a.currentTime = q * a.duration; kapky.forEach(function (k) { if (k.kdy > q) k.t0 = null; }); kresli(); spust(); }
+  kresli();
+  // #demo: samo přehraje a posune (jen kvůli snímku obrazovky při kontrole náhledu)
+  if (location.hash === '#demo') { a.muted = true; hraj(); setTimeout(function () { a.currentTime = a.duration * 0.35; }, 4000); }
+})();
+</script>
+</body>
+</html>

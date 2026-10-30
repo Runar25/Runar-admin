@@ -125,6 +125,11 @@ const srv = http.createServer((req, res) => {
     await cekej(`window._reportVersion() !== 'unknown'`, 5000);
     const r2 = await odesli();
     rekni(ma && r2 && r2.worker && r2.app_version === vN, '(B) 2. pod workerem: „' + vN + '“', JSON.stringify(r2));
+    // Útok „worker zase chytá sw.js“ propustil 2026-10-29, 30. ráno a 30. večer (BACKLOG ㊼): cache-first worker zapisuje stažený soubor
+    // do cache až PO odpovědi (caches.open().put v pozadí). Přešla-li kontrola do kroku 3 dřív, než zápis doběhl, šel sw.js v kroku 3
+    // na síť a vadu nebylo vidět. Teď se čeká, až je sw.js v cache (jen při vadě), nejvýš 3 s — správný worker ho tam nikdy nedá.
+    await cekej(`caches.keys().then(function (ks) { return Promise.all(ks.map(function (k) { return caches.open(k).then(function (c) { return c.keys(); }); })); })
+      .then(function (vs) { return [].concat.apply([], vs).some(function (r) { return r.url.indexOf('/sw.js') !== -1; }); })`, 3000);
 
     // 3. nasazená vN+1, worker ji ještě nemá → okno běží na vN
     rezim = 3;
