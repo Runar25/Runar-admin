@@ -44,6 +44,13 @@ Uzly: `krok31-uzly-gebo.md`. Owner test schválil („ok“) 2026-10-28.
 3. n = 14 na variantu, jedno čtení na uzel; rozdíly 14/14 vs 13/14 nic neříkají. Silný je jen rozdíl proti výchozímu stavu (42/42 vs 1/8).
 4. Jen angličtina, jen Gebo.
 
+## 4a. Ownerův verdikt (2026-10-30)
+
+1. Čtení ownerovi nesedí a nejsou lepší než v2. Že slepý soudce situaci pozná, tedy neznamená, že čtení funguje pro člověka.
+2. Chybí v nich vysvětlení, čím runa sama je. Situace nahradila význam runy, místo aby ho nesla.
+3. Směr dál: držet 4 věty a 50–58 slov, ale věty 1–2 postavit jako Gemini popis runy (esence a co znamená). Příklad má být
+   vtisknutý přímo do první věty, ne stát jako samostatná scéna. Pokračuje krok 33.
+
 ## 5. Všechna čtení
 
 ### Uzel 1 — Someone gives a small thing that shows they paid attention, and the other feels seen.
