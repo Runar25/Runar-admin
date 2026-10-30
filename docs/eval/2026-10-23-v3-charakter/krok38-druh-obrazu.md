@@ -36,6 +36,16 @@ Navazuje na `krok37-uhel-oblast-zamer-hledani.md` (oddíl 4a — ownerův verdik
 3. Isa potřebuje k úhlu výslovně říct, že obraz může být i jiný než zima — jinak vlastní obraz runy vyhraje i tam, kde nebyl nabídnut.
    (Pozor na paměť „nepojmenuj v promptu, co hned zakážeš“ — řešit kladně: nabídnout prostředí, ne zakázat led.)
 
+## 3a. Ownerův verdikt (2026-10-30)
+
+1. Čtení obecně dobrá; **zip** (Isa · Love · zákonitost) se „fakt povedl“.
+2. **Suchý humor** dobrý — „to by šlo“. Další krok: občasná možnost s hranicemi (ne u Healing, ne u těžkých run, ne na účet čtenáře).
+3. Úpravy brát s ohledem na to, co na gpt-6-sol pro v2 fungovalo a nefungovalo (`RUNAR_DESIGN.md`, „Model čtení: gpt-6-sol × Opus 5“).
+4. **Varování / stín:** Gemini „varování“ sedí spíš na čtení s pozitivním významem. Pro v3 jiný název a hlavně zjistit, jak to zní:
+   druhá strana **významu** — světlý úhel má stín, tmavý úhel má světlo, a ne každá mince má dvě strany. Zatím jako věta **mimo** 4 věty.
+5. **Klíčové poselství** (Gemini) je pro nás ve v2 samostatná myšlenka — do čtení v3 nepatří.
+6. Spojit druh obrazu s oblastí a u Isy nabízet i jiná prostředí — schváleno („7. ano“), humor jako občasná možnost („8. ano“).
+
 ## 4. Hranice
 
 1. n = 12, jedno čtení na kombinaci, jeden soudce. Pokles 10/12 → 5/12 je velký, ale změnily se naráz tři věci (druh obrazu, zákaz
