@@ -293,7 +293,7 @@ atomický upsert, úklid starších než hodina; stejně tak `use_credit` (atomi
 - [ ] Tree DB fáze 2 — přeškálovat: `intention` + `aol` už logujeme server-side (481d313, 094f287).
 
 ### 🟢 Dlouhý ocas (kód, nízká priorita)
-- [ ] **§18 debt:** lab i prod drží kompozici stromu 2× (`build_tree_production.py`) → vytáhnout `runar-tree-core.js`. Prod navíc načítá enginy z `tree-lab-*` cest. *(soubor zatím neexistuje — je to cíl toho refaktoru)*  <!-- doc-links:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
+- [x] **§18 debt: lab i prod drží kompozici stromu 2×** — vyřešeno portem 2026-10-11: `build_tree_production.py` bere skript labu doslova, druhá kopie neexistuje (DECISIONS 2026-10-11 (55); zavřel CODE-tree 2026-10-30). Aplikace dál načítá enginy z cest `tree-lab-*` — jen jméno složky, ne kopie.
 - [ ] **Před spuštěním: viditelnost + sklad dobrých vět** (KUKY 2026-09-29 bod 6: *„některá čtení jsou fakt dobrá, popřípadě vyjde dobrý
   závěr, a to chci ukládat tak, abychom měli materiál na vizuální tvorbu“*; report 10:13: *„Jak se maximálně zviditelnit ve vyhledávačích a
   taky při AI vyhledávání… Tohle je práce před spuštěním.“*). (a) SEO + AI vyhledávání (popisky run, tvar run v kolekci, statické texty jako
