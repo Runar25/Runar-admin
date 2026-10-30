@@ -29,6 +29,15 @@
 # pokus přes git http-backend týž průběh zopakoval (bez HTTP, lokálním přenosem, ne — proto ho první pokus neukázal). Proto se na konci
 # ověří, že každá pushovaná větev pořád ukazuje na commit, který prošel; když ne, push se zastaví. Zbývá okno mezi koncem hooku
 # a odesláním (zlomek sekundy místo minut).
+#
+# 2026-10-30 (CODE-read, owner „5. oprav. jde to udělat ještě lépe? tak udělej“): sdílený strom = sdílená větev main. Když jiná session
+# pushne během mých minut smoke, nese na server i moje commity a server pak můj push odmítne „cannot lock ref … expected <starý>“ —
+# vypadá to jako chyba, i když je všechno nahoře (2026-10-30 2×: CODE-read × CODE-tune, b714eb1 a 7c3aebc). Proto hook ptá server
+# (`git fetch`) NA ZAČÁTKU i PO smoke: (a) server už pushovaný commit má → řekne „už na serveru, není co pushovat“ a zastaví push dřív,
+# než přijde matoucí odmítnutí; (b) server se během smoke pohnul jinam → řekne to a ať se pushne znovu. A aby opakovaný push nečekal
+# znovu minuty na tentýž commit: smoke, který prošel, se zapíše (commit + základ); stejný commit se proti základu, který jen postoupil
+# dopředu (starý základ je předkem nového), už znovu netestuje — obsah je týž a „co přibylo“ je podmnožina toho, co už prošlo.
+# Selže-li dotaz na server (offline), hook jede postaru — dotaz push nikdy nezastaví sám od sebe.
 import os, shutil, subprocess, sys, tempfile
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -38,6 +47,45 @@ NAD_SDILENYM = ['verify_canonical_files.js', 'verify_memory_index.js']   # hleda
 def git(*a, **kw):
     return subprocess.run(['git', '-C', REPO] + list(a), capture_output=True, text=True, **kw)
 
+REMOTE = sys.argv[1] if len(sys.argv) > 1 and sys.argv[1] else 'origin'   # git předá hooku jméno vzdáleného repa
+
+def server_ma(vetve_):
+    """Zeptá se serveru a vrátí (vše_nahoře, posun, ff). Pro každou pushovanou větev vezme sha VZDÁLENÉHO refu (`ls-remote`), chybí-li
+    lokálně, stáhne ho (`fetch`). vše_nahoře = každý pushovaný commit je předkem toho, co je na serveru. posun = větve, kde server ukazuje
+    jinam, než git čeká (remote sha ze stdin). ff = server je u všech předkem pushovaného commitu (push stačí zopakovat).
+    Server nedostupný → (False, [], True): hook pak jede postaru, dotaz push nezastaví."""
+    nahore, posun, ff = True, [], True
+    for lok, sha, cekano, vzd in vetve_:
+        try:
+            l = git('ls-remote', REMOTE, vzd, timeout=60)
+        except Exception:
+            return False, [], True
+        if l.returncode != 0:
+            return False, [], True
+        server = (l.stdout.split() or [''])[0]
+        if server and git('cat-file', '-e', server + '^{commit}').returncode != 0:
+            try:
+                git('fetch', '-q', REMOTE, timeout=60)
+            except Exception:
+                pass
+        znam = bool(server) and git('cat-file', '-e', server + '^{commit}').returncode == 0
+        if not server or not znam or git('merge-base', '--is-ancestor', sha, server).returncode != 0:
+            nahore = False
+        if server and cekano and server != cekano:
+            posun.append(vzd.replace('refs/heads/', '') + ': čekán ' + cekano[:7] + ', na serveru ' + server[:7])
+        if server and (not znam or git('merge-base', '--is-ancestor', server, sha).returncode != 0):
+            ff = False
+    return bool(vetve_) and nahore, posun, ff
+
+def uz_nahore(kdy):
+    print('\n[pre-push] ✅ ' + kdy + ' už server tvoje commity má — nesl je push jiné session (sdílená větev). Není co pushovat.')
+    print('  Řádek „error: failed to push some refs“ pod tímhle je jen git, který hlásí zastavený push — nic se neztratilo.')
+    sys.exit(1)
+
+PROSLO = os.path.join(git('rev-parse', '--git-common-dir').stdout.strip() or os.path.join(REPO, '.git'), 'runar-prepush-proslo.txt')
+if not os.path.isabs(PROSLO):
+    PROSLO = os.path.join(REPO, PROSLO)
+
 # Co se pushuje: stdin nese „<local ref> <local sha> <remote ref> <remote sha>“; mazání větve má local sha samé nuly.
 shas, zaklady, vetve = [], [], []
 try:
@@ -45,7 +93,8 @@ try:
         p = line.split()
         if len(p) >= 2 and p[1].strip('0'):
             shas.append(p[1])
-            vetve.append((p[0], p[1]))   # (lokální ref, testovaný commit) — na konci se ověří, že se nepohnul
+            vetve.append((p[0], p[1], p[3] if len(p) >= 4 and p[3].strip('0') else '', p[2] if len(p) >= 3 else p[0]))
+            # (lokální ref, testovaný commit, co git čeká na serveru, vzdálený ref)
             if len(p) >= 4 and p[3].strip('0'):
                 zaklady.append(p[3])
 except Exception:
@@ -58,12 +107,41 @@ zaklad = zaklady[-1] if zaklady else git('merge-base', cil, 'origin/main').stdou
 if zaklad and git('cat-file', '-e', zaklad + '^{commit}').returncode != 0:
     zaklad = ''
 
+# Remote sha ve stdin = co git na serveru našel při startu pushe (ne zastaralá sledovací větev; lifecycle test 2026-10-30).
+if not vetve:
+    print('[pre-push] nic nového k odeslání (server ten commit už má, nebo jde jen o smazání větve) — smoke se nepouští.')
+    sys.exit(0)
+if vetve:
+    _nahore, _posun, _ff = server_ma(vetve)
+    if _nahore:
+        uz_nahore('Ještě před kontrolou')
+    if not _ff:
+        print('\n[pre-push] ZASTAVENO ještě před kontrolou — na serveru je práce, kterou nemáš. `git pull`, pak push znovu.')
+        sys.exit(1)
+    try:
+        _proslo = open(PROSLO, encoding='utf-8').read().split()
+    except Exception:
+        _proslo = []
+    if len(_proslo) == 2 and _proslo[0] == cil and (not _proslo[1] or not zaklad
+            or git('merge-base', '--is-ancestor', _proslo[1], zaklad).returncode == 0):
+        print('[pre-push] commit ' + cil[:7] + ' už smoke prošel (základ jen postoupil dopředu) — znovu se netestuje.')
+        print('[pre-push] OK')
+        sys.exit(0)
+
+def zapsat_proslo():
+    try:
+        with open(PROSLO, 'w', encoding='utf-8') as f:
+            f.write(cil + ' ' + (zaklad or ''))
+    except Exception:
+        pass   # zápis paměti nesmí push zastavit
+
 def postaru(duvod):
     print('[pre-push] ' + duvod + ' — smoke nad sdíleným stromem (postaru).')
     r = subprocess.run(PY + [os.path.join(REPO, 'smoke.py')], cwd=REPO)
     if r.returncode != 0:
         print('\n[pre-push] ZABLOKOVÁNO — smoke neprošel. Oprav to, nebo `git push --no-verify`.')
         sys.exit(1)
+    zapsat_proslo()
     print('[pre-push] OK')
     sys.exit(0)
 
@@ -113,12 +191,23 @@ if not ok:
     print('\n[pre-push] ZABLOKOVÁNO — smoke neprošel. Oprav to, nebo `git push --no-verify`.')
     sys.exit(1)
 posunute = []
-for ref, sha in vetve:
+for ref, sha, _cekano, _vzd in vetve:
     ted = git('rev-parse', '--verify', '-q', ref).stdout.strip()
     if ted and ted != sha:
         posunute.append(ref + ': otestován ' + sha[:7] + ', teď ' + ted[:7])
 if posunute:
     print('\n[pre-push] ZABLOKOVÁNO — během kontroly přibyl commit, který smoke neviděl (' + '; '.join(posunute) + ').')
     print('  Přes HTTPS by na server odešel ten NOVÝ commit, neotestovaný. Pusť push znovu — otestuje se aktuální stav.')
+    sys.exit(1)
+zapsat_proslo()
+_nahore, _posun, _ff = server_ma(vetve)
+if _nahore:
+    uz_nahore('Během kontroly')
+if _posun:
+    print('\n[pre-push] ZASTAVENO — během kontroly pushla jiná session (' + '; '.join(_posun) + ').')
+    if _ff:
+        print('  Server by push odmítl („cannot lock ref“). Pusť push znovu — server je předek tvého commitu a ten už prošel, smoke se přeskočí.')
+    else:
+        print('  Server by push odmítl. Na serveru je práce, kterou nemáš: `git pull`, pak push znovu (nový commit projde smoke znovu).')
     sys.exit(1)
 print('[pre-push] OK')
