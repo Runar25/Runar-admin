@@ -20,8 +20,8 @@ const k = rd.match(/<path d="M12 21v-6"\/><path d="M10 21h4"\/>'\s*\+\s*'(<path 
 if (!k) throw new Error('kresba kadidla v runar-reading.js nenalezena');
 const obl = k[1].replace(/<path /g, '<path class="klidny" ');
 vloz('<!--KADIDLO-->', '<path d="M12 21v-6"/><path d="M10 21h4"/>' + obl + '<circle class="zhava" cx="12" cy="14.7" r="1.1"/>'
-  + '<path class="dym d1" d="M12 14C11.6 10 12.4 6.5 13.6 4C15.2 1 19.5 -2 28 -4.5"/><path class="dym d2" d="M12.2 13C12.7 9.5 14.2 6.8 16.4 5C19.5 2.6 25 1.8 35 1"/>'
-  + '<path class="dym d3" d="M11.9 12C11.3 8.8 11.7 5.5 12.7 2.5C13.8 -.6 16.4 -3.2 21 -6"/>', 2);
+  + '<path class="dym d1" d="M12 14C11.7 10.5 12 7 12.6 4C13.2 1 14.4 -2 16 -5.5"/><path class="dym d2" d="M12 14C11.6 10 12.4 6.5 13.6 4C15.2 1 19.5 -2 28 -4.5"/>'
+  + '<path class="dym d3" d="M12 14C12.4 10 14 7 16.4 5C19.5 2.6 25 1.8 35 1"/>', 2);
 const out = path.join(D, '2026-10-30-papir.html');
 fs.writeFileSync(out, html);
 console.log('zapsáno', out, Math.round(html.length / 1024) + ' kB', '· odkazů ven:', (html.match(/(href|src)="(?!data:|#)[^"]+"/g) || []).length);

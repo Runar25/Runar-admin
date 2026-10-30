@@ -156,13 +156,13 @@ h1{font-family:'Cinzel',serif;font-weight:400;letter-spacing:3px;color:var(--gol
 .kad .zhava{fill:var(--gold);stroke:none;opacity:0}
 .kad .dym{fill:none;stroke:#cfc8b8;stroke-linecap:round;opacity:0;filter:url(#mlhaOpar);stroke-dasharray:64;stroke-dashoffset:64}
 .kad .d1{stroke-width:3.2}.kad .d2{stroke-width:4.6}.kad .d3{stroke-width:2.6}
-.kad.hori .klidny{opacity:0}
+.kad.hori .klidny{opacity:0;transition-delay:0s}
 .kad.hori .zhava{animation:zhava 3s ease-in-out both}
-.kad.hori .d1{animation:dym 3s ease-out both}
-.kad.hori .d2{animation:dym 2.7s ease-out .25s both}
-.kad.hori .d3{animation:dym 2.4s ease-out .55s both}
+.kad.hori .d1{animation:dym 2.4s ease-in-out both}
+.kad.hori .d2{animation:dym 2.6s ease-in-out .9s both}
+.kad.hori .d3{animation:dym 2.4s ease-in-out 1.8s both}
 @keyframes zhava{0%{opacity:0}12%,80%{opacity:1}100%{opacity:0}}
-@keyframes dym{0%{opacity:0;stroke-dashoffset:64;transform:translate(0,0)}20%{opacity:.3}55%{opacity:.22;stroke-dashoffset:6}100%{opacity:0;stroke-dashoffset:0;transform:translate(5px,-1.5px)}}
+@keyframes dym{0%{opacity:0;stroke-dashoffset:64}25%{opacity:.3}65%{opacity:.24;stroke-dashoffset:0}100%{opacity:0;stroke-dashoffset:0}}
 .velke{display:flex;gap:24px;align-items:flex-end;margin:12px 0 4px}
 .velke svg{width:96px;height:96px;color:var(--gold)}
 .tl,.var button{font-family:'Cinzel',serif;font-size:0.64em;letter-spacing:2px;color:var(--gold);background:none;border:1px solid rgba(214,168,92,0.55);padding:8px 12px;cursor:pointer;margin:4px 6px 0 0}
@@ -191,7 +191,7 @@ h1{font-family:'Cinzel',serif;font-weight:400;letter-spacing:3px;color:var(--gol
         <div class="hrana"></div>
       </div>
       <div class="form">
-        <div class="card-lbl"><svg class="ik kad" id="kadMale" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21v-6"/><path d="M10 21h4"/><path class="klidny" d="M12 13c-2-1.5-2-3 0-4.5s2-3 0-4.5"/><path class="klidny" d="M14.5 11c-1.2-.9-1.2-1.8 0-2.7"/><circle class="zhava" cx="12" cy="14.7" r="1.1"/><path class="dym d1" d="M12 14C11.6 10 12.4 6.5 13.6 4C15.2 1 19.5 -2 28 -4.5"/><path class="dym d2" d="M12.2 13C12.7 9.5 14.2 6.8 16.4 5C19.5 2.6 25 1.8 35 1"/><path class="dym d3" d="M11.9 12C11.3 8.8 11.7 5.5 12.7 2.5C13.8 -.6 16.4 -3.2 21 -6"/></svg>BEFORE WE BEGIN +</div>
+        <div class="card-lbl"><svg class="ik kad" id="kadMale" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21v-6"/><path d="M10 21h4"/><path class="klidny" d="M12 13c-2-1.5-2-3 0-4.5s2-3 0-4.5"/><path class="klidny" d="M14.5 11c-1.2-.9-1.2-1.8 0-2.7"/><circle class="zhava" cx="12" cy="14.7" r="1.1"/><path class="dym d1" d="M12 14C11.7 10.5 12 7 12.6 4C13.2 1 14.4 -2 16 -5.5"/><path class="dym d2" d="M12 14C11.6 10 12.4 6.5 13.6 4C15.2 1 19.5 -2 28 -4.5"/><path class="dym d3" d="M12 14C12.4 10 14 7 16.4 5C19.5 2.6 25 1.8 35 1"/></svg>BEFORE WE BEGIN +</div>
         <p class="note">Tell me where to look. The rune speaks for itself.</p>
         <div class="fl">YOUR NAME OR PREFERRED NAME</div>
         <div class="txt">How shall I address you?</div>
@@ -210,8 +210,9 @@ h1{font-family:'Cinzel',serif;font-weight:400;letter-spacing:3px;color:var(--gol
     <p><b>Svíčka.</b> Kromě kapek po stranách stéká pár kapek i zepředu. U paty se postupně tvoří kaluž vosku a ke konci mírně přeteče
       přes hranu podložky dolů.</p>
     <p><b>Kadidlo.</b> Ikona zůstává jako dnes. Při zapálení z tyčinky vyjde měkký kouř bez ostré čáry, stoupá a lehký vítr ho stočí
-      doprava, takže na chvíli zahalí první písmena nadpisu. Celé 3 s, pak se vrátí klidná ikona.</p>
-    <div class="velke"><svg class="ik kad" id="kadVelke" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21v-6"/><path d="M10 21h4"/><path class="klidny" d="M12 13c-2-1.5-2-3 0-4.5s2-3 0-4.5"/><path class="klidny" d="M14.5 11c-1.2-.9-1.2-1.8 0-2.7"/><circle class="zhava" cx="12" cy="14.7" r="1.1"/><path class="dym d1" d="M12 14C11.6 10 12.4 6.5 13.6 4C15.2 1 19.5 -2 28 -4.5"/><path class="dym d2" d="M12.2 13C12.7 9.5 14.2 6.8 16.4 5C19.5 2.6 25 1.8 35 1"/><path class="dym d3" d="M11.9 12C11.3 8.8 11.7 5.5 12.7 2.5C13.8 -.6 16.4 -3.2 21 -6"/></svg></div>
+      doprava, takže na chvíli zahalí první písmena nadpisu. Kouř vychází pořád z konce tyčinky, vítr ho jen postupně víc ohýbá.
+      Pomalé, asi 4 s, pak se vrátí klidná ikona.</p>
+    <div class="velke"><svg class="ik kad" id="kadVelke" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21v-6"/><path d="M10 21h4"/><path class="klidny" d="M12 13c-2-1.5-2-3 0-4.5s2-3 0-4.5"/><path class="klidny" d="M14.5 11c-1.2-.9-1.2-1.8 0-2.7"/><circle class="zhava" cx="12" cy="14.7" r="1.1"/><path class="dym d1" d="M12 14C11.7 10.5 12 7 12.6 4C13.2 1 14.4 -2 16 -5.5"/><path class="dym d2" d="M12 14C11.6 10 12.4 6.5 13.6 4C15.2 1 19.5 -2 28 -4.5"/><path class="dym d3" d="M12 14C12.4 10 14 7 16.4 5C19.5 2.6 25 1.8 35 1"/></svg></div>
     <button type="button" class="tl" id="kadZnovu">ZAPÁLIT KADIDLO ZNOVU</button>
   </div>
 </div>
