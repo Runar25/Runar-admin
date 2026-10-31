@@ -5,12 +5,16 @@
 //
 // Co vyveze (čte jen produkční DB, nic nemění): účet (auth.users: e-mail, kdy vznikl, poslední přihlášení, způsob přihlášení),
 // profil (user_profiles celý), všechna čtení i Asky (readings), pohyby kreditu (credit_ledger), uplatněné kódy Rúnakortu
-// (gift_codes.used_by), hlas (voice_usage, voice_tickets), rozbory čtení (gpt_reviews), záznam na seznamu testerů (allowed_emails).
-// NEvyveze: hlášení z appky (bug_reports) — nemají vazbu na účet, jen jméno, které si tester sám napsal; v souboru o tom stojí
-// věta. Zálohy (30 dní) a přepisy konverzací se neprohledávají (RUNAR_PRIVACY.md).
+// (gift_codes.used_by), hlas (voice_usage, voice_tickets), rozbory čtení (gpt_reviews), záznam na seznamu testerů (allowed_emails),
+// zprávy „Send Rúnar a line“ (bug_reports typu message — send-line je ukládá s e-mailem účtu) a uložené mp3 hlasu čtení
+// (bucket reading-voice, cesty z voice_tickets.path) do podsložky voice/. Zprávy a mp3 přibyly 2026-10-31 (owner „napřed všechny vady“):
+// zásady slibují „everything linked to your account“ a obojí k účtu patří.
+// NEvyveze: hlášení testerů z appky (bug_reports ostatních typů) — nesou jen jméno, které si tester sám napsal, ne účet; v souboru
+// o tom stojí věta. Zálohy (30 dní) a přepisy konverzací se neprohledávají (RUNAR_PRIVACY.md).
 //
-// Bezpečnost: e-mail ani nic z dat se nevypisuje na obrazovku — jen počty a cesta k souboru. Soubor leží v ~/runar-export/
-// (mimo git); po odeslání ho smaž. Najde-li se 0 nebo víc účtů, skončí bez souboru.
+// Bezpečnost: e-mail ani nic z dat se nevypisuje na obrazovku — jen počty a cesta. Export je SLOŽKA v ~/runar-export/ (mimo git):
+// export.json + voice/*.mp3; po odeslání ji smaž. Najde-li se 0 nebo víc účtů, skončí bez souboru. mp3 stahuje Supabase CLI
+// (`supabase storage cp --linked --experimental`, přihlášení CLI ownera) — klíč service_role na disku není a nepotřebuje se.
 //
 //   node scripts/utils/export_uctu.js --email <adresa>      (adresa, ze které přišla žádost)
 //   node scripts/utils/export_uctu.js --uid <uuid>
@@ -34,8 +38,8 @@ with u as (
 select case when (select count(*) from u) <> 1 then json_build_object('chyba', 'nalezeno uctu: ' || (select count(*) from u))
 else json_build_object(
   'export', json_build_object('created_at', now(), 'by', 'Rúnar (Agndofa ehf.)', 'format', 'JSON',
-    'note_en', 'Your personal data held by Rúnar. Bug reports sent from the app are not linked to accounts and are not included.',
-    'note_is', 'Persónuupplýsingar þínar sem Rúnar geymir. Ábendingar sem sendar voru úr appinu eru ekki tengdar aðgangi og fylgja ekki með.'),
+    'note_en', 'Your personal data held by Rúnar. Your messages to Rúnar are included; the saved voice of your readings is in the folder voice. Tester bug reports are not linked to accounts and are not included.',
+    'note_is', 'Persónuupplýsingar þínar sem Rúnar geymir. Skilaboð þín til Rúnars fylgja með og vistuð rödd lestranna þinna er í möppunni voice. Villutilkynningar prófara eru ekki tengdar aðgangi og fylgja ekki með.'),
   'account', (select row_to_json(j) from jeden j),
   'profile', (select row_to_json(p) from public.user_profiles p where p.id = (select id from jeden)),
   'readings', (select coalesce(json_agg(r order by r.drawn_at), '[]'::json) from public.readings r where r.user_id = (select id from jeden)),  -- opt-out:ok 2026-10-20 export čl. 15/20 patří i účtu odhlášenému z analýzy
@@ -45,7 +49,9 @@ else json_build_object(
   'voice_usage', (select coalesce(json_agg(v order by v.created_at), '[]'::json) from public.voice_usage v where v.user_id = (select id from jeden)),
   'voice_tickets', (select coalesce(json_agg(t order by t.created_at), '[]'::json) from public.voice_tickets t where t.user_id = (select id from jeden)),
   'reading_reviews', (select coalesce(json_agg(w order by w.created_at), '[]'::json) from public.gpt_reviews w where w.user_id = (select id from jeden)),
-  'tester_list', (select coalesce(json_agg(a), '[]'::json) from public.allowed_emails a where lower(a.email) = lower((select email from jeden)))
+  'tester_list', (select coalesce(json_agg(a), '[]'::json) from public.allowed_emails a where lower(a.email) = lower((select email from jeden))),
+  'messages_to_runar', (select coalesce(json_agg(json_build_object('sent_at', b.reported_at, 'message', b.message, 'language', b.locale) order by b.reported_at), '[]'::json)
+                        from public.bug_reports b where b.type = 'message' and lower(b.tester) = lower((select email from jeden)))
 ) end;
 `;
 
@@ -57,8 +63,27 @@ function vyvez(dbUrl, kdo) {
 }
 
 function pocty(d) {
-  const k = ['readings', 'credit_ledger', 'gift_codes_redeemed', 'voice_usage', 'voice_tickets', 'reading_reviews', 'tester_list'];
+  const k = ['readings', 'credit_ledger', 'gift_codes_redeemed', 'voice_usage', 'voice_tickets', 'reading_reviews', 'tester_list', 'messages_to_runar'];
   return k.map((x) => x + ' ' + (Array.isArray(d[x]) ? d[x].length : '?')).join(' · ');
+}
+
+// Uložené mp3 hlasu (cesty z voice_tickets) do <slozka>/voice/. Vrací [staženo, mělo být]. Chybějící soubor = chyba v počtu, ne tichý úspěch.
+function stahniHlasy(d, slozka) {
+  const cesty = (d.voice_tickets || []).map((t) => t.path).filter(Boolean);
+  if (!cesty.length) return [0, 0];
+  const cil = path.join(slozka, 'voice');
+  fs.mkdirSync(cil, { recursive: true });
+  const { spawnSync } = require('child_process');
+  let n = 0;
+  for (const c of cesty) {
+    const soubor = path.join(cil, path.basename(c));
+    // Cíl RELATIVNĚ ke složce voice/: absolutní cestu Windows („C:\…“) CLI 2.109 bere jako vzdálenou a odmítne
+    // (LegacyStorageUnsupportedOperationError, změřeno 2026-10-31); propojený projekt najde přes --workdir = repo.
+    spawnSync('supabase', ['storage', 'cp', 'ss:///reading-voice/' + c, path.basename(c), '--linked', '--experimental',
+      '--workdir', path.join(__dirname, '..', '..')], { cwd: cil, stdio: 'ignore', shell: process.platform === 'win32' });
+    if (fs.existsSync(soubor) && fs.statSync(soubor).size > 0) n++;
+  }
+  return [n, cesty.length];
 }
 
 function hlavni() {
@@ -84,16 +109,24 @@ function hlavni() {
     // Seed-and-assert na hranici DB → soubor: počet čtení v exportu = počet řádků readings toho účtu, spočítaný zvlášť.
     const n = parseInt(psql(dbUrl, ['-X', '-q', '-At', '-v', 'uid=' + d.account.id, '-f', '-'],
       { input: "select count(*) from public.readings where user_id = :'uid';\n", stdio: ['pipe', 'pipe', 'pipe'] }).trim(), 10);   // opt-out:ok 2026-10-20 samotest exportu jednoho účtu, žádná analýza
-    const ok = d.readings.length === n && d.profile && d.profile.id === d.account.id && d.export.note_is;
-    console.log((ok ? 'OK' : 'FAIL') + ' export_uctu --test: účet ' + uid8 + '… · čtení v exportu ' + d.readings.length + ' / v DB ' + n + ' · ' + pocty(d));
+    // mp3: stáhnout do dočasné složky a spočítat proti cestám v DB, pak smazat (data ownera z disku pryč).
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'runar-export-test-'));
+    const [mp3, maMp3] = stahniHlasy(d, tmp);
+    fs.rmSync(tmp, { recursive: true, force: true });
+    const ok = d.readings.length === n && d.profile && d.profile.id === d.account.id && d.export.note_is
+      && Array.isArray(d.messages_to_runar) && mp3 === maMp3;
+    console.log((ok ? 'OK' : 'FAIL') + ' export_uctu --test: účet ' + uid8 + '… · čtení v exportu ' + d.readings.length + ' / v DB ' + n
+      + ' · mp3 ' + mp3 + ' / ' + maMp3 + ' · ' + pocty(d));
     process.exit(ok ? 0 : 1);
   }
-  fs.mkdirSync(CIL, { recursive: true });
-  const soubor = path.join(CIL, 'runar-export-' + uid8 + '-' + new Date().toISOString().slice(0, 10) + '.json');
-  fs.writeFileSync(soubor, JSON.stringify(d, null, 2), 'utf8');
-  console.log('Hotovo: účet ' + uid8 + '… · ' + pocty(d));
-  console.log('Soubor: ' + soubor);
-  console.log('Pošli ho jako přílohu NA ADRESU ÚČTU (ne jinam) a pak ho smaž.');
+  const slozka = path.join(CIL, 'runar-export-' + uid8 + '-' + new Date().toISOString().slice(0, 10));
+  fs.mkdirSync(slozka, { recursive: true });
+  fs.writeFileSync(path.join(slozka, 'export.json'), JSON.stringify(d, null, 2), 'utf8');
+  const [mp3, maMp3] = stahniHlasy(d, slozka);
+  console.log('Hotovo: účet ' + uid8 + '… · ' + pocty(d) + ' · mp3 ' + mp3 + ' / ' + maMp3);
+  if (mp3 !== maMp3) console.log('POZOR: ' + (maMp3 - mp3) + ' mp3 se nestáhlo (supabase login? síť?) — export NEPOSÍLEJ neúplný, pusť znovu.');
+  console.log('Složka: ' + slozka);
+  console.log('Zabal ji (zip) a pošli jako přílohu NA ADRESU ÚČTU (ne jinam), pak ji smaž.');
 }
 
 if (require.main === module) hlavni();

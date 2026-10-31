@@ -1569,7 +1569,7 @@ const UI_TEXT = {
     coll_no_audio:      'No recording available yet.',
     coll_audio_missing: 'Audio file missing.',
     // 2026-10-10: „draw one“ → „choose one“ — v Safn rúna se runa vybírá, netáhne.
-    vcn_text:           'You walk here as a <strong>Visitor</strong>. Five runes await you — choose one, and listen to the ancient stones.<br><br>Should you want all twenty-five, and a reading that speaks to you alone, become a <strong>Rune Seeker</strong>. Free to join.',
+    vcn_text:           'You walk here as a <strong>{visitor}</strong>. Five runes await you — choose one, and listen to the ancient stones.<br><br>Should you want all twenty-five, and a reading that speaks to you alone, become a <strong>{tier}</strong> — {onboarding} when you join.',
     // 2026-10-12 (owner „ano“): klepnutí na zamčenou runu — dřív nedělalo nic a působilo jako porucha. Navazuje na vcn_text („Five runes await you“).
     // Okno „Where to start“ — jednou pro každého (2026-10-11, DECISIONS (65)); {guide} = guide_title. Text schválil owner.
     wts_title:          'WHERE TO START',
@@ -1723,9 +1723,10 @@ const UI_TEXT = {
     // 2026-10-10 (ráčna ㉸, DECISIONS 2026-10-10 (1) bod 5): texty dřív psané natvrdo v runar-app.js a runar-reading.js — znění
     // beze změny, jen jméno tieru a karty jde z TIERS / VOCAB ({tier}, {card}, §15).
     lock_become_rs:       '· Become a {tier} to unveil',
+    lock_become_rs_more:  '· Become a {tier} to unveil more',   // 2026-10-31: oblast a hledání — registrace odemkne jen část (volné čtení)
     lock_card_unveils:    '· {card} unveils all',
     atab_journal:         'JOURNAL',
-    journal_gate_txt:     'You walk here as a <strong>Visitor</strong>.<br>The journal keeps every reading, so none is lost.<br>It opens when you become a <strong>Rune Seeker</strong> — free to join.',
+    journal_gate_txt:     'You walk here as a <strong>{visitor}</strong>.<br>The journal keeps every reading, so none is lost.<br>It opens when you become a <strong>{tier}</strong> — {onboarding} when you join.',
     redeem_btn:           'REDEEM',
     auth_consent_txt:     'By continuing, you agree to our <a href="runar-privacy.html" target="_blank" rel="noopener">Privacy Policy</a>. We keep your readings and what you tell Rúnar, so he remembers them and his readings get better. No tracking, no ads.',   // 2026-10-10: „only what is needed“ zužovalo — ukládáme i pro rozbor kvality (zásady, oprávněný zájem); CODE-read (l)
     auth_modal_title:     "ENTER RÚNAR'S WORLD",
@@ -2142,7 +2143,7 @@ const UI_TEXT = {
     coll_no_audio:      'Engin hljóðupptaka til.',
     coll_audio_missing: 'Hljóðskrá vantar.',
     // 2026-10-10: „dragðu eina“ → „veldu eina“ (korpus 0× / 16×) — v Safn rúna se runa vybírá, netáhne.
-    vcn_text:           'Þú ert hér <strong>Gestur</strong>. Fimm rúnir bíða þín — veldu eina og hlustaðu á fornu steinana.<br><br>Viljir þú allar tuttugu og fimm rúnirnar, og lestur sem á aðeins við þig, gerðu þig að <strong>Leitanda</strong>. Skráning er ókeypis.',
+    vcn_text:           'Þú ert hér <strong>{visitor}</strong>. Fimm rúnir bíða þín — veldu eina og hlustaðu á fornu steinana.<br><br>Viljir þú allar tuttugu og fimm rúnirnar, og lestur sem á aðeins við þig, gerðu þig að <strong>{tier_dat}</strong>. Skráningunni fylgir {onboarding}.',
     // 2026-10-12: navazuje na vcn_text („Fimm rúnir bíða þín“); greynir OK, korpus „skráðu þig inn“ 104 · „þá bíða þín“ 11.
     // „Where to start“ (2026-10-11): psáno islandsky, greynir + gpt-check bez nálezu; korpus „tala í gegnum“ 207 · „í gegnum myndir“ 187 ·
     // „svara ekki beint“ 8 · „í henni býr“ 411 · „taka eftir þegar“ 73 · „kemur til þín“ 454. „Opna Safn rúna“ greynir četl jako sloveso
@@ -2283,9 +2284,10 @@ const UI_TEXT = {
     life_need_credits:    'Þú þarft {units}. Keyptu þér {card}.',
     name_you:             'þú',
     lock_become_rs:       '· Gerast {tier} til að opna',
+    lock_become_rs_more:  '· Gerast {tier} til að opna fleiri',   // korpus „að opna fleiri“ 671
     lock_card_unveils:    '· {card} opnar allt',
     atab_journal:         'LESTRAR',
-    journal_gate_txt:     'Þú ert hér <strong>Gestur</strong>.<br>Dagbókin geymir hvern lestur svo enginn glatist.<br>Hún opnast þegar þú gerist <strong>Leitandi</strong> — skráning er ókeypis.',
+    journal_gate_txt:     'Þú ert hér <strong>{visitor}</strong>.<br>Dagbókin geymir hvern lestur svo enginn glatist.<br>Hún opnast þegar þú gerist <strong>{tier}</strong>, og skráningunni fylgir {onboarding}.',
     redeem_btn:           'INNLEYSA',
     auth_consent_txt:     'Með því að halda áfram samþykkir þú <a href="runar-privacy.html" target="_blank" rel="noopener">persónuverndarstefnu okkar</a>. Við geymum lestrana þína og það sem þú segir Rúnari, svo að hann muni það og lestrarnir verði betri. Engin rakning, engar auglýsingar.',
     auth_modal_title:     'GAKKTU INN Í HEIM RÚNARS',

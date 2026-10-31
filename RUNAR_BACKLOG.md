@@ -922,7 +922,7 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   účet bez „again“ · toast Yggdrasilu jednou · Rune Seeker bez čtení má po DRAW ANOTHER / START OVER formulář s větou o Rúnakortu.
   **Zbývá** (jen z kódu, ověřit v prohlížeči): 2 souhlas testera se vrací stejně · 3 okno se jménem a „Where to start“ naráz ·
   7 závod `upsertProfile` × `fetchUserProfile` u nového účtu („0 spár eftir“) · 8 drobnosti a mrtvé prvky.
-- [ ] **„free to join“ → „{onboarding} when you join“** ve `vcn_text` a `journal_gate_txt` — zdroj je `TIER_LIMITS.rune_seeker.onboarding_label_*`
+- [x] ✅ *(CODE-tune 2026-10-31, owner „napřed všechny vady“, DECISIONS 2026-10-31 (5): oba texty i jména úrovní z configu — `_textNavstevnika` v runar-app.js.)* **„free to join“ → „{onboarding} when you join“** ve `vcn_text` a `journal_gate_txt` — zdroj je `TIER_LIMITS.rune_seeker.onboarding_label_*`
   (jako `visitor_join_note`), ne `free_trial` (Cowork ukázal na `free_trial`, tam je `onboarding` jen historický).
 - [ ] Ownerova diskuse D–H (uvítání Visitora v menu, statický „Rúnar's welcome“, vysvětlení v Journalu, blok jako „How a reading works“,
   jeden text o tom, co je zdarma) — owner: „ještě to doplníme“; nestavět.
@@ -961,7 +961,7 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
 Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zásady soukromí), 95375a7 (texty v appce). Zbývá:
 - [ ] **Zásady slibují upozornění v appce před změnou** (oddíl „If things change“) — mechanismus neexistuje, zásady se v říjnu měnily
   ~8×. Postavit, nebo větu změnit (čeká na ownera).
-- [ ] **Export účtu** (`scripts/utils/export_uctu.js`) nevyveze zprávy „Send Rúnar a line“ ani uložené mp3 hlasu, zásady slibují
+- [x] ✅ *(CODE-tune 2026-10-31, owner „napřed všechny vady“, DECISIONS 2026-10-31 (5): zprávy i mp3 v exportu; `--test` stáhne mp3 ownera a počítá je proti DB, 5 / 5.)* **Export účtu** (`scripts/utils/export_uctu.js`) nevyveze zprávy „Send Rúnar a line“ ani uložené mp3 hlasu, zásady slibují
   „everything linked to your account“.
 - [ ] *(řešit spolu s „Past v DB funkci `check_rate_limit`“ — týž úklid v téže funkci; úklid 2026-10-31)* **IP v `rate_limits`** nemá pevnou horní mez (úklid jen při ~5 % volání, řádky starší 1 h; 2026-10-21 nejstarší 18 h) — denní
   úklid cronem by dal zásadám přesnou lhůtu.
@@ -970,8 +970,8 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
 - [ ] **Rune Seeker a Ask:** `helper_ask` / `helper_ask2` ho zvou ptát se, pole je pro něj vypnuté (asks_per_reading 0).
 - [ ] **`qconsent_lbl`** (souhlas s odesláním otázky, čl. 9) jmenuje jen OpenAI; při výpadku jde otázka Anthropicu. Pole je dnes jen
   pro admina (DECISIONS 2026-10-16 (5)), před otevřením ostatním opravit.
-- [ ] **`lock_become_rs`** „Become a Rune Seeker to unveil“ — registrace odemkne jen část oblastí a hledání, zbytek karta.
-- [ ] **Mrtvé texty:** `q_teaser` (pole jen admin), `tier_soon` (kreslí se do vždy skrytého `#sp-path-body`), `layer2_lbl` (jen staré
+- [x] ✅ *(CODE-tune 2026-10-31, owner „napřed všechny vady“, DECISIONS 2026-10-31 (5): u oblasti a hledání „to unveil more“ / „til að opna fleiri“, u záměru dál „to unveil“ — ten registrace odemkne celý.)* **`lock_become_rs`** „Become a Rune Seeker to unveil“ — registrace odemkne jen část oblastí a hledání, zbytek karta.
+- ✖ *(CODE-tune 2026-10-31, owner „napřed všechny vady“, DECISIONS 2026-10-31 (5): nejsou vada — `q_teaser` se ukáže, až se pole s otázkou otevře ostatním; `layer2_lbl` kreslí staré záznamy deníku; `tier_soon` patří k výpisu účtů v menu, který je schovaný záměrně (DECISIONS 2026-10-19 (7), (8)); `title` slotů přepíše `_updateSpreadSlots` dřív, než je kdo uvidí. Uživatel nic z toho nevidí špatně.)* **Mrtvé texty:** `q_teaser` (pole jen admin), `tier_soon` (kreslí se do vždy skrytého `#sp-path-body`), `layer2_lbl` (jen staré
   záznamy deníku), anglické `title` u slotů spreadů v runar-reader.html (vymaže je `_updateSpreadSlots`).
 - [ ] **Zastaralé komentáře / natvrdo:** runar-config.js ~276 („Only these emails can access … Yggdrasil“), ~101 (testeři „jsou
   rune_seeker“, SQL jim dává premium); runar-reading.js ~1100 („tier != premium -> 403“); runar-journal.js ~274 natvrdo `count > 5`

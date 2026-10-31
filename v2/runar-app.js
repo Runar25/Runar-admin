@@ -884,6 +884,11 @@ function _updateDobLabel() {
 function _volneCteniDalsi() {
   return !!currentUser && userTier === 'rune_seeker' && userCredits <= 0 && userFreeBalance > 0;
 }
+// Texty pro návštěvníka s jmény úrovní a tím, co dá registrace — jedno místo pro proměnné (§10, §18).
+function _textNavstevnika(klic) {
+  return tp(klic, { visitor: tierLabel('free_trial', lang), tier: tierLabel('rune_seeker', lang), tier_dat: tierLabel('rune_seeker', lang, 'dat'),
+    onboarding: TIER_LIMITS.rune_seeker['onboarding_label_' + (lang === 'is' ? 'is' : 'en')] });
+}
 // Area of Life + Seeking + Question labels with tier lock hints
 function _updateAreaSeekLabels() {
   const albl = document.getElementById('area-lbl');
@@ -892,7 +897,7 @@ function _updateAreaSeekLabels() {
   // 2026-10-19 (owner, DECISIONS 2026-10-19 (9)): návštěvník má na obrazovce Spá jen JEDNU viditelnou pozvánku (horní pruh); štítek zámku
   // u skupiny je schovaný a ukáže se až po klepnutí na zamčenou pilulku (_zamekKlep). Id štítku = <skupina>-lock (čte i aria-describedby).
   const _lockHint = _isVisitor
-    ? function (k) { return ' <span class="visitor-lock-hint lock-skryty" id="' + k + '-lock">' + tp('lock_become_rs', { tier: tierLabel('rune_seeker', lang) }) + '</span>'; }
+    ? function (k) { return ' <span class="visitor-lock-hint lock-skryty" id="' + k + '-lock">' + tp(k === 'intention' ? 'lock_become_rs' : 'lock_become_rs_more', { tier: tierLabel('rune_seeker', lang) }) + '</span>'; }
     : _isRSnoCredits
       // 2026-10-10: jméno karty z VOCAB (§15) — dřív natvrdo „Reading Gift Card“, jinde v appce „Rune Reading Card“
       ? function () { return ' <span class="visitor-lock-hint">' + tp('lock_card_unveils', { card: vl('card', lang) }) + '</span>'; }
@@ -965,7 +970,7 @@ function _updateGateTexts() {
   _zalozka('journal');
   // Journal gate — Visitor teaser
   const jgTxt = document.getElementById('journal-gate-txt');
-  if (jgTxt) jgTxt.innerHTML = t('journal_gate_txt');
+  if (jgTxt) jgTxt.innerHTML = _textNavstevnika('journal_gate_txt');
   setText('journal-gate-btn', t('become_rs_btn'));
   // Deník se tu do 2026-10-11 překresloval celý (updateUIText → stav, proti §14): zahodil aktivní filtr a zaklapl otevřené karty. Přepnutí
   // jazyka na záložce Deník ho teď překreslí prekresliDenik v setLang (runar-journal.js) — filtr i otevřené karty zůstanou. Smoke ㊽ (D).
@@ -1200,9 +1205,9 @@ async function loadCollection() {
   if (notice) {
     notice.style.display = isVisitor ? 'block' : 'none';
     if (isVisitor) {
-      // 2026-09-23: text do UI_TEXT (§10). Jmena tieru v nem zustavaji jako slova, ne {placeholder}:
-      // islandstina je sklonuje („gerðu þig að Leitanda" — dativ), dosazeny nominativ by byl chyba.
-      document.getElementById('vcn-text').innerHTML = t('vcn_text');
+      // 2026-09-23: text do UI_TEXT (§10). 2026-10-31: jména úrovní z TIERS — islandský dativ „gerðu þig að Leitanda“ dává
+      // tierLabel(…, 'dat') (pády v configu od 2026-09-30; do té doby proto stála natvrdo); „Free to join“ → onboarding z configu.
+      document.getElementById('vcn-text').innerHTML = _textNavstevnika('vcn_text');
       document.getElementById('vcn-btn').textContent = t('become_rs_btn');
     }
   }

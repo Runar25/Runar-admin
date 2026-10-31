@@ -12696,3 +12696,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   není); EN text stromu „Sign in“ → „Sign up“ (tlačítko pod ním je registrace, IS „Skráðu þig“ sedí); dvě volání bez prvku a bez funkce pryč.
 - **Ověřeno:** 2, 3, 8 v prohlížeči (podvržený přihlášený stav, produkční funkce); 7 jen z kódu — registraci nového účtu nejde pustit naostro.
 - Affected doc(s): RUNAR_BACKLOG.md (položka „Vady z průchodu appkou“ odškrtnutá).
+
+## 2026-10-31 (5) — Texty pro návštěvníka slibují jen to, co platí; export účtu se zprávami a hlasy
+
+- **Rozhodl:** owner 2026-10-31 *„napřed všechny vady“* — položky RUNAR_BACKLOG „free to join“, `lock_become_rs`, „Export účtu“, „Mrtvé texty“.
+- **Co:** (1) Karta Kolekce a brána deníku pro návštěvníka: jména úrovní z `TIERS` (islandský dativ přes `tierLabel`, pády v configu od
+  2026-09-30 — do té doby proto stála natvrdo) a místo „Free to join“ to, co registrace dá (`onboarding_label`, jako `visitor_join_note`).
+  IS „Skráningunni fylgir {onboarding}“ (onboarding je v 1. pádě; greynir OK, korpus 6×). (2) Štítek zámku u oblasti a hledání
+  „to unveil more“ — registrace tam odemkne jen část. (3) Export účtu (`export_uctu.js`) vyveze i zprávy „Send Rúnar a line“
+  a mp3 hlasu uložených čtení — zásady slibují „everything linked to your account“. Samotest počítá mp3 proti DB.
+  (4) „Mrtvé texty“ zavřené bez změny — nejsou vada (důvody u položky).
+- Affected doc(s): RUNAR_PRIVACY.md (co export obsahuje), RUNAR_BACKLOG.md.
