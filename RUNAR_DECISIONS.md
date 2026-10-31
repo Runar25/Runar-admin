@@ -12685,3 +12685,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   a svíčkou — jen když se text nevejde. (3) Kolečko po odhlášení: `updateDropdown` bez přihlášeného skončil dřív, než kolečko schoval;
   stálo se starým číslem a po zmizení jména se přisunulo k SIGN IN. Teď ho schová.
 - Affected doc(s): žádný jiný (vzhled vlastní `v2/runar-reader.css`, chování `v2/runar-app.js`).
+
+## 2026-10-31 (4) — Zbytek vad z průchodu appkou: okna appky čekají na volno, souhlas testera jednou, nový účet bez „0 spár eftir“
+
+- **Rozhodl:** owner 2026-10-31 *„napřed všechny vady. to co chybí pro spuštění počká“*; vady 2, 3, 7, 8 z `docs/inbox/2026-10-19-pruchod-appkou.md`.
+- **Co:** (2) Souhlas testera po ✕ vyskakoval při každém dalším načtení profilu (obnovení tokenu, po čtení) — teď jednou za načtení
+  stránky, dál do dalšího přihlášení jako dřív. (3) Okna, která appka otevírá sama (jméno, souhlas testera), počkají, až nebude otevřené
+  jiné okno — „Where to start“ na ně čekalo, obráceně ne. Ťuknutím otevřená úprava jména nečeká. (7) Nový účet: profil se četl dřív, než
+  vznikl řádek → „0 spár eftir“; teď napřed řádek, pak čtení. (8) Štítek karty u záměru jen návštěvníkovi (Rune Seekerovi záměr zamčený
+  není); EN text stromu „Sign in“ → „Sign up“ (tlačítko pod ním je registrace, IS „Skráðu þig“ sedí); dvě volání bez prvku a bez funkce pryč.
+- **Ověřeno:** 2, 3, 8 v prohlížeči (podvržený přihlášený stav, produkční funkce); 7 jen z kódu — registraci nového účtu nejde pustit naostro.
+- Affected doc(s): RUNAR_BACKLOG.md (položka „Vady z průchodu appkou“ odškrtnutá).

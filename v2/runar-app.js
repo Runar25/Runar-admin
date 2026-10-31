@@ -199,7 +199,7 @@ async function fetchUserProfile(userId, _pokus) {
   if (typeof _updateReadingForm === 'function') _updateReadingForm();
   _renewalNotice();   // až tady: tarif i jazyk účtu jsou načtené (jazyk se z DB obnovuje výš)
   // Ask for name if not set yet (delay so UI settles first) — jednou za načtení stránky a ne po „Continue without a name“ (2026-10-19)
-  if (!userName && !namePromptOffered && !_jmenoPreskoceno()) { namePromptOffered = true; setTimeout(showNamePrompt, DELAY_NAME_PROMPT); }
+  if (!userName && !namePromptOffered && !_jmenoPreskoceno()) { namePromptOffered = true; setTimeout(function () { _azBudeVolno(function () { if (!userName && currentUser) showNamePrompt(); }); }, DELAY_NAME_PROMPT); }
 }
 
 // „Zkusit znovu“ po selhaném načtení profilu (tlačítko v záložce Životní runa / strom) a samo po návratu sítě. 2026-10-12, viz fetchUserProfile.
@@ -482,6 +482,13 @@ function _nameModalTexts() {
   if (pIn) pIn.placeholder = t('name_modal_ph');
 }
 
+// Okno, které appka otevírá SAMA (jméno po přihlášení, souhlas testera), počká, až žádné jiné okno nebude otevřené.
+// Vada 3 z průchodu appkou (docs/inbox/2026-10-19-pruchod-appkou.md): „Where to start“ na okno se jménem čekalo, ale obráceně ne —
+// profil, který doběhl až po „Where to start“, otevřel okno se jménem přes něj. Okno otevřené ťuknutím (úprava jména) nečeká.
+function _azBudeVolno(fn, _pokus) {
+  if (document.querySelector('.modal-overlay.open')) { if ((_pokus || 0) < 40) setTimeout(function () { _azBudeVolno(fn, (_pokus || 0) + 1); }, 1500); return; }
+  fn();
+}
 function showNamePrompt(edit) {
   const ov = document.getElementById('name-overlay');
   if (!ov) return;
@@ -601,10 +608,17 @@ async function setAnalyticsOptOut(optOut) {
 
 // Tester consent modal — shows once for a tester account that has not consented yet.
 // Consent is freely given: the modal can be dismissed (re-shows next login until accepted).
+// Jednou za načtení stránky (vada 2 z průchodu 2026-10-19): profil se načítá znovu po obnovení tokenu i po čtení a ✕ tak okno
+// vracelo uprostřed práce. A nevyskočí přes jiné okno (_azBudeVolno).
+var _tcmNabidnuto = false;
 function _maybeShowTesterConsent() {
-  if (!currentUser || !isTester || testerConsentAt) return;
+  if (!currentUser || !isTester || testerConsentAt || _tcmNabidnuto) return;
   var m = document.getElementById('tester-consent-modal');
   if (!m) return;
+  _tcmNabidnuto = true;
+  _azBudeVolno(function () { if (currentUser && isTester && !testerConsentAt) _tcmOtevri(m); });
+}
+function _tcmOtevri(m) {
   setText('tcm-title', t('tcm_title'));
   setText('tcm-body',  t('tcm_body'));
   setText('tcm-agree', t('tcm_agree'));
@@ -893,7 +907,9 @@ function _updateAreaSeekLabels() {
   const slbl = document.getElementById('seek-lbl');
   if (slbl) slbl.innerHTML = _tgl('seek', t('seek_lbl') + _optSpan) + _lockHint('seek');
   const ilbl = document.getElementById('intention-lbl');
-  if (ilbl) ilbl.innerHTML = _tgl('intention', t('intention_lbl') + _optSpan) + _lockHint('intention');
+  // Záměr se zamyká jen návštěvníkovi (buildPillGroup: bez počtu odemčených) — Rune Seeker bez kreditu tu štítek karty neuvidí
+  // (vada 8 z průchodu appkou 2026-10-19: sliboval, že karta odemkne něco, co zamčené není).
+  if (ilbl) ilbl.innerHTML = _tgl('intention', t('intention_lbl') + _optSpan) + (_isVisitor ? _lockHint('intention') : '');
   ['area', 'seek', 'intention', 'qpriv'].forEach(function (k) { setText(k + '-hint', t(k + '_hint')); });   // přepnutí jazyka přepíše i otevřenou nápovědu
   setText('q-consent-lbl', t('qconsent_lbl'));   // políčko souhlasu u otázky (krok 2, DECISIONS 2026-10-12 (7))
   const qlbl = document.getElementById('q-lbl');
@@ -1045,7 +1061,6 @@ function updateUIText() {
   const vBtn = document.getElementById('btn-generate-voice');
   if (vBtn && !vBtn.disabled) setRuneText(vBtn, t('voice_btn'));
   // Re-render auth UI + side panel vždy — zajistí správné texty i pro odhlášeného uživatele při změně jazyka
-  setText('free-redeem-link', '+ ' + vl('card', lang));
   // IS „ᚠ SLÁÐU INN KÓÐANN Á {card}“ — určitý 3. pád (2026-10-11; dřív kalk „SLÁÐU INN RÚNAKORT KÓÐA“ z „ENTER {card} CODE“, CODE-read)
   setRuneText('redeem-lbl', tp('redeem_card_code', { card: vl('card', lang, 'dat_def').toUpperCase() }));
   const shopLink = document.getElementById('redeem-shop-link');
@@ -1073,8 +1088,6 @@ function updateUIText() {
   if (_jr) _jr.textContent = t('jf_all_runes');
   var _ja = document.querySelector('#jf-area option[value=""]');
   if (_ja) _ja.textContent = t('jf_all_areas');
-  var _tbg = document.getElementById('topbar-greeting');
-  if (_tbg && _tbg.classList.contains('show') && typeof updateTopbarGreeting === 'function') updateTopbarGreeting();
 }
 
 // ─── APP TABS ────────────────────────────────────────────
@@ -2310,8 +2323,10 @@ window.addEventListener('DOMContentLoaded', async () => {
       }
       if (event === 'SIGNED_IN') {
         _navodPoPrvnimPrihlaseni();   // 2026-10-21: návod rozbalený po prvním přihlášení (jednou)
-        upsertProfile();
-        fetchUserProfile(currentUser.id); // tier + credits
+        // Vada 7 z průchodu 2026-10-19: u nového účtu se profil četl dřív, než upsertProfile založil řádek → prázdný profil a „0 spár
+        // eftir“. Napřed řádek, pak čtení. Bez await: čekat na Supabase uvnitř onAuthStateChange umí zamrznout (zámek relace).
+        var _uid = currentUser.id;
+        upsertProfile().then(function () { if (currentUser && currentUser.id === _uid) fetchUserProfile(_uid); }); // tier + credits
         syncFreeBalance(currentUser.id);
         loadJournal();
       }

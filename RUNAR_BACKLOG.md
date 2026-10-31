@@ -917,7 +917,7 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   smysl). Návrhy čekají na ownerovo potvrzení stylu.
 - [ ] **`RUNAR_PRICING.md` opisuje ceny ve výpočtech marží** (ř. ~232–263 „Standard value vs credits“, tabulka marží, a ~368 mix) — při změně
   ceny v configu se nepřepočítají samy. Přepsat na odkaz + výpočet, nebo nechat jen kalkulačku ve shrine (ta čte config). CODE-tune / owner.
-- [ ] **Vady z průchodu appkou (CODE-read 2026-10-19 → CODE-tune)** — detail a místa v kódu: `docs/inbox/2026-10-19-pruchod-appkou.md`
+- [x] ✅ *(CODE-tune 2026-10-31, owner „napřed všechny vady“, DECISIONS 2026-10-31 (4): 2, 3, 7 a 8 opravené; IS `gift_card_btn` „+ RÚNAKORT“ bez slovesa × EN „+ GET A …“ nechané — kratší IS tlačítko není vada, jen jiná délka.)* **Vady z průchodu appkou (CODE-read 2026-10-19 → CODE-tune)** — detail a místa v kódu: `docs/inbox/2026-10-19-pruchod-appkou.md`
   „Vady“. ✅ *(CODE-tune 2026-10-19, owner „6. ano oprav je“, 29dd249 + 67ca401)* vady 1, 4, 5, 6: okno se jménem se nevrací · nový
   účet bez „again“ · toast Yggdrasilu jednou · Rune Seeker bez čtení má po DRAW ANOTHER / START OVER formulář s větou o Rúnakortu.
   **Zbývá** (jen z kódu, ověřit v prohlížeči): 2 souhlas testera se vrací stejně · 3 okno se jménem a „Where to start“ naráz ·

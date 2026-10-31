@@ -1446,7 +1446,7 @@ const UI_TEXT = {
     tcm_body: 'To help us make the readings better, we store the readings you draw and review their text and the details you enter, to improve the quality of Rúnar. For a reading to exist at all, the details you enter are sent to OpenAI, which writes it (or to Anthropic, if OpenAI is unavailable), and its text to ElevenLabs for the voice — all in the United States. Neither OpenAI nor Anthropic uses them to train its models, and each keeps them for no more than 30 days, to check for misuse. What we keep is stored in the EU, we never sell it, and you can ask us to delete it at any time. You can stop testing whenever you like.',
     tcm_agree: 'I AGREE',
     tree_visitor_dob:   'Your life rune is written into the day you were born. Enter it, and see which one you carry.',
-    tree_visitor_read:  'Sign in to read what this rune carries.',
+    tree_visitor_read:  'Sign up to read what this rune carries.',   // 2026-10-31: „Sign in“ × tlačítko „become“ (vada 8 z průchodu); IS „Skráðu þig“ sedí
     // 2026-09-27 (KUKY „ano zapoj“; DECISIONS 2026-09-27 (5)): odkud životní runa je. Autora nejmenuje (owner), ale přiznává, že
     // rozdělení roku je moderní — ne dochované ze severu (HANDOFF62 Cowork, upraveno CODE-tune: „halves“ → „half-months“).
     tree_lr_origin:     'The runic year turns through twenty-four half-months, one rune to each. Your life rune is the one the sun stood in on the day you came. The runes are old; this way of dividing the year is not — it is a modern reckoning, not something carried down from the old north.',
