@@ -16,7 +16,7 @@
     a „öðru hvoru“ (podklad sám: odložené / vědomý duál), štítek „hvað er inni í þér“ (část B). Zbývá: A2.19 (do HOW YOU SPEAK IS
     přibývají pravidla = změna chování, změřit) a A3. Žlutě, beze změny (§19.2): v IS Asku pokračování věty o rozloučení za pomlčkou
     (výčet bez slovesa — Greynir E005, P_NT_ÍTölu) a v neaktivním profilu „lyrical“ výčet za „eins og“ (P_NT_ÍTölu).)*
-  - [ ] **CODE-tune — opravy (A):** krize v Asku: pravidlo „mimo téma neodpovídej“ přebije větu o 112 (vysoká) · 19 islandských chyb
+  - [x] ✅ *(úklid 2026-10-31, owner „12. ano“, CODE-tune: A1 a A2 výš; A3 v 8e5ac52 (v5.16) a adbab95 (v5.17). Zbývá jen `SOL_EFFORTS` → připsáno k F3.)* **CODE-tune — opravy (A):** krize v Asku: pravidlo „mimo téma neodpovídej“ přebije větu o 112 (vysoká) · 19 islandských chyb
     v živých promptech (mj. „Sleppu“ → „Slepptu“ v každém IS single, chybné pravidlo 2. osoby v IS systému, „rúna“ × „rún“, Kříž „einum
     flæði“, Yggdrasil „til Heljar“, kalky v bloku „never“) · Ask v IS povoluje přesah 90 slov (useká se) · „pro někoho“ oslovuje rodem
     majitele účtu · single „Let X answer“ zve k předpovědi · životní runa a jméno dostávají „popiš obraz“ bez obrazu · EN esence × „Mention
@@ -218,7 +218,7 @@ hlídal jen V2 cestu.
 
 ### B — rozpory / duplikáty k rozhodnutí
 - [ ] **Dvě otázky na Cowork k `memory/cowork-handoff-quality-bar.md` (2026-08-18, obsah = jejich lane).** (a) **Bod 12** („shrnutí + změněno: nic") říká totéž co `CLAUDE.md:435` *„Handoff má sekci `ZMĚNĚNO:`, i prázdnou"* — jedna informace na dvou místech (§20); má zůstat v obou, nebo odkázat? (b) **Bod 2** předepisuje ≥20–25 vzorků na tvrzení o vzorci a přiznat malé `n` nahlas; ten standard sám stojí na **dvou** handoffech. Doplnit tu větu o sobě? CODE do obsahu nesahá.
-- [ ] **Tree-mechanika DESIGN.md ↔ TREE.md si odporuje** (DESIGN má „vážené hlasování" + pauza-bonus jako živé, TREE = zrušeno). Cowork lane: z DESIGN smazat mechaniku, odkázat na TREE §3–§5.
+- [x] ✅ *(úklid 2026-10-31, owner „12. ano“, CODE-tune: v DESIGN už „vážené hlasování“ ani „jednou ročně“ nestojí (grep 0×), Yggdrasil „kdykoliv“.)* **Tree-mechanika DESIGN.md ↔ TREE.md si odporuje** (DESIGN má „vážené hlasování" + pauza-bonus jako živé, TREE = zrušeno). Cowork lane: z DESIGN smazat mechaniku, odkázat na TREE §3–§5.
   - Konkrétní řádky (root-analýza 2026-08-02): **DESIGN:348** „Yggdrasil jednou ročně/slunovrat" = mrtvé (je **kdykoliv** — 5× opravováno) · **:276** „Norns→větev→kmen" vs „Norns=3 kořeny" jinde · **:9** header ukazuje na archivované tree-of-life/patterns · **:470** „směr větve dolů→kořeny" superseded Norns osou (§4) · **:484/508** vážené hlasování (kód má jen intention, BACKLOG výše).
 - [ ] **Config hodnoty opsané do docí** (jména tierů: DESIGN, BACKLOG · 50/75: DESIGN, PRICING ~8× · Yggdrasil timing 4+ míst) — §20. Nahradit odkazem na config / DECISIONS.
 - [ ] **Další §20 duplikáty:** IS pravidla verbatim v DESIGN · element/Shadow v TREE+DESIGN · kreditní hodnoty 2× v PRICING. Nechat u vlastníka + odkaz.
@@ -228,7 +228,7 @@ hlídal jen V2 cestu.
 
 ### C — profi / SRE mezery (OWNER: vysvětlit podrobně před realizací)
 - [ ] **Runtime testy peníze-kritických edge funkcí** (deno test: deduct až po úspěchu · hranice měsíčního stropu · idempotence · anonymous nedostane placené). Dnes 0 runtime testů, jen 24 statických.
-- [ ] **Zálohy / DR** pro Supabase DB (peníze + PII): ověřit PITR, runbook kadence + restore, jednou nasucho vyzkoušet.
+- [x] ✅ *(úklid 2026-10-31, owner „12. ano“, CODE-tune: noční záloha s `pg_dump` a obnova ověřená v ea3e190; Supabase Pro je krok 2 Plánu infrastruktury, měsíční zkouška obnovy vyjmuta jako samostatná položka hned níž.)* **Zálohy / DR** pro Supabase DB (peníze + PII): ověřit PITR, runbook kadence + restore, jednou nasucho vyzkoušet.
   ✅ **Archiv ověřen 2026-10-15** (CODE-read, owner *„6. over ji“*): `runar-db-2026-10-15.7z` jde rozšifrovat, všech 17 tabulek public +
   auth.users čitelných; počty proti živému count(*) sedí (rozdíly jen kladné, 1–3 řádky přibylé po 06:57). Schéma nese sloupce, politiky,
   funkce, triggery, cizí klíče, granty, indexy, rozšíření, buckety. Archivy chybí za 12.–14. 10. (padala kontrola v zálohovacím skriptu,
@@ -245,8 +245,6 @@ hlídal jen V2 cestu.
   - [x] ✅ *(2026-10-18, CODE-read)* `pg_dump` v noční záloze (`zaloha_db.js`; selhání → `backup_fail`) a `scripts/utils/obnova_db.js`
     (produkci odmítne, cíl prázdný, jedna transakce, oprava oprávnění, 9 kontrol proti produkci; útok s grantem navíc chycen;
     `--vycistit`). Zkouška z archivu 2026-10-18: vše SEDÍ (liší se jen řádky přibylé po záloze), kopie smazána.
-  - [ ] **Zkouška obnovy jednou měsíčně a po změně schématu** — `node scripts/utils/obnova_db.js`, prohlédnout, `--vycistit`. Kdo a kdy
-    (naplánovaná úloha, nebo ruční krok) zatím nerozhodnuto.
   ⚠️ **Stav 2026-10-10 (CODE-read, `supabase backups list`): žádná záloha neexistuje** — `backups: []`, `pitr_enabled: false`.
   Deníky, kredity, profily i hlášení nemají kopii; `scripts/utils/zaloha_cteni.js` zálohuje jen čtení z pokusů, ne produkci.
   Volba (owner): placený tarif Supabase s denními zálohami (cena podle ceníku Supabase), nebo vlastní pravidelný `supabase db dump`
@@ -256,9 +254,11 @@ hlídal jen V2 cestu.
   `supabase db dump` nejde (chce Docker) → export přes `supabase db query`. Je to JEDNA kopie, ne záloha průběžná; bod zůstává otevřený.
   ✅ **Od 2026-10-10 automaticky** (DECISIONS 2026-10-10 (9)): denně 3:30 šifrovaná záloha → lokálně + Google Drive runar@therunekeeper.com
   (`scripts/utils/zaloha_db.js`, úloha Windows „Runar - zaloha databaze“). Zbývá: Supabase Pro před produkcí, obnova do DB nanečisto.
+- [ ] **Zkouška obnovy jednou měsíčně a po změně schématu** (vyjmuto z hotové „Zálohy / DR“ 2026-10-31) — `node scripts/utils/obnova_db.js`,
+  prohlédnout, `--vycistit`. Kdo a kdy (naplánovaná úloha, nebo ruční krok) zatím nerozhodnuto.
 - [ ] **`deno.lock` + Dependabot pro edge funkce** — přesné verze importů už hlídá smoke (`verify_edge_imports.js`, 2026-10-11);
   chybí zámek závislostí a automatické upozornění na nové verze.
-- [ ] **Proxy Fáze 2 — zbývající díry z auditu 2026-08-02** (visitor už zavřen; tyhle jsou pro PŘIHLÁŠENÉ): **#2b** hlas na zaplacené čtení — ✅ *(CODE-tune 2026-10-11, DECISIONS 2026-10-11 (61): očištěný návrat — hlas k `reading_id` / podpisu neuloženého čtení, všechny cesty zmapované a proklikané v prohlížeči, smoke ㊸ ㊹)* ⚠️ POKUS 2026-08-03 **VRÁCEN** (voice gate rozbil hlas u tree/life-rune čtení — ta nenastavují `_lastReadingId`; proxy zpět na Fázi 1, klient zpět na `{text,lang}`). `readings`→SELECT-only ZŮSTALO (samostatný reálný fix). Znovu JEN po zmapování VŠECH voice cest (reader · tree/life-rune · someone) + reálném E2E testu na živém toku · **#3** `mode=life_rune` gate čte sloupec, který server nikdy nezapíše → replay = free Opus; zrcadlit founding CAS · **#4** ⚠️ POKUS 2026-08-03 (server oceňuje podle slugu) **VRÁCEN** — cena/metering NEJDE postavit na klientem deklarovaných metadatech (`spread_cost`/slug), dokud prompt staví KLIENT a server ho nekontroluje (server nezná pravý spread). Spoof se jen přesunul číslo→slug + přidal regresi (nový RS s `free_balance` → 402 na spread). Skutečný fix = server staví prompt ze strukturovaných vstupů (runy+typ) nebo metering na server-vlastněném signálu → architektonické, owner (§21). Report: `tasks/wqxu3uuar.output` · **#6/#7** `tree-update` věří `credits_used` + `short_text/deep_text` od klienta (neměřené Haiku) → odvodit ze saved readings row.
+- [ ] **Proxy Fáze 2 — zbývající díry z auditu 2026-08-02** *(úklid 2026-10-31, owner „12. ano“, CODE-tune: #3 a #4 → F3 v „Plán infrastruktury“; #6 a #7 zastaralé, `tree-update` smazán v 4e732aa)* (visitor už zavřen; tyhle jsou pro PŘIHLÁŠENÉ): **#2b** hlas na zaplacené čtení — ✅ *(CODE-tune 2026-10-11, DECISIONS 2026-10-11 (61): očištěný návrat — hlas k `reading_id` / podpisu neuloženého čtení, všechny cesty zmapované a proklikané v prohlížeči, smoke ㊸ ㊹)* ⚠️ POKUS 2026-08-03 **VRÁCEN** (voice gate rozbil hlas u tree/life-rune čtení — ta nenastavují `_lastReadingId`; proxy zpět na Fázi 1, klient zpět na `{text,lang}`). `readings`→SELECT-only ZŮSTALO (samostatný reálný fix). Znovu JEN po zmapování VŠECH voice cest (reader · tree/life-rune · someone) + reálném E2E testu na živém toku · **#3** `mode=life_rune` gate čte sloupec, který server nikdy nezapíše → replay = free Opus; zrcadlit founding CAS · **#4** ⚠️ POKUS 2026-08-03 (server oceňuje podle slugu) **VRÁCEN** — cena/metering NEJDE postavit na klientem deklarovaných metadatech (`spread_cost`/slug), dokud prompt staví KLIENT a server ho nekontroluje (server nezná pravý spread). Spoof se jen přesunul číslo→slug + přidal regresi (nový RS s `free_balance` → 402 na spread). Skutečný fix = server staví prompt ze strukturovaných vstupů (runy+typ) nebo metering na server-vlastněném signálu → architektonické, owner (§21). Report: `tasks/wqxu3uuar.output` · **#6/#7** `tree-update` věří `credits_used` + `short_text/deep_text` od klienta (neměřené Haiku) → odvodit ze saved readings row.
 - [ ] **#2b navazující flagy** (2026-08-03): ✅ *(první flag — čtení pro někoho jiného bez hlasu — vyřešen 2026-10-11 podpisem z claude-proxy, DECISIONS 2026-10-11 (61))* „someone" čtení se neukládá → nemá `reading_id` → hlas zablokován (rozhodnout: přijmout, nebo claude-proxy vytvoří voice-gate řádek) · premium „question gate" (THE SITUATION) je jen KLIENTSKY — server otázku od nižšího tieru neodmítne (ne money-díra, jen produktová brána) · až bude tester tier: voice gate musí navíc kontrolovat `is_tester`+redeem (dnes hlas na každé zaplacené čtení = OK pro současné tiery).
 - [ ] **Proxy defense-in-depth** (audit 2026-08-02, ne urgentní): bound fail-open větve (monthly cap `:530`, ritual precheck `:508`) · legitAsk concurrency race (1 extra free ask) · ~~ověřit tělo `check_rate_limit` RPC (audit nečetl)~~ ✅ ověřeno 2026-10-09 (kontrola architektury, živá definice): pevné okno,
 atomický upsert, úklid starších než hodina; stejně tak `use_credit` (atomické odečtení jen při zůstatku > 0, jinak −1),
@@ -280,18 +280,16 @@ atomický upsert, úklid starších než hodina; stejně tak `use_credit` (atomi
       ⚠️ **SPOUSTEC pro GDPR prezkum:** objednavka nese e-mail I `user_id`, cimz OBNOVI mapovani UUID -> osoba. Zaver „radky v `credit_ledger` smi prezit smazani uctu" (RUNAR_PRIVACY.md, 2026-07-19) stoji prave na tom, ze po smazani uctu zadne mapovani nezbyde. Az bude Shopify, musi se ten zaver prezkoumat ZNOVU.
 
 ### 🟠 CODE — odblokované, v pořadí
-- [~] **Evidence pohybu kreditu (ledger)** — POLOŽKA BYLA ZASTARALÁ: ledger EXISTUJE od 2026-07-19 (trigger na user_profiles, append-only; odhaleno 22. 8., když ownerův běh mého duplikátního SQL narazil na existující tabulku — 29 řádků od 4. 8.). Zbývá FÁZE 2 = atribuce: `sql/2026-08-22_ledger_faze2_attribution.sql` (čeká na spuštění ownerem) + proxy posílá p_reason/p_ref (hotovo, deploy AŽ PO SQL). Pak ověřit: čtení za kredit → řádek s reason=reading a ref=id čtení. Původně: dnes NEEXISTUJE, takze na otazku "strhl se mi kredit?" nejde odpovedet ani u vlastniho uctu; `credits_balance` ukazuje jen aktualni stav, ne historii. Narazil na to owner 2026-07-19 pri prvnim zdarma cteni zivotni runy. Resi ZAROVEN starsi ownerovo zadani (2026-07-16): "musi byt za pouziti kodu, ten kod by se mel nekde zapsat. neni kod neni kredit. nikdy to nebude vic nez prodavame." **Podminka: zapis do evidence musi byt ATOMICKY se zmenou zustatku** — evidence, ktera muze chybet, lze, a lziva evidence je horsi nez zadna, protoze se podle ni rozhoduje.
+- [x] ✅ *(úklid 2026-10-31, owner „12. ano“, CODE-tune: fáze 2 hotová — proxy posílá `p_reason`/`p_ref`, v živých datech `credit_ledger` s důvodem reading, DECISIONS 2026-10-11 (38).)* **Evidence pohybu kreditu (ledger)** — POLOŽKA BYLA ZASTARALÁ: ledger EXISTUJE od 2026-07-19 (trigger na user_profiles, append-only; odhaleno 22. 8., když ownerův běh mého duplikátního SQL narazil na existující tabulku — 29 řádků od 4. 8.). Zbývá FÁZE 2 = atribuce: `sql/2026-08-22_ledger_faze2_attribution.sql` (čeká na spuštění ownerem) + proxy posílá p_reason/p_ref (hotovo, deploy AŽ PO SQL). Pak ověřit: čtení za kredit → řádek s reason=reading a ref=id čtení. Původně: dnes NEEXISTUJE, takze na otazku "strhl se mi kredit?" nejde odpovedet ani u vlastniho uctu; `credits_balance` ukazuje jen aktualni stav, ne historii. Narazil na to owner 2026-07-19 pri prvnim zdarma cteni zivotni runy. Resi ZAROVEN starsi ownerovo zadani (2026-07-16): "musi byt za pouziti kodu, ten kod by se mel nekde zapsat. neni kod neni kredit. nikdy to nebude vic nez prodavame." **Podminka: zapis do evidence musi byt ATOMICKY se zmenou zustatku** — evidence, ktera muze chybet, lze, a lziva evidence je horsi nez zadna, protoze se podle ni rozhoduje.
 - [ ] **Obohatit řádek: pořadí tažených run + char_count** — ALTER už NEPOTŘEBUJE (2026-08-10). Řádek `readings` má sloupec `prompt_draws jsonb`, do kterého se dá přidat cokoli bez migrace; dnes v něm jede úhel, obraz, klíčová slova, tvar konce a umístění jména. Pořadí run je navíc jediné, co ještě chybí — model může sloty přeskládat, takže se musí ukládat strukturovaně.
 - [ ] **Readings viewer: flag/annotate** — prohlížeč čtení ve shrine je hotový (`runar-readings-admin.js`, edge fn `list-readings`);
   chybí jen označit / okomentovat čtení — potřebuje review tabulku (owner ALTER). *(Úklid 2026-10-24: „prázdný stub“ už neplatilo.)*
 
 ### 🟡 OWNER rozhodnutí
-- [x] ✅ **Retence čtení** — rozhodnuto: po dobu účtu (DECISIONS 2026-10-19 (3); RUNAR_PRIVACY „Retence“), opuštěné účty po 3 letech s
-  upozorněním (položka níž). *(Uzavřeno úklidem 2026-10-24; do té doby tu stálo „nerozhodnuto“.)*
 - [ ] **Living tree: sundat admin gate** (`renderLivingTree()` v `runar-tree.js`) — až uznáš betu za hotovou.
 
 ### 🔵 COWORK
-- [ ] Tree DB fáze 2 — přeškálovat: `intention` + `aol` už logujeme server-side (481d313, 094f287).
+- ✖ *(úklid 2026-10-31, owner „12. ano“, CODE-tune: zrušeno — `tree_state` i `tree-update` jsou od 4e732aa (2026-10-14) pryč, zadání nemá předmět.)* Tree DB fáze 2 — přeškálovat: `intention` + `aol` už logujeme server-side (481d313, 094f287).
 
 ### 🟢 Dlouhý ocas (kód, nízká priorita)
 - [x] **§18 debt: lab i prod drží kompozici stromu 2×** — vyřešeno portem 2026-10-11: `build_tree_production.py` bere skript labu doslova, druhá kopie neexistuje (DECISIONS 2026-10-11 (55); zavřel CODE-tree 2026-10-30). Aplikace dál načítá enginy z cest `tree-lab-*` — jen jméno složky, ne kopie.
@@ -407,7 +405,7 @@ promptu v `claude-proxy` (už ověřuje přihlášení a odečítá kredity; pro
    **Postup (CODE-tune 2026-10-21, owner „ok začni“):** ✅ F1 balíček `supabase/functions/_shared/prompt_skladani.mjs` = týž kód jako appka
    (generuje `scripts/build_prompt_skladani.js`, pre-commit ho přegeneruje z indexu, smoke ㊌ 40/40 golden). ✅ F2 stínový režim: appka
    posílá `stin` (s čím skládala), `claude-proxy` prompt složí souběžně a zapíše shodu do `ops_events` „prompt_stin“ (bez textu); smoke ㊍.
-   - [ ] **F2 vyhodnotit:** po pár dnech provozu `select detail from ops_events where kind='prompt_stin'` — každá neshoda = co záznamník
+   - [x] ✅ *(úklid 2026-10-31, owner „12. ano“, CODE-tune: `ops_events` „prompt_stin“ 42 ze 42 shod od 2026-10-21 — Ask 16, single 21, Norny 4, rozbor jména 1; žádná neshoda. Kříž, Podkova, Yggdrasil a životní runa ve stínu zatím vzorek nemají.)* **F2 vyhodnotit:** po pár dnech provozu `select detail from ops_events where kind='prompt_stin'` — každá neshoda = co záznamník
      nebo balíček neumí (builder, místo rozdílu). Pak záznam z mé sondy 2026-10-21 17:21 (chyba „reading 'k'“) ignorovat.
    - [ ] **F3 přepnout:** server skládá sám — appka posílá jen vstupy (+ tah run); myšlenka ✦ (`_thoughtFor`, runar-reading.js) a připomínka
      délky do jedné skládací funkce v balíčku; sáček obrazů, poslední motiv a obraz z localStorage do DB (tabulka na uživatele); náhoda na
@@ -416,6 +414,8 @@ promptu v `claude-proxy` (už ověřuje přihlášení a odečítá kredity; pro
      (`spread_cost`) server spočítá z typu čtení, které sám skládá (`SPREAD_COSTS`), ne z čísla od prohlížeče — dnes zaplatí upravený
      prohlížeč Yggdrasil jako jednu runu (známé od 2026-10-09 (18)); (b) `rune_name`, `rune_glyph` a popis spreadu (`rune_display`) do deníku
      zapíše server z vlastního losu, ne z `journal` od prohlížeče (dnes jen vlastní deník a strom, ale po F3 to jde zadarmo).
+     **Připsáno 2026-10-31 (úklid):** (c) `SOL_EFFORTS = ["none","minimal"]` v `claude-proxy/index.ts` — `minimal` neexistuje, vědomě odloženo
+     „až s nasazením proxy“ (8e5ac52); (d) brána životní runy stojí na `life_rune_text` od klienta a cena od klienta = #3 a #4 z „Proxy Fáze 2“.
    - [ ] **F4 schovat:** buildery a RUNE_IMAGES z veřejných souborů appky pryč; shrine (laboratoř promptu) přes cestu jen pro admina;
      pak soukromé repo (krok 3) a nové klíče Supabase (krok 9).
 2. **Supabase Free → Pro**, ověřit, že denní zálohy běží.
@@ -461,9 +461,9 @@ promptu v `claude-proxy` (už ověřuje přihlášení a odečítá kredity; pro
   přímo na oficiálních stránkách 2026-10-15 (Cloudflare domény a limity, soukromé repo; Supabase ceník; GitHub Actions minuty; podmínky
   GitHub Pages) · (3) kontrola na GitHubu — *„pokud nepotřebujeme za něj platit, tak nebudeme“*: jen hlášení (Actions při pushi,
   2 000 min zdarma), bez GitHub Pro · (4) druhý Free projekt pro zkoušku obnovy — *„ano“*, zakládá owner.
-- [ ] **CODE-read:** po založení druhého projektu: klient Postgresu, záloha `pg_dump` do nočního skriptu, skript obnovy, první zkouška.
+- [x] ✅ *(úklid 2026-10-31, owner „12. ano“, CODE-tune: ea3e190 — `pg_dump` v noční záloze, `scripts/utils/obnova_db.js`, zkouška 2026-10-18.)* **CODE-read:** po založení druhého projektu: klient Postgresu, záloha `pg_dump` do nočního skriptu, skript obnovy, první zkouška.
 - [ ] **CODE-read:** Actions „jen hlášení“ (které kontroly poběží bez tajných hodnot, kolik minut spotřebují) — připravit, spustit s přechodem na soukromé repo.
-- [ ] **CODE-tune:** krok 1 (prompt na server) a krok 9 (klíče Supabase).
+- ✖ *(úklid 2026-10-31, owner „12. ano“, CODE-tune: duplikát — krok 1 = F3 a F4 výš, krok 9 stojí v plánu.)* **CODE-tune:** krok 1 (prompt na server) a krok 9 (klíče Supabase).
 
 **Ponaučení z přetažení Supabase Free (2026-10-22, „Cached Egress“ 11,4 / 5 GB, grace do 20. 11.; owner „3. ano, zapiš“)** — platí pro přechod
 na Cloudflare a placenou Supabase:
@@ -472,7 +472,7 @@ na Cloudflare a placenou Supabase:
   se `_headers` a dlouhým cachováním; Supabase jen data uživatelů (hlasy čtení, DB).
   Portrét: web z vlastní kopie, appka z repa (9335d57). Zvuky run: zatím ve Storage s ročním cachováním (DECISIONS 2026-10-22 (7));
   **přesun pryč ze Storage zbývá — s přechodem na Cloudflare** (krok exportu nových zvuků ze shrine do repa).
-- [ ] **Každý měřený zdroj má hlídače** (registr kvót, návrh níž) — o přetažení jsme se dozvěděli až z banneru Supabase.
+- ✖ *(úklid 2026-10-31, owner „12. ano“, CODE-tune: duplikát — „Registr kvót“ hned níž, postaveno kromě Brevo.)* **Každý měřený zdroj má hlídače** (registr kvót, návrh níž) — o přetažení jsme se dozvěděli až z banneru Supabase.
 - [ ] **Placená Supabase = černá díra se projeví fakturou, ne výpadkem** → při přechodu nastavit strop útraty a upozornění na rozpočet (owner v konzoli).
 - [ ] **Cloudflare Pages Free: 500 sestavení za měsíc, 1 naráz** (developers.cloudflare.com/pages/platform/limits, čteno 2026-10-22). Máme ~900 commitů
   za 2 týdny — sestavení z gitu na každý push limit přetáhne. Nasazovat jinak (Direct Upload / jen z vybrané větve / dávkově); jestli se Direct
@@ -500,6 +500,7 @@ Netlify: netlify.com/pricing. Supabase: supabase.com/pricing · /docs/guides/pla
 hetzner.com/cloud/cost-optimized. PostgreSQL: postgresql.org/docs/current/app-pgdump.html.
 
 ### PŘED SPUŠTĚNÍM: prompt je veřejný a repem to nespravíš (2026-08-16)
+→ **Úkol žije v F3 a F4** („Plán infrastruktury před spuštěním“, krok 1); tady zůstává důvod a kontext *(úklid 2026-10-31)*.
 KUKY: *„public repo. jako že se k nim může kdokoliv z venku dostat? i k promptu? nemělo by to
 být ošetřené, až půjde appka ven?"*
 
@@ -549,6 +550,7 @@ Platí pro Supabase edge funkci (zvolená cesta, owner 2026-10-15) — viz „Pl
 10. **Zavře navíc:** „libovolný prompt“ (níž), cenu spreadu z klienta (#4 v sekci C). Přestavba = CODE-tune.
 
 ### Přihlášený uživatel může proxy poslat LIBOVOLNÝ prompt (2026-08-16)
+→ **Zavře F3** („Plán infrastruktury před spuštěním“, krok 1); tady jen kontext *(úklid 2026-10-31)*.
 Plyne z předchozího: proxy bere `prompt` jako text od klienta a jen ho zastropuje na 2500 tokenů.
 Přihlášený člověk si tedy může za cenu jednoho kreditu nechat vygenerovat cokoli — je to
 **metrované, ale neřízené obsahem**. Riziko není účet (kredity to omezují), ale to, že náš klíč
@@ -682,7 +684,7 @@ Souběh už zčásti hotový týž den: push s commitem vzniklým během smoke (
       naživo přihlášeným adminem (zaškrtnout, odvolat) — ověřeno jen proti podvržené databázi. (Do 2026-10-13 tu stálo „do té doby
       uložení souhlasu selže“ — platilo jen do ownerova SQL 2026-10-12.)
 - [ ] **Před veřejným spuštěním (owner 2026-10-12 „později“):** vývojové konverzace s Claudem — do zásad, nebo lhůta (5) · doba uchování hlášení a čtení po smazání účtu (8, s „Retence čtení“) · DPIA ano/ne (10).
-- [ ] *(CODE-tune 2026-10-13, owner „ano udělej“: `elevenlabs-proxy` položku po vygenerování maže, nasazeno; zásady upravené.
+- [x] ✅ *(úklid 2026-10-31, owner „12. ano“, CODE-tune: mazání zabírá — v `ops_events` purge `el_history` 7× ok a žádné selhání, poslední 2026-10-30; věta v zásadách „mažeme“ platí.)* *(CODE-tune 2026-10-13, owner „ano udělej“: `elevenlabs-proxy` položku po vygenerování maže, nasazeno; zásady upravené.
       DECISIONS 2026-10-13 (6).)* **Neověřeno, že v historii něco je a že mazání zabírá:** owner v ElevenLabs → Text to Speech → historie
       žádné hlasy nenašel (2026-10-13); jestli webové rozhraní ukazuje hlasy z API, dokumentace ElevenLabs neříká. Rozhodne jen výpis
       `GET /v1/history` naším klíčem — ten je jen v Supabase secrets (lokálně ne). ✅ *(2026-10-13, owner „ano udělej a nasaď“: shrine VOICE
@@ -710,7 +712,18 @@ Souběh už zčásti hotový týž den: push s commitem vzniklým během smoke (
       („keeps it and the audio in our account“ / „geymir hann og upplesturinn á reikningnum okkar“). Do té doby zásady říkají pravdu.
 
 ## Musí být hotové PŘED prvním cizím přihlášením
-
+Rozcestník *(úklid 2026-10-31, owner „12. ano“)*: úkoly žijí u svých položek, tady jen co a kde. Hotovou položku odtud smaž.
+- **Prompt na server:** F3 a F4 v „Plán infrastruktury před spuštěním“ (krok 1) — zavře veřejný prompt, libovolný prompt i cenu od prohlížeče.
+- **Pole s otázkou pro ostatní** (dnes jen admin): krize v otázce (sekce „Krize v otázce“), souhlas jmenující správnou firmu
+  (`qconsent_lbl` v „Revize nápovědy, zásad a textů“), brána otázky na serveru („#2b navazující flagy“).
+- **Infrastruktura (owner):** v plánu kroky 2–9 — Supabase Pro, soukromé repo, Cloudflare, DNS, domény, klíče Supabase (do konce 2026);
+  strop útraty a statické soubory pryč ze Storage („Ponaučení z přetažení Supabase Free“).
+- **Právo a soukromí (owner):** posudek („Blockery prodeje“), otázky pro právníka ke krizi, sekce „Soukromí — kontrola GDPR“,
+  upozornění na změnu zásad a export zpráv „Send Rúnar a line“ (obojí v „Revize nápovědy, zásad a textů“).
+- **Platby:** „Před spuštěním plateb“ + Shopify / Rapyd (čeká na volbu ownera).
+- **Nakonec:** „Před spuštěním projít, že všechno sedí“ (hlášení 2026-10-28), SEO a web (`og:url`, `JOURNEY_URL` v sekci webu).
+- **Termíny, které nejdou odložit:** odklad přetaženého egressu Supabase Free do 20. 11. („Ponaučení z přetažení“) · délka doců
+  („Délka živých doců“, smoke ㉝ zastaví push) · staré klíče Supabase do konce 2026 (krok 9).
 
 ## Procházka appky jako návštěvník (CODE-read 2026-10-11, produkce v654, EN + IS, desktop i 375 px)
 Prošlo bez vady: úvod, tah runy (výzva k registraci, žádné volání serveru), přepnutí jazyka po tahu (bez okna o kreditu), životní runa
@@ -731,7 +744,7 @@ Procházka je tím úplná.
 ## Ověřit naživo, než rozešleš odkaz
 
 
-- [ ] po pushi zkontrolovat verzi: `curl -s https://runar25.github.io/Runar-admin/v2/sw.js | head -1`
+- ✖ *(úklid 2026-10-31, owner „12. ano“, CODE-tune: rutina, ne úkol — verzi hlídá smoke ㉞ a `runar-verze.js`.)* po pushi zkontrolovat verzi: `curl -s https://runar25.github.io/Runar-admin/v2/sw.js | head -1`
 
 ## Co testerům napsat dopředu (ať to nehlásí jako chybu)
 
@@ -769,7 +782,8 @@ Banka obrazů to nepokryje: **72 ze 108** řádků je `any` a projde všemi šes
 Není to regrese proti stavu před 2026-09-19, ale je to otevřená díra. Řešení až po měření —
 jestli se to na produkci vůbec děje (dřív než přidávat další pokyn, §25).
 
-### Los délky není v prompt_draws — nezapsaný confounder každého měření (2026-09-20, CODE-tune)
+### ✖ Los délky není v prompt_draws — nezapsaný confounder každého měření (2026-09-20, CODE-tune)
+*(úklid 2026-10-31, owner „12. ano“, CODE-tune: zastaralé — délka se od v4.35 nelosuje, `LENGTH_BUDGETS` má jednu položku. Zbývá jen text DESIGN bodu 4 → položka hned níž.)*
 `_lengthBudget` losuje mezi **3 věty / 38–45 slov** a **4 věty / 50–58 slov** (v2/runar-utils.js),
 ale do `prompt_draws` se nezapisuje. Každé měření na produkci tedy míchá dva vzorky, kde jeden má
 o větu a ~13 slov víc místa na konec — a post-hoc se to nedá odfiltrovat. CODE-read sám naměřil, že
@@ -886,7 +900,7 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
 ### Účty vypadají a ovládají se stejně — HANDOFF66 (owner: rozdíl jen tam, kde ho chce funkce)
 - [ ] **CODE-read: matice stav × plocha** (Visitor · Rune Seeker · Standard · Premium/tester · admin × menu, formulář, spready, Ask, hlas,
   Kolekce, Životní runa, okna, toasty, ⚑ a „?“) — z kódu; Standard v DB nemá nikdo (2026-10-18: 4× rune_seeker, 1× premium).
-- [ ] **Uvítání a navedení: Visitor při návštěvě, nový Rune Seeker po první registraci** (owner 2026-10-19 bod 11, místo přepisu první věty
+- [x] ✅ *(úklid 2026-10-31, owner „12. ano“, CODE-tune: okno se nevnucuje, stačí helper (DECISIONS 2026-10-19 (7)); okno cesty / UPGRADE 2026-10-19 (10); menu 2026-10-27 (5), (8); „How a reading works“ s hlasem 2026-10-30 (1). Zbytek žije v D–H a „Ask pro RS“ níž.)* **Uvítání a navedení: Visitor při návštěvě, nový Rune Seeker po první registraci** (owner 2026-10-19 bod 11, místo přepisu první věty
   Visitorova výpisu: *„všechno má omezené, já bych si dokázal představit nějaké uvítací okno, welcome visitor … heslovitě, že může
   prozkoumat, co mu appka nabízí, a po registraci si může nechat udělat od Rúnara čtení … totéž pro Rune Seekera … chce to uživatele
   navést na správné používání appky. Je potřeba vymyslet jak! Zjisti, jak to dělat nejlépe.“*). Stavět z toho, co už je (Where to start,
@@ -919,10 +933,6 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   EVAL_LOG — starší baseline do archivu (CODE-read); DESIGN a PRICING — rozdělení je obsahové rozhodnutí ownera; working-style — část do
   samostatných memory souborů. Další obnova bez zkrácení ne.
 
-- [x] ✅ *(CODE-tune 2026-10-27, DECISIONS 2026-10-27 (2))* **Tlačítka po čtení a přepínač MY READING / FOR SOMEONE (owner 2026-10-20, DECISIONS 2026-10-20 (1)) → CODE-tune.**
-  DRAW ANOTHER RUNE pryč, zůstává jedno velké START OVER ve stylu HEAR RÚNAR SPEAK (`.btn-voice`, přes celou šířku); ASK beze změny. Aktivní
-  MY READING / FOR SOMEONE vyplněné jako BEGIN THE READING (`.btn-full`), aby bylo vidět, kde člověk je. Velikost tlačítka podle důležitosti
-  (owner: *„všechno nemá být stejné“*). Pozor §32 / smoke ㉼: stav „další tah“ (drawAnother) se testuje — upravit kontrolu, ne ji obejít.
 ### Hlášení z appky 2026-10-19 / 20 (načtena 2026-10-20, CODE-tune; hotové: df67acda, 62283c8c — a56aa46)
 - [ ] **Jednotný vzhled — co ㊋ zatím nehlídá (zbytek po kroku 3, DECISIONS 2026-10-20 (3)):** (a) ~20 velikostí kurzívy textu karet
   (0.71–1.05em, řádkování 1.6–1.9) → dvě: text 0.92em / 1.8 a poznámka .fine; (b) 25 průhledností zlaté → 4 stupně (.08 tón · .2 rámeček ·
@@ -953,7 +963,7 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   ~8×. Postavit, nebo větu změnit (čeká na ownera).
 - [ ] **Export účtu** (`scripts/utils/export_uctu.js`) nevyveze zprávy „Send Rúnar a line“ ani uložené mp3 hlasu, zásady slibují
   „everything linked to your account“.
-- [ ] **IP v `rate_limits`** nemá pevnou horní mez (úklid jen při ~5 % volání, řádky starší 1 h; 2026-10-21 nejstarší 18 h) — denní
+- [ ] *(řešit spolu s „Past v DB funkci `check_rate_limit`“ — týž úklid v téže funkci; úklid 2026-10-31)* **IP v `rate_limits`** nemá pevnou horní mez (úklid jen při ~5 % volání, řádky starší 1 h; 2026-10-21 nejstarší 18 h) — denní
   úklid cronem by dal zásadám přesnou lhůtu.
 - [ ] **Ask u čtení „for someone“** (neuložené, ne-tester) nemá `reading_id` → proxy ho počítá jako čtení a strhne měsíční jednotku
   (runar-reading.js ~1144, proxy ~532–657); TIER_FEATURES slibuje „one question on every reading“. Neověřeno během, jen čtením kódu.
@@ -978,36 +988,16 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
 - [ ] **CODE-tune — nižší účet:** zpráva brány na konci období → server sníží `tier`; tlačítko „STEP BACK TO …“ vede do portálu brány.
 
 ### Hlášení z appky 2026-10-23 / 27 — čeká na ownera (načtena 2026-10-27, CODE-tune; hotové v DECISIONS 2026-10-27 (2))
-- [x] ✅ *(CODE-tune 2026-10-27, DECISIONS 2026-10-27 (3))* **Věta v okně cesty „From 1.490 kr for 5 rune readings. Have a code? Enter it here.“ (41004321):** owner: *„odstranit, pokud za tím
-  není myšlenka“*. Myšlenka je: ťuknutí zavře okno a otevře pole pro kód Rúnakortu (`journey_card_note`, `runar-app.js` u záložky karty);
-  cena = nejlevnější balíček. Rozhodnout: nechat, nechat jen „Have a code? Enter it here.“, nebo pryč.
-- [x] ✖ *(owner 2026-10-27: „1. uzavřený“ — Skladač se nestaví, DECISIONS 2026-10-27 (1))* **Skladač promptu v appce (f9b5b7f2, 2026-10-23):** owner chtěl skládat prompt sám a vidět, co se mění. Plán „z čeho se skládá čtení“
-  uzavřen 2026-10-27 (DECISIONS 2026-10-27 (1)) i s krokem 8 Skladač — hlášení je starší než uzavření. Potvrdit, jestli Skladač patří do
-  uzavření, nebo zůstává.
-- [x] ✅ *(CODE-tune 2026-10-27, DECISIONS 2026-10-27 (5))* **Menu (burger) přestavět (c9976b4e):** *„pořadí je takové divné, ať to má víc design menu“*. Napřed soupis dnešních položek a
-  návrh pořadí a vzhledu ownerovi (komponenty z `scripts/verify_komponenty.js`), pak stavět.
-- [x] ✅ *(CODE-tune 2026-10-27, DECISIONS 2026-10-27 (4); hlas 2026-10-28, DECISIONS 2026-10-28 (3))* **Rituál pod BEFORE WE BEGIN (5439bcc1, 36f14a03):** rozbalovač „+“ (komponenta `.xp-plus`) s krátkým textem, co udělat před tahem;
-  owner navrhl EN znění (svíčka, vůně, ticho, nádech, myšlenka na otázku, pak tah). Napřed kritický pohled (§21) a znění v EN i IS
-  hlasem Rúnara, schválení ownerem, pak stavět.
 - [ ] **Norny a3692c86 — „voice“ skřípe, význam nesedí (d65a6bb4, bf44ef3d):** Ansuz (Verðandi) dostal ze seznamu `k` význam „voice“
   („a voice is taking shape among the fallen branches“) uvnitř obrazu bouře, který nese celý výklad; owner: stačilo *„message“*, konec
   nesedí, *„jak udělat, aby lépe volil významy run pro určité čtení?“*. Hypotéza (neověřeno): jeden obraz pro tři runy nutí druhou a třetí
   runu mluvit uvnitř cizí scény. Zásah do promptu výkladů → lab CODE-read, ne tichý tune.
 
 ### Hlášení z appky 2026-10-28 — účet a menu: návrh čeká na ownera (načtena 2026-10-28, CODE-tune; hotové: 01fc1c13, 8a6f3ff6 — 44d2388)
-- [x] ✅ *(CODE-tune 2026-10-28, DECISIONS 2026-10-28 (2))* **Architektura účtu a menu — návrh ke schválení:** `docs/inbox/2026-10-28-ucet-a-menu-navrh.html` (skutečné styly appky). Hlášení
-  8b554620 (menu znovu, zarovnání, velikost, privacy dvakrát), b026bd00 (co menu obvykle má a co chybí), 8bc29ee1 (ikonky malé — 1,35 × text),
-  fc708c38 (runa před kódem karty → kreslená karta), e1c2ebdd (MY NAMES → jméno s ✎, kde je délka předplatného — data zatím nejsou),
-  228c8f1c (RÚNAR vlevo = domů v appce, web do menu, v Play skrytý), 85d5ea31 / 366d49e4 / b3118792 / 025f5d2d (počet čtení v kolečku za
-  jménem, rozzáření a doběhnutí čísla po dobití), 912b92ad (jméno se mění jen pod jménem, ze životní runy pryč). Owner: *„pokud tam něco
-  nesedělo, máš se mě zeptat, jak to upravíme“* — staví se až po schválení návrhu.
 - [x] ✅ *(CODE-tune 2026-10-30, DECISIONS 2026-10-30 (1): text verze B Rúnarovým hlasem, nahrávka receptem F, malá svíčka za nadpisem)*
   **Hlas Rúnara i pro „How a reading works“ (5fdcca95) — owner 2026-10-28 „ano, taky uděláme hlas a ikonu; ikona bude taky animovaná“:** *„How a reading works taky nemluvíme Rúnarem jako statické čtení“* — týž postup jako
   hlas rituálu — hotový jako varianta F (DECISIONS 2026-10-28 (3)): text do UI_TEXT, nahrávka gen.js, ♪ komponentou `.hlas-radek` /
   `.hlas-btn` a otisk do `RUNAR_RITUAL_HLAS` (smoke ㊗ pak hlídá i tenhle). Potvrdit, že jde o tohle.
-- [x] ✅ *(CODE-tune 2026-10-28, DECISIONS 2026-10-28 (1))* **Proužek #hero-down přes záložky (47b63e3f):** *„když se posunu z hlavní stránky dolů posuvníkem, který se na druhé straně obrátí nahoru,
-  chci, aby tam zůstal, i když překliknu na jiné okno“* — výklad (neověřeno s ownerem): proužek se šipkou nahoru zůstane pod lištou i v Lestrar,
-  Lífsrúnin a Safn rúna, ťuknutí vrátí k Rúnarovi. Potvrdit, pak postavit.
 - [ ] **Lucerna větší někde jinde (owner 2026-10-30):** *„symbol je tak malý, že lucerna nejde poznat. Jinak by to byl dobrý nápad, ale třeba
   ji budeme moci použít větší někde jinde.“* Kresba N1 v `docs/inbox/2026-10-30-pirko-a-symboly.html`; návod končí větou „I carry the light“.
   Místo zatím nevybrané — nabídnout, až bude větší symbol potřeba.
@@ -1031,7 +1021,7 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   `--cil v2/icons` + ruční bump `v2/sw.js` v témže commitu (ikony jsou v precache, hook verzi u PNG nezvedne) + `web/site/favicon.ico` +
   smazat nepoužitý `v2/icons/site.webmanifest`; při volbě B přegenerovat i `web/socialni/profil-r.jpg` s kamenem. Až se bude stavět
   balíček pro Google Play, ověřit jeho adaptivní ikonu proti rámečku — jak velký výřez z maskable obrázku ukáže, není ověřené.
-- [ ] **Útok ㊼ „worker zase chytá sw.js“ jednou propustil (2026-10-29, CODE-tune):** v pre-push smoke (čistá kopie, zátěž) kontrola
+- [x] ✅ *(úklid 2026-10-31, owner „12. ano“, CODE-tune: opraveno v 7c3aebc.)* **Útok ㊼ „worker zase chytá sw.js“ jednou propustil (2026-10-29, CODE-tune):** v pre-push smoke (čistá kopie, zátěž) kontrola
   `verify_verze_hlaseni.js` prošla i s podstrčenou chybou (`.git/runar-protipriklady-propustene/20261029-221655_…`); hned poté 2× po sobě
   chytila 4 ze 4. Šum časování skutečného workeru (stav B3) → zpevnit čekání v kontrole, ať útok nezávisí na rychlosti stroje.
   **Podruhé 2026-10-30** (CODE-tune, lokální celý smoke při souběhu s prohlížečem kontrol: `…/20261030-072317_verify_verze_hlaseni.js_v2_sw.js.txt`),
@@ -1049,3 +1039,8 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   *„bude to napsané někde v návodu“* → při stavbě řádek do nápovědy (`runar-help.html`, EN + IS).
   ✅ *(CODE-tune 2026-10-29: postaveno — `v2/runar-svicka.js` pro čtení, Kolekci, deník i rituál, svíčka je posuvník, stejné mezery
   na telefonu, nápověda EN + IS; DECISIONS 2026-10-29 (3). Náhled s kódem appky: `docs/inbox/2026-10-29-prehravac-svicka-3.html`.)*
+
+### Krok zpět ve čtení (owner 2026-10-31, CODE-tune)
+- [ ] **Viditelné „← zpět“ na kartě tahu a tlačítko zpět telefonu o krok ve čtení** (owner: *„když jsem v rune reading a chci jít o krok
+  zpět, tak je to složité, asi tam chybí někde zpět“*; na návrh *„10. zpět, do backlogu. teď nevím“*). Dnes vede zpět jen logo RÚNAR
+  (z karty tahu i z hotového čtení domů, DECISIONS 2026-10-31 (2)). Tlačítko zpět telefonu dnes appku zavře. Vrátit se, až owner bude vědět.

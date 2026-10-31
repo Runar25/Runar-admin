@@ -12664,7 +12664,7 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 ## 2026-10-31 (2) — Karta tahu bez noty „Close your eyes…“; logo RÚNAR vede domů i z hotového čtení
 
 - **Rozhodl:** owner 2026-10-31 na otázky po screenshotu karty tahu: *„9. zmizet“* (nota před tahem) · *„11. ano“* (logo i z hotového
-  čtení) · *„10. zpět, do backlogu. teď nevím“* (viditelné „← zpět“ a tlačítko zpět telefonu → RUNAR_BACKLOG, Reader UI).
+  čtení) · *„10. zpět, do backlogu. teď nevím“* (viditelné „← zpět“ a tlačítko zpět telefonu → RUNAR_BACKLOG „Krok zpět ve čtení“).
 - **Co:** (1) Nota „Close your eyes. Hold your question. Then choose the rune that calls to you.“ (`draw_note`, EN i IS) pod nadpisem
   tahu pryč — byla druhou verzí rituálu BEFORE WE BEGIN (2026-10-27 (4)) těsně před tahem. Nadpis tahu → mřížka run 16 px (okraj nadpisu). (2) Logo
   z hotového čtení = fotka a formulář. Výklad už dřív schovával `_resetReadingTab` (moje zpráva ownerovi „logo ho teď nechává“ byla

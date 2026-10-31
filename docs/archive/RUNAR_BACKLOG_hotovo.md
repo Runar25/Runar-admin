@@ -1533,3 +1533,39 @@ skončit „tohle jméno v severské tradici kořeny nemá" — a ověřit měř
 
 ### Před spuštěním plateb: nižší účet a vracení peněz (DECISIONS 2026-10-21 (9))
 - [x] ✅ *(owner 2026-10-22 „podle času“, DECISIONS 2026-10-22 (1))* **Owner:** „poměrná část“ předplatného — podle času, nebo podle vyčerpaných čtení?
+
+## Přesunuto 2026-10-31 (8 položek)
+
+### 🟡 OWNER rozhodnutí
+- [x] ✅ **Retence čtení** — rozhodnuto: po dobu účtu (DECISIONS 2026-10-19 (3); RUNAR_PRIVACY „Retence“), opuštěné účty po 3 letech s
+  upozorněním (položka níž). *(Uzavřeno úklidem 2026-10-24; do té doby tu stálo „nerozhodnuto“.)*
+
+### Délka živých doců (smoke ㉝, obnoveno potřetí 2026-10-20, CODE-tune)
+- [x] ✅ *(CODE-tune 2026-10-27, DECISIONS 2026-10-27 (2))* **Tlačítka po čtení a přepínač MY READING / FOR SOMEONE (owner 2026-10-20, DECISIONS 2026-10-20 (1)) → CODE-tune.**
+  DRAW ANOTHER RUNE pryč, zůstává jedno velké START OVER ve stylu HEAR RÚNAR SPEAK (`.btn-voice`, přes celou šířku); ASK beze změny. Aktivní
+  MY READING / FOR SOMEONE vyplněné jako BEGIN THE READING (`.btn-full`), aby bylo vidět, kde člověk je. Velikost tlačítka podle důležitosti
+  (owner: *„všechno nemá být stejné“*). Pozor §32 / smoke ㉼: stav „další tah“ (drawAnother) se testuje — upravit kontrolu, ne ji obejít.
+
+### Hlášení z appky 2026-10-23 / 27 — čeká na ownera (načtena 2026-10-27, CODE-tune; hotové v DECISIONS 2026-10-27 (2))
+- [x] ✅ *(CODE-tune 2026-10-27, DECISIONS 2026-10-27 (3))* **Věta v okně cesty „From 1.490 kr for 5 rune readings. Have a code? Enter it here.“ (41004321):** owner: *„odstranit, pokud za tím
+  není myšlenka“*. Myšlenka je: ťuknutí zavře okno a otevře pole pro kód Rúnakortu (`journey_card_note`, `runar-app.js` u záložky karty);
+  cena = nejlevnější balíček. Rozhodnout: nechat, nechat jen „Have a code? Enter it here.“, nebo pryč.
+- [x] ✖ *(owner 2026-10-27: „1. uzavřený“ — Skladač se nestaví, DECISIONS 2026-10-27 (1))* **Skladač promptu v appce (f9b5b7f2, 2026-10-23):** owner chtěl skládat prompt sám a vidět, co se mění. Plán „z čeho se skládá čtení“
+  uzavřen 2026-10-27 (DECISIONS 2026-10-27 (1)) i s krokem 8 Skladač — hlášení je starší než uzavření. Potvrdit, jestli Skladač patří do
+  uzavření, nebo zůstává.
+- [x] ✅ *(CODE-tune 2026-10-27, DECISIONS 2026-10-27 (5))* **Menu (burger) přestavět (c9976b4e):** *„pořadí je takové divné, ať to má víc design menu“*. Napřed soupis dnešních položek a
+  návrh pořadí a vzhledu ownerovi (komponenty z `scripts/verify_komponenty.js`), pak stavět.
+- [x] ✅ *(CODE-tune 2026-10-27, DECISIONS 2026-10-27 (4); hlas 2026-10-28, DECISIONS 2026-10-28 (3))* **Rituál pod BEFORE WE BEGIN (5439bcc1, 36f14a03):** rozbalovač „+“ (komponenta `.xp-plus`) s krátkým textem, co udělat před tahem;
+  owner navrhl EN znění (svíčka, vůně, ticho, nádech, myšlenka na otázku, pak tah). Napřed kritický pohled (§21) a znění v EN i IS
+  hlasem Rúnara, schválení ownerem, pak stavět.
+
+### Hlášení z appky 2026-10-28 — účet a menu: návrh čeká na ownera (načtena 2026-10-28, CODE-tune; hotové: 01fc1c13, 8a6f3ff6 — 44d2388)
+- [x] ✅ *(CODE-tune 2026-10-28, DECISIONS 2026-10-28 (2))* **Architektura účtu a menu — návrh ke schválení:** `docs/inbox/2026-10-28-ucet-a-menu-navrh.html` (skutečné styly appky). Hlášení
+  8b554620 (menu znovu, zarovnání, velikost, privacy dvakrát), b026bd00 (co menu obvykle má a co chybí), 8bc29ee1 (ikonky malé — 1,35 × text),
+  fc708c38 (runa před kódem karty → kreslená karta), e1c2ebdd (MY NAMES → jméno s ✎, kde je délka předplatného — data zatím nejsou),
+  228c8f1c (RÚNAR vlevo = domů v appce, web do menu, v Play skrytý), 85d5ea31 / 366d49e4 / b3118792 / 025f5d2d (počet čtení v kolečku za
+  jménem, rozzáření a doběhnutí čísla po dobití), 912b92ad (jméno se mění jen pod jménem, ze životní runy pryč). Owner: *„pokud tam něco
+  nesedělo, máš se mě zeptat, jak to upravíme“* — staví se až po schválení návrhu.
+- [x] ✅ *(CODE-tune 2026-10-28, DECISIONS 2026-10-28 (1))* **Proužek #hero-down přes záložky (47b63e3f):** *„když se posunu z hlavní stránky dolů posuvníkem, který se na druhé straně obrátí nahoru,
+  chci, aby tam zůstal, i když překliknu na jiné okno“* — výklad (neověřeno s ownerem): proužek se šipkou nahoru zůstane pod lištou i v Lestrar,
+  Lífsrúnin a Safn rúna, ťuknutí vrátí k Rúnarovi. Potvrdit, pak postavit.
