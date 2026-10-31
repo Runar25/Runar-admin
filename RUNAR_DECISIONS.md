@@ -12645,3 +12645,18 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Hlídá:** smoke ㊎ (oba papíry: zavřený se vejde na 375 px i v IS, nota ho rozvine, obsah pod ním se nehne, svíčka se vytáhne a hraje,
   po dohrání zmizí, ťuknutí vedle ho stáhne) + 3 útoky; ㊋ soupis komponent (papír, svislá svíčka, kadidlo).
 - Affected doc(s): žádný jiný (vzhled a chování vlastní `v2/runar-reader.html`, `v2/runar-reader.css`, `v2/runar-app.js`, `v2/runar-svicka.js`).
+
+## 2026-10-31 (1) — Papír: nota přesně nad svíčkou, „How a reading works“ zase na střed, posuvník na počítači mimo svíčku; kadidlo na střed písmen
+
+- **Rozhodl:** owner 2026-10-31 nad screenshotem z počítače: *„kadidlo níž než text. znova. tohle už tu bylo předtím“* · *„nota musí být
+  přímo nad svíčkou. zarovnat“* · *„how a reading works můžeme teda zase přesunout do prostřed obrazu. na počítači vidím defekt“*.
+- **Co:** (1) Nota stojí v pruhu svíčky (týž pravý okraj a šířka jako svislá svíčka) → osa noty = osa svíčky (dřív 8 px vpravo).
+  (2) Nadpis „How a reading works“ na středu listu jako před papírem; BEFORE WE BEGIN s kadidlem zůstává vlevo. Mění 2026-10-30 (1)
+  bod 3: vlevo byl proto, že skrytá vodorovná svíčka za notou držela místo a střed by stál ~50 px mimo osu. Ta svíčka odešla (2026-10-30
+  (7)) a nota teď leží mimo tok řádku, nadpis má z obou stran stejný okraj → střed = střed listu. (3) Defekt na počítači: text papíru sahal k pravé hraně listu, bílý systémový posuvník ležel přes pruh
+  svíčky a natržený okraj ho rozřízl. Text teď končí před pruhem svíčky (řádky stejně široké), posuvník tenký v barvě oddělovačů.
+  (4) Kadidlo K1 má těžiště níž než dřívější svíčka; se starým zarovnáním sedělo 3,2 px pod středem písmen (změřeno inkoustem).
+  Posunuto o 0,28 em (drží i na telefonu).
+- **Proč stroj:** kadidlo/svíčka u nadpisu ujely podruhé (poprvé 2026-10-21) — §30: hlídá smoke ㊎ `verify_telefon.js` (střed kresby
+  kadidla = střed verzálek ±1 px, osa noty = osa svíčky ±1,5 px, nadpis návodu na středu listu ±2 px) + 3 útoky.
+- Affected doc(s): žádný jiný (vzhled vlastní `v2/runar-reader.css` a `v2/runar-reading.js`).

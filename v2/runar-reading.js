@@ -1540,7 +1540,10 @@ function _updateReadingForm() {
   // přehrávač hlasu. Tvar K1 z náhledu docs/inbox/2026-10-30-papir.html (owner „K1 je dobrý, dej to do appky, ale bez těch čárek nad
   // tyčkou“): tyčinka šikmo v misce; kouř jen při zapálení (.kad-hori, _svickaPriOtevreni v runar-app.js), vychází z konce tyčinky
   // (15.6, 9.4) — pramínky jsou kreslené od (12, 14), proto posun. Rozmazání kouře = filtr přímo v ikoně (jediná instance na stránce).
-  if (titleEl) titleEl.innerHTML = '<span id="card1-ikona" style="display:inline-block;vertical-align:0;margin-right:0.45em">'
+  // 2026-10-31 (owner „kadidlo níž než text, znova, tohle už tu bylo“): K1 má těžiště níž než svíčka (inkoust 9,4–20,6 z 24, svíčka byla
+  // na středu), se starým vertical-align 0 sedělo 3,2 px pod středem písmen (změřeno: inkoust ikony × výška verzálek Cinzel, 11,2 px).
+  // .28em = ten rozdíl v em, drží i na telefonu. Hlídá smoke ㊎ verify_telefon.js (střed kresby = střed písmen ±1 px).
+  if (titleEl) titleEl.innerHTML = '<span id="card1-ikona" style="display:inline-block;vertical-align:.28em;margin-right:0.45em">'
     + '<svg class="atab-ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"'
     + ' aria-hidden="true" style="margin-right:0;vertical-align:top;overflow:visible;filter:drop-shadow(0 0 2.5px rgba(255,191,0,0.55))">'
     + '<defs><filter id="kadMlha" x="-80%" y="-50%" width="260%" height="200%"><feGaussianBlur stdDeviation="1.5"/></filter></defs>'

@@ -210,6 +210,17 @@ const MERENI = `(() => {
       // se vejde (IS má delší nadpis), nota zavřený papír rozvine PŘES obsah (#reader-note se nehne), svislá svíčka se vytáhne a hraje,
       // po dohrání zmizí; ťuknutí vedle papír stáhne
       setLang('is'); await sl(300);
+      // 2026-10-31 (owner „kadidlo níž než text, znova, tohle už tu bylo“ — podruhé, proto kontrola): střed kresby kadidla (bez kouře)
+      // = střed verzálek nadpisu ±1 px; měří inkoust, ne rámeček (rámeček ikony je čtverec, kresba K1 v něm sedí níž)
+      var kl = document.getElementById('reader-card1-lbl'), kz = document.createElement('span');
+      kz.style.cssText = 'display:inline-block;width:1px;height:0;vertical-align:baseline'; kl.appendChild(kz);
+      var kb = kz.getBoundingClientRect().bottom; kl.removeChild(kz);
+      var kcs = getComputedStyle(kl), kc = document.createElement('canvas').getContext('2d'); kc.font = kcs.fontWeight + ' ' + kcs.fontSize + ' ' + kcs.fontFamily;
+      var kv = kb - kc.measureText('B').actualBoundingBoxAscent / 2, kt = 1e9, kd = -1e9;
+      [].forEach.call(document.querySelectorAll('#card1-ikona svg > path'), function (p) { var b = p.getBBox(), M = p.getScreenCTM();
+        [b.y, b.y + b.height].forEach(function (y) { var yy = M.d * y + M.f; kt = Math.min(kt, yy); kd = Math.max(kd, yy); }); });
+      if (!(kd > kt)) v.push('kadidlo u BEFORE WE BEGIN chybí');
+      else if (Math.abs((kt + kd) / 2 - kv) > 1) v.push('kadidlo u BEFORE WE BEGIN o ' + ((kt + kd) / 2 - kv).toFixed(1) + ' px mimo střed písmen (+ = níž)');
       var PAP = [['read-guide-papir', 'nav'], ['ritual-papir', 'rit']], pozn = document.getElementById('reader-note');
       for (var pi = 0; pi < PAP.length; pi++) {
         var obal = document.getElementById(PAP[pi][0]), pre = PAP[pi][1];
@@ -218,6 +229,11 @@ const MERENI = `(() => {
           hl = obal.querySelector('.papir-hlava > button').getBoundingClientRect();
         if (lb.left < 0 || lb.right > ${SIRKA} || Math.round(lb.height) !== 44) v.push('zavřený papír ' + pre + ': ' + Math.round(lb.left) + '–' + Math.round(lb.right) + ' px, výška ' + Math.round(lb.height));
         if (hl.right > nb.left || nb.right > lb.right) v.push('papír ' + pre + ' (IS): nadpis ' + Math.round(hl.left) + '–' + Math.round(hl.right) + ' px, nota ' + Math.round(nb.left) + '–' + Math.round(nb.right) + ' px');
+        // 2026-10-31 (owner „nota musí být přímo nad svíčkou, zarovnat“): osa noty = osa svislé svíčky (kresba 7–27 px → osa 17 px od levé hrany SVG)
+        var ns = document.querySelector('#' + pre + '-pb svg').getBoundingClientRect(), sx = document.getElementById(pre + '-sv').getBoundingClientRect().left + 17;
+        if (Math.abs((ns.left + ns.right) / 2 - sx) > 1.5) v.push('nota papíru ' + pre + ' není nad svíčkou (o ' + ((ns.left + ns.right) / 2 - sx).toFixed(1) + ' px)');
+        // 2026-10-31 (owner „how a reading works můžeme zase přesunout doprostřed“): nadpis návodu na středu listu
+        if (pre === 'nav' && Math.abs((hl.left + hl.right) / 2 - (lb.left + lb.right) / 2) > 2) v.push('nadpis návodu není na středu listu (o ' + Math.round((hl.left + hl.right) / 2 - (lb.left + lb.right) / 2) + ' px)');
         var au = document.getElementById(pre + '-a'); au.muted = true;
         for (var k6 = 0; k6 < 50 && !(isFinite(au.duration) && au.duration > 0); k6++) await sl(100);
         var poz0 = pozn.getBoundingClientRect().top;

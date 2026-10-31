@@ -586,9 +586,23 @@ button.card-lbl:focus-visible{outline:1px solid var(--gold);outline-offset:4px;}
 #ritual-papir{z-index:3;}
 .papir-list{position:absolute;left:-6px;right:-6px;top:0;height:44px;overflow:hidden;background:var(--card);}
 .papir.otevreny .papir-list,.papir.pohyb .papir-list{box-shadow:0 12px 26px rgba(0,0,0,.6);}
-.papir-hlava{display:flex;align-items:center;justify-content:space-between;gap:.6em;height:44px;padding:0 6px 0 14px;}
+.papir-hlava{position:relative;display:flex;align-items:center;gap:.6em;height:44px;padding:0 50px 0 14px;}
+/* 2026-10-31 (owner „nota musí být přímo nad svíčkou, zarovnat“): nota stojí v pruhu svíčky — right 8 px a šířka 34 px jako .svp-svisla,
+   takže osa noty = osa svíčky (dřív seděla na konci řádku 8 px vpravo od ní). */
+.papir-hlava > #guide-voice,.papir-hlava > #ritual-voice{position:absolute;right:8px;top:0;bottom:0;width:34px;display:flex;align-items:center;justify-content:center;}
+/* 2026-10-31 (owner „how a reading works můžeme teda zase přesunout doprostřed“): nadpis návodu na střed listu jako před papírem
+   (stejný okraj z obou stran, aby střed byl střed listu, ne zbytku vedle noty); BEFORE WE BEGIN s kadidlem zůstává vlevo. */
+#read-guide-papir .papir-hlava{justify-content:center;padding-left:50px;}
+#read-guide-papir .papir-hlava > .guide-lbl{text-align:center;}
 .papir-hlava > .guide-lbl,.papir-hlava > .card-lbl{width:auto;margin:0;flex:0 1 auto;min-width:0;text-align:left;}
-.papir-text{position:absolute;top:44px;left:0;right:0;bottom:0;overflow:hidden;padding:2px 52px 8px 16px;}
+.papir-text{position:absolute;top:44px;left:0;right:46px;bottom:0;overflow:hidden;padding:2px 6px 8px 16px;
+  scrollbar-width:thin;scrollbar-color:var(--dim) transparent;}
+/* 2026-10-31 (owner screenshot „na počítači vidím defekt“): text sahal až k pravé hraně listu, takže bílý systémový posuvník počítače
+   ležel přes pruh svíčky a natržený okraj ho rozřízl. Teď text končí před pruhem svíčky (řádky zůstávají stejně široké: 46 + 6 = dřívějších
+   52 px) a posuvník je tenký v barvě oddělovačů. Na telefonu se posuvník kreslí přes text a mizí, tam se nic nemění. */
+.papir-text::-webkit-scrollbar{width:4px;}
+.papir-text::-webkit-scrollbar-thumb{background:var(--dim);}
+.papir-text::-webkit-scrollbar-track{background:transparent;}
 .papir.otevreny .papir-text{overflow-y:auto;}
 .papir .guide{margin:0;}
 .papir .guide p{font-style:italic;font-size:1.02em;line-height:1.65;color:var(--white);margin:0 0 10px;opacity:0;transform:translateY(4px);
