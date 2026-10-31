@@ -2032,6 +2032,16 @@ function _spText(id, v) {
 // RÚNAR v liště = domů v appce: záložka čtení, nahoru k Rúnarovi (hlášení 228c8f1c).
 function _domuAppky() {
   if (typeof closeSidePanel === 'function') closeSidePanel();
+  // 2026-10-31 (owner nad kartou tahu: „RÚNAR vlevo nahoře měl být home page, je to tak obyčejně všude“): z karty tahu (runa ještě
+  // nepromluvila, nic se neztratí) domů = Rúnarova fotka a formulář; vyplněné volby a otázka zůstávají, vytažené runy odejdou
+  // (_resetReadingTab ve showAppTab). Do té doby showAppTab kartu tahu nechal a fotku nevrátil — logo jen posunulo nahoru.
+  // Zakládací Norny ne: formulář tam není (_syncFoundingLock). Hotové čtení zůstává (hlas, Ask) — čeká na ownera.
+  var _rc = document.getElementById('reader-rune-card'), _ro = document.getElementById('reader-output');
+  if (_rc && _rc.style.display !== 'none' && (!_ro || _ro.style.display === 'none') && !(typeof _foundingPending !== 'undefined' && _foundingPending)) {
+    _rc.style.display = 'none';
+    document.getElementById('reader-setup').style.display = 'block';
+    setSt('st-reader', '');
+  }
   showAppTab('reading');
   var klid = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   window.scrollTo({ top: 0, behavior: klid ? 'auto' : 'smooth' });
