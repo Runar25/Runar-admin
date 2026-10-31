@@ -1427,13 +1427,16 @@ function _hlasyTextu() {
 // Rituál pod BEFORE WE BEGIN (owner 2026-10-27) a „How a reading works“: nadpis je rozbalovač. Od 2026-10-30 PAPÍR (owner nad náhledem
 // docs/inbox/2026-10-30-papir.html: „papír super, svíčka super“; „before we begin se rozbalí na papír stejně“): zavřený proužek
 // s nadpisem a notou; otevřený se rozvine dolů PŘES formulář a řádky se objevují, jak list sjíždí; ťuknutí kamkoli vedle ho rychle
-// stáhne a hlas utichne (owner „7. ano“). Nota zavřený papír napřed rozvine, pak se vytáhne svíčka a hraje. Dlouhý text: papír nejvýš
-// do 72 % výšky okna, dál se v něm posouvá.
+// stáhne a hlas utichne (owner „7. ano“). Nota zavřený papír napřed rozvine, pak se vytáhne svíčka a hraje. Dlouhý text: papír je vysoký
+// jako svíčka i s voskem přetékajícím přes podložku, dál se v něm posouvá (owner 2026-10-31 nad screenshotem telefonu: „zkrátíme okno,
+// ať nezabírá celou plochu, musí být velký min jako celá délka svíčky i s voskem přetékajícím přes hranu … ať se okno nenačítá dlouho
+// a uživatel může spustit hlas“). Do té doby nejvýš 72 % výšky okna — na telefonu celý návod přes celou obrazovku a rozvíjení 1,9 s.
 var _PAPIRY = {
   guide:  { obal: 'read-guide-papir', lbl: 'read-guide-lbl',   hlas: 'guide-voice',  prefix: 'nav' },
   ritual: { obal: 'ritual-papir',     lbl: 'reader-card1-lbl', hlas: 'ritual-voice', prefix: 'rit' },
 };
 var _PAPIR_ZAVRENY = 44;   // výška zavřeného proužku (runar-reader.css .papir)
+var _PAPIR_VYSKA = 50 + 230 + 26;   // otevřený nejvýš: .svp-svisla top 50 + výška 230 (kaluž a přetékající vosk jsou uvnitř) + spodní okraj
 function _papirS(k) {
   var c = _PAPIRY[k]; if (c.s) return c.s;
   var obal = document.getElementById(c.obal), list = obal && obal.querySelector('.papir-list'), txt = obal && obal.querySelector('.papir-text');
@@ -1468,13 +1471,31 @@ function _papirOtevri(k, potom) {
   if (_papirOtevreny(k)) { if (potom) potom(); return; }
   for (var j in _PAPIRY) if (j !== k && _papirOtevreny(j)) _papirZavri(j);   // jeden papír naráz
   lbl.setAttribute('aria-expanded', 'true'); s.obal.classList.add('pohyb', 'otevreny');
-  var cil = Math.min(_PAPIR_ZAVRENY + s.txt.scrollHeight, Math.round(window.innerHeight * 0.72));
-  _papirAnim(s, cil, 1900, function () { [].forEach.call(s.txt.querySelectorAll('p'), function (p) { p.classList.add('videt'); }); if (potom) potom(); });
+  var cil = Math.min(_PAPIR_ZAVRENY + s.txt.scrollHeight, _PAPIR_VYSKA);
+  // Posouvat jde až rozvinutý list: během rozvíjení je text vyšší než list, takže posuvník naskočil a na konci zase zmizel
+  // (owner 2026-10-31 „pořád se objevuje posuvník a pak zmizí“). Ukazatel vlastní (.papir-posuv): na telefonu se systémový schovává.
+  _papirAnim(s, cil, 900, function () { [].forEach.call(s.txt.querySelectorAll('p'), function (p) { p.classList.add('videt'); });
+    s.obal.classList.add('rozvinuty'); _papirPosuv(s); if (potom) potom(); });
+}
+// Ukazatel posunu v papíru: tenká čárka podél textu, jen když se text do listu nevejde. Jen ukazuje (posouvá se prstem / kolečkem).
+function _papirPosuv(s) {
+  var u = s.posuv;
+  if (!u) {
+    u = s.posuv = document.createElement('span'); u.className = 'papir-posuv'; u.setAttribute('aria-hidden', 'true');
+    u.appendChild(document.createElement('span')); s.list.appendChild(u);
+    s.txt.addEventListener('scroll', function () { _papirPosuv(s); }, { passive: true });
+  }
+  var vys = s.txt.clientHeight, cela = s.txt.scrollHeight;
+  if (!s.obal.classList.contains('rozvinuty') || cela <= vys + 1) { u.style.display = 'none'; return; }
+  u.style.display = '';
+  var h = Math.max(24, vys * vys / cela), y = (vys - h) * s.txt.scrollTop / (cela - vys);
+  u.firstChild.style.height = h + 'px'; u.firstChild.style.transform = 'translateY(' + y + 'px)';
 }
 function _papirZavri(k) {
   var s = _papirS(k), lbl = document.getElementById(_PAPIRY[k].lbl);
   if (!s || !lbl) return;
-  lbl.setAttribute('aria-expanded', 'false'); s.obal.classList.remove('otevreny'); s.txt.scrollTop = 0;
+  lbl.setAttribute('aria-expanded', 'false'); s.obal.classList.remove('otevreny', 'rozvinuty'); s.txt.scrollTop = 0;
+  if (s.posuv) s.posuv.style.display = 'none';
   if (typeof svickaZtis === 'function') svickaZtis(_PAPIRY[k].prefix);   // smotaný papír = hlas utichne (owner „7. ano“)
   _papirAnim(s, _PAPIR_ZAVRENY, 380, function () { s.obal.classList.remove('pohyb'); [].forEach.call(s.txt.querySelectorAll('p'), function (p) { p.classList.remove('videt'); }); });
 }
@@ -2089,6 +2110,9 @@ function updateDropdown() {
   const tierEl  = document.getElementById('dd-tier');
   const emailEl = document.getElementById('dd-email');
   const balEl   = document.getElementById('dd-balance');
+  // Kolečko i po odhlášení (owner 2026-10-31: „po odhlášení přeskočilo kolečko s počtem čtení zprava vedle jména nalevo“): návrat níž
+  // ho bez přihlášeného nechal stát se starým číslem, jméno zmizelo a kolečko se přisunulo k SIGN IN. Bez účtu ho _pocetCteni schová.
+  _pocetCteni();
   if (!dd || !currentUser) return;
   const isIs = lang === 'is';
   // Tier names from TIERS config — Rule §8: never hardcode
@@ -2100,7 +2124,6 @@ function updateDropdown() {
   if (tierEl)  tierEl.textContent  = tierNames[userTier] || userTier.toUpperCase();
   setText('dd-journey', t('sp_higher_path') + ' →');
   var _tz = document.getElementById('topbar-tuzka'); if (_tz) _tz.setAttribute('aria-label', t('sp_names_btn').replace(/^\S+\s+/, ''));   // tužka = úprava jména (2026-10-28)
-  _pocetCteni();   // kolečko za jménem
   setText('dd-signout', t('sign_out'));   // 2026-10-19: cesta dál z rozbalovacího okna (openJourney)
   if (emailEl) emailEl.textContent = currentUser.email;
   if (balEl) {

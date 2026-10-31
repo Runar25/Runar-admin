@@ -595,15 +595,18 @@ button.card-lbl:focus-visible{outline:1px solid var(--gold);outline-offset:4px;}
 #read-guide-papir .papir-hlava{justify-content:center;padding-left:50px;}
 #read-guide-papir .papir-hlava > .guide-lbl{text-align:center;}
 .papir-hlava > .guide-lbl,.papir-hlava > .card-lbl{width:auto;margin:0;flex:0 1 auto;min-width:0;text-align:left;}
-.papir-text{position:absolute;top:44px;left:0;right:46px;bottom:0;overflow:hidden;padding:2px 6px 8px 16px;
-  scrollbar-width:thin;scrollbar-color:var(--dim) transparent;}
+.papir-text{position:absolute;top:44px;left:0;right:46px;bottom:0;overflow:hidden;padding:2px 6px 8px 16px;}
 /* 2026-10-31 (owner screenshot „na počítači vidím defekt“): text sahal až k pravé hraně listu, takže bílý systémový posuvník počítače
    ležel přes pruh svíčky a natržený okraj ho rozřízl. Teď text končí před pruhem svíčky (řádky zůstávají stejně široké: 46 + 6 = dřívějších
-   52 px) a posuvník je tenký v barvě oddělovačů. Na telefonu se posuvník kreslí přes text a mizí, tam se nic nemění. */
-.papir-text::-webkit-scrollbar{width:4px;}
-.papir-text::-webkit-scrollbar-thumb{background:var(--dim);}
-.papir-text::-webkit-scrollbar-track{background:transparent;}
-.papir.otevreny .papir-text{overflow-y:auto;}
+   52 px). Posuvník od téhož dne vlastní, viz níž. */
+.papir-text::-webkit-scrollbar{display:none;}
+/* 2026-10-31 (owner „pořád se objevuje posuvník a pak zmizí … posuvník u how a reading works asi být musí“): posouvá se až rozvinutý
+   list (.rozvinuty, ne už při rozvíjení), systémový posuvník je schovaný a místo něj stojí vlastní tenký ukazatel .papir-posuv — na
+   telefonu se systémový ukáže jen při posunu a zmizí, na počítači kreslil šipky. Ukazatel stojí v mezeře mezi textem a svíčkou. */
+.papir-text{scrollbar-width:none;}
+.papir.rozvinuty .papir-text{overflow-y:auto;}
+.papir-posuv{position:absolute;top:50px;bottom:12px;right:42px;width:2px;background:var(--card2);pointer-events:none;}
+.papir-posuv > span{display:block;width:2px;background:var(--border2);}
 .papir .guide{margin:0;}
 .papir .guide p{font-style:italic;font-size:1.02em;line-height:1.65;color:var(--white);margin:0 0 10px;opacity:0;transform:translateY(4px);
   transition:opacity .4s ease,transform .4s ease;}

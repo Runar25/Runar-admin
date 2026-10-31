@@ -29,7 +29,8 @@
 // glyf runy         .rune-svg  (runeSvg v runar-utils.js, §5)             kámen = tahaná runa, holá = popisek
 // ikona položky     .sp-ik     (_spText v runar-app.js)                    značka / kreslená ikona položky menu, 1,35 × text (2026-10-28)
 // papír            .papir .papir-list .papir-hlava .papir-text           nadpis s „+“ a notou, rozvine se přes obsah pod ním („How a reading
-//                   (.otevreny .pohyb .videt)                             works“, BEFORE WE BEGIN; owner 2026-10-30); .videt = odkrytý odstavec
+//                   (.otevreny .pohyb .rozvinuty .videt .papir-posuv)     works“, BEFORE WE BEGIN; owner 2026-10-30); .videt = odkrytý odstavec;
+//                                                                         .papir-posuv = ukazatel posunu dlouhého textu (2026-10-31)
 // přehrávač         .svp .svp-nota .svp-cas .svp-svicka .svp-svisla (.hraje)  JEDINÝ přehrávač hlasu (runar-svicka.js, owner 2026-10-29): nota ·
 //                   .svp-lesk .svp-vosk .svp-plamen .svp-jadro .svp-jiskra   čas · svíčka (= posuvník) · délka; .svp-svisla = svíčka v okraji
 //                   .svp-kour .svp-telo                                   papíru (bez času); části kresby svíčky; .hraje = nota se houpe

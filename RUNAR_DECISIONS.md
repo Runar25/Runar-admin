@@ -12671,3 +12671,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   nepravdivá — ověřeno v prohlížeči); nově hlas čtení ztichne (záložka zůstává 'reading', showAppTab ho neztišil a hrál nad formulářem).
   Čtení pro někoho jiného se neukládá — owner to ví a chce to tak.
 - Affected doc(s): žádný jiný (chování vlastní `v2/runar-app.js`, text `v2/runar-translations.js`, kartu `v2/runar-reader.html`).
+
+## 2026-10-31 (3) — Papír vysoký jako svíčka, vlastní ukazatel posunu; kolečko s počtem čtení po odhlášení zmizí
+
+- **Rozhodl:** owner 2026-10-31 nad screenshotem počítače a telefonu: *„pořád se objevuje posuvník a pak zmizí. posuvník u how a reading
+  works asi být musí, jelikož je dlouhé. ale zkrátíme okno, aby nezabíralo celou plochu … musí být velký min jako celá délka svíčky i s voskem
+  přetékajícím přes hranu … ať se okno nenačítá dlouho a uživatel může spustit hlas“* · *„po odhlášení přeskočilo kolečko s počtem čtení
+  zprava vedle jména nalevo“*.
+- **Co:** (1) Otevřený papír je nejvýš 306 px = horní okraj svíčky + celá svíčka (230 px i s kaluží a voskem přes podložku) + okraj; dál
+  se v něm posouvá. Mění 2026-10-30 (7) „nejvýš do 72 % výšky okna“ — na telefonu to byl celý návod přes celou obrazovku. Rozvine se za
+  0,9 s místo 1,9 s. (2) Posouvat jde až rozvinutý list: při rozvíjení byl text vyšší než list, posuvník naskočil a na konci zmizel.
+  Systémový posuvník je schovaný (telefon ho ukáže jen při posunu, počítač kreslil šipky), místo něj tenký vlastní ukazatel mezi textem
+  a svíčkou — jen když se text nevejde. (3) Kolečko po odhlášení: `updateDropdown` bez přihlášeného skončil dřív, než kolečko schoval;
+  stálo se starým číslem a po zmizení jména se přisunulo k SIGN IN. Teď ho schová.
+- Affected doc(s): žádný jiný (vzhled vlastní `v2/runar-reader.css`, chování `v2/runar-app.js`).
