@@ -63,6 +63,15 @@ export async function podepis(tajemstvi: string, user: string, text: string): Pr
   return nonce + "." + b64url(sig);
 }
 
+// Id odvozené z nonce (2026-10-31, Ask u neuloženého čtení): sloty Asků k témuž čtení jdou do voice_tickets jako „t:<uuid>“ — tvar,
+// který tabulka bere (check ^(r|t):uuid$), takže bez nového SQL. SHA-256(nonce:značka) → 16 bajtů ve tvaru uuid; s nonce hlasu
+// („t:<nonce>“) se nepotká, protože ten je náhodný a tohle hash.
+export async function odvozId(nonce: string, znacka: string): Promise<string> {
+  const h = new Uint8Array(await crypto.subtle.digest("SHA-256", enc.encode(nonce + ":" + znacka)));
+  const x = Array.from(h.slice(0, 16), (b) => b.toString(16).padStart(2, "0")).join("");
+  return x.slice(0, 8) + "-" + x.slice(8, 12) + "-" + x.slice(12, 16) + "-" + x.slice(16, 20) + "-" + x.slice(20, 32);
+}
+
 // Patří podpis tomuhle uživateli a PŘESNĚ tomuhle textu? Vrátí nonce, jinak null.
 export async function over(tajemstvi: string, listek: unknown, user: string, text: string): Promise<string | null> {
   if (!tajemstvi || typeof listek !== "string" || !user) return null;

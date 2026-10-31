@@ -968,7 +968,7 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   „everything linked to your account“.
 - [ ] *(řešit spolu s „Past v DB funkci `check_rate_limit`“ — týž úklid v téže funkci; úklid 2026-10-31)* **IP v `rate_limits`** nemá pevnou horní mez (úklid jen při ~5 % volání, řádky starší 1 h; 2026-10-21 nejstarší 18 h) — denní
   úklid cronem by dal zásadám přesnou lhůtu.
-- [ ] **Ask u čtení „for someone“** (neuložené, ne-tester) nemá `reading_id` → proxy ho počítá jako čtení a strhne měsíční jednotku
+- [x] ✅ *(CODE-tune 2026-10-31, owner „pro někoho jiného bude mít to stejné jako pro samotného uživatele“, DECISIONS 2026-10-31 (8); nasazeno claude-proxy.)* **Ask u čtení „for someone“** (neuložené, ne-tester) nemá `reading_id` → proxy ho počítá jako čtení a strhne měsíční jednotku
   (runar-reading.js ~1144, proxy ~532–657); TIER_FEATURES slibuje „one question on every reading“. Neověřeno během, jen čtením kódu.
 - [ ] **Rune Seeker a Ask:** `helper_ask` / `helper_ask2` ho zvou ptát se, pole je pro něj vypnuté (asks_per_reading 0).
 - [ ] **`qconsent_lbl`** (souhlas s odesláním otázky, čl. 9) jmenuje jen OpenAI; při výpadku jde otázka Anthropicu. Pole je dnes jen

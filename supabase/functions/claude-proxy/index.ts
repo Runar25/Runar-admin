@@ -40,7 +40,7 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.117.3";
-import { textKHlasu, normalizuj, podepis } from "../_shared/voice_ticket.ts";
+import { textKHlasu, normalizuj, podepis, over, odvozId } from "../_shared/voice_ticket.ts";
 import { ADMIN_EMAILS } from "../_shared/admini.ts";   // seznam adminů na jednom místě (2026-10-22, DECISIONS 2026-10-22 (5))
 
 const cors = {
@@ -549,6 +549,24 @@ serve(async (req: Request) => {
         legitAsk = true;
       }
     }
+    // ── Ask k NEuloženému čtení (pro někoho jiného) — owner 2026-10-31: „pro někoho jiného bude mít to stejné jako pro samotného
+    // uživatele“. Do té doby takové čtení nemělo reading_id, Ask spadl mezi čtení a strhl jednotku. Čtení se neukládá (třetí osoba nic
+    // neodsouhlasila), takže strop Asků nejde počítat z follow_up — počítá se ve voice_tickets: podpis čtení (týž, který nese hlas,
+    // _shared/voice_ticket.ts) + sloty „t:<odvozId(nonce, ask-N)>“, N = 1..askLimit. Slot se zapíše až PO úspěšné odpovědi (níž),
+    // jako u uloženého čtení follow_up — selhaný model otázku nesebere. Bez platného podpisu se Ask účtuje jako dřív.
+    let askSloty: string[] | null = null;
+    const askListek = body.ask_listek;
+    if (mode === "ask" && !legitAsk && userId && askListek && typeof askListek === "object") {
+      const nonce = await over(Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "", askListek.ticket, userId, String(askListek.text ?? ""));
+      if (nonce) {
+        askSloty = [];
+        for (let n = 1; n <= askLimit; n++) askSloty.push("t:" + await odvozId(nonce, "ask-" + n));
+        const { data: pouz, error: pErr } = await sb().from("voice_tickets").select("id").in("id", askSloty);
+        if (pErr) console.error("ask slots read failed (allowing):", pErr.message);   // fail open jako zámek a strop: výpadek DB Ask nezastaví
+        if (!pErr && (pouz?.length ?? 0) >= askLimit) return json({ error: "ask_limit", message: "The runes have answered all they will for this reading." }, 403);
+        legitAsk = true;
+      }
+    }
     // ── Zivotni runa je ZDARMA — a cenu urcuje SERVER, ne klient ─────────────
     // Neceni se podle `spread_cost` (to je cislo od klienta, proto ta podlaha
     // Math.max(1,...) niz), ale podle `mode`. Druha pulka je stejne dulezita:
@@ -796,6 +814,15 @@ serve(async (req: Request) => {
     // ── Reading succeeded — NOW deduct the credit/balance ──
     const creditsRemaining = await applyDeduction(deductPlan, userId,
       mode === "ask" ? "ask" : "reading", journal?.id ?? null);
+
+    // Ask k neuloženému čtení: zapsat první volný slot (viz askSloty výš). Obsazený slot = 23505, zkusit další; jiná chyba jen do logu.
+    if (askSloty && userId) {
+      for (const id of askSloty) {
+        const { error: sErr } = await sb().from("voice_tickets").insert({ id, user_id: userId });
+        if (!sErr) break;
+        if (sErr.code !== "23505") { console.error("ask slot write failed:", sErr.message); break; }
+      }
+    }
 
     // ── Persist to the journal SERVER-SIDE, in the same request right after the deduction ──
     // Not one transaction (2026-10-09: until then this said „atomic … charged <=> journaled“): the

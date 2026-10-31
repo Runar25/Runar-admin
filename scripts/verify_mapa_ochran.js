@@ -50,6 +50,7 @@ const MAPA = {
       'if (!isAdmin) {': 'life_rune_reset jen admin',
       'if (mode === "ask" && askLimit < 1) {': 'tier bez Asků',
       'if (used >= askLimit) {': 'strop Asků na jedno čtení',
+      'if (!pErr && (pouz?.length ?? 0) >= askLimit) return json({ error: "ask_limit", message: "The runes have answered all they will for this reading." }, 403);': 'strop Asků u neuloženého čtení (sloty ve voice_tickets, 2026-10-31)',
       'if (!userId) {': 'rituál jen přihlášený (druhá pojistka uvnitř větve)',
       '} else if (isLifeRune && pr?.life_rune_text) {': 'životní runa jen jednou',
       '} else if (isFounding && !pr?.life_rune_text) {': 'založení až po životní runě — jinak Norny zdarma',

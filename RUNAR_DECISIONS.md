@@ -12724,3 +12724,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   volání ElevenLabs — brzda kvóty ani evidence se podruhé nepočítají (náhled je zapsal v elevenlabs-proxy). Změna textu náhled zahodí
   (bez náhledu jde uložit jen nově vygenerovaný hlas, jako dřív). Funkce přijme jen mp3 (hlavička ID3 / rámec) a jen od admina.
 - Affected doc(s): RUNAR_BACKLOG.md.
+
+## 2026-10-31 (8) — Čtení pro někoho jiného má Asky jako vlastní čtení; appka předává podpis hlasu
+
+- **Rozhodl:** owner 2026-10-31 *„pro někoho jiného bude mít to stejné jako pro samotného uživatele. uživatel platí, jako by to byl on sám“*.
+- **Co:** (1) Ask k neuloženému čtení (pro někoho jiného, ne tester) se už neúčtuje jako nové čtení: server ho pozná podle podpisu čtení
+  (týž, který nese hlas, `_shared/voice_ticket.ts`) a strop Asků tieru počítá ve `voice_tickets` (sloty `t:<odvozId(nonce, ask-N)>` — tvar,
+  který tabulka bere, bez nového SQL). Slot se zapíše až po úspěšné odpovědi, jako `follow_up` u uloženého čtení. Bez podpisu se Ask
+  účtuje jako dřív. Čtení samo se dál neukládá (třetí osoba nic neodsouhlasila — 2026-10-11). (2) Vada nalezená cestou: `callProxy`
+  podpis hlasu (`voice`) od 2026-10-11 zahazoval, takže čtení pro někoho jiného by u ne-testera skončilo bez hlasu (`voice_unbound`);
+  testerů se netýkalo (jejich čtení se ukládají). Teď ho předává.
+- **Ověřeno:** `odvozId` a podpis na známých vstupech v Node (tvar id podle checku tabulky, cizí uživatel neprojde); mapa ochran
+  (nová ochrana zapsaná). Naostro s modelem neověřeno — vyžaduje čtení ne-testera.
+- Affected doc(s): RUNAR_BACKLOG.md.

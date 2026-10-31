@@ -1791,7 +1791,7 @@ function _stinVezmi() { var z = _stinZaznam; _stinZaznam = { sys: null, prompt: 
 
 // ─── PROXY ───────────────────────────────────────────────
 // use_credit: true = odečíst kredit na backendu (monthly slot vyčerpán)
-async function callProxy(sys, prompt, maxTokens, use_credit = false, credit_cost = 1, journal = null, mode = '') {
+async function callProxy(sys, prompt, maxTokens, use_credit = false, credit_cost = 1, journal = null, mode = '', askListek = null) {
   try {
     const headers = { 'Content-Type': 'application/json' };
     const { data: { session } } = await sb.auth.getSession();
@@ -1800,6 +1800,7 @@ async function callProxy(sys, prompt, maxTokens, use_credit = false, credit_cost
     const res  = await fetch(PROXY, {
       method: 'POST', headers,
       body: JSON.stringify({ system: sys, prompt, max_tokens: maxTokens, use_credit, spread_cost: credit_cost, journal, mode,
+        ask_listek: askListek || undefined,   // 2026-10-31: Ask k neuloženému čtení — podpis čtení (claude-proxy, askSloty)
         stin: prompt ? _stinVezmi() : undefined,   // 2026-10-21 F2: s čím appka skládala prompt (server porovná; čtení beze změny)
         // Engine (od 2026-10-09 sol pro všechny, DECISIONS 2026-10-09 (13)): posílá se jen adminova volba 'opus' — u každého
         // volání modelu, i životní runy a rozboru jména. Co jde na sol, rozhoduje server; ne-admina s 'opus' ignoruje.
@@ -1822,7 +1823,10 @@ async function callProxy(sys, prompt, maxTokens, use_credit = false, credit_cost
       updateAuthUI();
     }
 
+    // voice: podpis neuloženého čtení pro hlas (a od 2026-10-31 i pro Ask). Do 2026-10-31 se tu nepředával — server ho posílal od
+    // 2026-10-11 (DECISIONS (61)), ale appka ho zahodila, takže čtení pro někoho jiného (ne tester) by hlas nedostalo (voice_unbound).
     return { text: data.content?.[0]?.text || data.text || '', reading_id: data.reading_id, saved: data.saved, ask_saved: data.ask_saved,
+             voice: data.voice || null,
              model: (data.usage && data.usage.model) || null,   // 2026-09-25: skutečný model (fallback) — složení čtení v reportu
              name_lore_for: data.name_lore_for, name_lore_count: data.name_lore_count, name_lore_saved: data.name_lore_saved,
              reset: data.reset };

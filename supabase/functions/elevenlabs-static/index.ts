@@ -71,12 +71,14 @@ serve(async (req) => {
 
     // Brzda kreditů (2026-10-11, DECISIONS (48)): audio Kolekce bere z téže kvóty jako hlas ve čtení — táž brzda jako elevenlabs-proxy
     // (převod se smí vyčerpat, dobití ne; pravidlo v _shared/voice_usage.ts). Stav nezjištěn = pustit (fail open).
-    const kvota = nahled ? null : await fetchQuota(EL_API_KEY)
-    const brzda = nahled ? { pustit: true, spotreba: 0, hladina: 0 } : brzdaHlasu(kvota, kredityHlasu(resolvedModel, text.length))
+    if (!nahled) {   // s mp3 z náhledu se ElevenLabs nevolá — brzda jen tam, kde se platí
+    const kvota = await fetchQuota(EL_API_KEY)
+    const brzda = brzdaHlasu(kvota, kredityHlasu(resolvedModel, text.length))
     if (!brzda.pustit) {
       await saveQuota(createClient(SB_URL, SB_KEY), kvota!, 'brake')   // každé zastavení brzdou = snímek (48)
       return new Response(JSON.stringify({ error: 'voice_quota_rest', used: brzda.spotreba, safe: brzda.hladina }),
         { status: 429, headers: { ...cors, 'Content-Type': 'application/json' } })
+    }
     }
 
     // 1. Generuj audio přes ElevenLabs — jen když náhled nepřišel

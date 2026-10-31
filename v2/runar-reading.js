@@ -1136,7 +1136,10 @@ async function askRunar() {
   // Strop odpovědi = RUNAR_MODES.ask.max_tokens (config, §10; historie stropu stojí tam). Do 2026-10-12 tu stál natvrdo
   // a komentář sliboval strop podle jazyka — byl jeden pro oba.
   var askCap = RUNAR_MODES.ask.max_tokens;
-  var res = await callProxy(sys, prompt, askCap, shouldUseCredit(), SPREAD_COSTS.single.credits, _askJournal, 'ask');
+  // Neuložené čtení (pro někoho jiného): Ask stejně jako u vlastního — server ho pozná podle podpisu čtení (owner 2026-10-31).
+  var _rtA = readerTexts[lang] || {};
+  var _askListek = (!_askJournal && _rtA.voice) ? { ticket: _rtA.voice.ticket, text: _rtA.voice.text } : null;
+  var res = await callProxy(sys, prompt, askCap, shouldUseCredit(), SPREAD_COSTS.single.credits, _askJournal, 'ask', _askListek);
   if (res.error) {
     // chyba: výměna zmizí, jako by se Ask nestal (otázka zůstává v poli k novému pokusu)
     if (cislo === 1) { if (qEl) qEl.style.display = 'none'; if (ans) { ans.innerHTML = ''; ans.style.display = 'none'; } }
