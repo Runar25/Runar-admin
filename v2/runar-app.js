@@ -1014,7 +1014,6 @@ function updateUIText() {
   _updateAreaSeekLabels();
   // begin-btn nastavuje _updateReadingForm (návštěvník má jiný text, 2026-10-10)
   setRuneText('draw-lbl', t('draw_lbl'));   // popisky s runou → setRuneText (naše SVG, bod 11, 2026-10-10)
-  setText('draw-note', t('draw_note'));
   setRuneText('btn-random', t('random_btn'));
   setText('mode-btn-single',    t('spread3_mode_single'));
   setText('mode-btn-norns',     t('spread_mode_norns'));
@@ -2035,9 +2034,13 @@ function _domuAppky() {
   // 2026-10-31 (owner nad kartou tahu: „RÚNAR vlevo nahoře měl být home page, je to tak obyčejně všude“): z karty tahu (runa ještě
   // nepromluvila, nic se neztratí) domů = Rúnarova fotka a formulář; vyplněné volby a otázka zůstávají, vytažené runy odejdou
   // (_resetReadingTab ve showAppTab). Do té doby showAppTab kartu tahu nechal a fotku nevrátil — logo jen posunulo nahoru.
-  // Zakládací Norny ne: formulář tam není (_syncFoundingLock). Hotové čtení zůstává (hlas, Ask) — čeká na ownera.
+  // Zakládací Norny ne: formulář tam není (_syncFoundingLock).
+  // Z hotového čtení taky domů (owner 2026-10-31 „11. ano“, i když čtení pro někoho jiného se neuloží). Výklad schovával už
+  // _resetReadingTab, ale hlas hrál dál nad formulářem: záložka zůstává 'reading', takže showAppTab hlas neztiší — tady ano.
   var _rc = document.getElementById('reader-rune-card'), _ro = document.getElementById('reader-output');
-  if (_rc && _rc.style.display !== 'none' && (!_ro || _ro.style.display === 'none') && !(typeof _foundingPending !== 'undefined' && _foundingPending)) {
+  var _vyklad = _ro && _ro.style.display !== 'none';
+  if (_rc && (_vyklad || _rc.style.display !== 'none') && !(typeof _foundingPending !== 'undefined' && _foundingPending)) {
+    if (_vyklad && typeof svickaZtisVse === 'function') svickaZtisVse();
     _rc.style.display = 'none';
     document.getElementById('reader-setup').style.display = 'block';
     setSt('st-reader', '');

@@ -1330,7 +1330,6 @@ const UI_TEXT = {
     opt:              '(OPTIONAL)',
     begin_btn:        'BEGIN THE READING',
     draw_lbl:         'ᚠ DRAW YOUR RUNE',
-    draw_note:        'Close your eyes. Hold your question. Then choose the rune that calls to you.',
     random_btn:       'ᚲ LET THE RUNES DECIDE',
     speak_btn:        'HEAR RÚNAR SPEAK',
     begin_btn_visitor: 'DRAW A RUNE',        // 2026-10-10: návštěvník čtení nedostane — tlačítko ho neslibuje (_updateReadingForm); vráceno s formulářem návštěvníka
@@ -1911,7 +1910,6 @@ const UI_TEXT = {
     opt:              '(VALKVÆTT)',
     begin_btn:        'HEFJA LESTURINN',
     draw_lbl:         'ᚠ DRAGÐU RÚNINA ÞÍNA',
-    draw_note:        'Lokaðu augunum um stund. Haltu spurningunni í huga. Veldu síðan rúnina sem kallar til þín.',
     random_btn:       'ᚲ LÁTTU RÚNIRNAR VELJA',
     speak_btn:        'HEYRA RÚNAR TALA',
     begin_btn_visitor: 'DRAGA RÚN',          // 2026-10-10: viz EN; „draga rún“ korpus 4× (jako DRAGA AÐRA RÚN)
