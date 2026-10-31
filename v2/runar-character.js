@@ -2267,7 +2267,8 @@ function buildReadingPrompt(u, drawn, lang, corrections) { return buildReadingPr
 var RP_KRIZ = {
   is: {
     seeker:'Leitandi', lifeRune:'Lífsrún', area:'Svið', seeking:'Leitin', seekJoin:' og ', question:'Spurning',
-    positions:['RÚNIN 1 (Miðja / Kjarni — verdandi):','RÚNIN 2 (Ofan / Þrá — skuld):','RÚNIN 3 (Undir / Rót — urd):','RÚNIN 4 (Að baki / Fortíð — urd):','RÚNIN 5 (Framar / Stefna — skuld):'],
+    // 2026-10-31: osy islandsky a jako EN (dřív klíče „verdandi/skuld/urd“, u runy 3 „urd“ × EN „hidden“) — v5.21
+    positions:['RÚNIN 1 (Miðja / Kjarni — nútíð):','RÚNIN 2 (Ofan / Þrá — framtíð):','RÚNIN 3 (Undir / Rót — dulið):','RÚNIN 4 (Að baki / Fortíð — fortíð):','RÚNIN 5 (Framar / Stefna — framtíð):'],
     intro:'Leitandinn dregur fimm rúnir — Áttavitinn.',
     landing:'NIÐURLAGIÐ — síðasta setningin svarar einu: hvað er orðið sýnilegt nú þegar kraftarnir fimm sjást saman, safnaðir um miðjuna. Segðu það með orðum myndarinnar. Engin spurning í lokin, enginn boðskapur, ekkert „þetta þýðir", engin huggun.',
     langInstr:'',

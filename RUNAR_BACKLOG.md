@@ -71,7 +71,8 @@
       dvojznačné (věta obrazu, nebo věta čtení?) · (d) „through image and symbol“ u otázky — „symbol“ zve k mystice, kterou systém zakazuje
       („Avoid abstract, mystical-sounding lines“) · (e) délka stojí v promptu dvakrát (uprostřed a na konci) — záměr (připomínka, Opus −8 slov),
       nechat · (f) štítky pozic „what lives inside“ / „subconscious“ — potenciální vada výš. Každé až s měřením, ne přepisem naslepo.
-    - IS osy Kříže „verdandi/skuld/urd“ — zatím bez rozhodnutí.
+    - ✅ *(CODE-tune 2026-10-31, owner „kříž udělej“, DECISIONS 2026-10-31 (6), v5.21)* IS osy Kříže „verdandi/skuld/urd“ → nútíð / framtíð /
+      dulið / fortíð jako EN. Uzávěr EN „complete and whole“ × IS „Vertu hnitmiðaður“ (týž bod kontroly 2026-10-16) zůstává — není to osa.
     - [ ] **Pro V3 — rozpracováno níž** (owner: *„dobré zkusit pro V3, kterou máme už mírně rozpracovanou. zapsat to. celé to rozpracuj, ať je
       čeho se chytit, ale řešit to budeme později“*).
   - **V3 = přestavba promptu s méně zákazy** (owner 2026-10-16: *„měla to být verze s méně zákazy podle definice, jak se tvoří takový
@@ -158,7 +159,7 @@ hlídal jen V2 cestu.
   přejít na jiný subscription kvůli nákladům… i s tím, kolik potřebuju uživatelů pro návratnost“*). Původní (pricing ji uvádí jako
   „interactive calculator, 2026-06-15“) se nenašla v repu, v artifactech ani v přepisech konverzací (červnové už nejsou) — nejspíš artifact
   v chatu na claude.ai; má-li ho owner, navázat na něj, jinak postavit znovu nad čísly z `scripts/utils/pricing_tabulka.js`.
-- [ ] **Teach ve shrine platí statický hlas dvakrát** (nalezeno 2026-10-11 CODE-tune při mapování cest hlasu, DECISIONS 2026-10-11 (61)):
+- [x] ✅ *(CODE-tune 2026-10-31, owner „shrine opravit“, DECISIONS 2026-10-31 (7))* **Teach ve shrine platí statický hlas dvakrát** (nalezeno 2026-10-11 CODE-tune při mapování cest hlasu, DECISIONS 2026-10-11 (61)):
   náhled jde přes elevenlabs-proxy, „SAVE VOICE TO MEMORY“ ho přes elevenlabs-static vygeneruje znovu → 2× kredity ElevenLabs za každé
   audio Kolekce. Uložení může vzít audio z náhledu (funkce je jen pro admina; upload místo nového volání EL).
 
@@ -557,7 +558,8 @@ Přihlášený člověk si tedy může za cenu jednoho kreditu nechat vygenerova
 generuje text, který s Rúnarem nemá nic společného.
 **Zmizí to samo**, když se prompt přesune na server (výš). Do té doby aspoň vědět, že to tak je.
 
-### Známkování čtení testery — a co s tím pak jde dělat (2026-08-16)
+### ✖ Známkování čtení testery — a co s tím pak jde dělat (2026-08-16)
+*(owner 2026-10-31: „známkování NE“ — nestavět. Kánon k měření pocitu přesnosti: RUNAR_DESIGN „Rúnarův rejstřík“.)*
 KUKY: *„jestli bychom pro testery neměli udělat i kolonku, kde by hodnotili to čtení. známkování…
 stanovili bychom, jaké výstupy by nám od nich nejvíc pomohly slyšet."* A dál: *„tohle všechno máme
 připravené. až budeme mít hodně testerů, tak jim budeme vypínat a zapínat oblasti s tím, že budeme
@@ -762,7 +764,8 @@ Procházka je tím úplná.
 
 ---
 
-## Meaning-tap: klik na význam runy zvýrazní, kde ve čtení žije (single + spready)
+## ✖ Meaning-tap: klik na význam runy zvýrazní, kde ve čtení žije (single + spready)
+*(owner 2026-10-31: „ťuk není potřeba“ — nestavět.)*
 
 KUKY 2026-09-13 (při přestavbě životní runy): u single jde ťuknout na glyf → popup se jménem
 a klíčovými slovy (`runar-rune-popup.js`, váže se na `.rlbl-glyph`). Chybí druhý krok: **klik na
@@ -942,7 +945,7 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   zúžit základ `scripts/komponenty_zaklad.json` (`--zaklad`) a doplnit soupis. CODE-tune.
 - [ ] **„What are you seeking — This sets the tone“ (hlášení 3b79eac3):** owner: *„je složité si představit, co tím tónem myslíme“* — nová
   věta nápovědy `seek_hint` EN + IS, návrh ownerovi (co volba ve čtení skutečně dělá: tvar konce čtení, `SEEK_SHAPE` v runar-utils.js).
-- [ ] **Písmo čtení je malé (testeři IS, hlášení 4910de7c, db5e2b38 — čtení Norny 452a97c5):** *„Letrið er of lítið, það er erfitt að
+- [x] ✅ *(owner 2026-10-31 „písmo už je hotové“ — čtení má 19 px od aaef0f6.)* **Písmo čtení je malé (testeři IS, hlášení 4910de7c, db5e2b38 — čtení Norny 452a97c5):** *„Letrið er of lítið, það er erfitt að
   lesa þetta.“* Změřit dnešní velikost textu čtení na telefonu a navrhnout větší (pozor na délku čtení na obrazovce). Rozhodne owner.
 - [ ] **Islandské věty, kterým tester nerozumí (f35d5943 21:05, aa0a852e 00:02 — bez označeného textu):** aa0a852e přišlo ve stejnou minutu
   jako db5e2b38 k Nornám 452a97c5 — nejspíš věta „Í lífi þínu gæti þetta verið kunnugleg nánd sem breytist í hlé, eða hlé sem gefur henni

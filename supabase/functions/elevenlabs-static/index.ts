@@ -42,7 +42,7 @@ serve(async (req) => {
       return new Response(JSON.stringify({ error: 'forbidden' }),
         { status: 403, headers: { ...cors, 'Content-Type': 'application/json' } })
 
-    const { text, rune_name, rune_glyph, lang, version } = await req.json()
+    const { text, rune_name, rune_glyph, lang, version, audio_b64 } = await req.json()
 
     if (!text)       throw new Error('text is required')
     if (typeof text !== 'string' || text.length > 3000) throw new Error('text too long')
@@ -54,17 +54,37 @@ serve(async (req) => {
     const resolvedVoiceId = EL_VOICE_ID       // týž hlas pro oba jazyky — eleven_v3 islandštinu pozná z textu
     const resolvedModel   = elModel(lang)     // rozhoduje server, klientovi se nevěří
 
+    // ── mp3 z náhledu (2026-10-31, owner „shrine opravit“) ──
+    // Shrine pustí náhled přes elevenlabs-proxy (zaplacený a zapsaný v evidenci tam) a při uložení pošle jeho mp3. Dřív se tady hlas
+    // generoval znovu → ElevenLabs 2× za každé audio Kolekce. S náhledem se ElevenLabs nevolá, brzda ani evidence se nepočítají podruhé.
+    // Jen admin (výš); bez audio_b64 jako dřív. Kontrola: rozumná velikost a hlavička MP3 (ID3 nebo rámec 0xFFEx).
+    let nahled: Uint8Array | null = null
+    if (audio_b64 !== undefined) {
+      if (typeof audio_b64 !== 'string' || audio_b64.length > 8_000_000) throw new Error('audio_b64 invalid')
+      const bin = atob(audio_b64)
+      nahled = new Uint8Array(bin.length)
+      for (let i = 0; i < bin.length; i++) nahled[i] = bin.charCodeAt(i)
+      const id3 = nahled[0] === 0x49 && nahled[1] === 0x44 && nahled[2] === 0x33
+      const ramec = nahled[0] === 0xff && (nahled[1] & 0xe0) === 0xe0
+      if (nahled.length < 1000 || !(id3 || ramec)) throw new Error('audio_b64 is not mp3')
+    }
+
     // Brzda kreditů (2026-10-11, DECISIONS (48)): audio Kolekce bere z téže kvóty jako hlas ve čtení — táž brzda jako elevenlabs-proxy
     // (převod se smí vyčerpat, dobití ne; pravidlo v _shared/voice_usage.ts). Stav nezjištěn = pustit (fail open).
-    const kvota = await fetchQuota(EL_API_KEY)
-    const brzda = brzdaHlasu(kvota, kredityHlasu(resolvedModel, text.length))
+    const kvota = nahled ? null : await fetchQuota(EL_API_KEY)
+    const brzda = nahled ? { pustit: true, spotreba: 0, hladina: 0 } : brzdaHlasu(kvota, kredityHlasu(resolvedModel, text.length))
     if (!brzda.pustit) {
       await saveQuota(createClient(SB_URL, SB_KEY), kvota!, 'brake')   // každé zastavení brzdou = snímek (48)
       return new Response(JSON.stringify({ error: 'voice_quota_rest', used: brzda.spotreba, safe: brzda.hladina }),
         { status: 429, headers: { ...cors, 'Content-Type': 'application/json' } })
     }
 
-    // 1. Generuj audio přes ElevenLabs
+    // 1. Generuj audio přes ElevenLabs — jen když náhled nepřišel
+    let audioBuffer: ArrayBuffer | Uint8Array
+    const sb = createClient(SB_URL, SB_KEY)
+    if (nahled) {
+      audioBuffer = nahled
+    } else {
     const elRes = await fetch(
       `https://api.elevenlabs.io/v1/text-to-speech/${resolvedVoiceId}/stream`,
       {
@@ -86,11 +106,11 @@ serve(async (req) => {
       throw new Error(`ElevenLabs ${elRes.status}: ${err}`)
     }
 
-    const audioBuffer = await elRes.arrayBuffer()
-    const sb = createClient(SB_URL, SB_KEY)
+    audioBuffer = await elRes.arrayBuffer()
     // Evidence hlasu (2026-09-25): i statické audio stojí znaky ElevenLabs — zapsat hned po vygenerování, ne až po
     // uložení (když Storage selže, znaky už jsou zaplacené). user_id = admin, který generoval.
     await logVoice(sb, { user_id: caller.id, source: 'static', lang: lang === 'is' ? 'is' : 'en', model: resolvedModel, chars: text.length })
+    }
 
     // 2. Ulož audio do Supabase Storage
     const fileName = `static/${lang}/${rune_name.toLowerCase()}_${version}.mp3`

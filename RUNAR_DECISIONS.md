@@ -12707,3 +12707,20 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   a mp3 hlasu uložených čtení — zásady slibují „everything linked to your account“. Samotest počítá mp3 proti DB.
   (4) „Mrtvé texty“ zavřené bez změny — nejsou vada (důvody u položky).
 - Affected doc(s): RUNAR_PRIVACY.md (co export obsahuje), RUNAR_BACKLOG.md.
+
+## 2026-10-31 (6) — Islandské osy Kříže islandsky (v5.21); ťuknutí na význam a známkování testery nestavět
+
+- **Rozhodl:** owner 2026-10-31 k nápadům z backlogu: *„ťuk není potřeba, známkování NE, … kříž udělej“*.
+- **Co:** (1) Islandský Kříž měl u pozic klíče z kódu „verdandi / skuld / urd“ — nejsou to islandská slova a u runy 3 „urd“ (minulost)
+  odporovalo EN „hidden“ (kontrola promptu CODE-read 2026-10-16 bod 4). Teď nútíð / framtíð / dulið / fortíð / framtíð, stejně jako EN
+  present / future / hidden / past / future („Dulið“ jako v Podkově). Golden: změnily se jen tyto řádky v `kriz_is` a `kriz_lens_is`.
+  Prompt v5.21. (2) Meaning-tap a známkování čtení testery — zavřeno, nestavět.
+- Affected doc(s): RUNAR_BACKLOG.md (osy Kříže, Meaning-tap, Známkování, písmo čtení).
+
+## 2026-10-31 (7) — Shrine Teach ukládá hlas z náhledu, ElevenLabs se platí jednou
+
+- **Rozhodl:** owner 2026-10-31 *„shrine opravit“* (RUNAR_BACKLOG „Teach ve shrine platí statický hlas dvakrát“, DECISIONS 2026-10-11 (61)).
+- **Co:** SAVE VOICE TO MEMORY pošle `elevenlabs-static` mp3 náhledu, který admin právě slyšel (`audio_b64`); funkce ho uloží místo nového
+  volání ElevenLabs — brzda kvóty ani evidence se podruhé nepočítají (náhled je zapsal v elevenlabs-proxy). Změna textu náhled zahodí
+  (bez náhledu jde uložit jen nově vygenerovaný hlas, jako dřív). Funkce přijme jen mp3 (hlavička ID3 / rámec) a jen od admina.
+- Affected doc(s): RUNAR_BACKLOG.md.

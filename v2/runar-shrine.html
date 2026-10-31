@@ -623,6 +623,9 @@ let activeChar    = null;
 let teachRune     = null;
 let teachText     = '';
 let teachAudioUrl = null;
+// 2026-10-31 (owner „shrine opravit“): mp3 z náhledu se při SAVE VOICE TO MEMORY pošle serveru — dřív elevenlabs-static hlas vygeneroval
+// znovu a ElevenLabs se platil dvakrát. Uloží se přesně to, co admin slyšel; změna textu náhled zahodí (onTeachTextEdit).
+let teachPreviewBlob = null;
 let teachVersion  = null;
 let corrections    = [];        // shared format: [{from_word, to_word, lang}]
 let corrScope     = 'both';
@@ -994,6 +997,7 @@ function onTeachTextEdit() {
   document.getElementById('btn-save-voice').style.display = 'none';
   setRuneText('btn-teach-voice', tUI('voice_btn'));
   setSt('st-teach-voice', '');
+  teachPreviewBlob = null;
 }
 
 async function invokeRunar() {
@@ -1071,6 +1075,7 @@ async function generateStaticVoice() {
     if (!data.audio_url) throw new Error('No audio_url in response');
 
     const teachBlob = await fetch(data.audio_url).then(r => r.blob());
+    teachPreviewBlob = teachBlob;
     const teachBlobUrl = URL.createObjectURL(teachBlob);
     teachAudioUrl = data.audio_url;
 
@@ -1110,6 +1115,9 @@ async function saveStaticVoice() {
       teachVersion = (maxRow?.version ?? 0) + 1;
     }
 
+    // mp3 z náhledu jako base64 (FileReader dá data:URL, za čárkou je base64)
+    const audioB64 = teachPreviewBlob ? await new Promise((ok, chyba) => { const fr = new FileReader();
+      fr.onload = () => ok(String(fr.result).split(',')[1] || ''); fr.onerror = chyba; fr.readAsDataURL(teachPreviewBlob); }) : '';
     const { data: { session: _elSession } } = await sb.auth.getSession();
     const res = await fetch(EL_STATIC, {
       method: 'POST',
@@ -1121,6 +1129,7 @@ async function saveStaticVoice() {
         rune_glyph: teachRune.g,
         lang:       lang || 'en',
         version:    teachVersion,
+        ...(audioB64 ? { audio_b64: audioB64 } : {}),
       })
     });
 
@@ -1157,7 +1166,7 @@ function resetTeach() {
   document.getElementById('teach-audio').src = '';
   document.getElementById('teach-rune-info').textContent = 'No rune selected.';
   document.querySelectorAll('#teach-grid .rb').forEach(b => b.classList.remove('on'));
-  teachRune = null; teachText = ''; teachAudioUrl = null; teachVersion = null;
+  teachRune = null; teachText = ''; teachAudioUrl = null; teachVersion = null; teachPreviewBlob = null;
   document.getElementById('btn-invoke').disabled = true;
   document.getElementById('btn-teach-voice').style.display = 'none';
   setRuneText('btn-teach-voice', tUI('voice_btn'));

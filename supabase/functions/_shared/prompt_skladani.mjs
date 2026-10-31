@@ -110,7 +110,9 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 // v5.19 (2026-10-20): islandská klíčová slova devíti run běžnými slovy (velmegun, hið heilaga, leiðsögn, viska forfeðranna, að gera rétt,
 //    þroski, Uruz bez „hrár kraftur“, innri vöxtur, óskrifað blað) v k_is i v 5. sloupci RUNE_IMAGES (16 obrazů). DECISIONS 2026-10-20 (5).
 // v5.20 (2026-10-20): Ingwaz formula_is „innri vaxtar“ místo „innri þróunar“ — sladěno s klíčem v5.19 (DECISIONS 2026-10-20 (6)).
-const RUNAR_PROMPT_VERSION = 'v5.20-ingwaz';
+// v5.21 (2026-10-31): IS osy Kříže islandsky a jako EN (nútíð / framtíð / dulið / fortíð) místo klíčů „verdandi/skuld/urd“;
+//    owner „kříž udělej“, kontrola promptu CODE-read 2026-10-16 bod 4. EN beze změny. DECISIONS 2026-10-31 (6).
+const RUNAR_PROMPT_VERSION = 'v5.21-kriz-osy';
 
 // Měsíční strop hlasu pro všechny (VOICE_MONTHLY_LIMIT = 5, od 2026-09-11) ZRUŠEN 2026-10-11: „limit na hlas max 5 na měsíc“ byl
 // ownerův pokyn pro testery, omylem pro všechny (DECISIONS 2026-10-11 (49)); owner: „žádný měsíční strop 5 hlasů není!!!“. Rúnar přečte
@@ -5873,7 +5875,8 @@ function buildReadingPrompt(u, drawn, lang, corrections) { return buildReadingPr
 var RP_KRIZ = {
   is: {
     seeker:'Leitandi', lifeRune:'Lífsrún', area:'Svið', seeking:'Leitin', seekJoin:' og ', question:'Spurning',
-    positions:['RÚNIN 1 (Miðja / Kjarni — verdandi):','RÚNIN 2 (Ofan / Þrá — skuld):','RÚNIN 3 (Undir / Rót — urd):','RÚNIN 4 (Að baki / Fortíð — urd):','RÚNIN 5 (Framar / Stefna — skuld):'],
+    // 2026-10-31: osy islandsky a jako EN (dřív klíče „verdandi/skuld/urd“, u runy 3 „urd“ × EN „hidden“) — v5.21
+    positions:['RÚNIN 1 (Miðja / Kjarni — nútíð):','RÚNIN 2 (Ofan / Þrá — framtíð):','RÚNIN 3 (Undir / Rót — dulið):','RÚNIN 4 (Að baki / Fortíð — fortíð):','RÚNIN 5 (Framar / Stefna — framtíð):'],
     intro:'Leitandinn dregur fimm rúnir — Áttavitinn.',
     landing:'NIÐURLAGIÐ — síðasta setningin svarar einu: hvað er orðið sýnilegt nú þegar kraftarnir fimm sjást saman, safnaðir um miðjuna. Segðu það með orðum myndarinnar. Engin spurning í lokin, enginn boðskapur, ekkert „þetta þýðir", engin huggun.',
     langInstr:'',
