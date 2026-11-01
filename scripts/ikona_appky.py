@@ -57,18 +57,71 @@ TVARY = {'android': ('kruh', 24 / 55), 'iphone': ('roh', 0.2237), 'play': ('roh'
 # Kámen s rámečkem je menší, ať se obrys kamene nemačká na rámeček.
 VYSKY = {'android': (0.47, 0.55, 0.64), 'iphone': (0.54, 0.62, 0.676), 'play': (0.54, 0.62, 0.676),
          'profil': (0.50, 0.55, 0.64), 'dlazdice': (0.74, 0.86, 0.86)}
-# Lucerna v jednotkách mřížky 24 přesně jako N1 (stříška, sklo 7 × 11, podstava), jen háček nahoře je očko (v N1 svislá čárka, ve velké
-# kresbě nevypadá jako nic). Širší sklo R nezvětší: R je úzké (šířka ~0,4 výšky), velikost mu dává výška skla — širší lucerna se jen
-# víc zmenší do kruhu (zkoušeno 2026-11-01: sklo 8,2 → R o 11 % menší). R stojí ve skle: výška 80 % skla, šířka nejvýš 78 % skla.
-LUCERNA = {'ocko': (12.0, 2.3, 1.15),
-           'stricha': ((9.5, 4.0), (14.5, 4.0), (15.7, 6.0), (8.3, 6.0)),
-           'sklo': (8.5, 6.0, 7.0, 11.0),
-           'podstava': ((7.5, 17.0), (16.5, 17.0), (15.6, 19.5), (8.4, 19.5))}
-LUC_LINKA = 0.42   # síla čar lucerny v jednotkách mřížky (~1,4 % strany na Androidu = síla rámečku) — tah R je silnější, R zůstane hlavní
-LUC_R = (0.80, 0.78)
+# Lucerna podle té, která stojí vedle Rúnara na moodboardu (v2/assets/app-moodboard.png): tmavé kování se zlatými hranami, očko
+# a makovice, zvonovitá stříška s kosočtvercem, okraj s nýty, okno se špičatým obloukem a vnitřní mřížkou, úzká boční okna (hloubka),
+# stupňovitý podstavec s nožkami. Owner 2026-11-01 k první, holé kresbě (N1): „ta lampa je hodně špatná. zapracuj víc na detailech“.
+# R svítí místo svíčky: sklo je tmavé, kouřově jantarové, a nejjasnější je R samo (světlejší zlatá a záře), ať ho jantar nepřebije.
+# Zkoušeno 2026-11-01: jasné sklo s tmavou mřížkou svítí víc, ale R pak musí být krémové s tmavým obrysem — runa už není zlatá (§5).
+# Jednotky: kresba 100 × ~105, střed x = 50. Kov (popředí) leží NAD R, sklo a světlo POD ním — mřížka R nekříží.
+LUC_ZLATA_R = '#FFD36A'        # R v lucerně: zlatá světlejší než hrany kování (R je zdroj světla)
+LUC_KOV = '#D6A85C'            # hrany kování = zlatá okrajů karty
+LUC_BODY = [(50, 0.0), (16, 27.6), (84, 27.6), (16, 31.2), (84, 31.2), (16.5, 96.6), (83.5, 96.6), (18.5, 101.6), (81.5, 101.6),
+            (19.5, 104.4), (80.5, 104.4)]                  # obrys pro výpočet velikosti (očko, okraj stříšky, podstavec, nožky)
+LUC_RAMEC = (50, 61.0, 37.7, 21.8)                         # R: střed x, y, výška, nejvyšší šířka (mezi vrcholem oblouku a příčkou)
+LUC_MERENI = (41, 40, 59, 83.5)                            # sloupec, kde je jen R (bez mřížky) — pro měření jeho výšky
 # Velikost lucerny jako podíl strany: [s rámečkem, bez rámečku]. Kruhové tvary (Android, profilovka): nejvzdálenější bod lucerny
 # od středu — Android do 40 % (jistý kruh, hlídá pojistka_maskable), s rámečkem s mezerou k němu. iPhone / Play: výška lucerny.
 LUC_MIRA = {'android': (0.335, 0.385), 'profil': (0.38, 0.43), 'iphone': (0.72, 0.80), 'play': (0.72, 0.80)}
+OKNO = 'M33.6 88.6 L33.6 47 C33.6 40.5 40.5 36.3 50 34.6 C59.5 36.3 66.4 40.5 66.4 47 L66.4 88.6 Z'
+OKNO_L = 'M22.1 88.6 L22.1 44 C22.1 39.5 24.5 36.6 26.35 35.4 C28.2 36.6 30.6 39.5 30.6 44 L30.6 88.6 Z'
+OKNO_P = 'M69.4 88.6 L69.4 44 C69.4 39.5 71.8 36.6 73.65 35.4 C75.5 36.6 77.9 39.5 77.9 44 L77.9 88.6 Z'
+# popředí: kování (výplň tmavý bronz, hrany zlatá), mřížka a nýty
+LUC_POPREDI = (
+    '<defs><linearGradient id="kov" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#33281a"/>'
+    '<stop offset="1" stop-color="#17110b"/></linearGradient></defs>'
+    '<g stroke="' + LUC_KOV + '" stroke-linejoin="round">'
+    '<circle cx="50" cy="3" r="2.4" fill="none" stroke-width="1.2"/>'
+    '<rect x="49.1" y="5.4" width="1.8" height="1.6" fill="url(#kov)" stroke-width="0.45"/>'
+    '<path d="M45.6 12 L54.4 12 L53 9.2 L47 9.2 Z" fill="url(#kov)" stroke-width="0.65"/>'
+    '<circle cx="50" cy="7.9" r="1.5" fill="url(#kov)" stroke-width="0.6"/>'
+    '<path d="M45.6 12 C44.6 18.5 35 24.4 18 27.6 L82 27.6 C65 24.4 55.4 18.5 54.4 12 Z" fill="url(#kov)" stroke-width="0.8"/>'
+    '<path d="M47.8 12.4 C47 18.4 41 23.8 32 27.2 M52.2 12.4 C53 18.4 59 23.8 68 27.2" fill="none" stroke-width="0.4" stroke-opacity="0.55"/>'
+    '<path d="M50 16.4 L52.7 19.9 L50 23.4 L47.3 19.9 Z" fill="none" stroke-width="0.6"/>'
+    '<rect x="16" y="27.6" width="68" height="3.6" fill="url(#kov)" stroke-width="0.8"/>'
+    '<rect x="17.5" y="31.2" width="4.6" height="61.2" fill="url(#kov)" stroke-width="0.7"/>'
+    '<rect x="77.9" y="31.2" width="4.6" height="61.2" fill="url(#kov)" stroke-width="0.7"/>'
+    '<rect x="22.1" y="31.2" width="55.8" height="2.4" fill="url(#kov)" stroke-width="0.6"/>'
+    '<rect x="30.6" y="33.6" width="3" height="55" fill="url(#kov)" stroke-width="0.6"/>'
+    '<rect x="66.4" y="33.6" width="3" height="55" fill="url(#kov)" stroke-width="0.6"/>'
+    '<path d="M33.6 33.6 H66.4 V88.6 H33.6 Z ' + OKNO + '" fill="url(#kov)" fill-rule="evenodd" stroke-width="0.7"/>'
+    '<path d="M22.1 33.6 H30.6 V88.6 H22.1 Z ' + OKNO_L + '" fill="url(#kov)" fill-rule="evenodd" stroke-width="0.55"/>'
+    '<path d="M69.4 33.6 H77.9 V88.6 H69.4 Z ' + OKNO_P + '" fill="url(#kov)" fill-rule="evenodd" stroke-width="0.55"/>'
+    '<path d="M36.4 84.4 L36.4 47.6 C36.4 42.2 42 38.6 50 37.3 C58 38.6 63.6 42.2 63.6 47.6 L63.6 84.4 Z" fill="none" stroke-width="0.5" stroke-opacity="0.55"/>'
+    '<path d="M26.35 38 V88.6 M73.65 38 V88.6 M22.1 62 H30.6 M69.4 62 H77.9" fill="none" stroke-width="0.4" stroke-opacity="0.65"/>'
+    '<rect x="22.1" y="88.6" width="55.8" height="3.8" fill="url(#kov)" stroke-width="0.6"/>'
+    '<rect x="20.5" y="92.4" width="59" height="4.2" fill="url(#kov)" stroke-width="0.7"/>'
+    '<path d="M16.5 96.6 L83.5 96.6 L81.5 101.6 L18.5 101.6 Z" fill="url(#kov)" stroke-width="0.8"/>'
+    '<path d="M19 99.1 H81" fill="none" stroke-width="0.35" stroke-opacity="0.5"/>'
+    '<rect x="19.5" y="101.6" width="7" height="2.8" fill="url(#kov)" stroke-width="0.6"/>'
+    '<rect x="73.5" y="101.6" width="7" height="2.8" fill="url(#kov)" stroke-width="0.6"/>'
+    '</g><g fill="#E9C988">'
+    + ''.join('<circle cx="%g" cy="29.4" r="0.65"/>' % x for x in (19.5, 34.5, 50, 65.5, 80.5))
+    + ''.join('<circle cx="%g" cy="90.5" r="0.6"/>' % x for x in (26, 50, 74))
+    + ''.join('<circle cx="%g" cy="94.5" r="0.6"/>' % x for x in (24, 76))
+    + '<circle cx="50" cy="19.9" r="0.7"/></g>')
+# pozadí lucerny: záře kolem, jantarové sklo předního okna, tmavší boční okna (sklo z boku)
+LUC_POZADI = (
+    '<defs><radialGradient id="halo" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#FFBF00" stop-opacity="0.07"/>'
+    '<stop offset="1" stop-color="#FFBF00" stop-opacity="0"/></radialGradient>'
+    '<radialGradient id="sklo" cx="50" cy="61" r="30" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#D07A22" stop-opacity="0.95"/>'
+    '<stop offset="0.45" stop-color="#6a3410" stop-opacity="0.95"/><stop offset="1" stop-color="#1a0d05" stop-opacity="1"/></radialGradient>'
+    '<linearGradient id="bokL" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1e1108" stop-opacity="0.95"/>'
+    '<stop offset="1" stop-color="#9a5418" stop-opacity="0.8"/></linearGradient>'
+    '<linearGradient id="bokP" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#1e1108" stop-opacity="0.95"/>'
+    '<stop offset="1" stop-color="#9a5418" stop-opacity="0.8"/></linearGradient></defs>'
+    '<ellipse cx="50" cy="60" rx="58" ry="62" fill="url(#halo)"/>'
+    '<path d="' + OKNO + '" fill="url(#sklo)"/>'
+    '<path d="' + OKNO_L + '" fill="url(#bokL)"/><path d="' + OKNO_P + '" fill="url(#bokP)"/>')
 
 def kresba(kamen):
     # runeSvg z produkce: výběr tahů holé runy (RUNE_BARE_KEEP) i kresba zůstávají na jednom místě (§18)
@@ -112,32 +165,21 @@ def ramecek(tvar):
             % (d, d, M - 2 * d, M - 2 * d, (r - ODSAZENI) * M - w / 2, ZLATA, SILA, w))
 
 def lucerna(tvar, s_rameckem):
-    # Vrátí (kresba lucerny, světlo ve skle, střed R x, y v px, výška R v px, nejvyšší šířka R v px, vnitřek skla x0, y0, x1, y1 v px).
-    L, w2 = LUCERNA, LUC_LINKA / 2
-    ox, oy, orr = L['ocko']
-    gx, gy, gw, gh = L['sklo']
-    body = list(L['stricha']) + list(L['podstava']) + [(gx, gy), (gx + gw, gy), (gx, gy + gh), (gx + gw, gy + gh)]
-    x0, x1 = min(p[0] for p in body) - w2, max(p[0] for p in body) + w2
-    y0, y1 = oy - orr - w2, max(p[1] for p in body) + w2
+    # Vrátí (kování, sklo a záře, střed R x, y v px, výška R v px, nejvyšší šířka R v px, sloupec jen s R x0, y0, x1, y1 v px).
+    x0, x1 = min(p[0] for p in LUC_BODY), max(p[0] for p in LUC_BODY)
+    y0, y1 = min(p[1] for p in LUC_BODY), max(p[1] for p in LUC_BODY)
     cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
     mira = LUC_MIRA[tvar][0 if s_rameckem else 1]
     if TVARY[tvar][0] == 'kruh':
-        dal = max([((x - cx) ** 2 + (y - cy) ** 2) ** 0.5 for x, y in body] + [cy - (oy - orr)]) + w2
-        k = mira * M / dal
+        k = mira * M / (max(((x - cx) ** 2 + (y - cy) ** 2) ** 0.5 for x, y in LUC_BODY) + 0.6)   # + polovina nejsilnější hrany
     else:
-        k = mira * M / (y1 - y0)
+        k = mira * M / (y1 - y0 + 1.2)
     tx, ty = M / 2 - cx * k, M / 2 - cy * k
-    bod = lambda pts: ' '.join('%g,%g' % p for p in pts)
-    kresba = ('<g transform="translate(%g %g) scale(%g)" fill="none" stroke="%s" stroke-opacity="%g" stroke-width="%g" '
-              'stroke-linejoin="round"><circle cx="%g" cy="%g" r="%g"/><polygon points="%s"/><rect x="%g" y="%g" width="%g" height="%g"/>'
-              '<polygon points="%s"/></g>'
-              % (tx, ty, k, ZLATA, SILA, LUC_LINKA, ox, oy, orr, bod(L['stricha']), gx, gy, gw, gh, bod(L['podstava'])))
-    # světlo: teplý přechod uvnitř skla, ať R „svítí“ (zlatou není — pojistka_maskable ho za zlatou nepočítá)
-    svit = ('<defs><radialGradient id="sv" cx="50%%" cy="52%%" r="62%%"><stop offset="0" stop-color="#FFBF00" stop-opacity="0.24"/>'
-            '<stop offset="1" stop-color="#FFBF00" stop-opacity="0"/></radialGradient></defs>'
-            '<rect x="%g" y="%g" width="%g" height="%g" fill="url(#sv)"/>' % (tx + gx * k, ty + gy * k, gw * k, gh * k))
-    sklo = (tx + (gx + w2) * k, ty + (gy + w2) * k, tx + (gx + gw - w2) * k, ty + (gy + gh - w2) * k)
-    return kresba, svit, tx + (gx + gw / 2) * k, ty + (gy + gh / 2) * k, LUC_R[0] * gh * k, LUC_R[1] * gw * k, sklo
+    obal = '<g transform="translate(%g %g) scale(%g)">%%s</g>' % (tx, ty, k)
+    rx, ry, rh, rw = LUC_RAMEC
+    mx0, my0, mx1, my1 = LUC_MERENI
+    mereni = (tx + mx0 * k, ty + my0 * k, tx + mx1 * k, ty + my1 * k)
+    return obal % LUC_POPREDI, obal % LUC_POZADI, tx + rx * k, ty + ry * k, rh * k, rw * k, mereni
 
 def chrome(html, tmp, jm):
     p = os.path.join(tmp, jm + '.html')
@@ -165,6 +207,7 @@ def predloha(tvar, kamen, s_rameckem, tmp, tucne=False, s_lucernou=False):
     if s_lucernou:
         luc, svit, rx, ry, rh, maxw, _ = lucerna(tvar, s_rameckem)
         x, y, h, vyska = '%gpx' % rx, '%gpx' % ry, int(rh * 1.04), rh / M
+        paths = paths.replace('fill="%s"' % ZLATA, 'fill="%s"' % LUC_ZLATA_R)
     if tucne:
         # 16 a 32 px: tahy runy i zlatý obrys kamene mají v kresbě pod 1 px → obrys silnější, tahy obtažené toutéž zlatou.
         # Tvar runy zůstává, jen je tučnější.
@@ -183,7 +226,8 @@ def predloha(tvar, kamen, s_rameckem, tmp, tucne=False, s_lucernou=False):
         'm': M, 'h': h, 'x': x, 'y': y, 'maxw': maxw, 'atributy': atributy, 'paths': paths, 'svit': svit, 'lucerna': luc,
         'bg': 'transparent' if maly_kamen else POZADI,
         'zaobleni': '%g%%' % (TVARY['dlazdice'][1] * 100) if tvar == 'dlazdice' else '0',
-        'glow': '' if tvar == 'dlazdice' else 'filter:drop-shadow(0 0 %dpx #FFBF0030)' % round(0.10 * M * vyska),
+        'glow': '' if tvar == 'dlazdice' else ('filter:drop-shadow(0 0 %dpx #FFB000C0)' % round(0.09 * M * vyska) if s_lucernou
+                                                else 'filter:drop-shadow(0 0 %dpx #FFBF0030)' % round(0.10 * M * vyska)),
         'ramecek': ramecek(tvar) if s_rameckem and tvar != 'dlazdice' else ''}
     return chrome(html, tmp, '%s-%d%d%d%d' % (tvar, kamen, s_rameckem, tucne, s_lucernou))
 
