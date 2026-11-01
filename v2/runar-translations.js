@@ -163,6 +163,7 @@ const UI_TEXT = {
     begin_btn:        'BEGIN THE READING',
     draw_lbl:         'ᚠ DRAW YOUR RUNE',
     random_btn:       'ᚲ LET THE RUNES DECIDE',
+    back_btn:         '← BACK',            // 2026-11-01: z karty tahu zpět na formulář
     speak_btn:        'HEAR RÚNAR SPEAK',
     begin_btn_visitor: 'DRAW A RUNE',        // 2026-10-10: návštěvník čtení nedostane — tlačítko ho neslibuje (_updateReadingForm); vráceno s formulářem návštěvníka
     speak_btn_visitor: 'DRAW THIS RUNE',     // 2026-10-10: návštěvník čtení nedostane — tlačítko tahu ho neslibuje (_updateReadingForm)
@@ -744,6 +745,7 @@ const UI_TEXT = {
     begin_btn:        'HEFJA LESTURINN',
     draw_lbl:         'ᚠ DRAGÐU RÚNINA ÞÍNA',
     random_btn:       'ᚲ LÁTTU RÚNIRNAR VELJA',
+    back_btn:         '← TIL BAKA',        // 2026-11-01: „til baka“ korpus (běžné)
     speak_btn:        'HEYRA RÚNAR TALA',
     begin_btn_visitor: 'DRAGA RÚN',          // 2026-10-10: viz EN; „draga rún“ korpus 4× (jako DRAGA AÐRA RÚN)
     speak_btn_visitor: 'DRAGA ÞESSA RÚN',    // 2026-10-10: „draga þessa“ 928×, „þessa rún“ 6×

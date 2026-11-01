@@ -424,7 +424,9 @@ async function redeemCode() {
 
     // Success
     userCredits = data.new_balance;
-    userTier    = 'rune_seeker'; // 'credits' je legacy alias — normalizujeme hned
+    // 2026-11-01: jen legacy aliasy → rune_seeker. Do té doby i předplatitel (standard/premium) po uplatnění kódu do obnovení stránky
+    // vypadal jako Rune Seeker (méně Asků, zamčené volby); server bral tier z DB, takže šlo jen o zobrazení.
+    if (userTier === 'credits' || userTier === 'free') userTier = 'rune_seeker';
     input.value = '';
     const runeMsg = data.rune_name ? ` · ${data.rune_name}` : '';
     setSt('st-redeem',

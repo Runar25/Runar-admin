@@ -880,6 +880,7 @@ input:autofill{filter:none;}
 .layer1-lbl.pulsing,.layer2-lbl.pulsing{animation:pulse-fade 1.4s ease-in-out infinite;}
 
 /* ── VOICE ── */
+#btn-zpet{margin-top:22px;}   /* 2026-11-01: odstup od HEAR RÚNAR SPEAK, ať se netrefí omylem */
 .btn-voice{width:100%;padding:14px;background:transparent;border:1px solid var(--border2);color:var(--muted);font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:1.5px;cursor:pointer;transition:all 0.25s;margin-top:4px;}
 .btn-voice:hover:not(:disabled){border-color:var(--blue);color:var(--blue);}
 .btn-voice:disabled{opacity:0.45;cursor:not-allowed;}

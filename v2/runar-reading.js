@@ -682,6 +682,19 @@ function _ukazVyklad() {
   out.style.display = 'block';
   _posunPodListu(out, false, 8);
 }
+// 2026-11-01 (owner: „když kliknu na begin the reading a zmáčkl jsem to omylem, tak se nemůžu vrátit k předchozímu oknu. Jedině refresh
+// nebo Rúnar home.“): zpět z karty tahu na formulář. Vyplněné volby (jméno, otázka, oblast, hledání, záměr) zůstanou, tah se zahodí.
+function zpetNaFormular() {
+  readerRune = null;
+  _spread3Runes = []; _spread5Runes = []; _spread7Runes = []; _spread9Runes = [];
+  _updateSpread3Slots(); _updateSpread5Slots(); _updateSpread7Slots(); _updateSpread9Slots();
+  _syncSpeakBtn();
+  document.getElementById('reader-rune-card').style.display = 'none';
+  document.getElementById('reader-hero').classList.remove('hidden');
+  var setup = document.getElementById('reader-setup');
+  setup.style.display = 'block';
+  _posunPodListu(setup, false, 8);
+}
 async function readRune() {
   if (_spreadMode === 'kriz') {
     // Návštěvník táhne jako přihlášený; kartu po tahu dá _generateSpreadReading (2026-10-22, DECISIONS 2026-10-22 (4) bod 8b).
@@ -1086,7 +1099,7 @@ function _trimToSentence(t) {
 
 async function askRunar() {
   if (_askCount >= _askLimit()) return;
-  // Skutecnou branu ma proxy (mode:'ask' + tier != premium -> 403); tohle jen setri roundtrip.
+  // Skutecnou branu ma proxy (mode:'ask' + strop asks_per_reading tieru -> 403); tohle jen setri roundtrip.
   var inp = document.getElementById('ask-input');
   var q = inp ? inp.value.trim() : '';
   if (!q) return;

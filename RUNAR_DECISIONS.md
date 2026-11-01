@@ -12751,3 +12751,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   podle ownerem schváleného konceptu z 2026-10-10, popisky ověřené proti dnešní appce (pořadí: otázka → BEGIN THE READING → výběr
   spreadu; okno Where to start; souhlas s otázkou; hlas 15 za měsíc).
 - Affected doc(s): RUNAR_BACKLOG.md (zásady, klišé).
+
+## 2026-11-01 (2) — Zpět z karty tahu na formulář; uplatnění kódu nesníží předplatitele; zastaralé komentáře
+
+- **Rozhodl:** owner 2026-11-01 *„když kliknu na begin the reading a zmáčkl jsem to omylem, tak se nemůžu vrátit k předchozímu oknu. Jedině
+  refresh nebo Rúnar home. Back musí být někde, kde se nedá kliknout na nic jiného. … hear rúnar speak? pod ním?“* a *„18. ano“* (vady z backlogu).
+- **Co:** (1) Pod HEAR RÚNAR SPEAK tlačítko „← BACK“ / „← TIL BAKA“ (`.btn-voice`, odstup 22 px): karta tahu zmizí, formulář se vrátí
+  s vyplněným jménem, otázkou a volbami; vybraná runa a runy výkladu se zahodí (`zpetNaFormular`, runar-reading.js). Tlačítko zpět
+  telefonu zůstává v BACKLOGu. (2) Po uplatnění kódu nastavovala appka `userTier = 'rune_seeker'` každému — předplatitel do obnovení
+  stránky vypadal jako Rune Seeker (jen zobrazení; server bere tier z DB). Teď se mění jen legacy aliasy `credits` / `free`.
+  (3) Komentáře, které tvrdily neplatné: testeři „v DB rune_seeker“ (jsou premium), „jen admin smí Yggdrasil“, Ask brána „tier != premium“.
+- **Ověřeno:** v prohlížeči (pracovní strom, návštěvník EN): BEGIN → karta → výběr runy → ← BACK → formulář, jméno zůstalo, runa null,
+  HEAR RÚNAR SPEAK zamčené; znovu BEGIN → čistá mřížka.
+- Affected doc(s): RUNAR_BACKLOG.md.

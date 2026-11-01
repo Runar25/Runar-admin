@@ -1036,6 +1036,7 @@ function updateUIText() {
   // begin-btn nastavuje _updateReadingForm (návštěvník má jiný text, 2026-10-10)
   setRuneText('draw-lbl', t('draw_lbl'));   // popisky s runou → setRuneText (naše SVG, bod 11, 2026-10-10)
   setRuneText('btn-random', t('random_btn'));
+  setText('btn-zpet', t('back_btn'));
   setText('mode-btn-single',    t('spread3_mode_single'));
   setText('mode-btn-norns',     t('spread_mode_norns'));
   setText('mode-btn-kriz',      t('spread_mode_kriz'));

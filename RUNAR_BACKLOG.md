@@ -753,11 +753,11 @@ Procházka je tím úplná.
 
 - [ ] **Tree of Life nemají** — ikona je skrytá, protože strom není hotový. Životní runu mají
       ve vlastní záložce.
-- [ ] **Hlas: tester 15 za měsíc** (`VOICE_MONTHLY_LIMIT_TESTER`, KUKY 2026-10-11; ostatní hlas ke každému čtení, DECISIONS 2026-10-11 (61)). Kolik zbývá, ukazuje
+- [x] ✅ *(2026-11-01: stojí v uvítacím e-mailu testerům, „GOOD TO KNOW“.)* **Hlas: tester 15 za měsíc** (`VOICE_MONTHLY_LIMIT_TESTER`, KUKY 2026-10-11; ostatní hlas ke každému čtení, DECISIONS 2026-10-11 (61)). Kolik zbývá, ukazuje
       od 2026-10-11 menu pod jménem (DECISIONS 2026-10-11 (56)). Když dojdou kredity ElevenLabs (brzda, DECISIONS (48)), hlas odpočívá
       pro všechny — appka to řekne, není to chyba. (Do 2026-10-11 tu stála hladina `VOICE_SAFE_SHARE`, kterou brzda nahradila.)
 - [ ] **Režim „pro někoho jiného" testovat smí** — je to záměr, ne chyba.
-- [ ] Až budou mít premium, musí si appku **znovu načíst** — tier i `is_tester` se čtou jen při
+- [x] ✖ *(2026-11-01: neplatí — premium a is_tester dává databáze už při vzniku profilu, sql/2026-10-09_uzavreny_test.sql.)* Až budou mít premium, musí si appku **znovu načíst** — tier i `is_tester` se čtou jen při
       startu. Že to sedlo, pozná se podle **„(tester)" / „(prófari)"** za jménem tieru v panelu.
 
 ## Zjištěno při auditu — nespěchá, ale ať se neztratí
@@ -973,13 +973,13 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   úklid cronem by dal zásadám přesnou lhůtu.
 - [x] ✅ *(CODE-tune 2026-10-31, owner „pro někoho jiného bude mít to stejné jako pro samotného uživatele“, DECISIONS 2026-10-31 (8); nasazeno claude-proxy.)* **Ask u čtení „for someone“** (neuložené, ne-tester) nemá `reading_id` → proxy ho počítá jako čtení a strhne měsíční jednotku
   (runar-reading.js ~1144, proxy ~532–657); TIER_FEATURES slibuje „one question on every reading“. Neověřeno během, jen čtením kódu.
-- [ ] **Rune Seeker a Ask:** `helper_ask` / `helper_ask2` ho zvou ptát se, pole je pro něj vypnuté (asks_per_reading 0).
+- [ ] **Rune Seeker a Ask:** `helper_ask` / `helper_ask2` ho zvou ptát se, pole je pro něj vypnuté (asks_per_reading 0). *(2026-11-01: patří do sjednocení teaserů — owner „ASK má být pro Rune Seeker teaser … musí vidět navrhované otázky“; návrh čeká na ownera.)*
 - [ ] **`qconsent_lbl`** (souhlas s odesláním otázky, čl. 9) jmenuje jen OpenAI; při výpadku jde otázka Anthropicu. Pole je dnes jen
   pro admina (DECISIONS 2026-10-16 (5)), před otevřením ostatním opravit.
 - [x] ✅ *(CODE-tune 2026-10-31, owner „napřed všechny vady“, DECISIONS 2026-10-31 (5): u oblasti a hledání „to unveil more“ / „til að opna fleiri“, u záměru dál „to unveil“ — ten registrace odemkne celý.)* **`lock_become_rs`** „Become a Rune Seeker to unveil“ — registrace odemkne jen část oblastí a hledání, zbytek karta.
 - ✖ *(CODE-tune 2026-10-31, owner „napřed všechny vady“, DECISIONS 2026-10-31 (5): nejsou vada — `q_teaser` se ukáže, až se pole s otázkou otevře ostatním; `layer2_lbl` kreslí staré záznamy deníku; `tier_soon` patří k výpisu účtů v menu, který je schovaný záměrně (DECISIONS 2026-10-19 (7), (8)); `title` slotů přepíše `_updateSpreadSlots` dřív, než je kdo uvidí. Uživatel nic z toho nevidí špatně.)* **Mrtvé texty:** `q_teaser` (pole jen admin), `tier_soon` (kreslí se do vždy skrytého `#sp-path-body`), `layer2_lbl` (jen staré
   záznamy deníku), anglické `title` u slotů spreadů v runar-reader.html (vymaže je `_updateSpreadSlots`).
-- [ ] **Zastaralé komentáře / natvrdo:** runar-config.js ~276 („Only these emails can access … Yggdrasil“), ~101 (testeři „jsou
+- [x] ✅ *(CODE-tune 2026-11-01, owner „18. ano“, DECISIONS 2026-11-01 (2): komentáře opravené; `count > 5` v deníku už dřív nahrazen `journalLimit()`; uplatnění kódu mění jen legacy aliasy, předplatitele už nesníží.)* **Zastaralé komentáře / natvrdo:** runar-config.js ~276 („Only these emails can access … Yggdrasil“), ~101 (testeři „jsou
   rune_seeker“, SQL jim dává premium); runar-reading.js ~1100 („tier != premium -> 403“); runar-journal.js ~274 natvrdo `count > 5`
   místo `TIERS.rune_seeker.journal` (§10); runar-auth.js ~400 po uplatnění kódu nastaví `userTier = 'rune_seeker'` i předplatiteli
   (dopad neověřen).
@@ -1047,6 +1047,6 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   na telefonu, nápověda EN + IS; DECISIONS 2026-10-29 (3). Náhled s kódem appky: `docs/inbox/2026-10-29-prehravac-svicka-3.html`.)*
 
 ### Krok zpět ve čtení (owner 2026-10-31, CODE-tune)
-- [ ] **Viditelné „← zpět“ na kartě tahu a tlačítko zpět telefonu o krok ve čtení** (owner: *„když jsem v rune reading a chci jít o krok
+- [ ] *(Viditelná půlka hotová: CODE-tune 2026-11-01, owner „Back musí být někde, kde se nedá kliknout na nic jiného … pod HEAR RÚNAR SPEAK?“, DECISIONS 2026-11-01 (2) — „← BACK“ pod HEAR RÚNAR SPEAK vrátí formulář s vyplněnými volbami. Zbývá tlačítko zpět telefonu.)* **Viditelné „← zpět“ na kartě tahu a tlačítko zpět telefonu o krok ve čtení** (owner: *„když jsem v rune reading a chci jít o krok
   zpět, tak je to složité, asi tam chybí někde zpět“*; na návrh *„10. zpět, do backlogu. teď nevím“*). Dnes vede zpět jen logo RÚNAR
   (z karty tahu i z hotového čtení domů, DECISIONS 2026-10-31 (2)). Tlačítko zpět telefonu dnes appku zavře. Vrátit se, až owner bude vědět.

@@ -118,7 +118,7 @@ const RUNAR_PROMPT_VERSION = 'v5.21-kriz-osy';
 // ownerův pokyn pro testery, omylem pro všechny (DECISIONS 2026-10-11 (49)); owner: „žádný měsíční strop 5 hlasů není!!!“. Rúnar přečte
 // každé čtení, jednou, a hlídá to server (elevenlabs-proxy: hlas jen ke čtení, DECISIONS 2026-10-11 (61)); čtení drží jednotky tarifu.
 // Větu o hlasu pro každý tier skládá TIER_FEATURES (klíč `voice`) a hlídá ji verify_tier_features.js.
-// Testeři (příznak is_tester — v DB jsou rune_seeker, testeři nejsou tier): 15 hlasů měsíčně každý. Owner 2026-10-11 (přes CODE-read,
+// Testeři (příznak is_tester — v DB premium z allowed_emails, sql/2026-10-09_uzavreny_test.sql): 15 hlasů měsíčně každý. Owner 2026-10-11 (přes CODE-read,
 // BACKLOG část 43): „máme 5 testerů, tak jim dejme 15 hlasů Rúnara… ale budeme hlídat, ať nepřekročíme bezpečnou hladinu, třeba 120
 // hlasů.“ ZRCADLÍ elevenlabs-proxy (vynucuje); shodu hlídá smoke ⑨ (verify_monthly_limits.js).
 const VOICE_MONTHLY_LIMIT_TESTER = 15;
@@ -283,7 +283,7 @@ TIERS.free    = TIERS.rune_seeker;
 TIERS.credits = TIERS.rune_seeker;
 
 // ─── ADMIN ACCESS ───────────────────────────────────────
-// Only these emails can access the Knowledge Shrine and Yggdrasil.
+// Only these emails can access the Knowledge Shrine (Yggdrasil is open to everyone signed in).
 const ADMIN_EMAILS = ['kukula@agndofa.is', 'info@agndofa.is'];
 
 // ─── E-MAILOVE PRIHLASENI ──────────────────────────────
@@ -1333,6 +1333,7 @@ const UI_TEXT = {
     begin_btn:        'BEGIN THE READING',
     draw_lbl:         'ᚠ DRAW YOUR RUNE',
     random_btn:       'ᚲ LET THE RUNES DECIDE',
+    back_btn:         '← BACK',            // 2026-11-01: z karty tahu zpět na formulář
     speak_btn:        'HEAR RÚNAR SPEAK',
     begin_btn_visitor: 'DRAW A RUNE',        // 2026-10-10: návštěvník čtení nedostane — tlačítko ho neslibuje (_updateReadingForm); vráceno s formulářem návštěvníka
     speak_btn_visitor: 'DRAW THIS RUNE',     // 2026-10-10: návštěvník čtení nedostane — tlačítko tahu ho neslibuje (_updateReadingForm)
@@ -1914,6 +1915,7 @@ const UI_TEXT = {
     begin_btn:        'HEFJA LESTURINN',
     draw_lbl:         'ᚠ DRAGÐU RÚNINA ÞÍNA',
     random_btn:       'ᚲ LÁTTU RÚNIRNAR VELJA',
+    back_btn:         '← TIL BAKA',        // 2026-11-01: „til baka“ korpus (běžné)
     speak_btn:        'HEYRA RÚNAR TALA',
     begin_btn_visitor: 'DRAGA RÚN',          // 2026-10-10: viz EN; „draga rún“ korpus 4× (jako DRAGA AÐRA RÚN)
     speak_btn_visitor: 'DRAGA ÞESSA RÚN',    // 2026-10-10: „draga þessa“ 928×, „þessa rún“ 6×
