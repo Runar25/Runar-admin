@@ -12837,3 +12837,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   (nařízení 435/2016, příloha I, [2]) dává; vzorový formulář (příloha II) telefon nemá. Jinde se neopisuje (§20).
 - **Proč:** zákon 16/2016 5. gr. b dnes chce telefon „eftir því sem við á“, návrh změny (þingskjal 317) vždy; podmínky jsou veřejné, owner to ví.
 - Affected doc(s): RUNAR_BACKLOG.md (Před spuštěním plateb).
+
+## 2026-11-01 (7) — Klíče Supabase, krok 1: edge funkce berou serverový klíč z jednoho místa (nový secret, záloha starý); shrine maže hlas přes server
+
+- **Rozhodl:** owner 2026-11-01 *„20. ano“* (výměnu klíčů oddělit od F3/F4), *„supabase hotovo“* (secret klíč `default` založen), *„6. nasaď“*.
+- **Co:** (1) `_shared/klic.ts` — `SERVER_KLIC` = `SUPABASE_SECRET_KEYS.default`, dokud staré klíče běží záloha `SUPABASE_SERVICE_ROLE_KEY`
+  (chyba v logu, zdroj `klicZdroj`; zkušební běh inactive-accounts ho vrací jako `key`). Všech 14 funkcí ho bere odtud. (2) Podpis hlasu
+  (HMAC) podepisuje novým klíčem a ověřuje novým i starým (`podepisServer` / `overServer`) — podpisy vydané před nasazením neprospadnou.
+  (3) Shrine ✕ DELETE maže verzi statického hlasu přes `elevenlabs-static` (`delete_id`, jen admin): soubor i řádek. Z klienta soubor
+  smazat nešlo (úložiště nemá politiku) a chyba se tiše spolkla — u Dagazu zůstaly dva soubory bez řádku (owner je smazal ručně).
+- **Plán dál:** RUNAR_BACKLOG „Plán infrastruktury“ krok 9 (appka na publishable, ~25. 11. owner vypne staré klíče, pak zálohy pryč).
+- Affected doc(s): RUNAR_BACKLOG.md.

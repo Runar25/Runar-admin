@@ -40,7 +40,8 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.117.3";
-import { textKHlasu, normalizuj, podepis, over, odvozId } from "../_shared/voice_ticket.ts";
+import { textKHlasu, normalizuj, odvozId } from "../_shared/voice_ticket.ts";
+import { SERVER_KLIC, podepisServer, overServer } from "../_shared/klic.ts";   // klíč a podpis hlasu z jednoho místa (2026-11-01)
 import { ADMIN_EMAILS } from "../_shared/admini.ts";   // seznam adminů na jednom místě (2026-10-22, DECISIONS 2026-10-22 (5))
 
 const cors = {
@@ -54,7 +55,7 @@ const json = (data: unknown, status = 200) =>
 function sb() {
   return createClient(
     Deno.env.get("SUPABASE_URL")!,
-    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+    SERVER_KLIC,
   );
 }
 
@@ -557,7 +558,7 @@ serve(async (req: Request) => {
     let askSloty: string[] | null = null;
     const askListek = body.ask_listek;
     if (mode === "ask" && !legitAsk && userId && askListek && typeof askListek === "object") {
-      const nonce = await over(Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "", askListek.ticket, userId, String(askListek.text ?? ""));
+      const nonce = await overServer(askListek.ticket, userId, String(askListek.text ?? ""));
       if (nonce) {
         askSloty = [];
         for (let n = 1; n <= askLimit; n++) askSloty.push("t:" + await odvozId(nonce, "ask-" + n));
@@ -852,7 +853,7 @@ serve(async (req: Request) => {
     let voice: { text: string; ticket: string } | null = null;
     if (userId && !readingId && mode === "") {
       const vt = normalizuj(textKHlasu(composeReading(text)));
-      const tk = await podepis(Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "", userId, vt);
+      const tk = await podepisServer(userId, vt);
       if (tk) voice = { text: vt, ticket: tk };
     }
 

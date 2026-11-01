@@ -6,6 +6,7 @@
 // {"mode":"dry","now":"<ISO>"} = zkouška: nic neposílá, nic nemaže, jen vrátí, co by udělala (počty a zkrácená id, žádné adresy).
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.117.3";
+import { SERVER_KLIC, klicZdroj } from "../_shared/klic.ts";   // serverový klíč Supabase z jednoho místa (2026-11-01, krok 9 plánu)
 import { rozhodni, denSmazani, email, chranen } from "../_shared/necinne_ucty.ts";
 import type { Ucet, Zaznam } from "../_shared/necinne_ucty.ts";
 import { jeAdmin } from "../_shared/admini.ts";
@@ -45,7 +46,7 @@ serve(async (req) => {
   const ted = zkouska && body.now ? new Date(body.now) : new Date();
   if (isNaN(ted.getTime())) return json({ error: "bad now" }, 400);
 
-  const db = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!, { auth: { persistSession: false } });
+  const db = createClient(Deno.env.get("SUPABASE_URL")!, SERVER_KLIC, { auth: { persistSession: false } });
   const vysledek = { ucty: 0, prvni: 0, druhe: 0, smazano: 0, chraneno: 0, obnoveno: 0, chyb: 0, items: [] as string[], chyby: [] as string[] };
   try {
     // Všechny účty (stránkovaně) + profily + záznamy upozornění.
@@ -115,5 +116,6 @@ serve(async (req) => {
       deleted: vysledek.smazano, items: vysledek.items, warned: vysledek.prvni, warned_last: vysledek.druhe,
       ...(vysledek.chyb ? { error: vysledek.chyby.join("; ").slice(0, 200) } : {}) } });
   }
-  return json({ ok: vysledek.chyb === 0, dry: zkouska, now: ted.toISOString(), ...vysledek });
+  // key = odkud je serverový klíč (secret / legacy) — zkušební běh tak ukáže, že nový klíč opravdu dorazil (krok 9 plánu).
+  return json({ ok: vysledek.chyb === 0, dry: zkouska, now: ted.toISOString(), key: klicZdroj, ...vysledek });
 });

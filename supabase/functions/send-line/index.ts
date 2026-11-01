@@ -12,6 +12,7 @@
 // Deploy: supabase functions deploy send-line --project-ref pmitxjvkeovijreepror --no-verify-jwt
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.117.3";
+import { SERVER_KLIC } from "../_shared/klic.ts";   // serverový klíč Supabase z jednoho místa (2026-11-01, krok 9 plánu)
 
 const PRIJEMCE = "runar@therunekeeper.com";
 const ODESILATEL = { name: "Rúnar", email: "noreply@therunekeeper.com" };   // ověřený odesílatel v Brevu (jako přihlašovací kód)
@@ -44,7 +45,7 @@ serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
   if (req.method !== "POST") return json({ error: "method" }, 405);
 
-  const sb = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!, { auth: { persistSession: false } });
+  const sb = createClient(Deno.env.get("SUPABASE_URL")!, SERVER_KLIC, { auth: { persistSession: false } });
   const token = (req.headers.get("Authorization") || "").replace(/^Bearer\s+/i, "");
   const { data: { user } } = token ? await sb.auth.getUser(token) : { data: { user: null } };
   if (!user || !user.email) return json({ error: "not_authenticated" }, 401);

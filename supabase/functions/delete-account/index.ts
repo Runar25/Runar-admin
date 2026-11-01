@@ -5,6 +5,7 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.117.3";
+import { SERVER_KLIC } from "../_shared/klic.ts";   // serverový klíč Supabase z jednoho místa (2026-11-01, krok 9 plánu)
 import { smazUcet } from "../_shared/smaz_ucet.ts";
 
 const cors = {
@@ -27,7 +28,7 @@ serve(async (req) => {
     // Use service role key — needed for auth.admin.deleteUser()
     const sb = createClient(
       Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+      SERVER_KLIC,
     );
 
     const { data: { user }, error: authErr } = await sb.auth.getUser(

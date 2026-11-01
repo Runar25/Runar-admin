@@ -9,6 +9,7 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.117.3";
+import { SERVER_KLIC } from "../_shared/klic.ts";   // serverový klíč Supabase z jednoho místa (2026-11-01, krok 9 plánu)
 import { fetchQuota, saveQuota, EL_DOBITI_KREDITY, EL_TARIF_KREDITY, EL_KREDIT_USD } from "../_shared/voice_usage.ts";
 import { kredityHlasu, EL_VOICE_ID } from "../_shared/el_voice.ts";
 import { ADMIN_EMAILS } from "../_shared/admini.ts";   // seznam adminů na jednom místě (2026-10-22, DECISIONS 2026-10-22 (5))
@@ -27,7 +28,7 @@ serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
   if (req.method !== "POST")    return json({ error: "Method not allowed" }, 405);
 
-  const sb = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
+  const sb = createClient(Deno.env.get("SUPABASE_URL")!, SERVER_KLIC);
   const authHeader = req.headers.get("Authorization");
   if (!authHeader) return json({ error: "Not authenticated" }, 401);
   const { data: { user }, error: authErr } = await sb.auth.getUser(authHeader.replace("Bearer ", ""));

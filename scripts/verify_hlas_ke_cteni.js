@@ -50,14 +50,18 @@ const rekni = (ok, co) => { if (!ok) fail++; console.log((ok ? 'OK    ' : 'FAIL 
 
   // (3) elevenlabs-proxy
   const el = cti('supabase/functions/elevenlabs-proxy/index.ts');
-  rekni(/import \{[^}]*\bover\b[^}]*\btextKHlasu\b[^}]*\} from "\.\.\/_shared\/voice_ticket\.ts"|import \{[^}]*\btextKHlasu\b[^}]*\bover\b[^}]*\} from "\.\.\/_shared\/voice_ticket\.ts"/.test(el),
-        'elevenlabs-proxy bere podpis a text k hlasu z _shared/voice_ticket.ts');
+  // 2026-11-01 (krok 9, nové klíče Supabase): podpis ověřuje _shared/klic.ts (overServer — nový i starý klíč), ten volá over z voice_ticket.ts.
+  const kl = cti('supabase/functions/_shared/klic.ts');
+  rekni(/import \{[^}]*\btextKHlasu\b[^}]*\} from "\.\.\/_shared\/voice_ticket\.ts"/.test(el) &&
+        /import \{[^}]*\boverServer\b[^}]*\} from "\.\.\/_shared\/klic\.ts"/.test(el) &&
+        /import \{[^}]*\bpodepis\b[^}]*\bover\b[^}]*\} from "\.\/voice_ticket\.ts"/.test(kl) && /await over\(k, listek, user, text\)/.test(kl),
+        'elevenlabs-proxy bere podpis a text k hlasu z _shared/voice_ticket.ts (přes _shared/klic.ts)');
   rekni(!/const \{ text, lang \} = await req\.json\(\)/.test(el), 'elevenlabs-proxy už nebere holý text od klienta (stará cesta pryč)');
   rekni(/if \(text === null && ADMIN_EMAILS\.includes\(email\) && typeof body\?\.text === "string"\) text = body\.text;/.test(el) &&
         /if \(text === null\) return json\(\{ error: "voice_unbound" \}, 403\);/.test(el), 'text bez čtení jen admin, jinak voice_unbound');
   rekni(/\.from\("readings"\)\s*\n?\s*\.select\([^)]*\)\.eq\("id", reading_id\)\.eq\("user_id", userId\)/.test(el), 'čtení se hledá jen mezi vlastními (user_id)');
   rekni(/pf\?\.founding_reading_id === r\.id\) return json\(\{ error: "voice_not_offered" \}/.test(el), 'zakládací Norny hlas nedostanou');
-  rekni(/const nonce = await over\(/.test(el) && /if \(!nonce\) return json\(\{ error: "voice_unbound" \}/.test(el), 'neuložené čtení jen s platným podpisem');
+  rekni(/const nonce = await overServer\(/.test(el) && /if \(!nonce\) return json\(\{ error: "voice_unbound" \}/.test(el), 'neuložené čtení jen s platným podpisem');
   // 2026-10-13: placené volání hlasu (text-to-speech), ne první zmínka domény — nad handlerem stojí mazání historie (smazHistorii),
   // které běží až PO vygenerování; s indexOf('api.elevenlabs.io') kontrola po 8c12069 falešně zčervenala a zastavila push všem.
   const iZamek = el.indexOf('from("voice_tickets").insert'), iEl = el.indexOf('api.elevenlabs.io/v1/text-to-speech');
@@ -69,7 +73,7 @@ const rekni = (ok, co) => { if (!ok) fail++; console.log((ok ? 'OK    ' : 'FAIL 
 
   // (4) claude-proxy + appka
   const cp = cti('supabase/functions/claude-proxy/index.ts');
-  rekni(/if \(userId && !readingId && mode === ""\) \{/.test(cp) && /await podepis\(/.test(cp) && /\.\.\.\(voice \? \{ voice \} : \{\}\)/.test(cp),
+  rekni(/if \(userId && !readingId && mode === ""\) \{/.test(cp) && /await podepisServer\(/.test(cp) && /return podepis\(SERVER_KLIC, user, text\)/.test(kl) && /\.\.\.\(voice \? \{ voice \} : \{\}\)/.test(cp),
         'claude-proxy podepisuje neuložené čtení a podpis vrací');
   const rd = cti('v2/runar-reading.js');
   rekni(/const _rt = readerTexts\[lang\] \|\| \{\};/.test(rd) && /reading_id: _rt\.id \|\| undefined,/.test(rd) && /ticket: _rt\.voice \? _rt\.voice\.ticket : undefined/.test(rd),

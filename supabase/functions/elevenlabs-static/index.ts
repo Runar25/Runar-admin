@@ -9,11 +9,12 @@ import { logVoice, fetchQuota, saveQuota, brzdaHlasu } from "../_shared/voice_us
 // ID hlasu, modely a nastavení hlasu: JEDINÉ místo je _shared/el_voice.ts (2026-10-11) — dřív tu stály vlastní kopie včetně
 // nepoužitého ID pro IS s jinou hodnotou (důvod tam).
 import { EL_VOICE_ID, EL_VOICE_SETTINGS, elModel, kredityHlasu } from "../_shared/el_voice.ts"
+import { SERVER_KLIC } from "../_shared/klic.ts";   // serverový klíč Supabase z jednoho místa (2026-11-01)
 import { ADMIN_EMAILS } from "../_shared/admini.ts";   // seznam adminů na jednom místě (2026-10-22, DECISIONS 2026-10-22 (5))
 
 const EL_API_KEY     = Deno.env.get('ELEVENLABS_API_KEY')
 const SB_URL       = Deno.env.get('SUPABASE_URL')
-const SB_KEY       = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
+const SB_KEY       = SERVER_KLIC
 // Brzda kreditů ElevenLabs: brzdaHlasu v _shared/voice_usage.ts (2026-10-11, DECISIONS (48)) — do té doby VOICE_SAFE_SHARE 0,7 tady.
 
 const cors = {
@@ -28,7 +29,7 @@ serve(async (req) => {
   try {
     if (!EL_API_KEY)  throw new Error('ELEVENLABS_API_KEY not set')
     if (!SB_URL)      throw new Error('SUPABASE_URL not set')
-    if (!SB_KEY)      throw new Error('SUPABASE_SERVICE_ROLE_KEY not set')
+    if (!SB_KEY)      throw new Error('Supabase server key not set')
 
     // ── Admin only — enforced here, not just claimed in a comment (was: not at all). ──
     // This tool spends the ElevenLabs key and overwrites shared Collection audio; a public
@@ -42,7 +43,26 @@ serve(async (req) => {
       return new Response(JSON.stringify({ error: 'forbidden' }),
         { status: 403, headers: { ...cors, 'Content-Type': 'application/json' } })
 
-    const { text, rune_name, rune_glyph, lang, version, audio_b64 } = await req.json()
+    const body = await req.json()
+    // ── Smazání verze (2026-11-01): shrine ✕ DELETE mazal soubor hlasu z klienta, ale úložiště klientovi mazat nedovolí (žádná
+    // politika) a chyba se tiše spolkla → u Dagazu zůstaly dva soubory bez řádku. Teď maže server: napřed soubor, pak řádek.
+    if (body.delete_id !== undefined) {
+      if (typeof body.delete_id !== 'string' || !/^[0-9a-f-]{36}$/.test(body.delete_id)) throw new Error('delete_id invalid')
+      const db = createClient(SB_URL, SB_KEY)
+      const { data: row, error: rErr } = await db.from('runar_static_audio').select('id, audio_url').eq('id', body.delete_id).maybeSingle()
+      if (rErr) throw new Error(rErr.message)
+      if (!row) throw new Error('version not found')
+      const cesta = String(row.audio_url || '').split('?')[0].split('/runar-audio/')[1] || ''
+      if (cesta) {
+        const { error: sErr } = await db.storage.from('runar-audio').remove([cesta])
+        if (sErr) throw new Error('storage: ' + sErr.message)
+      }
+      const { error: dErr } = await db.from('runar_static_audio').delete().eq('id', row.id)
+      if (dErr) throw new Error(dErr.message)
+      return new Response(JSON.stringify({ ok: true, deleted: row.id, file: cesta || null }),
+        { status: 200, headers: { ...cors, 'Content-Type': 'application/json' } })
+    }
+    const { text, rune_name, rune_glyph, lang, version, audio_b64 } = body
 
     if (!text)       throw new Error('text is required')
     if (typeof text !== 'string' || text.length > 3000) throw new Error('text too long')

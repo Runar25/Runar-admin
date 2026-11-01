@@ -8,6 +8,7 @@
 // Do e-mailu jdou jen počty a typy — žádné texty čtení, otázky ani jména (RUNAR_PRIVACY.md).
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.117.3";
+import { SERVER_KLIC } from "../_shared/klic.ts";   // serverový klíč Supabase z jednoho místa (2026-11-01, krok 9 plánu)
 import { fetchQuota, brzdaHlasu, EL_KREDIT_USD } from "../_shared/voice_usage.ts";
 import { kredityHlasu } from "../_shared/el_voice.ts";
 import { readingCostUsd } from "../_shared/ceny_modelu.ts";
@@ -19,7 +20,7 @@ const PRIJEMCE = "runar@therunekeeper.com";
 const ODESILATEL = { name: "Rúnar Ops", email: "noreply@therunekeeper.com" };
 
 function sb() {
-  return createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!, { auth: { persistSession: false } });
+  return createClient(Deno.env.get("SUPABASE_URL")!, SERVER_KLIC, { auth: { persistSession: false } });
 }
 function json(b: unknown, s = 200) {
   return new Response(JSON.stringify(b), { status: s, headers: { "Content-Type": "application/json" } });

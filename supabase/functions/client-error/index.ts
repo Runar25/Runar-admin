@@ -9,6 +9,7 @@
 // Veřejná (chyba přijde i od návštěvníka) → limity: 10 / h na IP, celkem 60 / h, tělo nejvýš 2 kB. Nad limit tichá 204 (appka nic nečeká).
 // Logy anglicky (§31), bez obsahu chyby. Deploy: supabase functions deploy client-error --project-ref pmitxjvkeovijreepror --no-verify-jwt
 import { createClient } from "npm:@supabase/supabase-js@2.117.3";
+import { SERVER_KLIC } from "../_shared/klic.ts";   // serverový klíč Supabase z jednoho místa (2026-11-01, krok 9 plánu)
 
 const ORIGINS = new Set([
   "https://runar25.github.io",
@@ -53,7 +54,7 @@ Deno.serve(async (req) => {
   try { b = JSON.parse(text); } catch { return new Response(null, { status: 400, headers: h }); }
   const z = zaznam(b && typeof b === "object" ? b : {});
   if (!z) return new Response(null, { status: 400, headers: h });
-  const sb = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
+  const sb = createClient(Deno.env.get("SUPABASE_URL")!, SERVER_KLIC);
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
   const { data: okIp } = await sb.rpc("check_rate_limit", { p_key: `clienterr:ip:${ip}`, p_window_seconds: 3600, p_max_requests: 10 });
   if (okIp === false) return new Response(null, { status: 204, headers: h });

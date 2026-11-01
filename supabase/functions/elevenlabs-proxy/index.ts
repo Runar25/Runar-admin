@@ -10,7 +10,8 @@ import { createClient } from "npm:@supabase/supabase-js@2.117.3";
 import { logVoice, denniSnimek, fetchQuota, saveQuota, brzdaHlasu } from "../_shared/voice_usage.ts";
 // ID hlasu, modely a nastavení hlasu: JEDINÉ místo je _shared/el_voice.ts (2026-10-11) — dřív tu stály vlastní kopie (důvod tam).
 import { EL_VOICE_ID, EL_VOICE_SETTINGS, elModel, kredityHlasu } from "../_shared/el_voice.ts";
-import { textKHlasu, normalizuj, over } from "../_shared/voice_ticket.ts";
+import { textKHlasu, normalizuj } from "../_shared/voice_ticket.ts";
+import { SERVER_KLIC, overServer } from "../_shared/klic.ts";   // klíč a podpis hlasu z jednoho místa (2026-11-01)
 import { hlasovyText } from "../_shared/voice_direction.ts";   // recept hlasu výkladu (2026-10-29, owner „R3 zní dobře pro výklad“)
 import { ADMIN_EMAILS } from "../_shared/admini.ts";   // seznam adminů na jednom místě (2026-10-22, DECISIONS 2026-10-22 (5))
 
@@ -41,7 +42,7 @@ const json = (data: unknown, status = 200) =>
 function sb() {
   return createClient(
     Deno.env.get("SUPABASE_URL")!,
-    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+    SERVER_KLIC,
   );
 }
 
@@ -166,7 +167,7 @@ serve(async (req) => {
     }
     if (text === null && ticket) {
       const vt = typeof voice_text === "string" ? voice_text : "";
-      const nonce = await over(Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "", ticket, userId, vt);
+      const nonce = await overServer(ticket, userId, vt);
       if (!nonce) return json({ error: "voice_unbound" }, 403);
       zamek = "t:" + nonce;
       text  = normalizuj(vt);

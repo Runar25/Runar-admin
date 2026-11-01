@@ -1284,19 +1284,20 @@ async function deleteVersion(id, runeName, lang, version) {
   if (!confirm(`Delete ${runeName} ${lang.toUpperCase()} v${version}? This cannot be undone.`)) return;
   setSt('st-progress', 'Deleting…');
 
-  // Delete from Storage (non-fatal)
-  const fileName = `static/${lang}/${runeName.toLowerCase()}_${version}.mp3`;
-  const { error: storErr } = await sb.storage.from('runar-audio').remove([fileName]);
-  if (storErr) console.warn('Storage delete:', storErr.message);
-
-  // Delete from DB — .select() verifies the row was actually deleted (catches silent RLS blocks)
-  const { data: deleted, error: dbErr } = await sb
-    .from('runar_static_audio').delete().eq('id', id).select();
-  if (dbErr) { setSt('st-progress', 'Delete failed: ' + dbErr.message, 'err'); return; }
-  if (!deleted || deleted.length === 0) {
-    setSt('st-progress', 'Delete failed: 0 rows affected — check RLS permissions', 'err');
-    return;
-  }
+  // 2026-11-01: maže server (elevenlabs-static, delete_id) — soubor i řádek. Z klienta soubor smazat nešlo (úložiště to nedovolí)
+  // a chyba se tiše spolkla; řádek zmizel, soubor zůstal.
+  const { data: { session: _delSession } } = await sb.auth.getSession();
+  let _del = null;
+  try {
+    const res = await fetch(EL_STATIC, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json',
+                 ...(_delSession?.access_token ? { Authorization: 'Bearer ' + _delSession.access_token } : {}) },
+      body: JSON.stringify({ delete_id: id }),
+    });
+    _del = await res.json().catch(() => null);
+    if (!res.ok || !_del || !_del.ok) { setSt('st-progress', 'Delete failed: ' + ((_del && _del.error) || res.status), 'err'); return; }
+  } catch (e) { setSt('st-progress', 'Delete failed: ' + e.message, 'err'); return; }
 
   // Remove card from UI instantly
   const el = document.getElementById('dv-' + id);

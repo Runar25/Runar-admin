@@ -10,6 +10,7 @@
 // Deploy: supabase functions deploy waitlist-join --project-ref pmitxjvkeovijreepror --no-verify-jwt
 
 import { createClient } from "npm:@supabase/supabase-js@2.117.3";
+import { SERVER_KLIC } from "../_shared/klic.ts";   // serverový klíč Supabase z jednoho místa (2026-11-01, krok 9 plánu)
 
 const BREVO_LIST_ID = 3;       // Brevo → Contacts → Lists → „Rúnar – waitlist #3“ (owner 2026-10-13)
 const BREVO_TEMPLATE_ID = 1;   // Brevo → Marketing → Templates → „#1“, tag optin (owner 2026-10-13)
@@ -52,7 +53,7 @@ Deno.serve(async (req) => {
   if (!email || email.length > 254 || !EMAIL_RE.test(email)) return json({ error: "invalid_email" }, 400);
 
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
-  const sb = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
+  const sb = createClient(Deno.env.get("SUPABASE_URL")!, SERVER_KLIC);
   const { data: allowed, error: rlErr } = await sb.rpc("check_rate_limit", {
     p_key: `waitlist:ip:${ip}`, p_window_seconds: 900, p_max_requests: 5,
   });
