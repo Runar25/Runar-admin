@@ -33,7 +33,9 @@
 # Soubory (jména jako dnes ve v2/icons — manifest.json, sw.js a stránky se měnit nemusí):
 #   favicon.ico (16, 32, 48) · favicon-96x96.png · apple-touch-icon.png (180) · web-app-manifest-192x192.png · web-app-manifest-512x512.png
 #   · play-512.png (ikona pro výpis v Google Play, 512×512 bez průhlednosti)
-#   python -X utf8 scripts/ikona_appky.py --cil <složka> [--kamen | --lucerna] [--bez-ramecku]
+# Owner 2026-11-01 k náhledům A–D2: „ani jedno se mi nelíbí. tohle R bych chtěl“ (snímek obrazovky načítání čtení) → výchozí R
+# je R ze značky appky (R_ZNACKA níž); R z kresby run (runeSvg) zůstává pod --r-runa a v kameni (--kamen).
+#   python -X utf8 scripts/ikona_appky.py --cil <složka> [--kamen | --lucerna] [--bez-ramecku] [--r-runa]
 #   (náhled kamkoli; do appky --cil v2/icons, až owner náhled schválí). profil() kreslí z téže předlohy profilovku na sítě
 #   (scripts/web_socialni_obrazky.py).
 import io, os, re, shutil, subprocess, sys, tempfile
@@ -123,6 +125,19 @@ LUC_POZADI = (
     '<path d="' + OKNO + '" fill="url(#sklo)"/>'
     '<path d="' + OKNO_L + '" fill="url(#bokL)"/><path d="' + OKNO_P + '" fill="url(#bokP)"/>')
 
+# R ze značky appky: ᚱ, které appka píše písmem (např. span .whispers-loading-star při načítání čtení). Cormorant runy nemá, takže ho
+# kreslí písmo systému — na Windows Segoe UI Historic (to je R ze snímku ownera), jinde jiné. Písmo Microsoftu do ikony nekopírujeme
+# (licence) a ikona musí vypadat všude stejně → táž stavba jako vlastní geometrie: kmen + lomená čára, nahoře i dole rovně, špičky
+# svisle seříznuté. Proporce změřené na Segoe UI Historic v 1000 px (kmen 11,7 % výšky, špička ve 26 %, vrchol v 49 %, mezera
+# kmen–vrchol ~8 %); obrysem se od písma liší ve 3,6 % plochy (2026-11-01, scratchpad r_geom_test.py). Jednotky: výška 100.
+R_ZNACKA = ('<defs><clipPath id="rc"><path d="M0 0 H58.6 V100 H20.3 V30 H11.7 V100 H0 Z"/></clipPath></defs>'
+            '<g clip-path="url(#rc)" fill="none" stroke="%s" stroke-linejoin="miter" stroke-miterlimit="8">'
+            '<path d="M5.85 -2 V102" stroke-width="11.7"/><path d="M4.12 2.14 L50.1 25.7 L25.3 49.3 L53.8 104" stroke-width="11"/></g>')
+
+def kresba_znacka(barva=ZLATA):
+    # data-vb: viewBox je pevný (ořez clipPath getBBox nevidí, výpočet obrysu ve stránce by R posunul)
+    return ' viewBox="-0.5 -0.5 59.6 101" data-vb="1" xmlns="http://www.w3.org/2000/svg"', R_ZNACKA % barva
+
 def kresba(kamen):
     # runeSvg z produkce: výběr tahů holé runy (RUNE_BARE_KEEP) i kresba zůstávají na jednom místě (§18)
     js = ("var fs=require('fs'),u=fs.readFileSync(process.argv[2],'utf8'),m=u.match(/var RUNE_BARE_KEEP[\\s\\S]*?\\n}\\n/);"
@@ -148,10 +163,12 @@ html,body{width:%(m)dpx;height:%(m)dpx;overflow:hidden;background:transparent}
 <svg id="ram" viewBox="0 0 %(m)d %(m)d" xmlns="http://www.w3.org/2000/svg">%(lucerna)s%(ramecek)s</svg>
 <script>
 // viewBox = skutečný obrys kresby (holé R zabírá jen část plochy kamene, viewBox kresby počítá s kamenem); 2 %% rezerva na vyhlazení
-var s=document.getElementById('runa'),b=s.querySelector('g').getBBox(),o=b.height*0.02,maxw=%(maxw)g;
-s.setAttribute('viewBox',[b.x-o,b.y-o,b.width+2*o,b.height+2*o].join(' '));
+var s=document.getElementById('runa'),maxw=%(maxw)g,bw,bh;
+if(s.hasAttribute('data-vb')){var v=s.viewBox.baseVal;bw=v.width;bh=v.height;}
+else{var b=s.querySelector('g').getBBox(),o=b.height*0.02;s.setAttribute('viewBox',[b.x-o,b.y-o,b.width+2*o,b.height+2*o].join(' '));
+bw=b.width+2*o;bh=b.height+2*o;}
 // v lucerně: R nesmí být širší než sklo dovolí
-if(maxw>0&&s.getBoundingClientRect().width>maxw)s.style.height=(maxw*(b.height+2*o)/(b.width+2*o))+'px';
+if(maxw>0&&s.getBoundingClientRect().width>maxw)s.style.height=(maxw*bh/bw)+'px';
 </script></body></html>'''
 
 def ramecek(tvar):
@@ -197,18 +214,19 @@ def chrome(html, tmp, jm):
         sys.exit('ikona_appky: Chrome vrátil %dx%d' % im.size)
     return im
 
-def predloha(tvar, kamen, s_rameckem, tmp, tucne=False, s_lucernou=False):
-    atributy, paths = kresba(kamen)
+def predloha(tvar, kamen, s_rameckem, tmp, tucne=False, s_lucernou=False, znacka=True):
+    znacka = znacka and not kamen   # kámen je kresba run (runeSvg frame:true), R ze značky v něm není
+    atributy, paths = kresba_znacka(LUC_ZLATA_R if s_lucernou else ZLATA) if znacka else kresba(kamen)
     vyska = VYSKY[tvar][0 if not kamen else (1 if s_rameckem else 2)]
-    h = int(M * vyska * 1.04)   # +2 % rezerva viewBoxu nahoře i dole
+    h = int(M * vyska * (1.01 if znacka else 1.04))   # rezerva viewBoxu (runeSvg 2 % nahoře i dole, značka 0,5 %)
     x = y = '50%'
     luc = svit = ''
     maxw = 0
     if s_lucernou:
         luc, svit, rx, ry, rh, maxw, _ = lucerna(tvar, s_rameckem)
-        x, y, h, vyska = '%gpx' % rx, '%gpx' % ry, int(rh * 1.04), rh / M
+        x, y, h, vyska = '%gpx' % rx, '%gpx' % ry, int(rh * (1.01 if znacka else 1.04)), rh / M
         paths = paths.replace('fill="%s"' % ZLATA, 'fill="%s"' % LUC_ZLATA_R)
-    if tucne:
+    if tucne and not znacka:   # R ze značky má tah ~11 % výšky, v 16 px přes 1 px — zesilovat netřeba
         # 16 a 32 px: tahy runy i zlatý obrys kamene mají v kresbě pod 1 px → obrys silnější, tahy obtažené toutéž zlatou.
         # Tvar runy zůstává, jen je tučnější.
         paths = paths.replace('stroke-width="0.3"', 'stroke-width="0.9"').replace(
@@ -229,7 +247,7 @@ def predloha(tvar, kamen, s_rameckem, tmp, tucne=False, s_lucernou=False):
         'glow': '' if tvar == 'dlazdice' else ('filter:drop-shadow(0 0 %dpx #FFB000C0)' % round(0.09 * M * vyska) if s_lucernou
                                                 else 'filter:drop-shadow(0 0 %dpx #FFBF0030)' % round(0.10 * M * vyska)),
         'ramecek': ramecek(tvar) if s_rameckem and tvar != 'dlazdice' else ''}
-    return chrome(html, tmp, '%s-%d%d%d%d' % (tvar, kamen, s_rameckem, tucne, s_lucernou))
+    return chrome(html, tmp, '%s-%d%d%d%d%d' % (tvar, kamen, s_rameckem, tucne, s_lucernou, znacka))
 
 def pojistka_maskable(im):
     # Vše zlaté (runa, lucerna i rámeček) musí ležet v kruhu o poloměru 40 % strany — jinak to Android v některé masce ořízne.
@@ -258,11 +276,11 @@ def vyska_zlate(im, sklo):
 def zmensi(im, n):
     return im.resize((n, n), Image.LANCZOS)
 
-def profil(cesta, kamen=False, s_rameckem=True, strana=720, s_lucernou=False):
+def profil(cesta, kamen=False, s_rameckem=True, strana=720, s_lucernou=False, znacka=True):
     # Profilovka na Instagram / Facebook: táž předloha, rámeček v kruhu, do kterého sítě profilovku ořízne.
     tmp = tempfile.mkdtemp(prefix='runar_profil_')
     try:
-        zmensi(predloha('profil', kamen, s_rameckem, tmp, s_lucernou=s_lucernou), strana).convert('RGB').save(
+        zmensi(predloha('profil', kamen, s_rameckem, tmp, s_lucernou=s_lucernou, znacka=znacka), strana).convert('RGB').save(
             cesta, 'JPEG', quality=92, optimize=True)
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
@@ -273,16 +291,17 @@ def main():
         sys.exit('ikona_appky: chybí --cil <složka> (náhled do scratchpadu; po schválení --cil v2/icons)')
     cil = sys.argv[sys.argv.index('--cil') + 1]
     kamen, s_rameckem, s_lucernou = '--kamen' in sys.argv, '--bez-ramecku' not in sys.argv, '--lucerna' in sys.argv
+    znacka = '--r-runa' not in sys.argv
     if kamen and s_lucernou:
         sys.exit('ikona_appky: --kamen a --lucerna naráz ne (R svítí v lucerně holé)')
     os.makedirs(cil, exist_ok=True)
     tmp = tempfile.mkdtemp(prefix='runar_ikona_')
     try:
-        android = predloha('android', kamen, s_rameckem, tmp, s_lucernou=s_lucernou)
-        iphone = predloha('iphone', kamen, s_rameckem, tmp, s_lucernou=s_lucernou)
-        play = predloha('play', kamen, s_rameckem, tmp, s_lucernou=s_lucernou)
-        mala = predloha('dlazdice', kamen, s_rameckem, tmp)            # karta prohlížeče: vždy bez lucerny (hlavička)
-        drobna = predloha('dlazdice', kamen, s_rameckem, tmp, tucne=True)
+        android = predloha('android', kamen, s_rameckem, tmp, s_lucernou=s_lucernou, znacka=znacka)
+        iphone = predloha('iphone', kamen, s_rameckem, tmp, s_lucernou=s_lucernou, znacka=znacka)
+        play = predloha('play', kamen, s_rameckem, tmp, s_lucernou=s_lucernou, znacka=znacka)
+        mala = predloha('dlazdice', kamen, s_rameckem, tmp, znacka=znacka)   # karta prohlížeče: vždy bez lucerny (hlavička)
+        drobna = predloha('dlazdice', kamen, s_rameckem, tmp, tucne=True, znacka=znacka)
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
     print('zlatá od středu nejdál %.0f px z dovolených %.0f (Android)' % (pojistka_maskable(android), 0.40 * M))
