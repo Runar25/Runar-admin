@@ -440,7 +440,24 @@ promptu v `claude-proxy` (už ověřuje přihlášení a odečítá kredity; pro
 7. **Ověřit** hlavičky, přihlášení Googlem i kódem, smoke.
 8. **Stará adresa:** přesměrovat nebo vypnout, smazat DNS záznamy mířící na GitHub (převzetí domény). Nová adresa = nový origin →
    uživatelé se přihlásí znovu, PWA nainstalovat znovu.
-9. **Klíče Supabase** na nové (fakt 8) — do konce 2026, nejlépe spolu s krokem 1.
+9. **Klíče Supabase** na nové (fakt 8) — do konce 2026. **Odděleno od kroku 1 (F3/F4)** — owner 2026-11-01 „20. ano“; plán z rešerše
+   CODE-tune 2026-11-01 (docs supabase.com/docs/guides/api/api-keys a …/migrating-to-new-api-keys, citace v rešerši):
+   - [ ] **0 OWNER:** Settings → API Keys: publishable už existuje (`is-corr-qa.py` ho používá); založit secret jménem `default`. Ověřit v SQL,
+     že žádný cron neposílá klíč jako Bearer (`select jobname, command from cron.job where command ilike '%bearer%' or command ilike '%eyJ%';`)
+     a že nejsou Database Webhooks s klíčem.
+   - [ ] **1 CODE (edge funkce):** jeden pomocník na serverový klíč (`SUPABASE_SECRET_KEYS` → `default`, dočasně záloha na
+     `SUPABASE_SERVICE_ROLE_KEY` se zápisem do ops_events — žádné tiché zelené); 14 funkcí na něj. Podpis hlasu (`_shared/voice_ticket.ts`)
+     dostane vlastní tajnou hodnotu `VOICE_TICKET_SECRET` (owner `supabase secrets set`); `over` po dobu přechodu přijme starou i novou —
+     jinak výměna zneplatní rozpracované podpisy (hlas neuloženého čtení 403, Ask u něj zase placený). Nasadit všech 14 s --no-verify-jwt
+     (verify_jwt nové klíče nezná — docs). Ověřit: čtení, hlas a Ask neuloženého čtení, kód, shrine, client-error, waitlist, ops-watch,
+     inactive-accounts. Návrat: předchozí verze funkcí.
+   - [ ] **2 CODE (appka):** `SB_KEY` = `sb_publishable_…`, `show_corrections.py`; ověřit i přihlášení a obnovu tokenu (docs a zkouška
+     se rozcházejí u Bearer + publishable — REST odpověděl 200). Návrat: revert.
+   - [ ] **3:** 1–2 týdny počkat (SW drží starý config v nainstalované appce; využití starých klíčů docs neukazují).
+   - [ ] **4 OWNER (~25. 11.):** staré klíče vypnout (docs: vratné — dají se zapnout zpět). Ověřit: celý smoke, čtení s hlasem, běhy cronu.
+   - [ ] **5 CODE:** zálohy z kroku 1 pryč, `KLICE_SUPABASE.vymeneno = true` (+ test v verify_ops_souhrn.js), DECISIONS.
+   Neověřeno (jen odvozeno): že `SUPABASE_SECRET_KEYS` se naplní po založení klíče `default`; že `auth.admin` (deleteUser, listUsers)
+   funguje se `sb_secret_`; zda proměnná `SUPABASE_SERVICE_ROLE_KEY` po vypnutí zmizí.
 
 **Zálohy, zkouška obnovy, zkušební prostředí, pojistky** (doplňuje „Zálohy / DR“ výš):
 - Dnešní noční JSON export je úplný (ověřeno 2026-10-15), ale pro obnovu se hodí špatně (chybí DDL a pořadí cizích klíčů). Doplnit
