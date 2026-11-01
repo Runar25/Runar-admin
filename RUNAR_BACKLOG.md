@@ -331,6 +331,7 @@ Rozhodnout to jde dvěma cestami a obě potřebují někoho jiného než CODE:
 (a) islandský seznam od rodilého mluvčího — **vymýšlet ho nesmím** (§23), nebo
 (b) obrácená páka (§25): pustit EN dávku BEZ toho seznamu. Nepřibudou-li klišé, je zbytečný
 i v angličtině a mezera zaniká sama. To je levnější a nikoho to nečeká.
+**Owner 2026-11-01 k testu (b): „ne“** — nepouštět (DECISIONS 2026-11-01 (1)). Mezera zůstává, jak je popsaná.
 
 ## Nálezy z workflow — k triáži
 
@@ -962,7 +963,7 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
 
 ### Revize nápovědy, zásad a textů v appce (owner 2026-10-21 „můžou tam být staré věci“; CODE-tune)
 Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zásady soukromí), 95375a7 (texty v appce). Zbývá:
-- [ ] **Zásady slibují upozornění v appce před změnou** (oddíl „If things change“) — mechanismus neexistuje, zásady se v říjnu měnily
+- [x] ✅ *(CODE-tune 2026-11-01, owner „jen to co děláme“, DECISIONS 2026-11-01 (1): věta teď slibuje jen zveřejnění změny na stránce a datum.)* **Zásady slibují upozornění v appce před změnou** (oddíl „If things change“) — mechanismus neexistuje, zásady se v říjnu měnily
   ~8×. Postavit, nebo větu změnit (čeká na ownera).
 - [x] ✅ *(CODE-tune 2026-10-31, owner „napřed všechny vady“, DECISIONS 2026-10-31 (5): zprávy i mp3 v exportu; `--test` stáhne mp3 ownera a počítá je proti DB, 5 / 5.)* **Export účtu** (`scripts/utils/export_uctu.js`) nevyveze zprávy „Send Rúnar a line“ ani uložené mp3 hlasu, zásady slibují
   „everything linked to your account“.

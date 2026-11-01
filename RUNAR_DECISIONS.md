@@ -12737,3 +12737,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno:** `odvozId` a podpis na známých vstupech v Node (tvar id podle checku tabulky, cizí uživatel neprojde); mapa ochran
   (nová ochrana zapsaná). Naostro s modelem neověřeno — vyžaduje čtení ne-testera.
 - Affected doc(s): RUNAR_BACKLOG.md.
+
+## 2026-11-01 (1) — Nasazeno, zásady slibují jen to, co děláme; Wanderer zůstává 75 čtení a 2 Asky; test klišé ne; nový tester
+
+- **Rozhodl:** owner 2026-11-01 k otázkám z 2026-10-31: *„10. nasaď. 11. jen to co děláme. 12. necháme. 13. ne.“* a *„nový tester. přidej ho.
+  a pošli mu email v EN“*.
+- **Co:** (1) Nasazeny edge funkce `elevenlabs-static` (shrine Teach uloží hlas z náhledu, DECISIONS 2026-10-31 (7)) a `claude-proxy`
+  (Ask u čtení pro někoho jiného + osy Kříže v5.21, 2026-10-31 (6), (8)). (2) Zásady soukromí, oddíl „If things change“: slib upozornění
+  v appce před změnou (mechanismus nikdy nebyl) nahrazen tím, co děláme — změnu zveřejníme na stránce a datum aktualizace je dole (EN + IS,
+  IS ověřena GreynirCorrect + korpus). (3) Wanderer dál 75 čtení a 2 Asky — rozbor 2026-10-31: rozdíl nákladů 50 × 75 ≤ ~$1 měsíčně,
+  nikdo v říjnu nepřesáhl 36 čtení; páka pro roční Wanderer = vysvětlit Ask, ne ubrat čtení. (4) Test obrácené páky pro seznam klišé
+  (RUNAR_BACKLOG „IS/EN parita zákazů“) se nepouští. (5) Tester č. 8 v `allowed_emails` (role tester) + uvítací e-mail EN z runar@,
+  podle ownerem schváleného konceptu z 2026-10-10, popisky ověřené proti dnešní appce (pořadí: otázka → BEGIN THE READING → výběr
+  spreadu; okno Where to start; souhlas s otázkou; hlas 15 za měsíc).
+- Affected doc(s): RUNAR_BACKLOG.md (zásady, klišé).
