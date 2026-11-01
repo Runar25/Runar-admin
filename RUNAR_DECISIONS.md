@@ -12851,3 +12851,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   a vypsal 6 účtů — nový klíč do funkcí dorazil a `auth.admin` s ním funguje (v plánu dosud neověřené). Všech 14 bez přihlášení odmítá
   (401 / 400), žádná nepadá. Cesta s přihlášením (čtení, hlas, Ask, shrine) čeká na první skutečné použití.
 - Affected doc(s): RUNAR_BACKLOG.md.
+
+## 2026-11-01 (10) — Ikona appky zůstává; značku ᚱ bude appka kreslit, ne psát písmem
+
+- **Rozhodl:** owner 2026-11-01 k náhledům E / E2 / L (R ze značky appky): *„5. žádnou. necháváme jak je. návrhy si ulož do budoucna.“*
+  K tomu, že značku ᚱ appka píše písmem systému: *„3. předělat na kresbu“*; na otázku, zda to předat CODE-tune: *„6. ano“*.
+- **Co:** ikony ve `v2/icons/` zůstávají (Rúnar s kamenem), hlášení e98e5e68 se uzavírá bez změny; náhledy A–L s verdikty a příkazy
+  generátoru v `docs/archive/2026-11-01-ikona-navrhy/`. Značku ᚱ bude appka kreslit kresbou podle R z ownerova snímku (CODE-tune,
+  `znackaSvg()` v `runar-utils.js`; §5 se změní v témže commitu).
+- **Proč:** písmo systému dává ᚱ na každém zařízení jiný tvar (Windows Segoe UI Historic, jinde jiný nebo prázdný čtvereček) — týž
+  důvod jako přechod run na SVG 2026-07-13.
+- Affected doc(s): RUNAR_BACKLOG.md (Nové logo appky; Značka ᚱ v appce).

@@ -1043,25 +1043,14 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   owner chce upozornit víc: *„mít možnost vybrat otázku, kliknout na ASK, kde se pak uživateli označí právě řádek your own question … změnit
   barvu na zlatou a pulsovat, jak to máme už jinde, a změnit barvu zase na tu originální. Otestujeme, jak to bude fungovat a vypadat. Jestli to
   potenciálně použijeme jako základ pro ostatní podobné funkce.“* → napřed náhled (vzor záře: svíčka `window.rozsvit`, `runar-helper.js`).
-- [ ] **Nové logo appky — zlaté Rúnarovo R (e98e5e68):** *„mame ho například v rune reading card“* (kresba Rúnakortu, `runar-runakort.js`)
-  → návrh ikony appky (PWA, Play) ve všech velikostech, napřed náhled.
-  Generátor `scripts/ikona_appky.py` (CODE-web). Owner 2026-10-29 k prvnímu náhledu (R v kameni): *„bez kamene. ale můžeme udělat
-  zlatý rámeček po okraji ikony. tvar asi záleží na tvaru ikony v mobilu. necháme i s kamenem.“* → druhý náhled: A holé R + zlatý
-  rámeček v tvaru ikony na telefonu (výchozí) · B kámen + rámeček (`--kamen`) · C první náhled (`--kamen --bez-ramecku`). Po volbě:
-  `--cil v2/icons` + ruční bump `v2/sw.js` v témže commitu (ikony jsou v precache, hook verzi u PNG nezvedne) + `web/site/favicon.ico` +
-  smazat nepoužitý `v2/icons/site.webmanifest`; při volbě B přegenerovat i `web/socialni/profil-r.jpg` s kamenem. Až se bude stavět
-  balíček pro Google Play, ověřit jeho adaptivní ikonu proti rámečku — jak velký výřez z maskable obrázku ukáže, není ověřené.
-  Owner 2026-11-01 (přes CODE-tune): *„teď mě napadá R v lucerně. samozřejmě, že by muselo být větší, aby šlo R poznat, ale je to
-  zajímavý nápad“* → *„5. ano udělej náhled D“*: `--lucerna`, R svítí místo plamene; D s rámečkem, D2 `--lucerna --bez-ramecku`.
-  K první kresbě (holá N1) owner: *„ta lampa je hodně špatná. zapracuj víc na detailech“* → nakreslená znovu podle lucerny vedle
-  Rúnara na `v2/assets/app-moodboard.png` (02a6741). R v ní má na Androidu 211 px z 1024 s rámečkem, 243 bez (A 481), ve 40 px je
-  malé; karta prohlížeče zůstává holé R. Po volbě D: `--cil v2/icons --lucerna` (+ kroky výš).
-  Owner 2026-11-01 k A–D2: *„ani jedno se mi nelíbí. tohle R bych chtěl“* + snímek načítání čtení (ᚱ písmem appky) → výchozí R ikony
-  je R ze značky (`R_ZNACKA`, 715b02d); náhled 5: E R + rámeček · E2 R bez rámečku · L R v lucerně. Volba ownera čeká.
-  ⚠️ **Pro CODE-tune, až owner ikonu vybere:** ᚱ značky kreslí appka písmem (6× v `v2/runar-reader.html`, např. `.whispers-loading-star`);
-  Cormorant runy nemá, takže tvar dává písmo systému — R ze snímku je Windows (Segoe UI Historic), jinde jiný tvar nebo prázdný
-  čtvereček (proto runy 2026-07-13 přešly na SVG, značka zůstala, §5). Návrh: značku kreslit touž geometrií jako ikonu (`R_ZNACKA`
-  ze `scripts/ikona_appky.py` přenést do appky jako jedinou kresbu, §18) — pak je R v ikoně i v appce stejné všude. Mění §5.
+- ✖ *(owner 2026-11-01: „5. žádnou. necháváme jak je. návrhy si ulož do budoucna“ — ikona appky zůstává; náhledy A–L, verdikty
+  a příkazy generátoru v `docs/archive/2026-11-01-ikona-navrhy/`, DECISIONS 2026-11-01 (10).)* **Nové logo appky — zlaté Rúnarovo R
+  (e98e5e68):** *„mame ho například v rune reading card“* → návrhy ikony generátorem `scripts/ikona_appky.py` (CODE-web).
+- [ ] **Značka ᚱ v appce kresbou místo písma (owner 2026-11-01: „3. předělat na kresbu“, „6. ano“ — předáno CODE-tune):** dnes písmo
+  systému (`runar-help.html`, `runar-privacy.html`, `runar-reader.html` 3×, `runar-reading.js`; výjimka v `setRuneText`, `runar-utils.js`)
+  — na Windows Segoe UI Historic (R ze snímku ownera), jinde jiný tvar nebo prázdný čtvereček (proto runy 2026-07-13 přešly na SVG).
+  CODE-tune: `znackaSvg()` v `runar-utils.js` z geometrie `R_ZNACKA` + §5 v témže commitu. **Pak CODE-web:** generátor ikony čte
+  kresbu odtamtud (jako `runeSvg`) a `R_ZNACKA` z něj zmizí (§18).
 - [x] ✅ *(úklid 2026-10-31, owner „12. ano“, CODE-tune: opraveno v 7c3aebc.)* **Útok ㊼ „worker zase chytá sw.js“ jednou propustil (2026-10-29, CODE-tune):** v pre-push smoke (čistá kopie, zátěž) kontrola
   `verify_verze_hlaseni.js` prošla i s podstrčenou chybou (`.git/runar-protipriklady-propustene/20261029-221655_…`); hned poté 2× po sobě
   chytila 4 ze 4. Šum časování skutečného workeru (stav B3) → zpevnit čekání v kontrole, ať útok nezávisí na rychlosti stroje.
