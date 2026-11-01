@@ -12847,4 +12847,7 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   (3) Shrine ✕ DELETE maže verzi statického hlasu přes `elevenlabs-static` (`delete_id`, jen admin): soubor i řádek. Z klienta soubor
   smazat nešlo (úložiště nemá politiku) a chyba se tiše spolkla — u Dagazu zůstaly dva soubory bez řádku (owner je smazal ručně).
 - **Plán dál:** RUNAR_BACKLOG „Plán infrastruktury“ krok 9 (appka na publishable, ~25. 11. owner vypne staré klíče, pak zálohy pryč).
+- **Nasazeno (git nevidí) a ověřeno 2026-11-01 ~19:25 UTC:** všech 14 funkcí z 2e0bf85. Zkušební běh inactive-accounts vrátil `key: secret`
+  a vypsal 6 účtů — nový klíč do funkcí dorazil a `auth.admin` s ním funguje (v plánu dosud neověřené). Všech 14 bez přihlášení odmítá
+  (401 / 400), žádná nepadá. Cesta s přihlášením (čtení, hlas, Ask, shrine) čeká na první skutečné použití.
 - Affected doc(s): RUNAR_BACKLOG.md.
