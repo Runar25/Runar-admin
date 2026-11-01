@@ -6055,8 +6055,8 @@ function buildNornsPromptFate(u, runes, lang, corrections) {
     _kus('INTRO', 'fixed (spread)', '—', S.intro), '',
     _kus('RUNES-POSITIONS', 'rune draw (positions + meanings)', 'each rune its part', runesBlock), '',
     _kus('IMAGE', 'image draw (spread runes + area)', '1 (carried through the reading)', _imageBlock(lang, _seasonalImagery(lang, runes, u && u.area))),
-    _kus('IMAGE-DETAIL', 'fixed (Norns)', 'each rune', S.imageDetail || ''),   // v5.22: runa vstoupí do obrazu detailem (RP_NORNS.imageDetail)
     _kus('FIGURE', 'image draw (animal as protagonist)', 'whole', _imgPostava ? _postavaPokyn(lang, true) : ''),   // 2026-09-30: zvíře v hlavní roli → B2 (IMG_POSTAVA); čte se AŽ po losu obrazu výš
+    _kus('IMAGE-DETAIL', 'fixed (Norns)', 'each rune', S.imageDetail || ''),   // v5.22 (za FIGURE — pokyn postavy musí stát hned za obrazem, verify_image_register): runa vstoupí do obrazu detailem (RP_NORNS.imageDetail)
     // v4.9 (2026-08-23): esencni radek VEN ze spreadu — rikal "pojmenuj runu" proti
     // zamernemu "nejmenuj" tehoz promptu (dve protichudne instrukce; mereno vitezilo
     // nejmenuj a radek jel mrtvy). Jmena nese UI pozic. Misto nej vztahova vazba:
