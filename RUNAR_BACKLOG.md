@@ -1052,9 +1052,10 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   smazat nepoužitý `v2/icons/site.webmanifest`; při volbě B přegenerovat i `web/socialni/profil-r.jpg` s kamenem. Až se bude stavět
   balíček pro Google Play, ověřit jeho adaptivní ikonu proti rámečku — jak velký výřez z maskable obrázku ukáže, není ověřené.
   Owner 2026-11-01 (přes CODE-tune): *„teď mě napadá R v lucerně. samozřejmě, že by muselo být větší, aby šlo R poznat, ale je to
-  zajímavý nápad“* → *„5. ano udělej náhled D“*: `--lucerna` — lucerna N1 (`docs/inbox/2026-10-30-pirko-a-symboly.html`), R svítí
-  místo plamene; D s rámečkem, D2 `--lucerna --bez-ramecku`. R v lucerně je na Androidu o 38 % menší než v A (bez rámečku o 29 %),
-  ve 40 px už sotva čitelné; karta prohlížeče zůstává holé R. Po volbě D: `--cil v2/icons --lucerna` (+ kroky výš).
+  zajímavý nápad“* → *„5. ano udělej náhled D“*: `--lucerna`, R svítí místo plamene; D s rámečkem, D2 `--lucerna --bez-ramecku`.
+  K první kresbě (holá N1) owner: *„ta lampa je hodně špatná. zapracuj víc na detailech“* → nakreslená znovu podle lucerny vedle
+  Rúnara na `v2/assets/app-moodboard.png` (02a6741). R v ní má na Androidu 211 px z 1024 s rámečkem, 243 bez (A 481), ve 40 px je
+  malé; karta prohlížeče zůstává holé R. Po volbě D: `--cil v2/icons --lucerna` (+ kroky výš).
 - [x] ✅ *(úklid 2026-10-31, owner „12. ano“, CODE-tune: opraveno v 7c3aebc.)* **Útok ㊼ „worker zase chytá sw.js“ jednou propustil (2026-10-29, CODE-tune):** v pre-push smoke (čistá kopie, zátěž) kontrola
   `verify_verze_hlaseni.js` prošla i s podstrčenou chybou (`.git/runar-protipriklady-propustene/20261029-221655_…`); hned poté 2× po sobě
   chytila 4 ze 4. Šum časování skutečného workeru (stav B3) → zpevnit čekání v kontrole, ať útok nezávisí na rychlosti stroje.
