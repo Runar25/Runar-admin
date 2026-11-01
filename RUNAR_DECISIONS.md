@@ -12829,3 +12829,11 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Hranice:** jen čtení z karty (`credits_balance`); měsíční čtení předplatného se do dalšího měsíce dál nepřevádějí (strop na měsíc
   v `claude-proxy`).
 - Affected doc(s): RUNAR_BACKLOG.md (Před spuštěním plateb).
+
+## 2026-11-01 (8) — Telefon v obchodních podmínkách: ownerovo číslo
+
+- **Rozhodl:** owner 2026-11-01 na otázku CODE-web (číslo z kontaktů agndofa.is, nebo samostatné pro Rúnara?): *„bude moje číslo“*.
+- **Co:** číslo stojí v podmínkách (`web/site/skilmalar/index.html`) jen tam — v údajích prodávajícího a v poučení o odstoupení, kam ho vzor
+  (nařízení 435/2016, příloha I, [2]) dává; vzorový formulář (příloha II) telefon nemá. Jinde se neopisuje (§20).
+- **Proč:** zákon 16/2016 5. gr. b dnes chce telefon „eftir því sem við á“, návrh změny (þingskjal 317) vždy; podmínky jsou veřejné, owner to ví.
+- Affected doc(s): RUNAR_BACKLOG.md (Před spuštěním plateb).

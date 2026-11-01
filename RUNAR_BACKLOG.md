@@ -1010,8 +1010,7 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   prodlouží o 12 měsíců (17. gr.). Bez právníka — owner 2026-11-01 k právní kontrole (přes CODE-tune): *„právníka mít nebudeme, musíš
   udělat nejlépe, jak dovedeš!“*
   **Stav 2026-11-01:** napsané jako skrytá https://therunekeeper.com/skilmalar/ (`web/site/skilmalar/index.html`, DECISIONS 2026-11-01 (6)).
-  **Zbývá:** telefon (návrh změny zákona ho chce v 5. gr. b; owner volí: číslo z kontaktů agndofa.is, nebo samostatné pro Rúnara)
-  · název platební brány · při spuštění plateb
+  **Zbývá:** název platební brány · při spuštění plateb
   odkaz z nákupu (souhlas výš), z patičky webu a z menu appky (BACKLOG Menu „podmínky užití“), `noindex` pryč. ⚠️ Appka z Google Play
   na therunekeeper.com odkazovat nesmí (㊐) — podmínky užití pro ni jinou cestou (text v appce bez ceníku a odkazů na nákup).
 - [ ] **CODE-tune — postup vracení:** skript pro admina: zrušit nepoužitý kód / snížit účet / odepsat zbylé kredity, zápis do
@@ -1057,6 +1056,8 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   K první kresbě (holá N1) owner: *„ta lampa je hodně špatná. zapracuj víc na detailech“* → nakreslená znovu podle lucerny vedle
   Rúnara na `v2/assets/app-moodboard.png` (02a6741). R v ní má na Androidu 211 px z 1024 s rámečkem, 243 bez (A 481), ve 40 px je
   malé; karta prohlížeče zůstává holé R. Po volbě D: `--cil v2/icons --lucerna` (+ kroky výš).
+  Owner 2026-11-01 k A–D2: *„ani jedno se mi nelíbí. tohle R bych chtěl“* + snímek načítání čtení (ᚱ písmem appky) → výchozí R ikony
+  je R ze značky (`R_ZNACKA`, 715b02d); náhled 5: E R + rámeček · E2 R bez rámečku · L R v lucerně. Volba ownera čeká.
 - [x] ✅ *(úklid 2026-10-31, owner „12. ano“, CODE-tune: opraveno v 7c3aebc.)* **Útok ㊼ „worker zase chytá sw.js“ jednou propustil (2026-10-29, CODE-tune):** v pre-push smoke (čistá kopie, zátěž) kontrola
   `verify_verze_hlaseni.js` prošla i s podstrčenou chybou (`.git/runar-protipriklady-propustene/20261029-221655_…`); hned poté 2× po sobě
   chytila 4 ze 4. Šum časování skutečného workeru (stav B3) → zpevnit čekání v kontrole, ať útok nezávisí na rychlosti stroje.
