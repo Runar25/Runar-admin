@@ -112,7 +112,9 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 // v5.20 (2026-10-20): Ingwaz formula_is „innri vaxtar“ místo „innri þróunar“ — sladěno s klíčem v5.19 (DECISIONS 2026-10-20 (6)).
 // v5.21 (2026-10-31): IS osy Kříže islandsky a jako EN (nútíð / framtíð / dulið / fortíð) místo klíčů „verdandi/skuld/urd“;
 //    owner „kříž udělej“, kontrola promptu CODE-read 2026-10-16 bod 4. EN beze změny. DECISIONS 2026-10-31 (6).
-const RUNAR_PROMPT_VERSION = 'v5.21-kriz-osy';
+// v5.22 (2026-11-01): Norny — každá runa vstoupí do společného obrazu detailem scény (RP_NORNS.imageDetail, EN + IS); owner „17. ano“,
+//    lab RUNAR_EVAL_LOG 2026-10-27 (1). Cross, Horseshoe, Yggdrasil beze změny (netestováno). DECISIONS 2026-11-01 (5).
+const RUNAR_PROMPT_VERSION = 'v5.22-norny-detail';
 
 // Měsíční strop hlasu pro všechny (VOICE_MONTHLY_LIMIT = 5, od 2026-09-11) ZRUŠEN 2026-10-11: „limit na hlas max 5 na měsíc“ byl
 // ownerův pokyn pro testery, omylem pro všechny (DECISIONS 2026-10-11 (49)); owner: „žádný měsíční strop 5 hlasů není!!!“. Rúnar přečte
@@ -5993,6 +5995,9 @@ var RP_NORNS = {
     seeker:'Leitandi', lifeRune:'Lífsrún', area:'Svið', seeking:'Leitin', seekJoin:' og ', question:'Spurning', langInstr:'',
     labels:['URÐUR (urd — það sem var ofið, ekki hægt að taka til baka):','VERÐANDI (verdandi — það sem er að verða til, lifandi þráðurinn):','SKULD (skuld — hvert þráðurinn stefnir núna, ekki spá):'],
     intro:'Leitandinn dregur þrjár rúnir — Nornirnar tala.',
+    // v5.22 (2026-11-01, owner „17. ano“): viz EN. IS ověřeno Greynir + korpus (kemur inn í sömu mynd · með einhverju sem · þessu smáatriði 30× ·
+    // er aldrei sett ofan á · ofan á myndina 26×); „myndina sem hugtak“ jako celek 0×, dvojice běžné.
+    imageDetail:'Hver rún kemur inn í sömu mynd með einhverju sem myndin sjálf á til, eins og hljóði, birtu, hreyfingu eða fari. Merking rúnarinnar kemur fram í þessu smáatriði. Hún er aldrei sett ofan á myndina sem hugtak.',
     landing:'NIÐURLAGIÐ — Síðasta setningin er Skuldar. Þar nefnir Rúnar tvennt sem þetta gæti verið hjá leitandanum núna, og leitandinn metur sjálfur hvort á við. Það sprettur af því sem var, því sem er að gerast og því sem er fram undan. Hann segir það með orðum myndarinnar. Engin spá, enginn boðskapur og engin huggun.',
     beats:[
       'Þetta eru ekki þrír aðskildir lestrar — þetta er ein saga sem Nornirnar segja saman.',
@@ -6009,6 +6014,9 @@ var RP_NORNS = {
     seeker:'Seeker', lifeRune:'Life rune', area:'Area', seeking:'Seeking', seekJoin:' & ', question:'Question', langInstr:'',
     labels:['URÐUR (urd — what was woven, cannot be undone):','VERÐANDI (verdandi — what is being woven, alive now):','SKULD (skuld — where the thread is heading now, not foretold):'],
     intro:'The seeker draws three runes — the Norns speak.',
+    // v5.22 (2026-11-01, owner „17. ano“): runa vstoupí do společného obrazu detailem scény, ne abstraktním slovem. Lab RUNAR_EVAL_LOG
+    // 2026-10-27 (1): Ansuz abstraktně 4/5 → 0/5, Sowilo detailem 3/5 → 5/5 (Norny a3692c86, „voice“ uvnitř bouře). Testováno jen v Nornách.
+    imageDetail:'Each rune enters this same scene through something the scene itself can do — a sound, a light, a movement, a mark. Its meaning is read from that detail; never lay the meaning on the scene as an abstract word.',
     landing:'THE LANDING — the last sentence belongs to Skuld: it holds out two things this movement may be in the seeker\'s life — from what was woven, through what is clearing, to where it now heads — each a state that may be so, left for them to weigh. Drawn from the image, never a prediction, no moral, no comfort added.',
     beats:[
       'This is not three separate readings — it is one story told by three voices.',
@@ -6047,6 +6055,7 @@ function buildNornsPromptFate(u, runes, lang, corrections) {
     _kus('INTRO', 'fixed (spread)', '—', S.intro), '',
     _kus('RUNES-POSITIONS', 'rune draw (positions + meanings)', 'each rune its part', runesBlock), '',
     _kus('IMAGE', 'image draw (spread runes + area)', '1 (carried through the reading)', _imageBlock(lang, _seasonalImagery(lang, runes, u && u.area))),
+    _kus('IMAGE-DETAIL', 'fixed (Norns)', 'each rune', S.imageDetail || ''),   // v5.22: runa vstoupí do obrazu detailem (RP_NORNS.imageDetail)
     _kus('FIGURE', 'image draw (animal as protagonist)', 'whole', _imgPostava ? _postavaPokyn(lang, true) : ''),   // 2026-09-30: zvíře v hlavní roli → B2 (IMG_POSTAVA); čte se AŽ po losu obrazu výš
     // v4.9 (2026-08-23): esencni radek VEN ze spreadu — rikal "pojmenuj runu" proti
     // zamernemu "nejmenuj" tehoz promptu (dve protichudne instrukce; mereno vitezilo

@@ -12788,3 +12788,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   in the USA.“ / „Ef OpenAI liggur niðri fara þær til Anthropic í Bandaríkjunum.“ — záloha modelu (claude-proxy `MODELS`) stojí v zásadách,
   v souhlasu chyběla. IS ověřeno Greynir + korpus (Greynir „lýkur → líkur“ = falešný poplach, sloveso ljúka; korpus „lestrinum lýkur“ 9×).
 - Affected doc(s): RUNAR_BACKLOG.md.
+
+## 2026-11-01 (5) — v5.22: v Nornách každá runa vstoupí do společného obrazu detailem scény
+
+- **Rozhodl:** owner 2026-11-01 *„17. ano“* na otázku, zda dát větu z labu do produkce (lab `RUNAR_EVAL_LOG.md` 2026-10-27 (1); hlášení
+  Norny a3692c86, owner tehdy *„jak udělat, aby lépe volil významy run pro určité čtení?“*).
+- **Co:** `RP_NORNS.imageDetail` (EN = věta z labu doslova; IS myšlená islandsky, Greynir + korpus) jako kus `IMAGE-DETAIL` hned za obrazem
+  v `buildNornsPromptFate`. Golden: změnily se jen `norns_en/is` a `norns_lens_en/is`, o ten jeden řádek. Prompt v5.22.
+- **Hranice:** lab měřil jen Norny, EN, jeden vstup, n = 5 + 5, jeden soudce. Kříž, Podkova a Yggdrasil mají týž blok obrazu, ale bez
+  měření se nemění. IS bez měření účinku (jen jazykově ověřená). Sledovat v čteních: formule ve stejném slotu (memory
+  `oprava-promptu-odebira-vadu`), u solu doslovné „a sound, a light…“ (RUNAR_DESIGN „Slova, která dáváme modelu“ bod 1).
+- Affected doc(s): RUNAR_BACKLOG.md.

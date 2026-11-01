@@ -997,7 +997,7 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
 - [ ] **CODE-tune — nižší účet:** zpráva brány na konci období → server sníží `tier`; tlačítko „STEP BACK TO …“ vede do portálu brány.
 
 ### Hlášení z appky 2026-10-23 / 27 — čeká na ownera (načtena 2026-10-27, CODE-tune; hotové v DECISIONS 2026-10-27 (2))
-- [ ] **Norny a3692c86 — „voice“ skřípe, význam nesedí (d65a6bb4, bf44ef3d):** Ansuz (Verðandi) dostal ze seznamu `k` význam „voice“
+- [x] ✅ *(CODE-tune 2026-11-01, owner „17. ano“, DECISIONS 2026-11-01 (5): věta z labu 2026-10-27 v Nornách jako v5.22; Kříž, Podkova a Yggdrasil netestované, beze změny.)* **Norny a3692c86 — „voice“ skřípe, význam nesedí (d65a6bb4, bf44ef3d):** Ansuz (Verðandi) dostal ze seznamu `k` význam „voice“
   („a voice is taking shape among the fallen branches“) uvnitř obrazu bouře, který nese celý výklad; owner: stačilo *„message“*, konec
   nesedí, *„jak udělat, aby lépe volil významy run pro určité čtení?“*. Hypotéza (neověřeno): jeden obraz pro tři runy nutí druhou a třetí
   runu mluvit uvnitř cizí scény. Zásah do promptu výkladů → lab CODE-read, ne tichý tune.

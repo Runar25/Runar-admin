@@ -94,7 +94,9 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 // v5.20 (2026-10-20): Ingwaz formula_is „innri vaxtar“ místo „innri þróunar“ — sladěno s klíčem v5.19 (DECISIONS 2026-10-20 (6)).
 // v5.21 (2026-10-31): IS osy Kříže islandsky a jako EN (nútíð / framtíð / dulið / fortíð) místo klíčů „verdandi/skuld/urd“;
 //    owner „kříž udělej“, kontrola promptu CODE-read 2026-10-16 bod 4. EN beze změny. DECISIONS 2026-10-31 (6).
-const RUNAR_PROMPT_VERSION = 'v5.21-kriz-osy';
+// v5.22 (2026-11-01): Norny — každá runa vstoupí do společného obrazu detailem scény (RP_NORNS.imageDetail, EN + IS); owner „17. ano“,
+//    lab RUNAR_EVAL_LOG 2026-10-27 (1). Cross, Horseshoe, Yggdrasil beze změny (netestováno). DECISIONS 2026-11-01 (5).
+const RUNAR_PROMPT_VERSION = 'v5.22-norny-detail';
 
 // Měsíční strop hlasu pro všechny (VOICE_MONTHLY_LIMIT = 5, od 2026-09-11) ZRUŠEN 2026-10-11: „limit na hlas max 5 na měsíc“ byl
 // ownerův pokyn pro testery, omylem pro všechny (DECISIONS 2026-10-11 (49)); owner: „žádný měsíční strop 5 hlasů není!!!“. Rúnar přečte
