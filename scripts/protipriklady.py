@@ -377,6 +377,7 @@ BEZ_UTOKU = {
     'verify_prelaunch_open.js': 'jen vypisuje, nikdy nepadá',
     'verify_zaklad_produkce.js': 'chybu si podstrčí sama v každém běhu (samotest: skryté Norny, fotka, chyba JS)',
     'verify_liferune_states.js': 'chybu si podstrčí sama v každém běhu',
+    'verify_necinne_ucty.js': 'chybu si podstrčí sama v každém běhu (ochrana kreditů, lhůta od upozornění, přihlášení v lhůtě) — 2026-11-01',
 }
 
 

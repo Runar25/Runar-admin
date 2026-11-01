@@ -12764,3 +12764,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno:** v prohlížeči (pracovní strom, návštěvník EN): BEGIN → karta → výběr runy → ← BACK → formulář, jméno zůstalo, runa null,
   HEAR RÚNAR SPEAK zamčené; znovu BEGIN → čistá mřížka.
 - Affected doc(s): RUNAR_BACKLOG.md.
+
+## 2026-11-01 (3) — Opuštěné účty: po 3 letech bez přihlášení smazání, napřed dva e-maily; jedna cesta mazání s delete-account
+
+- **Rozhodl:** owner 2026-10-19 (3), (6) (pravidla) a 2026-11-01 *„připravit. udělat.“*.
+- **Co:** edge funkce `inactive-accounts` (pg_cron denně 03:40 UTC, `sql/2026-11-01_necinne_ucty.sql`, tajná hlavička jako ops-watch).
+  Pravidla a texty v `_shared/necinne_ucty.ts`: poslední aktivita = poslední přihlášení (jinak vznik účtu); 30 a 7 dní před 3. výročím
+  e-mail (Brevo, noreply@; jazyk z účtu, neznámý → IS i EN); smazání nejdřív v termínu A zároveň 30 dní po prvním a 7 po druhém
+  upozornění — pozdě spuštěná úloha ani nedoručený e-mail nikoho nepřipraví o lhůtu (bez odeslání se nic nezapíše). Přihlášení v lhůtě
+  záznam zruší. Nemaže se admin, účet s kredity, předplatné (standard / premium mimo testery). Smazání tutéž cestou jako na žádost:
+  postup přesunut z `delete-account` do `_shared/smaz_ucet.ts` (jedna kopie, §18). Běh hlásí `ops_events` purge `inactive_accounts`
+  (registr MAZANI → ops-watch). Zásady (EN + IS, IS Greynir + korpus) to říkají v oddílu o smazání účtu.
+- **Ověřeno:** `scripts/verify_necinne_ucty.js` (smoke) — 26 případů na produkčních funkcích + 3 podvržené vady spadly; samotest při stavbě
+  našel slepé místo (lhůta od prvního upozornění) a přibyl případ. Naostro: zkušební běh `{"mode":"dry"}` po nasazení (viz zpráva ownerovi).
+- Affected doc(s): RUNAR_PRIVACY.md, RUNAR_BACKLOG.md.

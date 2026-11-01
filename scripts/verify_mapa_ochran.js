@@ -129,6 +129,15 @@ const MAPA = {
       'if (!stejne(req.headers.get("x-ops-secret") ?? "", Deno.env.get("OPS_CRON_SECRET") ?? "")) return json({ error: "unauthorized" }, 401);': 'tajná hlavička plánovače',
     },
   },
+  'inactive-accounts': {
+    kdo: 'jen pg_cron s tajnou hlavičkou x-ops-secret (porovnání v konstantním čase)', velikost: '—', cetnost: 'plánovač (denně 03:40 UTC)',
+    log: 'jen počty a zkrácená id účtů, žádné adresy (RUNAR_PRIVACY.md)',
+    ochrany: {
+      'if (req.method !== "POST") return json({ error: "Method not allowed" }, 405);': POST,
+      'if (!stejne(req.headers.get("x-ops-secret") ?? "", Deno.env.get("OPS_CRON_SECRET") ?? "")) return json({ error: "unauthorized" }, 401);': 'tajná hlavička plánovače',
+      'if (isNaN(ted.getTime())) return json({ error: "bad now" }, 400);': 'čas zkoušky (dry) musí být platné datum',
+    },
+  },
   'redeem-code': {
     kdo: 'přihlášený', velikost: '—', cetnost: '5 pokusů / 15 min na IP (před přihlášením — proti hádání kódů)',
     log: 'chyby anglicky', pozn: 'limit jen na IP: kdo má víc IP, hádá rychleji — síla kódů rozhoduje (bod 4 zadání, neověřeno)',

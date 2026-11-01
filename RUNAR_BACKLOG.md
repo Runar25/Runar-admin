@@ -299,7 +299,7 @@ atomický upsert, úklid starších než hodina; stejně tak `use_credit` (atomi
   taky při AI vyhledávání… Tohle je práce před spuštěním.“*). (a) SEO + AI vyhledávání (popisky run, tvar run v kolekci, statické texty jako
   obsah). (b) ✅ Ukládání vybraných čtení/vět pro vizuály — HOTOVO 2026-09-30: „✦ Keep this“ v reportéru (text + id čtení),
   DECISIONS 2026-09-30 (4); výpis = SQL v hlavičce `sql/2026-09-30_bug_reports_keep_a_limity.sql`.
-- [ ] **Mazání opuštěných účtů po 3 letech s upozorněním** (owner 2026-10-19, DECISIONS 2026-10-19 (3)) — CODE-tune: úloha
+- [x] ✅ *(CODE-tune 2026-11-01, owner „připravit. udělat.“, DECISIONS 2026-11-01 (3): funkce `inactive-accounts` + tabulka `inactive_notices` + plánovač denně; smoke kontroluje lhůty na známých datech.)* **Mazání opuštěných účtů po 3 letech s upozorněním** (owner 2026-10-19, DECISIONS 2026-10-19 (3)) — CODE-tune: úloha
   najde účty 3 roky bez přihlášení (`auth.users.last_sign_in_at`), pošle upozornění e-mailem (EN + IS, krátké — memory `emaily-kratke`),
   po lhůtě smaže cestou `delete-account`; zápis v registru `MAZANI` + `ops_events` purge (§30). Zásady v appce (EN + IS).
   **Upřesněno 2026-10-19 (6):** upozornění 30 dní předem + druhé týden předem; účet s nevyčerpanými kredity nebo běžícím

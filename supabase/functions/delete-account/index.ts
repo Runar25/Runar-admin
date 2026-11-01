@@ -1,10 +1,11 @@
 // Supabase Edge Function: delete-account
 // Permanently deletes the authenticated user and all their data.
-// ON DELETE CASCADE in DB removes: user_profiles, readings automatically. allowed_emails (no FK) is cleared by email below.
+// What goes with the account: _shared/smaz_ucet.ts (shared with inactive-accounts).
 // Deploy: supabase functions deploy delete-account --project-ref pmitxjvkeovijreepror --no-verify-jwt
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.117.3";
+import { smazUcet } from "../_shared/smaz_ucet.ts";
 
 const cors = {
   "Access-Control-Allow-Origin":  "*",
@@ -34,52 +35,9 @@ serve(async (req) => {
     );
     if (authErr || !user) return json({ error: "Invalid session" }, 401);
 
-    // ── Uvolni foreign key v gift_codes (used_by → SET NULL) ──
-    // gift_codes.used_by nemá ON DELETE CASCADE — musíme nullovat ručně
-    await sb.from("gift_codes").update({ used_by: null }).eq("used_by", user.id);
-
-    // ── Zprávy „Send Rúnar a line“ (2026-10-15, send-line) ──
-    // V bug_reports nesou e-mail účtu (sloupec tester), vazbu na auth.users nemají — CASCADE je nesmaže. Zásady slibují, že s účtem
-    // zmizí vše; selže-li to, účet se nemaže (uživatel to zkusí znovu a slib platí), stejně jako allowed_emails níž.
-    if (user.email) {
-      const { error: lineErr } = await sb.from("bug_reports").delete().eq("type", "message").eq("tester", user.email);
-      if (lineErr) return json({ error: "Failed to delete messages: " + lineErr.message }, 500);
-    }
-
-    // ── E-mail ze seznamu testerů (allowed_emails) ──
-    // 2026-10-10 (CODE-read BACKLOG část 32 (j)): tabulka nemá vazbu na auth.users, takže e-mail smazání účtu přežil — zásady přitom
-    // slibují „Email address — until account deleted“ a „Everything goes“. Shoda bez ohledu na velikost písmen, ale přesná: NE ilike —
-    // v něm jsou %, _ i * (alias PostgREST) zástupné znaky a „a_b@x“ by smazal i „acb@x“. Seznam je malý (testeři) → načíst, porovnat,
-    // smazat přesné uložené hodnoty. Selže-li to, účet se nemaže — uživatel to zkusí znovu a slib platí.
-    if (user.email) {
-      const { data: radky, error: selErr } = await sb.from("allowed_emails").select("email");
-      if (selErr) return json({ error: "Failed to read allowlist: " + selErr.message }, 500);
-      const moje = (radky || []).map((r: { email: string | null }) => r.email)
-        .filter((e): e is string => typeof e === "string" && e.toLowerCase() === user.email!.toLowerCase());
-      if (moje.length) {
-        const { error: allowErr } = await sb.from("allowed_emails").delete().in("email", moje);
-        if (allowErr) return json({ error: "Failed to remove email from allowlist: " + allowErr.message }, 500);
-      }
-    }
-
-    // ── Uložený hlas čtení (2026-10-11, DECISIONS (61)) ──
-    // Soubory v úložišti nejsou řádky databáze — CASCADE je nesmaže, a zásady slibují, že hlas čtení zmizí s účtem. Selže-li to, účet
-    // se nemaže (uživatel to zkusí znovu a slib platí) — jako u allowed_emails výš. Úložiště ještě není (SQL nespuštěno) = nic ke smazání.
-    for (let kolo = 0; kolo < 200; kolo++) {
-      const { data: soubory, error: lsErr } = await sb.storage.from("reading-voice").list(user.id, { limit: 100 });
-      if (lsErr) {
-        if (/not found/i.test(lsErr.message)) break;
-        return json({ error: "Failed to list voice files: " + lsErr.message }, 500);
-      }
-      if (!soubory || !soubory.length) break;
-      const { error: rmErr } = await sb.storage.from("reading-voice").remove(soubory.map((f) => `${user.id}/${f.name}`));
-      if (rmErr) return json({ error: "Failed to remove voice files: " + rmErr.message }, 500);
-      if (soubory.length < 100) break;
-    }
-
-    // ── Delete user (CASCADE removes user_profiles + readings + voice_tickets) ──
-    const { error: deleteErr } = await sb.auth.admin.deleteUser(user.id);
-    if (deleteErr) return json({ error: "Failed to delete account: " + deleteErr.message }, 500);
+    // Postup smazání je od 2026-11-01 ve sdíleném _shared/smaz_ucet.ts — tutéž cestou maže i inactive-accounts (opuštěné účty).
+    const vysledek = await smazUcet(sb, user.id, user.email ?? null);
+    if (!vysledek.ok) return json({ error: vysledek.chyba }, 500);
 
     return json({ success: true });
 
