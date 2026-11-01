@@ -761,6 +761,10 @@ Procházka je tím úplná.
       startu. Že to sedlo, pozná se podle **„(tester)" / „(prófari)"** za jménem tieru v panelu.
 
 ## Zjištěno při auditu — nespěchá, ale ať se neztratí
+- [ ] **Útok na ㊍ (stín skládání promptu) jednou propustil** (CODE-web 2026-11-01, pre-push 90b82b9 v čisté kopii): `verify_prompt_stin.js`
+  prošla s podstrčenou chybou v `v2/runar-app.js` (`.git/runar-protipriklady-propustene/20261101-174820_verify_prompt_stin.js_v2_runar-app.js.txt`);
+  hned poté samotný útok 2 ze 2 (6 a 18 vad ve 22 vzorcích). Který ze dvou případů propustil, výstup neříká. Šum jako dřív u ㊼ →
+  zpevnit kontrolu, ne přepouštět. Kontrola je CODE-tune (2026-10-21), předáno.
 
 
 ---
@@ -842,7 +846,7 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   5. Video: na výšku 9:16, titulky přímo v obraze (většina lidí kouká bez zvuku), rozhodují první 2 vteřiny, nahrát zvlášť na každou síť.
   6. Obsah: nejsilnější materiál jsou samotná čtení („✦ Keep this“ v appce ukládá dobré věty). Čtení testerů jen s jejich souhlasem
      (osobní údaje); ownerova a týmová volně.
-  7. Instagram v appce: položka v menu po ownerově volbě ikony (CODE-tune); ve verzi z Google Play skrytá — profil vede na web
+  7. ✅ *(CODE-tune 2026-10-28, 56e3b50)* Instagram v appce: položka v menu; ve verzi z Google Play skrytá — profil vede na web
      s nákupem (nepřímá cesta k platbě), hlídá smoke ㊐.
   **Připraveno (CODE-web 2026-10-28; soubory `web/socialni/`, generátor `scripts/web_socialni_obrazky.py`; owner nahrává ručně):**
   8. Titulní fotka Facebooku `fb-titulni.jpg` 1640×624: Rúnar i nápis stojí ve středu, který vidí počítač (820×312) i telefon
@@ -1027,8 +1031,9 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   smazat nepoužitý `v2/icons/site.webmanifest`; při volbě B přegenerovat i `web/socialni/profil-r.jpg` s kamenem. Až se bude stavět
   balíček pro Google Play, ověřit jeho adaptivní ikonu proti rámečku — jak velký výřez z maskable obrázku ukáže, není ověřené.
   Owner 2026-11-01 (přes CODE-tune): *„teď mě napadá R v lucerně. samozřejmě, že by muselo být větší, aby šlo R poznat, ale je to
-  zajímavý nápad“* → možná varianta D: lucerna N1 (`docs/inbox/2026-10-30-pirko-a-symboly.html`) jako ikona, R uvnitř; favicona by
-  zůstala holé R.
+  zajímavý nápad“* → *„5. ano udělej náhled D“*: `--lucerna` — lucerna N1 (`docs/inbox/2026-10-30-pirko-a-symboly.html`), R svítí
+  místo plamene; D s rámečkem, D2 `--lucerna --bez-ramecku`. R v lucerně je na Androidu o 38 % menší než v A (bez rámečku o 29 %),
+  ve 40 px už sotva čitelné; karta prohlížeče zůstává holé R. Po volbě D: `--cil v2/icons --lucerna` (+ kroky výš).
 - [x] ✅ *(úklid 2026-10-31, owner „12. ano“, CODE-tune: opraveno v 7c3aebc.)* **Útok ㊼ „worker zase chytá sw.js“ jednou propustil (2026-10-29, CODE-tune):** v pre-push smoke (čistá kopie, zátěž) kontrola
   `verify_verze_hlaseni.js` prošla i s podstrčenou chybou (`.git/runar-protipriklady-propustene/20261029-221655_…`); hned poté 2× po sobě
   chytila 4 ze 4. Šum časování skutečného workeru (stav B3) → zpevnit čekání v kontrole, ať útok nezávisí na rychlosti stroje.
