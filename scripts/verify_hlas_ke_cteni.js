@@ -81,8 +81,10 @@ const rekni = (ok, co) => { if (!ok) fail++; console.log((ok ? 'OK    ' : 'FAIL 
   rekni((jr.match(/\$\{_jHlas\(e, i\)\}/g) || []).length === 2 && /async function playReadingVoice\(i\)/.test(jr), 'deník: hlas u single i u výkladu');
 
   // (5) smazání účtu + SQL
+  // 2026-11-01: postup smazání je ve sdíleném _shared/smaz_ucet.ts (i pro opuštěné účty) — delete-account ho musí volat a on mazat hlas.
   const del = cti('supabase/functions/delete-account/index.ts');
-  rekni(/storage\.from\("reading-voice"\)\.remove\(/.test(del), 'delete-account maže soubory hlasu');
+  const smaz = cti('supabase/functions/_shared/smaz_ucet.ts');
+  rekni(/await smazUcet\(/.test(del) && /storage\.from\("reading-voice"\)\.remove\(/.test(smaz), 'delete-account maže soubory hlasu (přes _shared/smaz_ucet.ts)');
   const sql = cti('sql/2026-10-11_hlas_ke_cteni.sql');
   rekni(/create table if not exists public\.voice_tickets/.test(sql) && /\('reading-voice', 'reading-voice', false/.test(sql), 'SQL: tabulka zámků a SOUKROMÉ úložiště');
 

@@ -228,7 +228,7 @@ PRIPADY = [
  ('chyti', 'verify_jazyk_parametr.js', 'v2/runar-character.js', 'replace', "return rk(r, lang).split(", "return rk(r).split("),
  ('obchazka', 'verify_jazyk_parametr.js', 'v2/runar-utils.js', 'replace', "function rn(r, l)  { return (l || lang) === 'is'", "function rn(r, l)  { return lang === 'is'"),
  # 2026-10-12 (CODE-tune): nápovědy pod „+“ — 2026-10-10 je úklid smazal jako mrtvé a „+“ ukazoval holý klíč „area_hint“.
- ('chyti', 'verify_citelnost.js', 'v2/runar-translations.js', 'replace', "    seek_hint:        'This sets the tone.',", ''),
+ ('chyti', 'verify_citelnost.js', 'v2/runar-translations.js', 'replace', "    seek_hint:        'This shapes how the reading ends.',", ''),   # 2026-11-01: nové znění (DECISIONS 2026-11-01 (4))
  # 2026-10-12 (CODE-tune): „+“ s upozorněním u otázky (DECISIONS 2026-10-12 (7)) zmizí z popisku — (G) to musí poznat.
  ('chyti', 'verify_citelnost.js', 'v2/runar-app.js', 'replace', "qlbl.innerHTML = _tgl('qpriv', t('q_lbl') + ' <span class=\"opt\">'+t('opt')+'</span>');", "qlbl.innerHTML = t('q_lbl') + ' <span class=\"opt\">'+t('opt')+'</span>';"),   # 2026-10-20: nový tvar řádku (ab0cf88)
  # 2026-10-12 (CODE-tune): práh (A) 4,5 : 1 — „(OPTIONAL)“ zpátky na průhlednost 0,45 (3,12 : 1) musí shodit kontrolu.
@@ -274,6 +274,9 @@ PRIPADY = [
  ('chyti', 'verify_hlas_ke_cteni.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'replace', '.eq("id", reading_id).eq("user_id", userId)', '.eq("id", reading_id)'),
  ('chyti', 'verify_hlas_ke_cteni.js', 'v2/runar-journal.js', 'regex', r'        \$\{_jHlas\(e, i\)\}\r?\n', ''),
  ('nesmi', 'verify_hlas_ke_cteni.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'append', '', '\n// komentář navíc — správný kód\n'),
+# 2026-11-01: mazání účtu je ve sdíleném _shared/smaz_ucet.ts — útok na obě strany (sdílený soubor nemaže hlas / delete-account ho nevolá)
+('chyti', 'verify_hlas_ke_cteni.js', 'supabase/functions/_shared/smaz_ucet.ts', 'replace', 'await sb.storage.from("reading-voice").remove(', 'await sb.storage.from("reading-voice").list('),
+('chyti', 'verify_hlas_ke_cteni.js', 'supabase/functions/delete-account/index.ts', 'replace', 'const vysledek = await smazUcet(sb, user.id, user.email ?? null);', 'const vysledek = { ok: true };'),
  # 2026-10-13 (CODE-tune): zámek „jednou“ zmizí → ㊸ musí spadnout; zmínka domény ElevenLabs nad zámkem (jako mazání historie) nesmí.
  ('chyti', 'verify_hlas_ke_cteni.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'replace', 'from("voice_tickets").insert({ id: zamek, user_id: userId })', 'from("voice_tickets").select("id").eq("id", zamek)'),
  ('nesmi', 'verify_hlas_ke_cteni.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'replace', 'const EL_API_KEY     = Deno.env.get("ELEVENLABS_API_KEY");', 'const EL_API_KEY     = Deno.env.get("ELEVENLABS_API_KEY");   // api.elevenlabs.io (jen zmínka)'),
