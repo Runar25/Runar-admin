@@ -97,12 +97,14 @@ function stav(prihlasen, maDob, tier, L) {
     noDob: g('tree-no-dob').style.display, noDobText: String(g('tree-no-dob-text').textContent),
     teaser: g('tree-rs-teaser').style.display, runa: String(g('tree-rune-name-teaser').textContent),
     glyf: String(g('tree-rune-glyph-teaser').innerHTML), cta: g('tree-rs-cta-block').style.display,
-    vyzva: String(g('tree-teaser-text').textContent),
+    vyzva: String(g('tree-teaser-text').textContent), ttDisp: g('tree-teaser-text').style.display,
+    vyzvaV: String(g('tree-visitor-txt').textContent),   // pozvánka návštěvníka v panelu .tier-notice (2026-11-01)
   };
 }
 
 for (const L of ['en', 'is']) {
   const T = vm.runInContext('UI_TEXT', S)[L];
+  const TI = vm.runInContext('TIERS', S);
 
   // 1) návštěvník BEZ data narození — pozvánka zadat datum, ne „přihlas se"
   const a = stav(false, false, null, L);
@@ -115,7 +117,10 @@ for (const L of ['en', 'is']) {
   rekni(b.teaser === 'block', L + '  návštěvník s datem → DOSTANE svou runu (dřív slepá ulička)');
   rekni(b.runa.length > 2, L + '  …se jménem runy („' + b.runa + '")');
   rekni(b.glyf.indexOf('<svg') !== -1, L + '  …i s glyfem');
-  rekni(b.vyzva === T.tree_visitor_read, L + '  …a výzvou přihlásit se kvůli ČTENÍ');
+  // 2026-11-01 (náhled teaserů bod 5): pozvánka šablonou závoje v panelu #tree-visitor-cta, text Rune Seekera skrytý
+  const rsJm = L === 'is' ? TI.rune_seeker.label_is_dat : TI.rune_seeker.label;
+  rekni(b.vyzvaV === T.tree_visitor_read.split('{tier}').join(rsJm), L + '  …a pozvánkou, že ČTENÍ otevírá ' + rsJm + ' („' + b.vyzvaV + '“)');
+  rekni(b.ttDisp === 'none', L + '  …a text pro Rune Seekera se mu neukazuje');
   rekni(b.cta === 'none', L + '  …bez nabídky za kredity (nemá účet ani zůstatek)');
   rekni(b.noDob === 'none', L + '  …a formulář na datum už nesvítí');
 
@@ -124,6 +129,7 @@ for (const L of ['en', 'is']) {
   rekni(c.teaser === 'block', L + '  přihlášený Rune Seeker → teaser');
   rekni(c.cta === '', L + '  …a nabídka za kredity je zpátky viditelná');
   rekni(c.vyzva === T.tree_rs_teaser, L + '  …s vlastním textem, ne s tím pro návštěvníka');
+  rekni(c.ttDisp === '', L + '  …a ten text je zase vidět (návštěvníkovi se skrývá stylem na prvku)');
 }
 
 // ── JMÉNO: musí dojít do čtení životní runy, a rozbor jména tam být NESMÍ ───

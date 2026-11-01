@@ -564,6 +564,11 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
    společný rozbalovač .xp-plus — v barvě textu (2026-10-22), srovnaný na inkoust textu. */
 .tn-compact .tn-text{margin:12px 0 0;}
 .tier-notice.curious .tn-btn{border-color:rgba(255,191,0,0.35);}
+/* ── ZÁVOJ ── (owner 2026-11-01, docs/inbox/2026-11-01-teasery.html): zamčená věc po klepnutí — jedna Rúnarova věta (.tn-text) a jedno
+   tlačítko (.tn-btn.btn-upgrade); staví zavoj() v runar-utils.js, rozzáří svíčka (rozsvit). Rámeček jako pozvánka (.tier-notice), ale zlatý
+   a se zářem halo svíčky — ať je vidět, že se rozsvítil právě on, u místa, kde člověk klepl. */
+.zavoj{border:1px solid rgba(255,191,0,0.45);box-shadow:0 0 18px rgba(255,170,40,0.22);padding:14px 16px 16px;margin:14px 0 6px;text-align:center;}
+.zavoj .tn-text{margin-bottom:12px;}
 
 
 /* ── CARDS & FORMS ── */
@@ -645,7 +650,6 @@ button.card-lbl:focus-visible{outline:1px solid var(--gold);outline-offset:4px;}
 .opt{opacity:0.65;font-size:0.85em;}
 /* 2026-10-11 bez opacity 0.45: --muted přes průhlednost vycházelo ≈ --dim (#445160, kontrast 2,41 : 1), které §5 na text zakazuje — upozornění
    „not professional advice“ nešlo přečíst (procházka CODE-read). Vzor .credit-note (Cinzel, malé písmo, --muted bez průhlednosti, 7,7 : 1). Smoke ㊽. */
-.q-teaser-txt{margin:14px 0 6px;}
 /* 2026-10-20 (CODE-read, jednotný vzhled): drobná poznámka všude stejně — upozornění pod BEGIN, teaser otázky, poznámky v oknech.
    Do té doby čtyři podoby (Cinzel 0.58–0.6 i Cormorant, kurzíva i ne) na téže obrazovce. --muted bez průhlednosti drží 4,5 : 1 (㊽). */
 .fine{font-family:'Cormorant Garamond',serif;font-size:0.8em;font-style:italic;letter-spacing:0;color:var(--muted);line-height:1.6;}
@@ -684,14 +688,14 @@ input:autofill{filter:none;}
 /* 2026-10-19 (DECISIONS 2026-10-19 (9)): zamčená pilulka návštěvníka přijme klepnutí (_zamekKlep ukáže štítek se svíčkou), ale nevypadá
    jako volba — do té doby pointer-events:none a klepnutí mlčelo. Štítek zámku je skrytý, dokud na skupinu neklepne. */
 .pills-locked .pill{cursor:default;}
-.visitor-lock-hint.lock-skryty{display:none;}
-.pill.pill-locked{opacity:0.35;pointer-events:none;cursor:default;}
+/* 2026-11-01 (náhled teaserů bod 3): i zamčená pilulka Rune Seekera přijme klepnutí (závoj, _zamekKlep) — dřív pointer-events:none, mlčela.
+   Štítky zámku u popisků (.visitor-lock-hint) pryč — vysvětlí závoj. */
+.pill.pill-locked{opacity:0.35;cursor:default;}
 /* 2026-10-16 (hlášení 972e2a7e + ca5fab4b, KUKY: „Area má 4 řádky a snížení na 3 nám pomůže“ — tlačítko čtení má být vidět na druhé
    obrazovce): volby ve formuláři užší — okraj 14 → 8 px, mezera 8 → 6 px. Na 393 px šířky Area 3 řádky místo 4 a „This reading is for“
    1 místo 2, v EN i IS. Jen ve formuláři čtení: třídu .pill bere i shrine a web/nahled. Výška volby (místo na ťuknutí) beze změny. */
 #reader-setup .pills{gap:6px;}
 #reader-setup .pill{padding:6px 8px;}
-.visitor-lock-hint{font-size:0.72em;letter-spacing:1px;color:var(--gold);opacity:0.75;margin-left:8px;font-style:normal;}
 
 /* ── BUTTONS ── */
 .btn-full{width:100%;padding:17px;background:var(--gold);color:#000;border:none;font-family:'Cinzel',serif;font-size:0.9em;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.25s;margin-top:14px;}
@@ -1071,6 +1075,8 @@ body:has(.modal-overlay.open) #hb-btn{display:none;}
 .journal-filter-bar{display:none;gap:8px;padding:10px 18px;background:var(--card);border:1px solid rgba(126,217,181,0.15);border-top:none;flex-wrap:wrap;}
 .journal-filter-select{background:#080e18;border:1px solid var(--border);color:var(--muted);font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:1.5px;padding:6px 10px;outline:none;cursor:pointer;}
 .journal-filter-select:focus{border-color:var(--gold);}
+/* Rune Seeker vidí filtry ztlumené (.pills-locked, 2026-11-01): klepnutí jde na lištu a rozzáří závoj deníku (_denikZavoj), výběr se neotevře */
+.pills-locked .journal-filter-select{pointer-events:none;}
 /* Standard upgrade teaser in journal */
 .journal-standard-teaser{padding:18px 18px;text-align:center;border-top:1px solid rgba(255,191,0,0.1);background:transparent;}
 .journal-standard-teaser-txt{font-size:0.82em;font-style:italic;color:var(--muted);line-height:1.7;}

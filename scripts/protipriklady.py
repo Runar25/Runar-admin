@@ -132,6 +132,9 @@ PRIPADY = [
  ('chyti', 'verify_ending_angle.js', 'v2/runar-utils.js', 'regex',
   r"(var pool = lang === 'is' \? ESSENCE_FRAMES_IS : ESSENCE_FRAMES;\r?\n\s*return pool\[Math\.floor\(Math\.random\(\) \* )pool\.length", r'\g<1>(pool.length - 1)'),
  ('chyti', 'verify_ask_teaser.js', 'v2/runar-utils.js', 'replace', "return (pad && T['label_is_' + pad]) || T.label_is;", 'return T.label_is;'),
+ # ㉰ závoj zamčeného Asku (CODE-tune 2026-11-01, náhled teaserů body 1–2): ASK zase mlčí (závoj se neukáže) · věta závoje v 1. pádě
+ ('chyti', 'verify_ask_teaser.js', 'v2/runar-reading.js', 'replace', '  if (_askCount >= _askLimit()) { if (q) _askZavoj(q); return; }', '  if (_askCount >= _askLimit()) return;'),
+ ('chyti', 'verify_ask_teaser.js', 'v2/runar-reading.js', 'replace', "  else text = tp('ask_zavoj', { tier: tierLabel(vt, lang, 'dat') });", "  else text = tp('ask_zavoj', { tier: tierLabel(vt, lang) });"),
  # kolo 3 / 4d (2026-10-11): kontroly, které hlídají, že něco CHYBÍ (propustí-li, nikdo si nevšimne)
  ('chyti', 'verify_question_injection.js', 'v2/runar-character.js', 'replace', """.replace(/"/g, "'")""", ''),
  ('chyti', 'verify_question_injection.js', 'v2/runar-character.js', 'replace', r".replace(/[\r\n\t\u2028\u2029]+/g, ' ')", ''),

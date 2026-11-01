@@ -12862,3 +12862,23 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Proč:** písmo systému dává ᚱ na každém zařízení jiný tvar (Windows Segoe UI Historic, jinde jiný nebo prázdný čtvereček) — týž
   důvod jako přechod run na SVG 2026-07-13.
 - Affected doc(s): RUNAR_BACKLOG.md (Nové logo appky; Značka ᚱ v appce).
+
+## 2026-11-01 (11) — Jednotné teasery: závoj — co jde ovládat, jde ovládat do chvíle hodnoty, pak jedna věta a jedno tlačítko
+
+- **Rozhodl:** owner 2026-11-01 *„19. ano, ale první mě ukaž, které chceš měnit a pak na co“* → náhled `docs/inbox/2026-11-01-teasery.html`
+  → *„6. všechny“*. Podnět: *„ASK má být pro Rune Seeker teaser … musí vidět navrhované ASK otázky … teasery mít lépe sjednocené“*.
+- **Co:** jedna funkce `zavoj()` (runar-utils.js) a jedna třída `.zavoj` (svíčka `rozsvit`); věta šablonou „… opens with {tier}“ a jedno
+  tlačítko (WALK ON AS {TIER} → okno cesty · BECOME A {TIER} → přihlášení · YOUR {CARD} → okno cesty na kartě).
+  (1) Ask Rune Seekera: tipy, pole i ASK živé; po ASK se model nevolá, rozzáří se závoj. Otázka čeká v sessionStorage u čtení; po přechodu
+  na vyšší účet se vrátí do pole a ASK se rozsvítí — **sama se neodešle** (souhlas s otázkou, DECISIONS 2026-10-12 (7); náhled sliboval
+  „pošle se sama“, tohle je vědomá odchylka). (2) Rune Walker po poslední otázce: pole zůstane, po ASK závoj. (3)+(4) Zamčené volby
+  (návštěvník; Rune Seeker bez volného čtení) — klepnutí = závoj u voleb; štítky zámku u popisků (`lock_*`) pryč. IS u voleb jedna věta
+  pro všechny tři skupiny („Valið er þitt þegar þú gerist {tier}.“) — „val á sviði“ / „val opnast“ korpus 0×. (5) Životní runa návštěvníka:
+  panel `.tier-notice` jako ostatní pozvánky. (6) Deník Rune Seekera: závoj pod větou o počtu, filtry vidět ztlumené. (7) Mrtvý
+  `q_teaser` pryč (mění DECISIONS 2026-10-31 (5)); jména účtů ve `visitor_desc`, `visitor_join_note(_pl)`, `rs_banner_desc`, `become_rs_btn`
+  z configu; `visitor_join_note` „is for Rune Seekers“ → „opens with {tier}“ (config nemá množné číslo účtu).
+- **Ověřeno:** smoke (verify_ask_teaser, verify_liferune_states upravené + 2 útoky v protipříkladech), sonda v prohlížeči 420 px EN + IS,
+  šest toků, 0 volání modelu, 0 chyb JS; IS Greynir + korpus (čísla v `runar-translations.js` u klíčů).
+- **Známá mezera:** otevřený závoj ve formuláři nebo v Asku po přepnutí jazyka zůstane ve starém jazyce (§14 ho z updateUIText drží venku);
+  závoj deníku se překreslí.
+- Affected doc(s): RUNAR_BACKLOG.md (Jednotný vzhled (d), Rune Seeker a Ask).

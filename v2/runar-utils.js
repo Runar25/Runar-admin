@@ -247,6 +247,41 @@ function tp(key, vars) {
   return s;
 }
 
+// ── ZÁVOJ (owner 2026-11-01, schválený náhled docs/inbox/2026-11-01-teasery.html) ─────────────────────────────────────────────
+// Co se dá ovládat, jde ovládat až do chvíle, kdy přijde hodnota; pak se u toho místa rozzáří závoj: jedna Rúnarova věta a jedno
+// tlačítko (okno cesty, přihlášení, karta). JEDNA funkce a jedna třída (.zavoj) pro Ask, volby ve formuláři i deník — žádné kopie
+// po místech (§18). Rozzáření = svíčka rozsvit (runar-helper.js), táž jako u pozvánek návštěvníka.
+// id = jeden závoj na místo (znovu zavolaný se přesune za kotvu a přepíše) · kotva = prvek, ZA který se postaví · akce = klepnutí
+// na tlačítko · svit = rozzářit a dojet k němu (klepnutí na zamčenou věc); bez svit jen stojí (deník ho ukazuje trvale).
+function zavoj(id, kotva, text, tlacitko, akce, svit) {
+  if (!kotva || !kotva.parentNode) return null;
+  var z = document.getElementById(id);
+  if (!z) {
+    z = document.createElement('div');
+    z.id = id; z.className = 'zavoj'; z.setAttribute('role', 'status');
+    var p0 = document.createElement('p'); p0.className = 'tn-text';
+    var b0 = document.createElement('button'); b0.type = 'button'; b0.className = 'tn-btn btn-upgrade';
+    z.appendChild(p0); z.appendChild(b0);
+  }
+  if (kotva.nextSibling !== z) kotva.after(z);
+  var p = z.querySelector('p'), b = z.querySelector('button');
+  p.textContent = text; b.textContent = tlacitko;
+  b.onclick = function () { if (typeof akce === 'function') akce(); };
+  z.style.display = '';
+  if (svit) {
+    if (typeof window.rozsvit === 'function') { window.rozsvit(p); window.rozsvit(b); }
+    var r = z.getBoundingClientRect();
+    if ((r.top < 56 || r.bottom > (window.innerHeight || 0)) && z.scrollIntoView) z.scrollIntoView({ block: 'center',
+      behavior: (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) ? 'auto' : 'smooth' });
+  }
+  return z;
+}
+function zavojPryc(id) { var z = document.getElementById(id); if (z) z.remove(); }
+// Tlačítka závoje: texty z UI_TEXT, jména účtů z TIERS (§10). zavojKrok = WALK ON AS {TIER} → (okno cesty, jako tlačítka v okně samém);
+// tlacitkoNavstevnika = BECOME A {TIER} → (přihlášení) — jediné místo, kde se tlačítko návštěvníka skládá (do 2026-11-01 jméno natvrdo).
+function zavojKrok(tier) { return tp('journey_walk_on', { tier: tierLabel(tier, lang).toUpperCase() }) + ' →'; }
+function tlacitkoNavstevnika() { return tp('become_rs_btn', { tier: tierLabel('rune_seeker', lang).toUpperCase() }); }
+
 
 // ─── Reading angles EN ─────────────────────────────────────────
 // ⭐ PREPSANO 2026-08-16: uhel uz nenese DOMENU, nese VSTUP DO OBRAZU.

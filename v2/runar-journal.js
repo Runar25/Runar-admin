@@ -29,6 +29,7 @@ async function loadJournal() {
     renderJournal(_journalCache);
     if (userTier === 'standard' || userTier === 'premium') {
       populateJournalFilters(_journalCache);
+      const _jt = document.getElementById('journal-standard-teaser'); if (_jt) _jt.style.display = 'none';   // po přechodu z Rune Seekera
     } else {
       updateJournalTeaser();
     }
@@ -174,9 +175,17 @@ function renderJournal(entries) {
   var n = entries.length;
   if (countEl) countEl.textContent = n === 0 ? '' : (isStandard || n === 1) ? vn('reading', n, lang) : tp('journal_count_recent', { n: n });
 
-  // Filter bar
+  // Filter bar. 2026-11-01 (owner, náhled teaserů bod 6): Rune Seeker filtry VIDÍ, ztlumené (.pills-locked); klepnutí rozzáří závoj
+  // deníku (_denikZavoj). Do té doby je neviděl vůbec — nevěděl, že existují.
   const filterBar = document.getElementById('journal-filter-bar');
-  if (filterBar) filterBar.style.display = isStandard ? 'flex' : 'none';
+  if (filterBar) {
+    filterBar.style.display = 'flex';
+    const zamek = !isStandard;
+    if (filterBar.classList) filterBar.classList.toggle('pills-locked', zamek);
+    if (typeof filterBar.setAttribute === 'function') { if (zamek) filterBar.setAttribute('aria-disabled', 'true'); else filterBar.removeAttribute('aria-disabled'); }
+    filterBar.onclick = zamek ? function () { _denikZavoj(true); } : null;
+    if (typeof filterBar.querySelectorAll === 'function') filterBar.querySelectorAll('select').forEach(function (x) { x.tabIndex = zamek ? -1 : 0; });
+  }
 
   // Empty state
   if (entries.length === 0) {
@@ -269,22 +278,29 @@ function renderJournal(entries) {
 // Teaser pro rune_seeker — kolik čtení celkem mají v DB
 // 2026-10-22 (DECISIONS 2026-10-22 (3) bod 5): věta, že vyšší účet má celý deník, VŽDY (do té doby až od 6. čtení) —
 // nižší účet má vědět, co vyšší dostane. S počtem, když je čtení víc, než deník ukáže.
+// 2026-11-01 (owner, náhled teaserů bod 6): věta o vyšším účtu je závoj s tlačítkem do okna cesty (_denikZavoj) — dřív „Move to Rune
+// Walker…“ uvnitř věty a bez tlačítka. Blok se ukáže hned (bez počtu), počet doplní dotaz — ať ztlumené filtry nikdy neklepnou naprázdno.
 async function updateJournalTeaser() {
   var lim = journalLimit();
   if (lim === null) return;
   const teaser = document.getElementById('journal-standard-teaser');
   const txt    = document.getElementById('journal-teaser-txt');
   if (!teaser || !txt || !currentUser) return;
+  txt.innerHTML = t('journal_teaser');
+  teaser.style.display = 'block';
+  _denikZavoj(false);
   try {
     const { count } = await sb.from('readings')
       .select('id', { count: 'exact', head: true })
       .eq('user_id', currentUser.id);
-    // 2026-09-30: text z překladů (dřív natvrdo tady, druhá kopie journal_teaser); IS tarif ve 4. pádě („yfir í Vegfaranda“).
-    txt.innerHTML = (count && count > lim)
-      ? tp('journal_teaser_count', { count: count, tier: tierLabel('standard', lang, 'acc') })
-      : tp('journal_teaser', { tier: tierLabel('standard', lang, 'acc') });
-    teaser.style.display = 'block';
+    if (count && count > lim) txt.innerHTML = tp('journal_teaser_count', { count: count });
   } catch { /* silent */ }
+}
+// Závoj deníku: „celý deník otevírá {tier}“ + WALK ON AS {TIER} → (okno cesty). svit = klepnutí na ztlumený filtr (rozzáří a dojede k němu).
+function _denikZavoj(svit) {
+  var txt = document.getElementById('journal-teaser-txt');
+  if (!txt || typeof zavoj !== 'function') return;
+  zavoj('zavoj-denik', txt, tp('journal_zavoj', { tier: tierLabel('standard', lang, 'dat') }), zavojKrok('standard'), function () { openJourney(); }, svit);
 }
 
 // Filter journal (Rune Walker+) — data loaded in memory
@@ -316,7 +332,9 @@ function filterJournal() {
 // celý — bez filtru a se zaklapnutými kartami, a proti §14). Překreslí načtená čtení se stejným filtrem, otevřené karty nechá otevřené
 // a obnoví pruh pro Rune Seekera; znovu nic nenačítá. Hlídá smoke ㊽ (D).
 function prekresliDenik() {
-  if (!currentUser || !_journalCache.length) return;
+  if (!currentUser) return;
+  if (!(userTier === 'standard' || userTier === 'premium')) updateJournalTeaser();   // i u prázdného deníku (věta + závoj v novém jazyce)
+  if (!_journalCache.length) return;
   var otevrene = [];
   document.querySelectorAll('[id^="jex-"]').forEach(function (el) {
     if (el.classList.contains('jcard-excerpt--open')) otevrene.push(+el.id.slice(4));
@@ -324,7 +342,6 @@ function prekresliDenik() {
   var filtr = ['jf-rune', 'jf-area', 'jf-lang'].some(function (id) { var el = document.getElementById(id); return !!(el && el.value); });
   if (filtr) filterJournal(); else renderJournal(_journalCache);
   otevrene.forEach(function (i) { toggleJournalEntry(i); });
-  if (!(userTier === 'standard' || userTier === 'premium')) updateJournalTeaser();
 }
 
 // Populate filter selectors from journal data

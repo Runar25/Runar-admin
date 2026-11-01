@@ -106,6 +106,7 @@ async function fetchUserProfile(userId, _pokus) {
       userMonthKey    = data.month_key   || '';
       userVoiceCount  = data.voice_month_count || 0;
       userVoiceKey    = data.voice_month_key   || '';
+      if (typeof _askPoZmeneUctu === 'function') _askPoZmeneUctu();   // závoj Asku po přechodu na vyšší účet → pole s uloženou otázkou (2026-11-01)
       // Load life rune reading if stored
       if (data.life_rune_text) {
         _lifeRuneText = data.life_rune_text;
@@ -893,28 +894,19 @@ function _textNavstevnika(klic) {
 function _updateAreaSeekLabels() {
   const albl = document.getElementById('area-lbl');
   const _isVisitor = !currentUser;
-  const _isRSnoCredits = _volneCteniDalsi();
-  // 2026-10-19 (owner, DECISIONS 2026-10-19 (9)): návštěvník má na obrazovce Spá jen JEDNU viditelnou pozvánku (horní pruh); štítek zámku
-  // u skupiny je schovaný a ukáže se až po klepnutí na zamčenou pilulku (_zamekKlep). Id štítku = <skupina>-lock (čte i aria-describedby).
-  const _lockHint = _isVisitor
-    ? function (k) { return ' <span class="visitor-lock-hint lock-skryty" id="' + k + '-lock">' + tp(k === 'intention' ? 'lock_become_rs' : 'lock_become_rs_more', { tier: tierLabel('rune_seeker', lang) }) + '</span>'; }
-    : _isRSnoCredits
-      // 2026-10-10: jméno karty z VOCAB (§15) — dřív natvrdo „Reading Gift Card“, jinde v appce „Rune Reading Card“
-      ? function () { return ' <span class="visitor-lock-hint">' + tp('lock_card_unveils', { card: vl('card', lang) }) + '</span>'; }
-      : function () { return ''; };
+  // Štítky zámku u popisků („· Become a … to unveil“, „· {card} unveils all“) pryč 2026-11-01 (owner, náhled teaserů body 3–4,
+  // docs/inbox/2026-11-01-teasery.html): zamčenou volbu vysvětlí závoj u voleb po klepnutí (_zamekKlep).
   const _optSpan = _isVisitor ? '' : ' <span class="opt">'+t('opt')+'</span>';
   // 2026-09-29 (report KUKY 11:32): „+“ za popiskem rozbalí jednu větu, co volba ve čtení dělá (toggleFormHint níž).
   // 2026-10-20 (owner: „když najedu kurzorem na area, seeking, intention, neobjeví se ručička stejně jako … how a reading works“): tlačítkem
   // je CELÝ popisek (text + „(optional)“ + „+“), jako u „How a reading works“ — do té doby jen „+“ za textem.
   const _tgl = function (k, obsah) { const box = document.getElementById(k + '-hint'); const open = !!(box && box.style.display !== 'none');
     return '<button class="hint-tgl" type="button" aria-expanded="' + open + '" aria-controls="' + k + '-hint" onclick="toggleFormHint(\'' + k + '\')">' + obsah + '</button>'; };
-  if (albl) albl.innerHTML = _tgl('area', t('area_lbl') + _optSpan) + _lockHint('area');
+  if (albl) albl.innerHTML = _tgl('area', t('area_lbl') + _optSpan);
   const slbl = document.getElementById('seek-lbl');
-  if (slbl) slbl.innerHTML = _tgl('seek', t('seek_lbl') + _optSpan) + _lockHint('seek');
+  if (slbl) slbl.innerHTML = _tgl('seek', t('seek_lbl') + _optSpan);
   const ilbl = document.getElementById('intention-lbl');
-  // Záměr se zamyká jen návštěvníkovi (buildPillGroup: bez počtu odemčených) — Rune Seeker bez kreditu tu štítek karty neuvidí
-  // (vada 8 z průchodu appkou 2026-10-19: sliboval, že karta odemkne něco, co zamčené není).
-  if (ilbl) ilbl.innerHTML = _tgl('intention', t('intention_lbl') + _optSpan) + (_isVisitor ? _lockHint('intention') : '');
+  if (ilbl) ilbl.innerHTML = _tgl('intention', t('intention_lbl') + _optSpan);
   ['area', 'seek', 'intention', 'qpriv'].forEach(function (k) { setText(k + '-hint', t(k + '_hint')); });   // přepnutí jazyka přepíše i otevřenou nápovědu
   setText('q-consent-lbl', t('qconsent_lbl'));   // políčko souhlasu u otázky (krok 2, DECISIONS 2026-10-12 (7))
   const qlbl = document.getElementById('q-lbl');
@@ -932,15 +924,14 @@ function _updateTrialTexts() {
   // 2026-10-10 (DECISIONS 2026-10-10 (1) bod 1): karta po tahu návštěvníka (_showVisitorJoin) — texty z UI_TEXT (§10), počet z configu
   // (§8). Do té doby „YOUR JOURNEY AS VISITOR IS COMPLETE“ po čtení, které návštěvník od 2026-08-02 nedostával, a natvrdo psané
   // texty počítadla zkušebních čtení a auth-gate (ten se nikde nezobrazoval — z HTML pryč).
-  const ob = TIER_LIMITS.rune_seeker['onboarding_label_' + (lang === 'is' ? 'is' : 'en')];
   const ten = document.getElementById('trial-end-note');
   // 2026-10-22 (owner „5. ano“): po výkladu množné číslo — podle hlavičky čtení (_hdr, runar-reading.js); volá se i z _visitorJoin,
   // takže po přepnutí jazyka zůstane správná varianta (§14: text odpovídá stavu, nepřepisuje ho).
   const _vykl = (typeof _hdr !== 'undefined' && _hdr && !_hdr.single);
-  if (ten) ten.innerHTML = tp(_vykl ? 'visitor_join_note_pl' : 'visitor_join_note', { onboarding: ob });
+  if (ten) ten.innerHTML = _textNavstevnika(_vykl ? 'visitor_join_note_pl' : 'visitor_join_note');   // 2026-11-01: jména účtů z TIERS
   // 2026-10-10 (KUKY: „mělo by tam být přesměrování na rune collection“) — týž popisek jako záložka; nadpis karty pryč (styl pruhu)
   setText('trial-end-coll', t('atab_collection'));
-  setText('trial-end-btn', t('become_rs_btn'));
+  setText('trial-end-btn', tlacitkoNavstevnika());
 }
 
 // Ikony záložek (owner 2026-10-19, DECISIONS 2026-10-19 (8): „ikony záložek dobrý … runy se dávají do váčku“). Kresby CODE-read
@@ -971,7 +962,7 @@ function _updateGateTexts() {
   // Journal gate — Visitor teaser
   const jgTxt = document.getElementById('journal-gate-txt');
   if (jgTxt) jgTxt.innerHTML = _textNavstevnika('journal_gate_txt');
-  setText('journal-gate-btn', t('become_rs_btn'));
+  setText('journal-gate-btn', tlacitkoNavstevnika());
   // Deník se tu do 2026-10-11 překresloval celý (updateUIText → stav, proti §14): zahodil aktivní filtr a zaklapl otevřené karty. Přepnutí
   // jazyka na záložce Deník ho teď překreslí prekresliDenik v setLang (runar-journal.js) — filtr i otevřené karty zůstanou. Smoke ㊽ (D).
   // Single-source text updates for elements not covered elsewhere
@@ -1086,10 +1077,8 @@ function updateUIText() {
   // natvrdo text pokracovat-bez-jmena a v rezimu uprav to prepisovalo zrusit (§14).
   if (typeof _nameModalTexts === 'function') _nameModalTexts();
   setText('auth-or', t('auth_or'));
-  // 2026-09-30: IS „opnast með {tier}“ chce 3. pád, „yfir í {tier}“ 4. pád (tierLabel) — dřív 1. pád („með Vegfarandi“).
-  setText('q-teaser-txt', tp('q_teaser', { tier: tierLabel('standard', lang, 'dat') }));
-  var _jtxt = document.getElementById('journal-teaser-txt');
-  if (_jtxt) _jtxt.innerHTML = tp('journal_teaser', { tier: tierLabel('standard', lang, 'acc') });
+  // q_teaser (#q-teaser, vždy skrytý) pryč 2026-11-01 (náhled teaserů bod 7). Věta deníku Rune Seekera sem nepatří (§14, nese počet
+  // čtení a závoj) — při přepnutí jazyka ji překreslí prekresliDenik (runar-journal.js).
   var _jr = document.querySelector('#jf-rune option[value=""]');
   if (_jr) _jr.textContent = t('jf_all_runes');
   var _ja = document.querySelector('#jf-area option[value=""]');
@@ -1209,7 +1198,7 @@ async function loadCollection() {
       // 2026-09-23: text do UI_TEXT (§10). 2026-10-31: jména úrovní z TIERS — islandský dativ „gerðu þig að Leitanda“ dává
       // tierLabel(…, 'dat') (pády v configu od 2026-09-30; do té doby proto stála natvrdo); „Free to join“ → onboarding z configu.
       document.getElementById('vcn-text').innerHTML = _textNavstevnika('vcn_text');
-      document.getElementById('vcn-btn').textContent = t('become_rs_btn');
+      document.getElementById('vcn-btn').textContent = tlacitkoNavstevnika();
     }
   }
 
@@ -1669,6 +1658,7 @@ function _syncPillLang() {
 }
 function buildPills() {
   _syncPillLang();
+  zavojPryc('zavoj-volby');   // stav voleb se mění (přihlášení, karta, jazyk) — starý závoj nepatří k novému
   const _isVisitor = !currentUser;
   const _volne = _volneCteniDalsi(), _lim = TIER_LIMITS.rune_seeker;
   const _areaUnlocked = _volne ? _lim.free_reading_areas : undefined;
@@ -1681,9 +1671,6 @@ function buildPills() {
     if (el) el.classList.toggle('pills-locked', _isVisitor);
   });
 }
-// Klepnutí návštěvníka na zamčenou pilulku (2026-10-19, DECISIONS 2026-10-19 (9)): štítek té skupiny se ukáže a rozsvítí svíčkou (rozsvit,
-// runar-helper.js) a s ním tlačítko BECOME A RUNE SEEKER v horním pruhu. K pruhu se neposouvá — na mobilu může být mimo obraz, štítek pod
-// prstem informaci nese. Pilulka se nevybere.
 // Zamčená runa v Kolekci (2026-10-22, DECISIONS 2026-10-22 (4) bod 9): rozsvítí tlačítko pozvánky nad mřížkou; je-li pozvánka mimo
 // obrazovku (dole v mřížce), dojede k ní — jinak by klepnutí zase nedělalo nic viditelného (důvod hlášky z 2026-10-12).
 function _kolekceZamek() {
@@ -1691,11 +1678,16 @@ function _kolekceZamek() {
   if (n) { const r = n.getBoundingClientRect(); if (r.top < 56 || r.bottom > (window.innerHeight || 0)) _posunPodListu(n, false, 8); }
   if (b && typeof window.rozsvit === 'function') window.rozsvit(b);
 }
+// Klepnutí na zamčenou volbu ve formuláři (owner 2026-11-01, náhled teaserů body 3–4, docs/inbox/2026-11-01-teasery.html): u voleb, kde
+// člověk klepl, se rozzáří závoj (zavoj, runar-utils.js); pilulka se nevybere. Návštěvník: „{co} opens with {tier}“ + BECOME A {TIER} →
+// (přihlášení). Rune Seeker, jehož další čtení je volné (_volneCteniDalsi): „všechno otevírá karta“ + YOUR {CARD} → (okno cesty rovnou
+// na kartě, _kartaVOkne). Do té doby návštěvník dostal štítek u popisku a svíčku na tlačítku v horním pruhu (2026-10-19, DECISIONS
+// 2026-10-19 (9)) a Rune Seekerovi zamčená volba na klepnutí mlčela (pointer-events:none).
 function _zamekKlep(type) {
-  const h = document.getElementById(type + '-lock');
-  if (h) { h.classList.remove('lock-skryty'); if (typeof window.rozsvit === 'function') window.rozsvit(h); }
-  const b = document.getElementById('tn-visitor-btn');
-  if (b && typeof window.rozsvit === 'function') window.rozsvit(b);
+  const kotva = document.getElementById(type + '-pills');
+  if (!currentUser) zavoj('zavoj-volby', kotva, tp('zavoj_' + type, { tier: tierLabel('rune_seeker', lang) }), tlacitkoNavstevnika(), openAuthModal, true);
+  else zavoj('zavoj-volby', kotva, tp('zavoj_' + type + '_card', { card: vl('card', lang, 'dat_def') }),
+    tp('zavoj_card_btn', { card: vl('card', lang, 'def').toUpperCase() }), _kartaVOkne, true);
 }
 function buildPillGroup(containerId, items, type, unlockedCount, visitorLock) {
   const c = document.getElementById(containerId); if (!c) return;
@@ -1708,9 +1700,9 @@ function buildPillGroup(containerId, items, type, unlockedCount, visitorLock) {
     const p = document.createElement('div');
     p.className = 'pill' + (label === current && !locked ? ' on' : '') + (locked ? ' pill-locked' : '');
     p.textContent = label;
-    if (visitorLock) {   // 2026-10-19: zamčená pro návštěvníka — klepnutí ukáže štítek, nevybere (dřív pointer-events:none, klepnutí mlčelo)
+    if (visitorLock || locked) {   // zamčená (návštěvník celá skupina, Rune Seeker před volným čtením část) — klepnutí rozzáří závoj, nevybere
       p.setAttribute('aria-disabled', 'true');
-      p.setAttribute('aria-describedby', type + '-lock');
+      p.setAttribute('aria-describedby', 'zavoj-volby');
       p.onclick = function () { _zamekKlep(type); };
     } else if (!locked) {
       p.onclick = () => {
@@ -1978,7 +1970,7 @@ function _journeyPaint() {
         else h += '<a class="tn-btn btn-upgrade" href="' + _jesc(JOURNEY_URL) + '" target="_blank" rel="noopener">' + _jesc(tp('journey_step_back', { tier: tierUp })) + ' →</a>'
           + '<div class="journey-note">' + _jesc(t('journey_step_note')) + '</div>';
       } else if (id === 'rune_seeker' && ja === 0) {
-        h += '<button type="button" class="tn-btn btn-upgrade" onclick="closeJourney();openAuthModal()">' + _jesc(t('become_rs_btn')) + '</button>';
+        h += '<button type="button" class="tn-btn btn-upgrade" onclick="closeJourney();openAuthModal()">' + _jesc(tlacitkoNavstevnika()) + '</button>';
       } else if (id === 'rune_seeker' && ja === 1) {   // 2026-10-20: odkaz na kartu Rúnakort (šipka = vede jinam, CODE-read §4)
         h += '<button type="button" class="tn-btn btn-upgrade" onclick="_journeyObdobi(\'c\')">' + _jesc(vl('card', lang).toUpperCase()) + ' →</button>';   // owner 2026-10-20: „stačit napsat jen rune reading card. bez buy.“ (klíč journey_buy_card zrušen)
       }

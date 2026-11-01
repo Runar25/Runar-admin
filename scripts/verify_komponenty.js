@@ -22,6 +22,8 @@
 // přepínač          .lang-toggle .lang-btn                                dvě až tři volby vedle sebe
 // pilulky           .pills .pill                                          výběr z možností ve formuláři
 // oznámení          .tier-notice  (.tn-compact = bez rámečku)             pruh nad formulářem
+// závoj            .zavoj  (uvnitř .tn-text + .tn-btn .btn-upgrade)      zamčená věc po klepnutí: věta „… opens with {tier}“ a jedno tlačítko;
+//                                                                         staví zavoj() v runar-utils.js, rozzáří rozsvit (owner 2026-11-01)
 // štítek sekce      .flbl .auth-lbl .redeem-lbl                           Cinzel, zlatá
 // pole              .txt                                                  podtržení, bez rámečku
 // poznámka          .note                                                 vysvětlení pod polem

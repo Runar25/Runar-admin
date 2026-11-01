@@ -808,6 +808,7 @@ function _askLimit() {
 // rozhovor. První výměna zůstává v původních #ask-question/#ask-answer (reporter, styly).
 function _askResetThread() {
   document.querySelectorAll('#ask-runar .ask-extra').forEach(function (e) { e.remove(); });
+  if (typeof zavojPryc === 'function') zavojPryc('zavoj-ask');   // závoj zamčeného Asku patří k předchozímu čtení
   var wrap = document.getElementById('ask-input-wrap'), teaser = document.getElementById('ask-teaser');
   // 2026-09-30: teaser mohl odejít pod poslední odpověď (_showAskMoreTeaser) — vrátit pořadí pole · teaser · první otázka.
   var q1 = document.getElementById('ask-question');
@@ -1056,6 +1057,49 @@ function _showAskMoreTeaser(pod) {
   tEl.style.display = '';
   _refreshAskTeaser();
 }
+// Zamčený Ask po ASK (owner 2026-11-01, schválený náhled docs/inbox/2026-11-01-teasery.html body 1–2): model se NEvolá; pod otázkou se
+// rozzáří závoj — Rune Seeker: Rúnarova věta ask_zavoj, řádek ask_teaser pod polem zůstává (upozornil předem); Rune Walker po poslední
+// otázce: ask_teaser_more (řádek pod polem ustoupí závoji se stejnou větou). Tlačítko WALK ON AS {TIER} → otevře okno cesty. Otázka
+// čeká u tohoto čtení (_askCeka) a po přechodu na vyšší účet se vrátí do pole (_askPoZmeneUctu). Bránu dál drží proxy (asks_per_reading).
+function _askZavoj(q) {
+  var lim = _askLimit(), vt = _askVyssiTarif(lim);
+  if (!vt) return;
+  _askCeka('uloz', q);
+  var tEl = document.getElementById('ask-teaser'), wrap = document.getElementById('ask-input-wrap'), text;
+  if (lim > 0) { if (tEl) tEl.style.display = 'none'; text = tp('ask_teaser_more', { tier: tierLabel(vt, lang, 'dat') }); }
+  else text = tp('ask_zavoj', { tier: tierLabel(vt, lang, 'dat') });
+  zavoj('zavoj-ask', (tEl && tEl.style.display !== 'none') ? tEl : wrap, text, zavojKrok(vt), function () { openJourney(); }, true);
+}
+// Čekající otázka ze zamčeného Asku — sessionStorage (přežije odchod do okna cesty a na web v téže kartě). akce: 'uloz' | 'vezmi' | 'pryc'.
+// Váže se ke čtení (_lastReadingId; u neuloženého čtení začátek jeho textu): u jiného čtení 'vezmi' nevrátí nic.
+function _askCeka(akce, q) {
+  var cteni = _lastReadingId || ('t:' + String(((readerTexts[lang] || {}).short) || '').slice(0, 80));
+  try {
+    if (akce === 'uloz') sessionStorage.setItem('runar_ask_ceka', JSON.stringify({ q: q, cteni: cteni }));
+    else if (akce === 'pryc') sessionStorage.removeItem('runar_ask_ceka');
+    else { var c = JSON.parse(sessionStorage.getItem('runar_ask_ceka') || 'null'); return (c && c.q && c.cteni === cteni) ? c.q : ''; }
+  } catch (e) {}
+  return '';
+}
+// Návrat s odemčeným Askem (owner 2026-11-01, bod 1: „otázka zůstane uložená a po přechodu … se pošle“). Volá ho fetchUserProfile
+// (runar-app.js) po každém načtení profilu. Jen když u čtení svítí závoj Asku a účet teď otázku dovolí: závoj pryč, pole a ASK živé,
+// uložená otázka zpět v poli a ASK se rozzáří. Sám ji NEodešle — psaná otázka chce souhlas (_needsQuestionConsent, DECISIONS
+// 2026-10-12 (7)) a model se volá jen na klepnutí člověka.
+function _askPoZmeneUctu() {
+  var el = document.getElementById('ask-runar');
+  if (!el || el.style.display === 'none' || !document.getElementById('zavoj-ask') || _askCount >= _askLimit()) return;
+  zavojPryc('zavoj-ask');
+  var tEl = document.getElementById('ask-teaser'); if (tEl) tEl.style.display = 'none';
+  var wrap = document.getElementById('ask-input-wrap'); if (wrap) wrap.style.display = '';
+  var inp = document.getElementById('ask-input'), btn = document.getElementById('ask-btn'), q = _askCeka('vezmi');
+  if (inp) { inp.disabled = false; if (q) { _askPhStop(); inp.value = q; } }
+  if (btn) { btn.disabled = false; btn.textContent = t('ask_btn'); if (q && typeof window.rozsvit === 'function') window.rozsvit(btn); }
+}
+// Návrat do appky (z okna cesty na web) se svítícím závojem Asku: profil se načte znovu, ať se nový účet projeví bez obnovení stránky.
+if (typeof document !== 'undefined' && typeof document.addEventListener === 'function') document.addEventListener('visibilitychange', function () {
+  if (document.visibilityState !== 'visible' || !currentUser || !document.getElementById('zavoj-ask')) return;
+  if (typeof fetchUserProfile === 'function') fetchUserProfile(currentUser.id);
+});
 
 function _showAsk() {
   _askLog = [];
@@ -1065,7 +1109,8 @@ function _showAsk() {
   var canAsk = _askLimit() > 0;
   _askResetThread();
   // Kdo NEMA opravneni, ale JE prihlaseny, dostane teaser: featura je videt cela,
-  // jen se s ni neda hnout (KUKY 2026-08-09). Neprihlaseny nevidi nic — jeho dalsi
+  // jen se s ni neda hnout (KUKY 2026-08-09). Od 2026-11-01 (owner, náhled teaserů bod 1) se s ní hnout DÁ: otázky z nabídky,
+  // pole i ASK jsou živé, po ASK se model nevolá a rozzáří se závoj (_askZavoj). Neprihlaseny nevidi nic — jeho dalsi
   // krok je registrace, ne Premium.
   var teaser = !canAsk && !!currentUser;
   if (!canAsk && !teaser) { el.style.display = 'none'; return; }
@@ -1075,7 +1120,7 @@ function _showAsk() {
   _refreshAskTeaser();
   _askPhIdx++;  // rotate the placeholder each time the ask opens
   var inp = document.getElementById('ask-input');
-  if (inp) { inp.value = ''; inp.placeholder = _askPlaceholder(); inp.disabled = teaser; }
+  if (inp) { inp.value = ''; inp.placeholder = _askPlaceholder(); inp.disabled = false; }
   _askPhStart();
   var hb = document.getElementById('ask-hints');
   if (hb) { hb.innerHTML = ''; hb.style.display = 'none'; }
@@ -1083,7 +1128,7 @@ function _showAsk() {
   var wrap = document.getElementById('ask-input-wrap'); if (wrap) wrap.style.display = '';
   var qEl2 = document.getElementById('ask-question'); if (qEl2) { qEl2.textContent = ''; qEl2.style.display = 'none'; }
   var ans = document.getElementById('ask-answer'); if (ans) { ans.textContent = ''; ans.style.display = 'none'; }
-  var btn = document.getElementById('ask-btn'); if (btn) { btn.disabled = teaser; btn.textContent = t('ask_btn'); }
+  var btn = document.getElementById('ask-btn'); if (btn) { btn.disabled = false; btn.textContent = t('ask_btn'); }
   setSt('ask-status', '');
   el.style.display = 'block';
 }
@@ -1098,10 +1143,11 @@ function _trimToSentence(t) {
 }
 
 async function askRunar() {
-  if (_askCount >= _askLimit()) return;
   // Skutecnou branu ma proxy (mode:'ask' + strop asks_per_reading tieru -> 403); tohle jen setri roundtrip.
   var inp = document.getElementById('ask-input');
   var q = inp ? inp.value.trim() : '';
+  // Zamčený / vyčerpaný Ask (owner 2026-11-01, body 1–2): model se nevolá, rozzáří se závoj s účtem, který otázku otevře.
+  if (_askCount >= _askLimit()) { if (q) _askZavoj(q); return; }
   if (!q) return;
   // 2026-10-12 (DECISIONS 2026-10-12 (7), krok 2): psaná otázka bez souhlasu se neposílá — políčko souhlasu pod polem.
   if (_needsQuestionConsent()) { _showQuestionConsent(inp); setSt('ask-status', t('qconsent_need_ask')); return; }
@@ -1168,15 +1214,20 @@ async function askRunar() {
   if (_askJournal && res && !res.error && !res.ask_saved) { _pendAdd('pendingAsks', { id: _askEntryId, reading_id: _lastReadingId, question: q, answer: answer }); _flushPending(); }
   _askCount++;
   _askLog.push({ q: q, a: answer, lang: lang });   // rozbor GPT-6 sol + předchozí výměna pro další Ask (krok 2, _askBuild)
+  _askCeka('pryc');   // otázka odešla — čekající ze závoje už nepatří nikam
   var dalsi = _askCount < _askLimit();
-  if (!dalsi) _askPhStop();   // limit vyčerpán -> pole mizí, timer nemá co dělat
-  if (!dalsi) _showAskMoreTeaser(ans);   // 2026-09-30: Standard po své otázce uvidí, že další otevírá Premium
+  // 2026-11-01 (owner, náhled teaserů bod 2): po poslední povolené otázce pole ZŮSTANE, má-li vyšší účet víc otázek — člověk další
+  // otázku napíše a po ASK se rozzáří závoj (_askZavoj). Do té doby pole zmizelo a zůstala jen věta. Nejvyšší účet: pole pryč jako dřív.
+  var vyssi = !dalsi && !!_askVyssiTarif(_askLimit());
+  var pole = dalsi || vyssi;
+  if (!pole) _askPhStop();   // pole mizí, timer nemá co dělat
   if (ans) ans.textContent = '';   // pryč „Rúnar listens…“, přichází odpověď
   if (wrap) {
-    if (dalsi && ans) { ans.after(wrap); wrap.style.display = ''; } else wrap.style.display = 'none';
+    if (pole && ans) { ans.after(wrap); wrap.style.display = ''; } else wrap.style.display = 'none';
   }
+  if (!dalsi) _showAskMoreTeaser(pole && wrap ? wrap : ans);   // 2026-09-30: Standard po své otázce uvidí, že další otevírá Premium (pod polem)
   await stream(ansId, answer);
-  if (dalsi) {
+  if (pole) {
     if (inp) { inp.value = ''; inp.disabled = false; }
     if (btn) { btn.disabled = false; btn.textContent = t('ask_btn'); }
   }

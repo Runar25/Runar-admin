@@ -630,13 +630,16 @@ function updateTreeTab() {
       var glV = document.getElementById('tree-rune-glyph-teaser');
       // KÁMEN (KUKY 2026-09-23: „změnit glyf životních run na naše glyfy“) — dřív holá linka (§5 z 2026-07-14).
       if (glV) glV.innerHTML = runeSvg(rune, { frame: true, cls: 'tree-stone' });
+      // 2026-11-01 (owner, náhled teaserů bod 5): pozvánka v panelu jako ostatní pozvánky návštěvníka (#tree-visitor-cta = .tier-notice)
+      // šablonou „… opens with {tier}“; text Rune Seekera (#tree-teaser-text) se návštěvníkovi skryje — dřív v něm stálo „Sign up to read…“.
       var ttV = document.getElementById('tree-teaser-text');
-      if (ttV) ttV.textContent = t('tree_visitor_read');
+      if (ttV) { ttV.textContent = ''; ttV.style.display = 'none'; }
       // Nabidka „za 3 kredity" nema pro nepřihlášeného smysl — nema ucet ani zustatek.
       var ctaV = document.getElementById('tree-rs-cta-block');
       if (ctaV) ctaV.style.display = 'none';
       // 2026-10-10: tlačítko k registraci — do té doby tu stál jen text „Sign in to read…“ a nebylo na co klepnout (slepá ulička).
-      setText('tree-visitor-btn', t('become_rs_btn'));
+      setText('tree-visitor-txt', tp('tree_visitor_read', { tier: tierLabel('rune_seeker', lang, 'dat') }));
+      setText('tree-visitor-btn', tlacitkoNavstevnika());
       var vbV = document.getElementById('tree-visitor-cta'); if (vbV) vbV.style.display = '';
     }
     return;
@@ -735,7 +738,7 @@ function updateTreeTab() {
       if (nm) nm.textContent = runeName;
       if (gl) gl.innerHTML = runeSvg(rune, { frame: true, cls: 'tree-stone' });
       var tt = document.getElementById('tree-teaser-text');
-      if (tt) tt.textContent = t('tree_rs_teaser');
+      if (tt) { tt.textContent = t('tree_rs_teaser'); tt.style.display = ''; }   // návštěvníkovi skrytý (výš) — přihlášenému zpět
       var lb = document.getElementById('tree-rune-label'); if (lb) lb.textContent = t('life_rune_lbl');
       // Credits balance + button state
       var LIFE_RUNE_COST = (SPREAD_COSTS && SPREAD_COSTS.life_rune) ? SPREAD_COSTS.life_rune.credits : 3;

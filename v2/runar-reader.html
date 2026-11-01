@@ -399,10 +399,6 @@
           <span class="note" id="q-consent-lbl"></span>
         </label>
       </div>
-      <!-- Teaser for Visitor / Rune Seeker -->
-      <div id="q-teaser" style="display:none;">
-        <p class="q-teaser-txt fine" id="q-teaser-txt">Deeper questions open with Rune Walker.</p>
-      </div>
       <button class="btn-full" id="begin-btn" data-i18n="begin_btn" onclick="startReading()">BEGIN THE READING</button>
       <!-- 2026-10-19 (owner „13. pod BEGIN THE READING“): upozornění, že Rúnar je AI (EU AI Act čl. 50). Text z UI_TEXT ai_note (updateUIText). -->
       <!-- 2026-10-22 (owner „5. c“): nese i „ne odborná rada“ — dřív zvlášť #reader-disclaimer (od 2026-08-16, po bezpečnostním testu
@@ -738,10 +734,11 @@
           <!-- 2026-09-27: odkud runa je — půlměsíc narození, moderní rozdělení roku (KUKY, DECISIONS 2026-09-27 (5)); text plní updateTreeTab -->
           <p class="tree-gate-text tree-lr-origin"></p>
           <p class="tree-gate-text" id="tree-teaser-text"></p>
-          <!-- 2026-10-10: tlačítko jen pro návštěvníka (updateTreeTab) — do té doby tu četl „Sign in to read what this rune carries.“
-               a nebylo na co klepnout. Obal .tree-cta-block = na střed a týž odstup jako tlačítko Rune Seekera pod ním. -->
-          <div class="tree-cta-block" id="tree-visitor-cta" style="display:none;">
-            <button class="btn-upgrade" onclick="openAuthModal()" id="tree-visitor-btn"></button>
+          <!-- Pozvánka návštěvníka (jen pro něj, updateTreeTab). 2026-11-01 (owner, náhled teaserů bod 5): týž panel jako pozvánky v Kolekci
+               a v deníku (.tier-notice · .tn-text · .tn-btn), věta šablonou „… opens with {tier}“ (UI_TEXT tree_visitor_read). -->
+          <div class="tier-notice" id="tree-visitor-cta" style="display:none;">
+            <p class="tn-text" id="tree-visitor-txt"></p>
+            <button class="tn-btn btn-upgrade" onclick="openAuthModal()" id="tree-visitor-btn"></button>
           </div>
 
           <!-- Primary CTA: čtení životní runy; cena ze SPREAD_COSTS.life_rune (dnes 0 = zdarma, pak se zůstatek neukazuje) -->

@@ -161,6 +161,7 @@ function updateBanners() {
       }
       const txtEl = document.getElementById('free-user-text');
       if (txtEl) txtEl.innerHTML = tp('rs_banner_desc', {
+          tier:        tierLabel('rune_seeker', lang),   // 2026-11-01: dřív natvrdo v textu
           casts_month: vn('cast', FREE_REGISTERED_LIMIT, lang),
           card:        vl('card', lang)
         });
@@ -209,9 +210,9 @@ function updateBanners() {
     const cntEl = document.getElementById('trial-count');
     if (cntEl) cntEl.style.display = 'none';
     const txtEl = document.getElementById('trial-text');
-    if (txtEl) txtEl.innerHTML = tp('visitor_desc', { onboarding: TIER_LIMITS.rune_seeker['onboarding_label_' + (lang === 'is' ? 'is' : 'en')] });
+    if (txtEl) txtEl.innerHTML = _textNavstevnika('visitor_desc');   // 2026-11-01: jména účtů z TIERS (dřív natvrdo v textu)
     const btnEl = document.getElementById('tn-visitor-btn');
-    if (btnEl) btnEl.textContent = t('become_rs_btn');
+    if (btnEl) btnEl.textContent = tlacitkoNavstevnika();
   }
   updateQuestionGate();
 }
@@ -235,12 +236,10 @@ function updateAuthUI() {
 // 2026-10-16 (5)). Do té doby Standard a Premium (i testeři) — ve spreadech s otázkou prompt nepracoval. Ask (doptávání) je jiné pole.
 function updateQuestionGate() {
   const qSection = document.getElementById('q-section');
-  const qTeaser  = document.getElementById('q-teaser');
   const qInput   = document.getElementById('r-question');
-  if (!qSection || !qTeaser) return;
+  if (!qSection) return;   // #q-teaser (vždy skrytý, „Deeper questions open with …“) pryč 2026-11-01
   const canAsk = !!currentUser && typeof isAdmin === 'function' && isAdmin(currentUser.email);
   qSection.style.display = canAsk ? 'block' : 'none';
-  qTeaser.style.display  = 'none'; // hidden until Premium decision is made
   if (!canAsk && qInput) qInput.value = '';
   // 2026-09-08: ukazky formulace rotuji jen tam, kde je pole doopravdy videt.
   // Brana je jedine misto, kde se to pole odemyka — proto se rotace zapina tady,

@@ -960,7 +960,7 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
 - [ ] **Jednotný vzhled — co ㊋ zatím nehlídá (zbytek po kroku 3, DECISIONS 2026-10-20 (3)):** (a) ~20 velikostí kurzívy textu karet
   (0.71–1.05em, řádkování 1.6–1.9) → dvě: text 0.92em / 1.8 a poznámka .fine; (b) 25 průhledností zlaté → 4 stupně (.08 tón · .2 rámeček ·
   .4 linka · .7 text); (c) nadpisy sekcí (.card-lbl 0.7, .layer*-lbl, .tree-*-label, .dd-tier 0.58) → 0.65em / 2px / zlatá kromě vrstev
-  čtení; (d) `.visitor-lock-hint` vs `.opt`, `.pills-locked` vs `.pill-locked`; (e) `.atab-ikona` pevná velikost. Podklad: CODE-read
+  čtení; (d) ~~`.visitor-lock-hint` vs `.opt`~~ (2026-11-01: `.visitor-lock-hint` pryč, nahradil ho závoj — DECISIONS 2026-11-01 (11)), `.pills-locked` vs `.pill-locked`; (e) `.atab-ikona` pevná velikost. Podklad: CODE-read
   `docs/inbox/2026-10-20-jednotny-vzhled.md` §1–2. Pozor na ownerovo „velikost závisí od důležitosti“ — jen stejná úroveň. Po každém kusu
   zúžit základ `scripts/komponenty_zaklad.json` (`--zaklad`) a doplnit soupis. CODE-tune.
 - [x] ✅ *(CODE-tune 2026-11-01, owner „this sets the tone je nic neříkající“, DECISIONS 2026-11-01 (4).)* **„What are you seeking — This sets the tone“ (hlášení 3b79eac3):** owner: *„je složité si představit, co tím tónem myslíme“* — nová
@@ -991,7 +991,7 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   úklid cronem by dal zásadám přesnou lhůtu.
 - [x] ✅ *(CODE-tune 2026-10-31, owner „pro někoho jiného bude mít to stejné jako pro samotného uživatele“, DECISIONS 2026-10-31 (8); nasazeno claude-proxy.)* **Ask u čtení „for someone“** (neuložené, ne-tester) nemá `reading_id` → proxy ho počítá jako čtení a strhne měsíční jednotku
   (runar-reading.js ~1144, proxy ~532–657); TIER_FEATURES slibuje „one question on every reading“. Neověřeno během, jen čtením kódu.
-- [ ] **Rune Seeker a Ask:** `helper_ask` / `helper_ask2` ho zvou ptát se, pole je pro něj vypnuté (asks_per_reading 0). *(2026-11-01: patří do sjednocení teaserů — owner „ASK má být pro Rune Seeker teaser … musí vidět navrhované otázky“; návrh čeká na ownera.)*
+- [x] ✅ *(CODE-tune 2026-11-01, DECISIONS 2026-11-01 (11): pole i tipy jsou pro něj živé, po ASK závoj — pozvání nápovědy už nevede do slepé uličky.)* **Rune Seeker a Ask:** `helper_ask` / `helper_ask2` ho zvou ptát se, pole je pro něj vypnuté (asks_per_reading 0). *(2026-11-01: patří do sjednocení teaserů — owner „ASK má být pro Rune Seeker teaser … musí vidět navrhované otázky“; návrh čeká na ownera.)*
 - [x] ✅ *(CODE-tune 2026-11-01, DECISIONS 2026-11-01 (4): souhlas nově jmenuje i Anthropic — týká se i Asku, který už běží.)* **`qconsent_lbl`** (souhlas s odesláním otázky, čl. 9) jmenuje jen OpenAI; při výpadku jde otázka Anthropicu. Pole je dnes jen
   pro admina (DECISIONS 2026-10-16 (5)), před otevřením ostatním opravit.
 - [x] ✅ *(CODE-tune 2026-10-31, owner „napřed všechny vady“, DECISIONS 2026-10-31 (5): u oblasti a hledání „to unveil more“ / „til að opna fleiri“, u záměru dál „to unveil“ — ten registrace odemkne celý.)* **`lock_become_rs`** „Become a Rune Seeker to unveil“ — registrace odemkne jen část oblastí a hledání, zbytek karta.

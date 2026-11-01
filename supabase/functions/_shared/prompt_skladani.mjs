@@ -581,7 +581,7 @@ const MODEL_PRICES = {
 const VOCAB = {
   unit: { en: 'rune reading', en_pl: 'rune readings', is: 'spá', is_pl: 'spár' },
   cast: { en: 'rune reading', en_pl: 'rune readings', is: 'sp\u00e1',      is_pl: 'sp\u00e1r', is_dat_pl: 'sp\u00e1m', is_acc_def: 'spána' },   // is_dat_pl: TIER_FEATURES (2026-09-26); is_acc_def: hlas Rune Seekera tamtéž (2026-10-10)
-  card: { en: 'Rune Reading Card', en_pl: 'Rune Reading Cards', is: 'R\u00fanakort', is_pl: 'R\u00fanakort', is_dat: 'Rúnakorti', is_dat_def: 'Rúnakortinu' },   // is_dat: „með …“ v TIER_FEATURES a po vyčerpání volného čtení (2026-10-10, -11) · is_dat_def: „kóðann á …“ (redeem, 2026-10-11)
+  card: { en: 'Rune Reading Card', en_pl: 'Rune Reading Cards', is: 'R\u00fanakort', is_pl: 'R\u00fanakort', is_dat: 'Rúnakorti', is_dat_def: 'Rúnakortinu', is_def: 'Rúnakortið' },   // is_def: tlačítko závoje „RÚNAKORTIÐ ÞITT →“ (2026-11-01)   // is_dat: „með …“ v TIER_FEATURES a po vyčerpání volného čtení (2026-10-10, -11) · is_dat_def: „kóðann á …“ (redeem, 2026-10-11)
   reading: { en: 'reading', en_pl: 'readings', is: 'lestur', is_pl: 'lestrar' },   // počet v deníku (2026-10-10); korpus „einn lestur“ 15×, „tveir lestrar“ 3×
 };
 // ─── SPREAD CONFIG — single source of truth ──────────────
@@ -1241,9 +1241,9 @@ const UI_TEXT = {
     auth_send_failed:     'Your code could not be sent. Try again in a moment, or write to runar@therunekeeper.com.',
     auth_offline:         'Rúnar could not be reached. Check your connection and try again.',
     auth_expired:         'Your sign-in has run out. Please sign in again.',
-    q_teaser:             'Deeper questions open with {tier}.',
-    journal_teaser:       'Every reading you take for yourself is kept. Move to {tier} to open your full journal.',   // 2026-10-10: čtení „pro někoho“ se neukládá (CODE-read (l))
-    journal_teaser_count: 'Every reading you take for yourself is kept — {count} in total. Move to <strong style="color:var(--gold);font-style:normal;">{tier}</strong> to open your full journal.',   // 2026-09-30: dřív natvrdo v runar-journal.js
+    journal_teaser:       'Every reading you take for yourself is kept.',   // 2026-11-01: věta o vyšším účtu přešla do závoje (journal_zavoj); 2026-10-10: čtení „pro někoho“ se neukládá
+    journal_teaser_count: 'Every reading you take for yourself is kept — {count} in total.',
+    journal_zavoj:        'Your full journal opens with {tier}.',   // 2026-11-01 závoj deníku Rune Seekera (_denikZavoj, runar-journal.js)
     tree_growth_quote:    '<em>"The tree does not grow between visits.<br>It grows through them — slowly,<br>the way birch roots find water under stone.<br>Each rune you draw is already here.<br>Come back. The tree remembers."</em>',
     setup_someone_note:   'Enter the name of the person you are reading for. This reading will not be added to your journal.',
     setup_for_name_lbl:   'NAME',
@@ -1417,7 +1417,7 @@ const UI_TEXT = {
     // audio_loading/none/playing/error (owner: „ty mají být jen v kolekci“)
     jcard_voice_btn:    'ᚢ HEAR THE READING',
     gift_card_btn:      '+ GET A {card}',
-    become_rs_btn:      'BECOME A RUNE SEEKER \u2192',
+    become_rs_btn:      'BECOME A {tier} \u2192',   // {tier} = tierLabel('rune_seeker') velkými (tlacitkoNavstevnika, runar-utils.js); 2026-11-01 dřív natvrdo
     install_title:      'INSTALL R\u00daNAR',
     got_it_btn:         'GOT IT',
     install_body_ios:   'In Safari: tap the <strong>Share</strong> button (□↑) at the bottom of your screen, then select <strong>Add to Home Screen</strong> and tap <strong>Add</strong>.',   // 2026-10-10: dřív natvrdo v installPWA (runar-auth.js)
@@ -1451,7 +1451,7 @@ const UI_TEXT = {
     tcm_body: 'To help us make the readings better, we store the readings you draw and review their text and the details you enter, to improve the quality of Rúnar. For a reading to exist at all, the details you enter are sent to OpenAI, which writes it (or to Anthropic, if OpenAI is unavailable), and its text to ElevenLabs for the voice — all in the United States. Neither OpenAI nor Anthropic uses them to train its models, and each keeps them for no more than 30 days, to check for misuse. What we keep is stored in the EU, we never sell it, and you can ask us to delete it at any time. You can stop testing whenever you like.',
     tcm_agree: 'I AGREE',
     tree_visitor_dob:   'Your life rune is written into the day you were born. Enter it, and see which one you carry.',
-    tree_visitor_read:  'Sign up to read what this rune carries.',   // 2026-10-31: „Sign in“ × tlačítko „become“ (vada 8 z průchodu); IS „Skráðu þig“ sedí
+    tree_visitor_read:  'The reading of your life rune opens with {tier}.',   // 2026-11-01 (náhled teaserů bod 5): šablona závoje; dřív „Sign up to read what this rune carries.“
     // 2026-09-27 (KUKY „ano zapoj“; DECISIONS 2026-09-27 (5)): odkud životní runa je. Autora nejmenuje (owner), ale přiznává, že
     // rozdělení roku je moderní — ne dochované ze severu (HANDOFF62 Cowork, upraveno CODE-tune: „halves“ → „half-months“).
     tree_lr_origin:     'The runic year turns through twenty-four half-months, one rune to each. Your life rune is the one the sun stood in on the day you came. The runes are old; this way of dividing the year is not — it is a modern reckoning, not something carried down from the old north.',
@@ -1661,7 +1661,7 @@ const UI_TEXT = {
     },
     // ── Dynamic banner strings — used via tp(), vars: {casts}, {casts_month}, {units}, {card}, {n}, {rune}, {bal}, {UNITS}
     // Rule §10: ALL user-visible strings here. tp() in logic files. Adding a language = add block here only.
-    rs_banner_desc:     'You walk as <strong>Rune Seeker</strong> \u2014 {casts_month} to begin, all twenty-five runes open, R\u00fanar listening.<br><br>When it is drawn and the stones still have more to say, a {card} keeps the door open. One card. As many readings as you carry. No subscription, no expiry.',
+    rs_banner_desc:     'You walk as <strong>{tier}</strong> \u2014 {casts_month} to begin, all twenty-five runes open, R\u00fanar listening.<br><br>When it is drawn and the stones still have more to say, a {card} keeps the door open. One card. As many readings as you carry. No subscription, no expiry.',
     rs_credits_counter: '{units} remaining',
     voice_left:        'Rúnar can still read {casts} aloud this month.',   // 2026-10-11: menu pod jménem, předplatitel a tester (strop hlasu)
     rs_credits_desc:    'Your free rune reading is used. R\u00fanar will draw from your {units} from here on.',
@@ -1696,6 +1696,15 @@ const UI_TEXT = {
     ask_thinking:       'Rúnar listens…',
     ask_teaser:         'Your own questions to Rúnar open with {tier}.',   // 2026-09-25 KUKY (stavba jako q_teaser)
     ask_teaser_more:    'Another question opens with {tier}.',   // 2026-09-30 KUKY: po poslední otázce tarifu (Standard → Premium)
+    // ZÁVOJ (owner 2026-11-01, docs/inbox/2026-11-01-teasery.html): zamčená věc po klepnutí — věta šablonou „… opens with {tier}“ a jedno
+    // tlačítko (zavoj v runar-utils.js). ask_zavoj = Rúnarova věta zamčeného Asku (Rune Seeker); po poslední otázce Walkera stojí ask_teaser_more.
+    ask_zavoj:          'I hear your question. I answer it for those who walk further with me — it opens with {tier}.',
+    zavoj_area:         'Choosing the area of your life opens with {tier}.',   // návštěvník klepl na zamčenou volbu (_zamekKlep, runar-app.js)
+    zavoj_seek:         'Choosing what you seek opens with {tier}.',
+    zavoj_intention:    'Choosing what this reading is for opens with {tier}.',
+    zavoj_area_card:    'All areas open with your {card}.',   // Rune Seeker, další čtení volné (_volneCteniDalsi)
+    zavoj_seek_card:    'Everything you seek opens with your {card}.',
+    zavoj_card_btn:     'YOUR {card} →',
     err_no_credits:     'What you have left is not enough for this reading. Use a {card} to continue.',   // 2026-10-21: i když chybí jen na spread (proxy 402 no_credits)
     err_monthly_limit: 'What remains of this month’s readings is not enough for this one. They return with the new month.',   // 2026-10-21: proxy hlásí, když used + cena > strop
     renew_toast:       'Your readings have returned with the new month.',   // 2026-10-11: _renewalNotice (runar-app.js), dvojice s err_monthly_limit
@@ -1705,12 +1714,12 @@ const UI_TEXT = {
     err_save_failed:    'Could not save \u2014 check your connection and try again.',
     // 2026-10-10 (DECISIONS 2026-10-10 (1) bod 1): návštěvník čtení nedostane (proxy ho odmítá od 2026-08-02) — texty mu ho už
     // neslibují. Pryč visitor_counter („1 rune reading remaining“) a visitor_exhausted; karta po tahu = visitor_join_*.
-    visitor_desc:       'You walk here as a <strong>Visitor</strong>. Draw a rune and see which one comes to you.<br><br>Rúnar reads the runes for those who walk with him. Become a <strong>Rune Seeker</strong> — {onboarding} when you join.',
+    visitor_desc:       'You walk here as a <strong>{visitor}</strong>. Draw a rune and see which one comes to you.<br><br>Rúnar reads the runes for those who walk with him. Become a <strong>{tier}</strong> — {onboarding} when you join.',   // 2026-11-01: jména z TIERS (_textNavstevnika)
     // 2026-10-10 (KUKY: „runa thurisaz bez jakékoliv zprávy o tom, že nemůžu udělat jako visitor žádné čtení… přesměrování na rune
     // collection“): karta po tahu řekne napřímo, že čtení je pro Rune Seekery, a ukáže Safn rúna. Do té doby jen „Rúnar reads the runes
     // for those who walk with him“. Nadpis THE RUNE IS DRAWN pryč — karta má styl pruhu návštěvníka a ten nadpis nemá; runa stojí nad ní.
-    visitor_join_note_pl: 'As a <strong>Visitor</strong>, you see which runes came to you. The reading itself is for <strong>Rune Seekers</strong> — {onboarding} when you join.<br><br>Meanwhile, the Runes Collection waits for you.',   // 2026-10-22 po výkladu (owner „5. ano“)
-    visitor_join_note:  'As a <strong>Visitor</strong>, you see which rune came to you. The reading itself is for <strong>Rune Seekers</strong> — {onboarding} when you join.<br><br>Meanwhile, the Runes Collection waits for you.',
+    visitor_join_note_pl: 'As a <strong>{visitor}</strong>, you see which runes came to you. The reading itself opens with <strong>{tier}</strong> — {onboarding} when you join.<br><br>Meanwhile, the Runes Collection waits for you.',   // 2026-10-22 po výkladu (owner „5. ano“)
+    visitor_join_note:  'As a <strong>{visitor}</strong>, you see which rune came to you. The reading itself opens with <strong>{tier}</strong> — {onboarding} when you join.<br><br>Meanwhile, the Runes Collection waits for you.',
     redeem_ok_msg:      '\u2746 {units} added{rune} \u2014 balance: {bal}',
     redeem_toast_msg:   '\u2746 {UNITS} ADDED',
     redeem_card_code:   '\u16a0 ENTER {card} CODE',
@@ -1727,9 +1736,6 @@ const UI_TEXT = {
     name_you:             'you',
     // 2026-10-10 (ráčna ㉸, DECISIONS 2026-10-10 (1) bod 5): texty dřív psané natvrdo v runar-app.js a runar-reading.js — znění
     // beze změny, jen jméno tieru a karty jde z TIERS / VOCAB ({tier}, {card}, §15).
-    lock_become_rs:       '· Become a {tier} to unveil',
-    lock_become_rs_more:  '· Become a {tier} to unveil more',   // 2026-10-31: oblast a hledání — registrace odemkne jen část (volné čtení)
-    lock_card_unveils:    '· {card} unveils all',
     atab_journal:         'JOURNAL',
     journal_gate_txt:     'You walk here as a <strong>{visitor}</strong>.<br>The journal keeps every reading, so none is lost.<br>It opens when you become a <strong>{tier}</strong> — {onboarding} when you join.',
     redeem_btn:           'REDEEM',
@@ -1835,9 +1841,9 @@ const UI_TEXT = {
     auth_send_failed:     'Ekki tókst að senda kóðann. Reyndu aftur eftir smástund eða skrifaðu á runar@therunekeeper.com.',
     auth_offline:         'Ekki náðist samband við Rúnar. Athugaðu nettenginguna og reyndu aftur.',
     auth_expired:         'Innskráningin þín er útrunnin. Skráðu þig inn aftur.',
-    q_teaser:             'Dýpri spurningar opnast með {tier}.',
-    journal_teaser:       'Allir þínir eigin lestrar eru geymdir. Farðu yfir í {tier} til að opna alla dagbókina þína.',   // 2026-10-10: jen vlastní čtení; „taka lestur“ byl kalk, krónika navíc s chybou v pravopisu
-    journal_teaser_count: 'Allir þínir eigin lestrar eru geymdir — {count} samtals. Farðu yfir í <strong style="color:var(--gold);font-style:normal;">{tier}</strong> til að opna alla dagbókina þína.',   // {tier} ve 4. pádě (tierLabel)
+    journal_teaser:       'Allir þínir eigin lestrar eru geymdir.',   // 2026-11-01: viz EN; Greynir OK
+    journal_teaser_count: 'Allir þínir eigin lestrar eru geymdir — {count} samtals.',   // Greynir OK
+    journal_zavoj:        'Dagbókin þín opnast öll með {tier}.',   // {tier} 3. p.; „dagbókin þín“ 7, „opnast öll“ 31 („öll dagbókin“ 0×); Greynir OK
     tree_growth_quote:    '<em>"Tréð vex ekki milli heimsókna.<br>Það vex í gegnum þær — hægt,<br>eins og bjarkarrætur finna vatn undir steini.<br>Sérhver rún sem þú dregur er þegar hér.<br>Komdu aftur. Tréð man."</em>',
     setup_someone_note:   'Sláðu inn nafn þess sem þú ert að spá fyrir. Þessi spá fer ekki í dagbókina þína.',
     setup_for_name_lbl:   'NAFN',
@@ -1998,7 +2004,7 @@ const UI_TEXT = {
     life_rune_short:    'L\u00edfsr\u00fan',
     jcard_voice_btn:    'ᚢ HLUSTA Á LESTURINN',   // 2026-10-11: greynir + gpt-check OK, korpus „hlusta á lesturinn“ 17×
     gift_card_btn:      '+ {card}',
-    become_rs_btn:      'GERAST LEITANDI \u2192',
+    become_rs_btn:      'GERAST {tier} \u2192',   // {tier} 1. pád velkými (tlacitkoNavstevnika)
     install_title:      'SETJA INN R\u00daNAR',
     got_it_btn:         'SKILI\u00d0',
     install_body_ios:   'Í Safari: ýttu á <strong>Deila</strong> táknið (□↑) neðst á skjánum, veldu síðan <strong>Bæta við heimaskjá</strong> og ýttu á <strong>Bæta við</strong>.',   // 2026-10-10: viz EN; znění beze změny
@@ -2031,7 +2037,7 @@ const UI_TEXT = {
     tcm_body: 'Til að hjálpa okkur að bæta lestrana geymum við lestrana sem þú dregur og förum yfir texta þeirra og upplýsingarnar sem þú slærð inn. Til að lestur verði til eru upplýsingarnar sem þú slærð inn sendar til OpenAI, sem semur hann. Ef OpenAI svarar ekki fara þær til Anthropic. Texti lestursins fer til ElevenLabs sem ljær honum rödd. Öll þessi fyrirtæki eru í Bandaríkjunum. Hvorki OpenAI né Anthropic notar þær til að þjálfa gervigreind sína, og hvort um sig geymir þær ekki lengur en í 30 daga til að fylgjast með misnotkun. Það sem við geymum er geymt innan EES, við seljum það aldrei, og þú getur beðið um að því verði eytt hvenær sem er. Þú getur hætt að prófa hvenær sem þér hentar.',
     tcm_agree: '\u00c9g sam\u00feykki',
     tree_visitor_dob:   'Lífsrúnin þín er skrifuð í daginn sem þú fæddist. Sláðu inn fæðingardaginn og sjáðu hvaða rún þú berð.',
-    tree_visitor_read:  'Skráðu þig til að lesa hvað þessi rún ber.',
+    tree_visitor_read:  'Lesturinn um lífsrúnina þína opnast með {tier}.',   // {tier} 3. p.; „lesturinn um“ 39, „opnast með“ 341; Greynir jen S004 u vzácného „lífsrúnina“ (falešný poplach z hlavičky is-greynir.py)
     // IS vymyšleno islandsky, ne přeloženo; is-grammar-qa čisté, korpus: komst í heiminn 158, hálfa mánuði 157, sólin var í 19, úr fornöld 223.
     tree_lr_origin:     'Árið snýst í gegnum tuttugu og fjóra hálfa mánuði, ein rún fyrir hvern. Lífsrúnin þín er sú sem sólin var í daginn sem þú komst í heiminn. Rúnirnar eru fornar, en þessi skipting ársins er það ekki. Hún er ný, ekki arfur úr fornöld.',
     name_lore_lbl:      'NORRÆNA NAFNIÐ ÞITT',
@@ -2232,7 +2238,7 @@ const UI_TEXT = {
       Blank: ['Auða rúnin ber engin merki, ekkert sem þú getur stuðst við. Hún er eins og hlé í miðri sögu.', 'Í lestri horfir þú á það sem er að gerast í myndinni, áður en þú getur sagt hvað það er. Hér er það ekki rúnin sem talar, heldur þitt eigið líf.', 'Hún ákveður ekkert og spáir ekki fyrir um framtíðina. Ef þú flýtir þér að fylla í eyðuna, getur þú falið það sem er rétt byrjað að koma í ljós.', 'Eftir stendur spurningin: Hvað er það í lífi þínu sem hefur enn ekki fengið nafn — og getur þú látið það standa opið um stund?'],
     },
     // ── Dynamic banner strings — notaðar með tp(), breytur: {casts}, {casts_month}, {units}, {card}, {n}, {rune}, {bal}, {UNITS}
-    rs_banner_desc:     'Þú gengur sem <strong>Leitandi</strong> \u2014 {casts_month} til að byrja, allar tuttugu og fimm rúnirnar opnar, Rúnar hlustandi.<br><br>Þegar hún er gengin og steinarnir eiga enn eftir að segja, opnar {card} dyrnar. Eitt kort. Jafn margar spár og þú berð. Enginn gildistími, engin áskrift.',
+    rs_banner_desc:     'Þú gengur sem <strong>{tier}</strong> \u2014 {casts_month} til að byrja, allar tuttugu og fimm rúnirnar opnar, Rúnar hlustandi.<br><br>Þegar hún er gengin og steinarnir eiga enn eftir að segja, opnar {card} dyrnar. Eitt kort. Jafn margar spár og þú berð. Enginn gildistími, engin áskrift.',
     rs_credits_counter: '{units} eftir',
     voice_left:        'Rúnar getur enn lesið {casts} upphátt í þessum mánuði.',   // 2026-10-11: ověřeno nástroji z CLAUDE.md §2 (gramatika OK, „lesið upphátt“ 90× v korpusu)
     rs_credits_desc:    'Þú hefur notað ókeypis spána þína. Næsta spá verður greidd af inneign þinni.',   // 2026-10-10: „frjáls“ = kalk z EN „free“; spá se platí z inneign, nebere se z ní (is-gpt-check)
@@ -2264,6 +2270,17 @@ const UI_TEXT = {
     ask_thinking:       'Rúnar hlustar…',
     ask_teaser:         'Eigin spurningar þínar til Rúnars opnast með {tier}.',
     ask_teaser_more:    'Önnur spurning opnast með {tier}.',   // {tier} v 3. pádě (tierLabel); is-grammar-qa čisté, „önnur spurning“ 1572
+    // {tier} ve 3. pádě (tierLabel …'dat'); Greynir OK; korpus „ég heyri hvað“ 71, „hvað þú spyrð“ 14, „ég svara þeim“ 162, „þeim sem ganga“ 251,
+    // „ganga lengra með“ 172, „sú leið opnast“ 4, „opnast með“ 341 (zamítnuto: „svarið gef ég“ 0, „heyri spurningu þína“ 0, „svarið bíður“ 0)
+    ask_zavoj:          'Ég heyri hvað þú spyrð. Ég svara þeim sem ganga lengra með mér — sú leið opnast með {tier}.',
+    // Volby návštěvníka: jedna IS věta pro všechny tři skupiny ({tier} 1. pád po „gerist“) — „Val á sviði …“ 0×, „val opnast“ 0×; „valið er þitt“ 25,
+    // „þegar þú gerist“ 15. EN mluví po skupinách. Greynir OK.
+    zavoj_area:         'Valið er þitt þegar þú gerist {tier}.',
+    zavoj_seek:         'Valið er þitt þegar þú gerist {tier}.',
+    zavoj_intention:    'Valið er þitt þegar þú gerist {tier}.',
+    zavoj_area_card:    'Öll svið opnast með {card} þínu.',   // {card} = VOCAB.card.is_dat_def; „öll svið“ 680, „með kortinu þínu“ 23; Greynir OK
+    zavoj_seek_card:    'Allt sem þú leitar að opnast með {card} þínu.',   // „allt sem þú“ 15598, „sem þú leitar“ 673, „þú leitar að“ 759; Greynir OK
+    zavoj_card_btn:     '{card} ÞITT →',   // {card} = VOCAB.card.is_def velkými („RÚNAKORTIÐ ÞITT“); Greynir OK
     err_no_credits:     'Það sem þú átt eftir dugar ekki fyrir þessum lestri. Notaðu {card} til að halda áfram.',
     err_monthly_limit: 'Það sem eftir er af lestrum mánaðarins dugar ekki fyrir þessum lestri. Þeir koma aftur með nýjum mánuði.',
     renew_toast:       'Lestrarnir þínir eru komnir aftur með nýjum mánuði.',
@@ -2271,10 +2288,10 @@ const UI_TEXT = {
     err_voice_quota:   'Röddin hvílir um sinn, en orð spárinnar eru áfram hjá þér.',   // 2026-10-11: kontroly IS čisté (CLAUDE.md §2)
     err_generic:        'Rúnar hvílist — reyndu aftur eftir andartak.',
     err_save_failed:    'Ekki tókst að vista — athugaðu nettenginguna og reyndu aftur.',
-    visitor_desc:       'Þú ert hér <strong>Gestur</strong>. Dragðu rún og sjáðu hver kemur til þín.<br><br>Rúnar les í rúnirnar fyrir þá sem ganga með honum. Gerðu þig að <strong>Leitanda</strong> — {onboarding} þegar þú skráir þig.',
+    visitor_desc:       'Þú ert hér <strong>{visitor}</strong>. Dragðu rún og sjáðu hver kemur til þín.<br><br>Rúnar les í rúnirnar fyrir þá sem ganga með honum. Gerðu þig að <strong>{tier_dat}</strong> — {onboarding} þegar þú skráir þig.',   // {tier_dat} po „að“
     // 2026-10-10: viz EN. Korpus: „sem gestur“ 1361×, „sérðu hvaða“ 217×, „kom til þín“ 1240×, „lesturinn sjálfur“ 6×, „bíður þín“ 704×.
-    visitor_join_note_pl: 'Sem <strong>Gestur</strong> sérðu hvaða rúnir komu til þín. Lesturinn sjálfur er fyrir <strong>Leitendur</strong> — {onboarding} þegar þú skráir þig.<br><br>Á meðan bíður þín Safn rúna.',   // Greynir OK; „komu til þín“ 124×
-    visitor_join_note:  'Sem <strong>Gestur</strong> sérðu hvaða rún kom til þín. Lesturinn sjálfur er fyrir <strong>Leitendur</strong> — {onboarding} þegar þú skráir þig.<br><br>Á meðan bíður þín Safn rúna.',
+    visitor_join_note_pl: 'Sem <strong>{visitor}</strong> sérðu hvaða rúnir komu til þín. Lesturinn sjálfur opnast með <strong>{tier_dat}</strong> — {onboarding} þegar þú skráir þig.<br><br>Á meðan bíður þín Safn rúna.',   // Greynir OK; „komu til þín“ 124×
+    visitor_join_note:  'Sem <strong>{visitor}</strong> sérðu hvaða rún kom til þín. Lesturinn sjálfur opnast með <strong>{tier_dat}</strong> — {onboarding} þegar þú skráir þig.<br><br>Á meðan bíður þín Safn rúna.',
     redeem_ok_msg:      '\u2746 {units} bætt við{rune} \u2014 staða: {bal}',
     redeem_toast_msg:   '\u2746 {UNITS} BÆTT VIÐ',
     redeem_card_code:   'ᚠ SLÁÐU INN KÓÐANN Á {card}',   // 2026-10-11: dřív kalk „SLÁÐU INN {card} KÓÐA“; {card} = vl('card', lang, 'dat_def')
@@ -2289,9 +2306,6 @@ const UI_TEXT = {
     life_need_units:      'Þú þarft {units}',
     life_need_credits:    'Þú þarft {units}. Keyptu þér {card}.',
     name_you:             'þú',
-    lock_become_rs:       '· Gerast {tier} til að opna',
-    lock_become_rs_more:  '· Gerast {tier} til að opna fleiri',   // korpus „að opna fleiri“ 671
-    lock_card_unveils:    '· {card} opnar allt',
     atab_journal:         'LESTRAR',
     journal_gate_txt:     'Þú ert hér <strong>{visitor}</strong>.<br>Dagbókin geymir hvern lestur svo enginn glatist.<br>Hún opnast þegar þú gerist <strong>{tier}</strong>, og skráningunni fylgir {onboarding}.',
     redeem_btn:           'INNLEYSA',
@@ -2580,6 +2594,41 @@ function tp(key, vars) {
   });
   return s;
 }
+
+// ── ZÁVOJ (owner 2026-11-01, schválený náhled docs/inbox/2026-11-01-teasery.html) ─────────────────────────────────────────────
+// Co se dá ovládat, jde ovládat až do chvíle, kdy přijde hodnota; pak se u toho místa rozzáří závoj: jedna Rúnarova věta a jedno
+// tlačítko (okno cesty, přihlášení, karta). JEDNA funkce a jedna třída (.zavoj) pro Ask, volby ve formuláři i deník — žádné kopie
+// po místech (§18). Rozzáření = svíčka rozsvit (runar-helper.js), táž jako u pozvánek návštěvníka.
+// id = jeden závoj na místo (znovu zavolaný se přesune za kotvu a přepíše) · kotva = prvek, ZA který se postaví · akce = klepnutí
+// na tlačítko · svit = rozzářit a dojet k němu (klepnutí na zamčenou věc); bez svit jen stojí (deník ho ukazuje trvale).
+function zavoj(id, kotva, text, tlacitko, akce, svit) {
+  if (!kotva || !kotva.parentNode) return null;
+  var z = document.getElementById(id);
+  if (!z) {
+    z = document.createElement('div');
+    z.id = id; z.className = 'zavoj'; z.setAttribute('role', 'status');
+    var p0 = document.createElement('p'); p0.className = 'tn-text';
+    var b0 = document.createElement('button'); b0.type = 'button'; b0.className = 'tn-btn btn-upgrade';
+    z.appendChild(p0); z.appendChild(b0);
+  }
+  if (kotva.nextSibling !== z) kotva.after(z);
+  var p = z.querySelector('p'), b = z.querySelector('button');
+  p.textContent = text; b.textContent = tlacitko;
+  b.onclick = function () { if (typeof akce === 'function') akce(); };
+  z.style.display = '';
+  if (svit) {
+    if (typeof window.rozsvit === 'function') { window.rozsvit(p); window.rozsvit(b); }
+    var r = z.getBoundingClientRect();
+    if ((r.top < 56 || r.bottom > (window.innerHeight || 0)) && z.scrollIntoView) z.scrollIntoView({ block: 'center',
+      behavior: (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) ? 'auto' : 'smooth' });
+  }
+  return z;
+}
+function zavojPryc(id) { var z = document.getElementById(id); if (z) z.remove(); }
+// Tlačítka závoje: texty z UI_TEXT, jména účtů z TIERS (§10). zavojKrok = WALK ON AS {TIER} → (okno cesty, jako tlačítka v okně samém);
+// tlacitkoNavstevnika = BECOME A {TIER} → (přihlášení) — jediné místo, kde se tlačítko návštěvníka skládá (do 2026-11-01 jméno natvrdo).
+function zavojKrok(tier) { return tp('journey_walk_on', { tier: tierLabel(tier, lang).toUpperCase() }) + ' →'; }
+function tlacitkoNavstevnika() { return tp('become_rs_btn', { tier: tierLabel('rune_seeker', lang).toUpperCase() }); }
 
 
 // ─── Reading angles EN ─────────────────────────────────────────
