@@ -41,7 +41,7 @@
       mají svůj tvar. a pro „this reading is for“ dopsat poznámku, že platí jen pro single čtení“*): `_intentionContext` (a jiné časové
       rámce) ve spreadech nevkládat; u `intention_lbl` / IS v UI poznámka „jen pro jednu runu“ (EN + IS, §2, §31).
     - [ ] **Otázka ve spreadu** (owner: *„to by měla a je potřeba to testovat“*): spread ji má jen v hlavičce bez pokynu. CODE-read napřed
-      lab (pokyn + malý vzorek), pak CODE-tune.
+      lab (pokyn + malý vzorek), pak CODE-tune. ⏸ *Odloženo (owner 2026-11-01 „odkládáme“): pole s otázkou vidí jen admin.*
     - [x] ✅ *(CODE-tune 2026-10-16: updateQuestionGate = isAdmin; ověřeno v prohlížeči — admin pole vidí v každém tarifu, Premium,
       Standard, Rune Seeker ani návštěvník ne; čitelnost ㊽ a základ produkce ㉼ OK.)* **CODE-tune — pole s otázkou jen pro admina** (owner 2026-10-16: *„pole s otázkou jen pro adminy. nikdo jiný. není to vyladěné.
       je to featura do budoucna“*; DECISIONS 2026-10-16 (5)). Dnes ho vidí Standard a Premium, tedy i testeři (`updateQuestionGate`,
@@ -464,7 +464,7 @@ promptu v `claude-proxy` (už ověřuje přihlášení a odečítá kredity; pro
   GitHub Pages) · (3) kontrola na GitHubu — *„pokud nepotřebujeme za něj platit, tak nebudeme“*: jen hlášení (Actions při pushi,
   2 000 min zdarma), bez GitHub Pro · (4) druhý Free projekt pro zkoušku obnovy — *„ano“*, zakládá owner.
 - [x] ✅ *(úklid 2026-10-31, owner „12. ano“, CODE-tune: ea3e190 — `pg_dump` v noční záloze, `scripts/utils/obnova_db.js`, zkouška 2026-10-18.)* **CODE-read:** po založení druhého projektu: klient Postgresu, záloha `pg_dump` do nočního skriptu, skript obnovy, první zkouška.
-- [ ] **CODE-read:** Actions „jen hlášení“ (které kontroly poběží bez tajných hodnot, kolik minut spotřebují) — připravit, spustit s přechodem na soukromé repo.
+- [ ] **CODE-read:** Actions „jen hlášení“ (které kontroly poběží bez tajných hodnot, kolik minut spotřebují) — připravit, spustit s přechodem na soukromé repo. ⏸ *Owner 2026-11-01: na soukromé repo ještě nepřecházíme.*
 - ✖ *(úklid 2026-10-31, owner „12. ano“, CODE-tune: duplikát — krok 1 = F3 a F4 výš, krok 9 stojí v plánu.)* **CODE-tune:** krok 1 (prompt na server) a krok 9 (klíče Supabase).
 
 **Ponaučení z přetažení Supabase Free (2026-10-22, „Cached Egress“ 11,4 / 5 GB, grace do 20. 11.; owner „3. ano, zapiš“)** — platí pro přechod
@@ -607,7 +607,7 @@ Nález 2026-08-16: otázka s příznaky infarktu dostala běžné čtení o sbě
 - [ ] **Krize v poli s otázkou (single i spready) 112 nedostane** (CODE-read 2026-10-16, ownerův test Raidho EN): `qBranch` „Let <runa>
   answer: <q>“ (`runar-character.js`) vezme otázku jako zadání výkladu a systémová věta o 112 prohraje; výjimka v5.10 kryje jen Ask.
   Dnes jen admin (pole s otázkou, 2bf5e27). Nutné, než se pole otevře; „Let X answer“ owner drží do testu → měnit až s ním
-  (podklad `docs/inbox/2026-10-16-kontrola-promptu.md` část E).
+  (podklad `docs/inbox/2026-10-16-kontrola-promptu.md` část E). ⏸ *Odloženo spolu s polem (owner 2026-11-01); nutné před jeho otevřením.*
 **Zdroje (2026-10-15):** model-spec.openai.com · openai.com/index/strengthening-chatgpt-responses-in-sensitive-conversations ·
 developers.openai.com/api/docs/guides/moderation · anthropic.com/news/protecting-well-being-of-users · anthropic.com/legal/aup ·
 support.claude.com/en/articles/9307344 · artificialintelligenceact.eu/article/50 · raudikrossinn.is (Hjálparsíminn 1717) · pieta.is ·
