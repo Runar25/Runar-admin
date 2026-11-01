@@ -12819,3 +12819,13 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   z karty propadají (dnes ne, rozhodnutí chybí) · název platební brány. Islandština: vlastní věty Greynir bez nálezu a vazby doložené
   korpusem; nálezy zbyly jen v úředním znění (dlouhé věty) a falešné („Rúnakort“).
 - Affected doc(s): RUNAR_BACKLOG.md (Před spuštěním plateb).
+
+## 2026-11-01 (7) — Čtení z Rúnakortu nepropadají
+
+- **Rozhodl:** owner 2026-11-01 na otázku CODE-web, zda mají kredity z Rúnakortu platit bez časového omezení: *„ano bez omezení“*.
+- **Co:** čtení z karty zůstávají na účtu, dokud je člověk nepoužije; obchodní podmínky to říkají výslovně (IS *„Lestrarnir renna ekki út
+  og verða áfram á reikningnum þínum þar til þú notar þá“*, Greynir bez nálezu, *„renna ekki út“* 102× v korpusu; EN *„do not expire“*).
+  Sedí s 2026-11-01 (3): účet s kredity se po třech letech nečinnosti nemaže.
+- **Hranice:** jen čtení z karty (`credits_balance`); měsíční čtení předplatného se do dalšího měsíce dál nepřevádějí (strop na měsíc
+  v `claude-proxy`).
+- Affected doc(s): RUNAR_BACKLOG.md (Před spuštěním plateb).

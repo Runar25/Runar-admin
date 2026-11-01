@@ -1010,7 +1010,8 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   prodlouží o 12 měsíců (17. gr.). Bez právníka — owner 2026-11-01 k právní kontrole (přes CODE-tune): *„právníka mít nebudeme, musíš
   udělat nejlépe, jak dovedeš!“*
   **Stav 2026-11-01:** napsané jako skrytá https://therunekeeper.com/skilmalar/ (`web/site/skilmalar/index.html`, DECISIONS 2026-11-01 (6)).
-  **Zbývá:** telefon (návrh změny zákona ho chce v 5. gr. b) · název platební brány · zda kredity z karty propadají · při spuštění plateb
+  **Zbývá:** telefon (návrh změny zákona ho chce v 5. gr. b; owner volí: číslo z kontaktů agndofa.is, nebo samostatné pro Rúnara)
+  · název platební brány · při spuštění plateb
   odkaz z nákupu (souhlas výš), z patičky webu a z menu appky (BACKLOG Menu „podmínky užití“), `noindex` pryč. ⚠️ Appka z Google Play
   na therunekeeper.com odkazovat nesmí (㊐) — podmínky užití pro ni jinou cestou (text v appce bez ceníku a odkazů na nákup).
 - [ ] **CODE-tune — postup vracení:** skript pro admina: zrušit nepoužitý kód / snížit účet / odepsat zbylé kredity, zápis do
