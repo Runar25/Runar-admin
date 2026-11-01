@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teasery — teď a návrh</title>
+<link rel="stylesheet" href="../../v2/fonts/fonts.css">
+<style>
+  :root{--bg:#0b0e16;--card:#121725;--card2:#1a2133;--border:#2a3550;--gold:#d6a85c;--gold2:#f0c040;--text:#e8e1d1;--muted:#8ba5c0;--cz:#c9d3e0}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',Georgia,serif;font-size:17px;line-height:1.5}
+  .wrap{max-width:1040px;margin:0 auto;padding:28px 16px 80px}
+  h1{font-family:'Cinzel',serif;color:var(--gold);letter-spacing:.12em;font-size:1.3em;margin:0 0 6px}
+  .uvod{color:var(--cz);font-family:Arial,sans-serif;font-size:14px;max-width:760px;margin:0 0 26px}
+  .uvod li{margin:4px 0}
+  .bod{border-top:1px solid var(--border);padding:22px 0}
+  .hlav{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;margin-bottom:12px}
+  .cislo{font-family:'Cinzel',serif;color:var(--gold);font-size:1.1em}
+  .kde{font-family:Arial,sans-serif;font-size:14px;color:var(--cz)}
+  .kdo{font-family:Arial,sans-serif;font-size:12px;letter-spacing:.06em;border:1px solid var(--border);padding:1px 7px;color:var(--muted)}
+  .dve{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:720px){.dve{grid-template-columns:1fr}}
+  .sl{background:var(--card);border:1px solid var(--border);padding:14px}
+  .sl.navrh{border-color:var(--gold)}
+  .stitek{font-family:Arial,sans-serif;font-size:11px;letter-spacing:.14em;color:var(--muted);margin-bottom:10px}
+  .navrh .stitek{color:var(--gold)}
+  .lbl{font-family:'Cinzel',serif;font-size:.78em;letter-spacing:.12em;color:var(--gold);margin-bottom:8px}
+  .pole{border-bottom:1px solid var(--border);padding:6px 0;color:var(--muted);font-style:italic;margin-bottom:10px;display:flex;justify-content:space-between;gap:10px}
+  .pole.zivy{color:var(--text);border-color:var(--gold)}
+  .btnmini{font-family:'Cinzel',serif;font-size:.7em;letter-spacing:.1em;border:1px solid var(--border);padding:3px 10px;color:var(--muted);font-style:normal;white-space:nowrap}
+  .btnmini.svit{border-color:var(--gold);color:var(--gold)}
+  .tipy{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+  .tip{border:1px solid var(--border);padding:5px 9px;font-size:.92em;color:var(--muted)}
+  .tip.zivy{color:var(--text)}
+  .tip.vybrany{border-color:var(--gold);color:var(--gold)}
+  .teaser{font-style:italic;color:var(--muted);font-size:.95em}
+  .zavoj{border:1px solid var(--gold);box-shadow:0 0 18px rgba(214,168,92,.28);padding:12px;margin-top:10px}
+  .zavoj p{margin:0 0 10px;font-style:italic}
+  .btn{display:block;width:100%;text-align:center;font-family:'Cinzel',serif;font-size:.74em;letter-spacing:.14em;border:1px solid var(--gold);color:var(--gold);padding:10px;background:rgba(214,168,92,.06)}
+  .pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+  .pill{border:1px solid var(--border);padding:3px 9px;font-size:.85em}
+  .pill.zam{opacity:.35}
+  .zlata{color:var(--gold);font-size:.8em}
+  .panel{border:1px solid var(--border);background:var(--card2);padding:12px;font-size:.95em}
+  .panel p{margin:0 0 10px}
+  .proc{font-family:Arial,sans-serif;font-size:13px;color:var(--cz);margin-top:10px}
+  .beze{font-family:Arial,sans-serif;font-size:14px;color:var(--cz)}
+  .sablona{background:var(--card2);border:1px solid var(--border);padding:12px 14px;font-family:Arial,sans-serif;font-size:14px;color:var(--cz);margin:0 0 26px}
+  .sablona b{color:var(--gold);font-weight:normal}
+</style>
+</head>
+<body><div class="wrap">
+<h1>TEASERY — TEĎ A NÁVRH</h1>
+<div class="uvod">
+  <p>Náhled ke schválení, nic z toho zatím v appce není. Vlevo je to, co appka dělá dnes, vpravo, co navrhuju. Texty appky jsou anglicky. Islandštinu udělám a ověřím až po tvém schválení znění.</p>
+  <ul>
+    <li><b>Jeden vzorec pro celého Rúnara:</b> co se dá ovládat, jde ovládat až do chvíle, kdy přijde hodnota. Pak se rozzáří <i>závoj</i>: jedna Rúnarova věta a jedno tlačítko do okna cesty.</li>
+    <li><b>Jedna šablona věty:</b> „… opens with {tier}.“ (jméno úrovně z configu). Dnes appka používá čtyři slovesa: Become / Sign up / Move to / opens with.</li>
+    <li><b>Žádná slepá ulička:</b> nic, co vypadá živě, nesmí po klepnutí mlčet.</li>
+  </ul>
+</div>
+<div class="sablona">Šablona závoje: věta <b>„{Co} opens with {tier}.“</b> + tlačítko <b>WALK ON AS {TIER} →</b> (přihlášený, otevře okno cesty) nebo <b>BECOME A RUNE SEEKER →</b> (návštěvník, otevře přihlášení). Rozzáření stejné jako dnes u svíčky (pozvánka návštěvníka).</div>
+
+<div class="bod">
+  <div class="hlav"><span class="cislo">1</span><span class="kde">Ask pod čtením</span><span class="kdo">RUNE SEEKER</span></div>
+  <div class="dve">
+    <div class="sl"><div class="stitek">TEĎ</div>
+      <div class="lbl">ASK RÚNAR ABOUT THIS READING +</div>
+      <div class="tipy"><div class="tip">What is the image pointing to?</div><div class="tip">Where might I notice this in my days?</div></div>
+      <div class="pole"><span>Explain Isa without the image</span><span class="btnmini">ASK</span></div>
+      <div class="teaser">Your own questions to Rúnar open with Rune Walker.</div>
+      <div class="proc">Pole a ASK jsou šedé. Navržené otázky vypadají živě, ale klepnutí na ně nic neudělá: slepá ulička.</div>
+    </div>
+    <div class="sl navrh"><div class="stitek">NÁVRH</div>
+      <div class="lbl">ASK RÚNAR ABOUT THIS READING +</div>
+      <div class="tipy"><div class="tip vybrany">What is the image pointing to?</div><div class="tip zivy">Where might I notice this in my days?</div></div>
+      <div class="pole zivy"><span>What is the image pointing to?</span><span class="btnmini svit">ASK</span></div>
+      <div class="teaser">Your own questions to Rúnar open with Rune Walker.</div>
+      <div class="zavoj"><p>I hear your question. I answer it for those who walk further with me — it opens with Rune Walker.</p><span class="btn">WALK ON AS RUNE WALKER →</span></div>
+      <div class="proc">Klepnutí na otázku ji vepíše do pole a ASK se rozsvítí. Po ASK se model nevolá, rozzáří se závoj. Otázka zůstane uložená a po přechodu na Rune Walkera se pošle sama. Řádek pod polem upozorní předem, aby to nepůsobilo jako past.</div>
+    </div>
+  </div>
+</div>
+
+<div class="bod">
+  <div class="hlav"><span class="cislo">2</span><span class="kde">Ask po poslední otázce</span><span class="kdo">RUNE WALKER</span></div>
+  <div class="dve">
+    <div class="sl"><div class="stitek">TEĎ</div>
+      <div class="teaser">Another question opens with Rune Wanderer.</div>
+      <div class="proc">Pole zmizí, zůstane jen věta. Nedá se nic dělat.</div>
+    </div>
+    <div class="sl navrh"><div class="stitek">NÁVRH</div>
+      <div class="pole zivy"><span>And what does the light ask of me?</span><span class="btnmini svit">ASK</span></div>
+      <div class="zavoj"><p>Another question opens with Rune Wanderer.</p><span class="btn">WALK ON AS RUNE WANDERER →</span></div>
+      <div class="proc">Stejný závoj jako v bodě 1: otázku napíše, po ASK se rozzáří věta a tlačítko. Otázka se po přechodu pošle.</div>
+    </div>
+  </div>
+</div>
+
+<div class="bod">
+  <div class="hlav"><span class="cislo">3</span><span class="kde">Volby Oblast a Hledání bez kreditu</span><span class="kdo">RUNE SEEKER</span></div>
+  <div class="dve">
+    <div class="sl"><div class="stitek">TEĎ</div>
+      <div class="lbl">AREA OF LIFE <span class="zlata">· Rune Card unveils all</span></div>
+      <div class="pills"><span class="pill">Love &amp; Relationships</span><span class="pill">Purpose &amp; Path</span><span class="pill zam">Career &amp; Creativity</span><span class="pill zam">The Unseen</span></div>
+      <div class="proc">Zamčené volby jsou ztlumené a na klepnutí nereagují: slepá ulička.</div>
+    </div>
+    <div class="sl navrh"><div class="stitek">NÁVRH</div>
+      <div class="lbl">AREA OF LIFE</div>
+      <div class="pills"><span class="pill">Love &amp; Relationships</span><span class="pill">Purpose &amp; Path</span><span class="pill zam">Career &amp; Creativity</span><span class="pill zam">The Unseen</span></div>
+      <div class="zavoj"><p>All areas open with your Rune Card.</p><span class="btn">YOUR RUNE CARD →</span></div>
+      <div class="proc">Klepnutí na zamčenou volbu rozzáří závoj (jako dnes u návštěvníka). Tlačítko otevře okno cesty na záložce karty.</div>
+    </div>
+  </div>
+</div>
+
+<div class="bod">
+  <div class="hlav"><span class="cislo">4</span><span class="kde">Volby Oblast, Hledání, Záměr</span><span class="kdo">NÁVŠTĚVNÍK</span></div>
+  <div class="dve">
+    <div class="sl"><div class="stitek">TEĎ</div>
+      <div class="lbl">AREA OF LIFE <span class="zlata">· Become a Rune Seeker to unveil more</span></div>
+      <div class="pills"><span class="pill zam">Love &amp; Relationships</span><span class="pill zam">Purpose &amp; Path</span><span class="pill zam">Career &amp; Creativity</span></div>
+      <div class="proc">Klepnutí rozzáří zlatou větu a tlačítko v pruhu nahoře. Funguje, jen sloveso je jiné než jinde a tlačítko je daleko.</div>
+    </div>
+    <div class="sl navrh"><div class="stitek">NÁVRH</div>
+      <div class="lbl">AREA OF LIFE</div>
+      <div class="pills"><span class="pill zam">Love &amp; Relationships</span><span class="pill zam">Purpose &amp; Path</span><span class="pill zam">Career &amp; Creativity</span></div>
+      <div class="zavoj"><p>Choosing the area of your life opens with Rune Seeker.</p><span class="btn">BECOME A RUNE SEEKER →</span></div>
+      <div class="proc">Stejné chování, jen závoj stojí u voleb, kde člověk klepl, a mluví stejnou šablonou.</div>
+    </div>
+  </div>
+</div>
+
+<div class="bod">
+  <div class="hlav"><span class="cislo">5</span><span class="kde">Životní runa — čtení</span><span class="kdo">NÁVŠTĚVNÍK</span></div>
+  <div class="dve">
+    <div class="sl"><div class="stitek">TEĎ</div>
+      <p class="teaser">Sign up to read what this rune carries.</p><span class="btn" style="width:auto;display:inline-block">BECOME A RUNE SEEKER →</span>
+      <div class="proc">Jiný vzhled než ostatní pozvánky návštěvníka a jiné sloveso („Sign up“).</div>
+    </div>
+    <div class="sl navrh"><div class="stitek">NÁVRH</div>
+      <div class="panel"><p>The reading of your life rune opens with Rune Seeker.</p><span class="btn">BECOME A RUNE SEEKER →</span></div>
+      <div class="proc">Stejný panel jako pozvánky v Kolekci a v deníku.</div>
+    </div>
+  </div>
+</div>
+
+<div class="bod">
+  <div class="hlav"><span class="cislo">6</span><span class="kde">Deník</span><span class="kdo">RUNE SEEKER</span></div>
+  <div class="dve">
+    <div class="sl"><div class="stitek">TEĎ</div>
+      <p class="teaser">Every reading you take for yourself is kept — 12 in total. Move to Rune Walker to open your full journal.</p>
+      <div class="proc">Bez tlačítka, nedá se nikam jít. Filtry deníku Seeker vůbec nevidí, takže neví, že existují.</div>
+    </div>
+    <div class="sl navrh"><div class="stitek">NÁVRH</div>
+      <p class="teaser">Every reading you take for yourself is kept — 12 in total.</p>
+      <div class="pills"><span class="pill zam">All runes ▾</span><span class="pill zam">All areas ▾</span></div>
+      <div class="zavoj"><p>Your full journal opens with Rune Walker.</p><span class="btn">WALK ON AS RUNE WALKER →</span></div>
+      <div class="proc">Věta s tlačítkem. Filtry jsou vidět ztlumené a klepnutí na ně rozzáří týž závoj.</div>
+    </div>
+  </div>
+</div>
+
+<div class="bod">
+  <div class="hlav"><span class="cislo">7</span><span class="kde">Beze změny</span></div>
+  <div class="beze">
+    <p>Pozvánky návštěvníka (pruh nahoře, karta po tahu, Kolekce, deník) už mají jeden vzhled i tlačítko. Změním jen jména úrovní, která v nich stojí natvrdo, aby šla z configu (jako „Rune Seeker“ v pruhu nahoře).</p>
+    <p>Ask návštěvník neuvidí ani dál: čtení nedostane, takže se nemá na co ptát.</p>
+    <p>Mrtvý text „Deeper questions open with …“ (pole s otázkou, skryté vždy) odstraním.</p>
+  </div>
+</div>
+</div></body>
+</html>
