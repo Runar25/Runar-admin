@@ -12838,7 +12838,7 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Proč:** zákon 16/2016 5. gr. b dnes chce telefon „eftir því sem við á“, návrh změny (þingskjal 317) vždy; podmínky jsou veřejné, owner to ví.
 - Affected doc(s): RUNAR_BACKLOG.md (Před spuštěním plateb).
 
-## 2026-11-01 (7) — Klíče Supabase, krok 1: edge funkce berou serverový klíč z jednoho místa (nový secret, záloha starý); shrine maže hlas přes server
+## 2026-11-01 (9) — Klíče Supabase, krok 1: edge funkce berou serverový klíč z jednoho místa (nový secret, záloha starý); shrine maže hlas přes server
 
 - **Rozhodl:** owner 2026-11-01 *„20. ano“* (výměnu klíčů oddělit od F3/F4), *„supabase hotovo“* (secret klíč `default` založen), *„6. nasaď“*.
 - **Co:** (1) `_shared/klic.ts` — `SERVER_KLIC` = `SUPABASE_SECRET_KEYS.default`, dokud staré klíče běží záloha `SUPABASE_SERVICE_ROLE_KEY`

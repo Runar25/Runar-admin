@@ -445,7 +445,7 @@ promptu v `claude-proxy` (už ověřuje přihlášení a odečítá kredity; pro
    - [x] ✅ *(owner 2026-11-01 „supabase hotovo“; cron bez klíče ověřen CODE-tune — 5 úloh, žádná neposílá Bearer ani JWT.)* **0 OWNER:** Settings → API Keys: publishable už existuje (`is-corr-qa.py` ho používá); založit secret jménem `default`. Ověřit v SQL,
      že žádný cron neposílá klíč jako Bearer (`select jobname, command from cron.job where command ilike '%bearer%' or command ilike '%eyJ%';`)
      a že nejsou Database Webhooks s klíčem.
-   - [x] *(CODE-tune 2026-11-01, DECISIONS 2026-11-01 (7): podpis hlasu bez nové tajné hodnoty — podepisuje nový klíč, ověřuje nový i starý.)* **1 CODE (edge funkce):** jeden pomocník na serverový klíč (`SUPABASE_SECRET_KEYS` → `default`, dočasně záloha na
+   - [x] *(CODE-tune 2026-11-01, DECISIONS 2026-11-01 (9): podpis hlasu bez nové tajné hodnoty — podepisuje nový klíč, ověřuje nový i starý.)* **1 CODE (edge funkce):** jeden pomocník na serverový klíč (`SUPABASE_SECRET_KEYS` → `default`, dočasně záloha na
      `SUPABASE_SERVICE_ROLE_KEY` se zápisem do ops_events — žádné tiché zelené); 14 funkcí na něj. Podpis hlasu (`_shared/voice_ticket.ts`)
      dostane vlastní tajnou hodnotu `VOICE_TICKET_SECRET` (owner `supabase secrets set`); `over` po dobu přechodu přijme starou i novou —
      jinak výměna zneplatní rozpracované podpisy (hlas neuloženého čtení 403, Ask u něj zase placený). Nasadit všech 14 s --no-verify-jwt
