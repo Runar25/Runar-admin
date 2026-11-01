@@ -1009,6 +1009,10 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   vracení z DECISIONS 2026-10-21 (9) a 2026-10-22 (1) (poměr podle uplynulých dní), nižší účet od konce období. Bez poučení se lhůta
   prodlouží o 12 měsíců (17. gr.). Bez právníka — owner 2026-11-01 k právní kontrole (přes CODE-tune): *„právníka mít nebudeme, musíš
   udělat nejlépe, jak dovedeš!“*
+  **Stav 2026-11-01:** napsané jako skrytá https://therunekeeper.com/skilmalar/ (`web/site/skilmalar/index.html`, DECISIONS 2026-11-01 (6)).
+  **Zbývá:** telefon (návrh změny zákona ho chce v 5. gr. b) · název platební brány · zda kredity z karty propadají · při spuštění plateb
+  odkaz z nákupu (souhlas výš), z patičky webu a z menu appky (BACKLOG Menu „podmínky užití“), `noindex` pryč. ⚠️ Appka z Google Play
+  na therunekeeper.com odkazovat nesmí (㊐) — podmínky užití pro ni jinou cestou (text v appce bez ceníku a odkazů na nákup).
 - [ ] **CODE-tune — postup vracení:** skript pro admina: zrušit nepoužitý kód / snížit účet / odepsat zbylé kredity, zápis do
   `credit_ledger`; peníze vrací platební brána do 14 dní stejným prostředkem (21. gr.).
 - [ ] **CODE-tune — nižší účet:** zpráva brány na konci období → server sníží `tier`; tlačítko „STEP BACK TO …“ vede do portálu brány.

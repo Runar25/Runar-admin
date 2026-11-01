@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="is">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Skilmálar · Rúnar</title>
+<link rel="icon" type="image/png" sizes="96x96" href="https://runar25.github.io/Runar-admin/v2/icons/favicon-96x96.png">
+<link rel="apple-touch-icon" href="https://runar25.github.io/Runar-admin/v2/icons/apple-touch-icon.png">
+<!-- 2026-11-01 CODE-web: obchodní podmínky (skilmálar) EN + IS. Owner 2026-11-01: „právníka mít nebudeme, musíš udělat nejlépe, jak
+     dovedeš!“ a na otázku, zda psát hned, nebo až s platbami: „8. hned“. Zatím SKRYTÉ (noindex, nic na ně neodkazuje) — platby neběží;
+     při spuštění plateb odkaz z nákupu (souhlas u nákupu), z patičky webu a z menu appky („podmínky užití“, BACKLOG Menu).
+     Zdroje (čteno 2026-11-01): zákon 16/2016 lög um neytendasamninga (5. gr. povinné údaje, 12.–15. gr. objednávka a potvrzení,
+     16.–23. gr. odstoupení, 18. gr. a/m výjimky, 23. gr. poměrná část); nařízení 435/2016 přílohy I (vzorové poučení) a II (vzorový
+     formulář) — islandský text oddílu 7 a 8 je JEJICH znění, doplněné podle pokynů přílohy (služba: lhůta od uzavření smlouvy, bez
+     doručení a vracení zboží, bez faxu); anglický text = příloha I A/B směrnice 2011/83/EU, kterou nařízení přebírá. Zákon 30/2002
+     6. gr. (údaje o poskytovateli: kennitala, číslo DPH, rejstřík; ceny s daní). Údaje Agndofa ehf. a VSK-númer z fyrirtækjaskrá
+     Skattsinsu; adresa a e-mail shodně se zásadami soukromí. Mimosoudní spory (5. gr. s): Kærunefnd vöru- og þjónustukaupa.
+     Návrh změny zákona 16/2016 (þingskjal 317, 158. löggjafarþing, 29. 10. 2026): 5. gr. b bude chtít i telefon — doplnit, až ho
+     owner dá (BACKLOG). Pravidla vracení a nižší účet = DECISIONS 2026-10-21 (9) a 2026-10-22 (1); nákup jen na webu 2026-10-19 (7).
+     Měsíční čtení předplatného se nepřevádějí (claude-proxy: strop na měsíc, monthKey); čtení, které spadne, se neodečte (odečet až
+     po úspěchu). Jména účtů, název karty, ai_note a štítky appky živě z configu / UI_TEXT (§10) — v textu jen věty, které nikde jinde
+     nebydlí. Islandština ověřena Greynirem a korpusem (DECISIONS 2026-11-01). -->
+<link rel="stylesheet" href="https://runar25.github.io/Runar-admin/v2/fonts/fonts.css">
+<link rel="stylesheet" href="https://runar25.github.io/Runar-admin/v2/runar-reader.css">
+<style>
+/* vzhled dokumentu jako zásady soukromí appky (runar-privacy.html: help-hero / help-section / help-block), lišta jako /ferdin/ */
+.s-lang button{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:3px;background:none;border:none;color:var(--gold);opacity:.5;cursor:pointer;margin-left:14px}
+.s-lang button.on{opacity:.9}
+.s-page{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:40px 24px 100px}
+.s-hero{text-align:center;padding:40px 0 44px;border-bottom:1px solid rgba(46,74,112,0.3);margin-bottom:44px}
+.s-rune{font-size:3em;color:var(--gold);opacity:0.55;margin-bottom:20px;line-height:1}
+.s-title{font-family:'Cinzel',serif;font-size:1.6em;letter-spacing:4px;color:var(--white);font-weight:400;margin-bottom:16px}
+.s-sub{font-size:1.15em;font-style:italic;color:var(--muted);line-height:1.8;max-width:500px;margin:0 auto}
+.s-sec{margin-bottom:40px}
+.s-lbl{font-family:'Cinzel',serif;font-size:0.62em;letter-spacing:4px;color:var(--gold);opacity:0.6;margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid rgba(255,191,0,0.12)}
+.s-body{font-size:1.05em;line-height:1.9;color:var(--muted)}
+.s-body p{margin-bottom:12px}
+.s-body p:last-child{margin-bottom:0}
+.s-body strong{color:var(--white);font-weight:400}
+.s-body a{color:var(--gold);opacity:.85;text-decoration:none}
+.s-body a:hover{opacity:1}
+.s-body ul{padding-left:20px;margin:8px 0 12px}
+.s-body li{margin-bottom:8px}
+.s-ui{font-family:'Cinzel',serif;font-size:0.72em;letter-spacing:2px;color:var(--white)}
+.s-sub2{font-family:'Cinzel',serif;font-size:0.7em;letter-spacing:2.5px;color:var(--white);opacity:.9;margin:22px 0 10px}
+.s-dl{display:grid;grid-template-columns:max-content 1fr;gap:6px 18px}
+.s-dl dt{font-family:'Cinzel',serif;font-size:0.68em;letter-spacing:1.5px;color:var(--white);padding-top:6px}
+.s-dl dd{margin:0}
+/* vzorový formulář: jen jemný podklad, žádný rámeček */
+.s-form{background:rgba(255,255,255,0.035);padding:18px 20px;margin-top:6px}
+.s-form ul{list-style:none;padding-left:0}
+.s-form li::before{content:'– '}
+.s-updated{font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:2px;color:var(--muted);text-align:center;margin-top:48px}
+@media(max-width:600px){
+  .s-page{padding:28px 16px 80px}
+  .s-title{font-size:1.3em}
+  .s-dl{grid-template-columns:1fr;gap:0}
+  .s-dl dd{margin-bottom:8px}
+}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="topbar-inner">
+  <a class="brand" id="w-brand" href="/">RÚNAR</a>
+  <span class="s-lang"><button data-l="is">IS</button><button data-l="en">EN</button></span>
+</div></header>
+
+<article class="s-page" lang="is" id="t-is">
+  <div class="s-hero">
+    <div class="s-rune">ᚱ</div>
+    <h1 class="s-title">SKILMÁLAR</h1>
+    <p class="s-sub">Það sem gildir þegar þú notar Rúnar og kaupir áskrift eða <span data-card="sg"></span>.</p>
+  </div>
+
+  <section class="s-sec"><div class="s-lbl">1 · SELJANDI</div><div class="s-body">
+    <dl class="s-dl">
+      <dt>SELJANDI</dt><dd>Agndofa ehf.</dd>
+      <dt>KENNITALA</dt><dd>540312-1170</dd>
+      <dt>HEIMILISFANG</dt><dd>Brekkugata 38, 600 Akureyri</dd>
+      <dt>VIRÐISAUKASKATTSNÚMER</dt><dd>110736</dd>
+      <dt>SKRÁNING</dt><dd>Fyrirtækjaskrá Skattsins</dd>
+      <dt>NETFANG</dt><dd><a href="mailto:runar@therunekeeper.com">runar@therunekeeper.com</a></dd>
+    </dl>
+  </div></section>
+
+  <section class="s-sec"><div class="s-lbl">2 · ÞJÓNUSTAN</div><div class="s-body">
+    <p>Rúnar býður upp á rúnalestur á íslensku og ensku, í appi og á vefnum.</p>
+    <p><strong data-k="ai_note"></strong></p>
+  </div></section>
+
+  <section class="s-sec"><div class="s-lbl">3 · KAUP</div><div class="s-body">
+    <p>Áskrift og <span data-card="pl"></span> eru aðeins seld á therunekeeper.com.</p>
+    <p>Til að kaupa þarftu að vera 18 ára eða hafa samþykki foreldris eða forráðamanns.</p>
+    <p>Áður en þú greiðir sérðu hvað þú kaupir, verðið og hvaða greiðslumáta má nota. Staðfesting á kaupunum berst þér í tölvupósti.</p>
+  </div></section>
+
+  <section class="s-sec"><div class="s-lbl">4 · ÁSKRIFT</div><div class="s-body">
+    <p>Áskriftirnar eru tvær, <strong data-tier="standard"></strong> og <strong data-tier="premium"></strong>, og hvora þeirra má greiða mánaðarlega eða árlega. Hvað hvor þeirra veitir og hvað hún kostar stendur í <a href="../ferdin/">verðskránni</a>.</p>
+    <p>Hverri áskrift fylgir ákveðinn fjöldi lestra á mánuði. Ónotaðir lestrar flytjast ekki yfir á næsta mánuð.</p>
+    <p>Áskriftin endurnýjast sjálfkrafa í lok hvers tímabils og þá er greitt fyrir næsta tímabil, nema þú hafir sagt henni upp áður.</p>
+    <p>Þú getur sagt áskriftinni upp hvenær sem er, í appinu eða með tölvupósti til okkar. Uppsögnin tekur gildi í lok tímabilsins sem þú hefur greitt fyrir og fram að því gildir áskriftin eins og áður. Ef þú skiptir yfir í ódýrari áskrift tekur breytingin líka gildi í lok tímabilsins.</p>
+    <p>Ekki er endurgreitt fyrir það sem eftir er af tímabilinu, nema þú fallir frá samningnum innan 14 daga (sjá 7. kafla).</p>
+  </div></section>
+
+  <section class="s-sec"><div class="s-lbl">5 · <span data-card="up"></span></div><div class="s-body">
+    <p>Hverju <span data-card="dat"></span> fylgir kóði. Þegar kóðinn er sleginn inn í appinu fara lestrarnir inn á reikninginn þinn. Kortið getur þú notað eða gefið öðrum.</p>
+    <p>Hver kóði virkar einu sinni. Lestrarnir verða áfram á reikningnum þínum þar til þú notar þá. Hve marga lestra hvert kort gefur og hvað það kostar stendur í <a href="../ferdin/">verðskránni</a>.</p>
+  </div></section>
+
+  <section class="s-sec"><div class="s-lbl">6 · VERÐ OG GREIÐSLA</div><div class="s-body">
+    <p>Öll verð eru í íslenskum krónum og virðisaukaskattur er innifalinn í þeim.</p>
+    <p>Greiðslan fer fram hjá sérstakri greiðsluþjónustu og við sjáum aldrei kortanúmerið þitt.</p>
+  </div></section>
+
+  <section class="s-sec"><div class="s-lbl">7 · RÉTTUR TIL AÐ FALLA FRÁ SAMNINGI</div><div class="s-body">
+    <p>Þú hefur rétt til að falla frá þessum samningi án þess að tilgreina nokkra ástæðu innan 14 daga.</p>
+    <p>Frestur til að falla frá samningnum rennur út 14 dögum eftir þann dag sem samningurinn var gerður.</p>
+    <p>Til þess að nýta réttinn til að falla frá samningnum þarft þú að tilkynna okkur (Agndofa ehf., Brekkugötu 38, 600 Akureyri, runar@therunekeeper.com) ákvörðun þína um að falla frá samningnum með ótvíræðri yfirlýsingu (til dæmis með bréfi sendu í pósti eða tölvupósti). Nota má staðlaða eyðublaðið í 8. kafla, en það er ekki skylda.</p>
+    <p>Til að fresturinn teljist virtur nægir þér að senda tilkynningu um að þú neytir réttar þíns til að falla frá samningi áður en fresturinn rennur út.</p>
+    <div class="s-sub2">ÁHRIF ÞESS AÐ FALLA FRÁ SAMNINGI</div>
+    <p>Ef þú fellur frá þessum samningi munum við endurgreiða þér allar greiðslur sem við höfum fengið frá þér. Endurgreiðsla fer fram án ástæðulausrar tafar og alla jafna ekki síðar en 14 dögum eftir að okkur berst tilkynning um að þú fallir frá þessum samningi. Við munum endurgreiða þér með því að nota sama greiðslumiðil og þú notaðir í upphaflegu viðskiptunum, nema þú hafir samþykkt annað sérstaklega. Þú þarft ekki að bera neinn kostnað af þessari endurgreiðslu.</p>
+    <p>Ef þú óskar eftir að veiting þjónustu hefjist áður en frestur til að falla frá samningi rennur út þarft þú að greiða okkur fjárhæð sem er í réttu hlutfalli við það sem hefur verið afhent fram að þeim tíma þegar þú tilkynntir okkur að þú féllir frá þessum samningi, samanborið við að samningurinn hefði haldið gildi út samningstímann.</p>
+    <div class="s-sub2">HVAÐ ÞETTA ÞÝÐIR HJÁ RÚNARI</div>
+    <ul>
+      <li><strong>Ónotað <span data-card="sg"></span>:</strong> Þú færð allt endurgreitt og kóðinn er felldur úr gildi.</li>
+      <li><strong><span data-card="sg"></span> sem hefur verið notað að hluta:</strong> Þú færð endurgreitt í hlutfalli við það sem eftir er á kortinu.</li>
+      <li><strong><span data-card="sg"></span> sem hefur verið notað að fullu:</strong> Ekkert er endurgreitt. Það á þó aðeins við ef þú óskaðir við kaupin eftir því að þjónustan hæfist strax. Þá viðurkenndir þú um leið að þú myndir missa rétt þinn til að falla frá samningnum þegar hún hefði verið veitt að fullu.</li>
+      <li><strong>Áskrift:</strong> Ef þú fellur frá samningnum innan 14 daga færðu endurgreitt að frádregnum hluta verðsins í hlutfalli við þá daga sem liðnir eru af tímabilinu. Eftir 14 daga getur þú sagt áskriftinni upp frá lokum tímabilsins (sjá 4. kafla).</li>
+    </ul>
+  </div></section>
+
+  <section class="s-sec"><div class="s-lbl">8 · STAÐLAÐ UPPSAGNAREYÐUBLAÐ</div><div class="s-body">
+    <p>Staðlað eyðublað með yfirlýsingu um að fallið sé frá samningi.</p>
+    <div class="s-form">
+      <p>(fylltu út og sendu seljanda þessa yfirlýsingu ef þú óskar eftir að falla frá samningnum)</p>
+      <ul>
+        <li>Til Agndofa ehf., Brekkugötu 38, 600 Akureyri, runar@therunekeeper.com:</li>
+        <li>Ég/Við (*) tilkynni/tilkynnum (*) hér með að ég/við (*) óska/óskum (*) eftir að falla frá samningi mínum/okkar (*) um sölu á eftirfarandi vöru (*)/um veitingu eftirfarandi þjónustu (*)</li>
+        <li>Sem voru pantaðar hinn (*)/mótteknar hinn (*)</li>
+        <li>Nafn neytanda/neytenda</li>
+        <li>Heimilisfang neytanda/neytenda</li>
+        <li>Undirritun neytanda/neytenda (einungis ef þetta eyðublað er á pappírsformi)</li>
+        <li>Dagsetning</li>
+      </ul>
+      <p>(*) Eyðið eftir því sem við á</p>
+    </div>
+  </div></section>
+
+  <section class="s-sec"><div class="s-lbl">9 · KVARTANIR</div><div class="s-body">
+    <p>Ef eitthvað er að getur þú skrifað okkur á <a href="mailto:runar@therunekeeper.com">runar@therunekeeper.com</a> eða notað <span class="s-ui" data-k="line_title"></span> í appinu. Ef lestur mistekst vegna villu hjá okkur er hann ekki dreginn frá.</p>
+    <p>Þú átt þann rétt sem lög veita neytendum ef þjónustan er gölluð.</p>
+    <p>Ef við náum ekki saman getur þú leitað til <a href="https://island.is/v/kaerunefnd-voru-og-thjonustukaupa" target="_blank" rel="noopener">kærunefndar vöru- og þjónustukaupa</a>, sem úrskurðar í ágreiningsmálum milli neytenda og seljenda: Borgartúni 29, 105 Reykjavík, kvth@kvth.is.</p>
+  </div></section>
+
+  <section class="s-sec"><div class="s-lbl">10 · ÁBYRGÐ</div><div class="s-body">
+    <p>Við gerum okkar besta til að Rúnar virki alltaf, en getum ekki lofað að hann sé aldrei óaðgengilegur. Ákvarðanir sem þú tekur í kjölfar lesturs eru á þína ábyrgð.</p>
+    <p>Ekkert í þessum skilmálum skerðir rétt sem þú átt samkvæmt ófrávíkjanlegum lögum.</p>
+  </div></section>
+
+  <section class="s-sec"><div class="s-lbl">11 · BREYTINGAR</div><div class="s-body">
+    <p>Breytingar á skilmálunum birtum við á þessari síðu ásamt dagsetningu. Breyting gildir aldrei um tímabil sem þú hefur þegar greitt fyrir.</p>
+    <p>Ef verð áskriftar hækkar látum við þig vita í tölvupósti áður en næsta tímabil hefst, svo þú getir sagt henni upp í tæka tíð.</p>
+  </div></section>
+
+  <section class="s-sec"><div class="s-lbl">12 · LÖG OG PERSÓNUVERND</div><div class="s-body">
+    <p>Um skilmálana gilda íslensk lög.</p>
+    <p>Hvernig farið er með persónuupplýsingar stendur í <a class="s-privacy">persónuverndarstefnunni</a>.</p>
+  </div></section>
+
+  <div class="s-updated">SÍÐAST UPPFÆRT: 1. NÓVEMBER 2026</div>
+</article>
+
+<article class="s-page" lang="en" id="t-en" hidden>
+  <div class="s-hero">
+    <div class="s-rune">ᚱ</div>
+    <h1 class="s-title">TERMS</h1>
+    <p class="s-sub">What applies when you use Rúnar and buy a subscription or a <span data-card="sg"></span>.</p>
+  </div>
+
+  <section class="s-sec"><div class="s-lbl">1 · THE SELLER</div><div class="s-body">
+    <dl class="s-dl">
+      <dt>SELLER</dt><dd>Agndofa ehf.</dd>
+      <dt>COMPANY ID (KENNITALA)</dt><dd>540312-1170</dd>
+      <dt>ADDRESS</dt><dd>Brekkugata 38, 600 Akureyri, Iceland</dd>
+      <dt>VAT NUMBER</dt><dd>110736</dd>
+      <dt>REGISTERED</dt><dd>Register of Enterprises, Iceland Revenue and Customs (Skatturinn)</dd>
+      <dt>E-MAIL</dt><dd><a href="mailto:runar@therunekeeper.com">runar@therunekeeper.com</a></dd>
+    </dl>
+  </div></section>
+
+  <section class="s-sec"><div class="s-lbl">2 · THE SERVICE</div><div class="s-body">
+    <p>Rúnar offers rune readings in Icelandic and English, in the app and on the web.</p>
+    <p><strong data-k="ai_note"></strong></p>
+  </div></section>
+
+  <section class="s-sec"><div class="s-lbl">3 · BUYING</div><div class="s-body">
+    <p>Subscriptions and <span data-card="pl"></span> are sold only on therunekeeper.com.</p>
+    <p>To buy, you must be 18 or have the consent of a parent or guardian.</p>
+    <p>Before you pay, you see what you are buying, the price and which payment methods you can use. A confirmation of your purchase is sent to you by e-mail.</p>
+  </div></section>
+
+  <section class="s-sec"><div class="s-lbl">4 · SUBSCRIPTIONS</div><div class="s-body">
+    <p>There are two subscriptions, <strong data-tier="standard"></strong> and <strong data-tier="premium"></strong>, each available monthly or yearly. What each includes and what it costs is shown in the <a href="../ferdin/">price list</a>.</p>
+    <p>Each subscription includes a set number of readings a month. Unused readings do not carry over to the next month.</p>
+    <p>Your subscription renews automatically at the end of each period, and the next period is paid for then, unless you have cancelled before.</p>
+    <p>You can cancel at any time, in the app or by e-mail to us. The cancellation takes effect at the end of the period you have paid for, and until then your subscription continues as before. If you switch to a cheaper subscription, the change also takes effect at the end of the period.</p>
+    <p>The rest of a period is not refunded, unless you withdraw from the contract within 14 days (see section 7).</p>
+  </div></section>
+
+  <section class="s-sec"><div class="s-lbl">5 · <span data-card="up"></span></div><div class="s-body">
+    <p>Each <span data-card="sg"></span> comes with a code. When the code is entered in the app, the readings go into your account. You can use the card yourself or give it to someone.</p>
+    <p>Each code works once. The readings stay on your account until you use them. How many readings each card gives and what it costs is shown in the <a href="../ferdin/">price list</a>.</p>
+  </div></section>
+
+  <section class="s-sec"><div class="s-lbl">6 · PRICES AND PAYMENT</div><div class="s-body">
+    <p>All prices are in Icelandic krónur and include VAT.</p>
+    <p>Payment is handled by a separate payment service, and we never see your card number.</p>
+  </div></section>
+
+  <section class="s-sec"><div class="s-lbl">7 · RIGHT OF WITHDRAWAL</div><div class="s-body">
+    <p>You have the right to withdraw from this contract within 14 days without giving any reason.</p>
+    <p>The withdrawal period will expire after 14 days from the day of the conclusion of the contract.</p>
+    <p>To exercise the right of withdrawal, you must inform us (Agndofa ehf., Brekkugata 38, 600 Akureyri, Iceland, runar@therunekeeper.com) of your decision to withdraw from this contract by an unequivocal statement (e.g. a letter sent by post or e-mail). You may use the model withdrawal form in section 8, but it is not obligatory.</p>
+    <p>To meet the withdrawal deadline, it is sufficient for you to send your communication concerning your exercise of the right of withdrawal before the withdrawal period has expired.</p>
+    <div class="s-sub2">EFFECTS OF WITHDRAWAL</div>
+    <p>If you withdraw from this contract, we shall reimburse to you all payments received from you, without undue delay and in any event not later than 14 days from the day on which we are informed about your decision to withdraw from this contract. We will carry out such reimbursement using the same means of payment as you used for the initial transaction, unless you have expressly agreed otherwise; in any event, you will not incur any fees as a result of such reimbursement.</p>
+    <p>If you requested to begin the performance of services during the withdrawal period, you shall pay us an amount which is in proportion to what has been provided until you have communicated us your withdrawal from this contract, in comparison with the full coverage of the contract.</p>
+    <div class="s-sub2">WHAT THIS MEANS AT RÚNAR</div>
+    <ul>
+      <li><strong>An unused <span data-card="sg"></span>:</strong> you get a full refund and the code is cancelled.</li>
+      <li><strong>A partly used <span data-card="sg"></span>:</strong> you get a refund in proportion to what is left on the card.</li>
+      <li><strong>A fully used <span data-card="sg"></span>:</strong> nothing is refunded. This applies only if, when buying, you asked for the service to begin at once and acknowledged that you would lose your right of withdrawal once it had been fully provided.</li>
+      <li><strong>Subscription:</strong> if you withdraw within 14 days, you get a refund minus a part of the price in proportion to the days that have passed in the period. After 14 days you can cancel your subscription from the end of the period (see section 4).</li>
+    </ul>
+  </div></section>
+
+  <section class="s-sec"><div class="s-lbl">8 · MODEL WITHDRAWAL FORM</div><div class="s-body">
+    <div class="s-form">
+      <p>(complete and return this form only if you wish to withdraw from the contract)</p>
+      <ul>
+        <li>To Agndofa ehf., Brekkugata 38, 600 Akureyri, Iceland, runar@therunekeeper.com:</li>
+        <li>I/We (*) hereby give notice that I/We (*) withdraw from my/our (*) contract of sale of the following goods (*)/for the provision of the following service (*),</li>
+        <li>Ordered on (*)/received on (*),</li>
+        <li>Name of consumer(s),</li>
+        <li>Address of consumer(s),</li>
+        <li>Signature of consumer(s) (only if this form is notified on paper),</li>
+        <li>Date</li>
+      </ul>
+      <p>(*) Delete as appropriate.</p>
+    </div>
+  </div></section>
+
+  <section class="s-sec"><div class="s-lbl">9 · COMPLAINTS</div><div class="s-body">
+    <p>If something is wrong, write to us at <a href="mailto:runar@therunekeeper.com">runar@therunekeeper.com</a> or use <span class="s-ui" data-k="line_title"></span> in the app. If a reading fails because of an error on our side, it is not deducted.</p>
+    <p>You have the rights the law gives consumers if the service is faulty.</p>
+    <p>If we cannot agree, you can turn to the Icelandic complaints committee for goods and services, <a href="https://island.is/v/kaerunefnd-voru-og-thjonustukaupa" target="_blank" rel="noopener">Kærunefnd vöru- og þjónustukaupa</a>, which rules on disputes between consumers and sellers: Borgartún 29, 105 Reykjavík, kvth@kvth.is.</p>
+  </div></section>
+
+  <section class="s-sec"><div class="s-lbl">10 · LIABILITY</div><div class="s-body">
+    <p>We do our best to keep Rúnar running, but we cannot promise that he is never unavailable. Decisions you make after a reading are your own responsibility.</p>
+    <p>Nothing in these terms limits rights you have under mandatory law.</p>
+  </div></section>
+
+  <section class="s-sec"><div class="s-lbl">11 · CHANGES</div><div class="s-body">
+    <p>We publish changes to these terms on this page, with the date. A change never applies to a period you have already paid for.</p>
+    <p>If the price of your subscription goes up, we will tell you by e-mail before the next period begins, so that you can cancel in time.</p>
+  </div></section>
+
+  <section class="s-sec"><div class="s-lbl">12 · LAW AND PRIVACY</div><div class="s-body">
+    <p>These terms are governed by Icelandic law.</p>
+    <p>How your personal data is handled is described in the <a class="s-privacy">privacy policy</a>.</p>
+  </div></section>
+
+  <div class="s-updated">LAST UPDATED: 1 NOVEMBER 2026</div>
+</article>
+
+<script src="https://runar25.github.io/Runar-admin/v2/runar-config.js"></script>
+<script src="https://runar25.github.io/Runar-admin/v2/runar-translations.js"></script>
+<script src="../web.js?v=803050c8bd"></script>
+<script>
+// Jména a štítky z appky (§10): účty z TIERS, název karty z VOCAB, poznámka o AI a „Send Rúnar a line“ z UI_TEXT.
+// Jazyk textu = lang článku, ve kterém prvek stojí (IS i EN se plní naráz; přepínač jen ukáže jeden).
+document.querySelectorAll('article').forEach(function (a) {
+  var l = a.lang;
+  a.querySelectorAll('[data-tier]').forEach(function (el) {
+    var ucet = TIERS[el.getAttribute('data-tier')];   // ne jméno T: ㉽ bere na webu vše za „T“ s tečkou jako klíč UI_TEXT
+    el.textContent = l === 'is' ? ucet.label_is : ucet.label;
+  });
+  a.querySelectorAll('[data-card]').forEach(function (el) {
+    var f = el.getAttribute('data-card'), c = VOCAB.card;
+    var v = f === 'pl' ? c[l + '_pl'] : f === 'dat' ? c[l + '_dat'] : c[l];   // dat jen v IS („Hverju Rúnakorti“)
+    el.textContent = f === 'up' ? v.toUpperCase() : v;
+  });
+  a.querySelectorAll('[data-k]').forEach(function (el) { el.textContent = UI_TEXT[l][el.getAttribute('data-k')]; });
+  a.querySelectorAll('.s-privacy').forEach(function (el) { el.href = RUNAR_APP_URL.replace(/[^/]*$/, '') + 'runar-privacy.html'; });
+});
+var LANG = webJazyk();   // jazyk napříč stránkami webu (web.js)
+function render() {
+  document.documentElement.lang = LANG;
+  document.title = (LANG === 'is' ? 'Skilmálar' : 'Terms') + ' · Rúnar';
+  document.getElementById('t-is').hidden = LANG !== 'is';
+  document.getElementById('t-en').hidden = LANG !== 'en';
+  document.querySelectorAll('.s-lang button').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-l') === LANG); });
+}
+document.querySelectorAll('.s-lang button').forEach(function (b) {
+  b.onclick = function () { LANG = webJazyk(b.getAttribute('data-l')); render(); };
+});
+document.getElementById('w-brand').href = RUNAR_HOME_URL;   // značka RÚNAR → domovská stránka
+render();
+</script>
+</body>
+</html>

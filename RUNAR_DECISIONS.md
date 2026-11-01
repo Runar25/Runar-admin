@@ -12799,3 +12799,23 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   měření se nemění. IS bez měření účinku (jen jazykově ověřená). Sledovat v čteních: formule ve stejném slotu (memory
   `oprava-promptu-odebira-vadu`), u solu doslovné „a sound, a light…“ (RUNAR_DESIGN „Slova, která dáváme modelu“ bod 1).
 - Affected doc(s): RUNAR_BACKLOG.md.
+
+## 2026-11-01 (6) — Obchodní podmínky (skilmálar) EN + IS: skrytá stránka webu, bez právníka
+
+- **Rozhodl:** owner 2026-11-01 k právní kontrole (přes CODE-tune): *„právníka mít nebudeme, musíš udělat nejlépe, jak dovedeš!“*; na otázku
+  CODE-web, zda podmínky psát hned, nebo až s platbami: *„8. hned“*.
+- **Co:** https://therunekeeper.com/skilmalar/ (`web/site/skilmalar/index.html`, noindex, nic na ni neodkazuje) — prodávající, služba
+  (`ai_note`), nákup jen na webu (2026-10-19 (7)), 18 let nebo souhlas rodiče, předplatné (automatická obnova, zrušení a nižší účet od konce
+  období, čtení se do dalšího měsíce nepřevádějí), Rúnakort (kód jednou, čtení zůstávají na účtu), ceny v ISK s DPH, odstoupení do 14 dní,
+  vzorový formulář, stížnosti (Kærunefnd vöru- og þjónustukaupa), odpovědnost, změny, islandské právo, odkaz na zásady soukromí.
+  Jména účtů, název karty a štítky appky živě z configu a UI_TEXT.
+- **Proč takhle:** zákon 16/2016 chce údaje před uzavřením smlouvy islandsky (5. gr.) a bez poučení o odstoupení prodlouží lhůtu o 12 měsíců
+  (17. gr.). Bez právníka je nejbezpečnější úřední znění: oddíl 7 a 8 islandsky doslova podle nařízení 435/2016 (příloha I poučení, příloha II
+  formulář), anglicky podle přílohy I směrnice 2011/83/EU; pod tím, co to znamená u karty a předplatného (2026-10-21 (9), 2026-10-22 (1)).
+  Zákon 30/2002 (6. gr.) chce kennitala, číslo DPH a rejstřík — z fyrirtækjaskrá Skattsins (VSK-númer 110736).
+- **Slibuje navíc** (postavit s platbami): potvrzení nákupu e-mailem (14. gr. ho chce tak jako tak), zrušení předplatného v appce, e-mail
+  před zdražením předplatného.
+- **Neověřeno / otevřené:** telefon prodávajícího (návrh změny zákona, þingskjal 317 z 29. 10. 2026, ho chce v 5. gr. b) · zda kredity
+  z karty propadají (dnes ne, rozhodnutí chybí) · název platební brány. Islandština: vlastní věty Greynir bez nálezu a vazby doložené
+  korpusem; nálezy zbyly jen v úředním znění (dlouhé věty) a falešné („Rúnakort“).
+- Affected doc(s): RUNAR_BACKLOG.md (Před spuštěním plateb).
