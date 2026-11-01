@@ -12778,3 +12778,13 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno:** `scripts/verify_necinne_ucty.js` (smoke) — 26 případů na produkčních funkcích + 3 podvržené vady spadly; samotest při stavbě
   našel slepé místo (lhůta od prvního upozornění) a přibyl případ. Naostro: zkušební běh `{"mode":"dry"}` po nasazení (viz zpráva ownerovi).
 - Affected doc(s): RUNAR_PRIVACY.md, RUNAR_BACKLOG.md.
+
+## 2026-11-01 (4) — Nápověda u „What are you seeking“ říká, co volba dělá; souhlas s otázkou jmenuje i Anthropic
+
+- **Rozhodl:** owner 2026-11-01 *„this sets the tone je nic neříkající. přeformulovat. musí to více vystihovat a krátce co to dělá“*; souhlas =
+  vada z revize textů (BACKLOG „qconsent_lbl“), owner k bodu 13 *„má to vliv i na ASK?“* — ano, týž souhlas platí pro vlastní otázku v Asku.
+- **Co:** (1) `seek_hint` EN „This shapes how the reading ends.“ / IS „Þetta ræður því hvernig lestrinum lýkur.“ — volba hledání určuje tvar
+  poslední věty čtení (`SEEK_SHAPE`, runar-utils.js); nic jiného nemění. (2) `qconsent_lbl` + věta „If OpenAI is down, they go to Anthropic
+  in the USA.“ / „Ef OpenAI liggur niðri fara þær til Anthropic í Bandaríkjunum.“ — záloha modelu (claude-proxy `MODELS`) stojí v zásadách,
+  v souhlasu chyběla. IS ověřeno Greynir + korpus (Greynir „lýkur → líkur“ = falešný poplach, sloveso ljúka; korpus „lestrinum lýkur“ 9×).
+- Affected doc(s): RUNAR_BACKLOG.md.

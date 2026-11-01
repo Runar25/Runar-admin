@@ -942,7 +942,7 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   čtení; (d) `.visitor-lock-hint` vs `.opt`, `.pills-locked` vs `.pill-locked`; (e) `.atab-ikona` pevná velikost. Podklad: CODE-read
   `docs/inbox/2026-10-20-jednotny-vzhled.md` §1–2. Pozor na ownerovo „velikost závisí od důležitosti“ — jen stejná úroveň. Po každém kusu
   zúžit základ `scripts/komponenty_zaklad.json` (`--zaklad`) a doplnit soupis. CODE-tune.
-- [ ] **„What are you seeking — This sets the tone“ (hlášení 3b79eac3):** owner: *„je složité si představit, co tím tónem myslíme“* — nová
+- [x] ✅ *(CODE-tune 2026-11-01, owner „this sets the tone je nic neříkající“, DECISIONS 2026-11-01 (4).)* **„What are you seeking — This sets the tone“ (hlášení 3b79eac3):** owner: *„je složité si představit, co tím tónem myslíme“* — nová
   věta nápovědy `seek_hint` EN + IS, návrh ownerovi (co volba ve čtení skutečně dělá: tvar konce čtení, `SEEK_SHAPE` v runar-utils.js).
 - [x] ✅ *(owner 2026-10-31 „písmo už je hotové“ — čtení má 19 px od aaef0f6.)* **Písmo čtení je malé (testeři IS, hlášení 4910de7c, db5e2b38 — čtení Norny 452a97c5):** *„Letrið er of lítið, það er erfitt að
   lesa þetta.“* Změřit dnešní velikost textu čtení na telefonu a navrhnout větší (pozor na délku čtení na obrazovce). Rozhodne owner.
@@ -971,7 +971,7 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
 - [x] ✅ *(CODE-tune 2026-10-31, owner „pro někoho jiného bude mít to stejné jako pro samotného uživatele“, DECISIONS 2026-10-31 (8); nasazeno claude-proxy.)* **Ask u čtení „for someone“** (neuložené, ne-tester) nemá `reading_id` → proxy ho počítá jako čtení a strhne měsíční jednotku
   (runar-reading.js ~1144, proxy ~532–657); TIER_FEATURES slibuje „one question on every reading“. Neověřeno během, jen čtením kódu.
 - [ ] **Rune Seeker a Ask:** `helper_ask` / `helper_ask2` ho zvou ptát se, pole je pro něj vypnuté (asks_per_reading 0). *(2026-11-01: patří do sjednocení teaserů — owner „ASK má být pro Rune Seeker teaser … musí vidět navrhované otázky“; návrh čeká na ownera.)*
-- [ ] **`qconsent_lbl`** (souhlas s odesláním otázky, čl. 9) jmenuje jen OpenAI; při výpadku jde otázka Anthropicu. Pole je dnes jen
+- [x] ✅ *(CODE-tune 2026-11-01, DECISIONS 2026-11-01 (4): souhlas nově jmenuje i Anthropic — týká se i Asku, který už běží.)* **`qconsent_lbl`** (souhlas s odesláním otázky, čl. 9) jmenuje jen OpenAI; při výpadku jde otázka Anthropicu. Pole je dnes jen
   pro admina (DECISIONS 2026-10-16 (5)), před otevřením ostatním opravit.
 - [x] ✅ *(CODE-tune 2026-10-31, owner „napřed všechny vady“, DECISIONS 2026-10-31 (5): u oblasti a hledání „to unveil more“ / „til að opna fleiri“, u záměru dál „to unveil“ — ten registrace odemkne celý.)* **`lock_become_rs`** „Become a Rune Seeker to unveil“ — registrace odemkne jen část oblastí a hledání, zbytek karta.
 - ✖ *(CODE-tune 2026-10-31, owner „napřed všechny vady“, DECISIONS 2026-10-31 (5): nejsou vada — `q_teaser` se ukáže, až se pole s otázkou otevře ostatním; `layer2_lbl` kreslí staré záznamy deníku; `tier_soon` patří k výpisu účtů v menu, který je schovaný záměrně (DECISIONS 2026-10-19 (7), (8)); `title` slotů přepíše `_updateSpreadSlots` dřív, než je kdo uvidí. Uživatel nic z toho nevidí špatně.)* **Mrtvé texty:** `q_teaser` (pole jen admin), `tier_soon` (kreslí se do vždy skrytého `#sp-path-body`), `layer2_lbl` (jen staré

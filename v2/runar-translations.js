@@ -82,7 +82,7 @@ const UI_TEXT = {
     // 2026-10-12: tři nápovědy pod „+“ vrácené (znění z 2026-09-29) — 2026-10-10 je úklid mrtvých klíčů smazal, protože je kód skládá
     // `t(k + '_hint')` (_updateAreaSeekLabels, toggleFormHint) a ㉽ dynamickou příponu neviděla; „+“ pak ukazoval holý klíč.
     area_hint:        'The area tells Rúnar where in your life to let the picture land.',
-    seek_hint:        'This sets the tone.',
+    seek_hint:        'This shapes how the reading ends.',   // 2026-11-01 (owner): dřív „This sets the tone.“ — nic neříkalo; volba = tvar konce (SEEK_SHAPE)
     intention_hint:   'This sets the time the reading speaks to — for a single rune only.',   // 2026-10-16 owner: „platí jen pro single“ → „stačí jen for a single rune only“
     // 2026-09-29 (KUKY bod 4: jen jedna věta, „není potřeba to víc vysvětlovat, alespoň ne zatím“) — rozbalí „+“ u popisku.
     seek_lbl:         'WHAT ARE YOU SEEKING?',
@@ -136,7 +136,7 @@ const UI_TEXT = {
     qpriv_hint:       'Please do not write anything about your health here.',
     // 2026-10-12 (DECISIONS 2026-10-12 (7), krok 2): výslovný souhlas s odesláním a uložením otázky (čl. 9 GDPR) + věk 13+;
     // ukáže se při prvním psaní do otázky nebo Asku (_showQuestionConsent, runar-app.js), odvolání v menu (sp_qconsent_lbl).
-    qconsent_lbl:     'I agree that my questions are sent to OpenAI in the USA, whose AI writes the readings, even when I write about my health or anything else sensitive. I also agree that they are kept in my journal when the reading is mine. I am 13 or older.',
+    qconsent_lbl:     'I agree that my questions are sent to OpenAI in the USA, whose AI writes the readings, even when I write about my health or anything else sensitive. If OpenAI is down, they go to Anthropic in the USA. I also agree that they are kept in my journal when the reading is mine. I am 13 or older.',
     qconsent_need:    'Your question is sent only with your consent. Tick the box. To continue without a question, delete it.',
     qconsent_need_ask: 'Your question is sent only with your consent. Tick the box to send it.',
     qconsent_saved:   'Your consent has been saved.',
@@ -674,7 +674,7 @@ const UI_TEXT = {
     month_ph:         'Mánuður',
     area_lbl:         'SVIÐ LÍFSINS',
     area_hint:        'Sviðið segir Rúnari hvar í lífi þínu myndin á að lenda.',   // 2026-10-12 vráceno (viz EN), znění z 2026-09-29
-    seek_hint:        'Þetta ræður tóninum.',
+    seek_hint:        'Þetta ræður því hvernig lestrinum lýkur.',   // 2026-11-01: viz EN; „ræður því hvernig“ 216×, „lestrinum lýkur“ 9×
     intention_hint:   'Þetta ræður því um hvaða tíma lesturinn talar og á aðeins við um eina rún.',   // 2026-10-16: Greynir OK; věta o lagnir pryč (owner: stačí jen „for a single rune only“)
     seek_lbl:         'HVAÐ ERTU AÐ LEITA AÐ?',
     intention_lbl:    'ÞESSI LESTUR ER FYRIR',
@@ -720,7 +720,7 @@ const UI_TEXT = {
     qpriv_hint:       'Skrifaðu ekki neitt um heilsu þína hér.',
     // 2026-10-12 krok 2 souhlasu, viz EN. Greynir u qconsent_lbl hlásí pád „spurningar mínar“ — falešně, „samþykki“ bere jako
     // podstatné jméno; korpus „ég samþykki að“ 93×, is-gpt-check 0 nálezů. „haka við“ (hakað við 996×), ne „haka í“ (0×).
-    qconsent_lbl:     'Ég samþykki að spurningar mínar séu sendar til gervigreindar OpenAI í Bandaríkjunum sem semur lestrana, líka ef ég skrifa um heilsu mína eða annað viðkvæmt. Ég samþykki líka að þær séu geymdar í dagbókinni minni þegar lesturinn er minn. Ég er 13 ára eða eldri.',
+    qconsent_lbl:     'Ég samþykki að spurningar mínar séu sendar til gervigreindar OpenAI í Bandaríkjunum sem semur lestrana, líka ef ég skrifa um heilsu mína eða annað viðkvæmt. Ef OpenAI liggur niðri fara þær til Anthropic í Bandaríkjunum. Ég samþykki líka að þær séu geymdar í dagbókinni minni þegar lesturinn er minn. Ég er 13 ára eða eldri.',
     qconsent_need:    'Spurningin er aðeins send með samþykki þínu. Hakaðu við reitinn. Til að halda áfram án spurningar skaltu eyða henni.',
     qconsent_need_ask: 'Spurningin er aðeins send með samþykki þínu. Hakaðu við reitinn til að senda hana.',
     qconsent_saved:   'Samþykki þitt hefur verið vistað.',
