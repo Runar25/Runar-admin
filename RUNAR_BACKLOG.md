@@ -1058,6 +1058,10 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   malé; karta prohlížeče zůstává holé R. Po volbě D: `--cil v2/icons --lucerna` (+ kroky výš).
   Owner 2026-11-01 k A–D2: *„ani jedno se mi nelíbí. tohle R bych chtěl“* + snímek načítání čtení (ᚱ písmem appky) → výchozí R ikony
   je R ze značky (`R_ZNACKA`, 715b02d); náhled 5: E R + rámeček · E2 R bez rámečku · L R v lucerně. Volba ownera čeká.
+  ⚠️ **Pro CODE-tune, až owner ikonu vybere:** ᚱ značky kreslí appka písmem (6× v `v2/runar-reader.html`, např. `.whispers-loading-star`);
+  Cormorant runy nemá, takže tvar dává písmo systému — R ze snímku je Windows (Segoe UI Historic), jinde jiný tvar nebo prázdný
+  čtvereček (proto runy 2026-07-13 přešly na SVG, značka zůstala, §5). Návrh: značku kreslit touž geometrií jako ikonu (`R_ZNACKA`
+  ze `scripts/ikona_appky.py` přenést do appky jako jedinou kresbu, §18) — pak je R v ikoně i v appce stejné všude. Mění §5.
 - [x] ✅ *(úklid 2026-10-31, owner „12. ano“, CODE-tune: opraveno v 7c3aebc.)* **Útok ㊼ „worker zase chytá sw.js“ jednou propustil (2026-10-29, CODE-tune):** v pre-push smoke (čistá kopie, zátěž) kontrola
   `verify_verze_hlaseni.js` prošla i s podstrčenou chybou (`.git/runar-protipriklady-propustene/20261029-221655_…`); hned poté 2× po sobě
   chytila 4 ze 4. Šum časování skutečného workeru (stav B3) → zpevnit čekání v kontrole, ať útok nezávisí na rychlosti stroje.
