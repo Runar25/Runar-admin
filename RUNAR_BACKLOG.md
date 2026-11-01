@@ -650,7 +650,7 @@ Souběh už zčásti hotový týž den: push s commitem vzniklým během smoke (
     adres, pošle potvrzovací e-maily na cizí adresy (obtěžování) a vyčerpá denní kvótu Brevo (RUNAR_PRICING, řádek Brevo), kterou sdílejí
     přihlašovací kódy appky → ten den by se nikdo nepřihlásil e-mailem. Návrh: limit na adresu (otisk e-mailu, např. 2 / den) a denní strop
     registrací pod kvótou Brevo, ať zbude na kódy. Tichý úspěch při překročení (jako duplicita), ať se nedá zjišťovat.
-- [ ] **Past v DB funkci `check_rate_limit`** (nalezla CODE-web 2026-10-14): při ~5 % volání maže řádky s `window_start` starším než 1 h, takže
+- ✖ *(CODE-read 2026-11-01: duplikát — řeší se spolu s „IP v `rate_limits`“ v Revizi nápovědy (CODE-tune), týž úklid v téže funkci.)* **Past v DB funkci `check_rate_limit`** (nalezla CODE-web 2026-10-14): při ~5 % volání maže řádky s `window_start` starším než 1 h, takže
   okno delší než hodina (denní limit) se uprostřed vynuluje. Dnes všechna okna ≤ 1 h, netrefí to nic. Zapsat do hlavičky funkce v migraci,
   nebo úklid vázat na délku okna (SQL ownera). Kdo chce denní limit, musí o tom vědět.
 - **K4/1 další edge funkce:** `elevenlabs-proxy` (mazání položky z historie EL: podle request_id, text jen záloha, na pozadí přes waitUntil, cizí
@@ -797,7 +797,7 @@ Oprava je jednořádková: substring proti `LENGTH_BUDGETS`, týž vzor jako `en
 ### RUNAR_DESIGN bod 4 (délka) — dořešit znění po v4.35 (2026-09-20, CODE-tune → CODE-read)
 Bod 4 „Stavby Single čtení" říká „Délka: 4 věty; strop slov se nemění" a odkazuje na los délky.
 Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty, 50–58 slov).
-`prompt_draws.len` zůstává a je konstantní 0. Doc vlastní CODE-read; produkce je zdroj pravdy (§20).
+`prompt_draws.len` zůstává a je konstantní 0. Doc vlastní CODE-read; produkce je zdroj pravdy (§20). ✅ *(CODE-read 2026-11-01: DESIGN bod 4 přepsán — los zrušen, číslo jen odkazem na `LENGTH_BUDGETS`.)*
 
 ## 2026-10-10 — Kontrola návštěvníka: co zbylo (CODE-tune, DECISIONS 2026-10-10 (16))
 5. ↩ *(2026-10-10 večer VRÁCENO, DECISIONS 2026-10-10 (30): návštěvník má zase formulář — 2a3f03b „rovnou k tahu“ owner chtěl
@@ -902,7 +902,7 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
 
 ## Z Coworku 2026-10-18 (HANDOFF66 v `docs/inbox/2026-10-18-HANDOFF66_ucty-vypadaji-stejne-visitor-plus-a-formular_COWORK_to_CODE-read-tune.md`, 67 a 68 v `docs/inbox/rune-cards/`; ověřeno CODE-tune proti repu, DECISIONS 2026-10-18 (4))
 ### Účty vypadají a ovládají se stejně — HANDOFF66 (owner: rozdíl jen tam, kde ho chce funkce)
-- [ ] **CODE-read: matice stav × plocha** (Visitor · Rune Seeker · Standard · Premium/tester · admin × menu, formulář, spready, Ask, hlas,
+- [x] ✅ *(CODE-read 2026-11-01: hotovo jako mapa `docs/inbox/2026-10-19-pruchod-appkou.md`; vady z ní opravila CODE-tune 2026-10-31, návrhy žijí v D–H.)* **CODE-read: matice stav × plocha** (Visitor · Rune Seeker · Standard · Premium/tester · admin × menu, formulář, spready, Ask, hlas,
   Kolekce, Životní runa, okna, toasty, ⚑ a „?“) — z kódu; Standard v DB nemá nikdo (2026-10-18: 4× rune_seeker, 1× premium).
 - [x] ✅ *(úklid 2026-10-31, owner „12. ano“, CODE-tune: okno se nevnucuje, stačí helper (DECISIONS 2026-10-19 (7)); okno cesty / UPGRADE 2026-10-19 (10); menu 2026-10-27 (5), (8); „How a reading works“ s hlasem 2026-10-30 (1). Zbytek žije v D–H a „Ask pro RS“ níž.)* **Uvítání a navedení: Visitor při návštěvě, nový Rune Seeker po první registraci** (owner 2026-10-19 bod 11, místo přepisu první věty
   Visitorova výpisu: *„všechno má omezené, já bych si dokázal představit nějaké uvítací okno, welcome visitor … heslovitě, že může
@@ -951,6 +951,8 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
 - [ ] **Islandské věty, kterým tester nerozumí (f35d5943 21:05, aa0a852e 00:02 — bez označeného textu):** aa0a852e přišlo ve stejnou minutu
   jako db5e2b38 k Nornám 452a97c5 — nejspíš věta „Í lífi þínu gæti þetta verið kunnugleg nánd sem breytist í hlé, eða hlé sem gefur henni
   nýtt rými.“ (neověřeno). CODE-read: projít čtení 452a97c5 islandsky (§2), u f35d5943 kontext chybí.
+  ➕ *CODE-read 2026-11-01:* věta je gramaticky v pořádku (Greynir bez nálezu), ale „kunnugleg nánd“ a „breytist í hlé“ korpus nezná (0×) —
+  model skládá obraty, které Islanďan neříká. Je to výstup modelu, ne zdroj; patří k IS kvalitě čtení (V3 v IS), ne k opravě textu appky.
 
 ### Rúnakort jako karta (DECISIONS 2026-10-19 (4), CODE-web → CODE-tune)
 ### Karty run s dvergy (Dverg Tarot) — samostatný produkt mimo Rúnara (owner 2026-10-21, DECISIONS 2026-10-21 (2))

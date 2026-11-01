@@ -479,8 +479,8 @@ a co dělá problémy“. Důvod: obrazy kola 3 měly medián 17 slov (starší 
         („tři tvary + zvláštní znění pro těžké runy") — dvakrát totéž a navíc zastaralé, protože v4.34 dodala
         těžký protějšek každému tvaru. Sloučeno; ukazatel na backlog nahrazen ukazatelem na kód, znění je nasazené. -->
 4. **Délka: 4 věty; strop slov se nemění** (KUKY: „když bude víc, bude víc — proč bys mu číslem říkal, že může ještě
-   víc"). Průměr se NEzapisuje do docu — počítá ho `scripts/delky_cteni.js` z exportu DB; los délky se od 2026-09-20
-   zapisuje do `prompt_draws.len`.
+   víc"). Průměr se NEzapisuje do docu — počítá ho `scripts/delky_cteni.js` z exportu DB. Délka se od v4.35 nelosuje (DECISIONS
+   2026-09-20 (7)): `LENGTH_BUDGETS(_IS)` v `v2/runar-utils.js` má jednu položku a nese počet slov; `prompt_draws.len` je proto vždy 0.
 5. **Sezóna v promptu NENÍ** (od v4.32-bez-sezony, KUKY 2026-09-20 nad „A child crosses the late-summer floor":
    „zabírá místo… v místnosti je to naprosto nedůležitá informace"). Řádek, funkce i štítky smazány — **34 ze 108**
    obrazů (31 %) je registr D = domácí scéna, kam roční období nemá kam dosednout. Sezóna dál rozhoduje o VÝBĚRU
