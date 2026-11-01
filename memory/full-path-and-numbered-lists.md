@@ -35,5 +35,10 @@ v textu, tak to můžu přehlédnout.“*). „Tvé odpovědi čekají i dvě ot
 napiš celé znovu jako „N. <otázka>?“, i když už padla v minulé zprávě. Od 2026-10-14 to hlídá pravidlo 6 téhož hooku
 (`hooks/claude/runar-zprava-check.py`, DECISIONS 2026-10-14 (5)).
 
+⛔ **Nevyřízené otázky NEOPAKUJ v každé průběžné zprávě** (KUKY 2026-11-01: *„pořád mi dáváš stejné a stejné otázky a tím mi plníš chat
+tak moc, že nevím, kde jsem“*). Za jeden tah jsem k pěti krátkým stavovým zprávám (push běží / prošel) pětkrát přilepil tytéž čtyři otázky.
+Otázku polož celou jednou — v hlášení, kde vznikla, a znovu jen ve zprávě, která ownerovi skutečně odpovídá (konec práce na jeho zadání).
+Průběžná zpráva o stavu (push, smoke, agent) otázky nepřipojuje a ani nepíše, že něco čeká — pak ji hook pravidla 6 nezastaví.
+
 **How to apply:** každý odkaz na soubor = plná cesta od `C:\`. **Každý bod hlášení a každá otázka = číslo**
 (1, 2, 3 …, průběžně přes celé hlášení, ať „7“ znamená jen jednu věc). Odrážky jen uvnitř bodu.
