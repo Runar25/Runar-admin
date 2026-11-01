@@ -823,7 +823,7 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
 - [ ] **Domovská stránka webu po spuštění** (owner 2026-10-21 „ano, postav ji“): běží SKRYTÁ na https://therunekeeper.com/heim/ —
   hero appky s portrétem, „Gakktu inn →“ do appky, jak čtení funguje (guide_*), cesta (→ /ferdin/), Rúnakort (→ /ferdin/#kort), patička.
   **Při spuštění:** /heim/ se stane úvodní stránkou místo „Væntanlegt“ (registrace pak není potřeba), `noindex` pryč.
-  Dál (CODE-web 2026-10-27, DECISIONS 2026-10-27 (10)): na /heim/ doplnit `og:url` = https://therunekeeper.com/ (ostatní značky
+  Při spuštění také (DECISIONS 2026-10-27 (10)): na /heim/ doplnit `og:url` = https://therunekeeper.com/ (ostatní značky
   náhledu už tam jsou); `RUNAR_HOME_URL` v configu z /heim/ na kořen (CODE-tune); `robots.txt` + `sitemap.xml` (kořen, /ferdin/)
   a sitemapu odeslat v Google Search Console (doména je ověřená TXT záznamem `google-site-verification`).
 - [ ] **Sociální sítě Rúnara** (owner 2026-10-27: *„musíme založit facebook… budu s tebou pak řešit všechna sociální, které Rúnar má“*;
@@ -862,15 +862,12 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
       (IS 94, EN 96 znaků).
   13. Nová IS část ověřena: Greynir bez nálezu; korpus „rúnalestur“ 19×, „á íslensku og“ 7345×, „íslensku og ensku“ 2790×.
   14. therunekeeper.com do odkazů na Instagramu a do pole Web na Facebooku.
-  Čeká na ownera: volba profilovky (při zakládání profilů) a jazyk bia na Instagramu (doporučeno EN na Instagram, IS na Facebook).
-- [ ] **Google Play bez provize — co hlídat dál** (rešerše CODE-web 2026-10-21, Play Console Help 10281818 + Payments policy 9858738):
-  consumption-only appka smí o nákupu jinde jen INFORMOVAT textem; nesmí mít odkaz ani tlačítko na stránku, odkud se dá (i nepřímo)
-  zaplatit. Opraveno CODE-tune 2026-10-21 v režimu `?src=play`: odkaz na obchod u pole kódu, značka AGNDOFA, odkazy a ceník v nápovědě.
-  Zbývá hlídat: (1) appka v Play nesmí odkazovat na therunekeeper.com (po spuštění tam bude nákup); (2) popis appky v Google Play
-  nesmí vést k nákupu (i výpis v obchodě je podle pravidel kanál); ~~(3) stroj místo paměti~~ ✅ *(CODE-read 2026-10-21, owner „2. ano,
-  postav to“: smoke ㊐ `scripts/verify_play_bez_nakupu.js` — skutečný prohlížeč v režimu `?src=play`, JOURNEY_URL podvržené, appka + okno
-  cesty + IS + nápověda + zásady; viditelný odkaz na agndofa.is / therunekeeper.com / Shopify / Rapyd = FAIL.)* Pozn.: větev Play v nápovědě
-  převádí na text jen agndofa.is a therunekeeper.com — odkaz na Shopify by prošel do nápovědy, ㊐ ho ale zastaví.
+  Stav 2026-11-01 (CODE-web, veřejný profil): Instagram má dál staré bio bez odkazu na web; Facebook zatím není (v configu jen
+  `RUNAR_INSTAGRAM_URL`). Čeká na ownera: Facebook (bod 1), jména na TikToku a YouTube (bod 2), bio a odkaz na Instagramu (body 11, 14),
+  volba profilovky (při zakládání profilů) a jazyk bia na Instagramu (doporučeno EN na Instagram, IS na Facebook).
+- [x] ✅ *(CODE-web 2026-11-01: (1) odkaz z appky v Play na therunekeeper.com i na Instagram zastaví smoke ㊐ (`OBCHOD` ve
+  `scripts/verify_play_bez_nakupu.js`, JOURNEY_URL podvržené); (2) popis v obchodě přešel do „Obchody před spuštěním“; (3) ㊐ od 2026-10-21.)*
+  **Google Play bez provize — co hlídat dál** (pravidlo consumption-only → `RUNAR_PRICING.md` „Platby v appkách z obchodů“).
 - [ ] **Předplatné: měsíční / roční a datum obnovy v profilu a v menu** (owner 2026-10-21 nad rozbalovacím menu účtu: *„jména účtů — by mohlo
   jít vidět, jestli je měsíční nebo roční subscription u Walker a Wanderer“* → *„4. ano, zapiš to“*). Dnes to nejde: `user_profiles` má jen
   `tier`, žádnou délku předplatného ani datum obnovy (ověřeno 2026-10-21, CODE-read); platby neběží. Až poběží: server při platbě zapíše
@@ -891,14 +888,15 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   pravidla 4.8 chce i rovnocenné přihlášení (prakticky Sign in with Apple) — přesné znění 4.8 neověřeno. Jméno: v obou obchodech už je
   „Runar: AI Chat & Runes“ (runar.app, AI věštění z run) a na Google Play „Runar“ (com.tnco.runar) — název v obchodě musí být jiný,
   ochrannou známku owner řešit nechce (2026-10-13). Odznaky obchodů na webu až s živou appkou, jen oficiální soubory.
+  Popis appky v Google Play nesmí vést k nákupu — i výpis v obchodě je podle pravidel kanál (Payments policy 9858738, rešerše 2026-10-21).
 - [ ] **Rúnakort digitálně** (DECISIONS 2026-10-19 (4), CODE-web). ✅ 2026-10-19: stránka karty https://therunekeeper.com/kort/
   (černá / bílá, QR, tisk do PDF) · sloupce sledování v `gift_codes` (owner pustil SQL) · appka předvyplní kód z QR `#kort=` a shrine
   u dávky ukládá form / design / lang / channel / complimentary a dává odkaz na kartu (obojí CODE-tune). **Zbývá:** doručení po
   zaplacení až po rozhodnutí Shopify / Rapyd; tisk celé dávky v jednom PDF pro tiskárnu, až budou fyzické karty (dnes karta po jedné).
-  **Vzhled Vetur (zimní slunovrat, owner 2026-10-20)** je v `web/site/runakort.css|js`, postava je zatím výřez z archu
+  **Vzhled Vetur (zimní slunovrat, owner 2026-10-20)** je v `v2/runar-runakort.css|js` (kresba pro appku i web), postava je zatím výřez z archu
   `Runar_WinterSolsticeOutfit` (365 × 470 px) — na obrazovku stačí, na tisk ne. Owner: postavy se vygenerují zvlášť. Pro tisk je potřeba
   jedna postava (gesto otevřené dlaně jako u bílé karty), aspoň ~1500 px na výšku, průhledné nebo čistě bílé pozadí; pak vyměnit
-  `web/site/img/runar-zima.jpg`. Další vzhledy podle oblečení (letní slavnost, půlnoční slunce, polární záře, cestovatel) stejně.
+  `v2/img/runar-zima.jpg`. Další vzhledy podle oblečení (letní slavnost, půlnoční slunce, polární záře, cestovatel) stejně.
 
 ## Z Coworku 2026-10-18 (HANDOFF66 v `docs/inbox/2026-10-18-HANDOFF66_ucty-vypadaji-stejne-visitor-plus-a-formular_COWORK_to_CODE-read-tune.md`, 67 a 68 v `docs/inbox/rune-cards/`; ověřeno CODE-tune proti repu, DECISIONS 2026-10-18 (4))
 ### Účty vypadají a ovládají se stejně — HANDOFF66 (owner: rozdíl jen tam, kde ho chce funkce)
@@ -954,7 +952,6 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   ➕ *CODE-read 2026-11-01:* věta je gramaticky v pořádku (Greynir bez nálezu), ale „kunnugleg nánd“ a „breytist í hlé“ korpus nezná (0×) —
   model skládá obraty, které Islanďan neříká. Je to výstup modelu, ne zdroj; patří k IS kvalitě čtení (V3 v IS), ne k opravě textu appky.
 
-### Rúnakort jako karta (DECISIONS 2026-10-19 (4), CODE-web → CODE-tune)
 ### Karty run s dvergy (Dverg Tarot) — samostatný produkt mimo Rúnara (owner 2026-10-21, DECISIONS 2026-10-21 (2))
 - Vlastní složka a vlastní seznam otevřených věcí: `dverg-tarot/README.md`. Tady se nevede (§20).
 ### Karty run ke stažení — HANDOFF67, 68 (soubory od 2026-10-20 v `docs/inbox/rune-cards/`)
@@ -988,7 +985,9 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
 - [ ] **CODE-web — nákup:** zaškrtávací souhlas „chci začít hned a beru na vědomí ztrátu práva na odstoupení, až bude služba poskytnutá
   celá“ (zákon 16/2016, 15. a 18. gr.) u Rúnakortu i předplatného; potvrzení na trvalém nosiči (e-mail).
 - [ ] **CODE-web — obchodní podmínky (skilmálar) EN + IS:** poučení o 14 dnech, vzorový formulář pro odstoupení (5. gr. g), pravidla
-  vracení z DECISIONS 2026-10-21 (9), nižší účet od konce období. Bez poučení se lhůta prodlouží o 12 měsíců (17. gr.).
+  vracení z DECISIONS 2026-10-21 (9) a 2026-10-22 (1) (poměr podle uplynulých dní), nižší účet od konce období. Bez poučení se lhůta
+  prodlouží o 12 měsíců (17. gr.). Bez právníka — owner 2026-11-01 k právní kontrole (přes CODE-tune): *„právníka mít nebudeme, musíš
+  udělat nejlépe, jak dovedeš!“*
 - [ ] **CODE-tune — postup vracení:** skript pro admina: zrušit nepoužitý kód / snížit účet / odepsat zbylé kredity, zápis do
   `credit_ledger`; peníze vrací platební brána do 14 dní stejným prostředkem (21. gr.).
 - [ ] **CODE-tune — nižší účet:** zpráva brány na konci období → server sníží `tier`; tlačítko „STEP BACK TO …“ vede do portálu brány.
@@ -1006,7 +1005,7 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   `.hlas-btn` a otisk do `RUNAR_RITUAL_HLAS` (smoke ㊗ pak hlídá i tenhle). Potvrdit, že jde o tohle.
 - [ ] **Lucerna větší někde jinde (owner 2026-10-30):** *„symbol je tak malý, že lucerna nejde poznat. Jinak by to byl dobrý nápad, ale třeba
   ji budeme moci použít větší někde jinde.“* Kresba N1 v `docs/inbox/2026-10-30-pirko-a-symboly.html`; návod končí větou „I carry the light“.
-  Místo zatím nevybrané — nabídnout, až bude větší symbol potřeba.
+  Místo zatím nevybrané — nabídnout, až bude větší symbol potřeba. Owner 2026-11-01: R v lucerně jako ikona → „Nové logo appky“.
 - [ ] **Před spuštěním projít, že všechno sedí (owner 2026-10-28: „bude se to muset projít, že všechno sedí před spuštěním!“):** zásady, nápověda,
   texty a jazyky (EN i IS), menu, okna — celá appka očima uživatele na telefonu i počítači; nález = oprava nebo položka sem.
 - [ ] **Animace symbolů (owner 2026-10-28):** *„budeme hledat animace pro skoro všechny naše symboly“* — tužka u jména v liště hotová (DECISIONS 2026-10-28 (2)); nota u hlasu rituálu
@@ -1027,6 +1026,9 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   `--cil v2/icons` + ruční bump `v2/sw.js` v témže commitu (ikony jsou v precache, hook verzi u PNG nezvedne) + `web/site/favicon.ico` +
   smazat nepoužitý `v2/icons/site.webmanifest`; při volbě B přegenerovat i `web/socialni/profil-r.jpg` s kamenem. Až se bude stavět
   balíček pro Google Play, ověřit jeho adaptivní ikonu proti rámečku — jak velký výřez z maskable obrázku ukáže, není ověřené.
+  Owner 2026-11-01 (přes CODE-tune): *„teď mě napadá R v lucerně. samozřejmě, že by muselo být větší, aby šlo R poznat, ale je to
+  zajímavý nápad“* → možná varianta D: lucerna N1 (`docs/inbox/2026-10-30-pirko-a-symboly.html`) jako ikona, R uvnitř; favicona by
+  zůstala holé R.
 - [x] ✅ *(úklid 2026-10-31, owner „12. ano“, CODE-tune: opraveno v 7c3aebc.)* **Útok ㊼ „worker zase chytá sw.js“ jednou propustil (2026-10-29, CODE-tune):** v pre-push smoke (čistá kopie, zátěž) kontrola
   `verify_verze_hlaseni.js` prošla i s podstrčenou chybou (`.git/runar-protipriklady-propustene/20261029-221655_…`); hned poté 2× po sobě
   chytila 4 ze 4. Šum časování skutečného workeru (stav B3) → zpevnit čekání v kontrole, ať útok nezávisí na rychlosti stroje.
