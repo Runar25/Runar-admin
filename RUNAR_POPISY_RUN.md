@@ -22,7 +22,7 @@ Texty jsou **ownerovy, zapsané doslovně** — CODE je needituje (obsah = domé
 islandština se **píše nativně** a ověřuje (nástroje a pořadí: `CLAUDE.md` §2 „Kontrola IS“) — nikdy jako překlad
 téhle češtiny (§2: „IS se VYMÝŠLÍ, ne překládá"). Totéž platí pro angličtinu.
 
-**Společný tvar, který popisy drží** (pozorování, ne pravidlo — pravidlo vznikne, až jich bude 25+):
+**Společný tvar, který popisy drží** (pozorování, ne pravidlo — jedna verze z mnoha; owner 2026-11-02: „pokud bude dokonalá, tak to bude pravidlo“):
 runa se nejdřív **ukáže jako obraz nebo gesto** → pak **co dělá / co nedělá** → pak **kdy se objevuje**
 → pak **druhá strana** (co runa neslibuje) → a končí **otázkou pro čtenáře**, ne radou.
 Ani jeden popis neříká, co se stane; všechny říkají, na co se dívat.

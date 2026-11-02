@@ -699,7 +699,7 @@ Souběh už zčásti hotový týž den: push s commitem vzniklým během smoke (
   → **není to díra, nový mechanismus nestavím** (smazání cizích řádků chytí pre-commit 24 h, rozbitou cizí práci pre-push v čisté kopii).
   Nález jinde: soubor, který pre-commit přidá (`git add`) při pathspec commitu, hlavní index nedostane (ověřeno pokusem) → `runar-verze.js`
   ležel v indexu na v686 proti HEAD v688; post-commit a ㉞ znaly jen sw.js. ✅ 2026-10-15 oba hlídají i runar-verze.js (hook to hned uklidil).
-- [ ] **Pro ownera / Cowork (obsah, nespěchá; část 28):** hlavička `RUNAR_POPISY_RUN.md` píše „Společný tvar… pozorování, ne pravidlo —
+- ✖ *(CODE-read 2026-11-02: owner „je to jen verze, jedna z mnoha“ — pravidlo se nesepisuje; slib „až 25+“ z hlavičky pryč.)* **Pro ownera / Cowork (obsah, nespěchá; část 28):** hlavička `RUNAR_POPISY_RUN.md` píše „Společný tvar… pozorování, ne pravidlo —
   pravidlo vznikne, až jich bude 25+“. Popisů je 25, spouštěč nastal, pravidlo nikdo nesepsal. Jen připomínka; CODE do obsahu nesahá.
 
 ## Soukromí — kontrola GDPR 2026-10-12 (CODE-read; nálezy a důvody jen v `docs/archive/2026-10-12-gdpr-kontrola.md`)
