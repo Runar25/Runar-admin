@@ -13038,3 +13038,13 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   pryč v F4. Ask: text čtení a předchozí výměna od prohlížeče; pole čtení bez serverového stropu délky.
 - **Návrat:** revert commitu a nasadit předchozí `claude-proxy`; tabulka může zůstat.
 - Affected doc(s): RUNAR_BACKLOG.md (Plán infrastruktury krok 1 — F3b), RUNAR_PRIVACY.md (prompt_state).
+
+## 2026-11-02 (10) — Ikona appky: modrá runa ᚱ v kameni
+
+- **Rozhodl:** owner 2026-11-02 (poslal dvě ikony, modrou a zlatou): *„nové ikony pro Rúnara. ulož je. modrou použijeme pro appku.“*
+  Mění 2026-11-01 (10) („ikona appky zůstává“).
+- **Co:** originály ve `v2/assets/` (`runar-ikona-modra.jpg`, `runar-ikona-zlata.jpg`, README). Do appky (`v2/icons/`, manifest) zatím
+  nejdou: náhled 2026-11-02 — ve výřezu bez bílého okraje sahá runa od ~8 do ~90 % výšky; iPhone (zaoblený čtverec) i kruh ji ukážou
+  celou, maskovatelná ikona Androidu (vnitřních 80 %) by ji uřízla nahoře i dole → při převodu runu zmenšit a kámen kolem doplnit
+  (zrcadlením textury), ne ořezat. Kdy do appky, čeká na ownera.
+- Affected doc(s): v2/assets/README.md, RUNAR_BACKLOG.md (Web — ikona appky).

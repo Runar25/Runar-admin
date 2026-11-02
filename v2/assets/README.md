@@ -14,6 +14,8 @@ vysvětlení a odkaz, ať se ví, kde to je, pokud budeme dělat nějaký vizuá
 | `sacred-palette.png` | **Agndofa Sacred Color Palette** — 7 barev s hex kódem, jménem a účelem, pod každou ukázkový obraz; dole „The feeling of Agndofa“. |
 | `app-moodboard.png` | Moodboard appky z doby návrhu: Rúnar, mockupy obrazovek, paleta, písmo, materiály, ikony, prostředí, styl runových kamenů. |
 | `runar-app-icon.svg` | **Ikona appky v plném rozlišení (1254 px):** Rúnar drží kámen se zářící runou ᚱ, za ním kruh modře zářících run, ᚱ i na přívěsku; zaoblený čtverec na černém. Táž kresba jako ikony ve `v2/icons/`, jen větší (pod tabulkou). |
+| `runar-ikona-modra.jpg` | **Nová ikona appky** (owner 2026-11-02: *„modrou použijeme pro appku“*, DECISIONS 2026-11-02 (10)): modře zářící runa ᚱ v rozpraskaném černém kameni, zaoblený čtverec na bílém, 1254 px. Do `v2/icons/` zatím nešla — viz rozhodnutí (runa sahá skoro k okraji). |
+| `runar-ikona-zlata.jpg` | Táž ikona se zlatě zářící runou (owner 2026-11-02: *„ulož je“*). |
 
 **Pozor při použití:**
 - **Živé barvy appky jsou tokeny v `v2/runar-reader.css`**, ne hexy z obrázků (CLAUDE.md §5, §20). Paleta je původ, ne zdroj pravdy.

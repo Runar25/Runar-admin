@@ -914,6 +914,9 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   ownera) — dokud se nezkrátí, změnu neuloží. YouTube zatím bez odkazu (owner: dostane ho). Ani jedno bio neříká, že Rúnar je AI.
   Facebook zatím není (v configu jen `RUNAR_INSTAGRAM_URL`). Čeká na Sigrún (přes ownera): AI do bia všech tří, odkazy se štítky
   (bod 14), kratší bio TikToku, Facebook (bod 1).
+- [ ] **Ikona appky — modrá runa ᚱ v kameni** (owner 2026-11-02, DECISIONS 2026-11-02 (10); originály ve `v2/assets/`). Zbývá: sada
+  ikon pro `v2/icons/` (favicon, apple-touch, manifest 192/512 i maskovatelná) z rastru — runu zmenšit, kámen kolem doplnit zrcadlením
+  textury (jinak ji Android ořízne); generátor `scripts/ikona_appky.py` umí jen vlastní kresbu, rastr doplnit. Kdy, čeká na ownera.
 - [ ] **Veřejné stránky run na webu — sdílení a vyhledávače** (podněty Cowork 2026-11-02, HANDOFF69 „konkurence a online prostor“;
   owner rozhodl 2026-11-02 — DECISIONS 2026-11-02 (3), (5), (7)). Ověřeno v kódu (CODE-web 2026-11-02, HEAD 19e6878):
   (a) Životní runu dostane návštěvník appky bez registrace: den a měsíc → runa, kámen a `tree_lr_origin`; čtení až po přihlášení
