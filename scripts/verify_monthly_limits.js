@@ -41,7 +41,9 @@ for (const tier of ['standard', 'premium']) {
 // ── spread_cost sanitizace (2026-08-22, audit CRITICAL): radek musi v proxy BYT
 // a musi PREZIT adversarialni vstupy — spousti se tu doslova (kopie z proxy source
 // za behu, ne vlastni opis — vlastni kopie by se rozesla, §18/§19).
-const sm = proxy.match(/const spreadCost = (Math\.min\(9, Math\.max\(1, Math\.round\(Number\(spread_cost\)\) \|\| 1\)\));/);
+// 2026-11-02 (F3a): `let` — cenu přepíše server ze svého skládání (_shared/prompt_server.mjs); sanitizace čísla od prohlížeče zůstává
+// pro admina bez zápisu skládání (shrine, nástroje).
+const sm = proxy.match(/(?:const|let) spreadCost = (Math\.min\(9, Math\.max\(1, Math\.round\(Number\(spread_cost\)\) \|\| 1\)\));/);
 if (!sm) { fail++; console.log('FAIL  spread_cost sanitizace v proxy chybi (NaN projde do uctovani)'); }
 else {
   for (const zly of [NaN, 'abc', -5, Infinity, 2.5, undefined, null, 1e9, '4']) {
