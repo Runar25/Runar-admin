@@ -9,7 +9,7 @@ import sys, io, urllib.request, json
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 URL = 'https://pmitxjvkeovijreepror.supabase.co/rest/v1/runar_corrections?select=original_phrase,replacement_phrase,context,lang_scope&order=lang_scope.asc,created_at.asc'
-KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBtaXR4anZrZW92aWpyZWVwcm9yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyNzE0OTIsImV4cCI6MjA5Mzg0NzQ5Mn0.-qk3vHqZGkj9yplSlK1PUKbypxDeXOtllp49JLICGyw'
+KEY = 'sb_publishable_iS8zD-m5BC9N3BYJa3XnHQ_UTkIlNy2'   # 2026-11-02: veřejný klíč nového typu (Klíče Supabase, krok 2), jako is-corr-qa.py
 
 req = urllib.request.Request(URL, headers={'apikey': KEY, 'Authorization': f'Bearer {KEY}'})
 with urllib.request.urlopen(req) as r:

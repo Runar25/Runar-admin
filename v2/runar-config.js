@@ -5,7 +5,10 @@
 
 // ─── SUPABASE ───────────────────────────────────────────
 const SB_URL = 'https://pmitxjvkeovijreepror.supabase.co';
-const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBtaXR4anZrZW92aWpyZWVwcm9yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyNzE0OTIsImV4cCI6MjA5Mzg0NzQ5Mn0.-qk3vHqZGkj9yplSlK1PUKbypxDeXOtllp49JLICGyw';
+// 2026-11-02 (Klíče Supabase, krok 2): veřejný klíč nového typu místo starého anon JWT — staré klíče owner vypne (krok 4, RUNAR_BACKLOG
+// „9. Klíče Supabase“). Ověřeno 2026-11-02: přihlášení (/auth/v1/settings 200, obnova tokenu dojde ke kontrole tokenu), čtení z DB
+// s Bearer i bez, funkce. Veřejný je záměrně — práva drží RLS a granty, ne tajnost klíče.
+const SB_KEY = 'sb_publishable_iS8zD-m5BC9N3BYJa3XnHQ_UTkIlNy2';
 
 // ─── EDGE FUNCTIONS ─────────────────────────────────────
 const PROXY     = 'https://pmitxjvkeovijreepror.supabase.co/functions/v1/claude-proxy';

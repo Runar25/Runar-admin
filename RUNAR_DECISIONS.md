@@ -12895,3 +12895,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   ji tak mělo a kontrola, která hledala jen znak, ho neviděla. Útoky: 3 v protipříkladech (písmo v nápovědě, entita v readeru a v Asku).
 - **Zbývá CODE-web:** generátor ikony a web čtou kresbu z `v2/runar-znacka.js`, `R_ZNACKA` v `ikona_appky.py` zmizí (§18).
 - Affected doc(s): CLAUDE.md (§5, soubory, pořadí načítání), RUNAR_BACKLOG.md (Značka ᚱ v appce).
+
+## 2026-11-02 (2) — Klíče Supabase, krok 2: appka na veřejný klíč nového typu
+
+- **Rozhodl:** plán kroku 9 v RUNAR_BACKLOG („Plán infrastruktury“), owner 2026-11-01 *„20. ano“*; navazuje na 2026-11-01 (9).
+- **Co:** `SB_KEY` v `v2/runar-config.js` (appka i shrine) a `show_corrections.py` = `sb_publishable_…` místo starého anon JWT.
+- **Ověřeno před commitem (2026-11-02):** `/auth/v1/settings` 200; obnova tokenu s novým klíčem dojde až ke kontrole tokenu (400
+  „Refresh token is not valid“, ne 401 za klíč); čtení z DB s Bearer publishable i bez 200 (spor docs × zkouška z rešerše tím rozhodnut
+  pro REST); funkce 204; špatný klíč 401 (test rozliší). Appka lokálně jako návštěvník: klient, relace, čtení z DB bez chyby.
+- **Neověřeno:** přihlášený člověk — přihlásit se za ownera nesmím; ověří se po nasazení v datech (obnova relace ownera po aktualizaci
+  appky). Nainstalované appky drží starý config, dokud se neaktualizují — proto krok 3 (1–2 týdny) před vypnutím starých klíčů.
+- **Návrat:** revert tohoto commitu (starý klíč dál platí, dokud ho owner nevypne).
+- Affected doc(s): RUNAR_BACKLOG.md (Plán infrastruktury, krok 9.2).

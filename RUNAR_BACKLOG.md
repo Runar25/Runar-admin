@@ -451,7 +451,7 @@ promptu v `claude-proxy` (už ověřuje přihlášení a odečítá kredity; pro
      jinak výměna zneplatní rozpracované podpisy (hlas neuloženého čtení 403, Ask u něj zase placený). Nasadit všech 14 s --no-verify-jwt
      (verify_jwt nové klíče nezná — docs). Ověřit: čtení, hlas a Ask neuloženého čtení, kód, shrine, client-error, waitlist, ops-watch,
      inactive-accounts. Návrat: předchozí verze funkcí.
-   - [ ] **2 CODE (appka):** `SB_KEY` = `sb_publishable_…`, `show_corrections.py`; ověřit i přihlášení a obnovu tokenu (docs a zkouška
+   - [x] *(CODE-tune 2026-11-02, DECISIONS 2026-11-02 (2); přihlášeného ověřit v datech po nasazení.)* **2 CODE (appka):** `SB_KEY` = `sb_publishable_…`, `show_corrections.py`; ověřit i přihlášení a obnovu tokenu (docs a zkouška
      se rozcházejí u Bearer + publishable — REST odpověděl 200). Návrat: revert.
    - [ ] **3:** 1–2 týdny počkat (SW drží starý config v nainstalované appce; využití starých klíčů docs neukazují).
    - [ ] **4 OWNER (~25. 11.):** staré klíče vypnout (docs: vratné — dají se zapnout zpět). Ověřit: celý smoke, čtení s hlasem, běhy cronu.
