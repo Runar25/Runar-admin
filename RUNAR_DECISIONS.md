@@ -12943,7 +12943,9 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   Ask — text čtení a předchozí výměna od prohlížeče (ověřit proti uloženému čtení); pole čtení (otázka, oblast…) jsou volný text bez
   serverového stropu kromě 8000 znaků promptu — odpověď stropuje a platí server; brána životní runy (#3) samostatně.
   `SOL_EFFORTS` (c) beze změny: `minimal` se použije jen po 400 na `none`, které gpt-6-sol přijímá — že `minimal` neexistuje, je neověřené.
-- **Nasazení:** `claude-proxy` až na ownerovo „nasaď“; appka se nemění (posílá prompt i zápis jako od 2026-10-21).
+- **NASAZENO 2026-11-02** (owner *„5. ano“*): `supabase functions deploy claude-proxy --project-ref pmitxjvkeovijreepror --no-verify-jwt`
+  (9758ed9 — F3a i (d) z 2026-11-02 (6)). Sonda: bez přihlášení 401, OPTIONS 204. Skládání u přihlášeného čtení se ověří v datech
+  (`ops_events` „prompt_stin“ se `server: true` — shoda serveru s textem appky).
 - **Návrat:** revert commitu a nasadit předchozí `claude-proxy`.
 - Affected doc(s): RUNAR_BACKLOG.md (Plán infrastruktury, krok 1 — F3).
 
@@ -12977,5 +12979,7 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno:** smoke ㊍ — server vrací číslo a jazyk životní runy ze skládání (EN i IS), jinde nic; syntaxe proxy (Node bez typů, kontrola
   umí spadnout). Trigger po SQL neověřen pokusem — ověří ho první prohlížečový zápis do nastavené runy (chyba 42501).
 - **Zbývá:** `credit_ledger.actor` je kvůli témuž vždy `postgres` (BACKLOG).
+- **SQL PUŠTĚNO OWNEREM 2026-11-02:** `sql/2026-11-02_life_rune_guard_invoker.sql` → `prosecdef = false` (snímek ownera). Proxy se zápisem
+  životní runy nasazena týž den (2026-11-02 (4)).
 - **Návrat:** revert commitu; SQL `alter function public.guard_life_rune_immutable() security definer;`.
 - Affected doc(s): RUNAR_BACKLOG.md (Plán infrastruktury krok 1 — F3b, Zjištěno při auditu).
