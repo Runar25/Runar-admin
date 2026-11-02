@@ -851,8 +851,9 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   hero appky s portrétem, „Gakktu inn →“ do appky, jak čtení funguje (guide_*), cesta (→ /ferdin/), Rúnakort (→ /ferdin/#kort), patička.
   **Při spuštění:** /heim/ se stane úvodní stránkou místo „Væntanlegt“ (registrace pak není potřeba), `noindex` pryč.
   Při spuštění také (DECISIONS 2026-10-27 (10)): na /heim/ doplnit `og:url` = https://therunekeeper.com/ (ostatní značky
-  náhledu už tam jsou); `RUNAR_HOME_URL` v configu z /heim/ na kořen (CODE-tune); `robots.txt` + `sitemap.xml` (kořen, /ferdin/)
-  a sitemapu odeslat v Google Search Console (doména je ověřená TXT záznamem `google-site-verification`).
+  náhledu už tam jsou); `RUNAR_HOME_URL` v configu z /heim/ na kořen (CODE-tune). `robots.txt` a `sitemap.xml` s kořenem
+  jsou od 2026-11-02 (DECISIONS 2026-11-02 (5)) — při spuštění do sitemapy přidat /ferdin/ (a stránky run, až budou) a znovu ji odeslat
+  v Google Search Console (doména je ověřená TXT záznamem `google-site-verification`).
 - [ ] **Sociální sítě Rúnara** (owner 2026-10-27: *„musíme založit facebook… budu s tebou pak řešit všechna sociální, které Rúnar má“*;
   2026-10-28: *„13.–19. zapiš do backlog“* a *„Co jsem připravil 9–15“* do backlogu). Instagram 2026-10-28 (veřejný profil): jméno
   stejné jako titulek webu, jen s pomlčkou místo tečky a malým „the“; 0 příspěvků, bio „Rune readings ✧ Nordic mysticism ✧ Ancient wisdom / Welcome to the world of Agndofa. /

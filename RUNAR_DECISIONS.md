@@ -12946,3 +12946,18 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Nasazení:** `claude-proxy` až na ownerovo „nasaď“; appka se nemění (posílá prompt i zápis jako od 2026-10-21).
 - **Návrat:** revert commitu a nasadit předchozí `claude-proxy`.
 - Affected doc(s): RUNAR_BACKLOG.md (Plán infrastruktury, krok 1 — F3).
+
+## 2026-11-02 (5) — Landing do vyhledávačů hned: robots.txt a sitemap.xml
+
+- **Rozhodl:** owner 2026-11-02 na otázku CODE-web „Mají stránky jít do vyhledávačů hned, nebo až se spuštěním?“: *„landing by už mohla
+  ne? pokud je zabezpečená proti napadnutí“*. Bezpečnost ověřena téhož dne (níž).
+- **Co:** `web/site/robots.txt` (vše povoleno, odkaz na sitemapu) a `web/site/sitemap.xml` jen s kořenem webu. Skryté stránky (/heim/,
+  /ferdin/, /kort/, /skilmalar/) zůstávají noindex a v sitemapě nejsou; robots.txt je schválně nezakazuje — zákaz by vyhledávači schoval
+  i jejich noindex. Sitemapu v Google Search Console (doména ověřená TXT záznamem) odešle owner — je to jeho účet Google.
+- **Bezpečnost (2026-11-02):** web je statický (GitHub Pages); jediný vstup je formulář → `waitlist-join` (limity na IP, na adresu a celkem
+  za hodinu, honeypot, odpověď neprozradí, kdo je registrovaný) — prošel kolem 4 (2026-10-14) i útokem zvenku (2026-10-18), BACKLOG.
+  HTTP → HTTPS 301, HSTS na rok (`curl -I`). Indexace nepřidává nový vstup — adresa je veřejná od spuštění landingu. Zbývá: zaplavení boty
+  může na hodinu vyčerpat hodinový strop (skutečný člověk pak uvidí „zkus to za chvíli“); poznáme to v ranním souhrnu. Neověřeno (vidí
+  jen owner): ověřená doména v nastavení GitHubu (ochrana proti převzetí domény) a dvoufázové přihlášení účtů GitHub a registrátora.
+- **Návrat:** smazat oba soubory a nasadit.
+- Affected doc(s): RUNAR_BACKLOG.md (Domovská stránka webu po spuštění).
