@@ -871,8 +871,8 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   9. Profilovka — dvě možnosti, owner vybere při zakládání profilů (2026-10-29: *„ještě nevím. připravíme to a rozhodnu se, až to
      budeme dělat“*); tutéž na Facebook i Instagram, oba ji ořízne do kruhu.
      `profil-ikona.jpg` — Rúnarova tvář z dnešní ikony appky (kámen ᚱ, kruh run kreslený generátorem obrázku); srovnáno ve 176 / 110 /
-     40 px na tmavém i bílém pozadí, čitelná i ve 40 px. Po výměně ikony appky už nebude tatáž jako na ploše telefonu.
-     `profil-r.jpg` — zlaté R jako nová ikona appky, zlatý kruh u okraje (`ikona_appky.profil()`).
+     40 px na tmavém i bílém pozadí, čitelná i ve 40 px; tatáž jako ikona na ploše telefonu (ikona zůstala, DECISIONS 2026-11-01 (10)).
+     `profil-r.jpg` — zlaté R ze značky appky (táž kresba jako R v appce, owner 2026-11-01 „tohle R bych chtěl“), zlatý kruh u okraje.
      Výřezy z portrétů s holí owner zamítl (2026-10-28: *„má Rúnara s uříznutou holí“*) — čtverec kolem obličeje hůl vždy přetne;
      do profilovky jen záběr, kde Rúnar nic nedrží přes okraj.
   10. Jméno všude stejné jako titulek webu (`og:site_name` ve `web/site/index.html`; na Instagramu 23 / 30 znaků).
@@ -902,6 +902,12 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
 - [ ] **Pro OWNERA — Rapyd** *(owner 2026-10-12: totéž co Shopify — dodělá se, pak JEDEN souhrnný postup)*: smí účet Agndofy prodávat přes Rapyd Hosted Checkout / odkaz k platbě na therunekeeper.com, a jaký tarif
   má Shopify Agndofy (u cizí brány Shopify bere příplatek, Basic 2 %)? Rozhodne, jestli Rúnakort půjde přes Shopify, nebo rovnou Rapyd.
   Fyzické runy jdou přes Shopify vždy. Kupovat jde pět balíčků (`CARD_PACKS`).
+  **Ověřeno 2026-11-02 (CODE-web):** Shopify Payments Island nemá (help.shopify.com „Supported countries for Shopify Payments“) → obchod
+  na Islandu platí přes cizí bránu a Shopify k jejímu poplatku přidá vlastní „third-party transaction fee“: Basic 2 %, Grow 1 %,
+  Advanced 0,6 %, Plus 0,2 % (shopify.com/pricing, US stránka; nápověda: „in addition to processing fees charged by your third-party
+  payment provider“); výjimka pro digitální zboží neexistuje. Přímo přes Rapyd (Hosted Checkout / Payment Links) jen poplatek Rapydu
+  podle smlouvy Agndofy — veřejný ceník Rapydu pro Island není. `RUNAR_PRICING.md` „Variable“ počítá se Shopify ~2,9 % + $0,30 =
+  odhad; skutečnost dá smlouva s Rapydem (+ příplatek Shopify, půjde-li prodej přes Shopify).
 - [ ] **Obchody před spuštěním** (rešerše CODE-web 2026-10-13; poplatky a provize v `RUNAR_PRICING.md` „PWA vs Native App“; owner
   rozhodl 2026-10-19 (4): Android v Google Play bez nákupu v appce, iPhone zatím PWA). Android: táž PWA zabalená přes Trusted Web Activity (Bubblewrap) + ověřovací soubor Digital Asset Links (assetlinks)
   na doméně appky. Startovní adresa balíčku pro Play musí nést `?src=play` — podle ní appka skryje ceny a nákup (CODE-tune
