@@ -1046,7 +1046,8 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
 - ✖ *(owner 2026-11-01: „5. žádnou. necháváme jak je. návrhy si ulož do budoucna“ — ikona appky zůstává; náhledy A–L, verdikty
   a příkazy generátoru v `docs/archive/2026-11-01-ikona-navrhy/`, DECISIONS 2026-11-01 (10).)* **Nové logo appky — zlaté Rúnarovo R
   (e98e5e68):** *„mame ho například v rune reading card“* → návrhy ikony generátorem `scripts/ikona_appky.py` (CODE-web).
-- [ ] *(CODE-tune 2026-11-02 hotovo, DECISIONS 2026-11-02 (1): kresba `znackaSvg()` ve `v2/runar-znacka.js` — ne v runar-utils.js;
+- [x] ✅ *(CODE-web 2026-11-02: generátor ikony čte `znackaSvg` z appky, `R_ZNACKA` pryč, d9123ba — ikony pixel po pixelu stejné.)*
+  *(CODE-tune 2026-11-02 hotovo, DECISIONS 2026-11-02 (1): kresba `znackaSvg()` ve `v2/runar-znacka.js` — ne v runar-utils.js;
   zbývá jen krok CODE-web níž, generátor čte z `runar-znacka.js`.)* **Značka ᚱ v appce kresbou místo písma (owner 2026-11-01: „3. předělat na kresbu“, „6. ano“ — předáno CODE-tune):** dnes písmo
   systému (`runar-help.html`, `runar-privacy.html`, `runar-reader.html` 3×, `runar-reading.js`; výjimka v `setRuneText`, `runar-utils.js`)
   — na Windows Segoe UI Historic (R ze snímku ownera), jinde jiný tvar nebo prázdný čtvereček (proto runy 2026-07-13 přešly na SVG).
