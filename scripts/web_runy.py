@@ -57,8 +57,10 @@ def data():
     return d
 
 def webjs_verze():
-    # stejně jako scripts/web_nasad.py (verze()): prvních 10 znaků SHA-256 obsahu — stránka pak po nasazení vypadá stejně jako tady
-    return hashlib.sha256(open(os.path.join(SITE, 'web.js'), 'rb').read()).hexdigest()[:10]
+    # stejně jako scripts/web_nasad.py (h()): prvních 10 znaků SHA-256 obsahu — stránka pak po nasazení vypadá stejně jako tady.
+    # Konce řádků sjednocené na LF (2026-11-02): čistá kopie repa (pre-push, protipříklady) má soubory s CRLF, pracovní strom LF —
+    # verze vyšla jinak, otisk zdroje taky, všech 52 stránek se tvářilo zastarale a útok „ruční úprava“ tím prošel jako ⚠.
+    return hashlib.sha256(open(os.path.join(SITE, 'web.js'), 'rb').read().replace(b'\r\n', b'\n')).hexdigest()[:10]
 
 def otisk(d):
     # otisk všeho, z čeho stránky vznikají (data appky, nové věty webu, verze web.js) — ne šablony; změnu šablony bez přegenerování

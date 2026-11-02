@@ -21,7 +21,8 @@ SDILENE = ['web.js']   # soubory, které načítá víc stránek; runakort.* se 
 NECHAT = {'CNAME', '.git', '.nojekyll', 'README.md'}   # v repu webu, ale ne ve web/site — nemazat
 
 def h(p):
-    return hashlib.sha256(open(os.path.join(SITE, p), 'rb').read()).hexdigest()[:10]
+    # konce řádků sjednocené na LF (2026-11-02): v čisté kopii repa má soubor CRLF a verze by vyšla jinak než ve web_runy.py
+    return hashlib.sha256(open(os.path.join(SITE, p), 'rb').read().replace(b'\r\n', b'\n')).hexdigest()[:10]
 
 def verze():
     hashe = {f: h(f) for f in SDILENE}

@@ -870,7 +870,7 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
      @runartherunekeeper, propojit s Instagramem (ten musí být profesionální účet — ověřit v jeho nastavení). Zakládá owner. Pak adresu
      do configu vedle `RUNAR_INSTAGRAM_URL` (CODE-tune), do patičky webu (CODE-web, `webInstagram()` ve web.js zobecnit na víc sítí)
      a do menu appky; v režimu Play skrytý jako Instagram.
-  2. ✅ *(owner 2026-11-02, screenshoty)* TikTok @runartherunekeeper a YouTube @RunartheRuneKeeper, obojí „Rúnar the Rune Keeper“ —
+  2. ✅ *(owner 2026-11-02, screenshoty)* TikTok @runartherunekeeper a YouTube @RunartheRuneKeeper, obojí se jménem z bodu 10 —
      krátké video na výšku (9:16) jde na Reels, TikTok i Shorts.
   3. Odkaz v biu všude jen therunekeeper.com, žádný Linktree (teď registrace, po spuštění domovská stránka — nemusí se měnit).
   4. Měření: analytiku do webu zatím ne (cookie lišta, zásady); stačí statistiky Instagramu (kliky na odkaz v biu) a upozornění na

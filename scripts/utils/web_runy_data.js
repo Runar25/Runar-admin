@@ -9,7 +9,8 @@ const V2 = path.join(__dirname, '..', '..', 'v2');
 const ctx = vm.createContext({ console, window: {}, navigator: {}, document: { addEventListener() {} } });
 for (const f of ['runar-config.js', 'runar-runes.js', 'runar-translations.js', 'runar-svgs.js', 'runar-utils.js']) {
   // chyby za běhu (chybějící DOM) se ignorují — deklarace vzniknou před během; co generátor potřebuje, se ověří níž
-  try { vm.runInContext(fs.readFileSync(path.join(V2, f), 'utf8'), ctx, { filename: f }); } catch (e) { /* viz výš */ }
+  // konce řádků na LF (2026-11-02): čistá kopie repa má CRLF — víceřádkové řetězce by jinak nesly \r a otisk zdroje by se lišil
+  try { vm.runInContext(fs.readFileSync(path.join(V2, f), 'utf8').replace(/\r\n/g, '\n'), ctx, { filename: f }); } catch (e) { /* viz výš */ }
 }
 const g = (s) => vm.runInContext(s, ctx);
 for (const fn of ['calcLifeRune', 'lifeRuneSpan', 'runeSvg', 'rnSplit']) {
