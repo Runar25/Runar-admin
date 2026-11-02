@@ -22,7 +22,9 @@ const VEN = ['buildSysPrompt', 'buildReadingPrompt', 'buildNornsPrompt', 'buildK
   '_skladba',   // 2026-10-22: rozbor kusů promptu (runar-character.js, _kus) — anatomie, recept čtení, skladač
   // 2026-11-02 F3a: server skládá prompt sám (_shared/prompt_server.mjs) — konec promptu, tarif myšlenky, cena a strop odpovědi z configu,
   // jméno runy do deníku
-  '_promptKonec', '_myslenkaPro', 'TIERS', 'SPREAD_COSTS', 'RUNAR_MODES', 'rn', 'CORRECTIONS_IN_PROMPT'];
+  '_promptKonec', '_myslenkaPro', 'TIERS', 'SPREAD_COSTS', 'RUNAR_MODES', 'rn', 'CORRECTIONS_IN_PROMPT',
+  // 2026-11-02 F3b: server losuje sám — zápis losu do deníku (prompt_draws) a poslední obraz z deníku normalizuje jako appka
+  '_promptDraws', '_imgNorm'];
 
 // cti(f) = obsah v2/<f>; výchozí z pracovního stromu, pre-commit předá čtení z indexu (git show :v2/<f>).
 function vyrob(cti) {
@@ -51,7 +53,9 @@ function vyrob(cti) {
     + '  return { ' + VEN.map((n) => n + ': ' + n).join(', ') + ',\n'
     + '    nastav: function (k, v) { if (k === \'lang\') lang = v; else if (k === \'userGender\') userGender = v; else if (k === \'engine\') READ_ENGINE = v;\n'
     + '      else if (k === \'userName\') userName = v; else if (k === \'currentUser\') currentUser = v; else if (k === \'corrections\') corrections = v;\n'
-    + '      else if (k === \'pin\') IMG_PIN = v || null; else if (k === \'posledni\') _imgServerLast = v || {}; } };\n'
+    + '      else if (k === \'pin\') IMG_PIN = v || null; else if (k === \'posledni\') _imgServerLast = v || {}; },\n'
+    // živé hodnoty, které builder nastaví během skládání (export výš je jen otisk při vytvoření): zvolil admin obraz? (deník 📌)
+    + '    cti: function (k) { if (k === \'pinPouzit\') return _imgPinPouzit; } };\n'
     + '}\n';
 }
 

@@ -1822,6 +1822,8 @@ async function callProxy(sys, prompt, maxTokens, use_credit = false, credit_cost
              voice: data.voice || null,
              model: (data.usage && data.usage.model) || null,   // 2026-09-25: skutečný model (fallback) — složení čtení v reportu
              name_lore_for: data.name_lore_for, name_lore_count: data.name_lore_count, name_lore_saved: data.name_lore_saved,
+             // 2026-11-02 F3b: los serveru (co si prompt vylosoval) a adminovi serverový prompt — od F3b losuje server, text v appce je jiný los
+             draws: data.draws || null, prompt_admin: data.prompt_admin || null,
              reset: data.reset };
   } catch (e) { console.error('callProxy:', e && e.message); return { error: 'network_error' }; }
 }

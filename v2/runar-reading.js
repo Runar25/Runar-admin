@@ -136,7 +136,7 @@ function _drawsSPinem(prompt, lang, kusy) {
 // Štítky anglicky: čtou ho oba admini (owner i Sigrún); je to meta, ne text pro uživatele.
 function _slozeniCteni() {
   if (!_lastGen || !(currentUser && isAdmin(currentUser.email))) return '';
-  var L = _lastGen.lang, isIs = L === 'is', d = _promptDraws(_lastGen.prompt, L) || {};
+  var L = _lastGen.lang, isIs = L === 'is', d = _lastGen.draws || _promptDraws(_lastGen.prompt, L) || {};   // F3b: los serveru
   var out = ['[READING COMPOSITION — admin]',
     'model: ' + (_lastGen.model || '?') + ' · prompt ' + RUNAR_PROMPT_VERSION + ' · ' + _lastGen.kind + ' · ' + L];
   if (_lastGen.usage && costLabel(_lastGen.usage)) out.push('cost: ' + costLabel(_lastGen.usage));   // 2026-09-29
@@ -347,6 +347,9 @@ async function _generateReading() {
   _lastReadingId = null; _voiceTicket = null;
   const res = await callProxy(sys, prompt, RUNAR_MODES.quick_reading.max_tokens, shouldUseCredit(), SPREAD_COSTS.single.credits, _journal);
   if (_lastGen && res && res.model) _lastGen.model = res.model;
+  // F3b (2026-11-02): model dostal prompt, který složil a vylosoval SERVER — los (Ask: význam runy) a u admina i text bere appka od něj
+  if (_lastGen && res && res.draws) _lastGen.draws = res.draws;
+  if (_lastGen && res && res.prompt_admin) _lastGen.prompt = res.prompt_admin;
   if (_lastGen && res && res.usage) _lastGen.usage = res.usage;   // 2026-09-29: cena čtení do reportu (costLabel)   // skutečný model (sol může spadnout na Opus) — složení v reportu
   _lastReadingId = (res && res.reading_id) || (_journal ? _journal.id : null);
   _voiceTicket = (res && res.voice) || null;   // jen neuložené čtení; uložené hlas najde podle reading_id
@@ -907,7 +910,7 @@ function _askAspect() {
   if (!_lastGen || _lastGen.kind !== 'single' || _lastGen.lang !== lang) return '';
   var d = (_lastDrawn || []).filter(Boolean);
   if (d.length !== 1 || _lastGen.prompt.indexOf(': ' + rnPrompt(d[0]) + ' — ') === -1) return '';
-  return (_promptDraws(_lastGen.prompt, _lastGen.lang) || {}).kws || '';
+  return (_lastGen.draws || _promptDraws(_lastGen.prompt, _lastGen.lang) || {}).kws || '';   // F3b: význam z losu serveru
 }
 function _askSpread() {
   return { mode: _spreadMode,
@@ -1451,6 +1454,9 @@ async function _generateSpreadReading(o) {
                             _isFounding ? 0 : o.credits,
                             _journalS, _isFounding ? 'founding' : '');
   if (_lastGen && res && res.model) _lastGen.model = res.model;
+  // F3b (2026-11-02): model dostal prompt, který složil a vylosoval SERVER — los (Ask: význam runy) a u admina i text bere appka od něj
+  if (_lastGen && res && res.draws) _lastGen.draws = res.draws;
+  if (_lastGen && res && res.prompt_admin) _lastGen.prompt = res.prompt_admin;
   if (_lastGen && res && res.usage) _lastGen.usage = res.usage;   // 2026-09-29: cena čtení do reportu (costLabel)
   _lastReadingId = (res && res.reading_id) || (_journalS ? _journalS.id : null);
   _voiceTicket = (res && res.voice) || null;   // jen neuložené čtení; uložené hlas najde podle reading_id

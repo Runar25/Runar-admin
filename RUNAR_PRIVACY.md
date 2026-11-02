@@ -111,6 +111,10 @@ a souhlasí na pravdivém textu. Detail → `RUNAR_DECISIONS.md` 2026-09-11 (8).
   „zaznělo“ (`voice_tickets`: id čtení nebo podpisu, `user_id`, čas, cesta k souboru) — žádný text. Retence: po dobu účtu (i u čtení,
   která Rune Seeker v deníku už nevidí); `delete-account` maže soubory, `voice_tickets` padají kaskádou. Zásady (EN/IS) to uvádějí
   v tabulce dat. Migrace: `sql/2026-10-11_hlas_ke_cteni.sql`.
+- **Stav skládání promptu (`prompt_state`, od 2026-11-02, DECISIONS 2026-11-02 (9))** — sáček obrazů run, poslední motiv a obraz na
+  uživatele: identifikátory obrazů (začátek islandského textu obrazu), **žádný text čtení ani otázky**. Účel: obraz runy se neopakuje,
+  dokud nepřijdou na řadu ostatní (plnění smlouvy — čtení). Dosud localStorage prohlížeče. Jen service_role (RLS bez pravidel), maže se
+  s účtem kaskádou. Zásady (EN/IS) ho zatím samostatně neuvádějí — bod v BACKLOGu „Právní/DPO review“. Migrace: `sql/2026-11-02_prompt_state.sql`.
 - **Hlášení testerů (`bug_reports`, zapsáno 2026-10-09 kontrolou architektury — do té doby tu nestálo nic):** typ, zpráva, označený
   výřez textu (u čtení začátek čtení, může nést jméno), kontext obrazovky, jazyk, verze appky, `user_agent` a pole `tester` =
   jméno, které si tester sám napsal (2026-10-09: 0 e-mailů z 241). **Žádná vazba na účet** (`user_id` tabulka nemá) → smazání účtu

@@ -9,6 +9,9 @@
 // + připomínka délky, _promptKonec), musí být bajt po bajtu = slozPromptServer ze zápisu, i s cenou a stropem odpovědi z configu.
 // A útoky na hranici: korekce a postava od prohlížeče se nesmí dostat do promptu, cizí builder pro mode neprojde, Opus a myšlenka ✦
 // ne-adminovi / bez tarifu ne. Každý útok má i kontrolu naopak (bez ochrany by se projevil), jinak by „neprojde“ nic nedokazovalo.
+// 2026-11-02 (F3b, server losuje sám — režim `vlastni`): se stavem sáčku, jaký appka měla v localStorage, a s její náhodou musí server dát
+// tentýž prompt, tentýž stav sáčku po čtení (ten uloží do prompt_state) a tentýž zápis losu do deníku (prompt_draws i s kusy promptu).
+// A sáček ze zápisu appky se v tom režimu nesmí použít.
 //   node scripts/verify_prompt_stin.js
 'use strict';
 const fs = require('fs'), path = require('path'), http = require('http'), os = require('os'), cp = require('child_process');
@@ -34,8 +37,12 @@ const VZORKY = `(async () => {
               d: 15, m: 6, y: 1990, intention: INTENTIONS.en[0], lifeRune: R('Isa') };
   const pool = ['Fehu', 'Uruz', 'Thurisaz', 'Ansuz', 'Raidho', 'Kenaz', 'Gebo', 'Wunjo', 'Hagalaz'].map(R);
   // meta = jak to pošle appka proxy: mode, tarif (myšlenka ✦), admin (Opus), cenový klíč. Prompt = celý text pro model.
-  const vzorek = (jm, fn, meta) => { _stinVezmi(); let sys = '', prompt = ''; try { sys = buildSysPrompt(null, lang); prompt = fn(); }
-    catch (e) { out.push({ jm, chyba: e.message }); return; } out.push(Object.assign({ jm, sys, prompt, stin: _stinVezmi(), mode: '', tier: '', admin: false }, meta || {})); };
+  // skládá se v _skladba jako v appce (runar-reading.js) → draws = zápis losu do deníku (_drawsSPinem); po = sáček v localStorage po skládání
+  const vzorek = (jm, fn, meta) => { _stinVezmi(); let sys = '', prompt = '', draws = null, po = null;
+    try { sys = buildSysPrompt(null, lang); const sk = _skladba(fn); prompt = sk.text;
+          draws = _drawsSPinem(prompt, lang, sk.kusy.map((k) => k.kus)); po = _stinUloziste(); }
+    catch (e) { out.push({ jm, chyba: e.message }); return; }
+    out.push(Object.assign({ jm, sys, prompt, draws, po, stin: _stinVezmi(), mode: '', tier: '', admin: false }, meta || {})); };
   const K = (kind, runes, L) => _promptKonec(kind, runes, L, _thoughtAllowed());   // tentýž konec promptu jako runar-reading.js
   for (const L of ['en', 'is']) {
     lang = L;
@@ -124,6 +131,19 @@ const VZORKY = `(async () => {
       else if (x.los_zbyl !== 0 || x.los_dosel) vady.push(v.jm + ' ' + druh + ': náhoda nesedí (zbylo ' + x.los_zbyl + ', došla ' + x.los_dosel + ')');
     }
     // F3a: server ze zápisu = celý prompt appky (systém, prompt i s konci), cena z configu
+    // F3b: server s vlastním stavem (sáček z DB = co appka měla v localStorage) a náhodou (= tatáž čísla) → totéž co appka
+    const fronta = [...(v.stin.sys.los || []), ...(v.stin.prompt.los || [])];
+    const sw = slozPromptServer(v.stin, { mode: v.mode, tier: v.tier, admin: v.admin,
+      vlastni: { random: () => (fronta.length ? fronta.shift() : 0.5), uloz: v.stin.prompt.uloziste || {} } });
+    if (sw.chyba) vady.push(v.jm + ': server (vlastní stav) odmítl — ' + sw.chyba);
+    else {
+      if (sw.prompt !== v.prompt) vady.push(v.jm + ': server (vlastní stav) — prompt ≠ appka');
+      // pořadí klíčů nehraje roli (localStorage je vypisuje v pořadí prohlížeče) — porovnává se obsah
+      const serad = (o) => JSON.stringify(Object.keys(o || {}).sort().map((k) => [k, o[k]]));
+      if (serad(sw.stav) !== serad(v.po)) vady.push(v.jm + ': server (vlastní stav) — sáček po čtení ≠ localStorage appky');
+      if (v.cena && JSON.stringify(sw.draws) !== JSON.stringify(v.draws)) vady.push(v.jm + ': server (vlastní stav) — zápis losu do deníku ≠ appka');
+      if (fronta.length) vady.push(v.jm + ': server (vlastní stav) spotřeboval méně náhody než appka (' + fronta.length + ' zbylo)');
+    }
     const sv = slozPromptServer(v.stin, { mode: v.mode, tier: v.tier, admin: v.admin });
     if (sv.chyba) { vady.push(v.jm + ': server odmítl — ' + sv.chyba); continue; }
     if (sv.system !== v.sys) vady.push(v.jm + ': server — systém ≠ appka');
@@ -137,6 +157,18 @@ const VZORKY = `(async () => {
   }
   // F3a útoky na hranici — každý s kontrolou naopak (bez ochrany se projeví), jinak by „neprojde“ nic nedokazovalo
   const najdi = (jm) => vz.find((v) => v.jm === jm && !v.chyba);
+  // F3b: v režimu `vlastni` server sáček ze zápisu appky NEPOUŽIJE — vzorek sáčku (v sáčku jen poslední obraz, náhoda 0) s prázdným
+  // stavem z DB musí vybrat jiný obraz; s tímtéž stavem jako appka týž (kontrola naopak). A se skutečnou náhodou serveru se složí.
+  const sa = najdi('sacek_en');
+  if (!sa) vady.push('F3b: chybí vzorek sacek_en');
+  else {
+    const prazdny = slozPromptServer(sa.stin, { vlastni: { random: () => 0, uloz: {} } });
+    const stejny = slozPromptServer(sa.stin, { vlastni: { random: () => 0, uloz: sa.stin.prompt.uloziste } });
+    if (stejny.chyba || stejny.prompt !== sa.prompt) vady.push('F3b: se stavem appky server nevybral týž obraz — test sáčku nic nedokazuje');
+    if (prazdny.chyba || prazdny.prompt === sa.prompt) vady.push('F3b: server v režimu vlastni použil sáček ze zápisu appky');
+    const ziva = slozPromptServer(sa.stin, { vlastni: { uloz: {} } });
+    if (ziva.chyba || !ziva.prompt || !Object.keys(ziva.stav || {}).some((k) => /^seasonbag_/.test(k))) vady.push('F3b: se skutečnou náhodou server nesložil prompt nebo nevrátil sáček (' + (ziva.chyba || '') + ')');
+  }
   const kopie = (x) => JSON.parse(JSON.stringify(x));
   const s1 = najdi('single_en0'), op = najdi('single_opus_en'), th = najdi('single_myslenka_en'), avs = najdi('ask_en');
   if (!s1 || !op || !th || !avs) vady.push('útoky: chybí vzorek single_en0 / single_opus_en / single_myslenka_en / ask_en');
@@ -160,6 +192,7 @@ const VZORKY = `(async () => {
   }
   if (vady.length) { vady.slice(0, 12).forEach((v) => console.log('  ' + v)); console.log('FAIL  stín skládání promptu: ' + vady.length + ' vad v ' + vz.length + ' vzorcích z appky'); konec(1); return; }
   console.log('OK    stín skládání promptu: ' + vz.length + ' vzorků z appky (EN+IS, single, výklady, založení, Ask, životní runa, rozbor jména, Opus, myšlenka ✦)'
-    + ' — server složil systém i celý prompt bajt po bajtu, cena z configu; korekce a postava od prohlížeče, cizí builder, Opus a ✦ bez nároku neprojdou');
+    + ' — server složil systém i celý prompt bajt po bajtu, cena z configu; korekce a postava od prohlížeče, cizí builder, Opus a ✦ bez nároku neprojdou;'
+    + ' s vlastním stavem (F3b) týž prompt, sáček po čtení i zápis losu do deníku, sáček ze zápisu appky se nepoužije');
   konec(0);
 })().catch((e) => { console.log('FAIL  ' + e.message); process.exit(1); });

@@ -83,6 +83,29 @@ function zapisStin(detail: Record<string, unknown>) {
   if (er?.waitUntil) er.waitUntil(prace);
 }
 
+// ── Stav skládání na uživatele (F3b, 2026-11-02): sáček obrazů, poslední motiv a obraz runy — do F3b v localStorage prohlížeče ──────
+// Tabulka prompt_state (sql/2026-11-02_prompt_state.sql): jen service_role, řádek se smaže s účtem. Výpadek DB = prázdný stav (los jako
+// na novém zařízení) — čtení nezastaví. Poslední obraz téže runy z deníku dělala appka (_loadServerLastImage) jen u jedné runy; tady taky.
+async function stavZDb(userId: string): Promise<Record<string, string>> {
+  const { data, error } = await sb().from("prompt_state").select("data").eq("user_id", userId).maybeSingle();
+  if (error) { console.error("prompt_state read failed (empty state):", error.message); return {}; }
+  return (data?.data && typeof data.data === "object") ? data.data as Record<string, string> : {};
+}
+async function ulozStav(userId: string, data: Record<string, string>) {
+  const { error } = await sb().from("prompt_state").upsert({ user_id: userId, data, updated_at: new Date().toISOString() });
+  if (error) console.error("prompt_state write failed:", error.message);
+}
+async function posledniObrazZDb(userId: string, zapis: any): Promise<{ runa: string; img: string } | null> {
+  if (String(zapis?.prompt?.builder) !== "buildReadingPrompt") return null;
+  const runa = zapis?.prompt?.args?.[1]?.__runa;
+  if (typeof runa !== "string" || !runa) return null;
+  const { data, error } = await sb().from("readings").select("prompt_draws").eq("user_id", userId).eq("rune_name", runa)
+    .order("drawn_at", { ascending: false }).limit(1);
+  if (error) { console.error("last image read failed:", error.message); return null; }
+  const img = data?.[0]?.prompt_draws?.image;
+  return typeof img === "string" && img ? { runa, img } : null;
+}
+
 // Korekce slov pro prompt (runar_corrections) — server je čte sám, od prohlížeče je nebere (F3a). Tabulku čte appka taky celou
 // (pravidlo runar_corrections_public_read: true), takže prompt vyjde stejně. 5 min v paměti instance; výpadek DB = poslední známé.
 let _korekce: { kdy: number; data: unknown[] } | null = null;
@@ -491,6 +514,8 @@ serve(async (req: Request) => {
     // i jemu: jinak by stačilo poslat rozbitý zápis a model by dostal vlastní text. Jen selhání načtení balíčku (útočník ho nevyvolá)
     // pustí čtení po staru — výpadek kódu nesmí zastavit všechna čtení; jde do ops_events jako chyba.
     let zivotniServer: { cislo: number; lang: string } | null = null;   // životní runa ze skládání — zapíše se po úspěchu (níž)
+    // F3b: stav sáčku po skládání (uloží se po úspěchu, jen když se změnil) · los do deníku a appce · prompt pro admina (rozbor čtení)
+    let stavServer: Record<string, string> | null = null, stavPuvodni = "", drawsServer: unknown = null, promptAdmin = "";
     if (prompt && mode !== "resave" && mode !== "life_rune_reset") {
       const zapis = body.stin && typeof body.stin === "object" ? body.stin : null;
       if (!zapis && !isAdmin) {
@@ -499,9 +524,14 @@ serve(async (req: Request) => {
       if (zapis) {
         let sv: any = null, detail: Record<string, unknown>;
         try {
-          const { slozPromptServer, porovnej } = await import("../_shared/prompt_server.mjs");
-          sv = slozPromptServer(zapis, { mode, tier: userTier, admin: isAdmin, korekce: await korekceZDb() });
-          detail = { server: true, ...porovnej(sv, system, prompt) };
+          const { slozPromptServer } = await import("../_shared/prompt_server.mjs");
+          // F3b (2026-11-02, owner „1. ano“): losuje server — náhoda serveru, sáček z prompt_state, poslední obraz z deníku.
+          // Text appky se tím od serverového liší (jiný los), proto se už neporovnává; shodu se stejným losem hlídá smoke ㊍.
+          const [uloz, posledniObraz] = await Promise.all([stavZDb(userId as string), posledniObrazZDb(userId as string, zapis)]);
+          stavPuvodni = JSON.stringify(uloz);
+          sv = slozPromptServer(zapis, { mode, tier: userTier, admin: isAdmin, korekce: await korekceZDb(), vlastni: { uloz, posledniObraz } });
+          detail = sv.chyba ? { server: true, vlastni: true, chyba: sv.chyba }
+            : { server: true, vlastni: true, builder: sv.builder, delka_server: String(sv.prompt).length, nahod: sv.los?.nahod ?? null };
         } catch (e) { detail = { server: true, chyba: "import: " + String((e as Error)?.message || e).slice(0, 180) }; }
         zapisStin(detail);
         if (sv && sv.chyba) {
@@ -511,6 +541,9 @@ serve(async (req: Request) => {
           if (sv.maxTokens) cappedMaxTokens = sv.maxTokens;
           if (journal && sv.denik) Object.assign(journal, sv.denik);   // druh a runy do deníku z vlastního skládání, ne od prohlížeče
           zivotniServer = sv.zivotni || null;
+          stavServer = sv.stav || null; drawsServer = sv.draws || null;
+          if (journal && sv.draws) journal.draws = sv.draws;   // co si prompt vylosoval — ze serverového losu, ne z textu prohlížeče
+          if (isAdmin) promptAdmin = sv.prompt;
           // strop délky znovu na serverovém textu — otázka v zápisu může být delší než text, který prohlížeč poslal
           if (prompt.length > MAX_PROMPT_CHARS || system.length > MAX_SYSTEM_CHARS) {
             return json({ error: "too_long", message: "That is more than the runes can hold at once. Try a shorter question." }, 400);
@@ -916,6 +949,9 @@ serve(async (req: Request) => {
     // čtení zapíše server: CAS `is null` (dva souběžné požadavky zapíšou jednou), service_role (trigger trg_life_rune_immutable první
     // zápis pouští). Runa a jazyk ze serverového skládání, text = `text`, který dostane prohlížeč — appka pak zapíše tytéž hodnoty
     // (runar-tree.js) a trigger je propustí, protože se nic nemění. Bez skládání (admin bez zápisu) se nezapisuje nic, jako dřív.
+    // F3b: stav sáčku po úspěšném čtení (selhaný model sáček nečerpá); jen když se změnil
+    if (userId && stavServer && JSON.stringify(stavServer) !== stavPuvodni) await ulozStav(userId, stavServer);
+
     if (isLifeRune && userId && zivotniServer) {
       const { error: lErr } = await sb().from("user_profiles")
         .update({ life_rune_number: zivotniServer.cislo, life_rune_text: text, life_rune_lang: zivotniServer.lang })
@@ -943,6 +979,9 @@ serve(async (req: Request) => {
       ...(readingId ? { reading_id: readingId } : {}),
       ...(voice ? { voice } : {}),
       ...(mode === "ask" ? { ask_saved: askSaved } : {}),
+      // F3b: los serveru (deník, Ask — význam runy) a adminovi i prompt (složení čtení v reportu); appka bez nich jede na svém
+      ...(drawsServer ? { draws: drawsServer } : {}),
+      ...(promptAdmin ? { prompt_admin: promptAdmin } : {}),
       ...(isNameLore && nameLorePrev
         ? { name_lore_for: nameLorePrev.name, name_lore_count: nameLorePrev.count + 1, name_lore_saved: nameLoreSaved }
         : {}),

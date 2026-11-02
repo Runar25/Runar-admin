@@ -13018,3 +13018,23 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Oprava k 2026-11-02 (5):** „doména ověřená TXT záznamem“ pro Search Console ownera neplatí — jeho účet vlastnost therunekeeper.com
   nemá (screenshot ownera 2026-11-02); záznam `google-site-verification` v DNS je nejspíš z ověření pošty u Googlu, neověřeno.
 - Affected doc(s): RUNAR_BACKLOG.md (Sociální sítě Rúnara), docs/monitor/site-a-web.md.
+
+## 2026-11-02 (9) — F3b: prompt losuje server — sáček obrazů v DB (`prompt_state`), poslední obraz z deníku
+
+- **Rozhodl:** owner 2026-11-02 *„1. ano“* (F3b), navazuje na 2026-11-02 (4) (F3a).
+- **Co:** `claude-proxy` skládá s vlastní náhodou; sáček obrazů, poslední motiv a obraz runy (dosud localStorage prohlížeče, každé zařízení
+  zvlášť) drží tabulka `prompt_state` (jeden řádek na uživatele, jen service_role, maže se s účtem) — uloží se po úspěšném čtení, selhaný
+  model sáček nečerpá. Poslední obraz téže runy čte server z deníku sám. Co si prompt vylosoval (`prompt_draws` i s kusy promptu) zapíše do
+  deníku ze svého losu a vrátí appce (`draws`) — Ask bere význam runy z něj; admin dostane i serverový prompt (složení čtení v reportu).
+  Od prohlížeče zůstává jen místní čas (sezóna obrazů; mimo ±36 h od serveru se nepoužije). Appka bez `draws` (stará proxy) jede na svém.
+- **Mění chování (vědomě):** sáček je jeden pro všechna zařízení účtu, ne pro každé zvlášť — obraz runy se tak neopakuje ani mezi
+  telefonem a počítačem. Text appky se od serverového liší losem, proto se `prompt_stin` už neporovnává (zapisuje se jen, co server složil).
+- **Ověřeno:** smoke ㊍ — se stavem sáčku, jaký měla appka v localStorage, a s její náhodou dá server tentýž prompt, tentýž sáček po čtení
+  a tentýž zápis do deníku (32 vzorků); sáček ze zápisu appky se v tomto režimu nepoužije; se skutečnou náhodou se složí. Útoky v kopii:
+  server nezapíše sáček · vezme sáček od prohlížeče · vynechá kusy promptu v deníku — všechny chyceny.
+- **Pořadí:** SQL `sql/2026-11-02_prompt_state.sql` (owner) → nasadit `claude-proxy`. Bez tabulky proxy čte prázdný stav (los jako na novém
+  zařízení) a čtení nezastaví.
+- **Zbývá (F4):** appka dál skládá prompt i se svým sáčkem (jen kvůli zápisu vstupů) — buildery, RUNE_IMAGES a localStorage sáček z appky
+  pryč v F4. Ask: text čtení a předchozí výměna od prohlížeče; pole čtení bez serverového stropu délky.
+- **Návrat:** revert commitu a nasadit předchozí `claude-proxy`; tabulka může zůstat.
+- Affected doc(s): RUNAR_BACKLOG.md (Plán infrastruktury krok 1 — F3b), RUNAR_PRIVACY.md (prompt_state).

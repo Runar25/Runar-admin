@@ -274,6 +274,8 @@ atomický upsert, úklid starších než hodina; stejně tak `use_credit` (atomi
 
 ### 🔴 Blockery prodeje — OWNER (odloženo, trigger = **6. 9. 2026**, scheduled task `runar-launch-blockers-reminder`)
 - [ ] **Právní/DPO review** (Island/EEA) IS textů + legal-basis modelu. `RUNAR_PRIVACY.md` je pracovní podklad, ne posudek.
+  + *(CODE-tune 2026-11-02)* `prompt_state` (sáček obrazů na uživatele, F3b): v zásadách (EN/IS) zatím bez vlastního řádku — odvozené
+  z čtení, jen identifikátory obrazů; posoudit, jestli ho kryje řádek čtení (RUNAR_PRIVACY.md). Export účtu: přidat po spuštění SQL.
       ➕ **2026-10-12:** owner „udělej ten posudek“ → technická kontrola GDPR hotová (`docs/archive/2026-10-12-gdpr-kontrola.md`, není to právní posudek);
       úkoly z ní v sekci „Soukromí — kontrola GDPR 2026-10-12“. Právník zůstává volitelný — podklad pro něj je ta kontrola.
       ⚠️ **Na seznam k posouzeni patri i `credit_ledger`:** radky prezivaji smazani uctu. Muj zaver „je to v poradku, protoze klic je znicen" je TECHNICKY ROZBOR (delete-account nuluje `gift_codes.used_by` a kaskadou maze `user_profiles` i `readings`, takze UUID uz nejde spojit s osobou), NE pravni posudek.
@@ -422,7 +424,10 @@ promptu v `claude-proxy` (už ověřuje přihlášení a odečítá kredity; pro
      19:51: `prompt_stin` server — systém i prompt bajt po bajtu (3075 a 2888 zn.), náhoda 9/9, deník Uruz ᚢ, Ask uložen)* **F3a:** server skládá prompt ze
      zápisu appky — postava, korekce, engine, ✦, cena (a), strop odpovědi a runy do deníku (b) od serveru; konec promptu `_promptKonec`
      jedna funkce. Smoke ㊍ appka × server 32 vzorků + útoky.
-   - [ ] **F3b:** náhoda, sáček obrazů a poslední obraz na server (tabulka na uživatele — SQL ownera), místní čas → časové pásmo; pak
+   - [x] ✅ *(CODE-tune 2026-11-02, DECISIONS 2026-11-02 (9); čeká na SQL `sql/2026-11-02_prompt_state.sql` a nasazení `claude-proxy`)*
+     **F3b losování:** náhoda, sáček obrazů (`prompt_state`) a poslední obraz na serveru; los do deníku a appce ze serveru. Místní čas zůstává
+     od prohlížeče (±36 h). Zbývá z F3b:
+   - [ ] **F3b zbytek:** appka posílá jen vstupy (bez vlastního skládání a sáčku — spolu s F4);
      appka posílá jen vstupy. **Ask:** text čtení a předchozí výměnu brát z uloženého čtení / podpisu, ne od prohlížeče. **Pole čtení:**
      serverový strop délky (otázka, oblast, hledání, záměr, jméno) podle UI. ~~(d) brána životní runy~~ ✅ *(CODE-tune 2026-11-02,
      DECISIONS 2026-11-02 (6): server zapíše runu sám; SQL spuštěno ownerem, proxy nasazena 2026-11-02)*
@@ -567,6 +572,7 @@ Platí pro Supabase edge funkci (zvolená cesta, owner 2026-10-15) — viz „Pl
    tarif pro myšlenku ✦ (server ho zná z JWT).
 4. ⚠️ **Stav v prohlížeči — musí do DB, jinak se změní chování:** sáček obrazů `seasonbag_<bucket>_<druh>`, poslední motiv a obraz
    `seasonmotif_` / `seasonlast_<runa>` (localStorage, na zařízení), adminův výběr obrazu `runar_img_pin`. Na serveru stav na uživatele.
+   *(✅ F3b 2026-11-02, DECISIONS (9): sáček, motiv a obraz v `prompt_state`; výběr obrazu dál jen adminův, v zápisu skládání.)*
 5. **Náhoda a čas:** `Math.random` (úhel, délka, konec, jméno, obraz ze sáčku); `new Date().getMonth()` = sezóna obrazů — server běží
    v UTC (Island = UTC; jinde se sezóna na přelomu měsíce posune o hodiny).
 6. **Engine:** `READ_ENGINE` (sol/opus) mění variantu promptu, volí ji klient — model ale server; při výpadku solu dnes dostane Claude
