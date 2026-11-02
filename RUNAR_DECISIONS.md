@@ -13034,6 +13034,10 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   server nezapíše sáček · vezme sáček od prohlížeče · vynechá kusy promptu v deníku — všechny chyceny.
 - **Pořadí:** SQL `sql/2026-11-02_prompt_state.sql` (owner) → nasadit `claude-proxy`. Bez tabulky proxy čte prázdný stav (los jako na novém
   zařízení) a čtení nezastaví.
+- **SQL PUŠTĚNO OWNEREM a NASAZENO 2026-11-02** (owner *„5. hotovo, SQL spuštěno 6. nasaď“*): `prompt_state` RLS zapnuté, 0 pravidel, appka bez
+  práv (ověřeno dotazem); `claude-proxy` z 129e0bd. Ověřeno ownerovým čtením Berkana + Ask 22:22: server losoval sám (8 losů), stav sáčku
+  uložen po čtení, `prompt_draws` ze serveru i s 13 kusy promptu, Ask složen serverem a uložen. Neověřeno: že Ask dostal význam runy ze
+  serverového losu (prompt Asku se neukládá).
 - **Zbývá (F4):** appka dál skládá prompt i se svým sáčkem (jen kvůli zápisu vstupů) — buildery, RUNE_IMAGES a localStorage sáček z appky
   pryč v F4. Ask: text čtení a předchozí výměna od prohlížeče; pole čtení bez serverového stropu délky.
 - **Návrat:** revert commitu a nasadit předchozí `claude-proxy`; tabulka může zůstat.

@@ -424,7 +424,7 @@ promptu v `claude-proxy` (už ověřuje přihlášení a odečítá kredity; pro
      19:51: `prompt_stin` server — systém i prompt bajt po bajtu (3075 a 2888 zn.), náhoda 9/9, deník Uruz ᚢ, Ask uložen)* **F3a:** server skládá prompt ze
      zápisu appky — postava, korekce, engine, ✦, cena (a), strop odpovědi a runy do deníku (b) od serveru; konec promptu `_promptKonec`
      jedna funkce. Smoke ㊍ appka × server 32 vzorků + útoky.
-   - [x] ✅ *(CODE-tune 2026-11-02, DECISIONS 2026-11-02 (9); čeká na SQL `sql/2026-11-02_prompt_state.sql` a nasazení `claude-proxy`)*
+   - [x] ✅ *(CODE-tune 2026-11-02, DECISIONS 2026-11-02 (9); SQL spuštěno, `claude-proxy` nasazena a ověřena čtením ownera)*
      **F3b losování:** náhoda, sáček obrazů (`prompt_state`) a poslední obraz na serveru; los do deníku a appce ze serveru. Místní čas zůstává
      od prohlížeče (±36 h). Zbývá z F3b:
    - [ ] **F3b zbytek:** appka posílá jen vstupy (bez vlastního skládání a sáčku — spolu s F4);
