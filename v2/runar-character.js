@@ -1700,7 +1700,7 @@ function _parseSegments(raw) {
 // 1. nebo 3. podle THOUGHT_ODSTAVEC níž), ne
 // z obrazu. SMÍ se obrátit k člověku otázkou nebo tichým pozváním — POVOLENO, neopravovat (RUNAR_DESIGN.md, Cold reading;
 // DECISIONS 2026-09-30 (8)). Zdroj v uvozovkách + „vlastními slovy“ = zdroj, ne text k opsání (memory prompt-directive-makes-model-copy).
-// Kdo a kde rozhoduje _thoughtFor (runar-reading.js): tarif TIERS.*.reading_thought, druh čtení single · Kříž · Norny.
+// Kdo a kde rozhoduje _promptKonec (níž, u _splitThought): tarif TIERS.*.reading_thought, druh čtení podle _THOUGHT_SOURCE.
 // Testy: EVAL_LOG 2026-09-30 (4) a (6). Znění EN = otestované slovo od slova; IS psáno islandsky (is-grammar-qa, korpus).
 // 2026-10-04 (KUKY „1 a 2, jeď“; audit promptu × návody výrobců, BACKLOG „Prompt × návody výrobců“ bod 1): do té doby
 // „after everything else / Þegar allt annað er komið“ — a o řádek výš stojí „return ONLY this JSON array, nothing before or
@@ -1736,6 +1736,27 @@ function _thoughtLine(lng, rune) {
   if (!zdroj) return '';
   var jm = L === 'is' ? rnPrompt(rune, L) : (rune.n === 'Blank' ? 'the Blank rune' : rune.n);
   return THOUGHT_LINE[L](jm, zdroj);
+}
+// Konec promptu čtení — myšlenka ✦ a připomínka délky (2026-11-02, F3a „prompt na server“, owner „ok, pokračuj s F3a“).
+// Do 2026-11-02 to skládala appka v runar-reading.js (single a _generateSpreadReading), takže server by musel totéž napsat podruhé.
+// Teď JEDNA funkce: appka ji volá s _thoughtAllowed(), claude-proxy (balíček _shared/prompt_skladani.mjs) s tarifem z JWT.
+// Zdrojová runa myšlenky: single = tažená, Kříž = střed (runes[0]), Norny = Skuld (runes[2] — závěr patří jí), Horseshoe = runa 7
+// Výsledek (runes[6] — týž důvod jako Skuld), Yggdrasil = runa 4 Midgard (runes[3] — svět člověka, střed kmene; jako střed u Kříže).
+// Myšlenka (2026-09-30, KUKY „nasaď to“) jen pro tarif s TIERS.*.reading_thought (admin = premium, jako Ask); otestované EVAL_LOG
+// 2026-09-30 (4)(6); 2026-10-03 (KUKY „myšlenku ✦ i pro Podkovu a Yggdrasil“) i Horseshoe a Yggdrasil. Připomínka délky jen u single
+// (2026-10-04, audit promptu bod 2: s číslem ÚPLNĚ na konci — za ✦; viz _lengthReminder).
+var _THOUGHT_SOURCE = { SINGLE: 0, KRIZ: 0, NORNS: 2, HORSESHOE: 6, YGGDRASIL: 3 };
+function _myslenkaPro(tier, admin) { return !!(TIERS[admin ? 'premium' : tier] || {}).reading_thought; }
+function _thoughtRuny(kind, runes, lng) {
+  if (!Object.prototype.hasOwnProperty.call(_THOUGHT_SOURCE, kind)) return '';
+  var r = (runes || [])[_THOUGHT_SOURCE[kind]];
+  return r ? _thoughtLine(lng, r) : '';
+}
+function _promptKonec(kind, runes, lng, sMyslenkou) {
+  var out = '';
+  var th = _kus('THOUGHT-✦', 'account (reading_thought)', '✦ line', sMyslenkou ? _thoughtRuny(kind, runes, lng) : ''); if (th) out += '\n' + th;
+  if (kind === 'SINGLE') { var dr = _kus('LENGTH-REMINDER', 'fixed', 'whole', _lengthReminder(lng)); if (dr) out += '\n' + dr; }
+  return out;
 }
 // Oddělí řádek ✦ od čtení pro ZOBRAZENÍ a HLAS. _parseSegments výš zůstává zrcadlem serverového composeReading (deník drží
 // celý text i s ✦). Model píše ✦ za JSON pole (parser ho přilepí k poslední části) i dovnitř posledního textu — obojí se chytí.

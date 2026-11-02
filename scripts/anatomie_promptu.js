@@ -8,8 +8,8 @@
 //
 // Jak: produkční soubory appky v izolovaném kontextu (jako verify_thought.js), kusy z _skladba (runar-character.js). Podmínka kusu = pustí se
 // prázdný vstup, pak každý vstup zvlášť zapnutý, pak všechny naráz. Los = 20 tahů s pevnými semínky. Appka po builderu přidá myšlenku ✦
-// a připomínku délky (runar-reading.js, single ř. ~323); obojí se tu skládá STEJNÝMI funkcemi (_thoughtFor vyříznutá z runar-reading.js,
-// _lengthReminder z runar-utils.js) a pořadím, které kontrola níž ověří proti zdroji.
+// a připomínku délky jednou funkcí _promptKonec (runar-character.js, od 2026-11-02 F3a — týž kód skládá i server); tady se volá táž,
+// s _thoughtAllowed vyříznutou z runar-reading.js, a kontrola níž ověří, že appka ji volá právě takhle.
 // Hranice: anatomie popisuje PROMPT, ne to, co z něj model udělá (to je krok 5, rozbor po větách). Ask „vstup čtení“ je zástupný text.
 // Výstup nese text promptu (žádná data uživatelů) — jde mimo repo: prompt bydlí v kódu (§20), tohle je jeho generovaný pohled.
 //
@@ -30,9 +30,8 @@ for (const f of ['runar-config.js', 'runar-runes.js', 'runar-translations.js', '
 const READ = fs.readFileSync(D + 'runar-reading.js', 'utf8');
 const vyrizni = (jm) => { const i = READ.indexOf('\nfunction ' + jm + '('); if (i === -1) throw new Error(jm + ' v runar-reading.js není');
   const j = READ.indexOf('\nfunction ', i + 1); return READ.slice(i, j === -1 ? undefined : j); };
-const zdrojVar = (READ.match(/\nvar _THOUGHT_SOURCE = [^\n]*\n/) || [''])[0];
 const ADMIN = (vm.runInContext('ADMIN_EMAILS', S) || [])[0];
-vm.runInContext('var currentUser = null, userTier = "", userGender = "hk", lang = "en";\n' + zdrojVar + vyrizni('_thoughtAllowed') + '\n' + vyrizni('_thoughtFor')
+vm.runInContext('var currentUser = null, userTier = "", userGender = "hk", lang = "en";\n' + vyrizni('_thoughtAllowed')
   + '\nvar __semeno = 1; Math.random = function () { __semeno |= 0; __semeno = (__semeno + 0x6D2B79F5) | 0; var t = Math.imul(__semeno ^ (__semeno >>> 15), 1 | __semeno);'
   + ' t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };', S);
 const G = (x) => vm.runInContext(x, S);
@@ -40,14 +39,9 @@ const RUNES = G('RUNES'), AREAS = G('AREAS'), SEEKS = G('SEEKS'), INTENTIONS = G
 const R = (n) => RUNES.find((r) => r.n === n);
 
 // Doplňky appky za builderem: runar-reading.js tyto řádky skládá přesně takhle (ověřuje --test proti zdroji).
-const DOPLNEK_SINGLE = ["var _thL = _kus('THOUGHT-✦'", "var _dR = _kus('LENGTH-REMINDER'"];
+const DOPLNEK_SINGLE = ["prompt += _promptKonec('SINGLE', [drawn], lang, _thoughtAllowed());", "prompt += _promptKonec(o.kind, o.runes, lang, _thoughtAllowed());"];
 function sAppkou(kind, fn, args, runes, L) {
-  return function () {
-    var p = fn.apply(null, args);
-    var th = G('_kus')('THOUGHT-✦', 'account (reading_thought)', '✦ line', G('_thoughtFor')(kind, runes, L)); if (th) p += '\n' + th;
-    if (kind === 'SINGLE') { var dr = G('_kus')('LENGTH-REMINDER', 'fixed', 'whole', G('_lengthReminder')(L)); if (dr) p += '\n' + dr; }
-    return p;
-  };
+  return function () { return fn.apply(null, args) + G('_promptKonec')(kind, runes, L, G('_thoughtAllowed')()); };
 }
 
 // ── druhy čtení: vstupy (prázdný / vyplněný) a jak se prompt sestaví ──

@@ -210,7 +210,7 @@ const TIERS = {
     voice_credits:    false,      // n/a pro Visitor (nemůže mít kredity)
     journal:          false,
     asks_per_reading: 0,   // Ask otázek na jedno čtení, všechny zdarma (KUKY 2026-09-24); 0 = Ask jen jako teaser; JEDINÁ pravda o Asku tieru (2026-09-26)
-    reading_thought:  false,   // myšlenka ✦ na konec čtení (KUKY 2026-09-30: „Standard a Premium“); čte _thoughtFor v runar-reading.js
+    reading_thought:  false,   // myšlenka ✦ na konec čtení (KUKY 2026-09-30: „Standard a Premium“); čte _myslenkaPro v runar-character.js (appka i server)
     languages:        ['en', 'is'],
   },
   rune_seeker: {
@@ -243,7 +243,7 @@ const TIERS = {
     voice_credits:    true,
     journal:          null,
     asks_per_reading: 1,   // Ask otázek na jedno čtení, všechny zdarma (KUKY 2026-09-24); 0 = Ask jen jako teaser; JEDINÁ pravda o Asku tieru (2026-09-26)
-    reading_thought:  true,   // myšlenka ✦ na konec čtení (KUKY 2026-09-30: „Standard a Premium“); čte _thoughtFor v runar-reading.js
+    reading_thought:  true,   // myšlenka ✦ na konec čtení (KUKY 2026-09-30: „Standard a Premium“); čte _myslenkaPro v runar-character.js (appka i server)
     languages:        ['en', 'is'],
   },
   premium: {
@@ -260,7 +260,7 @@ const TIERS = {
     voice_credits:    true,
     journal:          null,
     asks_per_reading: 2,   // Ask otázek na jedno čtení, všechny zdarma (KUKY 2026-09-24); 0 = Ask jen jako teaser; JEDINÁ pravda o Asku tieru (2026-09-26)
-    reading_thought:  true,   // myšlenka ✦ na konec čtení (KUKY 2026-09-30: „Standard a Premium“); čte _thoughtFor v runar-reading.js
+    reading_thought:  true,   // myšlenka ✦ na konec čtení (KUKY 2026-09-30: „Standard a Premium“); čte _myslenkaPro v runar-character.js (appka i server)
     languages:        ['en', 'is'],
   },
 };

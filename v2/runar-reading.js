@@ -325,9 +325,7 @@ async function _generateReading() {
   // 2026-10-23 recept čtení (krok 4, owner „10. ano 11. ano“): skládání v _skladba → kusy promptu v pořadí do prompt_draws.kusy; text beze změny.
   var _sl = _skladba(function () {
   var prompt = buildReadingPrompt(u, drawn, lang, corrections);
-  var _thL = _kus('THOUGHT-✦', 'account (reading_thought)', '✦ line', _thoughtFor('SINGLE', [drawn], lang)); if (_thL) prompt += '\n' + _thL;   // 2026-09-30: myšlenka ✦ (Standard/Premium)
-  // 2026-10-04 (audit promptu bod 2): připomínka délky s číslem ÚPLNĚ na konci — za ✦ (Anthropic k Opusu 5, viz _lengthReminder).
-  var _dR = _kus('LENGTH-REMINDER', 'fixed', 'whole', _lengthReminder(lang)); if (_dR) prompt += '\n' + _dR;
+  prompt += _promptKonec('SINGLE', [drawn], lang, _thoughtAllowed());   // myšlenka ✦ + připomínka délky (runar-character.js, týž kód jako server)
   return prompt;
   });
   var prompt = _sl.text, _receptL = _sl.kusy.map(function (k) { return k.kus; });
@@ -772,19 +770,9 @@ var _askCount = 0;   // kolik Asků už k tomuto čtení padlo (dřív boolean _
 // Kolik Asků smí tenhle člověk k jednomu čtení (2026-09-24, KUKY: premium 2, standard 1, vše zdarma). Jediný zdroj =
 // TIERS.*.asks_per_reading (2026-09-26: náhradní větev přes TIERS.*.ask a vypínač ASK_MULTI_LIVE odebrány — neběžely).
 // Admin = premium (server dělá totéž, claude-proxy isAdmin → userTier 'premium').
-// Myšlenka ✦ (2026-09-30, KUKY „nasaď to“): jen tarif s TIERS.*.reading_thought (admin = premium, jako Ask), jen single / Kříž /
-// Norny — otestované (EVAL_LOG 2026-09-30 (4)(6)). 2026-10-03 (KUKY „myšlenku ✦ i pro Podkovu a Yggdrasil“): i Horseshoe a Yggdrasil.
-// Zdrojová runa: single = tažená, Kříž = střed (runes[0]), Norny = Skuld (runes[2] — závěr patří jí), Horseshoe = runa 7 Výsledek
-// (runes[6] — týž důvod jako Skuld), Yggdrasil = runa 4 Midgard (runes[3] — svět člověka, střed kmene; jako střed u Kříže).
-var _THOUGHT_SOURCE = { SINGLE: 0, KRIZ: 0, NORNS: 2, HORSESHOE: 6, YGGDRASIL: 3 };
+// Myšlenka ✦: kdo ji dostane a z jaké runy, rozhoduje _promptKonec v runar-character.js (týž kód skládá i server, F3a 2026-11-02).
 function _thoughtAllowed() {
-  if (!currentUser) return false;
-  return !!(TIERS[isAdmin(currentUser.email) ? 'premium' : userTier] || {}).reading_thought;
-}
-function _thoughtFor(kind, runes, lng) {
-  if (!_thoughtAllowed() || !Object.prototype.hasOwnProperty.call(_THOUGHT_SOURCE, kind)) return '';
-  var r = (runes || [])[_THOUGHT_SOURCE[kind]];
-  return r ? _thoughtLine(lng, r) : '';
+  return !!currentUser && _myslenkaPro(userTier, isAdmin(currentUser.email));
 }
 // Řádek ✦ jako SOUSED výstupu čtení, ne uvnitř: generateVoice čte innerText výstupu → myšlenka zůstane bez hlasu (KUKY).
 function _paintThought(afterId, thought) {
@@ -1436,7 +1424,7 @@ async function _generateSpreadReading(o) {
   // 2026-10-23 recept čtení (krok 4): jako u jedné runy — kusy promptu do prompt_draws.kusy, text beze změny.
   var _ss = _skladba(function () {
   var prompt = o.buildPrompt(u, o.runes, lang, corrections);
-  var _thS = _kus('THOUGHT-✦', 'account (reading_thought)', '✦ line', _thoughtFor(o.kind, o.runes, lang)); if (_thS) prompt += '\n' + _thS;   // 2026-09-30: myšlenka ✦ (Kříž, Norny; od 2026-10-03 i Horseshoe a Yggdrasil)
+  prompt += _promptKonec(o.kind, o.runes, lang, _thoughtAllowed());   // myšlenka ✦ (runar-character.js, týž kód jako server)
   return prompt;
   });
   var prompt = _ss.text, _receptS = _ss.kusy.map(function (k) { return k.kus; });

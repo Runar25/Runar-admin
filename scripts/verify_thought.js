@@ -3,7 +3,9 @@
 // PROC (2026-09-30, KUKY „nasaď to“, „myšlenka je bez hlasu“): řádek ✦ je jen pro tarif s TIERS.*.reading_thought (Standard,
 // Premium, admin) a jen pro single / Kříž / Norny. Model ho píše za JSON pole i dovnitř posledního textu — parser (zrcadlo serveru)
 // ho přilepí k čtení, takže bez _splitThought by skončil v textu i v hlasu. Tady se protlačí produkční funkce (§19):
-// _thoughtAllowed / _thoughtFor vyříznuté z runar-reading.js, _parseSegments + _splitThought z runar-character.js.
+// _thoughtAllowed vyříznutá z runar-reading.js; zdroj myšlenky _thoughtRuny, _parseSegments + _splitThought z runar-character.js.
+// (2026-11-02, F3a: zdrojová mapa _THOUGHT_SOURCE a skládání konce promptu _promptKonec se přestěhovaly do runar-character.js —
+// týž kód skládá i server. TF níž = tatáž podmínka jako dřívější _thoughtFor.)
 const fs = require('fs'), vm = require('vm'), path = require('path');
 const D = path.join(__dirname, '..', 'v2') + path.sep;
 const S = { console: { log() {}, warn() {}, error() {} } }; S.window = S; S.globalThis = S;
@@ -15,9 +17,8 @@ for (const f of ['runar-config.js', 'runar-runes.js', 'runar-translations.js', '
 const src = fs.readFileSync(D + 'runar-reading.js', 'utf8');
 const vyrizni = (jm) => { const i = src.indexOf('\nfunction ' + jm + '('); if (i === -1) throw new Error(jm + ' v runar-reading.js není');
   const j = src.indexOf('\nfunction ', i + 1); return src.slice(i, j === -1 ? undefined : j); };
-const zdrojVar = (src.match(/\nvar _THOUGHT_SOURCE = [^\n]*\n/) || [''])[0];
-if (!zdrojVar) { console.log('FAIL  _THOUGHT_SOURCE v runar-reading.js chybí'); process.exit(1); }
-vm.runInContext('var currentUser = null, userTier = "", lang = "en";\n' + zdrojVar + vyrizni('_thoughtAllowed') + '\n' + vyrizni('_thoughtFor'), S);
+vm.runInContext('var currentUser = null, userTier = "", lang = "en";\n' + vyrizni('_thoughtAllowed'), S);
+const TF = (kind, runes, L) => (S._thoughtAllowed() ? S._thoughtRuny(kind, runes, L) : '');
 const R = vm.runInContext('RUNES', S), UI = vm.runInContext('UI_TEXT', S), MARK = vm.runInContext('THOUGHT_MARK', S);
 // 2026-10-03: index odstavce bere kontrola z TÉŽE mapy jako produkce (THOUGHT_ODSTAVEC, runar-character.js) — §20.
 const ODST = vm.runInContext('THOUGHT_ODSTAVEC', S);
@@ -44,7 +45,7 @@ const stav = (tier, email) => vm.runInContext('currentUser = ' + (email ? '{ ema
 for (const [tier, email, ma] of [['', null, false], ['free_trial', 'a@example.com', false], ['rune_seeker', 'a@example.com', true],   // 2026-10-29: i Rune Seeker (17245e7e)
                                    ['standard', 'a@example.com', true], ['premium', 'a@example.com', true], ['rune_seeker', ADMIN, true]]) {
   stav(tier, email);
-  const t = S._thoughtFor('SINGLE', [runa('Uruz')], 'en');
+  const t = TF('SINGLE', [runa('Uruz')], 'en');
   ocek('tarif ' + (tier || 'nepřihlášený') + (email === ADMIN ? ' (admin)' : ''), !!t === ma, t ? 'má' : 'nemá');
 }
 // 3) z jaké runy a u kterých druhů (tarif Premium)
@@ -53,18 +54,18 @@ const pet = ['Blank', 'Tiwaz', 'Perth', 'Ingwaz', 'Sowilo'].map(runa), tri = ['N
 for (const L of ['en', 'is']) {
   vm.runInContext('lang = "' + L + '"', S);
   const zdroj = (n) => UI[L].coll_rune[n][ODST[n] || 0];
-  const s1 = S._thoughtFor('SINGLE', [runa('Uruz')], L), k = S._thoughtFor('KRIZ', pet, L), n = S._thoughtFor('NORNS', tri, L);
+  const s1 = TF('SINGLE', [runa('Uruz')], L), k = TF('KRIZ', pet, L), n = TF('NORNS', tri, L);
   ocek(L + ' single: zdroj = tažená runa', s1.indexOf(MARK[L]) === 0 && s1.indexOf(zdroj('Uruz')) !== -1);
   // 2026-10-03: Uruz bere 3. odstavec — metafora z 1. („aurochs… asks no one whether it may pass“) v promptu být NESMÍ;
   // Ansuz dál 1. odstavec (owner „keep“). Hlídá, že mapa opravdu platí, ne jen že existuje.
   ocek(L + ' single: Uruz bez 1. odstavce', ODST.Uruz === 2 && s1.indexOf(UI[L].coll_rune.Uruz[0]) === -1);
-  ocek(L + ' single: Ansuz 1. odstavec', S._thoughtFor('SINGLE', [runa('Ansuz')], L).indexOf(UI[L].coll_rune.Ansuz[0]) !== -1);
+  ocek(L + ' single: Ansuz 1. odstavec', TF('SINGLE', [runa('Ansuz')], L).indexOf(UI[L].coll_rune.Ansuz[0]) !== -1);
   ocek(L + ' Kříž: zdroj = střed', k.indexOf(zdroj('Blank')) !== -1 && k.indexOf(zdroj('Sowilo')) === -1);
   ocek(L + ' Norny: zdroj = Skuld', n.indexOf(zdroj('Perth')) !== -1 && n.indexOf(zdroj('Nauthiz')) === -1);
   // 2026-10-03 (KUKY „i pro Podkovu a Yggdrasil“): Podkova = runa 7 Výsledek, Yggdrasil = runa 4 Midgard; ostatní pozice zdrojem nejsou.
   const sedm = ['Fehu', 'Uruz', 'Thurisaz', 'Ansuz', 'Raidho', 'Kenaz', 'Gebo'].map(runa);
   const devet = ['Wunjo', 'Hagalaz', 'Nauthiz', 'Isa', 'Jera', 'Eihwaz', 'Perth', 'Algiz', 'Sowilo'].map(runa);
-  const hs = S._thoughtFor('HORSESHOE', sedm, L), yg = S._thoughtFor('YGGDRASIL', devet, L);
+  const hs = TF('HORSESHOE', sedm, L), yg = TF('YGGDRASIL', devet, L);
   ocek(L + ' Podkova: zdroj = runa 7 (Výsledek)', hs.indexOf(MARK[L]) === 0 && hs.indexOf(zdroj('Gebo')) !== -1 && hs.indexOf(zdroj('Fehu')) === -1);
   ocek(L + ' Yggdrasil: zdroj = runa 4 (Midgard)', yg.indexOf(MARK[L]) === 0 && yg.indexOf(zdroj('Isa')) !== -1 && yg.indexOf(zdroj('Wunjo')) === -1 && yg.indexOf(zdroj('Sowilo')) === -1);
   // _promptDraws pozná, že prompt myšlenku nesl
@@ -72,8 +73,8 @@ for (const L of ['en', 'is']) {
 }
 // 4) zapojení v toku čtení (funkce výš jsou vyříznuté, tyhle řádky ne): prompt, oddělení, vykreslení MIMO výstup (hlas ho nečte)
 // 2026-10-22: řádek obalený _kus (označený kus promptu pro rozbor, runar-character.js) — text promptu stejný
-for (const [jm, kus] of [['single prompt', "var _thL = _kus('THOUGHT-✦', 'account (reading_thought)', '✦ line', _thoughtFor('SINGLE', [drawn], lang)); if (_thL) prompt += '\\n' + _thL;"],
-                          ['spread prompt', "var _thS = _kus('THOUGHT-✦', 'account (reading_thought)', '✦ line', _thoughtFor(o.kind, o.runes, lang)); if (_thS) prompt += '\\n' + _thS;"],
+for (const [jm, kus] of [['single prompt', "prompt += _promptKonec('SINGLE', [drawn], lang, _thoughtAllowed());"],
+                          ['spread prompt', "prompt += _promptKonec(o.kind, o.runes, lang, _thoughtAllowed());"],
                           ['single split + kresba', "_paintThought('out-short', _th.thought);"],
                           ['spread split + kresba', "_paintThought(o.outId, _thX.thought);"],
                           ['soused výstupu, ne uvnitř', "kotva.after(el);"]])
