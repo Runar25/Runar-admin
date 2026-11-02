@@ -174,7 +174,9 @@ if staged:
 # supabase/functions/_shared/prompt_skladani.mjs je GENEROVANÝ z pěti souborů appky (scripts/build_prompt_skladani.js). Když commit
 # nese některý z nich, balíček se přegeneruje z INDEXU (ne z pracovního stromu — ten nese cizí necommitnutou práci) a jde do téhož
 # commitu. Bez toho by server po změně překladů nebo builderu skládal starý prompt. Shodu s prohlížečem hlídá smoke (verify_prompt_skladani.js).
-_PROMPT_ZDROJE = ['v2/runar-config.js', 'v2/runar-runes.js', 'v2/runar-translations.js', 'v2/runar-utils.js', 'v2/runar-character.js']
+_PROMPT_ZDROJE = ['v2/runar-config.js', 'v2/runar-runes.js', 'v2/runar-translations.js', 'v2/runar-utils.js', 'v2/runar-character.js',
+                  # 2026-11-02: i generátor sám — 00c64a4 změnil, co balíček pouští ven (VEN), a balíček zůstal starý (server by F3a nesložil)
+                  'scripts/build_prompt_skladani.js']
 if any(f in staged for f in _PROMPT_ZDROJE):
     _cil = 'supabase/functions/_shared/prompt_skladani.mjs'
     _g = subprocess.run(['node', os.path.join(REPO, 'scripts', 'build_prompt_skladani.js'), '--z-indexu'],
