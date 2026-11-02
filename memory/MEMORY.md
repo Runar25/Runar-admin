@@ -123,6 +123,7 @@ Vrstvy pravdy: kanonická = root `RUNAR_*.md`, `memory/*.md`, `CLAUDE.md` · his
 - [is-vazba-check.md](is-vazba-check.md) — islandskou vazbu ověř `is-vazba.py`, nehádej
 - [windows-ui-v-en.md](windows-ui-v-en.md) — owner má Windows v EN
 - [nahledy-ownerovi-v-en.md](nahledy-ownerovi-v-en.md) — náhledy a screenshoty ownerovi v EN verzi
+- [nazvy-souboru-anglicky.md](nazvy-souboru-anglicky.md) — obrázky, podklady a jejich složky ukládat s anglickými názvy
 - Strom (CODE-tree): [runar-tree-engine-lab.md](runar-tree-engine-lab.md) · [runar-trunk-incremental-rule.md](runar-trunk-incremental-rule.md) · [runar-tree-living-movement.md](runar-tree-living-movement.md) · [tree-roots-rebuild.md](tree-roots-rebuild.md)
 
 ## Index snapshots — dobrovolné; historický záznam ke svému datu, ne popis dneška

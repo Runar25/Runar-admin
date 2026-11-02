@@ -887,14 +887,14 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
      „✦ Keep this“ v appce ukládá dobré věty. Čtení testerů jen s jejich souhlasem (osobní údaje); ownerova a týmová volně.
   7. ✅ *(CODE-tune 2026-10-28, 56e3b50)* Instagram v appce: položka v menu; ve verzi z Google Play skrytá — profil vede na web
      s nákupem (nepřímá cesta k platbě), hlídá smoke ㊐.
-  **Připraveno (CODE-web 2026-10-28; soubory `web/socialni/`, generátor `scripts/web_socialni_obrazky.py`; owner nahrává ručně):**
-  8. Titulní fotka Facebooku `fb-titulni.jpg` 1640×624: Rúnar i nápis stojí ve středu, který vidí počítač (820×312) i telefon
+  **Připraveno (CODE-web 2026-10-28; soubory `web/social/`, generátor `scripts/web_socialni_obrazky.py`; owner nahrává ručně):**
+  8. Titulní fotka Facebooku `fb-cover.jpg` 1640×624: Rúnar i nápis stojí ve středu, který vidí počítač (820×312) i telefon
      (640×360) — nápis končí na 1301 px, telefon ořezává za 1375 px (změřeno).
   9. Profilovka — dvě možnosti, owner vybere při zakládání profilů (2026-10-29: *„ještě nevím. připravíme to a rozhodnu se, až to
      budeme dělat“*); tutéž na Facebook i Instagram, oba ji ořízne do kruhu.
-     `profil-ikona.jpg` — Rúnarova tvář z dnešní ikony appky (kámen ᚱ, kruh run kreslený generátorem obrázku); srovnáno ve 176 / 110 /
+     `profile-icon.jpg` — Rúnarova tvář z dnešní ikony appky (kámen ᚱ, kruh run kreslený generátorem obrázku); srovnáno ve 176 / 110 /
      40 px na tmavém i bílém pozadí, čitelná i ve 40 px; tatáž jako ikona na ploše telefonu (ikona zůstala, DECISIONS 2026-11-01 (10)).
-     `profil-r.jpg` — zlaté R ze značky appky (táž kresba jako R v appce, owner 2026-11-01 „tohle R bych chtěl“), zlatý kruh u okraje.
+     `profile-r.jpg` — zlaté R ze značky appky (táž kresba jako R v appce, owner 2026-11-01 „tohle R bych chtěl“), zlatý kruh u okraje.
      Výřezy z portrétů s holí owner zamítl (2026-10-28: *„má Rúnara s uříznutou holí“*) — čtverec kolem obličeje hůl vždy přetne;
      do profilovky jen záběr, kde Rúnar nic nedrží přes okraj.
   10. Jméno všude stejné jako titulek webu (`og:site_name` ve `web/site/index.html`; na Instagramu 23 / 30 znaků).
@@ -1121,7 +1121,7 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   barvu na zlatou a pulsovat, jak to máme už jinde, a změnit barvu zase na tu originální. Otestujeme, jak to bude fungovat a vypadat. Jestli to
   potenciálně použijeme jako základ pro ostatní podobné funkce.“* → napřed náhled (vzor záře: svíčka `window.rozsvit`, `runar-helper.js`).
 - ✖ *(owner 2026-11-01: „5. žádnou. necháváme jak je. návrhy si ulož do budoucna“ — ikona appky zůstává; náhledy A–L, verdikty
-  a příkazy generátoru v `docs/archive/2026-11-01-ikona-navrhy/`, DECISIONS 2026-11-01 (10).)* **Nové logo appky — zlaté Rúnarovo R
+  a příkazy generátoru v `docs/archive/2026-11-01-icon-proposals/`, DECISIONS 2026-11-01 (10).)* **Nové logo appky — zlaté Rúnarovo R
   (e98e5e68):** *„mame ho například v rune reading card“* → návrhy ikony generátorem `scripts/ikona_appky.py` (CODE-web).
 - [x] ✅ *(CODE-web 2026-11-02: generátor ikony čte `znackaSvg` z appky, `R_ZNACKA` pryč, d9123ba — ikony pixel po pixelu stejné.)*
   *(CODE-tune 2026-11-02 hotovo, DECISIONS 2026-11-02 (1): kresba `znackaSvg()` ve `v2/runar-znacka.js` — ne v runar-utils.js;

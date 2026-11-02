@@ -13066,3 +13066,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   nic nepublikuje, nic neodesílá. Běží, jen když je appka otevřená (jinak při dalším spuštění); uložená v režimu Auto.
 - **Ověřeno:** /ig/ v náhledu přesměruje na `/?z=ig` a landing štítek převezme; ㊖, ㊑, ㊙ projdou (62 stránek). Naostro po nasazení.
 - Affected doc(s): RUNAR_BACKLOG.md (Sociální sítě bod 14), docs/monitor/site-a-web.md.
+
+## 2026-11-02 (12) — Soubory, které ukládám, mají anglické názvy
+
+- **Rozhodl:** owner 2026-11-02 po uložení obrázků do `v2/assets/`: *„ukládej je anglicky. všechno.“*
+- **Co:** přejmenováno (9873260): `v2/assets/runar-ikona-modra.jpg` → `runar-icon-blue-rune.jpg`, `runar-ikona-zlata.jpg` →
+  `runar-icon-gold-rune.jpg`, `runar-ikona-hul-zlaty-ramecek.jpg` → `runar-icon-staff-gold-frame.jpg`, `runar-profil-kruh-hul.jpg` →
+  `runar-profile-circle-staff.jpg`, `runar-ikona-portret-modra.jpg` → `runar-icon-portrait-blue.jpg` · `web/socialni/` → `web/social/`
+  (`fb-cover.jpg`, `profile-icon.jpg`, `profile-r.jpg`) · `docs/archive/2026-11-01-ikona-navrhy/` → `docs/archive/2026-11-01-icon-proposals/`.
+  Starší záznamy tady (2026-11-01 (10), 2026-11-02 (10)) nesou staré názvy — DECISIONS se nepřepisuje, platí tahle mapa.
+- **Hranice:** obsah dokumentů zůstává česky (CLAUDE.md §31); jména skriptů a docs podle zvyklostí repa (česky) — owner nepotvrdil,
+  že „všechno“ znamená i je (otázka 2026-11-02).
+- Affected doc(s): RUNAR_BACKLOG.md (Sociální sítě body 8, 9; logo appky), memory/nazvy-souboru-anglicky.md.
