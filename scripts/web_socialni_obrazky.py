@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
-# web_socialni_obrazky.py — obrázky Rúnara pro sociální sítě → web/socialni/ (CODE-web 2026-10-28).
+# web_socialni_obrazky.py — obrázky Rúnara pro sociální sítě → web/social/ (CODE-web 2026-10-28; anglické názvy od 2026-11-02, owner „ukládej je anglicky“).
 #
 # Proč: owner 2026-10-27/28 — zakládá se Facebook, Instagram už je („2. ano“ na otázku, jestli připravit titulní fotku a profilovku).
 # Skládá se ze stejných podkladů jako web (portrét appky, písmo Cinzel, barvy landingu), ať je to všude tentýž Rúnar.
-# Složka web/socialni/ se NEnasazuje (web_nasad.py kopíruje jen web/site/) — soubory owner nahrává na Facebook / Instagram ručně.
+# Složka web/social/ se NEnasazuje (web_nasad.py kopíruje jen web/site/) — soubory owner nahrává na Facebook / Instagram ručně.
 #
 # Co vznikne:
-#   fb-titulni.jpg   1640×624 — titulní fotka Facebooku. Facebook ji ukazuje 820×312 na počítači a 640×360 na telefonu (ořízne
+#   fb-cover.jpg     1640×624 — titulní fotka Facebooku. Facebook ji ukazuje 820×312 na počítači a 640×360 na telefonu (ořízne
 #                    boky); obě zobrazení společně vidí jen střed ~1110 px, proto Rúnar i nápis stojí uvnitř (POJISTKA níž to měří).
-#   profil-ikona.jpg  720×720 — profilovka (owner 2026-10-28 „nejde to udělat ještě lépe?“): kresba ikony appky (Rúnar s kamenem ᚱ,
+#   profile-icon.jpg  720×720 — profilovka (owner 2026-10-28 „nejde to udělat ještě lépe?“): kresba ikony appky (Rúnar s kamenem ᚱ,
 #                    kruh zářících run, v2/assets/runar-app-icon.svg). Srovnáno ve skutečných velikostech 176 / 110 / 40 px na tmavém
 #                    i bílém pozadí: čitelná i ve 40 px, kruh run ji odliší na obou pozadích a je to tentýž obrázek, jaký lidé uvidí
 #                    na ploše telefonu. Výřez uvnitř zaobleného čtverce (černý okraj ikony do kruhu nesmí, měřeno 11–15 px).
 #                    Výřezy z portrétů s holí owner zamítl (2026-10-28: „profilovka A a B má Rúnara s uříznutou holí… A je úplně mimo“) —
 #                    čtverec kolem obličeje hůl vždy přetne. Do profilovky proto jen záběr, kde Rúnar nic nedrží přes okraj.
-#   profil-r.jpg      720×720 — druhá profilovka do zásoby: zlaté R ze značky appky (owner 2026-10-29 k otázce, zda profilovka
+#   profile-r.jpg     720×720 — druhá profilovka do zásoby: zlaté R ze značky appky (owner 2026-10-29 k otázce, zda profilovka
 #                    bude R, nebo tvář: „ještě nevím. připravíme to a rozhodnu se, až to budeme dělat“; R podle ownera 2026-11-01 „tohle R
 #                    bych chtěl“ — znackaSvg z v2/runar-znacka.js, táž kresba jako R v appce). Kreslí ji ikona_appky.profil(), rámeček
 #                    je kruh u okraje, protože Instagram i Facebook profilovku ořízne do kruhu. Ikona appky zůstala (DECISIONS 2026-11-01 (10)).
@@ -25,7 +25,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import ikona_appky
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CIL = os.path.join(ROOT, 'web', 'socialni')
+CIL = os.path.join(ROOT, 'web', 'social')
 TMAVY = os.path.join(ROOT, 'v2', 'img', 'runar-portrait.webp')        # 1024×1536, scéna s polární září
 IKONA = os.path.join(ROOT, 'v2', 'assets', 'runar-app-icon.svg')      # obal kolem jednoho PNG 1254×1254 v base64 (README assets)
 PISMA = os.path.join(ROOT, 'v2', 'fonts', 'fonts.css')
@@ -87,16 +87,16 @@ def main():
         im = Image.open(png).convert('RGB')
         if im.size != (W, H):
             sys.exit('web_socialni_obrazky: Chrome vrátil %dx%d' % im.size)
-        im.save(os.path.join(CIL, 'fb-titulni.jpg'), 'JPEG', quality=88, optimize=True, progressive=True)
+        im.save(os.path.join(CIL, 'fb-cover.jpg'), 'JPEG', quality=88, optimize=True, progressive=True)
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
     # Profilovka z ikony appky: střed obrázku, strana 1174 px = ikona bez černého okraje (11–15 px, změřeno 2026-10-28).
     m = re.search(r'data:image/png;base64,([A-Za-z0-9+/=]+)', io.open(IKONA, encoding='utf-8').read())
     ikona = os.path.join(tempfile.gettempdir(), 'runar-app-icon-1254.png')
     io.open(ikona, 'wb').write(base64.b64decode(m.group(1)))
-    vyrez(ikona, 627, 627, 1174, 720).save(os.path.join(CIL, 'profil-ikona.jpg'), 'JPEG', quality=90, optimize=True)
+    vyrez(ikona, 627, 627, 1174, 720).save(os.path.join(CIL, 'profile-icon.jpg'), 'JPEG', quality=90, optimize=True)
     os.remove(ikona)
-    ikona_appky.profil(os.path.join(CIL, 'profil-r.jpg'))
+    ikona_appky.profil(os.path.join(CIL, 'profile-r.jpg'))
     for f in sorted(os.listdir(CIL)):
         p = os.path.join(CIL, f)
         print('%-18s %s  %d kB' % (f, '%dx%d' % Image.open(p).size, os.path.getsize(p) // 1024))
