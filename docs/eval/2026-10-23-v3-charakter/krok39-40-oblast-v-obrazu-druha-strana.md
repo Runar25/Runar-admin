@@ -39,6 +39,19 @@ Navazuje na `krok38-druh-obrazu.md` (oddíl 3a — ownerův verdikt: „7. ano�
 1. n = 12 na krok, jedno čtení na kombinaci, jeden soudce; humor a druhá strana = ukázky pro ownera, ne měření.
 2. Testováno na Opusu; poučení ze solu zapracováno do pokynu, ale na solu neověřeno (sol až na ownerův pokyn).
 
+## 3a. Ownerův verdikt (2026-11-01 a 02)
+
+1. **Význam musí být jasný** a smí nutit k zamyšlení; věta „A gift is only a gift if it can be refused“ (Gebo) není špatně, chybí jí
+   vysvětlení. Líbí se popisovat význam runy z různých úhlů.
+2. **Obraz jako tarotová karta:** obraz je to, co by člověk viděl na kartě a mohl si prohlížet — symbolika, která zapadá do výkladu runy.
+   Protože ho píšeme slovy, smí být i situační a jiný, který se kresbou říct nedá. Nejméně přesvědčuje dnešní vysvětlení v obraze.
+3. **Světlo a stín:** světlá a stinná stránka runy (úhlu) — pravidlo z kroku 40 sedí. Samostatná věta zní jinak než věta 3; kde je ve čtení
+   místo, zůstane uvnitř, jinak venku. Tón jako odstavec GPT o Fehu („Bohatství může růst, ale také se může ztrácet…“) — to je ono,
+   jen kratší. Samostatná věta podobně jako myšlenka ve v2, jen s jiným zaměřením.
+4. **Fehu · předání:** zkusit víc obrazů předání bohatství (šálek s hřejivým úsměvem jako vnitřní hloubka) — ověřit, že sedí na Fehu.
+5. **Znění obrazu musí znít:** k38 „a man spending his whole Saturday gluing a chair nobody sits in“ jde říct líp (owner přinesl varianty GPT).
+6. **Oblast ze světa oblasti:** vyzkoušet.
+
 ## 4. Čtení — krok 39 (druhá strana uvnitř, věta 3)
 
 1. **Fehu · Family · protiklad · humor** Wealth lives only while it moves, like the casserole dish passed from aunt to aunt, always returned full, while the good china sits behind glass for funerals. The dish is worth more each time it leaves the house. But a dish that never comes back becomes a debt, and families keep count. Whose kitchen is it in now?
