@@ -1,6 +1,6 @@
 -- 2026-11-02 — Brána životní runy (trg_life_rune_immutable) konečně platí: funkce jako SECURITY INVOKER.
 --
--- Proč (CODE-tune, nalezeno při F3a (d), DECISIONS 2026-11-02 (5)):
+-- Proč (CODE-tune, nalezeno při F3a (d), DECISIONS 2026-11-02 (6)):
 --   guard_life_rune_immutable() běží jako SECURITY DEFINER s vlastníkem postgres. Uvnitř takové funkce je `current_user` VLASTNÍK,
 --   ne ten, kdo zapisuje — takže první podmínka `if current_user not in ('authenticated', 'anon') then return new` pustila VŠECHNO
 --   a brána od 2026-07-19 nikdy nezabrala. Doklad bez zápisu: sesterský trigger ledger_user_profiles (také DEFINER, vlastník postgres)
