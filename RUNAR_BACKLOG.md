@@ -778,7 +778,7 @@ Procházka je tím úplná.
       startu. Že to sedlo, pozná se podle **„(tester)" / „(prófari)"** za jménem tieru v panelu.
 
 ## Zjištěno při auditu — nespěchá, ale ať se neztratí
-- [ ] **Útok na ㊍ (stín skládání promptu) jednou propustil** (CODE-web 2026-11-01, pre-push 90b82b9 v čisté kopii): `verify_prompt_stin.js`
+- [x] ✅ *(CODE-tune 2026-11-02: propouštěl útok „záznamník vynechá úložiště“ — výchozí stav v testu měl klíč `seasonlast_Raidho`, který appka nečte, takže rozdíl vznikal jen náhodou. Nový pevný vzorek `sacek_en/is` (v sáčku jen poslední obraz, náhoda 0) chytá 10 z 10 a pokaždé na tomtéž místě; útok na náhodu 5 z 5.)* **Útok na ㊍ (stín skládání promptu) jednou propustil** (CODE-web 2026-11-01, pre-push 90b82b9 v čisté kopii): `verify_prompt_stin.js`
   prošla s podstrčenou chybou v `v2/runar-app.js` (`.git/runar-protipriklady-propustene/20261101-174820_verify_prompt_stin.js_v2_runar-app.js.txt`);
   hned poté samotný útok 2 ze 2 (6 a 18 vad ve 22 vzorcích). Který ze dvou případů propustil, výstup neříká. Šum jako dřív u ㊼ →
   zpevnit kontrolu, ne přepouštět. Kontrola je CODE-tune (2026-10-21), předáno.

@@ -26,8 +26,6 @@ const VZORKY = `(async () => {
   if (typeof _stinVezmi !== 'function') return 'EXC: _stinVezmi chybí (záznamník v runar-app.js?)';
   const R = (n) => RUNES.find((r) => r.n === n);
   const out = [];
-  // sáček obrazů s rozjetým stavem (jako u člověka po pár čteních) — musí přejít na server
-  try { localStorage.setItem('seasonlast_Raidho', '0'); } catch (e) {}
   const u = { name: 'Anna', area: AREAS ? (AREAS.en && AREAS.en[1]) || 'work' : 'work', seeking: 'clarity', question: 'What should I focus on?',
               d: 15, m: 6, y: 1990, intention: INTENTIONS.en[0], lifeRune: R('Isa') };
   const pool = ['Fehu', 'Uruz', 'Thurisaz', 'Ansuz', 'Raidho', 'Kenaz', 'Gebo', 'Wunjo', 'Hagalaz'].map(R);
@@ -46,6 +44,26 @@ const VZORKY = `(async () => {
     vzorek('yggdrasil_' + L, () => buildYggdrasilPrompt(u, pool, L, []));
     vzorek('ask_' + L, () => buildAskPrompt('SAMPLE READING', 'what does it mean for me', 'Raidho', L, [], u.lifeRune, null, null));
     vzorek('liferune_' + L, () => buildLifeRunePrompt('Anna', R('Fehu'), 15, 6, 1990, L, []));
+    // Sáček obrazů musí přejít na server (záznamník čte localStorage). Do 2026-11-02 tu stál klíč 'seasonlast_Raidho', který appka
+    // nikdy nečte (správně 'seasonlast_rune_Raidho'), takže stav vznikal jen z předchozích vzorků a útok „záznamník vynechá úložiště“
+    // chytal podle náhody — jednou propustil (CODE-web 2026-11-01, BACKLOG). Teď pevně: v sáčku zbývá jen POSLEDNÍ kandidát a náhoda
+    // vrací 0. Appka tak vezme poslední obraz, server bez úložiště první — rozdíl je jistý, ne pravděpodobný.
+    {
+      const bucket = _seasonBucket(new Date().getMonth() + 1);
+      const cand = _imgPodleOblasti(_runeImageCandidates(R('Raidho'), bucket), u.area);
+      const runeKey = 'rune_' + cand.map((r) => r[0]).filter((x, i, a) => a.indexOf(x) === i).sort().join('-');
+      const ids = cand.map(_imgId);
+      if (ids.length < 2) out.push({ jm: 'sacek_' + L, chyba: 'Raidho má v téhle části roku ' + ids.length + ' obrazů — sáček nejde vyzkoušet, vyber jinou runu' });
+      else {
+        try { localStorage.setItem('seasonbag_' + bucket + '_' + runeKey, JSON.stringify([ids[ids.length - 1]]));
+              localStorage.removeItem('seasonlast_' + runeKey); localStorage.removeItem('seasonmotif_' + runeKey); } catch (e) {}
+        const mr = Math.random; Math.random = () => 0;
+        try { vzorek('sacek_' + L, () => buildReadingPrompt(u, R('Raidho'), L, [])); } finally { Math.random = mr; }
+        // Předpoklad testu ověřen, ne předpokládán: appka opravdu vzala obraz ze sáčku (jinak by shoda nic nedokazovala).
+        let vzal = null; try { vzal = localStorage.getItem('seasonlast_' + runeKey); } catch (e) {}
+        if (vzal !== ids[ids.length - 1]) out.push({ jm: 'sacek_' + L, chyba: 'appka nevzala obraz ze sáčku (vzala ' + vzal + ') — test sáčku nic nedokazuje' });
+      }
+    }
   }
   lang = 'en';
   return JSON.stringify(out);
