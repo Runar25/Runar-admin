@@ -64,7 +64,7 @@
          potvrdil „most may be“); test jen ověří, že výjimka nepřetéká do vět před koncem.
       3. Systém „LANGUAGE & STYLE — check every sentence before returning“ × user „return ONLY this JSON array, nothing before or after“ —
          kontrola nemá kde proběhnout (sol bez přemýšlení; V3 bod 3).
-    - [ ] **Místa v promptu k pozornosti (žádný změřený přínos, nebo dvojznačné; owner: *„zjistit další místa, která by si zasloužila
+    - [x] ✅ *(CODE-read 2026-11-02, owner „pokud se nemýlím, testovali jsme je“ — ověřeno: (a) EVAL_LOG „Test 3 — where this person is standing“, (b) `docs/eval/2026-09-20-rejstrik-ven/`, (c) EVAL_LOG „Znění … one detail the sentence does not name“, (d) z Asku pryč v DECISIONS 2026-09-23, v single jen v poli s otázkou (admin). V3 je píše znovu.)* **Místa v promptu k pozornosti (žádný změřený přínos, nebo dvojznačné; owner: *„zjistit další místa, která by si zasloužila
       pozornost“*):** (a) „The image must connect to where this person is standing right now“ — nikdy netestováno, LAB 2026-10-05 doporučil
       vyndat (bod 8; podezřelá z přenosu do života ve větě 3) · (b) „Neither confirm nor refute.“ u hledání Confirmation proti otázce ano/ne —
       co model udělá, když člověk potvrzení výslovně chce · (c) „down to one detail the sentence does not name“ — „the sentence“ je
