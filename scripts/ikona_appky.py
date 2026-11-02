@@ -34,7 +34,7 @@
 #   favicon.ico (16, 32, 48) · favicon-96x96.png · apple-touch-icon.png (180) · web-app-manifest-192x192.png · web-app-manifest-512x512.png
 #   · play-512.png (ikona pro výpis v Google Play, 512×512 bez průhlednosti)
 # Owner 2026-11-01 k náhledům A–D2: „ani jedno se mi nelíbí. tohle R bych chtěl“ (snímek obrazovky načítání čtení) → výchozí R
-# je R ze značky appky (R_ZNACKA níž); R z kresby run (runeSvg) zůstává pod --r-runa a v kameni (--kamen).
+# je R ze značky appky (znackaSvg z v2/runar-znacka.js); R z kresby run (runeSvg) zůstává pod --r-runa a v kameni (--kamen).
 #   python -X utf8 scripts/ikona_appky.py --cil <složka> [--kamen | --lucerna] [--bez-ramecku] [--r-runa]
 #   (náhled kamkoli; do appky --cil v2/icons, až owner náhled schválí). profil() kreslí z téže předlohy profilovku na sítě
 #   (scripts/web_socialni_obrazky.py).
@@ -125,18 +125,18 @@ LUC_POZADI = (
     '<path d="' + OKNO + '" fill="url(#sklo)"/>'
     '<path d="' + OKNO_L + '" fill="url(#bokL)"/><path d="' + OKNO_P + '" fill="url(#bokP)"/>')
 
-# R ze značky appky: ᚱ, které appka píše písmem (např. span .whispers-loading-star při načítání čtení). Cormorant runy nemá, takže ho
-# kreslí písmo systému — na Windows Segoe UI Historic (to je R ze snímku ownera), jinde jiné. Písmo Microsoftu do ikony nekopírujeme
-# (licence) a ikona musí vypadat všude stejně → táž stavba jako vlastní geometrie: kmen + lomená čára, nahoře i dole rovně, špičky
-# svisle seříznuté. Proporce změřené na Segoe UI Historic v 1000 px (kmen 11,7 % výšky, špička ve 26 %, vrchol v 49 %, mezera
-# kmen–vrchol ~8 %); obrysem se od písma liší ve 3,6 % plochy (2026-11-01, scratchpad r_geom_test.py). Jednotky: výška 100.
-R_ZNACKA = ('<defs><clipPath id="rc"><path d="M0 0 H58.6 V100 H20.3 V30 H11.7 V100 H0 Z"/></clipPath></defs>'
-            '<g clip-path="url(#rc)" fill="none" stroke="%s" stroke-linejoin="miter" stroke-miterlimit="8">'
-            '<path d="M5.85 -2 V102" stroke-width="11.7"/><path d="M4.12 2.14 L50.1 25.7 L25.3 49.3 L53.8 104" stroke-width="11"/></g>')
-
 def kresba_znacka(barva=ZLATA):
-    # data-vb: viewBox je pevný (ořez clipPath getBBox nevidí, výpočet obrysu ve stránce by R posunul)
-    return ' viewBox="-0.5 -0.5 59.6 101" data-vb="1" xmlns="http://www.w3.org/2000/svg"', R_ZNACKA % barva
+    # Značka ᚱ z appky: znackaSvg ve v2/runar-znacka.js — jediná kresba pro appku, web i ikonu (§18; proč a odkud tvar → hlavička
+    # toho souboru). Do 2026-11-02 žila geometrie tady (R_ZNACKA), CODE-tune ji 1:1 přenesla do appky (c9ce542).
+    # data-vb: viewBox je pevný (ořez clipPath getBBox nevidí, výpočet obrysu ve stránce by R posunul).
+    js = ("var fs=require('fs');"
+          "process.stdout.write(new Function(fs.readFileSync(process.argv[1],'utf8')+';return znackaSvg;')()({barva:process.argv[2]}))")
+    r = subprocess.run(['node', '-e', js, os.path.join(ROOT, 'v2', 'runar-znacka.js'), barva],
+                       capture_output=True, encoding='utf-8', check=True)
+    m = re.match(r'<svg class="znacka[^"]*" viewBox="([^"]+)"[^>]*>(.*)</svg>$', r.stdout, re.S)
+    if not m or 'clipPath' not in m.group(2):
+        sys.exit('ikona_appky: znackaSvg nevrátil kresbu: %s' % r.stdout[:120])
+    return ' viewBox="%s" data-vb="1" xmlns="http://www.w3.org/2000/svg"' % m.group(1), m.group(2)
 
 def kresba(kamen):
     # runeSvg z produkce: výběr tahů holé runy (RUNE_BARE_KEEP) i kresba zůstávají na jednom místě (§18)
