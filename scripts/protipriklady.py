@@ -324,6 +324,11 @@ PRIPADY = [
  ('chyti', 'verify_prompt_stin.js', 'supabase/functions/_shared/prompt_server.mjs', 'replace', 'setItem: (k, v) => { st.uloz[k] = String(v); }', 'setItem: () => {}'),
  ('chyti', 'verify_prompt_stin.js', 'supabase/functions/_shared/prompt_server.mjs', 'replace', 'const zdrojUloz = vlastni ? vlastni.uloz : z.uloziste;', 'const zdrojUloz = z.uloziste;'),
  ('chyti', 'verify_prompt_stin.js', 'supabase/functions/_shared/prompt_server.mjs', 'replace', 'if (draws && sk.kusy.length) draws.kusy = sk.kusy.map((k) => k.kus);', ''),
+ # ㊍ Ask a strop (2026-11-02, CODE-tune, owner „3. ano“): text od prohlížeče se nenahradí · strop vypnutý · bez řezu u ✦ · bez stropu otázky
+ ('chyti', 'verify_prompt_stin.js', 'supabase/functions/_shared/prompt_server.mjs', 'replace', '{ a[0] = askText; askNahrazeno = true; }', '{ askNahrazeno = true; }'),
+ ('chyti', 'verify_prompt_stin.js', 'supabase/functions/_shared/prompt_server.mjs', 'replace', '    if (strop) return { chyba: strop };\n', ''),
+ ('chyti', 'verify_prompt_stin.js', 'supabase/functions/_shared/prompt_server.mjs', 'replace', 'normalizuj(textKHlasu(String(askCteni)))', 'normalizuj(String(askCteni))'),
+ ('chyti', 'verify_prompt_stin.js', 'supabase/functions/_shared/prompt_server.mjs', 'replace', 'if (delka(u.question) > STROP.volny || delka(u.name) > STROP.jmeno) return "input_too_long";', ''),
  # ㊎ mapa ochran (2026-10-21, CODE-read): vypnutá brána · obrácený limit · nová ochrana bez zápisu · nový mode · nová funkce
  ('chyti', 'verify_mapa_ochran.js', 'supabase/functions/claude-proxy/index.ts', 'replace', 'if (!userId) return json({ error: "unauthorized" }, 401);', 'if (false && (!userId)) return json({ error: "unauthorized" }, 401);'),
  ('chyti', 'verify_mapa_ochran.js', 'supabase/functions/send-line/index.ts', 'replace', 'if (zprava.length > MAX_ZNAKU)', 'if (zprava.length < MAX_ZNAKU)'),

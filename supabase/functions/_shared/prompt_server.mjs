@@ -10,11 +10,14 @@
 // builderu). Od F3b (2026-11-02, owner „1. ano“) v režimu `vlastni` ani náhodu, sáček obrazů a poslední obraz: losuje server, sáček
 // a poslední motiv drží tabulka prompt_state (jeden řádek na uživatele — sql/2026-11-02_prompt_state.sql), poslední obraz čte z deníku.
 // Od prohlížeče zůstává místní čas (sezóna obrazů je podle místního měsíce; mimo ±36 h od serveru se nepoužije).
-// Ask: text čtení a předchozí výměna jsou argumenty od prohlížeče (ověření proti uloženému čtení = další krok, BACKLOG F3).
+// Ask (2026-11-02, owner „3. ano“): text čtení ověří server proti deníku (uložené čtení) nebo podpisu hlasu (neuložené) — týmiž funkcemi,
+// kterými se podepisuje hlas (voice_ticket.ts); nesedí-li, dosadí svůj. Shoda změřena na 60/60 uložených čteních (46 s ✦). Neověřitelný
+// Ask (bez čtení i podpisu, účtuje se jako čtení) má jen strop délky. Vstupy čtení (otázka, jméno, oblast…) mají serverový strop — viz STROP.
 // Kódy chyb jsou anglicky — jdou do logů a ops_events (CLAUDE.md §31).
 //
 // Použití: claude-proxy (skutečné čtení) a scripts/verify_prompt_stin.js (appka v prohlížeči × server, bajt po bajtu). Jeden kód pro obojí.
 import { vytvorSkladani } from "./prompt_skladani.mjs";
+import { textKHlasu, normalizuj } from "./voice_ticket.ts";
 
 // Který builder smí který `mode` (proxy). Jiný builder = chyba, ne tiché čtení za cizí cenu.
 const POVOLENE = {
@@ -32,6 +35,38 @@ const CTENI = {
 // Kde builder bere korekce slov (index argumentu). Appka posílá všude globální `corrections`; server je nahradí svými.
 const KOREKCE_ARG = { buildReadingPrompt: 3, buildKrizPrompt: 3, buildNornsPrompt: 3, buildHorseshoePrompt: 3, buildYggdrasilPrompt: 3,
   buildAskPrompt: 4, buildLifeRunePrompt: 6, buildNameLorePrompt: 3 };
+
+// Strop délky vstupů od prohlížeče. POJISTKA serveru, ne nárok (memory strop-serveru-neni-narok): appka sama pustí otázku a Ask jen
+// do 160 znaků (maxlength v runar-reader.html), jméno stromu do 60. Strop je výš, aby ho legitimní vstup nikdy netrefil; nad ním
+// se čtení odmítne (ne ořízne — oříznutá otázka by dala čtení, za které člověk zaplatí a které nechtěl).
+const STROP = { volny: 300, jmeno: 120, retezec: 3000, askCteni: 6000, askVymen: 4 };
+function delka(x) { return typeof x === "string" ? x.length : 0; }
+function nejdelsi(x, d) {   // nejdelší řetězec kdekoli v argumentu (runy jsou objekty z RUNES — ty se nepočítají)
+  d = d || 0; if (d > 6 || x === null || x === undefined) return 0;
+  if (typeof x === "string") return x.length;
+  if (typeof x !== "object") return 0;
+  let m = 0; for (const v of Array.isArray(x) ? x : Object.values(x)) m = Math.max(m, nejdelsi(v, d + 1)); return m;
+}
+// args jsou už po runyZpet a po nahrazení korekcí a textu čtení serverem. Vrací kód chyby, nebo "".
+function prekrocenyStrop(jm, a, askOvereno) {
+  if (jm in CTENI) {
+    const u = a[0] || {};
+    if (delka(u.question) > STROP.volny || delka(u.name) > STROP.jmeno) return "input_too_long";
+    for (const k of ["area", "seeking", "intention"]) if (delka(u[k]) > STROP.volny) return "input_too_long";
+    return nejdelsi(u) > STROP.retezec ? "input_too_long" : "";
+  }
+  if (jm === "buildAskPrompt") {
+    if (!askOvereno && delka(a[0]) > STROP.askCteni) return "input_too_long";
+    if (delka(a[1]) > STROP.volny || delka(a[8]) > STROP.volny) return "input_too_long";
+    const pred = Array.isArray(a[9]) ? a[9] : [];
+    if (pred.length > STROP.askVymen) return "input_too_long";
+    for (const x of pred) if (delka(x && x.q) > STROP.volny || delka(x && x.a) > STROP.retezec) return "input_too_long";
+    return nejdelsi([a[2], a[6], a[7]]) > STROP.retezec ? "input_too_long" : "";
+  }
+  if (jm === "buildLifeRunePrompt") return delka(a[0]) > STROP.jmeno ? "input_too_long" : "";
+  if (jm === "buildNameLorePrompt") return delka(a[0]) > STROP.jmeno || nejdelsi(a[1]) > STROP.retezec ? "input_too_long" : "";
+  return "";
+}
 
 function runyZpet(x, runy, d) {
   d = d || 0;
@@ -90,11 +125,12 @@ export function prehravac() {
 }
 
 // Prompt pro model ze zápisu appky. opts: mode (proxy), tier, admin, korekce (řádky runar_corrections z DB, normalizují se tady),
+// askCteni (Ask): text čtení ze serveru — uložený text z deníku nebo text z podpisu hlasu; null = Ask bez ověřitelného čtení,
 // vlastni (F3b, claude-proxy): { random?, uloz: stav sáčku z prompt_state, posledniObraz: {runa, img} z deníku } — bez něj se přehraje
 // náhoda a sáček ze zápisu (stín a smoke ㊍: server = appka bajt po bajtu).
 // Vrací { system, prompt, builder, cena, maxTokens, denik: {kind, rune_name, rune_glyph, rune_display?} | null,
 // zivotni: {cislo, lang} | null (jen životní runa), draws (prompt_draws do deníku, jen čtení run), stav (sáček po skládání), los } nebo { chyba }.
-export function slozPromptServer(stin, { mode = "", tier = "", admin = false, korekce = null, vlastni = null } = {}) {
+export function slozPromptServer(stin, { mode = "", tier = "", admin = false, korekce = null, vlastni = null, askCteni = null } = {}) {
   if (!stin || typeof stin !== "object" || !stin.sys || !stin.prompt) return { chyba: "no_record" };
   if (JSON.stringify(stin).length > 120000) return { chyba: "record_too_large" };
   const povolene = POVOLENE[mode];
@@ -114,15 +150,24 @@ export function slozPromptServer(stin, { mode = "", tier = "", admin = false, ko
     const druh = CTENI[String(stin.prompt.builder)];
     let runy = [];
     // builder + konec promptu v jedné skladbě (_skladba): kusy = recept čtení do deníku, jako appka (runar-reading.js, _drawsSPinem)
-    let pr = null;
+    let pr = null, strop = "", askNahrazeno = false;
+    // Ask: text čtení tak, jak ho appka ukazuje (bez řádku ✦, mezery sjednocené) — porovná se a při neshodě dosadí serverový
+    const askText = askCteni === null || askCteni === undefined ? null : normalizuj(textKHlasu(String(askCteni)));
+    const uprav = (jm, a) => {
+      if (kor && jm in KOREKCE_ARG) a[KOREKCE_ARG[jm]] = kor;
+      if (jm === "buildAskPrompt" && askText !== null && normalizuj(String(a[0] ?? "")) !== askText) { a[0] = askText; askNahrazeno = true; }
+      strop = prekrocenyStrop(jm, a, askText !== null);
+      return a;
+    };
     const sk = S._skladba(() => {
-      pr = prehraj(stin.prompt, { admin, vlastni: vl, uprav: (jm, a) => { if (kor && jm in KOREKCE_ARG) a[KOREKCE_ARG[jm]] = kor; return a; } });
+      pr = prehraj(stin.prompt, { admin, vlastni: vl, uprav });
       if (pr.chyba || !druh) return pr.text || "";
       runy = (pr.builder === "buildReadingPrompt" ? [pr.args[1]] : (Array.isArray(pr.args[1]) ? pr.args[1] : [])).filter(Boolean);
       if (!runy.length) return pr.text;
       return pr.text + S._promptKonec(druh[0], runy, pr.lang, S._myslenkaPro(tier, admin));   // hned po builderu: připomínka délky čte jeho rozpočet
     });
     if (pr.chyba) return { chyba: pr.chyba };
+    if (strop) return { chyba: strop };
     let prompt = sk.text, cena = 1, maxTokens = 0, denik = null, zivotni = null, draws = null;
     if (druh) {
       if (!runy.length) return { chyba: "no_runes" };
@@ -144,7 +189,7 @@ export function slozPromptServer(stin, { mode = "", tier = "", admin = false, ko
       zivotni = { cislo: i + 1, lang: pr.lang };
     }
     else if (pr.builder === "buildNameLorePrompt") maxTokens = S.RUNAR_MODES.name_lore.max_tokens;
-    return { system: sys.text, prompt, builder: pr.builder, cena, maxTokens, denik, zivotni, draws, stav: stav(),
+    return { system: sys.text, prompt, builder: pr.builder, cena, maxTokens, denik, zivotni, draws, stav: stav(), askNahrazeno,
              los: { sys: [sys.los, sys.los_zbyl, sys.los_dosel], prompt: [pr.los, pr.los_zbyl, pr.los_dosel], nahod: sys.nahod + pr.nahod } };
   } catch (e) { return { chyba: String((e && e.message) || e).slice(0, 200) }; }
 }

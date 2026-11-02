@@ -13078,3 +13078,20 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Hranice:** obsah dokumentů zůstává česky (CLAUDE.md §31); jména skriptů a docs podle zvyklostí repa (česky) — owner nepotvrdil,
   že „všechno“ znamená i je (otázka 2026-11-02).
 - Affected doc(s): RUNAR_BACKLOG.md (Sociální sítě body 8, 9; logo appky), memory/nazvy-souboru-anglicky.md.
+
+## 2026-11-02 (13) — Ask bere text čtení ze serveru, vstupy mají serverový strop; F4 až s přechodem hostingu
+
+- **Rozhodl:** owner 2026-11-02 *„3. ano“* na návrh: dokončit F3 (Ask, strop vstupů) a F4 (schovat buildery z appky) odložit.
+- **Proč F4 později:** schovat obsah promptu z veřejných souborů appky nic neschová, dokud je veřejné celé repo — a soukromé repo přijde
+  s přechodem na Cloudflare + Supabase Pro, který owner odložil, *„dokud se neprodává“* (2026-10-15 (2)). Navazuje na 2026-11-02 (4), (9).
+- **Co:** (a) Ask — text čtení ověří server proti deníku (uložené čtení, jen vlastní) nebo podpisu hlasu (neuložené čtení), týmiž funkcemi
+  jako podpis hlasu (`textKHlasu`, `normalizuj`); nesedí-li, dosadí svůj. Shoda změřena na 60/60 uložených čteních (46 s řádkem ✦), takže
+  legitimní Ask se nezmění. (b) Strop vstupů od prohlížeče (`STROP` v `_shared/prompt_server.mjs`): volné texty 300, jméno 120, ostatní
+  řetězce 3 000, neověřený text čtení v Asku 6 000, nejvýš 4 předchozí výměny — pojistka nad appkou (otázka a Ask 160 znaků), ne nárok;
+  nad stropem se čtení odmítne, ne ořízne.
+- **Ověřeno:** smoke ㊍ — týž text (i s ✦ a jinými mezerami) prompt nezmění, jiný se nahradí, bez serverového textu zůstane text appky;
+  strop na hranici projde, nad ní ne. Útoky v kopii: nenahradí · strop vypnutý · bez řezu u ✦ · bez stropu otázky — všechny chyceny.
+- **Zbývá:** předchozí výměny v Asku se neověřují (jen strop počtu a délky) — u neuloženého čtení nejsou nikde uložené.
+- **Nasazení:** `claude-proxy` po ownerově „nasaď“.
+- **Návrat:** revert commitu a nasadit předchozí `claude-proxy`.
+- Affected doc(s): RUNAR_BACKLOG.md (Plán infrastruktury krok 1 — F3b, F4).

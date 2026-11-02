@@ -411,7 +411,8 @@ promptu v `claude-proxy` (už ověřuje přihlášení a odečítá kredity; pro
    posílá `stin` (s čím skládala), `claude-proxy` prompt složí souběžně a zapíše shodu do `ops_events` „prompt_stin“ (bez textu); smoke ㊍.
    - [x] ✅ *(úklid 2026-10-31, owner „12. ano“, CODE-tune: `ops_events` „prompt_stin“ 42 ze 42 shod od 2026-10-21 — Ask 16, single 21, Norny 4, rozbor jména 1; žádná neshoda. Kříž, Podkova, Yggdrasil a životní runa ve stínu zatím vzorek nemají.)* **F2 vyhodnotit:** po pár dnech provozu `select detail from ops_events where kind='prompt_stin'` — každá neshoda = co záznamník
      nebo balíček neumí (builder, místo rozdílu). Pak záznam z mé sondy 2026-10-21 17:21 (chyba „reading 'k'“) ignorovat.
-   - [ ] **F3 přepnout:** server skládá sám — appka posílá jen vstupy (+ tah run); myšlenka ✦ (`_thoughtFor`, runar-reading.js) a připomínka
+   - [x] ✅ *(CODE-tune 2026-11-02: F3a, F3b a zbytek hotové — DECISIONS 2026-11-02 (4), (6), (9), (13); „appka posílá jen vstupy“ přešlo do F4)*
+     **F3 přepnout:** server skládá sám — appka posílá jen vstupy (+ tah run); myšlenka ✦ (`_thoughtFor`, runar-reading.js) a připomínka
      délky do jedné skládací funkce v balíčku; sáček obrazů, poslední motiv a obraz z localStorage do DB (tabulka na uživatele); náhoda na
      serveru; `prompt_draws` zapisuje server z losu. Zavře „libovolný prompt“ (níž).
      **Připsáno 2026-10-22 (owner „6. ano, připiš to tune“, kolo (b) průchodu CODE-read — kde server věří prohlížeči):** (a) cenu čtení
@@ -427,11 +428,11 @@ promptu v `claude-proxy` (už ověřuje přihlášení a odečítá kredity; pro
    - [x] ✅ *(CODE-tune 2026-11-02, DECISIONS 2026-11-02 (9); SQL spuštěno, `claude-proxy` nasazena a ověřena čtením ownera)*
      **F3b losování:** náhoda, sáček obrazů (`prompt_state`) a poslední obraz na serveru; los do deníku a appce ze serveru. Místní čas zůstává
      od prohlížeče (±36 h). Zbývá z F3b:
-   - [ ] **F3b zbytek:** appka posílá jen vstupy (bez vlastního skládání a sáčku — spolu s F4);
-     appka posílá jen vstupy. **Ask:** text čtení a předchozí výměnu brát z uloženého čtení / podpisu, ne od prohlížeče. **Pole čtení:**
-     serverový strop délky (otázka, oblast, hledání, záměr, jméno) podle UI. ~~(d) brána životní runy~~ ✅ *(CODE-tune 2026-11-02,
-     DECISIONS 2026-11-02 (6): server zapíše runu sám; SQL spuštěno ownerem, proxy nasazena 2026-11-02)*
-   - [ ] **F4 schovat:** buildery a RUNE_IMAGES z veřejných souborů appky pryč; shrine (laboratoř promptu) přes cestu jen pro admina;
+   - [x] ✅ *(CODE-tune 2026-11-02, DECISIONS 2026-11-02 (13); nasazení `claude-proxy` čeká na ownera)* **F3b zbytek:** **Ask** — text
+     čtení ze serveru (deník / podpis hlasu), předchozí výměny jen strop · **pole čtení** — serverový strop délky · ~~(d) brána životní
+     runy~~ ✅ *(DECISIONS 2026-11-02 (6))*. „Appka posílá jen vstupy“ (bez vlastního skládání a sáčku) → F4.
+   - [ ] ⏸ *(odloženo do přechodu hostingu — owner 2026-11-02 „3. ano“, DECISIONS 2026-11-02 (13): dokud je repo veřejné, nic neschová)*
+     **F4 schovat:** buildery a RUNE_IMAGES z veřejných souborů appky pryč; appka posílá jen vstupy (bez vlastního skládání a sáčku v localStorage); shrine (laboratoř promptu) přes cestu jen pro admina;
      pak soukromé repo (krok 3) a nové klíče Supabase (krok 9).
 2. **Supabase Free → Pro**, ověřit, že denní zálohy běží.
 3. **Repo soukromé.** Historie, klony a forky zůstanou — dnešní prompt brát jako vyzrazený (úsudek).

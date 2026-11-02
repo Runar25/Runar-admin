@@ -106,6 +106,23 @@ async function posledniObrazZDb(userId: string, zapis: any): Promise<{ runa: str
   return typeof img === "string" && img ? { runa, img } : null;
 }
 
+// Text čtení pro Ask ze SERVERU (2026-11-02, owner „3. ano“): uložené čtení z deníku (jen vlastní — user_id), jinak text z podpisu hlasu
+// neuloženého čtení (overServer — podepsal ho tenhle server, jen tomuhle uživateli). Nic z toho = null: Ask bez ověřitelného čtení
+// (účtuje se jako čtení) a prompt_server.mjs mu dá jen strop délky. Výklad má text v deep_text, jedna runa v short_text (persistJournal).
+async function askCteniZeServeru(userId: string, journal: any, listek: any): Promise<string | null> {
+  if (journal?.kind === "ask" && journal?.reading_id) {
+    const { data, error } = await sb().from("readings").select("short_text, deep_text, rune_glyph")
+      .eq("id", journal.reading_id).eq("user_id", userId).maybeSingle();
+    if (error) console.error("ask reading read failed:", error.message);
+    else if (data) return String((data.rune_glyph === "✦" ? data.deep_text : data.short_text) ?? "");
+  }
+  if (listek && typeof listek === "object" && listek.ticket) {
+    const nonce = await overServer(listek.ticket, userId, String(listek.text ?? ""));
+    if (nonce) return String(listek.text ?? "");
+  }
+  return null;
+}
+
 // Korekce slov pro prompt (runar_corrections) — server je čte sám, od prohlížeče je nebere (F3a). Tabulku čte appka taky celou
 // (pravidlo runar_corrections_public_read: true), takže prompt vyjde stejně. 5 min v paměti instance; výpadek DB = poslední známé.
 let _korekce: { kdy: number; data: unknown[] } | null = null;
@@ -527,11 +544,13 @@ serve(async (req: Request) => {
           const { slozPromptServer } = await import("../_shared/prompt_server.mjs");
           // F3b (2026-11-02, owner „1. ano“): losuje server — náhoda serveru, sáček z prompt_state, poslední obraz z deníku.
           // Text appky se tím od serverového liší (jiný los), proto se už neporovnává; shodu se stejným losem hlídá smoke ㊍.
-          const [uloz, posledniObraz] = await Promise.all([stavZDb(userId as string), posledniObrazZDb(userId as string, zapis)]);
+          const [uloz, posledniObraz, askCteni] = await Promise.all([stavZDb(userId as string), posledniObrazZDb(userId as string, zapis),
+            mode === "ask" ? askCteniZeServeru(userId as string, journal, body.ask_listek) : Promise.resolve(null)]);
           stavPuvodni = JSON.stringify(uloz);
-          sv = slozPromptServer(zapis, { mode, tier: userTier, admin: isAdmin, korekce: await korekceZDb(), vlastni: { uloz, posledniObraz } });
+          sv = slozPromptServer(zapis, { mode, tier: userTier, admin: isAdmin, korekce: await korekceZDb(), vlastni: { uloz, posledniObraz }, askCteni });
           detail = sv.chyba ? { server: true, vlastni: true, chyba: sv.chyba }
-            : { server: true, vlastni: true, builder: sv.builder, delka_server: String(sv.prompt).length, nahod: sv.los?.nahod ?? null };
+            : { server: true, vlastni: true, builder: sv.builder, delka_server: String(sv.prompt).length, nahod: sv.los?.nahod ?? null,
+                ...(mode === "ask" ? { ask_overeno: askCteni !== null, ask_nahrazeno: !!sv.askNahrazeno } : {}) };
         } catch (e) { detail = { server: true, chyba: "import: " + String((e as Error)?.message || e).slice(0, 180) }; }
         zapisStin(detail);
         if (sv && sv.chyba) {

@@ -12,6 +12,8 @@
 // 2026-11-02 (F3b, server losuje sám — režim `vlastni`): se stavem sáčku, jaký appka měla v localStorage, a s její náhodou musí server dát
 // tentýž prompt, tentýž stav sáčku po čtení (ten uloží do prompt_state) a tentýž zápis losu do deníku (prompt_draws i s kusy promptu).
 // A sáček ze zápisu appky se v tom režimu nesmí použít.
+// 2026-11-02 (owner „3. ano“): Ask s textem čtení ze serveru — týž text (i s řádkem ✦ a jinými mezerami) = prompt beze změny, jiný text
+// = dosadí serverový; vstupy nad serverovým stropem délky se odmítnou, na stropu projdou.
 //   node scripts/verify_prompt_stin.js
 'use strict';
 const fs = require('fs'), path = require('path'), http = require('http'), os = require('os'), cp = require('child_process');
@@ -159,6 +161,28 @@ const VZORKY = `(async () => {
   const najdi = (jm) => vz.find((v) => v.jm === jm && !v.chyba);
   // F3b: v režimu `vlastni` server sáček ze zápisu appky NEPOUŽIJE — vzorek sáčku (v sáčku jen poslední obraz, náhoda 0) s prázdným
   // stavem z DB musí vybrat jiný obraz; s tímtéž stavem jako appka týž (kontrola naopak). A se skutečnou náhodou serveru se složí.
+  const askV = najdi('ask_en'), s1V = najdi('single_en0'), kop = (x) => JSON.parse(JSON.stringify(x));
+  // Ask: text čtení ze serveru (deník / podpis hlasu)
+  if (askV) {
+    const tyz = slozPromptServer(askV.stin, { mode: 'ask', askCteni: 'SAMPLE   READING\n✦ A thought line' });
+    if (tyz.chyba || tyz.prompt !== askV.prompt || tyz.askNahrazeno) vady.push('Ask: týž text čtení (s ✦ a jinými mezerami) změnil prompt — ' + (tyz.chyba || 'nahrazeno ' + tyz.askNahrazeno));
+    const jiny = slozPromptServer(askV.stin, { mode: 'ask', askCteni: 'XQZSERVERREADING text from the journal' });
+    if (jiny.chyba || jiny.prompt.indexOf('XQZSERVERREADING') === -1 || jiny.prompt.indexOf('SAMPLE READING') !== -1 || !jiny.askNahrazeno)
+      vady.push('Ask: text čtení od prohlížeče se nenahradil serverovým');
+    const bez = slozPromptServer(askV.stin, { mode: 'ask' });
+    if (bez.chyba || bez.prompt.indexOf('SAMPLE READING') === -1) vady.push('Ask: bez serverového textu chybí text od appky — test nahrazení nic nedokazuje');
+  }
+  // strop délky vstupů: nad stropem odmítnout, na stropu projít (kontrola naopak)
+  if (s1V && askV) {
+    const sOtazkou = (n) => { const z = kop(s1V.stin); z.prompt.args[0].question = 'x'.repeat(n); return slozPromptServer(z, {}); };
+    if (sOtazkou(300).chyba) vady.push('strop: otázka 300 znaků neprošla (' + sOtazkou(300).chyba + ')');
+    if (sOtazkou(301).chyba !== 'input_too_long') vady.push('strop: otázka 301 znaků prošla');
+    const askZ = (fn) => { const z = kop(askV.stin); fn(z.prompt.args); return slozPromptServer(z, { mode: 'ask' }); };
+    if (askZ((a) => { a[1] = 'q'.repeat(301); }).chyba !== 'input_too_long') vady.push('strop: otázka Asku 301 znaků prošla');
+    if (askZ((a) => { a[0] = 'r'.repeat(6001); }).chyba !== 'input_too_long') vady.push('strop: neověřený text čtení v Asku 6001 znaků prošel');
+    if (askZ((a) => { a[0] = 'r'.repeat(6000); }).chyba) vady.push('strop: neověřený text čtení v Asku 6000 znaků neprošel');
+    if (askZ((a) => { a[9] = [1, 2, 3, 4, 5].map(() => ({ q: 'q', a: 'a', lang: 'en' })); }).chyba !== 'input_too_long') vady.push('strop: 5 předchozích výměn v Asku prošlo');
+  }
   const sa = najdi('sacek_en');
   if (!sa) vady.push('F3b: chybí vzorek sacek_en');
   else {
@@ -193,6 +217,7 @@ const VZORKY = `(async () => {
   if (vady.length) { vady.slice(0, 12).forEach((v) => console.log('  ' + v)); console.log('FAIL  stín skládání promptu: ' + vady.length + ' vad v ' + vz.length + ' vzorcích z appky'); konec(1); return; }
   console.log('OK    stín skládání promptu: ' + vz.length + ' vzorků z appky (EN+IS, single, výklady, založení, Ask, životní runa, rozbor jména, Opus, myšlenka ✦)'
     + ' — server složil systém i celý prompt bajt po bajtu, cena z configu; korekce a postava od prohlížeče, cizí builder, Opus a ✦ bez nároku neprojdou;'
-    + ' s vlastním stavem (F3b) týž prompt, sáček po čtení i zápis losu do deníku, sáček ze zápisu appky se nepoužije');
+    + ' s vlastním stavem (F3b) týž prompt, sáček po čtení i zápis losu do deníku, sáček ze zápisu appky se nepoužije;'
+    + ' Ask bere text čtení ze serveru, vstupy nad stropem délky neprojdou');
   konec(0);
 })().catch((e) => { console.log('FAIL  ' + e.message); process.exit(1); });
