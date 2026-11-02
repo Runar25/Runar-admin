@@ -56,6 +56,9 @@ body{background:var(--bg);color:var(--white);font-family:'Cormorant Garamond',se
 .wait input::placeholder{color:var(--muted)}
 .wait button{font-family:'Cinzel',serif;font-size:12px;letter-spacing:3px;background:var(--gold);color:#000;border:none;padding:0 20px;cursor:pointer}
 .fine{font-size:16px;color:#b9c8d8;margin-top:10px;font-style:italic}
+/* odkaz na rejstřík run pod registrací (2026-11-02): písmo lišty, zlatě — v patičce (10 px) ho owner přehlédl */
+.coll-link{display:inline-block;margin-top:24px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:4px;color:var(--gold);text-decoration:none;opacity:.85}
+.coll-link:hover{opacity:1}
 .foot{position:absolute;bottom:18px;left:0;right:0;padding:0 16px;text-align:center;font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;line-height:1.9;color:#D6A85CCC;z-index:4}
 .foot a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 .quote-m{display:none}
@@ -86,6 +89,7 @@ body{background:var(--bg);color:var(--white);font-family:'Cormorant Garamond',se
     <form class="wait" id="wait" novalidate><input id="wl-email" data-ph="1" type="email" autocomplete="email" required><input name="website" id="wl-hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px"><button id="wl-btn" data-is="SKRÁÐU ÞIG HÉR" data-en="REGISTER HERE"></button></form>
     <div class="fine" id="wl-msg" role="status" aria-live="polite" style="display:none;color:#F2F5F7;font-style:normal"></div>
     <div class="fine" data-is="Skráðu þig núna og þú færð tölvupóst þegar Rúnar fer í loftið." data-en="Register now and you will get an email when Rúnar launches."></div>
+    <a class="coll-link" id="w-coll-hero" href="runir/"></a>
   </div>
   <div class="foot">© 2026 AGNDOFA EHF. · <a href="mailto:runar@therunekeeper.com">RUNAR@THERUNEKEEPER.COM</a> · <a id="w-coll" href="runir/" data-k="atab_collection"></a> · <a href="https://runar25.github.io/Runar-admin/v2/runar-privacy.html" data-k="sp_privacy_link"></a> · <a id="w-ig" style="display:none">INSTAGRAM</a></div>
 </section>
@@ -109,7 +113,12 @@ function render() {
   document.documentElement.lang = LANG;
   document.querySelectorAll('.nav button').forEach(function (x) { x.classList.toggle('on', x.getAttribute('data-l') === LANG); });
   webInstagram(document.getElementById('w-ig'));
-  document.getElementById('w-coll').href = LANG === 'en' ? 'en/runes/' : 'runir/';   // rejstřík run v jazyce stránky (2026-11-02)
+  // rejstřík run v jazyce stránky (2026-11-02): odkaz pod registrací a v patičce
+  var wColl = LANG === 'en' ? 'en/runes/' : 'runir/';
+  document.getElementById('w-coll').href = wColl;
+  var wCollHero = document.getElementById('w-coll-hero');
+  wCollHero.href = wColl;
+  wCollHero.textContent = T.atab_collection + ' →';
 }
 document.querySelectorAll('.nav button').forEach(function (b) {
   b.onclick = function () {
