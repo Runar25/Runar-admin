@@ -883,7 +883,8 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   12. Bio Facebooku (≤ 101 znaků; zdroje uvádějí 101 i 155, kratší projde vždy): věta o světle + první věta `UI_TEXT.ai_note`
       (IS 94, EN 96 znaků).
   13. Nová IS část ověřena: Greynir bez nálezu; korpus „rúnalestur“ 19×, „á íslensku og“ 7345×, „íslensku og ensku“ 2790×.
-  14. therunekeeper.com do odkazů na Instagramu a do pole Web na Facebooku.
+  14. Odkaz se štítkem kanálu (DECISIONS 2026-11-02 (3)): na Instagram `https://therunekeeper.com/?z=ig`, do pole Web na Facebooku
+      `https://therunekeeper.com/?z=fb` (TikTok `?z=tt`, YouTube `?z=yt`).
   Stav 2026-11-01 (CODE-web, veřejný profil): Instagram má dál staré bio bez odkazu na web — slibuje „Daily guidance“, denní obsah
   appka nemá (bio z bodu 11 to neslibuje); Facebook zatím není (v configu jen `RUNAR_INSTAGRAM_URL`). Čeká na ownera: Facebook
   (bod 1), jména na TikToku a YouTube (bod 2), bio a odkaz na Instagramu (body 11, 14), volba profilovky (při zakládání profilů)
@@ -902,7 +903,8 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   (d) Náhled při sdílení: sítě čtou og:image bez JS → statická stránka na každou runu s vlastním obrázkem, generovaná skriptem
       z `UI_TEXT` (jako `web_socialni_obrazky.py`), a smoke, že vygenerované odpovídá zdroji. Bez serveru a bez provozních nákladů.
       Tytéž stránky nesou text v HTML pro vyhledávače i AI — bod (a) položky „Před spuštěním: viditelnost“.
-  (e) Měření bez cookies: štítek kanálu v odkazu (`?z=ig`) přečte formulář při odeslání (do zařízení nic neukládá), `waitlist-join`
+  (e) ⏳ *(CODE-web 2026-11-02, owner „5. ano“, DECISIONS 2026-11-02 (3): kód hotový, nasazení funkce a webu pouští owner)*
+      Měření bez cookies: štítek kanálu v odkazu (`?z=ig`) přečte formulář při odeslání (do zařízení nic neukládá), `waitlist-join`
       ho po kontrole proti seznamu zapíše do `ops_events.detail` u `waitlist_signup` — bez adresy, do Brevo ne (štítek u adresy =
       osobní údaj). Ranní souhrn podle štítku = CODE-tune. Po spuštění se registruje v appce → štítek musí převzít appka (CODE-tune).
   (f) „Runa dne“ v kódu není. `robots.txt` a `sitemap.xml` zatím nejsou (přibudou při spuštění, položka „Domovská stránka“ výš);

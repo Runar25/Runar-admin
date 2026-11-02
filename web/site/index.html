@@ -120,6 +120,9 @@ var WL = {
   done:  { is: 'Netfangið þitt er staðfest. Við látum þig vita þegar Rúnar fer í loftið.', en: 'Your email is confirmed. We will let you know when Rúnar launches.' },
   bad:   { is: 'Netfangið lítur ekki rétt út.', en: 'That email address does not look right.' }
 };
+// Štítek kanálu z odkazu (?z=ig — odkaz v biu Instagramu a na profilech; owner 2026-11-02 „5. ano“): pošle se jen spolu s registrací,
+// do zařízení se nic neukládá (žádná cookie, žádné úložiště). Který štítek platí, rozhoduje server (waitlist-join, seznam KANALY).
+var ZDROJ = (location.search.match(/[?&]z=([a-z]{1,12})(?:&|$)/) || [])[1] || '';
 var wlState = location.search.indexOf('registered=1') >= 0 ? 'done' : null;
 function wlShow() {
   var m = document.getElementById('wl-msg');
@@ -135,7 +138,7 @@ document.getElementById('wait').addEventListener('submit', function (e) {
   var btn = document.getElementById('wl-btn'); btn.disabled = true;
   fetch(SB_URL + '/functions/v1/waitlist-join', {
     method: 'POST', headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email: email, website: document.getElementById('wl-hp').value })
+    body: JSON.stringify({ email: email, website: document.getElementById('wl-hp').value, z: ZDROJ })
   }).then(function (r) {
     wlState = r.ok ? 'sent' : r.status === 400 ? 'bad' : r.status === 429 ? 'rate' : 'err';
   }).catch(function () { wlState = 'err'; }).then(function () {

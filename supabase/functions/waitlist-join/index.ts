@@ -7,6 +7,8 @@
 // Logy anglicky (§31), bez adresy (2026-10-13: ani doména — kontrola zákazů (verify_zakazy_cesty.js, §12) hlídá split e-mailu a adresa do logu nepatří).
 // 2026-10-21 (owner „4. obojí, předej to“, DECISIONS 2026-10-21 (7)): po úspěšném předání do Brevo zápis ops_events
 // {kind:'waitlist_signup'} (ranní souhrn počítá registrace) a krátký e-mail do runar@ — oboje BEZ adresy (zásady: adresa jen v Brevu).
+// 2026-11-02 (owner „5. ano“, DECISIONS 2026-11-02 (3)): štítek kanálu z odkazu (therunekeeper.com/?z=ig) — odkud registrace přišla,
+// bez cookies a bez osobních údajů. Jde jen do ops_events (detail.z) a do oznámení na runar@; do Brevo NE (štítek u adresy = osobní údaj).
 // Deploy: supabase functions deploy waitlist-join --project-ref pmitxjvkeovijreepror --no-verify-jwt
 
 import { createClient } from "npm:@supabase/supabase-js@2.117.3";
@@ -15,6 +17,9 @@ import { SERVER_KLIC } from "../_shared/klic.ts";   // serverový klíč Supabas
 const BREVO_LIST_ID = 3;       // Brevo → Contacts → Lists → „Rúnar – waitlist #3“ (owner 2026-10-13)
 const BREVO_TEMPLATE_ID = 1;   // Brevo → Marketing → Templates → „#1“, tag optin (owner 2026-10-13)
 const REDIRECT_URL = "https://therunekeeper.com/?registered=1";
+// Štítky kanálů (odkazy v biu a na profilech: Instagram, Facebook, TikTok, YouTube). Co tu není, se zahodí — do ops_events nesmí projít
+// libovolný text z adresy. Nový kanál = nový štítek tady + nasadit.
+const KANALY = new Set(["ig", "fb", "tt", "yt"]);
 
 // Odkud smí formulář volat: web, náhled na GitHub Pages a lokální náhled. Jiný původ dostane odpověď bez CORS hlavičky.
 const ORIGINS = new Set([
@@ -44,13 +49,14 @@ Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: cors(origin) });
   if (req.method !== "POST") return json({ error: "method_not_allowed" }, 405);
 
-  let body: { email?: unknown; website?: unknown };
+  let body: { email?: unknown; website?: unknown; z?: unknown };
   try { body = await req.json(); } catch { return json({ error: "bad_request" }, 400); }
 
   if (typeof body.website === "string" && body.website.trim() !== "") return json({ ok: true });   // honeypot
 
   const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
   if (!email || email.length > 254 || !EMAIL_RE.test(email)) return json({ error: "invalid_email" }, 400);
+  const z = typeof body.z === "string" && KANALY.has(body.z) ? body.z : null;
 
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
   const sb = createClient(Deno.env.get("SUPABASE_URL")!, SERVER_KLIC);
@@ -96,7 +102,7 @@ Deno.serve(async (req) => {
   });
 
   if (res.ok) {
-    await Promise.allSettled([zapisUdalost(sb), oznam(sb, key)]);   // ani jedno nesmí registraci shodit
+    await Promise.allSettled([zapisUdalost(sb, z), oznam(sb, key, z)]);   // ani jedno nesmí registraci shodit
     return json({ ok: true });
   }
 
@@ -107,9 +113,9 @@ Deno.serve(async (req) => {
   return json({ error: "server_error" }, 502);
 });
 
-// Záznam pro ranní souhrn (CODE-tune počítá řádky waitlist_signup) — bez osobních údajů.
-async function zapisUdalost(sb: ReturnType<typeof createClient>) {
-  const { error } = await sb.from("ops_events").insert({ kind: "waitlist_signup", detail: {} });
+// Záznam pro ranní souhrn (CODE-tune počítá řádky waitlist_signup) — bez osobních údajů; detail.z = štítek kanálu ze seznamu KANALY.
+async function zapisUdalost(sb: ReturnType<typeof createClient>, z: string | null) {
+  const { error } = await sb.from("ops_events").insert({ kind: "waitlist_signup", detail: z ? { z } : {} });
   if (error) console.error("waitlist-join: ops_events insert failed: " + error.message);
 }
 
@@ -118,7 +124,7 @@ async function zapisUdalost(sb: ReturnType<typeof createClient>) {
 // Registrace mají strop nejvýš 207/den (výš); kdyby oznámení šla ke každé, bylo by to až 414/den a přihlašovací kódy by nedošly.
 // 2/h = nejvýš 48 oznámení za den (207 + 48 = 255, zbude ≥ 45 na kódy). Přes strop se registrace jen zapíše do ops_events —
 // ranní souhrn ji započte, takže přehled zůstane úplný. Při běžném provozu (pár registrací denně) přijde e-mail ke každé.
-async function oznam(sb: ReturnType<typeof createClient>, key: string) {
+async function oznam(sb: ReturnType<typeof createClient>, key: string, z: string | null) {
   const { data: smi } = await sb.rpc("check_rate_limit", { p_key: "waitlist:notify", p_window_seconds: 3600, p_max_requests: 2 });
   if (smi === false) return;
   const r = await fetch("https://api.brevo.com/v3/smtp/email", {
@@ -128,7 +134,7 @@ async function oznam(sb: ReturnType<typeof createClient>, key: string) {
       sender: { name: "Rúnar", email: "noreply@therunekeeper.com" },   // ověřený odesílatel v Brevu (jako send-line)
       to: [{ email: "runar@therunekeeper.com", name: "Rúnar" }],
       subject: "New waitlist signup",
-      textContent: "Someone joined the Rúnar waitlist (awaiting e-mail confirmation).",
+      textContent: "Someone joined the Rúnar waitlist (awaiting e-mail confirmation)." + (z ? " Channel: " + z + "." : ""),
       tags: ["waitlist"],
     }),
   });

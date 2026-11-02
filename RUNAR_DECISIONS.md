@@ -12907,3 +12907,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   appky). Nainstalované appky drží starý config, dokud se neaktualizují — proto krok 3 (1–2 týdny) před vypnutím starých klíčů.
 - **Návrat:** revert tohoto commitu (starý klíč dál platí, dokud ho owner nevypne).
 - Affected doc(s): RUNAR_BACKLOG.md (Plán infrastruktury, krok 9.2).
+
+## 2026-11-02 (3) — Registrace na webu nese štítek kanálu (`?z=ig`) — bez cookies a bez osobních údajů
+
+- **Rozhodl:** owner 2026-11-02 na otázku CODE-web „Mám přidat štítek kanálu do registrace?“ (podnět Cowork HANDOFF69, bod 4): *„5. ano“*.
+- **Co:** odkaz na landing nese krátký štítek kanálu (`therunekeeper.com/?z=ig`, dál `fb`, `tt`, `yt`). Formulář ho pošle spolu s registrací;
+  `waitlist-join` ho pustí jen ze seznamu `KANALY` a zapíše do `ops_events.detail.z` u `waitlist_signup` a do oznámení na runar@
+  („Channel: ig.“). Bez štítku se nic nemění.
+- **Proč takhle:** analytiku na webu zatím nechceme (cookie lišta, zásady — BACKLOG „Sociální sítě“, bod 4). Štítek se čte z adresy jen při
+  odeslání formuláře, do zařízení se nic neukládá. Do Brevo ne: štítek u adresy by z kanálu udělal osobní údaj, který zásady nejmenují.
+- **Hranice:** jen registrace na landingu (před spuštěním); po spuštění se registruje v appce → štítek musí převzít appka (CODE-tune).
+  Ranní souhrn ukazuje dál jen součet (rozpad podle štítku = `ops-watch`, CODE-tune). Kdo se zaregistruje později nebo z jiného zařízení,
+  štítek nemá — bez cookies to jinak nejde.
+- **Ověřeno:** výběr štítku z adresy na 10 vzorcích (`?z=ig`, `?a=1&z=yt` projde; `?z=IG`, `?zz=ig`, prázdný a příliš dlouhý ne); syntaxe
+  funkce `node --check`. **Neověřeno:** běh naostro — nasazení funkce i webu zastavilo automatické schvalování Claude Code (zásah do
+  produkce), pouští ho owner; po něm jedna zkušební registrace s `?z=ig` (řádek v `ops_events`, oznámení s „Channel: ig.“).
+- Affected doc(s): RUNAR_BACKLOG.md (Veřejné stránky run (e), Sociální sítě bod 14).
