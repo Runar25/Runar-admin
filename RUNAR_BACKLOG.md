@@ -932,8 +932,13 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   na ní popis tvaru, první odstavec Kolekce a závěrečná otázka; prostřední dva odstavce a hlas zůstávají v appce — čeká na ownera.
   (3) *„zatím runa půlměsíce“* → v náhledu nahoře v rejstříku (počítá prohlížeč). (4) landing do vyhledávačů hned → DECISIONS
   2026-11-02 (5). (5) štítek kanálu → (e).
-  **Před nasazením stránek run:** výstup do web/site, kontrola ve smoke, že vygenerované = zdroj (s útokem v protipříkladech), stránky
-  do sitemapy, odkaz z landingu; DECISIONS se záznamem obsahu a runy půlměsíce.
+  **Owner k náhledu:** *„design je dobrý. zkusíme to. určitě to budeme upravovat… ať to vidím a můžu dělat změny“*, *„chci
+  maximalizovat viditelnost na google!!“* → stránky ve web/site (DECISIONS 2026-11-02 (7)): 2 rejstříky + 50 stránek run + sitemapa
+  + 25 obrázků; hlídá smoke ㊙ (`verify_web_runy.py`), `web_nasad.py` je před nasazením přegeneruje; z landingu odkaz SAFN RÚNA a canonical.
+  **Čeká na ownera:** nasazení webu i edge funkce (automatické schvalování Claude Code ho nepustí), sitemapa v Google Search Console,
+  dvoufázové přihlášení na GitHubu a u registrátora domény (owner: *„myslím, že nemám“*), ověřená doména therunekeeper.com na GitHubu.
+  **Dál k viditelnosti:** Bing Webmaster Tools (import ze Search Console), odkaz z agndofa.is na therunekeeper.com, odkazy z profilů
+  na sítích (štítky `?z=`), strukturovaná data (JSON-LD) na landingu a stránkách run.
 - [x] ✅ *(CODE-web 2026-11-01: (1) odkaz z appky v Play na therunekeeper.com i na Instagram zastaví smoke ㊐ (`OBCHOD` ve
   `scripts/verify_play_bez_nakupu.js`, JOURNEY_URL podvržené); (2) popis v obchodě přešel do „Obchody před spuštěním“; (3) ㊐ od 2026-10-21.)*
   **Google Play bez provize — co hlídat dál** (pravidlo consumption-only → `RUNAR_PRICING.md` „Platby v appkách z obchodů“).

@@ -80,6 +80,9 @@ def popisy():
     return zmeneno
 
 def main():
+    # Stránky run (scripts/web_runy.py, 2026-11-02): přegenerovat z dnešních dat appky PŘED nasazením — text runy mění tune v appce
+    # a web by jinak nesl starý (smoke ㊙ to mezi nasazeními hlásí jen jako ⚠). Změněné stránky pak commitne session, jako verze níž.
+    subprocess.run([sys.executable, '-X', 'utf8', os.path.join(ROOT, 'scripts', 'web_runy.py')], check=True)
     hashe, zmeneno = verze()
     print('verze:', ', '.join('%s=%s' % kv for kv in hashe.items()))
     print('přepsané stránky:', ', '.join(zmeneno) or 'žádné (verze sedí)')

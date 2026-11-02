@@ -12983,3 +12983,24 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   životní runy nasazena týž den (2026-11-02 (4)).
 - **Návrat:** revert commitu; SQL `alter function public.guard_life_rune_immutable() security definer;`.
 - Affected doc(s): RUNAR_BACKLOG.md (Plán infrastruktury krok 1 — F3b, Zjištěno při auditu).
+
+## 2026-11-02 (7) — Stránky run na webu veřejně: rejstřík Safn rúna a 25 run (IS + EN), runa půlměsíce, do vyhledávačů
+
+- **Rozhodl:** owner 2026-11-02 k náhledu: *„design je dobrý. zkusíme to. určitě to budeme upravovat. ale zatím dobrý s tím, ať to
+  vidím a můžu dělat změny“*; dřív *„zatím bych to udělal jako runu půlměsíce. pro začátek“* a *„chci maximalizovat viditelnost na
+  google!!“* (podnět Cowork HANDOFF69).
+- **Co:** `scripts/web_runy.py` generuje z dat appky (`scripts/utils/web_runy_data.js`: `UI_TEXT.coll_rune` / `coll_shape`, `runeSvg`,
+  `lifeRuneSpan`, `rnSplit`) statické stránky `web/site/runir/` a `web/site/en/runes/` — rejstřík a 25 run, hreflang, canonical, obrázek
+  pro sdílení `img/runir/<runa>.jpg` — a `sitemap.xml` se všemi. Na stránce runy popis tvaru, první a poslední odstavec Kolekce;
+  prostřední dva odstavce a hlas jen v appce (návštěvník appky dál vidí 5 run celých). V rejstříku runa půlměsíce (`calcLifeRune`
+  s dnešním datem, počítá prohlížeč) a životní runa z data narození (jen v prohlížeči, nic se neposílá). Landing: odkaz SAFN RÚNA
+  v patičce a `canonical` (odkazy se štítkem `?z=` jsou pro vyhledávač tatáž stránka).
+- **Proč staticky:** náhled při sdílení i vyhledávače čtou HTML bez JavaScriptu.
+- **Hlídá:** smoke ㊙ (`verify_web_runy.py`): ruční úprava stránky nebo šablona bez přegenerování = FAIL, změněný text v appce = ⚠;
+  `web_nasad.py` stránky před každým nasazením přegeneruje sám. Útoky v protipříkladech (2× chyti, 1× nesmi).
+- **Ověřeno:** náhled v prohlížeči (telefon i počítač, IS i EN, 0 chyb v konzoli); životní runa 4. 7. → Fehu, 29. 2. → Tiwaz, 31. 4. →
+  hláška o neplatném datu; runa půlměsíce 2. 11. → Hagalaz; ㊙ na čistém výstupu projde, ruční úprava FAIL, jiný otisk zdroje ⚠;
+  ㊑, ㊖, ㉽, ㉹ bez nálezu (58 stránek webu). **Neověřeno naostro:** nasazení — automatické schvalování Claude Code nasazení do
+  produkce nepustilo ani s ownerovým *„udělej to“*; čeká na ownera.
+- **Návrat:** smazat `web/site/runir/`, `web/site/en/`, `web/site/img/runir/`, sitemapu vrátit na kořen, odkaz z landingu pryč, nasadit.
+- Affected doc(s): RUNAR_BACKLOG.md (Veřejné stránky run na webu).

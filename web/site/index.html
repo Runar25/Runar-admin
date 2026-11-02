@@ -10,6 +10,8 @@
 <meta name="description" data-meta="hero_quote" content="Rúnirnar spá ekki fyrir um örlög þín. Þær minna þig á veginn sem þú gengur nú þegar.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://therunekeeper.com/">
+<!-- canonical (2026-11-02, DECISIONS 2026-11-02 (7)): odkazy se štítkem kanálu (?z=ig…) jsou pro vyhledávač tatáž stránka -->
+<link rel="canonical" href="https://therunekeeper.com/">
 <meta property="og:site_name" content="Rúnar · The Rune Keeper">
 <meta property="og:title" content="Rúnar · The Rune Keeper">
 <meta property="og:description" data-meta="hero_quote" content="Rúnirnar spá ekki fyrir um örlög þín. Þær minna þig á veginn sem þú gengur nú þegar.">
@@ -85,7 +87,7 @@ body{background:var(--bg);color:var(--white);font-family:'Cormorant Garamond',se
     <div class="fine" id="wl-msg" role="status" aria-live="polite" style="display:none;color:#F2F5F7;font-style:normal"></div>
     <div class="fine" data-is="Skráðu þig núna og þú færð tölvupóst þegar Rúnar fer í loftið." data-en="Register now and you will get an email when Rúnar launches."></div>
   </div>
-  <div class="foot">© 2026 AGNDOFA EHF. · <a href="mailto:runar@therunekeeper.com">RUNAR@THERUNEKEEPER.COM</a> · <a href="https://runar25.github.io/Runar-admin/v2/runar-privacy.html" data-k="sp_privacy_link"></a> · <a id="w-ig" style="display:none">INSTAGRAM</a></div>
+  <div class="foot">© 2026 AGNDOFA EHF. · <a href="mailto:runar@therunekeeper.com">RUNAR@THERUNEKEEPER.COM</a> · <a id="w-coll" href="runir/" data-k="atab_collection"></a> · <a href="https://runar25.github.io/Runar-admin/v2/runar-privacy.html" data-k="sp_privacy_link"></a> · <a id="w-ig" style="display:none">INSTAGRAM</a></div>
 </section>
 <script src="https://runar25.github.io/Runar-admin/v2/runar-config.js"></script>
 <script src="https://runar25.github.io/Runar-admin/v2/runar-translations.js"></script>
@@ -107,6 +109,7 @@ function render() {
   document.documentElement.lang = LANG;
   document.querySelectorAll('.nav button').forEach(function (x) { x.classList.toggle('on', x.getAttribute('data-l') === LANG); });
   webInstagram(document.getElementById('w-ig'));
+  document.getElementById('w-coll').href = LANG === 'en' ? 'en/runes/' : 'runir/';   // rejstřík run v jazyce stránky (2026-11-02)
 }
 document.querySelectorAll('.nav button').forEach(function (b) {
   b.onclick = function () {

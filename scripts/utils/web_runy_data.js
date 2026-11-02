@@ -26,7 +26,7 @@ for (const l of ['is', 'en']) for (const k of KLICE) {
 const n = g('RUNES.length');
 for (let i = 0; i < n; i++) {
   const r = 'RUNES[' + i + ']';
-  const z = { n: g(r + '.n'), poradi: i, kamen: g('runeSvg(' + r + ', { frame: true, cls: "w-kamen" })') };
+  const z = { n: g(r + '.n'), poradi: i, kamen: g('runeSvg(' + r + ', { frame: true, cls: "w-stone" })') };
   for (const l of ['is', 'en']) {
     g('lang = ' + JSON.stringify(l));   // rn() v rnSplit čte globální `lang` (v appce ho drží runar-app.js)
     const sp = g('rnSplit(' + r + ')');

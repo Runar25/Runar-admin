@@ -381,6 +381,11 @@ PRIPADY = [
  ('chyti', 'verify_onclick_funkce.js', 'v2/runar-reader.html', 'replace', 'onclick="treeZoomAll()"', 'onclick="treeZoomVse()"'),
  ('chyti', 'verify_onclick_funkce.js', 'v2/runar-journal.js', 'replace', 'onclick="playReadingVoice(', 'onclick="playReadingVoiceX('),
  ('nesmi', 'verify_onclick_funkce.js', 'v2/runar-reader.html', 'replace', 'onclick="treeZoomAll()"', 'onclick="event.stopPropagation(); treeZoomAll()"'),
+ # ㊙ stránky run na webu (CODE-web 2026-11-02): ruční úprava vygenerované stránky · špatná adresa v sitemapě → FAIL; změněný text runy
+ # v appce → jen ⚠, exit 0 (text mění tune, web nasazuje web — kontrola nesmí zastavit cizí push)
+ ('chyti', 'verify_web_runy.py', 'web/site/runir/fehu/index.html', 'replace', '<h1 class="w-h1">FEHU</h1>', '<h1 class="w-h1">FEHU!</h1>'),
+ ('chyti', 'verify_web_runy.py', 'web/site/sitemap.xml', 'replace', '<loc>https://therunekeeper.com/runir/fehu/</loc>', '<loc>https://therunekeeper.com/runir/fehuX/</loc>'),
+ ('nesmi', 'verify_web_runy.py', 'v2/runar-translations.js', 'replace', 'Fehu is value that moves.', 'Fehu is value that flows.'),
 ]
 
 

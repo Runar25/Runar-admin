@@ -1347,6 +1347,18 @@ radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola hlasu vykladu probehla'
 check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
 
+# ㊙ Stránky run na webu (CODE-web 2026-11-02, owner „design je dobrý. zkusíme to“, DECISIONS 2026-11-02 (7)): web/site/runir/ a
+# web/site/en/runes/ generuje scripts/web_runy.py z dat appky. Ruční úprava stránky nebo změna generátoru bez přegenerování = FAIL;
+# změněný text v appce = jen ⚠ (text mění tune, web nasazuje web — scripts/web_nasad.py stránky před nasazením přegeneruje sám).
+print('\n' + chr(0x3299) + ' STRÁNKY RUN NA WEBU (verify_web_runy.py)')
+r = subprocess.run([sys.executable, '-X', 'utf8', os.path.join(ROOT, 'scripts', 'verify_web_runy.py')], capture_output=True, text=True, encoding='utf-8')
+for _l in r.stdout.splitlines():
+    if _l.startswith('⚠'):
+        print('  ' + _l)
+radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
+prvni = radky[-1] if radky else 'kontrola stranek run probehla'
+check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
