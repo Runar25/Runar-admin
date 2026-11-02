@@ -51,3 +51,5 @@ runar-provoz.html
 
 # Supabase CLI — místní stav propojení (project-ref, verze, pooler bez hesla); ne obsah repa. 2026-10-11 kontrola architektury, CODE-read.
 supabase/.temp/
+# náhled stránek run (scripts/web_runy.py --nahled, CODE-web 2026-11-02) — generovaný, necommitovat
+web/nahled-runy/

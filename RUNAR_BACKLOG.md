@@ -919,8 +919,14 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
       denní střídání by byl nový systém bez opory (§23).
   **Střet s kánonem (k posouzení, obsah je Cowork + owner):** „poznej se v jedné větě“ je výrok „tohle jsi“ — `RUNAR_DESIGN.md`
   „Kdo je Rúnar“ (nenabízí jistotu, zrcadlo, ne orákulum) a u životní runy „nikdy verdikt ani souhrn ‚tohle jsi‘“.
-  **Čeká na ownera:** stránky run ano / ne · všech 25 popisů veřejně? · runa půlměsíce místo denní · indexovat hned, nebo se
-  spuštěním · štítek kanálu v registraci.
+  **Owner 2026-11-02:** (1) *„ano, chci vidět první náhled“* → generátor `scripts/web_runy.py` (data z appky přes
+  `scripts/utils/web_runy_data.js`); `--nahled` píše do web/nahled-runy/ (mimo web/site, nenasazuje se). (2) *„dej mi návrh, jak by to
+  vypadalo… musí být všechny viditelné kvůli dosahu?“* → návrh v náhledu: stránka pro každou z 25 run (vyhledávač hledá konkrétní runu),
+  na ní popis tvaru, první odstavec Kolekce a závěrečná otázka; prostřední dva odstavce a hlas zůstávají v appce — čeká na ownera.
+  (3) *„zatím runa půlměsíce“* → v náhledu nahoře v rejstříku (počítá prohlížeč). (4) landing do vyhledávačů hned → DECISIONS
+  2026-11-02 (5). (5) štítek kanálu → (e).
+  **Před nasazením stránek run:** výstup do web/site, kontrola ve smoke, že vygenerované = zdroj (s útokem v protipříkladech), stránky
+  do sitemapy, odkaz z landingu; DECISIONS se záznamem obsahu a runy půlměsíce.
 - [x] ✅ *(CODE-web 2026-11-01: (1) odkaz z appky v Play na therunekeeper.com i na Instagram zastaví smoke ㊐ (`OBCHOD` ve
   `scripts/verify_play_bez_nakupu.js`, JOURNEY_URL podvržené); (2) popis v obchodě přešel do „Obchody před spuštěním“; (3) ㊐ od 2026-10-21.)*
   **Google Play bez provize — co hlídat dál** (pravidlo consumption-only → `RUNAR_PRICING.md` „Platby v appkách z obchodů“).
