@@ -3395,12 +3395,17 @@ function setText(id, v)   { const el = document.getElementById(id); if (el && v 
 // Popisek s runou na začátku („ᚠ DRAW YOUR RUNE“, „ᚲ LET THE RUNES DECIDE“, „ᚢ HEAR RÚNAR SPEAK“…) → runa jako NAŠE SVG (holá
 // linka), ne znak písma. KUKY 2026-10-10 (bod 11: „nahradit našimi glyfy“): Cormorant runy nemá, prohlížeč půjčil cizí písmo a runa
 // vypadala divně (§5: glyf jen z RUNE_SVGS). Kterou runu popisek nese, říká dál znak v UI_TEXT (jedno místo); barvu bere z textu
-// (.lbl-rune v CSS). ᚱ je značka a zůstává písmem (§5). Bez runy na začátku = totéž co setText. Smoke ㉻ hlídá, že se klíče
+// (.lbl-rune v CSS). ᚱ je značka Rúnara: od 2026-11-02 kresbou znackaSvg() (runar-znacka.js), ne holou linkou Raidho (§5).
+// Bez runy na začátku = totéž co setText. Smoke ㉻ hlídá, že se klíče
 // s runou jinudy nesázejí.
 function setRuneText(idOrEl, v) {
   var el = typeof idOrEl === 'string' ? document.getElementById(idOrEl) : idOrEl;
   if (!el || v === undefined) return;
   var m = /^([\u16A0-\u16FF])\s*/.exec(v);
+  if (m && m[1] === '\u16B1' && typeof znackaSvg === 'function') {
+    el.innerHTML = '<span class="lbl-rune" aria-hidden="true">' + znackaSvg() + '</span>' + escapeHtml(v.slice(m[0].length));
+    return;
+  }
   var r = (m && m[1] !== '\u16B1' && typeof RUNES !== 'undefined') ? RUNES.find(function (x) { return x.g === m[1]; }) : null;
   if (!r) { el.textContent = v; return; }
   var svg = runeSvg(r, { frame: false }), ink = _runeInkBox(r);

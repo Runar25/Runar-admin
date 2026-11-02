@@ -38,6 +38,7 @@
 <script src="runar-utils.js"></script>
 <script src="runar-svgs.js"></script>
 <script src="runar-runakort.js"></script>   <!-- 2026-10-21: kresba karty Rúnakort (sdílí web) -->
+<script src="runar-znacka.js"></script>   <!-- 2026-11-02: značka ᚱ kresbou, vyplní [data-znacka] -->
 
   <link rel="stylesheet" href="runar-reader.css">
   <link rel="stylesheet" href="runar-runakort.css">
@@ -177,7 +178,7 @@
 <div class="modal-overlay" id="install-modal">
   <div class="modal">
     <button class="modal-close" onclick="closeInstallModal()">✕</button>
-    <div class="modal-rune" style="font-size:2em;color:var(--gold);margin-bottom:16px;opacity:0.7;">ᚱ</div>
+    <div class="modal-rune" data-znacka style="font-size:2em;color:var(--gold);margin-bottom:16px;opacity:0.7;"></div>
     <div class="modal-title" id="install-modal-title">INSTALL RÚNAR</div>
     <p class="modal-sub" id="install-modal-body" style="margin:16px 0 24px;line-height:1.9;"></p>
     <button class="btn-full" onclick="closeInstallModal()" id="install-modal-btn">GOT IT</button>
@@ -503,7 +504,7 @@
       <!-- Reading loading overlay — pulsing ᚱ while AI generates -->
       <div id="reading-loading" style="display:none;">
         <div class="whispers-loading-inner">
-          <span class="whispers-loading-star">&#x16b1;</span>
+          <span class="whispers-loading-star" data-znacka></span>
           <div class="whispers-loading-label" id="reading-loading-txt">THE STONES SPEAK IN SILENCE…</div>
           <!-- Heslo zrcadla — plni _paintLoadingMotto() při startu čtení (reporty #5/#6, KUKY 2026-09-21) -->
           <div class="reading-loading-motto" id="reading-loading-motto"></div>
@@ -1035,7 +1036,7 @@
 <div class="modal-overlay" id="name-overlay" role="dialog" aria-modal="true" aria-labelledby="name-card-title">
   <div class="modal name-card">
     <button class="modal-close" type="button" onclick="skipName()">✕</button>
-    <div class="name-card-rune">ᚱ</div>
+    <div class="name-card-rune" data-znacka></div>
     <div class="modal-title" id="name-card-title">BEFORE THE RUNES SPEAK</div>
     <p class="modal-sub" id="name-card-sub">The runes speak differently to those whose name they know.</p>
     <label class="name-card-lbl" id="name-norse-lbl" for="name-norse-input">YOUR NORSE NAME</label>

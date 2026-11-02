@@ -1046,11 +1046,12 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
 - ✖ *(owner 2026-11-01: „5. žádnou. necháváme jak je. návrhy si ulož do budoucna“ — ikona appky zůstává; náhledy A–L, verdikty
   a příkazy generátoru v `docs/archive/2026-11-01-ikona-navrhy/`, DECISIONS 2026-11-01 (10).)* **Nové logo appky — zlaté Rúnarovo R
   (e98e5e68):** *„mame ho například v rune reading card“* → návrhy ikony generátorem `scripts/ikona_appky.py` (CODE-web).
-- [ ] **Značka ᚱ v appce kresbou místo písma (owner 2026-11-01: „3. předělat na kresbu“, „6. ano“ — předáno CODE-tune):** dnes písmo
+- [ ] *(CODE-tune 2026-11-02 hotovo, DECISIONS 2026-11-02 (1): kresba `znackaSvg()` ve `v2/runar-znacka.js` — ne v runar-utils.js;
+  zbývá jen krok CODE-web níž, generátor čte z `runar-znacka.js`.)* **Značka ᚱ v appce kresbou místo písma (owner 2026-11-01: „3. předělat na kresbu“, „6. ano“ — předáno CODE-tune):** dnes písmo
   systému (`runar-help.html`, `runar-privacy.html`, `runar-reader.html` 3×, `runar-reading.js`; výjimka v `setRuneText`, `runar-utils.js`)
   — na Windows Segoe UI Historic (R ze snímku ownera), jinde jiný tvar nebo prázdný čtvereček (proto runy 2026-07-13 přešly na SVG).
   CODE-tune: `znackaSvg()` v `runar-utils.js` z geometrie `R_ZNACKA` + §5 v témže commitu. **Pak CODE-web:** generátor ikony čte
-  kresbu odtamtud (jako `runeSvg`) a `R_ZNACKA` z něj zmizí (§18).
+  kresbu odtamtud (jako `runeSvg`) a `R_ZNACKA` z něj zmizí (§18). → čte `ZNACKA_R` z `v2/runar-znacka.js`.
 - [x] ✅ *(úklid 2026-10-31, owner „12. ano“, CODE-tune: opraveno v 7c3aebc.)* **Útok ㊼ „worker zase chytá sw.js“ jednou propustil (2026-10-29, CODE-tune):** v pre-push smoke (čistá kopie, zátěž) kontrola
   `verify_verze_hlaseni.js` prošla i s podstrčenou chybou (`.git/runar-protipriklady-propustene/20261029-221655_…`); hned poté 2× po sobě
   chytila 4 ze 4. Šum časování skutečného workeru (stav B3) → zpevnit čekání v kontrole, ať útok nezávisí na rychlosti stroje.

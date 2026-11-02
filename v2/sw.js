@@ -1,8 +1,8 @@
-// Rúnar Service Worker — v857
+// Rúnar Service Worker — v858
 // HTML: network-first (always fresh). JS/CSS/icons: cache-first (fast, offline ok).
 // External (Supabase, ElevenLabs, fonts): pass-through, never intercepted.
 
-const CACHE = 'runar-v857';
+const CACHE = 'runar-v858';
 const JS_SHELL = [
   '/Runar-admin/v2/runar-reader.css',
   '/Runar-admin/v2/runar-utils.js',
@@ -22,6 +22,7 @@ const JS_SHELL = [
   '/Runar-admin/v2/runar-svgs.js',
   // 2026-10-21: karta Rúnakort v okně cesty (kresba + vzhled + dva obrázky vzhledů s postavou)
   '/Runar-admin/v2/runar-runakort.js',
+  '/Runar-admin/v2/runar-znacka.js',   // 2026-11-02: značka ᚱ kresbou
   '/Runar-admin/v2/runar-runakort.css',
   '/Runar-admin/v2/img/runar-bile.jpg',
   '/Runar-admin/v2/img/runar-zima.jpg',

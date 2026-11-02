@@ -1178,7 +1178,7 @@ async function askRunar() {
   }
   if (qEl) { qEl.textContent = q; qEl.style.display = 'block'; }
   if (ans) {
-    ans.innerHTML = '<div class="whispers-loading-inner"><span class="whispers-loading-star">&#x16b1;</span>'
+    ans.innerHTML = '<div class="whispers-loading-inner"><span class="whispers-loading-star">' + znackaSvg() + '</span>'
       + '<div class="whispers-loading-label">' + escapeHtml(t('ask_thinking')) + '</div></div>';
     ans.style.display = 'block';
   }

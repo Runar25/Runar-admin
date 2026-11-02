@@ -162,6 +162,10 @@ PRIPADY = [
  ('chyti', 'verify_jazyk_ui.js', 'web/site/index.html', 'replace', "'That email address does not look right.'", "'Tahle e-mailová adresa nevypadá správně.'"),
  ('chyti', 'verify_edge_imports.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'regex', r'npm:@supabase/supabase-js@[0-9.]+', 'npm:@supabase/supabase-js@2'),
  ('chyti', 'verify_rune_glyphs.js', 'v2/runar-help.html', 'replace', '</body>', '<p>ᚠ</p></body>'),
+ # 2026-11-02: značka ᚱ je kresba (runar-znacka.js) — písmem ani HTML entitou (tak se schovávala v čekání) už neprojde
+ ('chyti', 'verify_rune_glyphs.js', 'v2/runar-help.html', 'replace', '<div class="help-rune" data-znacka></div>', '<div class="help-rune">ᚱ</div>'),
+ ('chyti', 'verify_rune_glyphs.js', 'v2/runar-reader.html', 'replace', '<span class="whispers-loading-star" data-znacka></span>', '<span class="whispers-loading-star">&#x16b1;</span>'),
+ ('chyti', 'verify_rune_glyphs.js', 'v2/runar-reading.js', 'replace', "<span class=\"whispers-loading-star\">' + znackaSvg() + '</span>'", "<span class=\"whispers-loading-star\">&#x16b1;</span>'"),
  # ㉻ hlídá od 2026-10-11 i shrine a runu z DB (CODE-tune, owner „jeď ty tři chyby“): návrat každé ze tří opravených vad musí shodit
  ('chyti', 'verify_rune_glyphs.js', 'v2/runar-shrine.html', 'replace', '<span data-rune-glyph="Fehu"></span>GENERATE GIFT CODES', 'ᚠ GENERATE GIFT CODES'),
  ('chyti', 'verify_rune_glyphs.js', 'v2/runar-shrine.html', 'replace', "setRuneText(btn, tUI('voice_btn_loading'));", "btn.textContent = tUI('voice_btn_loading');"),

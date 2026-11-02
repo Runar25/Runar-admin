@@ -15,14 +15,18 @@
 // Shrine a jeho skripty od 2026-10-11 (do té doby „Mimo: shrine — popisky teach_* a hlas tam runu písmem zatím mají“; BACKLOG „Journal
 // SPREAD historie … zbývá: shrine obchází runeSvg“, owner „jeď ty tři chyby“). Prompty (runar-character.js) nehlídá — runa v textu pro model
 // je správně. Neumí: volání rozdělené na víc řádků (setRuneText( na jednom, t('x') na dalším) — dnes žádné není.
+// Značka ᚱ (od 2026-11-02, owner „3. předělat na kresbu“, DECISIONS 2026-11-01 (10)): do té doby jediná výjimka, písmem smí. Teď je
+// kresbou znackaSvg() (runar-znacka.js) a písmem neprojde nikde. Runa zapsaná jako HTML entita (&#x16b1;) se počítá taky — tak se
+// značka v čekání na čtení a v Asku schovávala před bodem 2, který hledal jen znak.
 // Spuštění: node scripts/verify_rune_glyphs.js [--test]
 'use strict';
 const fs = require('fs'), path = require('path'), vm = require('vm');
 const V2 = path.join(__dirname, '..', 'v2');
 const RUNA = /[ᚠ-᛿]/;
-const ZNACKA = 'ᚱ';   // ᚱ — značka Rúnara, písmem smí (§5)
+// Runa jako HTML entita: &#x16A0; – &#x16FF; (5792–5887 desítkově).
+const ENTITA = /&#x16[a-f][0-9a-f];|&#(?:579[2-9]|58[0-7]\d|588[0-7]);/i;
 const JS_READERU = ['runar-utils.js', 'runar-app.js', 'runar-reading.js', 'runar-auth.js', 'runar-tree.js', 'runar-journal.js',
-  'runar-helper.js', 'runar-reporter.js', 'runar-rune-popup.js'];
+  'runar-helper.js', 'runar-reporter.js', 'runar-rune-popup.js', 'runar-znacka.js'];
 const JS_ADMIN = ['runar-readings-admin.js', 'runar-reports-admin.js', 'runar-voice-admin.js', 'runar-testers-admin.js'];
 const STRANKY = ['runar-reader.html', 'runar-help.html', 'runar-privacy.html', 'runar-shrine.html'];
 
@@ -35,7 +39,7 @@ function nactiUiText() {
 function kliceSRunou(U) {
   const k = new Set();
   for (const l of Object.keys(U)) for (const [key, val] of Object.entries(U[l] || {})) {
-    if (typeof val === 'string' && val.length && RUNA.test(val[0]) && val[0] !== ZNACKA) k.add(key);
+    if (typeof val === 'string' && val.length && RUNA.test(val[0])) k.add(key);
   }
   return k;
 }
@@ -57,6 +61,7 @@ function kontrolaDyn(src, soubor) {
   radky.forEach((radek, i) => {
     const t = radek.trim();
     if (t.startsWith('//')) return;
+    if (ENTITA.test(radek)) chyby.push(soubor + ':' + (i + 1) + '  runa jako HTML entita → ' + t.slice(0, 110));
     if (/(\$\{\s*\w+\.g\s*\}|\+\s*\w+\.g\b|\b\w+\.g\s*\+|textContent\s*=\s*\w+\.g\b)/.test(radek) && !/runeSvg|setRuneText|rune_glyph:/.test(radek))
       chyby.push(soubor + ':' + (i + 1) + '  runa z dat písmem → ' + t.slice(0, 110));
     // Runa z DB do HTML: jen jako záloha vedle runeSvg (týž řádek nebo dva pod ním).
@@ -69,8 +74,9 @@ function kontrolaHtml(src, soubor) {
   const chyby = [];
   const bez = src.replace(/<!--[\s\S]*?-->/g, (x) => x.replace(/[^\n]/g, ' '));   // komentáře pryč, čísla řádků zůstanou
   bez.split('\n').forEach((radek, i) => {
+    if (ENTITA.test(radek)) { chyby.push(soubor + ':' + (i + 1) + '  runa jako HTML entita → ' + radek.trim().slice(0, 100)); return; }
     for (const ch of radek) {
-      if (RUNA.test(ch) && ch !== ZNACKA) {
+      if (RUNA.test(ch)) {
         chyby.push(soubor + ':' + (i + 1) + '  ' + ch + ' U+' + ch.codePointAt(0).toString(16).toUpperCase() + ' písmem → ' + radek.trim().slice(0, 100));
         break;
       }
@@ -100,8 +106,14 @@ if (process.argv.includes('--test')) {
     ['js: klíč bez runy projde', kontrolaJs("  setText('x', t('k2'));", 'a.js', K).length === 0],
     ['html: runa písmem padne', kontrolaHtml('<div>ᚠ DRAW</div>', 'a.html').length === 1],
     ['html: runa v komentáři projde', kontrolaHtml('<!-- ᚠ -->\n<div>x</div>', 'a.html').length === 0],
-    ['html: značka ᚱ projde', kontrolaHtml('<div>ᚱ</div>', 'a.html').length === 0],
-    ['klíče: najde runu na začátku, ᚱ ne', (() => { const k = kliceSRunou({ en: { a: 'ᚠ X', b: 'ᚱ Y', c: 'Z ᚠ' } }); return k.has('a') && !k.has('b') && !k.has('c'); })()],
+    ['html: značka ᚱ písmem padne', kontrolaHtml('<div>ᚱ</div>', 'a.html').length === 1],
+    ['html: entita &#x16b1; padne', kontrolaHtml('<span class="x">&#x16b1;</span>', 'a.html').length === 1],
+    ['html: entita &#5809; padne', kontrolaHtml('<span>&#5809;</span>', 'a.html').length === 1],
+    ['html: entita mimo runy projde', kontrolaHtml('<span>&#x2014; &#8212;</span>', 'a.html').length === 0],
+    ['html: prázdné data-znacka projde', kontrolaHtml('<div class="help-rune" data-znacka></div>', 'a.html').length === 0],
+    ['klíče: najde runu na začátku vč. ᚱ', (() => { const k = kliceSRunou({ en: { a: 'ᚠ X', b: 'ᚱ Y', c: 'Z ᚠ' } }); return k.has('a') && k.has('b') && !k.has('c'); })()],
+    ['dyn: entita v innerHTML padne', kontrolaDyn("  ans.innerHTML = '<span class=\"s\">&#x16b1;</span>';", 'a.js').length === 1],
+    ['dyn: znackaSvg() projde', kontrolaDyn("  ans.innerHTML = '<span class=\"s\">' + znackaSvg() + '</span>';", 'a.js').length === 0],
     ['js: tUI ve shrine bez setRuneText padne', kontrolaJs("  btn.textContent = tUI('k1');", 's.html', K).length === 1],
     ['js: tUI přes setRuneText projde', kontrolaJs("  setRuneText(btn, tUI('k1'));", 's.html', K).length === 0],
     ['dyn: ${r.g} do textContent padne', kontrolaDyn("  el.textContent = `${r.g} ${r.n}`;", 'a.js').length === 1],
@@ -136,4 +148,4 @@ if (chyby.length) {
   console.log('FAIL  runy písmem: ' + chyby.length + ' míst — runa patří přes setRuneText / data-rune-glyph (naše SVG, §5)');
   process.exit(1);
 }
-console.log('OK    runy písmem: ' + K.size + ' klíčů s runou jde jen přes setRuneText · ' + STRANKY.length + ' stránky (vč. shrine) bez run písmem (mimo ᚱ) · runa z dat jen přes runeSvg / setRuneText · zrcadlo .lbl-rune ve shrine sedí');
+console.log('OK    runy písmem: ' + K.size + ' klíčů s runou jde jen přes setRuneText · ' + STRANKY.length + ' stránky (vč. shrine) bez run písmem ani entitou (ᚱ je kresba znackaSvg) · runa z dat jen přes runeSvg / setRuneText · zrcadlo .lbl-rune ve shrine sedí');

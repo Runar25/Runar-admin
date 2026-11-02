@@ -12882,3 +12882,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Známá mezera:** otevřený závoj ve formuláři nebo v Asku po přepnutí jazyka zůstane ve starém jazyce (§14 ho z updateUIText drží venku);
   závoj deníku se překreslí.
 - Affected doc(s): RUNAR_BACKLOG.md (Jednotný vzhled (d), Rune Seeker a Ask).
+
+## 2026-11-02 (1) — Značka ᚱ v appce kresbou: `runar-znacka.js`
+
+- **Rozhodl:** owner 2026-11-01 *„3. předělat na kresbu“*, *„6. ano“* (předáno CODE-tune) — DECISIONS 2026-11-01 (10).
+- **Co:** kresba `znackaSvg()` z geometrie `R_ZNACKA` (CODE-web, `scripts/ikona_appky.py`), barva textu, 0,72 em vysoká na účaří —
+  změřeno: ᚱ písmem má inkoust 0,71 em, řádek i okolí zůstávají stejné (nápověda: rámeček 48 px před i po). Místa: nápověda, soukromí,
+  okno instalace, okno se jménem, čekání na čtení a v Asku (dál dýchá), `setRuneText` pro popisek začínající ᚱ.
+  **Odchylka od (10):** kresba nebydlí v `runar-utils.js`, ale ve vlastním `runar-znacka.js` — nápověda a soukromí `runar-utils.js`
+  nenačítají a generátor ikony i web potřebují jen kresbu. §5 v CLAUDE.md změněn v témže commitu.
+- **Kontrola ㉻:** ᚱ písmem už neprojde a runa zapsaná HTML entitou (`&#x16b1;`) se počítá jako runa písmem — čekání na čtení a v Asku
+  ji tak mělo a kontrola, která hledala jen znak, ho neviděla. Útoky: 3 v protipříkladech (písmo v nápovědě, entita v readeru a v Asku).
+- **Zbývá CODE-web:** generátor ikony a web čtou kresbu z `v2/runar-znacka.js`, `R_ZNACKA` v `ikona_appky.py` zmizí (§18).
+- Affected doc(s): CLAUDE.md (§5, soubory, pořadí načítání), RUNAR_BACKLOG.md (Značka ᚱ v appce).

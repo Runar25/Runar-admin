@@ -35,6 +35,7 @@ runar-rune-popup.js   — ťuknutí na glyf runy ve čtení → popup se jménem
 runar-svicka.js       — JEDINÝ přehrávač hlasu (svíčka = posuvník): čtení, Kolekce, deník, rituál · jen reader
 runar-helper.js       — nápověda „?" (bublina: glyf-tap, Ask) + hesla zrcadla v UI_TEXT · jen reader
 runar-runakort.js · runar-runakort.css — kresba karty Rúnakort (okno cesty); web ji čte odsud · třídy rk-* · jen reader
+runar-znacka.js       — značka ᚱ kresbou: znackaSvg() + vyplní [data-znacka] · reader, nápověda, soukromí
 runar-readings-admin.js — shrine: prohlížeč čtení (edge fn list-readings)
 runar-reports-admin.js  — shrine: prohlížeč hlášení (edge fn list-reports)
 runar-voice-admin.js    — shrine: záložka VOICE, stav ElevenLabs (edge fn voice-usage)
@@ -52,7 +53,7 @@ sw.js                 — Service Worker (auto-bump via git hook · hooks/pre-co
 ### Load order
 ```
 runar-config.js → [reader: runar-client-errors.js] → runar-runes.js → [reader: runar-names.js → runar-names-registry.js] → runar-translations.js → runar-character.js
-→ runar-utils.js → runar-svgs.js → [reader: runar-runakort.js]
+→ runar-utils.js → runar-svgs.js → [reader: runar-runakort.js → runar-znacka.js]
 → [reader]: runar-svicka.js → runar-journal.js → runar-tree.js
             → runar-auth.js → runar-reading.js → runar-app.js
             → runar-verze.js → runar-reporter.js → runar-rune-popup.js → runar-helper.js
@@ -100,7 +101,7 @@ Auto-bump: git pre-commit hook (hooks/pre-commit.py). Po fresh clone: `python -X
 
 ### §5 — UI invarianty
 `--dim` NIKDY pro text (jen ikony, šipky, oddělovače, placeholdery) · reader-content se NIKDY neskrývá (tokeny bydlí v `runar-reader.css`).
-Runa ᚱ: vždy zlatá, NIKDY s ozdobami (◌ ᚱ ◌ zakázáno); ᚱ brand = font v HTML, ne `runeSvg`.
+Runa ᚱ: vždy zlatá, NIKDY s ozdobami (◌ ᚱ ◌ zakázáno); ᚱ brand = kresba `znackaSvg()` / `data-znacka` (`runar-znacka.js`), nikdy písmo ani `runeSvg`.
 **Runové glyfy = JEDEN zdroj kresby (RUNE_SVGS) přes `runeSvg(rune,{frame})`:** `frame:true` = KÁMEN pro runy, které člověk táhne / drží / vidí
 jako runu (mřížka tahu, Kolekce, čtení single i spread, sloty, deník, životní runa všude, runa v hlavičce oken); `frame:false` = HOLÁ linka
 (#D6A85C) jen v textových popiscích. NIKDY font glyf jako primární. Blank = orámované prázdno, NIKDY `○`. Holá runa = jen hlavní tah
