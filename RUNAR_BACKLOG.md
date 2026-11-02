@@ -870,7 +870,8 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
      @runartherunekeeper, propojit s Instagramem (ten musí být profesionální účet — ověřit v jeho nastavení). Zakládá owner. Pak adresu
      do configu vedle `RUNAR_INSTAGRAM_URL` (CODE-tune), do patičky webu (CODE-web, `webInstagram()` ve web.js zobecnit na víc sítí)
      a do menu appky; v režimu Play skrytý jako Instagram.
-  2. Stejné jméno zarezervovat i na TikToku a YouTube — krátké video na výšku (9:16) jde na Reels, TikTok i Shorts. Zakládá owner.
+  2. ✅ *(owner 2026-11-02, screenshoty)* TikTok @runartherunekeeper a YouTube @RunartheRuneKeeper, obojí „Rúnar the Rune Keeper“ —
+     krátké video na výšku (9:16) jde na Reels, TikTok i Shorts.
   3. Odkaz v biu všude jen therunekeeper.com, žádný Linktree (teď registrace, po spuštění domovská stránka — nemusí se měnit).
   4. Měření: analytiku do webu zatím ne (cookie lišta, zásady); stačí statistiky Instagramu (kliky na odkaz v biu) a upozornění na
      registrace, která chodí na runar@.
@@ -899,12 +900,14 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   13. Nová IS část ověřena: Greynir bez nálezu; korpus „rúnalestur“ 19×, „á íslensku og“ 7345×, „íslensku og ensku“ 2790×.
   14. Odkaz se štítkem kanálu (DECISIONS 2026-11-02 (3)): na Instagram `https://therunekeeper.com/?z=ig`, do pole Web na Facebooku
       `https://therunekeeper.com/?z=fb` (TikTok `?z=tt`, YouTube `?z=yt`).
-  Stav 2026-11-01 (CODE-web, veřejný profil): Instagram má dál staré bio bez odkazu na web — slibuje „Daily guidance“, denní obsah
-  appka nemá (bio z bodu 11 to neslibuje); Facebook zatím není (v configu jen `RUNAR_INSTAGRAM_URL`). Čeká na ownera: Facebook
-  (bod 1), jména na TikToku a YouTube (bod 2), bio a odkaz na Instagramu (body 11, 14), volba profilovky (při zakládání profilů)
-  a jazyk bia na Instagramu (doporučeno EN na Instagram, IS na Facebook).
+  Stav 2026-11-02 (screenshoty ownera): bio TikToku „Keeper of runes, stories & ancient wisdom / Rune readings & guidance / Welcome to
+  my world / ↓ Discover Rúnar“ — šipka míří na odkaz, který na profilu zatím není; popis YouTube „Welcome to the world of Agndofa —
+  a place of ancient runes, Nordic mysticism and quiet…“; v zobrazeném textu ani jeden neříká, že Rúnar je AI (bio z bodu 11 to říká).
+  Instagram má dál staré bio bez odkazu na web — slibuje „Daily guidance“, denní obsah appka nemá (bio z bodu 11 to neslibuje);
+  Facebook zatím není (v configu jen `RUNAR_INSTAGRAM_URL`). Čeká na ownera: Facebook (bod 1), bio a odkaz na Instagramu (body 11, 14),
+  odkaz na TikToku a YouTube (bod 14), volba profilovky a jazyk bia na Instagramu (doporučeno EN na Instagram, IS na Facebook).
 - [ ] **Veřejné stránky run na webu — sdílení a vyhledávače** (podněty Cowork 2026-11-02, HANDOFF69 „konkurence a online prostor“;
-  nic se nestaví, dokud owner nerozhodne). Ověřeno v kódu (CODE-web 2026-11-02, HEAD 19e6878):
+  owner rozhodl 2026-11-02 — DECISIONS 2026-11-02 (3), (5), (7)). Ověřeno v kódu (CODE-web 2026-11-02, HEAD 19e6878):
   (a) Životní runu dostane návštěvník appky bez registrace: den a měsíc → runa, kámen a `tree_lr_origin`; čtení až po přihlášení
       (`updateTreeTab`, větev bez `currentUser`). Datum zůstane v paměti, do DB jde jen přihlášenému (`setTreeDOB`).
   (b) Web už načítá `runar-runes.js` (`calcLifeRune`), `runar-svgs.js` (kámen) a `runar-translations.js` — v něm `UI_TEXT.coll_rune`
