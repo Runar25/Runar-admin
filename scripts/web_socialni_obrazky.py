@@ -14,9 +14,10 @@
 #                    na ploše telefonu. Výřez uvnitř zaobleného čtverce (černý okraj ikony do kruhu nesmí, měřeno 11–15 px).
 #                    Výřezy z portrétů s holí owner zamítl (2026-10-28: „profilovka A a B má Rúnara s uříznutou holí… A je úplně mimo“) —
 #                    čtverec kolem obličeje hůl vždy přetne. Do profilovky proto jen záběr, kde Rúnar nic nedrží přes okraj.
-#   profil-r.jpg      720×720 — druhá profilovka do zásoby: zlaté R jako nová ikona appky (owner 2026-10-29 k otázce, zda profilovka
-#                    bude R, nebo tvář: „ještě nevím. připravíme to a rozhodnu se, až to budeme dělat“). Kreslí ji ikona_appky.profil()
-#                    — táž předloha jako ikona appky, rámeček je kruh u okraje, protože Instagram i Facebook profilovku ořízne do kruhu.
+#   profil-r.jpg      720×720 — druhá profilovka do zásoby: zlaté R ze značky appky (owner 2026-10-29 k otázce, zda profilovka
+#                    bude R, nebo tvář: „ještě nevím. připravíme to a rozhodnu se, až to budeme dělat“; R podle ownera 2026-11-01 „tohle R
+#                    bych chtěl“ — znackaSvg z v2/runar-znacka.js, táž kresba jako R v appce). Kreslí ji ikona_appky.profil(), rámeček
+#                    je kruh u okraje, protože Instagram i Facebook profilovku ořízne do kruhu. Ikona appky zůstala (DECISIONS 2026-11-01 (10)).
 #   python -X utf8 scripts/web_socialni_obrazky.py
 import base64, io, os, re, shutil, subprocess, sys, tempfile
 from PIL import Image
