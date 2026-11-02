@@ -861,8 +861,9 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   4. Měření: analytiku do webu zatím ne (cookie lišta, zásady); stačí statistiky Instagramu (kliky na odkaz v biu) a upozornění na
      registrace, která chodí na runar@.
   5. Video: na výšku 9:16, titulky přímo v obraze (většina lidí kouká bez zvuku), rozhodují první 2 vteřiny, nahrát zvlášť na každou síť.
-  6. Obsah: nejsilnější materiál jsou samotná čtení („✦ Keep this“ v appce ukládá dobré věty). Čtení testerů jen s jejich souhlasem
-     (osobní údaje); ownerova a týmová volně.
+  6. Obsah: čtení jako hlavní materiál je hypotéza, ne nález (neměřeno; Cowork 2026-11-02, HANDOFF69: Shorts se čtením mají u malých
+     kanálů stovky zhlédnutí — slabý doklad). Rozhodnou statistiky Instagramu po prvních příspěvcích (dosah, uložení, kliky na odkaz).
+     „✦ Keep this“ v appce ukládá dobré věty. Čtení testerů jen s jejich souhlasem (osobní údaje); ownerova a týmová volně.
   7. ✅ *(CODE-tune 2026-10-28, 56e3b50)* Instagram v appce: položka v menu; ve verzi z Google Play skrytá — profil vede na web
      s nákupem (nepřímá cesta k platbě), hlídá smoke ㊐.
   **Připraveno (CODE-web 2026-10-28; soubory `web/socialni/`, generátor `scripts/web_socialni_obrazky.py`; owner nahrává ručně):**
@@ -883,9 +884,34 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
       (IS 94, EN 96 znaků).
   13. Nová IS část ověřena: Greynir bez nálezu; korpus „rúnalestur“ 19×, „á íslensku og“ 7345×, „íslensku og ensku“ 2790×.
   14. therunekeeper.com do odkazů na Instagramu a do pole Web na Facebooku.
-  Stav 2026-11-01 (CODE-web, veřejný profil): Instagram má dál staré bio bez odkazu na web; Facebook zatím není (v configu jen
-  `RUNAR_INSTAGRAM_URL`). Čeká na ownera: Facebook (bod 1), jména na TikToku a YouTube (bod 2), bio a odkaz na Instagramu (body 11, 14),
-  volba profilovky (při zakládání profilů) a jazyk bia na Instagramu (doporučeno EN na Instagram, IS na Facebook).
+  Stav 2026-11-01 (CODE-web, veřejný profil): Instagram má dál staré bio bez odkazu na web — slibuje „Daily guidance“, denní obsah
+  appka nemá (bio z bodu 11 to neslibuje); Facebook zatím není (v configu jen `RUNAR_INSTAGRAM_URL`). Čeká na ownera: Facebook
+  (bod 1), jména na TikToku a YouTube (bod 2), bio a odkaz na Instagramu (body 11, 14), volba profilovky (při zakládání profilů)
+  a jazyk bia na Instagramu (doporučeno EN na Instagram, IS na Facebook).
+- [ ] **Veřejné stránky run na webu — sdílení a vyhledávače** (podněty Cowork 2026-11-02, HANDOFF69 „konkurence a online prostor“;
+  nic se nestaví, dokud owner nerozhodne). Ověřeno v kódu (CODE-web 2026-11-02, HEAD 19e6878):
+  (a) Životní runu dostane návštěvník appky bez registrace: den a měsíc → runa, kámen a `tree_lr_origin`; čtení až po přihlášení
+      (`updateTreeTab`, větev bez `currentUser`). Datum zůstane v paměti, do DB jde jen přihlášenému (`setTreeDOB`).
+  (b) Web už načítá `runar-runes.js` (`calcLifeRune`), `runar-svgs.js` (kámen) a `runar-translations.js` — v něm `UI_TEXT.coll_rune`
+      (ownerovy popisy všech 25 run z Kolekce, IS + EN, končí otázkou) a `coll_shape`. Návštěvník appky z nich vidí 5 (`VISITOR_RUNES`).
+      Že volané funkce existují, hlídá smoke ㊑ (`verify_web_appka_jmena.js`); data ne → nová stránka potřebuje vlastní seed-and-assert.
+  (c) Islandský měsíc (`icelandicMonthKeysNoYear`) bydlí v `runar-character.js` (~250 kB i s prompty): web načte celý soubor, nebo
+      CODE-tune vyjme kalendář do malého modulu pro appku i web (jeden zdroj, golden-verify). Bez roku má část dnů dva nebo tři měsíce
+      (počty v komentáři u funkce) → na hranici ukázat oba; rok se nezadává (report 58a0c728). `BIRTH_MONTHS` je podklad pro model,
+      ne text pro člověka — veřejně by potřeboval nový text (IS napřed, ověřený). Jména Bóndadagur / Konudagur v kánonu nejsou.
+  (d) Náhled při sdílení: sítě čtou og:image bez JS → statická stránka na každou runu s vlastním obrázkem, generovaná skriptem
+      z `UI_TEXT` (jako `web_socialni_obrazky.py`), a smoke, že vygenerované odpovídá zdroji. Bez serveru a bez provozních nákladů.
+      Tytéž stránky nesou text v HTML pro vyhledávače i AI — bod (a) položky „Před spuštěním: viditelnost“.
+  (e) Měření bez cookies: štítek kanálu v odkazu (`?z=ig`) přečte formulář při odeslání (do zařízení nic neukládá), `waitlist-join`
+      ho po kontrole proti seznamu zapíše do `ops_events.detail` u `waitlist_signup` — bez adresy, do Brevo ne (štítek u adresy =
+      osobní údaj). Ranní souhrn podle štítku = CODE-tune. Po spuštění se registruje v appce → štítek musí převzít appka (CODE-tune).
+  (f) „Runa dne“ v kódu není. `robots.txt` a `sitemap.xml` zatím nejsou (přibudou při spuštění, položka „Domovská stránka“ výš);
+      /heim/, /ferdin/, /kort/ a /skilmalar/ jsou noindex, úvodní stránka ne. Runa půlměsíce = `calcLifeRune` s dnešním datem, hotové;
+      denní střídání by byl nový systém bez opory (§23).
+  **Střet s kánonem (k posouzení, obsah je Cowork + owner):** „poznej se v jedné větě“ je výrok „tohle jsi“ — `RUNAR_DESIGN.md`
+  „Kdo je Rúnar“ (nenabízí jistotu, zrcadlo, ne orákulum) a u životní runy „nikdy verdikt ani souhrn ‚tohle jsi‘“.
+  **Čeká na ownera:** stránky run ano / ne · všech 25 popisů veřejně? · runa půlměsíce místo denní · indexovat hned, nebo se
+  spuštěním · štítek kanálu v registraci.
 - [x] ✅ *(CODE-web 2026-11-01: (1) odkaz z appky v Play na therunekeeper.com i na Instagram zastaví smoke ㊐ (`OBCHOD` ve
   `scripts/verify_play_bez_nakupu.js`, JOURNEY_URL podvržené); (2) popis v obchodě přešel do „Obchody před spuštěním“; (3) ㊐ od 2026-10-21.)*
   **Google Play bez provize — co hlídat dál** (pravidlo consumption-only → `RUNAR_PRICING.md` „Platby v appkách z obchodů“).
