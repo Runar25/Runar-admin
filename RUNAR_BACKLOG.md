@@ -418,6 +418,12 @@ promptu v `claude-proxy` (už ověřuje přihlášení a odečítá kredity; pro
      zapíše server z vlastního losu, ne z `journal` od prohlížeče (dnes jen vlastní deník a strom, ale po F3 to jde zadarmo).
      **Připsáno 2026-10-31 (úklid):** (c) `SOL_EFFORTS = ["none","minimal"]` v `claude-proxy/index.ts` — `minimal` neexistuje, vědomě odloženo
      „až s nasazením proxy“ (8e5ac52); (d) brána životní runy stojí na `life_rune_text` od klienta a cena od klienta = #3 a #4 z „Proxy Fáze 2“.
+   - [x] ✅ *(CODE-tune 2026-11-02, DECISIONS 2026-11-02 (4); nasazení `claude-proxy` čeká na ownera)* **F3a:** server skládá prompt ze
+     zápisu appky — postava, korekce, engine, ✦, cena (a), strop odpovědi a runy do deníku (b) od serveru; konec promptu `_promptKonec`
+     jedna funkce. Smoke ㊍ appka × server 32 vzorků + útoky.
+   - [ ] **F3b:** náhoda, sáček obrazů a poslední obraz na server (tabulka na uživatele — SQL ownera), místní čas → časové pásmo; pak
+     appka posílá jen vstupy. **Ask:** text čtení a předchozí výměnu brát z uloženého čtení / podpisu, ne od prohlížeče. **Pole čtení:**
+     serverový strop délky (otázka, oblast, hledání, záměr, jméno) podle UI. **(d) brána životní runy** (#3): server zapíše runu po čtení sám.
    - [ ] **F4 schovat:** buildery a RUNE_IMAGES z veřejných souborů appky pryč; shrine (laboratoř promptu) přes cestu jen pro admina;
      pak soukromé repo (krok 3) a nové klíče Supabase (krok 9).
 2. **Supabase Free → Pro**, ověřit, že denní zálohy běží.

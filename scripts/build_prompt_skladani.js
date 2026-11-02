@@ -19,7 +19,10 @@ const CIL = path.join(ROOT, 'supabase', 'functions', '_shared', 'prompt_skladani
 const VEN = ['buildSysPrompt', 'buildReadingPrompt', 'buildNornsPrompt', 'buildKrizPrompt', 'buildHorseshoePrompt', 'buildYggdrasilPrompt',
   'buildLifeRunePrompt', 'buildAskPrompt', 'buildNameLorePrompt', 'getCorrPrompt', 'normalizeCorrections', 'RUNES', 'SPREAD_CONFIG',
   'INTENTIONS', 'READING_ANGLES', 'READING_ANGLES_IS',
-  '_skladba'];   // 2026-10-22: rozbor kusů promptu (runar-character.js, _kus) — anatomie, recept čtení, skladač
+  '_skladba',   // 2026-10-22: rozbor kusů promptu (runar-character.js, _kus) — anatomie, recept čtení, skladač
+  // 2026-11-02 F3a: server skládá prompt sám (_shared/prompt_server.mjs) — konec promptu, tarif myšlenky, cena a strop odpovědi z configu,
+  // jméno runy do deníku
+  '_promptKonec', '_myslenkaPro', 'TIERS', 'SPREAD_COSTS', 'RUNAR_MODES', 'rn', 'CORRECTIONS_IN_PROMPT'];
 
 // cti(f) = obsah v2/<f>; výchozí z pracovního stromu, pre-commit předá čtení z indexu (git show :v2/<f>).
 function vyrob(cti) {

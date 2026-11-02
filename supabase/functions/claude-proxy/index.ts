@@ -70,23 +70,28 @@ function logOps(kind: "model_fallback" | "model_error", detail: Record<string, u
   if (er?.waitUntil) er.waitUntil(zapis);
 }
 
-// ── Stín skládání promptu (2026-10-21, krok 1 plánu infrastruktury „prompt na server“, F2; owner „ok začni“) ──────────────────────
-// Appka posílá vedle hotového promptu `stin`: s čím ho skládala (builder, argumenty s runami jménem, spotřebovaná náhoda, sáček obrazů,
-// místní čas, jazyk, oslovení, engine). Server prompt složí z balíčku _shared/prompt_skladani.mjs (týž kód jako appka) a porovná:
-// system = shoda celého textu, prompt = prompt z appky ZAČÍNÁ výstupem builderu (appka za něj přilepí myšlenku ✦ a připomínku délky —
-// to se přesune v F3; délka přilepku jde do záznamu). Do ops_events jde jen builder, jazyk, shoda, místo prvního rozdílu a délky — žádný
-// text čtení ani otázka. Na pozadí (waitUntil), chyba stínu čtení nikdy nezastaví. Čtení dál jede na promptu z appky.
-function stinPorovnej(stin: unknown, system: unknown, prompt: unknown) {
+// ── Shoda serverového promptu s textem appky (F2 2026-10-21 stín → od F3a 2026-11-02 server skládá sám) ──────────────────────────
+// Do ops_events „prompt_stin“ jde jen builder, shoda, místo prvního rozdílu, délky a spotřeba náhody — žádný text čtení ani otázka.
+// Neshoda = appka a server se rozešly (nová verze appky před nasazením proxy, nebo naopak); čtení jede na serverovém promptu.
+// Na pozadí (waitUntil); chyba zápisu čtení nezastaví.
+function zapisStin(detail: Record<string, unknown>) {
   const prace = (async () => {
-    // dynamicky: selhání načtení balíčku (520 KB, Deno) shodí jen stín, ne funkci a čtení (2026-10-21, první nasazení F2)
-    let detail: Record<string, unknown>;
-    try { const { porovnejStin } = await import("../_shared/prompt_stin.mjs"); detail = porovnejStin(stin, system, prompt); }
-    catch (e) { detail = { chyba: "import: " + String((e as Error)?.message || e).slice(0, 180) }; }
     const { error } = await sb().from("ops_events").insert({ kind: "prompt_stin", detail });
     if (error) console.error("ops_events prompt_stin insert failed:", error.message);
   })();
   const er = (globalThis as any).EdgeRuntime;
   if (er?.waitUntil) er.waitUntil(prace);
+}
+
+// Korekce slov pro prompt (runar_corrections) — server je čte sám, od prohlížeče je nebere (F3a). Tabulku čte appka taky celou
+// (pravidlo runar_corrections_public_read: true), takže prompt vyjde stejně. 5 min v paměti instance; výpadek DB = poslední známé.
+let _korekce: { kdy: number; data: unknown[] } | null = null;
+async function korekceZDb(): Promise<unknown[]> {
+  if (_korekce && Date.now() - _korekce.kdy < 300000) return _korekce.data;
+  const { data, error } = await sb().from("runar_corrections").select("*").order("created_at");
+  if (error) { console.error("corrections read failed (using last known):", error.message); return _korekce?.data ?? []; }
+  _korekce = { kdy: Date.now(), data: data ?? [] };
+  return _korekce.data;
 }
 
 // (getISOWeekKey odstraněn 2026-10-09: nikdo ho nevolal — týdenní příděl skončil s modelem B 2026-06-12.)
@@ -395,7 +400,7 @@ serve(async (req: Request) => {
 
   try {
     const body = await req.json();
-    const {
+    let {   // let: system, prompt a cenu od F3a (2026-11-02) přepíše server ze zápisu appky — níž u „F3a“
       system,
       prompt,
       max_tokens  = 600,
@@ -436,7 +441,7 @@ serve(async (req: Request) => {
     // Clamp max_tokens (client-supplied, passed straight to Claude). Largest legit request = the highest `tokens` / `max_tokens`
     // in v2/runar-config.js (today the Yggdrasil spread, SPREAD_CONFIG); 2500 is headroom above it. Stops a crafted request ordering
     // an oversized, expensive generation. (Do 2026-10-11 tu stálo „life_rune_premium at 2000“ — režim zrušen, DECISIONS 2026-10-11 (22).)
-    const cappedMaxTokens = Math.min(Math.max(1, Number(max_tokens) || 600), 2500);
+    let cappedMaxTokens = Math.min(Math.max(1, Number(max_tokens) || 600), 2500);
 
     // spread_cost prichazi od KLIENTA a jde primo do stropu i odectu. NaN je tu zbran:
     // Math.max(1, NaN) = NaN, `used + NaN > limit` = false a odecitaci smycka `i < NaN`
@@ -445,7 +450,7 @@ serve(async (req: Request) => {
     // neumi (typ spreadu v requestu neni — navazny krok v BACKLOGu), proto: cele cislo,
     // podlaha 1, strop 9 (vic run nez Yggdrasil zadne cteni nema; cena v jednotkach je nejvys 5 — strop je volny nahoru,
     // podvrh nad cenu by jen preplatil).
-    const spreadCost = Math.min(9, Math.max(1, Math.round(Number(spread_cost)) || 1));
+    let spreadCost = Math.min(9, Math.max(1, Math.round(Number(spread_cost)) || 1));
 
     // ── Auth & tier check ──
     const authHeader = req.headers.get("Authorization");
@@ -479,8 +484,38 @@ serve(async (req: Request) => {
     // SECURITY: require a logged-in user. Visitor has only the static Rune Collection,
     // no live reading -> anonymous is rejected here before any Claude cost.
     if (!userId) return json({ error: "unauthorized" }, 401);
-    // F2 stín (na pozadí) — až po přihlášení: jinak by porovnání a zápis do ops_events spouštěl kdokoli (2026-10-21)
-    if (prompt && body.stin && typeof body.stin === "object") stinPorovnej(body.stin, system, prompt);
+    // ── F3a (2026-11-02, owner „ok, pokračuj s F3a“): prompt skládá SERVER ze zápisu appky (`stin`), text od prohlížeče se nepoužije ──
+    // Proč a co server od prohlížeče nebere (postava, korekce, engine, myšlenka ✦, cena, strop odpovědi): hlavička _shared/prompt_server.mjs.
+    // Až po přihlášení — tarif rozhoduje o myšlence ✦ a skládání stojí CPU. Admin bez zápisu (shrine, gen_batch, evaly) jede dál na svém
+    // textu; komukoli jinému bez zápisu proxy čtení odmítne (appka zápis posílá od 2026-10-21, F2). Zápis, který nejde složit, se odmítne
+    // i jemu: jinak by stačilo poslat rozbitý zápis a model by dostal vlastní text. Jen selhání načtení balíčku (útočník ho nevyvolá)
+    // pustí čtení po staru — výpadek kódu nesmí zastavit všechna čtení; jde do ops_events jako chyba.
+    if (prompt && mode !== "resave" && mode !== "life_rune_reset") {
+      const zapis = body.stin && typeof body.stin === "object" ? body.stin : null;
+      if (!zapis && !isAdmin) {
+        return json({ error: "update_app", message: "The runes are quiet. Reload the app and try again." }, 400);
+      }
+      if (zapis) {
+        let sv: any = null, detail: Record<string, unknown>;
+        try {
+          const { slozPromptServer, porovnej } = await import("../_shared/prompt_server.mjs");
+          sv = slozPromptServer(zapis, { mode, tier: userTier, admin: isAdmin, korekce: await korekceZDb() });
+          detail = { server: true, ...porovnej(sv, system, prompt) };
+        } catch (e) { detail = { server: true, chyba: "import: " + String((e as Error)?.message || e).slice(0, 180) }; }
+        zapisStin(detail);
+        if (sv && sv.chyba) {
+          if (!isAdmin) return json({ error: "unavailable", message: "The runes are quiet. Try again shortly." }, 400);
+        } else if (sv) {
+          system = sv.system; prompt = sv.prompt; spreadCost = sv.cena;
+          if (sv.maxTokens) cappedMaxTokens = sv.maxTokens;
+          if (journal && sv.denik) Object.assign(journal, sv.denik);   // druh a runy do deníku z vlastního skládání, ne od prohlížeče
+          // strop délky znovu na serverovém textu — otázka v zápisu může být delší než text, který prohlížeč poslal
+          if (prompt.length > MAX_PROMPT_CHARS || system.length > MAX_SYSTEM_CHARS) {
+            return json({ error: "too_long", message: "That is more than the runes can hold at once. Try a shorter question." }, 400);
+          }
+        }
+      }
+    }
 
     // ── Rate limiting ──
     const rlKey = `claude:user:${userId}`;

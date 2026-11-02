@@ -12923,3 +12923,26 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   funkce `node --check`. **Neověřeno:** běh naostro — nasazení funkce i webu zastavilo automatické schvalování Claude Code (zásah do
   produkce), pouští ho owner; po něm jedna zkušební registrace s `?z=ig` (řádek v `ops_events`, oznámení s „Channel: ig.“).
 - Affected doc(s): RUNAR_BACKLOG.md (Veřejné stránky run (e), Sociální sítě bod 14).
+
+## 2026-11-02 (4) — F3a: prompt skládá server ze zápisu appky, cena a strop odpovědi od serveru
+
+- **Rozhodl:** owner 2026-10-21 *„ok začni“* (plán „prompt na server“, RUNAR_BACKLOG „Plán infrastruktury“ krok 1), 2026-11-02 *„ok,
+  pokračuj s F3a“*. Rozdělení F3 na F3a (server skládá ze zápisu, který appka posílá od F2) a F3b (náhoda a sáček obrazů na server) je
+  postup CODE-tune — každý krok jde ověřit zvlášť.
+- **Co:** `claude-proxy` složí systém i prompt sám (`_shared/prompt_server.mjs`, balíček `prompt_skladani.mjs` = týž kód jako appka) a text
+  od prohlížeče nepoužije. Od prohlížeče nebere: postavu (null jako v appce), korekce slov (čte `runar_corrections` sám), engine a výběr
+  obrazu (jen admin), myšlenku ✦ (tarif z JWT), cenu (`SPREAD_COSTS` podle builderu — Yggdrasil už nejde zaplatit jako jednu runu), strop
+  odpovědi (config) a runy do deníku. Builder musí patřit k `mode` (Ask jen `buildAskPrompt` atd.). Bez zápisu čte jen admin (shrine,
+  nástroje); zápis, ze kterého prompt nejde složit, se odmítne. Konec promptu (✦ + připomínka délky) je jedna funkce `_promptKonec`
+  v `runar-character.js` pro appku i server (krok 1, 5158db9).
+- **Ověřeno:** smoke ㊍ — 32 vzorků z appky v prohlížeči (EN+IS, jedna runa, čtyři výklady, založení, Ask, životní runa, rozbor jména,
+  Opus, myšlenka ✦): server složil systém i celý prompt bajt po bajtu, cena = config; útoky (podstrčené korekce, postava, cizí builder pro
+  mode, Opus ne-adminovi, ✦ bez tarifu) neprojdou a každý bez ochrany prokazatelně zabírá. Zápis chodí ke každému čtení: 48 zápisů na 29
+  uložených čtení 10/21–11/01, každý den aspoň tolik zápisů jako čtení.
+- **Zbývá:** F3b — náhoda, sáček obrazů, poslední obraz a místní čas zatím od prohlížeče (cizí text do promptu nevpustí, cenu nemění);
+  Ask — text čtení a předchozí výměna od prohlížeče (ověřit proti uloženému čtení); pole čtení (otázka, oblast…) jsou volný text bez
+  serverového stropu kromě 8000 znaků promptu — odpověď stropuje a platí server; brána životní runy (#3) samostatně.
+  `SOL_EFFORTS` (c) beze změny: `minimal` se použije jen po 400 na `none`, které gpt-6-sol přijímá — že `minimal` neexistuje, je neověřené.
+- **Nasazení:** `claude-proxy` až na ownerovo „nasaď“; appka se nemění (posílá prompt i zápis jako od 2026-10-21).
+- **Návrat:** revert commitu a nasadit předchozí `claude-proxy`.
+- Affected doc(s): RUNAR_BACKLOG.md (Plán infrastruktury, krok 1 — F3).

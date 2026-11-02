@@ -315,6 +315,11 @@ PRIPADY = [
  # ㊍ stín skládání promptu (2026-10-21, CODE-tune): záznamník nepošle sáček obrazů · nezapíše náhodu
  ('chyti', 'verify_prompt_stin.js', 'v2/runar-app.js', 'replace', '    if (/^season(bag|motif|last)_/.test(k)) o[k] = localStorage.getItem(k); } } catch (e) {}', '    } } catch (e) {}'),
  ('chyti', 'verify_prompt_stin.js', 'v2/runar-app.js', 'replace', 'Math.random = function () { var x = puv(); los.push(x); return x; };', 'Math.random = function () { return puv(); };'),
+ # ㊍ F3a (2026-11-02, CODE-tune): server skládá prompt sám — korekce od prohlížeče · builder cizí pro mode · Opus ne-adminovi · cena od builderu
+ ('chyti', 'verify_prompt_stin.js', 'supabase/functions/_shared/prompt_server.mjs', 'replace', 'if (kor && jm in KOREKCE_ARG) a[KOREKCE_ARG[jm]] = kor; return a;', 'return a;'),
+ ('chyti', 'verify_prompt_stin.js', 'supabase/functions/_shared/prompt_server.mjs', 'replace', 'if (!povolene.includes(String(stin.prompt.builder))) return { chyba: "builder_not_allowed_for_mode" };', ''),
+ ('chyti', 'verify_prompt_stin.js', 'supabase/functions/_shared/prompt_server.mjs', 'replace', 'S.nastav("engine", admin ? (s.engine || "sol") : "sol");', 'S.nastav("engine", s.engine || "sol");'),
+ ('chyti', 'verify_prompt_stin.js', 'supabase/functions/_shared/prompt_server.mjs', 'replace', 'cena = S.SPREAD_COSTS[druh[1]].credits;', 'cena = 1;'),
  # ㊎ mapa ochran (2026-10-21, CODE-read): vypnutá brána · obrácený limit · nová ochrana bez zápisu · nový mode · nová funkce
  ('chyti', 'verify_mapa_ochran.js', 'supabase/functions/claude-proxy/index.ts', 'replace', 'if (!userId) return json({ error: "unauthorized" }, 401);', 'if (false && (!userId)) return json({ error: "unauthorized" }, 401);'),
  ('chyti', 'verify_mapa_ochran.js', 'supabase/functions/send-line/index.ts', 'replace', 'if (zprava.length > MAX_ZNAKU)', 'if (zprava.length < MAX_ZNAKU)'),

@@ -27,7 +27,7 @@ const ADMIN = 'jen admin (ADMIN_EMAILS, shodu kopií hlídá verify_admin_emails
 const MAPA = {
   'claude-proxy': {
     kdo: 'přihlášený (Visitor 401); admin = premium + nástroje s eval:true mimo počítadlo',
-    velikost: 'prompt 8000 znaků, Ask 12000 (MAX_PROMPT_CHARS); stín 120 kB (_shared/prompt_stin.mjs)',
+    velikost: 'prompt 8000 znaků, Ask 12000 (MAX_PROMPT_CHARS) — od F3a i na promptu, který složí server; zápis appky 120 kB (_shared/prompt_server.mjs)',
     cetnost: '10 požadavků / 60 s na účet (check_rate_limit) · jedno účtované čtení naráz (acquire_reading_lock)',
     log: 'kódy chyb a stav modelu anglicky; text čtení ani otázka ne (ops_events jen druh, model, čísla)',
     pozn: 'fail-open vědomě: zámek, měsíční strop a precheck rituálu při výpadku DB čtení pustí (komentáře u kódu)',
@@ -47,6 +47,10 @@ const MAPA = {
       'if (String(prompt ?? "").length > MAX_PROMPT_CHARS ||': 'limit velikosti promptu a systému — náklad modelu',
       'if (!userId) return json({ error: "unauthorized" }, 401);': PRIHL,
       'if (!allowed) {': 'rate limit 10/min na účet (fail-closed: chyba RPC = odmítnout)',
+      // F3a (2026-11-02): prompt skládá server ze zápisu appky (_shared/prompt_server.mjs)
+      'if (!zapis && !isAdmin) {': 'čtení bez zápisu skládání jen admin (shrine, nástroje) — ostatní by poslali vlastní prompt',
+      'if (!isAdmin) return json({ error: "unavailable", message: "The runes are quiet. Try again shortly." }, 400);': 'zápis, ze kterého server prompt nesloží (cizí builder pro mode, rozbitý zápis), neprojde — jinak by model dostal text prohlížeče',
+      'if (prompt.length > MAX_PROMPT_CHARS || system.length > MAX_SYSTEM_CHARS) {': 'limit velikosti i na promptu od serveru — otázka v zápisu může být delší než poslaný text',
       'if (!isAdmin) {': 'life_rune_reset jen admin',
       'if (mode === "ask" && askLimit < 1) {': 'tier bez Asků',
       'if (used >= askLimit) {': 'strop Asků na jedno čtení',
