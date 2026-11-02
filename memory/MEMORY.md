@@ -33,6 +33,7 @@ Druh: 🔒 externě ukotveno (etymologie, IS gramatika) · 📜 vytvořený kán
 | Mytologie — bytosti, katalog dvergů, islandský kalendář | `RUNAR_MYTOLOGIE.md` | 📜 · 🔒 |
 | Popisy run pro člověka | `RUNAR_POPISY_RUN.md` | 📜 |
 | Strom života | `RUNAR_TREE.md` | 📜 |
+| Sítě a web — čísla v čase (monitoring, CODE-web) | `docs/monitor/site-a-web.md` | stav |
 | Otevřené úkoly | `RUNAR_BACKLOG.md` | stav |
 | GDPR, privacy | `RUNAR_PRIVACY.md` | 🔒 |
 | Co owner řekl dřív | `node scripts/utils/najdi_v_konverzacich.js "<text>"` | stav |

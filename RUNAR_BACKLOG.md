@@ -859,8 +859,8 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   **Při spuštění:** /heim/ se stane úvodní stránkou místo „Væntanlegt“ (registrace pak není potřeba), `noindex` pryč.
   Při spuštění také (DECISIONS 2026-10-27 (10)): na /heim/ doplnit `og:url` = https://therunekeeper.com/ (ostatní značky
   náhledu už tam jsou); `RUNAR_HOME_URL` v configu z /heim/ na kořen (CODE-tune). `robots.txt` a `sitemap.xml` s kořenem
-  jsou od 2026-11-02 (DECISIONS 2026-11-02 (5)) — při spuštění do sitemapy přidat /ferdin/ (a stránky run, až budou) a znovu ji odeslat
-  v Google Search Console (doména je ověřená TXT záznamem `google-site-verification`).
+  jsou od 2026-11-02 (DECISIONS 2026-11-02 (5); stránky run v ní od (7)) — při spuštění do sitemapy přidat /ferdin/
+  (`DALSI_V_SITEMAPE` ve `scripts/web_runy.py`) a znovu ji odeslat v Google Search Console (vlastnost zatím není — položka Veřejné stránky run).
 - [ ] **Sociální sítě Rúnara** (owner 2026-10-27: *„musíme založit facebook… budu s tebou pak řešit všechna sociální, které Rúnar má“*;
   2026-10-28: *„13.–19. zapiš do backlog“* a *„Co jsem připravil 9–15“* do backlogu). Instagram 2026-10-28 (veřejný profil): jméno
   stejné jako titulek webu, jen s pomlčkou místo tečky a malým „the“; 0 příspěvků, bio „Rune readings ✧ Nordic mysticism ✧ Ancient wisdom / Welcome to the world of Agndofa. /
@@ -900,12 +900,14 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   13. Nová IS část ověřena: Greynir bez nálezu; korpus „rúnalestur“ 19×, „á íslensku og“ 7345×, „íslensku og ensku“ 2790×.
   14. Odkaz se štítkem kanálu (DECISIONS 2026-11-02 (3)): na Instagram `https://therunekeeper.com/?z=ig`, do pole Web na Facebooku
       `https://therunekeeper.com/?z=fb` (TikTok `?z=tt`, YouTube `?z=yt`).
-  Stav 2026-11-02 (screenshoty ownera): bio TikToku „Keeper of runes, stories & ancient wisdom / Rune readings & guidance / Welcome to
-  my world / ↓ Discover Rúnar“ — šipka míří na odkaz, který na profilu zatím není; popis YouTube „Welcome to the world of Agndofa —
-  a place of ancient runes, Nordic mysticism and quiet…“; v zobrazeném textu ani jeden neříká, že Rúnar je AI (bio z bodu 11 to říká).
-  Instagram má dál staré bio bez odkazu na web — slibuje „Daily guidance“, denní obsah appka nemá (bio z bodu 11 to neslibuje);
-  Facebook zatím není (v configu jen `RUNAR_INSTAGRAM_URL`). Čeká na ownera: Facebook (bod 1), bio a odkaz na Instagramu (body 11, 14),
-  odkaz na TikToku a YouTube (bod 14), volba profilovky a jazyk bia na Instagramu (doporučeno EN na Instagram, IS na Facebook).
+  **Kdo co (owner 2026-11-02, DECISIONS 2026-11-02 (8)):** obsah sítí a bia dělá Sigrún; CODE-web monitoring (čísla v čase →
+  `docs/monitor/site-a-web.md`) a technika. Owner: v biu Instagramu, TikToku i YouTube musí stát, že Rúnar je AI.
+  Stav 2026-11-02 (veřejné profily, CODE-web): Instagram i TikTok mají totéž bio („Keeper of runes, stories & ancient wisdom / Rune
+  readings & guidance / Welcome to my world / ↓ Discover Rúnar“) a odkaz na therunekeeper.com **bez štítku** `?z=` (bod 14) — registrace
+  z nich se nepoznají; staré „Daily guidance“ z Instagramu zmizelo. TikTok má v editoru bio 109 znaků při limitu 80 (screenshot
+  ownera) — dokud se nezkrátí, změnu neuloží. YouTube zatím bez odkazu (owner: dostane ho). Ani jedno bio neříká, že Rúnar je AI.
+  Facebook zatím není (v configu jen `RUNAR_INSTAGRAM_URL`). Čeká na Sigrún (přes ownera): AI do bia všech tří, odkazy se štítky
+  (bod 14), kratší bio TikToku, Facebook (bod 1).
 - [ ] **Veřejné stránky run na webu — sdílení a vyhledávače** (podněty Cowork 2026-11-02, HANDOFF69 „konkurence a online prostor“;
   owner rozhodl 2026-11-02 — DECISIONS 2026-11-02 (3), (5), (7)). Ověřeno v kódu (CODE-web 2026-11-02, HEAD 19e6878):
   (a) Životní runu dostane návštěvník appky bez registrace: den a měsíc → runa, kámen a `tree_lr_origin`; čtení až po přihlášení
@@ -938,8 +940,11 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   **Owner k náhledu:** *„design je dobrý. zkusíme to. určitě to budeme upravovat… ať to vidím a můžu dělat změny“*, *„chci
   maximalizovat viditelnost na google!!“* → stránky ve web/site (DECISIONS 2026-11-02 (7)): 2 rejstříky + 50 stránek run + sitemapa
   + 25 obrázků; hlídá smoke ㊙ (`verify_web_runy.py`), `web_nasad.py` je před nasazením přegeneruje; z landingu odkaz SAFN RÚNA a canonical.
-  **Čeká na ownera:** nasazení webu i edge funkce (automatické schvalování Claude Code ho nepustí), sitemapa v Google Search Console,
-  dvoufázové přihlášení na GitHubu a u registrátora domény (owner: *„myslím, že nemám“*), ověřená doména therunekeeper.com na GitHubu.
+  ✅ *(owner 2026-11-02 „3. nasazeno“; CODE-web ověřil naostro: 53 adres ze sitemapy, landing s canonical, odkazem SAFN RÚNA a štítkem,
+  `waitlist-join` verze 12)* nasazení · ✅ dvoufázové přihlášení na GitHubu a GoDaddy (owner *„8. hotovo“*) · ověřovací záznam GitHub
+  Pages pro doménu v DNS je. **Čeká na ownera:** Search Console — ownerův účet vlastnost therunekeeper.com nemá (screenshot 2026-11-02);
+  TXT `google-site-verification` v DNS je nejspíš z ověření domény pro poštu u Googlu (MX míří na Google), neověřeno. Založit ji
+  (typ Domain) účtem runar@therunekeeper.com, nebo runar@ přidat jako uživatele — hlášení Search Console pak jdou do runar@ (monitoring).
   **Dál k viditelnosti:** Bing Webmaster Tools (import ze Search Console), odkaz z agndofa.is na therunekeeper.com, odkazy z profilů
   na sítích (štítky `?z=`), strukturovaná data (JSON-LD) na landingu a stránkách run.
 - [x] ✅ *(CODE-web 2026-11-01: (1) odkaz z appky v Play na therunekeeper.com i na Instagram zastaví smoke ㊐ (`OBCHOD` ve

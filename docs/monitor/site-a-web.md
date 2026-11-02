@@ -1,0 +1,21 @@
+# Monitor sítí a webu — čísla Rúnara v čase (CODE-web)
+
+Vlastní: časovou řadu veřejných čísel Rúnara na sítích a webu a co se mezi měřeními změnilo. Obsah sítí dělá Sigrún, monitoring
+a techniku CODE-web (DECISIONS 2026-11-02 (8)). Doporučení k sítím a stav profilů → RUNAR_BACKLOG „Sociální sítě Rúnara“.
+
+**Zdroje (bez přihlášení):** veřejné profily Instagramu, TikToku a YouTube · web: Search Console (hlášení chodí do runar@, jen když tam
+je runar@therunekeeper.com uživatelem) · registrace: oznámení „New waitlist signup“ na runar@ (od 2026-10-21; od 2026-11-02 se štítkem
+kanálu „Channel: ig“, DECISIONS 2026-11-02 (3)).
+**Nevidím:** dosah a zobrazení příspěvků — statistiky Instagramu a TikToku jsou jen v účtu; bez nich se dosah pozná jen ze sledujících,
+reakcí a registrací podle kanálu.
+
+## 2026-11-02 · výchozí stav
+
+| kanál | sledující | příspěvky | odkaz na web | AI v biu |
+|---|---|---|---|---|
+| Instagram @runartherunekeeper | 12 (sám sleduje 2) | 0 | therunekeeper.com, bez `?z=ig` | ne |
+| TikTok @runartherunekeeper | 1 (sám sleduje 1), 0 lajků | 0 | https://therunekeeper.com, bez `?z=tt` | ne |
+| YouTube @RunartheRuneKeeper | 4 odběratelé | 0 | žádný | ne (v zobrazené části popisu) |
+
+Web: nasazeno 2026-11-02 — 53 adres v sitemapě (landing, 2 rejstříky run, 50 stránek run), Search Console: ownerův účet vlastnost
+therunekeeper.com zatím nemá. Registrace: od 2026-10-21 na runar@ jedno oznámení.

@@ -13004,3 +13004,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   produkce nepustilo ani s ownerovým *„udělej to“*; čeká na ownera.
 - **Návrat:** smazat `web/site/runir/`, `web/site/en/`, `web/site/img/runir/`, sitemapu vrátit na kořen, odkaz z landingu pryč, nasadit.
 - Affected doc(s): RUNAR_BACKLOG.md (Veřejné stránky run na webu).
+
+## 2026-11-02 (8) — Sociální sítě: obsah dělá Sigrún, CODE-web monitoring a technika
+
+- **Rozhodl:** owner 2026-11-02: *„Instagram, youtube, tiktok obsah dělá Sigrún. takže na nás je monitoring a sledovat všechny pohyby.
+  když se něco nového přidá. jak nám roste dosah a jak ho zlepšit. dělat technické věci.“*; k návrhu, že CODE-web připraví bia: *„ne, tohle
+  řeší Sigrún“*; k AI: *„musí být AI v bio pro tiktok, insta a youtube“*.
+- **Co:** CODE-web texty na sítě nepíše. Sleduje veřejná čísla profilů, registrace podle kanálu a vyhledávače, zapisuje je do
+  `docs/monitor/site-a-web.md` a navrhuje technické kroky (odkazy se štítky `?z=`, stránky run, vyhledávače). Ownerův požadavek „AI
+  v biu všech tří“ hlídá při monitoringu a nesplnění hlásí ownerovi.
+- **Hranice:** dosah a zobrazení příspěvků jsou jen ve statistikách účtů — bez nich monitoring vidí sledující, příspěvky, reakce
+  a registrace podle kanálu. Jak často se měří, zatím nerozhodnuto (otázka ownerovi 2026-11-02).
+- **Oprava k 2026-11-02 (5):** „doména ověřená TXT záznamem“ pro Search Console ownera neplatí — jeho účet vlastnost therunekeeper.com
+  nemá (screenshot ownera 2026-11-02); záznam `google-site-verification` v DNS je nejspíš z ověření pošty u Googlu, neověřeno.
+- Affected doc(s): RUNAR_BACKLOG.md (Sociální sítě Rúnara), docs/monitor/site-a-web.md.
