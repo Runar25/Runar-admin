@@ -904,8 +904,8 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   12. Bio Facebooku (≤ 101 znaků; zdroje uvádějí 101 i 155, kratší projde vždy): věta o světle + první věta `UI_TEXT.ai_note`
       (IS 94, EN 96 znaků).
   13. Nová IS část ověřena: Greynir bez nálezu; korpus „rúnalestur“ 19×, „á íslensku og“ 7345×, „íslensku og ensku“ 2790×.
-  14. Odkaz se štítkem kanálu (DECISIONS 2026-11-02 (3)): na Instagram `https://therunekeeper.com/?z=ig`, do pole Web na Facebooku
-      `https://therunekeeper.com/?z=fb` (TikTok `?z=tt`, YouTube `?z=yt`).
+  14. Odkaz v biu = krátká adresa se štítkem kanálu (DECISIONS 2026-11-02 (3), (11)): Instagram `therunekeeper.com/ig`, TikTok
+      `therunekeeper.com/tt`, YouTube `therunekeeper.com/yt`, pole Web na Facebooku `therunekeeper.com/fb` — přesměruje na `/?z=…`.
   **Kdo co (owner 2026-11-02, DECISIONS 2026-11-02 (8)):** obsah sítí a bia dělá Sigrún; CODE-web monitoring (čísla v čase →
   `docs/monitor/site-a-web.md`) a technika. Owner: v biu Instagramu, TikToku i YouTube musí stát, že Rúnar je AI.
   Stav 2026-11-02 (veřejné profily, CODE-web): Instagram i TikTok mají totéž bio („Keeper of runes, stories & ancient wisdom / Rune
@@ -952,7 +952,8 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   ✅ *(owner 2026-11-02 „3. nasazeno“; CODE-web ověřil naostro: 53 adres ze sitemapy, landing s canonical, odkazem SAFN RÚNA a štítkem,
   `waitlist-join` verze 12)* nasazení · ✅ dvoufázové přihlášení na GitHubu a GoDaddy (owner *„8. hotovo“*) · ověřovací záznam GitHub
   Pages pro doménu v DNS je. **Čeká na ownera:** Search Console — ownerův účet vlastnost therunekeeper.com nemá (screenshot 2026-11-02);
-  TXT `google-site-verification` v DNS je nejspíš z ověření domény pro poštu u Googlu (MX míří na Google), neověřeno. Založit ji
+  TXT `google-site-verification` v DNS je nejspíš z ověření domény pro poštu u Googlu (MX míří na Google), neověřeno. 2026-11-02 owner
+  přidal v GoDaddy druhý TXT záznam pro Search Console (Google DNS ho vidí) — zbývá VERIFY a sitemapa. Založit ji
   (typ Domain) účtem runar@therunekeeper.com, nebo runar@ přidat jako uživatele — hlášení Search Console pak jdou do runar@ (monitoring).
   **Dál k viditelnosti:** Bing Webmaster Tools (import ze Search Console), odkaz z agndofa.is na therunekeeper.com, odkazy z profilů
   na sítích (štítky `?z=`), strukturovaná data (JSON-LD) na landingu a stránkách run.

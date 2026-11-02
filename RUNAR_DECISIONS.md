@@ -13048,3 +13048,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   celou, maskovatelná ikona Androidu (vnitřních 80 %) by ji uřízla nahoře i dole → při převodu runu zmenšit a kámen kolem doplnit
   (zrcadlením textury), ne ořezat. Kdy do appky, čeká na ownera.
 - Affected doc(s): v2/assets/README.md, RUNAR_BACKLOG.md (Web — ikona appky).
+
+## 2026-11-02 (11) — Krátké adresy kanálů (therunekeeper.com/ig …) a pondělní přehled sítí a webu
+
+- **Rozhodl:** owner 2026-11-02 na otázky CODE-web „Mám udělat krátké adresy therunekeeper.com/ig, /tt, /yt a /fb?“ → *„ano“*
+  a „Mám nastavit pravidelný přehled sítí a webu každé pondělí ráno?“ → *„můžeš“*.
+- **Co:** (1) `scripts/web_kratke_odkazy.py` píše `web/site/<kanál>/index.html` pro každý štítek z `KANALY` ve `waitlist-join` (jediný
+  seznam); stránka hned přesměruje na `/?z=<kanál>` (meta refresh i JS), je noindex a canonical míří na kořen; `web_nasad.py` ji
+  generuje před nasazením. Do bia patří `therunekeeper.com/ig` (`/tt`, `/yt`, `/fb`). (2) Naplánovaná úloha `runar-prehled-site-a-web`
+  (desktopová appka, pondělí 8:30 místního času, před úlohou `runar-zpravy-gmail` v 9:00): veřejná čísla profilů, registrace podle
+  kanálu z oznámení na runar@, hlášení Search Console z runar@, web naostro → krátký přehled ownerovi. Úloha jen čte (verzi se zápisem
+  a pushem do repa automatické schvalování zamítlo); čísla do `docs/monitor/site-a-web.md` zapíše CODE-web. Nikam se nepřihlašuje,
+  nic nepublikuje, nic neodesílá. Běží, jen když je appka otevřená (jinak při dalším spuštění); uložená v režimu Auto.
+- **Ověřeno:** /ig/ v náhledu přesměruje na `/?z=ig` a landing štítek převezme; ㊖, ㊑, ㊙ projdou (62 stránek). Naostro po nasazení.
+- Affected doc(s): RUNAR_BACKLOG.md (Sociální sítě bod 14), docs/monitor/site-a-web.md.
