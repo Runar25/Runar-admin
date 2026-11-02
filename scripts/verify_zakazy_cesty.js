@@ -13,7 +13,12 @@ const fs = require('fs'), path = require('path');
 const R = process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin';
 
 const OZDOBY = '◌○●◦✦✧·•◈◇◆★☆❖⁂※';
-const reOzdoba = new RegExp('[' + OZDOBY + ']\\s?ᚱ|ᚱ\\s?[' + OZDOBY + ']');
+// Od 2026-11-02 je značka ᚱ kresbou (runar-znacka.js): ozdoba těsně před / za prvkem s data-znacka nebo voláním znackaSvg() je totéž
+// porušení jako ozdoba u znaku ᚱ — bez toho by kontrola po přechodu na kresbu nehlídala nic.
+const O = '[' + OZDOBY + ']';
+const reOzdoba = new RegExp(O + '\\s?ᚱ|ᚱ\\s?' + O
+  + '|' + O + '\\s?<[^>]*data-znacka|data-znacka[^>]*>(?:</\\w+>)?\\s?' + O
+  + "|" + O + "\\s?'\\s*\\+\\s*znackaSvg\\(|znackaSvg\\([^)]*\\)\\s*\\+\\s*'\\s?" + O);
 
 function castA(soubory) {
   const v = [];
@@ -81,6 +86,9 @@ if (process.argv.includes('--test')) {
   const pripady = [
     ['A čistý projde', castA([['x.html', '<span class="brand">ᚱ</span> ᚠᚢᚦᚨᚱᚲ']]), 0],
     ['A ozdoba padne', castA([['x.html', '<span>◌ ᚱ ◌</span>']]), 1],
+    ['A kresba čistá projde', castA([['x.html', '<div class="name-card-rune" data-znacka></div>'], ['a.js', "x = '<span>' + znackaSvg() + '</span>';"]]), 0],
+    ['A ozdoba u data-znacka padne', castA([['x.html', '<div>◌ <span data-znacka></span> ◌</div>']]), 1],
+    ['A ozdoba u znackaSvg() padne', castA([['a.js', "x = '✦ ' + znackaSvg() + ' ✦';"]]), 1],
     ['B block projde', castB([['a.js', "const content = document.getElementById('reader-content'); content.style.display = 'block';"]], []), 0],
     ['B none padne', castB([['a.js', "const c = document.getElementById('reader-content'); c.style.display = 'none';"]], []), 1],
     ['B třída padne', castB([['a.js', "document.getElementById('reader-content').classList.add('hidden');"]], []), 1],
