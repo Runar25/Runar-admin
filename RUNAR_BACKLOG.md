@@ -418,7 +418,8 @@ promptu v `claude-proxy` (už ověřuje přihlášení a odečítá kredity; pro
      zapíše server z vlastního losu, ne z `journal` od prohlížeče (dnes jen vlastní deník a strom, ale po F3 to jde zadarmo).
      **Připsáno 2026-10-31 (úklid):** (c) `SOL_EFFORTS = ["none","minimal"]` v `claude-proxy/index.ts` — `minimal` neexistuje, vědomě odloženo
      „až s nasazením proxy“ (8e5ac52); (d) brána životní runy stojí na `life_rune_text` od klienta a cena od klienta = #3 a #4 z „Proxy Fáze 2“.
-   - [x] ✅ *(CODE-tune 2026-11-02, DECISIONS 2026-11-02 (4); `claude-proxy` nasazena 2026-11-02, shoda v datech ověřit)* **F3a:** server skládá prompt ze
+   - [x] ✅ *(CODE-tune 2026-11-02, DECISIONS 2026-11-02 (4); `claude-proxy` nasazena 2026-11-02; ověřeno v datech ownerovým čtením Uruz + Ask
+     19:51: `prompt_stin` server — systém i prompt bajt po bajtu (3075 a 2888 zn.), náhoda 9/9, deník Uruz ᚢ, Ask uložen)* **F3a:** server skládá prompt ze
      zápisu appky — postava, korekce, engine, ✦, cena (a), strop odpovědi a runy do deníku (b) od serveru; konec promptu `_promptKonec`
      jedna funkce. Smoke ㊍ appka × server 32 vzorků + útoky.
    - [ ] **F3b:** náhoda, sáček obrazů a poslední obraz na server (tabulka na uživatele — SQL ownera), místní čas → časové pásmo; pak
