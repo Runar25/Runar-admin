@@ -131,6 +131,9 @@ const VZORKY = `(async () => {
       vady.push(v.jm + ': server — prompt ≠ appka od znaku ' + j + ' (appka ' + v.prompt.length + ', server ' + sv.prompt.length + ')'); }
     if (v.cena && sv.cena !== ceny[v.cena].credits) vady.push(v.jm + ': server — cena ' + sv.cena + ' ≠ SPREAD_COSTS.' + v.cena + ' ' + ceny[v.cena].credits);
     if (!(sv.maxTokens > 0)) vady.push(v.jm + ': server — bez stropu odpovědi');
+    // F3a (d): životní runu zapíše do profilu server — číslo = pořadí Fehu v RUNES (vzorek), jazyk = jazyk vzorku; jinde nic
+    if (v.mode === 'life_rune' ? !(sv.zivotni && sv.zivotni.cislo === 1 && sv.zivotni.lang === v.jm.slice(-2)) : sv.zivotni)
+      vady.push(v.jm + ': server — životní runa k zápisu ' + JSON.stringify(sv.zivotni));
   }
   // F3a útoky na hranici — každý s kontrolou naopak (bez ochrany se projeví), jinak by „neprojde“ nic nedokazovalo
   const najdi = (jm) => vz.find((v) => v.jm === jm && !v.chyba);

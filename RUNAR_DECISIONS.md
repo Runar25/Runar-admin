@@ -12961,3 +12961,21 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   jen owner): ověřená doména v nastavení GitHubu (ochrana proti převzetí domény) a dvoufázové přihlášení účtů GitHub a registrátora.
 - **Návrat:** smazat oba soubory a nasadit.
 - Affected doc(s): RUNAR_BACKLOG.md (Domovská stránka webu po spuštění).
+
+## 2026-11-02 (6) — Životní runa: zapíše ji server a trigger neměnnosti konečně platí (F3a (d), audit 2026-08-03 #3)
+
+- **Rozhodl:** F3a (d) z plánu F3 (owner 2026-10-21 *„ok začni“*, 2026-11-02 *„ok, pokračuj s F3a“*); oprava triggeru = důsledek nálezu níž,
+  SQL spouští owner.
+- **Nález:** `guard_life_rune_immutable()` (2026-07-19 (Fáze 1), *„neměnné pro roli authenticated“*) je `SECURITY DEFINER` s vlastníkem
+  postgres — uvnitř je `current_user` vlastník, takže první podmínka pustí každý zápis a brána **nikdy nezabrala**. Doklad bez zápisu:
+  sesterský `ledger_user_profiles` (také DEFINER) píše `current_user` do `credit_ledger.actor` → všech 106 záznamů `postgres`, i čtení
+  odečtená z claude-proxy. Prohlížeč má UPDATE na `life_rune_*` a `dob_*` → mohl si runu přepsat, vymazat a čtení životní runy (zdarma,
+  „jen jednou“) opakovat. Červencové „neměnné“ stálo na záměru SQL, pokusem ověřené nebylo; pokus teď neděláme (zápis do produkce).
+- **Co:** (a) `claude-proxy` po úspěšném čtení životní runy zapíše runu sám — CAS `is null`, runa a jazyk ze serverového skládání, text =
+  co dostane prohlížeč; appka pak zapíše tytéž hodnoty a trigger je pustí. (b) `sql/2026-11-02_life_rune_guard_invoker.sql`:
+  funkce jako `SECURITY INVOKER` (tělo beze změny) — server a SQL editor projdou, prohlížeč nastavenou runu ani datum nezmění.
+- **Ověřeno:** smoke ㊍ — server vrací číslo a jazyk životní runy ze skládání (EN i IS), jinde nic; syntaxe proxy (Node bez typů, kontrola
+  umí spadnout). Trigger po SQL neověřen pokusem — ověří ho první prohlížečový zápis do nastavené runy (chyba 42501).
+- **Zbývá:** `credit_ledger.actor` je kvůli témuž vždy `postgres` (BACKLOG).
+- **Návrat:** revert commitu; SQL `alter function public.guard_life_rune_immutable() security definer;`.
+- Affected doc(s): RUNAR_BACKLOG.md (Plán infrastruktury krok 1 — F3b, Zjištěno při auditu).

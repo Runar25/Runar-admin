@@ -79,7 +79,8 @@ export function prehravac() {
 }
 
 // Prompt pro model ze zápisu appky. opts: mode (proxy), tier, admin, korekce (řádky runar_corrections z DB, normalizují se tady).
-// Vrací { system, prompt, builder, cena, maxTokens, denik: {kind, rune_name, rune_glyph, rune_display?} | null, los } nebo { chyba }.
+// Vrací { system, prompt, builder, cena, maxTokens, denik: {kind, rune_name, rune_glyph, rune_display?} | null,
+// zivotni: {cislo, lang} | null (jen životní runa), los } nebo { chyba }.
 export function slozPromptServer(stin, { mode = "", tier = "", admin = false, korekce = null } = {}) {
   if (!stin || typeof stin !== "object" || !stin.sys || !stin.prompt) return { chyba: "no_record" };
   if (JSON.stringify(stin).length > 120000) return { chyba: "record_too_large" };
@@ -95,7 +96,7 @@ export function slozPromptServer(stin, { mode = "", tier = "", admin = false, ko
     if (sys.chyba) return { chyba: "system_" + sys.chyba };
     const pr = prehraj(stin.prompt, { admin, uprav: (jm, a) => { if (kor && jm in KOREKCE_ARG) a[KOREKCE_ARG[jm]] = kor; return a; } });
     if (pr.chyba) return { chyba: pr.chyba };
-    let prompt = pr.text, cena = 1, maxTokens = 0, denik = null;
+    let prompt = pr.text, cena = 1, maxTokens = 0, denik = null, zivotni = null;
     const druh = CTENI[pr.builder];
     if (druh) {
       const runy = (pr.builder === "buildReadingPrompt" ? [pr.args[1]] : (Array.isArray(pr.args[1]) ? pr.args[1] : [])).filter(Boolean);
@@ -108,9 +109,15 @@ export function slozPromptServer(stin, { mode = "", tier = "", admin = false, ko
         : { kind: "spread", rune_name: druh[0], rune_glyph: "✦",
             rune_display: runy.map((r) => ((r.g || "") + " " + (S.rn(r, pr.lang) || "").toUpperCase()).trim()).join(" · ") };
     } else if (pr.builder === "buildAskPrompt") maxTokens = S.RUNAR_MODES.ask.max_tokens;
-    else if (pr.builder === "buildLifeRunePrompt") maxTokens = S.RUNAR_MODES.life_rune_standard.max_tokens;
+    else if (pr.builder === "buildLifeRunePrompt") {
+      maxTokens = S.RUNAR_MODES.life_rune_standard.max_tokens;
+      // claude-proxy ji po úspěšném čtení zapíše do profilu sám (brána „jen jednou“) — číslo jako appka (runar-tree.js: index v RUNES + 1)
+      const r = pr.args[1], i = r ? S.RUNES.findIndex((x) => x.n === r.n) : -1;
+      if (i < 0) return { chyba: "life_rune_unknown" };
+      zivotni = { cislo: i + 1, lang: pr.lang };
+    }
     else if (pr.builder === "buildNameLorePrompt") maxTokens = S.RUNAR_MODES.name_lore.max_tokens;
-    return { system: sys.text, prompt, builder: pr.builder, cena, maxTokens, denik,
+    return { system: sys.text, prompt, builder: pr.builder, cena, maxTokens, denik, zivotni,
              los: { sys: [sys.los, sys.los_zbyl, sys.los_dosel], prompt: [pr.los, pr.los_zbyl, pr.los_dosel] } };
   } catch (e) { return { chyba: String((e && e.message) || e).slice(0, 200) }; }
 }

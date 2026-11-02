@@ -423,7 +423,8 @@ promptu v `claude-proxy` (už ověřuje přihlášení a odečítá kredity; pro
      jedna funkce. Smoke ㊍ appka × server 32 vzorků + útoky.
    - [ ] **F3b:** náhoda, sáček obrazů a poslední obraz na server (tabulka na uživatele — SQL ownera), místní čas → časové pásmo; pak
      appka posílá jen vstupy. **Ask:** text čtení a předchozí výměnu brát z uloženého čtení / podpisu, ne od prohlížeče. **Pole čtení:**
-     serverový strop délky (otázka, oblast, hledání, záměr, jméno) podle UI. **(d) brána životní runy** (#3): server zapíše runu po čtení sám.
+     serverový strop délky (otázka, oblast, hledání, záměr, jméno) podle UI. ~~(d) brána životní runy~~ ✅ *(CODE-tune 2026-11-02,
+     DECISIONS 2026-11-02 (6): server zapíše runu sám; SQL `sql/2026-11-02_life_rune_guard_invoker.sql` čeká na ownera)*
    - [ ] **F4 schovat:** buildery a RUNE_IMAGES z veřejných souborů appky pryč; shrine (laboratoř promptu) přes cestu jen pro admina;
      pak soukromé repo (krok 3) a nové klíče Supabase (krok 9).
 2. **Supabase Free → Pro**, ověřit, že denní zálohy běží.
@@ -784,6 +785,11 @@ Procházka je tím úplná.
       startu. Že to sedlo, pozná se podle **„(tester)" / „(prófari)"** za jménem tieru v panelu.
 
 ## Zjištěno při auditu — nespěchá, ale ať se neztratí
+- [ ] **`credit_ledger.actor` je vždy `postgres`** (CODE-tune 2026-11-02, DECISIONS 2026-11-02 (6)): trigger `ledger_user_profiles` je
+  `SECURITY DEFINER` (musí být — `credit_ledger` nemá INSERT ani pro service_role) a uvnitř vrací `current_user` vlastníka. 106/106 záznamů
+  `postgres`, takže z knihy pohybů nejde poznat, jestli změnu udělal server, prohlížeč nebo SQL editor. Oprava: role z JWT
+  (`auth.role()` / `request.jwt.claims`) s `session_user` jako zálohou — SQL pro ownera; ověřit na novém záznamu. Pak kontrola ve smoke:
+  žádná DEFINER funkce nerozhoduje podle `current_user`.
 - [x] ✅ *(CODE-tune 2026-11-02: propouštěl útok „záznamník vynechá úložiště“ — výchozí stav v testu měl klíč `seasonlast_Raidho`, který appka nečte, takže rozdíl vznikal jen náhodou. Nový pevný vzorek `sacek_en/is` (v sáčku jen poslední obraz, náhoda 0) chytá 10 z 10 a pokaždé na tomtéž místě; útok na náhodu 5 z 5.)* **Útok na ㊍ (stín skládání promptu) jednou propustil** (CODE-web 2026-11-01, pre-push 90b82b9 v čisté kopii): `verify_prompt_stin.js`
   prošla s podstrčenou chybou v `v2/runar-app.js` (`.git/runar-protipriklady-propustene/20261101-174820_verify_prompt_stin.js_v2_runar-app.js.txt`);
   hned poté samotný útok 2 ze 2 (6 a 18 vad ve 22 vzorcích). Který ze dvou případů propustil, výstup neříká. Šum jako dřív u ㊼ →

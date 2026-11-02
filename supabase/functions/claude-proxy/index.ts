@@ -490,6 +490,7 @@ serve(async (req: Request) => {
     // textu; komukoli jinému bez zápisu proxy čtení odmítne (appka zápis posílá od 2026-10-21, F2). Zápis, který nejde složit, se odmítne
     // i jemu: jinak by stačilo poslat rozbitý zápis a model by dostal vlastní text. Jen selhání načtení balíčku (útočník ho nevyvolá)
     // pustí čtení po staru — výpadek kódu nesmí zastavit všechna čtení; jde do ops_events jako chyba.
+    let zivotniServer: { cislo: number; lang: string } | null = null;   // životní runa ze skládání — zapíše se po úspěchu (níž)
     if (prompt && mode !== "resave" && mode !== "life_rune_reset") {
       const zapis = body.stin && typeof body.stin === "object" ? body.stin : null;
       if (!zapis && !isAdmin) {
@@ -509,6 +510,7 @@ serve(async (req: Request) => {
           system = sv.system; prompt = sv.prompt; spreadCost = sv.cena;
           if (sv.maxTokens) cappedMaxTokens = sv.maxTokens;
           if (journal && sv.denik) Object.assign(journal, sv.denik);   // druh a runy do deníku z vlastního skládání, ne od prohlížeče
+          zivotniServer = sv.zivotni || null;
           // strop délky znovu na serverovém textu — otázka v zápisu může být delší než text, který prohlížeč poslal
           if (prompt.length > MAX_PROMPT_CHARS || system.length > MAX_SYSTEM_CHARS) {
             return json({ error: "too_long", message: "That is more than the runes can hold at once. Try a shorter question." }, 400);
@@ -907,6 +909,18 @@ serve(async (req: Request) => {
         .update({ tree_founded_at: new Date().toISOString(), founding_reading_id: readingId })
         .eq("id", userId).is("tree_founded_at", null);
       if (fErr) console.error("founding mark failed:", fErr.message);
+    }
+
+    // Životní runa (2026-11-02, F3a (d) — audit 2026-08-03 #3): brána „jen jednou“ výš (`isLifeRune && pr?.life_rune_text`) stála na
+    // sloupci, který psal jen prohlížeč — kdo ho nezapsal, nechal si čtení životní runy psát znovu a znovu zdarma. Teď ho po úspěšném
+    // čtení zapíše server: CAS `is null` (dva souběžné požadavky zapíšou jednou), service_role (trigger trg_life_rune_immutable první
+    // zápis pouští). Runa a jazyk ze serverového skládání, text = `text`, který dostane prohlížeč — appka pak zapíše tytéž hodnoty
+    // (runar-tree.js) a trigger je propustí, protože se nic nemění. Bez skládání (admin bez zápisu) se nezapisuje nic, jako dřív.
+    if (isLifeRune && userId && zivotniServer) {
+      const { error: lErr } = await sb().from("user_profiles")
+        .update({ life_rune_number: zivotniServer.cislo, life_rune_text: text, life_rune_lang: zivotniServer.lang })
+        .eq("id", userId).is("life_rune_text", null);
+      if (lErr) console.error("life rune persist failed:", lErr.message);
     }
 
     // Rozbor jmena se uklada TADY, ne v klientovi — klient uz na `name_lore_text` grant nema.
