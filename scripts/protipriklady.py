@@ -316,7 +316,7 @@ PRIPADY = [
  ('chyti', 'verify_prompt_stin.js', 'v2/runar-app.js', 'replace', '    if (/^season(bag|motif|last)_/.test(k)) o[k] = localStorage.getItem(k); } } catch (e) {}', '    } } catch (e) {}'),
  ('chyti', 'verify_prompt_stin.js', 'v2/runar-app.js', 'replace', 'Math.random = function () { var x = puv(); los.push(x); return x; };', 'Math.random = function () { return puv(); };'),
  # ㊍ F3a (2026-11-02, CODE-tune): server skládá prompt sám — korekce od prohlížeče · builder cizí pro mode · Opus ne-adminovi · cena od builderu
- ('chyti', 'verify_prompt_stin.js', 'supabase/functions/_shared/prompt_server.mjs', 'replace', 'if (kor && jm in KOREKCE_ARG) a[KOREKCE_ARG[jm]] = kor; return a;', 'return a;'),
+ ('chyti', 'verify_prompt_stin.js', 'supabase/functions/_shared/prompt_server.mjs', 'replace', 'if (kor && jm in KOREKCE_ARG) a[KOREKCE_ARG[jm]] = kor;', ''),   # 2026-11-02: řádek bez „return a;“ (uprav pro Ask a strop)
  ('chyti', 'verify_prompt_stin.js', 'supabase/functions/_shared/prompt_server.mjs', 'replace', 'if (!povolene.includes(String(stin.prompt.builder))) return { chyba: "builder_not_allowed_for_mode" };', ''),
  ('chyti', 'verify_prompt_stin.js', 'supabase/functions/_shared/prompt_server.mjs', 'replace', 'S.nastav("engine", admin ? (s.engine || "sol") : "sol");', 'S.nastav("engine", s.engine || "sol");'),
  ('chyti', 'verify_prompt_stin.js', 'supabase/functions/_shared/prompt_server.mjs', 'replace', 'cena = S.SPREAD_COSTS[druh[1]].credits;', 'cena = 1;'),
@@ -326,7 +326,7 @@ PRIPADY = [
  ('chyti', 'verify_prompt_stin.js', 'supabase/functions/_shared/prompt_server.mjs', 'replace', 'if (draws && sk.kusy.length) draws.kusy = sk.kusy.map((k) => k.kus);', ''),
  # ㊍ Ask a strop (2026-11-02, CODE-tune, owner „3. ano“): text od prohlížeče se nenahradí · strop vypnutý · bez řezu u ✦ · bez stropu otázky
  ('chyti', 'verify_prompt_stin.js', 'supabase/functions/_shared/prompt_server.mjs', 'replace', '{ a[0] = askText; askNahrazeno = true; }', '{ askNahrazeno = true; }'),
- ('chyti', 'verify_prompt_stin.js', 'supabase/functions/_shared/prompt_server.mjs', 'replace', '    if (strop) return { chyba: strop };\n', ''),
+ ('chyti', 'verify_prompt_stin.js', 'supabase/functions/_shared/prompt_server.mjs', 'replace', 'if (strop) return { chyba: strop };', ''),   # bez \\n — čistá kopie z gitu má CRLF
  ('chyti', 'verify_prompt_stin.js', 'supabase/functions/_shared/prompt_server.mjs', 'replace', 'normalizuj(textKHlasu(String(askCteni)))', 'normalizuj(String(askCteni))'),
  ('chyti', 'verify_prompt_stin.js', 'supabase/functions/_shared/prompt_server.mjs', 'replace', 'if (delka(u.question) > STROP.volny || delka(u.name) > STROP.jmeno) return "input_too_long";', ''),
  # ㊎ mapa ochran (2026-10-21, CODE-read): vypnutá brána · obrácený limit · nová ochrana bez zápisu · nový mode · nová funkce
