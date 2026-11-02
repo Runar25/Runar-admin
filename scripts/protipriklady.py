@@ -251,7 +251,8 @@ PRIPADY = [
  ('chyti', 'verify_image_area.js', 'v2/runar-character.js', 'replace', 'function _imgPodleOblasti(cand, area) {', 'function _imgPodleOblasti(cand, area) { return cand;'),
  ('chyti', 'verify_image_motifs.js', 'v2/runar-character.js', 'replace', 'if (lastMotif) cand.forEach(', 'if (false) cand.forEach('),
  ('chyti', 'verify_image_register.js', 'v2/runar-character.js', 'replace', "bigger than it was in spring.','auður','wealth','P']", "bigger than it was in spring.','auður','wealth','X']"),
- ('chyti', 'verify_thought.js', 'v2/runar-reading.js', 'replace', "return !!(TIERS[isAdmin(currentUser.email) ? 'premium' : userTier] || {}).reading_thought;", 'return true;'),
+ ('chyti', 'verify_thought.js', 'v2/runar-reading.js', 'replace', "return !!currentUser && _myslenkaPro(userTier, isAdmin(currentUser.email));", 'return true;'),
+ ('chyti', 'verify_thought.js', 'v2/runar-character.js', 'replace', "function _myslenkaPro(tier, admin) { return !!(TIERS[admin ? 'premium' : tier] || {}).reading_thought; }", "function _myslenkaPro(tier, admin) { return !!admin; }"),
  ('chyti', 'verify_is_kontrola_jedno_misto.js', 'memory/working-style.md', 'append', '', '\nKontrola IS: napřed check-' + 'is.py, pak is-' + 'greynir.py.\n'),
  # strom ㉳ (CODE-tree 2026-10-11): mutace z hlavičky verify_tree_mista převedené na opakované útoky. Kontrola si lab staví z builderu
  # do dočasné složky, takže útok míří na build_crown_composer.py. (a) dvě ramena v jedné výšce — přes výšky zón XLF, ne exitMinPx
