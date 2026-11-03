@@ -15,5 +15,6 @@ přijde něco nečekaného · Fehu = hojnost.
 
 **How to apply:** význam runy = princip (co runa v životě dělá), ne předmět ze jména. Vzor návodu: ownerovy popisy
 (`RUNAR_POPISY_RUN.md`) a tvar „esence runy“ jako u Gemini (princip → oblasti → stín). Historii uváděj jen jako nápad,
-nikdy jako mez. Nové významy jsou 📜 kánon, který schvaluje owner. Nejsou to fakta, takže je §23 nezakazuje,
+nikdy jako mez. Nové významy jsou 📜 kánon, který schvaluje owner. **Kánon děláme my, takže se smí změnit vždy, když se ukáže,
+že to zlepší čtení** (owner 2026-11-03: „kánon je pro nás něco, co se může vždy změnit“) — „stojí to v kánonu“ není argument proti změně. Nejsou to fakta, takže je §23 nezakazuje,
 jen je nepodávej jako doložené. Souvisí: [[dont-invent-fact-critical]], [[decisions-are-directions-not-locks]].
