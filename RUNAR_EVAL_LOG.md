@@ -6561,3 +6561,23 @@ nedostupné). Data mimo repo: `~/runar-eval/podoby-bez-delky-2026-10-09.json`, `
 - **Co se netvrdí:** n = 1 čtení na jazyk, jen single; jak to zní, rozhodne poslech (`~/runar-eval/hlas-cteni/poslech.html` — doc-links:ok 2026-10-28 mimo repo, nese texty čtení). Že je
   intonace „stejná“, netvrdím — měřák rozdíl pod 4 půltóny nerozliší.
 - **Pauza funguje jen značkou:** rituál ukázal, že v4 dlouhou pauzu udělá na `[long pause]` (1,50 s), ne na „… …“ (0,90) — DECISIONS 2026-10-28 (3).
+
+## 2026-11-03 (1) — Ask převypráví čtení: zhruba 4 z 5 vět opakují čtení, u „What is this reading telling me?“ stejně jako u ostatních otázek
+
+- **Proč:** hlášení 9ae64c17 (owner 2026-11-03: *„ASK je od toho aby vysvětlil, ne jen opakoval co bylo ve čtení“*) u Raidho efbf762b;
+  owner *„6. ano“* k měření.
+- **Data:** produkční DB, 300 čtení s Askem, 374 výměn; na „What is this reading telling me?“ / „Hvað segir þessi lestur mér?“ 9 výměn
+  (2026-09-30 – 11-03, v4.80 – v5.22). Kontrola: 9 náhodných výměn na jiné otázky (pevné semínko).
+- **Nástroj 1 — slovní (slepý):** opsané slovní trojice 3 % (cíl) × 2 % (ostatní 365), nová obsahová slova 72 % × 73 %, půlky ostatních
+  2 % × 2 %. Ownerův případ efbf762b vychází 2 % / 71 % — **slepota dokázaná**: model opakuje parafrází („a road revealed one stretch at
+  a time“ → „a road you can see only a little at a time“), trojice ji nevidí. Nulová transformace v pořádku (čtení proti sobě 100 % / 0 %).
+- **Nástroj 2 — slepý soudce (subagent, nevěděl, které páry jsou cíl):** každou větu odpovědi označil „opakuje čtení i parafrází“ /
+  „říká něco nového“. **Cíl: 37 z 46 vět opakuje (80 %), skóre „hlavně opakování“ 8/9. Kontrola: 26 z 33 (79 %), 8/9.** Dva páry dostal
+  napoprvé s vadným čtením (můj export, viz DECISIONS 2026-11-02 (13) oprava měření) — po opravě oba „hlavně opakování“.
+- **Nález:** vada není u té jedné otázky — převyprávění čtení je obecné chování Asku (i „Explain Nauthiz without the image“, „What does
+  Fehu mean in this reading?“, „What is the dark water?“). V `RP_ASK.rules` pravidlo „vysvětli, co čtení neřeklo“ není; první věta
+  říká *„speak from what the picture holds“* a pravidlo o zrcadlení *„stay with this reading“* — obojí táhne zpátky do čtení (neověřeno,
+  že je to páka).
+- **Hranice:** n 9 + 9, jeden soudce, bez druhého soudce a bez opakování; nerozlišuje, kdy je návrat k obrazu žádoucí (owner 2026-10-03
+  chtěl u „clearer image“ zůstat u obrazu). Netvrdí se, která věta promptu to dělá.
+- Podklady: skripty, vzorek a klíč soudce jen ve scratchpadu session (mimo repo, nezachovají se).

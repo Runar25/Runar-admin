@@ -1171,4 +1171,5 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   see only a little at a time“) a otázku ze čtení slovo od slova (*„is the direction … one you still choose, or one you chose some time ago?
   It leaves that distinction with you“*) — nic, co čtení neřeklo. Navazuje na 2026-10-03 (13) (Ask nepřevypráví, jak čtení obraz otevřelo,
   v4.89) — ta oprava míří na úhel, ne na tuhle otázku. Zásah do promptu Asku → napřed změřit v labu CODE-read (kolik Asků na tuhle otázku
-  opakuje čtení), ne tichý tune. Čeká na ownerovo ano k měření.
+  opakuje čtení), ne tichý tune. **Změřeno 2026-11-03** (RUNAR_EVAL_LOG 2026-11-03 (1)): opakuje zhruba 4 z 5 vět u TÉTO otázky
+  i u ostatních (80 % × 79 %, slepý soudce, n 9 + 9) — vada Asku obecně. Další krok čeká na ownera.
