@@ -41,7 +41,7 @@ kdy se známé věci ukážou v novém světle“ vysvětluje podstatu runy. St�
 - Eihwaz — neuzavřená minulost, vnitřní proměna, něco, čím člověk musí projít, aby se změnil.
 - Isa — uvíznutí v okamžiku, zamrznutí v určité zkušenosti.
 - Nauthiz — vnitřní tlak, bolest nebo potřeba, kterou nelze obejít.
-- Othala — rodinné vzorce, zděděná zátěž.
+- Othila — rodinné vzorce, zděděná zátěž.
 - Dagaz — okamžik, kdy člověk začne minulou událost vidět jinak.
 
 Obrazy k Eihwaz „the past that remains“: old memories returning unexpectedly · a man revisiting an abandoned house · footprints appearing
@@ -54,7 +54,7 @@ Rozdíl: Eihwaz pro zkušenost, která člověka stále proměňuje; Isa pro sit
 
 **GPT:** hledat situace, ve kterých lidé poznávají sami sebe, a přiřadit je k runám podle významu, který v nich leží. „Pro každou runu
 knihovnu lidských zkušeností, ne jen knihovnu obrazů. Zkušenost je významový základ, obraz je její konkrétní vyjádření.“ Jedna zkušenost
-může patřit k několika runám — rozhoduje úhel (minulost: Eihwaz proměňuje, Isa drží na místě, Nauthiz tlačí, Othala je v kořenech, Dagaz ji
+může patřit k několika runám — rozhoduje úhel (minulost: Eihwaz proměňuje, Isa drží na místě, Nauthiz tlačí, Othila je v kořenech, Dagaz ji
 začíná chápat jinak).
 
 1. **Fehu** — strach ze ztráty toho, co člověk vybudoval · neschopnost přijímat dary (hned potřeba oplatit) · práce, která už nepřináší
@@ -83,7 +83,7 @@ začíná chápat jinak).
     potřebují čas · návrat do situace, kterou už jednou prožil · konec etapy a přirozený začátek další.
 13. **Eihwaz** — ozvěna minulosti, která se vrací · mění se, ale neví, kým se stává · ztráta staré identity · přijetí něčeho, co nelze
     změnit · dlouhá vnitřní proměna bez viditelného výsledku · zjištění, že už není tím, kým býval.
-14. **Perthro** — náhodné setkání, které změní život · čekání na výsledek, který nemůže ovlivnit · tajemství nesené celý život · možnost,
+14. **Perth** — náhodné setkání, které změní život · čekání na výsledek, který nemůže ovlivnit · tajemství nesené celý život · možnost,
     o které nevěděl · rozhodnutí bez znalosti okolností · překvapení, které se nedá naplánovat.
 15. **Algiz** — potřeba chránit někoho blízkého · naučit se chránit sám sebe · instinkt varuje dřív než rozum · bezpečné místo, kde nemusí
     nic předstírat · přehnaná ochrana, která omezuje svobodu · někdo se postaví za toho, kdo se nedokáže bránit.
@@ -103,20 +103,20 @@ začíná chápat jinak).
     napětí před důležitým začátkem · něco dozrálo a je čas to pustit · potenciál nevyužitý ze strachu.
 23. **Dagaz** — náhlé pochopení něčeho, co nedávalo smysl · přestane se dívat na sebe očima ostatních · starý způsob života přestane
     fungovat · změna, která otevře jinou perspektivu · už nemusí pokračovat stejně · nový začátek z dlouholeté zkušenosti.
-24. **Othala** — nese očekávání své rodiny · návrat do domu, ve kterém vyrůstal · zděděný majetek přináší odpovědnost · rozhodnutí přerušit
+24. **Othila** — nese očekávání své rodiny · návrat do domu, ve kterém vyrůstal · zděděný majetek přináší odpovědnost · rozhodnutí přerušit
     rodinný vzorec · hledání místa, které může nazývat domovem · co chce předat další generaci.
 
-## 4. Othala bez jmenovaných rolí (Cowork → owner → GPT)
+## 4. Othila bez jmenovaných rolí (Cowork → owner → GPT)
 
 **Coworkův text (owner poslal GPT):** pravidlo — žádná jmenovaná osoba ani role (otec, matka, babička), jen „someone close“, „a friend“
 nebo „family“ jako celek; jmenovaný člen rodiny sklouzne k tvrzení o konkrétním člověku. Ukázky:
-- *Othala · Love — zvyky:* „In love, Othala is the habits of closeness a person learned at home — how affection is shown, how a quarrel is
+- *Othala · Love — zvyky:* „In love, Othala is the habits of closeness a person learned at home — how affection is shown, how a quarrel is <!-- check-docs:ok 2026-11-03: doslovná citace (výstup modelu / Cowork), runu tam psali Othala -->
   handled — and the choice of which to bring into a new relationship. Imagine going silent in the middle of an argument and realising it is
-  how someone close to you always ended theirs. The shadow of Othala is that a way of loving learned at home can feel like love itself, so a
+  how someone close to you always ended theirs. The shadow of Othila is that a way of loving learned at home can feel like love itself, so a
   partner's different way looks like a lack of it. Which of the ways love was shown at home would you keep in a relationship of your own?“
-- *Othala · Love — očekávání:* „In love, Othala is the expectations a family places on a relationship — whom to choose, when to commit,
+- *Othala · Love — očekávání:* „In love, Othala is the expectations a family places on a relationship — whom to choose, when to commit, <!-- check-docs:ok 2026-11-03: doslovná citace (výstup modelu / Cowork), runu tam psali Othala -->
   what a partnership should look like — and whether those are the person's own. Imagine bringing a partner to a family dinner and sensing
-  the verdict before anyone has spoken. The shadow of Othala is that a family's picture of a good partner can pass for one's own, so a person
+  the verdict before anyone has spoken. The shadow of Othila is that a family's picture of a good partner can pass for one's own, so a person
   chooses, or refuses, someone for reasons that were never theirs. If your family had never had an opinion about whom you love, what would
   you look for in a partner?“
 
