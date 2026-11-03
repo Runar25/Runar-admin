@@ -907,6 +907,7 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   13. Nová IS část ověřena: Greynir bez nálezu; korpus „rúnalestur“ 19×, „á íslensku og“ 7345×, „íslensku og ensku“ 2790×.
   14. Odkaz v biu = krátká adresa se štítkem kanálu (DECISIONS 2026-11-02 (3), (11)): Instagram `therunekeeper.com/ig`, TikTok
       `therunekeeper.com/tt`, YouTube `therunekeeper.com/yt`, pole Web na Facebooku `therunekeeper.com/fb` — přesměruje na `/?z=…`.
+      ✅ *(nasazeno 2026-11-03, owner „6. nasazeno“, ověřeno naostro — DECISIONS 2026-11-02 (11))*
   **Kdo co (owner 2026-11-02, DECISIONS 2026-11-02 (8)):** obsah sítí a bia dělá Sigrún; CODE-web monitoring (čísla v čase →
   `docs/monitor/site-a-web.md`) a technika. Owner: v biu Instagramu, TikToku i YouTube musí stát, že Rúnar je AI.
   Stav 2026-11-02 (veřejné profily, CODE-web): Instagram i TikTok mají totéž bio („Keeper of runes, stories & ancient wisdom / Rune
@@ -919,7 +920,8 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   ikon pro `v2/icons/` (favicon, apple-touch, manifest 192/512 i maskovatelná) z rastru — runu zmenšit, kámen kolem doplnit zrcadlením
   textury (jinak ji Android ořízne); generátor `scripts/ikona_appky.py` umí jen vlastní kresbu, rastr doplnit. Kdy, čeká na ownera.
   2026-11-03: zkušební ikony na plochu telefonu `therunekeeper.com/icon-test/` (DECISIONS 2026-11-03 (1); maskovatelná verze tam už
-  je — postup `scripts/web_test_ikon.py` poslouží i pro `v2/icons/`); po ownerově výběru složku smazat.
+  je — postup `scripts/web_test_ikon.py` poslouží i pro `v2/icons/`); ✅ nasazeno 2026-11-03 (owner „6. nasazeno“), ověřeno naostro.
+  Čeká na ownerův výběr z plochy telefonu; pak složku smazat.
 - [ ] **Veřejné stránky run na webu — sdílení a vyhledávače** (podněty Cowork 2026-11-02, HANDOFF69 „konkurence a online prostor“;
   owner rozhodl 2026-11-02 — DECISIONS 2026-11-02 (3), (5), (7)). Ověřeno v kódu (CODE-web 2026-11-02, HEAD 19e6878):
   (a) Životní runu dostane návštěvník appky bez registrace: den a měsíc → runa, kámen a `tree_lr_origin`; čtení až po přihlášení
@@ -934,7 +936,7 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   (d) Náhled při sdílení: sítě čtou og:image bez JS → statická stránka na každou runu s vlastním obrázkem, generovaná skriptem
       z `UI_TEXT` (jako `web_socialni_obrazky.py`), a smoke, že vygenerované odpovídá zdroji. Bez serveru a bez provozních nákladů.
       Tytéž stránky nesou text v HTML pro vyhledávače i AI — bod (a) položky „Před spuštěním: viditelnost“.
-  (e) ⏳ *(CODE-web 2026-11-02, owner „5. ano“, DECISIONS 2026-11-02 (3): kód hotový, nasazení funkce a webu pouští owner)*
+  (e) *(CODE-web 2026-11-02, owner „5. ano“, DECISIONS 2026-11-02 (3); ✅ nasazeno 2026-11-02, `waitlist-join` verze 12)*
       Měření bez cookies: štítek kanálu v odkazu (`?z=ig`) přečte formulář při odeslání (do zařízení nic neukládá), `waitlist-join`
       ho po kontrole proti seznamu zapíše do `ops_events.detail` u `waitlist_signup` — bez adresy, do Brevo ne (štítek u adresy =
       osobní údaj). Ranní souhrn podle štítku = CODE-tune. Po spuštění se registruje v appce → štítek musí převzít appka (CODE-tune).

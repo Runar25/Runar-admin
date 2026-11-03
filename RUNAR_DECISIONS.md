@@ -12922,6 +12922,8 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno:** výběr štítku z adresy na 10 vzorcích (`?z=ig`, `?a=1&z=yt` projde; `?z=IG`, `?zz=ig`, prázdný a příliš dlouhý ne); syntaxe
   funkce `node --check`. **Neověřeno:** běh naostro — nasazení funkce i webu zastavilo automatické schvalování Claude Code (zásah do
   produkce), pouští ho owner; po něm jedna zkušební registrace s `?z=ig` (řádek v `ops_events`, oznámení s „Channel: ig.“).
+- **NASAZENO 2026-11-02** (owner *„3. nasazeno“*): `waitlist-join` verze 12 a landing, který štítek pošle. Naostro 2026-11-03: `/yt/`
+  → `/?z=yt` a landing štítek převezme. Registrace se štítkem zatím žádná (bia mají odkaz bez štítku) — první ukáže oznámení na runar@.
 - Affected doc(s): RUNAR_BACKLOG.md (Veřejné stránky run (e), Sociální sítě bod 14).
 
 ## 2026-11-02 (4) — F3a: prompt skládá server ze zápisu appky, cena a strop odpovědi od serveru
@@ -13002,6 +13004,7 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   hláška o neplatném datu; runa půlměsíce 2. 11. → Hagalaz; ㊙ na čistém výstupu projde, ruční úprava FAIL, jiný otisk zdroje ⚠;
   ㊑, ㊖, ㉽, ㉹ bez nálezu (58 stránek webu). **Neověřeno naostro:** nasazení — automatické schvalování Claude Code nasazení do
   produkce nepustilo ani s ownerovým *„udělej to“*; čeká na ownera.
+- **NASAZENO 2026-11-02** (owner *„3. nasazeno“*): naostro všech 53 adres ze sitemapy, landing s canonical a odkazem SAFN RÚNA.
 - **Návrat:** smazat `web/site/runir/`, `web/site/en/`, `web/site/img/runir/`, sitemapu vrátit na kořen, odkaz z landingu pryč, nasadit.
 - Affected doc(s): RUNAR_BACKLOG.md (Veřejné stránky run na webu).
 
@@ -13065,6 +13068,8 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   a pushem do repa automatické schvalování zamítlo); čísla do `docs/monitor/site-a-web.md` zapíše CODE-web. Nikam se nepřihlašuje,
   nic nepublikuje, nic neodesílá. Běží, jen když je appka otevřená (jinak při dalším spuštění); uložená v režimu Auto.
 - **Ověřeno:** /ig/ v náhledu přesměruje na `/?z=ig` a landing štítek převezme; ㊖, ㊑, ㊙ projdou (62 stránek). Naostro po nasazení.
+- **NASAZENO 2026-11-03** (owner *„6. nasazeno“*): `/ig/`, `/tt/`, `/yt/`, `/fb/` vrací 200 a shodují se s repem, `/ig` bez lomítka
+  přesměruje na `/ig/`; v prohlížeči `/yt/` → `/?z=yt` a landing štítek převezme.
 - Affected doc(s): RUNAR_BACKLOG.md (Sociální sítě bod 14), docs/monitor/site-a-web.md.
 
 ## 2026-11-02 (12) — Soubory, které ukládám, mají anglické názvy
@@ -13106,4 +13111,6 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   72 %) a manifest; owner si je přidá na plochu všechny naráz. Noindex, mimo sitemapu; po výběru ikony složku smazat.
 - **Proč ne denní střídání:** iPhone si ikonu uloží jednou při přidání na plochu a už ji nemění; Android ji obnovuje nepravidelně;
   ikona appky by se střídala i testerům.
+- **NASAZENO 2026-11-03** (owner *„6. nasazeno“*): všech 31 souborů rozcestníku a 5 variant je naostro shodných s repem; manifest
+  každé varianty míří na ikony 192, 512 i maskovatelnou 512 (všechny 200); na šířce telefonu bez vodorovného posunu.
 - Affected doc(s): RUNAR_BACKLOG.md (Web — ikona appky), memory/nazvy-souboru-anglicky.md.
