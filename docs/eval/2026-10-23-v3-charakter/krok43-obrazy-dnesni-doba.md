@@ -74,3 +74,9 @@ Islandská fakta: geotermální teplo ~90 % domácností (Orkustofnun) · strand
 1. Jeden soudce na kolo, jedno hodnocení na obraz, jen EN; soudce znal běžné moderní významy, ne ownerovy popisy (`RUNAR_POPISY_RUN.md`).
 2. Měří poznatelnost runy, ne krásu — tu posuzuje owner.
 3. Obrazy psal CODE-read; IS verze zatím nejsou. D4 „cheque“ je na Islandu zastaralé slovo (šeky se skoro nepoužívají) — přepsat, neověřeno.
+
+## 6. Ownerův verdikt (2026-11-03)
+
+1. Trampolína u souseda (D5) ne — vyřazena.
+2. Zavřená cesta ano, ale bez vřesoviště (B1 přepsat bez „over the heath“).
+3. Zatím se pracuje s obrazy z v2 (ownerovo dřívější „radši používej obrazy z v2“); nové obrazy z tohoto kroku jsou zásoba, ne náhrada.
