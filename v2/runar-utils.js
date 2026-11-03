@@ -1287,6 +1287,7 @@ function _heroDownNahoru() {
 function _heroDownStav() {
   var p = document.getElementById('hero-down');
   if (!p) return;
+  if (typeof _heroDownMimoStav === 'function') _heroDownMimoStav();   // appka: proužek v jiné záložce (runar-app.js, 2026-11-03)
   var nahoru = _heroDownNahoru();
   if (p.classList.contains('nahoru') === nahoru) return;
   p.classList.toggle('nahoru', nahoru);
@@ -1295,9 +1296,9 @@ function _heroDownStav() {
 function scrollToReading() {
   var p = document.getElementById('hero-down');
   if (!p) return;
-  // 2026-10-28 (hlášení 47b63e3f): v jiné záložce appky proužek vede zpět do čtení nahoru k Rúnarovi (web záložky nemá)
-  if (typeof activeAppTab !== 'undefined' && activeAppTab !== 'reading' && typeof showAppTab === 'function') {
-    showAppTab('reading');
+  // V jiné záložce appky (web záložky nemá) proužek vrací na začátek TÉ záložky — 2026-11-03, hlášení be8d2237, owner „5. a“. Od 2026-10-28
+  // (47b63e3f) přepínal do čtení k Rúnarovi; owner: „Skočí na úvodní stránku runara“, chtěl totéž, co dělá ve čtení.
+  if (typeof activeAppTab !== 'undefined' && activeAppTab !== 'reading') {
     var _klid = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     window.scrollTo({ top: 0, behavior: _klid ? 'auto' : 'smooth' });
     return;

@@ -276,6 +276,13 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
    lišty, šipka se otočí nahoru (třídu .nahoru přepíná _heroDownStav v runar-app.js). Otáčí se cesta, ne svg — svg nese houpání. */
 .hero-down svg path{transform-box:fill-box;transform-origin:50% 50%;transition:transform 0.25s ease;}
 .hero-down.nahoru svg path{transform:rotate(180deg);}
+/* 2026-11-03 (hlášení be8d2237, owner „5. a“): v ostatních záložkách stojí proužek přilepený pod horní lištou (top = výška lišty z
+   _heroDownMimoStav v runar-app.js) a vrací na začátek té záložky. Pozadí, ať přes něj neprosvítá obsah. .nad = výška 0, leží přes obsah
+   (objeví se až po sjetí, nic neposune); bez .videt schovaný. */
+#hero-down-mimo{position:sticky;z-index:45;}
+#hero-down-mimo .hero-down{background-color:var(--bg);}
+#hero-down-mimo.nad{height:0;}
+#hero-down-mimo:not(.videt) .hero-down{display:none;}
 /* 2026-10-09: pozdrav pod Rúnarem (.hero-greeting) pryč — stojí v horní liště (#topbar-greeting). */
 
 /* ── NAME PROMPT MODAL ── */

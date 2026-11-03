@@ -45,6 +45,7 @@
 // VLASTNÍ .pocet-cteni .rozzar — počet čtení v kolečku za jménem; po dobití se rozzáří a doběhne (owner 2026-10-28, hlášení 85d5ea31)
 // VLASTNÍ .myslenka-pero — pírko Huginna před myšlenkou na konci čtení a v deníku (owner 2026-10-30), jediná kresba myšlenky
 // VLASTNÍ .kad-zhava .kad-dym .kad-d1 .kad-d2 .kad-d3 .kad-hori — kadidlo u BEFORE WE BEGIN a jeho kouř (owner 2026-10-30), jediná ikona, která kouří
+// VLASTNÍ .nad — stav proužku #hero-down-mimo v ostatních záložkách: výška 0, leží přes obsah, ať jeho objevení po sjetí nic neposune (2026-11-03, be8d2237)
 //
 // PRAVIDLA, KTERÁ KONTROLA HLÍDÁ:
 //   A) každá třída z tabulky v runar-reader.css existuje (soupis nehnije)

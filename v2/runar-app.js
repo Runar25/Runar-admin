@@ -1020,7 +1020,7 @@ function updateUIText() {
   if (heroQ) heroQ.innerHTML = t('hero_quote');
   if (heroQm) heroQm.innerHTML = t('hero_quote').replace(/<br\s*\/?>/gi, ' ');
   var heroDown = document.getElementById('hero-down');
-  if (heroDown) heroDown.setAttribute('aria-label', t(heroDown.classList.contains('nahoru') ? 'hero_up_aria' : 'hero_down_aria'));
+  if (heroDown) _heroDownMimoStav();   // popisek proužku pro čtečku podle záložky a směru (2026-11-03)
   // reader-card1-lbl and reader-note are set by _updateReadingForm() — not here
   _updateDobLabel();
   _updateAreaSeekLabels();
@@ -1094,9 +1094,28 @@ var _heroDownZustane = false;
 function _heroDownPresun(pred, tab) {
   var p = document.getElementById('hero-down'), hero = document.getElementById('reader-hero'), mimo = document.getElementById('hero-down-mimo');
   if (!p || !hero || !mimo) return;
-  if (tab === 'reading') { if (p.parentNode !== hero) hero.appendChild(p); return; }
-  if (pred === 'reading') _heroDownZustane = typeof _heroDownNahoru === 'function' && _heroDownNahoru();
-  if (_heroDownZustane) mimo.appendChild(p); else if (p.parentNode !== hero) hero.appendChild(p);
+  // ve čtení směr šipky až po showAppTab: ten fotku rozbalí a stránku posune až po tomhle volání
+  if (tab === 'reading') { if (p.parentNode !== hero) hero.appendChild(p); setTimeout(_heroDownMimoStav, 0); }
+  else {
+    if (pred === 'reading') _heroDownZustane = typeof _heroDownNahoru === 'function' && _heroDownNahoru();
+    if (p.parentNode !== mimo) mimo.appendChild(p);
+  }
+  _heroDownMimoStav(tab);   // tab předán: showAppTab volá tohle dřív, než nastaví activeAppTab
+}
+// 2026-11-03 (hlášení be8d2237, owner „5. a“): v jiné záložce stojí proužek přilepený pod horní lištou (#hero-down-mimo je sticky) a ťuknutí
+// vrátí na začátek TÉ záložky (scrollToReading v runar-utils.js) — do té doby přepnul do čtení k Rúnarovi a owner chtěl, aby dělal „to stejné
+// co dělá v případě rune reading“. Vidět je, když zůstal ze čtení (2026-10-28 — pak drží místo nad záložkami jako dřív), nebo když je stránka
+// sjetá o víc než 120 px — tehdy leží PŘES obsah (.nad = výška 0), ať jeho objevení nic neposune.
+function _heroDownMimoStav(tab) {
+  var p = document.getElementById('hero-down'), mimo = document.getElementById('hero-down-mimo');
+  if (!p || !mimo) return;
+  var jinde = (tab || activeAppTab) !== 'reading', lista = document.querySelector('.topbar');
+  mimo.style.top = (lista ? lista.offsetHeight : 0) + 'px';
+  mimo.classList.toggle('nad', jinde && !_heroDownZustane);
+  mimo.classList.toggle('videt', jinde && (_heroDownZustane || (window.pageYOffset || 0) > 120));
+  // ve čtení směr podle polohy hned — po návratu z jiné záložky by bez posunu stránky zůstala šipka nahoru
+  p.classList.toggle('nahoru', jinde || _heroDownNahoru());
+  p.setAttribute('aria-label', t(jinde ? 'hero_top_aria' : p.classList.contains('nahoru') ? 'hero_up_aria' : 'hero_down_aria'));
 }
 function showAppTab(tab) {
   var _predTab = activeAppTab;

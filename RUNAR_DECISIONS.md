@@ -13127,3 +13127,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   Firemní účet má podle zdrojů o hudebních licencích (ne nápovědy TikToku) jen komerční knihovnu hudby, bez populárních písní — volba
   je na Sigrún a ownerovi. Bio TikToku je uložené se 139 znaky, i když editor 2026-11-02 ukazoval limit 80. AI v biu dál ani jedno.
 - Affected doc(s): RUNAR_BACKLOG.md (Sociální sítě bod 14 a stav), docs/monitor/site-a-web.md.
+
+## 2026-11-03 (3) — Proužek se šipkou v ostatních záložkách vrací na začátek té záložky, ne do čtení
+
+- **Rozhodl:** owner 2026-11-03 *„5. a“* k hlášení be8d2237 (2026-10-30: *„Měla by udělat to stejné co dělá v případě rune reading. Skočí na
+  úvodní stránku runara.“*), z nabídky (a) přilepený pod lištou a vrací na začátek dané stránky · (b) v těch záložkách zmizí. Mění 2026-10-28 (1)
+  v tom, kam ťuknutí vede; že proužek po sjetí ve čtení zůstane i v jiné záložce, platí dál.
+- **Co:** v Lífsrúnin, deníku a Safn rúna stojí proužek přilepený pod horní lištou (`#hero-down-mimo` sticky) se šipkou nahoru; ťuknutí vrátí
+  na začátek TÉ záložky (`scrollToReading` v `runar-utils.js`), do čtení už nepřepne. Vidět je, když zůstal ze čtení (drží místo nad záložkami
+  jako dřív), nebo když člověk stránku sjede o víc než 120 px — tehdy leží přes obsah a nic neposune. Popisek pro čtečku nový `hero_top_aria`
+  (EN *Back to the top of the page*, IS *Aftur efst á síðuna* — korpus „efst á síðuna“ 91, Greynir OK). Ve čtení beze změny.
+- **Ověřeno:** náhled 390 px a desktop, oba průchody (ze začátku čtení i po sjetí): po sjetí stojí pod lištou (bod pod lištou = proužek),
+  záložky se o nic neposunou, ťuknutí → začátek záložky, záložka zůstane; návrat do čtení → šipka podle polohy; IS popisek. Skrytý panel
+  nepouští `requestAnimationFrame` ani plynulý posun, proto test volal `_heroDownStav` ručně a posun bez animace.
+- Affected doc(s): RUNAR_BACKLOG.md (Hlášení z appky 2026-10-30 / 11-03).

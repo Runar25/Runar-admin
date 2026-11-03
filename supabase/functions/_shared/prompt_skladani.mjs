@@ -1515,6 +1515,7 @@ const UI_TEXT = {
     hero_quote:         '"The runes do not predict your fate.<br>They remind you of the path<br>you already walk."',
     hero_down_aria:     'Scroll down to the reading',   // 2026-10-09: proužek pod hero (#hero-down), jen pro čtečku obrazovky
     hero_up_aria:       'Back up to Rúnar',             // 2026-10-09: týž proužek u horní lišty (šipka nahoru)
+    hero_top_aria:      'Back to the top of the page',  // 2026-11-03: týž proužek v ostatních záložkách (be8d2237) — na začátek té stránky
     greet_hello:        'Good to see you.',   // 2026-10-10: bez jména (hlášení 26cac032) — jméno stojí vedle v liště
     greet_again:        'Good to see you again.',
     tester_suffix:        '(tester)',
@@ -2098,6 +2099,7 @@ const UI_TEXT = {
     hero_quote:         '"Rúnirnar spá ekki fyrir um örlög þín.<br>Þær minna þig á veginn<br>sem þú gengur nú þegar."',
     hero_down_aria:     'Niður að lestrinum',   // 2026-10-09: „niður að“ + þgf. (korpus „niður að“ 26 390, „að lestrinum“ 127); jen pro čtečku
     hero_up_aria:       'Aftur upp til Rúnars', // 2026-10-09: korpus „aftur upp“ 20 637, „til Rúnars“ 155 (til + ef.)
+    hero_top_aria:      'Aftur efst á síðuna',  // 2026-11-03: korpus „efst á síðuna“ 91 (pohyb, á + þf.), „aftur efst á“ 27; Greynir OK
     greet_hello:        'Það er gaman að sjá þig.',
     greet_again:        'Það er gaman að sjá þig aftur.',
     tree_reveal_btn:    'OPINBERA L\u00cdFSR\u00daNUNA',
@@ -3638,6 +3640,7 @@ function _heroDownNahoru() {
 function _heroDownStav() {
   var p = document.getElementById('hero-down');
   if (!p) return;
+  if (typeof _heroDownMimoStav === 'function') _heroDownMimoStav();   // appka: proužek v jiné záložce (runar-app.js, 2026-11-03)
   var nahoru = _heroDownNahoru();
   if (p.classList.contains('nahoru') === nahoru) return;
   p.classList.toggle('nahoru', nahoru);
@@ -3646,9 +3649,9 @@ function _heroDownStav() {
 function scrollToReading() {
   var p = document.getElementById('hero-down');
   if (!p) return;
-  // 2026-10-28 (hlášení 47b63e3f): v jiné záložce appky proužek vede zpět do čtení nahoru k Rúnarovi (web záložky nemá)
-  if (typeof activeAppTab !== 'undefined' && activeAppTab !== 'reading' && typeof showAppTab === 'function') {
-    showAppTab('reading');
+  // V jiné záložce appky (web záložky nemá) proužek vrací na začátek TÉ záložky — 2026-11-03, hlášení be8d2237, owner „5. a“. Od 2026-10-28
+  // (47b63e3f) přepínal do čtení k Rúnarovi; owner: „Skočí na úvodní stránku runara“, chtěl totéž, co dělá ve čtení.
+  if (typeof activeAppTab !== 'undefined' && activeAppTab !== 'reading') {
     var _klid = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     window.scrollTo({ top: 0, behavior: _klid ? 'auto' : 'smooth' });
     return;
