@@ -1158,3 +1158,16 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
 - [ ] *(Viditelná půlka hotová: CODE-tune 2026-11-01, owner „Back musí být někde, kde se nedá kliknout na nic jiného … pod HEAR RÚNAR SPEAK?“, DECISIONS 2026-11-01 (2) — „← BACK“ pod HEAR RÚNAR SPEAK vrátí formulář s vyplněnými volbami. Zbývá tlačítko zpět telefonu.)* **Viditelné „← zpět“ na kartě tahu a tlačítko zpět telefonu o krok ve čtení** (owner: *„když jsem v rune reading a chci jít o krok
   zpět, tak je to složité, asi tam chybí někde zpět“*; na návrh *„10. zpět, do backlogu. teď nevím“*). Dnes vede zpět jen logo RÚNAR
   (z karty tahu i z hotového čtení domů, DECISIONS 2026-10-31 (2)). Tlačítko zpět telefonu dnes appku zavře. Vrátit se, až owner bude vědět.
+
+### Hlášení z appky 2026-10-30 / 11-03 (načtena 2026-11-03, CODE-tune; hotové: e38ccdc8 — 2c91619, bc222bc2 ✦ Keep)
+- [ ] **Proužek se šipkou v Lífsrúnin / deníku / Safn rúna vede do čtení (be8d2237)** — owner 2026-10-30: *„nedělá … co bych chtěl. Měla
+  by udělat to stejné co dělá v případě rune reading. Skočí na úvodní stránku runara.“* Dnes tak funguje podle DECISIONS 2026-10-28 (1)
+  (`scrollToReading` v `runar-utils.js`: v jiné záložce → `showAppTab('reading')` nahoru). Novější slovo ownera to ruší, jen „to stejné“ nejde
+  udělat doslova: v těch záložkách je fotka sbalená, proužek stojí hned pod horní lištou a s obsahem odjede — po sjetí ho nikdo nevidí, nahoře
+  už stránka nahoře je. Čeká na ownera, co má dělat (viz otázka 2026-11-03).
+- [ ] **Ask na „What is this reading telling me?“ jen převypráví čtení (9ae64c17)** — owner 2026-11-03: *„ASK je od toho aby vysvětlil, ne jen
+  opakoval co bylo ve čtení. To je jeho důležitá role.“* Čtení efbf762b (Raidho, EN, sol): odpověď vrátila význam z hlavičky („a road you can
+  see only a little at a time“) a otázku ze čtení slovo od slova (*„is the direction … one you still choose, or one you chose some time ago?
+  It leaves that distinction with you“*) — nic, co čtení neřeklo. Navazuje na 2026-10-03 (13) (Ask nepřevypráví, jak čtení obraz otevřelo,
+  v4.89) — ta oprava míří na úhel, ne na tuhle otázku. Zásah do promptu Asku → napřed změřit v labu CODE-read (kolik Asků na tuhle otázku
+  opakuje čtení), ne tichý tune. Čeká na ownerovo ano k měření.
