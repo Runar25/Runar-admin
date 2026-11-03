@@ -21,3 +21,15 @@ reakcí a registrací podle kanálu.
 
 Web: nasazeno 2026-11-02 — 53 adres v sitemapě (landing, 2 rejstříky run, 50 stránek run), Search Console: ownerův účet vlastnost
 therunekeeper.com zatím nemá. Registrace: od 2026-10-21 na runar@ jedno oznámení.
+
+## 2026-11-03 · odkazy se štítkem v biu
+
+| kanál | sledující | příspěvky | odkaz na web | AI v biu |
+|---|---|---|---|---|
+| Instagram | 12 (sám sleduje 2) | 0 | `therunekeeper.com/?z=ig`, klikací | ne |
+| TikTok | 1, 0 lajků | 0 | `https://therunekeeper.com/?z=tt` jen jako text v biu, klikací ne | ne |
+| YouTube | 4 odběratelé | 0 (RSS kanálu bez videí) | `https://therunekeeper.com/?z=yt` na konci popisu | ne |
+
+Od 2026-11-02: všechna tři bia mají odkaz se štítkem (DECISIONS 2026-11-03 (2)), YouTube odkaz poprvé; sledující beze změny.
+Web: krátké adresy `/ig`, `/tt`, `/yt`, `/fb` a zkušební ikony `/icon-test/` nasazeny 2026-11-03 (noindex, mimo sitemapu).
+Registrace: na runar@ za poslední 3 dny žádné oznámení.

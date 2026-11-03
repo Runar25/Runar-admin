@@ -905,17 +905,18 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   12. Bio Facebooku (≤ 101 znaků; zdroje uvádějí 101 i 155, kratší projde vždy): věta o světle + první věta `UI_TEXT.ai_note`
       (IS 94, EN 96 znaků).
   13. Nová IS část ověřena: Greynir bez nálezu; korpus „rúnalestur“ 19×, „á íslensku og“ 7345×, „íslensku og ensku“ 2790×.
-  14. Odkaz v biu = krátká adresa se štítkem kanálu (DECISIONS 2026-11-02 (3), (11)): Instagram `therunekeeper.com/ig`, TikTok
-      `therunekeeper.com/tt`, YouTube `therunekeeper.com/yt`, pole Web na Facebooku `therunekeeper.com/fb` — přesměruje na `/?z=…`.
-      ✅ *(nasazeno 2026-11-03, owner „6. nasazeno“, ověřeno naostro — DECISIONS 2026-11-02 (11))*
+  14. Odkaz v biu = adresa se štítkem kanálu: Instagram `therunekeeper.com/?z=ig`, TikTok `?z=tt`, YouTube `?z=yt`, pole Web na
+      Facebooku `?z=fb` (owner 2026-11-03 *„zatím používej ty, co jsou. tedy s ?“*, DECISIONS 2026-11-03 (2)). Krátké adresy
+      `therunekeeper.com/ig` (`/tt`, `/yt`, `/fb`) vedou na totéž ✅ *(nasazeno 2026-11-03, ověřeno naostro — DECISIONS 2026-11-02 (11))*.
   **Kdo co (owner 2026-11-02, DECISIONS 2026-11-02 (8)):** obsah sítí a bia dělá Sigrún; CODE-web monitoring (čísla v čase →
   `docs/monitor/site-a-web.md`) a technika. Owner: v biu Instagramu, TikToku i YouTube musí stát, že Rúnar je AI.
-  Stav 2026-11-02 (veřejné profily, CODE-web): Instagram i TikTok mají totéž bio („Keeper of runes, stories & ancient wisdom / Rune
-  readings & guidance / Welcome to my world / ↓ Discover Rúnar“) a odkaz na therunekeeper.com **bez štítku** `?z=` (bod 14) — registrace
-  z nich se nepoznají; staré „Daily guidance“ z Instagramu zmizelo. TikTok má v editoru bio 109 znaků při limitu 80 (screenshot
-  ownera) — dokud se nezkrátí, změnu neuloží. YouTube zatím bez odkazu (owner: dostane ho). Ani jedno bio neříká, že Rúnar je AI.
-  Facebook zatím není (v configu jen `RUNAR_INSTAGRAM_URL`). Čeká na Sigrún (přes ownera): AI do bia všech tří, odkazy se štítky
-  (bod 14), kratší bio TikToku, Facebook (bod 1).
+  Stav 2026-11-03 (veřejné profily, CODE-web): odkaz se štítkem mají všechny tři — Instagram `therunekeeper.com/?z=ig` (klikací),
+  YouTube `https://therunekeeper.com/?z=yt` na konci popisu, TikTok `https://therunekeeper.com/?z=tt` jen jako text v biu: klikací odkaz
+  v profilu dává TikTok až od 1 000 sledujících nebo registrovanému firemnímu účtu (nápověda TikToku; teď 1 sledující; firemní účet =
+  jen komerční hudba, DECISIONS 2026-11-03 (2)). Bio Instagramu i TikToku je dál „Keeper of runes, stories & ancient wisdom / Rune
+  readings & guidance / Welcome to my world / ↓ Discover Rúnar“; bio TikToku je uložené se 139 znaky, i když editor 2026-11-02
+  ukazoval limit 80 (screenshot ownera). Ani jedno bio neříká, že Rúnar je AI. Facebook zatím není (v configu jen
+  `RUNAR_INSTAGRAM_URL`). Čeká na Sigrún (přes ownera): AI do bia všech tří, Facebook (bod 1).
 - [ ] **Ikona appky — modrá runa ᚱ v kameni** (owner 2026-11-02, DECISIONS 2026-11-02 (10); originály ve `v2/assets/`). Zbývá: sada
   ikon pro `v2/icons/` (favicon, apple-touch, manifest 192/512 i maskovatelná) z rastru — runu zmenšit, kámen kolem doplnit zrcadlením
   textury (jinak ji Android ořízne); generátor `scripts/ikona_appky.py` umí jen vlastní kresbu, rastr doplnit. Kdy, čeká na ownera.

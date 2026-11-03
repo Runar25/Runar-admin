@@ -13114,3 +13114,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **NASAZENO 2026-11-03** (owner *„6. nasazeno“*): všech 31 souborů rozcestníku a 5 variant je naostro shodných s repem; manifest
   každé varianty míří na ikony 192, 512 i maskovatelnou 512 (všechny 200); na šířce telefonu bez vodorovného posunu.
 - Affected doc(s): RUNAR_BACKLOG.md (Web — ikona appky), memory/nazvy-souboru-anglicky.md.
+
+## 2026-11-03 (2) — Do bia zatím odkaz se štítkem `?z=`; krátké adresy zůstávají
+
+- **Rozhodl:** owner 2026-11-03 na návrh CODE-web dát do bia krátké adresy (`therunekeeper.com/ig` …): *„zatím používej ty, co jsou.
+  tedy s ?“* — odkazy se štítkem už v biích stojí (dala je tam Sigrún).
+- **Co:** do bia zatím `therunekeeper.com/?z=ig` (`tt`, `yt`; na Facebooku `fb`). Krátké adresy `/ig`, `/tt`, `/yt`, `/fb` zůstávají
+  nasazené — vedou na totéž; pondělní přehled bere obojí jako odkaz se štítkem. Mění 2026-11-02 (11) v tom, co patří do bia.
+- **Zjištěno (veřejné profily 2026-11-03):** Instagram `therunekeeper.com/?z=ig` (klikací), YouTube `https://therunekeeper.com/?z=yt`
+  na konci popisu, TikTok `https://therunekeeper.com/?z=tt` jen jako text v biu — klikací odkaz v profilu dává TikTok až od 1 000
+  sledujících nebo registrovanému firemnímu účtu (nápověda TikToku „Link a website or social media account“); TikTok má 1 sledujícího.
+  Firemní účet má podle zdrojů o hudebních licencích (ne nápovědy TikToku) jen komerční knihovnu hudby, bez populárních písní — volba
+  je na Sigrún a ownerovi. Bio TikToku je uložené se 139 znaky, i když editor 2026-11-02 ukazoval limit 80. AI v biu dál ani jedno.
+- Affected doc(s): RUNAR_BACKLOG.md (Sociální sítě bod 14 a stav), docs/monitor/site-a-web.md.
