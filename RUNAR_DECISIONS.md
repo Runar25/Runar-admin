@@ -13092,6 +13092,7 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno:** smoke ㊍ — týž text (i s ✦ a jinými mezerami) prompt nezmění, jiný se nahradí, bez serverového textu zůstane text appky;
   strop na hranici projde, nad ní ne. Útoky v kopii: nenahradí · strop vypnutý · bez řezu u ✦ · bez stropu otázky — všechny chyceny.
 - **Zbývá:** předchozí výměny v Asku se neověřují (jen strop počtu a délky) — u neuloženého čtení nejsou nikde uložené.
-- **Nasazení:** `claude-proxy` po ownerově „nasaď“.
+- **NASAZENO 2026-11-03** (owner *„5. nasaď“*): `claude-proxy` z db2433f; sonda bez přihlášení vrací 401. Ověření ownerovým čtením s Askem
+  (`ask_overeno`, `ask_nahrazeno` v `ops_events`) čeká.
 - **Návrat:** revert commitu a nasadit předchozí `claude-proxy`.
 - Affected doc(s): RUNAR_BACKLOG.md (Plán infrastruktury krok 1 — F3b, F4).
