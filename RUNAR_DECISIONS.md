@@ -13096,3 +13096,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   (`ask_overeno`, `ask_nahrazeno` v `ops_events`) čeká.
 - **Návrat:** revert commitu a nasadit předchozí `claude-proxy`.
 - Affected doc(s): RUNAR_BACKLOG.md (Plán infrastruktury krok 1 — F3b, F4).
+
+## 2026-11-03 (1) — Ikony na zkoušku na ploše telefonu místo denního střídání ikony appky
+
+- **Rozhodl:** owner 2026-11-03: *„můžeme ty ikony střídat? každý den jinou? ať vidím, jak na mobilu vypadají?“* — cíl: vidět ikony na
+  vlastním telefonu. K 2026-11-02 (12), zda anglicky i názvy skriptů a docs: *„nene“* (jen obrázky a podklady).
+- **Co:** místo střídání ikony appky zkušební „appky“ `therunekeeper.com/icon-test/<varianta>/` (`scripts/web_test_ikon.py`): pro
+  modrou runu, zlatou runu, Rúnara s holí, Rúnara na modrém a dnešní ikonu vlastní ikona pro iPhone, Android (maskovatelná, obsah na
+  72 %) a manifest; owner si je přidá na plochu všechny naráz. Noindex, mimo sitemapu; po výběru ikony složku smazat.
+- **Proč ne denní střídání:** iPhone si ikonu uloží jednou při přidání na plochu a už ji nemění; Android ji obnovuje nepravidelně;
+  ikona appky by se střídala i testerům.
+- Affected doc(s): RUNAR_BACKLOG.md (Web — ikona appky), memory/nazvy-souboru-anglicky.md.
