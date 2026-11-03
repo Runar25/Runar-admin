@@ -793,6 +793,11 @@ Procházka je tím úplná.
       startu. Že to sedlo, pozná se podle **„(tester)" / „(prófari)"** za jménem tieru v panelu.
 
 ## Zjištěno při auditu — nespěchá, ale ať se neztratí
+- [ ] **Dva obrazy Othily v `RUNE_IMAGES` jmenují roli nebo tvrdí minulost čtenáře** (CODE-read 2026-11-03, při výběru obrazů pro lab
+  krok 44): `v2/runar-character.js:637` „Your mother's knitting needles are in your hands now…“ (jmenovaná role + tvrzení, že čtenář má
+  matčiny jehlice) a `:636` „You come back to the farm you grew up on…“ (tvrzení, kde čtenář vyrůstal — stejná vada jako opravené „už tam
+  nebydlíš“ 2026-09-23). Ownerovo pravidlo 2026-11-03 (zdroj `docs/eval/2026-10-23-v3-charakter/krok44-zdroj-gpt.md`, oddíl 4): žádná
+  jmenovaná role, jen „someone close“ / „family“. Oprava = CODE-tune (přepsat bez role a bez tvrzení, IS ověřit nástroji §2, identitní brána).
 - [ ] **`credit_ledger.actor` je vždy `postgres`** (CODE-tune 2026-11-02, DECISIONS 2026-11-02 (6)): trigger `ledger_user_profiles` je
   `SECURITY DEFINER` (musí být — `credit_ledger` nemá INSERT ani pro service_role) a uvnitř vrací `current_user` vlastníka. 106/106 záznamů
   `postgres`, takže z knihy pohybů nejde poznat, jestli změnu udělal server, prohlížeč nebo SQL editor. Oprava: role z JWT
