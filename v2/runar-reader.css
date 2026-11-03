@@ -598,7 +598,9 @@ button.card-lbl:focus-visible{outline:1px solid var(--gold);outline-offset:4px;}
 /* 2026-10-31 (owner „how a reading works můžeme teda zase přesunout doprostřed“): nadpis návodu na střed listu jako před papírem
    (stejný okraj z obou stran, aby střed byl střed listu, ne zbytku vedle noty); BEFORE WE BEGIN s kadidlem zůstává vlevo. */
 #read-guide-papir .papir-hlava{justify-content:center;padding-left:50px;}
-#read-guide-papir .papir-hlava > .guide-lbl{text-align:center;}
+/* 2026-11-03 (hlášení e38ccdc8 „How a reading works má jinou velikost font než ostatní“): na papíře stojí nad BEFORE WE BEGIN jako jeho
+   dvojče, ale měl velikost štítku z Kolekce (0.65em = 10,4 px proti 11,2 px) — na papíře teď tutéž velikost jako .card-lbl. */
+#read-guide-papir .papir-hlava > .guide-lbl{text-align:center;font-size:0.7em;}
 .papir-hlava > .guide-lbl,.papir-hlava > .card-lbl{width:auto;margin:0;flex:0 1 auto;min-width:0;text-align:left;}
 .papir-text{position:absolute;top:44px;left:0;right:46px;bottom:0;overflow:hidden;padding:2px 6px 8px 16px;}
 /* 2026-10-31 (owner screenshot „na počítači vidím defekt“): text sahal až k pravé hraně listu, takže bílý systémový posuvník počítače
