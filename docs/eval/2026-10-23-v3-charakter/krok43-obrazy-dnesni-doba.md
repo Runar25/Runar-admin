@@ -38,7 +38,7 @@ Islandská fakta: geotermální teplo ~90 % domácností (Orkustofnun) · strand
 | A4 | The neighbours' kids wheel their bikes to the one door where someone knows how to fix a chain. | **Kenaz** / Ansuz | 3 |
 | A5 | The blueberries are ripe on the hillside, and whoever brings a bucket fills it. | **Jera** / Fehu | 4 |
 | A6 | The money set aside and never touched pays for the boiler on the night it breaks. | Fehu / Algiz | 4 |
-| A7 | The garage is so full of things kept for later that the car sleeps outside. | Fehu / Othala — stín, FUNNY | 4 |
+| A7 | The garage is so full of things kept for later that the car sleeps outside. | Fehu / Othila — stín, FUNNY | 4 |
 | A8 | The hot water runs into every house in the valley. (v2) | Fehu / Laguz | 3 |
 | D2 | The café pays the baker, the baker pays the fisherman, and all three eat well. | **Gebo** / Fehu | 4 |
 | D3 | On moving day, the friend with the van is suddenly everyone's best friend. | Fehu / Gebo — FUNNY | 3 |
