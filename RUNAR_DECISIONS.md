@@ -13143,4 +13143,6 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno:** náhled 390 px a desktop, oba průchody (ze začátku čtení i po sjetí): po sjetí stojí pod lištou (bod pod lištou = proužek),
   záložky se o nic neposunou, ťuknutí → začátek záložky, záložka zůstane; návrat do čtení → šipka podle polohy; IS popisek. Skrytý panel
   nepouští `requestAnimationFrame` ani plynulý posun, proto test volal `_heroDownStav` ručně a posun bez animace.
+- **NASAZENO 2026-11-04** (owner *„1. nasaď“*): `claude-proxy` v99 z 08b3e2f — commit 091e8a2 přegeneroval balíček `prompt_skladani.mjs`
+  (změna utils a překladů), výstup promptu stejný. Sonda bez přihlášení 401, `nasazene_vs_repo.py`: nasazené = HEAD u všech 14 funkcí.
 - Affected doc(s): RUNAR_BACKLOG.md (Hlášení z appky 2026-10-30 / 11-03).
