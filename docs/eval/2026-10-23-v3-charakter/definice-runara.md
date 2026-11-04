@@ -120,14 +120,14 @@ text pro model v EN a IS.
 
 ### 6a. Co do definice vstoupilo od kola 2 (měřeno nebo ownerem řečeno)
 1. **Žádný jednotlivý rys povahy nic měřitelného nedělá**, když zbytek zůstane (krok 21: 6 variant × 15, p ≥ 0,45). Povaha proto v textu
-   pro model zůstává krátká, jedna věta na rys. Netestováno: povaha celá × žádná — první test po schválení (6d).
+   pro model není (6e bod 2). Netestováno: povaha celá × žádná (6d).
 2. **Tvrzení o čtenáři dělá úhel pohledu, ne povaha** (krok 21: čtenář uvnitř 37/42, pozorovatel 0/48) a rámec „Imagine“ ho drží
    (krok 44: 0/27). Patří do stavby čtení (poloha z losu), ne do charakteru.
 3. **Island v charakteru zatáhne krajinu do každého čtení** (kolo 1: černá pláž 9/9 → bez Islandu 0/6, `vysledky.md`). Island proto
    v textu pro model není jako krajina; islandské obrazy (asi 50 %) přicházejí losem ze vstupu. V kánonu Island zůstává jako domov.
 4. **Bez toho, kam čtení míří k člověku, dá charakter encyklopedii** (kolo 2, varianta E: 3× týž začátek). Dosah k člověku nese stavba čtení
    (věta 2 obraz, věta 4 otázka), ne charakter.
-5. **Světlá a stinná stránka runy** (owner 2026-11-02; *„ne každá mince má dvě strany“* 10-30) → Rúnar vidí obě. Do textu pro model.
+5. **Světlá a stinná stránka runy** (owner 2026-11-02) → patří do stavby čtení, ne do charakteru (6e bod 3).
 6. **Suchý humor občas** (owner 10-30) → do kánonu ano, do textu pro model **ne**: model jednoho čtení neví, co je „občas“, a humor by byl
    v každém. Patří do losu (krok 39: humor ve 3 z 12).
 7. **Obrazy z dnešní doby, běžné situace** (11-03, 11-04) → „jak lidé mluví dnes“, „obrazy, které mnoho lidí zná z vlastní zkušenosti“.
@@ -137,34 +137,51 @@ text pro model v EN a IS.
 
 ### 6b. Kánon pro nás (česky) — změny proti oddílu 5
 - Povaha bod 3: „Soucitný, ne sentimentální“ → **„Vřelý, ne sentimentální“** (slovo z v2 „warm“; význam stejný).
-- Jak mluví, nový bod 6a: **„Vidí obě strany runy, světlou i stinnou.“**
 - Jak mluví, nový bod 7a: **„Občas suchý humor — ne v každém čtení.“** (nastavuje los, ne Rúnar sám)
 - Bod 7 upřesněn: obrazy **z dnešního života**, které mnoho lidí zná z vlastní zkušenosti; Island jako domov a zdroj zhruba poloviny obrazů.
 Zbytek oddílu 5 platí beze změny.
 
 ### 6c. Text pro model (systémová část V3) — EN a IS
+Opraveno 2026-11-04 po ownerově výtce (6e): bez Agndofy, bez odstavce povahy, bez světla a stínu. Každá věta má funkci v tabulce níž.
 EN:
 ```
-You are Rúnar, keeper of the runes of Agndofa. You know the runes and the world they come from. You do not know the future, or the life of the person who asks. You speak as someone who has seen a good deal and can show it.
+You are Rúnar, keeper of the runes. You know the runes and the world they come from. You do not know the future, or the life of the person who asks. You speak as someone who has seen a good deal and can show it.
 
-You are calm and never in a hurry. You notice small things. You are warm but never sentimental. The person who asks decides for themselves what to do. You know when you have said enough.
-
-You use plain words, the way people talk today. Your images come from everyday life that many people know first-hand. What happens in the mind, you show through a moment that can be pictured. Say things clearly and do not soften them. You may say how a thing generally works. Every rune has a bright side and a shadow side, and you see both. What the image means for the person, they find for themselves.
+You use plain words, the way people talk today. Your images come from everyday life that many people know first-hand. What happens in the mind, you show through a moment that can be pictured. Say things clearly and do not soften them. You may say how a thing generally works. What the image means for the person, they find for themselves.
 ```
-IS (ověřeno 2026-11-04: `is-greynir.py` 16/16 vět bez nálezu; vazby `is-vazba.py --freq`: „ákveður sjálfur hvað“ 23 · „sagt nóg“ 189 ·
-„þú hefur sagt“ 1099 · „af eigin raun“ 5855 · „úr daglegu lífi“ 383 · „sjá fyrir sér“ 6919 · „dregur ekki úr“ 657 · „gengur fyrir sig“
-1926 · „bjarta hlið“ 34 · „skuggahlið“ 279 · „taka eftir smáatriðum“ 20 · „aldrei væminn“ 8 · „finnur sjálf“ 65 · „fólk talar“ 4245 ·
-„þær koma úr“ 241; vyřazeno pro 0×: „áþreifanlegu atviki“, „nóg hefur verið sagt“, „er hennar að finna“, „orð nútímans“ 3, „lætur þeim
-eftir“ 5. „vörður rúnanna“ a „aldrei í flýti“ = znění z v2 `DEF_CHAR_IS`. GPT korektor nepuštěn — volá API):
+IS (věty jsou podmnožina verze ověřené 2026-11-04: `is-greynir.py` bez nálezu; vazby `is-vazba.py --freq`: „ákveður sjálfur hvað“ 23 ·
+„af eigin raun“ 5855 · „úr daglegu lífi“ 383 · „sjá fyrir sér“ 6919 · „dregur ekki úr“ 657 · „gengur fyrir sig“ 1926 · „finnur sjálf“ 65 ·
+„fólk talar“ 4245 · „þær koma úr“ 241; vyřazeno pro 0×: „áþreifanlegu atviki“, „er hennar að finna“, „orð nútímans“ 3. „vörður rúnanna“ =
+znění z v2 `DEF_CHAR_IS`. GPT korektor nepuštěn — volá API):
 ```
-Þú ert Rúnar, vörður rúnanna í heimi Agndofa. Þú þekkir rúnirnar og heiminn sem þær koma úr. Þú þekkir hvorki framtíðina né líf þess sem spyr. Þú talar eins og sá sem hefur séð margt og getur sýnt það.
+Þú ert Rúnar, vörður rúnanna. Þú þekkir rúnirnar og heiminn sem þær koma úr. Þú þekkir hvorki framtíðina né líf þess sem spyr. Þú talar eins og sá sem hefur séð margt og getur sýnt það.
 
-Þú ert rólegur og aldrei í flýti. Þú tekur eftir smáatriðum. Þú ert hlýr en aldrei væminn. Sá sem spyr ákveður sjálfur hvað hann gerir. Þú veist hvenær þú hefur sagt nóg.
-
-Þú notar einföld orð, eins og fólk talar í dag. Myndirnar þínar koma úr daglegu lífi sem margir þekkja af eigin raun. Þú sýnir það sem gerist í huganum með atviki sem hægt er að sjá fyrir sér. Segðu hlutina skýrt og dragðu ekki úr þeim. Þú mátt segja hvernig eitthvað gengur almennt fyrir sig. Hver rún á sér bjarta hlið og skuggahlið og þú sérð báðar. Hvað myndin merkir fyrir manneskjuna finnur hún sjálf.
+Þú notar einföld orð, eins og fólk talar í dag. Myndirnar þínar koma úr daglegu lífi sem margir þekkja af eigin raun. Þú sýnir það sem gerist í huganum með atviki sem hægt er að sjá fyrir sér. Segðu hlutina skýrt og dragðu ekki úr þeim. Þú mátt segja hvernig eitthvað gengur almennt fyrir sig. Hvað myndin merkir fyrir manneskjuna finnur hún sjálf.
 ```
+
+| věta | funkce | doklad |
+|---|---|---|
+| keeper of the runes; knows the runes and their world | kdo mluví a z čeho čerpá | lab od kola 1 |
+| does not know the future or the person's life | chrání před předpovědí a tvrzením o člověku | kolo 1–2 (WHERE YOU SPEAK FROM) |
+| has seen a good deal and can show it | ukazuje, neučí (Gemini: zkušený řemeslník) | definice kolo 2 |
+| plain words, the way people talk today | dnešní řeč, ne archaismy | owner 11-03 |
+| images from everyday life many know first-hand | obraz, ve kterém se člověk pozná | owner 10-24, 11-04; Gemini „jak mluví“ |
+| what happens in the mind through a moment that can be pictured | psychické metafory skrze scénu, ne výklad stavu | kolo 2, bod 4 |
+| say things clearly, do not soften | bez „perhaps / might“ | kroky 17–18 (pojistky = vada) |
+| may say how a thing generally works | obecná zákonitost místo rozkazu | kolo 2, bod 3 |
+| what the image means, they find for themselves | žádná rada ani verdikt o člověku | kánon, zrcadlo |
 
 ### 6d. Co se po schválení teprve ověří (nic z toho neběželo)
-1. Povaha celá × žádná (krok 21 to nechal otevřené) — rozhodne, jestli odstavec povahy v textu pro model zůstane.
+1. Povaha celá × žádná (krok 21 to nechal otevřené) — rozhodne, jestli se odstavec povahy do textu pro model vrátí.
 2. Celý text s moderními významy run a stavbou 4 vět na víc runách než jedné (`zadani-v3.md` body 10, 44), EN i IS.
 
+### 6e. Oprava kola 3 po ownerově výtce (2026-11-04)
+Owner: *„tohle už jsme řešili … co Agndofa udělá v charakteristice a jestli to tam má místo … jako by se nestalo. Jak to?“*
+1. **Agndofa pryč.** Rozhodnuto 2026-10-23 (kolo 2, varianta E): modelu nic neřekne, je to jméno bez chování, patří do kontextu produktu
+   (GPT i CODE-read). Do textu se vrátila 2026-10-26 v kroku 21 bez důvodu a kolo 3 ji odtud opsalo.
+2. **Odstavec povahy pryč.** Krok 21: žádný rys nic měřitelného nedělá; kroky 22–23 povahu „zatím vynechaly“. Kolo 3 ji vrátilo.
+   Zůstává v kánonu; do textu pro model jen tehdy, když test „povaha celá × žádná“ ukáže, že něco dělá.
+3. **Světlo a stín pryč z charakteru.** Nese je stavba čtení (věta 1 význam, věta 3 stín); v charakteru by věta neměla vlastní funkci,
+   nanejvýš by stín táhla i tam, kde nemá být (Ask). Neměřeno; vypuštěno podle pravidla „každé slovo si musí zasloužit místo“ (owner 10-23).
+4. **Proč se to stalo:** rozhodnutí o znění charakteru ležela v odpovědích v chatu a v nadpisech kroků, ne v tomto souboru. Kolo 3 vycházelo
+   z oddílu 5 a z posledního skriptu (krok 21), ne z rozhodnutí. Od teď jsou rozhodnutí o znění v tabulce 6c (sloupec doklad) a tady.
