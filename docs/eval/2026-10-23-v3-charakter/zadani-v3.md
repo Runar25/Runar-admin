@@ -48,6 +48,43 @@ Značky: ✅ použito · ⚠️ použito špatně nebo jen zčásti · ❌ nepou
 24. ⚠️ *„Dej si na to čas a najdi pořádně všechny zdroje“* pro stavbu obrazů (11-03). Krok 43 bral přísloví; úplnost neověřena.
 25. Každý vstup ownera (vložený text, rozhovor s GPT, tabulka) jde **hned** do repa jako zdroj — porušeno u bodu 10 a čtyř rozhovorů.
 
+## F. Starší pokyny 2026-10-23 až 11-01, které dál platí (novější výš mají přednost)
+Doplněno 2026-11-04 po ownerově *„co ti tam chybí z naší konverzace v3 před 2. 11.?“* — z přepisu vytaženo 96 zpráv, z toho k V3 asi 60.
+Doklady a ownerova slova u jednotlivých kroků; tady jen co platí a jestli to lab drží.
+26. ⚠️ V3 = nový koncept „na zelené louce“, výsledky v2 neplatí samy (10-23, 10-24) — ale co fungovalo na solu ve v2, se bere v potaz,
+    „nemusíme objevovat kolo“ (10-27, 10-30). Viz bod 23.
+27. ❌ **Základ = Rúnarův charakter + dobrý koncept čtení** (10-23); „vypadl nám Rúnarův hlas“ (10-24). Definice Rúnara podle Gemini
+    (řemeslník / mentor / tichý pozorovatel, klidný, věcný, nesoudí; obrazy fyzické i psychické; EN + IS) → `definice-runara.md`, stav
+    návrh. **Kroky 41–46 charakter v pokynu neměly vůbec.**
+28. ⚠️ Začít jednoduše, vstupy přidávat po jednom, každý vypínatelný a poznatelný ve čtení (10-23, 10-24). Kroky 44–46 měnily víc věcí naráz.
+29. ✅ Testuje se na Opusu 5.5 (čerství agenti); sol přes API jen na ownerovo slovo; cíl sol 6 bez přemýšlení (10-24, 10-26).
+30. ⚠️ 4 věty, které spolu souvisí — ne každá o něčem jiném (10-24). **Délka 50–58 slov** (10-27, „držíme 50–58“) — kroky 44–46 měly
+    50–60.
+31. ✅ Model obraz tvoří ze vstupů (námět), nedostane hotový dlouhý obraz; každé slovo a předmět musí sloužit obrazu a významu, žádná
+    omáčka (10-24).
+32. ❌ **Materiál od ownera, GPT, Gemini i handoffy ověřit, jestli je pravda** (10-24). Knihovna zkušeností od GPT vzata bez ověření.
+33. ✅ Cíl: uživatel se ve čtení najde, položí si otázku, přemýšlí, něco to v něm vyvolá → `RUNAR_DESIGN.md` „Co má čtení v člověku
+    vyvolat“; vzorové věty s ownerovým verdiktem → `cil-a-vzory.md` (dveře držené pro dalšího, sušenka sestře, dech, most, zip, student
+    a slova učitele, koleno). ⚠️ Kroky 45–46 se proti vzorům neměřily.
+34. ❌ Variace: **fáze runy** (nástup, vrchol, přechod, odpor) — owner *„souhlasím s fázemi run“* (10-26); předměty, které lidé znají dnes
+    (kosa ne) (10-26). Fáze lab nepoužil.
+35. ⚠️ Role vět je potřeba vytvořit; esence runy smí být první i druhá, musí se dát měnit (10-27). Novější: věta 1 = význam (bod 2).
+36. ✅ Otázka na konci vede k zamyšlení víc směry, každý ji vezme po svém (10-27, dveře). Konce zhruba jako ve v2 (10-27).
+37. ❌ **Oblast, hledání, záměr a jméno** ve V3: oblast zůstane (možná jako vlastní část jako Ask), pro některé runy vlídnější slova
+    („work“ moc obecné); hledání = zrcadlení na konci, mělo by být vždy, testovat ve větách i mimo; záměr umístit; studené čtení
+    vyřešit líp (10-24 až 10-30). Nápad nové oblasti „jak se cítím“ = hypotéza (10-26). Kroky 41–46 nic z toho nemají.
+38. ❌ Významy run, které použije model, do sebe musí zapadat — vymyslet metodu (10-27, hlášení k Nornám).
+39. ❌ **Stavět čtení z pocitu, který má v člověku vyvolat** (10-28); lidská dynamika daru z obou stran — kdo přijímá rád i kdo nechce
+    dlužit (10-28).
+40. ❌ **Nic, co runě přirozeně sedí, nevyřazovat** — jen nabídnout i jiné možnosti (10-30, *„já nechci žádný extrém“*).
+41. ✅ Druhy obrazu: v2 dějové, ve V3 zkoušet i situační a další (10-30, krok 38).
+42. ✅ Vysvětlení obrazu nedlouhé, stačí jasně řečený význam — jinak model vymýšlí (10-30).
+43. ✅ Runa má víc významů, jedno čtení = jeden pohled; další významy možná přes Ask (nápad, 10-30).
+44. ❌ Závěr nikdy z jedné runy (10-30). Kroky 44–46: tři runy, krok 45/46 jen Fehu, Gebo, Raidho.
+45. ✅ Suchý humor občas (10-30, krok 39). Stín nenazývat „varování“; poselství z v2 je důležitá myšlenka (10-30).
+46. ⚠️ Fehu: hodnota daná jako práce, pozornost, pouto, ruční výroba (podat hrnek s úsměvem) — hledat další předání bohatství (11-01).
+47. ✅ Ownerův verdikt zapisovat srozumitelně, ne jeho slova (10-27, memory). Odkazy na čtení tak, aby šly rovnou otevřít (10-24, 10-27).
+
 ## E. Co z kroků 43–46 platí
 - **Krok 43** — seznam obrazů s ownerovým verdiktem platí; soudce bral významy z vlastní znalosti, ne z bodu 10.
 - **Krok 44** — platí: rámec „Imagine“ drží ve všech třech polohách (0/27 tvrzení o uživateli) a „<Runa> here is“ dělá pokyn.
