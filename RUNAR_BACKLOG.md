@@ -925,8 +925,9 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   jen komerční hudba, DECISIONS 2026-11-03 (2)). Bio Instagramu i TikToku je dál „Keeper of runes, stories & ancient wisdom / Rune
   readings & guidance / Welcome to my world / ↓ Discover Rúnar“; bio TikToku je uložené se 139 znaky, i když editor 2026-11-02
   ukazoval limit 80 (screenshot ownera). Ani jedno bio neříká, že Rúnar je AI. Facebook zatím není (v configu jen
-  `RUNAR_INSTAGRAM_URL`). TikTok čeká na 1 000 sledujících, firemní účet ne (owner 2026-11-04 *„zatím počkáme“*). Čeká na ownera
-  a Sigrún: štítek profilu „AI-generated profile“ na Instagramu (návrh CODE-web, DECISIONS 2026-11-04 (1)), Facebook (bod 1).
+  `RUNAR_INSTAGRAM_URL`). TikTok čeká na 1 000 sledujících, firemní účet ne (owner 2026-11-04 *„zatím počkáme“*). Čeká na Sigrún:
+  štítek profilu „AI-generated profile“ na Instagramu a přepínač AI u příspěvků s Rúnarovým AI hlasem (DECISIONS 2026-11-04 (1);
+  návrh předává owner, 2026-11-04 *„ano předám“* — ownera se na to znovu neptat, zapnutí hlídá pondělní přehled), Facebook (bod 1).
 - [ ] **Ikona appky — modrá runa ᚱ v kameni** (owner 2026-11-02, DECISIONS 2026-11-02 (10); originály ve `v2/assets/`). Zbývá: sada
   ikon pro `v2/icons/` (favicon, apple-touch, manifest 192/512 i maskovatelná) z rastru — runu zmenšit, kámen kolem doplnit zrcadlením
   textury (jinak ji Android ořízne); generátor `scripts/ikona_appky.py` umí jen vlastní kresbu, rastr doplnit. Kdy, čeká na ownera.
