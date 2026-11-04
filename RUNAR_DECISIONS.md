@@ -13146,3 +13146,25 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **NASAZENO 2026-11-04** (owner *„1. nasaď“*): `claude-proxy` v99 z 08b3e2f — commit 091e8a2 přegeneroval balíček `prompt_skladani.mjs`
   (změna utils a překladů), výstup promptu stejný. Sonda bez přihlášení 401, `nasazene_vs_repo.py`: nasazené = HEAD u všech 14 funkcí.
 - Affected doc(s): RUNAR_BACKLOG.md (Hlášení z appky 2026-10-30 / 11-03).
+
+## 2026-11-04 (1) — AI v biu povinné není (oprava k 2026-11-02 (8)); hlídají se štítky AI; TikTok zatím bez firemního účtu
+
+- **Rozhodl:** owner 2026-11-04 na otázku, zda Sigrún doplní AI do bií: *„pořád stejná otázka. musí to tam být?“* — jeho *„musí být AI
+  v bio pro tiktok, insta a youtube“* z 2026-11-02 byla otázka, 2026-11-02 (8) ji zapsal jako požadavek (chyba CODE-web). K volbě
+  TikToku z 2026-11-03 (2): *„zatím počkáme“* — firemní účet ne.
+- **Zjištěno (primární zdroje 2026-11-04):** bio nezmiňuje AI Act ani pravidla Instagramu, TikToku a YouTube.
+  - AI Act čl. 50 platí od 2. 8. 2026 (Digital Omnibus odst. 1 a 4 neposunul, Cooley 2026-08-03): kdo mluví s AI, musí to vědět —
+    splňuje appka (`ai_note` pod BEGIN THE READING, 2026-10-19 (1), 2026-10-22 (2)). Deep fake (čl. 3 bod 60) musí připomínat
+    existující osoby, místa nebo události. Island: AI Act zatím není v Dohodě o EHP (EFTA EEA-Lex „under scrutiny“); Rúnara se týká,
+    když jeho výstup používají lidé v EU (čl. 2 odst. 1 písm. c)).
+  - Štítek u příspěvku: Instagram (pravidlo Mety) ho vyžaduje u fotorealistického videa a realisticky znějícího zvuku, výslovně
+    i u reelu s realistickým AI hlasem, u obrázků a kresleného videa ne. TikTok u realistického obrazu, zvuku a videa (u ostatního AI
+    obsahu doporučuje); stačí přepínač „AI-generated content“, nebo text, nálepka s hashtagem či poznámka v popisu. YouTube u obsahu,
+    který vypadá realisticky (Studio, AI use); animace ne, AI hlas výslovně nejmenuje.
+  - Štítek profilu (Instagram od 2026-08-31): „AI-generated profile“ (Upravit profil → přepínač) pro účty, které pravidelně ukazují
+    AI postavu místo člověka. Dosahu nepomůže ani neuškodí; účet, který ho podle Instagramu potřebuje a nemá, může vypadnout z doporučování.
+    Animovanou postavu (Rúnar na profilovce) nápověda výslovně nezmiňuje. Přepínač TikToku ani zveřejnění na YouTube dosah nesnižují.
+- **Co:** CODE-web v monitoringu hlídá místo „AI v biu“ štítek profilu Instagramu a štítky u příspěvků s Rúnarovým AI hlasem nebo
+  realistickým AI obrazem; co stojí v biu, je na Sigrún. Návrh pro Sigrún (přes ownera): na Instagramu zapnout „AI-generated profile“.
+  Mimo bio: čl. 50 odst. 2 (strojově čitelné označení výstupů AI) → BACKLOG, otázka pro právníka.
+- Affected doc(s): RUNAR_BACKLOG.md (Sociální sítě Rúnara; Krize v otázce — pro právníka).

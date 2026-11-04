@@ -635,7 +635,9 @@ Nález 2026-08-16: otázka s příznaky infarktu dostala běžné čtení o sbě
 - [ ] **Zbývá — pro ownera, část pro právníka:** ~~upozornění „Rúnar je AI“ v rozhraní~~ ✅ 2026-10-19 pod BEGIN THE READING (owner
   „13.“, DECISIONS 2026-10-19 (1); zda to EU AI Act čl. 50 stačí, je otázka pro právníka) · věk 13+
   proti pravidlům Anthropicu pro nezletilé? · oznamovací povinnost při zneužívání dítěte (islandský zákon o ochraně dětí)? ·
-  placení za čtení s otázkou na sebevraždu — owner: *„Nebo je to protizákonné?“* (rešerše 2026-10-15 to neřešila)?
+  placení za čtení s otázkou na sebevraždu — owner: *„Nebo je to protizákonné?“* (rešerše 2026-10-15 to neřešila)? · AI Act čl. 50
+  odst. 2 (strojově čitelné označení výstupů AI — text čtení, hlas) se týká Agndofy jako poskytovatele Rúnara? Lhůta do 2. 12. 2026
+  platí podle Cooley (Digital Omnibus) jen pro systémy na trhu před 2. 8. 2026 (CODE-web, DECISIONS 2026-11-04 (1)).
 - [ ] **Krize v poli s otázkou (single i spready) 112 nedostane** (CODE-read 2026-10-16, ownerův test Raidho EN): `qBranch` „Let <runa>
   answer: <q>“ (`runar-character.js`) vezme otázku jako zadání výkladu a systémová věta o 112 prohraje; výjimka v5.10 kryje jen Ask.
   Dnes jen admin (pole s otázkou, 2bf5e27). Nutné, než se pole otevře; „Let X answer“ owner drží do testu → měnit až s ním
@@ -914,14 +916,17 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
       Facebooku `?z=fb` (owner 2026-11-03 *„zatím používej ty, co jsou. tedy s ?“*, DECISIONS 2026-11-03 (2)). Krátké adresy
       `therunekeeper.com/ig` (`/tt`, `/yt`, `/fb`) vedou na totéž ✅ *(nasazeno 2026-11-03, ověřeno naostro — DECISIONS 2026-11-02 (11))*.
   **Kdo co (owner 2026-11-02, DECISIONS 2026-11-02 (8)):** obsah sítí a bia dělá Sigrún; CODE-web monitoring (čísla v čase →
-  `docs/monitor/site-a-web.md`) a technika. Owner: v biu Instagramu, TikToku i YouTube musí stát, že Rúnar je AI.
+  `docs/monitor/site-a-web.md`) a technika. AI v biu povinné není (DECISIONS 2026-11-04 (1), oprava k 2026-11-02 (8)): povinný je
+  štítek AI u příspěvků s Rúnarovým AI hlasem nebo realistickým AI obrazem; na Instagramu chrání doporučování štítek profilu
+  „AI-generated profile“.
   Stav 2026-11-03 (veřejné profily, CODE-web): odkaz se štítkem mají všechny tři — Instagram `therunekeeper.com/?z=ig` (klikací),
   YouTube `https://therunekeeper.com/?z=yt` na konci popisu, TikTok `https://therunekeeper.com/?z=tt` jen jako text v biu: klikací odkaz
   v profilu dává TikTok až od 1 000 sledujících nebo registrovanému firemnímu účtu (nápověda TikToku; teď 1 sledující; firemní účet =
   jen komerční hudba, DECISIONS 2026-11-03 (2)). Bio Instagramu i TikToku je dál „Keeper of runes, stories & ancient wisdom / Rune
   readings & guidance / Welcome to my world / ↓ Discover Rúnar“; bio TikToku je uložené se 139 znaky, i když editor 2026-11-02
   ukazoval limit 80 (screenshot ownera). Ani jedno bio neříká, že Rúnar je AI. Facebook zatím není (v configu jen
-  `RUNAR_INSTAGRAM_URL`). Čeká na Sigrún (přes ownera): AI do bia všech tří, Facebook (bod 1).
+  `RUNAR_INSTAGRAM_URL`). TikTok čeká na 1 000 sledujících, firemní účet ne (owner 2026-11-04 *„zatím počkáme“*). Čeká na ownera
+  a Sigrún: štítek profilu „AI-generated profile“ na Instagramu (návrh CODE-web, DECISIONS 2026-11-04 (1)), Facebook (bod 1).
 - [ ] **Ikona appky — modrá runa ᚱ v kameni** (owner 2026-11-02, DECISIONS 2026-11-02 (10); originály ve `v2/assets/`). Zbývá: sada
   ikon pro `v2/icons/` (favicon, apple-touch, manifest 192/512 i maskovatelná) z rastru — runu zmenšit, kámen kolem doplnit zrcadlením
   textury (jinak ji Android ořízne); generátor `scripts/ikona_appky.py` umí jen vlastní kresbu, rastr doplnit. Kdy, čeká na ownera.
