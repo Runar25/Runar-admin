@@ -204,6 +204,15 @@ Základ = tenké zadání J; každý test mění jednu věc, 10 čtení. Co zabe
 5. Připomínka délky.
 6. Zákazy z A2–A4 (klišé, „journey“).
 
+## M. Test 1 v GPT: tenké zadání + definice obrazu ([zdroj](zdroj-gpt-2026-11-05-raidho-test1.md), 10 čtení Raidho)
+1. **Definice obrazu zabrala: scéna 10/10, deset různých situací** (recept, křižovatka, nábytek, vlak, kolo, hadice, fronta, cesta do práce, chléb, stěhování). Shoda slov 0,15, nejnižší ze tří běhů.
+2. **Stavba vznikla sama, stejná jako u prvního čtení z GPT:** 3–4 věty scény · runa + význam · u 8/10 obecná věta. Věty kratší (Ø 9,5 slova; plný prompt 13,1), 5–6 vět.
+3. **Druhá strana přišla sama a bez nálepky, uvnitř scény** 10/10 (netěsná hadice, peněženka u pokladny, chléb vyndaný moc brzy). Pokyn „where this goes wrong“ tedy stačí jako vstup.
+4. „Imagine“ 10/10 a „Raidho represents“ 10/10, ač je zadání nežádá. Může to být z předchozího promptu v témže chatu; nevím. Tenké zadání bez definice obrazu je nemělo.
+5. Otázka 0/10. Délka Ø 49,5, pod 50 slov 6/10 (bez připomínky délky).
+6. Význam se zúžil na pořadí kroků (sequence/order/stage/step 6/10). Jestli obraz nese Raidho, neměřeno; slepá brána z kroku 45 to ukáže. Co zní dobře, rozhodne owner.
+Základ dalších testů = J + G.
+
 ## Changelog
 - 2026-11-05 založeno (owner *„10. ano, začni bodem 5“*).
 - 2026-11-05 rozhodnutí ownera (oddíly E, F, G).
