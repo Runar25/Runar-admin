@@ -20,7 +20,7 @@ Značky vědění: **M** změřeno (model) · **N** neměřeno.
 ## A. Systémový prompt
 | # | kus | znění (EN) | původ | pokyn ownera | co víme |
 |---|---|---|---|---|---|
-| A1 | definice Rúnara | text z [definice-runara.md](definice-runara.md) 6c (10 vět: keeper of the runes · zná runy a svět, odkud jsou · nezná budoucnost ani život tazatele · mluví prostě, dnešní řečí · obrazy z běžného života · co se děje v mysli, ukáže chvílí · řekne věci jasně · smí říct, jak věc obecně chodí · co obraz znamená pro člověka, najde si sám) | lab (návrh, neschválen) | F27 základ = charakter | Opus: celý ani po větách nic měřitelného ve hustém zadání (krok 47); tón **N**; sol **N** |
+| A1 | definice Rúnara | text z [definice-runara.md](definice-runara.md) 6c (10 vět: keeper of the runes · zná runy a svět, odkud jsou · nezná budoucnost ani život tazatele · mluví prostě, dnešní řečí · obrazy z běžného života · co se děje v mysli, ukáže chvílí · řekne věci jasně · smí říct, jak věc obecně chodí · co obraz znamená pro člověka, najde si sám) | lab, **do testů schváleno G49** | F27 základ = charakter | Opus: celý ani po větách nic měřitelného ve hustém zadání (krok 47); tón **N**; sol **N** |
 | A2 | bez vykřičníků, bez „journey“ | „Rúnar does not use exclamation marks. Rúnar does not use the word "journey" as a metaphor for personal growth.“ | v2 | — (kánon v2) | **N**; levné, nechat |
 | A3 | ochrana při ohrožení | „If someone speaks of harming themselves or ending their life, Rúnar names 112, the emergency number in Iceland and across Europe, not phone numbers from other countries.“ | v2 | bezpečnost (nesmí vypadnout) | — |
 | A4 | jazyk | „Natural English idiom — nothing translated-sounding, stiff, or awkward. No clichés, self-help or wellness phrasing, or modern slang. Banned: "embrace", "empower", "your truth", "the universe", "trust the process", "step into your power", "everything happens for a reason", "deep within", "the answers you seek", "let go and". If a line could be a horoscope or a fridge magnet, cut it. Respond only in English.“ | v2* (body 2–3 z LANGUAGE & STYLE) | F31 žádná omáčka | **N** jako celek; seznam slov = známé vady modelu |
@@ -109,15 +109,21 @@ Length, once more: the reading itself is 4 short sentences, 50 to 58 words.
 Délka: systém 215 slov (v2 354), zadání 286 slov (v2 640).
 
 ## E. Stav rozhodnutí ownera (2026-11-05, vlastní [zadani-v3.md](zadani-v3.md) oddíl G)
-Oblast (B8) a hledání s jménem (B14, B15) schváleny. Otevřené: otevření runy (oddíl F) a definice Rúnara (A1). Fáze runy (B4) rozhodne test.
+Oblast (B8) a hledání s jménem (B14, B15) schváleny. Definice Rúnara (A1) jde do testů. Otevření (oddíl F) a fáze runy (B4) rozhodne test.
 
-## F. Otevření runy — „Imagine“ v losu (G48, čeká na ownera)
-Dnes (B10, B11) stojí „Imagine“ ve větě 2 a věta 1 začíná „<Runa> <sloveso>“. Owner: *„imagine by mělo být součástí, jak se otevírá runa“*.
-Znění losu po přesunu je nové a neměřené; vzor Fehu:
-1. „This is Fehu, …“
-2. „Fehu represents …“ (a další slovesa z `ESSENCE_VERBS_SOL`)
-3. „Imagine …“ — dvě možná čtení ownerova pokynu, ukázky v odpovědi ownerovi: (a) čtení začne obrazem a význam přijde hned za ním, (b) „Imagine“ otevře
-   samotný význam („Imagine wealth that only grows while it moves.“).
+## F. Otevření čtení — los (G48)
+**Ve v2 je to `READING_ANGLES` (`v2/runar-utils.js`, los `_randomAngle`, kus ANGLE):** 7 úhlů, jak vstoupit do obrazu. Tenhle návrh ANGLE původně vypustil,
+protože věta 1 byla význam; **to byla chyba** a vrací se.
+**Co říká čtení z GPT ([zdroj](zdroj-gpt-2026-11-05-pet-run.md), 5 run, česky):**
+1. Čtení otevře obraz 5/5; jméno runy a význam přijdou až potom, vždy jako 4. věta. Tedy pořadí jako ve v2: obraz, pak význam.
+2. „Představ si“ jen 1/5; ostatní začínají scénou rovnou („Někdo ti přinese dárek“, „Člověk sedí v autě“).
+3. Stavba 5/5: 3 krátké věty scény · runa + sloveso + význam · obecná věta, jak věc chodí · u 4/5 uzavírající věta. Slovesa: je 3×, připomíná, ukazuje.
+4. Délka 51–60 slov, ale 6–8 vět místo 4. Hlas drží krátká věta; slova jsou česká, s angličtinou se přímo srovnat nedají.
+5. Druhá strana se objeví bez nálepky stín („Ale ani všechno, co čeká, se samo znovu nerozběhne“, „Úroda také není vždycky taková“).
+6. Otázka je jedna na konci celku, ne u každé runy. Gebo určuje, co člověk cítí („První myšlenka není radost“), proti C17.
+Hranice: n = 5, jedno čtení, neznámý model a vstup. Není to měření proti ničemu, jen ukázka.
+**Los otevření ve V3 (znění k testu):** (a) obraz první: úhly z `READING_ANGLES` + „Begin with "Imagine"“; pak význam. (b) význam první: „{Runa} {sloveso}“ / „This is {Runa}“; pak obraz.
+Úhly [6] („You stand“) a [4] („Under…“ 5/8, krok 27) mají známé šablony; hlídat. Pořadí (a) proti (b) a 4 věty proti krátkým větám ve stejné délce jsou nové, rozhodne test.
 
 ## G. Obraz, který skládá model — definice (G50, nové, neměřené)
 Vyměňuje B6, když obraz nedodá sbírka. Vychází ze společných rysů chválených obrazů (krok 43 §1) a z kroku 45 (mechanismus, ne symbol).

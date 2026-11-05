@@ -86,9 +86,9 @@ Doklady a ownerova slova u jednotlivých kroků; tady jen co platí a jestli to 
 47. ✅ Ownerův verdikt zapisovat srozumitelně, ne jeho slova (10-27, memory). Odkazy na čtení tak, aby šly rovnou otevřít (10-24, 10-27).
 
 ## G. Rozhodnutí 2026-11-05 k návrhu [prompt-v3-navrh.md](prompt-v3-navrh.md)
-48. ⚠️ „Imagine“ patří k tomu, jak se runa otevírá, vedle „This is Raidho…“ a „Raidho represents…“ — tedy do losu otevření, ne k větě 2 (11-05).
-    Přesná podoba čeká na ownera (ukázky v návrhu, oddíl F).
-49. ⚠️ Definice Rúnara: owner ji chce vidět napsanou shrnutě, teprve pak rozhodne (11-05).
+48. ⚠️ Otevření čtení se losuje jako ve v2 (`READING_ANGLES`); „Imagine“ je jedna z možností vedle „This is Raidho…“ a „Raidho represents…“ (11-05).
+    „This is <runa>“ jako jedna z možností nevadí. Znění losu → [prompt-v3-navrh.md](prompt-v3-navrh.md) oddíl F.
+49. ✅ Definice Rúnara 6c jde do testů jako systém V3 (11-05). Owner ji vyzkoušel v GPT, obrazy jsou podle něj dobré → [zdroj-gpt-2026-11-05-pet-run.md](zdroj-gpt-2026-11-05-pet-run.md).
 50. ❌ Obraz: napřed obrazy v2; protože se změnily významy run a tím i to, jak o nich mluvit, část bude jinak. Vedle toho vyzkoušet obraz,
     který složí sám model; sol k tomu potřebuje definici, jak obraz skládat (11-05).
 51. ❌ Fáze runy jsou nové a nevyzkoušené, takže o nich nevíme nic; rozhodne test, ne odhad (11-05: *„co nemáme otestované, prostě není změřené“*).
