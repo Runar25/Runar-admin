@@ -179,6 +179,31 @@ Mezi oběma běhy se změnilo víc věcí naráz (obraz dodaný × vlastní, sta
 ## J. Tenké zadání k porovnání (Raidho, EN, GPT)
 Systém: jen definice 6c. Zadání: runa, význam, kde se kazí, délka. Bez obrazu, bez pořadí, bez zákazů.
 
+## K. Výsledek tenkého zadání v GPT: 10 čtení Raidho ([zdroj](zdroj-gpt-2026-11-05-raidho-tenke.md))
+| měřítko | plný prompt (H) | tenké zadání (J) |
+|---|---|---|
+| slov Ø · pod 50 | 53,6 · 0/10 | 48,2 · 7/10 (bez připomínky délky) |
+| vět | 4 (9/10) | 3–5 |
+| scéna, kde někdo něco dělá | jen převyprávěný obraz | 0/10 (přirovnání nebo „Think of“ 3/10) |
+| otázka | 10/10 (pokyn) | 0/10 |
+| začátek | „Raidho represents“ 10/10 (pokyn) | is 4 · represents 4 · speaks of 2, bez pokynu |
+| shoda slov mezi čteními (Jaccard) | 0,30 | 0,18, ale H má společný obraz |
+| direction · movement | 7 · 8 | 9 · 9 |
+| „journey“ | 0/10 (zakázáno) | 1/10 |
+1. **Definice sama scénu nepřinese.** Tím neplatí domněnka CODE-read, že scény v prvním čtení z GPT přinesla definice. Odkud přišly (historie Rúnara v GPT, slovo „čtení“, čeština), nevíme.
+2. Tenké zadání je rozmanitější, ale je to výklad pojmu, ne čtení: bez obrazu a bez člověka.
+3. Bez připomínky délky model píše pod 50 slov (7/10), s ní 0/10; změnilo se ale víc věcí, jen směr.
+Hranice: jedna runa (F44: závěr nikdy z jedné runy), GPT, model neznámý.
+
+## L. Řada oddělených testů v GPT (owner 2026-11-05: *„tímhle způsobem můžeme testovat odděleně věci“*)
+Základ = tenké zadání J; každý test mění jednu věc, 10 čtení. Co zabere, zůstane v základu. Na závěr totéž na dalších runách (F44) a na solu přes API jen na ownerovo ano.
+1. Definice obrazu z oddílu G (model scénu skládá sám).
+2. Pořadí: obraz první × význam první.
+3. Dodaný obraz s dějem z v2 × obraz od modelu.
+4. Otázka na konci.
+5. Připomínka délky.
+6. Zákazy z A2–A4 (klišé, „journey“).
+
 ## Changelog
 - 2026-11-05 založeno (owner *„10. ano, začni bodem 5“*).
 - 2026-11-05 rozhodnutí ownera (oddíly E, F, G).
