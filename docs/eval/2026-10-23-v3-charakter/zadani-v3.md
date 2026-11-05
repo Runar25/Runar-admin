@@ -96,6 +96,12 @@ Doklady a ownerova slova u jednotlivých kroků; tady jen co platí a jestli to 
 52. ✅ Oblast nemá ve čtení vlastní větu; vybere úhel významu a prostředí obrazu (11-05).
 53. ✅ Jméno jen v závěrečné otázce; hledání zesílí jednu konkrétní větu podle tabulky B14 (11-05).
 
+54. ✅ Počet vět je jedno, záleží na modelu; do promptu jen počet slov, 50–58 (11-05). Mění bod 1 a 30: pořadí částí zůstává, „4 věty“ ne.
+55. ✅ Nálepka stínu („Its shadow is…“) ve čtení zabírá místo (11-05). Druhá strana se řekne rovnou.
+56. ✅ Hypotetická scéna smí nést pocit: „První myšlenka není radost, ale otázka: Čím mu to oplatím?“ je význam ve scéně, ne tvrzení o čtenáři (11-05).
+    Jiný význam by řekl něco jiného. Upřesňuje bod 17: neurčovat, co cítí skutečný člověk, který čte; postava ve scéně smí.
+57. ✅ „Imagine“ je jen jedna z možností losu otevření (11-05, opakovaně); není to pravidlo stavby.
+
 ## E. Co z kroků 43–46 platí
 - **Krok 43** — seznam obrazů s ownerovým verdiktem platí; soudce bral významy z vlastní znalosti, ne z bodu 10.
 - **Krok 44** — platí: rámec „Imagine“ drží ve všech třech polohách (0/27 tvrzení o uživateli) a „<Runa> here is“ dělá pokyn.

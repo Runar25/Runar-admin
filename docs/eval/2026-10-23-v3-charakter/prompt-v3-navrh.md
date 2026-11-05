@@ -34,16 +34,16 @@ o budoucnosti a strach ve výstupu (krok 47 0/78 na Opusu, sol neměřen).
 |---|---|---|---|---|---|
 | B1 | runa | „RUNE: {RUNE}“ | v2* (bez „focus on“) | — | sol opisuje hlavičky (DESIGN „Slova“ 1); proto bez klíčového slova |
 | B2 | význam čtení | „THE MEANING IN THIS READING (the bright side; say it in your own words, do not copy it): {ÚHEL}“ | lab (k47) | A2, B9–B11, F43 jeden pohled | data: úhel z moderních významů losem (C1) · Opus k47 drží; sol **N** — sol hlavičku opisuje (17/33), proto „do not copy it“ hlídat |
-| B3 | stín | „THE SHADOW OF THIS MEANING (say it in your own words): {STÍN}“ — u těžké runy (`HEAVY_RUNES`) místo stínu světlá strana: „THE LIGHT IN THIS MEANING …“ | lab (k47) + nové (těžké runy) | A4, F45 (stín ≠ varování; tmavý úhel má světlo, krok 40) | k47 drží na Opusu; těžké runy **N** |
+| B3 | stín | „WHERE THIS MEANING GOES WRONG (say it in your own words): {STÍN}“ — u těžké runy (`HEAVY_RUNES`) místo stínu světlá strana: „THE LIGHT IN THIS MEANING …“ | lab (k47) + nové (těžké runy) | A4, F45 (stín ≠ varování; tmavý úhel má světlo, krok 40) | k47 drží na Opusu; těžké runy **N** |
 | B4 | fáze runy (**jen v testu**: zadání G51) | „THE MOMENT OF IT: {FÁZE}“ — los: *coming in · at its height · passing over into something else · meeting resistance* | nové | F34 („souhlasím s fázemi run“) | **N**; nikdy nepoužito |
 | B5 | čas (záměr) | jen s INTENTION: „{the scene shows what is happening now / what is about to happen / what has already happened}“ — vloží se do B6 | v2* (`_intentionContext`, znění času) + krok 36 | F37 záměr zůstane; krok 36 návrh „záměr = čas obrazu“ | v2 Opus 4.8: záměr přinese čas do závěru (n 2); V3 **N** |
 | B6 | obraz | „THE IMAGE (a scene that carries the meaning; tell it in your own words, keep what happens in it): {NÁMĚT}. Let it become your own seeing, down to one detail the sentence does not name.“ | lab (k47) + v2 („one detail“) | C13–C19, F31 (námět, ne hotový obraz) | „one detail“: sol převyprávění ↓ (EVAL_LOG 2026-09-23 (9)); zdroj námětu viz C2 |
-| B7 | hranice obrazu | „No named family roles (father, mother, grandmother and so on); "someone close", "a friend" or "family" as a whole are fine. No exact span of time or date (no "for weeks", "a year ago", "last summer"). Do not say what anyone in the scene feels.“ | lab (k47) + nové (cit) | C17, C18 | čas: kontrola v k46 ověřena protipříklady; role a cit **N** |
+| B7 | hranice obrazu | „No named family roles (father, mother, grandmother and so on); "someone close", "a friend" or "family" as a whole are fine. No exact span of time or date (no "for weeks", "a year ago", "last summer").“ | lab (k47) | C17, C18, G56 (postava ve scéně smí cítit) | čas: kontrola v k46 ověřena protipříklady; role **N** |
 | B8 | oblast | jen s AREA: nic do textu — oblast vybere úhel (C1) a svět námětu (C2) | nové (krok 36 návrh) | F37, 10-28, **G52 schváleno** | v2 sol: věta s oblastí se „bije“ s obrazem a opisuje podoby (EVAL_LOG 2026-10-02 (1), 10-09 (3)) → proto ne větou · v2 2026-08-21: oblast jako **zdroj obrazu** srazila studené čtení (EN 10 → 2,3/16, IS 11 → 2,7/16; DECISIONS 2026-08-21, EVAL_LOG mapa) |
-| B9 | stavba | „THE READING: 4 sentences, 50 to 58 words, in this order:“ | lab (k47) | A1, F30 | Opus 78/78 v rozsahu (k47) |
+| B9 | stavba | „THE READING: 50 to 58 words in all, in this order:“ | lab (k47), bez počtu vět | G54 | Opus 78/78 v rozsahu, tehdy se 4 větami (k47) |
 | B10 | věta 1 | „1: begins "{Runa} {SLOVESO}" and says the meaning in plain words a stranger to runes can grasp. The seeker knows only the words of the reading.“ — sloveso losem z `ESSENCE_VERBS_SOL` | v2 (rámec sol + los slovesa) | A2 (střídat losem jako ve v2) | sol převzal sloveso 56/56 (EVAL_LOG 2026-10-06 (2)); „stranger to runes“ v2 měřeno |
 | B11 | věta 2 | „2: the image.“ + poloha losem: A „Begin it with "Imagine" and place the reader inside the scene, as the one standing in it.“ · B „Begin it with "Imagine" and let the reader watch someone else in the scene.“ · C „Show the scene as it is, without "Imagine"; if a person is in it, it is someone, not the reader.“ | lab (k44, k47) | A7 | „Imagine“ ve 3 polohách 0/27 tvrzení (k44); uvnitř bez „Imagine“ 37/42 (k21) — rámec nese ochranu |
-| B12 | věta 3 | „3: the shadow of this meaning, not a fault of the reader.“ (těžká runa: „the light in this meaning“) | lab (k47) | A4, F45 | k47 Opus; tón „jako GPT o Fehu, kratší“ (krok 40 verdikt) **N** |
+| B12 | věta 3 | „3: where this meaning goes wrong, as a thing that happens, not a fault of the reader.“ (těžká runa: „the light in this meaning“) | lab (k47), znění nové | A4, F45, G55 (bez nálepky; „shadow“ v promptu se vyslovuje, k47 „Its shadow is…“) | k47 Opus; tón „jako GPT o Fehu, kratší“ (krok 40 verdikt) **N** |
 | B13 | věta 4 | „4: one open question that grows from the meaning of {Runa}, not from the details of the image, and that different readers could take in different ways.“ | lab (k47) | A3, F36, 10-28 (zrcadlení v každém čtení) | **N** mimo k47 |
 | B14 | hledání | jen se SEEKING, vloží se k větě, kterou nese: Clarity → věta 1 „one thing, sharply“ · Insight into Challenge → věta 3 „said fully, not softened“ · Reflection → věta 4 „turned toward the reader“ · Confirmation → „neither confirm nor refute“ · General → nic | v2* (`_registerContext` slova) + krok 36 | F37, 10-28, **G53 schváleno** | v2 Opus 4.8: hledání tlačí dovnitř člověka (n 2); V3 **N** |
 | B15 | jméno | jen se jménem: los v2 (55 % bez jména) — nově jen v otázce: „Address {name} in the question, once.“ nebo „This time do not use the name {name} at all.“ | v2* (`_namePlacement`, místo = věta 4) | 10-28, **G53 schváleno** | v2: jméno dosedne, kam se řekne (n 2); V3 **N** |
@@ -52,7 +52,7 @@ o budoucnosti a strach ve výstupu (krok 47 0/78 na Opusu, sol neměřen).
 | B18 | konec odpovědi | „Reply with the reading only.“ → v produkci nahradí FORMAT | lab | — | — |
 | B19 | formát | „Output format — return ONLY this JSON array, nothing before or after: [{"rune": "(the rune name)", "text": "(the reading exactly as instructed above, one flowing paragraph)"}]“ | v2 | — | parser appky a proxy ho potřebuje (§18, smoke ⑦) |
 | B20 | myšlenka ✦ | jen tarif s myšlenkou: kus THOUGHT z v2 beze změny | v2 | krok 38 verdikt („poselství je ve v2 samostatná myšlenka, do čtení nepatří“) | Opus 18 → 11 slov (EVAL_LOG 2026-10-05 (2)) |
-| B21 | připomínka délky | „Length, once more: the reading itself is 4 short sentences, 50 to 58 words.“ | v2 | F30 | Opus o ~8 slov kratší (EVAL_LOG 2026-10-04 (5)) |
+| B21 | připomínka délky | „Length, once more: the reading itself is 50 to 58 words.“ | v2 | F30 | Opus o ~8 slov kratší (EVAL_LOG 2026-10-04 (5)) |
 | B22 | korekce | `getCorrPrompt` beze změny (hlavně IS) | v2 | — | sol bez bloku chyby ze seznamu nedělal (EVAL_LOG 2026-10-15 (1)) |
 | — | **vypuštěno ze v2** | ANGLE (úhel otevření), IMAGE pravidla („one image… simile stacked…“), NO-QUESTION („Mention by name once“), NO-COLD-READING, LENGTH s „28–33 seconds“, ENDING (most „may be“), „focus on“ | — | A1 (věta 1 = význam, ne obraz), 10-28 (ochrana stavbou) | úhel vlastní větu 1 (v2) — ve V3 tam stojí význam; „Mention once“ → spona „This is Raidho“; most a NO-COLD-READING nesou pojistku; „Under…“ šablona z úhlu (k27) |
 
@@ -88,25 +88,25 @@ Respond only in English.
 USER
 RUNE: FEHU
 THE MEANING IN THIS READING (the bright side; say it in your own words, do not copy it): value given as attention, work or something made by hand
-THE SHADOW OF THIS MEANING (say it in your own words): giving that is counted, or taking without giving back
+WHERE THIS MEANING GOES WRONG (say it in your own words): giving that is counted, or taking without giving back
 THE MOMENT OF IT: coming in
 THE IMAGE (a scene that carries the meaning; tell it in your own words, keep what happens in it): someone hands a warm cup across a table.
 Let it become your own seeing, down to one detail the sentence does not name.
 No named family roles (father, mother, grandmother and so on); "someone close", "a friend" or "family" as a whole are fine. No exact span
-of time or date (no "for weeks", "a year ago", "last summer"). Do not say what anyone in the scene feels.
+of time or date (no "for weeks", "a year ago", "last summer").
 
-THE READING: 4 sentences, 50 to 58 words, in this order:
+THE READING: 50 to 58 words in all, in this order:
 1: begins "Fehu embodies" and says the meaning in plain words a stranger to runes can grasp — one thing, sharply. The seeker knows only
    the words of the reading.
 2: the image. Begin it with "Imagine" and let the reader watch someone else in the scene.
-3: the shadow of this meaning, not a fault of the reader.
+3: where this meaning goes wrong, as a thing that happens, not a fault of the reader.
 4: one open question that grows from the meaning of Fehu, not from the details of the image, and that different readers could take in
    different ways. Address Anna in the question, once.
 Output format — return ONLY this JSON array, nothing before or after: [{"rune": "(the rune name)", "text": "(the reading exactly as
 instructed above, one flowing paragraph)"}]
-Length, once more: the reading itself is 4 short sentences, 50 to 58 words.
+Length, once more: the reading itself is 50 to 58 words.
 ```
-Délka: systém 215 slov (v2 354), zadání 286 slov (v2 640).
+Délka: systém 215 slov (v2 354), zadání ~280 slov (v2 640).
 
 ## E. Stav rozhodnutí ownera (2026-11-05, vlastní [zadani-v3.md](zadani-v3.md) oddíl G)
 Oblast (B8) a hledání s jménem (B14, B15) schváleny. Definice Rúnara (A1) jde do testů. Otevření (oddíl F) a fáze runy (B4) rozhodne test.
@@ -118,12 +118,12 @@ protože věta 1 byla význam; **to byla chyba** a vrací se.
 1. Čtení otevře obraz 5/5; jméno runy a význam přijdou až potom, vždy jako 4. věta. Tedy pořadí jako ve v2: obraz, pak význam.
 2. „Představ si“ jen 1/5; ostatní začínají scénou rovnou („Někdo ti přinese dárek“, „Člověk sedí v autě“).
 3. Stavba 5/5: 3 krátké věty scény · runa + sloveso + význam · obecná věta, jak věc chodí · u 4/5 uzavírající věta. Slovesa: je 3×, připomíná, ukazuje.
-4. Délka 51–60 slov, ale 6–8 vět místo 4. Hlas drží krátká věta; slova jsou česká, s angličtinou se přímo srovnat nedají.
+4. Délka 51–60 slov, 6–8 krátkých vět. Počet vět se do promptu nepíše (G54); slova jsou česká, s angličtinou se přímo srovnat nedají.
 5. Druhá strana se objeví bez nálepky stín („Ale ani všechno, co čeká, se samo znovu nerozběhne“, „Úroda také není vždycky taková“).
-6. Otázka je jedna na konci celku, ne u každé runy. Gebo určuje, co člověk cítí („První myšlenka není radost“), proti C17.
-Hranice: n = 5, jedno čtení, neznámý model a vstup. Není to měření proti ničemu, jen ukázka.
+6. Otázka je jedna na konci celku, ne u každé runy. Gebo: „První myšlenka není radost“ je význam v hypotetické scéně, ne tvrzení o čtenáři (G56).
+Vstup GPT: jen definice 6c + „udělej čtení 5 run“; model neznámý, GPT zná historii Rúnara. Hranice: n = 5, jedno čtení, bez srovnání; ukázka, ne měření.
 **Los otevření ve V3 (znění k testu):** (a) obraz první: úhly z `READING_ANGLES` + „Begin with "Imagine"“; pak význam. (b) význam první: „{Runa} {sloveso}“ / „This is {Runa}“; pak obraz.
-Úhly [6] („You stand“) a [4] („Under…“ 5/8, krok 27) mají známé šablony; hlídat. Pořadí (a) proti (b) a 4 věty proti krátkým větám ve stejné délce jsou nové, rozhodne test.
+Úhly [6] („You stand“) a [4] („Under…“ 5/8, krok 27) mají známé šablony; hlídat. Pořadí (a) proti (b) je nové, rozhodne test. „Imagine“ je jedna položka losu (G57): stojí na začátku scény, kde je ta scéna kdekoli.
 
 ## G. Obraz, který skládá model — definice (G50, nové, neměřené)
 Vyměňuje B6, když obraz nedodá sbírka. Vychází ze společných rysů chválených obrazů (krok 43 §1) a z kroku 45 (mechanismus, ne symbol).

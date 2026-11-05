@@ -1,7 +1,7 @@
 # Zdroj: čtení pěti run z GPT, které poslal owner (2026-11-05)
 
 Owner 2026-11-05 k definici Rúnara (`definice-runara.md` 6c): *„změřeno v GPT“* · *„i ty obrazy jsou dobré“*. Intake, ne kánon. Text doslova, jen bez odkazů
-na obrázky run. Který model a jaký vstup GPT dostal, tady nestojí (čeká na ownera). Rozbor → `prompt-v3-navrh.md`, oddíl F.
+na obrázky run. Vstup: *„udělej mi čtení 5 run pro tenhle prompt“* + text definice 6c, nic dalšího; GPT ale zná z dřívějších rozhovorů historii Rúnara (owner). Který model, nestojí. Rozbor → `prompt-v3-navrh.md`, oddíl F.
 
 ---
 
