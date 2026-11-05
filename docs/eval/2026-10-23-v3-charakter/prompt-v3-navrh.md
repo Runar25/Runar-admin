@@ -166,6 +166,19 @@ Reply with the reading only.
 Length, once more: the reading itself is 50 to 58 words.
 ```
 
+## I. Výsledek promptu H v GPT: 10 čtení Raidho ([zdroj](zdroj-gpt-2026-11-05-raidho-10.md))
+Změřeno skriptem ve scratchpadu; hodnocení textů rozhodne owner.
+1. Pokyny drží: 50–56 slov, 0/10 mimo rozsah; 4 věty 9/10 (i bez pokynu k počtu vět); „Raidho represents“ 10/10.
+2. Čtení jsou šablona: „Imagine you stand“ 8/10, „Imagine you are“ 2/10; třetí věta „When“ 8/10; otázka „What“ 9/10.
+3. Význam se opisuje: 2–3 slova ze vstupu za sebou („movement with direction and rhythm“); direction 7/10, movement 8/10, rhythm 6/10.
+4. Obraz se převypráví, nic se v něm neděje: cairn a heath 10/10, „visible“ 8/10. Přidaný detail je slabý („a pale shape“, „rough stones“).
+5. Proti čtení z holé definice (Raidho = člověk v autě na parkovišti, ví kam, ale nevyjel) tu není situace ani člověk, který něco dělá.
+Hranice: 10 čtení téhož losu a téhož obrazu, takže podobnost obrazu je z velké části ze vstupu. Šablona ve třetí větě a v otázce ze vstupu nejde; jde ze stavby.
+Mezi oběma běhy se změnilo víc věcí naráz (obraz dodaný × vlastní, stavba, jazyk, počet run), takže příčina není určena. Obraz mohyl je navíc stav, ne děj.
+
+## J. Tenké zadání k porovnání (Raidho, EN, GPT)
+Systém: jen definice 6c. Zadání: runa, význam, kde se kazí, délka. Bez obrazu, bez pořadí, bez zákazů.
+
 ## Changelog
 - 2026-11-05 založeno (owner *„10. ano, začni bodem 5“*).
 - 2026-11-05 rozhodnutí ownera (oddíly E, F, G).
