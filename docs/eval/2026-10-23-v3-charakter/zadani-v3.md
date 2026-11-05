@@ -29,7 +29,7 @@ Značky: ✅ použito · ⚠️ použito špatně nebo jen zčásti · ❌ nepou
 12. ✅ Kánon děláme my a smí se změnit, když zlepší čtení (11-03; memory uložena).
 
 ## C. Obrazy
-13. ✅ Obrazy v2 v labu nepoužívat; obraz se odvozuje z významu runy (11-04 — ruší „zatím obrazy z v2“ z 11-02/03).
+13. ⚠️ **Změněno 11-05 (G50):** napřed zkusit obrazy v2, vedle nich obraz, který složí model podle definice. Dřív: obrazy v2 nepoužívat (11-04).
 14. ✅ Dnešní doba, žádné archaismy ani 19. století; běžné lidské situace, ve kterých se člověk pozná (11-03, 11-04; krok 43, 45).
 15. ✅ Asi 50 % Island / 50 % situace ze života, podle významu: některý chce situační, jiný přírodní, většina obojí (11-03).
 16. ⚠️ Island: lákadlo, nemusí být zažitý, musí být hned pochopitelný; ownerův seznam motivů (gejzír, fjord, vodopád, láva, sopka,
@@ -84,6 +84,17 @@ Doklady a ownerova slova u jednotlivých kroků; tady jen co platí a jestli to 
 45. ✅ Suchý humor občas (10-30, krok 39). Stín nenazývat „varování“; poselství z v2 je důležitá myšlenka (10-30).
 46. ⚠️ Fehu: hodnota daná jako práce, pozornost, pouto, ruční výroba (podat hrnek s úsměvem) — hledat další předání bohatství (11-01).
 47. ✅ Ownerův verdikt zapisovat srozumitelně, ne jeho slova (10-27, memory). Odkazy na čtení tak, aby šly rovnou otevřít (10-24, 10-27).
+
+## G. Rozhodnutí 2026-11-05 k návrhu [prompt-v3-navrh.md](prompt-v3-navrh.md)
+48. ⚠️ „Imagine“ patří k tomu, jak se runa otevírá, vedle „This is Raidho…“ a „Raidho represents…“ — tedy do losu otevření, ne k větě 2 (11-05).
+    Přesná podoba čeká na ownera (ukázky v návrhu, oddíl F).
+49. ⚠️ Definice Rúnara: owner ji chce vidět napsanou shrnutě, teprve pak rozhodne (11-05).
+50. ❌ Obraz: napřed obrazy v2; protože se změnily významy run a tím i to, jak o nich mluvit, část bude jinak. Vedle toho vyzkoušet obraz,
+    který složí sám model; sol k tomu potřebuje definici, jak obraz skládat (11-05).
+51. ❌ Fáze runy jsou nové a nevyzkoušené, takže o nich nevíme nic; rozhodne test, ne odhad (11-05: *„co nemáme otestované, prostě není změřené“*).
+    Tohle platí obecně: **na neměřenou věc se ownera neptat, otestovat ji.**
+52. ✅ Oblast nemá ve čtení vlastní větu; vybere úhel významu a prostředí obrazu (11-05).
+53. ✅ Jméno jen v závěrečné otázce; hledání zesílí jednu konkrétní větu podle tabulky B14 (11-05).
 
 ## E. Co z kroků 43–46 platí
 - **Krok 43** — seznam obrazů s ownerovým verdiktem platí; soudce bral významy z vlastní znalosti, ne z bodu 10.
