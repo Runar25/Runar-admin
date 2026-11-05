@@ -213,6 +213,23 @@ Základ = tenké zadání J; každý test mění jednu věc, 10 čtení. Co zabe
 6. Význam se zúžil na pořadí kroků (sequence/order/stage/step 6/10). Jestli obraz nese Raidho, neměřeno; slepá brána z kroku 45 to ukáže. Co zní dobře, rozhodne owner.
 Základ dalších testů = J + G.
 
+## N. Test 2: GPT chat × gpt-6-sol na stejném promptu ([GPT](zdroj-gpt-2026-11-05-raidho-test2.md) · [sol](zdroj-sol-2026-11-05-raidho-test2.md), po 10 čteních Raidho)
+| měřítko | GPT chat | gpt-6-sol |
+|---|---|---|
+| scény | 10 různých (autobus, recept, gauč, kolo, bubny, vlak, knihovna, přechod, chléb, navigace) | **přechod přes ulici 9/10**, autobus 1/10 |
+| shoda slov mezi čteními (půlky) | 0,17 (0,20 · 0,14) | **0,29** (0,32 · 0,28) |
+| začátek | „Raidho is movement with a direction“ 10/10 | „Raidho means movement with a direction“ 10/10 |
+| kdo ve scéně | žena/muž 3. osoba 9/10, „you“ 0/10 | **„you“ 8/10**, bez „Imagine“ |
+| délka | Ø 53,4, mimo 1/10 | Ø 55,3, mimo 0/10 |
+| vět · délka věty | 4–6 · 11,1 | 5–6 · 10,2 |
+| otázka | 0/10 | 0/10 |
+1. **Pořadí „význam první“ poslechly oba.** Začátek je ale u obou 10/10 stejný a vstup se opisuje: „movement with a direction“ 10/10 (DESIGN „Slova“ 1).
+2. **Rozdíl je v pestrosti:** sol bez losu sedne na jednu scénu. Rozdíl mezi modely (0,29 × 0,17) je větší než rozdíl půlek, není to šum. Ve v2 pestrost nese los obrazu a místa, tady není žádný.
+3. **„Raidho means“ 10/10:** sloveso z v2 vyřazené, protože sklouzává k „znamená, že“ (2/8; `ESSENCE_VERBS_SOL`). Sloveso se proto losuje.
+4. **„You stand at a crossing“ 8/10:** člověk uvnitř scény bez rámce „Imagine“. Tvrzení o čtenáři se nepočítalo; poloha se má losovat (A7).
+5. **Závěr pro postup: testy v GPT chatu neplatí pro sol samy.** GPT chat ukáže, co může model napsat; pestrost, slovesa a oslovení je potřeba měřit na solu. Model v chatu neznámý.
+Hranice: jedna runa, n = 10, jedno pořadí, sol bez losů. Proč sol volí přechod, neměřeno.
+
 ## Changelog
 - 2026-11-05 založeno (owner *„10. ano, začni bodem 5“*).
 - 2026-11-05 rozhodnutí ownera (oddíly E, F, G).
