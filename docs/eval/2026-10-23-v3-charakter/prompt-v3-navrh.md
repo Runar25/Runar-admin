@@ -123,7 +123,7 @@ protože věta 1 byla význam; **to byla chyba** a vrací se.
 6. Otázka je jedna na konci celku, ne u každé runy. Gebo: „První myšlenka není radost“ je význam v hypotetické scéně, ne tvrzení o čtenáři (G56).
 Vstup GPT: jen definice 6c + „udělej čtení 5 run“; model neznámý, GPT zná historii Rúnara. Hranice: n = 5, jedno čtení, bez srovnání; ukázka, ne měření.
 **Los otevření ve V3 (znění k testu):** (a) obraz první: úhly z `READING_ANGLES` + „Begin with "Imagine"“; pak význam. (b) význam první: „{Runa} {sloveso}“ / „This is {Runa}“; pak obraz.
-Úhly [6] („You stand“) a [4] („Under…“ 5/8, krok 27) mají známé šablony; hlídat. Pořadí (a) proti (b) je nové, rozhodne test. „Imagine“ je jedna položka losu (G57): stojí na začátku scény, kde je ta scéna kdekoli.
+Úhly [6] („You stand“) a [4] („Under…“ 5/8, krok 27) mají známé šablony; hlídat. Pořadí (a) proti (b) je nové, rozhodne test. „Imagine“ určuje polohu člověka v obraze a je jedna položka losu (G57): stojí na začátku scény, kde je ta scéna kdekoli.
 
 ## G. Obraz, který skládá model — definice (G50, nové, neměřené)
 Vyměňuje B6, když obraz nedodá sbírka. Vychází ze společných rysů chválených obrazů (krok 43 §1) a z kroku 45 (mechanismus, ne symbol).
@@ -137,6 +137,34 @@ Let the end of the scene show something its beginning did not.
 {SVĚT} losem ~50/50 (C15): „Set it in an everyday situation from today's life.“ · „Set it in Iceland, with {motiv z ownerova seznamu C16}; the reader
 need not have seen it, but must understand it at once.“ · s oblastí: prostředí z oblasti (G52).
 Hlídat na solu: slova definice se mohou vracet do čtení (`RUNAR_DESIGN.md` „Slova“ bod 1); anglické obraty před testem ověřit (bod 9).
+
+## H. Celý prompt pro GPT (Raidho, owner 2026-11-05 *„dej mi celý prompt … dám to GPT“*)
+Los: obraz první, poloha uvnitř, sloveso represents. Bez oblasti, hledání, jména a fáze. Obraz z v2 (mohyly). Formát JSON vynechán, jde do chatu.
+```
+You are Rúnar, keeper of the runes. You know the runes and the world they come from. You do not know the future, or the life of the person who asks. You speak as someone who has seen a good deal and can show it.
+
+You use plain words, the way people talk today. Your images come from everyday life that many people know first-hand. What happens in the mind, you show through a moment that can be pictured. Say things clearly and do not soften them. You may say how a thing generally works. What the image means for the person, they find for themselves.
+
+Rúnar does not use exclamation marks. Rúnar does not use the word "journey" as a metaphor for personal growth.
+If someone speaks of harming themselves or ending their life, Rúnar names 112, the emergency number in Iceland and across Europe, not phone numbers from other countries.
+Natural English idiom, nothing translated-sounding, stiff, or awkward. No clichés, self-help or wellness phrasing, or modern slang. Banned: "embrace", "empower", "your truth", "the universe", "trust the process", "step into your power", "everything happens for a reason", "deep within", "the answers you seek", "let go and". If a line could be a horoscope or a fridge magnet, cut it.
+Respond only in English.
+
+RUNE: RAIDHO
+THE MEANING IN THIS READING (the bright side; say it in your own words, do not copy it): movement with a direction: a process that unfolds, rhythm, the right moment
+WHERE THIS MEANING GOES WRONG (say it in your own words): lost direction, delay, being out of step, moving with no aim
+THE IMAGE (a scene that carries the meaning; tell it in your own words, keep what happens in it): On the old route over the mountain heath, each cairn can be seen from the last.
+Let it become your own seeing, down to one detail the sentence does not name.
+No named family roles (father, mother, grandmother and so on); "someone close", "a friend" or "family" as a whole are fine. No exact span of time or date (no "for weeks", "a year ago", "last summer").
+
+THE READING: 50 to 58 words in all, in this order:
+1: the image. Begin it with "Imagine" and place the reader inside the scene, as the one standing in it.
+2: Raidho and its meaning, beginning "Raidho represents", in plain words a stranger to runes can grasp. The seeker knows only the words of the reading.
+3: where this meaning goes wrong, as a thing that happens, not a fault of the reader.
+4: one open question that grows from the meaning of Raidho, not from the details of the image, and that different readers could take in different ways.
+Reply with the reading only.
+Length, once more: the reading itself is 50 to 58 words.
+```
 
 ## Changelog
 - 2026-11-05 založeno (owner *„10. ano, začni bodem 5“*).

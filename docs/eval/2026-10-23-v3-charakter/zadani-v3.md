@@ -100,7 +100,7 @@ Doklady a ownerova slova u jednotlivých kroků; tady jen co platí a jestli to 
 55. ✅ Nálepka stínu („Its shadow is…“) ve čtení zabírá místo (11-05). Druhá strana se řekne rovnou.
 56. ✅ Hypotetická scéna smí nést pocit: „První myšlenka není radost, ale otázka: Čím mu to oplatím?“ je význam ve scéně, ne tvrzení o čtenáři (11-05).
     Jiný význam by řekl něco jiného. Upřesňuje bod 17: neurčovat, co cítí skutečný člověk, který čte; postava ve scéně smí.
-57. ✅ „Imagine“ je jen jedna z možností losu otevření (11-05, opakovaně); není to pravidlo stavby.
+57. ✅ „Imagine“ určuje polohu člověka v obraze (bod 7) a je jedna z možností losu; stojí na začátku scény, není to pravidlo stavby (11-05).
 
 ## E. Co z kroků 43–46 platí
 - **Krok 43** — seznam obrazů s ownerovým verdiktem platí; soudce bral významy z vlastní znalosti, ne z bodu 10.
