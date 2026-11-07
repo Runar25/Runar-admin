@@ -17,6 +17,7 @@ body{margin:0;background:var(--bg);color:var(--txt);font:13px/1.35 system-ui,Seg
 .th{cursor:pointer;border:2px solid transparent;border-radius:4px;background:#fff;padding:1px;text-align:center;font-size:10px;width:52px}
 .th.on{border-color:var(--acc)}
 .th.new{display:flex;flex-direction:column;justify-content:center;font-size:13px;color:var(--acc2);border:2px dashed #9bb7e0;min-height:74px}
+button.fillon{background:#d2541b;color:#fff;border-color:#d2541b;font-weight:600}
 .undo button{font-size:14px;padding:5px 12px;font-weight:600}
 #top button[data-act=undo]{font-size:14px;padding:4px 12px;font-weight:600}
 .th svg{display:block;width:46px;height:auto;margin:auto}
@@ -66,7 +67,7 @@ label.chk{font-size:12px;display:inline-flex;gap:3px;align-items:center}
 <div id="main">
   <div id="stage">
     <svg id="cv"></svg>
-    <div id="hint">Táhni čáru myší = posun · Shift + táhni = otáčení kolem kotvy · šipky = posun vybrané o 0,1 mm (Shift 1 mm) · [ a ] = úhel ±0,5° · Ctrl+Z zpět</div>
+    <div id="hint">Dvojklik na pás mezi dvěma čarami = vyplnit úsek runou (znovu = smazat) · Táhni čáru myší = posun · Shift + táhni = otáčení kolem kotvy · šipky = posun vybrané o 0,1 mm (Shift 1 mm) · [ a ] = úhel ±0,5° · Ctrl+Z zpět</div>
   </div>
   <div id="panel"></div>
 </div>
@@ -229,7 +230,7 @@ function draw(){
   if(ui.labels){let g='';for(const id in c.lineSegs){const b=c.lineSegs[id][1],x=c.X(b),y=c.Y(b);const tx=Math.min(Math.max(x,D.mL+1),D.cardW-D.mR-1),ty=Math.min(Math.max(y,D.mT+2),D.cardH-D.mB-0.5);
     g+=`<text x="${tx}" y="${ty}" font-size="2" fill="${id===ui.sel?'#d2541b':'#2a6fd1'}" stroke="#fff" stroke-width="0.4" paint-order="stroke" text-anchor="${tx>c.O.ox?'end':'start'}">${id}</text>`;}s+=`<g font-family="system-ui,sans-serif" font-weight="600" style="pointer-events:none">${g}</g>`;}
   let hit='';for(const id in c.lineSegs)hit+=`<line data-id="${id}" x1="${c.X(c.lineSegs[id][0])}" y1="${c.Y(c.lineSegs[id][0])}" x2="${c.X(c.lineSegs[id][1])}" y2="${c.Y(c.lineSegs[id][1])}"/>`;
-  s+=`<g stroke="transparent" stroke-width="2.2" style="cursor:move">${hit}</g>`;
+  s+=`<g stroke="transparent" stroke-width="2.2" style="cursor:${ui.fill?'cell':'move'}">${hit}</g>`;
   cv.innerHTML=s;
 }
 function drawGallery(){
@@ -267,7 +268,7 @@ function panel(){
     h+=`<td class="common">${(cm[l.id]||[]).join(', ')}</td></tr>`;});
   h+=`</table>`;
   h+=`<h3>Tahy runy</h3><div class="muted">Tah leží na pásu a končí na dvou zarážkách. Zarážka = jiná čára (řez podél ní: střed, bližší nebo vzdálenější hrana) nebo bod na čáře v mm od kotvy (řez kolmo). Posuneš-li zarážku, tah se sám prodlouží nebo zkrátí.</div>`;
-  h+=`<div class="btns"><button data-act="addS">+ tah na vybrané čáře</button></div><table><tr><th>na čáře</th><th>od</th><th></th><th>do</th><th></th><th></th></tr>`;
+  h+=`<div class="btns"><button data-act="fillMode" class="${ui.fill?'fillon':''}">🖌 Vyplňování ${ui.fill?'ZAPNUTO – klikej na úseky pásů':'(nebo dvojklik na pás)'}</button><button data-act="addS">+ tah na vybrané čáře</button></div><table><tr><th>na čáře</th><th>od</th><th></th><th>do</th><th></th><th></th></tr>`;
   const stopEd=(s,w,i)=>{const sp=s[w];const opts=ids.filter(x=>x!==s.on).map(x=>`<option value="L:${x}"${sp.kind==='line'&&sp.id===x?' selected':''}>čára ${x}</option>`).join('')+`<option value="#"${sp.kind==='len'?' selected':''}>bod (mm)</option>`;
     let sub2=sp.kind==='len'?`<input type="number" step="0.1" data-sk="${w}.t" value="${sp.t}">`:`<select data-sk="${w}.edge">${[['mid','střed'],['near','bližší hrana'],['far','vzdálenější hrana']].map(([v,t])=>`<option value="${v}"${sp.edge===v?' selected':''}>${t}</option>`).join('')}</select>`;
     return `<td><select data-sk="${w}.kind">${opts}</select></td><td>${sub2}</td>`;};
@@ -329,6 +330,7 @@ function act(a,el){
     case 'copyRune':{const n=document.getElementById('copyFrom').value;if(!confirm(`Nahradit čáry a tahy runy ${st.cur} obsahem runy ${n}?`))return;st.runes[st.cur]=clone(st.runes[n]);break;}
     case 'clearRune':if(!confirm(`Vyprázdnit runu ${st.cur}?`))return;st.runes[st.cur]={lines:[],strokes:[]};break;
     case 'presetRune':if(!confirm('Vrátit předlohu podle ukázky?'))return;st.runes[st.cur]=clone(PRESETS[st.cur]);break;
+    case 'fillMode':ui.fill=!ui.fill;cv.style.cursor=ui.fill?'cell':'';document.querySelectorAll('#cv [data-id]').forEach(x=>x.parentNode.style.cursor=ui.fill?'cell':'move');panel();return;
     case 'resetDeck':st.deck={...DECK0};break;
     case 'newRune':case 'renameRune':{
       const old=a==='renameRune'?st.cur:null;
@@ -362,7 +364,24 @@ document.getElementById('imgOp').addEventListener('input',e=>{ui.imgOp=+e.target
 function mmAt(e){const p=cv.createSVGPoint();p.x=e.clientX;p.y=e.clientY;const q=p.matrixTransform(cv.getScreenCTM().inverse());const O=org();return [q.x-O.ox,O.oy-q.y];}
 const snap=(v,s)=>f3(Math.round(v/s)*s);
 let drag=null;
+// Vyplnění úseku: klik na pás → tah runy mezi nejbližšími křížícími čarami po obou stranách; klik na vyplněný úsek ho smaže
+function edgeFor(oid,Lg,t,G,r){const M=G[oid];if(M.type!=='pas')return 'mid';
+  const tx=dot(sub(add(Lg.P,mul(Lg.u,t)),M.P),M.u),tol=M.h+Lg.h;
+  for(const s of r.strokes){if(s.on!==oid)continue;const a=tOn(M,s.from,G),b=tOn(M,s.to,G);if(a==null||b==null)continue;
+    const lo=Math.min(a,b),hi=Math.max(a,b);if(tx>lo+tol&&tx<hi-tol)return 'mid';if(tx>=lo-tol&&tx<=hi+tol)return 'far';}
+  return 'mid';}   // napojení doprostřed jiného tahu = střed, na konec jiného tahu (roh) = vzdálenější hrana
+function fillAt(id,m){
+  const r=cur(),G=geom(r),Lg=G[id];if(!Lg)return false;const t=dot(sub(m,Lg.P),Lg.u);
+  for(let i=0;i<r.strokes.length;i++){const s=r.strokes[i];if(s.on!==id)continue;const a=tOn(Lg,s.from,G),b=tOn(Lg,s.to,G);
+    if(a!=null&&b!=null&&t>=Math.min(a,b)&&t<=Math.max(a,b)){r.strokes.splice(i,1);return true;}}
+  const cl=segClip(Lg.P,Lg.u,rectM());let lo=null,hi=null;
+  for(const oid in G){if(oid===id)continue;const tt=tOn(Lg,{kind:'line',id:oid},G);if(tt==null||(cl&&(tt<cl[0]||tt>cl[1])))continue;
+    if(tt<t&&(!lo||tt>lo.t))lo={t:tt,id:oid};if(tt>t&&(!hi||tt<hi.t))hi={t:tt,id:oid};}
+  const stop=(x,end)=>x?{kind:'line',id:x.id,edge:edgeFor(x.id,Lg,x.t,G,r)}:{kind:'len',t:f3(cl?cl[end]:(end?30:-30))};
+  r.strokes.push({on:id,from:stop(lo,0),to:stop(hi,1)});return true;}
+cv.addEventListener('dblclick',e=>{const id=e.target.dataset&&e.target.dataset.id;if(!id||ui.fill)return;ui.sel=id;if(fillAt(id,mmAt(e))){commit();refreshAll();}});
 cv.addEventListener('pointerdown',e=>{const id=e.target.dataset&&e.target.dataset.id;if(!id)return;e.preventDefault();
+  if(ui.fill){ui.sel=id;if(fillAt(id,mmAt(e))){commit();refreshAll();}return;}
   ui.sel=id;const l=selLine(),g=geom(cur())[id];drag={l,g,m0:mmAt(e),x0:+l.x,y0:+l.y,off0:+l.off,rot:e.shiftKey&&!l.ref};cv.setPointerCapture(e.pointerId);draw();});
 cv.addEventListener('pointermove',e=>{if(!drag)return;const m=mmAt(e),{l,g}=drag,step=e.altKey?0.01:0.1;
   if(drag.rot){const v=sub(m,g.P);let a=Math.atan2(v[1],v[0])*180/Math.PI;if(a>90)a-=180;if(a<=-90)a+=180;l.a=snap(a,e.altKey?0.1:0.5);}
