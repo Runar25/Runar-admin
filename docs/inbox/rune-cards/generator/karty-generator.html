@@ -114,7 +114,7 @@ function migrateNames(s){for(const [o,n] of Object.entries(RENAMED)){if(s.runes[
 const ALLF=()=>BASE.concat(st.custom||[]);
 // Karta 65 × 100 mm; rám a měřítko odpovídají předloze pro_form.svg (687 × 1024 px → 65 mm na šířku).
 const DECK0={cardW:65,cardH:100,mL:9.9,mR:9.9,mT:9.7,mB:27,radius:0,inner:1.6,frameW:0.4,origin:'frame',
-  bandW:1.6,bandN:3,bandS:0.35,thinS:0.6,runeStyle:'center',gap:0.35,step:1,snapOther:true,printMode:false,bleed:3,weave:true,weaveGap:0.3,ink:'#000000',bg:'#ffffff'};
+  bandW:1.6,bandN:3,bandS:0.35,thinS:0.6,runeStyle:'center',gap:0.35,step:1,snapOther:true,printMode:false,bleed:3,weave:true,ink:'#000000',bg:'#ffffff'};
 const L=(id,type,x,y,a,extra)=>Object.assign({id,type,x,y,a,ref:'',off:0},extra||{});
 const S=(on,from,to)=>({on,from,to});
 const ln=(id,edge)=>({kind:'line',id,edge:edge||'mid'});
@@ -238,7 +238,8 @@ function content(name){
       const el=seg(add(P,mul(g.u,c[0])),add(P,mul(g.u,c[1])),sw);myEls+=el;if(g.type==='pas')bands+=el;else thins+=el;}
     const c=segClip(g.P,g.u,R);if(c)lineSegs[id]=[add(g.P,mul(g.u,c[0])),add(g.P,mul(g.u,c[1]))];
     if(c){// mezera kolem čáry: přeruší čáry pod ní; nikdy nesahá na vnější rámeček, a kde čára končí na vnitřním, nesahá ani na ten
-      const hk=(g.type==='pas'?g.W/2+D.bandS/2:g.W/2)+(+D.weaveGap||0),a0=add(g.P,mul(g.u,c[0]-2)),a1=add(g.P,mul(g.u,c[1]+2));
+      const hk=g.type==='pas'?g.W/2+D.bandS/2:g.W/2,   // přesně po vnější hranu čáry: spodní čáry se jí dotknou, bez mezery (owner)
+        a0=add(g.P,mul(g.u,c[0]-2)),a1=add(g.P,mul(g.u,c[1]+2));
       let kp=clipRect([add(a0,mul(g.n,hk)),add(a1,mul(g.n,hk)),add(a1,mul(g.n,-hk)),add(a0,mul(g.n,-hk))],Rk);
       const ci=segClip(g.P,g.u,Rin);
       if(ci)[[inS,ci[0]],[inE,ci[1]]].forEach(([isIn,tt])=>{if(!isIn)return;const e=add(g.P,mul(g.u,tt)),dd=[Math.abs(e[0]-Rin.x0),Math.abs(e[0]-Rin.x1),Math.abs(e[1]-Rin.y0),Math.abs(e[1]-Rin.y1)],k=dd.indexOf(Math.min(...dd));
@@ -349,7 +350,7 @@ function drawGallery(){
 /* ====== Panel ====== */
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const DECKF=[['cardW','šířka karty mm'],['cardH','výška karty mm'],['radius','zaoblení rohů'],['mL','rám zleva'],['mR','rám zprava'],['mT','rám shora'],['mB','rám zdola'],['inner','vnitřní linka rámu'],['frameW','tloušťka rámu'],
-  ['bandW','šířka pásu (osy krajních linek)'],['bandN','počet linek v pásu'],['bandS','tloušťka linky pásu'],['thinS','tloušťka jednoduché čáry'],['weaveGap','mezera při křížení'],['gap','šířka světlé linky v runě']];
+  ['bandW','šířka pásu (osy krajních linek)'],['bandN','počet linek v pásu'],['bandS','tloušťka linky pásu'],['thinS','tloušťka jednoduché čáry'],['gap','šířka světlé linky v runě']];
 function panel(){
   const D=st.deck,r=cur(),ids=r.lines.map(l=>l.id),c=LAST||content(st.cur),cm=commonMap(st.cur);
   let h=`<details${panel.deckOpen?' open':''} id="deckBox"><summary>Karta a styl (platí pro všechny runy)</summary><div class="grid">`;
