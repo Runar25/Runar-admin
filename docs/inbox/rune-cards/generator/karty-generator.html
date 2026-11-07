@@ -25,8 +25,9 @@ button.fillon{background:#d2541b;color:#fff;border-color:#d2541b;font-weight:600
 .th svg{display:block;width:46px;height:auto;margin:auto}
 #main{display:flex;height:calc(100vh - 128px);min-height:500px}
 #stage{flex:1;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px;min-width:0}
-#cv{height:100%;max-height:calc(100vh - 175px);max-width:100%;background:#fff;box-shadow:0 1px 4px #0002;touch-action:none;user-select:none}
+#cv{height:100%;max-height:calc(100vh - 205px);max-width:100%;background:#fff;box-shadow:0 1px 4px #0002;touch-action:none;user-select:none}
 #hint{font-size:11px;color:var(--muted);padding-top:4px;text-align:center}
+#zoombar{display:flex;gap:4px;align-items:center;margin-bottom:4px;font-size:12px}#zoombar button{min-width:30px;font-size:14px}#coord{color:var(--acc2);margin-left:10px;font-variant-numeric:tabular-nums}
 #panel{width:600px;max-width:55vw;overflow:auto;background:var(--panel);border-left:1px solid var(--line);padding:8px 10px}
 h3{margin:12px 0 4px;font-size:13px}
 details{border:1px solid var(--line);border-radius:4px;padding:4px 8px;margin-bottom:6px}
@@ -68,8 +69,9 @@ label.chk{font-size:12px;display:inline-flex;gap:3px;align-items:center}
 <div id="gallery"></div>
 <div id="main">
   <div id="stage">
+    <div id="zoombar"><button data-act="zoomIn" title="přiblížit (+)">＋</button><button data-act="zoomOut" title="oddálit (−)">−</button><button data-act="zoomFit" title="celá karta (0)">celá karta</button><span id="zoomPct">100 %</span><span id="coord"></span></div>
     <svg id="cv"></svg>
-    <div id="hint">Dvojklik na pás mezi dvěma čarami = vyplnit úsek runou (znovu = smazat) · Ctrl + klik = označit víc čar (táhneš a posouváš je najednou, Esc zruší) · Táhni čáru myší = posun po mřížce (Alt = jemně 0,1 mm) · Shift + táhni = otáčení kolem kotvy · šipky = posun o krok mřížky (Shift 0,1 mm) · [ a ] = úhel ±0,5° · Ctrl+Z zpět</div>
+    <div id="hint">Kolečko myši = přiblížit / oddálit · táhni prázdné místo = posun pohledu · 0 = celá karta · Dvojklik na pás mezi dvěma čarami = vyplnit úsek runou (znovu = smazat) · Ctrl + klik = označit víc čar (táhneš a posouváš je najednou, Esc zruší) · Táhni čáru myší = posun po mřížce (Alt = jemně 0,1 mm) · Shift + táhni = otáčení kolem kotvy · šipky = posun o krok mřížky (Shift 0,1 mm) · [ a ] = úhel ±0,5° · Ctrl+Z zpět</div>
   </div>
   <div id="panel"></div>
 </div>
@@ -237,7 +239,8 @@ function thumb(name){const D=st.deck,c=content(name);
 const cv=document.getElementById('cv');let LAST=null;
 function draw(){
   const D=st.deck,c=content(st.cur);LAST=c;
-  cv.setAttribute('viewBox',`0 0 ${D.cardW} ${D.cardH}`);
+  const V=ui.view||{x:0,y:0,w:D.cardW,h:D.cardH},z=V.w/D.cardW;   // z < 1 = přiblíženo; pomocné značky se zmenšují s ním
+  cv.setAttribute("viewBox",`${f3(V.x)} ${f3(V.y)} ${f3(V.w)} ${f3(V.h)}`);
   let s=`<defs>${clipDef('cvclip')}</defs><rect width="${D.cardW}" height="${D.cardH}" fill="${D.bg}" stroke="#ccc" stroke-width="0.2"/>`;
   if(ui.img)s+=`<image href="${ui.img}" x="0" y="0" width="${D.cardW}" height="${f3(D.cardW*ui.imgRatio)}" opacity="${ui.imgOp}" preserveAspectRatio="none"/>`;
   if(ui.grid){const R=c.R,O=c.O;let g='';for(let x=Math.ceil(R.x0);x<=R.x1;x++)g+=`<line x1="${f3(O.ox+x)}" y1="${D.mT}" x2="${f3(O.ox+x)}" y2="${f3(D.cardH-D.mB)}" stroke-width="${x%5?0.04:0.1}"/>`;
@@ -250,18 +253,18 @@ function draw(){
   s+=`<g fill="none" stroke="${D.ink}" stroke-width="${D.frameW}">${frameEls()}</g>`;
   s+=`<g stroke="${D.ink}" stroke-width="${D.bandS}"${cp}>${c.bands}</g><g stroke="${D.ink}" stroke-width="${D.thinS}"${cp}>${c.thins}</g>`;
   s+=`<g fill="${D.ink}"${cp}>${c.rune}</g><g stroke="${D.bg}" stroke-width="${D.gap}" stroke-linecap="round"${cp}>${c.center}</g>`;
-  if(ui.common){const cm=commonMap(st.cur);let g='';for(const id in cm)if(c.lineSegs[id])g+=c.seg(...c.lineSegs[id]);s+=`<g stroke="#2a6fd1" stroke-width="0.35" stroke-dasharray="1 1" opacity="0.8">${g}</g>`;}
+  if(ui.common){const cm=commonMap(st.cur);let g='';for(const id in cm)if(c.lineSegs[id])g+=c.seg(...c.lineSegs[id]);s+=`<g stroke="#2a6fd1" stroke-width="${0.35*z}" stroke-dasharray="${z} ${z}" opacity="0.8">${g}</g>`;}
   // výběr, kotva, popisky, plochy pro chycení myší
   if(ui.snapTo){const C=ui.snapTo.g,cl=segClip(C.P,C.u,c.R);if(cl){s+=`<g stroke="#2a6fd1" stroke-width="1.4" opacity="0.35" stroke-linecap="round">${c.seg(add(C.P,mul(C.u,cl[0])),add(C.P,mul(C.u,cl[1])))}</g>`;
-    s+=`<text x="${D.mL+1}" y="${f3(D.cardH-D.mB+4)}" font-size="2.6" font-family="system-ui,sans-serif" font-weight="600" fill="#2a6fd1">přichyceno: ${esc(ui.snapTo.rune+' '+ui.snapTo.id)}${ui.snapTo.also.length?' (= '+esc(ui.snapTo.also.join(', '))+')':''} · Alt = bez přichycení</text>`;}}
+    s+=`<text x="${D.mL+1}" y="${f3(D.cardH-D.mB+4)}" font-size="${2.6*z}" font-family="system-ui,sans-serif" font-weight="600" fill="#2a6fd1">přichyceno: ${esc(ui.snapTo.rune+' '+ui.snapTo.id)}${ui.snapTo.also.length?' (= '+esc(ui.snapTo.also.join(', '))+')':''} · Alt = bez přichycení</text>`;}}
   const SEL=new Set(selIds());
-  {let g='';for(const id of SEL)if(c.lineSegs[id])g+=c.seg(...c.lineSegs[id]);s+=`<g stroke="#d2541b" stroke-width="0.3">${g}</g>`;}
-  if(ui.sel&&c.G[ui.sel]&&c.lineSegs[ui.sel]){const g=c.G[ui.sel];s+=`<circle cx="${c.X(g.P)}" cy="${c.Y(g.P)}" r="0.7" fill="none" stroke="#d2541b" stroke-width="0.25"/>`;}
-  s+=`<g stroke="#999" stroke-width="0.15"><line x1="${c.O.ox-1.5}" y1="${c.O.oy}" x2="${c.O.ox+1.5}" y2="${c.O.oy}"/><line x1="${c.O.ox}" y1="${c.O.oy-1.5}" x2="${c.O.ox}" y2="${c.O.oy+1.5}"/></g>`;
+  {let g='';for(const id of SEL)if(c.lineSegs[id])g+=c.seg(...c.lineSegs[id]);s+=`<g stroke="#d2541b" stroke-width="${0.3*z}">${g}</g>`;}
+  if(ui.sel&&c.G[ui.sel]&&c.lineSegs[ui.sel]){const g=c.G[ui.sel];s+=`<circle cx="${c.X(g.P)}" cy="${c.Y(g.P)}" r="${0.7*z}" fill="none" stroke="#d2541b" stroke-width="${0.25*z}"/>`;}
+  s+=`<g stroke="#999" stroke-width="${0.15*z}"><line x1="${c.O.ox-1.5}" y1="${c.O.oy}" x2="${c.O.ox+1.5}" y2="${c.O.oy}"/><line x1="${c.O.ox}" y1="${c.O.oy-1.5}" x2="${c.O.ox}" y2="${c.O.oy+1.5}"/></g>`;
   if(ui.labels){let g='';for(const id in c.lineSegs){const b=c.lineSegs[id][1],x=c.X(b),y=c.Y(b);const tx=Math.min(Math.max(x,D.mL+1),D.cardW-D.mR-1),ty=Math.min(Math.max(y,D.mT+2),D.cardH-D.mB-0.5);
-    g+=`<text x="${tx}" y="${ty}" font-size="2" fill="${SEL.has(id)?'#d2541b':'#2a6fd1'}" stroke="#fff" stroke-width="0.4" paint-order="stroke" text-anchor="${tx>c.O.ox?'end':'start'}">${id}</text>`;}s+=`<g font-family="system-ui,sans-serif" font-weight="600" style="pointer-events:none">${g}</g>`;}
+    g+=`<text x="${tx}" y="${ty}" font-size="${2*z}" fill="${SEL.has(id)?'#d2541b':'#2a6fd1'}" stroke="#fff" stroke-width="${0.4*z}" paint-order="stroke" text-anchor="${tx>c.O.ox?'end':'start'}">${id}</text>`;}s+=`<g font-family="system-ui,sans-serif" font-weight="600" style="pointer-events:none">${g}</g>`;}
   let hit='';for(const id in c.lineSegs)hit+=`<line data-id="${id}" x1="${c.X(c.lineSegs[id][0])}" y1="${c.Y(c.lineSegs[id][0])}" x2="${c.X(c.lineSegs[id][1])}" y2="${c.Y(c.lineSegs[id][1])}"/>`;
-  s+=`<g stroke="transparent" stroke-width="2.2" style="cursor:${ui.fill?'cell':'move'}">${hit}</g>`;
+  s+=`<g stroke="transparent" stroke-width="${2.2*z}" style="cursor:${ui.fill?'cell':'move'}">${hit}</g>`;
   cv.innerHTML=s;
 }
 function drawGallery(){
@@ -380,6 +383,7 @@ function act(a,el){
     case 'landOn':{const x=(landUI.list||[])[+document.getElementById('landSel').value];if(!x||!l)return;
       if(!landOn(l,g,x.o.g))return alert(`Čára ${l.id} vychází z čáry ${l.ref}, takže má její úhel a jde jen posunout. Úhly se liší o ${x.da.toFixed(1)}°. Přepni „vychází z“ na „středu“, pak půjde usadit i s úhlem.`);break;}
     case 'setType':selIds().forEach(o=>{r.lines.find(q=>q.id===o).type=el.dataset.v;});break;
+    case 'zoomIn':return zoomAt(1/1.5);case 'zoomOut':return zoomAt(1.5);case 'zoomFit':return zoomFit();
     case 'toGrid':{const s=+st.deck.step>0?+st.deck.step:1,ids=selIds(),ls=ids.length?r.lines.filter(x=>ids.includes(x.id)):r.lines;
       ls.forEach(x=>{if(x.ref)x.off=snap(+x.off,s);else{x.x=snap(+x.x,s);x.y=snap(+x.y,s);}});break;}
     case 'selAll':ui.multi=new Set(r.lines.map(x=>x.id));if(!ui.sel&&r.lines.length)ui.sel=r.lines[0].id;refresh();return;
@@ -439,15 +443,30 @@ function fillAt(id,m){
   const stop=(x,end)=>x?{kind:'line',id:x.id,edge:edgeFor(x.id,Lg,x.t,G,r)}:{kind:'len',t:f3(cl?cl[end]:(end?30:-30))};
   r.strokes.push({on:id,from:stop(lo,0),to:stop(hi,1)});return true;}
 cv.addEventListener('dblclick',e=>{const id=e.target.dataset&&e.target.dataset.id;if(!id||ui.fill)return;ui.sel=id;if(fillAt(id,mmAt(e))){commit();refreshAll();}});
-cv.addEventListener('pointerdown',e=>{const id=e.target.dataset&&e.target.dataset.id;if(!id)return;e.preventDefault();
+/* Zoom a posun pohledu */
+function view(){const D=st.deck;return ui.view||{x:0,y:0,w:D.cardW,h:D.cardH};}
+function svgPt(e){const p=cv.createSVGPoint();p.x=e.clientX;p.y=e.clientY;return p.matrixTransform(cv.getScreenCTM().inverse());}
+function zoomAt(f,cx,cy){const D=st.deck,v=view();let w=Math.min(Math.max(v.w*f,D.cardW/40),D.cardW*1.5);const k=w/v.w,h=v.h*k;
+  if(cx==null){cx=v.x+v.w/2;cy=v.y+v.h/2;}
+  ui.view={x:cx-(cx-v.x)*k,y:cy-(cy-v.y)*k,w,h};zoomInfo();draw();}
+function zoomFit(){ui.view=null;zoomInfo();draw();}
+function zoomInfo(){const el=document.getElementById('zoomPct');if(el)el.textContent=Math.round(st.deck.cardW/view().w*100)+' %';}
+cv.addEventListener('wheel',e=>{e.preventDefault();const p=svgPt(e);zoomAt(e.deltaY<0?1/1.25:1.25,p.x,p.y);},{passive:false});
+let pan=null;
+cv.addEventListener('pointermove',e=>{const m=mmAt(e),el=document.getElementById('coord');if(el)el.textContent=`kurzor x ${m[0].toFixed(1)} · y ${m[1].toFixed(1)} mm`;
+  if(!pan)return;const s=cv.getScreenCTM().a,v=pan.v0;ui.view={...v,x:v.x-(e.clientX-pan.cx)/s,y:v.y-(e.clientY-pan.cy)/s};draw();});
+cv.addEventListener('pointerup',()=>{if(pan){pan=null;cv.style.cursor='';}});
+cv.addEventListener('pointerdown',e=>{const id=e.target.dataset&&e.target.dataset.id;
+  if(e.button===1||!id){e.preventDefault();pan={cx:e.clientX,cy:e.clientY,v0:{...view()}};try{cv.setPointerCapture(e.pointerId)}catch(_){}cv.style.cursor='grabbing';return;}   // táhni prázdné místo = posun pohledu
+  e.preventDefault();
   if(ui.fill){selOne(id);if(fillAt(id,mmAt(e))){commit();refreshAll();}return;}
   if(e.ctrlKey||e.metaKey){selToggle(id);refresh();return;}          // Ctrl + klik = přidat / odebrat z označených
   const ids=selIds();
   if(ids.length>1&&ids.includes(id)&&!e.shiftKey){                      // táhnutí skupiny = posun všech označených
     ui.sel=id;const G=geom(cur()),set=new Set(ids);
     drag={group:ids.map(x=>cur().lines.find(q=>q.id===x)).filter(l=>!refAncestorIn(l,set)).map(l=>({l,g:G[l.id],x0:+l.x,y0:+l.y,off0:+l.off})),m0:mmAt(e)};
-    cv.setPointerCapture(e.pointerId);draw();return;}
-  selOne(id);const l=selLine(),g=geom(cur())[id];drag={l,g,m0:mmAt(e),x0:+l.x,y0:+l.y,a0:+l.a,off0:+l.off,rot:e.shiftKey&&!l.ref};cv.setPointerCapture(e.pointerId);draw();});
+    try{cv.setPointerCapture(e.pointerId)}catch(_){}draw();return;}
+  selOne(id);const l=selLine(),g=geom(cur())[id];drag={l,g,m0:mmAt(e),x0:+l.x,y0:+l.y,a0:+l.a,off0:+l.off,rot:e.shiftKey&&!l.ref};try{cv.setPointerCapture(e.pointerId)}catch(_){}draw();});
 cv.addEventListener('pointermove',e=>{if(!drag)return;const m=mmAt(e),{l,g}=drag,step=e.altKey?0.1:(+st.deck.step>0?+st.deck.step:1);   // krok posunu = mřížka (Alt = jemně 0,1 mm)
   if(drag.group){const dm=sub(m,drag.m0);for(const q of drag.group){if(q.l.ref)q.l.off=snap(q.off0+dot(dm,q.g.n),step);else{q.l.x=snap(q.x0+dm[0],step);q.l.y=snap(q.y0+dm[1],step);}}}
   else if(drag.rot){l.x=drag.x0;l.y=drag.y0;const v=sub(m,g.P);let a=Math.atan2(v[1],v[0])*180/Math.PI;if(a>90)a-=180;if(a<=-90)a+=180;l.a=snap(a,e.altKey?0.1:0.5);}
@@ -469,6 +488,7 @@ document.addEventListener('keydown',e=>{
   if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();undo(e.shiftKey?1:-1);return;}
   if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='y'){e.preventDefault();undo(1);return;}
   if(/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName))return;
+  if(e.key==='+'||e.key==='='){zoomAt(1/1.5);return;}if(e.key==='-'){zoomAt(1.5);return;}if(e.key==='0'){zoomFit();return;}
   const ids=selIds();if(!ids.length)return;const set=new Set(ids),G=geom(cur());
   const lines=ids.map(x=>cur().lines.find(q=>q.id===x)).filter(l=>!refAncestorIn(l,set));   // potomek označené se hýbe s ní
   const k=e.key,s=e.shiftKey?0.1:(+st.deck.step>0?+st.deck.step:1);let done=true;
