@@ -1081,6 +1081,9 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   ➕ *2026-11-07:* názvy, znaky a ætt bere generátor z `v2/runar-runes.js` (§18). Nesoulad v tom souboru k rozhodnutí
   (CODE-tune / owner): pole `RUNES` má pořadí `… Ingwaz, Othila, Dagaz`, ale `AETTY.tyr.runes` má `… Ingwaz, Dagaz, Othila`.
   Generátor řadí podle `AETTY`. Owner: zastavování čar o protínající čáru (místo o rámeček) zatím neřešit.
+  ⚠️ *2026-11-07:* předlohy líce i rubu, podle kterých generátor vznikl, jsou skutečný balíček **The Grid of Fortune**
+  od **Craft of Shadows** (https://craftofshadows.eu/products/the-grid-of-fortune; owner dohledal). Rub z jejich fotky
+  nekopírovat (vlastní rub, viz „zadní strana (AGNDOFA)“ výš); líc před prodejem odlišit (rámeček, skladba čar, rozvržení textu).
 
 ### Revize nápovědy, zásad a textů v appce (owner 2026-10-21 „můžou tam být staré věci“; CODE-tune)
 Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zásady soukromí), 95375a7 (texty v appce). Zbývá:
