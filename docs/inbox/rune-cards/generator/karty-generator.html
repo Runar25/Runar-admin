@@ -82,6 +82,7 @@ label.chk{font-size:12px;display:inline-flex;gap:3px;align-items:center}
   <span id="fileStat"></span>
   <button data-act="saveJson" title="stáhne kopii práce jako .json">Stáhnout zálohu</button>
   <input type="file" id="fJson" accept=".json" hidden>
+  <datalist id="fontList"><option value="Cinzel"><option value="Cormorant Garamond"><option value="Arial, Helvetica, sans-serif"><option value="Georgia, serif"><option value="Times New Roman, serif"><option value="Garamond, serif"><option value="Trajan Pro, serif"><option value="Futura, sans-serif"><option value="Montserrat, sans-serif"></datalist>
   <span style="width:10px"></span>
   <label class="chk">Podložit obrázek <input type="file" id="fImg" accept="image/*" style="width:160px"></label>
   <label class="chk">průhlednost <input type="range" id="imgOp" min="0" max="1" step="0.05" value="0.4" style="width:70px"></label>
@@ -115,7 +116,7 @@ function migrateNames(s){for(const [o,n] of Object.entries(RENAMED)){if(s.runes[
 const ALLF=()=>BASE.concat(st.custom||[]);
 // Karta 65 × 100 mm; rám a měřítko odpovídají předloze pro_form.svg (687 × 1024 px → 65 mm na šířku).
 const DECK0={cardW:65,cardH:100,mL:9.9,mR:9.9,mT:9.7,mB:27,radius:0,inner:1.6,frameW:0.4,origin:'frame',
-  bandW:1.6,bandN:3,bandS:0.35,thinS:0.6,runeStyle:'center',gap:0.35,step:1,snapOther:true,printMode:false,bleed:3,weave:true,txt:true,fsAett:3.2,fsSmall:2,fsSide:2,fsName:7.5,fAett:'Cinzel',fName:'Cormorant Garamond',fSans:'Arial, Helvetica, sans-serif',ink:'#000000',bg:'#ffffff'};
+  bandW:1.6,bandN:3,bandS:0.35,thinS:0.6,runeStyle:'center',gap:0.35,step:1,snapOther:true,printMode:false,bleed:3,weave:true,txt:true,fsAett:3.2,fsSmall:2,fsSide:2,fsName:7.5,fAett:'Cinzel',fName:'Cormorant Garamond',fSans:'Arial, Helvetica, sans-serif',bgMode:'flat',bg2:'#1a2230',runeC:'#000000',txtC:'#000000',nameC:'#000000',ink:'#000000',bg:'#ffffff'};
 const L=(id,type,x,y,a,extra)=>Object.assign({id,type,x,y,a,ref:'',off:0},extra||{});
 const S=(on,from,to)=>({on,from,to});
 const ln=(id,edge)=>({kind:'line',id,edge:edge||'mid'});
@@ -251,7 +252,7 @@ function content(name){
   }
   wl.sort((a,b)=>a.cara!==b.cara?(a.cara?-1:1):a.key-b.key);   // jednoduché čáry vždy pod pásy
   const woven=D.weave!==false
-    ?wl.map(w=>(w.kp.length>2?`<path d="M${w.kp.map(q=>X(q)+','+Y(q)).join(' L')} Z" fill="${D.bg}"/>`:'')+`<g fill="none" stroke="${D.ink}" stroke-width="${w.cara?D.thinS:D.bandS}">${w.els}</g>`).join('')
+    ?wl.map(w=>(w.kp.length>2?`<path d="M${w.kp.map(q=>X(q)+','+Y(q)).join(' L')} Z" fill="%%BG%%"/>`:'')+`<g fill="none" stroke="${D.ink}" stroke-width="${w.cara?D.thinS:D.bandS}">${w.els}</g>`).join('')
     :`<g fill="none" stroke="${D.ink}" stroke-width="${D.thinS}">${thins}</g><g fill="none" stroke="${D.ink}" stroke-width="${D.bandS}">${bands}</g>`;
   const joined=new Set(r.strokes.map(s=>s.on)),cont={};
   r.strokes.forEach(s=>['from','to'].forEach(w=>{if(s[w].kind==='line'){const k=s.on+'|'+s[w].id;cont[k]=(cont[k]||0)+1;}}));
@@ -283,15 +284,15 @@ function layers(name,cid,bleed){
   // linky pásů pod runou se oříznou, aby výřez uprostřed runy ukazoval podklad (jinak by v něm byla prostřední linka trojčáry)
   const out=merged?`<clipPath id="${cid}-mimo-runu"><path clip-rule="evenodd" d="M${-b},${-b} H${f3(D.cardW+b)} V${f3(D.cardH+b)} H${-b} Z ${merged.full}"/></clipPath>`:'';
   const wrap=inner=>merged?`<g clip-path="url(#${cid}-mimo-runu)">${inner}</g>`:inner;
-  return (+D.radius>0||merged?`<defs>${+D.radius>0?clipDef(cid):''}${out}</defs>`:'')+
-    lay(`${name}-pozadi`,`fill="${D.bg}"`,`<rect x="${-b}" y="${-b}" width="${f3(D.cardW+2*b)}" height="${f3(D.cardH+2*b)}"/>`)+
+  return (`<defs>${+D.radius>0?clipDef(cid):''}${out}${bgDef(cid+'-bg',b)}</defs>`+
+    lay(`${name}-pozadi`,`fill="%%BG%%"`,`<rect x="${-b}" y="${-b}" width="${f3(D.cardW+2*b)}" height="${f3(D.cardH+2*b)}"/>`)+
     lay(`${name}-ram-vnitrni`,`fill="none" stroke="${D.ink}" stroke-width="${D.frameW}"`,frameInner())+
     lay(`${name}-pasy-a-cary`,`${cp}`,wrap(c.woven))+
-    (merged!=null?lay(`${name}-runa`,`fill="${D.ink}" fill-rule="evenodd" stroke="none"${cp}`,`<path d="${merged.d}"/>`)
-     :lay(`${name}-runa`,`fill="${D.ink}" stroke="none"${cp}`,c.rune)+
-      lay(`${name}-runa-stred`,`fill="${D.bg}" stroke="none"${cp}`,c.center))+
+    (merged!=null?lay(`${name}-runa`,`fill="${runeColor()}" fill-rule="evenodd" stroke="none"${cp}`,`<path d="${merged.d}"/>`)
+     :lay(`${name}-runa`,`fill="${runeColor()}" stroke="none"${cp}`,c.rune)+
+      lay(`${name}-runa-stred`,`fill="%%BG%%" stroke="none"${cp}`,c.center))+
     lay(`${name}-ram-vnejsi`,`fill="none" stroke="${D.ink}" stroke-width="${D.frameW}"`,frameOuter())+
-    lay(`${name}-text`,'',textEls(name));
+    lay(`${name}-text`,'',textEls(name))).split('%%BG%%').join(bgFill(cid+'-bg'));
 }
 function cropMarks(W,H,b){const o=b+1,Ln=4;let s='';for(const [x,y,sx,sy] of [[0,0,-1,-1],[W,0,1,-1],[0,H,-1,1],[W,H,1,1]])
   s+=`<line x1="${x}" y1="${f3(y+sy*o)}" x2="${x}" y2="${f3(y+sy*(o+Ln))}"/><line x1="${f3(x+sx*o)}" y1="${y}" x2="${f3(x+sx*(o+Ln))}" y2="${y}"/>`;return s;}
@@ -332,13 +333,21 @@ function textEls(name){const D=st.deck;if(D.txt===false)return '';
     return `<text transform="translate(${f3(x)} ${midY}) rotate(${rot})" text-anchor="middle" font-family="${esc(D.fSans)}" font-weight="700" font-size="${fsD}" letter-spacing="${f3(ls)}"${fit}>${up(txt)}</text>`;};
   s+=side(T.left,-90,D.mL/2+fsD*0.36)+side(T.right,90,fR+(D.cardW-fR)/2-fsD*0.36);
   const yN=fB+fsN*1.17,yM=yN+fsS*2.6,yE=yM+fsS*1.3,sz=fsS*1.35;
-  if(T.name)s+=`<text x="${cx}" y="${f3(yN)}" text-anchor="middle" font-family="${esc(D.fName)}" font-size="${fsN}">${esc(T.name)}</text>`;
+  if(T.name)s+=`<text x="${cx}" y="${f3(yN)}" text-anchor="middle" font-family="${esc(D.fName)}" font-size="${fsN}" fill="${D.nameC||D.ink}">${esc(T.name)}</text>`;
   if(T.mean)s+=`<text x="${cx}" y="${f3(yM)}" text-anchor="middle" font-family="${esc(D.fSans)}" font-weight="700" font-size="${fsS}" letter-spacing="${f3(fsS*0.05)}">${up(T.mean)}</text>`;
   const els=T.el.filter(e=>elemSym(e,0,0,1));const n=els.length;
-  if(n){let g='';els.forEach((e,i)=>{g+=elemSym(e,D.cardW/2+(i-(n-1)/2)*sz*1.45,yE,sz);});s+=`<g fill="none" stroke="${D.ink}" stroke-width="${f3(fsS*0.14)}" stroke-linejoin="miter">${g}</g>`;}
-  return `<g fill="${D.ink}">${s}</g>`;}
-function bigCard(name){const D=st.deck,c=content(name);
-  return `<svg viewBox="0 0 ${D.cardW} ${D.cardH}"><rect width="${D.cardW}" height="${D.cardH}" fill="${D.bg}"/><g fill="none" stroke="${D.ink}" stroke-width="${D.frameW}">${frameInner()}</g>${c.woven}<g fill="${D.ink}">${c.rune}</g><g fill="${D.bg}">${c.center}</g><g fill="none" stroke="${D.ink}" stroke-width="${D.frameW}">${frameOuter()}</g>${textEls(name)}</svg>`;}
+  if(n){let g='';els.forEach((e,i)=>{g+=elemSym(e,D.cardW/2+(i-(n-1)/2)*sz*1.45,yE,sz);});s+=`<g fill="none" stroke="${D.txtC||D.ink}" stroke-width="${f3(fsS*0.14)}" stroke-linejoin="miter">${g}</g>`;}
+  return `<g fill="${D.txtC||D.ink}">${s}</g>`;}
+/* Pozadí: jednobarevné, nebo jako karta Rúnakort (radial-gradient(ellipse at 30% 50%, #1a2230 0%, #0c0f15 70%)).
+   Mezery při křížení a světlá linka runy mají „barvu pozadí“ = %%BG%%, nahradí se podle místa (plátno / export / přehled). */
+const RUNAKORT={bgMode:'runakort',bg:'#0c0f15',bg2:'#1a2230',ink:'#D6A85C',runeC:'#FFBF00',txtC:'#D6A85C',nameC:'#FFBF00'};   // barvy z runar-runakort.css (.rk-o)
+const PRINT_BW={bgMode:'flat',bg:'#ffffff',ink:'#000000',runeC:'#000000',txtC:'#000000',nameC:'#000000'};
+function bgFill(id){return st.deck.bgMode==='runakort'?`url(#${id})`:st.deck.bg;}
+function bgDef(id,b){const D=st.deck;b=+b||0;if(D.bgMode!=='runakort')return '';
+  return `<radialGradient id="${id}" gradientUnits="userSpaceOnUse" cx="${f3(D.cardW*0.3)}" cy="${f3(D.cardH*0.5)}" r="${f3(Math.max(D.cardW,D.cardH)*0.7)}" gradientTransform="translate(${f3(D.cardW*0.3)} ${f3(D.cardH*0.5)}) scale(${f3(D.cardW/Math.max(D.cardW,D.cardH))} ${f3(D.cardH/Math.max(D.cardW,D.cardH))}) translate(${f3(-D.cardW*0.3)} ${f3(-D.cardH*0.5)})"><stop offset="0" stop-color="${D.bg2}"/><stop offset="1" stop-color="${D.bg}"/></radialGradient>`;}
+const runeColor=()=>st.deck.runeC||st.deck.ink;
+function bigCard(name){const D=st.deck,c=content(name),gid='ovbg-'+name;
+  return (`<svg viewBox="0 0 ${D.cardW} ${D.cardH}"><defs>${bgDef(gid)}</defs><rect width="${D.cardW}" height="${D.cardH}" fill="%%BG%%"/><g fill="none" stroke="${D.ink}" stroke-width="${D.frameW}">${frameInner()}</g>${c.woven}<g fill="${runeColor()}">${c.rune}</g><g fill="%%BG%%">${c.center}</g><g fill="none" stroke="${D.ink}" stroke-width="${D.frameW}">${frameOuter()}</g>${textEls(name)}</svg>`).split('%%BG%%').join(bgFill(gid));}
 function showOverview(){let o=document.getElementById('ov');if(!o){o=document.createElement('div');o.id='ov';document.body.appendChild(o);}
   o.innerHTML=`<div class="ovbar"><b>Přehled sady (${ALLF().length} karet)</b><label class="chk"><input type="checkbox" id="ovDark"${ui.ovDark?' checked':''}>tmavě se zlatou</label><span class="muted">klik na kartu = otevřít ji</span><button data-act="ovClose">zavřít (Esc)</button></div><div class="ovgrid${ui.ovDark?' dark':''}">${ALLF().map(n=>`<div class="ovc" data-rune="${n}">${bigCard(n)}<div>${n}</div></div>`).join('')}</div>`;
   o.style.display='block';o.querySelector('#ovDark').onchange=e=>{ui.ovDark=e.target.checked;o.querySelector('.ovgrid').classList.toggle('dark',ui.ovDark);};}
@@ -348,7 +357,7 @@ function draw(){
   const D=st.deck,c=content(st.cur);LAST=c;
   const V=ui.view||{x:0,y:0,w:D.cardW,h:D.cardH},z=V.w/D.cardW;   // z < 1 = přiblíženo; pomocné značky se zmenšují s ním
   cv.setAttribute("viewBox",`${f3(V.x)} ${f3(V.y)} ${f3(V.w)} ${f3(V.h)}`);
-  let s=`<defs>${clipDef('cvclip')}</defs><rect width="${D.cardW}" height="${D.cardH}" fill="${D.bg}" stroke="#ccc" stroke-width="0.2"/>`;
+  let s=`<defs>${clipDef('cvclip')}${bgDef('cvbg')}</defs><rect width="${D.cardW}" height="${D.cardH}" fill="%%BG%%" stroke="#ccc" stroke-width="0.2"/>`;
   if(ui.img)s+=`<image href="${ui.img}" x="0" y="0" width="${D.cardW}" height="${f3(D.cardW*ui.imgRatio)}" opacity="${ui.imgOp}" preserveAspectRatio="none"/>`;
   if(ui.grid){const R=c.R,O=c.O;let g='';for(let x=Math.ceil(R.x0);x<=R.x1;x++)g+=`<line x1="${f3(O.ox+x)}" y1="${D.mT}" x2="${f3(O.ox+x)}" y2="${f3(D.cardH-D.mB)}" stroke-width="${x%5?0.04:0.1}"/>`;
     for(let y=Math.ceil(R.y0);y<=R.y1;y++)g+=`<line x1="${D.mL}" y1="${f3(O.oy-y)}" x2="${f3(D.cardW-D.mR)}" y2="${f3(O.oy-y)}" stroke-width="${y%5?0.04:0.1}"/>`;
@@ -358,7 +367,7 @@ function draw(){
   if(ui.ghost&&ui.ghost!==st.cur){const o=content(ui.ghost);s+=`<g opacity="0.35" clip-path="url(#cvclip)"><g stroke="#d2541b" stroke-width="${D.bandS}">${o.bands}${o.thins}</g><g fill="#d2541b">${o.rune}</g></g>`;}
   const cp=' clip-path="url(#cvclip)"';
   s+=`<g fill="none" stroke="${D.ink}" stroke-width="${D.frameW}">${frameInner()}</g><g${cp}>${c.woven}</g>`;
-  s+=`<g fill="${D.ink}"${cp}>${c.rune}</g><g fill="${D.bg}"${cp}>${c.center}</g><g fill="none" stroke="${D.ink}" stroke-width="${D.frameW}">${frameOuter()}</g>${textEls(st.cur)}`;
+  s+=`<g fill="${runeColor()}"${cp}>${c.rune}</g><g fill="%%BG%%"${cp}>${c.center}</g><g fill="none" stroke="${D.ink}" stroke-width="${D.frameW}">${frameOuter()}</g>${textEls(st.cur)}`;
   if(ui.common){const cm=commonMap(st.cur);let g='';for(const id in cm)if(c.lineSegs[id])g+=c.seg(...c.lineSegs[id]);s+=`<g stroke="#2a6fd1" stroke-width="${0.35*z}" stroke-dasharray="${z} ${z}" opacity="0.8">${g}</g>`;}
   // výběr, kotva, popisky, plochy pro chycení myší
   if(ui.snapTo){const C=ui.snapTo.g,cl=segClip(C.P,C.u,c.R);if(cl){s+=`<g stroke="#2a6fd1" stroke-width="1.4" opacity="0.35" stroke-linecap="round">${c.seg(add(C.P,mul(C.u,cl[0])),add(C.P,mul(C.u,cl[1])))}</g>`;
@@ -371,7 +380,7 @@ function draw(){
     g+=`<text x="${tx}" y="${ty}" font-size="${2*z}" fill="${SEL.has(id)?'#d2541b':'#2a6fd1'}" stroke="#fff" stroke-width="${0.4*z}" paint-order="stroke" text-anchor="${tx>c.O.ox?'end':'start'}">${id}${c.G[id].l.lock?' 🔒':''}</text>`;}s+=`<g font-family="system-ui,sans-serif" font-weight="600" style="pointer-events:none">${g}</g>`;}
   let hit='';for(const id in c.lineSegs)hit+=`<line data-id="${id}" x1="${c.X(c.lineSegs[id][0])}" y1="${c.Y(c.lineSegs[id][0])}" x2="${c.X(c.lineSegs[id][1])}" y2="${c.Y(c.lineSegs[id][1])}"/>`;
   s+=`<g stroke="transparent" stroke-width="${2.2*z}" style="cursor:${ui.fill?'cell':'move'}">${hit}</g>`;
-  cv.innerHTML=s;
+  cv.innerHTML=s.split('%%BG%%').join(bgFill('cvbg'));
 }
 function drawGallery(){
   const el=document.getElementById('gallery');
@@ -390,9 +399,11 @@ function panel(){
   h+=`<label>vzhled runy<select data-deck="runeStyle"><option value="center"${D.runeStyle==='center'?' selected':''}>se světlou linkou</option><option value="solid"${D.runeStyle==='solid'?' selected':''}>plná</option></select></label>`;
   h+=`<label title="pás, který vpravo začíná výš, vede přes pás pod ním; jednoduchá čára je vždy pod pásy">přerušovat při křížení<input type="checkbox" data-deck="weave"${D.weave!==false?' checked':''} style="width:auto"></label>`;
   h+=`<label>zobrazit text<input type="checkbox" data-deck="txt"${D.txt!==false?' checked':''} style="width:auto"></label>`;
-  h+=`<label>písmo ætt<input data-deck="fAett" value="${esc(D.fAett)}" style="width:90px"></label><label>písmo názvu<input data-deck="fName" value="${esc(D.fName)}" style="width:90px"></label><label>písmo malé<input data-deck="fSans" value="${esc(D.fSans)}" style="width:90px"></label>`;
-  h+=`<label>barva čar<input type="color" data-deck="ink" value="${D.ink}"></label><label>barva podkladu<input type="color" data-deck="bg" value="${D.bg}"></label>`;
-  h+=`</div><div class="btns"><button data-act="resetDeck">vrátit výchozí styl</button></div>`;
+  h+=`<label>písmo ætt<input list="fontList" data-deck="fAett" value="${esc(D.fAett)}" style="width:90px"></label><label>písmo názvu<input list="fontList" data-deck="fName" value="${esc(D.fName)}" style="width:90px"></label><label>písmo malé<input list="fontList" data-deck="fSans" value="${esc(D.fSans)}" style="width:90px"></label>`;
+  h+=`<label>pozadí<select data-deck="bgMode"><option value="flat"${D.bgMode!=='runakort'?' selected':''}>jednobarevné</option><option value="runakort"${D.bgMode==='runakort'?' selected':''}>jako Rúnakort</option></select></label>`;
+  h+=`<label>střed pozadí<input type="color" data-deck="bg2" value="${D.bg2}"></label><label>barva runy<input type="color" data-deck="runeC" value="${D.runeC||D.ink}"></label><label>barva názvu<input type="color" data-deck="nameC" value="${D.nameC||D.ink}"></label><label>barva textu<input type="color" data-deck="txtC" value="${D.txtC||D.ink}"></label>`;
+  h+=`<label>barva čar a rámečku<input type="color" data-deck="ink" value="${D.ink}"></label><label>barva podkladu<input type="color" data-deck="bg" value="${D.bg}"></label>`;
+  h+=`</div><div class="btns">Vzhled jedním klikem: <button data-act="lookRunakort">Rúnakort – tmavá se zlatou</button><button data-act="lookPrint">černá na bílé</button> · <button data-act="resetDeck">vrátit výchozí styl</button></div>`;
   h+=`<div class="btns" style="border-top:1px solid #eee;padding-top:6px"><b>Velikost karty</b> ${D.cardW} × ${D.cardH} mm → nová šířka <input type="number" id="newW" step="1" min="10" style="width:60px" placeholder="mm"> mm
     <label class="chk"><input type="checkbox" id="scaleThick" checked>i tloušťky čar</label><button data-act="scaleCard">změnit velikost (drží poměr)</button>
     <span class="muted" style="flex-basis:100%">Výška se dopočítá. Rámeček, polohy všech čar ve všech runách a délky tahů se změní ve stejném poměru, úhly zůstanou.</span></div></details>`;
@@ -526,6 +537,8 @@ function act(a,el){
     case 'presetRune':if(!confirm('Vrátit předlohu podle ukázky?'))return;st.runes[st.cur]=clone(PRESETS[st.cur]);break;
     case 'fillMode':ui.fill=!ui.fill;cv.style.cursor=ui.fill?'cell':'';document.querySelectorAll('#cv [data-id]').forEach(x=>x.parentNode.style.cursor=ui.fill?'cell':'move');panel();return;
     case 'resetDeck':st.deck={...DECK0};break;
+    case 'lookRunakort':Object.assign(st.deck,RUNAKORT);break;
+    case 'lookPrint':Object.assign(st.deck,PRINT_BW);break;
     case 'scaleCard':{const D=st.deck,nw=parseFloat(document.getElementById('newW').value);if(!(nw>0))return alert('Napiš novou šířku karty v mm.');
       const k=nw/D.cardW,th=document.getElementById('scaleThick').checked;
       if(!confirm(`Karta ${D.cardW} × ${D.cardH} mm → ${f3(nw)} × ${f3(D.cardH*k)} mm (poměr ${f3(k)} ×).\nZmění se rámeček, polohy čar ve všech runách a délky tahů${th?' i tloušťky čar':''}. Krok zpět to vrátí.`))return;
