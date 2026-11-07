@@ -13,10 +13,10 @@ body{margin:0;background:var(--bg);color:var(--txt);font:13px/1.35 system-ui,Seg
 #gallery{display:flex;gap:10px;padding:6px 10px;overflow-x:auto;background:#ebe9e4;border-bottom:1px solid var(--line)}
 .aett{display:flex;flex-direction:column;gap:2px}
 .aett span{font-size:11px;color:var(--muted)}
-.aett div{display:flex;gap:3px}
-.th{cursor:pointer;border:2px solid transparent;border-radius:4px;background:#fff;padding:1px;text-align:center;font-size:10px;width:52px}
+.aett>div{display:flex;gap:3px}
+.th{cursor:pointer;border:2px solid transparent;border-radius:4px;background:#fff;padding:1px;text-align:center;font-size:10px;width:54px;flex:0 0 54px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 .th.on{border-color:var(--acc)}
-.th.new{display:flex;flex-direction:column;justify-content:center;font-size:13px;color:var(--acc2);border:2px dashed #9bb7e0;min-height:74px}
+.th.new{display:flex;white-space:normal;flex-direction:column;justify-content:center;font-size:13px;color:var(--acc2);border:2px dashed #9bb7e0;min-height:74px}
 .bulk{background:#fdf3ee;border:1px solid #f0d2c3;border-radius:4px;padding:4px 6px;margin:4px 0;font-size:12px;display:flex;flex-wrap:wrap;gap:4px;align-items:center}
 input[data-k=w]::placeholder{color:#bbb}
 button.fillon{background:#d2541b;color:#fff;border-color:#d2541b;font-weight:600}
@@ -163,6 +163,22 @@ function strokeShape(s,G,R,joined){
   if(D.runeStyle==='center'&&(ct[1]-ct[0])*(tB-tA)>0){const cl=segClip(Lg.P,Lg.u,R);if(cl){let a=Math.min(ct[0],ct[1]),b=Math.max(ct[0],ct[1]);a=Math.max(a,cl[0]);b=Math.min(b,cl[1]);if(b>a)c=[add(Lg.P,mul(Lg.u,a)),add(Lg.P,mul(Lg.u,b))];}}
   return {poly,c};
 }
+/* Přichycení na čáry jiných run */
+function angDiff(a,b){let d=((a-b)%180+180)%180;return d>90?180-d:d;}
+function otherLines(){const uniq=[];for(const n of ALLF()){if(n===st.cur)continue;const G=geom(st.runes[n]);
+  for(const id in G){const g=G[id],d=uniq.find(u=>sameLine(u.g,g));if(d)d.also.push(n+' '+id);else uniq.push({rune:n,id,g,also:[]});}}return uniq;}
+function midOf(Lg){const cl=segClip(Lg.P,Lg.u,rectM());return cl?add(Lg.P,mul(Lg.u,(cl[0]+cl[1])/2)):Lg.P;}
+function lineDist(Lg,C){return Math.abs(dot(C.n,sub(midOf(Lg),C.P)));}   // vzdálenost uprostřed rámu
+// nastaví čáru l (její geometrie Lg) přesně na čáru C; u rovnoběžky jen posunem
+function landOn(l,Lg,C){
+  if(l.ref){if(angDiff(Lg.a,C.a)>0.05)return false;const Pref=sub(Lg.P,mul(Lg.n,+l.off||0));l.off=f3(dot(Lg.n,sub(C.P,Pref)));return true;}
+  const a=C.a,ca=Math.cos(rad(a)),sa=Math.sin(rad(a));l.a=f3(a);
+  if(Math.abs(sa)>Math.abs(ca))l.x=f3(C.P[0]+(l.y-C.P[1])*ca/sa);else l.y=f3(C.P[1]+(l.x-C.P[0])*sa/ca);
+  return true;}
+function snapCandidate(Lg,isRef,maxAng,maxDist){let best=null;
+  for(const o of otherLines()){const da=angDiff(Lg.a,o.g.a);if(da>(isRef?0.05:maxAng))continue;const d=lineDist(Lg,o.g);if(d>maxDist)continue;
+    const sc=d+da*0.2;if(!best||sc<best.sc)best={...o,sc,d,da};}return best;}
+const SNAP_MM=0.8,SNAP_ANG=3;
 function sameLine(a,b){let da=((a.a-b.a)%180+180)%180;if(da>90)da=180-da;if(da>0.05)return false;return Math.abs(dot(a.n,sub(b.P,a.P)))<0.05;}
 function commonMap(name){
   const G=geom(st.runes[name]),res={};
@@ -235,6 +251,8 @@ function draw(){
   s+=`<g fill="${D.ink}"${cp}>${c.rune}</g><g stroke="${D.bg}" stroke-width="${D.gap}" stroke-linecap="round"${cp}>${c.center}</g>`;
   if(ui.common){const cm=commonMap(st.cur);let g='';for(const id in cm)if(c.lineSegs[id])g+=c.seg(...c.lineSegs[id]);s+=`<g stroke="#2a6fd1" stroke-width="0.35" stroke-dasharray="1 1" opacity="0.8">${g}</g>`;}
   // výběr, kotva, popisky, plochy pro chycení myší
+  if(ui.snapTo){const C=ui.snapTo.g,cl=segClip(C.P,C.u,c.R);if(cl){s+=`<g stroke="#2a6fd1" stroke-width="1.4" opacity="0.35" stroke-linecap="round">${c.seg(add(C.P,mul(C.u,cl[0])),add(C.P,mul(C.u,cl[1])))}</g>`;
+    s+=`<text x="${D.mL+1}" y="${f3(D.cardH-D.mB+4)}" font-size="2.6" font-family="system-ui,sans-serif" font-weight="600" fill="#2a6fd1">přichyceno: ${esc(ui.snapTo.rune+' '+ui.snapTo.id)}${ui.snapTo.also.length?' (= '+esc(ui.snapTo.also.join(', '))+')':''} · Alt = bez přichycení</text>`;}}
   const SEL=new Set(selIds());
   {let g='';for(const id of SEL)if(c.lineSegs[id])g+=c.seg(...c.lineSegs[id]);s+=`<g stroke="#d2541b" stroke-width="0.3">${g}</g>`;}
   if(ui.sel&&c.G[ui.sel]&&c.lineSegs[ui.sel]){const g=c.G[ui.sel];s+=`<circle cx="${c.X(g.P)}" cy="${c.Y(g.P)}" r="0.7" fill="none" stroke="#d2541b" stroke-width="0.25"/>`;}
@@ -270,7 +288,7 @@ function panel(){
   h+=`<h3>Čáry runy ${st.cur}</h3><div class="muted">Pás = trojčára/dvojčára, do které se vepíše tah runy. Čára = jednoduchá (zakončovací) čára. Poloha v mm od středu: x doprava, y nahoru. Úhel od vodorovné: 0 = vodorovně, 90 = svisle, + = stoupá doprava. „Vychází z čáry“ = rovnoběžka v zadané kolmé vzdálenosti (+ nahoru / doprava); posuneš-li výchozí čáru, jde s ní.</div>`;
   const SEL=selIds(),SS=new Set(SEL);
   h+=`<div class="btns"><button data-act="addPas">+ pás</button><button data-act="addCara">+ jednoduchá čára</button><button data-act="addPar">+ rovnoběžka k vybrané</button><button data-act="mirX">zrcadlit označené ↔</button><button data-act="mirY">zrcadlit označené ↕</button><button data-act="dup">kopie označených</button><button data-act="del">smazat označené</button></div>`;
-  h+=`<div class="bulk">${SEL.length?`<b>Označeno ${SEL.length}:</b> ${SEL.map(esc).join(', ')} · tloušťka <input type="number" id="bulkW" step="0.05" min="0" style="width:56px" placeholder="mm"> <button data-act="setW">nastavit</button><button data-act="clearW">společná</button> · <button data-act="setType" data-v="pas">na pás</button><button data-act="setType" data-v="cara">na čáru</button> · <button data-act="selNone">zrušit označení</button>`:'<span class="muted">Víc čar označíš Ctrl + klikem na kartě nebo zaškrtnutím v tabulce. Označené táhneš, posouváš šipkami a mažeš najednou.</span>'} <button data-act="selAll">označit vše</button></div>`;
+  h+=`<div class="bulk">${SEL.length?`<b>Označeno ${SEL.length}:</b> ${SEL.map(esc).join(', ')} · tloušťka <input type="number" id="bulkW" step="0.05" min="0" style="width:56px" placeholder="mm"> <button data-act="setW">nastavit</button><button data-act="clearW">společná</button> · <button data-act="setType" data-v="pas">na pás</button><button data-act="setType" data-v="cara">na čáru</button> · <button data-act="selNone">zrušit označení</button>${landUI(SEL,c)}`:'<span class="muted">Víc čar označíš Ctrl + klikem na kartě nebo zaškrtnutím v tabulce. Označené táhneš, posouváš šipkami a mažeš najednou.</span>'} <button data-act="selAll">označit vše</button></div>`;
   h+=`<table><tr><th title="označit">☐</th><th>název</th><th>typ</th><th>vychází z</th><th>x / vzdálenost</th><th>y</th><th>úhel °</th><th title="prázdné = společná hodnota z Karta a styl">tloušťka</th><th>stejná čára je i v</th></tr>`;
   r.lines.forEach((l,i)=>{
     const ro=`<option value="">středu</option>`+ids.filter(x=>x!==l.id).map(x=>`<option value="${x}"${l.ref===x?' selected':''}>čáry ${x}</option>`).join('');
@@ -292,6 +310,11 @@ function panel(){
   h+=`<h3>Celá runa</h3><div class="btns"><select id="copyFrom">${ALLF().filter(n=>n!==st.cur).map(n=>`<option>${n}</option>`).join('')}</select><button data-act="copyRune">nahradit obsahem z vybrané runy</button><button data-act="clearRune">vyprázdnit runu</button>${PRESETS[st.cur]?'<button data-act="presetRune">vrátit předlohu</button>':''}${(st.custom||[]).includes(st.cur)?'<button data-act="renameRune">přejmenovat</button><button data-act="delRune">smazat tuto runu</button>':''}</div>`;
   document.getElementById('panel').innerHTML=`<div class="btns undo"><button data-act="undo" title="Ctrl+Z">↶ Krok zpět</button><button data-act="redo" title="Ctrl+Y">↷ Krok vpřed</button><button data-act="newRune">＋ Nová runa</button><span class="muted">${hi} kroků zpět k dispozici</span></div>`+h;
 }
+// „usadit na čáru jiné runy“: nabídka seřazená od nejpodobnější
+function landUI(SEL,c){if(SEL.length!==1)return '';const Lg=c.G[SEL[0]];if(!Lg)return '';
+  const list=otherLines().map(o=>({o,da:angDiff(Lg.a,o.g.a),d:lineDist(Lg,o.g)})).sort((a,b)=>(a.d+a.da*0.2)-(b.d+b.da*0.2));
+  landUI.list=list;
+  return `<span style="flex-basis:100%"></span>usadit ${esc(SEL[0])} přesně na: <select id="landSel" style="max-width:330px">${list.map((x,i)=>`<option value="${i}">${esc(x.o.rune+' '+x.o.id)}${x.o.also.length?' = '+esc(x.o.also.join(', ')):''} · vzdál. ${x.d.toFixed(1)} mm · úhel ${f3(x.o.g.a)}°${x.da>0.05?' (o '+x.da.toFixed(1)+'° jinak)':''}</option>`).join('')}</select><button data-act="landOn">usadit</button>`;}
 function refreshAll(){draw();panel();drawGallery();}
 function refresh(){draw();panel();}
 
@@ -351,6 +374,8 @@ function act(a,el){
       r.lines=r.lines.filter(x=>!D2.has(x.id));selOne(null);break;}
     case 'setW':case 'clearW':{const v=parseFloat((document.getElementById('bulkW')||{}).value);if(a==='setW'&&!(v>0))return alert('Napiš tloušťku v mm.');
       selIds().forEach(o=>{const x=r.lines.find(q=>q.id===o);if(a==='setW')x.w=v;else delete x.w;});break;}
+    case 'landOn':{const x=(landUI.list||[])[+document.getElementById('landSel').value];if(!x||!l)return;
+      if(!landOn(l,g,x.o.g))return alert(`Čára ${l.id} vychází z čáry ${l.ref}, takže má její úhel a jde jen posunout. Úhly se liší o ${x.da.toFixed(1)}°. Přepni „vychází z“ na „středu“, pak půjde usadit i s úhlem.`);break;}
     case 'setType':selIds().forEach(o=>{r.lines.find(q=>q.id===o).type=el.dataset.v;});break;
     case 'selAll':ui.multi=new Set(r.lines.map(x=>x.id));if(!ui.sel&&r.lines.length)ui.sel=r.lines[0].id;refresh();return;
     case 'selNone':selOne(null);refresh();return;
@@ -424,8 +449,16 @@ cv.addEventListener('pointermove',e=>{if(!drag)return;const m=mmAt(e),{l,g}=drag
   else{const dm=sub(m,drag.m0);if(l.ref)l.off=snap(drag.off0+dot(dm,g.n),step);
     else if(Math.abs(g.u[1])>Math.abs(g.u[0]))l.x=snap(drag.x0+dm[0],step);   // strmá čára: mění se jen x
     else l.y=snap(drag.y0+dm[1],step);}                                       // plochá čára: mění se jen y
+  // přichycení na čáru jiné runy (Alt = bez přichycení)
+  ui.snapTo=null;
+  if(!e.altKey&&ui.sel){const r=cur(),G=geom(r),Lg=G[ui.sel],ls=r.lines.find(q=>q.id===ui.sel);
+    if(Lg&&ls){const isGroup=!!drag.group,C=snapCandidate(Lg,!!ls.ref||isGroup,drag.rot?1.5:SNAP_ANG,SNAP_MM);
+      if(C){if(isGroup){const corr=mul(C.g.n,dot(C.g.n,sub(C.g.P,midOf(Lg))));        // skupina: posun všech o stejný kousek
+          for(const q of drag.group){if(q.l.ref)q.l.off=f3(+q.l.off+dot(corr,q.g.n));else{q.l.x=f3(+q.l.x+corr[0]);q.l.y=f3(+q.l.y+corr[1]);}}}
+        else landOn(ls,Lg,C.g);
+        ui.snapTo=C;}}}
   draw();});
-cv.addEventListener('pointerup',()=>{if(!drag)return;drag=null;commit();panel();drawGallery();});
+cv.addEventListener('pointerup',()=>{if(!drag)return;drag=null;ui.snapTo=null;commit();panel();drawGallery();});
 document.addEventListener('keydown',e=>{
   if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();undo(e.shiftKey?1:-1);return;}
   if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='y'){e.preventDefault();undo(1);return;}
