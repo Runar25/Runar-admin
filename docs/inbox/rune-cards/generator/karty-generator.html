@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Generátor runových karet</title>
+<style>
+:root{--bg:#f4f3f0;--panel:#fff;--line:#d9d6cf;--txt:#222;--muted:#777;--acc:#d2541b;--acc2:#2a6fd1}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font:13px/1.35 system-ui,Segoe UI,sans-serif}
+#top{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:6px 10px;background:var(--panel);border-bottom:1px solid var(--line)}
+#top b{font-size:14px;margin-right:8px}
+#gallery{display:flex;gap:10px;padding:6px 10px;overflow-x:auto;background:#ebe9e4;border-bottom:1px solid var(--line)}
+.aett{display:flex;flex-direction:column;gap:2px}
+.aett span{font-size:11px;color:var(--muted)}
+.aett div{display:flex;gap:3px}
+.th{cursor:pointer;border:2px solid transparent;border-radius:4px;background:#fff;padding:1px;text-align:center;font-size:10px;width:52px}
+.th.on{border-color:var(--acc)}
+.th svg{display:block;width:46px;height:auto;margin:auto}
+#main{display:flex;height:calc(100vh - 128px);min-height:500px}
+#stage{flex:1;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px;min-width:0}
+#cv{height:100%;max-height:calc(100vh - 175px);max-width:100%;background:#fff;box-shadow:0 1px 4px #0002;touch-action:none;user-select:none}
+#hint{font-size:11px;color:var(--muted);padding-top:4px;text-align:center}
+#panel{width:600px;max-width:55vw;overflow:auto;background:var(--panel);border-left:1px solid var(--line);padding:8px 10px}
+h3{margin:12px 0 4px;font-size:13px}
+details{border:1px solid var(--line);border-radius:4px;padding:4px 8px;margin-bottom:6px}
+summary{cursor:pointer;font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px 10px;margin-top:6px}
+.grid label{display:flex;justify-content:space-between;gap:4px;align-items:center;font-size:12px}
+.grid input,.grid select{width:64px}
+table{border-collapse:collapse;width:100%;margin-top:4px}
+td,th{border-bottom:1px solid #eee;padding:2px 3px;text-align:left;vertical-align:middle;font-size:12px}
+th{font-weight:600;color:var(--muted);font-size:11px}
+tr.sel td{background:#fde9df}
+input[type=number]{width:62px}
+td.common{color:var(--acc2);font-size:11px}
+button{font:inherit;font-size:12px;padding:2px 7px;border:1px solid #bbb;background:#fafafa;border-radius:3px;cursor:pointer}
+button:hover{background:#eee}
+.btns{display:flex;flex-wrap:wrap;gap:4px;margin:4px 0}
+.err{color:#b00}
+.muted{color:var(--muted);font-size:11px}
+label.chk{font-size:12px;display:inline-flex;gap:3px;align-items:center}
+</style>
+</head>
+<body>
+<div id="top">
+  <b>Generátor runových karet</b>
+  <button data-act="undo" title="Ctrl+Z">↶ zpět</button>
+  <button data-act="redo" title="Ctrl+Y">↷ znovu</button>
+  <span style="width:10px"></span>
+  <button data-act="expOne">Export SVG (tahle runa)</button>
+  <button data-act="expAll">Export SVG (všech 25 na arch)</button>
+  <button data-act="expEach">Export SVG (každá zvlášť)</button>
+  <span style="width:10px"></span>
+  <button data-act="saveJson">Uložit práci (.json)</button>
+  <label class="chk"><button data-act="loadJson">Načíst práci</button><input type="file" id="fJson" accept=".json" hidden></label>
+  <span style="width:10px"></span>
+  <label class="chk">Podložit obrázek <input type="file" id="fImg" accept="image/*" style="width:160px"></label>
+  <label class="chk">průhlednost <input type="range" id="imgOp" min="0" max="1" step="0.05" value="0.4" style="width:70px"></label>
+</div>
+<div id="gallery"></div>
+<div id="main">
+  <div id="stage">
+    <svg id="cv"></svg>
+    <div id="hint">Táhni čáru myší = posun · Shift + táhni = otáčení kolem kotvy · šipky = posun vybrané o 0,1 mm (Shift 1 mm) · [ a ] = úhel ±0,5° · Ctrl+Z zpět</div>
+  </div>
+  <div id="panel"></div>
+</div>
+<script>
+'use strict';
+/* ====== Runy a výchozí hodnoty ====== */
+const RUNES=[["Freyin ætt",['Fehu','Uruz','Thurisaz','Ansuz','Raidho','Kenaz','Gebo','Wunjo']],
+             ["Heimdallův ætt",['Hagalaz','Nauthiz','Isa','Jera','Eihwaz','Perthro','Algiz','Sowilo']],
+             ["Týrův ætt",['Tiwaz','Berkana','Ehwaz','Mannaz','Laguz','Ingwaz','Dagaz','Othala']],
+             ["prázdná",['Blank']]];
+const ALL=RUNES.flatMap(g=>g[1]);
+// Karta 65 × 100 mm; rám a měřítko odpovídají předloze pro_form.svg (687 × 1024 px → 65 mm na šířku).
+const DECK0={cardW:65,cardH:100,mL:9.9,mR:9.9,mT:9.7,mB:27,radius:0,inner:1.6,frameW:0.4,origin:'frame',
+  bandW:1.6,bandN:2,bandS:0.35,thinS:0.6,runeStyle:'center',gap:0.35,ink:'#000000',bg:'#ffffff'};
+const L=(id,type,x,y,a,extra)=>Object.assign({id,type,x,y,a,ref:'',off:0},extra||{});
+const S=(on,from,to)=>({on,from,to});
+const ln=(id,edge)=>({kind:'line',id,edge:edge||'mid'});
+const at=t=>({kind:'len',t});
+// Předlohy podle ukázek (souřadnice v mm od středu rámu, y nahoru, úhel od vodorovné, + = stoupá doprava)
+const PRESETS={
+ Berkana:{lines:[L('V','pas',-6,0,90),L('D1','pas',-6,18.5,-28),L('D2','pas',-6,6.5,28),L('D3','pas',-6,6.5,-28),L('D4','pas',-6,-5.5,28)],
+   strokes:[S('V',ln('D1','far'),ln('D4','far')),S('D1',ln('V'),ln('D2','far')),S('D2',ln('V'),ln('D1','far')),S('D3',ln('V'),ln('D4','far')),S('D4',ln('V'),ln('D3','far'))]},
+ Raidho:{lines:[L('V','pas',-6,0,90),L('D1','pas',-6,18.5,-28),L('D2','pas',-6,6.5,28),L('D3','pas',-6,6.5,-28),L('T','cara',-6,-5.5,28)],
+   strokes:[S('V',ln('D1','far'),ln('T')),S('D1',ln('V'),ln('D2','far')),S('D2',ln('V'),ln('D1','far')),S('D3',ln('V'),ln('T'))]},
+ Tiwaz:{lines:[L('V','pas',0,0,90),L('AL','pas',0,18,28),L('AR','pas',0,18,-28),L('T','cara',0,-13,28)],
+   strokes:[S('V',ln('AL'),ln('T')),S('AL',ln('V'),at(-13)),S('AR',ln('V'),at(13))]},
+ Uruz:{lines:[L('V1','pas',-7.5,0,90),L('V2','pas',0,0,90,{ref:'V1',off:10.2}),L('D','pas',-7.5,20,-31),L('T','cara',-7.5,-17.2,31)],
+   strokes:[S('V1',ln('D','far'),ln('T')),S('D',ln('V1','far'),ln('V2','far')),S('V2',ln('D','far'),ln('T'))]}
+};
+const KEY='runove-karty-generator-v1';
+const clone=o=>JSON.parse(JSON.stringify(o));
+function fresh(){return {deck:{...DECK0},runes:Object.fromEntries(ALL.map(n=>[n,PRESETS[n]?clone(PRESETS[n]):{lines:[],strokes:[]}])),cur:'Berkana'};}
+function load(){try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.runes&&s.deck){s.deck={...DECK0,...s.deck};ALL.forEach(n=>{if(!s.runes[n])s.runes[n]={lines:[],strokes:[]}});return s;}}catch(e){}return null;}
+let st=load()||fresh();
+const ui={sel:null,ghost:'',all:false,common:true,labels:true,grid:false,img:null,imgRatio:1,imgOp:0.4};
+const hist=[JSON.stringify(st)];let hi=0;
+function commit(){const s=JSON.stringify(st);if(s===hist[hi])return;hist.splice(hi+1);hist.push(s);if(hist.length>200)hist.shift();hi=hist.length-1;try{localStorage.setItem(KEY,s)}catch(e){}}
+function undo(d){const j=hi+d;if(j<0||j>=hist.length)return;hi=j;st=JSON.parse(hist[hi]);try{localStorage.setItem(KEY,hist[hi])}catch(e){}refreshAll();}
+const cur=()=>st.runes[st.cur];
+
+/* ====== Geometrie (mm, počátek ve středu, y nahoru) ====== */
+const rad=d=>d*Math.PI/180, dot=(a,b)=>a[0]*b[0]+a[1]*b[1], add=(a,b)=>[a[0]+b[0],a[1]+b[1]], sub=(a,b)=>[a[0]-b[0],a[1]-b[1]], mul=(a,k)=>[a[0]*k,a[1]*k];
+const f3=n=>+(+n).toFixed(3);
+function org(){const D=st.deck;return D.origin==='card'?{ox:D.cardW/2,oy:D.cardH/2}:{ox:D.mL+(D.cardW-D.mL-D.mR)/2,oy:D.mT+(D.cardH-D.mT-D.mB)/2};}
+function rectM(){const D=st.deck,O=org();return {x0:D.mL-O.ox,x1:D.cardW-D.mR-O.ox,y0:O.oy-(D.cardH-D.mB),y1:O.oy-D.mT};}
+function geom(r){
+  const D=st.deck,by={},G={};r.lines.forEach(l=>by[l.id]=l);
+  function get(id,depth){
+    if(G[id])return G[id];const l=by[id];if(!l||depth>40)return null;
+    let P=[+l.x||0,+l.y||0],a=+l.a||0,ref=null;
+    if(l.ref&&by[l.ref]&&l.ref!==id){ref=get(l.ref,depth+1);if(ref){a=ref.a;P=add(ref.P,mul(ref.n,+l.off||0));}}
+    const u=[Math.cos(rad(a)),Math.sin(rad(a))];let n=[-u[1],u[0]];
+    const steep=Math.abs(u[1])>Math.abs(u[0])+1e-9;
+    if(steep?n[0]<0:n[1]<0)n=[-n[0],-n[1]];   // + posun = doprava u strmých, nahoru u plochých
+    const h=l.type==='pas'?D.bandW/2+D.bandS/2:D.thinS/2;
+    return G[id]={id,P,a,u,n,h,type:l.type,l};
+  }
+  r.lines.forEach(l=>get(l.id,0));return G;
+}
+function segClip(P,u,R){let t0=-1e4,t1=1e4;for(const [p,d,lo,hi] of [[P[0],u[0],R.x0,R.x1],[P[1],u[1],R.y0,R.y1]]){if(Math.abs(d)<1e-12){if(p<lo||p>hi)return null;}else{let a=(lo-p)/d,b=(hi-p)/d;if(a>b)[a,b]=[b,a];t0=Math.max(t0,a);t1=Math.min(t1,b);}}return t0<t1?[t0,t1]:null;}
+function clipHP(poly,f){const out=[];for(let i=0;i<poly.length;i++){const A=poly[i],B=poly[(i+1)%poly.length],fa=f(A),fb=f(B);if(fa>=0)out.push(A);if((fa>=0)!==(fb>=0)){const t=fa/(fa-fb);out.push([A[0]+t*(B[0]-A[0]),A[1]+t*(B[1]-A[1])]);}}return out;}
+function clipRect(poly,R){for(const f of [p=>p[0]-R.x0,p=>R.x1-p[0],p=>p[1]-R.y0,p=>R.y1-p[1]])poly=clipHP(poly,f);return poly;}
+function tOn(Lg,st0,G){if(st0.kind==='len')return +st0.t||0;const M=G[st0.id];if(!M||M===Lg)return null;const den=dot(M.n,Lg.u);if(Math.abs(den)<1e-9)return null;return dot(M.n,sub(M.P,Lg.P))/den;}
+// Tah runy = pás na čáře `on`, oříznutý dvěma zarážkami (jinou čarou nebo bodem na čáře)
+function strokeShape(s,G,R,joined){
+  const D=st.deck,Lg=G[s.on];if(!Lg)return {err:'chybí čára '+s.on};
+  const tA=tOn(Lg,s.from,G),tB=tOn(Lg,s.to,G);
+  if(tA==null||tB==null)return {err:'zarážka je rovnoběžná nebo neexistuje'};
+  const Q=add(Lg.P,mul(Lg.u,(tA+tB)/2)),h=Lg.h,BIG=500;
+  let poly=[add(add(Lg.P,mul(Lg.u,-BIG)),mul(Lg.n,h)),add(add(Lg.P,mul(Lg.u,BIG)),mul(Lg.n,h)),add(add(Lg.P,mul(Lg.u,BIG)),mul(Lg.n,-h)),add(add(Lg.P,mul(Lg.u,-BIG)),mul(Lg.n,-h))];
+  const ct=[];
+  for(const [sp,tS,tO] of [[s.from,tA,tB],[s.to,tB,tA]]){
+    const dir=Math.sign(tO-tS)||1;let f,tCut,join=false;
+    if(sp.kind==='len'){const X=add(Lg.P,mul(Lg.u,tS));f=p=>dir*dot(Lg.u,sub(p,X));tCut=tS;}
+    else{const M=G[sp.id];const sQ=Math.sign(dot(M.n,sub(Q,M.P)))||1;
+      const d=sp.edge==='near'?sQ*M.h:sp.edge==='far'?-sQ*M.h:0;const M0=add(M.P,mul(M.n,d));
+      f=p=>sQ*dot(M.n,sub(p,M0));tCut=dot(M.n,sub(M0,Lg.P))/dot(M.n,Lg.u);join=joined.has(sp.id);}
+    poly=clipHP(poly,f);
+    ct.push(join?tS:tCut+dir*h);           // středová linka: ve spoji až do průsečíku, na konci kousek před řezem
+  }
+  poly=clipRect(poly,R);
+  let c=null;
+  if(D.runeStyle==='center'&&(ct[1]-ct[0])*(tB-tA)>0){const cl=segClip(Lg.P,Lg.u,R);if(cl){let a=Math.min(ct[0],ct[1]),b=Math.max(ct[0],ct[1]);a=Math.max(a,cl[0]);b=Math.min(b,cl[1]);if(b>a)c=[add(Lg.P,mul(Lg.u,a)),add(Lg.P,mul(Lg.u,b))];}}
+  return {poly,c};
+}
+function sameLine(a,b){let da=((a.a-b.a)%180+180)%180;if(da>90)da=180-da;if(da>0.05)return false;return Math.abs(dot(a.n,sub(b.P,a.P)))<0.05;}
+function commonMap(name){
+  const G=geom(st.runes[name]),res={};
+  for(const o of ALL){if(o===name)continue;const G2=geom(st.runes[o]);
+    for(const id in G)for(const id2 in G2)if(sameLine(G[id],G2[id2])){(res[id]=res[id]||[]).push(o+(id2!==id?' ('+id2+')':''));break;}}
+  return res;
+}
+
+/* ====== Kreslení ====== */
+function content(name){
+  const D=st.deck,r=st.runes[name],G=geom(r),O=org(),R=rectM();
+  const X=p=>f3(O.ox+p[0]),Y=p=>f3(O.oy-p[1]);
+  const seg=(a,b,extra='')=>`<line x1="${X(a)}" y1="${Y(a)}" x2="${X(b)}" y2="${Y(b)}"${extra}/>`;
+  let bands='',thins='',rune='',center='',errs=[];
+  const lineSegs={};
+  for(const id in G){const g=G[id];
+    const offs=g.type==='pas'?(D.bandN<=1?[0]:Array.from({length:D.bandN},(_,i)=>-D.bandW/2+i*D.bandW/(D.bandN-1))):[0];
+    for(const o of offs){const P=add(g.P,mul(g.n,o)),c=segClip(P,g.u,R);if(!c)continue;
+      const el=seg(add(P,mul(g.u,c[0])),add(P,mul(g.u,c[1])));if(g.type==='pas')bands+=el;else thins+=el;}
+    const c=segClip(g.P,g.u,R);if(c)lineSegs[id]=[add(g.P,mul(g.u,c[0])),add(g.P,mul(g.u,c[1]))];
+  }
+  const joined=new Set(r.strokes.map(s=>s.on));
+  r.strokes.forEach((s,i)=>{const sh=strokeShape(s,G,R,joined);if(sh.err){errs[i]=sh.err;return;}
+    if(sh.poly.length>2)rune+=`<path d="M${sh.poly.map(p=>X(p)+','+Y(p)).join(' L')} Z"/>`;
+    if(sh.c)center+=seg(sh.c[0],sh.c[1]);});
+  return {bands,thins,rune,center,G,O,R,X,Y,seg,lineSegs,errs};
+}
+function frameEls(){const D=st.deck,x=D.mL,y=D.mT,w=D.cardW-D.mL-D.mR,h=D.cardH-D.mT-D.mB,i=+D.inner,r=+D.radius;
+  let s=`<rect x="${x}" y="${y}" width="${f3(w)}" height="${f3(h)}" rx="${r}"/>`;
+  if(i>0&&w>2*i&&h>2*i)s+=`<rect x="${f3(x+i)}" y="${f3(y+i)}" width="${f3(w-2*i)}" height="${f3(h-2*i)}" rx="${f3(Math.max(0,r-i))}"/>`;return s;}
+function clipDef(cid){const D=st.deck;return `<clipPath id="${cid}"><rect x="${D.mL}" y="${D.mT}" width="${f3(D.cardW-D.mL-D.mR)}" height="${f3(D.cardH-D.mT-D.mB)}" rx="${D.radius}"/></clipPath>`;}
+// vrstvy pro export (id skupin = názvy vrstev v Illustratoru, inkscape:label v Inkscapu)
+function layers(name,cid){
+  const D=st.deck,c=content(name),cp=+D.radius>0?` clip-path="url(#${cid})"`:'';
+  const lay=(id,attrs,inner)=>`<g id="${id}" inkscape:groupmode="layer" inkscape:label="${id}" ${attrs}>${inner}</g>`;
+  return (+D.radius>0?`<defs>${clipDef(cid)}</defs>`:'')+
+    lay(`${name}-pozadi`,`fill="${D.bg}"`,`<rect width="${D.cardW}" height="${D.cardH}"/>`)+
+    lay(`${name}-ram`,`fill="none" stroke="${D.ink}" stroke-width="${D.frameW}"`,frameEls())+
+    lay(`${name}-pasy`,`fill="none" stroke="${D.ink}" stroke-width="${D.bandS}"${cp}`,c.bands)+
+    lay(`${name}-cary`,`fill="none" stroke="${D.ink}" stroke-width="${D.thinS}"${cp}`,c.thins)+
+    lay(`${name}-runa`,`fill="${D.ink}" stroke="none"${cp}`,c.rune)+
+    lay(`${name}-runa-stred`,`fill="none" stroke="${D.bg}" stroke-width="${D.gap}" stroke-linecap="round"${cp}`,c.center);
+}
+function svgFile(names){
+  const D=st.deck,cols=names.length>1?5:1,gap=5,rows=Math.ceil(names.length/cols);
+  const W=cols*D.cardW+(cols-1)*gap,H=rows*D.cardH+(rows-1)*gap;
+  let body='';names.forEach((n,i)=>{const x=(i%cols)*(D.cardW+gap),y=Math.floor(i/cols)*(D.cardH+gap);
+    const inner=layers(n,'clip-'+n);body+=names.length>1?`<g id="${n}" inkscape:groupmode="layer" inkscape:label="${n}" transform="translate(${x} ${y})">${inner}</g>`:inner;});
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="${W}mm" height="${H}mm" viewBox="0 0 ${W} ${H}">\n${body}\n</svg>\n`;
+}
+function thumb(name){const D=st.deck,c=content(name);
+  return `<svg viewBox="0 0 ${D.cardW} ${D.cardH}"><rect width="${D.cardW}" height="${D.cardH}" fill="#fff"/><g fill="none" stroke="#000" stroke-width="0.5">${frameEls()}</g><g stroke="#999" stroke-width="0.3">${c.bands}${c.thins}</g><g fill="#000">${c.rune}</g></svg>`;}
+
+const cv=document.getElementById('cv');let LAST=null;
+function draw(){
+  const D=st.deck,c=content(st.cur);LAST=c;
+  cv.setAttribute('viewBox',`0 0 ${D.cardW} ${D.cardH}`);
+  let s=`<defs>${clipDef('cvclip')}</defs><rect width="${D.cardW}" height="${D.cardH}" fill="${D.bg}" stroke="#ccc" stroke-width="0.2"/>`;
+  if(ui.img)s+=`<image href="${ui.img}" x="0" y="0" width="${D.cardW}" height="${f3(D.cardW*ui.imgRatio)}" opacity="${ui.imgOp}" preserveAspectRatio="none"/>`;
+  if(ui.grid){const R=c.R,O=c.O;let g='';for(let x=Math.ceil(R.x0);x<=R.x1;x++)g+=`<line x1="${f3(O.ox+x)}" y1="${D.mT}" x2="${f3(O.ox+x)}" y2="${f3(D.cardH-D.mB)}" stroke-width="${x%5?0.04:0.1}"/>`;
+    for(let y=Math.ceil(R.y0);y<=R.y1;y++)g+=`<line x1="${D.mL}" y1="${f3(O.oy-y)}" x2="${f3(D.cardW-D.mR)}" y2="${f3(O.oy-y)}" stroke-width="${y%5?0.04:0.1}"/>`;
+    s+=`<g stroke="#2a6fd1" opacity="0.5">${g}</g>`;}
+  if(ui.all){let g='';for(const n of ALL){if(n===st.cur)continue;const o=content(n);for(const id in o.lineSegs){const [a,b]=o.lineSegs[id];g+=c.seg(a,b);}}
+    s+=`<g stroke="#2a6fd1" stroke-width="0.5" opacity="0.12" clip-path="url(#cvclip)">${g}</g>`;}
+  if(ui.ghost&&ui.ghost!==st.cur){const o=content(ui.ghost);s+=`<g opacity="0.35" clip-path="url(#cvclip)"><g stroke="#d2541b" stroke-width="${D.bandS}">${o.bands}${o.thins}</g><g fill="#d2541b">${o.rune}</g></g>`;}
+  const cp=' clip-path="url(#cvclip)"';
+  s+=`<g fill="none" stroke="${D.ink}" stroke-width="${D.frameW}">${frameEls()}</g>`;
+  s+=`<g stroke="${D.ink}" stroke-width="${D.bandS}"${cp}>${c.bands}</g><g stroke="${D.ink}" stroke-width="${D.thinS}"${cp}>${c.thins}</g>`;
+  s+=`<g fill="${D.ink}"${cp}>${c.rune}</g><g stroke="${D.bg}" stroke-width="${D.gap}" stroke-linecap="round"${cp}>${c.center}</g>`;
+  if(ui.common){const cm=commonMap(st.cur);let g='';for(const id in cm)if(c.lineSegs[id])g+=c.seg(...c.lineSegs[id]);s+=`<g stroke="#2a6fd1" stroke-width="0.35" stroke-dasharray="1 1" opacity="0.8">${g}</g>`;}
+  // výběr, kotva, popisky, plochy pro chycení myší
+  if(ui.sel&&c.G[ui.sel]&&c.lineSegs[ui.sel]){const g=c.G[ui.sel];s+=`<g stroke="#d2541b" stroke-width="0.3">${c.seg(...c.lineSegs[ui.sel])}</g><circle cx="${c.X(g.P)}" cy="${c.Y(g.P)}" r="0.7" fill="none" stroke="#d2541b" stroke-width="0.25"/>`;}
+  s+=`<g stroke="#999" stroke-width="0.15"><line x1="${c.O.ox-1.5}" y1="${c.O.oy}" x2="${c.O.ox+1.5}" y2="${c.O.oy}"/><line x1="${c.O.ox}" y1="${c.O.oy-1.5}" x2="${c.O.ox}" y2="${c.O.oy+1.5}"/></g>`;
+  if(ui.labels){let g='';for(const id in c.lineSegs){const b=c.lineSegs[id][1],x=c.X(b),y=c.Y(b);const tx=Math.min(Math.max(x,D.mL+1),D.cardW-D.mR-1),ty=Math.min(Math.max(y,D.mT+2),D.cardH-D.mB-0.5);
+    g+=`<text x="${tx}" y="${ty}" font-size="2" fill="${id===ui.sel?'#d2541b':'#2a6fd1'}" stroke="#fff" stroke-width="0.4" paint-order="stroke" text-anchor="${tx>c.O.ox?'end':'start'}">${id}</text>`;}s+=`<g font-family="system-ui,sans-serif" font-weight="600" style="pointer-events:none">${g}</g>`;}
+  let hit='';for(const id in c.lineSegs)hit+=`<line data-id="${id}" x1="${c.X(c.lineSegs[id][0])}" y1="${c.Y(c.lineSegs[id][0])}" x2="${c.X(c.lineSegs[id][1])}" y2="${c.Y(c.lineSegs[id][1])}"/>`;
+  s+=`<g stroke="transparent" stroke-width="2.2" style="cursor:move">${hit}</g>`;
+  cv.innerHTML=s;
+}
+function drawGallery(){
+  const el=document.getElementById('gallery');
+  el.innerHTML=RUNES.map(([t,ns])=>`<div class="aett"><span>${t}</span><div>${ns.map(n=>`<div class="th${n===st.cur?' on':''}" data-rune="${n}">${thumb(n)}${n}</div>`).join('')}</div></div>`).join('');
+}
+
+/* ====== Panel ====== */
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const DECKF=[['cardW','šířka karty mm'],['cardH','výška karty mm'],['radius','zaoblení rohů'],['mL','rám zleva'],['mR','rám zprava'],['mT','rám shora'],['mB','rám zdola'],['inner','vnitřní linka rámu'],['frameW','tloušťka rámu'],
+  ['bandW','šířka pásu (osy krajních linek)'],['bandN','počet linek v pásu'],['bandS','tloušťka linky pásu'],['thinS','tloušťka jednoduché čáry'],['gap','šířka světlé linky v runě']];
+function panel(){
+  const D=st.deck,r=cur(),ids=r.lines.map(l=>l.id),c=LAST||content(st.cur),cm=commonMap(st.cur);
+  let h=`<details${panel.deckOpen?' open':''} id="deckBox"><summary>Karta a styl (platí pro všechny runy)</summary><div class="grid">`;
+  for(const [k,lab] of DECKF)h+=`<label>${lab}<input type="number" step="${k==='bandN'?1:0.05}" min="${k==='bandN'?1:0}" data-deck="${k}" value="${D[k]}"></label>`;
+  h+=`<label>střed (výchozí bod)<select data-deck="origin"><option value="frame"${D.origin==='frame'?' selected':''}>střed rámu</option><option value="card"${D.origin==='card'?' selected':''}>střed karty</option></select></label>`;
+  h+=`<label>vzhled runy<select data-deck="runeStyle"><option value="center"${D.runeStyle==='center'?' selected':''}>se světlou linkou</option><option value="solid"${D.runeStyle==='solid'?' selected':''}>plná</option></select></label>`;
+  h+=`<label>barva čar<input type="color" data-deck="ink" value="${D.ink}"></label><label>barva podkladu<input type="color" data-deck="bg" value="${D.bg}"></label>`;
+  h+=`</div><div class="btns"><button data-act="resetDeck">vrátit výchozí styl</button></div></details>`;
+  h+=`<div class="btns"><label class="chk"><input type="checkbox" data-ui="labels"${ui.labels?' checked':''}>názvy čar</label>
+    <label class="chk"><input type="checkbox" data-ui="common"${ui.common?' checked':''}>modře čáry, které má i jiná runa</label>
+    <label class="chk"><input type="checkbox" data-ui="all"${ui.all?' checked':''}>čáry všech run přes sebe</label>
+    <label class="chk"><input type="checkbox" data-ui="grid"${ui.grid?' checked':''}>mřížka 1 mm</label>
+    <label class="chk">podklad: <select data-ui="ghost"><option value="">—</option>${ALL.filter(n=>n!==st.cur).map(n=>`<option${ui.ghost===n?' selected':''}>${n}</option>`).join('')}</select></label></div>`;
+  h+=`<h3>Čáry runy ${st.cur}</h3><div class="muted">Pás = trojčára/dvojčára, do které se vepíše tah runy. Čára = jednoduchá (zakončovací) čára. Poloha v mm od středu: x doprava, y nahoru. Úhel od vodorovné: 0 = vodorovně, 90 = svisle, + = stoupá doprava. „Vychází z čáry“ = rovnoběžka v zadané kolmé vzdálenosti (+ nahoru / doprava); posuneš-li výchozí čáru, jde s ní.</div>`;
+  h+=`<div class="btns"><button data-act="addPas">+ pás</button><button data-act="addCara">+ jednoduchá čára</button><button data-act="addPar">+ rovnoběžka k vybrané</button><button data-act="mirX">zrcadlit vybranou ↔</button><button data-act="mirY">zrcadlit vybranou ↕</button><button data-act="dup">kopie vybrané</button><button data-act="del">smazat vybranou</button></div>`;
+  h+=`<table><tr><th>název</th><th>typ</th><th>vychází z</th><th>x / vzdálenost</th><th>y</th><th>úhel °</th><th>stejná čára je i v</th></tr>`;
+  r.lines.forEach((l,i)=>{
+    const ro=`<option value="">středu</option>`+ids.filter(x=>x!==l.id).map(x=>`<option value="${x}"${l.ref===x?' selected':''}>čáry ${x}</option>`).join('');
+    h+=`<tr data-i="${i}"${ui.sel===l.id?' class="sel"':''}><td><input data-k="id" value="${esc(l.id)}" size="4"></td>
+      <td><select data-k="type"><option value="pas"${l.type==='pas'?' selected':''}>pás</option><option value="cara"${l.type==='cara'?' selected':''}>čára</option></select></td>
+      <td><select data-k="ref">${ro}</select></td>`;
+    if(l.ref)h+=`<td><input type="number" step="0.1" data-k="off" value="${l.off}"></td><td class="muted">—</td><td class="muted">${c.G[l.id]?f3(c.G[l.id].a):''} (jako ${esc(l.ref)})</td>`;
+    else h+=`<td><input type="number" step="0.1" data-k="x" value="${l.x}"></td><td><input type="number" step="0.1" data-k="y" value="${l.y}"></td><td><input type="number" step="0.5" data-k="a" value="${l.a}"></td>`;
+    h+=`<td class="common">${(cm[l.id]||[]).join(', ')}</td></tr>`;});
+  h+=`</table>`;
+  h+=`<h3>Tahy runy</h3><div class="muted">Tah leží na pásu a končí na dvou zarážkách. Zarážka = jiná čára (řez podél ní: střed, bližší nebo vzdálenější hrana) nebo bod na čáře v mm od kotvy (řez kolmo). Posuneš-li zarážku, tah se sám prodlouží nebo zkrátí.</div>`;
+  h+=`<div class="btns"><button data-act="addS">+ tah na vybrané čáře</button></div><table><tr><th>na čáře</th><th>od</th><th></th><th>do</th><th></th><th></th></tr>`;
+  const stopEd=(s,w,i)=>{const sp=s[w];const opts=ids.filter(x=>x!==s.on).map(x=>`<option value="L:${x}"${sp.kind==='line'&&sp.id===x?' selected':''}>čára ${x}</option>`).join('')+`<option value="#"${sp.kind==='len'?' selected':''}>bod (mm)</option>`;
+    let sub2=sp.kind==='len'?`<input type="number" step="0.1" data-sk="${w}.t" value="${sp.t}">`:`<select data-sk="${w}.edge">${[['mid','střed'],['near','bližší hrana'],['far','vzdálenější hrana']].map(([v,t])=>`<option value="${v}"${sp.edge===v?' selected':''}>${t}</option>`).join('')}</select>`;
+    return `<td><select data-sk="${w}.kind">${opts}</select></td><td>${sub2}</td>`;};
+  r.strokes.forEach((s,i)=>{h+=`<tr data-s="${i}"><td><select data-sk="on">${ids.map(x=>`<option${s.on===x?' selected':''}>${x}</option>`).join('')}</select></td>${stopEd(s,'from',i)}${stopEd(s,'to',i)}<td><button data-act="delS" data-s2="${i}">×</button>${c.errs[i]?`<div class="err">${c.errs[i]}</div>`:''}</td></tr>`;});
+  h+=`</table>`;
+  h+=`<h3>Celá runa</h3><div class="btns"><select id="copyFrom">${ALL.filter(n=>n!==st.cur).map(n=>`<option>${n}</option>`).join('')}</select><button data-act="copyRune">nahradit obsahem z vybrané runy</button><button data-act="clearRune">vyprázdnit runu</button>${PRESETS[st.cur]?'<button data-act="presetRune">vrátit předlohu</button>':''}</div>`;
+  document.getElementById('panel').innerHTML=h;
+}
+function refreshAll(){draw();panel();drawGallery();}
+function refresh(){draw();panel();}
+
+/* ====== Úpravy ====== */
+const pn=document.getElementById('panel');
+pn.addEventListener('toggle',e=>{if(e.target.id==='deckBox')panel.deckOpen=e.target.open;},true);
+function uniqId(base){const ids=new Set(cur().lines.map(l=>l.id));let i=1;let id=base;while(ids.has(id))id=base+(++i);return id;}
+function onEdit(e,isCommit){
+  const t=e.target,D=st.deck;
+  if(t.dataset.deck){const k=t.dataset.deck;D[k]=(t.type==='number')?(parseFloat(t.value)||0):t.value;if(k==='bandN')D[k]=Math.max(1,Math.round(D[k]));draw();if(isCommit){commit();drawGallery();}return;}
+  if(t.dataset.ui){const k=t.dataset.ui;ui[k]=t.type==='checkbox'?t.checked:t.value;draw();return;}
+  const tr=t.closest('tr');if(!tr)return;const r=cur();
+  if(tr.dataset.i!=null&&t.dataset.k){const l=r.lines[+tr.dataset.i],k=t.dataset.k;
+    if(k==='id'){if(!isCommit)return;let nid=t.value.replace(/[^A-Za-z0-9_-]/g,'')||l.id;if(nid!==l.id&&r.lines.some(x=>x.id===nid))nid=l.id;
+      const old=l.id;l.id=nid;r.lines.forEach(x=>{if(x.ref===old)x.ref=nid});r.strokes.forEach(s=>{if(s.on===old)s.on=nid;['from','to'].forEach(w=>{if(s[w].id===old)s[w].id=nid})});if(ui.sel===old)ui.sel=nid;}
+    else if(k==='ref'){const G=geom(r),g=G[l.id];
+      if(t.value){const R2=G[t.value];l.ref=t.value;l.off=g&&R2?f3(dot(R2.n,sub(g.P,R2.P))):0;}   // zachová polohu, pokud je rovnoběžná
+      else{if(g){l.x=f3(g.P[0]);l.y=f3(g.P[1]);l.a=f3(g.a);}l.ref='';}}
+    else if(k==='type')l.type=t.value;
+    else l[k]=parseFloat(t.value)||0;
+    ui.sel=l.id;
+  }else if(tr.dataset.s!=null&&t.dataset.sk){const s=r.strokes[+tr.dataset.s],k=t.dataset.sk;
+    if(k==='on')s.on=t.value;
+    else{const [w,f]=k.split('.');
+      if(f==='kind'){if(t.value==='#'){const G=geom(r),tt=G[s.on]?tOn(G[s.on],s[w],G):0;s[w]={kind:'len',t:f3(tt==null?0:tt)};}else s[w]={kind:'line',id:t.value.slice(2),edge:s[w].edge||'mid'};}
+      else if(f==='t')s[w].t=parseFloat(t.value)||0;else s[w].edge=t.value;}
+  }
+  draw();
+  if(isCommit){commit();const structural=['id','ref','type','kind','on'].some(x=>(t.dataset.k||t.dataset.sk||'').endsWith(x));if(structural)panel();else updateCommon();drawGallery();}
+}
+function updateCommon(){const cm=commonMap(st.cur);pn.querySelectorAll('tr[data-i]').forEach(tr=>{const l=cur().lines[+tr.dataset.i];const td=tr.querySelector('td.common');if(l&&td)td.textContent=(cm[l.id]||[]).join(', ');});}
+pn.addEventListener('input',e=>onEdit(e,false));
+pn.addEventListener('change',e=>onEdit(e,true));
+pn.addEventListener('focusin',e=>{const tr=e.target.closest('tr[data-i]');if(tr){const id=cur().lines[+tr.dataset.i].id;if(ui.sel!==id){ui.sel=id;pn.querySelectorAll('tr.sel').forEach(x=>x.classList.remove('sel'));tr.classList.add('sel');draw();}}});
+function selLine(){return cur().lines.find(l=>l.id===ui.sel);}
+function act(a,el){
+  const r=cur(),l=selLine(),G=geom(r),g=l&&G[l.id];
+  switch(a){
+    case 'undo':return undo(-1);case 'redo':return undo(1);
+    case 'addPas':case 'addCara':{const id=uniqId(a==='addPas'?'P':'C');r.lines.push(L(id,a==='addPas'?'pas':'cara',0,0,90));ui.sel=id;break;}
+    case 'addPar':{if(!l)return alert('Nejdřív vyber čáru.');const id=uniqId(l.id+'_');r.lines.push(L(id,l.type,0,0,0,{ref:l.id,off:4}));ui.sel=id;break;}
+    case 'dup':{if(!l)return;const id=uniqId(l.id+'_');r.lines.push({...clone(l),id});ui.sel=id;break;}
+    case 'mirX':case 'mirY':{if(!g)return;const id=uniqId(l.id+'m');const x=a==='mirX'?-g.P[0]:g.P[0],y=a==='mirY'?-g.P[1]:g.P[1];let an=-g.a;r.lines.push(L(id,l.type,f3(x),f3(y),f3(an)));ui.sel=id;break;}
+    case 'del':{if(!l)return;const used=r.lines.filter(x=>x.ref===l.id).map(x=>x.id).concat(r.strokes.filter(s=>s.on===l.id||s.from.id===l.id||s.to.id===l.id).map(s=>'tah na '+s.on));
+      if(used.length&&!confirm(`Čáru ${l.id} používá: ${used.join(', ')}. Smazat i tak? (rovnoběžky se převedou na samostatné čáry, tahy na ní se smažou)`))return;
+      r.lines.forEach(x=>{if(x.ref===l.id){const gx=G[x.id];Object.assign(x,{ref:'',x:f3(gx.P[0]),y:f3(gx.P[1]),a:f3(gx.a)});}});
+      r.strokes=r.strokes.filter(s=>s.on!==l.id);r.strokes.forEach(s=>['from','to'].forEach(w=>{if(s[w].kind==='line'&&s[w].id===l.id){const tt=tOn(G[s.on],s[w],G);s[w]={kind:'len',t:f3(tt||0)};}}));
+      r.lines=r.lines.filter(x=>x!==l);ui.sel=null;break;}
+    case 'addS':{if(!l)return alert('Nejdřív vyber čáru, na které tah leží.');r.strokes.push(S(l.id,at(-10),at(10)));break;}
+    case 'delS':r.strokes.splice(+el.dataset.s2,1);break;
+    case 'copyRune':{const n=document.getElementById('copyFrom').value;if(!confirm(`Nahradit čáry a tahy runy ${st.cur} obsahem runy ${n}?`))return;st.runes[st.cur]=clone(st.runes[n]);break;}
+    case 'clearRune':if(!confirm(`Vyprázdnit runu ${st.cur}?`))return;st.runes[st.cur]={lines:[],strokes:[]};break;
+    case 'presetRune':if(!confirm('Vrátit předlohu podle ukázky?'))return;st.runes[st.cur]=clone(PRESETS[st.cur]);break;
+    case 'resetDeck':st.deck={...DECK0};break;
+    case 'expOne':return dl(`runa-${st.cur}.svg`,svgFile([st.cur]),'image/svg+xml');
+    case 'expAll':return dl('runy-arch.svg',svgFile(ALL),'image/svg+xml');
+    case 'expEach':ALL.forEach((n,i)=>setTimeout(()=>dl(`runa-${n}.svg`,svgFile([n]),'image/svg+xml'),i*300));return;
+    case 'saveJson':return dl('runove-karty.json',JSON.stringify(st,null,1),'application/json');
+    case 'loadJson':return document.getElementById('fJson').click();
+    default:return;
+  }
+  commit();refreshAll();
+}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(b){act(b.dataset.act,b);return;}
+  const th=e.target.closest('[data-rune]');if(th){st.cur=th.dataset.rune;ui.sel=null;commit();refreshAll();}});
+function dl(name,text,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000);}
+document.getElementById('fJson').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const s=JSON.parse(t);if(!s.runes||!s.deck)throw 0;s.deck={...DECK0,...s.deck};ALL.forEach(n=>{if(!s.runes[n])s.runes[n]={lines:[],strokes:[]}});if(!s.runes[s.cur])s.cur='Berkana';st=s;commit();refreshAll();}catch(x){alert('Tohle není soubor z generátoru.');}});e.target.value='';});
+document.getElementById('fImg').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{const im=new Image();im.onload=()=>{ui.img=rd.result;ui.imgRatio=im.height/im.width;draw();};im.src=rd.result;};rd.readAsDataURL(f);});
+document.getElementById('imgOp').addEventListener('input',e=>{ui.imgOp=+e.target.value;draw();});
+
+/* ====== Myš a klávesnice ====== */
+function mmAt(e){const p=cv.createSVGPoint();p.x=e.clientX;p.y=e.clientY;const q=p.matrixTransform(cv.getScreenCTM().inverse());const O=org();return [q.x-O.ox,O.oy-q.y];}
+const snap=(v,s)=>f3(Math.round(v/s)*s);
+let drag=null;
+cv.addEventListener('pointerdown',e=>{const id=e.target.dataset&&e.target.dataset.id;if(!id)return;e.preventDefault();
+  ui.sel=id;const l=selLine(),g=geom(cur())[id];drag={l,g,m0:mmAt(e),x0:+l.x,y0:+l.y,off0:+l.off,rot:e.shiftKey&&!l.ref};cv.setPointerCapture(e.pointerId);draw();});
+cv.addEventListener('pointermove',e=>{if(!drag)return;const m=mmAt(e),{l,g}=drag,step=e.altKey?0.01:0.1;
+  if(drag.rot){const v=sub(m,g.P);let a=Math.atan2(v[1],v[0])*180/Math.PI;if(a>90)a-=180;if(a<=-90)a+=180;l.a=snap(a,e.altKey?0.1:0.5);}
+  else{const dm=sub(m,drag.m0);if(l.ref)l.off=snap(drag.off0+dot(dm,g.n),step);
+    else if(Math.abs(g.u[1])>Math.abs(g.u[0]))l.x=snap(drag.x0+dm[0],step);   // strmá čára: mění se jen x
+    else l.y=snap(drag.y0+dm[1],step);}                                       // plochá čára: mění se jen y
+  draw();});
+cv.addEventListener('pointerup',()=>{if(!drag)return;drag=null;commit();panel();drawGallery();});
+document.addEventListener('keydown',e=>{
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();undo(e.shiftKey?1:-1);return;}
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='y'){e.preventDefault();undo(1);return;}
+  if(/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName))return;
+  const l=selLine();if(!l)return;const k=e.key,s=e.shiftKey?1:0.1;let done=true;
+  if(k==='['||k===']'){if(l.ref)return;l.a=f3((+l.a)+(k===']'?0.5:-0.5));}
+  else if(k.startsWith('Arrow')){const dx=k==='ArrowRight'?s:k==='ArrowLeft'?-s:0,dy=k==='ArrowUp'?s:k==='ArrowDown'?-s:0;
+    if(l.ref){const g=geom(cur())[l.id];l.off=f3(+l.off+dx*g.n[0]+dy*g.n[1]);}else{l.x=f3(+l.x+dx);l.y=f3(+l.y+dy);}}
+  else if(k==='Delete'){act('del');return;}
+  else done=false;
+  if(done){e.preventDefault();commit();refresh();drawGallery();}
+});
+refreshAll();
+</script>
+</body>
+</html>

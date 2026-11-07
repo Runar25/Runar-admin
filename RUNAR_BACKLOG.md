@@ -1074,6 +1074,10 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
 - [ ] Až karty půjdou opakovaně (IS, tiskárna): generátor do repa nad `v2/runar-runes.js`, `v2/runar-svgs.js`, `v2/fonts/fonts.css`
   (dnes kopie + vlastní `fonts.css`), Cinzel 500 → 400/700, přebarvení kamene jednou funkcí vedle `runeSvg`, spadávka 3 mm;
   hotové podklady pak řádkem do `v2/assets/README.md` (tabulka designových podkladů).
+- [ ] Owner skládá 24 run + Blank v `docs/inbox/rune-cards/generator/karty-generator.html` (2026-11-07, Code): čárový rozvrh
+  karty — runa vepsaná do pásů přes celý rám, konce tahů na zarážkách (jiná čára / zakončovací čára), vše v mm od středu,
+  export SVG po vrstvách pro Inkscape/Illustrator. Předlohy z ukázek: Berkana, Raidho, Tiwaz, Uruz. Práce žije v prohlížeči
+  (localStorage) + „Uložit práci (.json)“ — hotový .json patří vedle generátoru.
 
 ### Revize nápovědy, zásad a textů v appce (owner 2026-10-21 „můžou tam být staré věci“; CODE-tune)
 Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zásady soukromí), 95375a7 (texty v appce). Zbývá:
