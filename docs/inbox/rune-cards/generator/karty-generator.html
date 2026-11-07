@@ -173,7 +173,7 @@ function clipHP(poly,f){const out=[];for(let i=0;i<poly.length;i++){const A=poly
 function clipRect(poly,R){for(const f of [p=>p[0]-R.x0,p=>R.x1-p[0],p=>p[1]-R.y0,p=>R.y1-p[1]])poly=clipHP(poly,f);return poly;}
 function tOn(Lg,st0,G){if(st0.kind==='len')return +st0.t||0;const M=G[st0.id];if(!M||M===Lg)return null;const den=dot(M.n,Lg.u);if(Math.abs(den)<1e-9)return null;return dot(M.n,sub(M.P,Lg.P))/den;}
 // Tah runy = pás na čáře `on`, oříznutý dvěma zarážkami (jinou čarou nebo bodem na čáře)
-function strokeShape(s,G,R,joined){
+function strokeShape(s,G,R,joined,cont){   // cont: kolik tahů na téže čáře končí na téže zarážce (2 = navazují)
   const D=st.deck,Lg=G[s.on];if(!Lg)return {err:'chybí čára '+s.on};
   const tA=tOn(Lg,s.from,G),tB=tOn(Lg,s.to,G);
   if(tA==null||tB==null)return {err:'zarážka je rovnoběžná nebo neexistuje'};
@@ -185,7 +185,7 @@ function strokeShape(s,G,R,joined){
     if(sp.kind==='len'){const X=add(Lg.P,mul(Lg.u,tS));f=p=>dir*dot(Lg.u,sub(p,X));tCut=tS;}
     else{const M=G[sp.id];const sQ=Math.sign(dot(M.n,sub(Q,M.P)))||1;
       const d=sp.edge==='near'?sQ*M.h:sp.edge==='far'?-sQ*M.h:0;const M0=add(M.P,mul(M.n,d));
-      f=p=>sQ*dot(M.n,sub(p,M0));tCut=dot(M.n,sub(M0,Lg.P))/dot(M.n,Lg.u);join=joined.has(sp.id);}
+      f=p=>sQ*dot(M.n,sub(p,M0));tCut=dot(M.n,sub(M0,Lg.P))/dot(M.n,Lg.u);join=joined.has(sp.id)||(cont&&cont[s.on+'|'+sp.id]>1);}   // navazující tah na téže čáře = souvislá linka
     poly=clipHP(poly,f);
     // světlá linka: na volném konci stejný řez jako tah (doběhne až na konec a přejde v prostřední linku pásu);
     // ve spoji s jiným tahem dojde za jeho střed o půl své šířky = ostrý roh, napojí se na jeho světlou linku
@@ -237,8 +237,9 @@ function content(name){
       const el=seg(add(P,mul(g.u,c[0])),add(P,mul(g.u,c[1])),sw);if(g.type==='pas')bands+=el;else thins+=el;}
     const c=segClip(g.P,g.u,R);if(c)lineSegs[id]=[add(g.P,mul(g.u,c[0])),add(g.P,mul(g.u,c[1]))];
   }
-  const joined=new Set(r.strokes.map(s=>s.on));
-  r.strokes.forEach((s,i)=>{const sh=strokeShape(s,G,R,joined);if(sh.err){errs[i]=sh.err;return;}
+  const joined=new Set(r.strokes.map(s=>s.on)),cont={};
+  r.strokes.forEach(s=>['from','to'].forEach(w=>{if(s[w].kind==='line'){const k=s.on+'|'+s[w].id;cont[k]=(cont[k]||0)+1;}}));
+  r.strokes.forEach((s,i)=>{const sh=strokeShape(s,G,R,joined,cont);if(sh.err){errs[i]=sh.err;return;}
     if(sh.poly.length>2){rune+=`<path d="M${sh.poly.map(p=>X(p)+','+Y(p)).join(' L')} Z"/>`;rawPolys.push(sh.poly);}
     if(sh.c){center+=`<path d="M${sh.c.map(p=>X(p)+','+Y(p)).join(' L')} Z"/>`;rawCenters.push(sh.c);}});
   return {bands,thins,rune,center,G,O,R,X,Y,seg,lineSegs,errs,rawPolys,rawCenters};
