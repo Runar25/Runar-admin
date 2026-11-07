@@ -96,14 +96,21 @@ label.chk{font-size:12px;display:inline-flex;gap:3px;align-items:center}
   <div id="panel"></div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/polygon-clipping@0.15.3/dist/polygon-clipping.umd.min.js"></script>
+<script src="../../../../v2/runar-runes.js"></script>
 <script>
 'use strict';
 /* ====== Runy a výchozí hodnoty ====== */
-const RUNES=[["Freyin ætt",['Fehu','Uruz','Thurisaz','Ansuz','Raidho','Kenaz','Gebo','Wunjo']],
-             ["Heimdallův ætt",['Hagalaz','Nauthiz','Isa','Jera','Eihwaz','Perthro','Algiz','Sowilo']],
-             ["Týrův ætt",['Tiwaz','Berkana','Ehwaz','Mannaz','Laguz','Ingwaz','Dagaz','Othala']],
-             ["prázdná",['Blank']]];
-const BASE=RUNES.flatMap(g=>g[1]);
+// Názvy, znaky a ætt bere generátor z v2/runar-runes.js (jediný zdroj run v projektu). Když se soubor nenačte
+// (generátor otevřený mimo repo), použije zálohu se stejnými názvy.
+const SRC_OK=typeof AETTY!=='undefined'&&AETTY.freya&&typeof RUNES!=='undefined';
+const GROUPS=SRC_OK?[[AETTY.freya.name_en,AETTY.freya.runes],[AETTY.heimdall.name_en,AETTY.heimdall.runes],[AETTY.tyr.name_en,AETTY.tyr.runes],['Blank',['Blank']]]
+  :[["Freya's Aett",['Fehu','Uruz','Thurisaz','Ansuz','Raidho','Kenaz','Gebo','Wunjo']],["Heimdall's Aett",['Hagalaz','Nauthiz','Isa','Jera','Eihwaz','Perth','Algiz','Sowilo']],
+    ["Tyr's Aett",['Tiwaz','Berkana','Ehwaz','Mannaz','Laguz','Ingwaz','Dagaz','Othila']],['Blank',['Blank']]];
+const GLYPH=SRC_OK?Object.fromEntries(RUNES.map(r=>[r.n,r.g])):{};
+const BASE=GROUPS.flatMap(g=>g[1]);
+// starší názvy v uložené práci → názvy z runar-runes.js
+const RENAMED={Perthro:'Perth',Othala:'Othila'};
+function migrateNames(s){for(const [o,n] of Object.entries(RENAMED)){if(s.runes[o]&&!s.runes[n]){s.runes[n]=s.runes[o];delete s.runes[o];}if(s.cur===o)s.cur=n;}return s;}
 const ALLF=()=>BASE.concat(st.custom||[]);
 // Karta 65 × 100 mm; rám a měřítko odpovídají předloze pro_form.svg (687 × 1024 px → 65 mm na šířku).
 const DECK0={cardW:65,cardH:100,mL:9.9,mR:9.9,mT:9.7,mB:27,radius:0,inner:1.6,frameW:0.4,origin:'frame',
@@ -126,7 +133,7 @@ const PRESETS={
 const KEY='runove-karty-generator-v1';
 const clone=o=>JSON.parse(JSON.stringify(o));
 function fresh(){return {deck:{...DECK0},runes:Object.fromEntries(BASE.map(n=>[n,PRESETS[n]?clone(PRESETS[n]):{lines:[],strokes:[]}])),cur:"Berkana",custom:[]};}
-function load(){try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.runes&&s.deck){s.deck={...DECK0,...s.deck};if(!s.deck.mig3){if(s.deck.bandN===2)s.deck.bandN=3;s.deck.mig3=true;}BASE.concat(s.custom||[]).forEach(n=>{if(!s.runes[n])s.runes[n]={lines:[],strokes:[]}});return s;}}catch(e){}return null;}
+function load(){try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.runes&&s.deck){s.deck={...DECK0,...s.deck};if(!s.deck.mig3){if(s.deck.bandN===2)s.deck.bandN=3;s.deck.mig3=true;}migrateNames(s);BASE.concat(s.custom||[]).forEach(n=>{if(!s.runes[n])s.runes[n]={lines:[],strokes:[]}});return s;}}catch(e){}return null;}
 let st=load()||fresh();
 let fileH=null,fileTimer=null;   // propojený soubor pro průběžné ukládání
 const ui={sel:null,multi:new Set(),ghost:'',all:false,common:true,labels:true,grid:false,img:null,imgRatio:1,imgOp:0.4};
@@ -322,7 +329,7 @@ function draw(){
 }
 function drawGallery(){
   const el=document.getElementById('gallery');
-  el.innerHTML=RUNES.concat([["vlastní runy",st.custom||[]]]).map(([t,ns])=>`<div class="aett"><span>${t}</span><div>${ns.map(n=>`<div class="th${n===st.cur?' on':''}" data-rune="${n}">${thumb(n)}${n}</div>`).join('')}${t==='vlastní runy'?'<div class="th new" data-act="newRune" title="vytvořit novou runu">＋<br>nová runa</div>':''}</div></div>`).join('');
+  el.innerHTML=GROUPS.concat([["vlastní runy",st.custom||[]]]).map(([t,ns])=>`<div class="aett"><span>${t}</span><div>${ns.map(n=>`<div class="th${n===st.cur?' on':''}" data-rune="${n}">${thumb(n)}${GLYPH[n]?GLYPH[n]+' ':''}${n}</div>`).join('')}${t==='vlastní runy'?'<div class="th new" data-act="newRune" title="vytvořit novou runu">＋<br>nová runa</div>':''}</div></div>`).join('');
 }
 
 /* ====== Panel ====== */
@@ -484,7 +491,7 @@ function act(a,el){
 document.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(b){act(b.dataset.act,b);return;}
   const th=e.target.closest('[data-rune]');if(th){hideOverview();st.cur=th.dataset.rune;selOne(null);commit();refreshAll();}});
 function dl(name,text,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000);}
-function parseWork(t){try{const s=JSON.parse(t);if(!s.runes||!s.deck)return null;s.deck={...DECK0,...s.deck};BASE.concat(s.custom||[]).forEach(n=>{if(!s.runes[n])s.runes[n]={lines:[],strokes:[]}});if(!s.runes[s.cur])s.cur='Berkana';return s;}catch(x){return null;}}
+function parseWork(t){try{const s=JSON.parse(t);if(!s.runes||!s.deck)return null;s.deck={...DECK0,...s.deck};migrateNames(s);BASE.concat(s.custom||[]).forEach(n=>{if(!s.runes[n])s.runes[n]={lines:[],strokes:[]}});if(!s.runes[s.cur])s.cur='Berkana';return s;}catch(x){return null;}}
 document.getElementById('fJson').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{const s=parseWork(t);if(!s)return alert('Tohle není soubor z generátoru.');st=s;commit();refreshAll();});e.target.value='';});
 document.getElementById('top').addEventListener('change',e=>{if(e.target.dataset.deck)onEdit(e,true);});
 function syncTop(){const p=document.getElementById('tPrint'),b=document.getElementById('tBleed');if(p)p.checked=!!st.deck.printMode;if(b)b.value=st.deck.bleed;}
