@@ -28,7 +28,10 @@ button.fillon{background:#d2541b;color:#fff;border-color:#d2541b;font-weight:600
 #cv{height:100%;max-height:calc(100vh - 205px);max-width:100%;background:#fff;box-shadow:0 1px 4px #0002;touch-action:none;user-select:none}
 #hint{font-size:11px;color:var(--muted);padding-top:4px;text-align:center}
 #zoombar{display:flex;gap:4px;align-items:center;margin-bottom:4px;font-size:12px}#zoombar button{min-width:30px;font-size:14px}#coord{color:var(--acc2);margin-left:10px;font-variant-numeric:tabular-nums}
-#panel{width:600px;max-width:55vw;overflow:auto;background:var(--panel);border-left:1px solid var(--line);padding:8px 10px}
+#split{flex:0 0 8px;cursor:col-resize;background:#dcd9d2;border-left:1px solid var(--line);position:relative}
+#split:hover,#split.on{background:var(--acc)}
+#split::after{content:'⋮';position:absolute;top:50%;left:0;width:8px;text-align:center;color:#777;font-size:14px;transform:translateY(-50%)}
+#panel{flex:0 0 auto;width:600px;max-width:none;overflow:auto;background:var(--panel);border-left:1px solid var(--line);padding:8px 10px}
 h3{margin:12px 0 4px;font-size:13px}
 details{border:1px solid var(--line);border-radius:4px;padding:4px 8px;margin-bottom:6px}
 summary{cursor:pointer;font-weight:600}
@@ -89,6 +92,7 @@ label.chk{font-size:12px;display:inline-flex;gap:3px;align-items:center}
     <svg id="cv"></svg>
     <div id="hint">Kolečko myši = přiblížit / oddálit · táhni prázdné místo = posun pohledu · 0 = celá karta · Dvojklik na pás mezi dvěma čarami = vyplnit úsek runou (znovu = smazat) · Ctrl + klik = označit víc čar (táhneš a posouváš je najednou, Esc zruší) · Táhni čáru myší = posun po mřížce (Alt = jemně 0,1 mm) · Shift + táhni = otáčení kolem kotvy · šipky = posun o krok mřížky (Shift 0,1 mm) · [ a ] = úhel ±0,5° · Ctrl+Z zpět</div>
   </div>
+  <div id="split" title="táhni = změnit šířku panelu · dvojklik = výchozí šířka"></div>
   <div id="panel"></div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/polygon-clipping@0.15.3/dist/polygon-clipping.umd.min.js"></script>
@@ -595,6 +599,16 @@ document.addEventListener('keydown',e=>{
   else done=false;
   if(done){e.preventDefault();commit();refresh();drawGallery();}
 });
+/* Lišta mezi kartou a panelem: tažením se mění šířka panelu (pamatuje si ji prohlížeč) */
+(function(){const sp=document.getElementById('split'),pnl=document.getElementById('panel'),K='runove-karty-panelW';
+  const setW=w=>{w=Math.round(Math.min(Math.max(w,280),window.innerWidth-220));pnl.style.width=w+'px';return w;};
+  try{const w=+localStorage.getItem(K);if(w)setW(w);}catch(e){}
+  let on=false;
+  sp.addEventListener('pointerdown',e=>{on=true;sp.classList.add('on');try{sp.setPointerCapture(e.pointerId)}catch(_){}e.preventDefault();});
+  sp.addEventListener('pointermove',e=>{if(on)setW(window.innerWidth-e.clientX-4);});
+  sp.addEventListener('pointerup',()=>{if(!on)return;on=false;sp.classList.remove('on');try{localStorage.setItem(K,parseInt(pnl.style.width))}catch(e){}});
+  sp.addEventListener('dblclick',()=>{setW(600);try{localStorage.removeItem(K)}catch(e){}});
+  window.addEventListener('resize',()=>{if(pnl.style.width)setW(parseInt(pnl.style.width));});})();
 refreshAll();
 </script>
 </body>
