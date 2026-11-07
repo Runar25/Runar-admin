@@ -69,7 +69,7 @@ label.chk{font-size:12px;display:inline-flex;gap:3px;align-items:center}
 <div id="main">
   <div id="stage">
     <svg id="cv"></svg>
-    <div id="hint">Dvojklik na pás mezi dvěma čarami = vyplnit úsek runou (znovu = smazat) · Ctrl + klik = označit víc čar (táhneš a posouváš je najednou, Esc zruší) · Táhni čáru myší = posun · Shift + táhni = otáčení kolem kotvy · šipky = posun vybrané o 0,1 mm (Shift 1 mm) · [ a ] = úhel ±0,5° · Ctrl+Z zpět</div>
+    <div id="hint">Dvojklik na pás mezi dvěma čarami = vyplnit úsek runou (znovu = smazat) · Ctrl + klik = označit víc čar (táhneš a posouváš je najednou, Esc zruší) · Táhni čáru myší = posun po mřížce (Alt = jemně 0,1 mm) · Shift + táhni = otáčení kolem kotvy · šipky = posun o krok mřížky (Shift 0,1 mm) · [ a ] = úhel ±0,5° · Ctrl+Z zpět</div>
   </div>
   <div id="panel"></div>
 </div>
@@ -84,7 +84,7 @@ const BASE=RUNES.flatMap(g=>g[1]);
 const ALLF=()=>BASE.concat(st.custom||[]);
 // Karta 65 × 100 mm; rám a měřítko odpovídají předloze pro_form.svg (687 × 1024 px → 65 mm na šířku).
 const DECK0={cardW:65,cardH:100,mL:9.9,mR:9.9,mT:9.7,mB:27,radius:0,inner:1.6,frameW:0.4,origin:'frame',
-  bandW:1.6,bandN:2,bandS:0.35,thinS:0.6,runeStyle:'center',gap:0.35,ink:'#000000',bg:'#ffffff'};
+  bandW:1.6,bandN:2,bandS:0.35,thinS:0.6,runeStyle:'center',gap:0.35,step:1,ink:'#000000',bg:'#ffffff'};
 const L=(id,type,x,y,a,extra)=>Object.assign({id,type,x,y,a,ref:'',off:0},extra||{});
 const S=(on,from,to)=>({on,from,to});
 const ln=(id,edge)=>({kind:'line',id,edge:edge||'mid'});
@@ -172,6 +172,7 @@ function lineDist(Lg,C){return Math.abs(dot(C.n,sub(midOf(Lg),C.P)));}   // vzd�
 // nastaví čáru l (její geometrie Lg) přesně na čáru C; u rovnoběžky jen posunem
 function landOn(l,Lg,C){
   if(l.ref){if(angDiff(Lg.a,C.a)>0.05)return false;const Pref=sub(Lg.P,mul(Lg.n,+l.off||0));l.off=f3(dot(Lg.n,sub(C.P,Pref)));return true;}
+  if(C.l&&!C.l.ref){l.x=+C.l.x;l.y=+C.l.y;l.a=+C.l.a;return true;}   // převezme přesná čísla cizí čáry
   const a=C.a,ca=Math.cos(rad(a)),sa=Math.sin(rad(a));l.a=f3(a);
   if(Math.abs(sa)>Math.abs(ca))l.x=f3(C.P[0]+(l.y-C.P[1])*ca/sa);else l.y=f3(C.P[1]+(l.x-C.P[0])*sa/ca);
   return true;}
@@ -284,6 +285,7 @@ function panel(){
     <label class="chk"><input type="checkbox" data-ui="common"${ui.common?' checked':''}>modře čáry, které má i jiná runa</label>
     <label class="chk"><input type="checkbox" data-ui="all"${ui.all?' checked':''}>čáry všech run přes sebe</label>
     <label class="chk"><input type="checkbox" data-ui="grid"${ui.grid?' checked':''}>mřížka 1 mm</label>
+    <label class="chk">krok posunu <input type="number" step="0.5" min="0.1" data-deck="step" value="${st.deck.step}" style="width:48px"> mm</label><button data-act="toGrid" title="zaokrouhlí polohy označených čar (bez označení celé runy) na krok posunu">zarovnat na mřížku</button>
     <label class="chk">podklad: <select data-ui="ghost"><option value="">—</option>${ALLF().filter(n=>n!==st.cur).map(n=>`<option${ui.ghost===n?' selected':''}>${n}</option>`).join('')}</select></label></div>`;
   h+=`<h3>Čáry runy ${st.cur}</h3><div class="muted">Pás = trojčára/dvojčára, do které se vepíše tah runy. Čára = jednoduchá (zakončovací) čára. Poloha v mm od středu: x doprava, y nahoru. Úhel od vodorovné: 0 = vodorovně, 90 = svisle, + = stoupá doprava. „Vychází z čáry“ = rovnoběžka v zadané kolmé vzdálenosti (+ nahoru / doprava); posuneš-li výchozí čáru, jde s ní.</div>`;
   const SEL=selIds(),SS=new Set(SEL);
@@ -377,6 +379,8 @@ function act(a,el){
     case 'landOn':{const x=(landUI.list||[])[+document.getElementById('landSel').value];if(!x||!l)return;
       if(!landOn(l,g,x.o.g))return alert(`Čára ${l.id} vychází z čáry ${l.ref}, takže má její úhel a jde jen posunout. Úhly se liší o ${x.da.toFixed(1)}°. Přepni „vychází z“ na „středu“, pak půjde usadit i s úhlem.`);break;}
     case 'setType':selIds().forEach(o=>{r.lines.find(q=>q.id===o).type=el.dataset.v;});break;
+    case 'toGrid':{const s=+st.deck.step>0?+st.deck.step:1,ids=selIds(),ls=ids.length?r.lines.filter(x=>ids.includes(x.id)):r.lines;
+      ls.forEach(x=>{if(x.ref)x.off=snap(+x.off,s);else{x.x=snap(+x.x,s);x.y=snap(+x.y,s);}});break;}
     case 'selAll':ui.multi=new Set(r.lines.map(x=>x.id));if(!ui.sel&&r.lines.length)ui.sel=r.lines[0].id;refresh();return;
     case 'selNone':selOne(null);refresh();return;
     case 'addS':{if(!l)return alert('Nejdřív vyber čáru, na které tah leží.');r.strokes.push(S(l.id,at(-10),at(10)));break;}
@@ -443,7 +447,7 @@ cv.addEventListener('pointerdown',e=>{const id=e.target.dataset&&e.target.datase
     drag={group:ids.map(x=>cur().lines.find(q=>q.id===x)).filter(l=>!refAncestorIn(l,set)).map(l=>({l,g:G[l.id],x0:+l.x,y0:+l.y,off0:+l.off})),m0:mmAt(e)};
     cv.setPointerCapture(e.pointerId);draw();return;}
   selOne(id);const l=selLine(),g=geom(cur())[id];drag={l,g,m0:mmAt(e),x0:+l.x,y0:+l.y,off0:+l.off,rot:e.shiftKey&&!l.ref};cv.setPointerCapture(e.pointerId);draw();});
-cv.addEventListener('pointermove',e=>{if(!drag)return;const m=mmAt(e),{l,g}=drag,step=e.altKey?0.01:0.1;
+cv.addEventListener('pointermove',e=>{if(!drag)return;const m=mmAt(e),{l,g}=drag,step=e.altKey?0.1:(+st.deck.step>0?+st.deck.step:1);   // krok posunu = mřížka (Alt = jemně 0,1 mm)
   if(drag.group){const dm=sub(m,drag.m0);for(const q of drag.group){if(q.l.ref)q.l.off=snap(q.off0+dot(dm,q.g.n),step);else{q.l.x=snap(q.x0+dm[0],step);q.l.y=snap(q.y0+dm[1],step);}}}
   else if(drag.rot){const v=sub(m,g.P);let a=Math.atan2(v[1],v[0])*180/Math.PI;if(a>90)a-=180;if(a<=-90)a+=180;l.a=snap(a,e.altKey?0.1:0.5);}
   else{const dm=sub(m,drag.m0);if(l.ref)l.off=snap(drag.off0+dot(dm,g.n),step);
@@ -465,7 +469,7 @@ document.addEventListener('keydown',e=>{
   if(/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName))return;
   const ids=selIds();if(!ids.length)return;const set=new Set(ids),G=geom(cur());
   const lines=ids.map(x=>cur().lines.find(q=>q.id===x)).filter(l=>!refAncestorIn(l,set));   // potomek označené se hýbe s ní
-  const k=e.key,s=e.shiftKey?1:0.1;let done=true;
+  const k=e.key,s=e.shiftKey?0.1:(+st.deck.step>0?+st.deck.step:1);let done=true;
   if(k==='['||k===']'){lines.forEach(l=>{if(!l.ref)l.a=f3((+l.a)+(k===']'?0.5:-0.5));});}
   else if(k.startsWith('Arrow')){const dx=k==='ArrowRight'?s:k==='ArrowLeft'?-s:0,dy=k==='ArrowUp'?s:k==='ArrowDown'?-s:0;
     lines.forEach(l=>{if(l.ref){const g=G[l.id];l.off=f3(+l.off+dx*g.n[0]+dy*g.n[1]);}else{l.x=f3(+l.x+dx);l.y=f3(+l.y+dy);}});}
