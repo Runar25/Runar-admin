@@ -1078,6 +1078,9 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   karty — runa vepsaná do pásů přes celý rám, konce tahů na zarážkách (jiná čára / zakončovací čára), vše v mm od středu,
   export SVG po vrstvách pro Inkscape/Illustrator. Předlohy z ukázek: Berkana, Raidho, Tiwaz, Uruz. Práce žije v prohlížeči
   (localStorage) + „Uložit práci (.json)“ — hotový .json patří vedle generátoru.
+  ➕ *2026-11-07:* názvy, znaky a ætt bere generátor z `v2/runar-runes.js` (§18). Nesoulad v tom souboru k rozhodnutí
+  (CODE-tune / owner): pole `RUNES` má pořadí `… Ingwaz, Othila, Dagaz`, ale `AETTY.tyr.runes` má `… Ingwaz, Dagaz, Othila`.
+  Generátor řadí podle `AETTY`. Owner: zastavování čar o protínající čáru (místo o rámeček) zatím neřešit.
 
 ### Revize nápovědy, zásad a textů v appce (owner 2026-10-21 „můžou tam být staré věci“; CODE-tune)
 Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zásady soukromí), 95375a7 (texty v appce). Zbývá:
