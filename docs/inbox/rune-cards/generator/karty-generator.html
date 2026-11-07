@@ -437,9 +437,13 @@ function fillAt(id,m){
   const r=cur(),G=geom(r),Lg=G[id];if(!Lg)return false;const t=dot(sub(m,Lg.P),Lg.u);
   for(let i=0;i<r.strokes.length;i++){const s=r.strokes[i];if(s.on!==id)continue;const a=tOn(Lg,s.from,G),b=tOn(Lg,s.to,G);
     if(a!=null&&b!=null&&t>=Math.min(a,b)&&t<=Math.max(a,b)){r.strokes.splice(i,1);return true;}}
-  const cl=segClip(Lg.P,Lg.u,rectM());let lo=null,hi=null;
+  const cl=segClip(Lg.P,Lg.u,rectM());const below=[],above=[];
   for(const oid in G){if(oid===id)continue;const tt=tOn(Lg,{kind:'line',id:oid},G);if(tt==null||(cl&&(tt<cl[0]||tt>cl[1])))continue;
-    if(tt<t&&(!lo||tt>lo.t))lo={t:tt,id:oid};if(tt>t&&(!hi||tt<hi.t))hi={t:tt,id:oid};}
+    (tt<t?below:above).push({t:tt,id:oid});}
+  // když se v jednom místě kříží víc čar (Tiwaz: AL i AR ve vrcholu), napoj se na tu, na které už je tah runy
+  const hasStroke=new Set(r.strokes.map(s=>s.on));
+  const pick=(arr,dir)=>{if(!arr.length)return null;arr.sort((a,b)=>dir*(a.t-b.t));const near=arr.filter(x=>Math.abs(x.t-arr[0].t)<=Lg.h*2);return near.find(x=>hasStroke.has(x.id))||near[0];};
+  const lo=pick(below,-1),hi=pick(above,1);
   const stop=(x,end)=>x?{kind:'line',id:x.id,edge:edgeFor(x.id,Lg,x.t,G,r)}:{kind:'len',t:f3(cl?cl[end]:(end?30:-30))};
   r.strokes.push({on:id,from:stop(lo,0),to:stop(hi,1)});return true;}
 cv.addEventListener('dblclick',e=>{const id=e.target.dataset&&e.target.dataset.id;if(!id||ui.fill)return;ui.sel=id;if(fillAt(id,mmAt(e))){commit();refreshAll();}});
