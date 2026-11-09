@@ -33,7 +33,7 @@ Islandština každého kusu až po EN, nástroji z CLAUDE.md §2.
 Prompt = produkční `buildReadingPrompt` + `_promptKonec` (single EN, bez oblasti, hledání, jména a otázky, účet bez ✦) + `buildSysPrompt`; jeden řádek navíc.
 Sol jako `callSol` (gpt-6-sol, reasoning none, explicit cache). Stejné semínko losů v porovnávaných čteních. Skripty a JSON s celým promptem ve scratchpadu session.
 
-### 3.1 Druhá strana — Fehu, 3 + 3 (owner 2026-11-10 „6. ok“), 6 volání
+### 3.1 Druhá strana — Fehu, 3 + 3 (owner 2026-11-09 „6. ok“), 6 volání
 Řádek za esencí: „WHERE THIS MEANING GOES WRONG: loss, hoarding, greed, resources handled badly.“
 1. Druhá strana se objevila 3/3, bez nálepky, pokaždé jinými slovy. Produkce bez řádku ji nemá ani jednou.
 2. Kam padla: do věty 3 nebo do konce; ze čtení ubyla věta o krok dál ve scéně (v produkci „each needs pasture through winter“, „still needs pasture“).
