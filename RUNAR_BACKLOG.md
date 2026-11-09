@@ -7,6 +7,9 @@
 ---
 
 ## Čtení a islandština — co zbývá (prompt prakticky hotový, owner 2026-10-12)
+- [ ] **Výklad run z V3 do v2 (CODE-read lab → CODE-tune, owner 2026-11-09, DECISIONS 2026-11-09 (1)):** druhá strana významu, moderní významy,
+  otázka z významu, oblast jako úhel významu, humor, fáze — po jedné, seznam a výsledky `docs/eval/2026-11-09-v2-vyklad-z-v3/README.md`.
+- [ ] ⏸ **V3 k ledu (owner 2026-11-09):** návrat od `docs/eval/2026-10-23-v3-charakter/v3-k-ledu.md` (stav, otevřené věci, první kroky).
 - [ ] **Kontrola promptu tvorby čtení před spuštěním — 2026-10-16 (CODE-read)** (owner: *„jakákoliv další velká kontrola je vítána…
   chceme vychytat všechny mouchy“*). Celé nálezy s řádky a hotovými ověřenými IS opravami: `docs/inbox/2026-10-16-kontrola-promptu.md`.
   - ✅ *(CODE-tune 2026-10-16: krize v Asku hotová — v5.10, výjimka v pravidle „mimo téma“, EN + IS.)*

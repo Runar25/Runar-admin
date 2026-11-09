@@ -13168,3 +13168,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   realistickým AI obrazem; co stojí v biu, je na Sigrún. Návrh pro Sigrún (přes ownera): na Instagramu zapnout „AI-generated profile“.
   Mimo bio: čl. 50 odst. 2 (strojově čitelné označení výstupů AI) → BACKLOG, otázka pro právníka.
 - Affected doc(s): RUNAR_BACKLOG.md (Sociální sítě Rúnara; Krize v otázce — pro právníka).
+
+## 2026-11-09 (1) — V3 k ledu; co V3 chtěla ve výkladu run, jde po jednom do v2
+
+- **Rozhodl:** owner 2026-11-09: *„V3 dáváme teď k ledu. Zapiš, co je potřeba, ať se to neztratí, až se k tomu vrátíme. Co teď chci: implementovat
+  do v2 to, co jsme se snažili dostat do V3. Což bylo shadow rune, co jsme měli dál, co nemá v2, ale mělo mít V3, výslovně co se týče výkladu run.“*
+- **Proč:** lab V3 (2026-10-23 až 11-06) ukázal, že nový prompt bez losů v2 dělá na solu šablonu a jednu scénu (`docs/eval/2026-10-23-v3-charakter/prompt-v3-navrh.md`
+  oddíly I, N), kdežto v2 pestrost nese. Co V3 chtěla ve výkladu run (druhá strana významu, moderní významy, otázka z významu, oblast jako úhel
+  významu, humor, fáze), ve v2 chybí.
+- **Co:** V3 se nemaže; vstupní bod pro návrat `docs/eval/2026-10-23-v3-charakter/v3-k-ledu.md`. Do v2 jde po jedné věci: CODE-read měří na produkční
+  cestě (sol), CODE-tune převádí do produkce. Seznam, pořadí a výsledky `docs/eval/2026-11-09-v2-vyklad-z-v3/README.md`; první je druhá strana významu.
+- Affected doc(s): RUNAR_BACKLOG.md (Čtení a islandština — co zbývá).
+
