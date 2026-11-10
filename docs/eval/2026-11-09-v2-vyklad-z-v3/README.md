@@ -131,3 +131,21 @@ Data: 42 single čtení EN ze solu z produkce od 2026-10-09 s uloženým losem (
 Hranice: jen EN, jen sol, 42 čtení; „scéna“ = věty před jménem runy; shoda slov je hrubé měřítko (ověřeno kontrolou s cizím obrazem). Neříká, která čtení
 jsou dobrá — to řeknou ownerova hlášení.
 
+## 6. Zkouška ubráním: scéna na jednu větu (2026-11-10, owner „10. ano, zkus to“), 6 volání
+Za řádek obrazu přidáno „The scene gets one sentence, no more.“; jinak produkce, tytéž losy. Raidho, Isa, Gebo, po jednom páru.
+1. Scéna zůstala v jedné větě 3/3 a runa přišla ve větě 2 (v produkci 2/3; u Raidha až ve třetí).
+2. Scéna se zkrátila jen málo: 23 · 16 · 19 slov proti 28 · 18 · 22. Jedna věta je pořád dlouhá. Celková délka beze změny (57–62 slov).
+3. **Změnila se věta 3:** v produkci se vrací do obrazu („As the rail disappears…“, „Here, neither movement cancels the other“), s řádkem mluví
+   o významu („You can walk steadily without knowing whether the direction still suits you“, „how quickly a gift becomes a debt when return is expected“).
+   U Raidha a Geba je to druhá strana významu, i když ji vstup nedodal.
+Hranice: 3 páry, jedno semínko, EN. Co zní líp, rozhodne owner.
+
+- **raidho produkce:** You cross the snowy heath, and the wind smooths the edges of your footprints behind you. Your steps settle into a pace you no longer need to count. Raidho stands for the rhythm that carries you along a chosen road. Your pace may fit where you want to go, or it may belong to a road you no longer choose.
+- **raidho scéna na jednu větu:** You cross the snowy heath, and your boots fall into an even pace as a crust of ice gives way beneath each heel. Raidho stands for finding a natural rhythm in movement. You can walk steadily without knowing whether the direction still suits you. Your pace may belong to a road you still want, or one you keep walking because you began.
+
+- **isa produkce:** You stand beneath a windless snowfall, watching flakes settle straight down onto a fence rail without a sound. Isa stands for stillness, when movement has stopped but nothing is settled. As the rail disappears beneath the snow, you can still make out its shape. What is not moving in your life may be stuck, or it may be clearer when left undisturbed.
+- **isa scéna na jednu větu:** You stand where windless snow falls straight onto the path, covering your footprints without a sound. Isa stands for stillness that leaves things as they are. When nothing moves, you can see the shape of what remains, though the snow makes its edges harder to judge. In your life, something may be at rest, or something may be stuck.
+
+- **gebo produkce:** You stand at the shore where a wave leaves a dark line of sand, then draws grains back as it falls away. Gebo stands for the give and take that does not always settle at once. Here, neither movement cancels the other. Perhaps you are giving without a promise of return, or receiving something you cannot yet repay.
+- **gebo scéna na jednu větu:** You stand where the sea leaves a dark strip of sand, then draws back with a few small stones. Gebo stands for the give and take between people, without keeping score. You can notice how quickly a gift becomes a debt when return is expected. Perhaps you can give without a promise, or receive without immediate repayment.
+
