@@ -62,3 +62,56 @@ Sol jako `callSol` (gpt-6-sol, reasoning none, explicit cache). Stejné semínko
 - **prechod:** On the snowy heath, your counted steps give way to an even pace, while a thin crust of snow breaks beneath your boots. Raidho stands for finding a natural rhythm as you move. At this turning, the counting falls away, but the path remains underfoot. Where in your life might a steady pace be taking the place of careful measure?
 
 - **odpor:** At the edge of the snowy heath, your counting gives way to the sound of your boots settling into an even pace. Raidho stands for moving at a pace you can keep. When you push against that rhythm, each step becomes something to measure again. Where might you be counting what could simply carry you forward?
+
+### 3.3 Konec u Reflection: otázka z významu runy, která se dotkne života — Raidho, 3 čtení (owner 2026-11-10 „9. reflection, zkus to“)
+Produkční konec `ENDING_OPEN[2]` nahrazen: „End on one open question that grows from the meaning of {R} and touches what this may be {L} — one that different
+readers could take in different ways, never something you know about them.“ Seeking Reflection, jinak produkce.
+1. Otázka vychází z významu (rytmus, tempo) 3/3, žádné tvrzení o čtenáři.
+2. Začátek otázky je šablona: „Where in your life…“ 3/3.
+
+- **reflection-1:** At the edge of the snowy heath, your careful steps become an even walk, with snow gathering in the seams of your boots. You stop counting as the distance passes underfoot at its own pace. Raidho stands for finding a natural rhythm rather than measuring every step. Where in your life does the pace feel less forced?
+
+- **reflection-2:** You cross the snowy heath, and the faint creak under your boots fades from notice as you stop counting steps. Raidho stands for finding a natural rhythm rather than forcing a pace. Your feet still meet the same ground, but each step no longer needs measuring. Where in your life does the pace feel easier when you stop counting?
+
+- **reflection-3:** A thin crust of snow breaks beneath your boot, then the next step falls without counting. Across the heath, you keep walking, and the small crunch of each step settles into a pace you can hold. Raidho is the rune of finding a rhythm that fits the ground beneath you. Where in your life does your pace feel like your own?
+
+### 3.4 Konec u Confirmation: tři tvary místo dvou možností — Raidho, týž los (owner „confirmation všechny 3 varianty chci vidět“)
+(a) runa podpoří · (b) podmínka · (c) kde se to ukáže ve dnech. Znění ve vstupu úloh ve scratchpadu session; produkční konec `ENDING_OPEN[1]` nahrazen.
+1. Všechny tři skončily u téže věci („…where you want to go“) — týž los, liší se jen tvar.
+2. (a) zní krkolomně („It supports your sense of whether…“); (b) čistě; (c) opsal slova pokynu „In ordinary days“.
+
+- **confirmation-a:** At the edge of the snowy heath, you leave the last dark stones behind and follow a faint track across the white. After a while, you stop counting steps, and your boots fall into an even rhythm. Raidho stands for finding a pace you can keep. It supports your sense of whether this road still leads where you want to go.
+
+- **confirmation-b:** At the edge of the snowy heath, your boot leaves firm ground for a narrow track. You walk until the soft crunch beneath your feet becomes steady, and you stop counting the steps. Raidho stands for finding a natural rhythm as you move. That rhythm holds only if the track still leads where you want to go.
+
+- **confirmation-c:** At the edge of the snowy heath, your measured steps become a steady walk, and you stop counting them. Snow gathers in the seam of your boot as you cross the open ground. Raidho stands for a natural rhythm that leaves room to notice where you are going. In ordinary days, you may notice whether a familiar routine still takes you where you want to go.
+
+### 3.5 Druhá strana — Raidho, 3 čtení (owner: Fehu obraz na zkoušení není dobrý, „dej mi jen 3 čtení s druhou stranou“)
+1. Druhá strana 3/3 bez nálepky (zdržení, tempo, které nerozhoduje o směru, jdeš, protože jsi začal).
+2. U čtení 2 a 3 padla do konce, který dnes losuje „may be X, or Y“.
+
+- **stin-raidho-1:** Where the snowy heath meets your next step, a shallow print catches blue shadow, and the long walk settles into a pace you no longer count. Raidho stands for finding a natural rhythm as you move. A delay can break that rhythm without meaning you have lost direction. Where in your life might a slower pace still carry you forward?
+
+- **stin-raidho-2:** You cross the snowy heath, and your boots begin to fall into an even pace as the wind brushes loose snow from your tracks. Raidho stands for movement that finds its natural rhythm. You no longer need to count each step, but a steady pace does not settle where the road leads. You may be moving toward something you want, or simply keeping pace with a choice you once made.
+
+- **stin-raidho-3:** A thin crust of snow breaks beneath your heel, and the next step follows without a count. Across the heath, your pace settles into the distance before you. Raidho is the rune of finding a natural rhythm as you move. Your steady pace may carry you toward something you want, or keep you walking because you began.
+
+### 3.6 Fáze — Isa (těžká runa), 4 čtení, týž los (owner „fáze vypadá dobře, zkus 4 čtení pro Isa“)
+1. Každá fáze dala jiný okamžik v témže obrazu (sníh padá bez větru): začínající ticho · ticho, které zakryje, co je důležité · pauza,
+   která se mění v konec · tlačení proti klidu. Slovo pokynu vysloveno 1/4 („At its turning“).
+
+- **faze-isa-nastup:** You can see where the dark ground turns white as snow falls straight down without wind, gathering along the edge of a stone. Isa stands for stillness beginning to take hold. The stone remains visible, though its edges grow less distinct beneath the quiet fall. Where in your life might a pause be starting before you have noticed it?
+
+- **faze-isa-vrchol:** At the edge of your doorstep, the last dark strip of stone turns white as windless snow falls straight down. You hear nothing as it covers the threshold, and the line between outside and inside grows harder to see. Isa stands for stillness held so firmly that it begins to hide what matters. Where might stillness be covering a line you need to see?
+
+- **faze-isa-prechod:** Where the dark path meets the white, snow falls straight down, and the last visible footprints disappear without a sound. Isa stands for stillness, the pause before anything takes a new shape. At its turning, even the marks that seemed fixed grow harder to see beneath the snow. Could a pause in your life be changing into an ending?
+
+- **faze-isa-odpor:** At the edge of the path, windless snow turns dark ground white, settling over your footprints without a sound. Isa stands for stillness that cannot be hurried. When you push against it, you may keep crossing the same ground, trying to leave a mark that the snowfall quietly covers. Where might you be pressing for movement when nothing is moving?
+
+## 4. Pokyny ownera k obrazům (2026-11-10), zatím neudělané
+1. Obraz Fehu (ovce se vracejí z hor) není na zkoušení dobrý: člověk těžko pochopí, co mu čtení říká; Fehu je runa, na kterou si lidé stěžují
+   nejčastěji („bohatství v pohybu“). Ovce z hor je dobrá, špatné je, jak je obraz vytvořený. Fehu předělat v obrazech podle nových významů.
+2. Raidho (chůze, stopy ve sněhu) je obraz, který člověk zažívá často, hravý a zajímavý.
+3. Udělat rozbor obrazů v bance: vyřadit ty, které čtení zhoršují. Podklad: ownerova hlášení, kde psal, která čtení se mu líbí a která ne
+   (poslední hlášení = čtení, která se mu líbila). Hlášení se čtou přes `node scripts/nacti_cteni.js` (CLAUDE.md §29).
+
