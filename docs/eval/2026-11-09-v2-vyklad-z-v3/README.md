@@ -149,3 +149,39 @@ Hranice: 3 páry, jedno semínko, EN. Co zní líp, rozhodne owner.
 - **gebo produkce:** You stand at the shore where a wave leaves a dark line of sand, then draws grains back as it falls away. Gebo stands for the give and take that does not always settle at once. Here, neither movement cancels the other. Perhaps you are giving without a promise of return, or receiving something you cannot yet repay.
 - **gebo scéna na jednu větu:** You stand where the sea leaves a dark strip of sand, then draws back with a few small stones. Gebo stands for the give and take between people, without keeping score. You can notice how quickly a gift becomes a debt when return is expected. Perhaps you can give without a promise, or receive without immediate repayment.
 
+## 7. Návrh: význam vede, obraz ho ukáže (CODE-read 2026-11-10, čeká na ownera)
+Owner 2026-11-10: *„obraz slouží k popisu významu runy v životní situaci. Popis runy, její význam je pak to, co tvoří zbytek čtení“* · *„převzít V3, ale
+využít toho, že v2 funguje, a aplikovat ho na něj … potřebuju vytvořit návrh, jak by to mohlo vypadat.“* Dřívější výroky téhož: 2026-10-23, 10-24, 10-27,
+10-28 (krok 28), 11-04, 11-10 (přepis konverzace).
+
+### 7.1 Princip
+Dnes ve v2 vede obraz: vylosuje se z banky, model ho převypráví a rozvede (26 slov z 62, oddíl 5) a runa ho jednou větou vyloží; třetí věta se vrací do obrazu.
+Návrh obrací pořadí vzniku, kostra v2 zůstává:
+1. **Kód vylosuje jeden úhel významu runy** (z moderních významů), i s jeho druhou stranou.
+2. **K úhlu patří obraz:** jedna krátká životní situace, ve které se ten úhel děje. Obraz je v bance přivázaný k úhlu, ne k runě obecně.
+3. **Čtení:** scéna v jedné větě → runa a její význam → runa dál (druhá strana, jak to chodí) → konec podle hledání.
+
+### 7.2 Co se v promptu v2 mění (tři věci) a co zůstává
+| | dnes | návrh | opora |
+|---|---|---|---|
+| A. význam | „focus on: <slovo>“ podle obrazu | význam pro tohle čtení + kde se kazí (u těžké runy světlá strana), z dat | druhá strana 3/3 bez nálepky (3.1, 3.5) |
+| B. scéna | celý obraz + úhel otevření + „přidej detail“ | krátký obraz k úhlu, „scéna dostane jednu větu“; úhel otevření a „one detail“ ven | scéna v jedné větě 3/3 a věta 3 přešla k významu (oddíl 6); úhel [4] dělá dvě věty scény 8/10 (oddíl 5) |
+| C. věta po runě | často návrat do obrazu | mluví o runě: druhá strana významu | oddíl 6 bod 3 |
+Zůstává: los (úhel významu místo slova obrazu, sloveso věty o runě, jméno), konec podle hledání, oblast vybírá obraz, délka, formát, ✦, charakter, korekce.
+Neověřeno: pestrost na solu bez úhlu otevření (má ji nést los významu a obrazu); jestli „one detail“ nechybí proti opisování obrazu (EVAL_LOG 2026-09-23 (9)).
+
+### 7.3 Data, která to potřebuje
+Na runu 3–4 úhly významu; ke každému druhá strana a 2–3 krátké situace (do ~12 slov). Začít třemi runami (Fehu, Raidho, Isa), obsah schvaluje owner;
+obrazy z dnešní banky, které k úhlu sedí, zůstanou, ostatní se přepíšou (oddíl 4).
+
+### 7.4 Jak by čtení vypadalo — ukázky napsal CODE-read, ne model (jen tvar; rozhodne zkouška na solu)
+- **Fehu** (úhel: hodnota vzniká péčí a roste, když je v oběhu · kazí se hromaděním): In autumn the sheep come down from the mountain, and there are more of
+  them than went up in spring. Fehu stands for wealth that grows because someone looked after it. Wealth that is only counted and guarded stops growing and
+  starts to weigh. What you have built may be ready to be used, or waiting for you to let it move.
+- **Raidho** (úhel: pohyb, který našel svůj rytmus · kazí se, když jdeš jen proto, žes začal): On a long walk across the snow you stop counting your steps,
+  and the pace starts to carry you. Raidho represents movement that has found its own rhythm. A steady pace says nothing about the direction, and it is easy
+  to keep walking only because you began. Is the road you are on still the one you chose?
+- **Isa** (těžká runa; úhel: zastavení · světlá strana: v klidu je vidět): Snow falls straight down with no wind, and by morning every footprint on the path
+  is gone. Isa stands for the standstill, when nothing moves and nothing can be hurried. A standstill is also the only time you can look at something
+  without it changing under your eyes. What do you see now that you could not see while things were moving?
+
