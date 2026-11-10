@@ -115,3 +115,19 @@ readers could take in different ways, never something you know about them.“ Se
 3. Udělat rozbor obrazů v bance: vyřadit ty, které čtení zhoršují. Podklad: ownerova hlášení, kde psal, která čtení se mu líbí a která ne
    (poslední hlášení = čtení, která se mu líbila). Hlášení se čtou přes `node scripts/nacti_cteni.js` (CLAUDE.md §29).
 
+## 5. Rozbor produkce: kolik místa bere scéna a kolik význam (2026-11-10, bez API)
+Owner 2026-11-10: *„ve čtení je milion informací, které se tam model snaží napasovat, a rozbíjí to scénu. Scéna má být jednoduchá … obraz je většinou
+dlouhý a model se ho snaží využít a popsat celý. Je to vůbec dobré? Chybí mi v tom jednoduchost.“* Zkoušky z oddílu 3 se tím zastavují; napřed ubrat.
+Data: 42 single čtení EN ze solu z produkce od 2026-10-09 s uloženým losem (`prompt_draws`), 34 různých obrazů, 17 run. Skript ve scratchpadu session.
+1. **Obraz ve vstupu má průměrně 14 slov (7–26); scéna ve čtení před první zmínkou runy 26 slov.** Model obraz zhruba zdvojnásobí.
+2. **Model převypráví skoro celý obraz:** 71 % obsahových slov obrazu se vrátí ve čtení (kontrola s cizím obrazem 4 %), u krátkých i dlouhých obrazů stejně.
+3. **Ve 20 ze 42 čtení zabere scéna dvě věty** a runa přijde až ve třetí; pak má scéna 33 slov ze 62. Když je runa ve větě 2, má scéna 19 slov.
+   Úhel „out of sight“ [4] to dělá v 8 z 10.
+4. **Delší obraz = delší scéna** (korelace 0,45); čtení s obrazem od 18 slov má skoro dvě věty scény, do 12 slov necelou jednu (n 5 a 20).
+5. **Význam runy má jednu větu, průměrně 14 slov** — nejkratší část čtení. Konec 16 slov, k člověku („you“ 40/42, „may/might“ 32/42, otázka 8/42).
+6. **Délka přetéká:** průměr 62 slov, 32 ze 42 nad 58. Vždy 4 věty.
+7. Do čtyř vět jde průměrně 13,6 kusu promptu. Věta 1 nese obraz + úhel + „one detail the sentence does not name“; poslední nese konec + oblast +
+   hledání + jméno + otázku runy.
+Hranice: jen EN, jen sol, 42 čtení; „scéna“ = věty před jménem runy; shoda slov je hrubé měřítko (ověřeno kontrolou s cizím obrazem). Neříká, která čtení
+jsou dobrá — to řeknou ownerova hlášení.
+
