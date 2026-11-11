@@ -165,29 +165,43 @@ Návrh obrací pořadí vzniku, kostra v2 zůstává:
 | | dnes | návrh | opora |
 |---|---|---|---|
 | A. význam | „focus on: <slovo>“ podle obrazu | význam pro tohle čtení + kde se kazí (u těžké runy světlá strana), z dat | druhá strana 3/3 bez nálepky (3.1, 3.5) |
-| B. scéna | celý obraz + úhel otevření + „přidej detail“ | krátký obraz k úhlu, „scéna dostane jednu větu“; úhel otevření a „one detail“ ven | scéna v jedné větě 3/3 a věta 3 přešla k významu (oddíl 6); úhel [4] dělá dvě věty scény 8/10 (oddíl 5) |
+| B. scéna | celý obraz + úhel otevření + „přidej detail“ | krátký obraz k úhlu, „scéna dostane jednu větu“; **los otevření zůstává** (úhly v2 + poloha člověka s „Imagine“, zadání G48, A7); „one detail“ ven | scéna v jedné větě 3/3 a věta 3 přešla k významu (oddíl 6); úhel [4] dělá dvě věty scény 8/10 (oddíl 5) |
 | C. věta po runě | často návrat do obrazu | mluví o runě: druhá strana významu | oddíl 6 bod 3 |
 Zůstává: los (úhel významu místo slova obrazu, sloveso věty o runě, jméno), konec podle hledání, oblast vybírá obraz, délka, formát, ✦, charakter, korekce.
-Neověřeno: pestrost na solu bez úhlu otevření (má ji nést los významu a obrazu); jestli „one detail“ nechybí proti opisování obrazu (EVAL_LOG 2026-09-23 (9)).
+Neověřeno: jestli „one detail“ nechybí proti opisování obrazu (EVAL_LOG 2026-09-23 (9)); který úhel otevření scénu natahuje (úhel [4] 8/10, oddíl 5).
+⚠️ 2026-11-11: první verze návrhu úhel otevření vyřadila — proti ownerovu rozhodnutí G48 („otevření se losuje jako ve v2, Imagine je jedna z možností“). Opraveno.
 
 ### 7.3 Data, která to potřebuje
 Na runu 3–4 úhly významu; ke každému druhá strana a 2–3 krátké situace (do ~12 slov). Začít třemi runami (Fehu, Raidho, Isa), obsah schvaluje owner;
 obrazy z dnešní banky, které k úhlu sedí, zůstanou, ostatní se přepíšou (oddíl 4).
 
 ### 7.4 Jak by čtení vypadalo — ukázky napsal CODE-read, ne model (jen tvar; rozhodne zkouška na solu)
-⚠️ **Opraveno 2026-11-11.** První ukázky (2026-11-10) vzaly u Fehu obraz ovcí z hor, který owner týž den odmítl, a významy ze starých slov aspektu místo
-moderních významů. Owner: *„říkal jsem, že obraz Fehu se mi nelíbí, říkal jsem, že chci moderní významy run. Co dostanu? Přesně to, co jsem nechtěl.“*
-Teď: význam i druhá strana jsou slova z `../2026-10-23-v3-charakter/moderni-vyznamy-25-zdroj.md`, obraz je vybraný k tomu významu z obrazů, které owner
-dřív pochválil (zdroj u každého).
-| runa | význam z tabulky (úhel pro tohle čtení) | druhá strana z tabulky | obraz a odkud je |
-|---|---|---|---|
-| Fehu | Bohatství a zdroje → **hojnost** (owner 11-02: „Fehu = abundance“) | špatné nakládání se zdroji | teplá voda do každého domu (v2, ownerem chválený — krok 43 §1) |
-| Raidho | Cesta a pohyb → **směr** | bezcílný pohyb, ztráta směru | stopy ve sněhu v jedné linii (banka v2; owner 11-10: chůze a otisk ve sněhu „hravé a zajímavé“) |
-| Isa | Zastavení a nehybnost → **čekání, klid** | zablokování, nemožnost pokračovat | zamrzlý potok (čtení z GPT 11-05, owner: „i ty obrazy jsou dobré“) |
-- **Fehu:** Hot water comes up from the ground here and runs into every house in the valley. Fehu stands for abundance: more than enough of what life
-  runs on. What is always there is easily wasted, or left running when nobody needs it. What do you have so much of that you have stopped noticing it?
-- **Raidho:** From the pass you look back, and your tracks in the snow make one line down the valley. Raidho represents direction, the kind of movement
-  that is going somewhere. Without it you can walk all day and only add tracks. If you looked back today, what line would your tracks make?
-- **Isa:** In winter the stream stops, and under the ice no movement can be seen. Isa stands for the standstill: a time of waiting, when pushing changes
-  nothing. Waiting can also turn into being stuck, when the cold has gone and you still do not move. What would tell you the wait is over?
-Pozn.: Isa je ve v2 „těžká runa“; moderní tabulka jí dává klidný základ a stín zvlášť, proto je tu vedená jako ostatní (rozhodne owner).
+⚠️ **Dvakrát opraveno.** 2026-11-10: obraz ovcí u Fehu, který owner odmítl, a staré významy. 2026-11-11 první oprava: významy už z tabulky, ale všechny tři
+obrazy byly příroda (owner: obraz = význam runy **v životní situaci**; zadání C15 asi půl na půl), chyběla poloha člověka (A7), všechny konce byly otázka,
+ač konec řídí hledání, a nebylo vidět, kudy vstupuje hledání. Owner: *„co ještě jsi neudělal, jak jsem chtěl? Máš to udělat pořádně!“*
+Význam a druhá strana = slova z `../2026-10-23-v3-charakter/moderni-vyznamy-25-zdroj.md`.
+| runa | význam (úhel) | druhá strana | obraz | poloha (los) | hledání → konec |
+|---|---|---|---|---|---|
+| Fehu | Bohatství a zdroje → hojnost, oběh | hromadění | životní situace, nová: zahrada dá víc rajčat, než dům sní | B: „Imagine“, někdo jiný | Clarity → jedna věta |
+| Raidho | Cesta a pohyb → směr | bezcílný pohyb | Island: stopy ve sněhu v jedné linii (banka v2) | A: „Imagine“, čtenář uvnitř | Reflection → otázka |
+| Isa | Zastavení → čekání, klid | zablokování | životní situace, nová: vlak zastaví mezi stanicemi | C: bez „Imagine“ | Confirmation → podmínka (tvar b z 3.4, nevybráno) |
+- **Fehu:** Imagine someone whose garden gives more tomatoes than the house can eat, so bags of them go round to the neighbours. Fehu stands for abundance,
+  for having more than you need. Kept in the kitchen, the same tomatoes would only rot. Plenty may be most yours at the moment it leaves your hands.
+- **Raidho:** Imagine you stop at the top of the pass and look back: your tracks in the snow make one line down the valley. Raidho represents direction,
+  movement that is going somewhere. Without direction you can walk all day and only add tracks. If you looked back today, what line would your steps make?
+- **Isa:** A train stops between two stations, and after a while people put their phones away and look out of the window. Isa stands for the standstill,
+  a wait that pushing does not shorten. The same stop turns into being stuck when the doors open and nobody gets up. This pause holds as rest only if you
+  would move once the way opens.
+
+### 7.5 Co návrh a ukázky ještě nesplňují (kontrola proti `zadani-v3.md` a ownerovým zprávám 11-09 až 11-11)
+1. **Oblast a záměr** v ukázkách nejsou (owner 11-10: „všechno je odvozené od toho, co za vstupy jdou do čtení, plus area, seeking, intention“). Návrh: oblast vybere
+   obraz k úhlu (G52), záměr dá čas scény (krok 36) — neukázáno, nezkoušeno.
+2. **Nové obrazy (rajčata, vlak) nikdo neviděl ani neověřil:** neprošly slepou kontrolou, jestli nesou runu (krok 45), ani ownerem. Fehu má ownerův pokyn
+   i na druhý úhel — hodnota jako práce, pozornost, ruční výroba (F46) — ten tu není.
+3. **Tabulka moderních významů je od GPT a není ověřená** (F32).
+4. **Ukázky nejsou poměřené s ownerovými vzorovými větami** (`../2026-10-23-v3-charakter/cil-a-vzory.md`, F33).
+5. **Ownerova hlášení** o čteních, která se mu líbí a nelíbí, nejsou přečtená; **rozbor banky obrazů** neudělán (oddíl 4).
+6. **Isa** je ve v2 těžká runa (konec bez útěchy, u druhé strany světlo); tady vedená jako ostatní — rozhodnutí ownera chybí.
+7. **Otevřené z dřívějška:** tvar konce pro Confirmation (3.4) a Reflection (3.3), fáze (3.2, 3.6) — owner ještě nevybral; humor až na konec.
+8. Islandština ničeho z toho; všechno jen EN.
+9. Ukázky psal CODE-read; jak to napíše sol, se neví.
