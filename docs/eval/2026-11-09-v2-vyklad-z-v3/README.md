@@ -175,13 +175,19 @@ Na runu 3–4 úhly významu; ke každému druhá strana a 2–3 krátké situac
 obrazy z dnešní banky, které k úhlu sedí, zůstanou, ostatní se přepíšou (oddíl 4).
 
 ### 7.4 Jak by čtení vypadalo — ukázky napsal CODE-read, ne model (jen tvar; rozhodne zkouška na solu)
-- **Fehu** (úhel: hodnota vzniká péčí a roste, když je v oběhu · kazí se hromaděním): In autumn the sheep come down from the mountain, and there are more of
-  them than went up in spring. Fehu stands for wealth that grows because someone looked after it. Wealth that is only counted and guarded stops growing and
-  starts to weigh. What you have built may be ready to be used, or waiting for you to let it move.
-- **Raidho** (úhel: pohyb, který našel svůj rytmus · kazí se, když jdeš jen proto, žes začal): On a long walk across the snow you stop counting your steps,
-  and the pace starts to carry you. Raidho represents movement that has found its own rhythm. A steady pace says nothing about the direction, and it is easy
-  to keep walking only because you began. Is the road you are on still the one you chose?
-- **Isa** (těžká runa; úhel: zastavení · světlá strana: v klidu je vidět): Snow falls straight down with no wind, and by morning every footprint on the path
-  is gone. Isa stands for the standstill, when nothing moves and nothing can be hurried. A standstill is also the only time you can look at something
-  without it changing under your eyes. What do you see now that you could not see while things were moving?
-
+⚠️ **Opraveno 2026-11-11.** První ukázky (2026-11-10) vzaly u Fehu obraz ovcí z hor, který owner týž den odmítl, a významy ze starých slov aspektu místo
+moderních významů. Owner: *„říkal jsem, že obraz Fehu se mi nelíbí, říkal jsem, že chci moderní významy run. Co dostanu? Přesně to, co jsem nechtěl.“*
+Teď: význam i druhá strana jsou slova z `../2026-10-23-v3-charakter/moderni-vyznamy-25-zdroj.md`, obraz je vybraný k tomu významu z obrazů, které owner
+dřív pochválil (zdroj u každého).
+| runa | význam z tabulky (úhel pro tohle čtení) | druhá strana z tabulky | obraz a odkud je |
+|---|---|---|---|
+| Fehu | Bohatství a zdroje → **hojnost** (owner 11-02: „Fehu = abundance“) | špatné nakládání se zdroji | teplá voda do každého domu (v2, ownerem chválený — krok 43 §1) |
+| Raidho | Cesta a pohyb → **směr** | bezcílný pohyb, ztráta směru | stopy ve sněhu v jedné linii (banka v2; owner 11-10: chůze a otisk ve sněhu „hravé a zajímavé“) |
+| Isa | Zastavení a nehybnost → **čekání, klid** | zablokování, nemožnost pokračovat | zamrzlý potok (čtení z GPT 11-05, owner: „i ty obrazy jsou dobré“) |
+- **Fehu:** Hot water comes up from the ground here and runs into every house in the valley. Fehu stands for abundance: more than enough of what life
+  runs on. What is always there is easily wasted, or left running when nobody needs it. What do you have so much of that you have stopped noticing it?
+- **Raidho:** From the pass you look back, and your tracks in the snow make one line down the valley. Raidho represents direction, the kind of movement
+  that is going somewhere. Without it you can walk all day and only add tracks. If you looked back today, what line would your tracks make?
+- **Isa:** In winter the stream stops, and under the ice no movement can be seen. Isa stands for the standstill: a time of waiting, when pushing changes
+  nothing. Waiting can also turn into being stuck, when the cold has gone and you still do not move. What would tell you the wait is over?
+Pozn.: Isa je ve v2 „těžká runa“; moderní tabulka jí dává klidný základ a stín zvlášť, proto je tu vedená jako ostatní (rozhodne owner).
