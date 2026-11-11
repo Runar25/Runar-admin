@@ -205,3 +205,66 @@ Význam a druhá strana = slova z `../2026-10-23-v3-charakter/moderni-vyznamy-25
 7. **Otevřené z dřívějška:** tvar konce pro Confirmation (3.4) a Reflection (3.3), fáze (3.2, 3.6) — owner ještě nevybral; humor až na konec.
 8. Islandština ničeho z toho; všechno jen EN.
 9. Ukázky psal CODE-read; jak to napíše sol, se neví.
+
+### 7.6 Owner k ukázkám 7.4 (2026-11-11) a co z toho plyne
+1. **Fehu (rajčata):** „ok, lepší“; zelenina může být i něco jiného — „pořád něco ze zahrady“.
+2. **Raidho (stopy):** dobré, hlavně konec *If you looked back today, what line would your steps make?* — „míří přímo na člověka, aby se zamyslel nad
+   tím, co sám udělal, dnes, tento týden; má si udělat rekapitulaci dnes“.
+3. **Isa (vlak):** „nic moc; radši něco, co staví člověka přímo do obrazu a je víc o něm. To platí pro všechny runy. Některé vyžadují víc osob ve
+   čtení, jiné ukazují přímo na uživatele. Nemusíme hledat obrazy úplně mimo.“
+4. Oblast a záměr: „zatím doladíme bez“. Fehu druhý význam (práce, pozornost, ruční výroba): „zkusit, ať to vidím“. Jen EN. Napřed základ.
+5. „Lépe popsat, jak a co vidíme na runě … má vycházet z toho, co jsme už probírali: jak má výklad run fungovat, co má v člověku vyvolat, jaká
+   větná skladba ho vtáhne do obrazu … na všechno, na co přijdeš, si ještě ověřit.“
+6. **Nápad ownera — nálada člověka jako vstup** (smutný, veselý, zaneprázdněný): Rúnar podle ní směruje čtení nebo jen závěrečnou otázku (smutnému
+   něco povzbudivého, veselému něco vtipného); „dodává to jen Rúnara, nic, co by šlo do čtení navíc“. Stav: zapsáno, nezkoušeno. Souvisí: nálady
+   Rúnarova hlasu jsou odložené (`docs/archive/RUNAR_BACKLOG_odlozene.md` „Nálady“, 2026-08-14) — to byla nálada mluvčího, tohle je nálada tazatele.
+   Kde to drhne (CODE-read): čtvrté pole ve formuláři; „povzbudivé“ u těžké runy naráží na konec bez útěchy; čtení nesmí tvrdit, jak se člověk cítí
+   (smí jen zvolit tón). Nejlevnější zkouška: nálada mění jen větu 4, tři čtení.
+
+### 7.7 Co na runě vidíme — popis tří run (CODE-read 2026-11-11, k posouzení ownerem)
+Skladba podle ownerových podkladů: jádro → úhly významu → u každého „kde je to v životě vidět“ a druhá strana → kdo je v obraze (jen čtenář / čtenář
+a druhý člověk; vždy čtenář uvnitř, bod 3 výše) → čím se runa liší od sousední. Zdroje: tabulka moderních významů, výklady GPT, které owner označil
+za dobré (`../2026-10-23-v3-charakter/zdroj-gpt-2026-11-02-az-04.md`), runové básně.
+| runa | jádro | úhel | kde je to v životě vidět | druhá strana | kdo je v obraze |
+|---|---|---|---|---|---|
+| Fehu | co máš, je v pohybu | hojnost a oběh | máš víc, než spotřebuješ, a jde to dál (oblečení po dětech, jídlo, čas) | hromadění: leží to a kazí se | čtenář + ten, kdo dostane |
+| Fehu | | hodnota z práce a pozornosti | něco, do čeho někdo dal hodiny (ruční výroba, podaný hrnek) | ocenit to cenou z obchodu, nevidět to | čtenář + ten, kdo dal |
+| Fehu | | mít × čerpat | věc, kterou máš a nepoužíváš (kabát s visačkou) | hlídat ze strachu, že o to přijdeš | jen čtenář |
+| Raidho | cesta má směr a rytmus | směr | ohlédnutí za vlastní stopou; kam vede, co dělám | pohyb bez cíle, pokračuju, protože jsem začal | jen čtenář |
+| Raidho | | krok za krokem | věc, která dává smysl až v řadě (první stránka učebnice) | chtít přeskočit úsek | jen čtenář |
+| Raidho | | rytmus a načasování | tempo, které tě nese; vyjet včas | hnát se nebo otálet | čtenář, někdy spolucestující |
+| Isa | věci stojí | zastavení, které netlačíš | den, kdy nejde nic z plánu (zavřená silnice) | zůstat stát, i když už se dá jet | jen čtenář |
+| Isa | | klid, ve kterém je vidět | když se nic nehýbe, vidíš, co za pohybu ne | chlad, odstup od lidí | jen čtenář |
+| Isa | | led drží i klame | led jako most i jako kluzká plocha | spolehnout se na to, co neunese | jen čtenář |
+Hranice: Fehu × Gebo — Fehu mluví o hodnotě a co se s ní děje, Gebo o vazbě mezi dvěma (obraz daru táhne ke Gebu, viz 7.8 bod 4).
+
+### 7.8 Ověření (2026-11-11)
+1. **Runové básně** (Wikipedia: Rune poem, Fehu, Raido, Isaz; přečteno agentem, parafráze): Fehu — bohatství je útěcha, ale má se rozdávat (staroangl.);
+   působí svár mezi příbuznými (norská, islandská). Raidho — jízda je snadná pro toho, kdo sedí doma, a těžká na dlouhé cestě (staroangl.). Isa — led je
+   velmi studený, kluzký, krásný jako drahokam (staroangl.); „široký most“ (norská); zkáza odsouzených (islandská). Oběh i stín Fehu, námaha cesty
+   u Raidha a dvojí tvář ledu u Isy tedy mají oporu už ve starých textech.
+2. **Moderní tabulka (GPT) proti webu:** runecasting.com dává hlavní slovo Fehu „Abundance“, Raidho „Direction“, Isa „Stillness“ — základ sedí. Rozšířená
+   slova tabulky (hodnota, příležitosti, rytmus, načasování, soustředění, kontrola …) ani stíny tam NEJSOU; web převrácené významy nevede. ifate.com
+   nešel načíst (403). Hranice: jeden moderní web; rozšířená slova a stíny zůstávají neověřené moderním zdrojem.
+3. **Slepá kontrola scén** (agent vidí jen větu scény, neví nic): oblečení → „dát dál, co už nepotřebuješ“ · šála → „dar nese čas dárce“ · stopy →
+   „ohlédnutí za vlastní cestou“ · zavřená silnice → „vynucená pauza, zrušené plány“. Všechny čtyři trefily zamýšlený úhel. Známost situace 4 · 3 · 2 · 4
+   z 5 (stopy v průsmyku doslova zažil málokdo, jako obraz srozumitelné).
+4. **Vady, které slepá kontrola našla:** šála se čte jako dar (táhne ke Gebu) a čtenář v ní jen přijímá; u stop je „one line down the valley“
+   dvojznačné (jedna linie × jen jedny stopy = samota); dvě neobratné formulace opraveny před zápisem.
+5. **Proti vzorovým větám ownera** (`../2026-10-23-v3-charakter/cil-a-vzory.md`): známá situace ✔ (1, 4), stopy slabší; žádná věta netvrdí nic o čtenáři ✔;
+   věta 3 ukazuje, co v obraze není ✔; konce: výrok / otázka k zamyšlení / podmínka. Délka 51–58 slov.
+
+### 7.9 Ukázky po ownerových připomínkách (psal CODE-read; sol je neviděl)
+- **Fehu, hojnost a oběh** (Clarity → výrok): Imagine you pack the clothes your children have outgrown into a bag and carry it to the family next door.
+  Fehu stands for abundance, for having more than you need. In the attic the same clothes would only wait for the moths. What you have plenty of is
+  worth most while it is still moving.
+- **Fehu, hodnota z práce a pozornosti** (Reflection → otázka): Imagine a friend hands you a scarf she knitted all through November, evening after
+  evening. Fehu represents wealth, and here the wealth is the hours of someone's attention. Priced like a scarf from a shop, it would be worth almost
+  nothing. What do you own that no shop could sell you?
+- **Raidho, směr** (beze změny, owner: dobré): Imagine you stop at the top of the pass and look back: your tracks in the snow make one line down the
+  valley. Raidho represents direction, movement that is going somewhere. Without direction you can walk all day and only add tracks. If you looked back
+  today, what line would your steps make?
+- **Isa, zastavení** (Confirmation → podmínka; čtenář přímo v obraze): Imagine you wake to a road closed by snow, and for one day none of your plans
+  can go ahead. Isa stands for the standstill, a time when pushing changes nothing. The same stillness turns into being stuck if the road opens and you
+  stay in. This pause is rest only as long as you are ready to go when the road clears.
+
