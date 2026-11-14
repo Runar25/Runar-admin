@@ -110,6 +110,17 @@ if (out && out.length === 4) {
   }
 }
 
+// Pojistka 2026-11-14 (BACKLOG „spread_data“): jednoduché čtení bere runu jen z políčka runy, nikdy z prózy modelu.
+// Útok: políčko prázdné, v textu glyf uprostřed věty → do stromu nesmí přibýt větev. Text se smí číst, jen když je to
+// skládaný seznam run (dvě staré THE GATHERING mají políčko ✦) — ta větev zůstat musí. Stará verze útok pustila (ověřeno).
+const _proza = vm.runInContext('readingsToTreeLog([' +
+  '{ rune_name: "Fehu", rune_glyph: "", short_text: "Vítr nese " + _g[2] + " přes vodu." },' +
+  '{ rune_name: "THE GATHERING", rune_glyph: "✦", short_text: _g[0] + " FEHU · " + _g[1] + " URUZ" }])', sandbox);
+const _g0 = vm.runInContext('_g[0]', sandbox);
+assert('jednoduché čtení vzalo runu z prózy modelu (prázdné políčko runy)',
+       _proza.length === 1 && _proza[0].runes[0].g === _g0,
+       'log=' + JSON.stringify(_proza.map(function (r) { return r.runes.map(function (x) { return x.g; }).join(''); })));
+
 // ⭐ JÁDRO: rozumí PŘIJÍMAJÍCÍ STRANA tomu, co producent posílá?
 // Tohle je ta otázka, kterou nikdo nepoložil a která stála dva měsíce tichého
 // stromu: lab si vymyslel vlastní slovník ('healing', 'decision'), produkce
