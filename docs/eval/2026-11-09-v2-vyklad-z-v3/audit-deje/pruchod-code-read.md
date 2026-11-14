@@ -88,3 +88,36 @@ Rebarboru a kvásek (2026-11-14) psala session CODE-tune stejným postupem, jak�
 ## 6. Hranice
 Jeden čtenář (CODE-read), anglické znění, vlastní výklad run; u „drží“ jsem byl mírnější k obrazům, které jsou klidné z podstaty
 (Eihwaz jalovec pod sněhem, Ingwaz semeno v zemi). Skupiny A–D jsou podnět pro ownera, ne rozsudek; nic se z banky neodebírá.
+
+## 7. Oprava průchodu: střet s tím, co owner už dřív řekl (dohledáno 2026-11-14 večer)
+Owner k postupu v oddíle 5: *„jde to udělat ještě lépe?“* a *„napřed doladíme všechno, co je potřeba“*. Než jsem odpověděl, přečetl
+jsem, co o obrazech už stojí: `RUNAR_DESIGN.md` („Obraz — dvě síta“, „Typ obrazu“, „Délka a tvar obrazu“) a v labu V3
+`../../2026-10-23-v3-charakter/krok43-obrazy-dnesni-doba.md` oddíl 1 a `krok45-obraz-z-vyznamu.md`. Mělo se to stát před průchodem.
+1. **Tři obrazy, které jsem označil za vadné, owner dřív pochválil:** kvásek (č. 3), teplá voda do domů (č. 8), strom s hlubokými
+   kořeny po bouři (č. 68) — krok 43, oddíl 1.1. U nich platí ownerův soud, ne můj průchod.
+2. **Moje skupina B („poučka“) je jako plošné pravidlo špatně.** Owner chválí obrazy, kde *fyzický zákon JE tím významem* (plíce musí
+   dech pustit, než naberou další; most stojí, jen když ho nesou oba břehy; kvásek žije, protože ho někdo krmí) — krok 43, oddíl 1.3 (b).
+   Vada není „věta říká pravidlo“, ale „pravidlo není mechanismus runy“ (kopřiva: kdo jde rychle, spálí se = ponaučení).
+3. **Tři obrazy, které jsem nechal jako „drží“, owner 2026-11-03 odmítl a v bance pořád jsou:** mléko přes okraj vědra (č. 4) a kráva
+   prodaná na podzim (č. 6) — „19. století“; loď tak plná, že sedí hluboko (č. 7) — „nevěrohodné“. Můj průchod se ptal jen „kdo koná“
+   a dobu ani věrohodnost nehlídal.
+4. Průchod tedy platí jen pro to, na co se ptal (kdo koná a je to runa); čísla 149 / 41 nejsou seznam dobrých a špatných obrazů.
+
+## 8. Postup podruhé — co už víme na pěti místech, složené do jednoho (návrh, k ownerovu rozhodnutí)
+Většina pravidel už existovala; chyba je, že leží roztroušeně a při psaní obrazu je nikdo nemá před sebou.
+1. **Mechanismus napřed** (krok 45): jedna věta, co se v té stránce runy stane a mezi kým. Ne klíčové slovo, ne věta popisu.
+2. **Dvě podoby, které owner chválí** (krok 43): (a) situace, kterou zažil skoro každý; (b) fyzický zákon, který je tím významem.
+   Krajina sama runu nenese — v kroku 45 prošlo 5 z 8 situací a 2 z 8 islandských obrazů.
+3. **Jedna scéna, jeden, kdo koná, přítomnost; věc musí konat, ne stát** (DESIGN „Typ obrazu“ a „Délka a tvar“).
+4. **Druhá půlka věty ukáže, co v záběru není** („…a nikdo ho nežádal“; krok 43).
+5. **Dnešní doba a věrohodnost:** nic z 19. století; „jak moc se tohle někomu stane?“ (owner 2026-11-03 a 11-04).
+6. **Nové z dneška:** škrtací zkouška (bez okolností musí zbýt runa) · zkouška opakem (jde-li runové slovo vyměnit a děj se nezmění,
+   runu nese slovo, ne děj) · u run o dvou stranách musí konat obě (Gebo, Ehwaz).
+7. **Kontrola ve dvou krocích, žádný kruh:** (i) soudce vidí jen obraz, bez run, a napíše, kdo koná a co se stane; (ii) jiný soudce
+   vybírá runu z 25 jednovětých mechanismů (krok 45), ne z popisů, ze kterých obraz vznikl. Projde jen obojí.
+8. **Zkouška čtením:** jedno čtení solu, než jde obraz do banky (owner 2026-11-04: „pokud to nebude dobré, tak nejsou dobré ani obrazy“).
+9. **Stránka runy se zapíše až podle toho, co obraz dělá** — jde do zadání jako „focus on“.
+10. **Poslední slovo má owner:** poznatelnost není kvalita.
+Aby to nezůstalo na paměti session (§30): jeden soubor s tímhle postupem, na který ukáže hook při dotyku banky, a strojová kontrola
+toho, co stroj posoudit umí (časová slova, délka, slova ponaučení). Zatím nepostaveno.
+

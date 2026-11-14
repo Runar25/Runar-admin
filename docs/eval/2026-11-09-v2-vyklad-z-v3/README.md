@@ -460,3 +460,9 @@ place, weather, object or animal.“ 9 volání solu. Skladatel `zkouska-1114/sl
 6. **Hranice:** n = 3, jedno čtení na buňku, anglicky, bez oblasti a otázky. Bez obrazu nese čtení jen popis runy — u téže runy bude
    vstup pokaždé stejný, takže pestrost mezi čteními téže runy tahle zkouška neměří a nic ji nezaručuje. Jestli jsou čtení dobrá,
    rozhoduje owner.
+
+**Upřesnění ownera (týž večer):** *„špatně adresovaný problém. spletl jsem session. tohle musím pročíst znova.“* Výtka „bez obrazu“
+tedy nepatřila téhle zkoušce (zadání bez obrazu je Rune of the Day u CODE-tune). Odstavec „Chyba CODE-read“ výš proto neplatí jako
+ownerův soud o 8.3; owner si 8.3 teprve přečte. Čtení N1–N3 zůstávají jako vedlejší doklad, jak sol píše bez obrazu — nikdo si je
+pro tenhle lab nevyžádal.
+
