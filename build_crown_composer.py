@@ -412,7 +412,7 @@ HTML = r"""<!DOCTYPE html>
         if(d<need) ok=false; md=Math.min(md, d-need); }
       if(ok) return u; if(md>bestD){ bestD=md; best=u; } }
     return (best!=null) ? best : clamp(want, lo, hi); }
-  /* steering branch composeru ma vlastni klice (runar-branch.js AREA_LAT/INTENT_ELEV) */
+  /* steering branch composeru ma vlastni klice (runar-branch.js AREA_LAT/INTENT_ELEV); AREA_LAT labu se z nich sklada (nize) */
   var STEER_AREA={ love:'love_relationships', family:'family', healing:'healing', inner:'inner_growth', spirituality:'spirituality', crossroads:'crossroads', purpose:'purpose', career:'career' };
   var STEER_INT={ past:'understanding_past', present:'right_now', decision:'decision_ahead' };
   var _runeHost={};  /* runa -> index pramene, na jehoz vetvi roste (stableAssign) */
@@ -1290,7 +1290,9 @@ HTML = r"""<!DOCTYPE html>
   var ELEM_AETT={ fire:'freya', air:'tyr', water:'tyr', earth:'heimdall', shadow:'heimdall' };
   /* KROK 2: intention -> Norns vyska (-1 urd/dole .. +1 skuld/nahore); area -> strana (-1 dovnitr/vlevo .. +1 ven/vpravo) */
   var INT_AXIS={ past:-1, present:0, decision:1 };
-  var AREA_LAT={ healing:-0.7, family:-0.6, inner:-0.7, love:-0.2, crossroads:0, purpose:0.6, career:0.7, spirituality:0.5 };
+  /* strana oblasti: JEDINA tabulka je v enginu (runar-branch.js AREA_LAT, klice branch composeru) — tady se jen preklada
+     na klice labu pres STEER_AREA (2026-11-14; drive vlastni kopie s jinymi cisly nez engine, §20). */
+  var AREA_LAT={}; for(var ak in STEER_AREA) AREA_LAT[ak]=B.AREA_LAT[STEER_AREA[ak]];
   var WORLD_FRAC={ asgard:0.95, midgard:0.80, hel:0.62 };  /* emergence height */
   var runesByEl={}; B.RUNES.forEach(function(r){ (runesByEl[r.el]=runesByEl[r.el]||[]).push(r); });
   /* AETT: runa -> aett (Freya/Heimdall/Tyr) pres glyf z globalniho RUNES; aett -> charakter rustu vetve */

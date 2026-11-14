@@ -96,10 +96,13 @@ var ELEMENT_ARCH = {
 var WORLD_ELEV = { asgard: 0.8, midgard: 0.0, hel: -0.8 };
 var AETT_LABEL = { freya:'Freya (warm/up)', heimdall:'Heimdall (shadow/root)', tyr:'Tyr (flow)', none:'-- (Odinn, the unknown)' };
 
-/* steering: shown so KUKY sees the effect of each optional field */
+/* steering: shown so KUKY sees the effect of each optional field.
+   JEDINA tabulka oblasti stromu (2026-11-14): nitro (-) / svet (+) podle RUNAR_TREE.md §3 — Love a Crossroads bez strany,
+   Spirituality ve svete. Cte ji i lab koruny / aplikace (RunarBranch.AREA_LAT -> strana ctení a natoceni ramen); drive tam
+   byla druha kopie s jinymi cisly (Love -0,75, Spirituality -0,20, Crossroads +0,10). */
 var AREA_LAT = {
-  love_relationships:-0.75, family:-0.45, healing:-0.55, inner_growth:-0.65,
-  spirituality:-0.20, crossroads:0.10, purpose:0.50, career:0.72
+  love_relationships:-0.20, family:-0.60, healing:-0.70, inner_growth:-0.70,
+  spirituality:0.50, crossroads:0.00, purpose:0.60, career:0.70
 };
 /* area -> PHYSICAL: sub-branch density (busy life areas branch more) */
 var AREA_SUB = {
@@ -297,7 +300,7 @@ function buildBranch(spec, T) {
 }
 
 global.RunarBranch = {
-  RUNES: RUNES, ELEMENTS: ELEMENTS, TREE_BASE: TREE_BASE,
+  RUNES: RUNES, ELEMENTS: ELEMENTS, TREE_BASE: TREE_BASE, AREA_LAT: AREA_LAT,
   buildBranch: buildBranch,
   setRuneTune: setRuneTune, getRuneTune: getRuneTune, exportTune: exportTune, RUNE_TUNE: RUNE_TUNE, RUNE_CHAR: RUNE_CHAR,
   barkRgb: barkRgb, leafRgb: leafRgb, mixRgb: mixRgb, shadeRgb: shadeRgb, hexRgb: hexRgb,
