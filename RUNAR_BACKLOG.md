@@ -206,9 +206,13 @@ hlídal jen V2 cestu.
   Uživatel dostane náhodnou runu, nebo zadá svou — bez oblasti, seekingu a záměru. **Do stromu nejde.** Rúnar řekne, jaký má runa význam
   dnes: jak může na den, tedy na člověka, působit — **ne rada**, **bez obrazu**, stejným směrem jako popis větve (položka výš). Vzorek
   Berkana psal Claude (ne model výkladů), 2026-11-14. **Soud ownera:** tón *„je v pořádku“*, *„zní to dobře“*; **max 3 věty, čárky
-  smějí**; poslední věta *„výborná“*. Pak upřesnil: *„max 30 slov“* (zkrácení na 3 věty se stejným počtem slov nestačilo). Vzorek,
-  27 slov (měřítko tónu, ne text k opsání do promptu): *„Berkana is growth that does not hurry. This is a day for noticing where you
-  are patient with something, and where something has been patient with you.“*
+  smějí**; poslední věta *„výborná“*. Pak *„max 30 slov“* — a po 27slovném vzorku: *„to je moc krátké … 30 slov je asi málo“*.
+  **Stavba (owner 2026-11-14): tři části, každá ukazuje na něco jiného** — (1) popis runy; (2) co se na základě runy může v člověku
+  odehrávat (co mu chybí, co je nebo není přítomné); (3) *„This is a day for noticing …“* — na co se může zaměřit, zamyslet, co
+  vylepšit; záleží na runě. Vzorek složil owner, 55 slov (měřítko tónu a stavby, ne text k opsání do promptu): *„Berkana is the rune
+  of growth that does not hurry, and today it turns toward what is still small in you, a beginning you have hardly admitted to, a care
+  you give without counting it. This is a day for noticing where you are patient with something, and where something has been
+  patient with you.“* Strop délky zatím nerozhodnut.
   Owner 2026-11-14: předat CODE-tune — plán napřed ownerovi (vstup, kde v appce, cena/kredity, IS, uložení ano/ne).
 - [x] ✅ *(2026-11-14, owner „udělej“, CODE-tree, b48fefb: jedna tabulka v enginu `RunarBranch.AREA_LAT` s hodnotami kánonu, lab i aplikace ji čtou odtud. Nález: tabulka enginu strom NEMĚNILA — koruna předává úhel `spec.dev` a `lat` z oblasti se pak nečte; nulový test s extrémními hodnotami dal KUKYho strom bajt po bajtu stejný. „Řídí natočení větviček“ níž tedy neplatilo.)* **Strom (lab): `AREA_LAT` odporuje „oblast = strana“** (CODE-tree, nalezeno 2026-10-09). **Stav** (triáž 2026-10-12, CODE-tree): lab má vlastní `AREA_LAT` srovnanou s kánonem (Love −0,2, Crossroads 0, Spirituality +0,5; čte ji `sideOf` a `latOf`), engine `runar-branch.js` drží starou (Love −0,75, Spirituality −0,20, Crossroads +0,10) a řídí jí natočení větviček při kreslení (`spec.area`). Pořád dvě kopie téže informace (§20) — srovnat engine s labem s golden-verify kresby. Původní text: Tabulka v `runar-branch.js` (sdílená
   s aplikací) bere Love −0,75 (nitro), Spirituality −0,20 (skoro střed), Crossroads +0,10 — kánon (`RUNAR_TREE.md` §3) má Love a Crossroads
