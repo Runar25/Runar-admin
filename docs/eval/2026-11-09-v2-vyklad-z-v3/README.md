@@ -418,3 +418,45 @@ potom má smysl testovat, jak dobře ho model dokáže interpretovat“ (GPT). I
 a břehu chybí druhá strana. Z čtení GPT vybírá D u Raidha a Isy, C u Geba; jedna stavba pro všechny runy podle něj nesedí.
 Co z toho hned vzniklo: audit celé banky „odehrává se v obraze to, co runa znamená?“ → `audit-deje/README.md` (28 ze 190 sporných;
 nástroj je shovívavý — obraz Isy, který owner odmítl, pustil).
+
+### 8.5 Oprava: čtení BEZ OBRAZU (2026-11-14, pátá zpráva)
+**Owner k 8.3:** *„proč je všude obraz, když jsem říkal, že tam žádný být nemá? dostal jsi jasné zadání bez obrazu! dostal jsi čtení,
+jak má vypadat.“* **Chyba CODE-read:** owner v 8.2 řekl, že se mu popis obrazu nelíbí a které věty se mu líbí (bez scény) — a všechny
+tři varianty P1–P3 obraz přesto měly. Zadání „bez obrazu“ a ownerův vzor stavby (popis runy · co se na základě runy může v člověku
+odehrávat · na co se může zaměřit) stály od 14:40 téhož dne v `RUNAR_BACKLOG.md` u „Rune of the Day“ (zapsala CODE-tree) — před
+zkouškou jsem to nedohledal. Zkouška 8.3 tedy neodpovídá na to, co owner chtěl; platí z ní jen měření pořadí vět a délky.
+
+**Nová zkouška:** tytéž tři runy, systém = produkce, v zadání **žádný obraz ani stránka z banky**; zdroj významu = popis runy z appky
+(`UI_TEXT.en.coll_rune`, 1. a 3. odstavec; 2. mluví o obraze, proto ven; 4. = otázka runy). Zadání říká: „It contains no scene: no
+place, weather, object or animal.“ 9 volání solu. Skladatel `zkouska-1114/sloz1114n.js`, úlohy `u1114_bezobrazu.json`, výsledky
+`u1114_bezobrazu_vysledky.json`.
+- **N1 tři části** (ownerova stavba + konec z v2): 1 „X stands for“ · 2 co se v člověku může dít, co je nebo chybí · 3 „You can…“ na
+  co se může podívat · 4 dvě možnosti.
+- **N2 bez pořadí:** pojmenuj runu, řekni, co je, a zůstaň u toho, jaké to může být v životě; konec dvě možnosti.
+- **N3 viditelný plán:** napřed do výstupu smysl (do 8 slov) a dvě tváře runy (do 12 slov), pak čtení.
+
+**Čtení (doslova):**
+1. Raidho N1 — Raidho stands for a course you have already begun, whose direction becomes clearer as you go. You may feel steady in it, or you may no longer know why you continue. You can notice whether your reasons still feel like your own. Perhaps this course still matters to you, or perhaps you keep going because you once began.
+2. Isa N1 — Isa stands for silence when something that once moved has come to a halt. You may feel unable to make progress, though this pause need not mean an end. You can notice what remains unclear when you stop pressing for change. You may be waiting for the right time, or you may be ready to leave something as it is.
+3. Gebo N1 — Gebo stands for a gift freely given and received, with no debt between you and another person. You may feel close to someone, or you may feel that kindness comes with a price. You can notice whether you give freely and whether receiving kindness makes you uneasy. Perhaps you can give without expecting anything back, or perhaps you can receive without rushing to repay; only you know which feels harder.
+4. Raidho N2 — Raidho is the way you have already begun, shaped by each step rather than set out in advance. You may only see its course when you look back, and a change of direction may not make sense yet. You may find yourself continuing because you chose this way once. You may still want where you are going, or you may no longer want it.
+5. Isa N2 — Isa is silence, when something that was moving comes to a halt. You may feel this in a conversation that goes quiet or a decision that stays unresolved. The pause need not mean an end; something may still be changing beyond your notice. You may be waiting for time, or seeing what still matters to you.
+6. Gebo N2 — Gebo speaks of a gift freely given and freely received, with no debt between you. You may want to give something, yet hesitate because you cannot know what comes back. Or you may find it hard to receive without offering something at once. Perhaps you are ready to give without return, or perhaps you need room to receive.
+7. Raidho N3 — Raidho stands for a course already begun, whose shape you see more clearly in hindsight. You may find that what once felt right still matters, even when your reasons change. You may also find yourself continuing because you have continued for so long. You may be moving toward what you want, or staying with a choice that no longer fits.
+   (plán: sense „Your course takes shape as you continue.“ · faces „You may feel purposeful, or bound by an earlier choice.“)
+8. Isa N3 — Isa stands for silence when what once moved comes to a stop. You may feel that pause as room to notice something you have missed, or as a limit you cannot yet explain. Stillness does not always mean an ending, and change may continue beyond your view. You may be waiting for the right time, or you may be avoiding what you already see.
+   (plán: sense „Silence when movement stops.“ · faces „A pause that protects; a pause that confines.“)
+9. Gebo N3 — Gebo stands for giving and receiving without keeping score. You may feel ready to offer something, though you cannot know whether anything comes back. You may also find it hard to accept care when you cannot repay it at once. Perhaps you are willing to give freely, or perhaps you are learning to receive without debt.
+   (plán: sense „A gift freely given and freely received.“ · faces „You give without keeping count, or receive without owing.“)
+
+**Co je změřeno (n = 3 na variantu):**
+1. **Scéna:** žádné z 9 čtení nemá místo, počasí, předmět ani zvíře (strojově hledaná slova scény: jediný nález „step“ u Raidho N2,
+   převzaté z popisu runy „each step“).
+2. **Délka** (cíl 50–58): N1 58, 60, 70 · N2 64, 56, 58 · N3 60, 64, 56 → v mezích 1, 2 a 1 ze 3. Čtyři věty 9 z 9.
+3. **Opisování popisu runy** (nejdelší doslovný úsek): Isa N1 a N2 po 5 slovech („need not mean an end“), Raidho N2 4, jinak 1–2.
+4. **Tvrzení o čtenáři:** všechno je podané s „may / perhaps“ (čteno okem, 9 z 9); žádná rada. Gebo N1 přidalo dovětek „only you know
+   which feels harder“ a vyšlo nejdelší.
+5. **Plán (N3)** si u Raidha tentokrát nic nepřidal; dvě tváře runy z plánu se pak objeví ve 2. a 3. větě.
+6. **Hranice:** n = 3, jedno čtení na buňku, anglicky, bez oblasti a otázky. Bez obrazu nese čtení jen popis runy — u téže runy bude
+   vstup pokaždé stejný, takže pestrost mezi čteními téže runy tahle zkouška neměří a nic ji nezaručuje. Jestli jsou čtení dobrá,
+   rozhoduje owner.

@@ -1,0 +1,11 @@
+[
+ {"id": "raidho-N1", "runa": "Raidho", "seed": 1154, "zmeny": ["N1"]},
+ {"id": "isa-N1", "runa": "Isa", "seed": 1154, "zmeny": ["N1"]},
+ {"id": "gebo-N1", "runa": "Gebo", "seed": 1154, "zmeny": ["N1"]},
+ {"id": "raidho-N2", "runa": "Raidho", "seed": 1154, "zmeny": ["N2"]},
+ {"id": "isa-N2", "runa": "Isa", "seed": 1154, "zmeny": ["N2"]},
+ {"id": "gebo-N2", "runa": "Gebo", "seed": 1154, "zmeny": ["N2"]},
+ {"id": "raidho-N3", "runa": "Raidho", "seed": 1154, "zmeny": ["N3"]},
+ {"id": "isa-N3", "runa": "Isa", "seed": 1154, "zmeny": ["N3"]},
+ {"id": "gebo-N3", "runa": "Gebo", "seed": 1154, "zmeny": ["N3"]}
+]
