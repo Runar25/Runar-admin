@@ -1,0 +1,105 @@
+{
+ "kandidati": [
+  "B1",
+  "A1",
+  "K1"
+ ],
+ "soudci": [
+  [
+   {
+    "n": 1,
+    "id": "K1",
+    "spravne": "R60",
+    "kody": {
+     "R31": "Perth",
+     "R18": "Mannaz",
+     "R60": "Blank"
+    }
+   },
+   {
+    "n": 2,
+    "id": "B1",
+    "spravne": "R22",
+    "kody": {
+     "R22": "Berkana",
+     "R69": "Othila",
+     "R55": "Ingwaz"
+    }
+   },
+   {
+    "n": 3,
+    "id": "A1",
+    "spravne": "R64",
+    "kody": {
+     "R95": "Ansuz",
+     "R78": "Thurisaz",
+     "R64": "Algiz"
+    }
+   }
+  ],
+  [
+   {
+    "n": 1,
+    "id": "B1",
+    "spravne": "R21",
+    "kody": {
+     "R58": "Ingwaz",
+     "R21": "Berkana",
+     "R62": "Othila"
+    }
+   },
+   {
+    "n": 2,
+    "id": "A1",
+    "spravne": "R17",
+    "kody": {
+     "R82": "Thurisaz",
+     "R17": "Algiz",
+     "R35": "Ansuz"
+    }
+   },
+   {
+    "n": 3,
+    "id": "K1",
+    "spravne": "R81",
+    "kody": {
+     "R30": "Mannaz",
+     "R57": "Perth",
+     "R81": "Blank"
+    }
+   }
+  ],
+  [
+   {
+    "n": 1,
+    "id": "A1",
+    "spravne": "R76",
+    "kody": {
+     "R76": "Algiz",
+     "R90": "Thurisaz",
+     "R86": "Ansuz"
+    }
+   },
+   {
+    "n": 2,
+    "id": "B1",
+    "spravne": "R63",
+    "kody": {
+     "R28": "Ingwaz",
+     "R63": "Berkana",
+     "R45": "Othila"
+    }
+   },
+   {
+    "n": 3,
+    "id": "K1",
+    "spravne": "R38",
+    "kody": {
+     "R71": "Perth",
+     "R26": "Mannaz",
+     "R38": "Blank"
+    }
+   }
+  ]
+ ]
+}
