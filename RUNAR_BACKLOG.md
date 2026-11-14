@@ -823,6 +823,11 @@ Procházka je tím úplná.
       startu. Že to sedlo, pozná se podle **„(tester)" / „(prófari)"** za jménem tieru v panelu.
 
 ## Zjištěno při auditu — nespěchá, ale ať se neztratí
+- [ ] **Kontrola „základ produkce“ jednou spadla naprázdno** (CODE-read 2026-11-14 večer, pre-push nad commitem 0b3dda9, který měnil jen
+  dokumenty labu). `verify_zaklad_produkce.js` (smoke ㉼) ohlásil 2 vady: „+“ u `#sp-curr-toggle` je 1,18× textu místo 1,35× (po načtení
+  a po návratu z liferune). Hned poté prošla sama (`node scripts/verify_zaklad_produkce.js`) i celý smoke při druhém pushi téhož
+  commitu. Příčina neověřena — nabízí se měření velikosti dřív, než se v prohlížeči načte písmo, při zatíženém stroji. Výpis pádu:
+  `.git/runar-prepush-posledni.log` se přepsal druhým během; znění vady je tady. Vlastník kontroly: CODE-tune.
 - [ ] **Fehu: dva obrazy, které owner odmítl, jsou pořád v bance** (CODE-read 2026-11-14; odmítl je už 2026-11-03 jako „19. století“,
   `docs/eval/2026-10-23-v3-charakter/krok43-obrazy-dnesni-doba.md` oddíl 1.2). Owner 2026-11-14: *„mléko přes okraj bude lepší jako voda
   přes okraj. kráva prodaná na podzim není dobrý obraz. skoro žádný člověk si takovou věc nedokáže představit, o co by mělo jít. a hlavně
