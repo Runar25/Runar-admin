@@ -124,3 +124,16 @@ Většina pravidel už existovala; chyba je, že leží roztroušeně a při psa
 Aby to nezůstalo na paměti session (§30): jeden soubor s tímhle postupem, na který ukáže hook při dotyku banky, a strojová kontrola
 toho, co stroj posoudit umí (časová slova, délka, slova ponaučení). Zatím nepostaveno.
 
+## 9. Owner k oddílu 7 a 8 (2026-11-14 večer)
+1. K odmítnutým obrazům Fehu: *„mléko přes okraj bude lepší jako voda přes okraj. kráva prodaná na podzim není dobrý obraz. skoro žádný
+   člověk si takovou věc nedokáže představit, o co by mělo jít. a hlavně to vůbec není zajímavý obraz.“* → položka v `RUNAR_BACKLOG.md`.
+   Pozor u vody: voda přes okraj sklenice pod kohoutkem vyšla 2026-11-03 jako „promrhaná hojnost“ (Fehu / Laguz, jasnost 2 z 5) a horká
+   voda přes okraj pramene 2026-11-04 jako Ingwaz — `../../2026-10-23-v3-charakter/krok43-obrazy-dnesni-doba.md`, `krok45-obraz-z-vyznamu.md`.
+2. K bodu 8.1 (mechanismus napřed, ne klíčové slovo ani věta popisu): *„velká chyba.“* Čtu to jako soud o tom, jak obrazy vznikaly
+   dosud (můj výklad — neověřeno; položeno ownerovi jako otázka).
+3. K bodu 8.2: *„ano, třeba most stojí, jen když ho nesou oba břehy, je moc dobrý, pokud se hodí na runu.“*
+4. K bodu 8.3 (věc musí konat, ne stát): *„záleží podle významu runy. ne vždy to snad musí být věc?“* Smysl: konat může člověk, zvíře,
+   věc i živel — podle runy; pravidlo zní „ten, kdo v obraze koná, dělá to, co runa znamená“.
+5. K jednomu souboru s postupem a strojové kontrole: *„15. ok“* → `docs/postup-obraz.md` + `docs/eval/2026-09-26-obrazy/kontrola_tvaru.py`
+   (hook je vypíše při dotyku nástrojů brány). Oddíl 8 tady tím přestává být místem pravdy; platí `docs/postup-obraz.md`.
+

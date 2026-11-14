@@ -113,6 +113,18 @@
       "pravidla": ["§30"],
       "hlavicky": ["scripts/protipriklady.py"],
       "pamet": ["guard-test-the-lifecycle", "read-the-check-before-push"]
+    },
+    {
+      "oblast": "tvorba obrazů",
+      "_proc": "KUKY 2026-11-14: „proč je teda tvoříme špatně? jak je máme tvořit lépe?“ — obrazy vznikaly z věty popisu a kontrola „která runa“ je pouštěla (Isa: padající sníh jako nehybnost). Pravidla ležela na pěti místech; při prvním dotyku nástrojů brány nebo postupu se vypíše pořadí kroků a zkoušek.",
+      "cesty": ["docs/eval/2026-09-26-obrazy/**", "docs/postup-obraz.md"],
+      "pravidla": ["§23", "§24"],
+      "docs": [
+        {"soubor": "docs/postup-obraz.md", "nadpis": "1. Než obraz napíšu"},
+        {"soubor": "docs/postup-obraz.md", "nadpis": "2. Když obraz píšu"},
+        {"soubor": "docs/postup-obraz.md", "nadpis": "3. Zkoušky, než obraz uvidí owner"}
+      ],
+      "hlavicky": ["docs/eval/2026-09-26-obrazy/kontrola_tvaru.py"]
     }
   ]
 }
