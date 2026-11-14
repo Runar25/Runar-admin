@@ -340,3 +340,17 @@ než čtení, kde třetí věta mluví obecně o významu („You can look at wh
 Co z toho plyne: směr „věty po obrazu patří runě“ v tomhle znění **není zlepšení** — třetí věta bez scény vyjde abstraktní.
 Co zůstává jako nález: opakování téhož na víc místech čtení nedrží (B1, C), takže zadání jde zkrátit beze změny čtení; a sol dělá to,
 co zadání říká nejkonkrétněji. Verdikt je nad jednou dvojicí čtení; všech 15 čtení owner dostal vedle sebe týž den.
+
+### 8.2 Owner k 15 čtením a k obrazu (2026-11-14, druhá zpráva)
+1. K variantě D u Isy: *„You can look at what remains unchanged without deciding yet what it means. It may be a standstill you cannot shift,
+   or a pause in which you see more clearly. — mně se tohle celkem líbí, ta první část, popis obrazu, se mi nelíbí.“*
+   Smysl: věta o významu a konec z varianty D se líbí; nelíbí se první věta, která jen převypráví obraz. (Upřesňuje 8.1: „produkce zní lépe“
+   platilo pro celek, ne proti třetí a čtvrté větě varianty D.)
+2. B1: *„příliš konkrétní.“*
+3. Nápad k obrazu: *„líbilo by se mi, kdyby obraz byl upravován podle toho, jak je potřeba, a tím se řešila jak sezóna, tak variabilita obrazů
+   obecně. snow heath může být třeba across sand beach atd. … tím měnit klíčová slova.“*
+   Smysl: obraz jako pevné jádro (to, co nese runu) + vyměnitelné prostředí; výměnou prostředí by se řešila sezóna i pestrost.
+   Co k tomu už víme: „slovo, které nese runu, zůstává; ostatní jde pryč“ a po každé změně znovu brána — 12 z 15 zkrácených drželo
+   (`RUNAR_DESIGN.md` „Délka a tvar obrazu“ 4); sol má na jednu myšlenku jednu výchozí scénu, pestrost sám nevyrobí
+   (`../2026-10-23-v3-charakter/napric-labem.md`) — výměnu proto musí dělat los v kódu, ne pokyn „obměň to“. Nezkoušeno.
+4. Owner vložil rozbor GPT o psaní promptu pro sol bez přemýšlení → `zdroj-gpt-2026-11-14-prompt-sol-bez-premysleni.md` (i s ověřením).
