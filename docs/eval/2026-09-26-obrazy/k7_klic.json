@@ -1,0 +1,43 @@
+{
+ "kandidati": [
+  "F5"
+ ],
+ "soudci": [
+  [
+   {
+    "n": 1,
+    "id": "F5",
+    "spravne": "R95",
+    "kody": {
+     "R95": "Fehu",
+     "R22": "Jera",
+     "R64": "Berkana"
+    }
+   }
+  ],
+  [
+   {
+    "n": 1,
+    "id": "F5",
+    "spravne": "R35",
+    "kody": {
+     "R35": "Fehu",
+     "R17": "Berkana",
+     "R21": "Jera"
+    }
+   }
+  ],
+  [
+   {
+    "n": 1,
+    "id": "F5",
+    "spravne": "R86",
+    "kody": {
+     "R76": "Berkana",
+     "R63": "Jera",
+     "R86": "Fehu"
+    }
+   }
+  ]
+ ]
+}
