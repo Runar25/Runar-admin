@@ -1,0 +1,136 @@
+{
+ "kandidati": [
+  "F1",
+  "F2",
+  "O1",
+  "O2"
+ ],
+ "soudci": [
+  [
+   {
+    "n": 1,
+    "id": "F2",
+    "spravne": "R95",
+    "kody": {
+     "R60": "Isa",
+     "R95": "Fehu",
+     "R55": "Jera"
+    }
+   },
+   {
+    "n": 2,
+    "id": "O1",
+    "spravne": "R31",
+    "kody": {
+     "R31": "Othila",
+     "R18": "Laguz",
+     "R78": "Raidho"
+    }
+   },
+   {
+    "n": 3,
+    "id": "F1",
+    "spravne": "R95",
+    "kody": {
+     "R64": "Berkana",
+     "R55": "Jera",
+     "R95": "Fehu"
+    }
+   },
+   {
+    "n": 4,
+    "id": "O2",
+    "spravne": "R31",
+    "kody": {
+     "R22": "Gebo",
+     "R69": "Nauthiz",
+     "R31": "Othila"
+    }
+   }
+  ],
+  [
+   {
+    "n": 1,
+    "id": "F2",
+    "spravne": "R35",
+    "kody": {
+     "R81": "Isa",
+     "R35": "Fehu",
+     "R58": "Jera"
+    }
+   },
+   {
+    "n": 2,
+    "id": "F1",
+    "spravne": "R35",
+    "kody": {
+     "R17": "Berkana",
+     "R58": "Jera",
+     "R35": "Fehu"
+    }
+   },
+   {
+    "n": 3,
+    "id": "O1",
+    "spravne": "R57",
+    "kody": {
+     "R82": "Raidho",
+     "R57": "Othila",
+     "R30": "Laguz"
+    }
+   },
+   {
+    "n": 4,
+    "id": "O2",
+    "spravne": "R57",
+    "kody": {
+     "R62": "Nauthiz",
+     "R57": "Othila",
+     "R21": "Gebo"
+    }
+   }
+  ],
+  [
+   {
+    "n": 1,
+    "id": "O2",
+    "spravne": "R71",
+    "kody": {
+     "R45": "Nauthiz",
+     "R71": "Othila",
+     "R63": "Gebo"
+    }
+   },
+   {
+    "n": 2,
+    "id": "F2",
+    "spravne": "R86",
+    "kody": {
+     "R38": "Isa",
+     "R28": "Jera",
+     "R86": "Fehu"
+    }
+   },
+   {
+    "n": 3,
+    "id": "O1",
+    "spravne": "R71",
+    "kody": {
+     "R26": "Laguz",
+     "R90": "Raidho",
+     "R71": "Othila"
+    }
+   },
+   {
+    "n": 4,
+    "id": "F1",
+    "spravne": "R86",
+    "kody": {
+     "R28": "Jera",
+     "R76": "Berkana",
+     "R86": "Fehu"
+    }
+   }
+  ]
+ ]
+}
