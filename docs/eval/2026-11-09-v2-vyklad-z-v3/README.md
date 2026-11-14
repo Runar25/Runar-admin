@@ -268,3 +268,24 @@ Hranice: Fehu × Gebo — Fehu mluví o hodnotě a co se s ní děje, Gebo o vaz
   can go ahead. Isa stands for the standstill, a time when pushing changes nothing. The same stillness turns into being stuck if the road opens and you
   stay in. This pause is rest only as long as you are ready to go when the road clears.
 
+### 7.10 Owner 2026-11-14 k ukázkám 7.9 a co k tomu už V3 lab věděl
+Owner: „Imagine“ měla být jen jedna možnost, jak člověka dostat z nějakého pohledu do obrazu; začíná-li jím každé čtení, je to špatně z podstaty —
+„vezmeš holé slovo a cpeš ho všude“ (možnost „you can imagine“ úplně vypadla). Obrazy: oblečení sousedům lidé nedávají (nanejvýš charitě), totéž
+platilo pro zeleninu — „plácáš jedno přes druhé“. Pokyn: projít vše, co je pro V3 udělané a zapsané.
+Co lab V3 už měl zapsáno a ukázky 7.4 a 7.9 to porušily (všechny odkazy do `../2026-10-23-v3-charakter/`):
+1. **„Imagine“ je jedna položka losu, ne stavba** (`zadani-v3.md` G48, G57). Čtení z GPT, které owner pochválil, mělo „Představ si“ 1/5; ostatní začínají
+   scénou rovnou („Někdo ti přinese dárek“, „Člověk sedí v autě“) (`prompt-v3-navrh.md` F). Ve v2 staví člověka do obrazu jen 1 úhel ze 7.
+   Poloha člověka (uvnitř / dívá se na někoho / scéna bez něj) je jedna věc, slovo na začátku druhá (`krok44-poloha-a-zkusenost.md`). Ukázky: 4/4 „Imagine“.
+2. **Fehu jako dávání se čte jako Gebo** — krok 44: „radost ze sdílení“ 3/3 čtena jako Gebo; závěr z 2026-11-03: Fehu potřebuje úhel vlastnictví (co máš
+   a jak s tím zacházíš), ne darování. Ukázky: rajčata sousedům, oblečení sousedům, šála od kamarádky = třikrát dávání; slepá kontrola 7.8 to řekla počtvrté.
+3. **Jedna výchozí scéna a v ní vyměněné podstatné jméno** je přesně to, co dělá model (`napric-labem.md`: ke každé myšlence jedna výchozí scéna,
+   dar skoro vždy jídlo). Pestrost dá jiný děj, ne jiný předmět v témže ději.
+4. **Věrohodnost je ownerovo stálé měřítko:** „jak moc se někomu stane, že vymění vlnu za cukr a kávu?“ (krok 45), loď sedící hluboko „nevěrohodné“
+   (krok 43). Pochválené obrazy = situace, kterou zažil skoro každý, nebo fyzický zákon, který je tím významem; u Fehu kvásek, který žije, protože ho
+   někdo krmí, a teplá voda do domů — obojí o tom, co máš a co se s tím děje, ne o předání.
+5. Výklad Fehu, o kterém owner řekl „tohle je ono“ (`zdroj-gpt-2026-11-02-az-04.md`): bohatství může růst i se ztrácet; mít něco a čerpat z toho
+   nejsou stejné věci.
+Plyne pro postup: (a) obraz se hledá od děje významu („co se s tou věcí děje“), a teprve pak předmět; (b) každý obraz projde otázkou „stává se tohle
+lidem opravdu takhle?“; (c) vstup do scény se losuje a „Imagine“ je v losu jedna z možností; (d) před psaním ukázky projít `zadani-v3.md` a verdikty
+u kroků 43–45 — tahle kontrola u 7.4 a 7.9 neproběhla.
+
