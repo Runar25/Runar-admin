@@ -195,7 +195,16 @@ hlídal jen V2 cestu.
   až přijde čas): zvíře ve stromě, na které člověk klikne a ono řekne, co se na stromě děje z jeho místa podle kánonu (orel, veverka, had).
   Pokusy na solu 2026-11-14 (3 větve ownerova stromu, EN; zadání a texty v gitignored `eval_out/vetev_popis_*.json`). KUKY ke kolu 1:
   *„je to správný směr“* — tři výšky (nahoře kam míříš · uprostřed teď · dole co tě utvářelo) sedí; **bez obrazu** (*„jde o runy, obraz není
-  potřeba“*); větev se nepopisuje, je jen místo, kde runy visí. Kolo 2 (runy jako jeden pohyb, větev jen místo) čeká na soud; IS zatím nezkoušeno.
+  potřeba“*); větev se nepopisuje, je jen místo, kde runy visí. Kolo 2 (runy jako jeden pohyb, větev jen místo): *„není to špatné“*, vrchol
+  (Dagaz) *„je to dobré“*; jména run i jen jejich význam — obojí se ownerovi líbí, nevylučuje ani jedno; jak to vyzní, záleží na tom, jaké
+  runy se sejdou. Slovo jednoho vzorku („may“) se neřeší. Další volání teď ne (owner *„7. ne, teď to řešit nebudeme“*); IS nezkoušeno.
+  ⚗ **Hypotéza ownera (2026-11-14, nic nerozhodnuto):** shrnutí bude záviset na období. Když strom roste od středu ke špičkám větví, stáří
+  čtení se ukáže polohou na větvi (staré u kmene, nové ve špičce) — popis pak může mluvit o jednom úseku a nemíchá např. tři měsíce
+  dohromady. Jestli dnešní kresba čtení podél větve takhle řadí, neověřeno.
+- [ ] **Rune of the Day — nová funkce, směr ownera** (KUKY 2026-11-14 přes CODE-tree; patří čtení → CODE-tune, plán napřed ownerovi).
+  Uživatel dostane náhodnou runu, nebo zadá svou — bez oblasti, seekingu a záměru. **Do stromu nejde.** Rúnar řekne, jaký má runa význam
+  dnes: jak může na den, tedy na člověka, působit — **ne rada**, **bez obrazu**, stejným směrem jako popis větve (položka výš). Vzorek
+  Berkana psal Claude (ne model výkladů), 2026-11-14 — čeká na soud.
 - [x] ✅ *(2026-11-14, owner „udělej“, CODE-tree, b48fefb: jedna tabulka v enginu `RunarBranch.AREA_LAT` s hodnotami kánonu, lab i aplikace ji čtou odtud. Nález: tabulka enginu strom NEMĚNILA — koruna předává úhel `spec.dev` a `lat` z oblasti se pak nečte; nulový test s extrémními hodnotami dal KUKYho strom bajt po bajtu stejný. „Řídí natočení větviček“ níž tedy neplatilo.)* **Strom (lab): `AREA_LAT` odporuje „oblast = strana“** (CODE-tree, nalezeno 2026-10-09). **Stav** (triáž 2026-10-12, CODE-tree): lab má vlastní `AREA_LAT` srovnanou s kánonem (Love −0,2, Crossroads 0, Spirituality +0,5; čte ji `sideOf` a `latOf`), engine `runar-branch.js` drží starou (Love −0,75, Spirituality −0,20, Crossroads +0,10) a řídí jí natočení větviček při kreslení (`spec.area`). Pořád dvě kopie téže informace (§20) — srovnat engine s labem s golden-verify kresby. Původní text: Tabulka v `runar-branch.js` (sdílená
   s aplikací) bere Love −0,75 (nitro), Spirituality −0,20 (skoro střed), Crossroads +0,10 — kánon (`RUNAR_TREE.md` §3) má Love a Crossroads
   bez strany a Spirituality ve světě. Čte ji strana větvičky (`sideOf`), natočení ramene za čteními (`latOf` / `areaSide`) i lateral
