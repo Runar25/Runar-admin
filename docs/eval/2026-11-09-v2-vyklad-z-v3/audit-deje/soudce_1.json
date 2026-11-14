@@ -1,0 +1,1416 @@
+[
+ {
+  "id": 1,
+  "actor": "forge fire and iron",
+  "happens": "fire glows and shapes the iron",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 2,
+  "actor": "reflection on the lagoon",
+  "happens": "trembles at the slightest wind",
+  "verdict": "B",
+  "why": "Water's sensitivity is shown, but no one senses or knows anything ahead of evidence; the knowing part of intuition is missing."
+ },
+ {
+  "id": 3,
+  "actor": "die in the cup",
+  "happens": "lies unthrown, outcome undecided",
+  "verdict": "C",
+  "why": "Shows undecided chance (Perth), not a thorn or any protecting."
+ },
+ {
+  "id": 4,
+  "actor": "you and the group",
+  "happens": "you sit down, accepted without question",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 5,
+  "actor": "you",
+  "happens": "lean into boulder and move it",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 6,
+  "actor": "sheepdog",
+  "happens": "lies watching over the whole flock",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 7,
+  "actor": "the party",
+  "happens": "goes quiet to listen after a snap",
+  "verdict": "B",
+  "why": "Alertness to danger is shown, but nothing is protected or sheltered in the scene."
+ },
+ {
+  "id": 8,
+  "actor": "you",
+  "happens": "spend savings because the roof cannot wait",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 9,
+  "actor": "grey sky",
+  "happens": "gives no sign to the one reading",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 10,
+  "actor": "old woman",
+  "happens": "speaks one sentence, table falls quiet",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 11,
+  "actor": "black sand plain",
+  "happens": "stretches featureless to the horizon",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 12,
+  "actor": "dog",
+  "happens": "runs to greet you, wagging nonstop",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 13,
+  "actor": "milk",
+  "happens": "overflows the brim of the pail",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 14,
+  "actor": "frosty air",
+  "happens": "makes the far farm look close",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 15,
+  "actor": "sweater / you",
+  "happens": "winter's knitting is finally finished",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 16,
+  "actor": "thorn-bush",
+  "happens": "stands bare, spines still ready",
+  "verdict": "A",
+  "why": "Static, but the thorn as latent threat is what the scene shows."
+ },
+ {
+  "id": 17,
+  "actor": "voices in the house",
+  "happens": "fill the house before the meal",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 18,
+  "actor": "bulb",
+  "happens": "prepares underground long before showing",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 19,
+  "actor": "bull",
+  "happens": "turns and moves the whole fence",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 20,
+  "actor": "you and the skyr culture",
+  "happens": "stir starter into milk, leave overnight",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 21,
+  "actor": "morning light",
+  "happens": "floods the dark stalls at once",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 22,
+  "actor": "ram and you",
+  "happens": "ram threatens at gate, you wait",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 23,
+  "actor": "river",
+  "happens": "sinks underground and resurfaces far away",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 24,
+  "actor": "you",
+  "happens": "open August jam in winter dark",
+  "verdict": "B",
+  "why": "Shows the stored reward of earlier work; the turning and return of the cycle itself is not in the scene."
+ },
+ {
+  "id": 25,
+  "actor": "cairns on the route",
+  "happens": "each cairn visible from the last",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 26,
+  "actor": "blade and shavings",
+  "happens": "shavings curl away as wood is worked",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 27,
+  "actor": "two people",
+  "happens": "each sees their own mountain",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 28,
+  "actor": "egg",
+  "happens": "lies warm, nothing showing yet",
+  "verdict": "C",
+  "why": "Shows hidden potential and gestation (Ingwaz), not wisdom or speech."
+ },
+ {
+  "id": 29,
+  "actor": "reindeer stag",
+  "happens": "wades chest-deep snow without slowing",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 30,
+  "actor": "the two of you",
+  "happens": "laugh together after the quarrel",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 31,
+  "actor": "sun",
+  "happens": "breaks through and glints on stones",
+  "verdict": "B",
+  "why": "The sun's arrival is shown, but nothing becomes clearer or better seen; clarity is missing."
+ },
+ {
+  "id": 32,
+  "actor": "sheep",
+  "happens": "come home by their mothers' path",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 33,
+  "actor": "plant",
+  "happens": "presses flat toward its one hour of light",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 34,
+  "actor": "hail",
+  "happens": "rakes the hayfield and is gone",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 35,
+  "actor": "the call across the yard",
+  "happens": "its pitch alone carries the news",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 36,
+  "actor": "child",
+  "happens": "takes a first unsteady step",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 37,
+  "actor": "embers",
+  "happens": "stay alive hidden under ash",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 38,
+  "actor": "die in the cup",
+  "happens": "lies unthrown, outcome undecided",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 39,
+  "actor": "you",
+  "happens": "take one track, the other disappears",
+  "verdict": "B",
+  "why": "Shows an irreversible choice; giving something valued up for a cause, the cost of sacrifice, is missing."
+ },
+ {
+  "id": 40,
+  "actor": "something on the lagoon bed",
+  "happens": "glints briefly, then silt covers it",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 41,
+  "actor": "rhubarb",
+  "happens": "pushes up through cold soil",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 42,
+  "actor": "squall",
+  "happens": "strikes from clear sky, then gone",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 43,
+  "actor": "ladle handle",
+  "happens": "worn smooth by earlier hands",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 44,
+  "actor": "raven",
+  "happens": "settles and waits for you to listen",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 45,
+  "actor": "you in the pass",
+  "happens": "stand between dark behind, light ahead",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 46,
+  "actor": "boat",
+  "happens": "comes in riding low with fish",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 47,
+  "actor": "storm",
+  "happens": "cuts power, everything automatic stops",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 48,
+  "actor": "you and the lamp",
+  "happens": "light on, you see the empty chair",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 49,
+  "actor": "field",
+  "happens": "goes from mud to gold, every year",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 50,
+  "actor": "clock",
+  "happens": "has stopped and stays unwound",
+  "verdict": "B",
+  "why": "Standstill is shown, but no one is waiting for anything; it reads as stopped time or neglect."
+ },
+ {
+  "id": 51,
+  "actor": "two hands",
+  "happens": "one offers, the other receives",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 52,
+  "actor": "groundswell / your feet",
+  "happens": "felt in the feet before seen",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 53,
+  "actor": "children",
+  "happens": "each sees a different picture in bare wall",
+  "verdict": "C",
+  "why": "Shows imagination projected onto emptiness (open potential), nothing hidden is revealed."
+ },
+ {
+  "id": 54,
+  "actor": "midwife",
+  "happens": "lays newborn with mother, steps back",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 55,
+  "actor": "you at the summit",
+  "happens": "reach the cairn, sun in your face",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 56,
+  "actor": "you",
+  "happens": "keep your word at the cost of sleep",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 57,
+  "actor": "track",
+  "happens": "bends round lava, returns to its line",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 58,
+  "actor": "pond",
+  "happens": "iced over, waits",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 59,
+  "actor": "sunshine on snow",
+  "happens": "so bright you narrow your eyes",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 60,
+  "actor": "you walking",
+  "happens": "find your rhythm, stop counting steps",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 61,
+  "actor": "your companion",
+  "happens": "shortens stride to yours, going evens out",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 62,
+  "actor": "pole star",
+  "happens": "stays fixed while all else turns",
+  "verdict": "C",
+  "why": "Shows constancy and a fixed guiding point (Tiwaz), the opposite of open, unwritten potential."
+ },
+ {
+  "id": 63,
+  "actor": "tree",
+  "happens": "roots in the dark, crown in the light",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 64,
+  "actor": "your voice in the choir",
+  "happens": "merges with others, stays yours",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 65,
+  "actor": "turf wall",
+  "happens": "takes the wind, doorway stays calm",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 66,
+  "actor": "cow / household",
+  "happens": "cow sold, proceeds carry the winter",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 67,
+  "actor": "you",
+  "happens": "keep knitting as yarn runs out",
+  "verdict": "B",
+  "why": "Persistence under scarcity is shown, but no growth or strengthening comes out of the challenge."
+ },
+ {
+  "id": 68,
+  "actor": "you / dawn light",
+  "happens": "wake to light already changed",
+  "verdict": "B",
+  "why": "Dawn is shown as already done; the moment of turning itself is not in the scene."
+ },
+ {
+  "id": 69,
+  "actor": "kettle and you",
+  "happens": "note changes, you hear it unlooking",
+  "verdict": "B",
+  "why": "Shows attentive hearing of a signal (message), not wisdom or counsel."
+ },
+ {
+  "id": 70,
+  "actor": "you and the map",
+  "happens": "look for a name, find nothing written",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 71,
+  "actor": "people in the hot pot",
+  "happens": "all laugh at the same story",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 72,
+  "actor": "sourdough starter",
+  "happens": "lives when fed, dies when forgotten",
+  "verdict": "C",
+  "why": "Shows dependence on tending and care, not wealth or possession."
+ },
+ {
+  "id": 73,
+  "actor": "boat",
+  "happens": "lies frozen in while fjord is open",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 74,
+  "actor": "you",
+  "happens": "sit down, nothing calls you up",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 75,
+  "actor": "thorn hedge",
+  "happens": "lets nothing through without cost",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 76,
+  "actor": "laughter / people",
+  "happens": "laughter carries out, nobody hurries in",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 77,
+  "actor": "seed",
+  "happens": "lies in frozen ground awaiting its time",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 78,
+  "actor": "you",
+  "happens": "lift the end no one else could",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 79,
+  "actor": "two dancers",
+  "happens": "waltz so neither visibly leads",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 80,
+  "actor": "you two with the sofa",
+  "happens": "stop ordering each other, sofa gets down",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 81,
+  "actor": "you",
+  "happens": "grasp the handle and stop",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 82,
+  "actor": "brook",
+  "happens": "meets the stone and goes round",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 83,
+  "actor": "the day",
+  "happens": "lengthens slowly toward spring",
+  "verdict": "B",
+  "why": "Shows the slow turn of the year; no one waiting or enduring, and no fruit of patience."
+ },
+ {
+  "id": 84,
+  "actor": "you in sunshine",
+  "happens": "can see where you stand on slope",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 85,
+  "actor": "lamp",
+  "happens": "burns alone over the workbench",
+  "verdict": "B",
+  "why": "An outer lamp of craft is shown (torch), nothing inward is lit or kindled in a person."
+ },
+ {
+  "id": 86,
+  "actor": "a person",
+  "happens": "laughs differently by place, still recognisable",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 87,
+  "actor": "grey sky",
+  "happens": "gives no sign to the one reading",
+  "verdict": "C",
+  "why": "Shows the unknown (Blank); no wealth, cattle or prosperity in the scene."
+ },
+ {
+  "id": 88,
+  "actor": "smoked lamb",
+  "happens": "taken down for the feast after autumn",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 89,
+  "actor": "thorn",
+  "happens": "tears your sleeve a step before edge",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 90,
+  "actor": "midnight sun",
+  "happens": "never quite sets at Midsummer",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 91,
+  "actor": "new house",
+  "happens": "stands on the old foundations",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 92,
+  "actor": "flour bin",
+  "happens": "scrapes empty before the boat comes",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 93,
+  "actor": "fishing line",
+  "happens": "hangs in dark water, untouched",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 94,
+  "actor": "a voice calling your name",
+  "happens": "other sounds drop away",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 95,
+  "actor": "lambs",
+  "happens": "take first steps outside in May",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 96,
+  "actor": "bull",
+  "happens": "turns and moves the whole fence",
+  "verdict": "C",
+  "why": "Shows brute primal force (Uruz); nothing is given up."
+ },
+ {
+  "id": 97,
+  "actor": "stranger",
+  "happens": "pushes your car out, just waves",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 98,
+  "actor": "fog / sheep",
+  "happens": "fog lifts, unknown missing sheep appears",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 99,
+  "actor": "root",
+  "happens": "holds the ground as scree slides",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 100,
+  "actor": "eider",
+  "happens": "leads ducklings to water",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 101,
+  "actor": "you / someone at home",
+  "happens": "come in cold, stove already lit",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 102,
+  "actor": "you",
+  "happens": "take one thing, leave the rest",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 103,
+  "actor": "breeze and plover's call",
+  "happens": "call is carried across moor to you",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 104,
+  "actor": "tunnel rock wall",
+  "happens": "blasted through, daylight shines in",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 105,
+  "actor": "children",
+  "happens": "each sees a different picture in bare wall",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 106,
+  "actor": "gale",
+  "happens": "tears down old fence, field lies open",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 107,
+  "actor": "match flame",
+  "happens": "struck, room regains its shape",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 108,
+  "actor": "hay / barn",
+  "happens": "last hay in, barn warm and full",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 109,
+  "actor": "stream under ice",
+  "happens": "still heard beneath the ice",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 110,
+  "actor": "shore and waves",
+  "happens": "returns one thing, keeps another",
+  "verdict": "B",
+  "why": "Shows impersonal give-and-take; the exchange between two that binds them is missing."
+ },
+ {
+  "id": 111,
+  "actor": "your face in another's eyes",
+  "happens": "mirrored small and clear",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 112,
+  "actor": "you at the meeting",
+  "happens": "stand up for the absent one",
+  "verdict": "C",
+  "why": "Shows justice and courage (Tiwaz), an act, not stillness."
+ },
+ {
+  "id": 113,
+  "actor": "boy",
+  "happens": "beats his big brother at arm-wrestling",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 114,
+  "actor": "you",
+  "happens": "pack only what you cannot do without",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 115,
+  "actor": "pole star",
+  "happens": "stays fixed while all else turns",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 116,
+  "actor": "your tracks",
+  "happens": "form one line down the valley",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 117,
+  "actor": "snowfall",
+  "happens": "falls straight, covers everything soundlessly",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 118,
+  "actor": "midnight sun",
+  "happens": "keeps the hayfield bright past bedtime",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 119,
+  "actor": "sheep-track",
+  "happens": "winds of its own accord",
+  "verdict": "B",
+  "why": "A path is shown but nothing moves along it; rhythm, a repeated pace, is missing."
+ },
+ {
+  "id": 120,
+  "actor": "two horses",
+  "happens": "one slows for the tired other",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 121,
+  "actor": "ptarmigan",
+  "happens": "changes plumage with the seasons",
+  "verdict": "C",
+  "why": "Shows the seasonal cycle (Jera) by instinct, not mind or thought."
+ },
+ {
+  "id": 122,
+  "actor": "juniper",
+  "happens": "stays green under snow all winter",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 123,
+  "actor": "you and the photo",
+  "happens": "recognise yourself by your stance",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 124,
+  "actor": "pot with lid on",
+  "happens": "smell tells something is forming",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 125,
+  "actor": "catch / money",
+  "happens": "sold, money becomes new nets",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 126,
+  "actor": "lamb",
+  "happens": "presses close for warmth in cold-snap",
+  "verdict": "B",
+  "why": "Need under hardship is shown, but no growth comes from it."
+ },
+ {
+  "id": 127,
+  "actor": "first light",
+  "happens": "returns after deepest midwinter dark",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 128,
+  "actor": "you speaking",
+  "happens": "saying it aloud reveals the answer",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 129,
+  "actor": "you and the guestbook",
+  "happens": "leaf through, reach a blank page",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 130,
+  "actor": "mountain hut",
+  "happens": "stands open in blizzard for anyone",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 131,
+  "actor": "rhubarb",
+  "happens": "grows back more the more is pulled",
+  "verdict": "B",
+  "why": "Shows regrowth and fertility more than wealth held or possessed."
+ },
+ {
+  "id": 132,
+  "actor": "neighbours",
+  "happens": "dig out each other's doors in turn",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 133,
+  "actor": "you",
+  "happens": "turn hay on the one dry afternoon",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 134,
+  "actor": "egg",
+  "happens": "lies warm, nothing showing yet",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 135,
+  "actor": "children",
+  "happens": "run barefoot onto the dry grass",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 136,
+  "actor": "water",
+  "happens": "finds its own way downhill",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 137,
+  "actor": "flock",
+  "happens": "returns larger than in spring",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 138,
+  "actor": "two hauling a sled",
+  "happens": "pull together, sled glides",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 139,
+  "actor": "birch sapling",
+  "happens": "grows sheltered by older trees",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 140,
+  "actor": "you",
+  "happens": "go back into the storm for one sheep",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 141,
+  "actor": "old tree",
+  "happens": "has outlived those who planted it",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 142,
+  "actor": "hay",
+  "happens": "dries hour by hour, ready by evening",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 143,
+  "actor": "sun",
+  "happens": "reaches the valley, lights the farm briefly",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 144,
+  "actor": "embers",
+  "happens": "stay alive hidden under ash",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 145,
+  "actor": "you and your reflection",
+  "happens": "face moves only when you do",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 146,
+  "actor": "mare in foal",
+  "happens": "paws snow, foal due in spring",
+  "verdict": "C",
+  "why": "Shows new life gestating (Ingwaz); there is no death or ending in the scene."
+ },
+ {
+  "id": 147,
+  "actor": "drying fish",
+  "happens": "hung since winter, now ready",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 148,
+  "actor": "quarrel",
+  "happens": "goes quiet one word short of eruption",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 149,
+  "actor": "reindeer",
+  "happens": "lifts its head, on guard",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 150,
+  "actor": "you on the knoll",
+  "happens": "see the squall coming from afar",
+  "verdict": "B",
+  "why": "Early warning and foresight are shown, but nothing is shielded or sheltered."
+ },
+ {
+  "id": 151,
+  "actor": "your body / sleep",
+  "happens": "sleep takes you mid-sentence",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 152,
+  "actor": "new snow",
+  "happens": "lies untrodden over the track",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 153,
+  "actor": "church bell and you",
+  "happens": "bell carries, you turn toward it unwilled",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 154,
+  "actor": "birch",
+  "happens": "leafs out first despite cold ground",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 155,
+  "actor": "seedlings",
+  "happens": "stretch toward the light",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 156,
+  "actor": "bull",
+  "happens": "tears free of the bog, keeps going",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 157,
+  "actor": "carved plank",
+  "happens": "washes ashore, carving unreadable",
+  "verdict": "B",
+  "why": "Chance arrival is there, but the weight is on the unreadable carving, a mystery rather than luck or a throw."
+ },
+ {
+  "id": 158,
+  "actor": "rowan",
+  "happens": "bends flat in gust, rights itself",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 159,
+  "actor": "ewe and lamb",
+  "happens": "ewe gives birth, lamb finds warmth",
+  "verdict": "B",
+  "why": "The main action is birth; the mother's active care is only implied."
+ },
+ {
+  "id": 160,
+  "actor": "a voice and the room",
+  "happens": "one starts, the room joins the song",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 161,
+  "actor": "ruined farmstead",
+  "happens": "stands in ruins, warm in memory",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 162,
+  "actor": "lava crack",
+  "happens": "blocks the way, crossing needs a jump",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 163,
+  "actor": "mare in foal",
+  "happens": "paws snow, foal due in spring",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 164,
+  "actor": "diary sentence",
+  "happens": "breaks off, page below is blank",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 165,
+  "actor": "nettle",
+  "happens": "stings whoever passes too fast",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 166,
+  "actor": "lamplight on the cup",
+  "happens": "reveals a hairline crack",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 167,
+  "actor": "potatoes",
+  "happens": "come up far more than planted",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 168,
+  "actor": "road",
+  "happens": "vanishes round the next bend",
+  "verdict": "B",
+  "why": "A road is shown, but nobody and nothing moves on it."
+ },
+ {
+  "id": 169,
+  "actor": "sea",
+  "happens": "gives and takes on shore at once",
+  "verdict": "B",
+  "why": "Giving and taking by one impersonal actor, not a gift given and received between two."
+ },
+ {
+  "id": 170,
+  "actor": "you at the dark window",
+  "happens": "see yourself among the others",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 171,
+  "actor": "track",
+  "happens": "bends round lava, returns to its line",
+  "verdict": "C",
+  "why": "Shows a road keeping its course (Raidho); nothing is weighed or exchanged."
+ },
+ {
+  "id": 172,
+  "actor": "you with iron bar",
+  "happens": "drive it into frozen ground, it yields",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 173,
+  "actor": "storm",
+  "happens": "breaks window, puts out candles",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 174,
+  "actor": "you",
+  "happens": "return the wrongly given change",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 175,
+  "actor": "table and four families",
+  "happens": "table stays as families succeed",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 176,
+  "actor": "swollen knot",
+  "happens": "will not give however you pull",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 177,
+  "actor": "river",
+  "happens": "swells overnight, takes what stood near",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 178,
+  "actor": "sleeper's breath",
+  "happens": "frosts the pane, thaws a patch each exhale",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 179,
+  "actor": "horse",
+  "happens": "finds the unseen ford",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 180,
+  "actor": "you",
+  "happens": "keep knitting as yarn runs out",
+  "verdict": "C",
+  "why": "Shows dogged persistence under scarcity (Nauthiz); nothing breaks through or turns."
+ },
+ {
+  "id": 181,
+  "actor": "card",
+  "happens": "lies face down, unturned",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 182,
+  "actor": "you at the meeting",
+  "happens": "stand up for the absent one",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 183,
+  "actor": "low sun and footprints",
+  "happens": "trail appears briefly, then vanishes",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 184,
+  "actor": "torch",
+  "happens": "lights only a few steps ahead",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 185,
+  "actor": "hail",
+  "happens": "hammers the roof, melts at once",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 186,
+  "actor": "dawn",
+  "happens": "arrives without a noticeable moment",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 187,
+  "actor": "letter",
+  "happens": "arrives by boat, lies unopened",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 188,
+  "actor": "birds / the night",
+  "happens": "pause at midnight, sing in new day",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 189,
+  "actor": "hot water",
+  "happens": "runs into every house in the valley",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 190,
+  "actor": "deep-rooted tree",
+  "happens": "alone still stands after the storm",
+  "verdict": "B",
+  "why": "The clearing is implied, but the scene's focus is the survivor's resilience (Eihwaz), not what was swept away or changed."
+ },
+ {
+  "id": 191,
+  "actor": "you and the neighbour",
+  "happens": "trailer lent, leg of lamb returned",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 192,
+  "actor": "ptarmigan",
+  "happens": "changes plumage with the seasons",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 193,
+  "actor": "puffin chick",
+  "happens": "stays hidden in burrow until ready",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 194,
+  "actor": "two under a blanket",
+  "happens": "each pulls less so both are covered",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 195,
+  "actor": "glacial river",
+  "happens": "runs grey, heavy with its load",
+  "verdict": "B",
+  "why": "Water carrying a burden is shown, but nothing lies hidden beneath or rises from the depths."
+ },
+ {
+  "id": 196,
+  "actor": "berry-heath",
+  "happens": "grows heavy with bilberries in August",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 197,
+  "actor": "you and the horse",
+  "happens": "lead it with the rope slack",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 198,
+  "actor": "old dog",
+  "happens": "stretches out in the sun",
+  "verdict": "B",
+  "why": "Shows the sun's warmth and rest; vitality or life force rising is not enacted."
+ },
+ {
+  "id": 199,
+  "actor": "drawn bow and arrow",
+  "happens": "aimed one way, held",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 200,
+  "actor": "rowan",
+  "happens": "stands bare between frost and first leaf",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 201,
+  "actor": "you and the coffee",
+  "happens": "coffee goes cold while you wait",
+  "verdict": "A",
+  "why": ""
+ },
+ {
+  "id": 202,
+  "actor": "low winter sun",
+  "happens": "glints on a frozen puddle",
+  "verdict": "B",
+  "why": "Sun is present, but nothing is made clear or seen better; it is a glint on ice."
+ }
+]

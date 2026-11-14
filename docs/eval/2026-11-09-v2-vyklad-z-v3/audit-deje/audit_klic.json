@@ -1,0 +1,1214 @@
+[
+ {
+  "id": 1,
+  "zdroj": 17,
+  "navnada": false,
+  "pravaRuna": "Kenaz"
+ },
+ {
+  "id": 2,
+  "zdroj": 106,
+  "navnada": false,
+  "pravaRuna": "Laguz"
+ },
+ {
+  "id": 3,
+  "zdroj": 78,
+  "navnada": true,
+  "pravaRuna": "Perth"
+ },
+ {
+  "id": 4,
+  "zdroj": 82,
+  "navnada": false,
+  "pravaRuna": "Wunjo"
+ },
+ {
+  "id": 5,
+  "zdroj": 171,
+  "navnada": false,
+  "pravaRuna": "Uruz"
+ },
+ {
+  "id": 6,
+  "zdroj": 58,
+  "navnada": false,
+  "pravaRuna": "Algiz"
+ },
+ {
+  "id": 7,
+  "zdroj": 147,
+  "navnada": false,
+  "pravaRuna": "Algiz"
+ },
+ {
+  "id": 8,
+  "zdroj": 34,
+  "navnada": false,
+  "pravaRuna": "Nauthiz"
+ },
+ {
+  "id": 9,
+  "zdroj": 123,
+  "navnada": false,
+  "pravaRuna": "Blank"
+ },
+ {
+  "id": 10,
+  "zdroj": 10,
+  "navnada": false,
+  "pravaRuna": "Ansuz"
+ },
+ {
+  "id": 11,
+  "zdroj": 99,
+  "navnada": false,
+  "pravaRuna": "Blank"
+ },
+ {
+  "id": 12,
+  "zdroj": 188,
+  "navnada": false,
+  "pravaRuna": "Wunjo"
+ },
+ {
+  "id": 13,
+  "zdroj": 75,
+  "navnada": false,
+  "pravaRuna": "Fehu"
+ },
+ {
+  "id": 14,
+  "zdroj": 164,
+  "navnada": false,
+  "pravaRuna": "Isa"
+ },
+ {
+  "id": 15,
+  "zdroj": 51,
+  "navnada": false,
+  "pravaRuna": "Jera"
+ },
+ {
+  "id": 16,
+  "zdroj": 140,
+  "navnada": false,
+  "pravaRuna": "Thurisaz"
+ },
+ {
+  "id": 17,
+  "zdroj": 27,
+  "navnada": false,
+  "pravaRuna": "Wunjo"
+ },
+ {
+  "id": 18,
+  "zdroj": 116,
+  "navnada": false,
+  "pravaRuna": "Ingwaz"
+ },
+ {
+  "id": 19,
+  "zdroj": 3,
+  "navnada": false,
+  "pravaRuna": "Uruz"
+ },
+ {
+  "id": 20,
+  "zdroj": 92,
+  "navnada": false,
+  "pravaRuna": "Ingwaz"
+ },
+ {
+  "id": 21,
+  "zdroj": 181,
+  "navnada": false,
+  "pravaRuna": "Dagaz"
+ },
+ {
+  "id": 22,
+  "zdroj": 68,
+  "navnada": false,
+  "pravaRuna": "Thurisaz"
+ },
+ {
+  "id": 23,
+  "zdroj": 157,
+  "navnada": false,
+  "pravaRuna": "Laguz"
+ },
+ {
+  "id": 24,
+  "zdroj": 44,
+  "navnada": false,
+  "pravaRuna": "Jera"
+ },
+ {
+  "id": 25,
+  "zdroj": 133,
+  "navnada": false,
+  "pravaRuna": "Raidho"
+ },
+ {
+  "id": 26,
+  "zdroj": 20,
+  "navnada": false,
+  "pravaRuna": "Kenaz"
+ },
+ {
+  "id": 27,
+  "zdroj": 109,
+  "navnada": false,
+  "pravaRuna": "Mannaz"
+ },
+ {
+  "id": 28,
+  "zdroj": 138,
+  "navnada": true,
+  "pravaRuna": "Ingwaz"
+ },
+ {
+  "id": 29,
+  "zdroj": 85,
+  "navnada": false,
+  "pravaRuna": "Uruz"
+ },
+ {
+  "id": 30,
+  "zdroj": 174,
+  "navnada": false,
+  "pravaRuna": "Wunjo"
+ },
+ {
+  "id": 31,
+  "zdroj": 61,
+  "navnada": false,
+  "pravaRuna": "Sowilo"
+ },
+ {
+  "id": 32,
+  "zdroj": 150,
+  "navnada": false,
+  "pravaRuna": "Othila"
+ },
+ {
+  "id": 33,
+  "zdroj": 37,
+  "navnada": false,
+  "pravaRuna": "Nauthiz"
+ },
+ {
+  "id": 34,
+  "zdroj": 126,
+  "navnada": false,
+  "pravaRuna": "Hagalaz"
+ },
+ {
+  "id": 35,
+  "zdroj": 13,
+  "navnada": false,
+  "pravaRuna": "Ansuz"
+ },
+ {
+  "id": 36,
+  "zdroj": 102,
+  "navnada": false,
+  "pravaRuna": "Berkana"
+ },
+ {
+  "id": 37,
+  "zdroj": 18,
+  "navnada": true,
+  "pravaRuna": "Kenaz"
+ },
+ {
+  "id": 38,
+  "zdroj": 78,
+  "navnada": false,
+  "pravaRuna": "Perth"
+ },
+ {
+  "id": 39,
+  "zdroj": 167,
+  "navnada": false,
+  "pravaRuna": "Tiwaz"
+ },
+ {
+  "id": 40,
+  "zdroj": 54,
+  "navnada": false,
+  "pravaRuna": "Perth"
+ },
+ {
+  "id": 41,
+  "zdroj": 143,
+  "navnada": false,
+  "pravaRuna": "Berkana"
+ },
+ {
+  "id": 42,
+  "zdroj": 30,
+  "navnada": false,
+  "pravaRuna": "Hagalaz"
+ },
+ {
+  "id": 43,
+  "zdroj": 119,
+  "navnada": false,
+  "pravaRuna": "Othila"
+ },
+ {
+  "id": 44,
+  "zdroj": 6,
+  "navnada": false,
+  "pravaRuna": "Ansuz"
+ },
+ {
+  "id": 45,
+  "zdroj": 95,
+  "navnada": false,
+  "pravaRuna": "Dagaz"
+ },
+ {
+  "id": 46,
+  "zdroj": 184,
+  "navnada": false,
+  "pravaRuna": "Fehu"
+ },
+ {
+  "id": 47,
+  "zdroj": 71,
+  "navnada": false,
+  "pravaRuna": "Hagalaz"
+ },
+ {
+  "id": 48,
+  "zdroj": 160,
+  "navnada": false,
+  "pravaRuna": "Kenaz"
+ },
+ {
+  "id": 49,
+  "zdroj": 47,
+  "navnada": false,
+  "pravaRuna": "Jera"
+ },
+ {
+  "id": 50,
+  "zdroj": 136,
+  "navnada": false,
+  "pravaRuna": "Isa"
+ },
+ {
+  "id": 51,
+  "zdroj": 23,
+  "navnada": false,
+  "pravaRuna": "Gebo"
+ },
+ {
+  "id": 52,
+  "zdroj": 112,
+  "navnada": false,
+  "pravaRuna": "Laguz"
+ },
+ {
+  "id": 53,
+  "zdroj": 183,
+  "navnada": true,
+  "pravaRuna": "Blank"
+ },
+ {
+  "id": 54,
+  "zdroj": 88,
+  "navnada": false,
+  "pravaRuna": "Berkana"
+ },
+ {
+  "id": 55,
+  "zdroj": 177,
+  "navnada": false,
+  "pravaRuna": "Sowilo"
+ },
+ {
+  "id": 56,
+  "zdroj": 64,
+  "navnada": false,
+  "pravaRuna": "Tiwaz"
+ },
+ {
+  "id": 57,
+  "zdroj": 153,
+  "navnada": false,
+  "pravaRuna": "Raidho"
+ },
+ {
+  "id": 58,
+  "zdroj": 40,
+  "navnada": false,
+  "pravaRuna": "Isa"
+ },
+ {
+  "id": 59,
+  "zdroj": 129,
+  "navnada": false,
+  "pravaRuna": "Sowilo"
+ },
+ {
+  "id": 60,
+  "zdroj": 16,
+  "navnada": false,
+  "pravaRuna": "Raidho"
+ },
+ {
+  "id": 61,
+  "zdroj": 105,
+  "navnada": false,
+  "pravaRuna": "Ehwaz"
+ },
+ {
+  "id": 62,
+  "zdroj": 63,
+  "navnada": true,
+  "pravaRuna": "Tiwaz"
+ },
+ {
+  "id": 63,
+  "zdroj": 81,
+  "navnada": false,
+  "pravaRuna": "Eihwaz"
+ },
+ {
+  "id": 64,
+  "zdroj": 170,
+  "navnada": false,
+  "pravaRuna": "Mannaz"
+ },
+ {
+  "id": 65,
+  "zdroj": 57,
+  "navnada": false,
+  "pravaRuna": "Algiz"
+ },
+ {
+  "id": 66,
+  "zdroj": 146,
+  "navnada": false,
+  "pravaRuna": "Fehu"
+ },
+ {
+  "id": 67,
+  "zdroj": 33,
+  "navnada": false,
+  "pravaRuna": "Nauthiz"
+ },
+ {
+  "id": 68,
+  "zdroj": 122,
+  "navnada": false,
+  "pravaRuna": "Dagaz"
+ },
+ {
+  "id": 69,
+  "zdroj": 9,
+  "navnada": false,
+  "pravaRuna": "Ansuz"
+ },
+ {
+  "id": 70,
+  "zdroj": 98,
+  "navnada": false,
+  "pravaRuna": "Blank"
+ },
+ {
+  "id": 71,
+  "zdroj": 187,
+  "navnada": false,
+  "pravaRuna": "Wunjo"
+ },
+ {
+  "id": 72,
+  "zdroj": 74,
+  "navnada": false,
+  "pravaRuna": "Fehu"
+ },
+ {
+  "id": 73,
+  "zdroj": 163,
+  "navnada": false,
+  "pravaRuna": "Isa"
+ },
+ {
+  "id": 74,
+  "zdroj": 50,
+  "navnada": false,
+  "pravaRuna": "Jera"
+ },
+ {
+  "id": 75,
+  "zdroj": 139,
+  "navnada": false,
+  "pravaRuna": "Thurisaz"
+ },
+ {
+  "id": 76,
+  "zdroj": 26,
+  "navnada": false,
+  "pravaRuna": "Wunjo"
+ },
+ {
+  "id": 77,
+  "zdroj": 115,
+  "navnada": false,
+  "pravaRuna": "Ingwaz"
+ },
+ {
+  "id": 78,
+  "zdroj": 2,
+  "navnada": false,
+  "pravaRuna": "Uruz"
+ },
+ {
+  "id": 79,
+  "zdroj": 91,
+  "navnada": false,
+  "pravaRuna": "Ehwaz"
+ },
+ {
+  "id": 80,
+  "zdroj": 180,
+  "navnada": false,
+  "pravaRuna": "Ehwaz"
+ },
+ {
+  "id": 81,
+  "zdroj": 67,
+  "navnada": false,
+  "pravaRuna": "Thurisaz"
+ },
+ {
+  "id": 82,
+  "zdroj": 156,
+  "navnada": false,
+  "pravaRuna": "Laguz"
+ },
+ {
+  "id": 83,
+  "zdroj": 43,
+  "navnada": false,
+  "pravaRuna": "Jera"
+ },
+ {
+  "id": 84,
+  "zdroj": 132,
+  "navnada": false,
+  "pravaRuna": "Sowilo"
+ },
+ {
+  "id": 85,
+  "zdroj": 19,
+  "navnada": false,
+  "pravaRuna": "Kenaz"
+ },
+ {
+  "id": 86,
+  "zdroj": 108,
+  "navnada": false,
+  "pravaRuna": "Mannaz"
+ },
+ {
+  "id": 87,
+  "zdroj": 123,
+  "navnada": true,
+  "pravaRuna": "Blank"
+ },
+ {
+  "id": 88,
+  "zdroj": 84,
+  "navnada": false,
+  "pravaRuna": "Jera"
+ },
+ {
+  "id": 89,
+  "zdroj": 173,
+  "navnada": false,
+  "pravaRuna": "Thurisaz"
+ },
+ {
+  "id": 90,
+  "zdroj": 60,
+  "navnada": false,
+  "pravaRuna": "Sowilo"
+ },
+ {
+  "id": 91,
+  "zdroj": 149,
+  "navnada": false,
+  "pravaRuna": "Othila"
+ },
+ {
+  "id": 92,
+  "zdroj": 36,
+  "navnada": false,
+  "pravaRuna": "Nauthiz"
+ },
+ {
+  "id": 93,
+  "zdroj": 125,
+  "navnada": false,
+  "pravaRuna": "Blank"
+ },
+ {
+  "id": 94,
+  "zdroj": 12,
+  "navnada": false,
+  "pravaRuna": "Ansuz"
+ },
+ {
+  "id": 95,
+  "zdroj": 101,
+  "navnada": false,
+  "pravaRuna": "Berkana"
+ },
+ {
+  "id": 96,
+  "zdroj": 3,
+  "navnada": true,
+  "pravaRuna": "Uruz"
+ },
+ {
+  "id": 97,
+  "zdroj": 77,
+  "navnada": false,
+  "pravaRuna": "Gebo"
+ },
+ {
+  "id": 98,
+  "zdroj": 166,
+  "navnada": false,
+  "pravaRuna": "Perth"
+ },
+ {
+  "id": 99,
+  "zdroj": 53,
+  "navnada": false,
+  "pravaRuna": "Eihwaz"
+ },
+ {
+  "id": 100,
+  "zdroj": 142,
+  "navnada": false,
+  "pravaRuna": "Berkana"
+ },
+ {
+  "id": 101,
+  "zdroj": 29,
+  "navnada": false,
+  "pravaRuna": "Wunjo"
+ },
+ {
+  "id": 102,
+  "zdroj": 118,
+  "navnada": false,
+  "pravaRuna": "Othila"
+ },
+ {
+  "id": 103,
+  "zdroj": 5,
+  "navnada": false,
+  "pravaRuna": "Ansuz"
+ },
+ {
+  "id": 104,
+  "zdroj": 94,
+  "navnada": false,
+  "pravaRuna": "Dagaz"
+ },
+ {
+  "id": 105,
+  "zdroj": 183,
+  "navnada": false,
+  "pravaRuna": "Blank"
+ },
+ {
+  "id": 106,
+  "zdroj": 70,
+  "navnada": false,
+  "pravaRuna": "Hagalaz"
+ },
+ {
+  "id": 107,
+  "zdroj": 159,
+  "navnada": false,
+  "pravaRuna": "Kenaz"
+ },
+ {
+  "id": 108,
+  "zdroj": 46,
+  "navnada": false,
+  "pravaRuna": "Jera"
+ },
+ {
+  "id": 109,
+  "zdroj": 135,
+  "navnada": false,
+  "pravaRuna": "Isa"
+ },
+ {
+  "id": 110,
+  "zdroj": 22,
+  "navnada": false,
+  "pravaRuna": "Gebo"
+ },
+ {
+  "id": 111,
+  "zdroj": 111,
+  "navnada": false,
+  "pravaRuna": "Mannaz"
+ },
+ {
+  "id": 112,
+  "zdroj": 168,
+  "navnada": true,
+  "pravaRuna": "Tiwaz"
+ },
+ {
+  "id": 113,
+  "zdroj": 87,
+  "navnada": false,
+  "pravaRuna": "Uruz"
+ },
+ {
+  "id": 114,
+  "zdroj": 176,
+  "navnada": false,
+  "pravaRuna": "Nauthiz"
+ },
+ {
+  "id": 115,
+  "zdroj": 63,
+  "navnada": false,
+  "pravaRuna": "Tiwaz"
+ },
+ {
+  "id": 116,
+  "zdroj": 152,
+  "navnada": false,
+  "pravaRuna": "Raidho"
+ },
+ {
+  "id": 117,
+  "zdroj": 39,
+  "navnada": false,
+  "pravaRuna": "Isa"
+ },
+ {
+  "id": 118,
+  "zdroj": 128,
+  "navnada": false,
+  "pravaRuna": "Sowilo"
+ },
+ {
+  "id": 119,
+  "zdroj": 15,
+  "navnada": false,
+  "pravaRuna": "Raidho"
+ },
+ {
+  "id": 120,
+  "zdroj": 104,
+  "navnada": false,
+  "pravaRuna": "Ehwaz"
+ },
+ {
+  "id": 121,
+  "zdroj": 48,
+  "navnada": true,
+  "pravaRuna": "Jera"
+ },
+ {
+  "id": 122,
+  "zdroj": 80,
+  "navnada": false,
+  "pravaRuna": "Eihwaz"
+ },
+ {
+  "id": 123,
+  "zdroj": 169,
+  "navnada": false,
+  "pravaRuna": "Mannaz"
+ },
+ {
+  "id": 124,
+  "zdroj": 56,
+  "navnada": false,
+  "pravaRuna": "Perth"
+ },
+ {
+  "id": 125,
+  "zdroj": 145,
+  "navnada": false,
+  "pravaRuna": "Fehu"
+ },
+ {
+  "id": 126,
+  "zdroj": 32,
+  "navnada": false,
+  "pravaRuna": "Nauthiz"
+ },
+ {
+  "id": 127,
+  "zdroj": 121,
+  "navnada": false,
+  "pravaRuna": "Dagaz"
+ },
+ {
+  "id": 128,
+  "zdroj": 8,
+  "navnada": false,
+  "pravaRuna": "Ansuz"
+ },
+ {
+  "id": 129,
+  "zdroj": 97,
+  "navnada": false,
+  "pravaRuna": "Blank"
+ },
+ {
+  "id": 130,
+  "zdroj": 186,
+  "navnada": false,
+  "pravaRuna": "Algiz"
+ },
+ {
+  "id": 131,
+  "zdroj": 73,
+  "navnada": false,
+  "pravaRuna": "Fehu"
+ },
+ {
+  "id": 132,
+  "zdroj": 162,
+  "navnada": false,
+  "pravaRuna": "Gebo"
+ },
+ {
+  "id": 133,
+  "zdroj": 49,
+  "navnada": false,
+  "pravaRuna": "Jera"
+ },
+ {
+  "id": 134,
+  "zdroj": 138,
+  "navnada": false,
+  "pravaRuna": "Ingwaz"
+ },
+ {
+  "id": 135,
+  "zdroj": 25,
+  "navnada": false,
+  "pravaRuna": "Wunjo"
+ },
+ {
+  "id": 136,
+  "zdroj": 114,
+  "navnada": false,
+  "pravaRuna": "Laguz"
+ },
+ {
+  "id": 137,
+  "zdroj": 1,
+  "navnada": false,
+  "pravaRuna": "Fehu"
+ },
+ {
+  "id": 138,
+  "zdroj": 90,
+  "navnada": false,
+  "pravaRuna": "Ehwaz"
+ },
+ {
+  "id": 139,
+  "zdroj": 179,
+  "navnada": false,
+  "pravaRuna": "Berkana"
+ },
+ {
+  "id": 140,
+  "zdroj": 66,
+  "navnada": false,
+  "pravaRuna": "Tiwaz"
+ },
+ {
+  "id": 141,
+  "zdroj": 155,
+  "navnada": false,
+  "pravaRuna": "Eihwaz"
+ },
+ {
+  "id": 142,
+  "zdroj": 42,
+  "navnada": false,
+  "pravaRuna": "Jera"
+ },
+ {
+  "id": 143,
+  "zdroj": 131,
+  "navnada": false,
+  "pravaRuna": "Sowilo"
+ },
+ {
+  "id": 144,
+  "zdroj": 18,
+  "navnada": false,
+  "pravaRuna": "Kenaz"
+ },
+ {
+  "id": 145,
+  "zdroj": 107,
+  "navnada": false,
+  "pravaRuna": "Mannaz"
+ },
+ {
+  "id": 146,
+  "zdroj": 93,
+  "navnada": true,
+  "pravaRuna": "Ingwaz"
+ },
+ {
+  "id": 147,
+  "zdroj": 83,
+  "navnada": false,
+  "pravaRuna": "Jera"
+ },
+ {
+  "id": 148,
+  "zdroj": 172,
+  "navnada": false,
+  "pravaRuna": "Thurisaz"
+ },
+ {
+  "id": 149,
+  "zdroj": 59,
+  "navnada": false,
+  "pravaRuna": "Algiz"
+ },
+ {
+  "id": 150,
+  "zdroj": 148,
+  "navnada": false,
+  "pravaRuna": "Algiz"
+ },
+ {
+  "id": 151,
+  "zdroj": 35,
+  "navnada": false,
+  "pravaRuna": "Nauthiz"
+ },
+ {
+  "id": 152,
+  "zdroj": 124,
+  "navnada": false,
+  "pravaRuna": "Blank"
+ },
+ {
+  "id": 153,
+  "zdroj": 11,
+  "navnada": false,
+  "pravaRuna": "Ansuz"
+ },
+ {
+  "id": 154,
+  "zdroj": 100,
+  "navnada": false,
+  "pravaRuna": "Berkana"
+ },
+ {
+  "id": 155,
+  "zdroj": 189,
+  "navnada": false,
+  "pravaRuna": "Berkana"
+ },
+ {
+  "id": 156,
+  "zdroj": 76,
+  "navnada": false,
+  "pravaRuna": "Uruz"
+ },
+ {
+  "id": 157,
+  "zdroj": 165,
+  "navnada": false,
+  "pravaRuna": "Perth"
+ },
+ {
+  "id": 158,
+  "zdroj": 52,
+  "navnada": false,
+  "pravaRuna": "Eihwaz"
+ },
+ {
+  "id": 159,
+  "zdroj": 141,
+  "navnada": false,
+  "pravaRuna": "Berkana"
+ },
+ {
+  "id": 160,
+  "zdroj": 28,
+  "navnada": false,
+  "pravaRuna": "Wunjo"
+ },
+ {
+  "id": 161,
+  "zdroj": 117,
+  "navnada": false,
+  "pravaRuna": "Othila"
+ },
+ {
+  "id": 162,
+  "zdroj": 4,
+  "navnada": false,
+  "pravaRuna": "Thurisaz"
+ },
+ {
+  "id": 163,
+  "zdroj": 93,
+  "navnada": false,
+  "pravaRuna": "Ingwaz"
+ },
+ {
+  "id": 164,
+  "zdroj": 182,
+  "navnada": false,
+  "pravaRuna": "Blank"
+ },
+ {
+  "id": 165,
+  "zdroj": 69,
+  "navnada": false,
+  "pravaRuna": "Thurisaz"
+ },
+ {
+  "id": 166,
+  "zdroj": 158,
+  "navnada": false,
+  "pravaRuna": "Kenaz"
+ },
+ {
+  "id": 167,
+  "zdroj": 45,
+  "navnada": false,
+  "pravaRuna": "Jera"
+ },
+ {
+  "id": 168,
+  "zdroj": 134,
+  "navnada": false,
+  "pravaRuna": "Raidho"
+ },
+ {
+  "id": 169,
+  "zdroj": 21,
+  "navnada": false,
+  "pravaRuna": "Gebo"
+ },
+ {
+  "id": 170,
+  "zdroj": 110,
+  "navnada": false,
+  "pravaRuna": "Mannaz"
+ },
+ {
+  "id": 171,
+  "zdroj": 153,
+  "navnada": true,
+  "pravaRuna": "Raidho"
+ },
+ {
+  "id": 172,
+  "zdroj": 86,
+  "navnada": false,
+  "pravaRuna": "Uruz"
+ },
+ {
+  "id": 173,
+  "zdroj": 175,
+  "navnada": false,
+  "pravaRuna": "Hagalaz"
+ },
+ {
+  "id": 174,
+  "zdroj": 62,
+  "navnada": false,
+  "pravaRuna": "Tiwaz"
+ },
+ {
+  "id": 175,
+  "zdroj": 151,
+  "navnada": false,
+  "pravaRuna": "Othila"
+ },
+ {
+  "id": 176,
+  "zdroj": 38,
+  "navnada": false,
+  "pravaRuna": "Nauthiz"
+ },
+ {
+  "id": 177,
+  "zdroj": 127,
+  "navnada": false,
+  "pravaRuna": "Hagalaz"
+ },
+ {
+  "id": 178,
+  "zdroj": 14,
+  "navnada": false,
+  "pravaRuna": "Ansuz"
+ },
+ {
+  "id": 179,
+  "zdroj": 103,
+  "navnada": false,
+  "pravaRuna": "Ehwaz"
+ },
+ {
+  "id": 180,
+  "zdroj": 33,
+  "navnada": true,
+  "pravaRuna": "Nauthiz"
+ },
+ {
+  "id": 181,
+  "zdroj": 79,
+  "navnada": false,
+  "pravaRuna": "Perth"
+ },
+ {
+  "id": 182,
+  "zdroj": 168,
+  "navnada": false,
+  "pravaRuna": "Tiwaz"
+ },
+ {
+  "id": 183,
+  "zdroj": 55,
+  "navnada": false,
+  "pravaRuna": "Perth"
+ },
+ {
+  "id": 184,
+  "zdroj": 144,
+  "navnada": false,
+  "pravaRuna": "Kenaz"
+ },
+ {
+  "id": 185,
+  "zdroj": 31,
+  "navnada": false,
+  "pravaRuna": "Hagalaz"
+ },
+ {
+  "id": 186,
+  "zdroj": 120,
+  "navnada": false,
+  "pravaRuna": "Dagaz"
+ },
+ {
+  "id": 187,
+  "zdroj": 7,
+  "navnada": false,
+  "pravaRuna": "Ansuz"
+ },
+ {
+  "id": 188,
+  "zdroj": 96,
+  "navnada": false,
+  "pravaRuna": "Dagaz"
+ },
+ {
+  "id": 189,
+  "zdroj": 185,
+  "navnada": false,
+  "pravaRuna": "Fehu"
+ },
+ {
+  "id": 190,
+  "zdroj": 72,
+  "navnada": false,
+  "pravaRuna": "Hagalaz"
+ },
+ {
+  "id": 191,
+  "zdroj": 161,
+  "navnada": false,
+  "pravaRuna": "Gebo"
+ },
+ {
+  "id": 192,
+  "zdroj": 48,
+  "navnada": false,
+  "pravaRuna": "Jera"
+ },
+ {
+  "id": 193,
+  "zdroj": 137,
+  "navnada": false,
+  "pravaRuna": "Ingwaz"
+ },
+ {
+  "id": 194,
+  "zdroj": 24,
+  "navnada": false,
+  "pravaRuna": "Gebo"
+ },
+ {
+  "id": 195,
+  "zdroj": 113,
+  "navnada": false,
+  "pravaRuna": "Laguz"
+ },
+ {
+  "id": 196,
+  "zdroj": 0,
+  "navnada": false,
+  "pravaRuna": "Jera"
+ },
+ {
+  "id": 197,
+  "zdroj": 89,
+  "navnada": false,
+  "pravaRuna": "Ehwaz"
+ },
+ {
+  "id": 198,
+  "zdroj": 178,
+  "navnada": false,
+  "pravaRuna": "Sowilo"
+ },
+ {
+  "id": 199,
+  "zdroj": 65,
+  "navnada": false,
+  "pravaRuna": "Tiwaz"
+ },
+ {
+  "id": 200,
+  "zdroj": 154,
+  "navnada": false,
+  "pravaRuna": "Eihwaz"
+ },
+ {
+  "id": 201,
+  "zdroj": 41,
+  "navnada": false,
+  "pravaRuna": "Isa"
+ },
+ {
+  "id": 202,
+  "zdroj": 130,
+  "navnada": false,
+  "pravaRuna": "Sowilo"
+ }
+]

@@ -410,3 +410,11 @@ Skladatel `zkouska-1114/sloz1114p.js`, úlohy `u1114_postup.json`, výsledky `u1
 7. **Hranice:** n = 3 na variantu, jedno čtení na buňku, tři runy, jeden úhel, anglicky, bez oblasti; změněno je víc věcí naráz
    (nadpisy, kladné pokyny, pořadí vět, délka zadání) — zkouška ukazuje, jak si model s každým úhlem poradí, ne co z toho působí.
    Jestli jsou čtení lepší, rozhoduje owner.
+
+### 8.4 Owner: „analýza od GPT, se kterou souhlasím“ (2026-11-14, čtvrtá zpráva)
+Sdílená konverzace s GPT nad 15 čteními z oddílu 8 → `zdroj-gpt-2026-11-14-kritika-obrazu.md` (ownerova slova, závěry GPT, porovnání
+s tím, co máme). Jádro: *„Právě ty obrazy mi přijdou jako největší brzda“* (owner); „Nejdříve musí být správně zvolený obraz. Teprve
+potom má smysl testovat, jak dobře ho model dokáže interpretovat“ (GPT). Isa — sníh padá a mění vše, to není nehybnost; Gebo — moři
+a břehu chybí druhá strana. Z čtení GPT vybírá D u Raidha a Isy, C u Geba; jedna stavba pro všechny runy podle něj nesedí.
+Co z toho hned vzniklo: audit celé banky „odehrává se v obraze to, co runa znamená?“ → `audit-deje/README.md` (28 ze 190 sporných;
+nástroj je shovívavý — obraz Isy, který owner odmítl, pustil).
