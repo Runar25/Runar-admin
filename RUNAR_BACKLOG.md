@@ -191,11 +191,14 @@ hlídal jen V2 cestu.
   bude znít jinak než Opus“* — koncept psal Claude; skutečný popis by psal model výkladu (dnes GPT-6 sol), ladit se musí na něm.
   KUKY 2026-10-10: *„větší počet spíš dává větší váhu ve čtení. jelikož je dominantní, je to čistě hypotéza! je potřeba to zkusit na čteních.
   dokud nejsou čtení pořádně otestovaná, nic není takhle to bude.“* → četnost = váha (dominance) runy ve výkladu, ne jen pořadí; hypotéza k ověření.
+  KUKY 2026-11-14: *„mytická zvířata se tam zatím vůbec vyskytovat nebudou“* — popis větve je bez zvířat. Směr na později (probere se,
+  až přijde čas): zvíře ve stromě, na které člověk klikne a ono řekne, co se na stromě děje z jeho místa podle kánonu (orel, veverka, had).
+  První pokus na solu 2026-11-14 (3 větve ownerova stromu, EN; zadání a texty v gitignored `eval_out/vetev_popis_*.json`) — čeká na ownerův soud.
 - [x] ✅ *(2026-11-14, owner „udělej“, CODE-tree, b48fefb: jedna tabulka v enginu `RunarBranch.AREA_LAT` s hodnotami kánonu, lab i aplikace ji čtou odtud. Nález: tabulka enginu strom NEMĚNILA — koruna předává úhel `spec.dev` a `lat` z oblasti se pak nečte; nulový test s extrémními hodnotami dal KUKYho strom bajt po bajtu stejný. „Řídí natočení větviček“ níž tedy neplatilo.)* **Strom (lab): `AREA_LAT` odporuje „oblast = strana“** (CODE-tree, nalezeno 2026-10-09). **Stav** (triáž 2026-10-12, CODE-tree): lab má vlastní `AREA_LAT` srovnanou s kánonem (Love −0,2, Crossroads 0, Spirituality +0,5; čte ji `sideOf` a `latOf`), engine `runar-branch.js` drží starou (Love −0,75, Spirituality −0,20, Crossroads +0,10) a řídí jí natočení větviček při kreslení (`spec.area`). Pořád dvě kopie téže informace (§20) — srovnat engine s labem s golden-verify kresby. Původní text: Tabulka v `runar-branch.js` (sdílená
   s aplikací) bere Love −0,75 (nitro), Spirituality −0,20 (skoro střed), Crossroads +0,10 — kánon (`RUNAR_TREE.md` §3) má Love a Crossroads
   bez strany a Spirituality ve světě. Čte ji strana větvičky (`sideOf`), natočení ramene za čteními (`latOf` / `areaSide`) i lateral
   větvičky v enginu. Druhá kopie téže informace (§20) → srovnat s `SIDE_A` ve `stableAssign`, s golden-verify kresby.
-- [ ] **Strom (lab): záloha výšky bez záměru — jen kdyby svět runy neseděl** (CODE-tree, 2026-10-09; nízká priorita, nestavět bez ownera).
+- [x] ✖ *(2026-11-14, owner „já bych to nechal. nevidím důvod, proč to měnit“ — výška podle světa runy zůstává, záloha se nestaví)* **Strom (lab): záloha výšky bez záměru — jen kdyby svět runy neseděl** (CODE-tree, 2026-10-09; nízká priorita, nestavět bez ownera).
   Dnes: čtení bez záměru dostane výšku podle světa runy (Hel dole, Midgard střed, Asgard nahoře). Druhá možnost, kterou owner chce mít
   po ruce (KUKY: *„už máme vytvořenou zálohu pro případ, že mi to nebude sedět“*) = zóna, kde je strom zatím nejslabší (roste od zóny
   k zóně). Nepostavená, jen popsaná; DECISIONS 2026-10-09 (10).
