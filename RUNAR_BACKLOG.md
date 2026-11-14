@@ -798,7 +798,7 @@ Procházka je tím úplná.
       startu. Že to sedlo, pozná se podle **„(tester)" / „(prófari)"** za jménem tieru v panelu.
 
 ## Zjištěno při auditu — nespěchá, ale ať se neztratí
-- [ ] **Obraz Fehu „vlna za kávu a cukr“ má z banky pryč** (CODE-read 2026-11-14; owner 2026-11-14 k tomuto nálezu: *„11. další věc. odstranit.“*):
+- [x] ✅ 2026-11-14 CODE-tune (DECISIONS 2026-11-14 (2); platí po nasazení `claude-proxy`) — **Obraz Fehu „vlna za kávu a cukr“ má z banky pryč** (CODE-read 2026-11-14; owner 2026-11-14 k tomuto nálezu: *„11. další věc. odstranit.“*):
   `v2/runar-character.js:516` „The wool is traded in, and coffee and sugar come back for it.“ / „Ullin er lögð inn og fyrir hana kemur kaffi
   og sykur.“ Owner ho odmítl už 2026-11-04 (*„jak moc se někomu stane, že vymění vlnu za cukr a kávu?“*), v produkci se dál losuje.
   Oprava = CODE-tune (řádek banky pryč; ověřit, že Fehu má pro aspekt dál aspoň jeden obraz — smoke `verify_image_*`). Souvisí: owner

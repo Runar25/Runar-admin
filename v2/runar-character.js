@@ -513,7 +513,8 @@ var RUNE_IMAGES = [
   // 2026-09-23 (KUKY „2. ano“): 9 obrazů z ownerových popisů run (audit obrazů, sekce 5) — brána S POPISY 3/3 každý;
   // „dva nesou jedno koryto“ vyřazen (Ehwaz 3/3). + Jera: sušená ryba (jaro–září) a uzené jehněčí (zima), ať má Jera
   // v každém ročním období dost variant po odchodu chleba. IS: kandidati prošli korpusem + is-grammar-qa (audit 2026-09-23).
-  ['Fehu','any','Ullin er lögð inn og fyrir hana kemur kaffi og sykur.','The wool is traded in, and coffee and sugar come back for it.','auður','wealth','P', '', '', '', 'cf'],   // 2026-09-30: aspekt „mobile energy“ z klíčů Fehu odebrán
+  // 2026-11-14 (KUKY „11. … odstranit“): obraz Fehu „vlna za kávu a cukr“ pryč — owner 2026-11-04: „jak moc se někomu stane, že vymění
+  // vlnu za cukr a kávu?“ Wealth u Fehu nesou dál stádo z hor a loď plná ryb.
   ['Fehu','any','Mjólkin flóir yfir barminn á fötunni.','The milk spills over the brim of the pail.','velmegun','material prosperity','P'],
   ['Uruz','bright','Nautið rífur sig upp úr mýrinni og heldur áfram.','The bull tears itself up out of the bog and keeps going.','frumkraftur','raw power','P', '', '', 'postava'],
   ['Gebo','cold','Ókunnugur hjálpar þér að ýta bílnum úr skaflinum og veifar bara þegar hann fer.','A stranger helps push your car out of the drift and only waves as he leaves.','gjöf','gift','P'],

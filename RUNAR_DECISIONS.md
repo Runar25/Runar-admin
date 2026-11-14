@@ -13192,3 +13192,13 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   SQL `sql/2026-11-14_drop_readings_spread_data.sql` spouští owner; skripty CODE-read (`stats.js`, `archive_batches.js`) poznají spread
   podle `area='spread'`, fungují před i po.
 - Affected doc(s): RUNAR_BACKLOG.md (Strom — `spread_data`, váha větve).
+
+## 2026-11-14 (2) — Obraz Fehu „vlna za kávu a cukr“ z banky pryč
+
+- **Rozhodl:** owner 2026-11-14 *„11. další věc. odstranit.“* k nálezu CODE-read (BACKLOG); obraz odmítl už 2026-11-04 (*„jak moc se někomu
+  stane, že vymění vlnu za cukr a kávu?“*).
+- **Co:** řádek Fehu „Ullin er lögð inn og fyrir hana kemur kaffi og sykur.“ z `RUNE_IMAGES` (`v2/runar-character.js`) pryč, na jeho místě
+  komentář s důvodem. Wealth / auður u Fehu nesou dál dva obrazy (stádo z hor, loď plná ryb). Sáček obrazů hledá obraz podle textu
+  a chybějící vyřadí sám (`_seasonBagPick`), uložené sáčky se nerozbijí. Kontroly `verify_image_*` zelené.
+- **Platí v produkci až po nasazení `claude-proxy`** — prompt skládá server z balíčku `prompt_skladani.mjs`.
+- Affected doc(s): RUNAR_BACKLOG.md (Zjištěno při auditu).
