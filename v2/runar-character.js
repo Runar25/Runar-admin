@@ -514,7 +514,12 @@ var RUNE_IMAGES = [
   // „dva nesou jedno koryto“ vyřazen (Ehwaz 3/3). + Jera: sušená ryba (jaro–září) a uzené jehněčí (zima), ať má Jera
   // v každém ročním období dost variant po odchodu chleba. IS: kandidati prošli korpusem + is-grammar-qa (audit 2026-09-23).
   // 2026-11-14 (KUKY „11. … odstranit“): obraz Fehu „vlna za kávu a cukr“ pryč — owner 2026-11-04: „jak moc se někomu stane, že vymění
-  // vlnu za cukr a kávu?“ Wealth u Fehu nesou dál stádo z hor a loď plná ryb.
+  // vlnu za cukr a kávu?“ Hned nahrazen (owner téhož dne: „špatné obrazy budeme hned nahrazovat jinými“) dvěma obrazy o tom, co máš
+  // a co se s tím děje (RUNAR_POPISY_RUN Fehu: „To, co živíš, roste. To, co necháš stát, může ztratit svou sílu.“), ne o předání (Gebo).
+  // Brána s popisy k5: oba 3/3. IS: Greynir čisté; korpus tekið upp af 431, af rabarbaranum 22, því meira kemur 18, kemur upp aftur 327,
+  // legið í skúffu 17, allan veturinn 2524, fæst minna fyrir 16, en í haust 2426 (súrdeig vyřazen: krmení kvásku v korpusu 0×).
+  ['Fehu','any','Því meira sem er tekið upp af rabarbaranum, því meira kemur upp aftur.','The more rhubarb is pulled, the more comes up again.','auður','wealth','P'],
+  ['Fehu','any','Peningarnir hafa legið í skúffu allan veturinn, og í vor fæst minna fyrir þá en í haust.','The money has lain in a drawer all winter, and in spring it buys less than it did in autumn.','auður','wealth','D', '', '', '', 'cf'],
   ['Fehu','any','Mjólkin flóir yfir barminn á fötunni.','The milk spills over the brim of the pail.','velmegun','material prosperity','P'],
   ['Uruz','bright','Nautið rífur sig upp úr mýrinni og heldur áfram.','The bull tears itself up out of the bog and keeps going.','frumkraftur','raw power','P', '', '', 'postava'],
   ['Gebo','cold','Ókunnugur hjálpar þér að ýta bílnum úr skaflinum og veifar bara þegar hann fer.','A stranger helps push your car out of the drift and only waves as he leaves.','gjöf','gift','P'],
@@ -634,8 +639,13 @@ var RUNE_IMAGES = [
   ['Fehu', 'any', 'Kýrin er seld um haustið, og það sem fékkst fyrir hana dugar heimilinu út veturinn.', 'The cow is sold in the autumn, and what she fetched carries the household through the winter.', 'búfé', 'cattle', 'P', '', '', '', 'cf'],
   ['Algiz', 'any', 'Úti á heiðinni brestur í kvisti, og allur hópurinn þagnar til að hlusta.', 'Out on the heath a twig snaps, and the whole party goes quiet to listen.', 'vernd', 'protection', 'P'],
   ['Algiz', 'bright', 'Af hólnum sérð þú hryðjuna koma inn fjörðinn löngu áður en hún nær túninu.', 'From the knoll you see the squall coming up the fjord long before it reaches the hayfield.', 'vernd', 'protection', 'E'],
-  ['Othila', 'any', 'Þú kemur aftur á bæinn þar sem þú ólst upp, og eldhúsið er minna en í minningunni.', 'You come back to the farm you grew up on, and the kitchen is smaller than you remembered.', 'heimili', 'home', 'D', '', '', '', 'fg'],
-  ['Othila', 'any', 'Prjónarnir hennar mömmu þinnar eru nú í þínum höndum, með síðustu umferðina hennar enn á þeim.', 'Your mother\'s knitting needles are in your hands now, with her last row still on them.', 'arfur', 'inheritance', 'D', '', '', '', 'fh'],
+  // 2026-11-14 (KUKY „3. tak to udělej“, nález CODE-read 2026-11-03): dva obrazy Othily tvrdily čtenářovu minulost (kde vyrůstal)
+  // a jmenovaly roli (matčiny jehlice). Ownerovo pravidlo 2026-11-03 (docs/eval/2026-10-23-v3-charakter/krok44-zdroj-gpt.md, oddíl 4):
+  // žádná jmenovaná role, žádná předpokládaná historie — obecná lidská situace. Přepsáno: sourozenci místo „ty“, cizí ruce místo matky.
+  // Brána s popisy k5: oba 3/3. IS: Greynir čisté; korpus ólust upp 3213, en í minningunni 321, hálfprjónaða peysu 2, prjónunum 3688,
+  // tekur upp þráðinn 244, aðrar hendur 91.
+  ['Othila', 'any', 'Systkinin koma aftur á bæinn þar sem þau ólust upp, og eldhúsið er minna en í minningunni.', 'The siblings come back to the farm they grew up on, and the kitchen is smaller than they remembered.', 'heimili', 'home', 'D', '', '', '', 'fg'],
+  ['Othila', 'any', 'Hálfprjónuð peysa liggur á prjónunum, og einhver tekur upp þráðinn þar sem aðrar hendur hættu.', 'A half-knitted sweater lies on the needles, and someone picks up where other hands stopped.', 'arfur', 'inheritance', 'D', '', '', '', 'fh'],
   ['Othila', 'any', 'Fjórar fjölskyldur hafa setið við sama borð á bænum, og borðið stendur enn á sínum stað.', 'Four families have sat at the same table in the farmhouse, and the table has stayed where it is.', 'hefðir', 'heritage', 'D', '', '', '', 'f'],
   ['Raidho', 'cold', 'Af skarðinu lítur þú til baka, og sporin þín í snjónum mynda eina línu niður dalinn.', 'From the pass you look back, and your tracks in the snow make one line down the valley.', 'leið', 'the road', 'E'],
   ['Raidho', 'any', 'Slóðin sveigir fyrir hraunið og kemur aftur á sína línu hinum megin.', 'The track bends round the lava and comes back to its line on the other side.', 'leið', 'the road', 'E'],

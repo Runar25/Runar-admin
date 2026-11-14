@@ -803,7 +803,7 @@ Procházka je tím úplná.
   og sykur.“ Owner ho odmítl už 2026-11-04 (*„jak moc se někomu stane, že vymění vlnu za cukr a kávu?“*), v produkci se dál losuje.
   Oprava = CODE-tune (řádek banky pryč; ověřit, že Fehu má pro aspekt dál aspoň jeden obraz — smoke `verify_image_*`). Souvisí: owner
   2026-11-10 chce obrazy Fehu předělat (`docs/eval/2026-11-09-v2-vyklad-z-v3/README.md` oddíl 4 a 7.10).
-- [ ] **Dva obrazy Othily v `RUNE_IMAGES` jmenují roli nebo tvrdí minulost čtenáře** (CODE-read 2026-11-03, při výběru obrazů pro lab
+- [x] ✅ 2026-11-14 CODE-tune (DECISIONS 2026-11-14 (4); platí po nasazení `claude-proxy`) — **Dva obrazy Othily v `RUNE_IMAGES` jmenují roli nebo tvrdí minulost čtenáře** (CODE-read 2026-11-03, při výběru obrazů pro lab
   krok 44): `v2/runar-character.js:637` „Your mother's knitting needles are in your hands now…“ (jmenovaná role + tvrzení, že čtenář má
   matčiny jehlice) a `:636` „You come back to the farm you grew up on…“ (tvrzení, kde čtenář vyrůstal — stejná vada jako opravené „už tam
   nebydlíš“ 2026-09-23). Ownerovo pravidlo 2026-11-03 (zdroj `docs/eval/2026-10-23-v3-charakter/krok44-zdroj-gpt.md`, oddíl 4): žádná

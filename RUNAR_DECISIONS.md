@@ -13217,3 +13217,24 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   stejně jako `docs/inbox/`.
 - **Hranice:** že oba pády způsobil souběh, je doloženo u CODE-tree (timeout); u CODE-read jen tím, že týž commit pak prošel.
 - Affected doc(s): memory/handoff-text-in-code-block.md (týž den, jiné pravidlo: předání mezi CODE session jde přes BACKLOG).
+
+## 2026-11-14 (4) — Vyřazený obraz se hned nahradí: Fehu dostal dva nové, dva obrazy Othily přepsány
+
+- **Rozhodl:** owner 2026-11-14 *„pokud se posouvá vzorec, což jsem nevěděl, tak špatné obrazy budeme hned nahrazovat jinými!“* (k odebrání
+  Fehu 2026-11-14 (2)) a *„3. tak to udělej“* (obrazy Othily, nález CODE-read 2026-11-03 v BACKLOGu). **Platí dál:** obraz, který z banky
+  odchází, se v tomtéž kroku nahradí novým, který projde bránou — runa o obraz nepřijde.
+- **Co „posun“ byl:** zkušební vzorky (`scripts/golden/golden_baseline.json`) losují obraz pevnou náhodou; s jiným počtem obrazů padne
+  jiný, proto se 18 ze 40 vzorků změnilo jen v tom, který obraz padl. Uživatel to nevidí — losuje se pořád ze stejné banky.
+- **Fehu (auður / wealth):** *„Því meira sem er tekið upp af rabarbaranum, því meira kemur upp aftur.“* / *The more rhubarb is pulled, the more
+  comes up again.* (P, bez oblasti) · *„Peningarnir hafa legið í skúffu allan veturinn, og í vor fæst minna fyrir þá en í haust.“* / *The money
+  has lain in a drawer all winter, and in spring it buys less than it did in autumn.* (D, oblasti c f). Obojí o tom, co máš a co se s tím děje
+  (`RUNAR_POPISY_RUN.md` Fehu „To, co živíš, roste. To, co necháš stát, může ztratit svou sílu.“), ne o předání — dávání se čte jako Gebo
+  (lab `docs/eval/2026-11-09-v2-vyklad-z-v3/README.md` 7.10). Kvásek, který owner chválil, vyřazen: krmení kvásku v korpusu 0×.
+- **Othila:** „You come back to the farm you grew up on…“ → *„Systkinin koma aftur á bæinn þar sem þau ólust upp, og eldhúsið er minna en
+  í minningunni.“* / *The siblings come back…* (bez tvrzení, kde čtenář vyrůstal) · „Your mother's knitting needles…“ → *„Hálfprjónuð peysa
+  liggur á prjónunum, og einhver tekur upp þráðinn þar sem aðrar hendur hættu.“* / *A half-knitted sweater lies on the needles, and someone
+  picks up where other hands stopped.* (bez jmenované role). Pravidlo `docs/eval/2026-10-23-v3-charakter/krok44-zdroj-gpt.md` oddíl 4.
+- **Ověřeno:** brána s popisy run (`docs/eval/2026-09-26-obrazy/`, kolo k5, tři slepí soudci): všechny čtyři 3/3. IS: Greynir čisté, vazby
+  z korpusu (čísla v komentáři u řádků v `runar-character.js`), `check-is.py` čisté. `verify_image_*` zelené, golden: 18/40 jen jiný obraz.
+- **Hranice:** brána ověřuje, že obraz nese runu, ne že je dobrý ve čtení; čtení se s novými obrazy negenerovala. Platí po nasazení `claude-proxy`.
+- Affected doc(s): RUNAR_BACKLOG.md (Zjištěno při auditu — Othila).
