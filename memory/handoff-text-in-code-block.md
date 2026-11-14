@@ -35,3 +35,9 @@ neotravuj. já si to tam musím číst, abych zjistil, že tam není nic důlež
 **How to apply:** příjemce má něco ZMĚNIT nebo udělat → handoff (v bloku). Jen informace / potvrzení /
 „beze změny" → zapsat tam, kde to druhá session najde (BACKLOG u souvisejícího úkolu, doc, který čte) a
 ownerovi o tom nanejvýš jednu větu, žádný blok k přeposlání.
+
+⚠️ **Mezi CODE session žádný blok pro ownera — zapsat do BACKLOGu a hotovo (KUKY 2026-11-14).** Zapsal jsem úkol pro CODE-tune do
+`RUNAR_BACKLOG.md` a k tomu ownerovi vložil blok „Text pro CODE-tune“. Owner: *„co píšeš code tune, neposílej mně. to už jsme si snad
+řekli, jak to bude vypadat.“* CODE-tune si položku z BACKLOGu vzal sám do půl hodiny, bez ownera.
+**How to apply:** úkol pro jinou CODE session = položka v `RUNAR_BACKLOG.md` (s ownerovými slovy, souborem a řádkem) + commit; ownerovi
+jedna věta, že je zapsáno. Blok k přeposlání jen pro příjemce, který do repa nevidí.

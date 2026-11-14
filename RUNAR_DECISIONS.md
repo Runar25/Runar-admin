@@ -13202,3 +13202,18 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   a chybějící vyřadí sám (`_seasonBagPick`), uložené sáčky se nerozbijí. Kontroly `verify_image_*` zelené.
 - **Platí v produkci až po nasazení `claude-proxy`** — prompt skládá server z balíčku `prompt_skladani.mjs`.
 - Affected doc(s): RUNAR_BACKLOG.md (Zjištěno při auditu).
+
+## 2026-11-14 (3) — Pre-push: jeden smoke naráz a výpis toho, co spadlo; podklady od Coworku mimo kontrolu živých doků
+
+- **Rozhodl:** owner 2026-11-14 *„tak ty problémy vyřešte! udělej to tak, aby k nim už nemohlo dojít“* (push CODE-read zastavený dvěma
+  problémy, které se nedaly dohledat) a *„jak to, že se tohle pořád děje? ty jsi to neověřoval…“* (kdo commity odeslal).
+- **Co se stalo (ověřeno v přepisech session a v reflogu):** 12:35 pushoval CODE-read, 12:37 CODE-tree — dva smoke naráz. CODE-tree spadl
+  na `TimeoutExpired` v kontrole hooků, CODE-read na dvou problémech, jejichž jména se ztratila (výstup zkrácený na konec). Týž commit
+  fa55742 prošel o 20 min později sám za 3 min (CODE-tree, 12:57–13:00) a nesl na server i commity CODE-read — sdílená větev.
+- **Co:** `hooks/pre-push.py` (1) zámek ve společném `.git`: druhý push počká; když mu první mezitím commity odnese nebo týž commit
+  otestuje, skončí bez dalšího smoke; zámek po mrtvém procesu nebo starší 30 min se přebírá; (2) celý výpis smoke do
+  `.git/runar-prepush-posledni.log` a řádky s ❌ znovu úplně na konci. Zkoušeno ve stavech: žádný zámek, živý cizí, po mrtvém procesu,
+  starý, rozbitý, cizí se nepouští. `check-docs.py`: složka `Claude outputs/` (podklady od Coworku, mimo git) se nečte jako živý doc,
+  stejně jako `docs/inbox/`.
+- **Hranice:** že oba pády způsobil souběh, je doloženo u CODE-tree (timeout); u CODE-read jen tím, že týž commit pak prošel.
+- Affected doc(s): memory/handoff-text-in-code-block.md (týž den, jiné pravidlo: předání mezi CODE session jde přes BACKLOG).
