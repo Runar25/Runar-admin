@@ -823,6 +823,14 @@ Procházka je tím úplná.
       startu. Že to sedlo, pozná se podle **„(tester)" / „(prófari)"** za jménem tieru v panelu.
 
 ## Zjištěno při auditu — nespěchá, ale ať se neztratí
+- [ ] **Fehu: dva obrazy, které owner odmítl, jsou pořád v bance** (CODE-read 2026-11-14; odmítl je už 2026-11-03 jako „19. století“,
+  `docs/eval/2026-10-23-v3-charakter/krok43-obrazy-dnesni-doba.md` oddíl 1.2). Owner 2026-11-14: *„mléko přes okraj bude lepší jako voda
+  přes okraj. kráva prodaná na podzim není dobrý obraz. skoro žádný člověk si takovou věc nedokáže představit, o co by mělo jít. a hlavně
+  to vůbec není zajímavý obraz.“* Řádky `RUNE_IMAGES`: „The milk spills over the brim of the pail.“ → přepsat na vodu;
+  „The cow is sold in the autumn, and what she fetched carries the household through the winter.“ → pryč a hned nahradit (owner
+  2026-11-14: špatné obrazy se nahrazují). ⚠️ Voda přes okraj už dvakrát vyšla k jiné runě (sklenice pod kohoutkem: „promrhaná
+  hojnost“, Fehu / Laguz; horký pramen: Ingwaz) — nové znění napřed postupem `docs/postup-obraz.md`. Třetí odmítnutý („loď tak plná,
+  že sedí hluboko“ — „nevěrohodné“) owner 2026-11-14 nezmínil; zůstává k dotazu. Kdo obrazy píše (CODE-read / CODE-tune), čeká na ownera.
 - [x] ✅ 2026-11-14 CODE-tune (DECISIONS 2026-11-14 (2); platí po nasazení `claude-proxy`) — **Obraz Fehu „vlna za kávu a cukr“ má z banky pryč** (CODE-read 2026-11-14; owner 2026-11-14 k tomuto nálezu: *„11. další věc. odstranit.“*):
   `v2/runar-character.js:516` „The wool is traded in, and coffee and sugar come back for it.“ / „Ullin er lögð inn og fyrir hana kemur kaffi
   og sykur.“ Owner ho odmítl už 2026-11-04 (*„jak moc se někomu stane, že vymění vlnu za cukr a kávu?“*), v produkci se dál losuje.
