@@ -798,6 +798,11 @@ Procházka je tím úplná.
       startu. Že to sedlo, pozná se podle **„(tester)" / „(prófari)"** za jménem tieru v panelu.
 
 ## Zjištěno při auditu — nespěchá, ale ať se neztratí
+- [ ] **Obraz Fehu „vlna za kávu a cukr“ má z banky pryč** (CODE-read 2026-11-14; owner 2026-11-14 k tomuto nálezu: *„11. další věc. odstranit.“*):
+  `v2/runar-character.js:516` „The wool is traded in, and coffee and sugar come back for it.“ / „Ullin er lögð inn og fyrir hana kemur kaffi
+  og sykur.“ Owner ho odmítl už 2026-11-04 (*„jak moc se někomu stane, že vymění vlnu za cukr a kávu?“*), v produkci se dál losuje.
+  Oprava = CODE-tune (řádek banky pryč; ověřit, že Fehu má pro aspekt dál aspoň jeden obraz — smoke `verify_image_*`). Souvisí: owner
+  2026-11-10 chce obrazy Fehu předělat (`docs/eval/2026-11-09-v2-vyklad-z-v3/README.md` oddíl 4 a 7.10).
 - [ ] **Dva obrazy Othily v `RUNE_IMAGES` jmenují roli nebo tvrdí minulost čtenáře** (CODE-read 2026-11-03, při výběru obrazů pro lab
   krok 44): `v2/runar-character.js:637` „Your mother's knitting needles are in your hands now…“ (jmenovaná role + tvrzení, že čtenář má
   matčiny jehlice) a `:636` „You come back to the farm you grew up on…“ (tvrzení, kde čtenář vyrůstal — stejná vada jako opravené „už tam

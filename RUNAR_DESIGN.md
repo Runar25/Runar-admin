@@ -386,7 +386,8 @@ stav/přechod→kandidát na slovní), nikdy plošná preference — ⭐ **dolo�
 u tří abstraktních run vyhrál situační, u pěti run s konkrétní kotvou vyhrál fyzický (86 % vs
 67 %). Kdo si vybere jeden typ plošně, spadne na té druhé skupině · **žádné kvóty typů předem** — počty
 ať vyjdou z mapy mezer a z brány · **každý obraz jakéhokoli typu projde identitní branou**
-(generátor navrhuje, soudce rozhoduje; přebytek kandidátů = normální provoz, ne selhání) ·
+(generátor navrhuje, soudce rozhoduje; přebytek kandidátů = normální provoz, ne selhání; nástroj brány:
+`docs/eval/2026-09-26-obrazy/brana_build.py` + `brana_vyhodnot.py`) ·
 plus dvě síta výš a kontrola „čí je to pozemek" (předmět/sloveso nesmí být jádrem sousední runy).
 
 ### Obraz od modelu (KUKY 2026-10-03)
