@@ -216,6 +216,7 @@ PRIPADY = [
  ('obchazka', 'verify_runar_root.js', 'scripts/utils/stats.js', 'append', '', "\nconst _protiCesta2 = 'C:" + chr(92) * 2 + "Users" + chr(92) * 2 + "zkuku" + chr(92) * 2 + "Downloads" + chr(92) * 2 + "Runar-admin';\n"),
  ('obchazka', 'verify_code_doc_refs.js', 'v2/runar-reader.css', 'append', '', '\n/* podrobnosti viz docs/neexistuje-protipriklad-css' + '.md */\n'),
  ('chyti', 'verify_tree_signals.js', 'v2/runar-tree.js', 'replace', '(row.aol || null)', 'null'),
+ ('chyti', 'verify_tree_signals.js', 'v2/tree-lab-branch-composer/runar-branch.js', 'replace', 'purpose:0.60, career:0.70', 'purpose:0.60, karriera:0.70'),
  ('chyti', 'verify_tree_signals.js', 'v2/runar-tree.js', 'replace', "      src = row.rune_glyph || '';", "      src = (row.rune_glyph || '') + ' ' + st;"),
  # kolo 3 / 4i (2026-10-11): Ask nápověda, kolekce, páky promptu, databáze čtení. Kontroly bez útoku → BEZ_UTOKU níž.
  ('chyti', 'verify_ask_hints.js', 'v2/runar-reading.js', 'replace', 'var many = dr.length > 1, life = u.lifeRune;', 'var many = true, life = u.lifeRune;'),

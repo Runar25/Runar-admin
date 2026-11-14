@@ -142,7 +142,25 @@ function keysOf(name) {
     return part.split(':')[0].trim();
   }).filter(Boolean);
 }
-var AREA_KEYS = keysOf('AREA_LAT'), INT_KEYS = keysOf('INT_AXIS');
+// AREA_LAT renderer od 2026-11-14 SKLÁDÁ: klíče labu ze STEER_AREA, čísla z enginu (runar-branch.js RunarBranch.AREA_LAT,
+// jediná tabulka strany). Kontrola jde touž cestou: klíče = STEER_AREA a ke každému musí engine mít číslo — chybí-li, strana mlčí.
+var AREA_KEYS;
+if (prod.indexOf('AREA_LAT[ak]=B.AREA_LAT[STEER_AREA[ak]]') >= 0) {
+  var _sa = prod.indexOf('var STEER_AREA'), _sa1 = prod.indexOf('{', _sa), _sa2 = prod.indexOf('}', _sa1);
+  var _pairs = (_sa < 0 || _sa1 < 0 || _sa2 < 0) ? [] : prod.slice(_sa1 + 1, _sa2).split(',').map(function (part) {
+    var kv = part.split(':'); return [kv[0].trim(), (kv[1] || '').trim().replace(/'/g, '')]; }).filter(function (p) { return p[0]; });
+  if (!_pairs.length) fails.push('v runar-tree-prod.js nenalezena mapa STEER_AREA — změnil se tvar?');
+  var _eng = { Math: Math, console: console }; _eng.window = _eng; _eng.globalThis = _eng;
+  vm.createContext(_eng);
+  vm.runInContext(fs.readFileSync(DIR + 'tree-lab-branch-composer/runar-branch.js', 'utf8'), _eng);
+  var _EA = (_eng.RunarBranch && _eng.RunarBranch.AREA_LAT) || {};
+  AREA_KEYS = [];
+  _pairs.forEach(function (p) {
+    if (typeof _EA[p[1]] !== 'number') fails.push('engine RunarBranch.AREA_LAT nemá číslo pro ' + JSON.stringify(p[1]) + ' (oblast labu ' + JSON.stringify(p[0]) + ') → osa B (strana) mlčí');
+    else AREA_KEYS.push(p[0]);
+  });
+} else AREA_KEYS = keysOf('AREA_LAT');
+var INT_KEYS = keysOf('INT_AXIS');
 
 (out || []).forEach(function (r, i) {
   if (r.area != null && AREA_KEYS.indexOf(r.area) === -1) {
