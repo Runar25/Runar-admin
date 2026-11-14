@@ -4193,8 +4193,10 @@ var RUNE_IMAGES = [
   // 2026-11-14 (KUKY „líbil by se mi spíš kvásek než peníze“): peníze v šuplíku → kvásek; krmení řečeno „fær næringu“ (71×).
   // Nese obě půlky popisu (živíš → žije, zapomeneš → umře). Brána s popisy k6 3/3. IS: Greynir čisté; korpus súrdeigsgrunnurinn 23,
   // svo lengi sem 28661, fær næringu 71, gleymist hann 35, deyr hann 388.
+  // Týž den zkráceno (KUKY: „vyřadit z toho dies, je to zbytečně agresivní; chci, aby to bylo něco, co říká Rúnar: na to nezapomeň“):
+  // jen první půlka, „nezapomeň krmit“ nese věta sama. Brána s popisy k7 3/3, Greynir čisté.
   ['Fehu','any','Því meira sem er tekið upp af rabarbaranum, því meira kemur upp aftur.','The more rhubarb is pulled, the more comes up again.','auður','wealth','P'],
-  ['Fehu','any','Súrdeigsgrunnurinn lifir svo lengi sem hann fær næringu, og gleymist hann, deyr hann.','The sourdough starter lives as long as it is fed, and if it is forgotten, it dies.','auður','wealth','D'],
+  ['Fehu','any','Súrdeigsgrunnurinn lifir svo lengi sem hann fær næringu.','The sourdough starter lives as long as it is fed.','auður','wealth','D'],
   ['Fehu','any','Mjólkin flóir yfir barminn á fötunni.','The milk spills over the brim of the pail.','velmegun','material prosperity','P'],
   ['Uruz','bright','Nautið rífur sig upp úr mýrinni og heldur áfram.','The bull tears itself up out of the bog and keeps going.','frumkraftur','raw power','P', '', '', 'postava'],
   ['Gebo','cold','Ókunnugur hjálpar þér að ýta bílnum úr skaflinum og veifar bara þegar hann fer.','A stranger helps push your car out of the drift and only waves as he leaves.','gjöf','gift','P'],
