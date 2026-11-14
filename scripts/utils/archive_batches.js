@@ -74,7 +74,7 @@ if (has('--list')) {
 // ─── --production: živá čtení z DB ───────────────────────
 if (has('--production')) {
   const sql = "select id, rune_name, lang, area, seeking, intention, drawn_at, prompt_version, " +
-    "prompt_draws, spread_data is not null as is_spread, " +
+    "prompt_draws, coalesce(area,'') = 'spread' as is_spread, " +  // spread_data zrušen 2026-11-14 (u spreadů byl prázdný)
     "coalesce(short_text,'') as short_text, coalesce(deep_text,'') as deep_text " +
     "from " + CTENI + " where coalesce(short_text,'') <> '' order by drawn_at;";
   const tmp = path.join(os.tmpdir(), 'runar_arch_' + process.pid + '.sql');

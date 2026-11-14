@@ -13180,3 +13180,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   cestě (sol), CODE-tune převádí do produkce. Seznam, pořadí a výsledky `docs/eval/2026-11-09-v2-vyklad-z-v3/README.md`; první je druhá strana významu.
 - Affected doc(s): RUNAR_BACKLOG.md (Čtení a islandština — co zbývá).
 
+## 2026-11-14 (1) — Strom: jednoduché čtení jen z políčka runy, staré THE GATHERING ven; sloupec `spread_data` se ruší
+
+- **Rozhodl:** owner 2026-11-14 na otázky CODE-tree: *„stará čtení gathering se můžou smazat nebo úplně vynechat. nejsou vůbec důležitá“* ·
+  *„6. ano“* (vyřadit „váha větve = počet vyplněných polí“) · *„7. ano“* (zrušit nepoužívaný sloupec `spread_data`).
+- **Proč:** jednoduché čtení smí do stromu dát jen runu, kterou člověk táhl — text píše model a glyf v próze by přidal falešnou větev.
+  Výjimku pro dvě staré THE GATHERING (runy jen v textu) owner nechce. Zvoleno „vynechat“, ne smazat řádky: méně destruktivní, strom je nevidí.
+  `spread_data` nikdo nečte; plné jsou 3 prototypová SPREAD_3 z května (runy jen tam), owner stará pokusná čtení nepotřebuje.
+- **Co:** `readingsToTreeLog` (`v2/runar-tree.js`) bere u jednoduchého čtení jen `rune_glyph`. Ověřeno na 633 čteních z produkce: log přišel
+  přesně o dvě THE GATHERING (ani jedna není ownerova), zbytek beze změny. Kontrola `verify_tree_signals.js` (smoke ⑬) + útok v `protipriklady.py`.
+  SQL `sql/2026-11-14_drop_readings_spread_data.sql` spouští owner; skripty CODE-read (`stats.js`, `archive_batches.js`) poznají spread
+  podle `area='spread'`, fungují před i po.
+- Affected doc(s): RUNAR_BACKLOG.md (Strom — `spread_data`, váha větve).

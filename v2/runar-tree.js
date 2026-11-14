@@ -82,12 +82,9 @@ function readingsToTreeLog(rows) {
     var src = (row.rune_glyph || '') + ' ' + st;
     if (!isSpread) {
       // Jednoduché čtení: runa jen z políčka runy, nikdy z prózy, kterou napsal model (BACKLOG „spread_data“, 2026-11-14).
-      // Text se čte jen tehdy, když políčko žádnou známou runu nemá a text je skládaný seznam „ᚹ WUNJO · ᛉ ALGIZ“ —
-      // tak to mají dvě staré THE GATHERING (políčko ✦), ověřeno na všech čteních z produkce.
+      // Dvě staré THE GATHERING (políčko ✦, runy jen v textu) tím ze stromu vypadnou — owner 2026-11-14: „nejsou vůbec
+      // důležitá … úplně vynechat“. Až Gathering přijde jako spread, patří do isSpread výš, ne zpátky sem.
       src = row.rune_glyph || '';
-      var known = false;
-      for (var k = 0; k < src.length; k++) if (byGlyph[src.charAt(k)]) { known = true; break; }
-      if (!known && /^\S+ [A-Z]+( · \S+ [A-Z]+)*$/.test(st)) src = st;
     }
     var runes = [];
     // Ptáme se, jestli je znak ZNÁMÝ GLYF, ne jestli padne do runového rozsahu.

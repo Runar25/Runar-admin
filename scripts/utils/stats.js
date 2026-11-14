@@ -66,7 +66,7 @@ const jazyk = q('select coalesce(lang,'+"'?'"+') lang, count(*) n from public.re
   ' where drawn_at >= ' + OD + jenT('user_id') + ' group by 1 order by 2 desc;');
 
 const kvalita = q('select count(*) n, count(prompt_draws) s_draws,' +
-  ' count(*) filter (where spread_data is not null) spready' +
+  ' count(*) filter (where area = '+"'spread'"+') spready' +  // marker spreadu; spread_data zrušen 2026-11-14 (u spreadů byl prázdný)
   ' from public.readings where drawn_at >= ' + OD + jenT('user_id') + ';')[0];  // opt-out:ok 2026-10-10 provozní souhrny (objem, časy, jazyky), ne analýza kvality textu
 
 // ── Náklady a cache (CODE-read 2026-09-24) ──────────────────────────────────────────────

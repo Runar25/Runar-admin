@@ -698,7 +698,7 @@ if (has('--kws')) {
 
 // ─── běh ─────────────────────────────────────────────────
 const LEVERS = ['area', 'seeking', 'intention', 'rune_name'];
-// ⚠️ JEN SINGLE. Spready (`spread_data is not null`) staví jine buildery (norns/kriz/
+// ⚠️ JEN SINGLE. Spready (`area = 'spread'`) staví jine buildery (norns/kriz/
 // horseshoe/yggdrasil); merit je proti single promptu znamena merit proti spatnemu textu —
 // prvni verze tak hlasila "thread" u NORNS jako DRIFT, pritom to slovo nese spread builder.
 // Rozsireni na spready = vlastni krok, ne tichy predpoklad (§19.3).
@@ -709,9 +709,8 @@ const rows = q(
   "from " + CTENI + " where lang = '" + LSAFE + "' " +
   "and coalesce(area,'') <> 'spread' and coalesce(short_text,'') <> '';"
 );
-// ⚠️ Marker spreadu je `area='spread'`, NE `spread_data`. Sloupec `spread_data` je u vsech
-// spreadu prazdny — nikdo do nej nepise (zapsano v RUNAR_BACKLOG.md). Prvni verze filtrovala
-// podle nej a propustila vsech 63 spreadu do skenu.
+// ⚠️ Marker spreadu je `area='spread'`. Sloupec `spread_data` byl u vsech spreadu prazdny
+// (2026-11-14 zrusen); prvni verze filtrovala podle nej a propustila vsech 63 spreadu do skenu.
 const nSpread = (q("select count(*) as c from " + CTENI + " where lang = '" + LSAFE +
   "' and coalesce(area,'') = 'spread';")[0] || {}).c || 0;
 if (!rows.length) { console.error('Zadna cteni pro lang=' + LANG); process.exit(1); }
