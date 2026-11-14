@@ -13238,3 +13238,20 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   z korpusu (čísla v komentáři u řádků v `runar-character.js`), `check-is.py` čisté. `verify_image_*` zelené, golden: 18/40 jen jiný obraz.
 - **Hranice:** brána ověřuje, že obraz nese runu, ne že je dobrý ve čtení; čtení se s novými obrazy negenerovala. Platí po nasazení `claude-proxy`.
 - Affected doc(s): RUNAR_BACKLOG.md (Zjištěno při auditu — Othila).
+
+## 2026-11-14 (5) — Fehu: kvásek místo peněz · Othila: obrazy bez lidí
+
+- **Rozhodl:** owner 2026-11-14 k obrazům z 2026-11-14 (4): *„líbil by se mi spíš kvásek než peníze“* a k Othile *„nechci tam úplně jiné
+  osoby. pokud je to zvíře, tak dobrý, ale ne osoby. žádné třetí osoby, co někam přijdou.“* Mění (4) — sourozenci a „cizí ruce“ pryč.
+- **Fehu:** peníze v šuplíku → *„Súrdeigsgrunnurinn lifir svo lengi sem hann fær næringu, og gleymist hann, deyr hann.“* / *The sourdough
+  starter lives as long as it is fed, and if it is forgotten, it dies.* (D, bez oblasti). Krmení kvásku řečeno „fær næringu“ — „gefa/fóðra/
+  mata súrdeigið“ má v korpusu 0×, proto byl kvásek v (4) vyřazen. Nese obě půlky popisu Fehu (živíš → žije, necháš stát → ztratí sílu).
+- **Othila (heimili):** *„Á gamla bænum stendur nýtt hús á gömlum grunni.“* / *On the old farm a new house stands on old foundations.*
+  **(arfur):** *„Kindurnar rata heim af fjalli sömu leið og ærnar á undan þeim.“* / *The sheep find their way home from the mountain by the
+  same path as the ewes before them.* Oblasti beze změny (f g · f h).
+- **Ověřeno:** brána s popisy run, kolo k6 (`docs/eval/2026-09-26-obrazy/`): všech pět kandidátů 3/3, včetně druhého kvásku („lyftir sér
+  í krukkunni í hvert sinn sem hann fær næringu“) a kajky („Æðarkollurnar verpa þar sem þær klöktust sjálfar“) — obě v záloze, do banky
+  nešly. IS: Greynir čisté, vazby z korpusu (čísla v komentáři u řádků v `runar-character.js`), `check-is.py` čisté. Golden: 3 řádky, jen obraz.
+- **Hranice:** platí pro Othilu, jak owner řekl; jestli „žádné cizí osoby“ platí pro celou banku, je otevřená otázka ownerovi — nezobecněno.
+  Brána ověřuje, že obraz nese runu, ne že je dobrý ve čtení. Platí po nasazení `claude-proxy`.
+- Affected doc(s): žádný jiný (stav obrazů vlastní kód).
