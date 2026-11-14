@@ -1,0 +1,7 @@
+[
+ {"id": "F3", "runa": "Fehu", "en": "The sourdough starter lives as long as it is fed, and if it is forgotten, it dies.", "gpt": "kvásek místo peněz v šuplíku (owner 2026-11-14)", "plete": ["Berkana", "Jera"]},
+ {"id": "F4", "runa": "Fehu", "en": "The sourdough starter rises in the jar every time it is fed.", "gpt": "kvásek místo peněz v šuplíku (owner 2026-11-14)", "plete": ["Berkana", "Jera"]},
+ {"id": "O3", "runa": "Othila", "en": "On the old farm a new house stands on old foundations.", "gpt": "Othila bez osob (owner 2026-11-14)", "plete": ["Berkana", "Jera"]},
+ {"id": "O4", "runa": "Othila", "en": "The eider ducks nest where they themselves hatched.", "gpt": "Othila bez osob, zvíře (owner 2026-11-14)", "plete": ["Raidho", "Jera"]},
+ {"id": "O5", "runa": "Othila", "en": "The sheep find their way home from the mountain by the same path as the ewes before them.", "gpt": "Othila bez osob, zvíře (owner 2026-11-14)", "plete": ["Raidho", "Ehwaz"]}
+]

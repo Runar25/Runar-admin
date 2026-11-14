@@ -1,0 +1,167 @@
+{
+ "kandidati": [
+  "F3",
+  "F4",
+  "O3",
+  "O4",
+  "O5"
+ ],
+ "soudci": [
+  [
+   {
+    "n": 1,
+    "id": "F3",
+    "spravne": "R22",
+    "kody": {
+     "R64": "Berkana",
+     "R60": "Jera",
+     "R22": "Fehu"
+    }
+   },
+   {
+    "n": 2,
+    "id": "O5",
+    "spravne": "R55",
+    "kody": {
+     "R18": "Raidho",
+     "R55": "Othila",
+     "R95": "Ehwaz"
+    }
+   },
+   {
+    "n": 3,
+    "id": "O3",
+    "spravne": "R55",
+    "kody": {
+     "R55": "Othila",
+     "R60": "Jera",
+     "R64": "Berkana"
+    }
+   },
+   {
+    "n": 4,
+    "id": "F4",
+    "spravne": "R22",
+    "kody": {
+     "R60": "Jera",
+     "R64": "Berkana",
+     "R22": "Fehu"
+    }
+   },
+   {
+    "n": 5,
+    "id": "O4",
+    "spravne": "R55",
+    "kody": {
+     "R60": "Jera",
+     "R18": "Raidho",
+     "R55": "Othila"
+    }
+   }
+  ],
+  [
+   {
+    "n": 1,
+    "id": "F3",
+    "spravne": "R21",
+    "kody": {
+     "R17": "Berkana",
+     "R21": "Fehu",
+     "R81": "Jera"
+    }
+   },
+   {
+    "n": 2,
+    "id": "F4",
+    "spravne": "R21",
+    "kody": {
+     "R17": "Berkana",
+     "R21": "Fehu",
+     "R81": "Jera"
+    }
+   },
+   {
+    "n": 3,
+    "id": "O5",
+    "spravne": "R58",
+    "kody": {
+     "R35": "Ehwaz",
+     "R30": "Raidho",
+     "R58": "Othila"
+    }
+   },
+   {
+    "n": 4,
+    "id": "O3",
+    "spravne": "R58",
+    "kody": {
+     "R17": "Berkana",
+     "R58": "Othila",
+     "R81": "Jera"
+    }
+   },
+   {
+    "n": 5,
+    "id": "O4",
+    "spravne": "R58",
+    "kody": {
+     "R30": "Raidho",
+     "R58": "Othila",
+     "R81": "Jera"
+    }
+   }
+  ],
+  [
+   {
+    "n": 1,
+    "id": "F4",
+    "spravne": "R63",
+    "kody": {
+     "R63": "Fehu",
+     "R76": "Berkana",
+     "R38": "Jera"
+    }
+   },
+   {
+    "n": 2,
+    "id": "O5",
+    "spravne": "R28",
+    "kody": {
+     "R26": "Raidho",
+     "R28": "Othila",
+     "R86": "Ehwaz"
+    }
+   },
+   {
+    "n": 3,
+    "id": "F3",
+    "spravne": "R63",
+    "kody": {
+     "R76": "Berkana",
+     "R38": "Jera",
+     "R63": "Fehu"
+    }
+   },
+   {
+    "n": 4,
+    "id": "O4",
+    "spravne": "R28",
+    "kody": {
+     "R38": "Jera",
+     "R26": "Raidho",
+     "R28": "Othila"
+    }
+   },
+   {
+    "n": 5,
+    "id": "O3",
+    "spravne": "R28",
+    "kody": {
+     "R76": "Berkana",
+     "R38": "Jera",
+     "R28": "Othila"
+    }
+   }
+  ]
+ ]
+}
