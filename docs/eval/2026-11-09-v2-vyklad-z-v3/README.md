@@ -288,6 +288,6 @@ Co lab V3 už měl zapsáno a ukázky 7.4 a 7.9 to porušily (všechny odkazy do
 Plyne pro postup: (a) obraz se hledá od děje významu („co se s tou věcí děje“), a teprve pak předmět; (b) každý obraz projde otázkou „stává se tohle
 lidem opravdu takhle?“; (c) vstup do scény se losuje a „Imagine“ je v losu jedna z možností; (d) před psaním ukázky projít `zadani-v3.md` a verdikty
 u kroků 43–45 — tahle kontrola u 7.4 a 7.9 neproběhla.
-6. **Oprava vlastního tvrzení:** 7.8 bod 5 uvádí délku 51–58 slov;  naměřila u Isy 63. Číslo bylo odhad, ne měření.
-7. **Od 2026-11-14 platí ** (kam se dívat napřed, kontroly před ukázkou) a ; na ukázkách 7.9 kontrola hlásí „imagine“ 4/4 a délku Isy.
+6. **Oprava vlastního tvrzení:** 7.8 bod 5 uvádí délku 51–58 slov; `kontrola_ukazky.py` naměřila u Isy 63. Číslo bylo odhad, ne měření.
+7. **Od 2026-11-14 platí `postup.md`** (kam se dívat napřed, kontroly před ukázkou) a `kontrola_ukazky.py`; na ukázkách 7.9 kontrola hlásí „imagine“ 4/4 a délku Isy.
 
