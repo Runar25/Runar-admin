@@ -27,7 +27,7 @@
 
 ## 2. Velikost stromu (draw, před stavbou)
 - **Výška kmene** = věk (semínko + počet čtení × `readingEvery`) × `treeHeightMax` × velké spready ohně/vzduchu (`hExp`) × celková zóna (`Ztree`: budoucnost vyšší). Jedna rovnice `trunkTopY` pro draw, kapacitu (§3) i časovou smyčku (§5). **Kmen ještě povyroste**, když se ramena s rozestupem nevejdou (časová smyčka §5, `needH`; nejvýš po výšku obrazovky), a **roste s rozpětím ramen**: je aspoň `hwRatio` × rozpětí ramen a povýšených (bez větviček); když ne, draw se postaví znovu s vyšším kmenem (`_hwTop`, nejvýš jeden přepočet; rozpětí na výšce kmene skoro nezávisí).
-- ⚠️ **MRTVÉ:** `wExp` (velké spready vody/země → „šířka“) a `mExp` (stínu → „mohutnost“) se spočítají (`effCanopy`, `girth`) a **nikde se nepoužijí** — panel RŮST je přesto ukazuje jako „expanze: šířka / mohutnost“. Nalezeno 2026-10-03 při mapování.
+- Velké spready vody/země a stínu šířku ani mohutnost stromu neřídí — mrtvý výpočet (`wExp`, `mExp`) smazán 2026-11-14 (7258b2e); panel RŮST ukazuje jen výšku (`hExp`).
 - **Promítne se:** výška kmene = kolik místa je pro ramena (kapacita, §3) a jak daleko od sebe vycházejí.
 
 ## 3. Místa a ramena — `slotAssign` (od 2026-10-10)
