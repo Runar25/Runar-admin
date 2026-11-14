@@ -118,6 +118,9 @@ Většina pravidel už existovala; chyba je, že leží roztroušeně a při psa
 8. **Zkouška čtením:** jedno čtení solu, než jde obraz do banky (owner 2026-11-04: „pokud to nebude dobré, tak nejsou dobré ani obrazy“).
 9. **Stránka runy se zapíše až podle toho, co obraz dělá** — jde do zadání jako „focus on“.
 10. **Poslední slovo má owner:** poznatelnost není kvalita.
+11. **Osoba si místo v obraze musí zasloužit** (owner 2026-11-14, `RUNAR_DECISIONS.md` 2026-11-14 (6)): obejde-li se obraz bez ní,
+    je zbytečná; žádné třetí osoby, které někam přijdou (zvíře smí). Doplněno po zprávě CODE-tune týž večer — ta podle pravidla
+    přepsala tři obrazy (Berkana, Algiz, Blank); výpis banky `../banka-obrazu-vypis.md` už je má.
 Aby to nezůstalo na paměti session (§30): jeden soubor s tímhle postupem, na který ukáže hook při dotyku banky, a strojová kontrola
 toho, co stroj posoudit umí (časová slova, délka, slova ponaučení). Zatím nepostaveno.
 
