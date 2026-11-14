@@ -424,7 +424,7 @@ HTML = r"""<!DOCTYPE html>
     return clamp(trunkT.groundY - lerp(180, trunkT.treeHeightMax, hf)*(1+0.2*hX)*(1+0.22*Zt), 110, trunkT.groundY-110); }
   var SEED_AGE0=25;   /* = SEED_AGE v drawu (vek seminka); stableAssign z nej pocita vysku kmene pri kazdem cteni */
   var _hwTop=null;   /* PROPORCE: vrchol kmene pro druhy pruchod drawu (kmen doroste k sirce koruny), jinak null */
-  var _ANG=[], _GANG=[], _GTURN=[];   /* uhel ramen v case (casova smycka vysek v drawu); _GTURN = smer odbocky povysene */
+  var _ANG=[], _GTURN=[];   /* uhel ramen v case (casova smycka vysek v drawu); _GTURN = smer odbocky povysene */
   var _runeTot={}, _vlogRef=[];   /* INSPEKCE (2026-10-03): kolikrat runa padla na celem strome + log, ze ktereho se prave kreslilo */
   /* PREHLED VETVI: hodnoty vedle sebe (prehlednejsi nez cist ze stromu). Cte TATAZ meta,
      co pohani inspekci -> zadny druhy zdroj pravdy, nemuze se rozejit. */
@@ -1669,8 +1669,9 @@ HTML = r"""<!DOCTYPE html>
     var nR=(useLog||seed) ? vlog.length : Math.floor(realAge/crownT.readingEvery);
     var rt=(useLog||seed) ? routingFromLog(vlog) : routing(dobSeed, nR, crownT.diversity);   /* log -> element mix, jinak simulace */
     var els=rt.els;
-    var hExp=Math.min(1.2, rt.big.h/18), wExp=Math.min(1.0, rt.big.wd/18), mExp=Math.min(1.0, rt.big.ms/18);
-    var effCanopy=clamp(crownT.canopy+0.4*wExp, 0, 1.4), girth=1+0.35*mExp;
+    /* 2026-11-14: sirka a mohutnost z velkych spreadu (wExp/mExp -> effCanopy/girth) smazany — nic je necetlo a RUST ukazoval mrtva
+       cisla (BACKLOG „expanze sirka / mohutnost“); zapojit je = ownerovo rozhodnuti, co maji velke spready vody/zeme na strome znamenat. */
+    var hExp=Math.min(1.2, rt.big.h/18);
     /* #2 grow in height with age (+ fire/air/asgard big-spread expansion) */
     var hf=realAge/(realAge+420);
     /* V4 (2026-10-02): vyska stromu = kam se cteni divaji. Celkova zona vsech cteni (tlumena: soucet/(pocet+8))
@@ -1840,9 +1841,9 @@ HTML = r"""<!DOCTYPE html>
       /* POVYSENE VETVE VE VEJIRI (2026-10-03): kazda ma vlastni stranu (kostra FR klic 100+j, preklopeni jako limbPath z jejich
          cteni na rameni matky), cil (tiha + natoceni) a slot ve vejiri hned nad matkou; zive od povyseni. Drive stala mimo vejir
          a odklon "strmeji o GDIV" ji posilal soubezne s vudci vetvi nebo se sousedem (detektor: prekryv 10–33 px). */
-      var gIx={}, gN=[], gSv=[], gSl=[], gZ=[], gSd=[], gS0=[], gAngQ=[], gTurnQ=[];   /* gTurnQ: smer odbocky povysene, urceny v cteni povyseni */
-      gradStrands.forEach(function(G, j){ gIx[G.p+'|'+G.rune]=j; gN[j]=0; gSv[j]=0; gSl[j]=0; gZ[j]=0; gS0[j]=(FR[100+j]||{ side:0 }).side||0; gSd[j]=gS0[j]; gAngQ[j]=null; });
-      _GANG=[];
+      /* 2026-11-14: smazan vypocet strany a uhlu povysenych v case (gIx … gAngQ -> _GANG) — nikdo ho necetl, uhel povysene bere
+         growGrad od smeru matky (_GTURN); golden: KUKYho strom pred/po stejny (BACKLOG „mrtve uhly povysenych“). */
+      var gTurnQ=[];   /* gTurnQ: smer odbocky povysene, urceny v cteni povyseni */
       for(var q4c=0; q4c<mainsN; q4c++){ slQ[q4c]=0; zQ[q4c]=0; angQ[q4c]=null; }
       for(var q4b=0; q4b<mainsN; q4b++){ s0Q[q4b]=(FR[q4b]||{ side:0 }).side||0; sdQ[q4b]=s0Q[q4b]; svQ[q4b]=0; nQ[q4b]=0; }
       /* strana pro rozestup = kam rameno OPRAVDU miri (uhel z minuleho cteni); do 0,2 rad od svislice = v preklapeni -> obe strany.
@@ -1856,8 +1857,6 @@ HTML = r"""<!DOCTYPE html>
           if(q5!=null && q5>=0 && q5<mainsN){ zs[q5]+=z3; zn[q5]++; zc[q5][zoneWord(z3)]++;
             nQ[q5]++; var ar5=vlog[i3].area; if(ar5!=null && AREA_LAT[ar5]!=null) svQ[q5]+=AREA_LAT[ar5];
             slQ[q5]+=latOf(ar5, rk3); zQ[q5]+=z3;   /* jako limbPath: natoceni za ctenimi (b) a tiha (zona) */
-            var gj5=gIx[q5+'|'+rk3]; if(gj5!=null){ gN[gj5]++; if(ar5!=null && AREA_LAT[ar5]!=null) gSv[gj5]+=AREA_LAT[ar5]; gSl[gj5]+=latOf(ar5, rk3); gZ[gj5]+=z3;
-              var g05=gS0[gj5]; if(g05){ var gb5=gSv[gj5]/(gN[gj5]+K0s); if(gSd[gj5]===g05){ if(gb5*g05<=-ONs) gSd[gj5]=-g05; } else if(gb5*gSd[gj5]<LR_OFF) gSd[gj5]=g05; } }
             var s05=s0Q[q5]; if(s05){ var bA5=svQ[q5]/(nQ[q5]+K0s);   /* preklopeni stranou (limbPath) */
               if(sdQ[q5]===s05){ if(bA5*s05<=-ONs) sdQ[q5]=-s05; } else if(bA5*sdQ[q5]<LR_OFF) sdQ[q5]=s05; } } }
         var Hp3=Math.max(80, trunkT.groundY-trunkTopY(SEED_AGE0 + (i3+1)*crownT.readingEvery, hBig3, hZs3, hZn3), Hneed3);   /* vek, nebo vic, kdyz ramena potrebovala misto */
@@ -1911,9 +1910,6 @@ HTML = r"""<!DOCTYPE html>
           /* 2026-10-09 (zapnuto po obrazku, KUKY "9. zapnout"; DECISIONS 2026-10-09 (16)): odbocka nesmi poslat vetev pres svislici na druhou stranu jejiho mista -> opacna odbocka (jednou, stale).
              Drive ji pojistka v growGrad zastavila svisle (Nauthiz z Othily −1°: hreben). */
           var gsd9=G.side||G.adopt||0; if(gsd9){ var aP9=angQ[G.p]+gTurnQ[j]*0.6; if((((aP9+Math.PI/2)>=0) ? 1 : -1)!==gsd9) gTurnQ[j]=-gTurnQ[j]; } } });
-        var liveG=[]; gradStrands.forEach(function(G, j){ if(G.at<=i3 && hh[G.p]!=null){ liveG.push(j);
-          var frg=FR[100+j]||{ side:0, mag:0 }, tg=-Math.PI/2 + lifeLean*0.6 + (gS0[j] ? gSd[j]*bendMag(frg.mag, gZ[j], gN[j]) : 0) + (crownT.areaSide||0)*(gSl[j]/(gN[j]+K0s));
-          tgA['g'+j]=softSide(tg, -Math.PI/2); } });
         /* PORADI UHLU NA STRANE (2026-10-05, KUKY "oprav i ty dve ramena na stejne strane"): spodni rameno strmejsi nez rameno nad
            nim na teze strane do nej vzdy vroste (modelove stromy: Tiwaz/Othila 67°/38°, Raidho/Hagalaz 80°/38°). Nejmensi zmena,
            ktera obraceni odstrani: porusena dvojice (a retez) se srovna na prumer, spodni aspon o FANM vodorovneji (PAV). Zadne
@@ -1924,14 +1920,13 @@ HTML = r"""<!DOCTYPE html>
             while(bl.length>1 && bl[bl.length-2].v>bl[bl.length-1].v){ var b2=bl.pop(), b1=bl.pop(); bl.push({ v:(b1.v*b1.n+b2.v*b2.n)/(b1.n+b2.n), n:b1.n+b2.n }); } });
           var a2=0; bl.forEach(function(b){ for(var t=0; t<b.n; t++, a2++){ var q=E6[a2]; tgA[q]=-Math.PI/2 + sd6*(b.v + a2*FANM); } }); });
         ordL.forEach(function(q){ angQ[q]=(angQ[q]==null) ? tgA[q] : angQ[q]+clamp(tgA[q]-angQ[q], -LR_STEP, LR_STEP); });
-        liveG.forEach(function(j){ var tg=tgA['g'+j]; gAngQ[j]=(gAngQ[j]==null) ? tg : gAngQ[j]+clamp(tg-gAngQ[j], -LR_STEP, LR_STEP); });
         for(var rk4 in rz){ var tu4=clamp((rz[rk4]/(rn[rk4]+2)+1)/2, 0, 1); ru[rk4]=(ru[rk4]==null) ? tu4 : ru[rk4]+clamp(tu4-ru[rk4], -0.01, 0.01); }
       }
       if(HfinQ>0) trunkT.topY=Math.min(trunkT.topY, trunkT.groundY-HfinQ);   /* kmen povyrostl, kdyz ramena potrebovala misto (needH) */
       if(_hwTop!=null) trunkT.topY=Math.min(trunkT.topY, _hwTop);   /* PROPORCE: druhy pruchod — kmen doroste k sirce koruny */
       FRAC[0]=clamp(crownT.exitTop+0.02, 0.30, 0.98); FRAC0[0]=FRAC[0];   /* vudci vetev (zakladaci skuld) = vrchol kmene */
       for(var q7=1; q7<mainsN; q7++){ FRAC0[q7]=tgtOf(q7); FRAC[q7]=(hh[q7]!=null) ? hh[q7] : FRAC0[q7]; ANG[q7]=angQ[q7]; }
-      _ANG=ANG; gradStrands.forEach(function(G, j){ _GANG[j]=gAngQ[j]; _GTURN[j]=gTurnQ[j]; });
+      _ANG=ANG; gradStrands.forEach(function(G, j){ _GTURN[j]=gTurnQ[j]; });
       /* RAMENA (2026-10-10, KUKY "2x(4+4+3)+3 vrchol"): vysky, uhly a delky ramen (spodni nejdelsi, nahoru rovnomerne mene, KUKY "spodni nejsirsi");
          vedlejsi na rameni stridave nahoru / dolu; draha pramene v kmeni podle strany a poradi (dolni par u stredu, dalsi pary dal) —
          bez toho engine kladl prameny podle poradi a ramena i koreny se pod kmenem krizila (pokus 25, tyz den). */
@@ -2441,7 +2436,7 @@ HTML = r"""<!DOCTYPE html>
       'prameny <b>'+(gt.info.strandN||mainsN)+'</b> &rarr; hlavnich vetvi <b>'+(mainsN+_nG)+'</b> (mist element×zona '+mainsN+', povysenych '+_nG+', strop '+Math.round(crownT.maxMains)+') &middot; koreny '+roots.length+'<br>'+
       ((branchEls&&branchEls.near)?('<span style="color:var(--dim)">'+branchEls.near+' cteni na sousedni zone sveho elementu (runa uz mela rameno)</span><br>'):'')+
       'mix elementu: <span style="color:var(--dim)">'+(mix||'-')+'</span><br>'+
-      'expanze: vyska '+Math.round(hExp*100)+'% &middot; sirka '+Math.round(wExp*100)+'% &middot; mohutnost '+Math.round(mExp*100)+'%'+
+      'expanze: vyska '+Math.round(hExp*100)+'%'+
       (_fit<0.999?('<br><span style="color:var(--gold)">fit: strom zmensen na '+Math.round(_fit*100)+' %, aby se vesel na platno</span>'):'')+
       (_uz>1.0001?('<br><span style="color:var(--gold)">zoom '+Math.round(_uz*100)+' % &middot; tazenim posunes, dvojklik = zpet</span>'):'');
     renderBTable();
