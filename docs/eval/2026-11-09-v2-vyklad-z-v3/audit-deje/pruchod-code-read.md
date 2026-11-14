@@ -1,0 +1,90 @@
+# Průchod bankou vlastníma očima: kdo v obraze koná a je to ta runa? (CODE-read, 2026-11-14)
+
+Lab, ne kánon. Owner 2026-11-14 k auditu soudců: *„je jasný, že soudci soudí špatně. tedy že jsi je špatně napsal. projdi obrazy sám.“*
+A k Ise: *„když si to čtu, tak je pro mě aktér sníh, a to, že je bezvětří, je mi jedno, když je všechno pomalu zakryté sněhem.“*
+Čísla obrazů = pořadí v `../banka-obrazu-vypis.md` (190 obrazů, stav banky 2026-11-14). Je to čtení jednoho čtenáře, ne měření.
+
+## 1. Jak jsem četl (ownerovo čtení Isy jako vzor)
+1. Škrtnu okolnosti a přívlastky (windless, without a sound, in the dark). Zbude, kdo koná a co dělá.
+2. To, co zbylo, musí být runa. „Sníh padá a zakrývá všechno“ není nehybnost, ať je bezvětří jakkoli tiché.
+3. Počítá se děj v obraze, ne slovo runy ve větě a ne nálada.
+Proč soudci selhali: zadal jsem jim „je stránka runy v obraze přítomná?“ a dovolil stupeň „částečně“. Sníh a ticho jsou u Isy
+„přítomné“, takže prošlo. Správná otázka je užší: co dělá ten, kdo koná — a je právě tohle ta runa.
+
+## 2. Výsledek: 149 drží · 41 má vadu
+### A. Věc, ne děj — v obraze nikdo nic nedělá (10)
+- 34 Raidho „a sheep-track winding of its own accord“ a 37 „a road vanishing round the next bend“ — stezka a silnice bez chodce. ✖
+- 36 Raidho mohyly na dohled, 39 Raidho stezka obchází lávu — popis trasy, nikdo po ní nejde.
+- 42 Kenaz „A single lamp burns over the workbench“ — lampa svítí, nic se nestane. ✖
+- 16 Thurisaz „The crack in the lava waits“ — trhlina čeká, nikdo u ní nestojí. 21 Thurisaz holý trnitý keř ve vánici — keř stojí, koná vánice.
+- 103 Eihwaz strom s kořeny ve tmě a korunou ve světle — znak ze slovníku. 129 Tiwaz „The pole star stands still“ — nehybnost (bližší Ise).
+- 170 Othila „farmstead stands in ruins but still holds warmth in memory“ — ruina a k ní tvrzení, které se nedá vidět. ✖
+
+### B. Poučka místo okamžiku — věta říká pravidlo, ne co se právě děje (6)
+- 3 Fehu „The sourdough starter lives as long as it is fed.“ ✖ · 2 Fehu „The more rhubarb is pulled, the more comes up again.“
+- 19 Thurisaz „whoever goes past too fast gets stung“ · 20 Thurisaz „lets nothing through without cost“
+- 130 Tiwaz „You stand by your word though it costs you your sleep“ — bez scény · 152 Mannaz „The same person laughs one way… and another…“
+
+### C. Koná něco jiného, než co runa znamená (9)
+- 80 Isa padající sníh — koná sníh: padá, zakrývá, mění vše. ✖ (owner)
+- 48, 49 Gebo moře a břeh — koná jen moře, druhá strana chybí. ✖ (owner)
+- 83 Isa „Under the ice the stream can still be heard“ — děj je proudění.
+- 68 Hagalaz po bouři stojí strom s hlubokými kořeny — děj je výdrž (Eihwaz).
+- 123 Sowilo slabé zimní slunce na zamrzlé louži — slunce nic nezmůže. ✖
+- 127 Sowilo starý pes se natáhne na slunci — odpočinek, ne životní síla.
+- 8 Fehu horká voda teče do každého domu — koná voda; pohodlí všech, ne něčí majetek.
+- 160 Laguz ledovcová řeka nese, co vzala nahoře — tíha a náklad, nevědomí jen volně.
+
+### D. Děj se zastaví dřív, než přijde to, co runa znamená (7)
+- 25 Ansuz havran čeká, až budeš poslouchat · 26 Ansuz dopis leží neotevřený — zpráva nepředána.
+- 116 Algiz praskne větvička a ty nasloucháš · 117 Algiz z pahorku vidíš přeháňku — ostražitost, nic se neochrání.
+- 133 Tiwaz na rozcestí jdeš vlevo — volba, žádná oběť pro něco.
+- 89 Jera „The day lengthens slowly toward spring“ — nikdo nečeká, nic nedozraje.
+- 104 Eihwaz holý jeřáb mezi mrazem a listem — mezičas, smrt ani návrat se neděje.
+
+### E. Obraz je dobrý, ale nese jinou stránku, než má zapsanou (9)
+- 28 Ansuz konvice: zapsáno wisdom, děj = zaslechnutý signál (messages).
+- 72 Nauthiz jehně se tiskne k teplu a 73 pletení s docházející přízí: zapsáno growth through challenge, děj = nouze (need).
+- 84 Isa zastavené hodiny: zapsáno waiting, děj = stojí to (stillness).
+- 90 Jera zavařenina v zimě: zapsáno cycle, děj = odměna dřívější práce (reward).
+- 111 Perth prkno s řezbou: zapsáno chance, děj = nečitelné (the unseen).
+- 120 Sowilo slunce prorazí mraky: zapsáno clarity, děj = slunce (sun).
+- 139 Berkana bahnice rodí: zapsáno nurturing, děj = porod (birth).
+- 158 Laguz odraz v laguně se chvěje: zapsáno intuition, děj = citlivost vody (emotion).
+Stránka jde do zadání jako „focus on“ — nesedí-li s obrazem, model musí jedno z toho ohnout (viz oddíl 3).
+
+### Po runách (s vadou / všech)
+Thurisaz 4/8 · Raidho 4/6 · Fehu 3/8 · Ansuz 3/10 · Isa 3/7 · Sowilo 3/9 · Tiwaz 3/7 · Gebo 2/7 · Algiz 2/6 · Eihwaz 2/6 ·
+Nauthiz 2/8 · Jera 2/13 · Laguz 2/6 · po jednom Kenaz, Hagalaz, Perth, Berkana, Mannaz, Othila · žádný Uruz, Wunjo, Ehwaz,
+Ingwaz, Dagaz, Blank.
+
+## 3. Co se pak stane ve čtení (owner: „taky záleží na tom, co pak do promptu jde jako vstupy“)
+Do zadání jde obraz a k němu „focus on: stillness“. U Isy tak model dostane děj (sníh zakrývá) a vedle něj opačné slovo (nehybnost)
+a musí je spojit. Je to vidět ve čteních Isy z dnešních zkoušek: „snow covers each fence post“ a hned „Isa stands for
+stillness“; „the ground disappears“ a „nothing moves“. Zadání tu vadu nevyrobilo a žádné znění zadání ji neopraví.
+
+## 4. Proč je tvoříme špatně (owner k Fehu: „proč je teda tvoříme špatně? jak je máme tvořit lépe?“)
+Rebarboru a kvásek (2026-11-14) psala session CODE-tune stejným postupem, jakým vznikla většina banky; vady postupu:
+1. **Začíná se od věty popisu, ne od děje.** Fehu vzniklo z věty „To, co živíš, roste. To, co necháš stát, může ztratit svou sílu.“
+   To je poučka — a obraz ji jen přepsal do zahrady a kuchyně (skupina B). Poučka o runě není scéna.
+2. **Kontrola se točí v kruhu.** Brána dala soudcům tytéž popisy run, ze kterých obraz vznikl. Soudce větu „co živíš, roste“ v obraze
+   poznal a dal 3/3. Poznatelnost runy podle popisu není totéž co „runa se v obraze děje“.
+3. **Nikdo se neptal, kdo koná.** Pravidlo v `RUNAR_DESIGN.md` („obraz patří runě toho, kdo v něm koná“) existuje od 2026-09-28,
+   ale kontrolu nemá; starší obrazy jím nikdy neprošly.
+4. **Krajina a počasí napřed.** Islandská příroda dá náladu snadno a runové slovo se do ní vloží („windless“, „waits“). Skupiny A a C.
+5. **Stránka se připisuje ze seznamu klíčových slov**, ne z toho, co obraz dělá (skupina E).
+
+## 5. Jak tvořit lépe (návrh postupu, k ownerovu rozhodnutí)
+1. Napřed jedna věta se slovesem: **co se v runě stane a mezi kým.** Gebo: jeden dá, druhý přijme, a mezi nimi je pak něco, co předtím
+   nebylo. Isa: něco, co se hýbalo, stojí. Bez téhle věty obraz nepsat.
+2. Obraz = **okamžik, kdy to někdo nebo něco udělá.** Žádné „kdokoli“, „čím víc, tím víc“, „dokud“ — to jsou poučky.
+3. **Škrtací zkouška:** vyškrtnout přívlastky a okolnosti; co zbude (kdo + sloveso), musí být věta z bodu 1.
+4. **Zkouška opakem:** dá se z obrazu jedním slovem udělat opak runy? U sněhu ano (fouká / nefouká — sníh zakrývá stejně). Když
+   runové slovo jde vyměnit a děj se nezmění, runu nenese děj, ale to slovo.
+5. **Slepá kontrola obráceně:** soudce nevidí runy ani popisy, jen obraz, a napíše „kdo koná a co se stane“. Teprve tu větu
+   porovnáme s bodem 1. Stará brána (která runa) zůstává jako druhý krok proti záměně se sousední runou.
+6. Stránku runy zapsat až podle toho, co obraz dělá.
+
+## 6. Hranice
+Jeden čtenář (CODE-read), anglické znění, vlastní výklad run; u „drží“ jsem byl mírnější k obrazům, které jsou klidné z podstaty
+(Eihwaz jalovec pod sněhem, Ingwaz semeno v zemi). Skupiny A–D jsou podnět pro ownera, ne rozsudek; nic se z banky neodebírá.

@@ -39,3 +39,11 @@ Ingwaz, Mannaz, Ehwaz, Eihwaz.
 Soudci jsou tři běhy téhož modelu (Claude), anglické znění, jedna stránka na obraz (u dvojic „a|b“ celá dvojice). Nástroj je
 shovívavý (oddíl 2.2) — obraz Isy, který owner odmítl, prošel. Verdikt „sporný“ je podnět k pohledu, ne rozsudek; co je dobrý obraz,
 rozhoduje owner. Přísnější znění otázky (např. „co se v obraze pohybuje nebo mění — a je právě tohle ta stránka?“) nezkoušeno.
+
+## 5. Owner k výsledku (2026-11-14)
+*„je jasný, že soudci soudí špatně. tedy že jsi je špatně napsal. projdi obrazy sám.“* Zadání soudcům se ptalo, jestli je stránka runy
+v obraze „přítomná“, a dovolilo stupeň „částečně“ — proto prošel sníh u Isy. Výsledek oddílu 3 tím neplatí jako nález; platí jen
+jako seznam podnětů. Vlastní průchod podle ownerova čtení Isy (aktér je sníh, bezvětří je vedlejší) → `pruchod-code-read.md`:
+41 obrazů s vadou místo 28, a k tomu proč obrazy vznikají špatně a jak je tvořit.
+Celá banka jedním souborem pro čtení (owner ji dává k rozboru GPT): `../banka-obrazu-vypis.md`, generuje `banka_vypis.js`.
+
