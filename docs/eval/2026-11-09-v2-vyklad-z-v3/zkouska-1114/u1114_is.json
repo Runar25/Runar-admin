@@ -1,0 +1,11 @@
+[
+ {"id": "raidho-IS-A", "runa": "Raidho", "seed": 1154, "lang": "is"},
+ {"id": "isa-IS-A", "runa": "Isa", "seed": 1154, "lang": "is"},
+ {"id": "gebo-IS-A", "runa": "Gebo", "seed": 1154, "lang": "is"},
+ {"id": "raidho-IS-slova", "runa": "Raidho", "seed": 1154, "lang": "is", "zmeny": ["IS_SLOVA"],
+  "veta": "Á langri göngu yfir snævi þakta heiðina finnur þú taktinn og hættir að telja skrefin.", "slova": "löng ganga · snævi þakin heiði · taktur · telja skref."},
+ {"id": "isa-IS-slova", "runa": "Isa", "seed": 1154, "lang": "is", "zmeny": ["IS_SLOVA"],
+  "veta": "Lognkafaldið fellur beint niður og hylur allt hljóðlaust.", "slova": "lognkafald · beint niður · hylja · hljóðlaust."},
+ {"id": "gebo-IS-slova", "runa": "Gebo", "seed": 1154, "lang": "is", "zmeny": ["IS_SLOVA"],
+  "veta": "Sjórinn gefur og tekur á fjörunni í sömu andránni.", "slova": "sjór · fjara · gefa og taka · sama andrá."}
+]

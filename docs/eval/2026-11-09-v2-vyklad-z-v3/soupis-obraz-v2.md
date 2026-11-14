@@ -22,7 +22,8 @@ Podklad: celý produkční prompt Single EN složený buildery v2 (Fehu, bez obl
 | 12 | Scéna doma táhne k Othile; „zní dobře“ kontrolu runy nenahrazuje | změřeno | `RUNAR_DESIGN.md` „Obraz od modelu“ |
 | 13 | Úhel otevření [4] dělá dvě věty scény 8/10; produkce: obraz 14 slov → scéna 26 slov, 71 % slov obrazu převzato | změřeno, 42 čtení | `README.md` oddíl 5 |
 | 14 | Řádek „scéna dostane jednu větu“: scéna v jedné větě 3/3, třetí věta přešla k významu | změřeno, 3 páry | `README.md` oddíl 6 |
-Neověřeno / chybí: nástroj kontroly runy v obraze jsem v `scripts/` nedohledal (pravidlo popsané je, skript ne). Islandské opisování (32 % proti 12 %)
+Nástroj kontroly runy v obraze (brána): `docs/eval/2026-09-26-obrazy/brana_build.py` + `brana_vyhodnot.py` (oprava 2026-11-14: původně tu stálo
+„nedohledal“ — hledal jsem jen ve `scripts/`). Islandské opisování (32 % proti 12 %)
 má odložený nezkoušený test — obraz jako rozpojená slova (`docs/archive/RUNAR_BACKLOG_odlozene.md` bod 4); pro EN na solu tatáž páka nepomohla (řádek 6).
 
 ## 2. Kde prompt v2 mluví o obrazu (5 kusů, 146 z asi 365 slov uživatelské části)
@@ -33,7 +34,9 @@ má odložený nezkoušený test — obraz jako rozpojená slova (`docs/archive/
 | IMAGE (řádek) | hotová věta obrazu + „ať se stane tvým viděním, až po detail, který věta neříká“ | přidávat do scény |
 | ESSENCE | „po obrazu … význam, který obraz už drží“ | význam jako dovětek obrazu |
 | NO COLD READING | „Describe the image“ | popisovat obraz |
-Pět kusů říká „zůstaň u obrazu a rozveď ho“; žádný neříká, že zbytek čtení patří runě. To sedí s měřením (řádky 13, 14) i s ownerovou výhradou,
+Pět kusů říká „zůstaň u obrazu a rozveď ho“; žádný neříká, že věty po obrazu patří runě (oprava 2026-11-14: ESSENCE má dvě znění losem
+a jedno z nich drží aspoň řádek významu u runy — „keep the line on the rune's own sense, not on what happens in the scene“). Zkouška, co se stane,
+když se to řekne na jednom místě: `README.md` oddíl 8. To sedí s měřením (řádky 13, 14) i s ownerovou výhradou,
 že model obraz opisuje a čtení je o obrazu víc než o runě.
 
 ## 3. Jedna věc na víc místech (týž prompt)

@@ -23,6 +23,7 @@ nenutilo ukázku proti nim projít; to teď dělá `kontrola_ukazky.py` a tenhle
 3. **Obraz prošel pravidly v2** z kroku 1.1 (jeden děj, jeden, kdo koná, délka) a **věrohodností**: stává se tohle lidem opravdu takhle?
    Vzor ownerovy otázky: „jak moc se někomu stane, že vymění vlnu za cukr a kávu?“
 4. **Slepá kontrola runy:** soudce vidí jen větu obrazu a vybírá z více run (ne „o čem to je“) — obraz daru táhne ke Gebu, domov k Othile.
+   Nástroj: `docs/eval/2026-09-26-obrazy/brana_build.py` + `brana_vyhodnot.py` (tři soudci, popisy run bez jmen, prošel = 2 ze 3).
 5. **Jiný děj, ne jiný předmět:** nová ukázka nesmí být předchozí scéna s vyměněným podstatným jménem.
 6. **Vstup do scény je z losu** (krok 1.2); „Imagine“ je jedna z možností.
 7. U ukázky napsat, co z bodů 2–6 doloženo není. Co doloženo není, se neschvaluje, jen ukazuje.

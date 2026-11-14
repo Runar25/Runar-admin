@@ -291,3 +291,45 @@ u kroků 43–45 — tahle kontrola u 7.4 a 7.9 neproběhla.
 6. **Oprava vlastního tvrzení:** 7.8 bod 5 uvádí délku 51–58 slov; `kontrola_ukazky.py` naměřila u Isy 63. Číslo bylo odhad, ne měření.
 7. **Od 2026-11-14 platí `postup.md`** (kam se dívat napřed, kontroly před ukázkou) a `kontrola_ukazky.py`; na ukázkách 7.9 kontrola hlásí „imagine“ 4/4 a délku Isy.
 
+
+## 8. Zkoušky 2026-11-14: obraz na jednom místě, sjednocená zdvojení, islandský obraz jako rozpojená slova (21 volání)
+
+Owner 2026-11-14 k soupisu (`soupis-obraz-v2.md`): *„3. tohle zkusme na 3 čteních … 6. chtělo by to napsat jinak, lépe, na jedno místo a zkusit,
+jestli to změní a jak čtení, např. na 3 čteních … 8. zkus mi to všechno sjednotit … otázka je, jestli něco změní podobná znění v promptu …
+9. v3 měla být vylepšená verze v2 … aby prompt nebyl tak chaotický: jen jsme do něj přidávali, když jsme objevili problém, ale neřešili,
+co ten problém způsobuje.“*
+Podklady (prompty, čtení, skripty): složka `zkouska-1114/`. Runy Raidho, Isa, Gebo, týž los (seed 1154, úhel „člověk v obraze“), bez oblasti
+a hledání, sol jako v produkci (`gpt-6-sol`, bez přemýšlení). Co která změna v promptu přesně dělá: `zkouska-1114/sloz1114.js` (`ZMENY`).
+
+| varianta | co se změnilo | zadání slov | třetí věta se vrací do scény | délka čtení |
+|---|---|---|---|---|
+| A produkce (dnes + 3 z 11-10) | nic | 446–451 | **6 ze 6** | 58–72 |
+| B1 obraz na jednom místě, **týž obsah** | pět míst o obrazu → jeden odstavec (nes ho celým čtením, detail, dotkni se člověka) | 348–353 | 2 ze 3, třetí napůl | 60–62 |
+| B2 obraz na jednom místě, **jiný směr** | jeden odstavec: obraz dostane jednu větu, „every sentence after it belongs to the rune, not to the scene“ | 351–356 | **0 ze 3** | 61–63 |
+| C ostatní zdvojení sjednocená | „nic o člověku“ 6× → jeden odstavec; prostá slova 4× → jednou; připomínka délky a „one clear insight“ pryč; systém 354 → 290 slov | 414–419 | 3 ze 3 | 58–61 |
+| D = B2 + C | obojí | 322–327 | **0 ze 3** | 56–67 |
+
+**Co z toho plyne**
+1. **Stejný obsah řečený jednou místo pětkrát čtení nezměnil** (B1) a **odebrání zdvojených zákazů také ne** (C): scéna dál zabírá dvě věty,
+   žádné tvrzení o člověku ani rada se neobjevily, délka se nezhoršila. Podobná znění na víc místech tedy na třech čteních nic nedržela.
+2. **Čtení změnil směr, ne počet opakování** (B2, D): jakmile zadání řekne, že věty po obrazu patří runě, třetí věta mluví o významu 6 ze 6
+   (proti 0 ze 6 v produkci; dvě produkční trojice z různých dní vyšly stejně, takže to není šum mezi běhy).
+3. **Opisování první věty to nezlepšilo, spíš naopak:** když scéna dostane jednu větu, model do ní vměstná obraz těsněji
+   (Raidho B2 *„your boots find an even pace, and you stop counting the steps“*; nejdelší doslovný úsek 2,3 → 3,0 až 3,7 slova). n = 3.
+4. **Délka 50–58 slov neplatí ani v produkci** (5 ze 6 čtení nad 58) a žádná varianta to nezměnila.
+5. Třetí věta ve směru B2/D občas zní jako rada (*„You may find that a pause makes room to notice what haste kept out of view“*) — hlídat, až se bude ladit znění.
+
+**Islandština — obraz jako rozpojená slova** (odložený test z `docs/archive/RUNAR_BACKLOG_odlozene.md` bod 4): 3 + 3 čtení.
+Věta obrazu nahrazena slovy v základním tvaru (např. *„lognkafald · beint niður · hylja · hljóðlaust“*). Nejdelší doslovný úsek 3,3 → 2,0 slova,
+vrácená slova obrazu 64 % → 49 %; v produkční verzi Isa opsala šest slov za sebou, se slovy žádné čtení víc než tři. Scéna dál zabírá dvě věty.
+Směr ano, **neprokázáno**: n = 3, bez druhé produkční trojice na odhad šumu; islandštinu čtení jsem nástroji neověřoval a u Raidho je slovo
+ze zadání vložené neobratně (*„þar sem löng ganga er fram undan“*).
+
+**Hranice:** 3 čtení na variantu, jeden los, jeden úhel otevření, bez oblasti a hledání. Kvalitu čtení tohle neměří — texty musí přečíst owner.
+**K otázce „sol nepřemýšlí, co to znamená“:** výrobce k tomu nic konkrétního neuvádí (přečteny čtyři stránky dokumentace 2026-11-14: stránka
+modelu, prompt guidance, advice on prompting, migrace; rady, které tam jsou, se týkají jiných modelů). Co víme, je naše měření:
+`RUNAR_DESIGN.md` „Model čtení: gpt-6-sol × Opus 5“ a tahle zkouška — sol dělá to, co zadání říká nejvíc konkrétně, a opakování téhož mu nic nepřidá.
+
+**Opravy soupisu z téhož dne:** (1) nástroj brány runy existuje — `docs/eval/2026-09-26-obrazy/brana_build.py` + `brana_vyhodnot.py`
+(CODE-tune, commit 68a3013); hledal jsem jen ve `scripts/`. (2) Řádek významu má dvě znění losem; jedno z nich už říká „keep the line on the
+rune's own sense, not on what happens in the scene“ — tvrzení „žádný kus neříká, že zbytek patří runě“ platí pro věty po řádku významu, ne pro něj.
