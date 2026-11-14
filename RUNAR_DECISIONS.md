@@ -13255,3 +13255,22 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Hranice:** platí pro Othilu, jak owner řekl; jestli „žádné cizí osoby“ platí pro celou banku, je otevřená otázka ownerovi — nezobecněno.
   Brána ověřuje, že obraz nese runu, ne že je dobrý ve čtení. Platí po nasazení `claude-proxy`.
 - Affected doc(s): žádný jiný (stav obrazů vlastní kód).
+
+## 2026-11-14 (6) — Osoba v obraze si místo musí zasloužit; Fehu kvásek bez „dies“; Rune of the Day — rozhodnutí ownera
+
+- **Osoby v bance obrazů (KUKY):** *„ta osoba si musí zasloužit být v obraze. pokud se obraz obejde bez té osoby, tak je tam zbytečná“*
+  — platí pro **celou banku** (zpřesňuje „žádné cizí osoby“ z 2026-11-14 (5); zvíře smí). Kontrola: cizí osoba (mimo „ty“ a „nikdo“)
+  je v 37 ze 190 obrazů; nezávislý soudce (subagent, jen kritérium a seznam) označil za zbytečné 3, já ve shodě. Přepsány bez osoby:
+  Berkana porodní bába → *„Nýfædda barnið liggur í fyrsta sinn í fangi móður sinnar.“* / *The newborn lies in its mother's arms for the
+  first time.* · Algiz „celá skupina ztichne“ → *„… og þú stendur kyrr til að hlusta.“* / *… and you stand still to listen.* · Blank děti
+  → *„Á auða veggnum sérðu nýja mynd í hvert sinn sem þú lítur á hann.“* / *On the bare wall you see a new picture each time you look at it.*
+  Brána k8 3/3 všechny, Greynir čisté, vazby z korpusu. Ponecháno 34: u Gebo, Ehwaz, Mannaz, Wunjo, Ansuz je vztah nebo hlas člověka
+  podstata runy. **Hranice:** soud „zaslouží si“ je úsudek (jeden soudce + já), ne měření.
+- **Fehu kvásek (KUKY):** *„vyřadit z toho dies. je to zbytečně agresivní. chci, aby to bylo něco, co říká Rúnar: na to nezapomeň!“* →
+  *„Súrdeigsgrunnurinn lifir svo lengi sem hann fær næringu.“* / *The sourdough starter lives as long as it is fed.* (brána k7 3/3).
+- **Rune of the Day (KUKY, odpovědi na plán):** tlačítko pod nápisem RÚNAR na hlavní stránce; klik → okno se dvěma volbami: „I draw the
+  rune“ (mřížka 25 run jako v tahu) a „Let the runes decide“ (runa se zvolí hned, bez mřížky); text se pak objeví místo tlačítka. Jen text,
+  bez hlasu, zdarma, **jednou denně na účet** (při znovuotevření týž text), den končí o půlnoci **islandského** času, **jen přihlášení**.
+  Do deníku ani do stromu ne. Žádný strop počtu slov; stavba tři části (BACKLOG). Vzorky: napřed **jeden**, pak úpravy (*„žádných 25“*).
+  Web: náhodná runa dne jako text, zkusit; aktivuje se, až owner řekne. Do budoucna směr: automaticky každé ráno, upozornění, widget.
+- Affected doc(s): RUNAR_BACKLOG.md (Rune of the Day).

@@ -543,7 +543,7 @@ var RUNE_IMAGES = [
   ['Uruz','cold','Hreindýrstarfurinn öslar snjóinn upp að bringu og hægir ekki á sér.','The reindeer stag wades through chest-deep snow and does not slow down.','frumkraftur','raw power','P', '', '', 'postava'],
   ['Uruz','cold','Þú rekur járnkarlinn af öllu afli í frosna jörðina og hún gefur sig.','You drive the iron bar into the frozen ground with all your might, and it gives way.','frumkraftur','raw power','P'],
   ['Uruz','any','Strákurinn fer í sjómann við stóra bróður sinn og vinnur í fyrsta sinn.','The boy arm-wrestles his big brother and wins for the first time.','styrkur','strength','D', '', '', '', 'f'],
-  ['Berkana','any','Ljósmóðirin leggur nýfædda barnið í fang móðurinnar og stígur svo skref til baka.','The midwife lays the newborn in its mother\'s arms, then takes a step back.','fæðing','birth','P', '', '', '', 'fh'],
+  ['Berkana','any','Nýfædda barnið liggur í fyrsta sinn í fangi móður sinnar.','The newborn lies in its mother\'s arms for the first time.','fæðing','birth','P', '', '', '', 'fh'],   // 2026-11-14: osoba navíc pryč (KUKY: „osoba si musí zasloužit být v obraze“), brána k8 3/3, DECISIONS 2026-11-14 (6)
   ['Ehwaz','cold','Þú teymir hestinn yfir snjóinn og taumurinn á milli ykkar er slakur.','You lead the horse across the snow, and the rope between you hangs slack.','traust milli tveggja','trust','P'],
   ['Ehwaz','cold','Tvö draga sleða yfir skaflana og hann rennur fyrst þegar þau leggjast á eitt.','Two haul a sled over the drifts, and it glides only once they pull together.','hreyfing','movement','P'],
   ['Ehwaz','cold','Tvö dansa vals á þorrablótinu og enginn sér lengur hvort þeirra ræður ferðinni.','Two waltz at the midwinter feast, and no one can tell anymore which of them leads.','samfylgd','partnership','D', '', '', '', 'lf'],
@@ -642,7 +642,7 @@ var RUNE_IMAGES = [
   // IS vymyšleno islandsky, korpus + is-grammar-qa čisté („sérðu“ nerozparsováno → „sérð þú“).
   ['Fehu', 'any', 'Aflinn er seldur á bryggjunni, og um kvöldið eru peningarnir orðnir að nýjum netum.', 'The catch is sold at the harbour, and by evening the money has become new nets.', 'velmegun', 'material prosperity', 'P', '', '', '', 'c'],   // 2026-09-30: viz vlna výš
   ['Fehu', 'any', 'Kýrin er seld um haustið, og það sem fékkst fyrir hana dugar heimilinu út veturinn.', 'The cow is sold in the autumn, and what she fetched carries the household through the winter.', 'búfé', 'cattle', 'P', '', '', '', 'cf'],
-  ['Algiz', 'any', 'Úti á heiðinni brestur í kvisti, og allur hópurinn þagnar til að hlusta.', 'Out on the heath a twig snaps, and the whole party goes quiet to listen.', 'vernd', 'protection', 'P'],
+  ['Algiz', 'any', 'Úti á heiðinni brestur í kvisti, og þú stendur kyrr til að hlusta.', 'Out on the heath a twig snaps, and you stand still to listen.', 'vernd', 'protection', 'P'],   // 2026-11-14: osoba navíc pryč (KUKY: „osoba si musí zasloužit být v obraze“), brána k8 3/3, DECISIONS 2026-11-14 (6)
   ['Algiz', 'bright', 'Af hólnum sérð þú hryðjuna koma inn fjörðinn löngu áður en hún nær túninu.', 'From the knoll you see the squall coming up the fjord long before it reaches the hayfield.', 'vernd', 'protection', 'E'],
   // 2026-11-14 (KUKY „3. tak to udělej“, nález CODE-read 2026-11-03): dva obrazy Othily tvrdily čtenářovu minulost (kde vyrůstal)
   // a jmenovaly roli (matčiny jehlice). Ownerovo pravidlo 2026-11-03 (docs/eval/2026-10-23-v3-charakter/krok44-zdroj-gpt.md, oddíl 4):
@@ -710,7 +710,7 @@ var RUNE_IMAGES = [
   ['Ehwaz', 'any', 'Sófinn kemst niður þröngan stigann þegar þið hættið að segja hvort öðru fyrir verkum.', 'The sofa gets down the narrow stairs once you stop giving each other orders.', 'samfylgd', 'partnership', 'D', '', '', '', 'lf'],
   ['Dagaz', 'any', 'Þú opnar fjósdyrnar, og morgunbirtan flæðir í einu vetfangi inn í dimma básana.', 'You open the byre door, and the morning light floods into the dark stalls all at once.', 'ljós', 'light', 'D'],
   ['Blank', 'any', 'Setning í gömlu dagbókinni endar í miðju kafi og síðan fyrir neðan er auð.', 'A sentence in the old diary breaks off, and the page below is blank.', 'hið óþekkta', 'the unknown', 'D'],
-  ['Blank', 'any', 'Hvert barnanna sér sína mynd í sama auða blettinum á veggnum.', 'Each child sees a different picture in the same bare patch of wall.', 'óskrifað blað', 'unwritten potential', 'D'],
+  ['Blank', 'any', 'Á auða veggnum sérðu nýja mynd í hvert sinn sem þú lítur á hann.', 'On the bare wall you see a new picture each time you look at it.', 'óskrifað blað', 'unwritten potential', 'D'],   // 2026-11-14: osoba navíc pryč (KUKY: „osoba si musí zasloužit být v obraze“), brána k8 3/3, DECISIONS 2026-11-14 (6)
   // ── 2026-10-05 kolo k4 (KUKY „B, C, D, E… pusť se do toho“): runy, které mají v nějaké oblasti a období jen 2 obrazy (Fehu všude,
   // Wunjo a Berkana v zimě) a Algiz, kde 4 z 5 obrazů nese „protection“. IS myšleno islandsky; is-grammar-qa 0 nálezů; korpus:
   // „hlaðinn fiski“ 3 · „ristir djúpt“ 233 · „í hvert hús“ 494 · „stendur opið“ 83 · „í hríðinni“ 116 · „í heita pottinum“ 1861 ·
