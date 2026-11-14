@@ -354,3 +354,59 @@ co zadání říká nejkonkrétněji. Verdikt je nad jednou dvojicí čtení; v�
    (`RUNAR_DESIGN.md` „Délka a tvar obrazu“ 4); sol má na jednu myšlenku jednu výchozí scénu, pestrost sám nevyrobí
    (`../2026-10-23-v3-charakter/napric-labem.md`) — výměnu proto musí dělat los v kódu, ne pokyn „obměň to“. Nezkoušeno.
 4. Owner vložil rozbor GPT o psaní promptu pro sol bez přemýšlení → `zdroj-gpt-2026-11-14-prompt-sol-bez-premysleni.md` (i s ověřením).
+
+### 8.3 Owner k 8.2 a zkouška „postup místo zákazů“ (2026-11-14, třetí zpráva)
+**Owner:** 15 čtení ještě nečetl celá, z jeho dvou poznámek se nemá nic vyvozovat (*„nic z toho neplyne, nečetl jsem to“*) — závěr
+„problém je první věta“ v mé odpovědi byl předčasný. K obrazu: *„ano. je potřeba projít obrazy a určit ty, které by se dali tímhle
+způsobem vylepšit“*, *„samozřejmě že to budeme losovat my“* → `obrazy-jadro-a-prostredi.md`. K radám GPT: *„všechno, co napsal GPT a
+stálo by za to vyzkoušet, musíš ověřit sám a zjistit, jak to udělat. najít cestu … hledej. kdo hledá, tak najde“* →
+`zdroj-bez-premysleni-2026-11-14.md`. K postupu místo zákazů: *„napiš 3 varianty, jak to modelu napsat. udělej 3 runy … ale model
+je bez přemýšlení. zjistit si, co to znamená … jestli to má cenu vůbec zkoušet.“*
+
+**Má to cenu zkoušet?** Ano, ale jen jedním směrem: model bez přemýšlení píše na jeden průchod a plánovat umí jen do výstupu
+(`zdroj-bez-premysleni-2026-11-14.md` oddíl 5). Proto tři úhly: dát mu pořadí vět hotové (P1, P2), nebo ho nechat plán napsat (P3).
+
+**Zkouška:** stejné tři runy, stejný los a obrazy jako varianta A v oddíle 8 (seed 1154), systém = produkce beze změny; zadání
+napsané znovu s nadpisy (úkol, runa, obraz, postup, o čem čtení mluví, výstup), bez zákazů, 257–304 slov místo 446. 9 volání solu.
+Skladatel `zkouska-1114/sloz1114p.js`, úlohy `u1114_postup.json`, výsledky `u1114_postup_vysledky.json` (i se zadáním a syrovou odpovědí).
+- **P1 recept po větách:** 1 člověk na místě obrazu · 2 o co v obraze jde · 3 „X stands for“ · 4 dvě možnosti.
+- **P2 význam napřed:** 1 „X stands for“ · 2 obraz jednou větou · 3 co je z té chvíle vidět nebo co v ní jde dělat · 4 dvě možnosti.
+- **P3 viditelný plán:** model napřed napíše do výstupu „moment“ (chvíle, kde je runa nejvíc vidět) a „sense“ (smysl do 8 slov), pak čtení.
+
+**Čtení (doslova):**
+1. Raidho P1 — You cross the snowy heath, with cold air brushing your cheeks. You find a steady pace and no longer count your steps. Raidho stands for a rhythm that feels natural as you move. You may be heading somewhere you still want to go, or you may be walking on because you once set out.
+2. Isa P1 — You stand by a dark fence as snow falls straight down around you. Nothing stirs, and the snow covers each fence post without a sound. Isa stands for stillness, when something stops long enough for you to notice what is there. Perhaps a conversation has gone quiet, or perhaps a plan sits unchanged while you see it more clearly.
+3. Gebo P1 — You stand at the shore with cold sand under your feet. You watch the sea leave water on the sand as it draws the next wave back. Gebo stands for giving and receiving, though neither needs to happen on a fixed account. You may be giving without knowing what returns, or receiving something you cannot repay at once.
+4. Raidho P2 — Raidho stands for finding a pace that fits you, rather than forcing each step. You cross the snowy heath with cold air on your cheeks, and your feet settle into a steady rhythm. You no longer count the steps, so you can notice where the path bends. Perhaps this road still suits you, or perhaps you follow it because you began.
+5. Isa P2 — Isa stands for stillness, when nothing moves and you can see what is there. You stand beside a stone wall as snow falls straight down, silently covering the ground. With no wind to scatter it, you can see where each flake settles. Perhaps something in your life is stalled, or perhaps it needs no movement just now.
+6. Gebo P2 — Gebo stands for giving and receiving without keeping a strict count. You stand barefoot at the shore, where the sea leaves a shell beside your foot and draws the sand away. You can feel what arrives and what leaves in the same breath. Perhaps you give without knowing what returns, or you receive without repaying it at once.
+7. Raidho P3 — You stop counting steps across the snowy heath, and your boots settle into an even pace over the crusted snow. Raidho stands for a natural rhythm, though ease alone says nothing about where you are going. You can feel the difference between moving freely and simply keeping on. Perhaps your road still suits you, or perhaps an old choice keeps you walking.
+   (plán: moment „You stop counting steps across the snowy heath.“ · sense „Your pace feels natural, but your direction still matters.“)
+8. Isa P3 — Snow falls straight onto your sleeve, and nothing stirs beneath it. Isa stands for stillness that lets you notice what stays hidden. You can hear your own breath while the ground grows white around you. In your life, this may be a pause you cannot change, or a quiet you have not yet had time to understand.
+   (plán: moment „Snow falls straight onto your sleeve in windless air.“ · sense „Stillness lets you notice what stays hidden.“)
+9. Gebo P3 — You stand where a wave pulls back over cold pebbles as another comes in. Gebo stands for giving without certainty and receiving without debt. You feel the water leave your feet, then return, with no promise that either movement lasts. You may be offering something without knowing what comes back, or receiving kindness you cannot repay at once.
+   (plán: moment „The wave draws back as another reaches the shore.“ · sense „You give without certainty and receive without debt.“)
+
+**Co je změřeno (`mer1114.py`, n = 3 na variantu):**
+| | produkce A | P1 | P2 | P3 |
+|---|---|---|---|---|
+| slov (cíl 50–58) | 61, 72, 63 | 54, 59, 58 | 61, 57, 58 | 62, 57, 58 |
+| v mezích 50–58 | 0 ze 3 | 2 ze 3 | 2 ze 3 | 2 ze 3 |
+| věta s „X stands for“ je | 3., 1., 2. | 3., 3., 3. | 1., 1., 1. | 2., 2., 2. |
+| nejdelší doslovný úsek obrazu (slov) | 3, 2, 2 | 3, 3, 2 | 3, 2, 4 | 4, 1, 1 |
+| nejdelší doslovný úsek otázky runy v poslední větě | 2, 3, 3 | 5, 2, 2 | 2, 4, 7 | 2, 3, 2 |
+
+1. **Pořadí vět model drží přesně: 9 z 9.** V produkci, kde pořadí dané není, stojí věta o významu pokaždé jinde.
+2. **Délka je blíž cíli** (2 ze 3 v mezích proti 0 ze 3). Co to způsobilo, nejde oddělit: zadání je o 40 % kratší, délka stojí jednou
+   na konci a čtení má pevné čtyři kroky.
+3. **První věta:** P1 pořád začíná popisem místa („You cross…“, „You stand by…“, „You stand at…“) — to pokyn přímo žádal. P2 začíná
+   významem. P3 začíná chvílí; u Isy a Geba vlastními slovy (úsek obrazu 1 slovo), u Raidha skoro opsal obraz (4 slova).
+4. **Plán ve výstupu funguje a přidává obsah, který ve vstupu nebyl:** u Raidha si model do smyslu sám dopsal „but your direction
+   still matters“ a čtení pak mluví o směru, ne o rytmu, který byl zadaný. Limit 8 slov překročil o jedno.
+5. **Tvrzení o čtenáři:** žádné čtení neříká nic jako fakt o jeho životě; možnosti jsou podané s „perhaps / may“ (čteno okem, 9 z 9).
+   Zákaz studeného čtení tedy v téhle zkoušce nechyběl — na 9 čteních bez oblasti a bez otázky; s oblastí nezkoušeno.
+6. **Otázku runy v uvozovkách model opisuje** — Gebo P2 převzal 7 slov za sebou („receive without repaying it at once“). Stojí v zadání
+   jako hotová věta; produkce ji má také a přebírá 2–3 slova.
+7. **Hranice:** n = 3 na variantu, jedno čtení na buňku, tři runy, jeden úhel, anglicky, bez oblasti; změněno je víc věcí naráz
+   (nadpisy, kladné pokyny, pořadí vět, délka zadání) — zkouška ukazuje, jak si model s každým úhlem poradí, ne co z toho působí.
+   Jestli jsou čtení lepší, rozhoduje owner.

@@ -6,6 +6,8 @@ Owner k tomu: *„od GPT … pak se podíváme znova na ty čtení, co jsi uděl
 ## 1. Co z toho je ověřené (CODE-read 2026-11-14, přečtené stránky výrobce)
 Přečteno na developers.openai.com/api/docs: guides/prompt-engineering, guides/latest-model (Using GPT-6), stránka modelu gpt-6-sol,
 guides/prompt-guidance, guides/reasoning/advice-on-prompting. Stránka nápovědy (help.openai.com 6654000) vrací 403 — neověřeno.
+**Druhé kolo téhož dne** (owner: „hledej. kdo hledá, tak najde“): řádky označené „2. kolo“ jsou dohledané; citace a odkazy →
+`zdroj-bez-premysleni-2026-11-14.md`.
 
 | tvrzení GPT | stav | poznámka |
 |---|---|---|
@@ -13,12 +15,12 @@ guides/prompt-guidance, guides/reasoning/advice-on-prompting. Stránka nápověd
 | běžný model chce výslovné pokyny, přemýšlejícímu stačí cíl | potvrzeno, obecně | „They'll perform best with explicit instructions to create a specific output.“ |
 | příklady (few-shot), různorodé | potvrzeno, obecně | „try to show a diverse range of possible inputs with the desired outputs“ |
 | nadpisy Markdown a značky XML k oddělení částí | potvrzeno, obecně | |
-| délku udávat číslem, ne „short“ | nenalezeno na dostupných stránkách | zdroj GPT je stránka nápovědy (403) |
-| říkat, co dělat, místo co nedělat | nenalezeno u výrobce | GPT to sám připisuje Hugging Face a Microsoftu — nečteno |
-| opakování pokynů škodí / jeden pokyn jednou | nenalezeno u výrobce | |
-| cokoli o tom, jak psát prompt právě pro Sol s `none` | **nenalezeno** | rady výrobce pro GPT-6 popisují Astru |
-| varování, že model příklady opisuje | nenalezeno u výrobce | GPT to uvádí jako vlastní poznámku |
-| Spectrum AI Labs, PrompTessor | nečteno | cizí weby, ne výrobce |
+| délku udávat číslem, ne „short“ | 2. kolo: potvrzeno v nápovědě výrobce, bez dokladu | příklad výrobce je ve větách („3 to 5 sentence paragraph“), ne ve slovech |
+| říkat, co dělat, místo co nedělat | 2. kolo: potvrzeno v nápovědě výrobce a u Hugging Face, bez dokladu | u Microsoftu to není |
+| opakování pokynů škodí / jeden pokyn jednou | 2. kolo: výrobce u GPT-5.6 Sol „Removing repeated instructions … can improve“; Microsoft radí opak | protichůdné zdroje; naše měření: opakování nic nedrží |
+| cokoli o tom, jak psát prompt právě pro Sol s `none` | 2. kolo: pro GPT-6 Sol nic; návod ke GPT-5.1 říká, že `none` = chování modelu bez přemýšlení a platí rady pro GPT-4.1 | starší model téhož výrobce |
+| varování, že model příklady opisuje | 2. kolo: potvrzeno, návod ke GPT-4.1 | „models can use those quotes verbatim and start to sound repetitive“ |
+| Spectrum AI Labs, PrompTessor | 2. kolo: PrompTessor přečten — blog bez vlastních testů; Spectrum nečten | cizí weby, ne výrobce |
 
 ## 2. Jak to sedí s tím, co jsme sami změřili na solu
 - **„Jedna instrukce = jeden význam“** — sedí: sloučení zdvojených omezení čtení nezměnilo (`README.md` oddíl 8, varianty B1 a C).
