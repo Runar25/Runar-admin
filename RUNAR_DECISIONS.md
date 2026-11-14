@@ -13273,4 +13273,5 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   bez hlasu, zdarma, **jednou denně na účet** (při znovuotevření týž text), den končí o půlnoci **islandského** času, **jen přihlášení**.
   Do deníku ani do stromu ne. Žádný strop počtu slov; stavba tři části (BACKLOG). Vzorky: napřed **jeden**, pak úpravy (*„žádných 25“*).
   Web: náhodná runa dne jako text, zkusit; aktivuje se, až owner řekne. Do budoucna směr: automaticky každé ráno, upozornění, widget.
+- **NASAZENO 2026-11-14:** `claude-proxy` z b4cacdf (owner *„1. ano nasaď“*) — obrazy z (4), (5) a (6) platí ve čtení.
 - Affected doc(s): RUNAR_BACKLOG.md (Rune of the Day).
