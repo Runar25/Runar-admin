@@ -333,3 +333,10 @@ modelu, prompt guidance, advice on prompting, migrace; rady, které tam jsou, se
 **Opravy soupisu z téhož dne:** (1) nástroj brány runy existuje — `docs/eval/2026-09-26-obrazy/brana_build.py` + `brana_vyhodnot.py`
 (CODE-tune, commit 68a3013); hledal jsem jen ve `scripts/`. (2) Řádek významu má dvě znění losem; jedno z nich už říká „keep the line on the
 rune's own sense, not on what happens in the scene“ — tvrzení „žádný kus neříká, že zbytek patří runě“ platí pro věty po řádku významu, ne pro něj.
+
+### 8.1 Owner k oddílu 8 (2026-11-14)
+Owner nad ukázkou Isa (produkce × varianta D): *„produkce zní lépe.“* Smysl: čtení, kde se třetí věta vrací do scény, se mu čte lépe
+než čtení, kde třetí věta mluví obecně o významu („You can look at what remains unchanged without deciding yet what it means“).
+Co z toho plyne: směr „věty po obrazu patří runě“ v tomhle znění **není zlepšení** — třetí věta bez scény vyjde abstraktní.
+Co zůstává jako nález: opakování téhož na víc místech čtení nedrží (B1, C), takže zadání jde zkrátit beze změny čtení; a sol dělá to,
+co zadání říká nejkonkrétněji. Verdikt je nad jednou dvojicí čtení; všech 15 čtení owner dostal vedle sebe týž den.

@@ -34,7 +34,9 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 # 'dverg-tarot' (2026-10-21, DECISIONS 2026-10-21 (2)): samostatný produkt mimo Rúnara — „Rune Keeper“ je tam postava, ne tier;
 # Rúnarovy pojmy se na něj nevztahují.
 SKIP_DIRS  = ('docs/archive', 'docs/inbox', 'docs/findings', 'memory/snapshots', '_cowork_snap',
-              'node_modules', '.git', '.claude/worktrees', 'dverg-tarot')
+              'node_modules', '.git', '.claude/worktrees', 'dverg-tarot',
+              'Claude outputs')   # 2026-11-14 (CODE-read, owner „tak ty problémy vyřešte“): podklady od Coworku mimo git = intake jako
+                                  # docs/inbox, ne živý doc; tři citace v handoffech 69/70 držely smoke ve sdíleném stromě červený
 SKIP_FILES = ('RUNAR_DECISIONS.md', 'check-docs.py')
 
 # (regex, proč je to špatně, slova která výskyt OMLUVÍ na témž řádku)

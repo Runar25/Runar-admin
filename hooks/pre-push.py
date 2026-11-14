@@ -38,7 +38,14 @@
 # znovu minuty na tentýž commit: smoke, který prošel, se zapíše (commit + základ); stejný commit se proti základu, který jen postoupil
 # dopředu (starý základ je předkem nového), už znovu netestuje — obsah je týž a „co přibylo“ je podmnožina toho, co už prošlo.
 # Selže-li dotaz na server (offline), hook jede postaru — dotaz push nikdy nezastaví sám od sebe.
-import os, shutil, subprocess, sys, tempfile
+#
+# 2026-11-14 (CODE-read, owner „tak ty problémy vyřešte! udělej to tak, aby k nim už nemohlo dojít“): (1) JEDEN smoke naráz. Dvě session
+# pushly přes sebe (CODE-tree 12:37, CODE-read 12:35) a oba smoke spadly, ač commit byl v pořádku — u CODE-tree doloženě na
+# `TimeoutExpired` v ㊱ (hooky Claude Code), týž commit fa55742 o 20 min později sám prošel za 3 min. Proto zámek ve společném .git:
+# druhý push počká, a když mu mezitím první odnese commity na server nebo týž commit otestuje, skončí bez dalšího smoke. Zámek starší
+# než 30 min nebo po mrtvém procesu se přebírá. (2) CELÝ výpis smoke jde do souboru a vady (řádky s ❌) se vypíšou znovu úplně na konci
+# — kdo si výstup pushe zkrátí (`| tail`), přišel o to, CO spadlo (CODE-read toho dne: „2 problémy“, ale které, už nešlo zjistit).
+import atexit, os, shutil, subprocess, sys, tempfile, time
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PY = [sys.executable, '-X', 'utf8']
@@ -86,6 +93,78 @@ PROSLO = os.path.join(git('rev-parse', '--git-common-dir').stdout.strip() or os.
 if not os.path.isabs(PROSLO):
     PROSLO = os.path.join(REPO, PROSLO)
 
+ZAMEK = os.path.join(os.path.dirname(PROSLO), 'runar-prepush-zamek.txt')
+LOG = os.path.join(os.path.dirname(PROSLO), 'runar-prepush-posledni.log')
+ZAMEK_STARY = 30 * 60   # s; smoke sám trvá minuty
+
+def _zije(pid):
+    try:
+        q = subprocess.run(['tasklist', '/FI', 'PID eq %d' % pid, '/NH'], capture_output=True, text=True, timeout=20)
+        return str(pid) in q.stdout
+    except Exception:
+        return True   # nejde zjistit (jiný systém) → rozhodne stáří zámku
+
+def zamek_pust():
+    try:
+        if open(ZAMEK, encoding='utf-8').read().split()[0] == str(os.getpid()):
+            os.remove(ZAMEK)
+    except Exception:
+        pass
+
+def zamek_vezmi(popis):
+    """Vezme zámek; vrátí True, když se na jinou session čekalo."""
+    cekal = False
+    while True:
+        try:
+            fd = os.open(ZAMEK, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+            os.write(fd, ('%d %s' % (os.getpid(), popis)).encode('utf-8'))
+            os.close(fd)
+            atexit.register(zamek_pust)
+            return cekal
+        except FileExistsError:
+            try:
+                stari = time.time() - os.path.getmtime(ZAMEK)
+            except OSError:
+                continue   # právě zmizel
+            try:
+                pid = int(open(ZAMEK, encoding='utf-8').read().split()[0])
+            except Exception:
+                pid = 0
+            if stari > ZAMEK_STARY or (pid and not _zije(pid)) or (not pid and stari > 60):
+                try:
+                    os.remove(ZAMEK)
+                except OSError:
+                    pass
+                continue
+            if not cekal:
+                print('[pre-push] smoke teď pouští jiná session (proces %d, %d s) — čekám, dva naráz se navzájem shazují…' % (pid, stari))
+                sys.stdout.flush()
+            cekal = True
+            time.sleep(5)
+
+def uz_proslo(cil_, zaklad_):
+    try:
+        p = open(PROSLO, encoding='utf-8').read().split()
+    except Exception:
+        return False
+    return len(p) >= 1 and p[0] == cil_ and (len(p) < 2 or not p[1] or not zaklad_
+                                             or git('merge-base', '--is-ancestor', p[1], zaklad_).returncode == 0)
+
+def smoke_s_logem(cmd, cwd, env):
+    """Pustí smoke, výstup tiskne i ukládá do LOG; vrátí (returncode, řádky s ❌)."""
+    vady = []
+    env = dict(env, PYTHONUNBUFFERED='1')
+    with open(LOG, 'w', encoding='utf-8') as f:
+        p = subprocess.Popen(cmd, cwd=cwd, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, encoding='utf-8', errors='replace')
+        for l in p.stdout:
+            sys.stdout.write(l)
+            f.write(l)
+            if '❌' in l:
+                vady.append(l.strip())
+        p.wait()
+    sys.stdout.flush()
+    return p.returncode, vady
+
 # Co se pushuje: stdin nese „<local ref> <local sha> <remote ref> <remote sha>“; mazání větve má local sha samé nuly.
 shas, zaklady, vetve = [], [], []
 try:
@@ -118,12 +197,7 @@ if vetve:
     if not _ff:
         print('\n[pre-push] ZASTAVENO ještě před kontrolou — na serveru je práce, kterou nemáš. `git pull`, pak push znovu.')
         sys.exit(1)
-    try:
-        _proslo = open(PROSLO, encoding='utf-8').read().split()
-    except Exception:
-        _proslo = []
-    if len(_proslo) == 2 and _proslo[0] == cil and (not _proslo[1] or not zaklad
-            or git('merge-base', '--is-ancestor', _proslo[1], zaklad).returncode == 0):
+    if uz_proslo(cil, zaklad):
         print('[pre-push] commit ' + cil[:7] + ' už smoke prošel (základ jen postoupil dopředu) — znovu se netestuje.')
         print('[pre-push] OK')
         sys.exit(0)
@@ -160,6 +234,15 @@ try:
 except Exception:
     pass   # úklid nesmí push zastavit
 
+if zamek_vezmi(cil[:7]) and vetve:
+    _nahore, _posun, _ff = server_ma(vetve)
+    if _nahore:
+        uz_nahore('Během čekání na kontrolu jiné session')
+    if uz_proslo(cil, zaklad):
+        print('[pre-push] commit ' + cil[:7] + ' mezitím prošel smoke jiné session — znovu se netestuje.')
+        print('[pre-push] OK')
+        sys.exit(0)
+
 tmp = tempfile.mkdtemp(prefix='runar-prepush-')
 w = git('worktree', 'add', '--detach', tmp, cil)
 if w.returncode != 0:
@@ -172,8 +255,8 @@ try:
     if zaklad:
         env['RUNAR_BASE'] = zaklad
         print('[pre-push] „co přibylo“ se měří proti ' + zaklad[:7] + ' (co už má server)')
-    r = subprocess.run(PY + [os.path.join(tmp, 'smoke.py')], cwd=tmp, env=env)
-    ok = r.returncode == 0
+    _rc, VADY = smoke_s_logem(PY + [os.path.join(tmp, 'smoke.py')], tmp, env)
+    ok = _rc == 0
     print('[pre-push] soubory zapomenuté mimo git (sdílený strom)…')
     for s in NAD_SDILENYM:
         q = subprocess.run(['node', os.path.join(REPO, 'scripts', s)], cwd=REPO, capture_output=True, text=True, encoding='utf-8')
@@ -186,8 +269,12 @@ finally:
     git('worktree', 'remove', '--force', tmp)
     shutil.rmtree(tmp, ignore_errors=True)
     git('worktree', 'prune')
+    zamek_pust()
 
 if not ok:
+    print('\n[pre-push] CO SPADLO (celý výpis: ' + LOG.replace('\\', '/') + '):')
+    for v in (globals().get('VADY') or ['(žádný řádek s ❌ — čti celý výpis)']):
+        print('  ' + v)
     print('\n[pre-push] ZABLOKOVÁNO — smoke neprošel. Oprav to, nebo `git push --no-verify`.')
     sys.exit(1)
 posunute = []
