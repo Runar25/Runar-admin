@@ -12,7 +12,11 @@ function _rodSmi() {
   if (typeof RUNE_OF_DAY !== 'undefined' && RUNE_OF_DAY.open_to === 'all') return true;
   return (typeof isTester !== 'undefined' && isTester) || isAdmin(currentUser.email);
 }
-var _rodNacteno = '';   // uživatel + den, pro který už se dnešní text hledal (ať se DB neptá při každém překreslení)
+var _rodNacteno = '';
+// Admin: „táhnout znovu“ týž den (KUKY 2026-11-15 „jako admin potřebuju reset tlačítko pro opakování vícekrát za den“). Klient jen
+// pošle rod_znovu; adminovi ho uzná SERVER (claude-proxy: admin z JWT, uložený text dne přepíše) — tlačítko v DOM není brána.
+var _rodZnovu = false;
+function _rodAdmin() { return !!(typeof currentUser !== 'undefined' && currentUser && isAdmin(currentUser.email)); }   // uživatel + den, pro který už se dnešní text hledal (ať se DB neptá při každém překreslení)
 
 // Ukáže/skryje tlačítko podle přihlášení a přístupu; jednou za den a uživatele zkusí najít dnešní text.
 function _rodPaint() {
@@ -36,7 +40,8 @@ function _rodUkaz(runa, text) {
   var odst = String(text).split(/\n\s*\n/).map(function (p) { return p.trim(); }).filter(Boolean);
   document.getElementById('rod-result').innerHTML =
     runeSvg(r, { frame: true, cls: 'tree-stone' }) + '<div class="flbl">' + escapeHtml(rn(r)) + '</div>'
-    + odst.map(function (p) { return '<p class="tree-reading-text">' + escapeHtml(p) + '</p>'; }).join('');   // jako text životní runy
+    + odst.map(function (p) { return '<p class="tree-reading-text">' + escapeHtml(p) + '</p>'; }).join('')   // jako text životní runy
+    + (_rodAdmin() ? '<button type="button" class="tree-tester-btn" onclick="rodZnovu()">' + escapeHtml(t('rod_reset')) + '</button>' : '');
   document.getElementById('rod-btn').hidden = true;
   document.getElementById('rod-result').hidden = false;
 }
@@ -47,6 +52,13 @@ function rodOtevri() {
   document.getElementById('rod-grid').hidden = true;
   document.getElementById('rod-state').innerHTML = '';
   document.getElementById('rod-modal').classList.add('open');
+}
+function rodZnovu() {
+  if (!_rodAdmin()) return;
+  _rodZnovu = true;
+  document.getElementById('rod-result').hidden = true;
+  document.getElementById('rod-btn').hidden = false;
+  rodOtevri();
 }
 function rodZavri() { document.getElementById('rod-modal').classList.remove('open'); }
 
@@ -84,9 +96,10 @@ async function _rodCti(r) {
     var prompt = buildDayRunePrompt(r, lang, corrections);
     var sys = buildSysPrompt(activeChar, lang);
     // Zdarma rozhoduje PROXY podle mode='rune_day' (claude-proxy, isRuneDay), ne tahle čísla.
-    var res = await callProxy(sys, prompt, mode.max_tokens, false, 0, null, 'rune_day');
+    var res = await callProxy(sys, prompt, mode.max_tokens, false, 0, null, 'rune_day', null, _rodZnovu ? { rod_znovu: true } : null);
     if (res.error || !res.text) { stav.innerHTML = '<p class="note">' + escapeHtml(t('err_generic')) + '</p>'; return; }
     // Server mohl vrátit dnešní text z jiného zařízení — pak platí jeho runa, ne ta, kterou člověk právě zvolil.
+    _rodZnovu = false;
     _rodUkaz(res.rune || r.n, res.text);
     rodZavri();
     var box = document.getElementById('rod');

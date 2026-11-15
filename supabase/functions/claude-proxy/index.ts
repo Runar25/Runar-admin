@@ -679,6 +679,9 @@ serve(async (req: Request) => {
     // nekona). Zdarma je nedela cislo od klienta, ale tenhle `mode` — proto zustava
     // podlaha Math.max(1, spread_cost) niz: klient si zdarma rict nesmi.
     const isRitual = isLifeRune || isFounding || isNameLore || isRuneDay;
+    // Admin smí táhnout runu dne znovu týž den (KUKY 2026-11-15 „reset tlačítko pro opakování vícekrát za den“): uložený text se nevrátí,
+    // nový ho přepíše. isAdmin je z JWT (výš) — příznak od ne-admina nic nezmění.
+    const rodZnovu = isRuneDay && isAdmin && body.rod_znovu === true;
     // Rozbor jmena: kolikrat smi model psat. 1. rozbor + JEDNO precteni po zmene severskeho
     // jmena (KUKY 2026-09-12). ZRCADLI v2/runar-config.js NAME_LORE_LIMIT — Deno klientsky
     // config neimportuje; shodu hlida smoke (verify_monthly_limits.js).
@@ -706,7 +709,7 @@ serve(async (req: Request) => {
           console.error("rune day read failed:", dErr.message);
           return json({ error: "unavailable", message: "The runes are quiet. Try again shortly." }, 503);
         }
-        if (dr) return json({ text: dr.text, rune: dr.rune, stored: true });
+        if (dr && !rodZnovu) return json({ text: dr.text, rune: dr.rune, stored: true });
       }
       if (prErr) {
         // Fail OPEN, stejna posture jako mesicni strop: vypadek cteni nesmi zablokovat
@@ -1008,8 +1011,10 @@ serve(async (req: Request) => {
     let runaDne: string | null = null;
     if (isRuneDay && userId && denServer) {
       runaDne = denServer.runa;
-      const { error: dwErr } = await sb().from("rune_day")
-        .insert({ user_id: userId, den: denDnes, rune: denServer.runa, lang: denServer.lang, text });
+      const radek = { user_id: userId, den: denDnes, rune: denServer.runa, lang: denServer.lang, text };
+      const { error: dwErr } = rodZnovu
+        ? await sb().from("rune_day").upsert(radek, { onConflict: "user_id,den" })
+        : await sb().from("rune_day").insert(radek);
       if (dwErr && dwErr.code === "23505") {
         const { data: d1 } = await sb().from("rune_day").select("rune, text").eq("user_id", userId).eq("den", denDnes).maybeSingle();
         if (d1) { text = d1.text; runaDne = d1.rune; }
