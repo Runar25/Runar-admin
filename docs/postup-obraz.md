@@ -23,6 +23,12 @@ nikdo neměl před sebou; rozbor příčin → `docs/eval/2026-11-09-v2-vyklad-z
 3. Druhá půlka věty smí ukázat, co v záběru není („…a nikdo ho nežádal“).
 4. Dnešní doba a věrohodnost: nic, co si dnešní člověk neumí představit (owner o krávě prodané na podzim: „skoro žádný člověk si
    takovou věc nedokáže představit … a hlavně to vůbec není zajímavý obraz“).
+   **Podstata (owner 2026-11-15): vadí ČINNOST, ne věc.** „Kráva je přece v pořádku. Ale proč ji dáváš do obrazu, že ji někdo
+   prodává na trhu?“ — ptej se, jestli čtenář tu situaci zná ze svého běžného života, ne jestli je slovo moderní. Runu obraz nést
+   může a čtenáři přitom nic neříká; to je vada, i když projde slepou kontrolou runy.
+   **Opakovaně odmítnutý vzor: „půjčím sousedovi a po čase se něco vrátí“** (owner 2026-11-15: „tyhle obrazy kritizuju pořád, ale
+   jelikož sedí na runu, tak se stále objevují“). Místo něj situace, která se v běžném životě opravdu děje — jeho příklad: na
+   společnou večeři přinesu talíř něčeho a odcházím s něčím jiným; překvapení smí zůstat.
 5. **Osoba si místo v obraze musí zasloužit** (`RUNAR_DECISIONS.md` 2026-11-14 (6)); žádné tvrzení o čtenářově minulosti ani rodině.
 6. Dvě síta (`RUNAR_DESIGN.md` „Obraz — dvě síta“).
 
