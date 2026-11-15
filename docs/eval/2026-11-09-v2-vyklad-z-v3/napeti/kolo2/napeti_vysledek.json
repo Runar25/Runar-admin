@@ -1,0 +1,1234 @@
+[
+ {
+  "runa": "Uruz",
+  "obraz": "The stuck window gives when you lean into the frame with both hands.",
+  "stav": "projde",
+  "A": "Uruz",
+  "B": "Uruz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Resistance gives way to bodily force applied with both hands.",
+   "Resistance gives way to bodily force applied fully."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Jera",
+  "obraz": "You answer in the new language before you have time to translate the question.",
+  "stav": "neprojde",
+  "A": "Laguz",
+  "B": "Laguz",
+  "jistota": [
+   "medium",
+   "low"
+  ],
+  "proc": [
+   "The answer comes from under the surface before it can be reasoned out.",
+   "The response comes from below before conscious explanation."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Ingwaz",
+  "obraz": "After days of practising alone, the first sentence comes out ready.",
+  "stav": "projde",
+  "A": "Ingwaz",
+  "B": "Ingwaz",
+  "jistota": [
+   "medium",
+   "high"
+  ],
+  "proc": [
+   "Unseen work alone completes itself and emerges ready.",
+   "Hidden work completes itself and comes out ready."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Gebo",
+  "obraz": "You hold the door, and the stranger behind you holds the next one for you.",
+  "stav": "projde",
+  "A": "Gebo",
+  "B": "Gebo",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "A courtesy given is received and returned between two people.",
+   "A gesture given and one received back, uncounted."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Tiwaz",
+  "obraz": "You refuse the promotion that rests on your colleague's work.",
+  "stav": "projde",
+  "A": "Tiwaz",
+  "B": "Tiwaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Taking the right side knowingly at the cost of a promotion.",
+   "Taking the right side knowingly at a personal cost."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Thurisaz",
+  "obraz": "You have typed the angry reply, and your thumb stops above the send button.",
+  "stav": "projde",
+  "A": "Thurisaz",
+  "B": "Thurisaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "A move is stopped just before it is made.",
+   "A move is halted right before it is made."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Jera",
+  "obraz": "The small monthly payments finally cover the cost of the course.",
+  "stav": "projde",
+  "A": "Jera",
+  "B": "Jera",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Small steps over time finally add up to a result.",
+   "Small acts over a long time finally show as a result."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Othila",
+  "obraz": "You follow your grandmother's recipe card and add the change your family made.",
+  "stav": "projde",
+  "A": "Othila",
+  "B": "Othila",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "A handed-down thing is carried on with the family's own change.",
+   "An inherited way is carried on with a choice of what to keep."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Wunjo",
+  "obraz": "Halfway through the dishes a song comes on, and you both sing along.",
+  "stav": "projde",
+  "A": "Wunjo",
+  "B": "Wunjo",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Shared joy in the middle of a chore.",
+   "Shared joy in the middle of a chore."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Berkana",
+  "obraz": "The child struggles with the zip, and you wait while they try again.",
+  "stav": "projde",
+  "A": "Berkana",
+  "B": "Berkana",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "A fragile attempt is given room rather than forced.",
+   "A fragile attempt is given room rather than forced."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Thurisaz",
+  "obraz": "You start to interrupt, see the other has not finished, and close your mouth.",
+  "stav": "projde",
+  "A": "Thurisaz",
+  "B": "Thurisaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "An interruption is stopped at the threshold after seeing what the rush would miss.",
+   "A move is stopped at the threshold just before it is made."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Eihwaz",
+  "obraz": "A gust turns the umbrella inside out, and you push it back into shape.",
+  "stav": "hraniční",
+  "A": "Hagalaz",
+  "B": "Eihwaz",
+  "jistota": [
+   "medium",
+   "low"
+  ],
+  "proc": [
+   "An outside force breaks the shape of something that looked solid.",
+   "An outside gust bends the umbrella, but it goes back into shape rather than breaking."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Othila",
+  "obraz": "The old key still opens the shed at your parents' house.",
+  "stav": "projde",
+  "A": "Othila",
+  "B": "Othila",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Returning to the parental place where the old thing still fits.",
+   "A return to the inherited place that still admits you."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Wunjo",
+  "obraz": "The train is late again, and you two start rating the vending-machine snacks.",
+  "stav": "projde",
+  "A": "Wunjo",
+  "B": "Wunjo",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Two people find lightness together in the middle of a delay.",
+   "Shared lightness in the middle of a delay, not a reward."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Berkana",
+  "obraz": "The child ties the lace wrong, and your hand stays in your pocket.",
+  "stav": "projde",
+  "A": "Berkana",
+  "B": "Berkana",
+  "jistota": [
+   "high",
+   "medium"
+  ],
+  "proc": [
+   "The helper holds back so the small beginner can grow.",
+   "A fragile beginning is given room instead of being forced."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Thurisaz",
+  "obraz": "You reach to post the photo, then notice someone in it who never agreed.",
+  "stav": "projde",
+  "A": "Thurisaz",
+  "B": "Thurisaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "A stop just before posting shows what the rush would have missed.",
+   "A move is stopped just before it is made and the stop shows what the rush missed."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Eihwaz",
+  "obraz": "The old wooden chair creaks under your weight, bends a little, and holds.",
+  "stav": "projde",
+  "A": "Eihwaz",
+  "B": "Eihwaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "It bends under strain and does not break.",
+   "It bends under strain and does not break."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Othila",
+  "obraz": "You mend your coat on the sewing machine your mother taught you to use.",
+  "stav": "projde",
+  "A": "Othila",
+  "B": "Othila",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "A skill and tool handed down by the mother is carried on.",
+   "A handed-down skill and tool carried on."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Wunjo",
+  "obraz": "The birthday cake leans, and the child asks for the piece sliding off.",
+  "stav": "projde",
+  "A": "Wunjo",
+  "B": "Wunjo",
+  "jistota": [
+   "medium",
+   "medium"
+  ],
+  "proc": [
+   "The imperfect moment turns light and joyful instead of failing.",
+   "A mishap turns into lightness and delight in the middle of things."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Berkana",
+  "obraz": "The seedling droops in its new pot, then opens one fresh leaf toward the window.",
+  "stav": "projde",
+  "A": "Berkana",
+  "B": "Berkana",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Fragile new life starts growing in its new room.",
+   "Fragile new life given room starts to grow."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Ansuz",
+  "obraz": "One person says, \"I thought I was the only one,\" and the table goes quiet.",
+  "stav": "neprojde",
+  "A": "Mannaz",
+  "B": "Mannaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Someone recognises themselves among the others.",
+   "A person recognises themselves among others at the table."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Eihwaz",
+  "obraz": "The phone case splits when it hits the floor, and the screen beneath is whole.",
+  "stav": "neprojde",
+  "A": "Hagalaz",
+  "B": "Hagalaz",
+  "jistota": [
+   "high",
+   "medium"
+  ],
+  "proc": [
+   "A blow breaks one thing and shows what held.",
+   "A sudden blow breaks one thing and shows what held."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Dagaz",
+  "obraz": "You turn the map on your phone, and the street falls into place.",
+  "stav": "hraniční",
+  "A": "Dagaz",
+  "B": "Sowilo",
+  "jistota": [
+   "low",
+   "low"
+  ],
+  "proc": [
+   "A turn after which the same street looks different and makes sense.",
+   "An orientation shift lets you see where you stand."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Hagalaz",
+  "obraz": "The flight is cancelled at the gate, and the group chat fills with new plans.",
+  "stav": "projde",
+  "A": "Hagalaz",
+  "B": "Hagalaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "An outside event breaks the plan and something new follows.",
+   "An outside event breaks the plan and people regroup after it."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Ehwaz",
+  "obraz": "On the tandem the wobble stops when both riders settle into one pace.",
+  "stav": "projde",
+  "A": "Ehwaz",
+  "B": "Ehwaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Progress comes when two settle into one common pace.",
+   "Progress comes when two find a common rhythm."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Ansuz",
+  "obraz": "You say the decision out loud, and it suddenly sounds different.",
+  "stav": "projde",
+  "A": "Ansuz",
+  "B": "Ansuz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Speaking it aloud changes what the thing means.",
+   "Speech spoken aloud changes what the thing means."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Perth",
+  "obraz": "A parcel arrives with no sender, and the label gives no clue what is inside.",
+  "stav": "projde",
+  "A": "Perth",
+  "B": "Perth",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Something exists inside but is not yet shown or known.",
+   "Something exists inside but is not yet known."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Dagaz",
+  "obraz": "One ordinary sentence from its sender makes you read the whole message differently.",
+  "stav": "neprojde",
+  "A": "Ansuz",
+  "B": "Ansuz",
+  "jistota": [
+   "medium",
+   "medium"
+  ],
+  "proc": [
+   "One arriving sentence changes the meaning of the rest.",
+   "A sentence arrives and gives the whole message a new meaning."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Hagalaz",
+  "obraz": "A power cut ends the video call and takes the unsaved slide with it.",
+  "stav": "projde",
+  "A": "Hagalaz",
+  "B": "Hagalaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "An uninvited outside force cuts things off and takes something with it.",
+   "An outside force breaks the plan and takes something with it."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Ehwaz",
+  "obraz": "Two carry a long mirror through the doorway: one pauses, the other turns.",
+  "stav": "projde",
+  "A": "Ehwaz",
+  "B": "Ehwaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Two move one load by adjusting to each other.",
+   "Two people coordinate their moves to get one object through."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Ansuz",
+  "obraz": "One sentence in the voice message tells you the plan has changed.",
+  "stav": "projde",
+  "A": "Ansuz",
+  "B": "Ansuz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "A spoken sentence arrives and changes the situation.",
+   "A spoken word arrives and changes the situation."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Perth",
+  "obraz": "A voice memo is saved as \"Untitled\", and you cannot recall what you said.",
+  "stav": "neprojde",
+  "A": "Blank",
+  "B": "Blank",
+  "jistota": [
+   "medium",
+   "medium"
+  ],
+  "proc": [
+   "No name and no recalled content - unmarked.",
+   "No name and no recalled meaning attached to the thing."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Dagaz",
+  "obraz": "At dawn the street that felt strange in the dark is the one you know.",
+  "stav": "projde",
+  "A": "Dagaz",
+  "B": "Dagaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Dark turns to light and the same street looks different.",
+   "The turn from dark to light makes the same place look different."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Hagalaz",
+  "obraz": "After the burst pipe the new ceiling is down, and the old counter still stands.",
+  "stav": "projde",
+  "A": "Hagalaz",
+  "B": "Hagalaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "A burst from outside destroys and shows what is gone and what held.",
+   "An uninvited force breaks something and shows what held."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Ehwaz",
+  "obraz": "Two people work the long saw in turn, and the blade moves cleanly.",
+  "stav": "projde",
+  "A": "Ehwaz",
+  "B": "Ehwaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Two alternate in rhythm without forcing and the work moves.",
+   "Two move in alternating rhythm, neither forcing the other."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Raidho",
+  "obraz": "The path across the grass is on no plan; it is where everyone actually walks.",
+  "stav": "projde",
+  "A": "Raidho",
+  "B": "Raidho",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "A road made by people actually walking it.",
+   "A road made only by people walking it."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Perth",
+  "obraz": "The result is ready in the app, but the notification shows no number.",
+  "stav": "projde",
+  "A": "Perth",
+  "B": "Perth",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "The result exists but is not yet shown.",
+   "The thing exists but is not yet shown."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Blank",
+  "obraz": "A new document is open, and the first line is still yours to choose.",
+  "stav": "projde",
+  "A": "Blank",
+  "B": "Blank",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "An open unwritten space waiting for its first mark.",
+   "An open space where nothing has been written yet."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Nauthiz",
+  "obraz": "The phone is at two per cent, and you send the one message that matters.",
+  "stav": "projde",
+  "A": "Nauthiz",
+  "B": "Nauthiz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Scarcity forces the choice of what truly matters.",
+   "Scarcity forces the choice of the one thing truly needed."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Mannaz",
+  "obraz": "You hear your own phrase come out of a friend's mouth and learn how it sounds.",
+  "stav": "projde",
+  "A": "Mannaz",
+  "B": "Mannaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "One hears oneself through another person as in a mirror.",
+   "You hear yourself mirrored in another person."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Raidho",
+  "obraz": "On the long drive you miss your turning because the road was so easy to follow.",
+  "stav": "projde",
+  "A": "Raidho",
+  "B": "Raidho",
+  "jistota": [
+   "medium",
+   "high"
+  ],
+  "proc": [
+   "The easy road carries one past where one meant to go.",
+   "The rhythm of the road carries you past where you meant to go."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Algiz",
+  "obraz": "The door opens on its chain, just far enough to see who is knocking.",
+  "stav": "projde",
+  "A": "Algiz",
+  "B": "Algiz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "A guard that opens enough to look but does not let everything in.",
+   "A guarded opening that watches without letting everything in."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Blank",
+  "obraz": "The form asks for a detail it never explains, and you leave the box blank.",
+  "stav": "hraniční",
+  "A": "Algiz",
+  "B": "Blank",
+  "jistota": [
+   "low",
+   "medium"
+  ],
+  "proc": [
+   "You withhold something from an unexplained request rather than let it in.",
+   "An unexplained space is left unmarked."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Nauthiz",
+  "obraz": "One seat is left on the last bus, and it goes to the person on crutches.",
+  "stav": "projde",
+  "A": "Nauthiz",
+  "B": "Nauthiz",
+  "jistota": [
+   "medium",
+   "medium"
+  ],
+  "proc": [
+   "One scarce seat goes where the need is real.",
+   "Scarcity shows who truly needs the one thing left."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Mannaz",
+  "obraz": "A friend calls you patient, and you have never thought of yourself that way.",
+  "stav": "projde",
+  "A": "Mannaz",
+  "B": "Mannaz",
+  "jistota": [
+   "medium",
+   "medium"
+  ],
+  "proc": [
+   "You see yourself through another's eyes for the first time.",
+   "You see yourself through another person's view of you."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Raidho",
+  "obraz": "A few lengths in, your strokes find a rhythm you no longer count.",
+  "stav": "projde",
+  "A": "Raidho",
+  "B": "Raidho",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Rhythm is found only by moving, stroke after stroke.",
+   "A rhythm is found only by moving, stroke after stroke."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Algiz",
+  "obraz": "You share your location with your family and not with the group chat.",
+  "stav": "projde",
+  "A": "Algiz",
+  "B": "Algiz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Selective openness: some are let in, others not.",
+   "Selective openness: some are let in, others not."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Blank",
+  "obraz": "The new flat has one empty wall, and you have not decided what belongs there.",
+  "stav": "projde",
+  "A": "Blank",
+  "B": "Blank",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "An empty space where nothing has been decided or written yet.",
+   "An open, unmarked space where nothing has been decided yet."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Nauthiz",
+  "obraz": "Before the water is shut off you fill one bottle.",
+  "stav": "projde",
+  "A": "Nauthiz",
+  "B": "Nauthiz",
+  "jistota": [
+   "medium",
+   "medium"
+  ],
+  "proc": [
+   "Coming lack reduces the act to the one thing needed.",
+   "Coming lack narrows action to what is needed."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Mannaz",
+  "obraz": "A friend copies the way you tap your foot, and you never knew you did it.",
+  "stav": "projde",
+  "A": "Mannaz",
+  "B": "Mannaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Another person mirrors a habit you did not know you had.",
+   "You see yourself through another person as in a mirror."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Kenaz",
+  "obraz": "Your phone torch finds the dropped key in the dark under the seat.",
+  "stav": "projde",
+  "A": "Kenaz",
+  "B": "Kenaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "A small light reveals what was there in the dark.",
+   "A small light reveals what was there in the dark."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Algiz",
+  "obraz": "You mute the work chat overnight and leave family calls switched on.",
+  "stav": "projde",
+  "A": "Algiz",
+  "B": "Algiz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "A guard that shuts out one channel and stays open to another.",
+   "A guard that stays open but does not let everything in."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Fehu",
+  "obraz": "The food you were saving for a special day is past its date.",
+  "stav": "projde",
+  "A": "Fehu",
+  "B": "Fehu",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Value kept standing unused has lost its worth.",
+   "Value kept standing instead of used loses its worth."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Isa",
+  "obraz": "The waterfall has become a wall of ice, its last streams held against the rock.",
+  "stav": "projde",
+  "A": "Isa",
+  "B": "Isa",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Moving water is stopped and held as it is.",
+   "Flowing water stopped and held as it is."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Laguz",
+  "obraz": "Your foot moves to the brake before you have named what is wrong.",
+  "stav": "projde",
+  "A": "Laguz",
+  "B": "Laguz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Something is sensed and acted on before it can be explained.",
+   "The body senses the danger before it can be named."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Kenaz",
+  "obraz": "You change the hallway bulb and see a crack in the ceiling.",
+  "stav": "projde",
+  "A": "Kenaz",
+  "B": "Kenaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "New light shows a crack that was there all along.",
+   "A small light reveals something that was there all along."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Sowilo",
+  "obraz": "The fog lifts, and the trail marker you were walking toward appears.",
+  "stav": "hraniční",
+  "A": "Dagaz",
+  "B": "Sowilo",
+  "jistota": [
+   "low",
+   "medium"
+  ],
+  "proc": [
+   "The obscurity lifts and what was hidden ahead becomes visible.",
+   "Clearing light shows where one stands and where one is heading."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Fehu",
+  "obraz": "The battery you never use is flat on the day you need it.",
+  "stav": "projde",
+  "A": "Fehu",
+  "B": "Fehu",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "What was left unused has lost its strength.",
+   "What is not used loses its strength."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Isa",
+  "obraz": "A chain of bubbles rises through the dark water, then stops beneath the clear ice.",
+  "stav": "hraniční",
+  "A": "Isa",
+  "B": "Laguz",
+  "jistota": [
+   "medium",
+   "medium"
+  ],
+  "proc": [
+   "Rising movement is stopped and held in view under the ice.",
+   "Something moves under the surface of dark water."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Laguz",
+  "obraz": "You lower your voice when your friend goes quiet, before either of you knows why.",
+  "stav": "projde",
+  "A": "Laguz",
+  "B": "Laguz",
+  "jistota": [
+   "high",
+   "medium"
+  ],
+  "proc": [
+   "A response to something sensed before either can explain it.",
+   "Something is sensed and acted on before anyone can explain it."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Kenaz",
+  "obraz": "The idea comes mid-walk, and you stop to record it before it goes.",
+  "stav": "projde",
+  "A": "Kenaz",
+  "B": "Kenaz",
+  "jistota": [
+   "low",
+   "low"
+  ],
+  "proc": [
+   "A small spark appears and must be tended before it goes out.",
+   "A small spark appears and must be caught and fed before it goes out."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Sowilo",
+  "obraz": "After the power cut the apartment block lights up window by window.",
+  "stav": "neprojde",
+  "A": "Dagaz",
+  "B": "Dagaz",
+  "jistota": [
+   "medium",
+   "medium"
+  ],
+  "proc": [
+   "Darkness turns to light across the building.",
+   "A turn from dark to light across the whole building."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Fehu",
+  "obraz": "The bicycle left in the shed all year needs a repair before it will move.",
+  "stav": "projde",
+  "A": "Fehu",
+  "B": "Fehu",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "A thing left standing unused has lost its ability to move.",
+   "What is left standing unused loses its strength."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Isa",
+  "obraz": "A drop has frozen at the tip of an icicle, just before it falls.",
+  "stav": "projde",
+  "A": "Isa",
+  "B": "Isa",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "A movement stopped and held at one point.",
+   "A moving drop is stopped and held as it is."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Laguz",
+  "obraz": "You keep looking at the same patch of ceiling before any leak appears.",
+  "stav": "projde",
+  "A": "Laguz",
+  "B": "Laguz",
+  "jistota": [
+   "medium",
+   "high"
+  ],
+  "proc": [
+   "Something hidden is sensed before there is any evidence.",
+   "Something is sensed before it can be explained or seen."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Gebo",
+  "obraz": "You bring a dish to the shared dinner and go home carrying someone else's.",
+  "stav": "projde",
+  "A": "Gebo",
+  "B": "Gebo",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Giving and receiving between people, uncounted.",
+   "Something leaves one hand and something is received, uncounted."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Sowilo",
+  "obraz": "You open the curtains and can finally read the colour on the sample card.",
+  "stav": "projde",
+  "A": "Sowilo",
+  "B": "Sowilo",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Daylight simply shines in and lets one see truly.",
+   "Sunlight simply shines and lets you see truly."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Uruz",
+  "obraz": "The jar lid will not move until you put your full grip behind it.",
+  "stav": "projde",
+  "A": "Uruz",
+  "B": "Uruz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Resistance yields only to full bodily force.",
+   "Resistance gives way to full bodily force."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Isa",
+  "obraz": "The lift stops between floors, and everyone inside falls quiet.",
+  "stav": "projde",
+  "A": "Isa",
+  "B": "Isa",
+  "jistota": [
+   "medium",
+   "high"
+  ],
+  "proc": [
+   "Movement stops and everything is held still.",
+   "Movement stops and everything is held still."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Ingwaz",
+  "obraz": "The dough rests under a tea towel, and by morning it has doubled.",
+  "stav": "projde",
+  "A": "Ingwaz",
+  "B": "Ingwaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Covered and left alone, it completes itself within.",
+   "Covered and left alone, it completes itself within."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Gebo",
+  "obraz": "The borrowed dish comes back with something baked in it.",
+  "stav": "projde",
+  "A": "Gebo",
+  "B": "Gebo",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "A lent thing returns with a gift in it, exchange between two.",
+   "A gift returned between two sides, more than was owed."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Tiwaz",
+  "obraz": "Everyone agrees the mistake should be reported, and you put your name on the form.",
+  "stav": "projde",
+  "A": "Tiwaz",
+  "B": "Tiwaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "One person takes the stand personally and bears its cost.",
+   "You take the side knowingly and bear the cost under your own name."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Uruz",
+  "obraz": "The packed suitcase will not lift until you bend your knees and take its weight.",
+  "stav": "projde",
+  "A": "Uruz",
+  "B": "Uruz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "A weight gives way once the body's strength is engaged.",
+   "A weight yields only to full bodily strength."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Jera",
+  "obraz": "The sapling you planted by the bench now shades the place where you sit.",
+  "stav": "projde",
+  "A": "Jera",
+  "B": "Jera",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "What was planted long ago shows its result in its own time.",
+   "Something done long ago has ripened into a result."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Ingwaz",
+  "obraz": "The file downloads overnight while the screen shows nothing happening.",
+  "stav": "projde",
+  "A": "Ingwaz",
+  "B": "Ingwaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Outside nothing seems to happen while it completes within.",
+   "Nothing shows outside while something completes itself within."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Gebo",
+  "obraz": "One friend brings the coffees, and the other has kept a seat.",
+  "stav": "projde",
+  "A": "Gebo",
+  "B": "Gebo",
+  "jistota": [
+   "medium",
+   "medium"
+  ],
+  "proc": [
+   "Each side gives something to the other, uncounted.",
+   "Each side gives something to the other without counting."
+  ],
+  "popis": null
+ },
+ {
+  "runa": "Tiwaz",
+  "obraz": "You tell the referee the ball was out, and your own team loses the point.",
+  "stav": "projde",
+  "A": "Tiwaz",
+  "B": "Tiwaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Telling the truth knowingly at one's own side's cost.",
+   "Keeping to the truth and paying the price for it."
+  ],
+  "popis": null
+ }
+]

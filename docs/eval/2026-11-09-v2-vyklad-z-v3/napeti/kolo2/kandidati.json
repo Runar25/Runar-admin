@@ -1,0 +1,254 @@
+[
+ {
+  "runa": "Fehu",
+  "mech": "Value that lives only while it moves: what is used and passed on grows, what is left standing loses its strength.",
+  "napeti": "Hodnota, kterou máš, žije jen pohybem: co se používá a jde dál, roste; co stojí, ztrácí sílu.",
+  "obrazy": [
+   "The food you were saving for a special day is past its date.",
+   "The battery you never use is flat on the day you need it.",
+   "The bicycle left in the shed all year needs a repair before it will move."
+  ]
+ },
+ {
+  "runa": "Uruz",
+  "mech": "Raw bodily strength that shows only when it is needed: a weight or resistance gives way to a force that was already there.",
+  "napeti": "Síla, o které nevíš, dokud ji nepotřebuješ: něco, co vypadalo nepohnutelně, povolí.",
+  "obrazy": [
+   "The jar lid will not move until you put your full grip behind it.",
+   "The packed suitcase will not lift until you bend your knees and take its weight.",
+   "The stuck window gives when you lean into the frame with both hands."
+  ]
+ },
+ {
+  "runa": "Thurisaz",
+  "mech": "The sharp edge at a threshold: something stops a move just before it is made, and the stop protects or shows what the rush would have missed.",
+  "napeti": "Okamžik mezi impulsem a činem: něco ostrého tě zastaví těsně před krokem — a právě to zastavení chrání.",
+  "obrazy": [
+   "You have typed the angry reply, and your thumb stops above the send button.",
+   "You start to interrupt, see the other has not finished, and close your mouth.",
+   "You reach to post the photo, then notice someone in it who never agreed."
+  ]
+ },
+ {
+  "runa": "Ansuz",
+  "mech": "A word or sound that arrives and changes something: speech heard at the right moment gives a thing its name or its meaning.",
+  "napeti": "Slovo, které už možná zaznělo mnohokrát, a teprve teď je slyšet — a tím se něco změní.",
+  "obrazy": [
+   "One person says, \"I thought I was the only one,\" and the table goes quiet.",
+   "You say the decision out loud, and it suddenly sounds different.",
+   "One sentence in the voice message tells you the plan has changed."
+  ]
+ },
+ {
+  "runa": "Raidho",
+  "mech": "A road made by going: step follows step, a rhythm is found only by moving, and the question is whether the way still leads where one means to go.",
+  "napeti": "Cestu dělají kroky, ne plán — a snadná cesta tě může nést dál, než kam jsi chtěl.",
+  "obrazy": [
+   "The path across the grass is on no plan; it is where everyone actually walks.",
+   "On the long drive you miss your turning because the road was so easy to follow.",
+   "A few lengths in, your strokes find a rhythm you no longer count."
+  ]
+ },
+ {
+  "runa": "Kenaz",
+  "mech": "A small light that reveals: something that was there all along gets a shape, and once seen it cannot be unseen; a flame that needs feeding.",
+  "napeti": "Malé světlo ukáže, co tu bylo celou dobu — i to, co bys raději neviděl; a oheň bez péče zhasne.",
+  "obrazy": [
+   "Your phone torch finds the dropped key in the dark under the seat.",
+   "You change the hallway bulb and see a crack in the ceiling.",
+   "The idea comes mid-walk, and you stop to record it before it goes."
+  ]
+ },
+ {
+  "runa": "Gebo",
+  "mech": "A gift between two sides: something leaves one hand and is received by another, and what arises between them belongs to both and is not counted.",
+  "napeti": "Dar, který nikdo nepočítá, a přece mezi dvěma něco založí: obě strany dávají i přijímají.",
+  "obrazy": [
+   "You bring a dish to the shared dinner and go home carrying someone else's.",
+   "The borrowed dish comes back with something baked in it.",
+   "One friend brings the coffees, and the other has kept a seat.",
+   "You hold the door, and the stranger behind you holds the next one for you."
+  ]
+ },
+ {
+  "runa": "Wunjo",
+  "mech": "A moment when things fall into place and lighten: shared joy in the middle of things, not a reward for finishing.",
+  "napeti": "Nic se nevyřešilo, a přece je to lehčí: radost uprostřed práce nebo nepohody, ne až po ní.",
+  "obrazy": [
+   "Halfway through the dishes a song comes on, and you both sing along.",
+   "The train is late again, and you two start rating the vending-machine snacks.",
+   "The birthday cake leans, and the child asks for the piece sliding off."
+  ]
+ },
+ {
+  "runa": "Hagalaz",
+  "mech": "An uninvited force from outside breaks what looked solid: the plan falls apart, and afterwards it shows what is gone and what held.",
+  "napeti": "Co nikdo nezval, rozbije, co vypadalo pevně — a teprve potom je vidět, co zbylo.",
+  "obrazy": [
+   "The flight is cancelled at the gate, and the group chat fills with new plans.",
+   "A power cut ends the video call and takes the unsaved slide with it.",
+   "After the burst pipe the new ceiling is down, and the old counter still stands."
+  ]
+ },
+ {
+  "runa": "Nauthiz",
+  "mech": "Lack and constraint: something is missing or cannot be had, and the pressure shows what is truly needed.",
+  "napeti": "Teprve když něčeho není dost, je vidět, co je opravdu potřeba.",
+  "obrazy": [
+   "The phone is at two per cent, and you send the one message that matters.",
+   "One seat is left on the last bus, and it goes to the person on crutches.",
+   "Before the water is shut off you fill one bottle."
+  ]
+ },
+ {
+  "runa": "Isa",
+  "mech": "Standstill: something that was moving has stopped and is held as it is, and in the stillness one thing stays in view.",
+  "napeti": "Owner 2026-11-14: něco, co by se normálně pohybovalo, je teď zastavené — a to zastavení má konkrétní důsledek.",
+  "obrazy": [
+   "The waterfall has become a wall of ice, its last streams held against the rock.",
+   "A chain of bubbles rises through the dark water, then stops beneath the clear ice.",
+   "A drop has frozen at the tip of an icicle, just before it falls.",
+   "The lift stops between floors, and everyone inside falls quiet."
+  ]
+ },
+ {
+  "runa": "Jera",
+  "mech": "Time that does the work: what was done long before ripens at its own pace and shows as a result that cannot be hurried.",
+  "napeti": "Dlouho není nic vidět a nejde to uspíšit — a pak se ukáže výsledek toho, co bylo uděláno dávno.",
+  "obrazy": [
+   "The sapling you planted by the bench now shades the place where you sit.",
+   "You answer in the new language before you have time to translate the question.",
+   "The small monthly payments finally cover the cost of the course."
+  ]
+ },
+ {
+  "runa": "Eihwaz",
+  "mech": "Holding through change: something bends, stands between two states or endures a long strain, and does not break.",
+  "napeti": "Všechno kolem se mění nebo tlačí, a jedna věc drží — ohne se, ale nezlomí.",
+  "obrazy": [
+   "A gust turns the umbrella inside out, and you push it back into shape.",
+   "The old wooden chair creaks under your weight, bends a little, and holds.",
+   "The phone case splits when it hits the floor, and the screen beneath is whole."
+  ]
+ },
+ {
+  "runa": "Perth",
+  "mech": "The closed vessel: something exists but is not yet shown or known — not \"nothing\", but \"not yet\".",
+  "napeti": "Obsah existuje, ale je zavřený: ne „nic nevím“, ale „ještě nevím“ — a otevřít to dřív by to pokazilo.",
+  "obrazy": [
+   "A parcel arrives with no sender, and the label gives no clue what is inside.",
+   "A voice memo is saved as \"Untitled\", and you cannot recall what you said.",
+   "The result is ready in the app, but the notification shows no number."
+  ]
+ },
+ {
+  "runa": "Algiz",
+  "mech": "Guarding alertness: something watches or stands between a threat and what it protects, open to the world yet letting not everything in.",
+  "napeti": "Otevřené světu, a přece hlídá: pustí dovnitř jen něco — a tím to, co je uvnitř, ochrání.",
+  "obrazy": [
+   "The door opens on its chain, just far enough to see who is knocking.",
+   "You share your location with your family and not with the group chat.",
+   "You mute the work chat overnight and leave family calls switched on."
+  ]
+ },
+ {
+  "runa": "Sowilo",
+  "mech": "The sun's light and strength: it simply shines, and by it one sees where one stands; too bright, it dazzles.",
+  "napeti": "Slunce nic nevysvětluje, jen svítí — a najednou je vidět, kde stojíš; příliš ostré oslní.",
+  "obrazy": [
+   "The fog lifts, and the trail marker you were walking toward appears.",
+   "After the power cut the apartment block lights up window by window.",
+   "You open the curtains and can finally read the colour on the sample card."
+  ]
+ },
+ {
+  "runa": "Tiwaz",
+  "mech": "A direction that costs something: taking one side or keeping one's word and paying the price for it knowingly.",
+  "napeti": "Nejde stát na všech stranách: jeden směr vybereš a víš, co tě to stojí.",
+  "obrazy": [
+   "Everyone agrees the mistake should be reported, and you put your name on the form.",
+   "You tell the referee the ball was out, and your own team loses the point.",
+   "You refuse the promotion that rests on your colleague's work."
+  ]
+ },
+ {
+  "runa": "Berkana",
+  "mech": "New small life and the care that lets it grow: something fragile begins, and is given room rather than forced.",
+  "napeti": "Malé není slabé — a péče znamená dát tomu místo, ne do toho sahat.",
+  "obrazy": [
+   "The child struggles with the zip, and you wait while they try again.",
+   "The child ties the lace wrong, and your hand stays in your pocket.",
+   "The seedling droops in its new pot, then opens one fresh leaf toward the window."
+  ]
+ },
+ {
+  "runa": "Ehwaz",
+  "mech": "Movement made by two: progress that comes only when two find a common rhythm and neither forces the other.",
+  "napeti": "Pohyb vznikne až ve chvíli, kdy ani jeden netlačí: dva najdou společný krok.",
+  "obrazy": [
+   "On the tandem the wobble stops when both riders settle into one pace.",
+   "Two carry a long mirror through the doorway: one pauses, the other turns.",
+   "Two people work the long saw in turn, and the blade moves cleanly."
+  ]
+ },
+ {
+  "runa": "Mannaz",
+  "mech": "The person among people: one sees oneself in or through others, as in a mirror.",
+  "napeti": "Sám sebe vidíš až v druhých: oni ukážou to, co zevnitř vidět nejde.",
+  "obrazy": [
+   "You hear your own phrase come out of a friend's mouth and learn how it sounds.",
+   "A friend calls you patient, and you have never thought of yourself that way.",
+   "A friend copies the way you tap your foot, and you never knew you did it."
+  ]
+ },
+ {
+  "runa": "Laguz",
+  "mech": "Water and what moves under the surface: something is sensed before it can be explained, or a hidden current finds its own way.",
+  "napeti": "Víš to dřív, než to umíš vysvětlit: pod klidnou hladinou se něco hýbe a určuje směr.",
+  "obrazy": [
+   "Your foot moves to the brake before you have named what is wrong.",
+   "You lower your voice when your friend goes quiet, before either of you knows why.",
+   "You keep looking at the same patch of ceiling before any leak appears."
+  ]
+ },
+ {
+  "runa": "Ingwaz",
+  "mech": "Ripening inside: from outside nothing seems to happen while something completes itself within, closed until it is ready.",
+  "napeti": "Zvenku se neděje nic, uvnitř všechno: je to zavřené a hotové to bude, až to bude hotové.",
+  "obrazy": [
+   "The dough rests under a tea towel, and by morning it has doubled.",
+   "The file downloads overnight while the screen shows nothing happening.",
+   "After days of practising alone, the first sentence comes out ready."
+  ]
+ },
+ {
+  "runa": "Othila",
+  "mech": "What is inherited and where one returns: things, ways and places handed down, and the choice of what to carry on.",
+  "napeti": "Co jsi dostal, a co z toho neseš dál: něco zděděného pořád slouží, něco už nepasuje.",
+  "obrazy": [
+   "You follow your grandmother's recipe card and add the change your family made.",
+   "The old key still opens the shed at your parents' house.",
+   "You mend your coat on the sewing machine your mother taught you to use."
+  ]
+ },
+ {
+  "runa": "Dagaz",
+  "mech": "The turn from dark to light: a shift after which the same world looks different and cannot be seen the old way.",
+  "napeti": "Nic se nepohnulo, a přece je všechno jinak: pohled se otočí a zpátky už to nejde.",
+  "obrazy": [
+   "You turn the map on your phone, and the street falls into place.",
+   "One ordinary sentence from its sender makes you read the whole message differently.",
+   "At dawn the street that felt strange in the dark is the one you know."
+  ]
+ },
+ {
+  "runa": "Blank",
+  "mech": "The unmarked: no sign, no name yet — an open space where meaning has not been written.",
+  "napeti": "Prázdné místo není chyba: znak tu ještě není, a co se tam vloží moc rychle, zakryje, co se teprve ukazuje.",
+  "obrazy": [
+   "A new document is open, and the first line is still yours to choose.",
+   "The form asks for a detail it never explains, and you leave the box blank.",
+   "The new flat has one empty wall, and you have not decided what belongs there."
+  ]
+ }
+]

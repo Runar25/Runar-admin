@@ -1,0 +1,387 @@
+[
+ {
+  "id": 1,
+  "runa": "Uruz",
+  "obraz": "The stuck window gives when you lean into the frame with both hands."
+ },
+ {
+  "id": 2,
+  "runa": "Jera",
+  "obraz": "You answer in the new language before you have time to translate the question."
+ },
+ {
+  "id": 3,
+  "runa": "Ingwaz",
+  "obraz": "After days of practising alone, the first sentence comes out ready."
+ },
+ {
+  "id": 4,
+  "runa": "Gebo",
+  "obraz": "You hold the door, and the stranger behind you holds the next one for you."
+ },
+ {
+  "id": 5,
+  "runa": "Tiwaz",
+  "obraz": "You refuse the promotion that rests on your colleague's work."
+ },
+ {
+  "id": 6,
+  "runa": "Thurisaz",
+  "obraz": "You have typed the angry reply, and your thumb stops above the send button."
+ },
+ {
+  "id": 7,
+  "runa": "Jera",
+  "obraz": "The small monthly payments finally cover the cost of the course."
+ },
+ {
+  "id": 8,
+  "runa": "Othila",
+  "obraz": "You follow your grandmother's recipe card and add the change your family made."
+ },
+ {
+  "id": 9,
+  "runa": "Wunjo",
+  "obraz": "Halfway through the dishes a song comes on, and you both sing along."
+ },
+ {
+  "id": 10,
+  "runa": "Berkana",
+  "obraz": "The child struggles with the zip, and you wait while they try again."
+ },
+ {
+  "id": 11,
+  "runa": "Thurisaz",
+  "obraz": "You start to interrupt, see the other has not finished, and close your mouth."
+ },
+ {
+  "id": 12,
+  "runa": "Eihwaz",
+  "obraz": "A gust turns the umbrella inside out, and you push it back into shape."
+ },
+ {
+  "id": 13,
+  "runa": "Othila",
+  "obraz": "The old key still opens the shed at your parents' house."
+ },
+ {
+  "id": 14,
+  "runa": "Wunjo",
+  "obraz": "The train is late again, and you two start rating the vending-machine snacks."
+ },
+ {
+  "id": 15,
+  "runa": "Berkana",
+  "obraz": "The child ties the lace wrong, and your hand stays in your pocket."
+ },
+ {
+  "id": 16,
+  "runa": "Thurisaz",
+  "obraz": "You reach to post the photo, then notice someone in it who never agreed."
+ },
+ {
+  "id": 17,
+  "runa": "Eihwaz",
+  "obraz": "The old wooden chair creaks under your weight, bends a little, and holds."
+ },
+ {
+  "id": 18,
+  "runa": "Othila",
+  "obraz": "You mend your coat on the sewing machine your mother taught you to use."
+ },
+ {
+  "id": 19,
+  "runa": "Wunjo",
+  "obraz": "The birthday cake leans, and the child asks for the piece sliding off."
+ },
+ {
+  "id": 20,
+  "runa": "Berkana",
+  "obraz": "The seedling droops in its new pot, then opens one fresh leaf toward the window."
+ },
+ {
+  "id": 21,
+  "runa": "Ansuz",
+  "obraz": "One person says, \"I thought I was the only one,\" and the table goes quiet."
+ },
+ {
+  "id": 22,
+  "runa": "Eihwaz",
+  "obraz": "The phone case splits when it hits the floor, and the screen beneath is whole."
+ },
+ {
+  "id": 23,
+  "runa": "Dagaz",
+  "obraz": "You turn the map on your phone, and the street falls into place."
+ },
+ {
+  "id": 24,
+  "runa": "Hagalaz",
+  "obraz": "The flight is cancelled at the gate, and the group chat fills with new plans."
+ },
+ {
+  "id": 25,
+  "runa": "Ehwaz",
+  "obraz": "On the tandem the wobble stops when both riders settle into one pace."
+ },
+ {
+  "id": 26,
+  "runa": "Ansuz",
+  "obraz": "You say the decision out loud, and it suddenly sounds different."
+ },
+ {
+  "id": 27,
+  "runa": "Perth",
+  "obraz": "A parcel arrives with no sender, and the label gives no clue what is inside."
+ },
+ {
+  "id": 28,
+  "runa": "Dagaz",
+  "obraz": "One ordinary sentence from its sender makes you read the whole message differently."
+ },
+ {
+  "id": 29,
+  "runa": "Hagalaz",
+  "obraz": "A power cut ends the video call and takes the unsaved slide with it."
+ },
+ {
+  "id": 30,
+  "runa": "Ehwaz",
+  "obraz": "Two carry a long mirror through the doorway: one pauses, the other turns."
+ },
+ {
+  "id": 31,
+  "runa": "Ansuz",
+  "obraz": "One sentence in the voice message tells you the plan has changed."
+ },
+ {
+  "id": 32,
+  "runa": "Perth",
+  "obraz": "A voice memo is saved as \"Untitled\", and you cannot recall what you said."
+ },
+ {
+  "id": 33,
+  "runa": "Dagaz",
+  "obraz": "At dawn the street that felt strange in the dark is the one you know."
+ },
+ {
+  "id": 34,
+  "runa": "Hagalaz",
+  "obraz": "After the burst pipe the new ceiling is down, and the old counter still stands."
+ },
+ {
+  "id": 35,
+  "runa": "Ehwaz",
+  "obraz": "Two people work the long saw in turn, and the blade moves cleanly."
+ },
+ {
+  "id": 36,
+  "runa": "Raidho",
+  "obraz": "The path across the grass is on no plan; it is where everyone actually walks."
+ },
+ {
+  "id": 37,
+  "runa": "Perth",
+  "obraz": "The result is ready in the app, but the notification shows no number."
+ },
+ {
+  "id": 38,
+  "runa": "Blank",
+  "obraz": "A new document is open, and the first line is still yours to choose."
+ },
+ {
+  "id": 39,
+  "runa": "Nauthiz",
+  "obraz": "The phone is at two per cent, and you send the one message that matters."
+ },
+ {
+  "id": 40,
+  "runa": "Mannaz",
+  "obraz": "You hear your own phrase come out of a friend's mouth and learn how it sounds."
+ },
+ {
+  "id": 41,
+  "runa": "Raidho",
+  "obraz": "On the long drive you miss your turning because the road was so easy to follow."
+ },
+ {
+  "id": 42,
+  "runa": "Algiz",
+  "obraz": "The door opens on its chain, just far enough to see who is knocking."
+ },
+ {
+  "id": 43,
+  "runa": "Blank",
+  "obraz": "The form asks for a detail it never explains, and you leave the box blank."
+ },
+ {
+  "id": 44,
+  "runa": "Nauthiz",
+  "obraz": "One seat is left on the last bus, and it goes to the person on crutches."
+ },
+ {
+  "id": 45,
+  "runa": "Mannaz",
+  "obraz": "A friend calls you patient, and you have never thought of yourself that way."
+ },
+ {
+  "id": 46,
+  "runa": "Raidho",
+  "obraz": "A few lengths in, your strokes find a rhythm you no longer count."
+ },
+ {
+  "id": 47,
+  "runa": "Algiz",
+  "obraz": "You share your location with your family and not with the group chat."
+ },
+ {
+  "id": 48,
+  "runa": "Blank",
+  "obraz": "The new flat has one empty wall, and you have not decided what belongs there."
+ },
+ {
+  "id": 49,
+  "runa": "Nauthiz",
+  "obraz": "Before the water is shut off you fill one bottle."
+ },
+ {
+  "id": 50,
+  "runa": "Mannaz",
+  "obraz": "A friend copies the way you tap your foot, and you never knew you did it."
+ },
+ {
+  "id": 51,
+  "runa": "Kenaz",
+  "obraz": "Your phone torch finds the dropped key in the dark under the seat."
+ },
+ {
+  "id": 52,
+  "runa": "Algiz",
+  "obraz": "You mute the work chat overnight and leave family calls switched on."
+ },
+ {
+  "id": 53,
+  "runa": "Fehu",
+  "obraz": "The food you were saving for a special day is past its date."
+ },
+ {
+  "id": 54,
+  "runa": "Isa",
+  "obraz": "The waterfall has become a wall of ice, its last streams held against the rock."
+ },
+ {
+  "id": 55,
+  "runa": "Laguz",
+  "obraz": "Your foot moves to the brake before you have named what is wrong."
+ },
+ {
+  "id": 56,
+  "runa": "Kenaz",
+  "obraz": "You change the hallway bulb and see a crack in the ceiling."
+ },
+ {
+  "id": 57,
+  "runa": "Sowilo",
+  "obraz": "The fog lifts, and the trail marker you were walking toward appears."
+ },
+ {
+  "id": 58,
+  "runa": "Fehu",
+  "obraz": "The battery you never use is flat on the day you need it."
+ },
+ {
+  "id": 59,
+  "runa": "Isa",
+  "obraz": "A chain of bubbles rises through the dark water, then stops beneath the clear ice."
+ },
+ {
+  "id": 60,
+  "runa": "Laguz",
+  "obraz": "You lower your voice when your friend goes quiet, before either of you knows why."
+ },
+ {
+  "id": 61,
+  "runa": "Kenaz",
+  "obraz": "The idea comes mid-walk, and you stop to record it before it goes."
+ },
+ {
+  "id": 62,
+  "runa": "Sowilo",
+  "obraz": "After the power cut the apartment block lights up window by window."
+ },
+ {
+  "id": 63,
+  "runa": "Fehu",
+  "obraz": "The bicycle left in the shed all year needs a repair before it will move."
+ },
+ {
+  "id": 64,
+  "runa": "Isa",
+  "obraz": "A drop has frozen at the tip of an icicle, just before it falls."
+ },
+ {
+  "id": 65,
+  "runa": "Laguz",
+  "obraz": "You keep looking at the same patch of ceiling before any leak appears."
+ },
+ {
+  "id": 66,
+  "runa": "Gebo",
+  "obraz": "You bring a dish to the shared dinner and go home carrying someone else's."
+ },
+ {
+  "id": 67,
+  "runa": "Sowilo",
+  "obraz": "You open the curtains and can finally read the colour on the sample card."
+ },
+ {
+  "id": 68,
+  "runa": "Uruz",
+  "obraz": "The jar lid will not move until you put your full grip behind it."
+ },
+ {
+  "id": 69,
+  "runa": "Isa",
+  "obraz": "The lift stops between floors, and everyone inside falls quiet."
+ },
+ {
+  "id": 70,
+  "runa": "Ingwaz",
+  "obraz": "The dough rests under a tea towel, and by morning it has doubled."
+ },
+ {
+  "id": 71,
+  "runa": "Gebo",
+  "obraz": "The borrowed dish comes back with something baked in it."
+ },
+ {
+  "id": 72,
+  "runa": "Tiwaz",
+  "obraz": "Everyone agrees the mistake should be reported, and you put your name on the form."
+ },
+ {
+  "id": 73,
+  "runa": "Uruz",
+  "obraz": "The packed suitcase will not lift until you bend your knees and take its weight."
+ },
+ {
+  "id": 74,
+  "runa": "Jera",
+  "obraz": "The sapling you planted by the bench now shades the place where you sit."
+ },
+ {
+  "id": 75,
+  "runa": "Ingwaz",
+  "obraz": "The file downloads overnight while the screen shows nothing happening."
+ },
+ {
+  "id": 76,
+  "runa": "Gebo",
+  "obraz": "One friend brings the coffees, and the other has kept a seat."
+ },
+ {
+  "id": 77,
+  "runa": "Tiwaz",
+  "obraz": "You tell the referee the ball was out, and your own team loses the point."
+ }
+]
