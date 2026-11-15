@@ -13297,3 +13297,12 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   (lab `docs/eval/2026-11-14-runa-dne/`); islandský text runy dne ani jiné runy model ještě nepsal.
 - **Web** (owner 2026-11-14: „náhodná runa jako text, aktivujeme, až řeknu“): vlastník CODE-web; builder je připravený i pro něj.
 - Affected doc(s): RUNAR_BACKLOG.md (Rune of the Day; zásady soukromí), CLAUDE.md (soubory a pořadí načtení).
+
+## 2026-11-15 (2) — Runa dne nasazena; admin smí táhnout znovu týž den
+- **NASAZENO** `claude-proxy` z 5eb8c3e (mode `rune_day`), po ownerově spuštění `sql/2026-11-15_rune_day.sql` a jeho „nasaď“.
+- Owner téhož dne: „jako admin potřebuju reset tlačítko pro opakování vícekrát za den“. Pod textem dne vidí admin tlačítko
+  „DRAW AGAIN (ADMIN)“ / „DRAGA AFTUR (ADMIN)“; otevře znovu okno s volbami a požadavek nese `rod_znovu`. Uzná ho jen server (admin
+  z JWT): uložený text dne nevrátí a nový ho přepíše (upsert). Příznak od ne-admina nic nemění — „jednou denně“ pro ostatní platí dál.
+  Tahle změna serveru čeká na další ownerovo „nasaď“.
+- Vzhled: owner chtěl zkusit zlaté písmo místo bílého, pak „tak žádná zlatá, necháváme“ → vzhled beze změny.
+- Affected doc(s): žádný jiný (chování vlastní `v2/runar-runa-dne.js` a `supabase/functions/claude-proxy/index.ts`, text `v2/runar-translations.js`).

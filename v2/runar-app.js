@@ -1807,7 +1807,7 @@ function _stinVezmi() { var z = _stinZaznam; _stinZaznam = { sys: null, prompt: 
 
 // ─── PROXY ───────────────────────────────────────────────
 // use_credit: true = odečíst kredit na backendu (monthly slot vyčerpán)
-async function callProxy(sys, prompt, maxTokens, use_credit = false, credit_cost = 1, journal = null, mode = '', askListek = null) {
+async function callProxy(sys, prompt, maxTokens, use_credit = false, credit_cost = 1, journal = null, mode = '', askListek = null, extra = null) {
   try {
     const headers = { 'Content-Type': 'application/json' };
     const { data: { session } } = await sb.auth.getSession();
@@ -1816,6 +1816,7 @@ async function callProxy(sys, prompt, maxTokens, use_credit = false, credit_cost
     const res  = await fetch(PROXY, {
       method: 'POST', headers,
       body: JSON.stringify({ system: sys, prompt, max_tokens: maxTokens, use_credit, spread_cost: credit_cost, journal, mode,
+        ...(extra || {}),   // 2026-11-15: pole navíc pro jeden mode (runa dne: rod_znovu — adminovo „táhnout znovu“, uzná ho jen server)
         ask_listek: askListek || undefined,   // 2026-10-31: Ask k neuloženému čtení — podpis čtení (claude-proxy, askSloty)
         stin: prompt ? _stinVezmi() : undefined,   // 2026-10-21 F2: s čím appka skládala prompt (server porovná; čtení beze změny)
         // Engine (od 2026-10-09 sol pro všechny, DECISIONS 2026-10-09 (13)): posílá se jen adminova volba 'opus' — u každého
