@@ -13275,3 +13275,25 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   Web: náhodná runa dne jako text, zkusit; aktivuje se, až owner řekne. Do budoucna směr: automaticky každé ráno, upozornění, widget.
 - **NASAZENO 2026-11-14:** `claude-proxy` z b4cacdf (owner *„1. ano nasaď“*) — obrazy z (4), (5) a (6) platí ve čtení.
 - Affected doc(s): RUNAR_BACKLOG.md (Rune of the Day).
+
+## 2026-11-15 (1) — Rune of the Day postavena pro zkoušku s testery
+
+- **Rozhodl:** owner 2026-11-14/15 k plánu pestrosti: *„1. není potřeba tvar runy · 2. ano“* (začátek 3. části losem) *· 3. ano“* (výjimky
+  pro runy, kterým páka nesedí) a *„postav to, ať to můžu dát i testerům na zkoušku“*. Navazuje na 2026-11-14 (6) (umístění, zdarma, jednou
+  denně, islandský den, jen přihlášení, bez deníku a stromu).
+- **Co vzniklo:** builder `buildDayRunePrompt` (`v2/runar-character.js`) — tři části; páky význam · vstup do popisu (jméno / co runa dělá /
+  druhá strana; Prázdná runa vlastní dva) · první sloveso · čočka 2. části · zaměření a začátek 3. části, každá ze sáčku na runu
+  (`prompt_state`, takže táž runa zítra jinak). Výjimky: Perth bez vstupu přes jméno, Hagalaz a Nauthiz bez „co ti chybí“, Hagalaz bez
+  „pečovat“, Prázdná runa bez „kde je toho moc“. Server: `claude-proxy` mode `rune_day` — zdarma, jednou za UTC den, při znovuotevření
+  uložený text bez volání modelu, **fail closed** (bez tabulky odmítne); komu je otevřená, říká `RUNE_OF_DAY.open_to` v configu
+  (`'testers'` = testeři a admin; `'all'` = všichni přihlášení — přepíná owner). Tabulka `rune_day` (`sql/2026-11-15_rune_day.sql`, spouští
+  owner): appka jen čte své řádky, zapisuje server. Appka: tlačítko „RUNE OF THE DAY“ / „RÚN DAGSINS“ pod nápisem RÚNAR, okno se dvěma
+  volbami („I DRAW THE RUNE“ → mřížka 25 run; „LET THE RUNES DECIDE“ → runa hned), text pak místo tlačítka (`v2/runar-runa-dne.js`).
+  Prompt v5.23 (registr ㉜ skenuje šablonu a všechny polohy pák).
+- **Ověřeno:** IS instrukce — korpus u každé vazby, Greynir 143/143 vět čistých (věty s uvozeným začátkem dávaly E001 → začátky přesunuty
+  do řádků UPPHAF / NIÐURLAG). Vzhled v prohlížeči (telefon i počítač) se simulovaným testerem: tlačítko pod RÚNAR, okno, mřížka 25 run,
+  text dne. Kontrola komponent a registr promptu zelené.
+- **Neověřeno:** celé volání přes appku a server — čeká na SQL a nasazení `claude-proxy`. Ze solu zatím jen 5 anglických vzorků Berkany
+  (lab `docs/eval/2026-11-14-runa-dne/`); islandský text runy dne ani jiné runy model ještě nepsal.
+- **Web** (owner 2026-11-14: „náhodná runa jako text, aktivujeme, až řeknu“): vlastník CODE-web; builder je připravený i pro něj.
+- Affected doc(s): RUNAR_BACKLOG.md (Rune of the Day; zásady soukromí), CLAUDE.md (soubory a pořadí načtení).

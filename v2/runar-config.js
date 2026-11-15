@@ -99,7 +99,9 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 //    owner „kříž udělej“, kontrola promptu CODE-read 2026-10-16 bod 4. EN beze změny. DECISIONS 2026-10-31 (6).
 // v5.22 (2026-11-01): Norny — každá runa vstoupí do společného obrazu detailem scény (RP_NORNS.imageDetail, EN + IS); owner „17. ano“,
 //    lab RUNAR_EVAL_LOG 2026-10-27 (1). Cross, Horseshoe, Yggdrasil beze změny (netestováno). DECISIONS 2026-11-01 (5).
-const RUNAR_PROMPT_VERSION = 'v5.22-norny-detail';
+// v5.23 (2026-11-15): nový builder runy dne (buildDayRunePrompt, mode rune_day) — čtení, Ask, životní runa ani spready beze změny.
+//    Bump kvůli registru ㉜ (nová instrukční plocha). DECISIONS 2026-11-15 (1).
+const RUNAR_PROMPT_VERSION = 'v5.23-runa-dne';
 
 // Měsíční strop hlasu pro všechny (VOICE_MONTHLY_LIMIT = 5, od 2026-09-11) ZRUŠEN 2026-10-11: „limit na hlas max 5 na měsíc“ byl
 // ownerův pokyn pro testery, omylem pro všechny (DECISIONS 2026-10-11 (49)); owner: „žádný měsíční strop 5 hlasů není!!!“. Rúnar přečte
@@ -129,6 +131,12 @@ const NAME_LORE_LIMIT = 2;
 // ─── RÚNAR MODES ────────────────────────────────────────
 // Each mode has its own prompt assembly, token limit, and UI flow.
 // Add new modes here — the app reads from this object.
+// ─── RUNA DNE — komu je otevřená ─────────────────────────
+// 'testers' = jen testeři (user_profiles.is_tester) a admin — zkouška (KUKY 2026-11-15: „postav to, ať to můžu dát i testerům na
+// zkoušku“); 'all' = všichni přihlášení (owner 2026-11-14: „jen přihlášení“). Přepíná owner. Čte ho appka (tlačítko) i claude-proxy
+// (brána) — server ho bere z balíčku prompt_skladani.mjs, takže jedno místo (§18).
+const RUNE_OF_DAY = { open_to: 'testers' };
+
 const RUNAR_MODES = {
   quick_reading: {
     label:      'Quick Reading',
@@ -161,6 +169,15 @@ const RUNAR_MODES = {
   name_lore: {
     label:      'Name Lore',
     max_tokens: 700,
+    voice:      false,
+    layers:     null,
+    active:     true,
+  },
+  // Runa dne (KUKY 2026-11-14, DECISIONS 2026-11-14 (6) a 2026-11-15 (1)): jen text, bez hlasu, zdarma, jednou denně. Strop odpovědi je
+  // pojistka, ne délka — délku dělá stavba ve třech částech (owner: žádný strop slov); vzorky solu měly 40–90 slov (~150 tokenů).
+  rune_day: {
+    label:      'Rune of the Day',
+    max_tokens: 500,
     voice:      false,
     layers:     null,
     active:     true,

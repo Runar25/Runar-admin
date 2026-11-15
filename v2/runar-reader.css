@@ -166,6 +166,17 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
   max-width:400px;
 }
 
+/* ── RUNA DNE (2026-11-15) — obal pod nápisem RÚNAR a stav v okně; uvnitř jen komponenty (.btn-full, .tree-stone, .flbl,
+   .tree-reading-text jako životní runa, .note). Vlastní je jen rozvržení: šířka pod titulkem a kámen nad jménem. ── */
+.rod{max-width:420px;margin:0 0 22px;}
+.rod .btn-full{margin-top:0;}
+.rod .tree-stone{display:block;margin:0 0 8px;}
+.rod .tree-reading-text{padding:4px 0 6px;}
+@media(max-width:768px){
+  .rod{margin:0 auto 16px;}
+  .rod .tree-stone{margin:0 auto 8px;}
+}
+
 /* ── MOBILE HERO LABEL (overlaid on portrait) ── */
 .hero-mob-label{display:none;} /* hidden on desktop */
 

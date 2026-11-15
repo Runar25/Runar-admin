@@ -13,7 +13,7 @@
 const fs = require('fs'), path = require('path');
 const V2 = path.resolve(process.env.RUNAR_ROOT || path.join(__dirname, '..'), 'v2');
 const JS_READERU = ['runar-utils.js', 'runar-journal.js', 'runar-tree.js', 'runar-auth.js', 'runar-reading.js', 'runar-app.js',
-  'runar-reporter.js', 'runar-rune-popup.js', 'runar-helper.js'];
+  'runar-reporter.js', 'runar-rune-popup.js', 'runar-helper.js', 'runar-runa-dne.js'];   // + runa dne 2026-11-15
 const VYJIMKY = new Set([]);   // 'soubor:text řádku' — jen s důvodem a datem v komentáři
 const DOM = /(\.textContent\s*=|\.innerHTML\s*\+?=|\.innerText\s*=|\.placeholder\s*=|\.title\s*=|\bsetText\s*\(|\bsetSt\s*\(|\bshowToast\s*\(|\bsetRuneText\s*\(|\balert\s*\(|\bconfirm\s*\()/;
 const LIT = /(['"`])((?:\\.|(?!\1)[^\\])*)\1/g;

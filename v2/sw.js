@@ -1,8 +1,8 @@
-// Rúnar Service Worker — v872
+// Rúnar Service Worker — v873
 // HTML: network-first (always fresh). JS/CSS/icons: cache-first (fast, offline ok).
 // External (Supabase, ElevenLabs, fonts): pass-through, never intercepted.
 
-const CACHE = 'runar-v872';
+const CACHE = 'runar-v873';
 const JS_SHELL = [
   '/Runar-admin/v2/runar-reader.css',
   '/Runar-admin/v2/runar-utils.js',
@@ -39,6 +39,7 @@ const JS_SHELL = [
   '/Runar-admin/v2/runar-verze.js',
   '/Runar-admin/v2/runar-rune-popup.js',
   '/Runar-admin/v2/runar-helper.js',
+  '/Runar-admin/v2/runar-runa-dne.js',   // 2026-11-15: runa dne
   // 2026-10-10: písma u nás (dřív fonts.googleapis.com — externí, SW je nechytal); bez precache by offline padala na systémové písmo.
   '/Runar-admin/v2/fonts/fonts.css',
   '/Runar-admin/v2/fonts/cinzel-latin-ext.woff2',

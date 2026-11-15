@@ -117,7 +117,9 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 //    owner „kříž udělej“, kontrola promptu CODE-read 2026-10-16 bod 4. EN beze změny. DECISIONS 2026-10-31 (6).
 // v5.22 (2026-11-01): Norny — každá runa vstoupí do společného obrazu detailem scény (RP_NORNS.imageDetail, EN + IS); owner „17. ano“,
 //    lab RUNAR_EVAL_LOG 2026-10-27 (1). Cross, Horseshoe, Yggdrasil beze změny (netestováno). DECISIONS 2026-11-01 (5).
-const RUNAR_PROMPT_VERSION = 'v5.22-norny-detail';
+// v5.23 (2026-11-15): nový builder runy dne (buildDayRunePrompt, mode rune_day) — čtení, Ask, životní runa ani spready beze změny.
+//    Bump kvůli registru ㉜ (nová instrukční plocha). DECISIONS 2026-11-15 (1).
+const RUNAR_PROMPT_VERSION = 'v5.23-runa-dne';
 
 // Měsíční strop hlasu pro všechny (VOICE_MONTHLY_LIMIT = 5, od 2026-09-11) ZRUŠEN 2026-10-11: „limit na hlas max 5 na měsíc“ byl
 // ownerův pokyn pro testery, omylem pro všechny (DECISIONS 2026-10-11 (49)); owner: „žádný měsíční strop 5 hlasů není!!!“. Rúnar přečte
@@ -147,6 +149,12 @@ const NAME_LORE_LIMIT = 2;
 // ─── RÚNAR MODES ────────────────────────────────────────
 // Each mode has its own prompt assembly, token limit, and UI flow.
 // Add new modes here — the app reads from this object.
+// ─── RUNA DNE — komu je otevřená ─────────────────────────
+// 'testers' = jen testeři (user_profiles.is_tester) a admin — zkouška (KUKY 2026-11-15: „postav to, ať to můžu dát i testerům na
+// zkoušku“); 'all' = všichni přihlášení (owner 2026-11-14: „jen přihlášení“). Přepíná owner. Čte ho appka (tlačítko) i claude-proxy
+// (brána) — server ho bere z balíčku prompt_skladani.mjs, takže jedno místo (§18).
+const RUNE_OF_DAY = { open_to: 'testers' };
+
 const RUNAR_MODES = {
   quick_reading: {
     label:      'Quick Reading',
@@ -179,6 +187,15 @@ const RUNAR_MODES = {
   name_lore: {
     label:      'Name Lore',
     max_tokens: 700,
+    voice:      false,
+    layers:     null,
+    active:     true,
+  },
+  // Runa dne (KUKY 2026-11-14, DECISIONS 2026-11-14 (6) a 2026-11-15 (1)): jen text, bez hlasu, zdarma, jednou denně. Strop odpovědi je
+  // pojistka, ne délka — délku dělá stavba ve třech částech (owner: žádný strop slov); vzorky solu měly 40–90 slov (~150 tokenů).
+  rune_day: {
+    label:      'Rune of the Day',
+    max_tokens: 500,
     voice:      false,
     layers:     null,
     active:     true,
@@ -1338,6 +1355,9 @@ const UI_TEXT = {
     begin_btn:        'BEGIN THE READING',
     draw_lbl:         'ᚠ DRAW YOUR RUNE',
     random_btn:       'ᚲ LET THE RUNES DECIDE',
+    rod_btn:          'RUNE OF THE DAY',   // runa dne (2026-11-15, runar-runa-dne.js)
+    rod_sub:          'One rune for this day. Draw it with your own hand, or let the runes choose.',
+    rod_self:         'I DRAW THE RUNE',
     back_btn:         '← BACK',            // 2026-11-01: z karty tahu zpět na formulář
     speak_btn:        'HEAR RÚNAR SPEAK',
     begin_btn_visitor: 'DRAW A RUNE',        // 2026-10-10: návštěvník čtení nedostane — tlačítko ho neslibuje (_updateReadingForm); vráceno s formulářem návštěvníka
@@ -1927,6 +1947,9 @@ const UI_TEXT = {
     begin_btn:        'HEFJA LESTURINN',
     draw_lbl:         'ᚠ DRAGÐU RÚNINA ÞÍNA',
     random_btn:       'ᚲ LÁTTU RÚNIRNAR VELJA',
+    rod_btn:          'RÚN DAGSINS',
+    rod_sub:          'Ein rún fyrir þennan dag. Dragðu hana með eigin hendi eða láttu rúnirnar velja.',
+    rod_self:         'ÉG DREG RÚNINA',
     back_btn:         '← TIL BAKA',        // 2026-11-01: „til baka“ korpus (běžné)
     speak_btn:        'HEYRA RÚNAR TALA',
     begin_btn_visitor: 'DRAGA RÚN',          // 2026-10-10: viz EN; „draga rún“ korpus 4× (jako DRAGA AÐRA RÚN)
@@ -5157,6 +5180,127 @@ function buildLifeRunePrompt(name, rune, day, month, year, lang, corrections) {
   ].filter(Boolean).join('\n\n');
 }
 
+// ─── RUNE OF THE DAY (Rún dagsins) ─────────────────────────────
+// KUKY 2026-11-14 (DECISIONS 2026-11-14 (6) a (7), BACKLOG „Rune of the Day“): jedna runa na den, jen text, bez obrazu, bez rady,
+// bez předpovědi. Tři části: popis runy (jako učení o runách) · co může runa v člověku vyvolat (jen jako možnost — owner „1. ano“
+// k oslovení „ty“) · na co se dnes zaměřit (pokaždé jinými slovy). Žádný strop slov (owner: „pokud to udělá model delší, je to delší“).
+// PESTROST (owner: „pokud si člověk vytáhne druhý den znova Berkana, tak musí znít jinak“): páky jako ve v2 — význam runy (los z klíčů),
+// vstup do popisu (jako úhel čtení), první sloveso (ESSENCE_VERBS_SOL, doložené korpusem), čočka 2. části, zaměření a začátek 3. části.
+// Každá páka má vlastní sáček na runu (_seasonBagPick, klíč seasonbag_dne_<runa>_<páka>): server ho drží v prompt_state, takže táž runa
+// zítra dostane jiné polohy, dokud se všechny nevystřídají. Vstup „tvar runy“ vyřazen (owner „1. není potřeba tvar runy“; model si tvar
+// vymýšlel — „two rounded strokes“ u Berkany, naše kresba má hroty). Lab a vzorky: docs/eval/2026-11-14-runa-dne/.
+// IS: vazby ověřené is-vazba.py --freq (např. hefst á orðunum 324, gengur of langt 411, kann að vanta 67, býr í þér 118, dregur fram 2830,
+// getur átt við 1064, dagur til að 2003, á degi sem 488, stendur fyrir 31202, með eigin orðum 209); 0× jen spojení se slovem „rún“
+// (téma je v korpusu vzácné: „sem þessi rún“, „nafni rúnarinnar“ → přepsáno na „nafni hennar“ 665).
+var DAY_VSTUP = {
+  name:  { en: 'Let the description come in through the rune\'s name and what it stood for in the old world.',
+           is: 'Láttu lýsinguna hefjast á nafni hennar og því sem það stóð fyrir í gamla heiminum.' },
+  does:  { en: 'Let the description come in through what the rune does — the force or movement in it.',
+           is: 'Láttu lýsinguna hefjast á því sem hún gerir — kraftinum eða hreyfingunni í henni.' },
+  other: { en: 'Let the description come in through the rune\'s other side — what it becomes when it goes too far, or when it is missing.',
+           is: 'Láttu lýsinguna hefjast á hinni hlið hennar — hvað hún verður þegar hún gengur of langt eða þegar hana vantar.' },
+  // Prázdná runa nemá jméno, tahy ani sílu (posudek 2026-11-14) — vlastní vstupy, jako má vlastní rámec ve v2 (ESSENCE_BLANK).
+  empty: { en: 'Let the description come in through the stone with nothing on it — what it means to draw it.',
+           is: 'Láttu lýsinguna hefjast á steininum sem ekkert er á — hvað það merkir að draga hann.' },
+  unwritten: { en: 'Let the description come in through what is still unwritten and stays open.',
+           is: 'Láttu lýsinguna hefjast á því sem er enn óskrifað og stendur opið.' },
+};
+var DAY_COCKA = {
+  missing: { en: 'Then what may be missing in you that this rune speaks to.',
+             is: 'Síðan hvað þig kann að vanta sem þessi rún talar til.' },
+  unseen:  { en: 'Then what may be there in you that goes unnoticed, which this rune brings into view.',
+             is: 'Síðan hvað kann að búa í þér án þess að þú takir eftir því — það sem þessi rún dregur fram.' },
+  toomuch: { en: 'Then where there may be too much of what this rune carries, or where it has gone too far in you.',
+             is: 'Síðan hvar kann að vera of mikið af því sem þessi rún ber, eða hvar hún hefur gengið of langt hjá þér.' },
+};
+var DAY_ZAMER = {
+  notice: { en: 'something to notice', is: 'eitthvað til að taka eftir' },
+  think:  { en: 'something to think over', is: 'eitthvað til að hugsa um' },
+  tend:   { en: 'something to tend or take care of', is: 'eitthvað til að hlúa að' },
+};
+// Začátek 3. části losem (owner „2. ano“): bez losu začínala „Today“ ve 3 ze 4 vzorků — pokyn „jinými slovy“ na začátek nestačil.
+var DAY_ZACATEK = {
+  en: ['This is a day for', 'Today', 'On a day like this', 'For today'],
+  is: ['Þetta er dagur til að', 'Í dag', 'Á degi sem þessum', 'Dagurinn í dag'],
+};
+var DAY_SLOVESA_IS = ['táknar', 'stendur fyrir', 'er rún'];
+// Co které runě nesedí (nezávislý posudek všech 25 run 2026-11-14, owner „3. ano“): Perth — původní význam jména se neví;
+// Hagalaz a Nauthiz — „co ti chybí“ by znělo jako „chybí ti krupobití / nouze“; Hagalaz — krupobití se pečovat nedá;
+// Prázdná runa — žádný vstup přes jméno ani sílu a ani „kde je toho moc“.
+var DAY_VYJIMKY = {
+  Blank:   { vstup: ['empty', 'unwritten'], bez: ['toomuch'] },
+  Perth:   { bez: ['name'] },
+  Hagalaz: { bez: ['missing', 'tend'] },
+  Nauthiz: { bez: ['missing'] },
+};
+var RP_DAY = {
+  en: {
+    intro: 'This is a short word on one rune for today — not a reading. There is no question and no area of life.',
+    RUNE: 'RUNE', CORE: 'MEANINGS', CENTRE: 'CENTRE TODAY',
+    rname: function (r) { return r.n; }, rcore: function (r) { return r.k; },
+    sections: 'Write one flowing text in three parts, with no headings or labels:',
+    p1: function (R, V, vstup) { return 'First, what the rune is, in plain words, centred on the meaning above. The first sentence begins "' + R + ' ' + V + '". ' + vstup; },
+    maybe: 'Say it as something that may be so, never as fact.',
+    p3: function (zamer, O) { return 'Last, what is worth giving attention to today, as the rune points: ' + zamer + '. Begin this part with the words "' + O + '" and go on in words of your own. It is neither advice about their life nor a forecast of the day.'; },
+    rules: 'Rúnar\'s voice — calm and clear. Say it in words, not in images or scenes. No exclamation marks.',
+    langInstr: '',
+  },
+  is: {
+    intro: 'Þetta er stutt orð um eina rún fyrir daginn í dag — ekki lestur. Engin spurning fylgir og ekkert svið lífsins.',
+    RUNE: 'RÚN', CORE: 'MERKINGAR', CENTRE: 'ÁHERSLA',
+    rname: function (r) { return _bezGlosy(r.is_n); }, rcore: function (r) { return r.k_is; },
+    sections: 'Skrifaðu einn samfelldan texta í þremur hlutum, án fyrirsagna:',
+    // Začátky vět jako řádky s daty (UPPHAF, NIÐURLAG), ne v uvozovkách uvnitř věty: „hefst á orðunum „Berkana táknar““ Greynir
+    // nerozebral (E001, 135/143 vět), takhle čisté (§19.2). Korpus: í línunni 966, lokahlutann 46, orðunum í 167.
+    p1: function (R, V, vstup) { return 'Fyrst hvað rúnin er, á skýru máli, með áherslu á merkinguna hér að ofan. Láttu fyrstu setninguna hefjast á orðunum í línunni UPPHAF. ' + vstup + '\nUPPHAF: ' + R + ' ' + V; },
+    maybe: 'Segðu það sem eitthvað sem getur átt við, aldrei sem staðreynd.',
+    p3: function (zamer, O) { return 'Loks hverju er gott að gefa gaum í dag eins og rúnin bendir á — ' + zamer + '. Láttu lokahlutann hefjast á orðunum í línunni NIÐURLAG og haltu svo áfram með eigin orðum. Það er hvorki ráð um lífið né spá um daginn.\nNIÐURLAG: ' + O; },
+    rules: 'Rödd Rúnars — róleg og skýr. Segðu þetta með orðum, en ekki með myndum eða atvikum. Notaðu engin upphrópunarmerki.',
+    langInstr: 'Svaraðu einungis á íslensku.',
+  },
+};
+// Los jedné páky ze sáčku runy (bez výjimek dané runy). Vrací id polohy.
+function _dayLos(rune, paka, ids) {
+  var v = DAY_VYJIMKY[rune.n] || {};
+  var bez = v.bez || [];
+  var k = ids.filter(function (id) { return bez.indexOf(id) === -1; });
+  return _seasonBagPick('dne', rune.n + '_' + paka, k.length ? k : ids);
+}
+function buildDayRunePrompt(rune, lang, corrections) {
+  var L = (lang === 'is') ? 'is' : 'en';
+  var S = RP_DAY[L];
+  var v = DAY_VYJIMKY[rune.n] || {};
+  var klice = String(S.rcore(rune) || '').split(',').map(function (x) { return x.trim(); }).filter(Boolean);
+  var iV = Number(_dayLos(rune, 'vyznam', klice.map(function (x, i) { return String(i); }))) || 0;
+  var vstup = _dayLos(rune, 'vstup', v.vstup || ['name', 'does', 'other']);
+  var slovesa = (L === 'is') ? DAY_SLOVESA_IS : ESSENCE_VERBS_SOL;
+  var sloveso = slovesa[Number(_dayLos(rune, 'sloveso', slovesa.map(function (x, i) { return String(i); }))) || 0];
+  var cocka = _dayLos(rune, 'cocka', ['missing', 'unseen', 'toomuch']);
+  var zamer = _dayLos(rune, 'zamer', ['notice', 'think', 'tend']);
+  var zac = DAY_ZACATEK[L][Number(_dayLos(rune, 'zacatek', DAY_ZACATEK[L].map(function (x, i) { return String(i); }))) || 0];
+  var base = [
+    _kus('INTRO', 'fixed (rune of the day)', '—', S.intro),
+    '',
+    _kus('RUNE', 'rune', '—', S.RUNE + ': ' + S.rname(rune)),
+    _kus('RUNE-MEANING', 'rune', 'part 1', S.CORE + ': ' + S.rcore(rune)),
+    _kus('CENTRE', 'meaning draw', 'part 1', S.CENTRE + ': ' + (klice[iV] || klice[0] || '')),
+    '',
+    _kus('PARTS', 'fixed (rune of the day)', '—', S.sections),
+    _kus('PART-1', 'verb draw + entry draw', 'part 1', S.p1(S.rname(rune), sloveso, DAY_VSTUP[vstup][L])),
+    _kus('PART-2', 'lens draw', 'part 2', DAY_COCKA[cocka][L] + ' ' + S.maybe),
+    _kus('PART-3', 'focus draw + opening draw', 'part 3', S.p3(DAY_ZAMER[zamer][L], zac)),
+    '',
+    _kus('RULE', 'fixed (rune of the day)', 'whole', S.rules),
+    _kus('LANGUAGE', 'fixed', 'whole', S.langInstr),
+  ].join('\n').trim();
+  return [
+    base,
+    _kus('ADDRESS', 'address (gender)', 'whole', _addressContext(lang)),
+    _kus('NO-COLD-READING', 'fixed (explanatory)', 'whole', _noColdRead(lang, true)),
+    _kus('CORRECTIONS', 'corrections', 'whole', getCorrPrompt(lang, corrections)),
+  ].filter(Boolean).join('\n\n');
+}
+
 // ─── DVERGAR ────────────────────────────────────────────────
 // Rúnar je zná jako příbuzné a starší — ale mluví o nich, JEN když se ho někdo zeptá
 // (KUKY 2026-08-12). Do čtení se to nikdy nedostane: `_dvergarContext` se volá výhradně
@@ -6358,7 +6502,7 @@ function buildYggdrasilPrompt(u, runes, lang, corrections) { return buildYggdras
 
 ;
   if (P.engine) READ_ENGINE = P.engine;
-  return { buildSysPrompt: buildSysPrompt, buildReadingPrompt: buildReadingPrompt, buildNornsPrompt: buildNornsPrompt, buildKrizPrompt: buildKrizPrompt, buildHorseshoePrompt: buildHorseshoePrompt, buildYggdrasilPrompt: buildYggdrasilPrompt, buildLifeRunePrompt: buildLifeRunePrompt, buildAskPrompt: buildAskPrompt, buildNameLorePrompt: buildNameLorePrompt, getCorrPrompt: getCorrPrompt, normalizeCorrections: normalizeCorrections, RUNES: RUNES, SPREAD_CONFIG: SPREAD_CONFIG, INTENTIONS: INTENTIONS, READING_ANGLES: READING_ANGLES, READING_ANGLES_IS: READING_ANGLES_IS, _skladba: _skladba, _promptKonec: _promptKonec, _myslenkaPro: _myslenkaPro, TIERS: TIERS, SPREAD_COSTS: SPREAD_COSTS, RUNAR_MODES: RUNAR_MODES, rn: rn, CORRECTIONS_IN_PROMPT: CORRECTIONS_IN_PROMPT, _promptDraws: _promptDraws, _imgNorm: _imgNorm,
+  return { buildSysPrompt: buildSysPrompt, buildReadingPrompt: buildReadingPrompt, buildNornsPrompt: buildNornsPrompt, buildKrizPrompt: buildKrizPrompt, buildHorseshoePrompt: buildHorseshoePrompt, buildYggdrasilPrompt: buildYggdrasilPrompt, buildLifeRunePrompt: buildLifeRunePrompt, buildAskPrompt: buildAskPrompt, buildNameLorePrompt: buildNameLorePrompt, getCorrPrompt: getCorrPrompt, normalizeCorrections: normalizeCorrections, RUNES: RUNES, SPREAD_CONFIG: SPREAD_CONFIG, INTENTIONS: INTENTIONS, READING_ANGLES: READING_ANGLES, READING_ANGLES_IS: READING_ANGLES_IS, _skladba: _skladba, _promptKonec: _promptKonec, _myslenkaPro: _myslenkaPro, TIERS: TIERS, SPREAD_COSTS: SPREAD_COSTS, RUNAR_MODES: RUNAR_MODES, rn: rn, CORRECTIONS_IN_PROMPT: CORRECTIONS_IN_PROMPT, _promptDraws: _promptDraws, _imgNorm: _imgNorm, buildDayRunePrompt: buildDayRunePrompt, RUNE_OF_DAY: RUNE_OF_DAY,
     nastav: function (k, v) { if (k === 'lang') lang = v; else if (k === 'userGender') userGender = v; else if (k === 'engine') READ_ENGINE = v;
       else if (k === 'userName') userName = v; else if (k === 'currentUser') currentUser = v; else if (k === 'corrections') corrections = v;
       else if (k === 'pin') IMG_PIN = v || null; else if (k === 'posledni') _imgServerLast = v || {}; },

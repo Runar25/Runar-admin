@@ -88,6 +88,21 @@
 <!-- „Where to start“ — jednou pro každého, i návštěvníka (KUKY 2026-10-11, DECISIONS 2026-10-11 (65)): kde se učit číst runy a to, co
      Rúnar říká (Kolekce, pod každou runou). Zavření okno zasune do „How a reading works“. Texty UI_TEXT wts_*, řídí maybeShowWhereToStart /
      closeWhereToStart v runar-app.js. Stojí PŘED oknem souhlasu testera — kdyby byla otevřená obě, souhlas je nahoře. -->
+<!-- 2026-11-15 runa dne: dvě volby jako v tahu (KUKY: „I draw the rune“ a „Let the runes decide“) — runar-runa-dne.js -->
+<div class="modal-overlay" id="rod-modal" role="dialog" aria-modal="true" aria-labelledby="rod-title">
+  <div class="modal">
+    <button class="modal-close" type="button" onclick="rodZavri()">✕</button>
+    <div class="modal-title" id="rod-title">RUNE OF THE DAY</div>
+    <div class="modal-sub" id="rod-sub"></div>
+    <div id="rod-choices">
+      <button type="button" class="btn-full" id="rod-self" onclick="rodMrizka()">I DRAW THE RUNE</button>
+      <button type="button" class="btn-random" id="rod-random" onclick="rodNahoda()">LET THE RUNES DECIDE</button>
+    </div>
+    <div class="rune-grid" id="rod-grid" hidden></div>
+    <div class="rod" id="rod-state"></div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="wts-modal" role="dialog" aria-modal="true" aria-labelledby="wts-title">
   <div class="modal wts-card" id="wts-card">
     <button class="modal-close" type="button" onclick="closeWhereToStart(false)">✕</button>
@@ -235,6 +250,12 @@
     <div class="hero-text-col">
       <div class="hero-eyebrow hero-desk-only" id="hero-eyebrow">THE RUNE KEEPER</div>
       <h1 class="hero-title hero-desk-only" id="ui-title">Rúnar</h1>
+      <!-- 2026-11-15 runa dne (KUKY: „tlačítko pod textem RÚNAR… text se pak objeví místo tlačítka“, „největší lákadlo“ → plné tlačítko).
+           Kreslí runar-runa-dne.js. Na mobilu je tenhle sloupec hned pod portrétem s nápisem, takže stojí pod RÚNAR i tam. -->
+      <div class="rod" id="rod" hidden>
+        <button type="button" class="btn-full" id="rod-btn" onclick="rodOtevri()">RUNE OF THE DAY</button>
+        <div id="rod-result" hidden></div>
+      </div>
       <p class="hero-sub" id="ui-sub">Draw a rune. Hear the old tongue speak.</p>
       <!-- 2026-10-09 (KUKY): pozdrav pod Rúnarem pryč — „Good to see you again…“ stojí v horní liště (#topbar-greeting) -->
       <!-- text jen z UI_TEXT.hero_quote (updateUIText); 2026-10-09 natvrdo zapsaná kopie pryč (§20) -->
@@ -929,6 +950,7 @@
 <script src="runar-reporter.js"></script>
 <script src="runar-rune-popup.js"></script>
 <script src="runar-helper.js"></script>
+<script src="runar-runa-dne.js"></script>
 
 <!-- ═══ SIDE PANEL ═══ -->
 <div class="side-overlay" id="side-overlay" onclick="closeSidePanel()"></div>

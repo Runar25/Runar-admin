@@ -24,7 +24,9 @@ const VEN = ['buildSysPrompt', 'buildReadingPrompt', 'buildNornsPrompt', 'buildK
   // jméno runy do deníku
   '_promptKonec', '_myslenkaPro', 'TIERS', 'SPREAD_COSTS', 'RUNAR_MODES', 'rn', 'CORRECTIONS_IN_PROMPT',
   // 2026-11-02 F3b: server losuje sám — zápis losu do deníku (prompt_draws) a poslední obraz z deníku normalizuje jako appka
-  '_promptDraws', '_imgNorm'];
+  '_promptDraws', '_imgNorm',
+  // 2026-11-15: runa dne (mode rune_day) — builder a kdo ji smí (RUNE_OF_DAY.open_to)
+  'buildDayRunePrompt', 'RUNE_OF_DAY'];
 
 // cti(f) = obsah v2/<f>; výchozí z pracovního stromu, pre-commit předá čtení z indexu (git show :v2/<f>).
 function vyrob(cti) {

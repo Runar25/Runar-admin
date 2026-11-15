@@ -229,6 +229,7 @@ function updateAuthUI() {
   // bočního panelu — kdo se přihlásil a nic dalšího neudělal, měl v menu prázdný e-mail.
   if (typeof updateDropdown === 'function') updateDropdown();
   if (typeof _paintReportBtn === 'function') _paintReportBtn();   // ⚑ jen pro přihlášené (2026-10-10, DECISIONS 2026-10-10 (1) bod 2)
+  if (typeof _rodPaint === 'function') _rodPaint();               // runa dne jen přihlášeným (2026-11-15, runar-runa-dne.js)
 }
 
 // ── SPECIFIC QUESTION GATE ────────────────────────────────

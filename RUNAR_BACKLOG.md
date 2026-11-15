@@ -216,6 +216,8 @@ hlídal jen V2 cestu.
   nese stavba ze tří částí, ne číslo.
   Owner 2026-11-14: předat CODE-tune — plán napřed ownerovi (vstup, kde v appce, cena/kredity, IS, uložení ano/ne).
   **Plán rozhodnut** (DECISIONS 2026-11-14 (6)): umístění, zdarma jen text, jednou denně, jen přihlášení, bez deníku. Dál: prompt + jeden vzorek (CODE-tune).
+  **Postaveno pro testery** (DECISIONS 2026-11-15 (1)): čeká na SQL `sql/2026-11-15_rune_day.sql` + nasazení `claude-proxy` (owner). Pak
+  první IS texty z modelu přečíst; otevřít všem = `RUNE_OF_DAY.open_to: 'all'` (owner). Web s náhodnou runou → CODE-web, až owner řekne.
 - [x] ✅ *(2026-11-14, owner „udělej“, CODE-tree, b48fefb: jedna tabulka v enginu `RunarBranch.AREA_LAT` s hodnotami kánonu, lab i aplikace ji čtou odtud. Nález: tabulka enginu strom NEMĚNILA — koruna předává úhel `spec.dev` a `lat` z oblasti se pak nečte; nulový test s extrémními hodnotami dal KUKYho strom bajt po bajtu stejný. „Řídí natočení větviček“ níž tedy neplatilo.)* **Strom (lab): `AREA_LAT` odporuje „oblast = strana“** (CODE-tree, nalezeno 2026-10-09). **Stav** (triáž 2026-10-12, CODE-tree): lab má vlastní `AREA_LAT` srovnanou s kánonem (Love −0,2, Crossroads 0, Spirituality +0,5; čte ji `sideOf` a `latOf`), engine `runar-branch.js` drží starou (Love −0,75, Spirituality −0,20, Crossroads +0,10) a řídí jí natočení větviček při kreslení (`spec.area`). Pořád dvě kopie téže informace (§20) — srovnat engine s labem s golden-verify kresby. Původní text: Tabulka v `runar-branch.js` (sdílená
   s aplikací) bere Love −0,75 (nitro), Spirituality −0,20 (skoro střed), Crossroads +0,10 — kánon (`RUNAR_TREE.md` §3) má Love a Crossroads
   bez strany a Spirituality ve světě. Čte ji strana větvičky (`sideOf`), natočení ramene za čteními (`latOf` / `areaSide`) i lateral
@@ -304,6 +306,8 @@ atomický upsert, úklid starších než hodina; stejně tak `use_credit` (atomi
 - [ ] **Právní/DPO review** (Island/EEA) IS textů + legal-basis modelu. `RUNAR_PRIVACY.md` je pracovní podklad, ne posudek.
   + *(CODE-tune 2026-11-02)* `prompt_state` (sáček obrazů na uživatele, F3b): v zásadách (EN/IS) zatím bez vlastního řádku — odvozené
   z čtení, jen identifikátory obrazů; posoudit, jestli ho kryje řádek čtení (RUNAR_PRIVACY.md). Export účtu: přidat po spuštění SQL.
+  + *(CODE-tune 2026-11-15)* `rune_day` (text runy dne na den, sql/2026-11-15_rune_day.sql): totéž — řádek v zásadách, export účtu,
+  a jak dlouho staré dny držet (stačí dnešek; sáček pák je v `prompt_state`).
       ➕ **2026-10-12:** owner „udělej ten posudek“ → technická kontrola GDPR hotová (`docs/archive/2026-10-12-gdpr-kontrola.md`, není to právní posudek);
       úkoly z ní v sekci „Soukromí — kontrola GDPR 2026-10-12“. Právník zůstává volitelný — podklad pro něj je ta kontrola.
       ⚠️ **Na seznam k posouzeni patri i `credit_ledger`:** radky prezivaji smazani uctu. Muj zaver „je to v poradku, protoze klic je znicen" je TECHNICKY ROZBOR (delete-account nuluje `gift_codes.used_by` a kaskadou maze `user_profiles` i `readings`, takze UUID uz nejde spojit s osobou), NE pravni posudek.

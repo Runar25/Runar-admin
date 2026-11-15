@@ -531,6 +531,7 @@ serve(async (req: Request) => {
     // i jemu: jinak by stačilo poslat rozbitý zápis a model by dostal vlastní text. Jen selhání načtení balíčku (útočník ho nevyvolá)
     // pustí čtení po staru — výpadek kódu nesmí zastavit všechna čtení; jde do ops_events jako chyba.
     let zivotniServer: { cislo: number; lang: string } | null = null;   // životní runa ze skládání — zapíše se po úspěchu (níž)
+    let denServer: { runa: string; lang: string; otevreno: string } | null = null;   // runa dne ze skládání — runa, jazyk, komu je otevřená
     // F3b: stav sáčku po skládání (uloží se po úspěchu, jen když se změnil) · los do deníku a appce · prompt pro admina (rozbor čtení)
     let stavServer: Record<string, string> | null = null, stavPuvodni = "", drawsServer: unknown = null, promptAdmin = "";
     if (prompt && mode !== "resave" && mode !== "life_rune_reset") {
@@ -560,6 +561,7 @@ serve(async (req: Request) => {
           if (sv.maxTokens) cappedMaxTokens = sv.maxTokens;
           if (journal && sv.denik) Object.assign(journal, sv.denik);   // druh a runy do deníku z vlastního skládání, ne od prohlížeče
           zivotniServer = sv.zivotni || null;
+          denServer = sv.dne || null;
           stavServer = sv.stav || null; drawsServer = sv.draws || null;
           if (journal && sv.draws) journal.draws = sv.draws;   // co si prompt vylosoval — ze serverového losu, ne z textu prohlížeče
           if (isAdmin) promptAdmin = sv.prompt;
@@ -667,10 +669,16 @@ serve(async (req: Request) => {
     // Rozbor jmena (2026-09-11): samostatna volba vedle zivotni runy, taky zdarma a taky
     // jednou za ucet — jinak by byl volny mod dirou na penize.
     const isNameLore = mode === "name_lore";
+    // Runa dne (2026-11-15, KUKY 2026-11-14 „jen text… jednou denně… jen přihlášení“; DECISIONS 2026-11-14 (6)): zdarma, jen text,
+    // JEDNOU za islandský den (= UTC) na účet — při znovuotevření týž text z tabulky rune_day (sql/2026-11-15_rune_day.sql), model se
+    // nevolá. Komu je otevřená, říká config (RUNE_OF_DAY.open_to, přes skládání): 'testers' = testeři a admin, 'all' = každý přihlášený.
+    // Na rozdíl od ostatních rituálů fail CLOSED: bez tabulky by „jednou denně“ nic nehlídalo a zdarma režim by byl dírou na peníze.
+    const isRuneDay = mode === "rune_day";
+    const denDnes = new Date().toISOString().slice(0, 10);   // islandský čas = UTC (owner 2026-11-14: „4. islandský“)
     // Dva RITUALNI mody. Oba zdarma, oba textove (hlas = 95 % ceny cteni, a ten se
     // nekona). Zdarma je nedela cislo od klienta, ale tenhle `mode` — proto zustava
     // podlaha Math.max(1, spread_cost) niz: klient si zdarma rict nesmi.
-    const isRitual = isLifeRune || isFounding || isNameLore;
+    const isRitual = isLifeRune || isFounding || isNameLore || isRuneDay;
     // Rozbor jmena: kolikrat smi model psat. 1. rozbor + JEDNO precteni po zmene severskeho
     // jmena (KUKY 2026-09-12). ZRCADLI v2/runar-config.js NAME_LORE_LIMIT — Deno klientsky
     // config neimportuje; shodu hlida smoke (verify_monthly_limits.js).
@@ -681,8 +689,25 @@ serve(async (req: Request) => {
         return json({ error: "unavailable", message: "The runes are quiet. Try again shortly." }, 401);
       }
       const { data: pr, error: prErr } = await sb()
-        .from("user_profiles").select("life_rune_text, tree_founded_at, name_lore_text, norse_name, name_lore_for, name_lore_count")
+        .from("user_profiles").select("life_rune_text, tree_founded_at, name_lore_text, norse_name, name_lore_for, name_lore_count, is_tester")
         .eq("id", userId).maybeSingle();
+      if (isRuneDay) {
+        if (!denServer) return json({ error: "update_app", message: "The runes are quiet. Reload the app and try again." }, 400);
+        if (prErr) {
+          console.error("rune day profile read failed:", prErr.message);
+          return json({ error: "unavailable", message: "The runes are quiet. Try again shortly." }, 503);
+        }
+        if (denServer.otevreno !== "all" && !isAdmin && !pr?.is_tester) {
+          return json({ error: "unavailable", message: "The runes are quiet. Try again shortly." }, 403);
+        }
+        const { data: dr, error: dErr } = await sb().from("rune_day").select("rune, text")
+          .eq("user_id", userId).eq("den", denDnes).maybeSingle();
+        if (dErr) {
+          console.error("rune day read failed:", dErr.message);
+          return json({ error: "unavailable", message: "The runes are quiet. Try again shortly." }, 503);
+        }
+        if (dr) return json({ text: dr.text, rune: dr.rune, stored: true });
+      }
       if (prErr) {
         // Fail OPEN, stejna posture jako mesicni strop: vypadek cteni nesmi zablokovat
         // zalozeni stromu. Cena omylu je jedno textove volani za ~$0.005 a zapis
@@ -978,6 +1003,19 @@ serve(async (req: Request) => {
       if (lErr) console.error("life rune persist failed:", lErr.message);
     }
 
+    // Runa dne: zápis dne po úspěšném čtení (service_role; appka do rune_day psát nesmí). Primární klíč (user_id, den) = jednou denně
+    // i při dvou souběžných požadavcích: druhý zápis narazí (23505) a vrátí se text, který se uložil první — člověk vidí jeden text dne.
+    let runaDne: string | null = null;
+    if (isRuneDay && userId && denServer) {
+      runaDne = denServer.runa;
+      const { error: dwErr } = await sb().from("rune_day")
+        .insert({ user_id: userId, den: denDnes, rune: denServer.runa, lang: denServer.lang, text });
+      if (dwErr && dwErr.code === "23505") {
+        const { data: d1 } = await sb().from("rune_day").select("rune, text").eq("user_id", userId).eq("den", denDnes).maybeSingle();
+        if (d1) { text = d1.text; runaDne = d1.rune; }
+      } else if (dwErr) console.error("rune day persist failed:", dwErr.message);
+    }
+
     // Rozbor jmena se uklada TADY, ne v klientovi — klient uz na `name_lore_text` grant nema.
     // CAS na `name_lore_count`: dva soubezne pozadavky zapisou jen jeden a ten druhy nic nepripocte.
     // `nameLorePrev` je null jen pri fail-open prechecku (DB vypadek) — pak se nic neuklada.
@@ -998,6 +1036,7 @@ serve(async (req: Request) => {
       ...(readingId ? { reading_id: readingId } : {}),
       ...(voice ? { voice } : {}),
       ...(mode === "ask" ? { ask_saved: askSaved } : {}),
+      ...(runaDne ? { rune: runaDne } : {}),
       // F3b: los serveru (deník, Ask — význam runy) a adminovi i prompt (složení čtení v reportu); appka bez nich jede na svém
       ...(drawsServer ? { draws: drawsServer } : {}),
       ...(promptAdmin ? { prompt_admin: promptAdmin } : {}),

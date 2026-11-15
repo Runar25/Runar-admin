@@ -26,7 +26,7 @@ const RUNA = /[ᚠ-᛿]/;
 // Runa jako HTML entita: &#x16A0; – &#x16FF; (5792–5887 desítkově).
 const ENTITA = /&#x16[a-f][0-9a-f];|&#(?:579[2-9]|58[0-7]\d|588[0-7]);/i;
 const JS_READERU = ['runar-utils.js', 'runar-app.js', 'runar-reading.js', 'runar-auth.js', 'runar-tree.js', 'runar-journal.js',
-  'runar-helper.js', 'runar-reporter.js', 'runar-rune-popup.js', 'runar-znacka.js'];
+  'runar-helper.js', 'runar-reporter.js', 'runar-rune-popup.js', 'runar-znacka.js', 'runar-runa-dne.js'];   // + runa dne 2026-11-15
 const JS_ADMIN = ['runar-readings-admin.js', 'runar-reports-admin.js', 'runar-voice-admin.js', 'runar-testers-admin.js'];
 const STRANKY = ['runar-reader.html', 'runar-help.html', 'runar-privacy.html', 'runar-shrine.html'];
 

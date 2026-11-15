@@ -13,6 +13,7 @@
 // vedome nezaregistruje. Vynucuje tedy POZORNOST, ne verdikt.
 //
 // Registrace po prezkoumani:  node scripts/verify_prompt_rules_registry.js --zapis
+// (Runa dne se skenuje voláním S.buildDayRunePrompt( níž — s pevnou náhodou a s pooly pák.)
 const fs = require('fs'), path = require('path'), vm = require('vm'), crypto = require('crypto');
 const REPO = path.resolve(__dirname, '..');
 const D = path.join(REPO, 'v2') + path.sep;
@@ -159,6 +160,20 @@ const DATA = /^(PERSON|DRAWN|SEEKER|LIFE|AREA|SEEKING|INTENTION|QUESTION|REALM|E
     S.buildNameLorePrompt('Anna', L, null)
       .split(String.fromCharCode(10))
       .forEach(r => { if (!DATA.test(r.trim())) pridej(L, 'namelore', r); });
+    // RUNA DNE (2026-11-15, CODE-tune): páky jsou los ze sáčků, takže jeden postavený prompt by ukázal jen jednu polohu a příští běh
+    // jinou (registr by červenal náhodou). Registruje se proto šablona packu se zástupci {R} {V} {Z} {O} a KAŽDÁ poloha páky (pooly),
+    // a postavený prompt jen s pevnou náhodou (0) — ať jsou v něm i brány (oslovení, studené čtení) a pořád stejné.
+    {
+      const P = glob('RP_DAY')[L];
+      [P.intro, P.sections, P.p1('{R}', '{V}', ''), P.maybe, P.p3('{Z}', '{O}'), P.rules]
+        .forEach((t) => String(t).split(String.fromCharCode(10)).forEach((r) => { if (!DATA.test(r.trim())) pridej(L, 'runa_dne', r); }));
+      for (const pool of ['DAY_VSTUP', 'DAY_COCKA', 'DAY_ZAMER']) Object.values(glob(pool) || {}).forEach((v) => pridej(L, 'runa_dne', v[L]));
+      vm.runInContext('__puvRandom = Math.random; Math.random = function () { return 0; };', S);
+      try {
+        S.buildDayRunePrompt(RUNES[3], L, null).split(String.fromCharCode(10))
+          .forEach((r) => { if (!DATA.test(r.trim())) pridej(L, 'runa_dne', r); });
+      } finally { vm.runInContext('Math.random = __puvRandom;', S); }
+    }
     S.buildAskPrompt('A reading.', 'What do you mean?', RUNES[3].n, L, null, null, null,
       { mode: 'kriz', runy: ['Fehu', 'Uruz', 'Thurisaz', 'Ansuz', 'Raidho'] })
       .split(String.fromCharCode(10))

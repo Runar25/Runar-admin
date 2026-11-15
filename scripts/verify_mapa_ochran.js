@@ -40,6 +40,7 @@ const MAPA = {
       life_rune_reset: 'reset životní runy — jen admin',
       name_lore: 'rozbor jména — strop NAME_LORE_LIMIT, admin bez stropu',
       resave: 'uložení hotového čtení bez volání modelu',
+      rune_day: 'runa dne (2026-11-15) — zdarma, jednou za UTC den (tabulka rune_day; podruhé uložený text bez modelu), komu: RUNE_OF_DAY.open_to (testeři + admin / všichni přihlášení); fail closed',
     },
     ochrany: {
       'if (req.method !== "POST") return json({ error: "Method not allowed" }, 405);': POST,
@@ -60,6 +61,8 @@ const MAPA = {
       '} else if (isFounding && !pr?.life_rune_text) {': 'založení až po životní runě — jinak Norny zdarma',
       '} else if (isFounding && pr?.tree_founded_at) {': 'založení jen jednou',
       'if (!nn) {': 'rozbor jména bez jména',
+      'if (!denServer) return json({ error: "update_app", message: "The runes are quiet. Reload the app and try again." }, 400);': 'runa dne jen ze zápisu skládání — runu a přístup bere server ze skládání, ne od prohlížeče',
+      'if (denServer.otevreno !== "all" && !isAdmin && !pr?.is_tester) {': 'runa dne jen testerům a adminovi, dokud ji owner neotevře všem (RUNE_OF_DAY.open_to)',
       'if (String(pr?.name_lore_for ?? "") === nn && !isAdmin) {': 'rozbor téhož jména podruhé',
       'if (cnt >= NAME_LORE_LIMIT && !isAdmin) {': 'strop rozborů jména',
       '} else if (!vzat) {': 'zámek: jedno účtované čtení naráz',

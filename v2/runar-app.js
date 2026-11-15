@@ -155,6 +155,7 @@ async function fetchUserProfile(userId, _pokus) {
           if (typeof _maybeShowTesterConsent === 'function') _maybeShowTesterConsent();
           if (typeof updateDropdown === 'function') updateDropdown();   // 2026-10-11: strop hlasu v menu závisí na příznaku tester
           if (typeof _paintReportBtn === 'function') _paintReportBtn();   // 2026-10-15: vlajka jen testerům — příznak přijde až teď
+          if (typeof _rodPaint === 'function') _rodPaint();   // 2026-11-15: runa dne je na zkoušku jen testerům — příznak přijde až teď
         })
         .catch(function () {});
       // Restore language preference
@@ -995,6 +996,9 @@ function updateUIText() {
   _syncPillLang();   // MUSI predchazet _askPlaceholder() nize — duvod u te funkce
   // 2026-10-21 (owner): značka RÚNAR → domovská stránka webu (RUNAR_HOME_URL); do té doby AGNDOFA → agndofa.is. V Play bez odkazu.
   setText('ui-brand', 'RÚNAR');   // 2026-10-28 (228c8f1c): vede domů v appce (_domuAppky), web je v menu
+  // runa dne (2026-11-15): jen statické popisky tlačítka a okna (§14) — dnešní text kreslí _rodPaint/_rodUkaz (runar-runa-dne.js)
+  setText('rod-btn', t('rod_btn')); setText('rod-title', t('rod_btn')); setText('rod-sub', t('rod_sub'));
+  setText('rod-self', t('rod_self')); setRuneText('rod-random', t('random_btn'));   // „ᚲ …“ — runa kresbou, ne písmem (§5)
   // ⚠️ Staticke upozorneni patri SEM, ne do _updateReadingForm: (a) §14 rika, ze
   // updateUIText vlastni staticke preklady, (b) `setLang` vola updateUIText, ale
   // _updateReadingForm NE — text by pri prepnuti jazyka zustal anglicky.
@@ -1763,7 +1767,7 @@ async function loadCorrections() {
 // supabase/functions/_shared/prompt_skladani.mjs (týž kód) a shodu zapíše do ops_events „prompt_stin“ (bez textu). Až bude shoda trvalá,
 // přepne se server na vlastní prompt (F3). Chyba záznamu čtení nikdy nezastaví — obal vždy vrátí výstup builderu.
 var _STIN_BUILDERY = ['buildSysPrompt', 'buildReadingPrompt', 'buildNornsPrompt', 'buildKrizPrompt', 'buildHorseshoePrompt',
-  'buildYggdrasilPrompt', 'buildLifeRunePrompt', 'buildAskPrompt', 'buildNameLorePrompt'];
+  'buildYggdrasilPrompt', 'buildLifeRunePrompt', 'buildAskPrompt', 'buildNameLorePrompt', 'buildDayRunePrompt'];
 var _stinZaznam = { sys: null, prompt: null }, _stinHloubka = 0;
 function _stinArg(x, d) {
   if (d > 6 || x === null || x === undefined || typeof x === 'function') return null;
@@ -1839,6 +1843,7 @@ async function callProxy(sys, prompt, maxTokens, use_credit = false, credit_cost
     // 2026-10-11 (DECISIONS (61)), ale appka ho zahodila, takže čtení pro někoho jiného (ne tester) by hlas nedostalo (voice_unbound).
     return { text: data.content?.[0]?.text || data.text || '', reading_id: data.reading_id, saved: data.saved, ask_saved: data.ask_saved,
              voice: data.voice || null,
+             rune: data.rune || null,   // 2026-11-15 runa dne: runa uloženého textu dne (claude-proxy, mode rune_day)
              model: (data.usage && data.usage.model) || null,   // 2026-09-25: skutečný model (fallback) — složení čtení v reportu
              name_lore_for: data.name_lore_for, name_lore_count: data.name_lore_count, name_lore_saved: data.name_lore_saved,
              // 2026-11-02 F3b: los serveru (co si prompt vylosoval) a adminovi serverový prompt — od F3b losuje server, text v appce je jiný los
@@ -2030,7 +2035,8 @@ var OKNA_ZAVRI = {
   'line-modal': function () { closeLine(); },
   'lang-switch-modal': function () { cancelLangSwitch(); },
   'install-modal': function () { closeInstallModal(); },
-  'name-overlay': function () { skipName(); }
+  'name-overlay': function () { skipName(); },
+  'rod-modal': function () { rodZavri(); }   // 2026-11-15 runa dne
 };
 function _oknoNavrchu() { var o = document.querySelectorAll('.modal-overlay.open'); return o.length ? o[o.length - 1] : null; }
 document.addEventListener('keydown', function (e) {
