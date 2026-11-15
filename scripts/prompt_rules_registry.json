@@ -1,7 +1,7 @@
 {
  "poznamka": "Otisky instrukcnich radek promptu. Zmena = kontrola ㉜ zcervena, dokud ji nekdo vedome nezaregistruje (--zapis). Nehodnoti vyznam, vynucuje pozornost.",
- "zapsano": "2026-10-20",
- "prompt_version": "v5.19-is-kw",
+ "zapsano": "2026-11-15",
+ "prompt_version": "v5.23-runa-dne",
  "pravidla": [
   {
    "hash": "084253a8b9d6",
@@ -836,6 +836,126 @@
    "lang": "en",
    "zdroj": "namelore",
    "zacatek": "Do not draw runes, do not read the seeker, do not turn this into a rea"
+  },
+  {
+   "hash": "22e0f606b58a",
+   "lang": "en",
+   "zdroj": "runa_dne",
+   "zacatek": "This is a short word on one rune for today — not a reading. There is n"
+  },
+  {
+   "hash": "e06a079154bc",
+   "lang": "en",
+   "zdroj": "runa_dne",
+   "zacatek": "Write one flowing text in three parts, with no headings or labels:"
+  },
+  {
+   "hash": "d5ccb5552652",
+   "lang": "en",
+   "zdroj": "runa_dne",
+   "zacatek": "First, what the rune is, in plain words, centred on the meaning above."
+  },
+  {
+   "hash": "dde98229b0fb",
+   "lang": "en",
+   "zdroj": "runa_dne",
+   "zacatek": "Say it as something that may be so, never as fact."
+  },
+  {
+   "hash": "9e60356b7e99",
+   "lang": "en",
+   "zdroj": "runa_dne",
+   "zacatek": "Last, what is worth giving attention to today, as the rune points: {Z}"
+  },
+  {
+   "hash": "2ef191cd3352",
+   "lang": "en",
+   "zdroj": "runa_dne",
+   "zacatek": "Rúnar's voice — calm and clear. Say it in words, not in images or scen"
+  },
+  {
+   "hash": "cf573b5eb2b5",
+   "lang": "en",
+   "zdroj": "runa_dne",
+   "zacatek": "Let the description come in through the rune's name and what it stood "
+  },
+  {
+   "hash": "eac2a63192d1",
+   "lang": "en",
+   "zdroj": "runa_dne",
+   "zacatek": "Let the description come in through what the rune does — the force or "
+  },
+  {
+   "hash": "b2bf32ebfbfc",
+   "lang": "en",
+   "zdroj": "runa_dne",
+   "zacatek": "Let the description come in through the rune's other side — what it be"
+  },
+  {
+   "hash": "8c876b17a0a7",
+   "lang": "en",
+   "zdroj": "runa_dne",
+   "zacatek": "Let the description come in through the stone with nothing on it — wha"
+  },
+  {
+   "hash": "92face72ed2c",
+   "lang": "en",
+   "zdroj": "runa_dne",
+   "zacatek": "Let the description come in through what is still unwritten and stays "
+  },
+  {
+   "hash": "b7b72a932314",
+   "lang": "en",
+   "zdroj": "runa_dne",
+   "zacatek": "Then what may be missing in you that this rune speaks to."
+  },
+  {
+   "hash": "3f2775cbb07c",
+   "lang": "en",
+   "zdroj": "runa_dne",
+   "zacatek": "Then what may be there in you that goes unnoticed, which this rune bri"
+  },
+  {
+   "hash": "948a6732aad8",
+   "lang": "en",
+   "zdroj": "runa_dne",
+   "zacatek": "Then where there may be too much of what this rune carries, or where i"
+  },
+  {
+   "hash": "32b1bd08bad2",
+   "lang": "en",
+   "zdroj": "runa_dne",
+   "zacatek": "something to think over"
+  },
+  {
+   "hash": "ddd67b0389fa",
+   "lang": "en",
+   "zdroj": "runa_dne",
+   "zacatek": "something to tend or take care of"
+  },
+  {
+   "hash": "10550e548f9f",
+   "lang": "en",
+   "zdroj": "runa_dne",
+   "zacatek": "CENTRE TODAY: messages"
+  },
+  {
+   "hash": "f9d45720b0fe",
+   "lang": "en",
+   "zdroj": "runa_dne",
+   "zacatek": "First, what the rune is, in plain words, centred on the meaning above."
+  },
+  {
+   "hash": "abd9afe5a529",
+   "lang": "en",
+   "zdroj": "runa_dne",
+   "zacatek": "Then what may be missing in you that this rune speaks to. Say it as so"
+  },
+  {
+   "hash": "cbfc5f6e2095",
+   "lang": "en",
+   "zdroj": "runa_dne",
+   "zacatek": "Last, what is worth giving attention to today, as the rune points: som"
   },
   {
    "hash": "0dce88d2e626",
@@ -1832,6 +1952,132 @@
    "lang": "is",
    "zdroj": "namelore",
    "zacatek": "NO COLD READING: never tell the seeker what is true, stirring, or know"
+  },
+  {
+   "hash": "f028429e8d24",
+   "lang": "is",
+   "zdroj": "runa_dne",
+   "zacatek": "Þetta er stutt orð um eina rún fyrir daginn í dag — ekki lestur. Engin"
+  },
+  {
+   "hash": "8e4e0a325dce",
+   "lang": "is",
+   "zdroj": "runa_dne",
+   "zacatek": "Skrifaðu einn samfelldan texta í þremur hlutum, án fyrirsagna:"
+  },
+  {
+   "hash": "e28b18dce993",
+   "lang": "is",
+   "zdroj": "runa_dne",
+   "zacatek": "Fyrst hvað rúnin er, á skýru máli, með áherslu á merkinguna hér að ofa"
+  },
+  {
+   "hash": "367a7d3d2630",
+   "lang": "is",
+   "zdroj": "runa_dne",
+   "zacatek": "Segðu það sem eitthvað sem getur átt við, aldrei sem staðreynd."
+  },
+  {
+   "hash": "94da03ba6b36",
+   "lang": "is",
+   "zdroj": "runa_dne",
+   "zacatek": "Loks hverju er gott að gefa gaum í dag eins og rúnin bendir á — {Z}. L"
+  },
+  {
+   "hash": "f5dca6fe5dfb",
+   "lang": "is",
+   "zdroj": "runa_dne",
+   "zacatek": "Rödd Rúnars — róleg og skýr. Segðu þetta með orðum, en ekki með myndum"
+  },
+  {
+   "hash": "329ffd143b17",
+   "lang": "is",
+   "zdroj": "runa_dne",
+   "zacatek": "Láttu lýsinguna hefjast á nafni hennar og því sem það stóð fyrir í gam"
+  },
+  {
+   "hash": "e963ea217a44",
+   "lang": "is",
+   "zdroj": "runa_dne",
+   "zacatek": "Láttu lýsinguna hefjast á því sem hún gerir — kraftinum eða hreyfingun"
+  },
+  {
+   "hash": "eb8593f362d2",
+   "lang": "is",
+   "zdroj": "runa_dne",
+   "zacatek": "Láttu lýsinguna hefjast á hinni hlið hennar — hvað hún verður þegar hú"
+  },
+  {
+   "hash": "e987132b00ae",
+   "lang": "is",
+   "zdroj": "runa_dne",
+   "zacatek": "Láttu lýsinguna hefjast á steininum sem ekkert er á — hvað það merkir "
+  },
+  {
+   "hash": "82005747cb12",
+   "lang": "is",
+   "zdroj": "runa_dne",
+   "zacatek": "Láttu lýsinguna hefjast á því sem er enn óskrifað og stendur opið."
+  },
+  {
+   "hash": "20714b58740a",
+   "lang": "is",
+   "zdroj": "runa_dne",
+   "zacatek": "Síðan hvað þig kann að vanta sem þessi rún talar til."
+  },
+  {
+   "hash": "6ca9ee48e1a4",
+   "lang": "is",
+   "zdroj": "runa_dne",
+   "zacatek": "Síðan hvað kann að búa í þér án þess að þú takir eftir því — það sem þ"
+  },
+  {
+   "hash": "d40ecbb3687e",
+   "lang": "is",
+   "zdroj": "runa_dne",
+   "zacatek": "Síðan hvar kann að vera of mikið af því sem þessi rún ber, eða hvar hú"
+  },
+  {
+   "hash": "701923120f4f",
+   "lang": "is",
+   "zdroj": "runa_dne",
+   "zacatek": "eitthvað til að taka eftir"
+  },
+  {
+   "hash": "8ab487e25d51",
+   "lang": "is",
+   "zdroj": "runa_dne",
+   "zacatek": "eitthvað til að hugsa um"
+  },
+  {
+   "hash": "eeba88fc0ae9",
+   "lang": "is",
+   "zdroj": "runa_dne",
+   "zacatek": "eitthvað til að hlúa að"
+  },
+  {
+   "hash": "93d91cdb78ee",
+   "lang": "is",
+   "zdroj": "runa_dne",
+   "zacatek": "Fyrst hvað rúnin er, á skýru máli, með áherslu á merkinguna hér að ofa"
+  },
+  {
+   "hash": "b4de45a75fcf",
+   "lang": "is",
+   "zdroj": "runa_dne",
+   "zacatek": "Síðan hvað þig kann að vanta sem þessi rún talar til. Segðu það sem ei"
+  },
+  {
+   "hash": "437eedf8a6f3",
+   "lang": "is",
+   "zdroj": "runa_dne",
+   "zacatek": "Loks hverju er gott að gefa gaum í dag eins og rúnin bendir á — eitthv"
+  },
+  {
+   "hash": "7cfbd9104dbf",
+   "lang": "is",
+   "zdroj": "runa_dne",
+   "zacatek": "NIÐURLAG: Þetta er dagur til að"
   },
   {
    "hash": "1013b8da068f",
