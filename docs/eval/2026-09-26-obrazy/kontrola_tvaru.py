@@ -15,6 +15,9 @@ PONAUCENI = r'\b(whoever|whenever|the more\b.*\bthe more|as long as|always|never
 OSOBA = r'\b(someone|stranger|neighbours?|woman|man|boy|girl|child|children|kids?|friend|people|person|everyone|party|families)\b'
 STOJI = r'\b(stands?|lies|waits?|burns|hangs|sits)\b'
 DRUHA_UDALOST = r';|\band then\b|, and (later|afterwards)\b'
+# Owner 2026-11-15 (kráva prodaná na trhu): „je to 100 let stará činnost … chci modernější obrazy, aby se s nimi člověk dokázal spojit“.
+# Slova selského světa jsou jen podezření — ovce a koně jsou na Islandu i dnešek; posoudí člověk.
+DOBA = r'\b(cows?|cattle|plough|scythe|sickle|loom|spindle|anvil|forge|byre|thresh\w*|cart|wagon|ox(en)?|horses?|mare|foal|saddle|harness|yoke|churn|sheaf|sheaves|hay|peat|turf|oars?|spear|sword|shepherd|flock|lambs?|ewes?|sheep(dog)?|sheep-track|granary|barn|quern|lantern|tallow|fleece|whetstone|bellows|stable|pasture|pail|smokehouse)\b'
 
 
 def zkontroluj(obraz):
@@ -31,6 +34,7 @@ def zkontroluj(obraz):
                         ('rodinná role — patří postavě v obraze, nebo ji obraz přisuzuje čtenáři?', ROLE),
                         ('osoba jiná než „you“ — zaslouží si místo? obejde se obraz bez ní?', OSOBA),
                         ('sloveso stání — dělá tu někdo něco, nebo věc jen stojí?', STOJI),
+                        ('selský svět — zná to dnešní čtenář ze svého života, nebo je to sto let stará činnost?', DOBA),
                         ('možná druhá událost', DRUHA_UDALOST)):
         m = re.search(vzor, obraz, re.I)
         if m:
