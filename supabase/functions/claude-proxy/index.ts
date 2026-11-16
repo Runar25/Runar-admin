@@ -531,7 +531,7 @@ serve(async (req: Request) => {
     // i jemu: jinak by stačilo poslat rozbitý zápis a model by dostal vlastní text. Jen selhání načtení balíčku (útočník ho nevyvolá)
     // pustí čtení po staru — výpadek kódu nesmí zastavit všechna čtení; jde do ops_events jako chyba.
     let zivotniServer: { cislo: number; lang: string } | null = null;   // životní runa ze skládání — zapíše se po úspěchu (níž)
-    let denServer: { runa: string; lang: string; otevreno: string } | null = null;   // runa dne ze skládání — runa, jazyk, komu je otevřená
+    let denServer: { runa: string; lang: string; otevreno: string; losy?: Record<string, unknown> | null; verze?: string | null } | null = null;   // runa dne ze skládání — runa, jazyk, komu je otevřená
     // F3b: stav sáčku po skládání (uloží se po úspěchu, jen když se změnil) · los do deníku a appce · prompt pro admina (rozbor čtení)
     let stavServer: Record<string, string> | null = null, stavPuvodni = "", drawsServer: unknown = null, promptAdmin = "";
     if (prompt && mode !== "resave" && mode !== "life_rune_reset") {
@@ -1022,10 +1022,17 @@ serve(async (req: Request) => {
     let runaDne: string | null = null;
     if (isRuneDay && userId && denServer) {
       runaDne = denServer.runa;
-      const radek = { user_id: userId, den: denDnes, rune: denServer.runa, lang: denServer.lang, text };
-      const { error: dwErr } = rodZnovu
-        ? await sb().from("rune_day").upsert(radek, { onConflict: "user_id,den" })
-        : await sb().from("rune_day").insert(radek);
+      const zaklad = { user_id: userId, den: denDnes, rune: denServer.runa, lang: denServer.lang, text };
+      // 2026-11-16: verze promptu a losy (sql/2026-11-16_rune_day_draws.sql). Chybí-li sloupce (42703), zapíše se řádek bez nich —
+      // bez řádku by „jednou denně“ nic nehlídalo a runa dne by šla táhnout zdarma znovu a znovu.
+      const zapisDne = (radek: Record<string, unknown>) => rodZnovu
+        ? sb().from("rune_day").upsert(radek, { onConflict: "user_id,den" })
+        : sb().from("rune_day").insert(radek);
+      let { error: dwErr } = await zapisDne({ ...zaklad, prompt_version: denServer.verze ?? null, draws: denServer.losy ?? null });
+      if (dwErr && (dwErr.code === "42703" || dwErr.code === "PGRST204")) {
+        console.error("rune day draws columns missing:", dwErr.message);
+        ({ error: dwErr } = await zapisDne(zaklad));
+      }
       if (dwErr && dwErr.code === "23505") {
         const { data: d1 } = await sb().from("rune_day").select("rune, text").eq("user_id", userId).eq("den", denDnes).maybeSingle();
         if (d1) { text = d1.text; runaDne = d1.rune; }

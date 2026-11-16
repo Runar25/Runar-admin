@@ -1571,6 +1571,10 @@ function _dayLos(rune, paka, ids) {
   var k = ids.filter(function (id) { return bez.indexOf(id) === -1; });
   return _seasonBagPick('dne', rune.n + '_' + paka, k.length ? k : ids);
 }
+// Co si poslední buildDayRunePrompt vylosoval — server to uloží k textu dne (rune_day.draws, owner 2026-11-16 „3. ano“: bez toho
+// nepoznáme, která páka dělá rozdíl, když táž runa přijde znovu). Vzor readings.prompt_draws. Prompt samotný to nemění.
+var _DAY_LOSY = null;
+function _dayLosy() { return _DAY_LOSY; }
 function buildDayRunePrompt(rune, lang, corrections) {
   var L = (lang === 'is') ? 'is' : 'en';
   var S = RP_DAY[L];
@@ -1583,6 +1587,7 @@ function buildDayRunePrompt(rune, lang, corrections) {
   var cocka = _dayLos(rune, 'cocka', ['missing', 'unseen', 'toomuch']);
   var zamer = _dayLos(rune, 'zamer', ['notice', 'think', 'tend']);
   var zac = DAY_ZACATEK[L][Number(_dayLos(rune, 'zacatek', DAY_ZACATEK[L].map(function (x, i) { return String(i); }))) || 0];
+  _DAY_LOSY = { vyznam: klice[iV] || klice[0] || '', vstup: vstup, sloveso: sloveso, cocka: cocka, zamer: zamer, zacatek: zac };
   var base = [
     _kus('INTRO', 'fixed (rune of the day)', '—', S.intro),
     '',

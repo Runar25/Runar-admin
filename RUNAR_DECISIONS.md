@@ -13314,6 +13314,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Co:** tabulka `model_usage` (`sql/2026-11-16_model_usage.sql`, spouští owner): řádek na každé úspěšné volání modelu — režim, model,
   usage od poskytovatele + ms a pokusy, u čtení v deníku `reading_id`; žádný text. Zapisuje `claude-proxy` (service_role), klient nic.
   `readings.usage` zůstává jako údaj čtení (který model ho napsal); úplný účet je `model_usage`. Vzor: `voice_usage` u hlasu.
-- **Neověřeno:** zápis naostro — čeká na SQL a nasazení `claude-proxy`. Skript plýtvání (`scripts/utils/plytvani.js`) zatím čte jen
+- **NASAZENO** 2026-11-16 z 5ec75d6 po ownerově SQL (owner „1. hotovo 2. nasaď“). Skript plýtvání (`scripts/utils/plytvani.js`) zatím čte jen
   `readings.usage`; převést na `model_usage`, až v ní budou řádky.
 - Affected doc(s): RUNAR_PRIVACY.md (evidence nákladů na model).
+
+## 2026-11-16 (2) — Runa dne si ukládá verzi promptu a co si vylosovala
+- **Owner:** *„3. ano“* na otázku, zda u runy dne ukládat verzi promptu a losy jako u čtení — bez nich nepoznáme, která páka dělá rozdíl,
+  když táž runa přijde znovu.
+- **Co:** `rune_day.prompt_version` + `rune_day.draws` (`sql/2026-11-16_rune_day_draws.sql`, spouští owner); losy = význam, vstup, sloveso,
+  čočka, zaměření, začátek 3. části. Builder (`buildDayRunePrompt`) si je zapamatuje (`_dayLosy`), skládání na serveru je předá, `claude-proxy`
+  zapíše. Prompt beze změny. Bez sloupců (před SQL) proxy zapíše řádek bez nich, ať „jednou denně“ drží dál.
+- **Ověřeno:** serverové skládání (node, Berkana EN 4× + Hagalaz IS) vrací losy i verzi; zápis naostro čeká na SQL a nasazení.
+- Affected doc(s): žádný jiný (chování vlastní `v2/runar-character.js`, `supabase/functions/_shared/prompt_server.mjs`, `claude-proxy`).
