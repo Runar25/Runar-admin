@@ -26,3 +26,5 @@ uzavírá odstup od verdiktu. Sowilo (*„enough light to see what is near“*) 
 **Hranice:** n = 12 na rameno, jeden tip, jen EN; scéna se u Sowila ani u Algiz-sob neobjevila ani v P0 (scénu nesou jen 2 ze 4 čtení).
 Neměřeno: tip „clearer image“, kvůli kterému půlvěta vznikla (2026-10-03: úhel 2/4 → 0/4) — bez ní se může vrátit převyprávění úhlu.
 Nerozhodnuto: zda je rovnější odpověď s víc pojistkou lepší — rozhoduje owner podle textů.
+
+**Verdikt ownera 2026-11-16:** *„obraz lepší“* → půlvěta zůstává, prompt beze změny (DECISIONS 2026-11-16 (3)).

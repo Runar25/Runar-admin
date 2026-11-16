@@ -13324,5 +13324,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Co:** `rune_day.prompt_version` + `rune_day.draws` (`sql/2026-11-16_rune_day_draws.sql`, spouští owner); losy = význam, vstup, sloveso,
   čočka, zaměření, začátek 3. části. Builder (`buildDayRunePrompt`) si je zapamatuje (`_dayLosy`), skládání na serveru je předá, `claude-proxy`
   zapíše. Prompt beze změny. Bez sloupců (před SQL) proxy zapíše řádek bez nich, ať „jednou denně“ drží dál.
-- **Ověřeno:** serverové skládání (node, Berkana EN 4× + Hagalaz IS) vrací losy i verzi; zápis naostro čeká na SQL a nasazení.
+- **Ověřeno:** serverové skládání (node, Berkana EN 4× + Hagalaz IS) vrací losy i verzi. SQL spuštěno (sloupce ověřeny dotazem),
+  **NASAZENO** 2026-11-16 z c61cc37 (owner „1. hotovo 2. nasaď“); zápis naostro zatím neviděn.
 - Affected doc(s): žádný jiný (chování vlastní `v2/runar-character.js`, `supabase/functions/_shared/prompt_server.mjs`, `claude-proxy`).
+
+## 2026-11-16 (3) — Ask na tip „Where does this get hard?“ dál mluví přes obraz
+- **Podnět:** hlášení 037966b4 (Algiz) — odpověď přes obraz, owner pak *„Tell me the hard part without the image!“*; owner *„5. zkus“*.
+- **Pokus** (`docs/eval/2026-11-16-ask-tezkost/`, sol, 24 volání): bez půlvěty *„speak from what the picture holds“* v prvním pravidle Asku
+  scéna z obrazu 5/12 → 0/12, pojistka 7/12 → 10/12. Texty owner viděl.
+- **Owner:** *„3. obraz lepší“* → pravidlo beze změny; na rovnou odpověď stačí, když si o ni člověk řekne (pravidlo „answer in plain words“
+  v RP_ASK, u Algiz to napodruhé fungovalo).
+- Affected doc(s): žádný jiný (prompt beze změny; nález v labu).

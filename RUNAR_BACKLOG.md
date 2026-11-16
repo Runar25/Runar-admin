@@ -1253,3 +1253,5 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   opakuje čtení), ne tichý tune. **Změřeno 2026-11-03** (RUNAR_EVAL_LOG 2026-11-03 (1)): opakuje zhruba 4 z 5 vět u TÉTO otázky
   i u ostatních (80 % × 79 %, slepý soudce, n 9 + 9) — vada Asku obecně. Pokus s výměnou věty „speak from what the picture holds“
   (36 volání přes sol) owner 2026-11-04 odmítl (*„2. ne“*) — položka zůstává otevřená, jiný postup napřed s ownerem.
+  *2026-11-16:* táž půlvěta odebraná u tipu „Where does this get hard?“ — scéna 5/12 → 0/12, pojistka 7 → 10/12; owner *„obraz lepší“*,
+  půlvěta zůstává (DECISIONS 2026-11-16 (3), `docs/eval/2026-11-16-ask-tezkost/`).
