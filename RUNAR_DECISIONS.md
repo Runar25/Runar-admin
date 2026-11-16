@@ -13303,6 +13303,6 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - Owner téhož dne: „jako admin potřebuju reset tlačítko pro opakování vícekrát za den“. Pod textem dne vidí admin tlačítko
   „DRAW AGAIN (ADMIN)“ / „DRAGA AFTUR (ADMIN)“; otevře znovu okno s volbami a požadavek nese `rod_znovu`. Uzná ho jen server (admin
   z JWT): uložený text dne nevrátí a nový ho přepíše (upsert). Příznak od ne-admina nic nemění — „jednou denně“ pro ostatní platí dál.
-  Tahle změna serveru čeká na další ownerovo „nasaď“.
+  **NASAZENO** 2026-11-16 z ef84334 (owner „nasaď“).
 - Vzhled: owner chtěl zkusit zlaté písmo místo bílého, pak „tak žádná zlatá, necháváme“ → vzhled beze změny.
 - Affected doc(s): žádný jiný (chování vlastní `v2/runar-runa-dne.js` a `supabase/functions/claude-proxy/index.ts`, text `v2/runar-translations.js`).
