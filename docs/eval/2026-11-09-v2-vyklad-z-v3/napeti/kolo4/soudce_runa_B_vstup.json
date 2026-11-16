@@ -1,0 +1,414 @@
+{
+ "runes": [
+  {
+   "rune": "Gebo",
+   "mechanism": "A gift between two sides: something leaves one hand and is received by another, and what arises between them belongs to both and is not counted."
+  },
+  {
+   "rune": "Berkana",
+   "mechanism": "New small life and the care that lets it grow: something fragile begins, and is given room rather than forced."
+  },
+  {
+   "rune": "Ansuz",
+   "mechanism": "A word or sound that arrives and changes something: speech heard at the right moment gives a thing its name or its meaning."
+  },
+  {
+   "rune": "Algiz",
+   "mechanism": "Guarding alertness: something watches or stands between a threat and what it protects, open to the world yet letting not everything in."
+  },
+  {
+   "rune": "Fehu",
+   "mechanism": "Value that lives only while it moves: what is used and passed on grows, what is left standing loses its strength."
+  },
+  {
+   "rune": "Jera",
+   "mechanism": "Time that does the work: what was done long before ripens at its own pace and shows as a result that cannot be hurried."
+  },
+  {
+   "rune": "Othila",
+   "mechanism": "What is inherited and where one returns: things, ways and places handed down, and the choice of what to carry on."
+  },
+  {
+   "rune": "Hagalaz",
+   "mechanism": "An uninvited force from outside breaks what looked solid: the plan falls apart, and afterwards it shows what is gone and what held."
+  },
+  {
+   "rune": "Mannaz",
+   "mechanism": "The person among people: one sees oneself in or through others, as in a mirror."
+  },
+  {
+   "rune": "Kenaz",
+   "mechanism": "A small light that reveals: something that was there all along gets a shape, and once seen it cannot be unseen; a flame that needs feeding."
+  },
+  {
+   "rune": "Tiwaz",
+   "mechanism": "A direction that costs something: taking one side or keeping one's word and paying the price for it knowingly."
+  },
+  {
+   "rune": "Thurisaz",
+   "mechanism": "The sharp edge at a threshold: something stops a move just before it is made, and the stop protects or shows what the rush would have missed."
+  },
+  {
+   "rune": "Perth",
+   "mechanism": "The closed vessel: something exists but is not yet shown or known — not \"nothing\", but \"not yet\"."
+  },
+  {
+   "rune": "Blank",
+   "mechanism": "The unmarked: no sign, no name yet — an open space where meaning has not been written."
+  },
+  {
+   "rune": "Isa",
+   "mechanism": "Standstill: something that was moving has stopped and is held as it is, and in the stillness one thing stays in view."
+  },
+  {
+   "rune": "Ingwaz",
+   "mechanism": "Ripening inside: from outside nothing seems to happen while something completes itself within, closed until it is ready."
+  },
+  {
+   "rune": "Wunjo",
+   "mechanism": "A moment when things fall into place and lighten: shared joy in the middle of things, not a reward for finishing."
+  },
+  {
+   "rune": "Ehwaz",
+   "mechanism": "Movement made by two: progress that comes only when two find a common rhythm and neither forces the other."
+  },
+  {
+   "rune": "Raidho",
+   "mechanism": "A road made by going: step follows step, a rhythm is found only by moving, and the question is whether the way still leads where one means to go."
+  },
+  {
+   "rune": "Sowilo",
+   "mechanism": "The sun's light and strength: it simply shines, and by it one sees where one stands; too bright, it dazzles."
+  },
+  {
+   "rune": "Uruz",
+   "mechanism": "Raw bodily strength that shows only when it is needed: a weight or resistance gives way to a force that was already there."
+  },
+  {
+   "rune": "Eihwaz",
+   "mechanism": "Holding through change: something bends, stands between two states or endures a long strain, and does not break."
+  },
+  {
+   "rune": "Dagaz",
+   "mechanism": "The turn from dark to light: a shift after which the same world looks different and cannot be seen the old way."
+  },
+  {
+   "rune": "Nauthiz",
+   "mechanism": "Lack and constraint: something is missing or cannot be had, and the pressure shows what is truly needed."
+  },
+  {
+   "rune": "Laguz",
+   "mechanism": "Water and what moves under the surface: something is sensed before it can be explained, or a hidden current finds its own way."
+  }
+ ],
+ "images": [
+  {
+   "id": 12,
+   "image": "The footbridge sways under the crowd and is still again when they have crossed."
+  },
+  {
+   "id": 55,
+   "image": "Your foot finds the brake as the car ahead drifts, before you know why."
+  },
+  {
+   "id": 21,
+   "image": "One person says the name no one has said all evening, and the table goes quiet."
+  },
+  {
+   "id": 64,
+   "image": "A drop has frozen at the tip of an icicle, just before it falls."
+  },
+  {
+   "id": 30,
+   "image": "Two people carry a long mirror through the doorway, one pausing as the other turns."
+  },
+  {
+   "id": 73,
+   "image": "The salmon throws itself at the falls again."
+  },
+  {
+   "id": 39,
+   "image": "The phone is at two per cent, and you send the one message that matters."
+  },
+  {
+   "id": 5,
+   "image": "You turn down the praise and say whose work it was."
+  },
+  {
+   "id": 48,
+   "image": "Fresh snow lies on the field, and nothing has crossed it yet."
+  },
+  {
+   "id": 14,
+   "image": "Dinner is burnt, and the table laughs over bread and cheese."
+  },
+  {
+   "id": 57,
+   "image": "The cloud lifts, and you see how far up the slope you already are."
+  },
+  {
+   "id": 23,
+   "image": "You read the same message again in the morning, and it says something else."
+  },
+  {
+   "id": 66,
+   "image": "You bring a dish to the shared dinner and leave with a plate of someone else's cooking."
+  },
+  {
+   "id": 32,
+   "image": "An unnamed voice memo sits in your phone, three minutes long."
+  },
+  {
+   "id": 75,
+   "image": "The broken bone knits under the cast, and nothing can be seen of it."
+  },
+  {
+   "id": 41,
+   "image": "On the long drive you miss your turning because the road was so easy to follow."
+  },
+  {
+   "id": 7,
+   "image": "The coins dropped in the jar each evening are, one day, the fare."
+  },
+  {
+   "id": 50,
+   "image": "In the dark window of the train your own face sits among the other passengers."
+  },
+  {
+   "id": 16,
+   "image": "Your foot is already off the kerb when the horn sounds."
+  },
+  {
+   "id": 59,
+   "image": "A chain of bubbles rises through the dark water, then stops beneath the clear ice."
+  },
+  {
+   "id": 25,
+   "image": "Two people walk side by side, and neither could say who set the pace."
+  },
+  {
+   "id": 68,
+   "image": "The lid holds, and holds, and gives under your grip."
+  },
+  {
+   "id": 34,
+   "image": "One minute of hail, and the tulips are lying on the path."
+  },
+  {
+   "id": 77,
+   "image": "You tell the referee the ball was out, and your own team loses the point."
+  },
+  {
+   "id": 43,
+   "image": "One wall in the new flat is still bare, without a single nail hole."
+  },
+  {
+   "id": 9,
+   "image": "Halfway through the dishes a song comes on, and you both join in."
+  },
+  {
+   "id": 52,
+   "image": "The geese feed with one head always raised."
+  },
+  {
+   "id": 18,
+   "image": "The stream runs in the bed the old river cut."
+  },
+  {
+   "id": 61,
+   "image": "One match in the cave shows the wall an arm's length away and no further."
+  },
+  {
+   "id": 27,
+   "image": "A parcel sits on the step, taped shut, with no sender's name."
+  },
+  {
+   "id": 70,
+   "image": "The dough rests under a tea towel, and by morning it has doubled."
+  },
+  {
+   "id": 36,
+   "image": "The path across the grass is on no plan; it is where everyone actually walks."
+  },
+  {
+   "id": 2,
+   "image": "After months of practice, you answer in the new language without translating first."
+  },
+  {
+   "id": 45,
+   "image": "A friend copies the way you tap your foot, and you had never noticed it."
+  },
+  {
+   "id": 11,
+   "image": "The cold of the river at your ankles stops you before the current does."
+  },
+  {
+   "id": 54,
+   "image": "The waterfall has become a wall of ice, its last streams held against the rock."
+  },
+  {
+   "id": 20,
+   "image": "The eider plucks her own down to line the nest."
+  },
+  {
+   "id": 63,
+   "image": "The pool cut off from the river clouds over while the river runs clear."
+  },
+  {
+   "id": 29,
+   "image": "A power cut ends the video call and takes the unsaved slide with it."
+  },
+  {
+   "id": 72,
+   "image": "Everyone agreed in the corridor; on the form there is one name, and it is yours."
+  },
+  {
+   "id": 38,
+   "image": "A new document is open, and the cursor blinks on the first line."
+  },
+  {
+   "id": 4,
+   "image": "The rowan feeds the thrush, and the thrush carries its seed over the hill."
+  },
+  {
+   "id": 47,
+   "image": "The phone is silenced for the night, with three numbers allowed to ring through."
+  },
+  {
+   "id": 13,
+   "image": "The table has moved through three homes and still stands in the kitchen."
+  },
+  {
+   "id": 56,
+   "image": "The new bulb in the hallway shows a crack that was always in the ceiling."
+  },
+  {
+   "id": 22,
+   "image": "The runner slows to a walk on the hill and does not stop."
+  },
+  {
+   "id": 65,
+   "image": "The swell lifts the boat before any wave can be seen."
+  },
+  {
+   "id": 31,
+   "image": "The raven calls once from the roof, and everyone at the door looks up."
+  },
+  {
+   "id": 74,
+   "image": "The tree planted as a sapling beside the bench now shades the place where you sit."
+  },
+  {
+   "id": 40,
+   "image": "You hear your own phrase come out of a friend's mouth and learn how it sounds."
+  },
+  {
+   "id": 6,
+   "image": "The reply is written in a single breath, and your thumb stops above the send button."
+  },
+  {
+   "id": 49,
+   "image": "The birch on the lava field grows no taller than the rock that shelters it."
+  },
+  {
+   "id": 15,
+   "image": "The seedling droops for a week in its new pot, then puts out one leaf."
+  },
+  {
+   "id": 58,
+   "image": "The battery you never use is flat on the day you need it."
+  },
+  {
+   "id": 24,
+   "image": "The flight is cancelled at the gate, and the queue turns round as one."
+  },
+  {
+   "id": 67,
+   "image": "The sun comes round to the window, and every fingerprint on the glass shows."
+  },
+  {
+   "id": 33,
+   "image": "The tide has turned, and the same boats now point the other way."
+  },
+  {
+   "id": 76,
+   "image": "Someone has remembered how you take your coffee."
+  },
+  {
+   "id": 42,
+   "image": "The door opens on its chain, just far enough to see who is knocking."
+  },
+  {
+   "id": 8,
+   "image": "The recipe card is in another hand, with one change added in yours."
+  },
+  {
+   "id": 51,
+   "image": "The phone light finds the dropped key, and beside it a long-lost earring."
+  },
+  {
+   "id": 17,
+   "image": "The tall grass lies flat in the wind and is standing again by evening."
+  },
+  {
+   "id": 60,
+   "image": "You turn back at the door, sure something is left behind, before you know what."
+  },
+  {
+   "id": 26,
+   "image": "Said aloud, the plan sounds different from the one in your head."
+  },
+  {
+   "id": 69,
+   "image": "The lift stops between floors, and the building goes on humming around it."
+  },
+  {
+   "id": 35,
+   "image": "Two swans cross the lake, and the gap between them never changes."
+  },
+  {
+   "id": 1,
+   "image": "The door swollen by rain opens at the third push of your shoulder."
+  },
+  {
+   "id": 44,
+   "image": "One seat is left on the last bus, and two of you are still on the pavement."
+  },
+  {
+   "id": 10,
+   "image": "The child struggles with the zip, and you wait while they try again."
+  },
+  {
+   "id": 53,
+   "image": "The candle kept for a special evening has never been lit."
+  },
+  {
+   "id": 19,
+   "image": "On the first warm day every door on the street stands open."
+  },
+  {
+   "id": 62,
+   "image": "The low sun comes in under the cloud, and every stone on the moor has a shadow."
+  },
+  {
+   "id": 28,
+   "image": "You turn the map on your phone, and the street falls into place."
+  },
+  {
+   "id": 71,
+   "image": "The borrowed book comes back with a bar of chocolate on top."
+  },
+  {
+   "id": 37,
+   "image": "Something has crossed the snow in the night, and the tracks end at the stream."
+  },
+  {
+   "id": 3,
+   "image": "The potato forgotten in the cupboard has put out white shoots."
+  },
+  {
+   "id": 46,
+   "image": "After the first hour of walking your feet stop asking how far it is."
+  }
+ ]
+}

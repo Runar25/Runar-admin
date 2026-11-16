@@ -1,0 +1,112 @@
+[
+ {
+  "id": 1,
+  "druh": "pochvaleny",
+  "obraz": "You sit down with them and no one asks why you came."
+ },
+ {
+  "id": 2,
+  "druh": "odmitnuty",
+  "obraz": "A single lamp over the bench."
+ },
+ {
+  "id": 3,
+  "druh": "novy",
+  "obraz": "The low sun comes in under the cloud, and every stone on the moor has a shadow."
+ },
+ {
+  "id": 4,
+  "druh": "pochvaleny",
+  "obraz": "The lagoon water clears for a moment and something below stirs, then closes over again."
+ },
+ {
+  "id": 5,
+  "druh": "odmitnuty",
+  "obraz": "You water the cutting and then leave it alone."
+ },
+ {
+  "id": 6,
+  "druh": "novy",
+  "obraz": "The rowan feeds the thrush, and the thrush carries its seed over the hill."
+ },
+ {
+  "id": 7,
+  "druh": "pochvaleny",
+  "obraz": "You lift the end no one else could get under, and it comes up."
+ },
+ {
+  "id": 8,
+  "druh": "odmitnuty",
+  "obraz": "You stand by your word though it costs you your sleep."
+ },
+ {
+  "id": 9,
+  "druh": "odmitnuty",
+  "obraz": "The cow is sold in the autumn, and what she fetched carries the household through the winter."
+ },
+ {
+  "id": 10,
+  "druh": "pochvaleny",
+  "obraz": "The milk spills over the brim of the pail."
+ },
+ {
+  "id": 11,
+  "druh": "pochvaleny",
+  "obraz": "In the sunshine you can see where you stand on the slope."
+ },
+ {
+  "id": 12,
+  "druh": "odmitnuty",
+  "obraz": "The sun finally reaches into the valley and everything goes still."
+ },
+ {
+  "id": 13,
+  "druh": "novy",
+  "obraz": "An unnamed voice memo sits in your phone, three minutes long."
+ },
+ {
+  "id": 14,
+  "druh": "pochvaleny",
+  "obraz": "Out on the heath a twig snaps, and the whole party goes quiet to listen."
+ },
+ {
+  "id": 15,
+  "druh": "odmitnuty",
+  "obraz": "The turf wall the forefathers built now sinks slowly back into the earth."
+ },
+ {
+  "id": 16,
+  "druh": "novy",
+  "obraz": "The salmon throws itself at the falls again."
+ },
+ {
+  "id": 17,
+  "druh": "pochvaleny",
+  "obraz": "After the storm, only the tree with deep roots is still standing."
+ },
+ {
+  "id": 18,
+  "druh": "odmitnuty",
+  "obraz": "From the pass you look back, and your tracks in the snow make one line down the valley."
+ },
+ {
+  "id": 19,
+  "druh": "novy",
+  "obraz": "The door swollen by rain opens at the third push of your shoulder."
+ },
+ {
+  "id": 20,
+  "druh": "pochvaleny",
+  "obraz": "The plant on the sill turns itself flat to the glass, toward the one hour of light it gets."
+ },
+ {
+  "id": 21,
+  "druh": "odmitnuty",
+  "obraz": "The calm lies over the fjord and nothing stirs, not even the bird on the rock."
+ },
+ {
+  "id": 22,
+  "druh": "novy",
+  "obraz": "One minute of hail, and the tulips are lying on the path."
+ }
+]
