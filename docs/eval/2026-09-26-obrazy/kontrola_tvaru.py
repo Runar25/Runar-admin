@@ -10,7 +10,8 @@ import re, subprocess, sys
 DELKA_MAX = 20            # RUNAR_DESIGN „Délka a tvar obrazu“: kolem 12; nad 20 je to příběh
 CAS = r'\b(yesterday|tomorrow|last (week|month|year|summer|winter|spring|autumn)|\d+ (days|weeks|months|years) ago|for (weeks|months|years)|a year ago|in (may|june|july|august|september|october|november|december|january|february|march|april))\b'
 ROLE = r'\b(father|mother|grandmother|grandfather|sister|brother|daughter|son|husband|wife|aunt|uncle|forefathers?|ancestors?)\b'
-TVRZENI = r'\b(you (once|used to|grew up|remember|have always)|your (childhood|family|past))\b'
+# 2026-11-16: „your <role>“ je tvrzení o čtenářově rodině → červená; role postavy v obraze („its mother“) zůstává žlutá v ROLE.
+TVRZENI = r'\b(you (once|used to|grew up|remember|have always)|your (childhood|family|past)|your (grand)?(father|mother|parents?|sister|brother|daughter|son|husband|wife|aunt|uncle)|family calls?)\b'
 PONAUCENI = r'\b(whoever|whenever|the more\b.*\bthe more|as long as|always|never)\b'
 OSOBA = r'\b(someone|stranger|neighbours?|woman|man|boy|girl|child|children|kids?|friend|people|person|everyone|party|families)\b'
 STOJI = r'\b(stands?|lies|waits?|burns|hangs|sits)\b'

@@ -31,6 +31,12 @@ nikdo neměl před sebou; rozbor příčin → `docs/eval/2026-11-09-v2-vyklad-z
    společnou večeři přinesu talíř něčeho a odcházím s něčím jiným; překvapení smí zůstat.
 5. **Osoba si místo v obraze musí zasloužit** (`RUNAR_DECISIONS.md` 2026-11-14 (6)); žádné tvrzení o čtenářově minulosti ani rodině.
 6. Dvě síta (`RUNAR_DESIGN.md` „Obraz — dvě síta“).
+7. **Obraz říká Rúnar** (owner 2026-11-16: „všechny věty by měly být jak od Rúnara“). Klidně, bez pojmenování emoce a bez
+   tvrzení, jaký čtenář je — k větě „You have typed the angry reply…“: „jak moc je potřeba být přímý a přirovnávat to k tomu, když je
+   člověk angry? nejde to říct jinak a přitom zachovat dramatičnost a význam?“ Napětí nese děj (odpověď napsaná jedním dechem, palec
+   nad odesláním), ne přídavné jméno. Hlas: `RUNAR_DESIGN.md` „Hlas a styl“.
+8. **Při krácení se škrtá vysvětlování, ne příčina ani důsledek** (rozbor GPT 2026-11-16, kolo 2: Jera bez „after months of practice“
+   šla k Laguz; výtah bez „budova běží dál“ ztratil Isu). Délka kolem 12 slov není cíl sama o sobě; ownerem chválené obrazy mají 11–16.
 
 ## 3. Zkoušky, než obraz uvidí owner
 1. **Stroj:** `python -X utf8 docs/eval/2026-09-26-obrazy/kontrola_tvaru.py <soubor>` — červená se přepíše; žluté body stroj neposoudí

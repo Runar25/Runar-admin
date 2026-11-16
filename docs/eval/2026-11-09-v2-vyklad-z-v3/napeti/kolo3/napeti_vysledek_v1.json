@@ -1,0 +1,1850 @@
+[
+ {
+  "runa": "Uruz",
+  "obraz": "The stuck window gives when you lean into the frame with both hands.",
+  "stav": "projde",
+  "A": "Uruz",
+  "B": "Uruz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "A resistance gives way when bodily force is applied.",
+   "A resistance gives way to bodily force applied in full."
+  ],
+  "popis": {
+   "id": 1,
+   "actor": "you, pushing a stuck window",
+   "happens": "a jammed window comes loose when you push hard with both hands",
+   "point": "Real effort with your whole weight frees what was stuck.",
+   "plausible": "yes",
+   "natural": "no - you push the window or sash, not 'lean into the frame'; the frame is the fixed part",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Jera",
+  "obraz": "After months of practice, you answer in the new language without translating first.",
+  "stav": "projde",
+  "A": "Jera",
+  "B": "Jera",
+  "jistota": [
+   "medium",
+   "high"
+  ],
+  "proc": [
+   "Long earlier work shows as a result that came at its own pace.",
+   "Long earlier work shows as a result that could not have been hurried."
+  ],
+  "popis": {
+   "id": 2,
+   "actor": "you, a language learner",
+   "happens": "you reply in a foreign language without translating in your head",
+   "point": "Long practice has made the skill automatic.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "no - only people who have learned a second language to a working level"
+  }
+ },
+ {
+  "runa": "Ingwaz",
+  "obraz": "After days of practising alone, the first sentence comes out whole.",
+  "stav": "projde",
+  "A": "Ingwaz",
+  "B": "Ingwaz",
+  "jistota": [
+   "medium",
+   "medium"
+  ],
+  "proc": [
+   "Something completed itself unseen and comes out whole when ready.",
+   "Something completed itself unseen and emerges whole when ready."
+  ],
+  "popis": {
+   "id": 3,
+   "actor": "someone practising alone",
+   "happens": "after days of solo practice a first full sentence comes out",
+   "point": "A first small success after private practice.",
+   "plausible": "yes",
+   "natural": "no - unclear what is being practised (a language? a speech? speaking again?) and 'comes out whole' is vague",
+   "known": "no - too unspecific to recognise; depends on guessing the situation"
+  }
+ },
+ {
+  "runa": "Gebo",
+  "obraz": "Someone has remembered how you take your coffee.",
+  "stav": "projde",
+  "A": "Gebo",
+  "B": "Gebo",
+  "jistota": [
+   "medium",
+   "medium"
+  ],
+  "proc": [
+   "An uncounted attention given from one person to another.",
+   "A small uncounted attention passes from one person to another."
+  ],
+  "popis": {
+   "id": 4,
+   "actor": "someone else (unnamed)",
+   "happens": "another person remembers how you like your coffee",
+   "point": "Being noticed and remembered in a small way.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Tiwaz",
+  "obraz": "You turn down the praise and say whose work it was.",
+  "stav": "projde",
+  "A": "Tiwaz",
+  "B": "Tiwaz",
+  "jistota": [
+   "high",
+   "medium"
+  ],
+  "proc": [
+   "Takes the honest side and knowingly gives up the praise.",
+   "You keep to what is right and knowingly give up the praise."
+  ],
+  "popis": {
+   "id": 5,
+   "actor": "you",
+   "happens": "you refuse credit and name the person who really did the work",
+   "point": "Honesty about who deserves the credit.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Thurisaz",
+  "obraz": "The reply is written in a single breath, and your thumb stops above send.",
+  "stav": "projde",
+  "A": "Thurisaz",
+  "B": "Thurisaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "A rushed move is stopped just before it is made.",
+   "A rushed move is stopped just before it is made."
+  ],
+  "popis": {
+   "id": 6,
+   "actor": "you, writing a message on a phone",
+   "happens": "you type a reply in a rush and then hesitate before sending",
+   "point": "Pausing before sending something written in the heat of the moment.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Jera",
+  "obraz": "The small sums set aside each month have quietly become the course fee.",
+  "stav": "projde",
+  "A": "Jera",
+  "B": "Jera",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Small acts done long before have ripened into a result.",
+   "Small acts done long before have ripened over time into a result."
+  ],
+  "popis": {
+   "id": 7,
+   "actor": "you / your monthly savings",
+   "happens": "small monthly savings have added up to the price of a course",
+   "point": "Small regular savings quietly add up to something real.",
+   "plausible": "yes",
+   "natural": "no - 'have become the course fee' is slightly odd; savings cover or add up to a fee",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Othila",
+  "obraz": "The recipe card is in another hand, with one change added in yours.",
+  "stav": "projde",
+  "A": "Othila",
+  "B": "Othila",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "A handed-down thing carried on with one's own change.",
+   "Something handed down is carried on with a choice of one's own."
+  ],
+  "popis": {
+   "id": 8,
+   "actor": "you and an earlier writer of the recipe",
+   "happens": "you have added one change of your own to someone else's handwritten recipe",
+   "point": "Something inherited, with your own small mark added.",
+   "plausible": "yes",
+   "natural": "no - 'in another hand' for handwriting is old-fashioned and may be misread",
+   "known": "no - handwritten recipe cards are uncommon now"
+  }
+ },
+ {
+  "runa": "Wunjo",
+  "obraz": "Halfway through the dishes a song comes on, and two voices join it.",
+  "stav": "projde",
+  "A": "Wunjo",
+  "B": "Wunjo",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Shared joy arises in the middle of a chore.",
+   "Shared joy arises in the middle of a task, not at its end."
+  ],
+  "popis": {
+   "id": 9,
+   "actor": "two people washing up",
+   "happens": "a song plays during the dishes and two people sing along",
+   "point": "An ordinary chore turns into a shared happy moment.",
+   "plausible": "yes",
+   "natural": "no - people 'join in', voices don't 'join it'; mildly awkward",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Berkana",
+  "obraz": "The child struggles with the zip, and you wait while they try again.",
+  "stav": "projde",
+  "A": "Berkana",
+  "B": "Berkana",
+  "jistota": [
+   "medium",
+   "high"
+  ],
+  "proc": [
+   "A fragile attempt is given room rather than forced.",
+   "A small growing ability is given room rather than forced."
+  ],
+  "popis": {
+   "id": 10,
+   "actor": "you and a child",
+   "happens": "you wait and let a child keep trying to do up a zip",
+   "point": "Patience: letting someone learn by doing it themselves.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Thurisaz",
+  "obraz": "The words are in your mouth, and you hold them until the other has finished.",
+  "stav": "projde",
+  "A": "Thurisaz",
+  "B": "Thurisaz",
+  "jistota": [
+   "medium",
+   "medium"
+  ],
+  "proc": [
+   "The move is held back at the threshold of being made.",
+   "The words are checked at the threshold, just before being spoken."
+  ],
+  "popis": {
+   "id": 11,
+   "actor": "you, in a conversation",
+   "happens": "you hold back what you want to say until the other person finishes",
+   "point": "Restraint: not interrupting.",
+   "plausible": "yes",
+   "natural": "no - 'the other' is stiff; 'the other person' is normal",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Eihwaz",
+  "obraz": "The umbrella turns inside out in the gust, is pushed back, and goes on.",
+  "stav": "projde",
+  "A": "Eihwaz",
+  "B": "Eihwaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "It bends under strain, does not break, and continues.",
+   "The umbrella is bent out of shape by the gust, is restored and keeps working without breaking."
+  ],
+  "popis": {
+   "id": 12,
+   "actor": "an umbrella (and its unnamed holder)",
+   "happens": "wind flips an umbrella inside out, it is pushed back into shape",
+   "point": "Something knocked out of shape is righted and carries on.",
+   "plausible": "yes",
+   "natural": "no - 'and goes on' is unclear: an umbrella doesn't go on; the person is missing from the sentence",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Othila",
+  "obraz": "The table has moved through three homes and still stands in the kitchen.",
+  "stav": "projde",
+  "A": "Othila",
+  "B": "Othila",
+  "jistota": [
+   "medium",
+   "medium"
+  ],
+  "proc": [
+   "A thing carried from home to home and kept.",
+   "A thing carried on from home to home that remains the centre of the house."
+  ],
+  "popis": {
+   "id": 13,
+   "actor": "a table",
+   "happens": "the same table has been kept through three house moves",
+   "point": "A lasting object that stays constant through change.",
+   "plausible": "yes",
+   "natural": "no - 'moved through three homes' is slightly off; and 'still stands in the kitchen' of which home is blurred",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Wunjo",
+  "obraz": "The rain ends the plan, and the kitchen fills with people instead.",
+  "stav": "neprojde",
+  "A": "Hagalaz",
+  "B": "Hagalaz",
+  "jistota": [
+   "medium",
+   "medium"
+  ],
+  "proc": [
+   "An outside force breaks the plan and shows what remains.",
+   "An outside force breaks the plan and what remains shows itself."
+  ],
+  "popis": {
+   "id": 14,
+   "actor": "rain and a group of people",
+   "happens": "rain cancels an outdoor plan and everyone gathers in the kitchen",
+   "point": "A spoiled plan turns into a warm gathering.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Berkana",
+  "obraz": "The child ties the shoelace wrong, and your hands stay where they are.",
+  "stav": "projde",
+  "A": "Berkana",
+  "B": "Berkana",
+  "jistota": [
+   "medium",
+   "medium"
+  ],
+  "proc": [
+   "Care that lets a small beginner grow without stepping in.",
+   "A fragile beginner's attempt is given room rather than taken over."
+  ],
+  "popis": {
+   "id": 15,
+   "actor": "you and a child",
+   "happens": "a child ties a lace badly and you do not step in",
+   "point": "Holding back from fixing someone else's mistake.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Thurisaz",
+  "obraz": "About to post the photo, you notice a face in it that was never asked.",
+  "stav": "projde",
+  "A": "Thurisaz",
+  "B": "Thurisaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "A stop just before the act shows what the rush would miss.",
+   "A move is stopped just before it is made, showing what the rush would have missed."
+  ],
+  "popis": {
+   "id": 16,
+   "actor": "you, about to post a photo",
+   "happens": "you notice someone in the photo who did not consent to it being posted",
+   "point": "A moment of conscience about another person's privacy.",
+   "plausible": "yes",
+   "natural": "no - 'a face that was never asked' is odd; you ask a person, not a face",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Eihwaz",
+  "obraz": "The tall grass lies flat in the wind and is standing again by evening.",
+  "stav": "projde",
+  "A": "Eihwaz",
+  "B": "Eihwaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Bends flat under force and stands again unbroken.",
+   "The grass bends fully under the force and does not break."
+  ],
+  "popis": {
+   "id": 17,
+   "actor": "tall grass and wind",
+   "happens": "wind flattens the grass and it stands up again later",
+   "point": "Bending under pressure and recovering.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "no - most people don't watch a field through the day; it is nature imagery, not lived experience"
+  }
+ },
+ {
+  "runa": "Othila",
+  "obraz": "You thread the needle the way you were shown, long ago, without thinking.",
+  "stav": "projde",
+  "A": "Othila",
+  "B": "Othila",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "A way handed down long ago is still carried in the hands.",
+   "A way handed down long ago is carried on in your own hands."
+  ],
+  "popis": {
+   "id": 18,
+   "actor": "you",
+   "happens": "you thread a needle automatically the way you were once taught",
+   "point": "An old learned skill stays in the hands.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Wunjo",
+  "obraz": "The cake leans to one side, and everyone wants a piece from the low end.",
+  "stav": "projde",
+  "A": "Wunjo",
+  "B": "Wunjo",
+  "jistota": [
+   "medium",
+   "medium"
+  ],
+  "proc": [
+   "An imperfect thing becomes a shared delight.",
+   "An imperfection turns into shared delight in the middle of things."
+  ],
+  "popis": {
+   "id": 19,
+   "actor": "a lopsided cake and the guests",
+   "happens": "a cake comes out leaning and everyone asks for a slice from the lower side",
+   "point": "Unclear - maybe the flaw is what people like.",
+   "plausible": "no - there is no real reason everyone would want the low end; it reads as invented",
+   "natural": "no - 'the low end' of a cake is odd, and the point of the sentence is unclear",
+   "known": "no - a lopsided cake yes, but not this reaction"
+  }
+ },
+ {
+  "runa": "Berkana",
+  "obraz": "The seedling droops for a week in its new pot, then puts out one leaf.",
+  "stav": "projde",
+  "A": "Berkana",
+  "B": "Berkana",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Fragile new life given room puts out a first leaf.",
+   "Fragile new growth begins after being given room."
+  ],
+  "popis": {
+   "id": 20,
+   "actor": "a repotted seedling",
+   "happens": "a seedling wilts after repotting and then grows a new leaf",
+   "point": "Recovery after a setback; slow adjustment to a new place.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "no - only people who grow plants would recognise it"
+  }
+ },
+ {
+  "runa": "Ansuz",
+  "obraz": "Someone finally says it aloud, and the room is not the same room.",
+  "stav": "projde",
+  "A": "Ansuz",
+  "B": "Ansuz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "A spoken word arrives and changes everything.",
+   "A spoken word arrives and changes the room."
+  ],
+  "popis": {
+   "id": 21,
+   "actor": "someone in a group",
+   "happens": "someone says the unspoken thing and the atmosphere changes",
+   "point": "Speaking a truth aloud changes everything.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Eihwaz",
+  "obraz": "The runner slows to a walk on the hill and does not stop.",
+  "stav": "projde",
+  "A": "Eihwaz",
+  "B": "Eihwaz",
+  "jistota": [
+   "medium",
+   "high"
+  ],
+  "proc": [
+   "Yields to the strain but endures without breaking off.",
+   "Under long strain the runner yields in pace but does not break off."
+  ],
+  "popis": {
+   "id": 22,
+   "actor": "a runner",
+   "happens": "a runner drops to a walk on a hill but keeps going",
+   "point": "Slowing down without giving up.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Dagaz",
+  "obraz": "You turn the map on your phone, and the street falls into place.",
+  "stav": "hraniční",
+  "A": "Dagaz",
+  "B": "Wunjo",
+  "jistota": [
+   "low",
+   "low"
+  ],
+  "proc": [
+   "A turn after which the same place reads differently and one sees where one stands.",
+   "A small turn and things literally fall into place."
+  ],
+  "popis": {
+   "id": 23,
+   "actor": "you, with a phone map",
+   "happens": "you rotate the map and suddenly understand where you are",
+   "point": "A small adjustment makes things make sense.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Hagalaz",
+  "obraz": "The flight is cancelled at the gate, and the day has to be made again.",
+  "stav": "projde",
+  "A": "Hagalaz",
+  "B": "Hagalaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "An uninvited outside event breaks the plan.",
+   "An outside force breaks the plan at the last moment."
+  ],
+  "popis": {
+   "id": 24,
+   "actor": "an airline / the traveller",
+   "happens": "a flight is cancelled at the last minute and plans must be redone",
+   "point": "A sudden disruption forces a full replan.",
+   "plausible": "yes",
+   "natural": "no - 'the day has to be made again' is not idiomatic; a day is replanned or rearranged",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Ehwaz",
+  "obraz": "Two walk side by side, and neither could say who set the pace.",
+  "stav": "projde",
+  "A": "Ehwaz",
+  "B": "Ehwaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Two move in a common rhythm neither forced.",
+   "Two share a common pace that neither forced on the other."
+  ],
+  "popis": {
+   "id": 25,
+   "actor": "two people walking",
+   "happens": "two people walk together at a pace neither consciously set",
+   "point": "Easy, unspoken harmony between two people.",
+   "plausible": "yes",
+   "natural": "no - 'Two walk' with no noun is stiff",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Ansuz",
+  "obraz": "Said aloud, the plan sounds different from the one in your head.",
+  "stav": "projde",
+  "A": "Ansuz",
+  "B": "Ansuz",
+  "jistota": [
+   "medium",
+   "medium"
+  ],
+  "proc": [
+   "Speaking it gives the thing a different meaning.",
+   "Speaking the thing aloud changes what it means."
+  ],
+  "popis": {
+   "id": 26,
+   "actor": "you, voicing a plan",
+   "happens": "a plan sounds different once you say it out loud",
+   "point": "Speaking a plan aloud tests it.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Perth",
+  "obraz": "A parcel arrives with no sender's name on it.",
+  "stav": "projde",
+  "A": "Perth",
+  "B": "Perth",
+  "jistota": [
+   "low",
+   "medium"
+  ],
+  "proc": [
+   "A closed thing exists but its source and content are not yet known.",
+   "A closed thing has arrived whose contents and origin are not yet known."
+  ],
+  "popis": {
+   "id": 27,
+   "actor": "a parcel",
+   "happens": "a parcel is delivered with no indication who sent it",
+   "point": "A small mystery; something unexpected and unexplained.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "no - it happens, but rarely; most parcels are expected and labelled"
+  }
+ },
+ {
+  "runa": "Dagaz",
+  "obraz": "You read the same message again in the morning, and it says something else.",
+  "stav": "projde",
+  "A": "Dagaz",
+  "B": "Dagaz",
+  "jistota": [
+   "medium",
+   "medium"
+  ],
+  "proc": [
+   "After the night the same thing is seen differently.",
+   "After the night the same thing reads differently."
+  ],
+  "popis": {
+   "id": 28,
+   "actor": "you, rereading a message",
+   "happens": "a message reads differently when you look at it again the next morning",
+   "point": "Mood changes how words are read.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Hagalaz",
+  "obraz": "A power cut ends the video call and takes the unsaved slide with it.",
+  "stav": "projde",
+  "A": "Hagalaz",
+  "B": "Hagalaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "An outside force cuts in and takes something with it.",
+   "An uninvited outside force breaks things off and takes something with it."
+  ],
+  "popis": {
+   "id": 29,
+   "actor": "a power cut",
+   "happens": "the electricity fails, cutting off a video call and losing unsaved work",
+   "point": "Sudden loss of work through something outside your control.",
+   "plausible": "no - most people work on battery laptops with autosave, so a power cut drops the call but rarely loses the slide",
+   "natural": "yes",
+   "known": "no - losing unsaved work yes, but this exact combination is uncommon today"
+  }
+ },
+ {
+  "runa": "Ehwaz",
+  "obraz": "Two people carry a long mirror through the doorway, one pausing as the other turns.",
+  "stav": "projde",
+  "A": "Ehwaz",
+  "B": "Ehwaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Two progress only by coordinating, one yielding as the other moves.",
+   "Two move one object together, each adjusting to the other's motion."
+  ],
+  "popis": {
+   "id": 30,
+   "actor": "two people carrying a mirror",
+   "happens": "two people manoeuvre a long mirror through a door, taking turns to move",
+   "point": "Careful cooperation; one waits while the other moves.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Ansuz",
+  "obraz": "One sentence in the voice message, and the day has a different shape.",
+  "stav": "projde",
+  "A": "Ansuz",
+  "B": "Ansuz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "A heard sentence arrives and changes the day.",
+   "A heard sentence arrives and changes the meaning of the day."
+  ],
+  "popis": {
+   "id": 31,
+   "actor": "a voice message / its sender",
+   "happens": "one sentence in a voice message changes how the day feels",
+   "point": "A few words can change the whole day.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Perth",
+  "obraz": "There is a recording in your own voice, and you cannot recall what it says.",
+  "stav": "projde",
+  "A": "Perth",
+  "B": "Perth",
+  "jistota": [
+   "medium",
+   "medium"
+  ],
+  "proc": [
+   "Content exists but is not known yet.",
+   "Something exists with content that is not yet known to you."
+  ],
+  "popis": {
+   "id": 32,
+   "actor": "you and an old voice recording",
+   "happens": "you find a recording you made and don't remember its content",
+   "point": "Something of your own you have forgotten.",
+   "plausible": "yes",
+   "natural": "no - 'a recording in your own voice' is awkward; 'of your own voice' is normal",
+   "known": "no - only people who record voice memos have had this"
+  }
+ },
+ {
+  "runa": "Dagaz",
+  "obraz": "At dawn the street that was strange in the dark is the one you know.",
+  "stav": "projde",
+  "A": "Dagaz",
+  "B": "Dagaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "The turn from dark to light changes how the place looks.",
+   "The turn from dark to light makes the same place look different."
+  ],
+  "popis": {
+   "id": 33,
+   "actor": "a street / daylight",
+   "happens": "a street that seemed unfamiliar at night turns out to be a known one at dawn",
+   "point": "Daylight shows the familiar behind what looked strange.",
+   "plausible": "yes",
+   "natural": "no - the tenses and 'the one you know' take a second reading to untangle",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Hagalaz",
+  "obraz": "The phone hits the tiles, and the evening is suddenly about something else.",
+  "stav": "projde",
+  "A": "Hagalaz",
+  "B": "Hagalaz",
+  "jistota": [
+   "medium",
+   "high"
+  ],
+  "proc": [
+   "A sudden break overturns what the evening was.",
+   "A sudden break of something solid overturns the evening."
+  ],
+  "popis": {
+   "id": 34,
+   "actor": "a dropped phone",
+   "happens": "a phone falls on a tiled floor and the breakage takes over the evening",
+   "point": "One small accident hijacks everything.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Ehwaz",
+  "obraz": "Two people on a long saw, and the blade runs clean when each pulls in turn.",
+  "stav": "projde",
+  "A": "Ehwaz",
+  "B": "Ehwaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Work goes well only when two alternate in rhythm.",
+   "Progress comes only when the two alternate in a shared rhythm."
+  ],
+  "popis": {
+   "id": 35,
+   "actor": "two people with a two-handed saw",
+   "happens": "the saw cuts well when the two take turns pulling",
+   "point": "Work goes smoothly when two people alternate in rhythm.",
+   "plausible": "yes",
+   "natural": "no - verbless first half; 'a long saw' is not the usual name (two-man or crosscut saw)",
+   "known": "no - almost nobody today has used a two-person saw"
+  }
+ },
+ {
+  "runa": "Raidho",
+  "obraz": "The path across the grass is on no plan; it is where everyone actually walks.",
+  "stav": "projde",
+  "A": "Raidho",
+  "B": "Raidho",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "A road made by the going itself.",
+   "A road that exists only because it has been made by walking."
+  ],
+  "popis": {
+   "id": 36,
+   "actor": "walkers / a worn path",
+   "happens": "people have worn a path across grass where no path was planned",
+   "point": "Real habits override the official design.",
+   "plausible": "yes",
+   "natural": "no - 'is on no plan' is stiff",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Perth",
+  "obraz": "The message says the result is ready, and nothing yet about what it is.",
+  "stav": "projde",
+  "A": "Perth",
+  "B": "Perth",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Something exists but is not yet shown.",
+   "The result exists but is not yet shown."
+  ],
+  "popis": {
+   "id": 37,
+   "actor": "a notification message",
+   "happens": "you are told a result is available but not what it says",
+   "point": "The suspense of waiting to learn an important result.",
+   "plausible": "yes",
+   "natural": "no - 'and nothing yet about what it is' is clumsy",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Blank",
+  "obraz": "A new document is open, and the first line is still yours to choose.",
+  "stav": "projde",
+  "A": "Blank",
+  "B": "Blank",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "An open unwritten space.",
+   "An open space where nothing has yet been written."
+  ],
+  "popis": {
+   "id": 38,
+   "actor": "you, facing a blank document",
+   "happens": "you have opened a new document and not yet written anything",
+   "point": "A fresh start; everything is still open.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Nauthiz",
+  "obraz": "The phone is at two per cent, and you send the one message that matters.",
+  "stav": "projde",
+  "A": "Nauthiz",
+  "B": "Nauthiz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Scarcity forces out what is truly needed.",
+   "Scarcity of battery forces out the one thing truly needed."
+  ],
+  "popis": {
+   "id": 39,
+   "actor": "you, with a dying phone",
+   "happens": "with the battery almost gone you send only the essential message",
+   "point": "Scarcity forces you to pick what really matters.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Mannaz",
+  "obraz": "You hear your own phrase come out of a friend's mouth and learn how it sounds.",
+  "stav": "projde",
+  "A": "Mannaz",
+  "B": "Mannaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "One sees oneself through another as in a mirror.",
+   "You come to know yourself by hearing yourself in another."
+  ],
+  "popis": {
+   "id": 40,
+   "actor": "you and a friend",
+   "happens": "a friend uses your habitual phrase and you hear it from outside",
+   "point": "Seeing yourself reflected in someone else.",
+   "plausible": "yes",
+   "natural": "no - 'come out of a friend's mouth' is slightly crude and 'learn how it sounds' is vague",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Raidho",
+  "obraz": "On the long drive you miss your turning because the road was so easy to follow.",
+  "stav": "projde",
+  "A": "Raidho",
+  "B": "Raidho",
+  "jistota": [
+   "medium",
+   "high"
+  ],
+  "proc": [
+   "The easy going no longer leads where one meant to go.",
+   "The road carries you on and no longer leads where you meant to go."
+  ],
+  "popis": {
+   "id": 41,
+   "actor": "you, driving",
+   "happens": "you drive past your turn-off because you were on autopilot",
+   "point": "Ease makes you inattentive.",
+   "plausible": "yes",
+   "natural": "no - 'because the road was so easy to follow' is an odd reason as worded; 'turning' is British only",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Algiz",
+  "obraz": "The door opens on its chain, just far enough to see who is knocking.",
+  "stav": "projde",
+  "A": "Algiz",
+  "B": "Algiz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Guarded opening that does not let everything in.",
+   "A guard stands between inside and outside, open only enough to see."
+  ],
+  "popis": {
+   "id": 42,
+   "actor": "someone behind a chained door",
+   "happens": "someone opens the door a crack on the chain to check the visitor",
+   "point": "Caution: checking before letting someone in.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "no - door chains are no longer common; many know it only from films"
+  }
+ },
+ {
+  "runa": "Blank",
+  "obraz": "The form has one box with no label, and you leave it empty.",
+  "stav": "projde",
+  "A": "Blank",
+  "B": "Blank",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "An unmarked space left unwritten.",
+   "An unnamed space with no sign, left unwritten."
+  ],
+  "popis": {
+   "id": 43,
+   "actor": "you, filling in a form",
+   "happens": "you skip a box on a form because it has no label",
+   "point": "Leaving alone what you can't identify.",
+   "plausible": "no - forms with a completely unlabelled box are rare",
+   "natural": "yes",
+   "known": "no - confusing forms yes, an unlabelled box hardly ever"
+  }
+ },
+ {
+  "runa": "Nauthiz",
+  "obraz": "One seat is left on the last bus, and you see at once who needs it.",
+  "stav": "projde",
+  "A": "Nauthiz",
+  "B": "Nauthiz",
+  "jistota": [
+   "medium",
+   "medium"
+  ],
+  "proc": [
+   "Scarcity shows at once what is truly needed.",
+   "Scarcity of one seat makes plain who truly needs it."
+  ],
+  "popis": {
+   "id": 44,
+   "actor": "you, on a full bus",
+   "happens": "you see that someone else needs the last free seat more than you",
+   "point": "Recognising another person's greater need at once.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Mannaz",
+  "obraz": "In a friend's story of that evening you appear as someone you had not met.",
+  "stav": "projde",
+  "A": "Mannaz",
+  "B": "Mannaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "One sees oneself through another's account.",
+   "You see yourself through another person's telling."
+  ],
+  "popis": {
+   "id": 45,
+   "actor": "a friend telling a story",
+   "happens": "a friend describes an evening and their version of you surprises you",
+   "point": "Others see you differently from how you see yourself.",
+   "plausible": "yes",
+   "natural": "no - 'as someone you had not met' is clever but takes a moment to parse",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Raidho",
+  "obraz": "A few lengths in, the strokes find a rhythm that no longer needs counting.",
+  "stav": "projde",
+  "A": "Raidho",
+  "B": "Raidho",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Rhythm found only by moving.",
+   "A rhythm is found only by moving, stroke after stroke."
+  ],
+  "popis": {
+   "id": 46,
+   "actor": "a swimmer",
+   "happens": "after a few lengths the swimming becomes rhythmic and automatic",
+   "point": "Settling into an effortless rhythm.",
+   "plausible": "yes",
+   "natural": "no - swimming is never named; 'lengths' and 'strokes' must be decoded",
+   "known": "no - only people who swim lengths"
+  }
+ },
+ {
+  "runa": "Algiz",
+  "obraz": "You answer the unknown number, and give your name only after they give theirs.",
+  "stav": "projde",
+  "A": "Algiz",
+  "B": "Algiz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Open to the contact yet guarding what is let in.",
+   "Open to the caller yet guarded, letting nothing in until they are known."
+  ],
+  "popis": {
+   "id": 47,
+   "actor": "you, answering a phone call",
+   "happens": "you pick up an unknown call and withhold your name until the caller identifies themselves",
+   "point": "Guardedness with strangers.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Blank",
+  "obraz": "One wall in the new flat is bare, and nothing has been decided for it.",
+  "stav": "projde",
+  "A": "Blank",
+  "B": "Blank",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "An empty space with nothing yet decided.",
+   "An unmarked open space where nothing has been written yet."
+  ],
+  "popis": {
+   "id": 48,
+   "actor": "a bare wall / the new tenant",
+   "happens": "one wall in a new flat is still empty and undecided",
+   "point": "An open space still waiting for a decision.",
+   "plausible": "yes",
+   "natural": "no - 'nothing has been decided for it' is slightly stiff",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Nauthiz",
+  "obraz": "The water is off for the morning, and one bottle has to do for everything.",
+  "stav": "projde",
+  "A": "Nauthiz",
+  "B": "Nauthiz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Something is lacking and one must make do.",
+   "A lack forces everything to be done with what little there is."
+  ],
+  "popis": {
+   "id": 49,
+   "actor": "a household without water",
+   "happens": "the water supply is off and one bottle must cover every need",
+   "point": "Making do with very little.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "no - water cut-offs are occasional; many adults have rarely had one"
+  }
+ },
+ {
+  "runa": "Mannaz",
+  "obraz": "A friend copies the way you tap your foot, and you had never noticed it.",
+  "stav": "projde",
+  "A": "Mannaz",
+  "B": "Mannaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "A friend mirrors a trait one had not seen in oneself.",
+   "You see an unnoticed part of yourself mirrored in another person."
+  ],
+  "popis": {
+   "id": 50,
+   "actor": "a friend and you",
+   "happens": "a friend imitates your foot-tapping, a habit you were unaware of",
+   "point": "Others notice habits you can't see in yourself.",
+   "plausible": "no - friends rarely mimic a foot-tap; the scene feels constructed",
+   "natural": "no - 'and you had never noticed it' is ambiguous (the copying or the tapping?)",
+   "known": "no - being told about a habit yes, this scene no"
+  }
+ },
+ {
+  "runa": "Kenaz",
+  "obraz": "The phone light finds the dropped key, and beside it the earring given up for lost.",
+  "stav": "projde",
+  "A": "Kenaz",
+  "B": "Kenaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "A small light reveals what was there all along.",
+   "A small light reveals what was lying there all along."
+  ],
+  "popis": {
+   "id": 51,
+   "actor": "you with a phone torch",
+   "happens": "looking for a dropped key you also find a long-lost earring",
+   "point": "Searching for one thing turns up another you had given up.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Algiz",
+  "obraz": "The phone is silenced for the night, with three numbers allowed to ring through.",
+  "stav": "projde",
+  "A": "Algiz",
+  "B": "Algiz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "A guard that shuts out most but lets a few through.",
+   "A guard is set that keeps most out and lets only a chosen few through."
+  ],
+  "popis": {
+   "id": 52,
+   "actor": "the phone's owner",
+   "happens": "the phone is put on silent overnight except for three chosen contacts",
+   "point": "Shutting the world out but staying reachable for a few.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Fehu",
+  "obraz": "The candle kept for a special evening has never been lit.",
+  "stav": "projde",
+  "A": "Fehu",
+  "B": "Fehu",
+  "jistota": [
+   "medium",
+   "medium"
+  ],
+  "proc": [
+   "A value kept standing and never used.",
+   "A thing of value is kept back and never put to use."
+  ],
+  "popis": {
+   "id": 53,
+   "actor": "the candle's owner",
+   "happens": "a candle saved for a special occasion has never been used",
+   "point": "Saving things for a 'right moment' that never comes.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Isa",
+  "obraz": "The waterfall has become a wall of ice, its last streams held against the rock.",
+  "stav": "projde",
+  "A": "Isa",
+  "B": "Isa",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Moving water has stopped and is held as it is.",
+   "Flowing water has stopped and is held as it was."
+  ],
+  "popis": {
+   "id": 54,
+   "actor": "a frozen waterfall",
+   "happens": "a waterfall has frozen solid against the rock",
+   "point": "Movement stopped and held in place by cold.",
+   "plausible": "yes",
+   "natural": "no - 'its last streams held against the rock' is poetic and vague",
+   "known": "no - few adults have ever seen a frozen waterfall"
+  }
+ },
+ {
+  "runa": "Laguz",
+  "obraz": "Your foot finds the brake as the car ahead drifts, before you know why.",
+  "stav": "projde",
+  "A": "Laguz",
+  "B": "Laguz",
+  "jistota": [
+   "medium",
+   "high"
+  ],
+  "proc": [
+   "Something is sensed and acted on before it can be explained.",
+   "The body senses the danger and acts before the mind can explain it."
+  ],
+  "popis": {
+   "id": 55,
+   "actor": "you, driving",
+   "happens": "you brake by reflex when the car in front starts to wander",
+   "point": "The body reacts before the mind understands.",
+   "plausible": "yes",
+   "natural": "no - 'before you know why' is tacked on at the end and at first attaches to the drifting car",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Kenaz",
+  "obraz": "The new bulb in the hallway shows a crack that was always in the ceiling.",
+  "stav": "projde",
+  "A": "Kenaz",
+  "B": "Kenaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "A light gives shape to what was always there.",
+   "A small light reveals what was there all along."
+  ],
+  "popis": {
+   "id": 56,
+   "actor": "a new light bulb",
+   "happens": "a brighter new bulb reveals an old crack in the ceiling",
+   "point": "Better light shows what was always there.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Sowilo",
+  "obraz": "The fog lifts, and the marker you had been walking toward is there.",
+  "stav": "hraniční",
+  "A": "Sowilo",
+  "B": "Dagaz",
+  "jistota": [
+   "low",
+   "low"
+  ],
+  "proc": [
+   "With clear sight one sees where one stands relative to the goal.",
+   "Obscurity lifts and what was there all along becomes visible."
+  ],
+  "popis": {
+   "id": 57,
+   "actor": "a walker in fog",
+   "happens": "the fog clears and the marker the walker was aiming for comes into view",
+   "point": "You were on course all along without seeing it.",
+   "plausible": "yes",
+   "natural": "no - 'the marker' is vague (what kind?) and 'is there' is flat and unclear",
+   "known": "no - only hill or trail walkers"
+  }
+ },
+ {
+  "runa": "Fehu",
+  "obraz": "The battery you never use is flat on the day you need it.",
+  "stav": "projde",
+  "A": "Fehu",
+  "B": "Fehu",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "What stood unused has lost its strength.",
+   "What stood unused has lost its strength when it is called for."
+  ],
+  "popis": {
+   "id": 58,
+   "actor": "a spare battery",
+   "happens": "a rarely used battery turns out to be dead when it is finally needed",
+   "point": "Neglected things fail you exactly when needed.",
+   "plausible": "yes",
+   "natural": "no - 'the battery you never use' is vague; which battery?",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Isa",
+  "obraz": "A chain of bubbles rises through the dark water, then stops beneath the clear ice.",
+  "stav": "projde",
+  "A": "Isa",
+  "B": "Isa",
+  "jistota": [
+   "medium",
+   "medium"
+  ],
+  "proc": [
+   "A movement is halted and held under the ice.",
+   "A rising movement under the surface is stopped and held by the ice."
+  ],
+  "popis": {
+   "id": 59,
+   "actor": "bubbles under ice",
+   "happens": "bubbles rise through the water and are trapped under the ice",
+   "point": "Something rising is stopped by an invisible barrier.",
+   "plausible": "yes",
+   "natural": "no - 'then stops' for a chain of bubbles is odd; dark water but clear ice is hard to picture",
+   "known": "no - very few people have watched this"
+  }
+ },
+ {
+  "runa": "Laguz",
+  "obraz": "Your voice drops when your friend goes quiet, before either of you knows why.",
+  "stav": "projde",
+  "A": "Laguz",
+  "B": "Laguz",
+  "jistota": [
+   "medium",
+   "medium"
+  ],
+  "proc": [
+   "Something is sensed and followed before it is understood.",
+   "A hidden current is followed before either can explain it."
+  ],
+  "popis": {
+   "id": 60,
+   "actor": "you and a friend",
+   "happens": "you speak more quietly when your friend falls silent, without knowing why",
+   "point": "Sensing another's mood before understanding it.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Kenaz",
+  "obraz": "The idea comes mid-step, and you stop to catch it before it goes.",
+  "stav": "hraniční",
+  "A": "Isa",
+  "B": "Kenaz",
+  "jistota": [
+   "low",
+   "low"
+  ],
+  "proc": [
+   "Motion stops so that one thing stays in view.",
+   "A small spark appears and has to be tended at once or it goes out."
+  ],
+  "popis": {
+   "id": 61,
+   "actor": "you, walking",
+   "happens": "an idea strikes while walking and you stop to hold on to it",
+   "point": "Catching a fleeting idea before it is lost.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Sowilo",
+  "obraz": "The cloud opens, and you see how far up the slope you already are.",
+  "stav": "projde",
+  "A": "Sowilo",
+  "B": "Sowilo",
+  "jistota": [
+   "medium",
+   "medium"
+  ],
+  "proc": [
+   "Light breaks through and one sees where one stands.",
+   "Light breaks through and shows where you stand."
+  ],
+  "popis": {
+   "id": 62,
+   "actor": "a climber / the cloud",
+   "happens": "the cloud clears and you see how high you have already climbed",
+   "point": "You have come further than you realised.",
+   "plausible": "yes",
+   "natural": "no - 'the cloud opens' is unusual; clouds part or lift",
+   "known": "no - only people who walk in mountains"
+  }
+ },
+ {
+  "runa": "Fehu",
+  "obraz": "The chain rusts on the bicycle that stays in the shed.",
+  "stav": "projde",
+  "A": "Fehu",
+  "B": "Fehu",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "What is left standing decays.",
+   "What is left standing unused loses its strength."
+  ],
+  "popis": {
+   "id": 63,
+   "actor": "an unused bicycle",
+   "happens": "a bicycle left in the shed gets a rusty chain",
+   "point": "What isn't used decays.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Isa",
+  "obraz": "A drop has frozen at the tip of an icicle, just before it falls.",
+  "stav": "projde",
+  "A": "Isa",
+  "B": "Isa",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "A moving thing is held still at the instant before falling.",
+   "A moving drop has stopped and is held as it is."
+  ],
+  "popis": {
+   "id": 64,
+   "actor": "a water drop on an icicle",
+   "happens": "a drop freezes at the icicle's tip instead of dripping off",
+   "point": "A moment caught and frozen just before it would have happened.",
+   "plausible": "yes",
+   "natural": "no - 'has frozen ... just before it falls' contradicts itself: a frozen drop does not fall; should be 'before it could fall'",
+   "known": "no - people know icicles but have not watched a drop freeze"
+  }
+ },
+ {
+  "runa": "Laguz",
+  "obraz": "You turn back at the door, sure something is left, before you know what.",
+  "stav": "projde",
+  "A": "Laguz",
+  "B": "Laguz",
+  "jistota": [
+   "medium",
+   "high"
+  ],
+  "proc": [
+   "A sense arrives before its explanation.",
+   "Something is sensed before it can be explained."
+  ],
+  "popis": {
+   "id": 65,
+   "actor": "you, leaving home",
+   "happens": "you turn back at the door feeling you've forgotten something unidentified",
+   "point": "A nagging sense of something forgotten.",
+   "plausible": "yes",
+   "natural": "no - 'sure something is left' is clipped; 'left behind' is what is meant",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Gebo",
+  "obraz": "You bring a dish to the shared dinner and leave with a plate of someone else's cooking.",
+  "stav": "projde",
+  "A": "Gebo",
+  "B": "Gebo",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Giving and receiving between sides, uncounted.",
+   "Something leaves your hands and something is received from another's."
+  ],
+  "popis": {
+   "id": 66,
+   "actor": "you, at a potluck",
+   "happens": "you bring food to a shared meal and take home someone else's",
+   "point": "Give and take; sharing comes back to you.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Sowilo",
+  "obraz": "The curtains open, and the colour you chose by lamplight is another colour.",
+  "stav": "hraniční",
+  "A": "Dagaz",
+  "B": "Sowilo",
+  "jistota": [
+   "medium",
+   "medium"
+  ],
+  "proc": [
+   "Daylight comes and the same thing can no longer be seen the old way.",
+   "By daylight one sees the true state of what was chosen in weaker light."
+  ],
+  "popis": {
+   "id": 67,
+   "actor": "daylight / you who chose a colour",
+   "happens": "daylight shows the colour you picked under a lamp looks different",
+   "point": "Things chosen in one light look different in another.",
+   "plausible": "yes",
+   "natural": "no - 'is another colour' is abrupt and it is unclear what was coloured (paint? fabric?)",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Uruz",
+  "obraz": "The lid holds, and holds, and gives when your whole hand closes on it.",
+  "stav": "projde",
+  "A": "Uruz",
+  "B": "Uruz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Resistance gives way to full bodily force.",
+   "Resistance gives way to the full force of the hand."
+  ],
+  "popis": {
+   "id": 68,
+   "actor": "you, opening a jar",
+   "happens": "a tight lid resists and finally opens with a full grip",
+   "point": "Persistence and full effort finally work.",
+   "plausible": "yes",
+   "natural": "no - 'when your whole hand closes on it' is odd; a lid needs grip and twist, and jar is never named",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Isa",
+  "obraz": "The lift stops between floors, and the building goes on humming around it.",
+  "stav": "projde",
+  "A": "Isa",
+  "B": "Isa",
+  "jistota": [
+   "medium",
+   "high"
+  ],
+  "proc": [
+   "A moving thing has stopped and is held between states.",
+   "Something that was moving has stopped and is held where it is."
+  ],
+  "popis": {
+   "id": 69,
+   "actor": "a lift (elevator)",
+   "happens": "the lift gets stuck between floors while the building carries on as normal",
+   "point": "Being stuck while everything else goes on.",
+   "plausible": "yes",
+   "natural": "no - 'the building goes on humming around it' is fanciful",
+   "known": "no - most adults have never been stuck in a lift"
+  }
+ },
+ {
+  "runa": "Ingwaz",
+  "obraz": "The dough rests under a tea towel, and by morning it has doubled.",
+  "stav": "projde",
+  "A": "Ingwaz",
+  "B": "Ingwaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Covered and still outside, it completes itself within.",
+   "Under cover and untouched, something completes itself within."
+  ],
+  "popis": {
+   "id": 70,
+   "actor": "bread dough",
+   "happens": "dough left covered overnight rises to twice its size",
+   "point": "Things grow on their own if left to rest.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "no - only people who bake with yeast"
+  }
+ },
+ {
+  "runa": "Gebo",
+  "obraz": "The last piece on the plate is cut in two without a word.",
+  "stav": "projde",
+  "A": "Gebo",
+  "B": "Gebo",
+  "jistota": [
+   "medium",
+   "high"
+  ],
+  "proc": [
+   "Something is shared between two without counting.",
+   "What is there is shared between two without reckoning or words."
+  ],
+  "popis": {
+   "id": 71,
+   "actor": "two people sharing food",
+   "happens": "someone silently halves the last piece to share it",
+   "point": "Unspoken fairness and consideration.",
+   "plausible": "yes",
+   "natural": "yes",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Tiwaz",
+  "obraz": "Everyone agreed in the corridor; on the form there is one name, and it is yours.",
+  "stav": "projde",
+  "A": "Tiwaz",
+  "B": "Tiwaz",
+  "jistota": [
+   "medium",
+   "medium"
+  ],
+  "proc": [
+   "One alone stands by the word and carries the cost.",
+   "One person alone stands committed and bears what the others only agreed to."
+  ],
+  "popis": {
+   "id": 72,
+   "actor": "you and your colleagues",
+   "happens": "everyone agreed informally but only you put your name on the form",
+   "point": "Others agree in private; you alone carry the responsibility.",
+   "plausible": "yes",
+   "natural": "no - it is unclear what form or what was agreed; needs working out",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Uruz",
+  "obraz": "The last flight of stairs is climbed on legs that had nothing left.",
+  "stav": "projde",
+  "A": "Uruz",
+  "B": "Uruz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Strength appears only when it is needed.",
+   "Bodily strength appears exactly when needed, against apparent emptiness."
+  ],
+  "popis": {
+   "id": 73,
+   "actor": "someone exhausted climbing stairs",
+   "happens": "an exhausted person still gets up the final flight of stairs",
+   "point": "Finding strength when you thought there was none.",
+   "plausible": "yes",
+   "natural": "no - present 'is climbed' with past 'had nothing left' jars, and the passive is stiff",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Jera",
+  "obraz": "The sapling planted beside the bench now shades the place where you sit.",
+  "stav": "projde",
+  "A": "Jera",
+  "B": "Jera",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "What was planted long ago shows its result in time.",
+   "What was planted long ago has grown at its own pace into a result."
+  ],
+  "popis": {
+   "id": 74,
+   "actor": "a tree grown from a sapling",
+   "happens": "a tree planted years ago has grown big enough to shade the bench",
+   "point": "Something planted long ago now gives back.",
+   "plausible": "yes",
+   "natural": "no - 'the sapling ... now shades' is illogical; it is no longer a sapling",
+   "known": "no - few people have planted a tree and sat under it years later"
+  }
+ },
+ {
+  "runa": "Ingwaz",
+  "obraz": "The broken bone knits under the cast, and nothing can be seen of it.",
+  "stav": "projde",
+  "A": "Ingwaz",
+  "B": "Ingwaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Completion happens inside, unseen and closed.",
+   "Completion happens inside, enclosed, with nothing visible outside."
+  ],
+  "popis": {
+   "id": 75,
+   "actor": "a healing bone",
+   "happens": "a broken bone heals unseen inside a plaster cast",
+   "point": "Healing happens invisibly.",
+   "plausible": "yes",
+   "natural": "no - 'nothing can be seen of it' is ambiguous (the bone, the break, or the healing?)",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Gebo",
+  "obraz": "One brings the coffee, the other has saved the seat, and neither keeps count.",
+  "stav": "projde",
+  "A": "Gebo",
+  "B": "Gebo",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Mutual giving that is not counted.",
+   "Giving runs both ways between two and is not counted."
+  ],
+  "popis": {
+   "id": 76,
+   "actor": "two friends or partners",
+   "happens": "one fetches the coffee while the other has kept a seat, with no scorekeeping",
+   "point": "Easy mutual give-and-take without keeping score.",
+   "plausible": "yes",
+   "natural": "no - tense shifts ('brings' / 'has saved') and 'One ... the other' with no nouns is stiff",
+   "known": "yes"
+  }
+ },
+ {
+  "runa": "Tiwaz",
+  "obraz": "You tell the referee the ball was out, and your own team loses the point.",
+  "stav": "projde",
+  "A": "Tiwaz",
+  "B": "Tiwaz",
+  "jistota": [
+   "high",
+   "high"
+  ],
+  "proc": [
+   "Keeping to the truth and knowingly paying the price.",
+   "Honesty is kept at a known cost to one's own side."
+  ],
+  "popis": {
+   "id": 77,
+   "actor": "you, a player in a match",
+   "happens": "you honestly report the ball was out and it costs your team the point",
+   "point": "Honesty at your own cost.",
+   "plausible": "no - in refereed sport players almost never volunteer calls against their own side",
+   "natural": "yes",
+   "known": "no - only people who play team sports, and even they rarely do this"
+  }
+ }
+]
