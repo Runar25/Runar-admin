@@ -970,11 +970,14 @@ function _askHints() {
   return out.filter(Boolean).filter(function (x) { return polozene.indexOf(x.trim().toLowerCase()) === -1; });
 }
 // Jedno ze tri hesel zrcadla do #reading-loading-motto (prazdne = prvek chybi, nic nespadne).
+function _loadingMotto() {   // heslo zrcadla pod čekáním — čtení i runa dne (runar-runa-dne.js)
+  var kl = ['motto_image', 'motto_mirror', 'motto_paths'];
+  return t(kl[Math.floor(Math.random() * kl.length)]);
+}
 function _paintLoadingMotto() {
   var el = document.getElementById('reading-loading-motto');
   if (!el) return;
-  var kl = ['motto_image', 'motto_mirror', 'motto_paths'];
-  el.textContent = t(kl[Math.floor(Math.random() * kl.length)]);
+  el.textContent = _loadingMotto();
 }
 function toggleAskHints() {
   var btn = document.getElementById('ask-lbl'), box = document.getElementById('ask-hints');

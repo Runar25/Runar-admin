@@ -13,6 +13,14 @@ function _rodSmi() {
   return (typeof isTester !== 'undefined' && isTester) || isAdmin(currentUser.email);
 }
 var _rodNacteno = '';
+// Ukázat / skrýt prvek. NE jen atribut hidden: .rune-grid má v CSS display:grid a ten atribut přebije — mřížka pak v okně zůstala
+// i po další volbě (hlášení 66f64c6b, KUKY 2026-11-16 „zůstane při další volbě zaseknuté… mělo by se to vracet k oknu se dvěma volbami“).
+function _rodVid(id, ukaz) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.hidden = !ukaz;
+  el.style.display = ukaz ? '' : 'none';
+}
 // Admin: „táhnout znovu“ týž den (KUKY 2026-11-15 „jako admin potřebuju reset tlačítko pro opakování vícekrát za den“). Klient jen
 // pošle rod_znovu; adminovi ho uzná SERVER (claude-proxy: admin z JWT, uložený text dne přepíše) — tlačítko v DOM není brána.
 var _rodZnovu = false;
@@ -22,13 +30,13 @@ function _rodAdmin() { return !!(typeof currentUser !== 'undefined' && currentUs
 function _rodPaint() {
   var box = document.getElementById('rod');
   if (!box) return;
-  if (!_rodSmi()) { box.hidden = true; _rodNacteno = ''; return; }
-  box.hidden = false;
+  if (!_rodSmi()) { _rodVid('rod', false); _rodNacteno = ''; return; }
+  _rodVid('rod', true);
   var klic = currentUser.id + '|' + _rodDnes();
   if (_rodNacteno === klic) return;
   _rodNacteno = klic;
-  document.getElementById('rod-result').hidden = true;
-  document.getElementById('rod-btn').hidden = false;
+  _rodVid('rod-result', false);
+  _rodVid('rod-btn', true);
   sb.from('rune_day').select('rune, text').eq('user_id', currentUser.id).eq('den', _rodDnes()).maybeSingle()
     .then(function (r) { if (r && r.data && r.data.text) _rodUkaz(r.data.rune, r.data.text); })
     .catch(function () {});   // bez tabulky (než owner pustí SQL) zůstane tlačítko; server pak runu dne odmítne
@@ -42,22 +50,22 @@ function _rodUkaz(runa, text) {
     runeSvg(r, { frame: true, cls: 'tree-stone' }) + '<div class="flbl">' + escapeHtml(rn(r)) + '</div>'
     + odst.map(function (p) { return '<p class="tree-reading-text">' + escapeHtml(p) + '</p>'; }).join('')   // jako text životní runy
     + (_rodAdmin() ? '<button type="button" class="tree-tester-btn" onclick="rodZnovu()">' + escapeHtml(t('rod_reset')) + '</button>' : '');
-  document.getElementById('rod-btn').hidden = true;
-  document.getElementById('rod-result').hidden = false;
+  _rodVid('rod-btn', false);
+  _rodVid('rod-result', true);
 }
 
 function rodOtevri() {
   if (!_rodSmi()) return;
-  document.getElementById('rod-choices').hidden = false;
-  document.getElementById('rod-grid').hidden = true;
+  _rodVid('rod-choices', true);
+  _rodVid('rod-grid', false);
   document.getElementById('rod-state').innerHTML = '';
   document.getElementById('rod-modal').classList.add('open');
 }
 function rodZnovu() {
   if (!_rodAdmin()) return;
   _rodZnovu = true;
-  document.getElementById('rod-result').hidden = true;
-  document.getElementById('rod-btn').hidden = false;
+  _rodVid('rod-result', false);
+  _rodVid('rod-btn', true);
   rodOtevri();
 }
 function rodZavri() { document.getElementById('rod-modal').classList.remove('open'); }
@@ -76,8 +84,8 @@ function rodMrizka() {
     b.onclick = function () { _rodCti(r); };
     g.appendChild(b);
   });
-  document.getElementById('rod-choices').hidden = true;
-  g.hidden = false;
+  _rodVid('rod-choices', false);
+  _rodVid('rod-grid', true);
 }
 // „Let the runes decide“ — runa hned, bez mřížky
 function rodNahoda() { _rodCti(RUNES[Math.floor(Math.random() * RUNES.length)]); }
@@ -86,12 +94,14 @@ var _rodBezi = false;
 async function _rodCti(r) {
   if (_rodBezi) return;
   _rodBezi = true;
-  document.getElementById('rod-choices').hidden = true;
-  document.getElementById('rod-grid').hidden = true;
+  try {   // celé uvnitř try: výjimka kdekoli níž nesmí nechat _rodBezi zamčené (pak by runa dne do obnovení stránky nereagovala)
+  _rodVid('rod-choices', false);
+  _rodVid('rod-grid', false);
   var stav = document.getElementById('rod-state');
   stav.innerHTML = runeSvg(r, { frame: true, cls: 'tree-stone' }) + '<div class="flbl">' + escapeHtml(rn(r)) + '</div>'
-    + '<p class="note">' + escapeHtml(t('reading_loading')) + '</p>';
-  try {
+    + '<div class="whispers-loading-inner"><span class="whispers-loading-star">' + znackaSvg() + '</span>'   // jako #reading-loading (hlášení 64005ae3)
+    + '<div class="whispers-loading-label">' + escapeHtml(t('reading_loading')) + '</div>'
+    + '<div class="reading-loading-motto">' + escapeHtml(_loadingMotto()) + '</div></div>';
     var mode = RUNAR_MODES.rune_day;
     var prompt = buildDayRunePrompt(r, lang, corrections);
     var sys = buildSysPrompt(activeChar, lang);

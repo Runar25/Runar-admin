@@ -202,6 +202,14 @@ hlídal jen V2 cestu.
   čtení se ukáže polohou na větvi (staré u kmene, nové ve špičce) — popis pak může mluvit o jednom úseku a nemíchá např. tři měsíce
   dohromady. Jestli dnešní kresba čtení podél větve takhle řadí, neověřeno. Owner: *„nevím, je to hypotéza … bez toho, až bych to viděl,
   to není směrodatné“* — rozhodne až pohled na skutečné větve.
+- [ ] **Čekání stromu má jinou podobu než čtení** (CODE-tune 2026-11-16, pro CODE-tree). Čtení i runa dne čekají komponentou čekání
+  (`.whispers-loading-*`: pulzující značka ᚱ, nápis, heslo zrcadla — soupis v `scripts/verify_komponenty.js`, pravidlo E). Strom má vlastní
+  (`.tree-loading-glyph` / `.tree-loading-text`, jiná animace i barva nápisu) a při životní runě píše nápis do tlačítka; pravidlo E je
+  zatím pouští výjimkou (`CEKANI_VYJIMKY`). Sjednotit na komponentu a výjimky smazat. Proč: owner 2026-11-16 (hlášení 64005ae3) chce
+  „přesně takové jako při čtení run“.
+- [ ] **Hluboký rozbor čtení Algiz** (hlášení 037966b4, owner 2026-11-10: *„zajímavé čtení, zaslouží si hlubokou analýzu“*; pro CODE-read).
+  Čtení `04242…` (Algiz, EN, obraz „za ohybem vřesoviště… praskne větvička“); celé v `readings`, najde `node scripts/utils/najdi_cteni.js`.
+  Co rozbor rozhodne, owner neřekl — napřed se zeptat, čím ho zaujalo.
 - [ ] **Rune of the Day — nová funkce, směr ownera** (KUKY 2026-11-14 přes CODE-tree; patří čtení → CODE-tune, plán napřed ownerovi).
   Uživatel dostane náhodnou runu, nebo zadá svou — bez oblasti, seekingu a záměru. **Do stromu nejde.** Rúnar řekne, jaký má runa význam
   dnes: jak může na den, tedy na člověka, působit — **ne rada**, **bez obrazu**, stejným směrem jako popis větve (položka výš). Vzorek

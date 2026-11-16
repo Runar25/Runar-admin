@@ -172,6 +172,8 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 .rod .btn-full{margin-top:0;}
 .rod .tree-stone{display:block;margin:0 0 8px;}
 .rod .tree-reading-text{padding:4px 0 6px;}
+#rod-state{max-width:none;margin:0;text-align:center;}   /* stav v okně na střed (hlášení 64005ae3) */
+#rod-state .tree-stone{margin:0 auto 8px;}
 @media(max-width:768px){
   .rod{margin:0 auto 16px;}
   .rod .tree-stone{margin:0 auto 8px;}
