@@ -33,6 +33,9 @@
 // papír            .papir .papir-list .papir-hlava .papir-text           nadpis s „+“ a notou, rozvine se přes obsah pod ním („How a reading
 //                   (.otevreny .pohyb .rozvinuty .videt .papir-posuv)     works“, BEFORE WE BEGIN; owner 2026-10-30); .videt = odkrytý odstavec;
 //                                                                         .papir-posuv = ukazatel posunu dlouhého textu (2026-10-31)
+// čekání na model   .whispers-loading-inner .whispers-loading-star        KAŽDÉ čekání na text od modelu: pulzující značka ᚱ (znackaSvg), nápis
+//                   .whispers-loading-label .reading-loading-motto        „THE STONES SPEAK IN SILENCE…“, heslo zrcadla (_loadingMotto); čtení i runa
+//                                                                         dne. Pravidlo E. (2026-11-16: runa dne dostala nápis v .note — hlášení 64005ae3)
 // přehrávač         .svp .svp-nota .svp-cas .svp-svicka .svp-svisla (.hraje)  JEDINÝ přehrávač hlasu (runar-svicka.js, owner 2026-10-29): nota ·
 //                   .svp-lesk .svp-vosk .svp-plamen .svp-jadro .svp-jiskra   čas · svíčka (= posuvník) · délka; .svp-svisla = svíčka v okraji
 //                   .svp-kour .svp-telo                                   papíru (bez času); části kresby svíčky; .hraje = nota se houpe
@@ -53,6 +56,9 @@
 //   B) nová třída (mimo základ scripts/komponenty_zaklad.json z 2026-10-20) je v tabulce nebo VLASTNÍ s důvodem
 //   C) zaoblení jen 0 nebo 50 % (kruh) — nic jiného v appce zaoblené není
 //   D) barva natvrdo (#…) mimo :root jen ta, která tu byla 2026-10-20; nová = token v :root
+//   E) nápis čekání t('reading_loading') v JS readeru jen v komponentě čekání (.whispers-loading-label, #reading-loading-txt);
+//      jinde jen s výjimkou v CEKANI_VYJIMKY (soubor + kus řádku + důvod). Proč: komponentu, kterou soupis neměl, jsem 2026-11-15 nenašel
+//      a nápis dal do .note — bez pulzu, mimo střed (hlášení 64005ae3). Neumí: jiné čekání bez tohoto nápisu.
 // Co NEhlídá: velikosti písma a průhlednosti zlaté (25 variant, srovnání čeká — RUNAR_BACKLOG), inline styly v HTML a JS.
 //
 //   node scripts/verify_komponenty.js          kontrola
@@ -64,6 +70,26 @@ const path = require('path');
 const ROOT = path.join(__dirname, '..');
 const CSS = path.join(ROOT, 'v2', 'runar-reader.css');
 const ZAKLAD = path.join(__dirname, 'komponenty_zaklad.json');
+const JS_READERU = ['runar-utils.js', 'runar-journal.js', 'runar-tree.js', 'runar-auth.js', 'runar-reading.js', 'runar-app.js',
+  'runar-reporter.js', 'runar-rune-popup.js', 'runar-helper.js', 'runar-runa-dne.js'];
+const CEKANI_OK = /whispers-loading-label|[Rr]dLoadTxt|reading-loading-txt/;
+// Pravidlo E — výjimky jen s důvodem. Strom má vlastní čekání (.tree-loading-glyph/-text, CODE-tree); sjednocení = RUNAR_BACKLOG.
+const CEKANI_VYJIMKY = [
+  ['runar-tree.js', "getElementById('tree-loading-text')", 'čekání stromu (CODE-tree), vlastní podoba — sjednocení v RUNAR_BACKLOG (2026-11-16)'],
+  ['runar-tree.js', 'loadTxt.textContent', 'čekání stromu (CODE-tree), vlastní podoba — sjednocení v RUNAR_BACKLOG (2026-11-16)'],
+  ['runar-tree.js', 'btn.textContent', 'nápis v tlačítku při čtení životní runy (CODE-tree) — sjednocení v RUNAR_BACKLOG (2026-11-16)'],
+];
+function zkontrolujCekani(soubory) {   // soubory: [[jméno, zdroj]]
+  const vady = [];
+  for (const [jm, src] of soubory) src.split(/\r?\n/).forEach((r, i) => {
+    if (!/t\(\s*['"]reading_loading['"]\s*\)/.test(r) || /^\s*\/\//.test(r)) return;
+    if (CEKANI_OK.test(r)) return;
+    if (CEKANI_VYJIMKY.some(([f, kus]) => f === jm && r.includes(kus))) return;
+    vady.push('E) ' + jm + ':' + (i + 1) + ' nápis čekání mimo komponentu čekání — použij .whispers-loading-inner/-star/-label (+ .reading-loading-motto): '
+      + r.trim().slice(0, 100));
+  });
+  return vady;
+}
 
 function soupis() {
   const radky = [];
@@ -139,19 +165,31 @@ if (args.includes('--test')) {
     ['třída jen v komentáři se nepočítá', '/* .nova{} */.a{}', 0],
   ];
   let zle = 0;
+  const cekani = [
+    ['nápis čekání v .note', "stav.innerHTML = '<p class=\"note\">' + escapeHtml(t('reading_loading')) + '</p>';", 1],
+    ['nápis v komponentě projde', "+ '<div class=\"whispers-loading-label\">' + escapeHtml(t('reading_loading')) + '</div>'", 0],
+    ['čtení (#reading-loading-txt) projde', "if (rdLoadTxt) rdLoadTxt.textContent = t('reading_loading');", 0],
+    ['výjimka jen ve svém souboru', "var _tlt = document.getElementById('tree-loading-text'); _tlt.textContent = t('reading_loading');", 1, 'runar-app.js'],
+    ['výjimka stromu projde', "var _tlt = document.getElementById('tree-loading-text'); _tlt.textContent = t('reading_loading');", 0, 'runar-tree.js'],
+  ];
+  for (const [jm, radek, ocek, soubor] of cekani) {
+    const n = zkontrolujCekani([[soubor || 'runar-runa-dne.js', radek]]).length;
+    if (ocek ? n === 0 : n > 0) { zle++; console.log('FAIL  samotest E „' + jm + '“: ' + n + ' vad'); }
+  }
   for (const [jm, css, ocek] of pripady) {
     const n = zkontroluj(css, zaklad, s).vady.length;
     const ok = ocek ? n > 0 : n === 0;
     if (!ok) { zle++; console.log('FAIL  samotest „' + jm + '“: ' + n + ' vad'); }
   }
   if (zle) process.exit(1);
-  console.log('OK    samotest soupisu komponent: ' + pripady.length + ' případů');
+  console.log('OK    samotest soupisu komponent: ' + (pripady.length + cekani.length) + ' případů');
   process.exit(0);
 }
 
 if (!fs.existsSync(ZAKLAD)) { console.log('FAIL  chybí ' + path.relative(ROOT, ZAKLAD)); process.exit(1); }
 const zaklad = JSON.parse(fs.readFileSync(ZAKLAD, 'utf8'));
 const { vady, tridy } = zkontroluj(fs.readFileSync(CSS, 'utf8'), zaklad, sp);
+vady.push(...zkontrolujCekani(JS_READERU.map((f) => [f, fs.readFileSync(path.join(ROOT, 'v2', f), 'utf8')])));
 if (vady.length) {
   for (const v of vady) console.log('  ' + v);
   console.log('FAIL  soupis komponent: ' + vady.length + ' vad v v2/runar-reader.css (soupis: hlavička scripts/verify_komponenty.js)');
