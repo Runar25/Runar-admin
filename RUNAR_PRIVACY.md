@@ -105,6 +105,10 @@ a souhlasí na pravdivém textu. Detail → `RUNAR_DECISIONS.md` 2026-09-11 (8).
   `user_id` má `on delete set null` → po smazání účtu zbude anonymní účetní řádek, stejná úvaha jako u `credit_ledger` výš.
   Klient tabulku nečte ani nepíše (RLS bez politik). Snímky předplatného (`voice_quota_snapshots`) osobní údaj nenesou.
   Migrace: `sql/2026-09-25_voice_usage.sql`.
+- **Evidence nákladů na model (`model_usage`, od 2026-11-16, DECISIONS 2026-11-16 (1))** — u každého volání modelu jen režim, model,
+  počty tokenů a doba odpovědi, `user_id` (a `reading_id` u čtení v deníku); **žádný text ani prompt**. Účel a úvaha jako u `voice_usage`:
+  náklady služby (oprávněný zájem, účetnictví); `on delete set null`, klient tabulku nečte ani nepíše (RLS bez politik).
+  Migrace: `sql/2026-11-16_model_usage.sql`.
 - **Uložený hlas čtení (úložiště `reading-voice`, od 2026-10-11, DECISIONS 2026-10-11 (61))** — když Rúnar uložené čtení přečte
   nahlas, audio (mp3) se uloží k čtení, ať se dá v deníku pustit znovu bez dalšího volání ElevenLabs. Soukromé úložiště, přehrání jen
   přes podepsaný odkaz z `elevenlabs-proxy` (hodina). Čtení pro někoho jiného, které se neukládá, se neukládá ani jako hlas. Záznam
@@ -172,7 +176,7 @@ tabulka „What is held“ v `v2/runar-privacy.html` (EN i IS) — tady se neopi
 | účet a přihlášení | e-mail, jméno a fotka z Google (`auth.users`), kód | smlouva | Supabase · Brevo · Google (přihlášení, spíš samostatný správce) | — / DPF |
 | čtení, deník, Ask | jméno (volitelné), volby, volná otázka (⚠️ může být čl. 9), den + měsíc narození, text čtení | smlouva · otázka jen s výslovným souhlasem (čl. 9 odst. 2 a, od 2026-10-12; do té doby tu stálo „čl. 9 nevyřešen“) | OpenAI · Anthropic (záloha) · Supabase | SCC (OpenAI, Anthropic) |
 | hlas | text čtení, uložené audio | smlouva | ElevenLabs · Supabase | DPF + SCC |
-| kredity a limity | zůstatky, měsíční jednotky, `credit_ledger`, `voice_usage` · IP adresa krátce při uplatnění kódu karty (`rate_limits`, od 2026-10-13 v zásadách) | smlouva · oprávněný zájem (účetnictví, prevence zneužití) | Supabase | — |
+| kredity a limity | zůstatky, měsíční jednotky, `credit_ledger`, `voice_usage`, `model_usage` · IP adresa krátce při uplatnění kódu karty (`rate_limits`, od 2026-10-13 v zásadách) | smlouva · oprávněný zájem (účetnictví, prevence zneužití) | Supabase | — |
 | rozbor kvality | texty čtení a vstupy, pseudonymizovaně, bez odhlášených | oprávněný zájem (opt-out) | interně; vývojová session → Anthropic (kontrola, nález 5) | SCC |
 | testeři | souhlas, čtení „pro někoho“, hlášení | výslovný souhlas (čl. 9 odst. 2 a) | Supabase | — |
 | zálohy | celá DB šifrovaně (AES-256) | oprávněný zájem (obnova) | Google Drive | DPF + SCC (Workspace s přijatým CDPA — owner 2026-10-13) |

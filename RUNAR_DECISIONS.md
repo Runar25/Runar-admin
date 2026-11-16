@@ -13306,3 +13306,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   **NASAZENO** 2026-11-16 z ef84334 (owner „nasaď“).
 - Vzhled: owner chtěl zkusit zlaté písmo místo bílého, pak „tak žádná zlatá, necháváme“ → vzhled beze změny.
 - Affected doc(s): žádný jiný (chování vlastní `v2/runar-runa-dne.js` a `supabase/functions/claude-proxy/index.ts`, text `v2/runar-translations.js`).
+
+## 2026-11-16 (1) — Účet plateb za model: každé volání do `model_usage`
+- **Owner:** *„jak to, že se neukládá? platíme, tak se to má ukládat!“* (k ceně runy dne, hlášení b38f37e7) a na otázku po SQL *„ano“*.
+- **Nález:** tokeny se ukládaly jen do `readings.usage`, tedy jen u čtení a Asků v deníku. Bez záznamu zůstala čtení pro někoho jiného,
+  životní runa, rozbor jména a runa dne — zaplacená volání, která z dat nešla spočítat.
+- **Co:** tabulka `model_usage` (`sql/2026-11-16_model_usage.sql`, spouští owner): řádek na každé úspěšné volání modelu — režim, model,
+  usage od poskytovatele + ms a pokusy, u čtení v deníku `reading_id`; žádný text. Zapisuje `claude-proxy` (service_role), klient nic.
+  `readings.usage` zůstává jako údaj čtení (který model ho napsal); úplný účet je `model_usage`. Vzor: `voice_usage` u hlasu.
+- **Neověřeno:** zápis naostro — čeká na SQL a nasazení `claude-proxy`. Skript plýtvání (`scripts/utils/plytvani.js`) zatím čte jen
+  `readings.usage`; převést na `model_usage`, až v ní budou řádky.
+- Affected doc(s): RUNAR_PRIVACY.md (evidence nákladů na model).

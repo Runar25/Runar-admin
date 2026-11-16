@@ -963,6 +963,17 @@ serve(async (req: Request) => {
       askSaved  = r.askSaved;
     }
 
+    // Účet plateb za model (2026-11-16, owner „jak to, že se neukládá? platíme, tak se to má ukládat!“): KAŽDÉ úspěšné volání, i to,
+    // které do deníku nejde (čtení pro někoho, životní runa, rozbor jména, runa dne). Do té doby jen readings.usage = jen čtení v deníku.
+    // Tabulka: sql/2026-11-16_model_usage.sql. Selhání zápisu čtení nezastaví (jen log) — text už je hotový a zaplacený.
+    if (userId && data?.usage) {
+      const { error: muErr } = await sb().from("model_usage").insert({
+        user_id: userId, mode: String(mode ?? ""), model: data?.model ?? null,
+        usage: { ...data.usage, ms: Date.now() - t0, tries }, reading_id: readingId,
+      });
+      if (muErr) console.error("model usage write failed:", muErr.message);
+    }
+
     // ── Hlas ke čtení, které se neuložilo (2026-10-11, DECISIONS (61)) ──
     // Uložené čtení si elevenlabs-proxy najde podle reading_id; tohle (pro někoho jiného, nebo když zápis selhal) dostane podpis —
     // elevenlabs-proxy pak přečte jen PŘESNĚ tenhle text, jen tomuhle uživateli a jen jednou. Jen obyčejná čtení (mode ""):
