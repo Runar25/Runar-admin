@@ -73,18 +73,16 @@ const ZAKLAD = path.join(__dirname, 'komponenty_zaklad.json');
 const JS_READERU = ['runar-utils.js', 'runar-journal.js', 'runar-tree.js', 'runar-auth.js', 'runar-reading.js', 'runar-app.js',
   'runar-reporter.js', 'runar-rune-popup.js', 'runar-helper.js', 'runar-runa-dne.js'];
 const CEKANI_OK = /whispers-loading-label|[Rr]dLoadTxt|reading-loading-txt/;
-// Pravidlo E — výjimky jen s důvodem. Strom má vlastní čekání (.tree-loading-glyph/-text, CODE-tree); sjednocení = RUNAR_BACKLOG.
-const CEKANI_VYJIMKY = [
-  ['runar-tree.js', "getElementById('tree-loading-text')", 'čekání stromu (CODE-tree), vlastní podoba — sjednocení v RUNAR_BACKLOG (2026-11-16)'],
-  ['runar-tree.js', 'loadTxt.textContent', 'čekání stromu (CODE-tree), vlastní podoba — sjednocení v RUNAR_BACKLOG (2026-11-16)'],
-  ['runar-tree.js', 'btn.textContent', 'nápis v tlačítku při čtení životní runy (CODE-tree) — sjednocení v RUNAR_BACKLOG (2026-11-16)'],
-];
-function zkontrolujCekani(soubory) {   // soubory: [[jméno, zdroj]]
+// Pravidlo E — výjimky jen s důvodem ([soubor, kus řádku, důvod]). Prázdné od 2026-11-16: čekání stromu a rozboru jména sjednoceno
+// (_cekaniHtml v runar-reading.js — jediné místo, které komponentu skládá v JS).
+const CEKANI_VYJIMKY = [];
+function zkontrolujCekani(soubory, vyjimky) {   // soubory: [[jméno, zdroj]]
+  vyjimky = vyjimky || CEKANI_VYJIMKY;
   const vady = [];
   for (const [jm, src] of soubory) src.split(/\r?\n/).forEach((r, i) => {
     if (!/t\(\s*['"]reading_loading['"]\s*\)/.test(r) || /^\s*\/\//.test(r)) return;
     if (CEKANI_OK.test(r)) return;
-    if (CEKANI_VYJIMKY.some(([f, kus]) => f === jm && r.includes(kus))) return;
+    if (vyjimky.some(([f, kus]) => f === jm && r.includes(kus))) return;
     vady.push('E) ' + jm + ':' + (i + 1) + ' nápis čekání mimo komponentu čekání — použij .whispers-loading-inner/-star/-label (+ .reading-loading-motto): '
       + r.trim().slice(0, 100));
   });
@@ -173,7 +171,7 @@ if (args.includes('--test')) {
     ['výjimka stromu projde', "var _tlt = document.getElementById('tree-loading-text'); _tlt.textContent = t('reading_loading');", 0, 'runar-tree.js'],
   ];
   for (const [jm, radek, ocek, soubor] of cekani) {
-    const n = zkontrolujCekani([[soubor || 'runar-runa-dne.js', radek]]).length;
+    const n = zkontrolujCekani([[soubor || 'runar-runa-dne.js', radek]], [['runar-tree.js', "getElementById('tree-loading-text')", 'test']]).length;
     if (ocek ? n === 0 : n > 0) { zle++; console.log('FAIL  samotest E „' + jm + '“: ' + n + ' vad'); }
   }
   for (const [jm, css, ocek] of pripady) {
