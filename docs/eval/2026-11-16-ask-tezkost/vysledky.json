@@ -1,0 +1,578 @@
+[
+ {
+  "v": "P0",
+  "id": "5297799e",
+  "runa": "Sowilo",
+  "obraz": "The midnight sun never quite sets around Midsummer",
+  "otazka": "Where does this get hard?",
+  "text": "The light is enough to show what is near, but not what lies beyond it. You may see a reason to continue and still have no clear sense of where it leads. Sowilo holds that tension: clarity can make an old question harder to overlook, without giving you an answer to it.",
+  "usage": {
+   "prompt_tokens": 1246,
+   "completion_tokens": 62,
+   "total_tokens": 1308,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "id": "5297799e",
+  "runa": "Sowilo",
+  "obraz": "The midnight sun never quite sets around Midsummer",
+  "otazka": "Where does this get hard?",
+  "text": "Sowilo gives enough light to see what is near, not the whole way ahead. That can make the next stretch uncertain: a clear question may be visible while its answer is not. You may find that the will to continue and the wish to know where it leads do not arrive together.",
+  "usage": {
+   "prompt_tokens": 1246,
+   "completion_tokens": 62,
+   "total_tokens": 1308,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "id": "5297799e",
+  "runa": "Sowilo",
+  "obraz": "The midnight sun never quite sets around Midsummer",
+  "otazka": "Where does this get hard?",
+  "text": "You can see by this light, but not very far. That leaves room for doubt, even when something close at hand looks clear. Sowilo holds both: the will to continue and the limits of what you can see. An old question may become harder to set aside without becoming any easier to answer.",
+  "usage": {
+   "prompt_tokens": 1246,
+   "completion_tokens": 64,
+   "total_tokens": 1310,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "id": "cb4f2614",
+  "runa": "Algiz",
+  "obraz": "The reindeer lifts its head, on guard",
+  "otazka": "Where does this get hard?",
+  "text": "It gets hard at the point where listening and holding back look the same. You may need space to feel safe, while someone close to you sees that space as distance. Algiz does not ask you to drop your guard. It leaves open the question of what your guard protects, and what it keeps beyond reach.",
+  "usage": {
+   "prompt_tokens": 1233,
+   "completion_tokens": 66,
+   "total_tokens": 1299,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "id": "cb4f2614",
+  "runa": "Algiz",
+  "obraz": "The reindeer lifts its head, on guard",
+  "otazka": "Where does this get hard?",
+  "text": "It gets hard where protection and distance look the same. You may be listening for harm while someone near you cannot tell whether there is room for them. Algiz holds both sides: your watchfulness can shelter what matters, and it can leave someone unsure whether they are welcome.",
+  "usage": {
+   "prompt_tokens": 1233,
+   "completion_tokens": 58,
+   "total_tokens": 1291,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "id": "cb4f2614",
+  "runa": "Algiz",
+  "obraz": "The reindeer lifts its head, on guard",
+  "otazka": "Where does this get hard?",
+  "text": "It gets hard at the point where you cannot yet tell whether a sound means danger. Your watchfulness may keep you safe, but someone who means no harm may feel kept outside. Algiz holds both possibilities without deciding which one stands before you.",
+  "usage": {
+   "prompt_tokens": 1233,
+   "completion_tokens": 52,
+   "total_tokens": 1285,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "id": "bf8d8db8",
+  "runa": "Raidho",
+  "obraz": "cairns, each in sight of the next",
+  "otazka": "Where does this get hard?",
+  "text": "The next cairn is visible, so the road can look settled even when the choice behind it has changed. Raidho holds that difference: you can keep moving along a familiar path without knowing whether it still fits. The reading leaves that question with you.",
+  "usage": {
+   "prompt_tokens": 1232,
+   "completion_tokens": 54,
+   "total_tokens": 1286,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "id": "bf8d8db8",
+  "runa": "Raidho",
+  "obraz": "cairns, each in sight of the next",
+  "otazka": "Where does this get hard?",
+  "text": "You can see the next cairn, but it does not tell you whether the road still fits. Raidho holds that distinction: continuing because the way is familiar is not the same as moving in a direction you would choose now. The hard part may be that nothing has to be wrong with the old road for that question to matter.",
+  "usage": {
+   "prompt_tokens": 1232,
+   "completion_tokens": 70,
+   "total_tokens": 1302,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "id": "bf8d8db8",
+  "runa": "Raidho",
+  "obraz": "cairns, each in sight of the next",
+  "otazka": "Where does this get hard?",
+  "text": "The hard part may be that the next cairn is easy to see. You can follow the road without asking whether it still fits the choice that first put you on it. Raidho does not say you must leave it. It holds the difference between a road you choose now and one you continue by habit.",
+  "usage": {
+   "prompt_tokens": 1232,
+   "completion_tokens": 65,
+   "total_tokens": 1297,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "id": "04242c2d",
+  "runa": "Algiz",
+  "obraz": "Out on the heath a twig snaps, and the whole party goes quiet to listen",
+  "otazka": "Where does this get hard?",
+  "text": "The hard part lies in the pause. You hear the twig snap, but you cannot tell what made the sound. Algiz holds protection there, before you know whether you face danger. If you shut everything out, you may feel safer, but you lose contact with what is actually there.",
+  "usage": {
+   "prompt_tokens": 1240,
+   "completion_tokens": 61,
+   "total_tokens": 1301,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "id": "04242c2d",
+  "runa": "Algiz",
+  "obraz": "Out on the heath a twig snaps, and the whole party goes quiet to listen",
+  "otazka": "Where does this get hard?",
+  "text": "It gets hard in the pause after the twig snaps. You have enough reason to listen, but not enough to know whether you need shelter. Algiz holds that uncertainty: protection can leave room for what is quiet, or it can close around you before danger has a shape.",
+  "usage": {
+   "prompt_tokens": 1240,
+   "completion_tokens": 58,
+   "total_tokens": 1298,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P0",
+  "id": "04242c2d",
+  "runa": "Algiz",
+  "obraz": "Out on the heath a twig snaps, and the whole party goes quiet to listen",
+  "otazka": "Where does this get hard?",
+  "text": "The hard part is the pause before you know what made the sound. Algiz holds protection there, but it does not tell you whether anything threatens you. You can stay alert without shutting everything out, though the difference may be hard to feel when the grass is still and nothing shows itself.",
+  "usage": {
+   "prompt_tokens": 1240,
+   "completion_tokens": 61,
+   "total_tokens": 1301,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P1",
+  "id": "5297799e",
+  "runa": "Sowilo",
+  "obraz": "The midnight sun never quite sets around Midsummer",
+  "otazka": "Where does this get hard?",
+  "text": "Sowilo gives enough light to see what is close, not the whole way ahead. The harder part may be holding that distinction. Clarity about one thing does not settle every question around it, and the will to continue can remain even when you cannot see an outcome.",
+  "usage": {
+   "prompt_tokens": 1239,
+   "completion_tokens": 58,
+   "total_tokens": 1297,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P1",
+  "id": "5297799e",
+  "runa": "Sowilo",
+  "obraz": "The midnight sun never quite sets around Midsummer",
+  "otazka": "Where does this get hard?",
+  "text": "Sowilo gives enough light to see what is near, not the whole way ahead. You may find it hard to tell whether that light shows a direction you want, or a question you would rather leave unanswered. The reading leaves that distinction with you.",
+  "usage": {
+   "prompt_tokens": 1239,
+   "completion_tokens": 54,
+   "total_tokens": 1293,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P1",
+  "id": "5297799e",
+  "runa": "Sowilo",
+  "obraz": "The midnight sun never quite sets around Midsummer",
+  "otazka": "Where does this get hard?",
+  "text": "Sowilo gives enough light to see what is near, not everything ahead. You may find that difficult when a choice matters and you want certainty before you make it. The reading leaves room for another kind of difficulty: something familiar may look different in that light. Neither possibility tells you what the answer is.",
+  "usage": {
+   "prompt_tokens": 1239,
+   "completion_tokens": 65,
+   "total_tokens": 1304,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P1",
+  "id": "cb4f2614",
+  "runa": "Algiz",
+  "obraz": "The reindeer lifts its head, on guard",
+  "otazka": "Where does this get hard?",
+  "text": "It gets hard where watchfulness and distance look much the same. You may be protecting something tender, while another person sees no way to come close. Algiz leaves room for both: your need for shelter, and the cost of keeping a door guarded when no harm is there.",
+  "usage": {
+   "prompt_tokens": 1226,
+   "completion_tokens": 59,
+   "total_tokens": 1285,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P1",
+  "id": "cb4f2614",
+  "runa": "Algiz",
+  "obraz": "The reindeer lifts its head, on guard",
+  "otazka": "Where does this get hard?",
+  "text": "It gets hard when you cannot yet tell whether someone needs your trust or your caution. Your watchfulness can protect what matters, but it can also leave another person unsure whether there is room for them beside you. Algiz holds both possibilities without settling which one is yours.",
+  "usage": {
+   "prompt_tokens": 1226,
+   "completion_tokens": 57,
+   "total_tokens": 1283,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P1",
+  "id": "cb4f2614",
+  "runa": "Algiz",
+  "obraz": "The reindeer lifts its head, on guard",
+  "otazka": "Where does this get hard?",
+  "text": "It can get hard when the same watchfulness that protects you also keeps someone at a distance. A pause may give you room to notice what matters, yet another person may read it as a closed door. Algiz does not say which reading is right. It holds that tension without asking you to drop your guard.",
+  "usage": {
+   "prompt_tokens": 1226,
+   "completion_tokens": 66,
+   "total_tokens": 1292,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P1",
+  "id": "bf8d8db8",
+  "runa": "Raidho",
+  "obraz": "cairns, each in sight of the next",
+  "otazka": "Where does this get hard?",
+  "text": "The hard part may be that you know the road well. Its rhythm can feel right because it is familiar, even when the reason you chose it no longer fits. Raidho leaves that distinction open: whether you are moving with purpose, or continuing because you have been moving for so long.",
+  "usage": {
+   "prompt_tokens": 1225,
+   "completion_tokens": 61,
+   "total_tokens": 1286,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P1",
+  "id": "bf8d8db8",
+  "runa": "Raidho",
+  "obraz": "cairns, each in sight of the next",
+  "otazka": "Where does this get hard?",
+  "text": "The hard part may be that a familiar road still takes you somewhere. Nothing has to be plainly wrong for its direction to feel less fitting than it once did. Raidho leaves room for that difference between continuing and choosing.",
+  "usage": {
+   "prompt_tokens": 1225,
+   "completion_tokens": 47,
+   "total_tokens": 1272,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P1",
+  "id": "bf8d8db8",
+  "runa": "Raidho",
+  "obraz": "cairns, each in sight of the next",
+  "otazka": "Where does this get hard?",
+  "text": "Raidho leaves room for a road to change direction. The hard part may be that a familiar path still carries you forward, even when you are no longer sure it leads where you mean to go. The reading does not say whether to stay or turn. It asks whether the direction still feels chosen.",
+  "usage": {
+   "prompt_tokens": 1225,
+   "completion_tokens": 63,
+   "total_tokens": 1288,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P1",
+  "id": "04242c2d",
+  "runa": "Algiz",
+  "obraz": "Out on the heath a twig snaps, and the whole party goes quiet to listen",
+  "otazka": "Where does this get hard?",
+  "text": "It gets hard in the pause, when you cannot tell whether you need shelter or simply more time to listen. Algiz holds protection without asking you to shut everything out. You may find that hard to distinguish from keeping your guard up, especially when you cannot yet see what made you wary.",
+  "usage": {
+   "prompt_tokens": 1233,
+   "completion_tokens": 61,
+   "total_tokens": 1294,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P1",
+  "id": "04242c2d",
+  "runa": "Algiz",
+  "obraz": "Out on the heath a twig snaps, and the whole party goes quiet to listen",
+  "otazka": "Where does this get hard?",
+  "text": "It gets hard in the pause before you know whether anything threatens you. You may feel safer shutting everything out, yet that can shut out the quiet forms of care that Algiz also holds. The reading does not say the danger is real or imagined. It leaves you with that uncertainty, where protection and withdrawal can look much the same.",
+  "usage": {
+   "prompt_tokens": 1233,
+   "completion_tokens": 70,
+   "total_tokens": 1303,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ },
+ {
+  "v": "P1",
+  "id": "04242c2d",
+  "runa": "Algiz",
+  "obraz": "Out on the heath a twig snaps, and the whole party goes quiet to listen",
+  "otazka": "Where does this get hard?",
+  "text": "It gets hard in the space between noticing something and knowing what it means. Algiz leaves room for caution, but caution can become a wall when every quiet thing is treated as a threat. You may need shelter, or you may simply need time to see what is there. The reading does not settle that for you.",
+  "usage": {
+   "prompt_tokens": 1233,
+   "completion_tokens": 67,
+   "total_tokens": 1300,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "audio_tokens": 0,
+    "accepted_prediction_tokens": 0,
+    "rejected_prediction_tokens": 0
+   }
+  }
+ }
+]

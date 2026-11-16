@@ -311,8 +311,8 @@ PRIPADY = [
  ('chyti', 'verify_komponenty.js', 'v2/runar-reader.css', 'append', '', '\n.fine{border-radius:6px;}\n'),
  ('chyti', 'verify_komponenty.js', 'v2/runar-reader.css', 'append', '', '\n.fine{color:#123abc;}\n'),
  ('chyti', 'verify_komponenty.js', 'v2/runar-reader.css', 'replace', '.fine{font-family', '.drobna{font-family'),
- # pravidlo E (2026-11-16, hlášení 64005ae3): nápis čekání runy dne zpět v .note → musí spadnout; čekání ve stromu (výjimka) nesmí
- ('chyti', 'verify_komponenty.js', 'v2/runar-runa-dne.js', 'replace', "'<div class=\"whispers-loading-label\">' + escapeHtml(t('reading_loading'))", "'<p class=\"note\">' + escapeHtml(t('reading_loading'))"),
+ # pravidlo E (2026-11-16, hlášení 64005ae3): nápis čekání v _cekaniHtml (runar-utils.js) zpět v .note → musí spadnout
+ ('chyti', 'verify_komponenty.js', 'v2/runar-utils.js', 'replace', "'<div class=\"whispers-loading-label\">' + escapeHtml(t('reading_loading'))", "'<p class=\"note\">' + escapeHtml(t('reading_loading'))"),
  ('obchazka', 'verify_komponenty.js', 'v2/runar-app.js', 'append', '', "\nfunction _x() { document.getElementById('x').textContent = t('reading_loading'); }\n"),
  # ㊌ skládání promptu na serveru (2026-10-21, CODE-tune): změna builderu bez přegenerovaného balíčku · balíček s jinou náhodou
  ('chyti', 'verify_prompt_skladani.js', 'v2/runar-character.js', 'replace', 'Lestu allar sjö sem eina samfellda frásögn', 'Lestu allar sjö sem eina frásögn'),
