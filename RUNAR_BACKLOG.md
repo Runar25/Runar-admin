@@ -202,7 +202,7 @@ hlídal jen V2 cestu.
   čtení se ukáže polohou na větvi (staré u kmene, nové ve špičce) — popis pak může mluvit o jednom úseku a nemíchá např. tři měsíce
   dohromady. Jestli dnešní kresba čtení podél větve takhle řadí, neověřeno. Owner: *„nevím, je to hypotéza … bez toho, až bych to viděl,
   to není směrodatné“* — rozhodne až pohled na skutečné větve.
-- [ ] **Čekání stromu má jinou podobu než čtení** (CODE-tune 2026-11-16, pro CODE-tree). Čtení i runa dne čekají komponentou čekání
+- [x] ✅ *(2026-11-16, owner „4. udělej sám“, CODE-tune: strom — životní runa, načítání profilu i rozbor jména — čeká komponentou čekání přes `_cekaniHtml()` v `runar-utils.js`, kámen runy nad ní; výjimky pravidla E smazány; chybová hláška profilu zůstala zvlášť jako `.note`.)* **Čekání stromu má jinou podobu než čtení** (CODE-tune 2026-11-16, pro CODE-tree). Čtení i runa dne čekají komponentou čekání
   (`.whispers-loading-*`: pulzující značka ᚱ, nápis, heslo zrcadla — soupis v `scripts/verify_komponenty.js`, pravidlo E). Strom má vlastní
   (`.tree-loading-glyph` / `.tree-loading-text`, jiná animace i barva nápisu) a při životní runě píše nápis do tlačítka; pravidlo E je
   zatím pouští výjimkou (`CEKANI_VYJIMKY`). Sjednotit na komponentu a výjimky smazat. Proč: owner 2026-11-16 (hlášení 64005ae3) chce

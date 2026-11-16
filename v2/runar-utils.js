@@ -1314,3 +1314,17 @@ if (typeof window !== 'undefined' && typeof window.addEventListener === 'functio
   if (_heroDownRaf) return;
   _heroDownRaf = requestAnimationFrame(function () { _heroDownRaf = 0; _heroDownStav(); });
 }, { passive: true });
+
+// ─── Čekání na model (2026-11-16) ─────────────────────────────
+// Jen reader (znackaSvg je v runar-znacka.js, načte se po utils — volá se až za běhu). Shrine to nevolá.
+function _loadingMotto() {   // heslo zrcadla pod čekáním — čtení i runa dne (runar-runa-dne.js)
+  var kl = ['motto_image', 'motto_mirror', 'motto_paths'];
+  return t(kl[Math.floor(Math.random() * kl.length)]);
+}
+// Komponenta čekání na model jako HTML — JEDINÉ místo pro čekání skládané v JS (runa dne, strom, rozbor jména); čtení ji má
+// v runar-reader.html (#reading-loading), soupis komponent a pravidlo E v scripts/verify_komponenty.js. 2026-11-16 (hlášení 64005ae3).
+function _cekaniHtml() {
+  return '<div class="whispers-loading-inner"><span class="whispers-loading-star">' + znackaSvg() + '</span>'
+    + '<div class="whispers-loading-label">' + escapeHtml(t('reading_loading')) + '</div>'
+    + '<div class="reading-loading-motto">' + escapeHtml(_loadingMotto()) + '</div></div>';
+}

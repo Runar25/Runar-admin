@@ -655,9 +655,7 @@ function updateTreeTab() {
   // Profil se nenačetl ani napodruhé (2026-10-12, fetchUserProfile): hláška a „zkusit znovu“ místo formuláře na datum narození — dřív
   // se tu člověka, který datum i hotové čtení má, appka znovu ptala „When were you born?“ (nález CODE-read). Nabídky výš čekají na profileLoaded.
   if (typeof profileLoadFailed !== 'undefined' && profileLoadFailed) {
-    var _tlf = document.getElementById('tree-loading'); if (_tlf) _tlf.style.display = 'block';
-    var _tlft = document.getElementById('tree-loading-text'); if (_tlft) _tlft.textContent = t('profile_load_err');
-    var _tlfg = document.getElementById('tree-loading-glyph'); if (_tlfg) _tlfg.innerHTML = '';
+    _treeCekaniChyba(t('profile_load_err'));
     var _tlfr = document.getElementById('tree-loading-retry'); if (_tlfr) { _tlfr.style.display = ''; _tlfr.textContent = t('profile_retry_btn'); }
     return;
   }
@@ -667,9 +665,7 @@ function updateTreeTab() {
     // Profil se jeste nacita (currentUser je hned, readerUser.d dorazi z DB ~1-2s):
     // ukaz loading misto no-dob formulare, jinak to blikne jako "kdy ses narodil?" a vypada rozbite.
     if (currentUser && typeof profileLoaded !== 'undefined' && !profileLoaded) {
-      var _tl = document.getElementById('tree-loading'); if (_tl) _tl.style.display = 'block';
-      var _tlt = document.getElementById('tree-loading-text'); if (_tlt) _tlt.textContent = t('reading_loading');
-      var _tlg = document.getElementById('tree-loading-glyph'); if (_tlg) _tlg.innerHTML = '';
+      _treeCekani('');
       return;
     }
     var noDob = document.getElementById('tree-no-dob');
@@ -1090,13 +1086,16 @@ async function generateNameLore() {
     return;
   }
   var btn = document.getElementById('name-lore-btn');
-  if (btn) { btn.disabled = true; btn.textContent = t('reading_loading'); }
+  if (btn) btn.disabled = true;
+  var nlCta = document.getElementById('name-lore-cta'); if (nlCta) nlCta.style.display = 'none';
+  var nlWait = document.getElementById('name-lore-wait'); if (nlWait) { nlWait.innerHTML = _cekaniHtml(); nlWait.style.display = ''; }
   var mode = RUNAR_MODES.name_lore;
   var prompt = buildNameLorePrompt(jm, _nameLookup(jm), lang, corrections);
   var sys = buildSysPrompt(activeChar, lang);
   // Zdarma — o tom i o strop rozhoduje PROXY (podle `mode` a sloupcu, na ktere klient nesahne).
   var res = await callProxy(sys, prompt, mode.max_tokens, false, 0, null, 'name_lore');
   if (btn) btn.disabled = false;
+  if (nlWait) { nlWait.innerHTML = ''; nlWait.style.display = 'none'; }   // cta vrátí _renderNameLore níž (každá větev)
   if (res && /^name_lore_(limit|done|no_name)$/.test(String(res.error || ''))) {
     // Server rika, ze tohle cist nebude — klient mel stary stav. Srovnat z DB a ukazat pravdu.
     await loadLifeRuneFromDB();
@@ -1111,6 +1110,20 @@ async function generateNameLore() {
   _nameLoreCount = (typeof res.name_lore_count === 'number') ? res.name_lore_count : (_nameLoreCount + 1);
   if (res.name_lore_saved === false) console.warn('name lore: the server returned the text, but saving it failed');   // 2026-10-10 §31: do té doby česky bez diakritiky
   _renderNameLore();
+}
+
+// Čekání ve stromu (2026-11-16): komponenta čekání jako u čtení (_cekaniHtml) s kamenem runy nad ní, nebo chybová hláška místo ní.
+function _treeCekani(kamen) {
+  var el = document.getElementById('tree-loading'); if (el) el.style.display = 'block';
+  var g = document.getElementById('tree-loading-glyph'); if (g) g.innerHTML = kamen || '';
+  var w = document.getElementById('tree-loading-wait'); if (w) { w.innerHTML = _cekaniHtml(); w.style.display = ''; }
+  var e = document.getElementById('tree-loading-text'); if (e) e.style.display = 'none';
+}
+function _treeCekaniChyba(text) {
+  var el = document.getElementById('tree-loading'); if (el) el.style.display = 'block';
+  var g = document.getElementById('tree-loading-glyph'); if (g) g.innerHTML = '';
+  var w = document.getElementById('tree-loading-wait'); if (w) { w.innerHTML = ''; w.style.display = 'none'; }
+  var e = document.getElementById('tree-loading-text'); if (e) { e.textContent = text; e.style.display = ''; }
 }
 
 function _lifeRuneName() {
@@ -1136,12 +1149,7 @@ async function generateLifeRuneReading() {
   ['tree-reveal-cta','tree-rs-teaser','tree-reading-exists'].forEach(function(id){
     var el=document.getElementById(id); if(el) el.style.display='none';
   });
-  var loadEl = document.getElementById('tree-loading');
-  var loadGlyph = document.getElementById('tree-loading-glyph');
-  var loadTxt = document.getElementById('tree-loading-text');
-  if (loadEl) loadEl.style.display = 'block';
-  if (loadGlyph) loadGlyph.innerHTML = runeSvg(rune, { frame: true, cls: 'tree-stone' });
-  if (loadTxt) loadTxt.textContent = t('reading_loading');
+  _treeCekani(runeSvg(rune, { frame: true, cls: 'tree-stone' }));
 
   var name = _lifeRuneName();
   // 2026-10-11: jeden režim pro všechny. Premium a admin měli strop 2000 místo 1200 tokenů, ale týž prompt a strop se nikdy

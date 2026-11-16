@@ -385,8 +385,8 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 .tree-static-open{font-family:'Cinzel',serif;font-size:0.85em;letter-spacing:0.5px;color:var(--muted);padding:12px 0 4px;}
 .tree-reading-text{font-size:1.1875em;line-height:1.8;color:var(--white);padding:12px 0 20px;font-style:italic;}
 .tree-reveal-intro{text-align:center;font-style:italic;color:var(--muted);font-size:0.95em;line-height:1.7;padding:8px 16px 20px;}
-.tree-loading-glyph{text-align:center;font-size:3em;color:var(--gold);opacity:0.6;padding:24px 0 8px;animation:pulse-fade 1.4s ease-in-out infinite;}
-.tree-loading-text{text-align:center;font-family:'Cinzel',serif;font-size:0.65em;letter-spacing:2px;color:var(--muted);padding-bottom:24px;}
+.tree-loading-glyph{text-align:center;padding:24px 0 0;}   /* kámen životní runy nad komponentou čekání (2026-11-16; do té doby pulzoval sám a nápis byl šedý) */
+#tree-loading .note{text-align:center;}
 .tree-growth-section{padding:24px 0 8px;border-top:1px solid var(--border);}
 .tree-growth-quote{text-align:center;font-style:italic;color:var(--muted);font-size:0.9em;line-height:1.9;padding:0 12px;}
 /* ── READING MODE TOGGLE ── */

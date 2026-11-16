@@ -99,9 +99,7 @@ async function _rodCti(r) {
   _rodVid('rod-grid', false);
   var stav = document.getElementById('rod-state');
   stav.innerHTML = runeSvg(r, { frame: true, cls: 'tree-stone' }) + '<div class="flbl">' + escapeHtml(rn(r)) + '</div>'
-    + '<div class="whispers-loading-inner"><span class="whispers-loading-star">' + znackaSvg() + '</span>'   // jako #reading-loading (hlášení 64005ae3)
-    + '<div class="whispers-loading-label">' + escapeHtml(t('reading_loading')) + '</div>'
-    + '<div class="reading-loading-motto">' + escapeHtml(_loadingMotto()) + '</div></div>';
+    + _cekaniHtml();   // komponenta čekání jako u čtení (hlášení 64005ae3; runar-utils.js)
     var mode = RUNAR_MODES.rune_day;
     var prompt = buildDayRunePrompt(r, lang, corrections);
     var sys = buildSysPrompt(activeChar, lang);
