@@ -1014,7 +1014,7 @@ function _nameLoreFixedSentence(jm) {
   if (z && z.norse) return null;
   var pv = z && (lang === 'is' ? z.origin_is : z.origin);
   if (pv) return tp('name_no_norse_from', { origin: pv });
-  if (!z && _inRegistry(jm)) return t('name_known_untraced');
+  if (!z && (_inRegistry(jm) || _nameCasti(jm).some(_inRegistry))) return t('name_known_untraced');
   return t('name_no_norse');
 }
 
@@ -1053,7 +1053,27 @@ function _inRegistry(jmeno) {
   var q = String(jmeno || '').trim().toLowerCase();
   return !!q && (_regSet.has(q) || _regFold.has(_nameFold(q)));
 }
+// Víc jmen (2026-11-17, hlášení 7ba9af13 — „Sigrún Björg“ dostala „žádný severský kořen“, protože se hledal celý řetězec):
+// owner „Islanďané mají více jmen a jen jedno třeba bude vhodné na rozbor“. Celé jméno napřed; když ho seznam nezná, rozhoduje
+// PRVNÍ severské z jednotlivých jmen, a když žádné není severské, první, které seznam zná (kvůli původu ve větě). Rozbor pak mluví
+// o tom jednom jméně (_nameProRozbor), ne o celém řetězci.
+function _nameCasti(jmeno) { return String(jmeno || '').trim().split(/[\s-]+/).filter(Boolean); }
 function _nameLookup(jmeno) {
+  var z = _nameLookup1(jmeno);
+  var casti = _nameCasti(jmeno);
+  if (z || casti.length < 2) return z;
+  var nalez = casti.map(_nameLookup1);
+  for (var i = 0; i < nalez.length; i++) if (nalez[i] && nalez[i].norse) return nalez[i];
+  for (var j = 0; j < nalez.length; j++) if (nalez[j]) return nalez[j];
+  return null;
+}
+// Jméno, o kterém rozbor mluví: celé, když ho seznam zná celé; jinak to jedno severské z více jmen (kanonický tvar ze seznamu).
+function _nameProRozbor(jmeno) {
+  if (_nameLookup1(jmeno)) return jmeno;
+  var z = _nameLookup(jmeno);
+  return z ? z.name : jmeno;
+}
+function _nameLookup1(jmeno) {
   if (!jmeno || typeof NORSE_NAMES === 'undefined') return null;
   var q = String(jmeno).trim().toLowerCase();
   if (!q) return null;
@@ -1090,7 +1110,7 @@ async function generateNameLore() {
   var nlCta = document.getElementById('name-lore-cta'); if (nlCta) nlCta.style.display = 'none';
   var nlWait = document.getElementById('name-lore-wait'); if (nlWait) { nlWait.innerHTML = _cekaniHtml(); nlWait.style.display = ''; }
   var mode = RUNAR_MODES.name_lore;
-  var prompt = buildNameLorePrompt(jm, _nameLookup(jm), lang, corrections);
+  var prompt = buildNameLorePrompt(_nameProRozbor(jm), _nameLookup(jm), lang, corrections);   // víc jmen → to jedno severské (2026-11-17)
   var sys = buildSysPrompt(activeChar, lang);
   // Zdarma — o tom i o strop rozhoduje PROXY (podle `mode` a sloupcu, na ktere klient nesahne).
   var res = await callProxy(sys, prompt, mode.max_tokens, false, 0, null, 'name_lore');
