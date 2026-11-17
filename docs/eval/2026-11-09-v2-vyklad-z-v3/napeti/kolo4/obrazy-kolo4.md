@@ -106,7 +106,7 @@ Mechanism: The closed vessel: something exists but is not yet shown or known —
 Napětí: Obsah existuje, ale je zavřený: ne „nic nevím“, ale „ještě nevím“ — a otevřít to dřív by to pokazilo.
 48. A parcel sits on the step, taped shut, with no sender's name.
 49. An unnamed voice memo sits in your phone, three minutes long.
-50. The seal has dived, and everyone on the shore watches a different patch of water.
+50. The whale has dived, and everyone on the boat watches a different patch of water.
 51. You write down the teacher's words, not yet knowing what they are for.
 
 ## Algiz
