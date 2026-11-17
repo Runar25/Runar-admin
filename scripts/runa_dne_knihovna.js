@@ -5,7 +5,7 @@
 // … můžeme teď udělat třeba jen 3 pro začátek“; „při dalším generování variant to má být bráno v potaz, ať se negenerují zase stejné“.
 // Cena textu změřená v model_usage (5 run dne): 1 426 tokenů vstup, 114 výstup = $0,004. Knihovna stojí jednou, ne za každého člověka.
 //
-// Knihovna = supabase/functions/_shared/runa_dne_knihovna.json (jediné místo; claude-proxy ji čte, oprava textu = diff v gitu).
+// Knihovna = supabase/functions/_shared/runa_dne_knihovna.mjs (jediné místo; claude-proxy ji importuje, oprava textu = diff v gitu).
 // Záznam: id · runa · lang · rod (jen is: kk/kvk/hk — oslovení) · varianta (číslo v rámci runy a jazyka) · losy · verze · text · ok · zdroj.
 // `ok: false` = ke kontrole; server dává jen `ok: true`. Islandština: Greynir + korpus před ok (CLAUDE.md §2), angličtinu čte owner.
 // Varianta k je v islandštině TÁŽ ve všech třech rodech (stejné losy, jiné oslovení) — počítadlo člověka jde po variantách, ne po rodech.
@@ -19,7 +19,7 @@
 'use strict';
 const fs = require('fs'), path = require('path'), vm = require('vm'), os = require('os'), cp = require('child_process');
 const ROOT = path.join(__dirname, '..');
-const KNIHOVNA = path.join(ROOT, 'supabase', 'functions', '_shared', 'runa_dne_knihovna.json');
+const KNIHOVNA = path.join(ROOT, 'supabase', 'functions', '_shared', 'runa_dne_knihovna.mjs');
 const ROD_IS = ['kk', 'kvk', 'hk'];
 const args = process.argv.slice(2), arg = (n) => { const i = args.indexOf(n); return i >= 0 ? args[i + 1] : null; };
 const DRY = args.includes('--dry-run');
@@ -27,11 +27,13 @@ const DRY = args.includes('--dry-run');
 function nacti() {
   if (!fs.existsSync(KNIHOVNA)) return { _proc: 'Knihovna textů runy dne — generuje a doplňuje scripts/runa_dne_knihovna.js (hlavička tam). '
     + 'claude-proxy dává jen ok:true. Text opravuj tady; varianta k je v islandštině táž ve všech rodech.', texty: [] };
-  return JSON.parse(fs.readFileSync(KNIHOVNA, 'utf8'));
+  const src = fs.readFileSync(KNIHOVNA, 'utf8');
+  return JSON.parse(src.slice(src.indexOf('{'), src.lastIndexOf('}') + 1));   // modul: export const KNIHOVNA = {…};
 }
 function uloz(k) {   // jeden záznam na řádek — diff v gitu ukáže opravu jednoho textu
   const radky = k.texty.map((t) => '  ' + JSON.stringify(t));
-  fs.writeFileSync(KNIHOVNA, '{\n "_proc": ' + JSON.stringify(k._proc) + ',\n "texty": [\n' + radky.join(',\n') + '\n ]\n}\n', 'utf8');
+  fs.writeFileSync(KNIHOVNA, '// GENEROVANÉ A RUČNĚ OPRAVOVANÉ: knihovna textů runy dne — scripts/runa_dne_knihovna.js (hlavička tam). Text opravuj tady, řádek = záznam.\n'
+    + 'export const KNIHOVNA = {\n "_proc": ' + JSON.stringify(k._proc) + ',\n "texty": [\n' + radky.join(',\n') + '\n ]\n};\n', 'utf8');
 }
 const idZaznamu = (t) => t.runa + '-' + t.varianta + '-' + t.lang + (t.rod ? '-' + t.rod : '');
 
