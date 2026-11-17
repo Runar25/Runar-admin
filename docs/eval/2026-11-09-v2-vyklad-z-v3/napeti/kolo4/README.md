@@ -64,6 +64,22 @@ Pochválené věty zůstaly beze změny. Tři průchody („nejde to ještě lé
 5. Za „neznámé ze života“ označil pět přírodních obrazů (kajka, bříza na lávě, bubliny pod ledem, vlna zvedá loď, potok ve starém korytě).
    Je to cena přírodních obrazů; o tom, které jsou čtenáři dost blízké, rozhoduje owner.
 
+## 6b. Čtvrtý průchod (2026-11-17) — 84 vět
+Owner: „algiz nedává smysl. jak může jedna geese jíst, když má zvednutou hlavu? jinak dobře. dával jsem ti nějaké další, co mě napadly,
+a pokud se hodí k nějaké runě, tak by se mi líbilo je použít.“ Rozbor GPT ke kolu 4: `zdroj-gpt-2026-11-17-analyza-kolo4.md`.
+1. Husy: věta teď popisuje jeden okamžik (hejno se pase, jedna husa stojí s krkem vzhůru). Zdroje (hledáno 2026-11-17) dokládají zvedání
+   hlavy při pastvě a střídání, **ne** stálou hlídku jedné husy — proto bez „always“.
+2. Výměna dvou vět, které neprošly: bříza roste podél jediné pukliny s hlínou (bez „shelters“) · Perth tuleň místo stop u potoka.
+3. Ownerovy nápady dohledané v přepisu session (2026-10-28, 10-30, 11-14, 11-15): voda přes okraj · ztuhlé koleno před schody · nádech před
+   odpovědí · nevyžádaný dar · most a oba břehy (jako lávka z prkna, aby to platilo doslova — výhrada GPT k mostu) · dech · slova učitele.
+4. Dva slepí soudci na 84 větách (`*_v4.json`): **79 projde / 3 hraniční / 2 ne**. Neprošly dvě nové věty a obě se přesunuly k runě, kterou
+   zvolili oba soudci: dech Gebo → Fehu · slova učitele Gebo → Perth. Hraniční: nevyžádaný dar (Gebo / Perth) · tuleň (Laguz / Perth) ·
+   bubliny pod ledem (Isa / Laguz).
+5. Po posouzení ještě úpravy znění podle GPT, které soudci už neviděli: víčko „turns in your hand“ · „the doors along the street“ ·
+   „the stones on the moor have shadows“ · labutě „stays the same“. Pěšina („is on no plan“) je ownerem pochválená — beze změny, dokud
+   owner nerozhodne.
+6. GPT se mýlí u posledního místa v autobuse (píše, že šlo k Algiz; u obou soudců prošlo jako Nauthiz).
+
 ## 7. Hranice
 1. Kruh: soudci vybírají z mých jednovětých popisů run; číslo říká „sedí na mou větu“, ne „je dobrý“.
 2. Bez islandštiny a bez zkoušky čtením. Jestli obraz nechá modelu místo, ukáže až čtení (na jiné runě než Isa, s ownerovým ano).
