@@ -28,13 +28,13 @@
 const fs = require('fs');
 const R = (process.env.RUNAR_ROOT || 'C:/Users/zkuku/Downloads/Runar-admin') + '/';
 
-const TABLE = 'user_profiles';
-const GRANT_SQL = 'sql/2026-07-16_user_profiles_column_grants.sql';
+let TABLE = 'user_profiles';
+let GRANT_SQL = 'sql/2026-07-16_user_profiles_column_grants.sql';
 
 // Columns that decide money or authority. Written ONLY by edge functions via
 // service_role (which bypasses grants). If any of these ever reaches the client
 // or the grant list, that is the hole coming back.
-const PRIVILEGED = [
+let PRIVILEGED = [
   'tier', 'credits_balance', 'free_balance',
   'month_units', 'month_key', 'drip_week', 'is_tester',
   // 2026-09-12: rozbor jmena je zdarma a strop drzi tyhle tri. Kdyby je smel psat klient,
@@ -55,6 +55,7 @@ const CLIENT_FILES = fs.readdirSync(R + 'v2')
 // 2026-10-11 (kolo 3 kontroly, podstrčeno naostro v kopii repa): from("user_profiles") s dvojitými uvozovkami a
 // update(p) s objektem v proměnné prošly zeleně i se sloupcem credits_balance. Teď obojí uvozovky, a zápis, jehož
 // sloupce nejsou vidět (argument není objektový literál), je chyba — nesmí projít tiše (§19.2).
+function zkontroluj() {
 const opaque = []; // "file:line" zápisů, jejichž sloupce z kódu nevyčteš
 function clientWrites() {
   const found = new Map(); // column -> "file:line"
@@ -143,4 +144,12 @@ if (fail === 0) {
 } else {
   console.log('\n' + fail + ' PROBLEM(S) — the write surface and the grants disagree.');
 }
-process.exit(fail ? 1 : 0);
+return fail;
+}
+let celkem = zkontroluj();
+// 2026-11-17: deník runy dne — klient smí do rune_day psát JEN poznámky; runu, text, variantu a losy píše claude-proxy (service_role).
+TABLE = 'rune_day';
+GRANT_SQL = 'sql/2026-11-17_rune_day_poznamky.sql';
+PRIVILEGED = ['user_id', 'den', 'rune', 'lang', 'text', 'text_id', 'draws', 'prompt_version', 'created_at'];
+celkem += zkontroluj();
+process.exit(celkem ? 1 : 0);
