@@ -207,6 +207,13 @@ hlídal jen V2 cestu.
   (`.tree-loading-glyph` / `.tree-loading-text`, jiná animace i barva nápisu) a při životní runě píše nápis do tlačítka; pravidlo E je
   zatím pouští výjimkou (`CEKANI_VYJIMKY`). Sjednotit na komponentu a výjimky smazat. Proč: owner 2026-11-16 (hlášení 64005ae3) chce
   „přesně takové jako při čtení run“.
+- [ ] **Rozbor jména nezná dvě jména** (hlášení 7ba9af13, Sigrún 2026-11-17: *„Sigrún er norrænt nafn, sigur og rún“*). V profilu
+  `Sigrún Björg`; `_nameLookup` (`v2/runar-tree.js`) hledá celý řetězec → nenajde → hotová věta „Rúnar sér enga norræna rót…“, přestože
+  `Sigrún` v `runar-names.js` je (`norse: true`). Islandská dvě jména jsou běžná. **Čeká na ownera:** rozebrat první severské jméno
+  z dvojice, nebo obě? `Björg` v seznamu není — kořen by musel dodat Cowork se zdrojem (§23).
+- [ ] **Runa dne: komu a jak dlouho zdarma** (hlášení b0f39156, owner 2026-11-17: zdarma týden až 14 dní, týden navíc za přivedeného
+  kamaráda; *„jak to dělají ostatní?“*). Dnes: `RUNE_OF_DAY.open_to: 'testers'`, rozhodnuto „zdarma, jen text, jednou denně, přihlášení“
+  (DECISIONS 2026-11-14 (6)). Návrh a srovnání v konverzaci 2026-11-17; **čeká na ownera.**
 - [ ] **Hluboký rozbor čtení Algiz** (hlášení 037966b4, owner 2026-11-10: *„zajímavé čtení, zaslouží si hlubokou analýzu“*; pro CODE-read).
   Čtení `04242…` (Algiz, EN, obraz „za ohybem vřesoviště… praskne větvička“); celé v `readings`, najde `node scripts/utils/najdi_cteni.js`.
   Co rozbor rozhodne, owner neřekl — napřed se zeptat, čím ho zaujalo.
