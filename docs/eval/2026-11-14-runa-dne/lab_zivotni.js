@@ -16,12 +16,19 @@ const runa = (n) => RUNES.find((r) => r.n === n);
 
 // Blok životní runy (návrh, laboratorní znění). IS psáno islandsky; korpus: „ber frá fæðingu“ / „mætir“ ověřit před produkcí.
 const ZIVOTNI = {
-  en: (L) => 'LIFE RUNE: ' + L.n + ' (' + L.k + ') — the rune this person carries from birth. In the second part, let today\'s rune meet '
+  // kolo 2 (owner 2026-11-17: „nemělo by jít o dva samostatné výklady … life rune je jako personalita člověka a denní runa je runa dne …
+  // jak life rune ovlivňuje denní runu, situace v ní“; vzor = jeho Asky „How does my life rune Isa affect Fehu“ → „Isa brings stillness to Fehu’s…“)
+  en: (L) => KOLO === 2
+    ? 'LIFE RUNE: ' + L.n + ' (' + L.k + ') — the nature this person carries from birth. Do not describe ' + L.n + ' on its own and do not give it a part of '
+      + 'its own. Let it colour today\'s rune throughout: what ' + L.n + ' brings to today\'s rune, and how today\'s rune may play out in someone '
+      + 'whose nature is ' + L.n + '. Still only as something that may be so.'
+    : 'LIFE RUNE: ' + L.n + ' (' + L.k + ') — the rune this person carries from birth. In the second part, let today\'s rune meet '
     + 'it: what this day\'s rune may stir in someone who carries ' + L.n + '. Still only as something that may be so.',
   is: (L) => 'LÍFSRÚN: ' + L.n + ' (' + L.k_is + ') — rúnin sem þessi manneskja ber frá fæðingu. Í öðrum hluta mætir rún dagsins henni: '
     + 'hvað rún dagsins gæti vakið hjá þeim sem ber ' + L.n + '. Aðeins sem eitthvað sem gæti verið.',
 };
-const VZORKY = [ { lang: 'en', seed: 1 }, { lang: 'en', seed: 7 }, { lang: 'is', seed: 3 } ];
+const KOLO = Number((process.argv.find((x) => /^--kolo=/.test(x)) || '--kolo=1').split('=')[1]);
+const VZORKY = KOLO === 2 ? [ { lang: 'en', seed: 1 }, { lang: 'en', seed: 7 } ] : [ { lang: 'en', seed: 1 }, { lang: 'en', seed: 7 }, { lang: 'is', seed: 3 } ];
 
 function seeded(seed) { let x = seed * 9301 + 49297; return () => { x = (x * 9301 + 49297) % 233280; return x / 233280; }; }
 function prompt(v) {
@@ -53,7 +60,7 @@ function prompt(v) {
     const data = await res.json().catch(() => ({}));
     if (!res.ok) { console.error('HTTP ' + res.status, data.error && data.error.message); continue; }
     const text = ((data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) || '').trim();
-    fs.appendFileSync(OUT, JSON.stringify({ kolo: 'zivotni1', vzorek: v, losy, prompt: p, text, usage: data.usage, generated_at: new Date().toISOString() }) + '\n', 'utf8');
+    fs.appendFileSync(OUT, JSON.stringify({ kolo: 'zivotni' + KOLO, vzorek: v, losy, prompt: p, text, usage: data.usage, generated_at: new Date().toISOString() }) + '\n', 'utf8');
     console.log('--- ' + JSON.stringify(v) + ' ' + JSON.stringify(losy) + '\n' + text + '\n');
   }
 })();
