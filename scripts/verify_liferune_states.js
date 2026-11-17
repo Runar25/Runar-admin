@@ -463,6 +463,15 @@ async function drat() {
   const isRejstrik = await zkus({ severske: 'Dagur', L: 'is' });
   rekni(isRejstrik.obsah === vm.runInContext('UI_TEXT', S).is.name_known_untraced, 'is  „Dagur" → táž pravdivá věta islandsky');
 
+  // Víc jmen (2026-11-17, hlášení 7ba9af13): rozhoduje to jedno severské, ne celý řetězec.
+  const dve = await zkus({ severske: 'Sigrún Björg' });
+  rekni(dve.volani === 1, '„Sigrún Björg" (dvě jména, první severské) → model text NAPÍŠE');
+  const dveNe = await zkus({ severske: 'Magnús Einar' });
+  rekni(dveNe.volani === 0 && dveNe.obsah === T.name_no_norse_from.replace('{origin}', 'Latin'),
+        '„Magnús Einar" (žádné severské) → model se nevolá, věta s původem prvního známého jména');
+  const pr = vm.runInContext('_nameProRozbor', S);
+  rekni(pr('Sigrún Björg') === 'Sigrún' && pr('Sigrún') === 'Sigrún', '…rozbor mluví o „Sigrún", ne o celém řetězci');
+
   // Rozbor bere SEVERSKE jmeno, i kdyz se clovek nechava oslovovat jinak.
   const severske = await zkus({ severske: 'Sigrún', jmeno: 'Trpaslík' });
   rekni(severske.volani === 1, '„Sigrún" (severské; oslovení Trpaslík) → model text NAPÍŠE');
