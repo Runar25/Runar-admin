@@ -2175,7 +2175,9 @@ const UI_TEXT = {
     // Hesla zrcadla + helper — viz en blok (IS psano nativne, korpus + is-grammar-qa 2026-09-22).
     motto_image:        'Rúnar talar í myndum — rúnin býr í myndinni.',
     // 2026-09-23: pryc „sjálfur" (muzsky tvar — u zen nesedel; nasel rozbor reportu). Beze slova, ktere nese rod.
-    motto_mirror:       'Myndin er spegill. Það sem þú leitar að, finnur þú í honum.',
+    // 2026-11-17 (Sigrún, hlášení 7fc812f4: „Maður sér í spegli, ekki finnur“): v zrcadle se vidí, ne najde. Korpus: þar sérðu 853 ·
+    // sérðu það sem 53 · þú leitar að 759; Greynir čistý („finnur í spegli“ 0, „sérðu í honum“ 0 → proto „þar“).
+    motto_mirror:       'Myndin er spegill. Þar sérðu það sem þú leitar að.',
     motto_paths:        'Rúnar segir þér ekki hvað þú átt að gera. Hann bendir á möguleika.',
     helper_btn:         'Hjálp við lesturinn',
     helper_guide:       'Smelltu hér til að sjá hvernig lestur verður til.',
