@@ -130,7 +130,7 @@ export function prehravac() {
 // vlastni (F3b, claude-proxy): { random?, uloz: stav sáčku z prompt_state, posledniObraz: {runa, img} z deníku } — bez něj se přehraje
 // náhoda a sáček ze zápisu (stín a smoke ㊍: server = appka bajt po bajtu).
 // Vrací { system, prompt, builder, cena, maxTokens, denik: {kind, rune_name, rune_glyph, rune_display?} | null,
-// zivotni: {cislo, lang} | null (jen životní runa), dne: {runa, lang, otevreno, losy, verze} | null (jen runa dne), draws (prompt_draws do deníku, jen čtení run), stav (sáček po skládání), los } nebo { chyba }.
+// zivotni: {cislo, lang} | null (jen životní runa), dne: {runa, lang, otevreno, losy, verze, rod} | null (jen runa dne), draws (prompt_draws do deníku, jen čtení run), stav (sáček po skládání), los } nebo { chyba }.
 export function slozPromptServer(stin, { mode = "", tier = "", admin = false, korekce = null, vlastni = null, askCteni = null } = {}) {
   if (!stin || typeof stin !== "object" || !stin.sys || !stin.prompt) return { chyba: "no_record" };
   if (JSON.stringify(stin).length > 120000) return { chyba: "record_too_large" };
@@ -196,7 +196,9 @@ export function slozPromptServer(stin, { mode = "", tier = "", admin = false, ko
       if (!r || !S.RUNES.some((x) => x.n === r.n)) return { chyba: "day_rune_unknown" };
       maxTokens = S.RUNAR_MODES.rune_day.max_tokens;
       dne = { runa: r.n, lang: pr.lang, otevreno: (S.RUNE_OF_DAY && S.RUNE_OF_DAY.open_to) || "testers",
-        losy: S._dayLosy ? S._dayLosy() : null, verze: S.RUNAR_PROMPT_VERSION || null };   // 2026-11-16: do rune_day.draws / prompt_version
+        losy: S._dayLosy ? S._dayLosy() : null, verze: S.RUNAR_PROMPT_VERSION || null,   // 2026-11-16: do rune_day.draws / prompt_version
+        // 2026-11-17: rod oslovení — islandský text z knihovny se vybírá podle něj (runa_dne_knihovna.mjs)
+        rod: pr.lang === "is" ? (["kk", "kvk", "hk"].includes(String((stin.prompt.stav || {}).userGender)) ? String(stin.prompt.stav.userGender) : "hk") : null };
     }
     return { system: sys.text, prompt, builder: pr.builder, cena, maxTokens, denik, zivotni, dne, draws, stav: stav(), askNahrazeno,
              los: { sys: [sys.los, sys.los_zbyl, sys.los_dosel], prompt: [pr.los, pr.los_zbyl, pr.los_dosel], nahod: sys.nahod + pr.nahod } };

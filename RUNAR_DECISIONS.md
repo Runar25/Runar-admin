@@ -13335,3 +13335,20 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Owner:** *„3. obraz lepší“* → pravidlo beze změny; na rovnou odpověď stačí, když si o ni člověk řekne (pravidlo „answer in plain words“
   v RP_ASK, u Algiz to napodruhé fungovalo).
 - Affected doc(s): žádný jiný (prompt beze změny; nález v labu).
+
+## 2026-11-17 (1) — Runa dne z knihovny textů, ne z modelu pro každého
+- **Owner:** *„nebudeme je dělat pořád dokola voláním … vyrobíme jich několik a budeme je střídat … čtení jedné runy se nesmí opakovat,
+  takže pojede počítadlo … až dostane všech 5 variant, můžeme vygenerovat dalších 5, přečíst a upravit … teď třeba jen 3“*; k živému
+  dogenerování, když varianty dojdou: *„ok, zatím to tak uděláme“*; *„při dalším generování … ať se negenerují zase stejné“*; *„1. ano“*.
+- **Proč:** text runy dne nezávisí na člověku (jen runa, losy, v islandštině rod oslovení). Cena změřená v `model_usage`: $0,004 za text;
+  živě by 1 000 lidí denně stálo ~$120 měsíčně, knihovna stojí jednou. Islandštinu jde zkontrolovat dřív, než ji kdo uvidí.
+- **Co:** `supabase/functions/_shared/runa_dne_knihovna.mjs` (jediné místo, oprava textu = diff v gitu), generátor
+  `scripts/runa_dne_knihovna.js` (sáček runy se napřed zbaví poloh pák, které knihovna už má; islandská varianta je táž ve třech rodech).
+  Zkouška: 25 run × 3 varianty, en + is ve 3 rodech + 4 texty z produkce = 296, sol $1,25. `claude-proxy` dá schválený text téže runy,
+  jazyka a rodu, jehož variantu člověk u té runy ještě neviděl (`rune_day.text_id`, `sql/2026-11-17_rune_day_text_id.sql`); když dojdou,
+  píše model jako dosud a text se převezme ke kontrole (`--z-produkce`).
+- **Kontrola:** 281 schváleno. Islandština Greynirem: nálezy roztříděné (jména run, „vanta“ s tvarem shodným v obou pádech, „gefa gaum að“,
+  „gefa og þiggja“ = známá slepá místa); rod oslovení sedí ve všech textech. 15 islandských textů s E001 mimo známá slepá místa zůstává
+  ke kontrole (`ok: false`, server je nedá). Angličtinu owner číst nechce — schválena po kontrole tvaru (bez vykřičníků, délka).
+- **Neověřeno:** běh naostro — čeká na SQL a nasazení; serverový kód zkontrolován jen syntaxí (Deno tu není).
+- Affected doc(s): RUNAR_BACKLOG.md (Rune of the Day).

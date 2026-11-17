@@ -207,6 +207,28 @@ hlídal jen V2 cestu.
   (`.tree-loading-glyph` / `.tree-loading-text`, jiná animace i barva nápisu) a při životní runě píše nápis do tlačítka; pravidlo E je
   zatím pouští výjimkou (`CEKANI_VYJIMKY`). Sjednotit na komponentu a výjimky smazat. Proč: owner 2026-11-16 (hlášení 64005ae3) chce
   „přesně takové jako při čtení run“.
+- [ ] **Deník runy dne — vlastní zápis** (owner 2026-11-17: *„umožníme zápis do deníku … jiný deník než runový, ale s tím, že vidí,
+  jakou runu ten den vytáhl, a může si zapsat, co se mu líbilo“*). Rešerše 2026-11-17 (slabé zdroje — obchody, blogy výrobců): lidé chtějí
+  krátký zápis s malou námahou (Daylio, „one line a day“), ohlédnutí „tento den před rokem“ (Day One), vzorce v čase (Labyrinthos Mirror:
+  nejčastější karta, karty, které nepřišly); vadí ztráta zápisů, zamčená historie, mělké opakované otázky, série a výčitky. Návrh první
+  verze: runa dne + jedno volné pole s neměnnou výzvou hlasem zrcadla · volitelné „vrátit se“ (druhá poznámka později) · seznam / kalendář
+  bez počítadla · hledání podle runy · uložení na serveru, koncept nikdy tiše neztratit. **Čeká na ownera:** co z toho v první verzi.
+- [ ] **Souhrn týdne / měsíce z run dne** (owner 2026-11-17: *„na základě rune of the day … určitý souhrn za týden, měsíc, kde bude výklad
+  z run, co byly rune of the day“*). Vzor: popis větve od CODE-tree (2026-11-14, výstupy `eval_out/vetev_popis_*.json`, owner *„správný
+  směr“*, *„jde o runy, obraz není potřeba“*; builder necommitnutý). Owner 2026-11-17: nejčastější runa = základ, ostatní se k ní přidávají
+  — u stromu je to jen hypotéza (DECISIONS 2026-10-10 (5)), tvar ho nepoužívá (`RUNAR_TREE.md` §5). Popis vzorce, nikdy předpověď.
+- [ ] **Ukázat, ne popisovat: obsah předplatného** (owner 2026-11-17 „16. do backlogu“). Řádky okna cesty rozklepnout na skutečnou ukázku
+  (vzorové čtení, vzorový Ask s odpovědí, ukázka hlasu; zřetelně označené) + prohlídka „Projdi se s Rúnarem“ ve 3–4 krocích přes `rozsvit()`
+  (`v2/runar-helper.js`), vždy přeskočitelná, volitelně Rúnarovým hlasem. Zdroje: NN/g (úvodní tutoriál nepomáhá), Chameleon (3–4 kroky
+  ~72 % dokončí, 7+ ~16 %).
+- [ ] **Video o appce na web a sítě** (owner „17. backlog“): na výšku, s titulky; v appce nanejvýš odkaz (appka se mění, video zastará).
+- [ ] **Osobní runa dne se životní runou** (owner 2026-11-17 „22. není to ono … musíme najít lepší formu, jak říct, co chceme“). Životní runa
+  = povaha člověka, runa dne = runa dne; ne dva výklady, ale jak životní runa ovlivňuje runu dne. Lab `docs/eval/2026-11-14-runa-dne/
+  lab_zivotni.js` (kolo 2 zbarví celý text; slovo „colour“ z promptu se vrátilo doslova).
+- [ ] **Ask pro Rune Seekera, jedno nebo dvě předplatná** (owner 2026-11-17: *„tohle celé musí být lépe promyšlené“*). Podklady 2026-11-17:
+  Ask stojí $0,003 EN / $0,006 IS (132 Asků, 128 adminových), marže kreditu −0,2 až −0,5 p. b.; Ask je ale jedna ze tří výhod předplatného.
+  Konkurence: 8 z 9 appek jedno předplatné, otázky po kusech Co-Star a Trusted Tarot; ceny kategorie $7–15/měs proti našim ~$28/~$40.
+  Data o tom, zda lidé chtějí víc kredity, nejsou. Pozor: v App Store je „Runar: AI Chat & Runes“ (jiný vývojář).
 - [ ] **Rozbor jména nezná dvě jména** (hlášení 7ba9af13, Sigrún 2026-11-17: *„Sigrún er norrænt nafn, sigur og rún“*). V profilu
   `Sigrún Björg`; `_nameLookup` (`v2/runar-tree.js`) hledá celý řetězec → nenajde → hotová věta „Rúnar sér enga norræna rót…“, přestože
   `Sigrún` v `runar-names.js` je (`norse: true`). Islandská dvě jména jsou běžná. **Čeká na ownera:** rozebrat první severské jméno
@@ -1170,6 +1192,10 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   rune_seeker“, SQL jim dává premium); runar-reading.js ~1100 („tier != premium -> 403“); runar-journal.js ~274 natvrdo `count > 5`
   místo `TIERS.rune_seeker.journal` (§10); runar-auth.js ~400 po uplatnění kódu nastaví `userTier = 'rune_seeker'` i předplatiteli
   (dopad neověřen).
+
+- [ ] **Okno cesty: co přesně dostaneš, kdy se platí a jak zrušit** (owner 2026-11-17 „18. ok udělat“; vzor Blinkist — údajně +23 %
+  konverze, jen z druhé ruky). Dnes jen `journey_foot` „Cancel any time.“ Kdy se platí a jak se ruší, závisí na platební bráně, která není
+  vybraná (DECISIONS 2026-11-01 (6)) — napsat se stavbou plateb, nevymýšlet předem.
 
 ### Před spuštěním plateb: nižší účet a vracení peněz (DECISIONS 2026-10-21 (9))
 - [ ] **CODE-web — nákup:** zaškrtávací souhlas „chci začít hned a beru na vědomí ztrátu práva na odstoupení, až bude služba poskytnutá

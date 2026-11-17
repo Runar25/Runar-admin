@@ -42,7 +42,8 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.117.3";
 import { textKHlasu, normalizuj, odvozId } from "../_shared/voice_ticket.ts";
 import { SERVER_KLIC, podepisServer, overServer } from "../_shared/klic.ts";   // klíč a podpis hlasu z jednoho místa (2026-11-01)
-import { ADMIN_EMAILS } from "../_shared/admini.ts";   // seznam adminů na jednom místě (2026-10-22, DECISIONS 2026-10-22 (5))
+import { ADMIN_EMAILS } from "../_shared/admini.ts";
+import { KNIHOVNA } from "../_shared/runa_dne_knihovna.mjs";   // texty runy dne (2026-11-17, scripts/runa_dne_knihovna.js)   // seznam adminů na jednom místě (2026-10-22, DECISIONS 2026-10-22 (5))
 
 const cors = {
   "Access-Control-Allow-Origin":  "*",
@@ -531,7 +532,7 @@ serve(async (req: Request) => {
     // i jemu: jinak by stačilo poslat rozbitý zápis a model by dostal vlastní text. Jen selhání načtení balíčku (útočník ho nevyvolá)
     // pustí čtení po staru — výpadek kódu nesmí zastavit všechna čtení; jde do ops_events jako chyba.
     let zivotniServer: { cislo: number; lang: string } | null = null;   // životní runa ze skládání — zapíše se po úspěchu (níž)
-    let denServer: { runa: string; lang: string; otevreno: string; losy?: Record<string, unknown> | null; verze?: string | null } | null = null;   // runa dne ze skládání — runa, jazyk, komu je otevřená
+    let denServer: { runa: string; lang: string; otevreno: string; losy?: Record<string, unknown> | null; verze?: string | null; rod?: string | null } | null = null;   // runa dne ze skládání — runa, jazyk, komu je otevřená
     // F3b: stav sáčku po skládání (uloží se po úspěchu, jen když se změnil) · los do deníku a appce · prompt pro admina (rozbor čtení)
     let stavServer: Record<string, string> | null = null, stavPuvodni = "", drawsServer: unknown = null, promptAdmin = "";
     if (prompt && mode !== "resave" && mode !== "life_rune_reset") {
@@ -710,6 +711,41 @@ serve(async (req: Request) => {
           return json({ error: "unavailable", message: "The runes are quiet. Try again shortly." }, 503);
         }
         if (dr && !rodZnovu) return json({ text: dr.text, rune: dr.rune, stored: true });
+        // Knihovna (2026-11-17, owner „vyrobíme jich několik a budeme je střídat … čtení jedné runy se nesmí opakovat“): schválený text
+        // téže runy, jazyka a (v islandštině) rodu, jehož VARIANTU člověk u té runy ještě neviděl — bez volání modelu, cena 0.
+        // Viděné varianty = jeho řádky rune_day s text_id (sql/2026-11-17_rune_day_text_id.sql). Dojdou-li, píše model jako dosud a ten
+        // text se později převezme do knihovny ke kontrole (scripts/runa_dne_knihovna.js --z-produkce).
+        const variantaZ = (id: string) => id.replace(/-(kk|kvk|hk)$/, "");
+        const kandidati = (KNIHOVNA.texty as Array<Record<string, any>>).filter((t) => t.ok && t.runa === denServer!.runa
+          && t.lang === denServer!.lang && (t.lang !== "is" || t.rod === (denServer!.rod || "hk")));
+        if (kandidati.length) {
+          const { data: hist, error: hErr } = await sb().from("rune_day").select("text_id")
+            .eq("user_id", userId).eq("rune", denServer.runa).not("text_id", "is", null);
+          if (hErr) console.error("rune day history read failed:", hErr.message);   // bez sloupce text_id (před SQL) = nic neviděl
+          const videno = new Set((hist || []).map((h: { text_id: string }) => variantaZ(String(h.text_id))));
+          const volne = kandidati.filter((t) => !videno.has(variantaZ(String(t.id))));
+          if (volne.length) {
+            const t = volne[Math.floor(Math.random() * volne.length)];
+            const radek = { user_id: userId, den: denDnes, rune: denServer.runa, lang: denServer.lang, text: t.text,
+              prompt_version: t.verze ?? null, draws: t.losy ?? null, text_id: t.id };
+            const zapis = (r: Record<string, unknown>) => rodZnovu
+              ? sb().from("rune_day").upsert(r, { onConflict: "user_id,den" }) : sb().from("rune_day").insert(r);
+            let { error: kErr } = await zapis(radek);
+            if (kErr && (kErr.code === "42703" || kErr.code === "PGRST204")) {
+              const { text_id: _bez, ...bezId } = radek; ({ error: kErr } = await zapis(bezId));
+            }
+            if (kErr && kErr.code === "23505") {
+              const { data: d2 } = await sb().from("rune_day").select("rune, text").eq("user_id", userId).eq("den", denDnes).maybeSingle();
+              if (d2) return json({ text: d2.text, rune: d2.rune, stored: true });
+            }
+            if (kErr) {
+              // Bez uloženého řádku by „jednou denně“ nic nehlídalo — text z knihovny nevydat, ať se nedá brát zdarma dokola.
+              console.error("rune day library persist failed:", kErr.message);
+              return json({ error: "unavailable", message: "The runes are quiet. Try again shortly." }, 503);
+            }
+            return json({ text: t.text, rune: denServer.runa, library: true });
+          }
+        }
       }
       if (prErr) {
         // Fail OPEN, stejna posture jako mesicni strop: vypadek cteni nesmi zablokovat
