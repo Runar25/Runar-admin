@@ -311,6 +311,8 @@ PRIPADY = [
  ('chyti', 'verify_komponenty.js', 'v2/runar-reader.css', 'append', '', '\n.fine{border-radius:6px;}\n'),
  ('chyti', 'verify_komponenty.js', 'v2/runar-reader.css', 'append', '', '\n.fine{color:#123abc;}\n'),
  ('chyti', 'verify_komponenty.js', 'v2/runar-reader.css', 'replace', '.fine{font-family', '.drobna{font-family'),
+ # rune_day (2026-11-17, deník runy dne): appka smí psát jen note / note_later — zápis textu dne musí spadnout
+ ('chyti', 'verify_write_surface.js', 'v2/runar-runa-dne.js', 'append', '', "\nasync function _x() { const { error } = await sb.from('rune_day').update({ text: 'x' }).eq('den', 'd'); if (error) return; }\n"),
  # pravidlo E (2026-11-16, hlášení 64005ae3): nápis čekání v _cekaniHtml (runar-utils.js) zpět v .note → musí spadnout
  ('chyti', 'verify_komponenty.js', 'v2/runar-utils.js', 'replace', "'<div class=\"whispers-loading-label\">' + escapeHtml(t('reading_loading'))", "'<p class=\"note\">' + escapeHtml(t('reading_loading'))"),
  ('obchazka', 'verify_komponenty.js', 'v2/runar-app.js', 'append', '', "\nfunction _x() { document.getElementById('x').textContent = t('reading_loading'); }\n"),

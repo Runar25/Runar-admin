@@ -905,6 +905,14 @@
     <!-- Content: logged in -->
     <div id="journal-content" style="display:none;">
 
+      <!-- Přepínač čtení / runa dne (2026-11-17, deník runy dne): komponenta přepínač; vidí ho jen ten, komu je runa dne otevřená -->
+      <div class="lang-toggle" id="jtab" style="margin-bottom:22px;" hidden>
+        <button type="button" class="lang-btn active" id="jtab-readings" onclick="rodDenikPrepni('readings')"></button>
+        <button type="button" class="lang-btn" id="jtab-rod" onclick="rodDenikPrepni('rod')"></button>
+      </div>
+      <div id="rod-journal" hidden></div>
+
+      <div id="jread">
       <!-- Pane header -->
       <div class="journal-pane-header">
         <span class="journal-pane-title" id="journal-pane-title"></span>
@@ -935,6 +943,7 @@
              a kopie měla tier natvrdo a slib „každé čtení“ -->
         <p class="journal-standard-teaser-txt" id="journal-teaser-txt"></p>
       </div>
+      </div><!-- /jread -->
 
     </div><!-- /journal-content -->
 

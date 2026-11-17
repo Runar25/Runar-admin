@@ -30,8 +30,8 @@ function _rodAdmin() { return !!(typeof currentUser !== 'undefined' && currentUs
 function _rodPaint() {
   var box = document.getElementById('rod');
   if (!box) return;
-  if (!_rodSmi()) { _rodVid('rod', false); _rodNacteno = ''; return; }
-  _rodVid('rod', true);
+  if (!_rodSmi()) { _rodVid('rod', false); _rodVid('jtab', false); rodDenikPrepni('readings'); _rodNacteno = ''; return; }
+  _rodVid('rod', true); _rodVid('jtab', true);
   var klic = currentUser.id + '|' + _rodDnes();
   if (_rodNacteno === klic) return;
   _rodNacteno = klic;
@@ -113,4 +113,89 @@ async function _rodCti(r) {
     var box = document.getElementById('rod');
     if (box && box.scrollIntoView) box.scrollIntoView({ behavior: 'smooth', block: 'center' });
   } finally { _rodBezi = false; }
+}
+
+// ─── Deník runy dne (2026-11-17) ─────────────────────────────────────────────
+// Owner 2026-11-17: „umožníme zápis do deníku … jiný deník než runový, ale s tím, že vidí, jakou runu ten den vytáhl, a může si
+// zapsat, co se mu líbilo“; k první verzi (rešerše, RUNAR_BACKLOG „Deník runy dne“) „souhlasím“: runa dne + jedno volné pole,
+// volitelné ohlédnutí později, seznam bez počítadla, výběr podle runy. Zápis jen do rune_day.note / note_later
+// (sql/2026-11-17_rune_day_poznamky.sql; klientskou stranu hlídá verify_write_surface). Neuložený text zůstává v poli — nikdy tiše neztratit.
+var _rodJ = { rows: [], runa: '' };
+function rodDenikPrepni(co) {
+  var rod = co === 'rod';
+  _rodVid('rod-journal', rod);
+  _rodVid('jread', !rod);
+  var a = document.getElementById('jtab-readings'), b = document.getElementById('jtab-rod');
+  if (a) a.classList.toggle('active', !rod);
+  if (b) b.classList.toggle('active', rod);
+  if (rod) rodDenikNacti();
+}
+async function rodDenikNacti() {
+  var box = document.getElementById('rod-journal');
+  if (!box || !currentUser) return;
+  const { data, error } = await sb.from('rune_day').select('den, rune, text, note, note_later')
+    .eq('user_id', currentUser.id).order('den', { ascending: false }).limit(400);
+  if (error) {
+    console.error('rune day journal read failed:', error.message);
+    box.innerHTML = '<p class="note">' + escapeHtml(t('err_generic')) + '</p>';
+    return;
+  }
+  _rodJ.rows = data || [];
+  _rodDenikKresli();
+}
+function rodDenikRuna(n) { _rodJ.runa = n || ''; _rodDenikKresli(); }
+function _rodDenikKresli() {
+  var box = document.getElementById('rod-journal');
+  if (!box) return;
+  var rows = _rodJ.rows;
+  if (!rows.length) { box.innerHTML = '<p class="note">' + escapeHtml(t('rod_j_empty')) + '</p>'; return; }
+  var runy = [];
+  rows.forEach(function (r) { if (runy.indexOf(r.rune) === -1) runy.push(r.rune); });
+  var najdi = function (n) { return RUNES.find(function (x) { return x.n === n; }); };
+  var vyber = runy.length < 2 ? '' : '<div style="display:flex;margin-bottom:12px;"><select class="journal-filter-select" onchange="rodDenikRuna(this.value)">'
+    + '<option value="">' + escapeHtml(t('jf_all_runes')) + '</option>'
+    + runy.map(function (n) { var r = najdi(n); return '<option value="' + escapeHtml(n) + '"' + (n === _rodJ.runa ? ' selected' : '') + '>'
+      + escapeHtml(r ? rn(r) : n) + '</option>'; }).join('') + '</select></div>';
+  var dnes = _rodDnes();
+  var karty = rows.filter(function (r) { return !_rodJ.runa || r.rune === _rodJ.runa; }).map(function (r) {
+    var ru = najdi(r.rune), d = escapeHtml(String(r.den));
+    var odst = String(r.text || '').split(/\n\s*\n/).map(function (x) { return x.trim(); }).filter(Boolean);
+    return '<div class="jcard"><div class="jcard-header" role="button" aria-expanded="false" onclick="rodDenikOtevri(this, \'' + d + '\')">'
+      + '<div class="jcard-left">' + (ru ? runeSvg(ru, { frame: true, cls: 'jcard-stone' }) : '')
+      + '<div class="jcard-info"><div class="jcard-name">' + escapeHtml(ru ? rn(ru) : r.rune) + '</div>'
+      + '<div class="jcard-date">' + escapeHtml(datumUI(r.den, lang)) + '</div>'
+      + '<div class="jcard-excerpt">' + escapeHtml(r.note || odst[0] || '') + '</div></div></div><span class="xp-plus" aria-hidden="true">+</span></div>'
+      + '<div class="jcard-body" id="rodj-' + d + '" hidden>'
+      + odst.map(function (p) { return '<p class="jcard-text">' + escapeHtml(p) + '</p>'; }).join('')
+      + '<div class="jcard-layer-lbl">' + escapeHtml(t('rod_j_note_lbl')) + '</div>'
+      + '<textarea class="txt" rows="3" maxlength="2000" id="rodn-' + d + '" placeholder="' + escapeHtml(t('rod_j_note_ph')) + '">'
+      + escapeHtml(r.note || '') + '</textarea>'
+      + (String(r.den) < dnes ? '<div class="jcard-layer-lbl">' + escapeHtml(t('rod_j_later_lbl')) + '</div>'
+        + '<textarea class="txt" rows="3" maxlength="2000" id="rodl-' + d + '">' + escapeHtml(r.note_later || '') + '</textarea>' : '')
+      + '<button type="button" class="btn-half" onclick="rodDenikUloz(\'' + d + '\')">' + escapeHtml(t('save_btn')) + '</button>'
+      + '</div></div>';
+  }).join('');
+  box.innerHTML = vyber + karty;
+}
+function rodDenikOtevri(hlava, den) {
+  var b = document.getElementById('rodj-' + den);
+  if (!b) return;
+  var otevrit = b.hidden;
+  b.hidden = !otevrit;
+  if (hlava) hlava.setAttribute('aria-expanded', otevrit ? 'true' : 'false');
+}
+async function rodDenikUloz(den) {
+  if (!currentUser) return;
+  var n = document.getElementById('rodn-' + den), l = document.getElementById('rodl-' + den);
+  var row = _rodJ.rows.find(function (r) { return String(r.den) === den; });
+  var note = n ? n.value.trim().slice(0, 2000) : '', later = l ? l.value.trim().slice(0, 2000) : '';
+  const { error } = await sb.from('rune_day').update({ note: note || null, note_later: l ? (later || null) : (row ? row.note_later : null) })
+    .eq('user_id', currentUser.id).eq('den', den);
+  if (error) {   // text zůstává v poli
+    console.error('rune day note save failed:', error.message);
+    showToast(t('err_generic'));
+    return;
+  }
+  if (row) { row.note = note || null; if (l) row.note_later = later || null; }
+  showToast(t('st_saved'));
 }

@@ -998,7 +998,8 @@ function updateUIText() {
   setText('ui-brand', 'RÚNAR');   // 2026-10-28 (228c8f1c): vede domů v appce (_domuAppky), web je v menu
   // runa dne (2026-11-15): jen statické popisky tlačítka a okna (§14) — dnešní text kreslí _rodPaint/_rodUkaz (runar-runa-dne.js)
   setText('rod-btn', t('rod_btn')); setText('rod-title', t('rod_btn')); setText('rod-sub', t('rod_sub'));
-  setText('rod-self', t('rod_self')); setRuneText('rod-random', t('random_btn'));   // „ᚲ …“ — runa kresbou, ne písmem (§5)
+  setText('rod-self', t('rod_self')); setRuneText('rod-random', t('random_btn'));
+  setText('jtab-readings', t('jtab_readings')); setText('jtab-rod', t('rod_btn'));   // deník runy dne (2026-11-17)   // „ᚲ …“ — runa kresbou, ne písmem (§5)
   // ⚠️ Staticke upozorneni patri SEM, ne do _updateReadingForm: (a) §14 rika, ze
   // updateUIText vlastni staticke preklady, (b) `setLang` vola updateUIText, ale
   // _updateReadingForm NE — text by pri prepnuti jazyka zustal anglicky.

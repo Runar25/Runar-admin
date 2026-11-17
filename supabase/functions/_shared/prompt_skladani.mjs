@@ -1358,6 +1358,11 @@ const UI_TEXT = {
     rod_btn:          'RUNE OF THE DAY',   // runa dne (2026-11-15, runar-runa-dne.js)
     rod_sub:          'One rune for this day. Draw it with your own hand, or let the runes choose.',
     rod_self:         'I DRAW THE RUNE',
+    jtab_readings:    'READINGS',   // deník runy dne (2026-11-17, runar-runa-dne.js)
+    rod_j_note_lbl:   'WHAT STAYED WITH YOU',
+    rod_j_later_lbl:  'LOOKING BACK',
+    rod_j_note_ph:    'One line is enough.',
+    rod_j_empty:      'Your rune of the day will appear here.',
     rod_reset:        'DRAW AGAIN (ADMIN)',
     back_btn:         '← BACK',            // 2026-11-01: z karty tahu zpět na formulář
     speak_btn:        'HEAR RÚNAR SPEAK',
@@ -1951,6 +1956,11 @@ const UI_TEXT = {
     rod_btn:          'RÚN DAGSINS',
     rod_sub:          'Ein rún fyrir þennan dag. Dragðu hana með eigin hendi eða láttu rúnirnar velja.',
     rod_self:         'ÉG DREG RÚNINA',
+    jtab_readings:    'LESTRAR',
+    rod_j_note_lbl:   'ÞAÐ SEM SAT EFTIR',
+    rod_j_later_lbl:  'LITIÐ UM ÖXL',
+    rod_j_note_ph:    'Ein setning nægir.',
+    rod_j_empty:      'Rún dagsins birtist hér.',
     rod_reset:        'DRAGA AFTUR (ADMIN)',
     back_btn:         '← TIL BAKA',        // 2026-11-01: „til baka“ korpus (běžné)
     speak_btn:        'HEYRA RÚNAR TALA',

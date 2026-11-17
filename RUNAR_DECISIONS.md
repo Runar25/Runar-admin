@@ -13352,3 +13352,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   ke kontrole (`ok: false`, server je nedá). Angličtinu owner číst nechce — schválena po kontrole tvaru (bez vykřičníků, délka).
 - **Neověřeno:** běh naostro — čeká na SQL a nasazení; serverový kód zkontrolován jen syntaxí (Deno tu není).
 - Affected doc(s): RUNAR_BACKLOG.md (Rune of the Day).
+
+## 2026-11-17 (2) — Deník runy dne, první verze
+- **Owner:** *„umožníme zápis do deníku. měl by to být asi jiný deník než runový, ale s tím, že vidí, jakou runu ten den vytáhl, ale může
+  si do deníku zapsat, co se mu líbilo“*; k návrhu první verze z rešerše *„souhlasím“*.
+- **Co:** v záložce deníku přepínač READINGS | RUNE OF THE DAY (komponenta přepínač; jen komu je runa dne otevřená). Deník runy dne = dny
+  z `rune_day`: kámen, jméno, datum, text dne a pole *„What stayed with you“* / *„Það sem sat eftir“*; u starších dnů i *„Looking back“* /
+  *„Litið um öxl“*. Seznam bez počítadla, výběr podle runy (od dvou run). Neuložený text zůstane v poli. Zápis jen `rune_day.note` a
+  `note_later` (`sql/2026-11-17_rune_day_poznamky.sql`, sloupcový grant + RLS „upravit své“); `verify_write_surface` hlídá i `rune_day`
+  (appka nesmí psát jiný sloupec).
+- **Ověřeno:** náhled se vzorovými daty (karty, rozbalení, ohlédnutí jen u starších dnů, výběr runy); kontroly zápisové plochy, ověření
+  výsledku zápisu, komponent, jazyka, angličtiny natvrdo. **Neověřeno:** uložení naostro (čeká na SQL).
+- Affected doc(s): RUNAR_BACKLOG.md (Deník runy dne; soukromí `rune_day`).

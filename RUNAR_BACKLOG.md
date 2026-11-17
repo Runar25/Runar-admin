@@ -214,11 +214,20 @@ hlídal jen V2 cestu.
   krátký zápis s malou námahou (Daylio, „one line a day“), ohlédnutí „tento den před rokem“ (Day One), vzorce v čase (Labyrinthos Mirror:
   nejčastější karta, karty, které nepřišly); vadí ztráta zápisů, zamčená historie, mělké opakované otázky, série a výčitky. Návrh první
   verze: runa dne + jedno volné pole s neměnnou výzvou hlasem zrcadla · volitelné „vrátit se“ (druhá poznámka později) · seznam / kalendář
-  bez počítadla · hledání podle runy · uložení na serveru, koncept nikdy tiše neztratit. **Čeká na ownera:** co z toho v první verzi.
+  bez počítadla · hledání podle runy · uložení na serveru, koncept nikdy tiše neztratit. **První verze postavena** (DECISIONS 2026-11-17 (2));
+  na později: zrcadlo měsíce, „tento den před rokem“, export, nálada.
 - [ ] **Souhrn týdne / měsíce z run dne** (owner 2026-11-17: *„na základě rune of the day … určitý souhrn za týden, měsíc, kde bude výklad
   z run, co byly rune of the day“*). Vzor: popis větve od CODE-tree (2026-11-14, výstupy `eval_out/vetev_popis_*.json`, owner *„správný
   směr“*, *„jde o runy, obraz není potřeba“*; builder necommitnutý). Owner 2026-11-17: nejčastější runa = základ, ostatní se k ní přidávají
-  — u stromu je to jen hypotéza (DECISIONS 2026-10-10 (5)), tvar ho nepoužívá (`RUNAR_TREE.md` §5). Popis vzorce, nikdy předpověď.
+  — u stromu je to jen hypotéza (DECISIONS 2026-10-10 (5)), tvar ho nepoužívá (`RUNAR_TREE.md` §5). Owner 2026-11-17: *„to, co je ve
+  stromu, jsou informace z deníku. pokud bude mít uživatel i osobní deník, tak z něj můžou také vycházet čtení. týdenní zrcadlo nebo
+  měsíční zrcadlo zní dobře. lucerna by mohla osvětlit nějakou vybranou část z jejich deníku“* (lucerna = symbol z BACKLOG „Lucerna
+  větší někde jinde“). Popis vzorce, nikdy předpověď.
+- [ ] **Upozornění na runu dne — Android teď, iPhone později** (owner 2026-11-17: *„ok udělej pro android, apple backlog“*). Ranní
+  zpráva „Rúnar má pro tebe runu dne“, klepnutí otevře appku na runě dne; zapíná ji člověk sám, tón Huginna, žádné výčitky. Stavba:
+  povolení a odběr v appce (service worker `push`), tabulka odběrů, ranní odeslání ze serveru (plánovaná edge funkce, záznam v `BEHY`).
+  **Čeká na ownera:** klíče VAPID (vytvoří a uloží jako secret owner — Code hodnoty klíčů nevidí). iPhone: jen appka přidaná na plochu
+  (iOS 16.4+) — dodělat později.
 - [ ] **Ukázat, ne popisovat: obsah předplatného** (owner 2026-11-17 „16. do backlogu“). Řádky okna cesty rozklepnout na skutečnou ukázku
   (vzorové čtení, vzorový Ask s odpovědí, ukázka hlasu; zřetelně označené) + prohlídka „Projdi se s Rúnarem“ ve 3–4 krocích přes `rozsvit()`
   (`v2/runar-helper.js`), vždy přeskočitelná, volitelně Rúnarovým hlasem. Zdroje: NN/g (úvodní tutoriál nepomáhá), Chameleon (3–4 kroky
@@ -346,7 +355,8 @@ atomický upsert, úklid starších než hodina; stejně tak `use_credit` (atomi
   + *(CODE-tune 2026-11-02)* `prompt_state` (sáček obrazů na uživatele, F3b): v zásadách (EN/IS) zatím bez vlastního řádku — odvozené
   z čtení, jen identifikátory obrazů; posoudit, jestli ho kryje řádek čtení (RUNAR_PRIVACY.md). Export účtu: přidat po spuštění SQL.
   + *(CODE-tune 2026-11-15)* `rune_day` (text runy dne na den, sql/2026-11-15_rune_day.sql): totéž — řádek v zásadách, export účtu,
-  a jak dlouho staré dny držet (stačí dnešek; sáček pák je v `prompt_state`).
+  a jak dlouho staré dny držet (sáček pák je v `prompt_state`). *(2026-11-17)* Od deníku runy dne nese `rune_day` i vlastní poznámky
+  člověka (`note`, `note_later`) — staré dny tedy držet, řádek v zásadách a export účtu jsou teď nutné, ne volitelné.
       ➕ **2026-10-12:** owner „udělej ten posudek“ → technická kontrola GDPR hotová (`docs/archive/2026-10-12-gdpr-kontrola.md`, není to právní posudek);
       úkoly z ní v sekci „Soukromí — kontrola GDPR 2026-10-12“. Právník zůstává volitelný — podklad pro něj je ta kontrola.
       ⚠️ **Na seznam k posouzeni patri i `credit_ledger`:** radky prezivaji smazani uctu. Muj zaver „je to v poradku, protoze klic je znicen" je TECHNICKY ROZBOR (delete-account nuluje `gift_codes.used_by` a kaskadou maze `user_profiles` i `readings`, takze UUID uz nejde spojit s osobou), NE pravni posudek.
