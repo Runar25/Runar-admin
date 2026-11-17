@@ -1,0 +1,26 @@
+{
+ "_zdroj": "Lab v3 bez obrazu, CODE-read 2026-11-17. Kánon: ownerův popis Gebo (RUNAR_POPISY_RUN.md) · k v runar-runes.js · Kolekce UI_TEXT.en.coll_rune · katalog 7 dynamik (docs/eval/2026-10-23-v3-charakter/krok30-gebo-katalog.md) · cesty z výkladu Gemini (owner 2026-11-17). U každé položky 'z' = odkud.",
+ "popis": [
+  {"t": "Gebo is the gift that comes into being between two sides: one hand gives, the other receives, and something begins that was not there before.", "z": "RUNAR_POPISY_RUN: jedna ruka podává, druhá přijímá, vzniká, co předtím nebylo"},
+  {"t": "Gebo is giving and receiving without a ledger: not a trade, and not a debt of one side to the other.", "z": "RUNAR_POPISY_RUN: není obchod ani účetnictví; k: giving and receiving"},
+  {"t": "Gebo is the space that opens between two when something passes from one hand to the other, and it belongs to both.", "z": "RUNAR_POPISY_RUN: prostor, který patří oběma; coll_rune: the space between the hands"},
+  {"t": "Gebo is drawn as two strokes that cross: two sides meeting at one point, neither taking the other's place.", "z": "tvar runy X (fakt); setkání dvou stran, žádná nepohltí druhou (Gemini, krok 33)"}
+ ],
+ "napeti": [
+  {"id": "vztah", "t": "a gift can show a bond, or try to buy one", "cesty": ["dekovat", "vratit"], "z": "katalog 1: vyjadřuje dar vztah, nebo se jím vztah kupuje"},
+  {"id": "ucty", "t": "giving because one wants to, or giving and keeping a tally", "cesty": ["bez_pocitani", "dekovat"], "z": "katalog 2: dávám, protože chci, nebo si zapisuji"},
+  {"id": "prijeti", "t": "to take a gift can mean saying yes to something one never asked for", "cesty": ["prijmout", "vratit"], "z": "katalog 3, ownerova dynamika nevyžádaného daru"},
+  {"id": "hacek", "t": "a gift with a hook leaves the debt in place even after the thanks are gone", "cesty": ["vratit", "zastavit"], "z": "katalog 4 (Tsang 2006); RUNAR_POPISY_RUN: vynucený dar není dar"},
+  {"id": "davani", "t": "giving what the other needs, or what feels good to give", "cesty": ["bez_pocitani", "maly"], "z": "katalog 5"},
+  {"id": "rovnovaha", "t": "two who do not give the same can still stand even", "cesty": ["zastavit", "prijmout"], "z": "katalog 6; RUNAR_POPISY_RUN: vztah není výměnou, pokud jedna strana musí stále platit"},
+  {"id": "neporozumeni", "t": "what one meant to give and what the other received are not always the same thing", "cesty": ["dekovat", "maly"], "z": "katalog 7"}
+ ],
+ "cesty": {
+  "bez_pocitani": {"t": "giving without counting, which means letting go of the reply as well", "z": "Gemini cesta 1; RUNAR_POPISY_RUN: dát bez jistoty, že se vrátí"},
+  "zastavit": {"t": "stopping an exchange that runs only one way, which keeps room for one that runs both ways", "z": "Gemini cesta 2; RUNAR_POPISY_RUN: jedna strana nesmí stále platit"},
+  "prijmout": {"t": "receiving without repaying at once, which leaves the other the joy of having given", "z": "Gemini cesta 3; RUNAR_POPISY_RUN: přijmout, aniž bys hned vracel"},
+  "dekovat": {"t": "thanks said plainly, which can carry more than a gift in return", "z": "katalog 1–2: vděčnost sbližuje, oplátka mezi blízkými ochlazuje (Algoe 2008, Clark & Mills 1979)"},
+  "maly": {"t": "a small gift, which can be enough, because size is not what binds two people", "z": "katalog 2: Hávamál 52 „oft kaupir sér í litlu lof“"},
+  "vratit": {"t": "handing back a gift that comes with a claim, which leaves both sides free", "z": "katalog 3–4: nevyžádaný dar jako nárok (Belk & Coon 1993); vynucený dar není dar"}
+ }
+}
