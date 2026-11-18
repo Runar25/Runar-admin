@@ -109,6 +109,11 @@ a souhlasí na pravdivém textu. Detail → `RUNAR_DECISIONS.md` 2026-09-11 (8).
   počty tokenů a doba odpovědi, `user_id` (a `reading_id` u čtení v deníku); **žádný text ani prompt**. Účel a úvaha jako u `voice_usage`:
   náklady služby (oprávněný zájem, účetnictví); `on delete set null`, klient tabulku nečte ani nepíše (RLS bez politik).
   Migrace: `sql/2026-11-16_model_usage.sql`.
+- **Odběr ranního upozornění (`push_subscriptions`, od 2026-11-18, DECISIONS 2026-11-18 (1))** — jen když si ho člověk sám zapne:
+  adresa zařízení u push služby (endpoint u Google FCM, u počítače Mozilla / Microsoft), dva veřejné klíče prohlížeče, jazyk, `user_id`.
+  Upozornění odchází **bez obsahu** (text drží telefon), push služba tedy vidí jen to, že přišlo. Smaže se vypnutím, smazáním účtu
+  (`on delete cascade`) nebo když služba ohlásí zánik odběru (`rune-day-push`, MAZANI `push_subs`). Appka čte a maže jen svůj řádek.
+  ⚠️ Zatím bez řádku ve veřejných zásadách — BACKLOG „Blockery prodeje“.
 - **Uložený hlas čtení (úložiště `reading-voice`, od 2026-10-11, DECISIONS 2026-10-11 (61))** — když Rúnar uložené čtení přečte
   nahlas, audio (mp3) se uloží k čtení, ať se dá v deníku pustit znovu bez dalšího volání ElevenLabs. Soukromé úložiště, přehrání jen
   přes podepsaný odkaz z `elevenlabs-proxy` (hodina). Čtení pro někoho jiného, které se neukládá, se neukládá ani jako hlas. Záznam

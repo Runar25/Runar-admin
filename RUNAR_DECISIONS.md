@@ -13366,3 +13366,21 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   výsledku zápisu, komponent, jazyka, angličtiny natvrdo. SQL spuštěno 2026-11-17 (ověřeno: zapisovatelné jen `note`, `note_later`;
   pravidla 2). Uložení naostro zatím neviděno.
 - Affected doc(s): RUNAR_BACKLOG.md (Deník runy dne; soukromí `rune_day`).
+
+## 2026-11-18 (1) — Ranní upozornění na runu dne (Android a počítač; iPhone později)
+- **Owner:** 2026-11-17 *„ok udělej pro android, apple backlog“*; 2026-11-18 ke klíčům *„3. pusť ten skript sám“* — `scripts/vapid_klice.js`
+  uložil `VAPID_*` do Supabase secrets (soukromý klíč se nikde nevypsal; v seznamu secretů jen otisk).
+- **Co:** pod tlačítkem runy dne přepínač *„Remind me each morning“* / *„Ég vil fá tilkynningu á morgnana“* (zapíná člověk sám; zablokované
+  povolení = věta, kde ho zapnout). Odběr = řádek v `push_subscriptions` (`sql/2026-11-18_push_odbery.sql`: appka vloží / smaže / čte jen svůj,
+  smazání účtu ho vezme s sebou). Funkce `rune-day-push` v 09:00 UTC pošle upozornění každému odběru, jehož člověk dnes runu ještě netáhl;
+  ťuknutí otevře appku s `?rod=1` → okno runy dne, nebo dnešní text. Admin má *„Send a test now“* na své odběry.
+- **Proč bez obsahu:** server posílá push bez těla; text v jazyce uživatele (UI_TEXT) drží telefon v Cache Storage a ukáže ho `sw.js`.
+  Odpadá šifrování těla (RFC 8291), které tu bez Deno nejde vyzkoušet, a server nenese žádný text. Podpis VAPID je jen WebCrypto,
+  ověřený v Node veřejným klíčem (`scripts/verify_web_push.js`).
+- **Obrana:** endpoint posílá klient a funkce na něj volá s naším podpisem → jen známé push služby, v kódu i v CHECK tabulky (kontrola
+  ověřuje, že obě vrstvy přijmou a odmítnou tytéž adresy). Mrtvé odběry (404/410) funkce maže a každý běh hlásí jako `purge` job
+  `push_subs` (registr MAZANI) — i nulu, takže ranní souhrn pozná i běh, který se nekonal. iPhone a iPad přepínač nevidí (BACKLOG).
+- **Ověřeno:** náhled — tři stavy přepínače v EN i IS, uložený text upozornění, obsluha `push` s textem i bez (pak značka RÚNAR, §6),
+  ťuknutí, `?rod=1` otevře okno, výměna verze SW cache s textem nesmaže. IS: Greynir OK, vazby z korpusu. **Neověřeno:** doručení na
+  telefon — čeká na SQL a nasazení funkce, pak admin *„Send a test now“*.
+- Affected doc(s): RUNAR_BACKLOG.md (Upozornění na runu dne; Blockery prodeje — zásady), RUNAR_PRIVACY.md (odběry upozornění).

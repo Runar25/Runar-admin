@@ -152,4 +152,9 @@ TABLE = 'rune_day';
 GRANT_SQL = 'sql/2026-11-17_rune_day_poznamky.sql';
 PRIVILEGED = ['user_id', 'den', 'rune', 'lang', 'text', 'text_id', 'draws', 'prompt_version', 'created_at'];
 celkem += zkontroluj();
+// 2026-11-18: upozornění na runu dne — klient vkládá jen svůj odběr; kdy odešlo poslední upozornění píše rune-day-push (service_role).
+TABLE = 'push_subscriptions';
+GRANT_SQL = 'sql/2026-11-18_push_odbery.sql';
+PRIVILEGED = ['created_at', 'last_sent'];
+celkem += zkontroluj();
 process.exit(celkem ? 1 : 0);

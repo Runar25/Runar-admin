@@ -172,6 +172,13 @@ const UI_TEXT = {
     rod_j_note_ph:    'One line is enough.',
     rod_j_empty:      'Your rune of the day will appear here.',
     rod_reset:        'DRAW AGAIN (ADMIN)',
+    rod_push_on:      'REMIND ME EACH MORNING',   // upozornění na runu dne (2026-11-18, runar-runa-dne.js)
+    rod_push_off:     'TURN OFF MORNING REMINDER',
+    rod_push_blocked: 'Notifications are blocked. Turn them on for Rúnar in your phone settings.',
+    rod_push_title:   'Rune of the day',
+    rod_push_body:    'A new day, a new rune. It is waiting for you.',
+    rod_push_test:    'SEND A TEST NOW (ADMIN)',
+    rod_push_sent:    'Test sent.',
     back_btn:         '← BACK',            // 2026-11-01: z karty tahu zpět na formulář
     speak_btn:        'HEAR RÚNAR SPEAK',
     begin_btn_visitor: 'DRAW A RUNE',        // 2026-10-10: návštěvník čtení nedostane — tlačítko ho neslibuje (_updateReadingForm); vráceno s formulářem návštěvníka
@@ -770,6 +777,13 @@ const UI_TEXT = {
     rod_j_note_ph:    'Ein setning nægir.',
     rod_j_empty:      'Rún dagsins birtist hér.',
     rod_reset:        'DRAGA AFTUR (ADMIN)',
+    rod_push_on:      'ÉG VIL FÁ TILKYNNINGU Á MORGNANA',
+    rod_push_off:     'SLÖKKVA Á TILKYNNINGUM',
+    rod_push_blocked: 'Lokað er á tilkynningar. Kveiktu á þeim í stillingum símans.',
+    rod_push_title:   'Rún dagsins',
+    rod_push_body:    'Nýr dagur, ný rún. Hún bíður þín.',
+    rod_push_test:    'SENDA PRUFU NÚNA (ADMIN)',
+    rod_push_sent:    'Prufa send.',
     back_btn:         '← TIL BAKA',        // 2026-11-01: „til baka“ korpus (běžné)
     speak_btn:        'HEYRA RÚNAR TALA',
     begin_btn_visitor: 'DRAGA RÚN',          // 2026-10-10: viz EN; „draga rún“ korpus 4× (jako DRAGA AÐRA RÚN)

@@ -306,6 +306,7 @@ function setLang(l) {
   if (activeAppTab === 'reading' && outputVisible && readerRune && currentUser) {
     if (readerTexts[l]) {
       lang = l; applyLangToggle(l); showCachedReading(l); updateUIText(); updateSidePanel(); buildPills();
+      if (typeof _rodPushKresli === 'function') _rodPushKresli();
     } else {
       pendingLang = l; openLangSwitchModal(l); applyLangToggle(lang);
     }
@@ -326,6 +327,8 @@ function setLang(l) {
   if (activeAppTab === 'liferune' && typeof updateTreeTab === 'function') updateTreeTab();
   // Deník (2026-10-11, procházka CODE-read): po přepnutí jazyka zůstával v předchozí řeči — prekresliDenik v runar-journal.js.
   if (activeAppTab === 'journal' && typeof prekresliDenik === 'function') prekresliDenik();
+  // Upozornění na runu dne (2026-11-18): tlačítko i uložený text upozornění v novém jazyce (runar-runa-dne.js).
+  if (typeof _rodPushKresli === 'function') _rodPushKresli();
 }
 
 function applyLangToggle(l) {

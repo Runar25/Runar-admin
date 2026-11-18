@@ -145,6 +145,17 @@ const MAPA = {
       'if (isNaN(ted.getTime())) return json({ error: "bad now" }, 400);': 'čas zkoušky (dry) musí být platné datum',
     },
   },
+  'rune-day-push': {
+    kdo: 'pg_cron s tajnou hlavičkou x-ops-secret (ostrý běh, dry); admin s JWT jen mode „me“ = upozornění na vlastní odběry',
+    velikost: '—', cetnost: 'plánovač (denně 09:00 UTC); admin ručně',
+    log: 'jen počty, zkrácená id účtů a jméno push služby; endpoint ani klíče ne (RUNAR_PRIVACY.md)',
+    pozn: 'endpoint posílá klient → funkce volá jen známé push služby (sluzbaOk v _shared/web_push.ts + CHECK v tabulce, verify_web_push.js)',
+    ochrany: {
+      'if (req.method !== "POST") return json({ error: "Method not allowed" }, 405);': POST,
+      'if (!user || !jeAdmin(user.email)) return json({ error: "unauthorized" }, 401);': ADMIN + ' — zkouška na vlastním telefonu',
+      '} else if (!stejne(req.headers.get("x-ops-secret") ?? "", Deno.env.get("OPS_CRON_SECRET") ?? "")) {': 'tajná hlavička plánovače',
+    },
+  },
   'redeem-code': {
     kdo: 'přihlášený', velikost: '—', cetnost: '5 pokusů / 15 min na IP (před přihlášením — proti hádání kódů)',
     log: 'chyby anglicky', pozn: 'limit jen na IP: kdo má víc IP, hádá rychleji — síla kódů rozhoduje (bod 4 zadání, neověřeno)',

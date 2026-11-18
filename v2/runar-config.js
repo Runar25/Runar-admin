@@ -5,6 +5,9 @@
 
 // ─── SUPABASE ───────────────────────────────────────────
 const SB_URL = 'https://pmitxjvkeovijreepror.supabase.co';
+// 2026-11-18: veřejný klíč pro upozornění na runu dne (Web Push, VAPID). Vytvořil scripts/vapid_klice.js; soukromý klíč je jen v Supabase
+// secrets (VAPID_PRIVATE_KEY, čte funkce rune-day-push). Nový běh skriptu = nový pár → tuhle hodnotu vyměnit, staré odběry přestanou chodit.
+const VAPID_PUBLIC_KEY = 'BBEZMxC0f_S0JBgYrKvqIZCE4FDKbAmiJF0AyJYNYE_gpxVK7cZ4KNlLFNpKL4PUUCq6rVrcV8-xDvh99mifVmc';
 // 2026-11-02 (Klíče Supabase, krok 2): veřejný klíč nového typu místo starého anon JWT — staré klíče owner vypne (krok 4, RUNAR_BACKLOG
 // „9. Klíče Supabase“). Ověřeno 2026-11-02: přihlášení (/auth/v1/settings 200, obnova tokenu dojde ke kontrole tokenu), čtení z DB
 // s Bearer i bez, funkce. Veřejný je záměrně — práva drží RLS a granty, ne tajnost klíče.

@@ -1,8 +1,10 @@
-// Rúnar Service Worker — v881
+// Rúnar Service Worker — v882
 // HTML: network-first (always fresh). JS/CSS/icons: cache-first (fast, offline ok).
 // External (Supabase, ElevenLabs, fonts): pass-through, never intercepted.
 
-const CACHE = 'runar-v881';
+// Text upozornění na runu dne píše appka (runar-runa-dne.js) do vlastní cache — activate ji nesmí smazat s ostatními (2026-11-18).
+const NOTIF = 'runar-notif';
+const CACHE = 'runar-v882';
 const JS_SHELL = [
   '/Runar-admin/v2/runar-reader.css',
   '/Runar-admin/v2/runar-utils.js',
@@ -66,7 +68,7 @@ self.addEventListener('install', e => {
 self.addEventListener('activate', e => {
   e.waitUntil(
     caches.keys()
-      .then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
+      .then(keys => Promise.all(keys.filter(k => k !== CACHE && k !== NOTIF).map(k => caches.delete(k))))
       .then(() => self.clients.claim())
   );
 });
@@ -109,6 +111,34 @@ self.addEventListener('fetch', e => {
         return response;
       });
       return cached || networkFetch;
+    })
+  );
+});
+
+// ── Upozornění na runu dne (2026-11-18): server (rune-day-push) posílá push BEZ obsahu; text v jazyce uživatele je v cache NOTIF.
+// Bez uloženého textu jen značka RÚNAR (§6) — upozornění se ukázat MUSÍ (userVisibleOnly), jinak prohlížeč odběr časem zruší.
+self.addEventListener('push', e => {
+  const scope = self.registration.scope;
+  e.waitUntil(
+    caches.open(NOTIF).then(c => c.match(new URL('__notif', scope).href)).then(r => (r ? r.json() : null)).catch(() => null)
+      .then(n => self.registration.showNotification((n && n.title) || 'RÚNAR', {
+        body: (n && n.body) || '',
+        icon: new URL('icons/web-app-manifest-192x192.png', scope).href,
+        tag: 'rune-day',
+        data: { url: (n && n.url) || scope },
+      }))
+  );
+});
+self.addEventListener('notificationclick', e => {
+  e.notification.close();
+  const url = (e.notification.data && e.notification.data.url) || self.registration.scope;
+  e.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(async list => {
+      const okno = list.find(c => c.url.indexOf(self.registration.scope) === 0);
+      if (okno) {
+        try { const w = await okno.navigate(url); return (w || okno).focus(); } catch (err) { /* nekontrolované okno — otevřít nové */ }
+      }
+      return self.clients.openWindow(url);
     })
   );
 });

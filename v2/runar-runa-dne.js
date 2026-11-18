@@ -37,8 +37,9 @@ function _rodPaint() {
   _rodNacteno = klic;
   _rodVid('rod-result', false);
   _rodVid('rod-btn', true);
+  _rodPushNacti();
   sb.from('rune_day').select('rune, text').eq('user_id', currentUser.id).eq('den', _rodDnes()).maybeSingle()
-    .then(function (r) { if (r && r.data && r.data.text) _rodUkaz(r.data.rune, r.data.text); })
+    .then(function (r) { var ma = !!(r && r.data && r.data.text); if (ma) _rodUkaz(r.data.rune, r.data.text); _rodZUpozorneni(ma); })
     .catch(function () {});   // bez tabulky (než owner pustí SQL) zůstane tlačítko; server pak runu dne odmítne
 }
 
@@ -198,4 +199,123 @@ async function rodDenikUloz(den) {
   }
   if (row) { row.note = note || null; if (l) row.note_later = later || null; }
   showToast(t('st_saved'));
+}
+
+// ─── Upozornění na runu dne (2026-11-18) ─────────────────────────────────────
+// Owner 2026-11-17 „11. ok udělej pro android, apple backlog“ (RUNAR_BACKLOG „Upozornění na runu dne“). Ráno v 09:00 UTC pošle funkce
+// rune-day-push upozornění každému odběru, jehož člověk dnes runu ještě netáhl. Server posílá upozornění BEZ textu: text v jazyce
+// uživatele (UI_TEXT) uloží appka sem do Cache Storage a sw.js ho při push ukáže (_shared/web_push.ts proč). Odběr = řádek v
+// push_subscriptions (sql/2026-11-18_push_odbery.sql; appka smí vložit / smazat jen svůj). iPhone a iPad zatím ne — BACKLOG.
+var _RODN_CACHE = 'runar-notif';   // týž název v sw.js (activate ji nesmí smazat s ostatními cache)
+var _rodPush = { sub: null, stav: '' };   // stav: '' neznámý · 'on' · 'off' · 'blocked'
+function _rodPushUmi() {
+  if (typeof VAPID_PUBLIC_KEY !== 'string' || !VAPID_PUBLIC_KEY) return false;
+  if (!('serviceWorker' in navigator) || !('PushManager' in window) || !('Notification' in window)) return false;
+  var ua = navigator.userAgent || '';
+  return !(/iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1));   // Apple = BACKLOG
+}
+function _rodB64(s) {
+  var t = String(s).replace(/-/g, '+').replace(/_/g, '/');
+  var bin = atob(t + '==='.slice((t.length + 3) % 4));
+  return Uint8Array.from(bin, function (c) { return c.charCodeAt(0); });
+}
+// Text upozornění pro sw.js — v jazyce, který má člověk teď zapnutý; adresa po ťuknutí otevře runu dne (?rod=1).
+async function _rodPushTexty() {
+  try {
+    var c = await caches.open(_RODN_CACHE);
+    await c.put(new URL('__notif', location.href).href, new Response(JSON.stringify({ title: t('rod_push_title'), body: t('rod_push_body'),
+      url: location.origin + location.pathname + '?rod=1' }), { headers: { 'Content-Type': 'application/json' } }));
+  } catch (e) { console.error('rod push texty:', e); }
+}
+async function _rodPushUloz(sub) {
+  var j = sub.toJSON();
+  const { error } = await sb.from('push_subscriptions').upsert({ endpoint: j.endpoint, user_id: currentUser.id, p256dh: j.keys.p256dh,
+    auth: j.keys.auth, lang: lang === 'is' ? 'is' : 'en' }, { onConflict: 'endpoint', ignoreDuplicates: true });
+  if (error) {
+    console.error('push_subscriptions insert:', error.message);
+    return false;
+  }
+  return true;
+}
+async function _rodPushNacti() {
+  var box = document.getElementById('rod-push');
+  if (!box) return;
+  if (!_rodPushUmi() || !_rodSmi()) { box.innerHTML = ''; return; }
+  var sub = null;
+  try { var reg = await navigator.serviceWorker.ready; sub = await reg.pushManager.getSubscription(); } catch (e) { return; }
+  _rodPush.sub = sub;
+  _rodPush.stav = Notification.permission === 'denied' ? 'blocked' : (sub && Notification.permission === 'granted' ? 'on' : 'off');
+  if (_rodPush.stav === 'on') _rodPushUloz(sub);   // odběr z prohlížeče do DB i po přihlášení na jiný účet nebo smazaném řádku
+  _rodPushKresli();
+}
+function _rodPushKresli() {
+  var box = document.getElementById('rod-push');
+  if (!box) return;
+  var s = _rodPush.stav, h = '';
+  if (s === 'blocked') h = '<p class="note">' + escapeHtml(t('rod_push_blocked')) + '</p>';
+  else if (s === 'on') {
+    _rodPushTexty();   // i po přepnutí jazyka (setLang) — upozornění přijde v jazyce, který má člověk zapnutý naposled
+    h = '<button type="button" class="btn-half sec" onclick="rodPushVypni()">' + escapeHtml(t('rod_push_off')) + '</button>'
+      + (_rodAdmin() ? '<button type="button" class="tree-tester-btn" onclick="rodPushTest()">' + escapeHtml(t('rod_push_test')) + '</button>' : '');
+  } else if (s === 'off') h = '<button type="button" class="btn-half" onclick="rodPushZapni()">' + escapeHtml(t('rod_push_on')) + '</button>';
+  box.innerHTML = h;
+}
+async function rodPushZapni() {
+  try {
+    var p = await Notification.requestPermission();
+    if (p !== 'granted') { _rodPush.stav = p === 'denied' ? 'blocked' : 'off'; _rodPushKresli(); return; }
+    var reg = await navigator.serviceWorker.ready;
+    var sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: _rodB64(VAPID_PUBLIC_KEY) });
+    await _rodPushTexty();
+    if (!(await _rodPushUloz(sub))) {
+      try { await sub.unsubscribe(); } catch (e) {}
+      showToast(t('err_generic'));
+      return;
+    }
+    _rodPush.sub = sub; _rodPush.stav = 'on'; _rodPushKresli();
+  } catch (e) {
+    console.error('rod push zapnout:', e);
+    showToast(t('err_generic'));
+  }
+}
+async function rodPushVypni() {
+  var sub = _rodPush.sub;
+  try {
+    if (sub) {
+      const { error } = await sb.from('push_subscriptions').delete().eq('endpoint', sub.endpoint);
+      if (error) console.error('push_subscriptions delete:', error.message);   // odběr se zruší i tak; mrtvý řádek smaže rune-day-push (410)
+      await sub.unsubscribe();
+    }
+  } catch (e) { console.error('rod push vypnout:', e); }
+  _rodPush.sub = null; _rodPush.stav = 'off'; _rodPushKresli();
+}
+// Admin: pošle upozornění hned na své odběry (funkce ověří admina z JWT, ostatním 401) — zkouška na vlastním telefonu.
+async function rodPushTest() {
+  if (!_rodAdmin()) return;
+  try {
+    var s = await sb.auth.getSession();
+    var tok = s && s.data && s.data.session ? s.data.session.access_token : '';
+    var r = await fetch(SB_URL + '/functions/v1/rune-day-push', { method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + tok }, body: JSON.stringify({ mode: 'me' }) });
+    var d = await r.json().catch(function () { return {}; });
+    if (!r.ok || !d.sent) {
+      console.error('rune-day-push test:', r.status, JSON.stringify(d).slice(0, 200));
+      showToast(t('err_generic'));
+      return;
+    }
+    showToast(t('rod_push_sent'));
+  } catch (e) {
+    console.error('rune-day-push test:', e);
+    showToast(t('err_generic'));
+  }
+}
+// Ťuknutí na upozornění otevře appku s ?rod=1: kdo dnes ještě netáhl, dostane rovnou okno runy dne; kdo už táhl, svůj text.
+var _rodZNotif = (function () { try { return new URLSearchParams(location.search).get('rod') === '1'; } catch (e) { return false; } })();
+function _rodZUpozorneni(ma) {
+  if (!_rodZNotif) return;
+  _rodZNotif = false;
+  try { history.replaceState(null, '', location.pathname + location.hash); } catch (e) {}
+  if (!ma) { rodOtevri(); return; }
+  var box = document.getElementById('rod');
+  if (box && box.scrollIntoView) box.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }

@@ -77,6 +77,9 @@ export const MAZANI: Record<string, { kratce: string; lhutaH: number | null; zdr
   reports_db: { kratce: "reports DB", lhutaH: 26, zdroj: "sql/2026-10-22_mazani_provoz.sql" },
   // 2026-11-01 (DECISIONS 2026-11-01 (3)): opuštěné účty — 3 roky bez přihlášení, upozornění 30 a 7 dní předem. Denně 03:40 UTC.
   inactive_accounts: { kratce: "inactive accounts", lhutaH: 26, zdroj: "supabase/functions/inactive-accounts/index.ts" },
+  // 2026-11-18: ranní upozornění na runu dne — maže odběry, které push služba ohlásila jako zaniklé (404/410). Denně 09:00 UTC; záznam
+  // „purge“ píše každý běh, takže hlídá i to, že upozornění vůbec odešla (sent v detailu).
+  push_subs: { kratce: "push subscriptions", lhutaH: 26, zdroj: "supabase/functions/rune-day-push/index.ts" },
 };
 
 // Pravidelné úlohy, které nic nemažou, ale je dobré vidět, že proběhly (owner 2026-10-18: „všechna a jakákoliv další důležité zálohy

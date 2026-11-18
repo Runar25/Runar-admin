@@ -226,8 +226,8 @@ hlídal jen V2 cestu.
 - [ ] **Upozornění na runu dne — Android teď, iPhone později** (owner 2026-11-17: *„ok udělej pro android, apple backlog“*). Ranní
   zpráva „Rúnar má pro tebe runu dne“, klepnutí otevře appku na runě dne; zapíná ji člověk sám, tón Huginna, žádné výčitky. Stavba:
   povolení a odběr v appce (service worker `push`), tabulka odběrů, ranní odeslání ze serveru (plánovaná edge funkce, záznam v `BEHY`).
-  **Čeká na ownera:** klíče VAPID (vytvoří a uloží jako secret owner — Code hodnoty klíčů nevidí). iPhone: jen appka přidaná na plochu
-  (iOS 16.4+) — dodělat později.
+  *(CODE-tune 2026-11-18)* Android a počítač postaveny — DECISIONS 2026-11-18 (1). **Zbývá iPhone:** jen appka přidaná na plochu
+  (iOS 16.4+); přepínač je teď pro iPhone a iPad skrytý (`_rodPushUmi` v `v2/runar-runa-dne.js`), server Apple službu už bere.
 - [ ] **Ukázat, ne popisovat: obsah předplatného** (owner 2026-11-17 „16. do backlogu“). Řádky okna cesty rozklepnout na skutečnou ukázku
   (vzorové čtení, vzorový Ask s odpovědí, ukázka hlasu; zřetelně označené) + prohlídka „Projdi se s Rúnarem“ ve 3–4 krocích přes `rozsvit()`
   (`v2/runar-helper.js`), vždy přeskočitelná, volitelně Rúnarovým hlasem. Zdroje: NN/g (úvodní tutoriál nepomáhá), Chameleon (3–4 kroky
@@ -357,6 +357,8 @@ atomický upsert, úklid starších než hodina; stejně tak `use_credit` (atomi
   + *(CODE-tune 2026-11-15)* `rune_day` (text runy dne na den, sql/2026-11-15_rune_day.sql): totéž — řádek v zásadách, export účtu,
   a jak dlouho staré dny držet (sáček pák je v `prompt_state`). *(2026-11-17)* Od deníku runy dne nese `rune_day` i vlastní poznámky
   člověka (`note`, `note_later`) — staré dny tedy držet, řádek v zásadách a export účtu jsou teď nutné, ne volitelné.
+  + *(CODE-tune 2026-11-18)* `push_subscriptions` (ranní upozornění, DECISIONS 2026-11-18 (1)): adresa zařízení u push služby (Google FCM,
+  u počítače Mozilla / Microsoft) — řádek v zásadách (EN/IS) a příjemce v tabulce čl. 30 (`RUNAR_PRIVACY.md`).
       ➕ **2026-10-12:** owner „udělej ten posudek“ → technická kontrola GDPR hotová (`docs/archive/2026-10-12-gdpr-kontrola.md`, není to právní posudek);
       úkoly z ní v sekci „Soukromí — kontrola GDPR 2026-10-12“. Právník zůstává volitelný — podklad pro něj je ta kontrola.
       ⚠️ **Na seznam k posouzeni patri i `credit_ledger`:** radky prezivaji smazani uctu. Muj zaver „je to v poradku, protoze klic je znicen" je TECHNICKY ROZBOR (delete-account nuluje `gift_codes.used_by` a kaskadou maze `user_profiles` i `readings`, takze UUID uz nejde spojit s osobou), NE pravni posudek.
