@@ -175,6 +175,15 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 #rod-push{display:flex;flex-direction:column;align-items:flex-start;gap:8px;}   /* upozornění na runu dne v menu (2026-11-18, db02d0e0) */
 #rod-push:empty{display:none;}
 #rod-push .note{margin:0;}
+/* záložka runy dne (2026-11-18, d9df437e): kámen 2/3 kamene pod RÚNAR (.tree-stone), svislá svíčka v pravém okraji textu jako v papíru */
+#apane-runeday .tree-life-rune-section{max-width:560px;margin:0 auto;}
+#rod-pane-btn{max-width:420px;margin:0 auto;display:block;}
+#rod-result{text-align:center;}
+#rod-result .tree-stone{width:clamp(32px,9.3vw,43px);display:block;margin:0 auto 8px;}
+#rod-result .rlbl-glyph{display:inline-block;cursor:pointer;}
+#rod-cteni{position:relative;text-align:left;margin-top:8px;}
+#rod-cteni[data-voice]{padding-right:50px;min-height:280px;}
+#rod-voice{position:absolute;right:8px;top:4px;width:34px;height:40px;display:flex;align-items:center;justify-content:center;}
 #rod-state{max-width:none;margin:0;text-align:center;}   /* stav v okně na střed (hlášení 64005ae3) */
 #rod-state .tree-stone{margin:0 auto 8px;}
 @media(max-width:768px){

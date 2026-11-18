@@ -1360,6 +1360,7 @@ const UI_TEXT = {
     random_btn:       'ᚲ LET THE RUNES DECIDE',
     rod_btn:          'RUNE OF THE DAY',   // runa dne (2026-11-15, runar-runa-dne.js)
     rod_sub:          'One rune for this day. Draw it with your own hand, or let the runes choose.',
+    rod_about:        'Each morning one rune is waiting for you. Draw it with your own hand, or let the runes choose. It goes with you through the day and costs nothing. You can write down what stays with you.',   // záložka runy dne (2026-11-18, d9df437e)
     rod_self:         'I DRAW THE RUNE',
     jtab_readings:    'READINGS',   // deník runy dne (2026-11-17, runar-runa-dne.js)
     rod_j_note_lbl:   'WHAT STAYED WITH YOU',
@@ -1787,6 +1788,7 @@ const UI_TEXT = {
     atab_collection:      'RUNES COLLECTION',
     atab_tree:            'TREE OF LIFE',
     atab_liferune:        'LIFE RUNE',
+    atab_runeday:         'RUNE OF THE DAY',   // záložka runy dne (2026-11-18)
     hero_eyebrow:         'THE RUNE KEEPER',
     voice_resting:        'The voice of Rúnar is resting — please try again in a moment.',
     shop_buy_more:      '\u2192 {card}',   // 2026-10-21: otevře okno cesty na kartě Rúnakort; „at Agndofa.is“ pryč — tam se nekupuje
@@ -1965,6 +1967,7 @@ const UI_TEXT = {
     random_btn:       'ᚲ LÁTTU RÚNIRNAR VELJA',
     rod_btn:          'RÚN DAGSINS',
     rod_sub:          'Ein rún fyrir þennan dag. Dragðu hana með eigin hendi eða láttu rúnirnar velja.',
+    rod_about:        'Á hverjum morgni bíður þín ein rún. Dragðu hana með eigin hendi eða láttu rúnirnar velja. Hún fylgir þér út daginn og kostar ekkert. Þú getur skrifað niður það sem situr eftir.',
     rod_self:         'ÉG DREG RÚNINA',
     jtab_readings:    'LESTRAR',
     rod_j_note_lbl:   'ÞAÐ SEM SAT EFTIR',
@@ -2375,6 +2378,7 @@ const UI_TEXT = {
     atab_collection:      'SAFN RÚNA',
     atab_tree:            'TRÉ LÍFSINS',
     atab_liferune:        'LÍFSRÚNIN',
+    atab_runeday:         'RÚN DAGSINS',
     hero_eyebrow:         'RÚNAVÖRÐURINN',
     voice_resting:        'Rödd Rúnars hvílir — reyndu aftur eftir andartak.',
     shop_buy_more:      '→ {card}',

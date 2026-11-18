@@ -946,6 +946,7 @@ var TAB_IKONY = {
   reading:    '<path d="M5 15.5c0-2 .3-4 2.3-4.2 2-.1 3.4.3 3.5 2.4.1 2.2-.6 4-2.7 4.1-2 .1-3.1-.3-3.1-2.3z"/><path d="M13.6 18.6c-.2-1.7.4-3.2 2.1-3.4 1.8-.2 3 .3 3.2 2 .2 1.8-.6 2.9-2.3 3-1.8.2-2.8 0-3-1.6z"/><path d="M10 6.6c.2-1.8 1.2-2.8 3-2.6 1.8.2 2.7 1 2.5 2.8-.2 1.8-1.3 2.7-3 2.5-1.8-.2-2.7-.9-2.5-2.7z"/>',
   journal:    '<path d="M19 3C11 5 6 11 5 21"/><path d="M17 5l-5 1.6M15 8l-5 1.6M13 11l-4.5 1.5M11 14.5l-3.5 1.2"/>',
   collection: '<path d="M8 8c-2 2-3.5 5-3.5 8 0 3 3 5 7.5 5s7.5-2 7.5-5c0-3-1.5-6-3.5-8"/><path d="M8 8h8"/><path d="M9 8 7.5 5.5M15 8l1.5-2.5"/><path d="M9.5 3.5c1.5 1 3.5 1 5 0"/>',
+  runeday:    '<circle cx="12" cy="12" r="4"/><path d="M12 3.5v2.5M12 18v2.5M3.5 12H6M18 12h2.5M6 6l1.8 1.8M16.2 16.2 18 18M6 18l1.8-1.8M16.2 7.8 18 6"/>',   // slunce = den (2026-11-18)
   tree:       '<path d="M12 21V9"/><path d="M12 13 7.5 9.5M12 11l4.5-3.5M12 16l-3 -2M12 15l3-2"/><path d="M5 10c0-4 3-7 7-7s7 3 7 7c0 2-2 3.5-4 3.5M5 10c0 2 1.5 3.5 3.5 3.5"/><path d="M8 21c1.5-1 2.5-1 4 0 1.5-1 2.5-1 4 0"/>'
 };
 // (2026-10-20: ikona Rune Reading byla pár hodin ze dvou našich kamenů s losovanou runou — owner ji vrátil: „tohle nejde přečíst
@@ -1014,6 +1015,8 @@ function updateUIText() {
   _zalozka('collection');
   _zalozka('tree');
   _zalozka('liferune');
+  _zalozka('runeday');
+  setText('rod-about', t('rod_about')); setText('rod-pane-btn', t('rod_btn'));   // záložka runy dne — statické texty (§14)
   _wtsPaint();   // okno „Where to start“ — statické texty (§14), přepnutí jazyka je přepíše i v otevřeném okně
   setText('hero-eyebrow',    t('hero_eyebrow'));
   setText('hero-eyebrow-m',  t('hero_eyebrow'));
@@ -1136,16 +1139,23 @@ function showAppTab(tab) {
   document.getElementById('apane-tree').style.display       = tab === 'tree'       ? 'block' : 'none';
   var _plr = document.getElementById('apane-liferune');
   if (_plr) _plr.style.display = tab === 'liferune' ? 'block' : 'none';
+  var _prd = document.getElementById('apane-runeday');
+  if (_prd) _prd.style.display = tab === 'runeday' ? 'block' : 'none';
   document.getElementById('atab-reading').classList.toggle('active',    tab === 'reading');
   document.getElementById('atab-collection').classList.toggle('active', tab === 'collection');
   document.getElementById('atab-journal').classList.toggle('active',    tab === 'journal');
   document.getElementById('atab-tree').classList.toggle('active',       tab === 'tree');
   var _tlr = document.getElementById('atab-liferune');
   if (_tlr) _tlr.classList.toggle('active', tab === 'liferune');
+  var _trd = document.getElementById('atab-runeday');
+  if (_trd) _trd.classList.toggle('active', tab === 'runeday');
   if (tab === 'collection') {
     document.getElementById('reader-hero').classList.add('hidden');
     loadCollection();
     window.scrollTo(0, 0);   // okamžitě, ne plynule — hlášení 51efe091 (2026-10-27)
+  } else if (tab === 'runeday') {   // runa dne (2026-11-18): obsah kreslí runar-runa-dne.js, tady jen jako ostatní záložky
+    document.getElementById('reader-hero').classList.add('hidden');
+    window.scrollTo(0, 0);
   } else if (tab === 'liferune') {
     // Stavy zivotni runy ridi dal `updateTreeTab()` — prvky se presunuly v DOM, ale
     // funkce je hleda pres getElementById, takze ji to nevadi (2026-09-11).

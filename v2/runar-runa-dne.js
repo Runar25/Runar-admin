@@ -24,39 +24,99 @@ function _rodVid(id, ukaz) {
 // Admin: „táhnout znovu“ týž den (KUKY 2026-11-15 „jako admin potřebuju reset tlačítko pro opakování vícekrát za den“). Klient jen
 // pošle rod_znovu; adminovi ho uzná SERVER (claude-proxy: admin z JWT, uložený text dne přepíše) — tlačítko v DOM není brána.
 var _rodZnovu = false;
+// 2026-11-18 (hlášení d9df437e): text dne bydlí v záložce RUNE OF THE DAY (vlevo od LIFE RUNE); tlačítko pod RÚNAR zůstává a po tahu do ní
+// vede. _rodMa = dnešní text je na obrazovce (pak tlačítko neotevírá okno, ale záložku).
+var _rodMa = false;
 function _rodAdmin() { return !!(typeof currentUser !== 'undefined' && currentUser && isAdmin(currentUser.email)); }   // uživatel + den, pro který už se dnešní text hledal (ať se DB neptá při každém překreslení)
 
 // Ukáže/skryje tlačítko podle přihlášení a přístupu; jednou za den a uživatele zkusí najít dnešní text.
 function _rodPaint() {
   var box = document.getElementById('rod');
   if (!box) return;
-  if (!_rodSmi()) { _rodVid('rod', false); _rodVid('jtab', false); rodDenikPrepni('readings'); _rodNacteno = ''; return; }
-  _rodVid('rod', true); _rodVid('jtab', true);
+  if (!_rodSmi()) {
+    _rodVid('rod', false); _rodVid('jtab', false); _rodVid('atab-runeday', false); rodDenikPrepni('readings'); _rodNacteno = ''; _rodMa = false;
+    if (typeof activeAppTab !== 'undefined' && activeAppTab === 'runeday') showAppTab('reading');   // odhlášení na záložce runy dne
+    return;
+  }
+  _rodVid('rod', true); _rodVid('jtab', true); _rodVid('atab-runeday', true);
   var klic = currentUser.id + '|' + _rodDnes();
   if (_rodNacteno === klic) return;
   _rodNacteno = klic;
+  _rodMa = false;
   _rodVid('rod-result', false);
-  _rodVid('rod-btn', true);
+  _rodVid('rod-pane-btn', true);
   _rodPushNacti();
   sb.from('rune_day').select('rune, text').eq('user_id', currentUser.id).eq('den', _rodDnes()).maybeSingle()
     .then(function (r) { var ma = !!(r && r.data && r.data.text); if (ma) _rodUkaz(r.data.rune, r.data.text); _rodZUpozorneni(ma); })
     .catch(function () {});   // bez tabulky (než owner pustí SQL) zůstane tlačítko; server pak runu dne odmítne
 }
 
+// Kámen = glyf s popupem významu (runar-rune-popup.js: .rlbl-glyph + data-rune/data-kw, jako ve čtení). Hlas (zatím jen admin, owner
+// 2026-11-18 „zatím jen pro admina na vyzkoušení. svislá svíčka jako přehrávač“): nota v pravém okraji textu, pod ní svislá svíčka
+// (runar-svicka.js, týž přehrávač jako papír návodu); nahrávka se dělá až na ťuknutí na notu (_rodHlasNapoj).
+var _rodText = { runa: null, text: '' };
 function _rodUkaz(runa, text) {
   var r = RUNES.find(function (x) { return x.n === runa; });
   if (!r || !text) return;
   var odst = String(text).split(/\n\s*\n/).map(function (p) { return p.trim(); }).filter(Boolean);
+  var hlas = _rodAdmin();
+  if (typeof _SVICKY !== 'undefined' && _SVICKY.rdv) svickaStop('rdv');
+  _rodText = { runa: r, text: odst.join('\n\n') };
   document.getElementById('rod-result').innerHTML =
-    runeSvg(r, { frame: true, cls: 'tree-stone' }) + '<div class="flbl">' + escapeHtml(rn(r)) + '</div>'
+    '<span class="rlbl-glyph" data-rune="' + escapeHtml(rn(r)) + '" data-kw="' + escapeHtml(rk(r)) + '">' + runeSvg(r, { frame: true, cls: 'tree-stone' }) + '</span>'
+    + '<div class="flbl">' + escapeHtml(rn(r)) + '</div>'
+    + '<div id="rod-cteni"' + (hlas ? ' data-voice="1"' : '') + '>'
+    + (hlas ? '<span id="rod-voice"></span><svg class="svp-svisla" id="rdv-sv" role="slider" tabindex="0" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0"></svg>' : '')
     + odst.map(function (p) { return '<p class="tree-reading-text">' + escapeHtml(p) + '</p>'; }).join('')   // jako text životní runy
-    + (_rodAdmin() ? '<button type="button" class="tree-tester-btn" onclick="rodZnovu()">' + escapeHtml(t('rod_reset')) + '</button>' : '');
-  _rodVid('rod-btn', false);
+    + '</div>'
+    + (hlas ? '<button type="button" class="tree-tester-btn" onclick="rodZnovu()">' + escapeHtml(t('rod_reset')) + '</button>' : '');
+  if (hlas) _rodHlasNapoj();
+  _rodMa = true;
+  _rodVid('rod-pane-btn', false);
   _rodVid('rod-result', true);
+}
+function _rodHlasNapoj() {
+  var host = document.getElementById('rod-voice');
+  if (!host || typeof svickaHtml !== 'function') return;
+  host.innerHTML = svickaHtml('rdv', '', { svisla: true }); svickaNapoj('rdv');
+  svickaNazev('rdv', function () { return t('rod_btn') + (_rodText.runa ? ' · ' + rn(_rodText.runa) : ''); }, function () { return _rodText.runa ? [_rodText.runa] : []; });
+  // první ťuknutí na notu: napřed nahrávka (svíčka se mezitím tvoří), pak hrát — zachyceno dřív, než notu uslyší přehrávač
+  host.addEventListener('click', function (e) {
+    var a = document.getElementById('rdv-a');
+    if (!e.target.closest('#rdv-pb') || !a || a.getAttribute('src')) return;
+    e.stopPropagation(); e.preventDefault();
+    _rodHlas();
+  }, true);
+}
+var _rodHlasBezi = false;
+async function _rodHlas() {
+  if (_rodHlasBezi || !_rodAdmin() || !_rodText.text) return;
+  _rodHlasBezi = true;
+  svickaTvor('rdv');
+  try {
+    var s = await sb.auth.getSession();
+    var tok = s && s.data && s.data.session ? s.data.session.access_token : '';
+    // admin text bez čtení (elevenlabs-proxy, větev „admin“ — jako Teach ve shrine); nikomu jinému server text nevezme
+    var res = await fetch(EL_PROXY, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + tok },
+      body: JSON.stringify({ text: _rodText.text, lang: lang }) });
+    var d = await res.json().catch(function () { return {}; });
+    if (!res.ok || !d.audio_url) throw new Error('voice ' + res.status + ' ' + ((d && d.error) || ''));
+    var blob = await fetch(d.audio_url).then(function (r) { return r.blob(); });
+    var a = document.getElementById('rdv-a');
+    if (!a) return;
+    a.src = URL.createObjectURL(blob);
+    svickaHotovo('rdv');
+    svickaPrepni('rdv');
+  } catch (e) {
+    console.error('rod voice:', e && e.message);
+    svickaStop('rdv');
+    showToast(t('err_generic'));
+  } finally { _rodHlasBezi = false; }
 }
 
 function rodOtevri() {
   if (!_rodSmi()) return;
+  if (_rodMa && !_rodZnovu) { showAppTab('runeday'); return; }   // dnes už taženo → tlačítko pod RÚNAR vede do záložky
   _rodVid('rod-choices', true);
   _rodVid('rod-grid', false);
   document.getElementById('rod-state').innerHTML = '';
@@ -65,8 +125,6 @@ function rodOtevri() {
 function rodZnovu() {
   if (!_rodAdmin()) return;
   _rodZnovu = true;
-  _rodVid('rod-result', false);
-  _rodVid('rod-btn', true);
   rodOtevri();
 }
 function rodZavri() { document.getElementById('rod-modal').classList.remove('open'); }
@@ -111,8 +169,7 @@ async function _rodCti(r) {
     _rodZnovu = false;
     _rodUkaz(res.rune || r.n, res.text);
     rodZavri();
-    var box = document.getElementById('rod');
-    if (box && box.scrollIntoView) box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    showAppTab('runeday');
   } finally { _rodBezi = false; }
 }
 
@@ -321,6 +378,5 @@ function _rodZUpozorneni(ma) {
   _rodZNotif = false;
   try { history.replaceState(null, '', location.pathname + location.hash); } catch (e) {}
   if (!ma) { rodOtevri(); return; }
-  var box = document.getElementById('rod');
-  if (box && box.scrollIntoView) box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  showAppTab('runeday');
 }

@@ -1307,7 +1307,8 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
 - [x] ✅ *(CODE-tune 2026-11-18, DECISIONS 2026-11-18 (3))* **Upozornění do menu (db02d0e0):** *„Nastavení upozornění pro rune of the day … přesunout do menu asi pod nastavení. Nemůže to být
   na hlavní stránce.“* Návrh: v menu skupina NOTIFICATIONS s přepínačem (vzhled jako přepínače soukromí), pod ním hláška „zablokováno“
   a admin test; u runy dne nic. Sedí na schválený plán menu 2026-10-28 (b026bd00, „upozornění“).
-- [ ] **Runa dne — podoba (d9df437e):** *„chybí popis rune of the day nad nebo vedle runy · runa o 2/3 stávající · po kliknutí na runu
+- [x] ✅ *(CODE-tune 2026-11-18, DECISIONS 2026-11-18 (4): vlastní záložka, hlas jen admin; nahrávka jednou za text a cena čekají,
+  až se rozhodne, že hlas zůstane)* **Runa dne — podoba (d9df437e):** *„chybí popis rune of the day nad nebo vedle runy · runa o 2/3 stávající · po kliknutí na runu
   význam · nechat si runu dne přečíst hlasem Rúnara za kredit jako jedno čtení · rozbalování jako How a reading works … uvidím, jak to
   bude vypadat“*. Návrh: papír (komponenta „How a reading works“) se štítkem RUNE OF THE DAY, kámen menší, ťuknutí na kámen = popup
   s významem (runar-rune-popup.js). Hlas: texty jsou z knihovny (DECISIONS 2026-11-17 (1)), stejné pro všechny → nahrávka jednou za text

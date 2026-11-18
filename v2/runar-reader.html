@@ -254,7 +254,6 @@
            Kreslí runar-runa-dne.js. Na mobilu je tenhle sloupec hned pod portrétem s nápisem, takže stojí pod RÚNAR i tam. -->
       <div class="rod" id="rod" hidden>
         <button type="button" class="btn-full" id="rod-btn" onclick="rodOtevri()">RUNE OF THE DAY</button>
-        <div id="rod-result" hidden></div>
       </div>
       <p class="hero-sub" id="ui-sub">Draw a rune. Hear the old tongue speak.</p>
       <!-- 2026-10-09 (KUKY): pozdrav pod Rúnarem pryč — „Good to see you again…“ stojí v horní liště (#topbar-greeting) -->
@@ -275,6 +274,8 @@
 
   <!-- APP TABS — primary row: Tree of Life -->
   <div class="app-tabs-primary">
+    <!-- 2026-11-18 (hlášení d9df437e, owner: „čtení a text runy přesunout po kliknutí vlevo od life rune, takže bude v seznamu jako první“) -->
+    <button class="app-tab-primary" id="atab-runeday" onclick="showAppTab('runeday')" style="display:none;">RUNE OF THE DAY</button>
     <button class="app-tab-primary" id="atab-liferune" onclick="showAppTab('liferune')" style="display:none;">LIFE RUNE</button>
     <button class="app-tab-primary" id="atab-tree" onclick="showAppTab('tree')" style="display:none;">TREE OF LIFE</button>
   </div>
@@ -284,6 +285,16 @@
     <button class="app-tab active" id="atab-reading"    onclick="showAppTab('reading')">RUNE READING</button>
     <button class="app-tab"        id="atab-journal"    onclick="showAppTab('journal')">JOURNAL</button>
     <button class="app-tab"        id="atab-collection" onclick="showAppTab('collection')">RUNES COLLECTION</button>
+  </div>
+
+  <!-- ═ RUNA DNE (2026-11-18, hlášení d9df437e) ═ popis, co runa dne je (owner: „popis … dáme do toho nového okna“), před tahem
+       tlačítko, po tahu kámen (ťuknutí = význam), jméno, hlas svislou svíčkou (zatím admin) a text. Kreslí runar-runa-dne.js. -->
+  <div id="apane-runeday" style="display:none;">
+    <div class="tree-life-rune-section">
+      <div class="tree-intro" id="rod-about"></div>
+      <button type="button" class="btn-full" id="rod-pane-btn" onclick="rodOtevri()">RUNE OF THE DAY</button>
+      <div id="rod-result" hidden></div>
+    </div>
   </div>
 
   <!-- ═ READING PANE ═ -->

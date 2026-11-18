@@ -13409,3 +13409,23 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **IS:** Greynir OK; *„minntu mig á“* v korpusu 380×.
 - **Ověřeno:** náhled — tři stavy (vypnuto, zapnuto + admin test, zablokováno) v EN i IS, skupina skrytá bez přístupu.
 - Affected doc(s): RUNAR_BACKLOG.md (Hlášení z appky 2026-11-18).
+
+## 2026-11-18 (4) — Runa dne ve vlastní záložce RUNE OF THE DAY; hlas zatím jen admin
+- **Owner:** hlášení d9df437e (popis runy dne, kámen o 2/3, význam po ťuknutí, hlas za kredit, rozbalování); k návrhu *„nechat tlačítko
+  rune of the day, kde je, a samotné čtení a text runy přesunout po kliknutí vlevo od life rune, takže bude v seznamu jako první … budeme
+  mít víc místa zkoušet další věci s day rune“*, *„popis toho, co rune of the day je, dáme do toho nového okna“*, k hlasu *„chci to hlavně
+  zkusit, nevím, jestli to zůstane. zatím jen pro admina … svislá svíčka jako přehrávač“*, *„ok, zatím jen hlas pro admina“*.
+- **Co:** záložka RUNE OF THE DAY / RÚN DAGSINS první v horní řadě (ikona slunce), vidí ji, komu je runa dne otevřená (`_rodSmi`).
+  Nahoře popis runy dne (`rod_about`), před tahem tlačítko do okna tahu, po tahu kámen (`.tree-stone` o 2/3: 43 px místo 64 px)
+  s popupem významu (`runar-rune-popup.js`, jako glyf ve čtení), jméno a text. Tlačítko pod RÚNAR zůstává: před tahem otevře okno,
+  po tahu přepne do záložky; po tahu i ťuknutí na upozornění (`?rod=1`) appka do záložky přepne sama. Text pod RÚNAR už nestojí.
+  Papír z návrhu (rozbalování jako „How a reading works“) odpadl — záložka místo nahradila.
+- **Hlas (jen admin):** nota v pravém okraji textu, pod ní svislá svíčka (`runar-svicka.js`, týž přehrávač jako papír návodu). Nahrávka
+  až na první ťuknutí, přes `elevenlabs-proxy` větví „admin text“ (bez změny serveru) — každé nové otevření appky = nová nahrávka
+  (~430 znaků). Nahrávka jednou za text z knihovny pro všechny a cena pro ostatní = rozhodnutí, až se ukáže, že hlas zůstane.
+- **IS:** `rod_about` Greynir OK (větu s E001 *„Það sem situr eftir geturðu skrifað niður“* jsem přestavěl), vazby z korpusu (*bíður þín*
+  704, *út daginn* 1 304, *situr eftir* 4 364, *skrifað niður* 994, *kostar ekkert* 4 303, *á hverjum morgni* 6 017).
+- **Ověřeno:** náhled — záložka před tahem i po tahu, kámen 43 px, popup *Algiz · protection…*, tlačítko pod RÚNAR po tahu přepne
+  do záložky, na 375 px se záložky vejdou v EN i IS (stránka bez vodorovného posunu); `verify_zaklad_produkce.js` OK.
+  **Neověřeno:** hlas naostro (náhled admina nemá) a tah naostro.
+- Affected doc(s): RUNAR_BACKLOG.md (Hlášení z appky 2026-11-18).
