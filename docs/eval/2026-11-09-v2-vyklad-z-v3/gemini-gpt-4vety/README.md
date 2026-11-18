@@ -73,6 +73,24 @@ podle hledání, ne jen řádek tónu · los významu „bez opakování do vyč
 | Gemini A: Inner Growth + Lost (56) | týž obraz jako v2 | „real growth often happens below the canopy…“ | „feeling without a clear direction…“ | „What quiet shift … have you stopped noticing?“ | opakuje pocit, který člověk zadal |
 | Gemini B: Clarity + otázka (60) | týž obraz | úkryt × stín | odpověď na dilema dvěma cestami | „…protecting unready craft, or hiding from judgment?“ | ano, v otázce |
 
+## 5b. Zkouška na solu: čtyři pohyby bez definice runy (2026-11-18, 3 volání)
+Owner: *„5. zákaz definice … chtěl bych zkusit čtení bez té definice … chci vidět čtení od SOL a rozhodnu se“* · *„7. … úplně mi stačí
+3 čtení“* · *„9. určitě, jak řekl gemini“*. Skladatel `sloz_4pohyby.js`, úlohy `ulohy.json`, texty `ulohy_vysledky.json`; produkční zadání
+v2 vypíše `vypis_v2.js`.
+1. **Co se změnilo proti v2:** systém beze změny; ze zadání v2 zůstaly losy a vstupy (slovo významu, záměr, úhel otevření, podoba oblasti,
+   NO COLD READING). Pryč blok THE IMAGE, esenční řádek, jméno runy, délkový řádek a konec; místo nich čtyři pohyby (obraz · význam · dopad ·
+   otevření) a konec jako funkce podle hledání. Zdroj významu = jednovětý mechanismus runy z labu napětí (`../napeti/kolo4/kandidati.json`),
+   označený „not words to repeat“. Bez vzorového výkladu, bez povinného „yet“. Obrazy: Berkana z banky (táž věta jako ownerovo čtení
+   2026-11-18), Raidho a Hagalaz z kola 4.
+2. **Vstupy:** Berkana · Career & Creativity · General Guidance · Right now — Raidho · Purpose & Path · Clarity · Decision ahead —
+   Hagalaz · Inner Growth · Insight into Challenge · Understanding the past.
+3. **Měřeno:** 4 věty 3/3 · 60, 61, 60 slov · runa nejmenovaná ani definovaná 3/3 · doslovný úsek z mechanismu runy nejvýš 2 slova.
+4. **Čteno:** obraz má vlastní detail 3/3 (bříza prorůstá stínem · motor drží stejný tón · stonky ohnuté k mokrému kameni). Berkana sama
+   našla napětí, které Gemini chtěl (úkryt × „may also keep it out of sight“) — v bankovní větě není. Význam (věta 2) je blízká parafráze
+   mechanismu (Raidho „You find a rhythm by going“ ← „a rhythm is found only by moving“). Raidho otázka převzala slovo významu z losu
+   doslova („natural rhythm“). Žádné tvrzení o životě čtenáře, žádná rada.
+5. **Hranice:** n = 3, jen EN, jedno čtení na runu, bez srovnávací trojice v2 na týchž losech (owner chtěl 3 čtení).
+
 ## 6. Hranice
 1. Ukázky Gemini a GPT psal model **s přemýšlením**, ne sol bez něj; jak by je napsal sol, neví nikdo — rozhodne zkouška.
 2. Nic tu nebylo puštěno. Soudy v oddílech 3–4 jsou moje čtení textů a doklady z dřívějších měření, kde jsou uvedeny.
