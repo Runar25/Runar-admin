@@ -1201,6 +1201,14 @@ radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip() and '
 posl = [l for l in radky if l.startswith(('OK', 'FAIL'))]
 check((posl[-1] if posl else 'opuštěné účty: bez verdiktu').strip(), r.returncode == 0 and bool(posl) and posl[-1].startswith('OK'), '\n'.join(radky))
 
+# Upozornění na runu dne (CODE-tune 2026-11-18, DECISIONS 2026-11-18 (1)): podpis VAPID ověřený veřejným klíčem a brána push služeb
+# v kódu i v CHECK tabulky — funkce se tu spustit nedá a chybný podpis by se ukázal jen tím, že ráno nikomu nic nepřijde.
+print('\n' + 'UPOZORNĚNÍ NA RUNU DNE (verify_web_push.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_web_push.js')], capture_output=True, text=True, encoding='utf-8')
+radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip() and 'ExperimentalWarning' not in l and 'trace-warnings' not in l]
+posl = [l for l in radky if l.startswith(('OK', 'FAIL'))]
+check((posl[-1] if posl else 'web push: bez verdiktu').strip(), r.returncode == 0 and bool(posl) and posl[-1].startswith('OK'), '\n'.join(radky))
+
 # ㊉ Mapa souborů v CLAUDE.md (CODE-read 2026-10-15, kolo 4): každý v2/runar-* v „Soubory a jejich zodpovědnost“, nic navíc — chyběly
 # v ní dva moduly shrine od dvou session a nic to nehlídalo.
 print('\n' + chr(0x3289) + ' MAPA SOUBORŮ V CLAUDE.MD (verify_soubory_claude.js)')

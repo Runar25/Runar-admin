@@ -52,6 +52,11 @@ PRIPADY = [
   '"Access-Control-Allow-Methods": "POST, OPTIONS", _x: fetch(u, { method: "DEL' + 'ETE" }),'),
  ('chyti', 'verify_mazani.js', 'sql/2099-12-31_protipriklad.sql', 'create', '',
   "select cron.schedule('protipriklad', '0 1 * * *', $$del" + "ete from public.bug_reports where false$$);\n"),
+ # upozornění na runu dne (CODE-tune 2026-11-18): brána push služeb v kódu pustí port · CHECK v SQL bez lomítka za hostem pustí
+ # podvrženou doménu (fcm.googleapis.com.evil…) · podpis s jiným hashem neověří veřejný klíč → všechno musí spadnout
+ ('chyti', 'verify_web_push.js', 'supabase/functions/_shared/web_push.ts', 'replace', ' && !u.port && ', ' && '),
+ ('chyti', 'verify_web_push.js', 'sql/2026-11-18_push_odbery.sql', 'replace', 'web\\.push\\.apple\\.com)/', 'web\\.push\\.apple\\.com)'),
+ ('chyti', 'verify_web_push.js', 'supabase/functions/_shared/web_push.ts', 'replace', '{ name: "ECDSA", hash: "SHA-256" }, klic', '{ name: "ECDSA", hash: "SHA-384" }, klic'),
  # ㊈ hlídání provozu (CODE-tune 2026-10-14): práh selhání modelu desetkrát vyšší — upozornění by nepřišlo
  ('chyti', 'verify_ops_souhrn.js', 'supabase/functions/_shared/ops_souhrn.ts', 'replace', '  chybModeluZaHodinu: 3,', '  chybModeluZaHodinu: 30,'),
  # ㊈ krátké e-maily (CODE-tune 2026-10-14, owner „maily nesmí zabírat moc místa“): nad tělem znovu řádek se stavem — e-mail o řádek delší
