@@ -91,6 +91,34 @@ v2 vypíše `vypis_v2.js`.
    doslova („natural rhythm“). Žádné tvrzení o životě čtenáře, žádná rada.
 5. **Hranice:** n = 3, jen EN, jedno čtení na runu, bez srovnávací trojice v2 na týchž losech (owner chtěl 3 čtení).
 
+## 5c. Z čeho čtení Berkana (5b) vzniklo — věta po větě (owner 2026-11-18: „popiš mi, jak a z čeho to čtení vzniklo“)
+Model dostal dvě zprávy: **systém** (354 slov, produkce beze změny: kdo je Rúnar, jak mluví — věta o jedné klauzuli, nikdy rada ani
+závěr, druhá osoba, zakázané fráze) a **zadání** (361 slov, `sloz_4pohyby.js`). Bez přemýšlení, 85 slov výstupu.
+| věta čtení | co ji dalo (řádek zadání → co z něj je ve větě) |
+|---|---|
+| *You stand beneath older birches, where a sapling reaches through their shade.* | úhel otevření z losu „setting the seeker inside the image“ → *You stand* · obraz z banky „birch sapling … shelter of the older trees“ → bříza, starší stromy · pohyb 1 „one detail the sentence does not name“ → *reaches through their shade* (úkryt přeložil na stín = napětí, které chtěl Gemini) |
+| *You can see how new growth sometimes depends on room and shelter, not on being hurried.* | slovo významu z losu *growth* → *new growth* · mechanismus runy „given room rather than forced“ → *room … not on being hurried* (parafráze) · pohyb 2 „what the picture reveals about human experience“ |
+| *In what you make for others, care may give a small beginning time to take hold, though it may also keep it out of sight.* | podoba oblasti z losu (Career & Creativity) „what is made for others“ → *what you make for others* doslova · mechanismus „new small life and the care“ → *care, small beginning* · pohyb 3 „a possibility, a tension, or two sides“ → *may … though it may also* · NO COLD READING → vše v „may“ |
+| *What seems ready for more light now?* | konec podle hledání (General Guidance) „open, as a question, what may deserve attention now“ · záměr Right now → *now* · *light* navazuje na stín z věty 1 |
+Ze systému je vidět: druhá osoba, krátké věty, žádná rada, žádný závěr. Ze zadání se nepoužilo nic navíc — každý kus věty má zdroj v řádku.
+**V2 pro srovnání** (týž obraz, ownerovo čtení 2026-11-18): esenční řádek zadal *„… begins ‚Berkana stands for' and gives the meaning the
+picture already holds“* → odtud *„Berkana is the rune of growth…“*; konec „dvě možnosti, které to může být“ → *„Perhaps…“*. Napětí v zadání
+v2 není, proto ho čtení nemá.
+
+## 5d. Zdroj významu: jen slovo × dvě strany runy (owner „2. zkus obě varianty“, 6 volání)
+Skladatel `sloz_zdroj.js`, úlohy `ulohy_zdroj.json`, texty `ulohy_zdroj_vysledky.json`. Stejné losy a vstupy jako 5b; mění se jen řádek zdroje.
+Dvě strany = věty z ownerova popisu v `RUNAR_POPISY_RUN.md` (citace u každé úlohy v `_zdroj_stran`).
+| | jen slovo | dvě strany |
+|---|---|---|
+| 4 věty, runa nejmenovaná | 3/3 | 3/3 |
+| slova | 66, 60, 64 | 62, 59, 64 |
+| slovo významu z losu doslova ve čtení | **3/3** (*growth*, *A natural rhythm*, *Disruption*) | 0/3 |
+| nejdelší doslovný úsek ze zdroje | 1–2 slova (= to slovo) | 2, 2, 4 (*a force no one*) |
+| kterou stranu model vzal | — | Berkana 1 (malé není slabé) · Raidho 2 (směr) · Hagalaz 1 (síla, kterou nikdo neřídí) |
+Čteno: se slovem je věta 2 obecnější a slovo v ní stojí jako štítek (*„Disruption can take in a minute what care has built“*). Se stranami
+jsou věty 2 vlastnější a strany se liší od mechanismu z 5b (Berkana mluví o malém začátku, ne o péči). Hagalaz „strany“ ale věta 2 opsala
+skoro celou stranu (*„a force no one could have steered“*). n = 3 na variantu, jen EN.
+
 ## 6. Hranice
 1. Ukázky Gemini a GPT psal model **s přemýšlením**, ne sol bez něj; jak by je napsal sol, neví nikdo — rozhodne zkouška.
 2. Nic tu nebylo puštěno. Soudy v oddílech 3–4 jsou moje čtení textů a doklady z dřívějších měření, kde jsou uvedeny.
