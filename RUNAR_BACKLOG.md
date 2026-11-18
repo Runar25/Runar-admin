@@ -1302,3 +1302,16 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   (36 volání přes sol) owner 2026-11-04 odmítl (*„2. ne“*) — položka zůstává otevřená, jiný postup napřed s ownerem.
   *2026-11-16:* táž půlvěta odebraná u tipu „Where does this get hard?“ — scéna 5/12 → 0/12, pojistka 7 → 10/12; owner *„obraz lepší“*,
   půlvěta zůstává (DECISIONS 2026-11-16 (3), `docs/eval/2026-11-16-ask-tezkost/`).
+
+### Hlášení z appky 2026-11-18 — runa dne a nápověda formuláře: návrh čeká na ownera (načtena 2026-11-18, CODE-tune)
+- [ ] **Upozornění do menu (db02d0e0):** *„Nastavení upozornění pro rune of the day … přesunout do menu asi pod nastavení. Nemůže to být
+  na hlavní stránce.“* Návrh: v menu skupina NOTIFICATIONS s přepínačem (vzhled jako přepínače soukromí), pod ním hláška „zablokováno“
+  a admin test; u runy dne nic. Sedí na schválený plán menu 2026-10-28 (b026bd00, „upozornění“).
+- [ ] **Runa dne — podoba (d9df437e):** *„chybí popis rune of the day nad nebo vedle runy · runa o 2/3 stávající · po kliknutí na runu
+  význam · nechat si runu dne přečíst hlasem Rúnara za kredit jako jedno čtení · rozbalování jako How a reading works … uvidím, jak to
+  bude vypadat“*. Návrh: papír (komponenta „How a reading works“) se štítkem RUNE OF THE DAY, kámen menší, ťuknutí na kámen = popup
+  s významem (runar-rune-popup.js). Hlas: texty jsou z knihovny (DECISIONS 2026-11-17 (1)), stejné pro všechny → nahrávka jednou za text
+  a znovu se použije; schválených textů je ~122 000 znaků (en 75 × ~414, is 206 × ~443), celá knihovna naráz by vzala několik cyklů
+  tarifu ElevenLabs — nahrávat až na první žádost. Cena (kredit, nebo zdarma) = rozhodnutí ownera.
+- [ ] **Nápověda u AREA / SEEKING / INTENTION / THE SITUATION (fe7a3143):** *„po kliku na plus rozbalit stejně jako how a reading works,
+  ať se nemusí posouvat celý text pod ním“*. Návrh: táž komponenta papír — věta se rozvine přes formulář, ťuknutím vedle se stáhne.
