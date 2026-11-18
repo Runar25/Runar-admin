@@ -35,3 +35,8 @@ Model produkce (gpt-6-sol, bez přemýšlení), 6 volání. Texty: `ulohy_vysled
 2. Netvrdí se, že si čtenář větu o runě vztáhne na sebe — to je **neověřené** a lab to neumí změřit (soudce není čtenář); rozhodnou
    owner a testeři.
 3. Pestrost mezi čteními drží jen los dat (4 × 7 × 2); vlastní šablony modelu (body 3 a 7) ji ubírají.
+
+## Odloženo (owner 2026-11-18: „zatím to ulož a odkládáme“)
+Otevřené, až se k tomu vrátíme: (1) ownerův verdikt nad šesti čteními proti výkladu Gemini a dnešnímu Rúnarovi · (2) rozbít dvě šablony
+modelu („It holds the difference between …“, „Where in your life …“) · (3) data pro druhou runu jiné povahy (Isa nebo Hagalaz).
+Totéž v `RUNAR_BACKLOG.md` položky 12 a 13.
