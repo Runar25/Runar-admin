@@ -13427,5 +13427,5 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   704, *út daginn* 1 304, *situr eftir* 4 364, *skrifað niður* 994, *kostar ekkert* 4 303, *á hverjum morgni* 6 017).
 - **Ověřeno:** náhled — záložka před tahem i po tahu, kámen 43 px, popup *Algiz · protection…*, tlačítko pod RÚNAR po tahu přepne
   do záložky, na 375 px se záložky vejdou v EN i IS (stránka bez vodorovného posunu); `verify_zaklad_produkce.js` OK.
-  **Neověřeno:** hlas naostro (náhled admina nemá) a tah naostro.
+  **Hlas ověřen** 2026-11-18 v produkci (owner *„funguje, hlas hraje a svíčka hoří“*).
 - Affected doc(s): RUNAR_BACKLOG.md (Hlášení z appky 2026-11-18).
