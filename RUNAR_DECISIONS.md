@@ -13381,6 +13381,8 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   ověřuje, že obě vrstvy přijmou a odmítnou tytéž adresy). Mrtvé odběry (404/410) funkce maže a každý běh hlásí jako `purge` job
   `push_subs` (registr MAZANI) — i nulu, takže ranní souhrn pozná i běh, který se nekonal. iPhone a iPad přepínač nevidí (BACKLOG).
 - **Ověřeno:** náhled — tři stavy přepínače v EN i IS, uložený text upozornění, obsluha `push` s textem i bez (pak značka RÚNAR, §6),
-  ťuknutí, `?rod=1` otevře okno, výměna verze SW cache s textem nesmaže. IS: Greynir OK, vazby z korpusu. **Neověřeno:** doručení na
-  telefon — čeká na SQL a nasazení funkce, pak admin *„Send a test now“*.
+  ťuknutí, `?rod=1` otevře okno, výměna verze SW cache s textem nesmaže. IS: Greynir OK, vazby z korpusu.
+- **NASAZENO** 2026-11-18: SQL spustil owner (ověřeno: vložit = `auth,endpoint,lang,p256dh,user_id` · pravidla 3 · úloha `0 9 * * *` aktivní);
+  funkce `rune-day-push` z ee9b779 po ownerově „nasaď, ok“ (čas 9:00 UTC potvrzen) — naběhla, bez tajemství i bez přihlášení 401.
+  **Neověřeno:** doručení na telefon (admin *„Send a test now“*) a první ranní běh.
 - Affected doc(s): RUNAR_BACKLOG.md (Upozornění na runu dne; Blockery prodeje — zásady), RUNAR_PRIVACY.md (odběry upozornění).
