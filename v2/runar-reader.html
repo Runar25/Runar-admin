@@ -387,20 +387,22 @@
           <button class="lang-btn active" id="fg-hk"  type="button" onclick="setGender('hk')">Hán</button>
         </div>
       </div>
+      <!-- 2026-11-18 (hlášení fe7a3143, owner: „po kliku na plus rozbalit stejně jako how a reading works, ať se nemusí posouvat celý text
+           pod ním“): věta za „+“ je papír — .hint-papir má nulovou výšku, list v něm leží PŘES formulář. Ovládá toggleFormHint (runar-app.js). -->
       <label class="flbl" id="area-lbl" data-i18n="area_lbl">AREA OF LIFE <span class="opt">(OPTIONAL)</span></label>
-      <p class="note form-hint" id="area-hint" style="display:none;"></p>
+      <div class="hint-papir"><div class="hint-list"><p class="note form-hint" id="area-hint" style="display:none;"></p></div></div>
       <div class="pills" id="area-pills"></div>
       <label class="flbl" id="seek-lbl" data-i18n="seek_lbl">WHAT ARE YOU SEEKING? <span class="opt">(OPTIONAL)</span></label>
-      <p class="note form-hint" id="seek-hint" style="display:none;"></p>
+      <div class="hint-papir"><div class="hint-list"><p class="note form-hint" id="seek-hint" style="display:none;"></p></div></div>
       <div class="pills" id="seek-pills"></div>
       <label class="flbl" id="intention-lbl" data-i18n="intention_lbl">THIS READING IS FOR <span class="opt">(OPTIONAL)</span></label>
-      <p class="note form-hint" id="intention-hint" style="display:none;"></p>
+      <div class="hint-papir"><div class="hint-list"><p class="note form-hint" id="intention-hint" style="display:none;"></p></div></div>
       <div class="pills" id="intention-pills"></div>
       <!-- THE SITUATION — Rune Walker/Rune Wanderer only -->
       <div id="q-section" style="display:none;">
         <label class="flbl" id="q-lbl" data-i18n="q_lbl">SPECIFIC QUESTION <span class="opt">(OPTIONAL)</span></label>
         <!-- 2026-10-12 (DECISIONS 2026-10-12 (7)): upozornění za „+“ u otázky — text qpriv_hint z UI_TEXT (toggleFormHint) -->
-        <p class="note form-hint" id="qpriv-hint" style="display:none;"></p>
+        <div class="hint-papir"><div class="hint-list"><p class="note form-hint" id="qpriv-hint" style="display:none;"></p></div></div>
         <!-- Text plní setText('q-hint') v _updateAreaSeekLabels(); `data-i18n` překlad NEDĚLÁ
              (čte ho jen runar-reporter.js). Měřeno 2026-08-16: volný text ukotví čtení
              +8,8 b., kdežto výběr z nabídky +2,7 b. — proto se vyplatí navést, jak psát. -->

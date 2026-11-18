@@ -1322,15 +1322,38 @@ function _paintPapirText(id, radky, k) {
   radky.forEach(function (r) { var p = document.createElement('p'); p.textContent = r; if (videt) p.className = 'videt'; box.appendChild(p); });
 }
 // Jedna věta pod popiskem oblasti / hledání / záměru (2026-09-29, report KUKY 11:32; owner: „tohle stačí“).
-function toggleFormHint(k) {
+// 2026-11-18 (hlášení fe7a3143, owner: „rozbalit stejně jako how a reading works, ať se nemusí posouvat celý text pod ním“): věta je papír
+// přes formulář (.hint-papir v HTML/CSS) — natržené boky jako _papirS, otevřená nejvýš jedna, ťuknutí vedle ji stáhne (_hintVedle).
+// Stav dál nese display nápovědy (čte ho _tgl v _updateAreaSeekLabels při přepnutí jazyka).
+var _HINTY = ['area', 'seek', 'intention', 'qpriv'];
+function toggleFormHint(k, zavrit) {
   var box = document.getElementById(k + '-hint'); if (!box) return;
-  var otevrit = box.style.display === 'none';
+  var otevrit = !zavrit && box.style.display === 'none';
+  if (otevrit) _HINTY.forEach(function (j) { if (j !== k) toggleFormHint(j, true); });
+  var obal = box.closest('.hint-papir'), list = box.parentNode;
+  if (otevrit && obal && !obal.getAttribute('data-bok') && typeof _svickaRnd === 'function') {
+    var rnd = _svickaRnd(k + '-hint'), bok = function () { var b = []; for (var y = 0; y <= 100; y += 5) b.push([(rnd() < .22 ? 1.5 + rnd() * 3 : rnd() * 1.2).toFixed(2), y]); return b; };
+    var Lb = bok(), Pb = bok().reverse();
+    list.style.clipPath = 'polygon(' + Lb.map(function (b) { return b[0] + 'px ' + b[1] + '%'; })
+      .concat(Pb.map(function (b) { return 'calc(100% - ' + b[0] + 'px) ' + b[1] + '%'; })).join(',') + ')';
+    obal.setAttribute('data-bok', '1');
+  }
   box.textContent = t(k + '_hint');
   box.style.display = otevrit ? '' : 'none';
+  if (obal) obal.classList.toggle('otevreny', otevrit);
   // tlačítko podle aria-controls, ne podle id popisku: u otázky nese „+“ popisek q-lbl a nápověda je qpriv-hint (2026-10-12)
   var b = document.querySelector('.hint-tgl[aria-controls="' + k + '-hint"]');
   if (b) b.setAttribute('aria-expanded', otevrit ? 'true' : 'false');
 }
+function _hintVedle(e) {   // ťuknutí mimo otevřený papír i mimo jeho „+“ ho stáhne (jako papír návodu)
+  _HINTY.forEach(function (k) {
+    var box = document.getElementById(k + '-hint');
+    if (!box || box.style.display === 'none') return;
+    if (e.target.closest('.hint-tgl[aria-controls="' + k + '-hint"]') || (box.parentNode && box.parentNode.contains(e.target))) return;
+    toggleFormHint(k, true);
+  });
+}
+document.addEventListener('click', _hintVedle);
 // ─── „WHERE TO START“ — jednou pro každého, i návštěvníka (KUKY 2026-10-11, DECISIONS 2026-10-11 (65)) ───────────────────────────
 // Proč: číst runy, a hlavně to, co Rúnar říká, není napoprvé samozřejmé; vysvětlení stojí v Kolekci pod každou runou („How Rúnar sees the
 // rune“) a v „How a reading works“. Okno se ukáže jednou (pamatuje si prohlížeč, ne účet — owner schválil), jen na obrazovce čtení a nikdy

@@ -33,6 +33,7 @@
 // papír            .papir .papir-list .papir-hlava .papir-text           nadpis s „+“ a notou, rozvine se přes obsah pod ním („How a reading
 //                   (.otevreny .pohyb .rozvinuty .videt .papir-posuv)     works“, BEFORE WE BEGIN; owner 2026-10-30); .videt = odkrytý odstavec;
 //                                                                         .papir-posuv = ukazatel posunu dlouhého textu (2026-10-31)
+//                   .hint-papir .hint-list                                papír nápovědy za „+“ ve formuláři, bez noty (hlášení fe7a3143, 2026-11-18)
 // čekání na model   .whispers-loading-inner .whispers-loading-star        KAŽDÉ čekání na text od modelu: pulzující značka ᚱ (znackaSvg), nápis
 //                   .whispers-loading-label .reading-loading-motto        „THE STONES SPEAK IN SILENCE…“, heslo zrcadla (_loadingMotto); čtení i runa
 //                                                                         dne. Pravidlo E. (2026-11-16: runa dne dostala nápis v .note — hlášení 64005ae3)

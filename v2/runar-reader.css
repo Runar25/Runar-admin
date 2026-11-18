@@ -520,6 +520,13 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 [role="button"][aria-expanded]:focus-visible{outline:1px solid var(--gold);outline-offset:3px;}
 @media (prefers-reduced-motion:reduce){.guide-lbl::after,.hint-tgl::after,.ask-lbl::after,#reader-card1-lbl::after,.xp-plus{transition:none;}}
 .form-hint{margin:-2px 0 10px;}
+/* 2026-11-18 (hlášení fe7a3143): nápověda za „+“ = papír jako „How a reading works“ — obal nulové výšky, list leží přes formulář
+   (nic pod ním se neposune), rozvine se dolů, natržené boky dá toggleFormHint. Ťuknutí vedle ho stáhne. */
+.hint-papir{position:relative;height:0;z-index:5;}
+.hint-list{position:absolute;left:-6px;right:-6px;top:0;background:var(--card);overflow:hidden;max-height:0;transition:max-height .5s ease;}
+.hint-papir.otevreny .hint-list{max-height:320px;box-shadow:0 12px 26px rgba(0,0,0,.6);}
+.hint-list .form-hint{margin:0;padding:12px 18px 14px;font-size:1.02em;line-height:1.65;color:var(--white);}
+@media (prefers-reduced-motion:reduce){.hint-list{transition:none;}}
 .guide{margin-top:14px;}
 /* „Where to start“ (2026-10-11, DECISIONS (65)) — okno appky (.modal); zavření ho zmenší a zasune do „How a reading works“
    (transform z closeWhereToStart v runar-app.js), závoj zmizí a popisek se dvakrát rozzáří. Bez animací (prefers-reduced-motion) jen rozzáření. */

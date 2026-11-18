@@ -1313,5 +1313,5 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   s významem (runar-rune-popup.js). Hlas: texty jsou z knihovny (DECISIONS 2026-11-17 (1)), stejné pro všechny → nahrávka jednou za text
   a znovu se použije; schválených textů je ~122 000 znaků (en 75 × ~414, is 206 × ~443), celá knihovna naráz by vzala několik cyklů
   tarifu ElevenLabs — nahrávat až na první žádost. Cena (kredit, nebo zdarma) = rozhodnutí ownera.
-- [ ] **Nápověda u AREA / SEEKING / INTENTION / THE SITUATION (fe7a3143):** *„po kliku na plus rozbalit stejně jako how a reading works,
+- [x] ✅ *(CODE-tune 2026-11-18, DECISIONS 2026-11-18 (2))* **Nápověda u AREA / SEEKING / INTENTION / THE SITUATION (fe7a3143):** *„po kliku na plus rozbalit stejně jako how a reading works,
   ať se nemusí posouvat celý text pod ním“*. Návrh: táž komponenta papír — věta se rozvine přes formulář, ťuknutím vedle se stáhne.

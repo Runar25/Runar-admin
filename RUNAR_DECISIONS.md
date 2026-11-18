@@ -13386,3 +13386,12 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   funkce `rune-day-push` z ee9b779 po ownerově „nasaď, ok“ (čas 9:00 UTC potvrzen) — naběhla, bez tajemství i bez přihlášení 401.
   **Doručení ověřeno** 2026-11-18 na Androidu (admin *„Send a test now“*, owner *„funguje, upozornění přišlo“*). **Neověřeno:** první ranní běh.
 - Affected doc(s): RUNAR_BACKLOG.md (Upozornění na runu dne; Blockery prodeje — zásady), RUNAR_PRIVACY.md (odběry upozornění).
+
+## 2026-11-18 (2) — Nápověda za „+“ ve formuláři se rozvine jako papír přes formulář
+- **Owner:** hlášení fe7a3143 *„Nápověda v area, seeking, intention, situation po kliku na plus rozbalit stejně jako how a reading works,
+  ať se nemusí posouvat celý text pod ním“*; k návrhu *„ano“*.
+- **Co:** věta za „+“ (AREA OF LIFE, WHAT ARE YOU SEEKING?, THIS READING IS FOR, THE SITUATION) leží v obalu nulové výšky
+  (`.hint-papir`), list se rozvine dolů přes formulář, boky natržené jako papír návodu, otevřená nejvýš jedna, ťuknutí vedle ji stáhne
+  (`toggleFormHint`, `_hintVedle` v runar-app.js). Do té doby věta odsunula formulář pod sebou. Bez noty — věty hlas nemají.
+- **Ověřeno:** náhled — pilulky pod otevřenou nápovědou se neposunou (0 px), druhá nápověda zavře první, ťuknutí vedle zavře.
+- Affected doc(s): RUNAR_BACKLOG.md (Hlášení z appky 2026-11-18).
