@@ -13395,3 +13395,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   (`toggleFormHint`, `_hintVedle` v runar-app.js). Do té doby věta odsunula formulář pod sebou. Bez noty — věty hlas nemají.
 - **Ověřeno:** náhled — pilulky pod otevřenou nápovědou se neposunou (0 px), druhá nápověda zavře první, ťuknutí vedle zavře.
 - Affected doc(s): RUNAR_BACKLOG.md (Hlášení z appky 2026-11-18).
+
+## 2026-11-18 (3) — Upozornění na runu dne v menu, skupina NOTIFICATIONS
+- **Owner:** hlášení db02d0e0 *„Nastavení upozornění pro rune of the day budeme muset přesunout do menu asi pod nastavení. Nemůže to být
+  na hlavní stránce.“*; k návrhu *„ano“* a k pojmenování *„budeme mít více notifications? … doporuč“*.
+- **Co:** přepínač (vzhled přepínačů soukromí, `.sp-toggle`) *Remind me of the rune of the day each morning* / *Minntu mig á rún dagsins
+  á morgnana* v menu pod štítkem NOTIFICATIONS / TILKYNNINGAR; zablokované = přepínač nejde zaškrtnout a pod ním proč; admin test
+  pod zapnutým. Skupinu vidí jen ten, komu je runa dne otevřená a jehož prohlížeč push umí. U runy dne na hlavní stránce nic.
+  Tlačítka REMIND ME EACH MORNING / TURN OFF MORNING REMINDER pryč (klíče `rod_push_on/off` z UI_TEXT pryč).
+- **Proč NOTIFICATIONS, ne SETTINGS:** menu samo je nastavení — jazyk a soukromí v něm mají vlastní štítky; obecný štítek by je
+  rozdělil napůl. Další upozornění (týdenní zrcadlo z BACKLOGu) přibude jako další řádek pod týž štítek. Samostatná obrazovka nastavení
+  dává smysl, až přepínačů bude tolik, že menu přestane být přehledné.
+- **IS:** Greynir OK; *„minntu mig á“* v korpusu 380×.
+- **Ověřeno:** náhled — tři stavy (vypnuto, zapnuto + admin test, zablokováno) v EN i IS, skupina skrytá bez přístupu.
+- Affected doc(s): RUNAR_BACKLOG.md (Hlášení z appky 2026-11-18).

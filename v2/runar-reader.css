@@ -172,7 +172,7 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 .rod .btn-full{margin-top:0;}
 .rod .tree-stone{display:block;margin:0 0 8px;}
 .rod .tree-reading-text{padding:4px 0 6px;}
-#rod-push{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}   /* upozornění na runu dne (2026-11-18) */
+#rod-push{display:flex;flex-direction:column;align-items:flex-start;gap:8px;}   /* upozornění na runu dne v menu (2026-11-18, db02d0e0) */
 #rod-push:empty{display:none;}
 #rod-push .note{margin:0;}
 #rod-state{max-width:none;margin:0;text-align:center;}   /* stav v okně na střed (hlášení 64005ae3) */

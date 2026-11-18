@@ -172,8 +172,8 @@ const UI_TEXT = {
     rod_j_note_ph:    'One line is enough.',
     rod_j_empty:      'Your rune of the day will appear here.',
     rod_reset:        'DRAW AGAIN (ADMIN)',
-    rod_push_on:      'REMIND ME EACH MORNING',   // upozornění na runu dne (2026-11-18, runar-runa-dne.js)
-    rod_push_off:     'TURN OFF MORNING REMINDER',
+    rod_push_lbl:     'Remind me of the rune of the day each morning',   // upozornění na runu dne v menu (2026-11-18, runar-runa-dne.js)
+    sp_notif_lbl:     'NOTIFICATIONS',
     rod_push_blocked: 'Notifications are blocked. Turn them on for Rúnar in your phone settings.',
     rod_push_title:   'Rune of the day',
     rod_push_body:    'A new day, a new rune. It is waiting for you.',
@@ -777,8 +777,8 @@ const UI_TEXT = {
     rod_j_note_ph:    'Ein setning nægir.',
     rod_j_empty:      'Rún dagsins birtist hér.',
     rod_reset:        'DRAGA AFTUR (ADMIN)',
-    rod_push_on:      'ÉG VIL FÁ TILKYNNINGU Á MORGNANA',
-    rod_push_off:     'SLÖKKVA Á TILKYNNINGUM',
+    rod_push_lbl:     'Minntu mig á rún dagsins á morgnana',
+    sp_notif_lbl:     'TILKYNNINGAR',
     rod_push_blocked: 'Lokað er á tilkynningar. Kveiktu á þeim í stillingum símans.',
     rod_push_title:   'Rún dagsins',
     rod_push_body:    'Nýr dagur, ný rún. Hún bíður þín.',

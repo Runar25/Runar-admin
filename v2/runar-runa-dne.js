@@ -237,10 +237,12 @@ async function _rodPushUloz(sub) {
   }
   return true;
 }
+// 2026-11-18 (hlášení db02d0e0): přepínač bydlí v menu (#sp-notif), ne u runy dne — skupina je vidět jen s přepínačem.
+function _rodPushSkupina(ukaz) { var g = document.getElementById('sp-notif'); if (g) g.style.display = ukaz ? '' : 'none'; }
 async function _rodPushNacti() {
   var box = document.getElementById('rod-push');
   if (!box) return;
-  if (!_rodPushUmi() || !_rodSmi()) { box.innerHTML = ''; return; }
+  if (!_rodPushUmi() || !_rodSmi()) { box.innerHTML = ''; _rodPushSkupina(false); return; }
   var sub = null;
   try { var reg = await navigator.serviceWorker.ready; sub = await reg.pushManager.getSubscription(); } catch (e) { return; }
   _rodPush.sub = sub;
@@ -251,15 +253,18 @@ async function _rodPushNacti() {
 function _rodPushKresli() {
   var box = document.getElementById('rod-push');
   if (!box) return;
-  var s = _rodPush.stav, h = '';
-  if (s === 'blocked') h = '<p class="note">' + escapeHtml(t('rod_push_blocked')) + '</p>';
-  else if (s === 'on') {
-    _rodPushTexty();   // i po přepnutí jazyka (setLang) — upozornění přijde v jazyce, který má člověk zapnutý naposled
-    h = '<button type="button" class="btn-half sec" onclick="rodPushVypni()">' + escapeHtml(t('rod_push_off')) + '</button>'
-      + (_rodAdmin() ? '<button type="button" class="tree-tester-btn" onclick="rodPushTest()">' + escapeHtml(t('rod_push_test')) + '</button>' : '');
-  } else if (s === 'off') h = '<button type="button" class="btn-half" onclick="rodPushZapni()">' + escapeHtml(t('rod_push_on')) + '</button>';
-  box.innerHTML = h;
+  setText('sp-notif-lbl', t('sp_notif_lbl'));
+  var s = _rodPush.stav;
+  if (!s) { box.innerHTML = ''; _rodPushSkupina(false); return; }
+  if (s === 'on') _rodPushTexty();   // i po přepnutí jazyka (setLang) — upozornění přijde v jazyce, který má člověk zapnutý naposled
+  // přepínač jako u soukromí (.sp-toggle); zablokované = zaškrtnout nejde, pod ním proč
+  box.innerHTML = '<label class="sp-toggle"><input type="checkbox" onchange="rodPushPrepni(this)"' + (s === 'on' ? ' checked' : '')
+    + (s === 'blocked' ? ' disabled' : '') + '><span>' + escapeHtml(t('rod_push_lbl')) + '</span></label>'
+    + (s === 'blocked' ? '<p class="note">' + escapeHtml(t('rod_push_blocked')) + '</p>' : '')
+    + (s === 'on' && _rodAdmin() ? '<button type="button" class="tree-tester-btn" onclick="rodPushTest()">' + escapeHtml(t('rod_push_test')) + '</button>' : '');
+  _rodPushSkupina(true);
 }
+function rodPushPrepni(el) { if (el.checked) rodPushZapni(); else rodPushVypni(); }
 async function rodPushZapni() {
   try {
     var p = await Notification.requestPermission();

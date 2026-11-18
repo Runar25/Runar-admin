@@ -255,7 +255,6 @@
       <div class="rod" id="rod" hidden>
         <button type="button" class="btn-full" id="rod-btn" onclick="rodOtevri()">RUNE OF THE DAY</button>
         <div id="rod-result" hidden></div>
-        <div id="rod-push"></div>
       </div>
       <p class="hero-sub" id="ui-sub">Draw a rune. Hear the old tongue speak.</p>
       <!-- 2026-10-09 (KUKY): pozdrav pod Rúnarem pryč — „Good to see you again…“ stojí v horní liště (#topbar-greeting) -->
@@ -1036,6 +1035,13 @@
       </label>
     </div>
     <a class="sp-item" id="sp-privacy-link" href="runar-privacy.html" style="text-decoration:none;"><span class="sp-ik" aria-hidden="true">§</span><span id="sp-privacy-txt">PRIVACY POLICY</span></a>
+  </div>
+
+  <!-- Upozornění (2026-11-18, hlášení db02d0e0 — owner: „přesunout do menu … nemůže to být na hlavní stránce“): skupina NOTIFICATIONS,
+       přepínače jako u soukromí. Vidí ji jen ten, komu je runa dne otevřená a jehož prohlížeč push umí; plní _rodPushKresli (runar-runa-dne.js). -->
+  <div class="side-panel-section" id="sp-notif" style="display:none;">
+    <div class="side-panel-lbl" id="sp-notif-lbl">NOTIFICATIONS</div>
+    <div id="rod-push"></div>
   </div>
 
   <!-- Pomoc — vždy. „Send Rúnar a line“ (2026-10-15, owner „8. ano“): přihlášený okno se zprávou, návštěvník odkaz na e-mail (texty
