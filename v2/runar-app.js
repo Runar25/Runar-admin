@@ -2337,6 +2337,9 @@ window.addEventListener('DOMContentLoaded', async () => {
   }
   applyLangToggle(lang);   // 2026-10-10: výchozí jazyk je IS — i bez uložené volby, jinak by svítilo EN z HTML
   _hlasyTextu();   // hned po uložené volbě jazyka: první updateUIText čeká na přihlášení (pomalá síť = rituál a návod by chyběly)
+  // 2026-11-19 (hlášení 872bef97): statické texty hned, ne až po síti (getSession + loadCorrections) — tlačítka v HTML jsou prázdná
+  // a do té doby se plnila postupně. updateUIText je jen statické překlady (§14); níž po přihlášení běží znovu.
+  updateUIText();
 
   // Restore address gender from localStorage
   userGender = localStorage.getItem('runar_gender') || 'hk';
