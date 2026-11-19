@@ -224,6 +224,11 @@ hlídal jen V2 cestu.
   stromu, jsou informace z deníku. pokud bude mít uživatel i osobní deník, tak z něj můžou také vycházet čtení. týdenní zrcadlo nebo
   měsíční zrcadlo zní dobře. lucerna by mohla osvětlit nějakou vybranou část z jejich deníku“* (lucerna = symbol z BACKLOG „Lucerna
   větší někde jinde“). Popis vzorce, nikdy předpověď.
+  *(CODE-tune 2026-11-19)* Lab `docs/eval/2026-11-19-souhrn-tydne/`: owner — týden po–ne, souhrn **v neděli hned po tahu runy dne**,
+  od 5 dnů s tahem, zdarma, poznámky z deníku později; **runa po runě**, opakovaná runa NENÍ základ (*„to bude patřit jen stromu“*), vrácenou
+  runu smí pojmenovat bez čísla; den bez tahu = tečka (prázdná runa je runa). Míří na člověka a musí být originální. Kolo 1 (sol, 4 texty):
+  začátek 4/4 stejný, pojistka „though…“ 4/4, výčet run. **Kolo 2 až později** (owner *„kolo pustíme později“*): do vstupu **texty run dne,
+  které člověk ten týden dostal** (owner *„zkusíme to“*), bez jmen dnů, los začátku.
 - [ ] **Upozornění na runu dne — Android teď, iPhone později** (owner 2026-11-17: *„ok udělej pro android, apple backlog“*). Ranní
   zpráva „Rúnar má pro tebe runu dne“, klepnutí otevře appku na runě dne; zapíná ji člověk sám, tón Huginna, žádné výčitky. Stavba:
   povolení a odběr v appce (service worker `push`), tabulka odběrů, ranní odeslání ze serveru (plánovaná edge funkce, záznam v `BEHY`).
@@ -1303,6 +1308,22 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   (36 volání přes sol) owner 2026-11-04 odmítl (*„2. ne“*) — položka zůstává otevřená, jiný postup napřed s ownerem.
   *2026-11-16:* táž půlvěta odebraná u tipu „Where does this get hard?“ — scéna 5/12 → 0/12, pojistka 7 → 10/12; owner *„obraz lepší“*,
   půlvěta zůstává (DECISIONS 2026-11-16 (3), `docs/eval/2026-11-16-ask-tezkost/`).
+
+### Hlášení z appky 2026-11-19 — co v tahu nezůstalo hotové (načtena 2026-11-19, CODE-tune)
+- [ ] **Obraz si dokresluje předměty — úhel [3] u obrazu bez pevné věci** (852ccc73 owner *„model zbytečně přidává do obrazu věci, které
+  nejsou podstatné. Přidává pant. Koukám, jestli to není z angle“*; fe581227 a f05b7671 = rozbor od GPT: nevytvářet nové předměty, rozvíjet
+  význam místo kulis). **Změřeno na tom čtení** (49697887, Dagaz, v5.23): los `angle: 3` = *„Open with the one thing in the image that
+  stays fixed while the rest gives way“*; obraz *„You open the byre door, and the morning light floods into the dark stalls all at once“*
+  nic pevného nemá → model si ho vyrobil (*„its hinges hold“*), pak dokreslil *„the worn edge of the manger“*. Návrh: výjimka ve větě úhlu jako
+  u [2] (*„If nothing moves, open with the stillness itself“*) — změna promptu → napřed malý pokus (stejné losy, úhel 3 s výjimkou a bez,
+  obrazy bez pevné věci) a ownerovo ano k API. Kolik čtení s úhlem 3 si věc vymýšlí, změřeno není. Rozbor GPT = podnět, ne verdikt;
+  „nevytvářej předměty“ jako přidaný zákaz hrozí formulí (memory `oprava-promptu-odebira-vadu`) — oprava má odebrat příčinu (úhel).
+- [ ] **Přehrávač — vysvětlit v nápovědě, jak funguje** (fa9cb3e2 owner *„asi po kliknutí na helper“*): svíčka = posuvník, ťuknutí na notu,
+  posun po svíčce. Copy EN + IS (§2) hlasem zrcadla nápovědy.
+- [ ] **Menu se skoro nevejde na obrazovku** (065a5205 owner *„bude potřeba upravit, lépe uspořádat, i vizuálně opravit, jak jsou jednotlivé
+  sekce oddělené“*). Návrh uspořádání napřed ownerovi (§32: porovnat celou obrazovku před a po).
+- [ ] **Hlas runy dne — doplněk k 5006ae34** (čekání svíčky hotové, 78202bf): owner *„nota by se mohla pohybovat jako při hraní melodie“*
+  (nápad) a *„až budou všechny nahrané, svíčky buď viditelné, nebo se nahrát“* — patří k položce nahrávek knihovny (výš: hlas jednou na text).
 
 ### Hlášení z appky 2026-11-18 — runa dne a nápověda formuláře: návrh čeká na ownera (načtena 2026-11-18, CODE-tune)
 - [x] ✅ *(CODE-tune 2026-11-18, DECISIONS 2026-11-18 (3))* **Upozornění do menu (db02d0e0):** *„Nastavení upozornění pro rune of the day … přesunout do menu asi pod nastavení. Nemůže to být
