@@ -391,7 +391,7 @@ PRIPADY = [
  ('chyti', 'verify_telefon.js', 'v2/runar-app.js', 'replace', "      if (obal && _papirOtevreny(k) && !obal.contains(e.target)) _papirZavri(k);", ""),   # ťuknutí vedle papír nestáhne
  ('chyti', 'verify_telefon.js', 'v2/runar-app.js', 'replace', "      _papirOtevri(k, function () { svickaPrepni(c.prefix); });", "      svickaPrepni(c.prefix);"),   # nota papír nerozvine
  # čekání na hlas (owner 2026-10-30 „10. ok“): svíčka se při čekání netvoří
- ('chyti', 'verify_telefon.js', 'v2/runar-svicka.js', 'replace', "    if (S.stav === 'tvori') S.p = tvorP(performance.now() - S.tv0);", "    if (false) S.p = tvorP(performance.now() - S.tv0);"),
+ ('chyti', 'verify_telefon.js', 'v2/runar-svicka.js', 'replace', "    if (S.stav === 'tvori') { if (svisla) S.delka = 1 - tvorP(performance.now() - S.tv0); else S.p = tvorP(performance.now() - S.tv0); }", "    if (false) { if (svisla) S.delka = 1 - tvorP(performance.now() - S.tv0); else S.p = tvorP(performance.now() - S.tv0); }"),
  # hlas návodu „How a reading works“ (owner 2026-10-30): nahrávka bez hostitele v appce · návod změněný bez nové nahrávky
  ('chyti', 'verify_telefon.js', 'v2/runar-app.js', 'replace', "{ prefix: 'nav', host: 'guide-voice',", "{ prefix: 'nav', host: 'guide-voice-x',"),
  ('chyti', 'verify_telefon.js', 'v2/runar-reading.js', 'replace', 'style="display:inline-block;vertical-align:.28em;margin-right:0.45em"', 'style="display:inline-block;vertical-align:0;margin-right:0.45em"'),   # kadidlo zase níž než písmena (2026-10-31)
