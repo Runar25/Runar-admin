@@ -527,6 +527,7 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 .guide-lbl[aria-expanded="true"]::after,.hint-tgl[aria-expanded="true"]::after,.ask-lbl[aria-expanded="true"]::after,#reader-card1-lbl[aria-expanded="true"]::after,
 [aria-expanded="true"] .xp-plus{transform:rotate(45deg);}
 [role="button"][aria-expanded]:focus-visible{outline:1px solid var(--gold);outline-offset:3px;}
+[aria-expanded]{-webkit-tap-highlight-color:transparent;}   /* ťuknutí na rozbalovač „+“ nebliká celým řádkem (hlášení 0c56a131, 2026-11-19); klávesnici zůstává focus-visible */
 @media (prefers-reduced-motion:reduce){.guide-lbl::after,.hint-tgl::after,.ask-lbl::after,#reader-card1-lbl::after,.xp-plus{transition:none;}}
 .form-hint{margin:-2px 0 10px;}
 /* 2026-11-18 (hlášení fe7a3143): nápověda za „+“ = papír jako „How a reading works“ — obal nulové výšky, list leží přes formulář
