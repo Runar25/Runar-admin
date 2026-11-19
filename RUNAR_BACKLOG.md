@@ -248,18 +248,6 @@ hlídal jen V2 cestu.
 - [ ] **Hluboký rozbor čtení Algiz** (hlášení 037966b4, owner 2026-11-10: *„zajímavé čtení, zaslouží si hlubokou analýzu“*; pro CODE-read).
   Čtení `04242…` (Algiz, EN, obraz „za ohybem vřesoviště… praskne větvička“); celé v `readings`, najde `node scripts/utils/najdi_cteni.js`.
   Co rozbor rozhodne, owner neřekl — napřed se zeptat, čím ho zaujalo.
-- [ ] **Rune of the Day — nová funkce, směr ownera** (KUKY 2026-11-14 přes CODE-tree; patří čtení → CODE-tune, plán napřed ownerovi).
-  Uživatel dostane náhodnou runu, nebo zadá svou — bez oblasti, seekingu a záměru. **Do stromu nejde.** Rúnar řekne, jaký má runa význam
-  dnes: jak může na den, tedy na člověka, působit — **ne rada**, **bez obrazu**, stejným směrem jako popis větve (položka výš). Vzorek
-  Berkana psal Claude (ne model výkladů), 2026-11-14. **Soud ownera:** tón *„je v pořádku“*, *„zní to dobře“*; **max 3 věty, čárky
-  smějí**; poslední věta *„výborná“*. Pak *„max 30 slov“* — a po 27slovném vzorku: *„to je moc krátké … 30 slov je asi málo“*.
-  **Stavba (owner 2026-11-14): tři části, každá ukazuje na něco jiného** — (1) popis runy; (2) co se na základě runy může v člověku
-  odehrávat (co mu chybí, co je nebo není přítomné); (3) *„This is a day for noticing …“* — na co se může zaměřit, zamyslet, co
-  vylepšit; záleží na runě. Vzorek složil owner, 55 slov (měřítko tónu a stavby, ne text k opsání do promptu): *„Berkana is the rune
-  of growth that does not hurry, and today it turns toward what is still small in you, a beginning you have hardly admitted to, a care
-  you give without counting it. This is a day for noticing where you are patient with something, and where something has been
-  patient with you.“* **Žádný strop počtu slov** (owner: *„je to úplně jedno … pokud to udělá model delší, je to delší“*); délku
-  nese stavba ze tří částí, ne číslo.
   Owner 2026-11-14: předat CODE-tune — plán napřed ownerovi (vstup, kde v appce, cena/kredity, IS, uložení ano/ne).
   **Plán rozhodnut** (DECISIONS 2026-11-14 (6)): umístění, zdarma jen text, jednou denně, jen přihlášení, bez deníku. Dál: prompt + jeden vzorek (CODE-tune).
   **Postaveno pro testery** (DECISIONS 2026-11-15 (1)), SQL spuštěno a `claude-proxy` nasazena (DECISIONS 2026-11-15 (2)). Zbývá:
@@ -957,7 +945,8 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
       Měření bez cookies: štítek kanálu v odkazu (`?z=ig`) přečte formulář při odeslání (do zařízení nic neukládá), `waitlist-join`
       ho po kontrole proti seznamu zapíše do `ops_events.detail` u `waitlist_signup` — bez adresy, do Brevo ne (štítek u adresy =
       osobní údaj). Ranní souhrn podle štítku = CODE-tune. Po spuštění se registruje v appce → štítek musí převzít appka (CODE-tune).
-  (f) „Runa dne“ v kódu není. `robots.txt` a `sitemap.xml` zatím nejsou (přibudou při spuštění, položka „Domovská stránka“ výš);
+  (f) „Runa dne“ na webu není; v appce je od 2026-11-15 a builder je připravený i pro web, aktivuje se na pokyn ownera
+      (DECISIONS 2026-11-15 (1)). `robots.txt` a `sitemap.xml` zatím nejsou (přibudou při spuštění, položka „Domovská stránka“ výš);
       /heim/, /ferdin/, /kort/ a /skilmalar/ jsou noindex, úvodní stránka ne. Runa půlměsíce = `calcLifeRune` s dnešním datem, hotové;
       denní střídání by byl nový systém bez opory (§23).
   **Střet s kánonem (k posouzení, obsah je Cowork + owner):** „poznej se v jedné větě“ je výrok „tohle jsi“ — `RUNAR_DESIGN.md`
