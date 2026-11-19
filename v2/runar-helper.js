@@ -13,7 +13,9 @@
     // 2026-09-25 (KUKY: „nápověda by měla ukázat na HOW A READING WORKS“) — navod nad formularem.
     ["#read-guide-lbl", "helper_guide", ""],
     [".rlbl-glyph", "helper_glyph", ""],
-    ["#ask-lbl", "helper_ask", "helper_ask2"]
+    ["#ask-lbl", "helper_ask", "helper_ask2"],
+    // 2026-11-19 (hlášení fa9cb3e2): nota přehrávače — co nota a svíčka dělají (čtení, runa dne, návod, rituál; jen viditelné)
+    [".svp-nota", "helper_player", ""]
   ];
 
   function viditelny(el) {
@@ -73,15 +75,47 @@
     var txt = t(c[1]) + (c[2] ? " " + t(c[2]) : "");
     el.title = txt;
     el.setAttribute("aria-description", txt);
+    return txt;
+  }
+
+  // 2026-11-19 (owner: „nemělo by to zabírat místo a jasně říkat tady … může klidně zobrazit text“): věta viditelně u místa —
+  // pod ním (nad ním, když je dole na obrazovce), přes obsah, takže nic neposune. Zmizí dalším ťuknutím kamkoli.
+  var popisky = [];
+  function ukliz() {
+    popisky.forEach(function (d) { d.remove(); });
+    popisky = [];
+    document.removeEventListener("click", ukliz, true);
+  }
+  function ukaz(el, txt) {
+    var r = el.getBoundingClientRect(), vw = window.innerWidth || 360, vh = window.innerHeight || 640;
+    var d = document.createElement("div");
+    d.setAttribute("data-hb-popis", "");
+    d.setAttribute("role", "note");
+    d.textContent = txt;
+    var w = Math.min(280, vw - 32);
+    d.style.width = w + "px";
+    document.body.appendChild(d);
+    var x = Math.max(16, Math.min(r.left + r.width / 2 - w / 2, vw - 16 - w));
+    var y = (r.bottom + 10 + d.offsetHeight < vh - 70) ? r.bottom + 10 : r.top - 10 - d.offsetHeight;
+    d.style.left = Math.round(x + (window.pageXOffset || 0)) + "px";
+    var top = Math.round(Math.max(8, y) + (window.pageYOffset || 0)), left = Math.round(x + (window.pageXOffset || 0));
+    popisky.forEach(function (o) {   // překryv s dřívějším popiskem → pod něj
+      var ot = parseInt(o.style.top, 10), ol = parseInt(o.style.left, 10);
+      if (left < ol + o.offsetWidth && ol < left + w && top < ot + o.offsetHeight && ot < top + d.offsetHeight) top = ot + o.offsetHeight + 8;
+    });
+    d.style.top = top + "px";
+    popisky.push(d);
   }
 
   function svitit(ev) {
     if (ev) ev.stopPropagation();
+    ukliz();
     var na = [];
     CILE.forEach(function (c) {
       document.querySelectorAll(c[0]).forEach(function (el) { if (viditelny(el)) na.push([el, c]); });
     });
     // Nic na obrazovce (typicky nahore u fotky) -> dojet k prvnimu mistu, ktere na strance je, a rozsvitit ho.
+    var dojel = false;
     if (!na.length) {
       for (var i = 0; i < CILE.length && !na.length; i++) {
         var el = document.querySelector(CILE[i][0]);
@@ -90,9 +124,16 @@
       if (na.length) {
         var klid = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
         na[0][0].scrollIntoView({ block: "center", behavior: klid ? "auto" : "smooth" });
+        dojel = !klid;
       }
     }
-    na.forEach(function (p) { popis(p[0], p[1]); rozsvit(p[0]); });
+    na.forEach(function (p) { rozsvit(p[0]); });
+    // popisky az na miste, kam stranka dojela (pri plynulem posunu by stály vedle)
+    setTimeout(function () {
+      var bylo = {};   // jedna věta na jeden druh místa (víc not naráz = jedna věta u první)
+      na.forEach(function (p) { var txt = popis(p[0], p[1]); if (bylo[p[1][1]]) return; bylo[p[1][1]] = 1; ukaz(p[0], txt); });
+      if (popisky.length) document.addEventListener("click", ukliz, true);
+    }, dojel ? 500 : 0);
     zhasni(btn);
   }
 
@@ -107,7 +148,13 @@
       "background:rgba(14,22,34,.82);color:var(--gold,#FFBF00);border:1px solid var(--gold,#FFBF00);" +
       "font-family:Cinzel,serif;font-size:19px;line-height:44px;text-align:center;cursor:pointer;" +
       "z-index:99998;opacity:.55;-webkit-tap-highlight-color:transparent;transition:opacity .2s}" +
-      "@media (hover:hover){#hb-btn:hover{opacity:1}}#hb-btn:focus-visible,#hb-btn:active,#hb-btn.stisk{opacity:1}";
+      "@media (hover:hover){#hb-btn:hover{opacity:1}}#hb-btn:focus-visible,#hb-btn:active,#hb-btn.stisk{opacity:1}" +
+      // 2026-11-19: popisek nápovědy — barvy panelu appky (ne žlutá bublina z 2026-10-19), přes obsah, kliky jím projdou
+      "[data-hb-popis]{position:absolute;z-index:99997;background:var(--panel,#0d1220);color:var(--white,#F2F5F7);" +
+      "border:1px solid rgba(255,191,0,.45);border-radius:4px;padding:10px 14px;box-shadow:0 6px 18px rgba(0,0,0,.45);" +
+      "font-family:'Cormorant Garamond',Georgia,serif;font-size:17px;line-height:1.45;pointer-events:none;animation:hbPopis .25s ease}" +
+      "@keyframes hbPopis{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}" +
+      "@media (prefers-reduced-motion:reduce){[data-hb-popis]{animation:none}}";
     // 2026-10-27 (hlášení c7ca6a41): na dotyku nebylo poznat ťuknutí — :active a .stisk (500 ms) dají tutéž odezvu jako hover.
     document.head.appendChild(s);
     btn = document.createElement("button");

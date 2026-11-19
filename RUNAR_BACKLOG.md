@@ -1125,7 +1125,7 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   u [2] (*„If nothing moves, open with the stillness itself“*) — změna promptu → napřed malý pokus (stejné losy, úhel 3 s výjimkou a bez,
   obrazy bez pevné věci) a ownerovo ano k API. Kolik čtení s úhlem 3 si věc vymýšlí, změřeno není. Rozbor GPT = podnět, ne verdikt;
   „nevytvářej předměty“ jako přidaný zákaz hrozí formulí (memory `oprava-promptu-odebira-vadu`) — oprava má odebrat příčinu (úhel).
-- [ ] **Přehrávač — vysvětlit v nápovědě, jak funguje** (fa9cb3e2 owner *„asi po kliknutí na helper“*): svíčka = posuvník, ťuknutí na notu,
+- [x] ✅ *(2026-11-19, DECISIONS 2026-11-19 (5))* **Přehrávač — vysvětlit v nápovědě, jak funguje** (fa9cb3e2 owner *„asi po kliknutí na helper“*): svíčka = posuvník, ťuknutí na notu,
   posun po svíčce. Copy EN + IS (§2) hlasem zrcadla nápovědy.
 - [ ] **Menu se skoro nevejde na obrazovku** (065a5205 owner *„bude potřeba upravit, lépe uspořádat, i vizuálně opravit, jak jsou jednotlivé
   sekce oddělené“*). Návrh uspořádání napřed ownerovi (§32: porovnat celou obrazovku před a po).

@@ -13497,3 +13497,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **IS:** Greynir 0 nálezů; korpus po kouscích v komentáři u řádků (`runar-character.js`).
 - **Ověřeno:** kontroly obrazů (motivy, oblast, stránka runy, registr, připnutí) OK; golden beze změny.
 - Affected doc(s): — (obrazy bydlí jen v kódu, §20).
+
+## 2026-11-19 (5) — Nápověda „?“ ukazuje větu u místa; nově i nota přehrávače
+- **Owner** (hlášení fa9cb3e2 *„vysvětlit, jak přehrávač funguje, asi po kliknutí na helper“*; 2026-11-19): *„jak to udělat, abychom
+  vysvětlili, co to znamená. nemělo by to zabírat místo a jasně říkat tady. jinak ten helper můžeme udělat, jak potřebujeme. spousta
+  věcí se změnila. takže může klidně zobrazit text“*.
+- **Co:** ťuknutí na „?“ dál rozsvítí místa (svíčka, 2026-10-19 (7)) a u každého ukáže jeho větu jako popisek PŘES obsah (pod místem,
+  nad ním, je-li dole) — nic neposune; zmizí dalším ťuknutím kamkoli. Barvy panelu appky, ne žlutá bublina z 2026-10-19. Nové místo:
+  nota přehrávače (`helper_player`: *„Tap the note to listen. The candle burns down as Rúnar speaks. Tap the candle to move back or
+  forward.“*). Víc not naráz = věta jen u první; popisek, který by se překryl, jde pod předchozí.
+- **IS:** Greynir OK; *til að hlusta* 11 164, *kertið brennur* 38, *brennur niður* 40, *fara aftur á* 2 578, *bak eða áfram* 38.
+- **Ověřeno (náhled):** počítač — dva popisky vedle sebe bez překryvu, dalším ťuknutím pryč; telefon 375 px — popisek celý, stránka
+  bez vodorovného posunu.
+- Affected doc(s): RUNAR_BACKLOG.md (Hlášení z appky 2026-11-19).
