@@ -340,7 +340,14 @@ hlídal jen V2 cestu.
   ✅ **Od 2026-10-10 automaticky** (DECISIONS 2026-10-10 (9)): denně 3:30 šifrovaná záloha → lokálně + Google Drive runar@therunekeeper.com
   (`scripts/utils/zaloha_db.js`, úloha Windows „Runar - zaloha databaze“). Zbývá: Supabase Pro před produkcí, obnova do DB nanečisto.
 - [ ] **Zkouška obnovy jednou měsíčně a po změně schématu** (vyjmuto z hotové „Zálohy / DR“ 2026-10-31) — `node scripts/utils/obnova_db.js`,
-  prohlédnout, `--vycistit`. Kdo a kdy (naplánovaná úloha, nebo ruční krok) zatím nerozhodnuto.
+  prohlédnout, `--vycistit`. Měsíčně ji pouští úloha Windows „Runar - zkouska obnovy“ (`--mesicni`, jednou za 4 týdny v pondělí 4:15,
+  DECISIONS 2026-10-18 (2)); po změně schématu ručně.
+  ⚠️ *(CODE-web 2026-11-19, z ranního hlášení Ops)* Běh 2026-11-16 padl: zkušební projekt Runar Testing je Free a Supabase ho po týdnu
+  bez provozu uspí (`supabase projects list` → INACTIVE); spojení skončí „tenant/user … not found“ a souhrn to hlásí jako „cleanup
+  failed“ a „restore test FAILED“ — každé ráno až do dalšího úspěšného běhu (příští 14. 12.). Kopie dat 16. 11. nevznikla (zkouška
+  se nepřipojila); po běhu 19. 10. (9/9) ranní souhrn žádnou chybu mazání nehlásil. **Zbývá (CODE-read):** před zkouškou projekt
+  probudit (dashboard → Restore project, nebo Management API — neověřeno) a počkat na ACTIVE_HEALTHY; uspaný projekt hlásit jako
+  „test project paused“, ne „cleanup failed“.
 - [ ] **`deno.lock` + Dependabot pro edge funkce** — přesné verze importů už hlídá smoke (`verify_edge_imports.js`, 2026-10-11);
   chybí zámek závislostí a automatické upozornění na nové verze.
 - [ ] **Proxy Fáze 2 — zbývající díry z auditu 2026-08-02** *(úklid 2026-10-31, owner „12. ano“, CODE-tune: #3 a #4 → F3 v „Plán infrastruktury“; #6 a #7 zastaralé, `tree-update` smazán v 4e732aa)* (visitor už zavřen; tyhle jsou pro PŘIHLÁŠENÉ): **#2b** hlas na zaplacené čtení — ✅ *(CODE-tune 2026-10-11, DECISIONS 2026-10-11 (61): očištěný návrat — hlas k `reading_id` / podpisu neuloženého čtení, všechny cesty zmapované a proklikané v prohlížeči, smoke ㊸ ㊹)* ⚠️ POKUS 2026-08-03 **VRÁCEN** (voice gate rozbil hlas u tree/life-rune čtení — ta nenastavují `_lastReadingId`; proxy zpět na Fázi 1, klient zpět na `{text,lang}`). `readings`→SELECT-only ZŮSTALO (samostatný reálný fix). Znovu JEN po zmapování VŠECH voice cest (reader · tree/life-rune · someone) + reálném E2E testu na živém toku · **#3** `mode=life_rune` gate čte sloupec, který server nikdy nezapíše → replay = free Opus; zrcadlit founding CAS · **#4** ⚠️ POKUS 2026-08-03 (server oceňuje podle slugu) **VRÁCEN** — cena/metering NEJDE postavit na klientem deklarovaných metadatech (`spread_cost`/slug), dokud prompt staví KLIENT a server ho nekontroluje (server nezná pravý spread). Spoof se jen přesunul číslo→slug + přidal regresi (nový RS s `free_balance` → 402 na spread). Skutečný fix = server staví prompt ze strukturovaných vstupů (runy+typ) nebo metering na server-vlastněném signálu → architektonické, owner (§21). Report: `tasks/wqxu3uuar.output` · **#6/#7** `tree-update` věří `credits_used` + `short_text/deep_text` od klienta (neměřené Haiku) → odvodit ze saved readings row.
@@ -567,7 +574,8 @@ promptu v `claude-proxy` (už ověřuje přihlášení a odečítá kredity; pro
   **`pg_dump` přes session pooler** (port 5432, IPv4; heslo z proměnné) → roles, schema, data do téhož šifrovaného archivu. Klient:
   produkce běží PostgreSQL 17.6, scoop main má 18.4 (export starší verze umí; pro obnovu do 17 je bezpečnější klient 17 — dostupnost
   přes bucket `versions` neověřena). `supabase db dump` chce Docker; `--dry-run` vydá přesné příkazy pg_dump.
-- **Zkouška obnovy:** druhý Free projekt (0 $; Free dává 2 aktivní, uspání po týdnu nevadí), oficiální sekvence roles → schema →
+- **Zkouška obnovy:** druhý Free projekt (0 $; Free dává 2 aktivní; uspání po týdnu vadí — uspaný projekt nepřijme spojení, 2026-11-19,
+  viz „Zkouška obnovy jednou měsíčně“ výš), oficiální sekvence roles → schema →
   data přes `psql --single-transaction`; ověřit počty, součet kreditů, UUID účtů proti profilům, RLS, granty, triggery, přihlášení
   kódem. Kopie nese skutečné osobní údaje → po zkoušce smazat, žádné živé klíče (cron, webhooky). Opakovat měsíčně a po změně schématu.
   Že účty zůstanou se stejným ID, docs netvrdí — ověří až zkouška.
