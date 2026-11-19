@@ -3711,6 +3711,13 @@ function scrollToReading() {
   // (47b63e3f) přepínal do čtení k Rúnarovi; owner: „Skočí na úvodní stránku runara“, chtěl totéž, co dělá ve čtení.
   if (typeof activeAppTab !== 'undefined' && activeAppTab !== 'reading') {
     var _klid = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // 2026-11-19 (hlášení 6c8f52d0): na začátku záložky by posun nahoru nic neudělal — pak ke čtení, k Rúnarovi (fotka nahoře).
+    // showAppTab('reading') drží 0,8 s záložky na místě, než fotka doroste (hlášení 6deb9bb3) — posun až po něm.
+    if ((window.pageYOffset || 0) < 8 && typeof showAppTab === 'function') {
+      showAppTab('reading');
+      setTimeout(function () { window.scrollTo({ top: 0, behavior: _klid ? 'auto' : 'smooth' }); }, 820);
+      return;
+    }
     window.scrollTo({ top: 0, behavior: _klid ? 'auto' : 'smooth' });
     return;
   }
