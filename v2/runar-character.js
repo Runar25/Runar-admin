@@ -445,7 +445,8 @@ var RUNE_IMAGES = [
   ['Isa','cold','Lognkafaldið fellur beint niður og hylur allt hljóðlaust.','The windless snowfall comes straight down and covers everything without a sound.','kyrrstaða','stillness','E'],
   ['Isa','cold','Tjörnin er ísi lögð og bíður án þess að biðja um neitt.','The pond has iced over and waits without asking for anything.','að bíða','waiting','E'],
   ['Isa','any','Kaffibollinn kólnar á borðinu meðan þú bíður.','The cup of coffee goes cold on the table while you wait.','að bíða','waiting','D'],
-  ['Jera','bright','Heyið þornar örlítið meir hverja stund sem sólin helst, og að kvöldi er það tilbúið að snúa.','The hay dries a shade more each hour the sun holds, and by evening it is ready to turn.','þolinmæði','patience','P'],
+  // 2026-11-19 (owner: obraz, který si člověk jednoduše představí): seno, které schne k obracení → jahody, Jera 3/3.
+  ['Jera','bright','Jarðarberin við vegginn þroskast hægt og þú bíður þar til þau eru tilbúin.','The strawberries by the wall ripen slowly, and you wait until they are ready.','þolinmæði','patience','P'],
   ['Jera','any','Daginn lengir hægt fram á vorið.','The day lengthens slowly toward spring.','þolinmæði','patience','E'],
   // 2026-10-01 (kontrola dvojic): testo = skryte zrani (Ingwaz ma skyr pres noc); starsi zneni testa se ve 2 ze 3 cteni stocilo k cekani
   // a „quiet working underneath“. Leto se vraci v zime (popis Jery: sklizis, co jsi udelal driv); zadne seti ani pestovani (KUKY u chleba 2026-09-23).
@@ -456,10 +457,11 @@ var RUNE_IMAGES = [
   // radku prosel identitnim soudcem 3/3; ze stejne davky jich 14 propadlo a nenasazuje se.
   // Duvod + cisla -> RUNAR_EVAL_LOG.md 2026-09-10 (2).
   ['Jera','bright','Kartöflurnar koma upp úr moldinni margfalt fleiri en handfyllin sem fór niður.','The potatoes come up out of the soil far more than the handful that went in.','uppskera','harvest','P'],
-  ['Jera','bright','Síðasta heyið er komið inn og hlaðan andar hlýju endanna á milli.','The last of the hay is in and the barn breathes warm the whole way down its length.','uppskera','harvest','P','hay'],
+  ['Jera','bright','Síðasta heyið er komið inn og hlaðan andar hlýju endanna á milli.','The last of the hay is in and the barn breathes warm the whole way down its length.','uppskera','harvest','P'],
   ['Jera','bright','Sami akur sem var svört leðja í vor stendur gullinn og sleginn í lok sumars, eins og í fyrra og eins og hann verður næst.','The same field that was black mud in spring stands gold and cut by summer\'s end, as last year and as it will be next.','hringur','cycle','P'],
   ['Jera','any','Rjúpan verður hvít fyrir snjóinn og brún aftur fyrir lyngið, eftir klukku eldri en allt tal.','The ptarmigan turns white for the snow and brown again for the heath, on a clock older than counting.','hringur','cycle','E'],
-  ['Jera','bright','Þú snýrð heyinu eina þurra eftirmiðdaginn sem vikan leyfir, og það nægir.','You turn the hay the one dry afternoon the whole week allows, and it is enough.','rétt tímasetning','right timing','P','hay'],
+  // 2026-11-19 (owner: obraz, který si člověk jednoduše představí): obracení sena → chléb z trouby ve správnou chvíli, Jera 3/3.
+  ['Jera','any','Þú tekur brauðið út úr ofninum á réttu augnabliki og skorpan er gullin.','You take the bread out of the oven at just the right moment, and the crust is golden.','rétt tímasetning','right timing','D'],
   ['Jera','any','Þú sest niður í lok vertíðar og í þetta sinn kallar ekkert á þig að standa upp aftur.','You sit down at the end of the season and this time nothing is calling you to get up again.','umbun','reward','D', '', '', '', 'chg'],
   // 2026-09-23: chleba z Fehu — soudci ho ctou jako odmenu urody (Jera 3/3); KUKY „cim vic obrazu tim vic variant".
   // 2026-09-23 (KUKY „přepsat a otestovat“): chléb „dost pro všechny“ nesl hojnost = Fehu (brána 0/3 i s popisy 0/3).
@@ -475,7 +477,8 @@ var RUNE_IMAGES = [
   // potreba nadobu rozbijet"): obraz, ktery nese JESTE — obsah skryty, ale uz se neco dela.
   // Ostatni tri obrazy Perth nesou „nevis" (kaminek zmizi, hladina se zavre, stopy zmizi).
   ['Perth','any','Lokið er enn á pottinum, en ilmurinn segir að eitthvað sé að verða til.','The lid is still on the pot, but the smell says something is taking shape.','hið ósýnilega','the unseen','D'],
-  ['Algiz','any','Torfveggurinn stendur á milli þín og vindsins og í dyragættinni er logn.','The turf wall takes the wind so the doorway stays calm.','skjól','shelter','P'],
+  // 2026-11-19 (owner: obraz, který si člověk jednoduše představí): drnová zeď → úkryt za balvanem, Algiz 3/3.
+  ['Algiz','any','Vindurinn gnauðar á heiðinni, en í skjóli við stóra steininn nærðu andanum.','The wind howls across the heath, but in the shelter of the big boulder you catch your breath.','skjól','shelter','P'],
   ['Algiz','any','Fjárhundurinn liggur þar sem hann sér alla hjörðina.','The sheepdog lies where it can see the whole flock.','vernd','protection','P', '', '', 'postava'],
   // 2026-09-12: IS aspekt skjól → vernd. EN tu nese „protection", ktere o radek vys paruje
   // s „vernd"; „skjól" je „shelter" (radek s torfveggem). Dvojice se rozchazela jen tady.
@@ -547,7 +550,8 @@ var RUNE_IMAGES = [
   ['Ehwaz','cold','Þú teymir hestinn yfir snjóinn og taumurinn á milli ykkar er slakur.','You lead the horse across the snow, and the rope between you hangs slack.','traust milli tveggja','trust','P'],
   ['Ehwaz','cold','Tvö draga sleða yfir skaflana og hann rennur fyrst þegar þau leggjast á eitt.','Two haul a sled over the drifts, and it glides only once they pull together.','hreyfing','movement','P'],
   ['Ehwaz','cold','Tvö dansa vals á þorrablótinu og enginn sér lengur hvort þeirra ræður ferðinni.','Two waltz at the midwinter feast, and no one can tell anymore which of them leads.','samfylgd','partnership','D', '', '', '', 'lf'],
-  ['Ingwaz','any','Þú hrærir skeið af gamla skyrinu út í volga mjólkina, breiðir yfir og lætur standa yfir nótt.','You stir a spoon of the old skyr into the warm milk, cover it and leave it overnight.','fræ','seed','D'],
+  // 2026-11-19 (owner: obraz, který si člověk jednoduše představí): skyr ze starého (cizinec si ho nepředstaví) → těsto pod utěrkou, Ingwaz 3/3.
+  ['Ingwaz','any','Deigið lyftir sér undir dúknum á meðan enginn horfir.','The dough rises under the cloth while no one is watching.','möguleiki','potential','D'],
   ['Ingwaz','cold','Fylfull hryssa krafsar í snjóinn úti í haga; folaldið fæðist ekki fyrr en með vorinu.','A mare in foal paws the snow in the pasture; her foal will not be born until spring.','nýtt líf','new life','P', '', '', 'postava'],
   ['Dagaz','any','Síðasta haftið í göngunum er sprengt og dagsbirtan skín inn hinum megin frá.','The last wall of rock in the tunnel is blasted, and daylight shines in from the other side.','bylting','breakthrough','P'],
   ['Dagaz','bright','Þú stendur uppi í skarðinu milli tveggja dala; fyrir aftan þig er enn dimmt en fram undan er orðið bjart.','You stand high in the pass between two valleys; behind you it is still dark, and ahead it has grown light.','tímamót','turning point','P'],

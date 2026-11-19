@@ -13483,3 +13483,17 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno:** `verify_doc_length.js` OK (nic bez výjimky nad 250); `uz_vime.js` najde měření z archivu.
 - Affected doc(s): RUNAR_DESIGN.md, RUNAR_PRICING.md, RUNAR_EVAL_LOG.md, memory/working-style.md, memory/MEMORY.md (rozcestník),
   RUNAR_BACKLOG.md („Délka živých doců“).
+
+## 2026-11-19 (4) — Čtyři obrazy, které si člověk těžko představí, vyměněny za běžné scény (Ingwaz, Algiz, 2× Jera)
+- **Owner** nad seznamem těžko představitelných obrazů: *„ingwaz staré, změnit za normální. algiz změnit. othila ok. jera změnit.
+  ostatní nevím“* (k Dagaz chatě viz (1): *„scéna má být taková, že si ji člověk jednoduše představí“*).
+- **Co** (`RUNE_IMAGES`, EN + IS, stránka runy a registr v řádku): Ingwaz skyr ze starého → *„The dough rises under the cloth while no
+  one is watching.“* (možnost) · Algiz drnová zeď → *„The wind howls across the heath, but in the shelter of the big boulder you catch
+  your breath.“* (úkryt) · Jera seno k obracení → *„The strawberries by the wall ripen slowly, and you wait until they are ready.“*
+  (trpělivost) · Jera obracení sena → *„You take the bread out of the oven at just the right moment, and the crust is golden.“* (správná
+  chvíle, registr domácí, sezóna kdykoli). Motiv „hay“ zbyl na jednom řádku → značka pryč (motiv = střídání víc obrazů).
+- **Identitní brána** (slepí soudci, 25 run s klíči, cíl neprozrazen): chléb, jahody, těsto 3/3; balvan v 1. znění 2/3 (Isa — „vítr
+  utichne“ čteno jako klid) → dodán vítr, před kterým kryje: 3/3 (jeden agent, tři průchody — slabší než tři nezávislí).
+- **IS:** Greynir 0 nálezů; korpus po kouscích v komentáři u řádků (`runar-character.js`).
+- **Ověřeno:** kontroly obrazů (motivy, oblast, stránka runy, registr, připnutí) OK; golden beze změny.
+- Affected doc(s): — (obrazy bydlí jen v kódu, §20).
