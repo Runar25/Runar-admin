@@ -415,6 +415,7 @@ const UI_TEXT = {
     helper_glyph:       'Tap the rune — it tells its name and meaning.',
     helper_ask:         'Tap here — suggested questions open.',
     helper_ask2:        'Ask how the image touches your question.',
+    helper_player:      'Tap the note to listen. The candle burns down as Rúnar speaks. Tap the candle to move back or forward.',   // 2026-11-19 (fa9cb3e2)
     // Navod pod statickou runou (Kolekce), KUKY 2026-09-23. Radky = odstavce, poradi = hierarchie z RUNAR_DESIGN.
     // Kolekce (2026-09-23, z runar-app.js kvuli §10)
     coll_no_audio:      'No recording available yet.',
@@ -1019,6 +1020,7 @@ const UI_TEXT = {
     helper_glyph:       'Snertu rúnina — hún segir nafn sitt og merkingu.',
     helper_ask:         'Smelltu hér, þá opnast tillögur að spurningum.',
     helper_ask2:        'Spurðu hvernig myndin snertir spurningu þína.',
+    helper_player:      'Snertu nótuna til að hlusta. Kertið brennur niður á meðan Rúnar talar. Snertu kertið til að fara aftur á bak eða áfram.',   // 2026-11-19: Greynir OK; til að hlusta 11 164, kertið brennur 38, brennur niður 40, fara aftur á 2 578, bak eða áfram 38
     coll_no_audio:      'Engin hljóðupptaka til.',
     coll_audio_missing: 'Hljóðskrá vantar.',
     // 2026-10-10: „dragðu eina“ → „veldu eina“ (korpus 0× / 16×) — v Safn rúna se runa vybírá, netáhne.

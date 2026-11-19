@@ -13468,7 +13468,7 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   mimo doručenou poštu, nic smazáno.
 - Affected doc(s): memory/schranka-runar-gmail.md (kdo se stará, štítek DMARC), RUNAR_BACKLOG.md (Zkouška obnovy jednou měsíčně).
 
-## 2026-11-19 (2) — Dlouhé docy zkráceny přesunem celých témat: Vegvísir a fyzické produkty do vlastních doců, měření 08-18→09-30 do archivu
+## 2026-11-19 (3) — Dlouhé docy zkráceny přesunem celých témat: Vegvísir a fyzické produkty do vlastních doců, měření 08-18→09-30 do archivu
 - **Owner:** odklady délky (smoke ㉝) z 2026-10-20 vypršely a zastavily push všem lanům; k otázce, jak s DESIGN, EVAL_LOG, PRICING a working-style:
   *„5. udělej, co je potřeba“*, *„7. najdi nejlepší řešení!“*. Pravidlo odkladu: obnova jen se zkrácením.
 - **Co (přesuny doslova, na původním místě ukazatel):** `RUNAR_DESIGN.md` „Vegvísir — záměr“ → **`RUNAR_VEGVISIR.md`** (1012 → 902) ·
