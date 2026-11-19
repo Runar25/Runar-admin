@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Menu — teď a návrh</title>
+<!-- CODE-tune 2026-11-19, hlášení 065a5205 (owner: „menu se mi už skoro nevejde na obrazovku … lépe uspořádat, i vizuálně opravit,
+     jak jsou jednotlivé sekce oddělené“; k návrhu „8. ukaž“). Barvy a písmo z v2/runar-reader.css a v2/fonts/fonts.css. Obsah menu
+     = přihlášený admin (nejdelší varianta). Ukázka, ne kód appky. -->
+<link href="../../v2/fonts/fonts.css" rel="stylesheet">
+<style>
+:root{--bg:#0a0c12;--panel:#0d1220;--gold:#FFBF00;--muted:#8ba5c0;--white:#F2F5F7;--line:rgba(255,191,0,0.1);--line2:rgba(46,74,112,0.3);}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--white);font-family:'Cormorant Garamond',Georgia,serif;padding:24px 16px;}
+h1{font-family:'Cinzel',serif;font-weight:400;font-size:18px;letter-spacing:3px;color:var(--gold);margin:0 0 6px;}
+.uvod{color:var(--muted);font-size:17px;max-width:62ch;margin:0 0 24px;line-height:1.5}
+.dva{display:flex;gap:28px;flex-wrap:wrap;align-items:flex-start}
+.sloupec{width:260px}
+.nad{font-family:'Cinzel',serif;font-size:12px;letter-spacing:2px;color:var(--muted);margin:0 0 8px}
+.nad b{color:var(--white);font-weight:400}
+.panel{background:var(--panel);border-left:1px solid rgba(46,74,112,.5);font-family:'Cinzel',serif;}
+.hlava{display:flex;justify-content:space-between;padding:18px 22px 16px;border-bottom:1px solid var(--line2);font-size:11px;letter-spacing:4px;color:var(--gold)}
+.sek{padding:18px 24px 14px;border-bottom:1px solid var(--line)}
+.sek.prazdna{padding:6px 24px}
+.lbl{font-size:10px;letter-spacing:3px;color:var(--gold);opacity:.85;margin-bottom:14px}
+.it{font-size:10px;letter-spacing:2px;color:var(--gold);opacity:.85;padding:10px 0;display:flex;gap:10px;align-items:center}
+.tg{font-size:9px;letter-spacing:1.5px;color:var(--gold);opacity:.85;line-height:1.5;padding:4px 0;display:flex;gap:10px}
+.tg i{width:14px;height:14px;border:1px solid var(--gold);flex-shrink:0;margin-top:2px;background:rgba(255,191,0,.85)}
+.tg i.ne{background:none}
+.up{border:1px solid var(--gold);padding:10px 12px;font-size:10px;letter-spacing:2px;color:var(--gold);display:flex;justify-content:space-between;margin-top:10px}
+.jazyk{display:flex}
+.jazyk span{flex:1;text-align:center;padding:8px 0;font-size:10px;letter-spacing:2px;border:1px solid rgba(46,74,112,.6);color:var(--muted)}
+.jazyk span.on{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+.radek{display:flex;align-items:center;gap:14px}
+.radek .lbl{margin:0}
+.radek .jazyk{flex:1}
+.ikony{display:flex;gap:22px}
+.pata{display:flex;justify-content:space-between;padding:12px 24px 18px;font-size:8.5px;letter-spacing:2px;color:var(--muted)}
+.vys{font-family:'Cinzel',serif;font-size:11px;letter-spacing:1px;color:var(--muted);margin-top:8px}
+.nove{outline:1px dashed rgba(126,217,181,.55);outline-offset:-1px}
+.body{max-width:62ch;margin:28px 0 0;padding:0;list-style:none;counter-reset:b}
+.body li{counter-increment:b;font-size:17px;line-height:1.5;margin:0 0 10px;padding-left:28px;position:relative;color:var(--white)}
+.body li::before{content:counter(b) ".";position:absolute;left:0;color:var(--gold);font-family:'Cinzel',serif;font-size:13px;top:3px}
+.body em{color:var(--muted)}
+.legenda{font-size:15px;color:var(--muted);margin-top:10px}
+.legenda span{outline:1px dashed rgba(126,217,181,.55);padding:0 6px}
+</style>
+</head>
+<body>
+<h1>MENU — TEĎ A NÁVRH</h1>
+<p class="uvod">Přihlášený admin, tedy nejdelší podoba menu. Obsah zůstává stejný, mění se pořadí, seskupení a oddělení. Výšky jsou odhad v pixelech při šířce telefonu.</p>
+
+<div class="dva">
+  <div class="sloupec">
+    <p class="nad"><b>TEĎ</b></p>
+    <div class="panel">
+      <div class="hlava"><span>MENU</span><span>✕</span></div>
+      <div class="sek"><div class="it">RUNE SEEKER +</div><div class="up"><span>UPGRADE YOUR JOURNEY</span><span>→</span></div></div>
+      <div class="sek"><div class="lbl">LANGUAGE</div><div class="jazyk"><span class="on">EN</span><span>IS</span></div></div>
+      <div class="sek"><div class="it">▭ ENTER RUNE READING CARD CODE</div></div>
+      <div class="sek"><div class="lbl">PRIVACY</div>
+        <div class="tg"><i></i>HELP IMPROVE RÚNAR WITH MY READINGS</div>
+        <div class="tg"><i class="ne"></i>SEND MY QUESTIONS WITH MY READINGS</div>
+        <div class="it">§ PRIVACY POLICY</div></div>
+      <div class="sek"><div class="lbl">NOTIFICATIONS</div><div class="tg"><i></i>REMIND ME OF THE RUNE OF THE DAY EACH MORNING</div></div>
+      <div class="sek"><div class="it">? GUIDE &amp; FAQ</div><div class="it">✉ SEND RÚNAR A LINE</div><div class="it">◎ INSTAGRAM</div><div class="it">◍ THERUNEKEEPER.COM</div></div>
+      <div class="sek"><div class="it">⚿ KNOWLEDGE SHRINE</div><div class="it">👥 TESTERS</div></div>
+      <div class="pata"><span>× DELETE ACCOUNT</span></div>
+    </div>
+    <p class="vys">≈ 910 px — telefon ukáže ~810</p>
+  </div>
+
+  <div class="sloupec">
+    <p class="nad"><b>NÁVRH</b></p>
+    <div class="panel">
+      <div class="hlava"><span>MENU</span><span>✕</span></div>
+      <div class="sek"><div class="it">RUNE SEEKER +</div><div class="up"><span>UPGRADE YOUR JOURNEY</span><span>→</span></div>
+        <div class="it nove">▭ ENTER RUNE READING CARD CODE</div></div>
+      <div class="sek nove"><div class="radek"><div class="lbl">LANGUAGE</div><div class="jazyk"><span class="on">EN</span><span>IS</span></div></div></div>
+      <div class="sek"><div class="lbl">NOTIFICATIONS</div><div class="tg"><i></i>REMIND ME OF THE RUNE OF THE DAY EACH MORNING</div></div>
+      <div class="sek"><div class="lbl">PRIVACY</div>
+        <div class="tg"><i></i>HELP IMPROVE RÚNAR WITH MY READINGS</div>
+        <div class="tg"><i class="ne"></i>SEND MY QUESTIONS WITH MY READINGS</div></div>
+      <div class="sek nove"><div class="lbl">HELP</div><div class="it">? GUIDE &amp; FAQ</div><div class="it">✉ SEND RÚNAR A LINE</div></div>
+      <div class="sek nove"><div class="lbl">FOLLOW</div><div class="ikony"><div class="it">◎ INSTAGRAM</div><div class="it">◍ WEB</div></div></div>
+      <div class="sek nove"><div class="lbl">ADMIN</div><div class="it">⚿ KNOWLEDGE SHRINE</div><div class="it">👥 TESTERS</div></div>
+      <div class="pata nove"><span>§ PRIVACY POLICY</span><span>× DELETE ACCOUNT</span></div>
+    </div>
+    <p class="vys">≈ 790 px — vejde se</p>
+  </div>
+</div>
+<p class="legenda"><span>přerušovaně</span> = změna proti dnešku</p>
+
+<ol class="body">
+  <li><b>Kód karty k účtu.</b> Patří k němu, proto pod cestu dál. Dnes stojí sám mezi jazykem a soukromím.</li>
+  <li><b>Jazyk na jednom řádku.</b> Štítek vlevo, EN a IS vpravo. Ušetří zhruba 40 px.</li>
+  <li><b>Každá skupina má štítek</b> (HELP, FOLLOW, ADMIN) a mezi skupinami je všude stejná tenká čára. Dnes mají štítek jen některé, takže hranice nejsou vidět. <em>To je to „jak jsou sekce oddělené“.</em></li>
+  <li><b>Upozornění nad soukromím.</b> Mění se častěji. Přepínače soukromí zůstávají pohromadě.</li>
+  <li><b>Instagram a web vedle sebe</b> pod FOLLOW, místo dvou řádků jeden.</li>
+  <li><b>Pata:</b> zásady soukromí a smazání účtu na jednom řádku dole. Obojí je „právní“ a jde se tam zřídka.</li>
+</ol>
+</body>
+</html>
