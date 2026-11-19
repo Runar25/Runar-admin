@@ -122,7 +122,9 @@ const CORRECTIONS_IN_PROMPT   = true;   // inject corrections into the reading p
 //    lab RUNAR_EVAL_LOG 2026-10-27 (1). Cross, Horseshoe, Yggdrasil beze změny (netestováno). DECISIONS 2026-11-01 (5).
 // v5.23 (2026-11-15): nový builder runy dne (buildDayRunePrompt, mode rune_day) — čtení, Ask, životní runa ani spready beze změny.
 //    Bump kvůli registru ㉜ (nová instrukční plocha). DECISIONS 2026-11-15 (1).
-const RUNAR_PROMPT_VERSION = 'v5.23-runa-dne';
+// v5.24 (2026-11-19): THE IMAGE — držet se toho, co obraz ukazuje, nic navíc bez funkce; úhel [3] „stays fixed“ mimo los;
+//    obraz Dagaz chlév → horská chata (owner nad čtením 49697887, hlášení 852ccc73). DECISIONS 2026-11-19 (1).
+const RUNAR_PROMPT_VERSION = 'v5.24-image';
 
 // Měsíční strop hlasu pro všechny (VOICE_MONTHLY_LIMIT = 5, od 2026-09-11) ZRUŠEN 2026-10-11: „limit na hlas max 5 na měsíc“ byl
 // ownerův pokyn pro testery, omylem pro všechny (DECISIONS 2026-10-11 (49)); owner: „žádný měsíční strop 5 hlasů není!!!“. Rúnar přečte
@@ -2719,6 +2721,7 @@ const READING_ANGLES = [
   'Open with one quick glance at the whole image, then let everything fall away but one.',
   'Open on the smallest detail in the image, the part someone would walk past.',
   'Open with the motion already underway in the image. If nothing moves, open with the stillness itself.',
+  // [3] MIMO LOS od 2026-11-19 (READING_ANGLES_MIMO_LOS níž) — text zůstává kvůli indexům v uložených čteních.
   'Open with the one thing in the image that stays fixed while the rest gives way.',
   // 2026-08-21: 7/8 studenych cteni proti prumeru poolu 5,1. „Hides beneath its surface"
   // model cetl jako pozvanku mluvit o skrytem V CLOVEKU. Skryte ted zustava v obraze.
@@ -2745,8 +2748,12 @@ const READING_ANGLES_IS = [
 ];
 
 // ─── _randomAngle(lang) ─────────────────────────────────────────
+// Úhly mimo los (index do READING_ANGLES/_IS). [3] „stays fixed“ od 2026-11-19: u obrazu bez pevné věci si ji model vyrobí — pant
+// (čtení 49697887, hlášení 852ccc73), v pokusu i s výjimkou „If nothing … stays fixed“ dům a okno (docs/eval/2026-11-19-obraz-predmety/).
+// Kánon RUNAR_DESIGN „Úhel musí sednout KAŽDÉ runě“. Návrat jen očištěný (§21): úhel, který sedne i na obraz bez pevné věci.
+const READING_ANGLES_MIMO_LOS = [3];
 function _randomAngle(lang) {
-  var _pool = lang === 'is' ? READING_ANGLES_IS : READING_ANGLES;
+  var _pool = (lang === 'is' ? READING_ANGLES_IS : READING_ANGLES).filter(function (x, i) { return READING_ANGLES_MIMO_LOS.indexOf(i) === -1; });
   return _pool[Math.floor(Math.random() * _pool.length)];
 }
 
@@ -4459,7 +4466,8 @@ var RUNE_IMAGES = [
   ['Sowilo', 'bright', 'Gamli hundurinn teygir úr sér í sólinni á tröppunum.', 'The old dog stretches out full length in the sun on the steps.', 'lífskraftur', 'life force', 'P', '', '', 'postava'],
   ['Berkana', 'any', 'Birkiplantan vex í skjóli eldri trjánna.', 'The birch sapling grows in the shelter of the older trees.', 'þroski', 'growth', 'P'],
   ['Ehwaz', 'any', 'Sófinn kemst niður þröngan stigann þegar þið hættið að segja hvort öðru fyrir verkum.', 'The sofa gets down the narrow stairs once you stop giving each other orders.', 'samfylgd', 'partnership', 'D', '', '', '', 'lf'],
-  ['Dagaz', 'any', 'Þú opnar fjósdyrnar, og morgunbirtan flæðir í einu vetfangi inn í dimma básana.', 'You open the byre door, and the morning light floods into the dark stalls all at once.', 'ljós', 'light', 'D'],
+  // 2026-11-19 (owner nad čtením 49697887): chlév → horská chata — „scéna má být taková, že si ji člověk jednoduše představí“.
+  ['Dagaz', 'any', 'Þú opnar dyrnar á fjallakofanum og morgunbirtan flæðir í einu vetfangi inn í myrkrið.', 'You open the door of the mountain hut, and the morning light floods into the darkness all at once.', 'ljós', 'light', 'D'],
   ['Blank', 'any', 'Setning í gömlu dagbókinni endar í miðju kafi og síðan fyrir neðan er auð.', 'A sentence in the old diary breaks off, and the page below is blank.', 'hið óþekkta', 'the unknown', 'D'],
   ['Blank', 'any', 'Á auða veggnum sérðu nýja mynd í hvert sinn sem þú lítur á hann.', 'On the bare wall you see a new picture each time you look at it.', 'óskrifað blað', 'unwritten potential', 'D'],   // 2026-11-14: osoba navíc pryč (KUKY: „osoba si musí zasloužit být v obraze“), brána k8 3/3, DECISIONS 2026-11-14 (6)
   // ── 2026-10-05 kolo k4 (KUKY „B, C, D, E… pusť se do toho“): runy, které mají v nějaké oblasti a období jen 2 obrazy (Fehu všude,
@@ -4560,8 +4568,8 @@ function _imgNorm(s) { return String(s || '').trim().replace(/\.\s*$/, '').trim(
 // 2026-09-24: IS dorovnána na EN („í sama umhverfi“ + věta o přirovnání na metafoře) — rozbor reportů 2026-09-23.
 function _imageRules(lang) {
   if (lang === 'is')
-    return 'MYNDIN\nRúnar notar eina mynd í hverjum lestri og ber hana í gegn. Hann telur ekki upp myndir. Önnur mynd á aðeins rétt á sér ef hún færir þá fyrstu einu skrefi lengra, í sama umhverfi. Ef tvær ótengdar myndir standa hlið við hlið segja þær ekkert. Settu aldrei viðlíkingu ofan á myndlíkingu. Myndin verður að tengjast því hvar þessi manneskja stendur núna. Andrúmsloft eitt og sér er skreyting, ekki lestur.';
-  return 'THE IMAGE\nRúnar uses one image per reading and carries it through; he does not list images. A second picture earns its place only when it takes the first one further — the same scene, one step on. Two unrelated pictures side by side say nothing. Never a simile stacked on a metaphor. The image must connect to where this person is standing right now — atmosphere on its own is decoration, not a reading.';
+    return 'MYNDIN\nRúnar notar eina mynd í hverjum lestri og ber hana í gegn. Hann telur ekki upp myndir. Önnur mynd á aðeins rétt á sér ef hún færir þá fyrstu einu skrefi lengra, í sama umhverfi. Ef tvær ótengdar myndir standa hlið við hlið segja þær ekkert. Settu aldrei viðlíkingu ofan á myndlíkingu. Myndin verður að tengjast því hvar þessi manneskja stendur núna. Andrúmsloft eitt og sér er skreyting, ekki lestur. Haltu þig við það sem myndin sýnir. Bættu aðeins við nýjum hlut, manneskju eða atburði ef lesturinn þarf á því að halda. Annað lengir bara lesturinn og tekur pláss frá því sem skiptir máli.';
+  return 'THE IMAGE\nRúnar uses one image per reading and carries it through; he does not list images. A second picture earns its place only when it takes the first one further — the same scene, one step on. Two unrelated pictures side by side say nothing. Never a simile stacked on a metaphor. The image must connect to where this person is standing right now — atmosphere on its own is decoration, not a reading. Keep to what the image shows. Add a new object, person or event only when the reading needs it; anything else just lengthens the reading and takes room from what matters.';
 }
 // Pravidla + radek IMAGE jako JEDEN blok zpravy (jedno misto, §18).
 // 2026-09-20: RADEK SEZONY ODSTRANEN (i funkce _seasonLine a SEASON_LABELS — git nese

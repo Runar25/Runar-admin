@@ -1310,7 +1310,7 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   půlvěta zůstává (DECISIONS 2026-11-16 (3), `docs/eval/2026-11-16-ask-tezkost/`).
 
 ### Hlášení z appky 2026-11-19 — co v tahu nezůstalo hotové (načtena 2026-11-19, CODE-tune)
-- [ ] **Obraz si dokresluje předměty — úhel [3] u obrazu bez pevné věci** (852ccc73 owner *„model zbytečně přidává do obrazu věci, které
+- [x] ✅ *(2026-11-19, v5.24, DECISIONS 2026-11-19 (1))* **Obraz si dokresluje předměty — úhel [3] u obrazu bez pevné věci** (852ccc73 owner *„model zbytečně přidává do obrazu věci, které
   nejsou podstatné. Přidává pant. Koukám, jestli to není z angle“*; fe581227 a f05b7671 = rozbor od GPT: nevytvářet nové předměty, rozvíjet
   význam místo kulis). **Změřeno na tom čtení** (49697887, Dagaz, v5.23): los `angle: 3` = *„Open with the one thing in the image that
   stays fixed while the rest gives way“*; obraz *„You open the byre door, and the morning light floods into the dark stalls all at once“*

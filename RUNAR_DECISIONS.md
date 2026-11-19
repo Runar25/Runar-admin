@@ -13429,3 +13429,23 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   do záložky, na 375 px se záložky vejdou v EN i IS (stránka bez vodorovného posunu); `verify_zaklad_produkce.js` OK.
   **Hlas ověřen** 2026-11-18 v produkci (owner *„funguje, hlas hraje a svíčka hoří“*).
 - Affected doc(s): RUNAR_BACKLOG.md (Hlášení z appky 2026-11-18).
+
+## 2026-11-19 (1) — Obraz: nic navíc bez funkce; úhel [3] „stays fixed“ mimo los; Dagaz chlév → horská chata (v5.24)
+- **Owner:** hlášení 852ccc73 nad čtením 49697887 (Dagaz: *„its hinges hold … the worn edge of the manger“*); *„obraz chléva se mi nelíbí …
+  scéna má být taková, že si ji člověk jednoduše představí … stačí, když to budou dveře do chaty, klidně horské chaty. další věc je to, že
+  model si nemá domýšlet víc předmětů, které ale obraz nepotřebuje, jelikož nemají žádnou funkci. jen prodlouží čtení nebo zabírají místo
+  pro něco důležitějšího. v promptu to určitě změň, ať se to nestane jiným obrazům“*; *„3 volání“*.
+- **Co:** (1) THE IMAGE (EN + IS, všechny výklady): *„Keep to what the image shows. Add a new object, person or event only when the reading
+  needs it; anything else just lengthens the reading and takes room from what matters.“* · (2) úhel [3] *„Open with the one thing in the image
+  that stays fixed…“* **mimo los** (`READING_ANGLES_MIMO_LOS`, text v poli zůstává kvůli indexům v uložených čteních) · (3) obraz Dagaz
+  *„You open the door of the mountain hut, and the morning light floods into the darkness all at once.“* místo chléva · verze v5.24-obraz.
+- **Proč [3] ven, ne výjimka:** pant vyrobil los úhlu [3] u obrazu bez pevné věci (`prompt_draws.angle = 3`). Výjimka *„If nothing in the
+  image stays fixed, open with what is changing“* v pokusu nestačila — u *„At midnight all goes quiet…“* model vyrobil dům a okno. Kánon
+  RUNAR_DESIGN „Úhel musí sednout KAŽDÉ runě“: nesedí-li, nesmí se použít. Lab `docs/eval/2026-11-19-obraz-predmety/` (sol, n = 3, jen EN).
+- **Netvrdí se:** že samotné pravidlo vymýšlení snižuje (bez srovnávacího ramene); sledovat v produkci. Solova věta *„down to one detail
+  the sentence does not name“* (2026-09-24) zůstává — detail smí přijít, má-li funkci.
+- **IS:** Greynir 0 nálezů; korpus *opnar dyrnar* 413, *fjallakofanum* 95, *inn í myrkrið* 264, *myndin sýnir* 996, *bættu aðeins við* 17,
+  *nýjum hlut* 59, *lengir bara* 44, *tekur pláss frá* 23.
+- **Ověřeno:** golden — rozdíl jen nová věta THE IMAGE a jiný úhel tam, kde vzor losoval [3]; [3] v 7 000 losech 0× (EN i IS); skládání
+  na serveru = prohlížeč 40/40; registr pravidel zapsán.
+- Affected doc(s): RUNAR_DESIGN.md („Úhel musí sednout KAŽDÉ runě“), RUNAR_BACKLOG.md (Hlášení z appky 2026-11-19).

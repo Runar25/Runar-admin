@@ -308,6 +308,7 @@ const READING_ANGLES = [
   'Open with one quick glance at the whole image, then let everything fall away but one.',
   'Open on the smallest detail in the image, the part someone would walk past.',
   'Open with the motion already underway in the image. If nothing moves, open with the stillness itself.',
+  // [3] MIMO LOS od 2026-11-19 (READING_ANGLES_MIMO_LOS níž) — text zůstává kvůli indexům v uložených čteních.
   'Open with the one thing in the image that stays fixed while the rest gives way.',
   // 2026-08-21: 7/8 studenych cteni proti prumeru poolu 5,1. „Hides beneath its surface"
   // model cetl jako pozvanku mluvit o skrytem V CLOVEKU. Skryte ted zustava v obraze.
@@ -334,8 +335,12 @@ const READING_ANGLES_IS = [
 ];
 
 // ─── _randomAngle(lang) ─────────────────────────────────────────
+// Úhly mimo los (index do READING_ANGLES/_IS). [3] „stays fixed“ od 2026-11-19: u obrazu bez pevné věci si ji model vyrobí — pant
+// (čtení 49697887, hlášení 852ccc73), v pokusu i s výjimkou „If nothing … stays fixed“ dům a okno (docs/eval/2026-11-19-obraz-predmety/).
+// Kánon RUNAR_DESIGN „Úhel musí sednout KAŽDÉ runě“. Návrat jen očištěný (§21): úhel, který sedne i na obraz bez pevné věci.
+const READING_ANGLES_MIMO_LOS = [3];
 function _randomAngle(lang) {
-  var _pool = lang === 'is' ? READING_ANGLES_IS : READING_ANGLES;
+  var _pool = (lang === 'is' ? READING_ANGLES_IS : READING_ANGLES).filter(function (x, i) { return READING_ANGLES_MIMO_LOS.indexOf(i) === -1; });
   return _pool[Math.floor(Math.random() * _pool.length)];
 }
 

@@ -110,6 +110,8 @@ To je **přísnější kritérium než „hezky napsaný úhel"** a je z něj vi
 i jinak než porušením zákazu: „veď tělem" a „veď tím, co se probouzí" předpokládají runu, která
 v těle nebo v probouzení něco dělá. U Isy (led, zastavení) nebo Nauthiz (nedostatek) to drhne.
 Změřené vady → `RUNAR_EVAL_LOG.md` 2026-08-16.
+Totéž platí pro **obraz**: úhel [3] *„the one thing in the image that stays fixed“* u obrazu bez pevné věci donutí model věc vyrobit
+(pant, dům, okno) → od 2026-11-19 mimo los (`RUNAR_DECISIONS.md` 2026-11-19 (1)).
 
 ### Runa je základ, oblast je otázka (KUKY 2026-08-16)
 ⭐ **„Čtení runy má být runa jako základ, a oblast je otázka, kterou musí runa vzít v potaz,
