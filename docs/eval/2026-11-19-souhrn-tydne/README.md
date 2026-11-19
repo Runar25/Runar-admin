@@ -63,3 +63,23 @@ Dny bez tahu ve vstupu **nejsou** (štítek „no rune“ by se podle DESIGN „
   again“, „at its start and again at its end“) bez čísla.
 - **Den bez tahu ≠ prázdná runa.** Prázdná runa (Blank) je skutečná runa a kreslí se jako orámované prázdno (CLAUDE.md §5).
   Den bez tahu proto nesmí vypadat jako prázdný kámen, jak stálo v prvním plánu — jinak by D četl člověk jako dva Blanky.
+
+## Kolo 1 přes model (sol, 4 volání, 2026-11-19)
+
+Owner k ukázkám: *„směr je dobrý … jedna runa po druhé, ne to, že ta, co se objeví víckrát, bude tvořit základ — to bude patřit jen
+stromu … od pondělí do neděle, rekapitulace přijde v neděli hned po tom, co člověk udělá rune of the day“*; *„čtení jsou víc mířená
+na člověka samotného … každé čtení musí být originální … shrnutí začíná každým jednotlivým dnem“*. Odpovědi: tón ok, vrácenou runu
+smí pojmenovat, den bez tahu = tečka, vzorek 4 volání ano.
+
+Instrukce kola 1 a výstupy: `souhrn_lab.js` (celý prompt `--dry-run`), texty + prompty + usage v `vysledky.json`. Týdny jako
+ruční ukázky, B a D upravené tak, aby neděle byla tažená (souhrn přichází po nedělním tahu).
+
+**Co se ukázalo (n = 4, jedno kolo, sol, EN):**
+- **Stejný začátek 4/4:** „You began the week with…“ / „Your week opened with…“ — formule, ne originál.
+- **Pojistka na konci 4/4**, vždy větou s „though“: *„though what grew from this week remains yours to name“* · *„though it does
+  not erase what came before“* · *„though only you can say what became clearer“* · *„though the runes between gave it more to hold“*.
+  Známý jev (RUNAR_DESIGN „Slova, která dáváme modelu“ bod 6), tady v plné síle.
+- **Klíčová slova ze vstupu odříkaná:** „a rune of growth and care“, „a rune of joy and belonging“ (DESIGN bod 1).
+- **Dny v týdnu ze vstupu se vyslovují** (C: „Ansuz on Monday … Kenaz on Tuesday …“) — kalendář místo pohybu (DESIGN bod 3).
+- **Míří na runy, ne na člověka:** výčet run s významy, z člověka jen „you began / you ended“.
+- Hranice: jedno kolo, 4 texty, nic se neporovnává s jinou instrukcí; netvrdí se, která páka co způsobuje.
