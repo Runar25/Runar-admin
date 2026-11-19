@@ -13510,3 +13510,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno (náhled):** počítač — dva popisky vedle sebe bez překryvu, dalším ťuknutím pryč; telefon 375 px — popisek celý, stránka
   bez vodorovného posunu.
 - Affected doc(s): RUNAR_BACKLOG.md (Hlášení z appky 2026-11-19).
+
+## 2026-11-19 (6) — Menu přeskládané: skupiny se štítky, jazyk na řádku, pata; UPGRADE YOUR JOURNEY jen pod jménem
+- **Owner** (hlášení 065a5205 *„menu se mi už skoro nevejde na obrazovku … lépe uspořádat, i vizuálně opravit, jak jsou jednotlivé sekce
+  oddělené“*; nad ukázkou `docs/inbox/2026-11-19-menu-navrh.html`): *„upgrade your journey je u účtu, tak to asi necháme jen tam. a v menu
+  nebude“*. Mění 2026-10-27 (*„chci upgrade your journey zpět do menu … bude na dvou místech“*).
+- **Co:** přihlášený nemá v menu sekci cesty dál (je pod jménem); návštěvník ji má dál (účet nemá). Pořadí: kód karty · LANGUAGE se
+  štítkem a EN | IS na jednom řádku · NOTIFICATIONS · PRIVACY (přepínače) · HELP · FOLLOW (Instagram a WEB / VEFUR vedle sebe; celá
+  skupina skrytá v Google Play) · ADMIN · pata: zásady soukromí a smazání účtu na jednom řádku. Každá skupina má štítek a stejnou čáru.
+  Obsah ani odkazy beze změny; web dřív s popiskem THERUNEKEEPER.COM (vedle Instagramu se nevešel).
+- **Měřeno (náhled):** přihlášený admin 814 px (dřív ~910), přihlášený bez ADMIN ~680 px. `verify_zaklad_produkce.js` (11 stavů)
+  a `verify_citelnost.js` (8 stavů) OK; soupis komponent OK (nové kusy přes id, ne třídy).
+- **IS:** *hjálp* 112 314, *fylgstu með* 749, *vefur* 11 811.
+- Affected doc(s): RUNAR_BACKLOG.md (Hlášení z appky 2026-11-19).

@@ -99,7 +99,16 @@ body:has(#side-panel.open) #br-btn,body:has(#side-panel.open) #hb-btn{display:no
 .sp-tier-detail{font-size:0.71em;color:var(--muted);font-style:italic;line-height:1.6;margin-top:2px;}
 .sp-item.coming.active{opacity:0.85;pointer-events:auto;cursor:pointer;}
 /* danger zone — delete account */
-.sp-danger-zone{padding:10px 24px 18px;border-top:1px solid rgba(255,255,255,0.04);}
+.sp-danger-zone{padding:10px 24px 18px;border-top:1px solid rgba(255,191,0,0.1);display:flex;justify-content:space-between;align-items:center;gap:12px;}
+/* 2026-11-19 (hlášení 065a5205): menu — jazyk na jednom řádku, FOLLOW vedle sebe, v patě zásady soukromí malé jako smazání účtu */
+#sp-lang-sec{display:flex;align-items:center;gap:14px;}
+#sp-lang-sec .side-panel-lbl{margin-bottom:0;}
+#sp-lang-sec .lang-toggle{flex:1;}
+#sp-follow-radek{display:flex;flex-wrap:wrap;column-gap:22px;}
+#sp-follow .sp-item{width:auto;}
+#sp-pata #sp-privacy-link{width:auto;font-size:0.52em;color:var(--muted);opacity:1;padding:8px 0;}
+#sp-pata #sp-privacy-link .sp-ik{display:none;}
+#sp-pata .sp-delete-btn{width:auto;}
 /* 2026-11-19: bez průhlednosti — s 0,65 měl text 3,76 : 1 (práh 4,5; verify_citelnost (A), stav přihlášeného) */
 .sp-delete-btn{display:block;width:100%;text-align:left;font-family:'Cinzel',serif;font-size:0.52em;letter-spacing:2px;padding:8px 0;background:none;border:none;color:var(--muted);cursor:pointer;transition:color 0.2s;}
 .sp-delete-btn:hover{color:#ff6b6b;}

@@ -151,7 +151,7 @@
       "@media (hover:hover){#hb-btn:hover{opacity:1}}#hb-btn:focus-visible,#hb-btn:active,#hb-btn.stisk{opacity:1}" +
       // 2026-11-19: popisek nápovědy — barvy panelu appky (ne žlutá bublina z 2026-10-19), přes obsah, kliky jím projdou
       "[data-hb-popis]{position:absolute;z-index:99997;background:var(--panel,#0d1220);color:var(--white,#F2F5F7);" +
-      "border:1px solid rgba(255,191,0,.45);border-radius:4px;padding:10px 14px;box-shadow:0 6px 18px rgba(0,0,0,.45);" +
+      "border:1px solid rgba(255,191,0,.45);padding:10px 14px;box-shadow:0 6px 18px rgba(0,0,0,.45);" +
       "font-family:'Cormorant Garamond',Georgia,serif;font-size:17px;line-height:1.45;pointer-events:none;animation:hbPopis .25s ease}" +
       "@keyframes hbPopis{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}" +
       "@media (prefers-reduced-motion:reduce){[data-hb-popis]{animation:none}}";

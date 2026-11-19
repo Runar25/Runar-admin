@@ -714,7 +714,12 @@ function updateSidePanel() {
   if (_ig) { _ig.style.display = (!_play && typeof RUNAR_INSTAGRAM_URL === 'string' && RUNAR_INSTAGRAM_URL) ? 'block' : 'none'; if (typeof RUNAR_INSTAGRAM_URL === 'string') _ig.href = RUNAR_INSTAGRAM_URL; }
   setText('sp-instagram-txt', t('sp_instagram'));
   if (_web) { _web.style.display = (!_play && typeof RUNAR_HOME_URL === 'string' && RUNAR_HOME_URL) ? 'block' : 'none';
-    if (typeof RUNAR_HOME_URL === 'string' && RUNAR_HOME_URL) { _web.href = RUNAR_HOME_URL; try { setText('sp-web-txt', new URL(RUNAR_HOME_URL).hostname.toUpperCase()); } catch (e) {} } }
+    if (typeof RUNAR_HOME_URL === 'string' && RUNAR_HOME_URL) { _web.href = RUNAR_HOME_URL; setText('sp-web-txt', t('sp_web_lbl'));   /* 2026-11-19: krátce, ať se vejde vedle Instagramu (FOLLOW) */ } }
+  // 2026-11-19: štítky skupin menu; FOLLOW zmizí celá, když jsou Instagram i web skryté (Google Play)
+  setText('sp-help-lbl', t('sp_help_lbl'));
+  setText('sp-follow-lbl', t('sp_follow_lbl'));
+  var _fol = document.getElementById('sp-follow');
+  if (_fol) _fol.style.display = ((_ig && _ig.style.display !== 'none') || (_web && _web.style.display !== 'none')) ? '' : 'none';
   const lineBtn = document.getElementById('sp-line-btn'), lineMail = document.getElementById('sp-line-mail');
   if (lineBtn) lineBtn.style.display = currentUser ? 'block' : 'none';
   if (lineMail) lineMail.style.display = currentUser ? 'none' : 'block';
@@ -722,12 +727,11 @@ function updateSidePanel() {
   _renderYourPath();
   // 2026-10-27 (owner: „chci upgrade your journey zpět do menu. Také bude na dvou místech“): přihlášený má UPGRADE YOUR JOURNEY v menu
   // i pod jménem — v menu vždy, jako pod jménem (otevře okno cesty). Název účtu s „+“ jen pod jménem.
-  if (currentUser) {
-    ['sp-curr-toggle', 'sp-tier-desc'].forEach(function (id) { var el = document.getElementById(id); if (el) el.style.display = 'none'; });
-    var _up = document.getElementById('sp-higher-toggle'); if (_up) _up.style.display = '';
-  } else {
-    var _ct = document.getElementById('sp-curr-toggle'); if (_ct) _ct.style.display = '';
-  }
+  // 2026-11-19 (owner „upgrade your journey je u účtu, tak to asi necháme jen tam. a v menu nebude“; dřív 2026-10-27 „bude na dvou
+  // místech“): přihlášený má cestu dál jen pod jménem → sekce cesty v menu pryč. Návštěvník (účet nemá) ji v menu má dál.
+  var _ps = document.getElementById('sp-path-section');
+  if (_ps) _ps.style.display = currentUser ? 'none' : '';
+  if (!currentUser) { var _ct = document.getElementById('sp-curr-toggle'); if (_ct) _ct.style.display = ''; }
 
   // Show/hide session + danger + personal actions sections
   const dangerEl  = document.getElementById('sp-danger');

@@ -287,6 +287,9 @@ const UI_TEXT = {
     line_limit:         'You sent a few lines just now. Try again in an hour.',
     line_empty:         'Write something first.',
     sp_privacy_settings_lbl: 'PRIVACY',
+    sp_help_lbl:        'HELP',     // 2026-11-19: štítky skupin menu (hlášení 065a5205)
+    sp_follow_lbl:      'FOLLOW',
+    sp_web_lbl:         'WEB',
     optout_label: 'Help improve R\u00fanar with my readings',
     optout_saved_on: 'Thanks \u2014 your readings help improve R\u00fanar',
     optout_saved_off: 'Done \u2014 your readings will not be used for analysis',
@@ -894,6 +897,9 @@ const UI_TEXT = {
     line_limit:         'Þú sendir nokkrar línur rétt áðan. Reyndu aftur eftir klukkustund.',
     line_empty:         'Skrifaðu eitthvað fyrst.',
     sp_privacy_settings_lbl: 'PERS\u00d3NUVERND',
+    sp_help_lbl:        'HJÁLP',     // 2026-11-19: hjálp 112 314; fylgstu með 749
+    sp_follow_lbl:      'FYLGSTU MEÐ',
+    sp_web_lbl:         'VEFUR',
     optout_label: 'Hj\u00e1lpa til vi\u00f0 a\u00f0 b\u00e6ta R\u00fanar me\u00f0 lestrunum m\u00ednum',
     optout_saved_on: 'Takk \u2014 lestrarnir \u00fe\u00ednir hj\u00e1lpa til vi\u00f0 a\u00f0 b\u00e6ta R\u00fanar',
     optout_saved_off: '\u00cd lagi \u2014 lestrarnir \u00fe\u00ednir ver\u00f0a ekki nota\u00f0ir til greiningar',

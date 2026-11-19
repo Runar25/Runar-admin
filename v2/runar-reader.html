@@ -1013,8 +1013,16 @@
     </div>
   </div>
 
+  <!-- Deník a kód karty — jen přihlášený -->
+  <div id="sp-account" style="display:none;">
+    <div class="side-panel-section">
+      <!-- 2026-10-28: MY JOURNAL pryč (owner „my journal tak asi být nemusí“); kód karty s kreslenou kartou místo runy (fc708c38) -->
+      <button class="sp-item" id="sp-gift" onclick="showAppTab('reading');toggleRedeem();closeSidePanel()"><span class="sp-ik" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="6" width="17" height="12"/><path d="M3.5 10h17"/><path d="M7 14.5h4"/></svg></span><span id="sp-gift-txt"></span></button>
+    </div>
+  </div>
+
   <!-- Jazyk — nahoře, mění se nejčastěji -->
-  <div class="side-panel-section">
+  <div class="side-panel-section" id="sp-lang-sec">   <!-- 2026-11-19: štítek a EN | IS na jednom řádku -->
     <div class="side-panel-lbl" id="sp-lang-lbl">LANGUAGE</div>
     <div class="lang-toggle">
       <button class="lang-btn active" id="sp-btn-en" onclick="setLang('en');closeSidePanel()">EN</button>
@@ -1022,12 +1030,11 @@
     </div>
   </div>
 
-  <!-- Deník a kód karty — jen přihlášený -->
-  <div id="sp-account" style="display:none;">
-    <div class="side-panel-section">
-      <!-- 2026-10-28: MY JOURNAL pryč (owner „my journal tak asi být nemusí“); kód karty s kreslenou kartou místo runy (fc708c38) -->
-      <button class="sp-item" id="sp-gift" onclick="showAppTab('reading');toggleRedeem();closeSidePanel()"><span class="sp-ik" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="6" width="17" height="12"/><path d="M3.5 10h17"/><path d="M7 14.5h4"/></svg></span><span id="sp-gift-txt"></span></button>
-    </div>
+  <!-- Upozornění (2026-11-18, hlášení db02d0e0 — owner: „přesunout do menu … nemůže to být na hlavní stránce“): skupina NOTIFICATIONS,
+       přepínače jako u soukromí. Vidí ji jen ten, komu je runa dne otevřená a jehož prohlížeč push umí; plní _rodPushKresli (runar-runa-dne.js). -->
+  <div class="side-panel-section" id="sp-notif" style="display:none;">
+    <div class="side-panel-lbl" id="sp-notif-lbl">NOTIFICATIONS</div>
+    <div id="rod-push"></div>
   </div>
 
   <!-- Soukromí na jednom místě (2026-10-28, hlášení 8b554620 „privacy je dvakrát“): štítek a zásady vidí každý, přepínače jen přihlášený -->
@@ -1045,40 +1052,43 @@
         <span id="sp-qconsent-label">Send my questions with my readings</span>
       </label>
     </div>
-    <a class="sp-item" id="sp-privacy-link" href="runar-privacy.html" style="text-decoration:none;"><span class="sp-ik" aria-hidden="true">§</span><span id="sp-privacy-txt">PRIVACY POLICY</span></a>
-  </div>
-
-  <!-- Upozornění (2026-11-18, hlášení db02d0e0 — owner: „přesunout do menu … nemůže to být na hlavní stránce“): skupina NOTIFICATIONS,
-       přepínače jako u soukromí. Vidí ji jen ten, komu je runa dne otevřená a jehož prohlížeč push umí; plní _rodPushKresli (runar-runa-dne.js). -->
-  <div class="side-panel-section" id="sp-notif" style="display:none;">
-    <div class="side-panel-lbl" id="sp-notif-lbl">NOTIFICATIONS</div>
-    <div id="rod-push"></div>
   </div>
 
   <!-- Pomoc — vždy. „Send Rúnar a line“ (2026-10-15, owner „8. ano“): přihlášený okno se zprávou, návštěvník odkaz na e-mail (texty
        a viditelnost: updateSidePanel, runar-app.js). -->
   <div class="side-panel-section">
+    <div class="side-panel-lbl" id="sp-help-lbl">HELP</div>
     <a class="sp-item" id="sp-guide-link"   href="runar-help.html"    style="text-decoration:none;">? GUIDE &amp; FAQ</a>
     <button class="sp-item" id="sp-line-btn" type="button" onclick="openLine()" style="display:none;"></button>
     <a class="sp-item" id="sp-line-mail" href="mailto:runar@therunekeeper.com" style="text-decoration:none;display:none;"></a>
     <button class="sp-item" id="sp-install-btn" onclick="installPWA();closeSidePanel();" style="display:none;">⬇ INSTALL RÚNAR</button>
+  </div>
+
+  <!-- 2026-11-19: FOLLOW — Instagram a web vedle sebe; celá skupina skrytá, když jsou skryté oba (Google Play, updateSidePanel) -->
+  <div class="side-panel-section" id="sp-follow">
+    <div class="side-panel-lbl" id="sp-follow-lbl">FOLLOW</div>
+    <div id="sp-follow-radek">
     <!-- 2026-10-28: Instagram (ikona jako má Instagram) a web — v Google Play skryté (vedou k nákupu, ㊐) -->
-    <a class="sp-item" id="sp-instagram" target="_blank" rel="noopener" style="text-decoration:none;"><span class="sp-ik" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".9" fill="currentColor" stroke="none"/></svg></span><span id="sp-instagram-txt">INSTAGRAM</span></a>
-    <a class="sp-item" id="sp-web" target="_blank" rel="noopener" style="text-decoration:none;"><span class="sp-ik" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.6 2.4 3.9 5.2 3.9 8.5s-1.3 6.1-3.9 8.5M12 3.5C9.4 5.9 8.1 8.7 8.1 12s1.3 6.1 3.9 8.5"/></svg></span><span id="sp-web-txt">THERUNEKEEPER.COM</span></a>
+      <a class="sp-item" id="sp-instagram" target="_blank" rel="noopener" style="text-decoration:none;"><span class="sp-ik" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".9" fill="currentColor" stroke="none"/></svg></span><span id="sp-instagram-txt">INSTAGRAM</span></a>
+      <a class="sp-item" id="sp-web" target="_blank" rel="noopener" style="text-decoration:none;"><span class="sp-ik" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.6 2.4 3.9 5.2 3.9 8.5s-1.3 6.1-3.9 8.5M12 3.5C9.4 5.9 8.1 8.7 8.1 12s1.3 6.1 3.9 8.5"/></svg></span><span id="sp-web-txt">THERUNEKEEPER.COM</span></a>
+    </div>
   </div>
 
   <!-- Admin — jen admin (2026-10-11 rovnou i záložka TESTERS: „rychlejší přístup než se proklikávat shrine“) -->
   <div id="sp-admin" style="display:none;">
     <div class="side-panel-section">
+      <div class="side-panel-lbl">ADMIN</div>
       <a class="sp-item" id="sp-admin-link" href="runar-shrine.html" style="text-decoration:none;"><span class="sp-ik" aria-hidden="true">⚿</span>KNOWLEDGE SHRINE</a>
       <a class="sp-item" id="sp-testers-link" href="runar-shrine.html#testers" style="text-decoration:none;"><span class="sp-ik" aria-hidden="true">👥</span>TESTERS</a>
     </div>
   </div>
 
   <!-- ⑥ Danger zone — logged-in only, separated at very bottom -->
-  <div id="sp-danger" style="display:none;margin-top:auto;">
+  <!-- 2026-11-19: pata — zásady soukromí (každý) a smazání účtu (jen přihlášený, #sp-danger) na jednom řádku dole -->
+  <div id="sp-pata" style="margin-top:auto;">
     <div class="sp-danger-zone">
-      <button class="sp-delete-btn" id="sp-delete-account" onclick="openDeleteModal();closeSidePanel()">× DELETE ACCOUNT</button>
+      <a class="sp-item" id="sp-privacy-link" href="runar-privacy.html" style="text-decoration:none;"><span class="sp-ik" aria-hidden="true">§</span><span id="sp-privacy-txt">PRIVACY POLICY</span></a>
+      <span id="sp-danger" style="display:none;"><button class="sp-delete-btn" id="sp-delete-account" onclick="openDeleteModal();closeSidePanel()">× DELETE ACCOUNT</button></span>
     </div>
   </div>
 

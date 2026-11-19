@@ -1127,7 +1127,7 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   „nevytvářej předměty“ jako přidaný zákaz hrozí formulí (memory `oprava-promptu-odebira-vadu`) — oprava má odebrat příčinu (úhel).
 - [x] ✅ *(2026-11-19, DECISIONS 2026-11-19 (5))* **Přehrávač — vysvětlit v nápovědě, jak funguje** (fa9cb3e2 owner *„asi po kliknutí na helper“*): svíčka = posuvník, ťuknutí na notu,
   posun po svíčce. Copy EN + IS (§2) hlasem zrcadla nápovědy.
-- [ ] **Menu se skoro nevejde na obrazovku** (065a5205 owner *„bude potřeba upravit, lépe uspořádat, i vizuálně opravit, jak jsou jednotlivé
+- [x] ✅ *(2026-11-19, DECISIONS 2026-11-19 (6))* **Menu se skoro nevejde na obrazovku** (065a5205 owner *„bude potřeba upravit, lépe uspořádat, i vizuálně opravit, jak jsou jednotlivé
   sekce oddělené“*). Návrh uspořádání napřed ownerovi (§32: porovnat celou obrazovku před a po).
 - [ ] **Hlas runy dne — doplněk k 5006ae34** (čekání svíčky hotové, 78202bf): owner *„nota by se mohla pohybovat jako při hraní melodie“*
   (nápad) a *„až budou všechny nahrané, svíčky buď viditelné, nebo se nahrát“* — patří k položce nahrávek knihovny (výš: hlas jednou na text).
