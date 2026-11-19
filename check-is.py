@@ -18,6 +18,8 @@ FILES = sorted(p for p in glob.glob(os.path.join(BASE, '*.js')) + glob.glob(os.p
                if os.path.basename(p) not in _SKIP)
 # 2026-10-12 (CODE-web): i veřejný web web/**/*.html — islandská copy webu je táž řeč jako appka a pre-commit ji jinak neviděl.
 FILES += sorted(glob.glob(os.path.join(os.path.dirname(BASE), 'web', '**', '*.html'), recursive=True))
+# 2026-11-19 (CODE-tune, hlášení 3ab178d9): i knihovna textů runy dne — server je dává lidem doslova a kontrola ji neviděla.
+FILES.append(os.path.join(os.path.dirname(BASE), 'supabase', 'functions', '_shared', 'runa_dne_knihovna.mjs'))
 
 # (bad_pattern, correct_form, note)
 BAD_PATTERNS = [
@@ -129,6 +131,9 @@ BAD_PATTERNS = [
     ('níu rúnar',         'níu rúnir',          'rún pl = rúnir'),
     ('dregnar rúnar',     'dregnar rúnir',      'rún pl = rúnir'),
     ('Of an /',           'Ofan /',             'split word Ofan'),
+    # 2026-11-19 (hlášení 3ab178d9 „Röng íslenska“): po „vera“ nominativ, ne akuzativ — „vera þú sjálfur/sjálf/sjálft“ (korpus 316×).
+    *[(v + ' ' + z + ' þig', v + ' þú ' + {'sjálfan': 'sjálfur', 'sjálfa': 'sjálf', 'sjálft': 'sjálft'}[z], 'po vera nominativ (hlášení 3ab178d9)')
+      for v in ('vera', 'verið') for z in ('sjálfan', 'sjálfa', 'sjálft')],
 ]
 
 # --- MODEL-OUTPUT ARCHIVE (NOT scanned) ---------------------------------
