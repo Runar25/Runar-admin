@@ -13449,3 +13449,21 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno:** golden — rozdíl jen nová věta THE IMAGE a jiný úhel tam, kde vzor losoval [3]; [3] v 7 000 losech 0× (EN i IS); skládání
   na serveru = prohlížeč 40/40; registr pravidel zapsán.
 - Affected doc(s): RUNAR_DESIGN.md („Úhel musí sednout KAŽDÉ runě“), RUNAR_BACKLOG.md (Hlášení z appky 2026-11-19).
+
+## 2026-11-19 (2) — Schránku runar@ má na starosti CODE-web: denní úloha runar-schranka, štítek DMARC, probouzení zkušebního projektu
+
+- **Rozhodl:** owner 2026-11-19: *„budeš se starat o email“* + snímek schránky runar@; k návrhu denní úlohy a filtru *„8. ano“*;
+  k probuzení zkušebního projektu *„7. udělej to ty“*; přihlášení k runar@ z iPhonu 12 Pro 2. 11. = *„sigrun“*.
+- **Proč:** ranní souhrn Ops hlásil od 11. 11. „Database backup missing or failed“ a nikdo ho nečetl (46 nepřečtených souhrnů): Drive
+  pro počítač neměl připojený účet runar@ (disk H:), záloha vznikala 9 dní jen na PC. Měsíční zkouška obnovy 16. 11. padla na uspaném
+  Free projektu Runar Testing (INACTIVE). Gmail odložil 4 souhrny Ops do spamu (owner); konektor spam nevidí a filtry zakládat neumí.
+- **Co:** denní plánovaná úloha `runar-schranka` (7:00 UTC, po souhrnu v 6:00), postup `scripts/ulohy/schranka.md`: souhrn Ops projde
+  a opraví, co jde (chybějící zálohy na Drive + `zaloha_db.js`; uspaný zkušební projekt probudí `scripts/utils/probud_zkusebni_projekt.ps1`
+  přes Management API a pustí `obnova_db.js --mesicni`), hlášení DMARC přečte `scripts/utils/dmarc_cti.py` a dá je do štítku DMARC
+  mimo doručenou poštu, vyřízené Ops archivuje (štítek zůstává), poštu od lidí roztřídí a nechá ownerovi nepřečtenou. Nic neposílá ani
+  nemaže. Gmailový filtr jen tam, kde úloha nestačí: „Never send it to Spam“ pro noreply@therunekeeper.com zakládá owner v Gmailu.
+- **Ověřeno 2026-11-19:** 9 chybějících záloh (11.–19. 11.) na Drive, `zaloha_db.js` exit 0 a „RESOLVED · Database backup OK again“
+  (22:15 UTC); projekt probuzen (API 200, INACTIVE → ACTIVE_HEALTHY), zkouška obnovy 9/9; 4 hlášení DMARC (21. 10. – 18. 11.) bez
+  selhání; `dmarc_cti.py` na podvrženém hlášení vypíše POZOR, na rozbitém souboru exit 1; schránka: 54 Ops, 29 DMARC a 15 dalších vláken
+  mimo doručenou poštu, nic smazáno.
+- Affected doc(s): memory/schranka-runar-gmail.md (kdo se stará, štítek DMARC), RUNAR_BACKLOG.md (Zkouška obnovy jednou měsíčně).

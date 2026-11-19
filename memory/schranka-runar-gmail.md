@@ -13,6 +13,10 @@ nápověda (`v2/runar-help.html`) i e-mail s přihlašovacím kódem (`supabase/
 zůstává `noreply@therunekeeper.com`). Stránka soukromí má dál `info@agndofa.is` (správce údajů je Agndofa ehf.).
 
 Claude ji čte přes **Gmail konektor** (připojený účet = runar@therunekeeper.com, ověř `authuser` v `viewUrl`, než cokoli uděláš).
+**Kdo se stará:** od 2026-11-19 CODE-web (owner: „budeš se starat o email“, DECISIONS 2026-11-19 (2)) — denní úloha `runar-schranka`,
+postup `scripts/ulohy/schranka.md`: souhrn Ops projde a opraví, co jde, hlášení DMARC dá do štítku **DMARC** (Label_8), vyřízené dá
+mimo doručenou poštu, poštu od lidí nechá ownerovi nepřečtenou. Gmail občas odloží souhrn Ops do spamu a konektor spam nevidí —
+chybějící ranní souhrn proto úloha hlásí ownerovi.
 Štítky: **Testers · Login · Bugs · Ideas · Other** (Label_1–Label_5) + **Ops** (Label_6, od 2026-10-14: hlídání provozu — e-maily
 „Rúnar Ops · …“ od noreply@therunekeeper.com, DECISIONS 2026-10-14 (13)) + **Messages** (Label_7, od 2026-10-15: zprávy čtenářů
 „Rúnar · A line from a reader · ref <id>“ z menu appky, Reply-To = uživatel; owner jen odpovídá tlačítkem Odpovědět — ve shrine nic
