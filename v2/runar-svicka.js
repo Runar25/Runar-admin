@@ -271,7 +271,7 @@ function svickaNapoj(prefix) {
   function smycka() {
     if (!S.bezi) return;
     if (S.stav === 'hori' && !S.tah && delka()) S.p = Math.min(1, a.currentTime / delka());
-    if (S.stav === 'tvori') S.p = tvorP(performance.now() - S.tv0);
+    if (S.stav === 'tvori') { if (svisla) S.delka = 1 - tvorP(performance.now() - S.tv0); else S.p = tvorP(performance.now() - S.tv0); }
     var roste = kresli();
     if (S.stav === 'hori' || S.stav === 'zapaluje' || S.stav === 'zhasina' || S.stav === 'tvori' || S.stav === 'roste' || roste) requestAnimationFrame(smycka); else S.bezi = false;
   }
@@ -317,14 +317,16 @@ function svickaNapoj(prefix) {
   // za 0,6 s a jiskra na knotu dvakrát blikne — výzva „ťukni na notu“. Při tvoření žádný vosk ani okraj odhořelé části.
   function tvorP(ms) { return 1 - 0.92 * (1 - Math.exp(-ms / 6000)); }
   function tvor() {
-    if (svisla) { celaZnovu(); return; }   // svislá (rituál, návod) má nahrávku u appky — nečeká se
-    celaZnovu(); S.stav = 'tvori'; S.tv0 = performance.now(); S.p = 1; kresli(); spust();
+    // svislá (rituál, návod) má nahrávku u appky a nečeká; runa dne (hlas teprve vzniká, hlášení 5006ae34) ano — vytahuje se od knotu
+    celaZnovu(); S.stav = 'tvori'; S.tv0 = performance.now(); if (!svisla) S.p = 1; kresli(); spust();
   }
   function hotovo() {   // zvuk dorazil: dotvořit z místa, kde svíčka je; nebyla-li ve tvoření, prostě celá (jako reset)
     if (S.stav !== 'tvori') { celaZnovu(); return; }
-    zastavAnim(); S.stav = 'dotvari'; var p0 = S.p;
-    S.zrusAnim = _svickaAnim(600, function (q) { S.p = p0 * Math.pow(1 - q, 2); kresli(); }, function () {
-      S.p = 0; S.stav = 'klid'; kresli();
+    zastavAnim(); S.stav = 'dotvari'; var p0 = S.p, d0 = S.delka;
+    S.zrusAnim = _svickaAnim(600, function (q) {
+      if (svisla) S.delka = d0 + (1 - d0) * (1 - Math.pow(1 - q, 2)); else S.p = p0 * Math.pow(1 - q, 2); kresli();
+    }, function () {
+      S.p = 0; if (svisla) S.delka = 1; S.stav = 'klid'; kresli();
       S.zrusAnim = _svickaAnim(1400, function (q) {
         var b = Math.sin(Math.PI * ((q * 2) % 1)); S.js = (0.3 + b * 0.9).toFixed(3); S.jr = (q * 90).toFixed(1); jiskra.setAttribute('opacity', b); kresli();
       }, function () { S.zrusAnim = null; S.js = null; jiskra.setAttribute('opacity', 0); kresli(); });
@@ -349,8 +351,9 @@ function svickaNapoj(prefix) {
       });
     };
     if (svisla && S.delka < 1) {   // svislá: napřed se od knotu dolů vytáhne (0,9 s), pak ji jiskra zapálí
+      var d0 = S.delka;   // z místa, kam došla (ťuknutí ještě při dotváření čekání), ne od nuly
       S.stav = 'roste'; S.p = 0; svg.style.opacity = ''; spust();
-      S.zrusAnim = _svickaAnim(900, function (q) { S.delka = 1 - Math.pow(1 - q, 3); }, function () { S.zrusAnim = null; S.delka = 1; zapalit(); });
+      S.zrusAnim = _svickaAnim(900, function (q) { S.delka = d0 + (1 - d0) * (1 - Math.pow(1 - q, 3)); }, function () { S.zrusAnim = null; S.delka = 1; zapalit(); });
       return;
     }
     zapalit();
