@@ -1,10 +1,10 @@
-// Rúnar Service Worker — v890
+// Rúnar Service Worker — v891
 // HTML: network-first (always fresh). JS/CSS/icons: cache-first (fast, offline ok).
 // External (Supabase, ElevenLabs, fonts): pass-through, never intercepted.
 
 // Text upozornění na runu dne píše appka (runar-runa-dne.js) do vlastní cache — activate ji nesmí smazat s ostatními (2026-11-18).
 const NOTIF = 'runar-notif';
-const CACHE = 'runar-v890';
+const CACHE = 'runar-v891';
 const JS_SHELL = [
   '/Runar-admin/v2/runar-reader.css',
   '/Runar-admin/v2/runar-utils.js',

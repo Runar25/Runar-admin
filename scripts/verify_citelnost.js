@@ -30,7 +30,7 @@
 //  (H) souhlas s odesláním otázky (DECISIONS 2026-10-12 (7), čl. 9 GDPR): podvržený přihlášený Premium bez souhlasu — otázka ve čtení
 //      ani Ask bez něj neodejdou a ukáže se políčko; zaškrtnutí souhlas uloží (podvržená databáze) a čtení s otázkou pak začne; odvolání
 //      v menu ho vezme zpět i s otázkou zachycenou k rozdělanému čtení. Testeři (souhlas testera) políčko nevidí.
-// Neumí: text přes obrázek (bere barvu pozadí předků), stavy přihlášeného (čtení, menu), stín a obrys písma.
+// Neumí: text přes obrázek (bere barvu pozadí předků), stavy přihlášeného kromě formuláře (čtení, menu), stín a obrys písma.
 // Útok: scripts/protipriklady.py → PRIPADY.
 //   node scripts/verify_citelnost.js
 'use strict';
@@ -149,6 +149,11 @@ const srv = http.createServer((req, res) => {
     await ev(`openAuthModal()`); await sleep(300); await sber('reader · přihlášení', 'en');
     await ev(`setLang('is')`); await sleep(400); await sber('reader · přihlášení', 'is'); await ev(`closeAuthModal()`); await sleep(200);
     await zmer('reader · návštěvník IS'); await sber('reader', 'is');
+    // 2026-11-19: přihlášený formulář — „(OPTIONAL)“ (.opt) u oblasti, hledání a záměru vidí jen přihlášený; bez tohoto stavu ho (A) neměřila
+    // (do 316e4e0 ho viděla jen díky výchozímu HTML, dokud první updateUIText čekal na síť). setLang ne — u přihlášeného píše do DB.
+    await ev(`(() => { currentUser = { id: 'u1', email: 'tester@example.com' }; userTier = 'premium'; updateUIText(); return true; })()`); await sleep(300);
+    await zmer('reader · přihlášený formulář IS');
+    await ev(`(() => { currentUser = null; userTier = 'free'; updateUIText(); return true; })()`); await sleep(200);
 
     // (C) okno přepnutí jazyka po single čtení: přihlášený (podvržený), čtení na obrazovce, bez textu v cílovém jazyce → setLang otevře okno
     const okno = (cil) => ev(`(() => {
