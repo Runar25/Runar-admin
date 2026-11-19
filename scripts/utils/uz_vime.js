@@ -45,6 +45,11 @@ try {
     souhrn.push(['docs/archive/' + f, hledej('docs/archive/' + f, /^#{2,4} /).map((x) => Object.assign(x, { stav: (x.stav === '✖' || (/odlozene/.test(f) && x.stav === '✅')) ? x.stav : /odlozene/.test(f) ? '⏸' : '✅' }))]);
 } catch (e) {}
 souhrn.push(['RUNAR_EVAL_LOG.md', hledej('RUNAR_EVAL_LOG.md', /^## \d{4}-\d{2}-\d{2}/)]);
+// Archivy měření (docs/archive/RUNAR_EVAL_LOG-*.md; 2026-11-19 odešlo 08-18→09-30) — bez nich by „už je změřeno“ po přesunu nikdo nenašel.
+try {
+  for (const f of fs.readdirSync(path.join(REPO, 'docs', 'archive')).filter((x) => /^RUNAR_EVAL_LOG-.*\.md$/.test(x)).sort())
+    souhrn.push(['docs/archive/' + f, hledej('docs/archive/' + f, /^#{2,3} \d{4}-\d{2}-\d{2}/)]);
+} catch (e) {}
 souhrn.push(['RUNAR_DESIGN.md', hledej('RUNAR_DESIGN.md', /^#{2,3} /)]);
 // Ostatní kanonické docy v kořeni — seznam se odvozuje, ne opisuje (2026-10-11: chyběly RUNAR_TREE, PRICING, POPISY_RUN, PRIVACY;
 // pokyn ownera ve RUNAR_TREE.md §2 tak uz_vime nenašel ani se správným pojmem).

@@ -13467,3 +13467,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   selhání; `dmarc_cti.py` na podvrženém hlášení vypíše POZOR, na rozbitém souboru exit 1; schránka: 54 Ops, 29 DMARC a 15 dalších vláken
   mimo doručenou poštu, nic smazáno.
 - Affected doc(s): memory/schranka-runar-gmail.md (kdo se stará, štítek DMARC), RUNAR_BACKLOG.md (Zkouška obnovy jednou měsíčně).
+
+## 2026-11-19 (2) — Dlouhé docy zkráceny přesunem celých témat: Vegvísir a fyzické produkty do vlastních doců, měření 08-18→09-30 do archivu
+- **Owner:** odklady délky (smoke ㉝) z 2026-10-20 vypršely a zastavily push všem lanům; k otázce, jak s DESIGN, EVAL_LOG, PRICING a working-style:
+  *„5. udělej, co je potřeba“*, *„7. najdi nejlepší řešení!“*. Pravidlo odkladu: obnova jen se zkrácením.
+- **Co (přesuny doslova, na původním místě ukazatel):** `RUNAR_DESIGN.md` „Vegvísir — záměr“ → **`RUNAR_VEGVISIR.md`** (1012 → 902) ·
+  `RUNAR_PRICING.md` fyzické produkty (Bundle Strategy … Ekosystém) → **`RUNAR_PRODUKTY.md`** (575 → 458) · `RUNAR_EVAL_LOG.md` měření
+  2026-08-18 → 09-30 → `docs/archive/RUNAR_EVAL_LOG-2026-08-18_09-30.md` (6584 → 1283; precedent 2026-08-21) · `memory/working-style.md`
+  sedm samostatných sekcí do vlastních pamětí + duplikát CLAUDE.md „Testování“ pryč (364 → 247, odklad už netřeba) · BACKLOG
+  `backlog_uklid.py` (1343 → 1145). Odklady DESIGN, PRICING, EVAL_LOG a BACKLOG obnoveny 2026-11-19 s důvodem a zkrácením.
+- **Proč takhle:** stejný vzor jako spready a mytologie (2026-10-24) — nový doc vlastní celé téma, které jinde nebydlí (§20). Nic se
+  nepřepisovalo. Zůstaly sekce, na které míří odkazy (working-style „Compact“ ze skillu /zabal, „Explore → Plan → Implement“ z §16,
+  „Ownerovi se neposílají příkazy“ z hooku). `uz_vime.js` prohledává i archivy EVAL_LOGu; skripty čtou z EVAL_LOGu jen Rejstřík pák,
+  ten zůstal.
+- **Ověřeno:** `verify_doc_length.js` OK (nic bez výjimky nad 250); `uz_vime.js` najde měření z archivu.
+- Affected doc(s): RUNAR_DESIGN.md, RUNAR_PRICING.md, RUNAR_EVAL_LOG.md, memory/working-style.md, memory/MEMORY.md (rozcestník),
+  RUNAR_BACKLOG.md („Délka živých doců“).

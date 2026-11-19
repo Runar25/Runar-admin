@@ -1021,7 +1021,9 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   EVAL_LOG — starší baseline do archivu (CODE-read); DESIGN a PRICING — rozdělení je obsahové rozhodnutí ownera; working-style — část do
   samostatných memory souborů. Další obnova bez zkrácení ne.
   *(CODE-tune 2026-11-19)* Odklad BACKLOGu vypršel podruhé a zastavil push; `backlog_uklid.py` přesunul 48 hotových a zamítnutých
-  položek (1 341 → 1 143 ř.), odklad obnoven 2026-11-19 se zkrácením. Ostatní docy nedotčeny.
+  položek (1 341 → 1 143 ř.), odklad obnoven 2026-11-19 se zkrácením. Týž den zkráceny i ostatní (DECISIONS 2026-11-19 (2)): DESIGN
+  1 012 → 902 (Vegvísir do `RUNAR_VEGVISIR.md`), PRICING 575 → 458 (`RUNAR_PRODUKTY.md`), EVAL_LOG 6 584 → 1 283 (archiv 08-18→09-30),
+  working-style 364 → 247. Příští vypršení (2026-12-19) zase jen se zkrácením.
 
 ### Hlášení z appky 2026-10-19 / 20 (načtena 2026-10-20, CODE-tune; hotové: df67acda, 62283c8c — a56aa46)
 - [ ] **Jednotný vzhled — co ㊋ zatím nehlídá (zbytek po kroku 3, DECISIONS 2026-10-20 (3)):** (a) ~20 velikostí kurzívy textu karet

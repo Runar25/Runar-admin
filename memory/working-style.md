@@ -91,51 +91,6 @@ Vlastní je CLAUDE.md: §1 (JS přes Python skript), §4 (SW verze), §7 (commit
 ## Detail k CLAUDE.md §12 — jméno, když chybí
 Přihlášený bez jména → `'you'`/`'þú'`. Visitor (anonymous) → `'Visitor'`/`'Gestur'`. NIKDY `email.split('@')[0]`.
 
-## Po přejmenování VOCAB vždy ruční grep na staré termíny (k CLAUDE.md §13 „Migrace“)
-Smoke test §10 chytí jen typické patterny. Po změně VOCAB (nebo jiném přejmenování termínu) spustit:
-```
-grep -n "\bold_term\b" runar-app.js runar-auth.js runar-reading.js runar-tree.js runar-reader.html
-```
-Hardcoded výskyty mimo translations.js / VOCAB nejsou smoke testem zachyceny — kromě větví `lang === 'is' ? '…' : '…'`:
-ty od 2026-10-09 hlídá ráčna smoke ㉸ (`scripts/verify_lang_ternary.js`, počet na soubor nesmí stoupnout; stav tam v BASELINE).
-
-## Vocab/tier termíny natvrdo — jak je najít (k CLAUDE.md §15)
-Seznam „zbývajících míst“ se tu nevede: stav vlastní kód (§20.4). Aktuální stav dá audit:
-```
-grep -nE "rune stones?|rúnastein|Rune (Seeker|Walker|Keeper)|rune reading" v2/*.js v2/*.html  <!-- check-docs:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
-```
-
-**Tier jména v próze — POLICY:** v dlouhých marketingových větách OK nechat, jinde → `TIERS[x].label` (CLAUDE.md §15).
-
-**„cast" → „reading" — OBRÁCENO (owner 2026-08-03).** Reading→cast (2026-06-06) zrušeno.
-User-facing „cast" je PRYČ: config panely + name_modal → „rune reading" (de90bb2, ověřeno).
-Zbytek je jen INTERNÍ a neviditelné: VOCAB klíč `cast` (hodnota už 'rune reading') · `{casts}`
-placeholdery · `vn('cast')` → renderují „reading". SERVER `countsAsCast` / claude-proxy komenty
-= PŘESNÝ pojem (čtení počítané do stropu; `ask` JE čtení, ale NENÍ cast) — nepřejmenovávat,
-ztratilo by to smysl. **Owner 2026-08-03 potvrdil: JEN user-facing; neviditelný interní kód
-(VOCAB klíč, `{casts}`, server pojem) NECHAT — nerozbíjet.** Viz [[decisions-are-directions-not-locks]].
-
-## JS unicode escapes v souborech = problém pro Python pattern matching
-Soubory mohou mít mix: literální UTF-8 (`RÚNAKORT`) i JS escape sekvence (`RÚNAKORT`).
-Python čte `Ú` jako 6 ASCII znaků (ne jako Ú). Bezpečný přístup při opravě neznámé řádky:
-```python
-# NIKDY nehádej — najdi a nahraď celou řádku
-pos = c.find('unique-id-or-unique-string')
-line_start = c.rfind('\n', 0, pos) + 1
-line_end   = c.find('\n', pos)
-old_line = c[line_start:line_end]   # přečti repr() pro ověření
-c = c[:line_start] + new_line + c[line_end:]
-```
-
-## Cowork: flaky bash mount uřezává repo soubory — JS patch bezpečně (2026-07-09, lekce)
-Bash mount v Coworku občas **uřízne repo soubor při čtení** (podstrčí kratší verzi než host). Přímý mount-read → patch → write-back pak zapíše **useknutý = poškozený** soubor. Chytlo to 2× (MEMORY.md, runar-app.js — produkční JS).
-**Postup pro JS/repo patch v Coworku (povinné):**
-1. Zdroj čti z **git objektu**, ne z mountu: `git show HEAD:<path> > /tmp/x` (nebo Read tool = host-direct).
-2. Patchni v `/tmp` (Python, §1 — ne Edit tool, kazí apostrofy).
-3. `node --check /tmp/x` (JS) — chytne truncation i syntax error.
-4. Teprve validní verzi nasaď na host (`cp /tmp/x <path>`) a ověř **Read toolem** (ne bash), že je celý (končí správně).
-**Nikdy** nepiš zpět z přímého mount readu. (Code = nativní repo → nepotká ho to; pravidlo je pro Cowork.)
-
 ## Kde ukládat soubory — povinné
 
 | Typ | Umístění |
@@ -159,11 +114,6 @@ Ověřovací skripty (volané ze smoke) žijí v `scripts/verify_*.js`.
 - Refactor skript: `refactor-popis.py`  <!-- doc-links:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
 - Utility: `název.py` bez prefixu (např. `smoke.py`)
 - Dokumentace: `RUNAR_NAZEV.md` (velká písmena)  <!-- doc-links:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
-
----
-
-## Cowork sync — ZRUŠENO
-Nic se nikam nekopíruje; jak paměť a Cowork fungují, vlastní CLAUDE.md §17 a sekce „N paralelních session“.
 
 ---
 
@@ -197,11 +147,6 @@ co já s tím?“* Na „ať můžu zkontrolovat“ patří odkazy `soubor:řád
 - Nechávat patch skripty v rootu `Runar-admin/`
 (Commit po jedné věci → §7 · Edit na JS → §1 · kopie do Cowork → §17.)
 
-## Testování
-Jako visitor a rune_seeker (CLAUDE.md „Tier systém“) — admin má premium automaticky, reálný stav nepředstavuje.
-
----
-
 ## ⚡ IS JE PRIMÁRNÍ JAZYK
 Pravidlo, tři vrstvy generování a kontrola IS → CLAUDE.md §2. Co tam není:
 - NIKDY „Respond entirely in Icelandic“ jako jediná IS instrukce.
@@ -226,23 +171,6 @@ Co tam není a patří sem: plochy se nezaměňují — kontrola zdrojového kó
 Při změně tier hodnoty: grep runar-app.js, runar-reader.html, runar-translations.js. (ᚱ v UI → CLAUDE.md §5.)
 
 ---
-
-## Protokol pro externí dokumenty (PATCHES, DESIGN DOCS, atd.)
-Když uživatel přinese soubor zvenku (@soubor nebo obsah vložen do chatu):
-
-1. PŘEČÍST celý dokument — žádné zkratky
-2. AUDIT: Co z toho už je v kódu? Co je jen design? Co je nové rozhodnutí?
-3. ZAPSAT do správných souborů:
-   - Rozhodnutí + pravidla → CLAUDE.md (repo)
-   - Tree (model, zóny, signály, Gathering) → RUNAR_TREE.md · vzhled → RUNAR_TREE_RENDER.md · úkoly → RUNAR_BACKLOG.md
-   - Stack, soubory, DB, tier → CLAUDE.md („Soubory") + `runar-config.js` (runar-project.md je prázdný, §20)
-   - Workflow, coding rules → working-style.md
-4. Implementovat co jde BEZ stromu/DB — datové definice do kódu
-5. Označit co čeká — v CLAUDE.md nebo memory souboru
-6. Říct co bylo zapsáno kam a co čeká na implementaci
-
-NIKDY nepředpokládat že obsah dokumentu je zachycen jen proto, že jsme o něm mluvili.
-Kontext v chatu zmizí při /compact — důležité musí být v souborech.
 
 ## runar-shrine.html = admin, NE lab
 ⚠️ **„V2 lab" NEEXISTUJE od 2026-07-10** (commit `c6eb89c`) — změny čtení se v shrine netestují; `#reader-setup`, `#reader-rune-card` ani `#reader-output` tam nejsou.
@@ -315,49 +243,5 @@ který nikdo netrefí. Kontext v chatu zmizí; soubory jsou jediná paměť.
 
 ---
 
-## Proveniencia tvrzení: relay ≠ rozhodnutí ownera (2026-07-17, lekce)
-
-Když zapisuju cokoli do **kódu, §16 záznamu nebo commit message**, musí být poznat, **odkud tvrzení je**:
-
-| Zápis | Znamená |
-|---|---|
-| „KUKY rozhodl / řekl" | owner mi to řekl **přímo v chatu** |
-| „Cowork tvrdí / navrhuje" | přišlo **relayem** — dokud to owner nepotvrdí |
-| „ověřeno na `<ploše>`" | ověřil jsem sám (pracovní strom / HEAD / probe) |
-
-**Nevím → zeptám se ownera.** (KUKY 2026-07-17: „ano stačí se mě zeptat.")
-
-**Proč:** Coworkův patch měl v komentáři `// Owner: jméno v každém čtení otravuje`. Zapsal jsem to jako
-**přímý citát KUKYho** — do kódu, do §16 i do commit message. Náhodou to pravda byla (owner potvrdil), ale
-vědět jsem to nemohl. Commit message už nepřepíšu → **vymyšlená provenience zatvrdne v projektové pravdě**
-a nikdo ji později nerozliší od ověřeného faktu.
-
-Totéž platí pro tvrzení o KÓDU (CLAUDE.md „kdo co VIDÍ") — **ověř na svém stromě, teprve pak zapiš/jednej.**
-Téhož dne Cowork hlásil „claude-proxy useknutý na 528 řádků" (jeho mount); můj strom měl kompletních 675 a
-esbuild čistý. Bez ověření bych „opravoval" funkční kód.
-
-**A než začnu dělat, co Cowork navrhuje: ověř, jestli to není hotové.** Cowork vidí jen HEAD → necommitnutá
-práce pro něj neexistuje. 2026-07-17 navrhoval konsolidaci tree doků, která byla hotová od 2026-07-04, jen
-necommitnutá. Odtud smoke ⑫ (kanonický doc musí být v gitu).
-
-## Adversariální náraz na shodu — jen fact-critical (Cowork↔Code)
-Když Cowork a Code doručí **SHODNÝ** výstup na 🔒 nebo 📜 položce (druh viz rozcestník v MEMORY.md),
-shoda **NENÍ potvrzení** — dvě session čtoucí týž doc jsou ozvěna, ne dva nezávislé důkazy. Proběhne
-JEDEN pas, jehož úkol je tu shodu **zbořit proti VNĚJŠÍMU měřítku**, ne proti sdílenému docu:
-- 🔒 → proti externímu zdroji (je ta etymologie / IS tvar fakt správně?)
-- 📜 → proti vnitřní konzistenci kánonu (neodporuje to už zapsanému lore?)
-- 🔄 → žádný náraz (pravdou je ownerův záměr, ne vnější měřítko)
-
-Triáž: co agenti vyřeší sami, vyřeší; k ownerovi jde **jen otázka záměru**, ne rešerše. „Nenašel jsem
-nic, co by to zbořilo" je taky informace — zapíše se, nezamlčí. Chybějící fakt/lore → [[dont-invent-fact-critical]].
-
-## Náklady testování (KUKY 2026-08-23: „používáš moc API… testy dělej tady, to už mám zaplacené")
-- **Souzení/eval = V SESSION** (Claude Code, předplacené): mantinelové soudce (svět/soulad/chlad),
-  lineup/řazení, korelace — dělá session sama, nebo **čerstvý subagent** tam, kde je potřeba
-  SLEPOST (subagent nemá kontext session → nezná odpověď; session, která text sama psala, ho
-  slepě soudit nemůže).
-- **API klíč JEN na generování produkčních čtení** (testuje se produkční model, to nejde jinak)
-  — a s malým n; před dávkou zvaž, jestli otázku nezodpoví menší řez.
-- ⚠️ Změna soudce = čísla nejsou přímo srovnatelná se staršími baselines (opus-4-8, 3 hlasy) —
-  při prvním použití session-soudce to poznamenat u měření (rejstřík/DECISIONS).
-
+## Přesunuto do samostatných pamětí (2026-11-19, délka docu)
+[[vocab-natvrdo-a-migrace]] · [[js-unicode-escapes-python]] · [[cowork-bash-mount]] · [[protokol-externi-dokumenty]] · [[proveniencia-relay-neni-rozhodnuti]] · [[adversarialni-naraz-fact-critical]] · [[naklady-testovani]]

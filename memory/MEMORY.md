@@ -27,8 +27,10 @@ Druh: 🔒 externě ukotveno (etymologie, IS gramatika) · 📜 vytvořený kán
 | Pravidla §1+, lanes, commit prefixy | `CLAUDE.md` | 🏛 |
 | Proč pravidlo zní, jak zní (důvody, doklady, historie) · podrobnosti stavu systémů | `docs/pravidla-duvody.md` · `docs/projekt-mapa.md` (na požádání) | 🏛 |
 | Proč je něco tak (datovaná rozhodnutí) | `RUNAR_DECISIONS.md` | log |
-| Business, kredity, fyzické produkty | `RUNAR_PRICING.md` | 🔄 |
-| Design: hlas Rúnara, stavba čtení, obraz, Vegvísir | `RUNAR_DESIGN.md` | 📜 |
+| Business, kredity | `RUNAR_PRICING.md` | 🔄 |
+| Fyzické produkty, Rúnakort jako karta, balíčky | `RUNAR_PRODUKTY.md` | 🔄 |
+| Design: hlas Rúnara, stavba čtení, obraz | `RUNAR_DESIGN.md` | 📜 |
+| Vegvísir (odložený, není spread) | `RUNAR_VEGVISIR.md` | 📜 |
 | Spready — pozice, místo ve stromě, přístup | `RUNAR_SPREADY.md` | 📜 |
 | Mytologie — bytosti, katalog dvergů, islandský kalendář | `RUNAR_MYTOLOGIE.md` | 📜 · 🔒 |
 | Popisy run pro člověka | `RUNAR_POPISY_RUN.md` | 📜 |
@@ -48,6 +50,13 @@ Vrstvy pravdy: kanonická = root `RUNAR_*.md`, `memory/*.md`, `CLAUDE.md` · his
 
 ## Index paměti
 - [working-style.md](working-style.md) — workflow, Python skripty, verifikace
+- [vocab-natvrdo-a-migrace.md](vocab-natvrdo-a-migrace.md) — Jak najít natvrdo zapsané vocab/tier termíny a po přejmenování ručně grepnout staré (k CLAUDE.md §13, §15)
+- [js-unicode-escapes-python.md](js-unicode-escapes-python.md) — JS soubory s \uXXXX escapy rozbíjejí pattern matching v Python patch skriptech — jak na to
+- [cowork-bash-mount.md](cowork-bash-mount.md) — Cowork: flaky bash mount uřezává repo soubory (JS patch bezpečně); Cowork sync zrušen
+- [protokol-externi-dokumenty.md](protokol-externi-dokumenty.md) — Protokol pro externí dokumenty (patche, design docy): jak je přijímat a kam zapsat
+- [proveniencia-relay-neni-rozhodnuti.md](proveniencia-relay-neni-rozhodnuti.md) — Tvrzení předané jinou session (relay) není rozhodnutí ownera — dohledat zdroj (lekce 2026-07-17)
+- [adversarialni-naraz-fact-critical.md](adversarialni-naraz-fact-critical.md) — Adversariální náraz na shodu Cowork↔Code jen u fact-critical tvrzení
+- [naklady-testovani.md](naklady-testovani.md) — Náklady testování: testy dělat tady (předplacené), API jen s důvodem (KUKY 2026-08-23)
 - [is-done-together-not-for-sigrun.md](is-done-together-not-for-sigrun.md) — IS rovnou hotová a ověřená, žádný draft pro Sigrún
 - [handoff-text-in-code-block.md](handoff-text-in-code-block.md) — text k předání jiné session do code blocku
 - [neposilat-praci-coworku.md](neposilat-praci-coworku.md) — co umí Code, udělá sám; žádný handoff Coworku přes ownera
