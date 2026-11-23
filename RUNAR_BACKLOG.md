@@ -871,7 +871,8 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   Při spuštění také (DECISIONS 2026-10-27 (10)): na /heim/ doplnit `og:url` = https://therunekeeper.com/ (ostatní značky
   náhledu už tam jsou); `RUNAR_HOME_URL` v configu z /heim/ na kořen (CODE-tune). `robots.txt` a `sitemap.xml` s kořenem
   jsou od 2026-11-02 (DECISIONS 2026-11-02 (5); stránky run v ní od (7)) — při spuštění do sitemapy přidat /ferdin/
-  (`DALSI_V_SITEMAPE` ve `scripts/web_runy.py`) a znovu ji odeslat v Google Search Console (vlastnost zatím není — položka Veřejné stránky run).
+  (`DALSI_V_SITEMAPE` ve `scripts/web_runy.py`); Google ji najde přes `robots.txt`, v Search Console (účet runar@, ověřeno 2026-11-07)
+  ji jde odeslat i ručně, ať ji přečte dřív.
 - [ ] **Sociální sítě Rúnara** (owner 2026-10-27: *„musíme založit facebook… budu s tebou pak řešit všechna sociální, které Rúnar má“*;
   2026-10-28: *„13.–19. zapiš do backlog“* a *„Co jsem připravil 9–15“* do backlogu). Instagram 2026-10-28 (veřejný profil): jméno
   stejné jako titulek webu, jen s pomlčkou místo tečky a malým „the“; 0 příspěvků, bio „Rune readings ✧ Nordic mysticism ✧ Ancient wisdom / Welcome to the world of Agndofa. /
@@ -950,7 +951,7 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
       ho po kontrole proti seznamu zapíše do `ops_events.detail` u `waitlist_signup` — bez adresy, do Brevo ne (štítek u adresy =
       osobní údaj). Ranní souhrn podle štítku = CODE-tune. Po spuštění se registruje v appce → štítek musí převzít appka (CODE-tune).
   (f) „Runa dne“ na webu není; v appce je od 2026-11-15 a builder je připravený i pro web, aktivuje se na pokyn ownera
-      (DECISIONS 2026-11-15 (1)). `robots.txt` a `sitemap.xml` zatím nejsou (přibudou při spuštění, položka „Domovská stránka“ výš);
+      (DECISIONS 2026-11-15 (1)). `robots.txt` (Allow: /, s odkazem na sitemapu) a `sitemap.xml` jsou od 2026-11-02 (DECISIONS 2026-11-02 (7));
       /heim/, /ferdin/, /kort/ a /skilmalar/ jsou noindex, úvodní stránka ne. Runa půlměsíce = `calcLifeRune` s dnešním datem, hotové;
       denní střídání by byl nový systém bez opory (§23).
   **Střet s kánonem (k posouzení, obsah je Cowork + owner):** „poznej se v jedné větě“ je výrok „tohle jsi“ — `RUNAR_DESIGN.md`
@@ -966,10 +967,10 @@ Od v4.35 se **délka nelosuje** — `LENGTH_BUDGETS` má jednu položku (4 věty
   + 25 obrázků; hlídá smoke ㊙ (`verify_web_runy.py`), `web_nasad.py` je před nasazením přegeneruje; z landingu odkaz SAFN RÚNA a canonical.
   ✅ *(owner 2026-11-02 „3. nasazeno“; CODE-web ověřil naostro: 53 adres ze sitemapy, landing s canonical, odkazem SAFN RÚNA a štítkem,
   `waitlist-join` verze 12)* nasazení · ✅ dvoufázové přihlášení na GitHubu a GoDaddy (owner *„8. hotovo“*) · ověřovací záznam GitHub
-  Pages pro doménu v DNS je. **Čeká na ownera:** Search Console — ownerův účet vlastnost therunekeeper.com nemá (screenshot 2026-11-02);
-  TXT `google-site-verification` v DNS je nejspíš z ověření domény pro poštu u Googlu (MX míří na Google), neověřeno. 2026-11-02 owner
-  přidal v GoDaddy druhý TXT záznam pro Search Console (Google DNS ho vidí) — zbývá VERIFY a sitemapa. Založit ji
-  (typ Domain) účtem runar@therunekeeper.com, nebo runar@ přidat jako uživatele — hlášení Search Console pak jdou do runar@ (monitoring).
+  Pages pro doménu v DNS je. ✅ Search Console: vlastnost therunekeeper.com (typ Domain) ověřená 2026-11-07 účtem runar@ — hlášení
+  chodí do runar@ (monitoring). Sitemapu Google najde přes řádek `Sitemap:` v `robots.txt`, ruční odeslání netřeba. Hláška
+  2026-11-09 o neindexovaných stránkách (redirect, robots, 404) se adres ze sitemapy netýká: všech 53 vrací 200 (CODE-web
+  2026-11-19) — není co opravovat, konkrétní adresy jsou jen v účtu Search Console.
   **Dál k viditelnosti:** Bing Webmaster Tools (import ze Search Console), odkaz z agndofa.is na therunekeeper.com, odkazy z profilů
   na sítích (štítky `?z=`), strukturovaná data (JSON-LD) na landingu a stránkách run.
 - [ ] **Předplatné: měsíční / roční a datum obnovy v profilu a v menu** (owner 2026-10-21 nad rozbalovacím menu účtu: *„jména účtů — by mohlo
