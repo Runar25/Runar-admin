@@ -163,7 +163,7 @@ hlídal jen V2 cestu.
 
 ## Údržba 2026-11 — co zbylo (CODE-tune 2026-11-23; postup `RUNAR_UDRZBA.md`, zpráva `docs/udrzba/2026-11.md`)
 Kolo A–I proběhlo celé (A 2026-11-23 (3), B–I DECISIONS 2026-11-23 (5)). Zbylo:
-- [ ] **SQL pro ownera (čeká na ano):** `sql/2026-11-23_udrzba_db.sql` — mazání `client_error` po 90 dnech (slib zásad), politika
+- [x] ✅ *(owner 2026-11-23 „pusť to SQL“, spuštěno a ověřeno, DECISIONS 2026-11-23 (5))* **SQL pro ownera:** `sql/2026-11-23_udrzba_db.sql` — mazání `client_error` po 90 dnech (slib zásad), politika
   nehotového audia Kolekce jen adminům, revoke TRUNCATE/TRIGGER/REFERENCES pro anon a authenticated.
 - [ ] **Refaktory duplicit v appce (F, bez vady pro uživatele):** hledání štítku v balíčku 4× (`_seekIdx`, `_intentIdx`, `_areaIdx`,
   `_labelIndex` — ta při chybějícím balíčku dostane `null` a spadla by) · HTML escape mimo `escapeHtml` (`_jesc` v runar-app.js, inline

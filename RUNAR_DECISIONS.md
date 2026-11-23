@@ -13606,6 +13606,9 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Kontroly:** smoke 112/112, útoky 255/255 na 95 kontrol. Nové stroje: ㊚ nedefinovaná jména (2026-11-23 (3)), ㊛ tabulky v zásadách.
 - **Nechané záměrně:** tabulka cen výkladů v PRICING (hlídá `verify_spread_prices.js`, čte ji kalkulačka PAYBACK); „1 free credit“ v
   PRODUKTY (popis fyzického produktu); `runar-project.md` (prázdný záměrně, nese poučení); záměrná zrcadla limitů v edge funkcích.
-- **Čeká:** SQL pro ownera, refaktory duplicit, přepočet PRICING, měkké smazání → BACKLOG „Údržba 2026-11“.
+- **SQL** (owner *„pusť to SQL“*): `sql/2026-11-23_udrzba_db.sql` spuštěno — ověřeno: `purge_ops_data` maže `client_error` po 90 dnech,
+  politika nehotového audia `je_admin()`, 0 grantů TRUNCATE/TRIGGER/REFERENCES pro anon a authenticated (SELECT/INSERT/UPDATE beze
+  změny), Kolekce dál čte hotové audio (REST 200).
+- **Čeká:** refaktory duplicit, přepočet PRICING, měkké smazání → BACKLOG „Údržba 2026-11“.
 - Affected doc(s): CLAUDE.md, memory/, RUNAR_PRICING.md, RUNAR_SPREADY.md, RUNAR_PRODUKTY.md, RUNAR_PRIVACY.md, RUNAR_BACKLOG.md,
   docs/projekt-mapa.md, docs/pravidla-duvody.md (všechny v commitech téhož dne).
