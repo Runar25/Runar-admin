@@ -169,8 +169,8 @@ Kolo A–I proběhlo celé (A 2026-11-23 (3), B–I DECISIONS 2026-11-23 (5)). Z
   `_labelIndex` — ta při chybějícím balíčku dostane `null` a spadla by) · HTML escape mimo `escapeHtml` (`_jesc` v runar-app.js, inline
   v runar-app.js a runar-journal.js) · `token()` 4× a `setErr` 2× v shrine modulech · natržený okraj papíru 2× (runar-app.js).
 - [ ] **Obrázky `v2/email/tester-*.png`** — v repu na ně nic neodkazuje; vedou na ně URL v odeslaných e-mailech testerům? (owner)
-- [ ] **Paměť stromu** `runar-tree-engine-lab.md`, `runar-tree-living-movement.md` se samy hlásí jako historie → do `memory/snapshots/`
-  (CODE-tree, jeho paměť).
+- [x] ✅ *(CODE-tree 2026-11-23: přesunuto, index a RUNAR_TREE.md upraveny, mrtvé odkazy opraveny)* **Paměť stromu** `runar-tree-engine-lab.md`,
+  `runar-tree-living-movement.md` se samy hlásí jako historie → do `memory/snapshots/` (CODE-tree, jeho paměť).
 - ✖ *(owner 2026-11-23 „kontrola asi není potřeba“ — čtení se pořád mění, dělá se s CODE-read; z metodiky vypuštěno.)* **J. Čtení**
 - [ ] **Měkké smazání účtu** (nález D: `RUNAR_PRIVACY.md` „Zálohy“ na tuhle položku odkazoval, ale nebyla nikde) — před spuštěním
   nahradí ruční obnovu smazaného účtu ze zálohy (kroky 1 a 4 tam); návrh a SQL pro ownera.

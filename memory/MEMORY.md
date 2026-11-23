@@ -136,7 +136,7 @@ Vrstvy pravdy: kanonická = root `RUNAR_*.md`, `memory/*.md`, `CLAUDE.md` · his
 - [windows-ui-v-en.md](windows-ui-v-en.md) — owner má Windows v EN
 - [nahledy-ownerovi-v-en.md](nahledy-ownerovi-v-en.md) — náhledy a screenshoty ownerovi v EN verzi
 - [nazvy-souboru-anglicky.md](nazvy-souboru-anglicky.md) — obrázky, podklady a jejich složky ukládat s anglickými názvy
-- Strom (CODE-tree): [runar-tree-engine-lab.md](runar-tree-engine-lab.md) · [runar-trunk-incremental-rule.md](runar-trunk-incremental-rule.md) · [runar-tree-living-movement.md](runar-tree-living-movement.md) · [tree-roots-rebuild.md](tree-roots-rebuild.md)
+- Strom (CODE-tree): [runar-trunk-incremental-rule.md](runar-trunk-incremental-rule.md) · [tree-roots-rebuild.md](tree-roots-rebuild.md)
 
 ## Index snapshots — dobrovolné; historický záznam ke svému datu, ne popis dneška
 - Starší (2026-05-30 → 2026-09-26): složka `snapshots/`.
@@ -144,3 +144,4 @@ Vrstvy pravdy: kanonická = root `RUNAR_*.md`, `memory/*.md`, `CLAUDE.md` · his
 - [snapshots/2026-10-05-lab-co-uz-vime.md](snapshots/2026-10-05-lab-co-uz-vime.md) — LAB přestavby promptu: co už je změřeno
 - [snapshots/2026-10-05-tree-proporce-strany-spicka.md](snapshots/2026-10-05-tree-proporce-strany-spicka.md) — strom: proporce, strany, špička
 - [snapshots/2026-10-07-tune-audit-zaloha.md](snapshots/2026-10-07-tune-audit-zaloha.md) — §30 hooky, v5.04, lab otázek v Asku
+- [snapshots/runar-tree-engine-lab.md](snapshots/runar-tree-engine-lab.md) · [snapshots/runar-tree-living-movement.md](snapshots/runar-tree-living-movement.md) — strom: lab enginu a živý pohyb (červen–srpen 2026)
