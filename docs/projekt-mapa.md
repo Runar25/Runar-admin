@@ -31,14 +31,12 @@ se rozešel o 4 sloupce dřív, než si toho kdokoli všiml (2026-07-19: chyběl
 `is_tester`, `analytics_opt_out`, `tester_consent_at` — a do všech tří klient zapisuje).
 Aktuální sloupce: `supabase db query --linked "select column_name from information_schema.columns
 where table_name='user_profiles'"`.
-Co databáze sama neřekne, a proto bydlí tady:
-- ⚠️ **`email` a `updated_at` v `user_profiles` NEEXISTUJÍ** — časté chybné hledání; e-mail je v `auth.users`.
-- **Zapisovatelnou plochu** (které sloupce smí klient měnit) vlastní `sql/2026-07-16_user_profiles_column_grants.sql`
-  a hlídá ji smoke ⑩. Peníze a oprávnění (`tier`, `credits_balance`, `free_balance`, `month_*`) píše
+Co databáze sama neřekne (neexistující `email` / `updated_at`, kdo smí co zapsat) → CLAUDE.md „DB — user_profiles“.
 
 ## Reading systém — stav
 **Unified format**: 1 plynoucí blok, žádné `|||`. `layer1-lbl` = glyf + jméno runy.
-`_readingMode` = `'mine'` (ukládá — journal píše SERVER-SIDE claude-proxy hned po odečtu kreditu — dva zápisy, ne jedna transakce; klient jen loadJournal) | `'someone'` (neukládá).
+`_readingMode` → CLAUDE.md „Reading systém“. Detail: journal píše server dvěma zápisy hned po odečtu kreditu (ne jedna transakce),
+klient jen `loadJournal`.
 `u.area/seeking/intention/question` → `parts[]` → Claude. Norns axis: `_intentionContext(intention,lang)` v runar-character.js.
 **Délky čtení**: zdroj pravdy = buildery v `runar-character.js` (RP_* packy + `closing()` věty). Docs čísla NEopakují — když měníš délku, uprav builder + přepočítej pricing (RUNAR_PRICING.md). Délka = znaky = EL náklad. Jméno ne vždy na začátek; životní runa jen kontext.
 **Obraznost**: `_seasonalImagery(lang, drawn)` vloží do čtení JEDEN obraz. Primární zdroj je
@@ -64,20 +62,13 @@ neměl vstup, `RUNAR_DECISIONS.md` 2026-09-28 (1)); nová podoba čeká na `dete
 <!-- 2026-08-18: tady stál výčet pěti spreadů + „= ✅ produkce", tedy STAV, který §20.4 zakazuje
      a který navíc říkal totéž co tehdejší řádka o modulu Gatheringu o 326 řádek výš. Duplikát uvnitř
      jednoho souboru; pět spreadů je v configu, takže se dá odkázat místo opisovat. -->
-**Gating:** blokuje se jen **Visitor** (nepřihlášený) — živé čtení ani hlas nemá, proxy ho odmítne (401, DECISIONS 2026-08-02);
-má jen statickou kolekci run a životní runu (výpočet);
-po tahu runy mu appka ukáže výzvu k registraci a proxy nevolá (od 2026-10-10, DECISIONS 2026-10-10 (1)). Každý přihlášený dosáhne
-na všechno; Rune Seeker platí kredity, předplatitelé to berou z měsíčních jednotek.
-⭐ **Yggdrasil = KDYKOLIV, KDOKOLIV přihlášený. Žádná brána na datum.** Zimní slunovrat = větší
-**síla ve stromě**, ne podmínka přístupu (rituální čtení; bude jich víc). KUKY 2026-07-18, po páté
-opravě téhož — detail `RUNAR_DECISIONS.md`. Kdo sem napíše „Dec 14–28" jako podmínku, dělá to znovu.  <!-- check-docs:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
+**Gating a Yggdrasil** → CLAUDE.md „Spread systém“. Detail: Visitor má statickou Kolekci a životní runu (výpočet); po tahu runy mu
+appka ukáže výzvu k registraci a proxy nevolá (DECISIONS 2026-10-10 (1)).
 
 ## Tree of Life — stav
 Stav vlastní `RUNAR_TREE.md` (duše · zóny · stavba · co je a co není postavené) a `git log`.
-**Tady se neopisuje** — §20.4. Kdo strom vidí, vlastní `renderLivingTree` v `runar-tree.js`.
-⚠️ **Past pro lane `[tune]`:** strom se krmí regexem přes text čtení (glyfy 0x16A0–0x16FF
-z `rune_glyph + short_text`). Změníš formát skládaného textu → CODE-tree tiše přijde o větve.
-Hlídá smoke ⑬ (`verify_tree_signals.js`), ale tahle věta je důvod, proč o tom vůbec víš.
+**Tady se neopisuje** — §20.4. Kdo strom vidí, vlastní `treeVisibleFor()` v `runar-tree.js`. Past pro `[tune]` → CLAUDE.md
+„Tree of Life“ (smoke ⑬).
 Kanonický vstupní bod = `RUNAR_TREE.md`. `RUNAR_TREE_LAB.md` = historie (docs/archive/tree/).
 
 ## Word Corrections

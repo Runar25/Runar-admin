@@ -2,6 +2,7 @@
 # Čte se NA POŽÁDÁNÍ (není v kontextu každé session). Platné znění pravidel je v CLAUDE.md; tady je, PROČ tak zní,
 # čím se to doložilo a co tam stálo dřív. Přeneseno doslova z CLAUDE.md při optimalizaci 2026-10-21 (owner „12. ano, začni“,
 # DECISIONS 2026-10-21) — nic se nesmazalo. Nové důvody sem nepiš: patří do RUNAR_DECISIONS.md (§16, §28).
+# ⚠️ Příkazy v textu níž jsou znění k 2026-10-21 kvůli kontextu důvodu — **platné znění je jen v CLAUDE.md** (údržba 2026-11-23).
 
 ### §1 — JS změny = Python skripty
 **Výjimka — sdílené soubory** (`_SDILENE` v `hooks/pre-commit.py`; z appky `runar-reading.js`, `runar-translations.js`, `runar-tree.js`,
