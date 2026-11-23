@@ -24,7 +24,7 @@ export function normalizuj(s: string): string {
   return String(s ?? "").replace(/\s+/g, " ").trim();
 }
 
-// Vlastní podklíč odvozený z tajemství serveru (SUPABASE_SERVICE_ROLE_KEY má každá edge funkce) — žádné nové tajemství
+// Vlastní podklíč odvozený z tajemství serveru (SERVER_KLIC z _shared/klic.ts, nový tajný klíč) — žádné nové tajemství
 // k nastavení; tajemství samo se k podpisu nepoužije a z podpisu se zjistit nedá.
 async function klic(tajemstvi: string): Promise<CryptoKey> {
   const zaklad = await crypto.subtle.importKey("raw", enc.encode(tajemstvi), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);

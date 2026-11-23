@@ -504,9 +504,9 @@ promptu v `claude-proxy` (už ověřuje přihlášení a odečítá kredity; pro
      inactive-accounts. Návrat: předchozí verze funkcí.
    - [x] *(CODE-tune 2026-11-02, DECISIONS 2026-11-02 (2); přihlášený ověřen: owner po aktualizaci appky „jsem přihlášený, funguje“.)* **2 CODE (appka):** `SB_KEY` = `sb_publishable_…`, `show_corrections.py`; ověřit i přihlášení a obnovu tokenu (docs a zkouška
      se rozcházejí u Bearer + publishable — REST odpověděl 200). Návrat: revert.
-   - [ ] **3:** 1–2 týdny počkat (SW drží starý config v nainstalované appce; využití starých klíčů docs neukazují).
-   - [ ] **4 OWNER (~25. 11.):** staré klíče vypnout (docs: vratné — dají se zapnout zpět). Ověřit: celý smoke, čtení s hlasem, běhy cronu.
-   - [ ] **5 CODE:** zálohy z kroku 1 pryč, `KLICE_SUPABASE.vymeneno = true` (+ test v verify_ops_souhrn.js), DECISIONS.
+   - [x] ✅ *(2026-11-23, DECISIONS 2026-11-23 (1))* **3:** 1–2 týdny počkat (SW drží starý config v nainstalované appce; využití starých klíčů docs neukazují).
+   - [x] ✅ *(2026-11-23, vypnul CODE-tune s ownerovým přihlášením, DECISIONS 2026-11-23 (1))* **4 OWNER (~25. 11.):** staré klíče vypnout (docs: vratné — dají se zapnout zpět). Ověřit: celý smoke, čtení s hlasem, běhy cronu.
+   - [x] ✅ *(2026-11-23, DECISIONS 2026-11-23 (1))* **5 CODE:** zálohy z kroku 1 pryč, `KLICE_SUPABASE.vymeneno = true` (+ test v verify_ops_souhrn.js), DECISIONS.
    Neověřeno (jen odvozeno): že `SUPABASE_SECRET_KEYS` se naplní po založení klíče `default`; že `auth.admin` (deleteUser, listUsers)
    funguje se `sb_secret_`; zda proměnná `SUPABASE_SERVICE_ROLE_KEY` po vypnutí zmizí.
 

@@ -54,7 +54,8 @@ export const KVOTY: Record<string, { kratce: string; limit: number; zdroj: strin
 };
 // Staré klíče Supabase (anon, service_role) končí „do konce roku 2026“ (supabase.com/docs/guides/api/api-keys, čteno 2026-10-22; přesné datum
 // docs neuvádí) — krok 9 plánu infrastruktury. Odpočet v souhrnu od pozorOd, od problemOd stav souhrnu PROBLEM. Po výměně klíčů vymeneno: true.
-export const KLICE_SUPABASE = { vymeneno: false, konec: "2026-12-31", pozorOd: "2026-11-01", problemOd: "2026-12-01" };
+// 2026-11-23: staré klíče vypnuté (owner „vyměň klíče“, krok 5) → vymeneno: true, odpočet v souhrnu skončil.
+export const KLICE_SUPABASE = { vymeneno: true, konec: "2026-12-31", pozorOd: "2026-11-01", problemOd: "2026-12-01" };
 export const EGRESS_PRIPOMINKA = "Monday check: Supabase egress has no API — look at Usage in the Supabase dashboard (Free 5 GB).";
 
 // Automatická mazání — JEDINÉ místo, kde stojí, co se kde samo maže (owner 2026-10-16: „chci vždy potvrzení, že úloha … proběhla, kde

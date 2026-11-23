@@ -13523,3 +13523,16 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   a `verify_citelnost.js` (8 stavů) OK; soupis komponent OK (nové kusy přes id, ne třídy).
 - **IS:** *hjálp* 112 314, *fylgstu með* 749, *vefur* 11 811.
 - Affected doc(s): RUNAR_BACKLOG.md (Hlášení z appky 2026-11-19).
+
+## 2026-11-23 (1) — Klíče Supabase, krok 4 a 5: staré klíče anon / service_role vypnuté, záloha z kódu pryč
+- **Owner:** *„vyměň klíče“*; přihlásil se do Supabase v panelu prohlížeče. Vypnul CODE-tune (Settings → API Keys → Disable JWT-based
+  API keys) — plán počítal s ownerem, owner 2026-11-23 *„vždy to nasazuješ sám“*. Navazuje na 2026-11-01 (9) a 2026-11-02 (2).
+- **Ověřeno před vypnutím:** zkušební běh `inactive-accounts` (z DB jako cron) `"key":"secret"`; 15 funkcí bez `verify_jwt`; starý JWT
+  nikde v repu (kód, web, skripty), v lokálních úlohách ani v cronu; zálohy a skripty jdou do DB heslem.
+- **Ověřeno po vypnutí:** starý anon v hlavičce `apikey` → 401 (REST i auth), publishable → auth 200, REST přijme klíč (dál rozhoduje
+  RLS); `inactive-accounts` dry 200 `secret`; `ops-watch` check 200, všechno ok kromě `runs` = deploy_drift `ops-watch` — nesouvisí s klíči:
+  `ee9b779` (2026-11-18) změnil `_shared/ops_souhrn.ts` bez nasazení `ops-watch`; srovná ho nasazení všech funkcí v kroku 5.
+- **Krok 5:** `_shared/klic.ts` bez zálohy `SUPABASE_SERVICE_ROLE_KEY` (chybí-li nový klíč, `klicZdroj` = none + chyba v logu); podpis
+  hlasu se ověřuje jen novým klíčem (starým se nepodepisuje od 2026-11-01); `KLICE_SUPABASE.vymeneno = true` (souhrn přestal odpočítávat).
+- **Návrat:** Settings → API Keys → *Re-enable JWT-based API keys* (vratné) + revert commitu a nasazení.
+- Affected doc(s): RUNAR_BACKLOG.md (Plán infrastruktury, krok 9).
