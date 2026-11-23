@@ -872,18 +872,8 @@ function _phRotate(id, seznam, idx0) {
 // Duvod je islandsky: nazvy zameru („Akvordun framundan") by se musely sklonovat podle
 // vazby ve vete, a to sablona neumi. Cela veta ten problem odstranuje, ne obchazi.
 // Index hledani v SEEKS. 0 = „Almenn leiðsögn / General Guidance" — vedome BEZ tipu.
-function _seekIdx(v) {
-  if (!v || typeof SEEKS === 'undefined') return -1;
-  var i = (SEEKS.en || []).indexOf(v);
-  if (i === -1) i = (SEEKS.is || []).indexOf(v);
-  return i;
-}
-function _intentIdx(v) {
-  if (!v || typeof INTENTIONS === 'undefined') return -1;
-  var i = (INTENTIONS.en || []).indexOf(v);
-  if (i === -1) i = (INTENTIONS.is || []).indexOf(v);
-  return i;
-}
+function _seekIdx(v) { return _labelIndex(v, typeof SEEKS !== 'undefined' ? SEEKS : null); }
+function _intentIdx(v) { return _labelIndex(v, typeof INTENTIONS !== 'undefined' ? INTENTIONS : null); }
 // Co Runar o ZADANI ctenia vi, kdyz clovek pouzije Ask. Ma vlastni funkci ze dvou duvodu:
 // (1) je to jedno misto (§18) — az pribude dalsi pole, pribude tady a nikde jinde;
 // (2) `askRunar()` potrebuje DOM, takze se z kontroly zavolat neda. Bez tehle funkce by

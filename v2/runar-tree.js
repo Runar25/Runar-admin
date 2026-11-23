@@ -35,12 +35,7 @@ var TREE_AREA_SLUG = ['love', 'purpose', 'career', 'healing', 'spirituality', 'f
 // DRUH seekingu (2026-10-11): novy strom tvaruje vetev i koren podle druhu. Poradi MUSI sedet na SEEKS.en/SEEKS.is; hlida smoke ⑬.
 var TREE_SEEK_SLUG = ['general', 'clarity', 'confirmation', 'insight', 'reflection'];
 
-function _labelIndex(label, pack) {
-  if (!label || typeof pack === 'undefined') return -1;
-  var i = (pack.en || []).indexOf(label);
-  if (i < 0) i = (pack.is || []).indexOf(label);
-  return i;
-}
+// _labelIndex(label, pack) bydlí v runar-utils.js (2026-11-23).
 function _areaSlug(label) {
   var i = _labelIndex(label, typeof AREAS !== 'undefined' ? AREAS : null);
   return i >= 0 ? (TREE_AREA_SLUG[i] || null) : null;
