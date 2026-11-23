@@ -17,3 +17,8 @@ dobrým, a rozšiř to na to, co už platí (obrazy z v2, které chválil dřív
 
 **How to apply:** verdikt = věc + ✔/✘ + důvod vlastními slovy; u chváleného příkladu napiš, jaký obecnější rys nese, a doplň další
 doklady z kánonu. Souvisí: [[ownerovo-slovo-neni-spec]] · [[write-for-owner-not-process]] · [[co-dela-cteni-silnym]].
+
+**Platí i v chatu (owner 2026-11-23):** ownerova stará slova nevracej ownerovi jako zdůvodnění („sedí to i s tvým ‚ne každá mince má
+dvě strany‘“). Owner: „pokud jsem to řekl, tak to nezní dobře … oprav mě a použij něco, co k tomu sedí. není fakt potřeba citovat všechno.“
+Řekni věc vlastní srozumitelnou větou („u Hagalaz bod zlomu chybí, protože ta runa je zlom sama“); citaci jen tam, kde rozhoduje spor
+o to, co owner řekl.
