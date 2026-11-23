@@ -1289,7 +1289,7 @@ function resetReader() {
   buildPills();
 }
 
-// Přehrávač hlasu = _makeCapPlayer('cap') / _capWire / _capReset / _capStop v runar-app.js — jediný přehrávač appky (2026-10-10,
+// Přehrávač hlasu = _makeCapPlayer('cap') / _capWire / _capStop v runar-app.js — jediný přehrávač appky (2026-10-10,
 // KUKY „jen jeden typ“). Tady do té doby stál vlastní (capToggle/capSeek/capMute/_capTrack) a ztlumení bylo jen u čtení.
 
 // ─── VOICE ───────────────────────────────────────────────
@@ -1367,7 +1367,7 @@ async function generateVoice() {
     const blob = await fetch(data.audio_url).then(r => r.blob());
     const audio = document.getElementById('cap-a');   // přehrávač hlasu = _makeCapPlayer('cap') (runar-app.js)
     audio.src = URL.createObjectURL(blob);
-    svickaHotovo('cap');   // svíčka se dotvoří a jiskra blikne (bez tvoření = jako dřív _capReset)
+    svickaHotovo('cap');   // svíčka se dotvoří a jiskra blikne (bez tvoření = jako dřív reset přehrávače)
     // název na zamčené obrazovce = nadpis čtení, který je vidět (jméno runy / výkladu), bez ozdob
     svickaNazev('cap', function () { var l = [].find.call(document.querySelectorAll('#reader-output .layer1-lbl'), function (e) { return e.offsetParent !== null; });
       return l ? l.textContent.replace(/[✦~]/g, '').trim() : ''; },

@@ -1236,10 +1236,6 @@ async function loadLifeRuneFromDB() {
   }
 }
 
-function openJournalFromPanel() {
-  closeSidePanel();
-  showAppTab('journal');
-}
 function closeSidePanel() {
   document.getElementById('side-panel').classList.remove('open');
   document.getElementById('side-overlay').classList.remove('open');
