@@ -95,6 +95,23 @@ NO-QUESTION / QUESTION · ENDING → poslední · NAME-PLACEMENT · LANGUAGE · 
 | poměr 70/15/15, trychtýř runa → člověk | 4 věty, věta 4 krátká | sedí |
 Pět bloků do čtyř vět se nevejde → bloky 3 a 4 jako položky losu věty 3, ne pevné věty.
 
+## 8b. GPT a Gemini k návrhu (2026-11-23, vloženo ownerem) — vyhodnocení CODE-read
+Owner: *„nemůžeme teď slepě koukat na kánon … je potřeba se trochu otevřít a analyticky to zhodnotit. všechno překontroluj a pokud můžeš, rozšiř.“*
+| návrh | ověření / co už víme | verdikt |
+|---|---|---|
+| zůstat u 4 pohybů, 5 bloků ne (GPT, Gemini souhlasí) | shoda s ownerem 11-18 | **přijmout** |
+| věta 3 = jedno z: konstruktivní pól · tření · přehlížená stránka | sol při volné volbě sklouzne k výchozí (krok 2: volný konec → návrat k obrazu 8/9 → „druh konce se musí losovat“) | **přijmout, režim losovat** (Gemini), ne nechat na modelu |
+| „vnitřní napětí: mechanismus runy se obrátí proti sobě“ | ownerovy popisy run mají druhou stranu skoro všude (Fehu „Ale Fehu má i druhou stranu“); owner 10-30 „ne každá mince má dvě strany“ | **přijmout jako data per runa**, ne jako povinnost u každé runy |
+| „přehlížená proměnná“ | už máme ownerem potvrzené pravidlo „druhá půlka ukáže, co v obraze NENÍ — směna, nebo stopa“ (2026-09-20, `memory/co-dela-cteni-silnym.md` bod 4; n = 6 dvojic) | **přijmout** — je to totéž; v produkčním zadání dnes chybí |
+| pravidlo nenahraditelnosti v promptu | model při psaní jedné runy nesrovnává s 24 dalšími (Gemini) | **ne do promptu** — do dat (paradox per runa) + mimo prompt měří slepí soudci run (máme) |
+| pravidlo nového přínosu (věta 3 ≠ přeformulovaná 2) | měřitelné strojem: překryv slov věty 2 a 3 | **přijmout jako kontrolu**, ne jako větu v promptu |
+| vstup „What feels closest to you right now?“ (GPT) | = BACKLOG 10 „How I feel“ (owner 10-26, 11-11). Emoce zvolí stranu runy pro větu 3, význam nemění. Co člověk zadal sám, smí Rúnar pojmenovat (definice 10-16, „konstatování“) | **slibné**; rizika: Loss/Pressure u krize (pravidlo 112) · přitakávání · osobní údaj v DB (`RUNAR_PRIVACY.md`) · volný text = dnes jen admin |
+| Zeigarnikův efekt (Gemini) | metaanalýza 2025 (Ghibellini & Meier): paměťová výhoda nedokončených úkolů obecně neplatí; tendence se k nim vracet ano | **nepoužívat jako důvod** |
+| Barnum (GPT) | známý jev; „působí přesně“ není měřítko — už v kánonu (`RUNAR_DESIGN.md`) | shoda |
+| defuze (ACT) | koncept existuje, účinek metafory není zaručený (GPT sám) | jen jako možný účinek, ne cíl |
+| 4. kritérium „bez diagnostiky uživatele“ (Gemini) | = naše jádro, bod 2; kontrola tvaru umí část strojově | **přijmout do hodnocení** |
+Pozn.: GPT píše, že náš systém „vybírá jeden ze dvou pólů runy“ — platí jen v labu (varianta „dvě strany“), produkce má slovo z banky + esenci.
+
 ## 9. Jde to jinak a lépe?
 1. **Kostru generovat z kódu:** každý kus zadání už v kódu nese, na kterou větu míří (`_kus(jméno, vstup, věta, text)`). Tabulka v oddílu 5 se dá
    skládat skriptem (jako testovací balíček) → doc a prompt se nerozejdou.
