@@ -1,5 +1,5 @@
 -- 2026-11-23 — Základní tabulky bez vytvářecí migrace: jen ZÁZNAM, jak vypadají v produkci (pg_dump --schema-only, bez vlastníka a grantů).
--- Proč: readings, gift_codes, runar_character, runar_corrections, runar_static_audio a rate_limits vznikly ručně v Supabase editoru
+-- Proč: user_profiles, readings, gift_codes, runar_character, runar_corrections, runar_static_audio a rate_limits vznikly ručně v Supabase editoru
 -- před zavedením sql/; z repa se DB postavit nedala (údržba 2026-11-23, oblast G). NESPOUŠTĚT na produkci — tabulky tam jsou.
 -- Granty a mazání vlastní pozdější migrace; obnovu ze zálohy dělá scripts/utils/obnova_db.js z pg_dump (zálohy), ne tenhle soubor.
 
@@ -362,4 +362,142 @@ ALTER TABLE public.runar_static_audio ENABLE ROW LEVEL SECURITY;
 --
 
 \unrestrict u4hsDa7OAx0bjgOQCsGtY0w7WihVDOOeGiZTLFfzkeeo8bzoXnzupLnAaiyU7lD
+
+
+-- user_profiles (doplněno týž den — chyběla v sql/ taky)
+--
+-- PostgreSQL database dump
+--
+
+\restrict 7SnlnWuXFCHemhtndGVV5S23IIjcADGgj2FROlVKUjcEIDoljYlV8CaDAynXlNo
+
+-- Dumped from database version 17.6
+-- Dumped by pg_dump version 17.11
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: user_profiles; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.user_profiles (
+    id uuid NOT NULL,
+    name text,
+    lang text DEFAULT 'en'::text,
+    tier text DEFAULT 'free'::text,
+    created_at timestamp with time zone DEFAULT now(),
+    credits_balance integer DEFAULT 0 NOT NULL,
+    free_balance integer DEFAULT 1 NOT NULL,
+    drip_week text,
+    life_rune_number integer,
+    life_rune_text text,
+    life_rune_lang text,
+    dob_day integer,
+    dob_month integer,
+    dob_year integer,
+    tree_name text,
+    address_gender text DEFAULT 'hk'::text,
+    is_tester boolean DEFAULT false NOT NULL,
+    analytics_opt_out boolean DEFAULT false NOT NULL,
+    tester_consent_at timestamp with time zone,
+    month_units integer DEFAULT 0 NOT NULL,
+    month_key text,
+    tree_founded_at timestamp with time zone,
+    founding_reading_id uuid,
+    name_lore_text text,
+    voice_month_key text,
+    voice_month_count integer DEFAULT 0 NOT NULL,
+    norse_name text,
+    address_pref text DEFAULT 'name'::text NOT NULL,
+    name_lore_for text,
+    name_lore_count integer DEFAULT 0 NOT NULL,
+    question_consent_at timestamp with time zone,
+    CONSTRAINT user_profiles_address_pref_chk CHECK ((address_pref = ANY (ARRAY['name'::text, 'norse'::text]))),
+    CONSTRAINT user_profiles_norse_name_len_chk CHECK (((norse_name IS NULL) OR (char_length(norse_name) <= 60)))
+);
+
+
+--
+-- Name: user_profiles user_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_profiles
+    ADD CONSTRAINT user_profiles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_profiles_is_tester_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX user_profiles_is_tester_idx ON public.user_profiles USING btree (is_tester) WHERE (is_tester = true);
+
+
+--
+-- Name: user_profiles_opt_out_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX user_profiles_opt_out_idx ON public.user_profiles USING btree (analytics_opt_out) WHERE (analytics_opt_out = true);
+
+
+--
+-- Name: user_profiles trg_ledger_user_profiles; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER trg_ledger_user_profiles AFTER INSERT OR DELETE OR UPDATE ON public.user_profiles FOR EACH ROW EXECUTE FUNCTION public.ledger_user_profiles();
+
+
+--
+-- Name: user_profiles trg_life_rune_immutable; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER trg_life_rune_immutable BEFORE UPDATE ON public.user_profiles FOR EACH ROW EXECUTE FUNCTION public.guard_life_rune_immutable();
+
+
+--
+-- Name: user_profiles trg_profile_tester_from_allowlist; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER trg_profile_tester_from_allowlist BEFORE INSERT ON public.user_profiles FOR EACH ROW EXECUTE FUNCTION public.profile_tester_from_allowlist();
+
+
+--
+-- Name: user_profiles user_profiles_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_profiles
+    ADD CONSTRAINT user_profiles_id_fkey FOREIGN KEY (id) REFERENCES auth.users(id) ON DELETE CASCADE;
+
+
+--
+-- Name: user_profiles Users manage own profile; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "Users manage own profile" ON public.user_profiles USING ((auth.uid() = id)) WITH CHECK ((auth.uid() = id));
+
+
+--
+-- Name: user_profiles; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.user_profiles ENABLE ROW LEVEL SECURITY;
+
+--
+-- PostgreSQL database dump complete
+--
+
+\unrestrict 7SnlnWuXFCHemhtndGVV5S23IIjcADGgj2FROlVKUjcEIDoljYlV8CaDAynXlNo
 
