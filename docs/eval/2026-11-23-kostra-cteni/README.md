@@ -112,6 +112,21 @@ Owner: *„nemůžeme teď slepě koukat na kánon … je potřeba se trochu ote
 | 4. kritérium „bez diagnostiky uživatele“ (Gemini) | = naše jádro, bod 2; kontrola tvaru umí část strojově | **přijmout do hodnocení** |
 Pozn.: GPT píše, že náš systém „vybírá jeden ze dvou pólů runy“ — platí jen v labu (varianta „dvě strany“), produkce má slovo z banky + esenci.
 
+## 8c. Data pro větu 3 a kalibrace soudců (2026-11-23, owner „8. ano · 9. ano“)
+**Data:** `data-5-run.json` — Fehu, Raidho, Gebo, Hagalaz, Berkana: dvě strany · bod zlomu · přehlížená stránka, každá s citací z ownerova
+popisu. Gemini: „druhá strana“ nesmí být jinými slovy „bod zlomu“ → u Berkany přepsána 2. strana (růst nejde vynutit), zlom = příliš péče;
+u Hagalaz zlom **vynechán** (runa je sama zlom; owner „ne každá mince má dvě strany“).
+**Kalibrace soudců** (owner: „rád bych věděl, že kontrolují a hlídají to, co mají … ne zbytečným voláním API“): `soudci/` — sada se známou
+odpovědí, soudci = agenti bez API, naslepo.
+1. **Soudce tvrzení o člověku:** 20 vět, o kterých už rozhodl owner nebo kánon (10 vad, 10 v pořádku; včetně těch, na kterých dřív soudci
+   přestřelili). Soudce 1: 20/20. Soudce 2: 19/20 — přestřelil „Your knuckles have learned this before your mind has“ (owner 09-23: není vada).
+   → **vada se počítá, jen když se shodnou oba**; kde se rozejdou, čte CODE-read a ukáže ownerovi.
+2. **Soudce runy:** 9 skutečných čtení bez jména runy + 3 chiméry (věta o významu z jiné runy). Oba soudci: runa 9/9, chiméry 3/3 i s původem
+   podstrčené věty, falešné poplachy 0/9.
+3. **Stroj „nový přínos“** (podíl slov věty 3, která už jsou ve větě 2): pravá čtení 0,00–0,13 · podstrčené přeformulování 0,75 → práh existuje.
+4. **Hranice kalibrace:** chiméry jsou hrubé (celá jiná runa) — jemnou záměnu sousedních run (Fehu × Gebo) to neprověřuje · věty v sadě A
+   jsou krátké a vytržené · „zajímavost“ a „nový pohled“ soudce neměří, to soudí owner naslepo.
+
 ## 9. Jde to jinak a lépe?
 1. **Kostru generovat z kódu:** každý kus zadání už v kódu nese, na kterou větu míří (`_kus(jméno, vstup, věta, text)`). Tabulka v oddílu 5 se dá
    skládat skriptem (jako testovací balíček) → doc a prompt se nerozejdou.

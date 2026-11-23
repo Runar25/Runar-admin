@@ -1,0 +1,14 @@
+[
+ {"id": 1, "rune": "Hagalaz", "second": "Eihwaz", "s2_fits": "yes", "s2_rune": "Hagalaz", "why": "Hail flattening tulips is an outside force breaking a plan, and sentence 2 says exactly that."},
+ {"id": 2, "rune": "Raidho", "second": "Ehwaz", "s2_fits": "yes", "s2_rune": "Raidho", "why": "Driving past the turning on a smooth road matches settling into a pace without noticing where it leads."},
+ {"id": 3, "rune": "Berkana", "second": "Ingwaz", "s2_fits": "yes", "s2_rune": "Berkana", "why": "A sapling in the shade of older birches matches new growth needing room and shelter rather than hurry."},
+ {"id": 4, "rune": "Hagalaz", "second": "Nauthiz", "s2_fits": "yes", "s2_rune": "Hagalaz", "why": "Hail-felled tulips match disruption taking in a minute what care built over a season."},
+ {"id": 5, "rune": "Hagalaz", "second": "Raidho", "s2_fits": "no", "s2_rune": "Raidho", "why": "The picture is hail breaking flowers, but sentence 2 talks about finding a rhythm by going along a road."},
+ {"id": 6, "rune": "Berkana", "second": "Algiz", "s2_fits": "yes", "s2_rune": "Berkana", "why": "A birch sapling under older trees matches growth taking shape under shelter with room."},
+ {"id": 7, "rune": "Hagalaz", "second": "Nauthiz", "s2_fits": "yes", "s2_rune": "Hagalaz", "why": "Fallen tulips on a wet path match meeting a force no one could have steered."},
+ {"id": 8, "rune": "Raidho", "second": "Ehwaz", "s2_fits": "yes", "s2_rune": "Raidho", "why": "Passing the turning with an even engine hum matches a rhythm found by going that does not tell where the road leads."},
+ {"id": 9, "rune": "Berkana", "second": "Ingwaz", "s2_fits": "yes", "s2_rune": "Berkana", "why": "A sapling under sheltering birches matches a small beginning given room to grow before it is strong."},
+ {"id": 10, "rune": "Raidho", "second": "Berkana", "s2_fits": "no", "s2_rune": "Berkana", "why": "The picture is a road and a missed turning, but sentence 2 talks about new growth needing room and shelter."},
+ {"id": 11, "rune": "Raidho", "second": "Ehwaz", "s2_fits": "yes", "s2_rune": "Raidho", "why": "The white line drawing you past the turning matches ease carrying you past the moment to turn."},
+ {"id": 12, "rune": "Berkana", "second": "Hagalaz", "s2_fits": "no", "s2_rune": "Hagalaz", "why": "The picture is a sheltered sapling, but sentence 2 talks about an outside force breaking a plan."}
+]

@@ -1,0 +1,77 @@
+[
+ {
+  "id": 1,
+  "runa": "Hagalaz",
+  "text": "Beneath the hail, the path is strewn with tulips, their stems bent toward the wet stone. What comes from outside can break a plan before anyone has a chance to change it. With time, you may see both what the break took and what remained sound beneath it. Does the friction lie in what was lost, or in what held?",
+  "druh": "prave"
+ },
+ {
+  "id": 2,
+  "runa": "Raidho",
+  "text": "You follow the smooth road past the turning, and the painted arrow slips behind you. You can settle into a pace so easily that you stop noticing where it takes you. What lies ahead may offer room to keep going, even if the direction remains unsettled. Is the ease of moving the same as wanting where you are headed?",
+  "druh": "prave"
+ },
+ {
+  "id": 3,
+  "runa": "Berkana",
+  "text": "You stand beneath older birches, where a sapling reaches through their shade. You can see how new growth sometimes depends on room and shelter, not on being hurried. In what you make for others, care may give a small beginning time to take hold, though it may also keep it out of sight. What seems ready for more light now?",
+  "druh": "prave"
+ },
+ {
+  "id": 4,
+  "runa": "Hagalaz",
+  "text": "Beneath the fallen tulips, your path stays dark where the hail has not yet melted. Disruption can take in a minute what care has built over a season, without giving you a reason. With time, you may see what grew back and what never had the chance. Where does the friction sit for you: in the damage, or in how little warning there was?",
+  "druh": "prave"
+ },
+ {
+  "id": 5,
+  "runa": "Hagalaz",
+  "text": "Beneath the hail, the path is strewn with tulips, their stems bent toward the wet stone. You find a rhythm by going, though ease alone cannot tell you where the road leads. With time, you may see both what the break took and what remained sound beneath it. Does the friction lie in what was lost, or in what held?",
+  "druh": "chimera",
+  "veta2z": "Raidho"
+ },
+ {
+  "id": 6,
+  "runa": "Berkana",
+  "text": "You stand beneath older trees, where a birch sapling catches a narrow strip of light through their branches. You see growth that takes shape under shelter, with room to become distinct. In what you make for others, shelter can give new work time to form, though too much shade can keep it small. Where does protection make room for growth, and where does it limit it?",
+  "druh": "prave"
+ },
+ {
+  "id": 7,
+  "runa": "Hagalaz",
+  "text": "Beneath the fallen tulips, the path is still wet, and one stem rests across another. You can meet a force no one could have steered without finding a reason it came. With time, you may see what was damaged beside what was never yours to protect. Where does the friction sit: in what happened, or in the wish that someone could have stopped it?",
+  "druh": "prave"
+ },
+ {
+  "id": 8,
+  "runa": "Raidho",
+  "text": "You pass your turning as the road bends gently, and the engine keeps its even hum. You find a rhythm by going, though ease alone cannot tell you where the road leads. Ahead, a familiar pace may carry you onward, or a change of direction may give you reason to continue. How do you tell a natural rhythm from mere momentum?",
+  "druh": "prave"
+ },
+ {
+  "id": 9,
+  "runa": "Berkana",
+  "text": "You stand among older birches, where a sapling rises beneath their branches and a narrow strip of light reaches its leaves. In their shelter, you can see how a small beginning has room to grow without being strong yet. What you make for others may be modest and still offer something real. What has begun quietly enough that you might overlook it?",
+  "druh": "prave"
+ },
+ {
+  "id": 10,
+  "runa": "Raidho",
+  "text": "You pass your turning as the road bends gently, and the engine keeps its even hum. You can see how new growth sometimes depends on room and shelter, not on being hurried. Ahead, a familiar pace may carry you onward, or a change of direction may give you reason to continue. How do you tell a natural rhythm from mere momentum?",
+  "druh": "chimera",
+  "veta2z": "Berkana"
+ },
+ {
+  "id": 11,
+  "runa": "Raidho",
+  "text": "Where the road bends past your turning, the white line keeps drawing you forward. A natural rhythm has room for a change of pace; ease alone can carry you past the moment to turn. A decision ahead may hold both the pull of what is familiar and the wish to keep moving. When does a steady pace become mere momentum?",
+  "druh": "prave"
+ },
+ {
+  "id": 12,
+  "runa": "Berkana",
+  "text": "You stand beneath older birches, where a sapling reaches through their shade. What comes from outside can break a plan before anyone has a chance to change it. In what you make for others, care may give a small beginning time to take hold, though it may also keep it out of sight. What seems ready for more light now?",
+  "druh": "chimera",
+  "veta2z": "Hagalaz"
+ }
+]

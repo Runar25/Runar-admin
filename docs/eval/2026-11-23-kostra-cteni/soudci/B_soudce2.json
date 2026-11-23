@@ -1,0 +1,14 @@
+[
+ {"id": 12, "rune": "Berkana", "second": "Ingwaz", "s2_fits": "no", "s2_rune": "Hagalaz", "why": "Picture is a sheltered sapling, but sentence 2 speaks of an outside force breaking a plan."},
+ {"id": 11, "rune": "Raidho", "second": "Ehwaz", "s2_fits": "yes", "s2_rune": "Raidho", "why": "Road drawing you past the turning matches rhythm and ease carrying you past the moment to turn."},
+ {"id": 10, "rune": "Raidho", "second": "Berkana", "s2_fits": "no", "s2_rune": "Berkana", "why": "Picture is driving past a turning, but sentence 2 speaks of new growth needing room and shelter."},
+ {"id": 9, "rune": "Berkana", "second": "Ingwaz", "s2_fits": "yes", "s2_rune": "Berkana", "why": "Sapling under older birches matches a small beginning given room to grow."},
+ {"id": 8, "rune": "Raidho", "second": "Ehwaz", "s2_fits": "yes", "s2_rune": "Raidho", "why": "Even hum past the turning matches rhythm found by going that does not tell where the road leads."},
+ {"id": 7, "rune": "Hagalaz", "second": "Nauthiz", "s2_fits": "yes", "s2_rune": "Hagalaz", "why": "Fallen tulips on a wet path match an unsteerable force that came without reason."},
+ {"id": 6, "rune": "Berkana", "second": "Algiz", "s2_fits": "yes", "s2_rune": "Berkana", "why": "Sapling in a strip of light under older trees matches growth taking shape under shelter."},
+ {"id": 5, "rune": "Hagalaz", "second": "Raidho", "s2_fits": "no", "s2_rune": "Raidho", "why": "Picture is hail-broken tulips, but sentence 2 speaks of finding a rhythm on a road."},
+ {"id": 4, "rune": "Hagalaz", "second": "Nauthiz", "s2_fits": "yes", "s2_rune": "Hagalaz", "why": "Hail and fallen tulips match disruption taking in a minute what care built."},
+ {"id": 3, "rune": "Berkana", "second": "Ingwaz", "s2_fits": "yes", "s2_rune": "Berkana", "why": "Sapling in the shade of older birches matches growth that needs room and shelter, not hurry."},
+ {"id": 2, "rune": "Raidho", "second": "Ehwaz", "s2_fits": "yes", "s2_rune": "Raidho", "why": "Smooth road past the turning matches settling into a pace and not noticing where it leads."},
+ {"id": 1, "rune": "Hagalaz", "second": "Nauthiz", "s2_fits": "yes", "s2_rune": "Hagalaz", "why": "Hail-bent tulips match something from outside breaking a plan."}
+]

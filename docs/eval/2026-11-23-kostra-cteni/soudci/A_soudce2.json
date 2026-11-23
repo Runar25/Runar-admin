@@ -1,0 +1,22 @@
+[
+ {"id": 20, "verdict": "OK", "which": "", "why": "Open question that assumes nothing about the seeker."},
+ {"id": 19, "verdict": "FAULT", "which": "a", "why": "States as fact that the seeker gives more than they get and is worn down."},
+ {"id": 18, "verdict": "FAULT", "which": "a", "why": "Claims to know what the seeker already knows and will choose."},
+ {"id": 17, "verdict": "OK", "which": "", "why": "Open question that presumes no problem or motive."},
+ {"id": 16, "verdict": "FAULT", "which": "d", "why": "Question smuggles in two unstated motives, protecting growth or hiding from judgment."},
+ {"id": 15, "verdict": "FAULT", "which": "a", "why": "States as fact how people talk in the seeker's home."},
+ {"id": 14, "verdict": "OK", "which": "", "why": "Possibility marked with may, no claim about the seeker's actual situation."},
+ {"id": 13, "verdict": "FAULT", "which": "c", "why": "Claims the runes are arranging something for the seeker."},
+ {"id": 12, "verdict": "FAULT", "which": "a", "why": "Asserts facts about the seeker's relationship, its arguments and unresolved weight."},
+ {"id": 11, "verdict": "OK", "which": "", "why": "Places the seeker inside a picture only."},
+ {"id": 10, "verdict": "FAULT", "which": "b", "why": "Tells the seeker to stop carrying something and presumes they carry what is not theirs."},
+ {"id": 9, "verdict": "OK", "which": "", "why": "Open question posed inside the picture, no assumed problem."},
+ {"id": 8, "verdict": "OK", "which": "", "why": "Invitation to look at the picture."},
+ {"id": 7, "verdict": "FAULT", "which": "b", "why": "Direct advice on what the seeker should do before deciding."},
+ {"id": 6, "verdict": "OK", "which": "", "why": "General truth about how plans break."},
+ {"id": 5, "verdict": "FAULT", "which": "a", "why": "States as fact what the seeker's body has learned and their mind has not."},
+ {"id": 4, "verdict": "FAULT", "which": "a", "why": "Asserts a specific disruption and months of building in the seeker's plans."},
+ {"id": 3, "verdict": "OK", "which": "", "why": "Two possibilities marked with may, nothing asserted."},
+ {"id": 2, "verdict": "OK", "which": "", "why": "Open question that imputes no problem or motive."},
+ {"id": 1, "verdict": "FAULT", "which": "a", "why": "States the seeker's hidden fear and motive as fact."}
+]

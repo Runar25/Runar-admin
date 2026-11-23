@@ -1,0 +1,43 @@
+{
+ "_co": "Lab 2026-11-23, CODE-read: data pro větu 3 (DOPAD) u pěti run. strany = dvě různé podoby téže síly · zlom = chvíle, kdy se síla runy obrátí proti sobě (null, kde to runa přirozeně nemá — owner 2026-10-30 „ne každá mince má dvě strany“, Gemini 2026-11-23 „raději pole vynech“) · prehlizene = co v obraze není vidět: směna nebo stopa (ownerem potvrzené pravidlo 2026-09-20). Každá položka: t = znění pro model (zdroj, ne text k opsání), z = citace z ownerova popisu v RUNAR_POPISY_RUN.md.",
+ "Fehu": {
+  "strany": [
+   {"t": "value lives only while it moves; what is fed grows", "z": "„síla, která má hodnotu tehdy, když se může pohybovat“ · „To, co živíš, roste.“"},
+   {"t": "what flows in can also flow out again", "z": "„To, co proudí dovnitř, může také odtéct.“"}
+  ],
+  "zlom": {"t": "keeping a thing safe by keeping it still is what makes it lose its strength", "z": "„To, co necháš stát, může ztratit svou sílu.“"},
+  "prehlizene": {"t": "it is not only what is there, but what is being done with it", "z": "„ukazuje nejen na to, co máš, ale také na to, co s tím děláš“"}
+ },
+ "Raidho": {
+  "strany": [
+   {"t": "the way itself makes something; its rhythm is found only by going", "z": "„Cesta sama něco vytváří.“ · „rytmus cesty objevíš až tím, že po ní jdeš“"},
+   {"t": "whether the way of going still matches where one truly means to go", "z": "„odpovídá způsob, kterým jdeš, tomu, kam skutečně směřuješ?“"}
+  ],
+  "zlom": {"t": "a rhythm so easy that going on takes the place of choosing", "z": "„nebo jen pokračuješ v cestě, kterou jsi už jednou začal?“"},
+  "prehlizene": {"t": "steps show themselves as a road only when looked back on", "z": "„teprve zpětně je vidět, že vytvořily cestu“"}
+ },
+ "Gebo": {
+  "strany": [
+   {"t": "a gift means something leaves the hand, with no certainty it returns", "z": "„Dar má smysl právě proto, že něco opouští tvoji ruku.“ · „bez jistoty, že se ti to vrátí“"},
+   {"t": "receiving without having to repay at once", "z": "„přijmout, aniž bys za to musel okamžitě něco vracet“"}
+  ],
+  "zlom": {"t": "a gift that has to be given, or has to be paid back, stops being a gift", "z": "„Skutečný dar není dar, pokud je vynucený.“ · „pokud jedna strana musí neustále platit“"},
+  "prehlizene": {"t": "what arises between the two belongs to neither of them alone", "z": "„prostor, který patří oběma“ · „Něco, co nejde vlastnit.“"}
+ },
+ "Hagalaz": {
+  "strany": [
+   {"t": "a force no one can steer, which is not a punishment", "z": "„Hagalaz ale není trest. Je to síla, kterou člověk nemůže řídit.“"},
+   {"t": "the moment when it is no longer possible to go on exactly as before", "z": "„okamžik, kdy už není možné pokračovat přesně tak jako předtím“"}
+  ],
+  "zlom": null,
+  "prehlizene": {"t": "what is still standing afterwards shows what had real roots", "z": "„některé možná přežily právě proto, že měly skutečně pevné kořeny“"}
+ },
+ "Berkana": {
+  "strany": [
+   {"t": "what is small does not have to be weak; a beginning need not be impressive to be real", "z": "„To, co je malé, nemusí být slabé.“ · „začátek nemusí být působivý“"},
+   {"t": "growth cannot be forced; it needs soil, water, light and time", "z": "„Semeno nevyroste rychleji proto, že na něj budeš tlačit. Potřebuje půdu, vodu, světlo a čas.“"}
+  ],
+  "zlom": {"t": "too much tending can harm what is growing as much as none at all", "z": "„Příliš mnoho zásahů může být stejně škodlivých jako žádná péče.“"},
+  "prehlizene": {"t": "letting something grow without knowing yet what it will become", "z": "„nechat něco růst, aniž bys musel přesně vědět, čím se nakonec stane“"}
+ }
+}

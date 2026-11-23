@@ -1,0 +1,22 @@
+[
+ {"id": 1, "verdict": "FAULT", "which": "a", "why": "Asserts as fact a hidden fear behind the seeker's behaviour, which the reader cannot know."},
+ {"id": 2, "verdict": "OK", "which": "", "why": "Open question that assumes no problem or motive."},
+ {"id": 3, "verdict": "OK", "which": "", "why": "Two possibilities marked with 'may', nothing asserted about the seeker."},
+ {"id": 4, "verdict": "FAULT", "which": "a", "why": "States a specific event and months of building in the seeker's plans as fact."},
+ {"id": 5, "verdict": "OK", "which": "", "why": "Bodily image inside the picture; not clearly a factual claim about the seeker's life."},
+ {"id": 6, "verdict": "OK", "which": "", "why": "General truth about how plans break, not about the seeker."},
+ {"id": 7, "verdict": "FAULT", "which": "b", "why": "Direct advice on what the seeker should do before deciding."},
+ {"id": 8, "verdict": "OK", "which": "", "why": "Invitation to look at the picture."},
+ {"id": 9, "verdict": "OK", "which": "", "why": "Open question posed inside the picture, assumes nothing about the seeker."},
+ {"id": 10, "verdict": "FAULT", "which": "b", "why": "Tells the seeker to stop carrying something, and presumes they carry a burden not theirs."},
+ {"id": 11, "verdict": "OK", "which": "", "why": "Places the seeker inside a picture."},
+ {"id": 12, "verdict": "FAULT", "which": "a", "why": "States as fact arguments and an unresolved weight in the seeker's relationship."},
+ {"id": 13, "verdict": "FAULT", "which": "c", "why": "Claims the runes are arranging something for the seeker's future."},
+ {"id": 14, "verdict": "OK", "which": "", "why": "Possibility marked with 'may' in both directions, no assertion."},
+ {"id": 15, "verdict": "FAULT", "which": "a", "why": "States as fact how conversation is in the seeker's home."},
+ {"id": 16, "verdict": "FAULT", "which": "d", "why": "Question smuggles in the motive of hiding from judgment that the seeker never stated."},
+ {"id": 17, "verdict": "OK", "which": "", "why": "Open question that presumes no problem or motive."},
+ {"id": 18, "verdict": "FAULT", "which": "a", "why": "Asserts what the seeker already knows and will choose."},
+ {"id": 19, "verdict": "FAULT", "which": "a", "why": "States as fact the seeker's giving, imbalance and exhaustion."},
+ {"id": 20, "verdict": "OK", "which": "", "why": "Open hypothetical question that assumes nothing about the seeker."}
+]
