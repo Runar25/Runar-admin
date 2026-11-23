@@ -1379,6 +1379,15 @@ r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_nedefinovane.j
                    capture_output=True, text=True, encoding='utf-8')
 check(((r.stdout + r.stderr).strip().split('\n') or [''])[-1].strip() or 'samotest nedefinovanych jmen', r.returncode == 0)
 
+# 2026-11-23 (CODE-tune, údržba): runa dne a odběr upozornění se ukládaly týden bez řádku v zásadách soukromí; nová tabulka
+# v sql/ musí mít řádek v RUNAR_PRIVACY.md, nebo důvod, proč osobní údaj nenese.
+print('\n' + chr(0x329B) + ' TABULKY V ZÁSADÁCH SOUKROMÍ (verify_privacy_tabulky.js)')
+for _arg in ([], ['--test']):
+    r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_privacy_tabulky.js')] + _arg,
+                       capture_output=True, text=True, encoding='utf-8')
+    radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
+    check((radky[0] if radky else 'kontrola tabulek v zasadach probehla').strip(), r.returncode == 0, '\n'.join(radky[1:]) if r.returncode != 0 else '')
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')
