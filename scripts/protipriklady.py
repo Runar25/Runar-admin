@@ -231,6 +231,9 @@ PRIPADY = [
  ('chyti', 'verify_nedefinovane.js', 'v2/runar-shrine.html', 'replace', "      teachRune = r; setRuneText('teach-rune-info',", "      _clearSingleSlot(); teachRune = r; setRuneText('teach-rune-info',"),
     # 2026-11-23 (CODE-tune): tabulka s user_id, kterou RUNAR_PRIVACY.md nejmenuje (jako rune_day a push_subscriptions do 2026-11-23).
  ('chyti', 'verify_privacy_tabulky.js', 'RUNAR_PRIVACY.md', 'replace', '`inactive_notices` (poslední aktivita', '`jina_tabulka` (poslední aktivita'),
+ # kostra čtení (CODE-read 2026-11-23, owner „jakmile sáhneš na kostru, musíš to zjistit“): pokus s neznámým stavem · přehled upravený ručně → musí spadnout
+ ('chyti', 'verify_kostra.js', 'docs/kostra/pokusy.json', 'replace', '"stav": "poučení"', '"stav": "hotovo"'),
+ ('chyti', 'verify_kostra.js', 'docs/kostra/KOSTRA.md', 'append', '', '\nručně připsaný řádek\n'),
  ('chyti', 'verify_ask_hints.js', 'v2/runar-reading.js', 'replace', "  else if (_ko === 2) out.push(t('ask_h_why_question'));", "  else if (_ko === 9) out.push(t('ask_h_why_question'));"),
  ('chyti', 'verify_ask_hints.js', 'v2/runar-reading.js', 'replace', 'var many = dr.length > 1, life = u.lifeRune;', 'var many = true, life = u.lifeRune;'),
  ('chyti', 'verify_coll_shape.js', 'v2/runar-app.js', 'replace', "document.getElementById('cd-shape').textContent    = (_tv && typeof _tv === 'object' && _tv[r.n]) || '';", "document.getElementById('cd-shape').textContent    = '';"),
