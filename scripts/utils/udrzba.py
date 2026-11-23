@@ -3,7 +3,7 @@
 #
 # Proč (2026-11-23, CODE-tune; owner „vypracuj metodiku … třeba 1 za měsíc“): údržba se dělala ve vlnách (kontrola architektury kola 1–3
 # v říjnu) a pak šest týdnů nic; první měsíční pokus 2026-11-23 prošel jen provoz. Tenhle skript udělá to, co jde strojem, vypíše oblasti
-# A–J k ruční práci a uloží kostru zprávy docs/udrzba/RRRR-MM.md. --hotovo zapíše do ops_events kind „udrzba“ — hlídání provozu
+# A–I k ruční práci a uloží kostru zprávy docs/udrzba/RRRR-MM.md. --hotovo zapíše do ops_events kind „udrzba“ — hlídání provozu
 # (BEHY v supabase/functions/_shared/ops_souhrn.ts) po 32 dnech bez záznamu pošle e-mail, ať údržba nevisí na paměti session (§30).
 #
 #   python -X utf8 scripts/utils/udrzba.py                     automatická část + kostra zprávy (nic nezapisuje do DB)
@@ -115,7 +115,7 @@ def main():
     out += ['## Ruční oblasti (RUNAR_UDRZBA.md „Oblasti a otázky“) — odškrtnout, neprošlé do BACKLOGu', '']
     for o in ['A. Provoz — u každé chyby výš: proč a kdy by ji ohlásil stroj', 'B. Pravidla (CLAUDE.md) — každý §',
               'C. Paměť — každý soubor, skilly, mapa pravidel hooků', 'D. Kanonické docy × kód', 'E. Kontroly a stroje (smoke, útoky --vse)',
-              'F. Kód appky v2', 'G. Server (edge funkce, DB, cron)', 'H. Sliby uživateli', 'I. Peníze', 'J. Čtení — jen číst, předat CODE-read']:
+              'F. Kód appky v2', 'G. Server (edge funkce, DB, cron)', 'H. Sliby uživateli', 'I. Peníze']:   # čtení se neprochází (owner 2026-11-23)
         out.append('- [ ] ' + o)
     out.append('')
 

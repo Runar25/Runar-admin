@@ -175,7 +175,7 @@ Prošlo jen: **A. provoz** (DECISIONS 2026-11-23 (3)) a z F nedefinovaná jména
 - [ ] **F. Kód appky** — mrtvé funkce, soubory a styly, tatáž logika dvakrát, nepoužité klíče UI_TEXT, §5 invarianty.
 - [ ] **G. Server** — edge funkce (proměnné, kopie configu) a DB (RLS, granty, schéma repo × DB, nepoužité tabulky a funkce).
 - [ ] **H. Sliby uživateli** (zásady × kód, nápověda × appka) · **I. Peníze** (plýtvání, kvóty služeb).
-- [ ] **J. Čtení** — jen předat CODE-read (bod 15 výš je první nález).
+- ✖ *(owner 2026-11-23 „kontrola asi není potřeba“ — čtení se pořád mění, dělá se s CODE-read; z metodiky vypuštěno.)* **J. Čtení**
 - [ ] **Neověřené z opravy A:** spuštění Google Drive při odpojeném Disku (`zaloha_db.js` `pripojDrive`) — naostro neodzkoušeno.
 
 ## Profil / personalizace

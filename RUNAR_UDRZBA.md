@@ -14,7 +14,8 @@ BACKLOG bod 15). Tenhle postup je proto pevný seznam — co se neprojde, se zap
 - **Jednou za měsíc**, nejpozději 32 dní od poslední. Připomíná to hlídání provozu (úloha `udrzba` v `BEHY`, `_shared/ops_souhrn.ts`):
   po lhůtě ranní souhrn PROBLEM a e-mail. Spouští owner slovem „údržba“, nebo session sama na připomínku.
 - **Vede CODE-tune.** **Čtení nemění** (prompt, obrazy, texty a stavba čtení, Ask): nálezy z nich jdou CODE-read do BACKLOGu
-  (owner 2026-11-23 *„čtení neměň … s code read děláme na čteních“*). Strom → CODE-tree, web → CODE-web: jen čte a předá.
+  (owner 2026-11-23 *„čtení neměň … s code read děláme na čteních“*) a **ani ho neprochází** — pořád se mění a dělá se na něm s CODE-read
+  (owner 2026-11-23 *„kontrola asi není potřeba“*). Strom → CODE-tree, web → CODE-web: jen čte a předá.
 - Agenti: nejvýš 3–5 naráz, každý jedna oblast, dostane její otázky níž a vrací nálezy se `soubor:řádek`; nic neopravuje.
   Nález agenta je žádost o ověření, ne fakt (memory `verify-agent-claims-about-code`).
 
@@ -45,12 +46,11 @@ bez útoku; hooky (`verify_hooky_claude.py`); rychlé kontroly při commitu; kon
 načítají; DB jen čtením (RLS a granty, schéma repo × DB, tabulky a funkce bez použití, cron).
 **H. Sliby uživateli** — zásady soukromí × kód (co ukládáme, smazání účtu, EHP, opt-out), nápověda × co appka dělá.
 **I. Peníze** — plýtvání voláními (přehled v `nacti_cteni.js`), kvóty a stropy služeb (Supabase, ElevenLabs, OpenAI, Anthropic).
-**J. Čtení** — jen čte, nic nemění; rozpor s ownerovým rozhodnutím → BACKLOG pro CODE-read.
 
 ## Postup
 0. `python -X utf8 scripts/utils/udrzba.py` — automatická část (provoz, nasazení, rychlé kontroly, paměť, docy) a kostra zprávy
-   složka `docs/udrzba/` (soubor na měsíc) s oblastmi A–J k odškrtnutí. Celý smoke a `protipriklady.py --vse` pustit hned na pozadí (dlouhé).
-1. A sám; B + C, D, F + G agenti souběžně; E z běhů na pozadí; H, I, J.
+   složka `docs/udrzba/` (soubor na měsíc) s oblastmi A–I k odškrtnutí. Celý smoke a `protipriklady.py --vse` pustit hned na pozadí (dlouhé).
+1. A sám; B, C, D, F a G + H + I agenti souběžně (pět); E z běhů na pozadí.
 2. Nálezy ověřit, opravit po jedné věci (commit, push, nasadit dotčené funkce, `nasazene_vs_repo.py`).
 3. Uzavřít: DECISIONS „Údržba RRRR-MM“ (co našla, příčiny, nové stroje) · zpráva doplněná · neprošlé do BACKLOGu ·
    `python -X utf8 scripts/utils/udrzba.py --hotovo "<shrnutí>"` (záznam do `ops_events`, připomínka se vynuluje) · ownerovi číslovaný
