@@ -127,6 +127,23 @@ odpovědí, soudci = agenti bez API, naslepo.
 4. **Hranice kalibrace:** chiméry jsou hrubé (celá jiná runa) — jemnou záměnu sousedních run (Fehu × Gebo) to neprověřuje · věty v sadě A
    jsou krátké a vytržené · „zajímavost“ a „nový pohled“ soudce neměří, to soudí owner naslepo.
 
+## 8d. Plán: z kostry „organismus“ (návrh CODE-read 2026-11-23, čeká na ownera)
+Owner: *„každá část má svou jasnou funkci, kdy budeme vědět, že když tohle změníme, tak se stane tamhle to … nechci se točit v kruhu,
+chci solidní plán.“* Základ zůstává v2 (to, co funguje); v3 = řada změn v2 přes kostru, ne nový prompt. Zkoušky na solu až v kroku 5.
+1. **Mapa příčin (bez API).** Ke každému kusu zadání (`_kus`): funkce · věta, na kterou míří · známé vady, které způsobil (z DECISIONS,
+   hlášení a labů, s doklady: např. pant ← úhel [3] u obrazu bez pevné věci; cesty v krajině ← oblast popsaná jako místo; „already“ ← slovo
+   v úhlu) · jak se vada pozná. Výsledek: tabulka „změním X → hýbe se Y“. Generovaná z kódu, aby se nerozešla s promptem.
+2. **Audit kombinací losů (bez API).** Každý obraz banky × každý úhel × podoby oblasti × tvary konce: má obraz to, co úhel a oblast
+   předpokládají (pevnou věc, pohyb, skrytou část, hranu, místo pro člověka)? Je scéna dnes snadno představitelná (chlév ✘ → horská chata ✔)?
+   Soudci napřed kalibrovaní na známých případech (chlév, pant, kráva na trhu ✘ · svíčka, baterie ✔). Výsledek: seznam kombinací, které
+   potřebují zásah, a seznam obrazů k výměně.
+3. **Pravidla slov pro data (bez API).** Než se cokoli napíše modelu: změřit na uložených čteních, co sol z jakého druhu vstupu opisuje
+   (slovo, věta, štítek, otázka) — data máme v DB a labech. Spojit s `RUNAR_DESIGN.md` „Slova, která dáváme modelu“ a Gemini dokumentem
+   o volbě slov. Výsledek: jak psát položku dat, aby z ní model tvořil, ne opakoval.
+4. **Kontrola čtení věta po větě (bez API, na produkčních čteních z DB).** Každá věta dělá svou práci? Obraz nepřidal předmět bez funkce —
+   a když ano, dohledat příčinu z losů čtení (`prompt_draws`)? Výsledek: stav v2 dnes + kde přesně se kazí.
+5. **Teprve pak změny po jedné**, každá s předpovědí z mapy (krok 1) a měřená na stálé sadě (5 run, pevné vstupy, kalibrovaní soudci + owner naslepo).
+
 ## 9. Jde to jinak a lépe?
 1. **Kostru generovat z kódu:** každý kus zadání už v kódu nese, na kterou větu míří (`_kus(jméno, vstup, věta, text)`). Tabulka v oddílu 5 se dá
    skládat skriptem (jako testovací balíček) → doc a prompt se nerozejdou.
