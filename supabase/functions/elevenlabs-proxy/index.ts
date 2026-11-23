@@ -12,7 +12,7 @@ import { logVoice, denniSnimek, fetchQuota, saveQuota, brzdaHlasu } from "../_sh
 import { EL_VOICE_ID, EL_VOICE_SETTINGS, elModel, kredityHlasu } from "../_shared/el_voice.ts";
 import { textKHlasu, normalizuj } from "../_shared/voice_ticket.ts";
 import { SERVER_KLIC, overServer } from "../_shared/klic.ts";   // klíč a podpis hlasu z jednoho místa (2026-11-01)
-import { hlasovyText } from "../_shared/voice_direction.ts";   // recept hlasu výkladu (2026-10-29, owner „R3 zní dobře pro výklad“)
+import { hlasovyText, HLAS_REZIE_MODEL } from "../_shared/voice_direction.ts";   // recept hlasu výkladu (2026-10-29, owner „R3 zní dobře pro výklad“)
 import { ADMIN_EMAILS } from "../_shared/admini.ts";   // seznam adminů na jednom místě (2026-10-22, DECISIONS 2026-10-22 (5))
 
 const EL_API_KEY     = Deno.env.get("ELEVENLABS_API_KEY");
@@ -193,25 +193,8 @@ serve(async (req) => {
     // lang determines model — NEVER trust frontend for voice/model selection. Model je potřeba už pro brzdu (kredity na znak).
     const resolvedModel = elModel(lang);
 
-    // ── Text pro hlas: úvodní značka, pauzy a intonační značky od modelu výkladu (_shared/voice_direction.ts). Slova = čtení (pojistka
-    // overZnacky); selže-li režie, jde hlas bez značek. Brzda, ElevenLabs, evidence i úklid historie počítají s TÍMHLE textem.
-    const hlas = await hlasovyText(text, lang, Deno.env.get("OPENAI_API_KEY"));
-    if (hlas.rezie !== "tagged") console.warn("voice direction " + hlas.rezie + " — reading voiced without tags");
-    const recText = hlas.text;
-
-    // ── Brzda kreditů ElevenLabs (2026-10-11, DECISIONS (48): převod se smí vyčerpat, dobití ne) ──
-    // Podle JEJICH počítadla (vidí i audio Kolekce a pokusy na webu EL), v kreditech. Pravidlo a důvod: brzdaHlasu v _shared/voice_usage.ts.
-    // Stav nezjištěn → pustit (fail open); osobní strop výš platí dál.
-    const kvota = await fetchQuota(EL_API_KEY);
-    const brzda = brzdaHlasu(kvota, kredityHlasu(resolvedModel, recText.length));
-    if (!brzda.pustit) {
-      console.warn(`voice brake: ${brzda.spotreba} + ${brzda.novych} > ${brzda.hladina}`);
-      await saveQuota(sb(), kvota!, "brake");   // každé zastavení brzdou = snímek — owner to musí vidět (48)
-      return json({ error: "voice_quota_rest", used: brzda.spotreba, safe: brzda.hladina }, 429);
-    }
-    if (brzda.hladina === null) console.error("ElevenLabs quota unknown — allowing voice (brake not checked)");
-
-    // ── Zámek „jednou“ — PŘED voláním ElevenLabs: dvě souběžná ťuknutí nezaplatí hlas dvakrát. Selže-li ElevenLabs níž, zámek se
+    // ── Zámek „jednou“ — PŘED režií i voláním ElevenLabs: dvě souběžná ťuknutí nezaplatí hlas ani režii dvakrát (režie byla do
+    // 2026-11-23 před zámkem). Selže-li ElevenLabs níž, zámek se
     // smaže (člověk o hlas nepřijde kvůli cizí chybě). Bez tabulky voice_tickets (SQL nespuštěno) radši nic než hlas bez hlídání.
     if (zamek) {
       const { error: zErr } = await sb().from("voice_tickets").insert({ id: zamek, user_id: userId });
@@ -222,6 +205,34 @@ serve(async (req) => {
       }
     }
     const pustZamek = async () => { if (zamek) await sb().from("voice_tickets").delete().eq("id", zamek); };
+
+    // ── Text pro hlas: úvodní značka, pauzy a intonační značky od modelu výkladu (_shared/voice_direction.ts). Slova = čtení (pojistka
+    // overZnacky); selže-li režie, jde hlas bez značek. Brzda, ElevenLabs, evidence i úklid historie počítají s TÍMHLE textem.
+    const hlas = await hlasovyText(text, lang, Deno.env.get("OPENAI_API_KEY"));
+    if (hlas.rezie !== "tagged") console.warn("voice direction " + hlas.rezie + " — reading voiced without tags");
+    const recText = hlas.text;
+    // Evidence nákladů režie (2026-11-23; do té doby se nezapisovala). Selhání zápisu hlas nezastaví.
+    if (hlas.usage) {
+      const { error: muErr } = await sb().from("model_usage").insert({
+        user_id: userId, mode: "voice_direction", model: HLAS_REZIE_MODEL,
+        usage: { ...hlas.usage, rezie: hlas.rezie }, reading_id: ulozit ? ulozit.split("/")[1].replace(".mp3", "") : null,
+      });
+      if (muErr) console.error("model usage write failed:", muErr.message);
+    }
+
+    // ── Brzda kreditů ElevenLabs (2026-10-11, DECISIONS (48): převod se smí vyčerpat, dobití ne) ──
+    // Podle JEJICH počítadla (vidí i audio Kolekce a pokusy na webu EL), v kreditech. Pravidlo a důvod: brzdaHlasu v _shared/voice_usage.ts.
+    // Stav nezjištěn → pustit (fail open); osobní strop výš platí dál.
+    const kvota = await fetchQuota(EL_API_KEY);
+    const brzda = brzdaHlasu(kvota, kredityHlasu(resolvedModel, recText.length));
+    if (!brzda.pustit) {
+      console.warn(`voice brake: ${brzda.spotreba} + ${brzda.novych} > ${brzda.hladina}`);
+      await saveQuota(sb(), kvota!, "brake");   // každé zastavení brzdou = snímek — owner to musí vidět (48)
+      await pustZamek();   // 2026-11-23: zámek je od teď před brzdou — zastavený hlas nesmí čtení „spotřebovat“
+      return json({ error: "voice_quota_rest", used: brzda.spotreba, safe: brzda.hladina }, 429);
+    }
+    if (brzda.hladina === null) console.error("ElevenLabs quota unknown — allowing voice (brake not checked)");
+
 
     // ── Call ElevenLabs ──
     // Od kdy hledat položku historie ke smazání (smazHistorii). Rezerva 60 s (do 2026-10-14 jen 5 s) proti rozdílu hodin u ElevenLabs;

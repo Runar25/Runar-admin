@@ -487,8 +487,8 @@ serve(async (req: Request) => {
     // spread_cost prichazi od KLIENTA a jde primo do stropu i odectu. NaN je tu zbran:
     // Math.max(1, NaN) = NaN, `used + NaN > limit` = false a odecitaci smycka `i < NaN`
     // nikdy nebezi -> crafted request projde KOLEM mesicniho stropu i odectu (audit
-    // 2026-08-03 CRITICAL, opraveno 2026-08-22). Server cenu podle typu zatim odvodit
-    // neumi (typ spreadu v requestu neni — navazny krok v BACKLOGu), proto: cele cislo,
+    // 2026-08-03 CRITICAL, opraveno 2026-08-22). Od F3a (2026-11-02) cenu
+    // urcuje server (spreadCost = sv.cena ze SPREAD_COSTS); cislo od klienta zbyva jen adminovi bez zapisu — pro nej plati: cele cislo,
     // podlaha 1, strop 9 (vic run nez Yggdrasil zadne cteni nema; cena v jednotkach je nejvys 5 — strop je volny nahoru,
     // podvrh nad cenu by jen preplatil).
     let spreadCost = Math.min(9, Math.max(1, Math.round(Number(spread_cost)) || 1));
