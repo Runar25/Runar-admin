@@ -26,5 +26,5 @@ co se řeší hned je malé, když se na to vyseřeš, tak to naroste do obříc
   není omluva — je to místo, kde se ten nález dá najít příště. Vzor: rejstřík pák
   v `RUNAR_EVAL_LOG.md` (2026-08-21) a pravidlo *než o páce něco tvrdím, přečtu si její řádek*.
 
-Souvisí: [[break-your-own-work-before-reporting]] · CLAUDE.md §22 ·
+Souvisí: [[break-your-own-work-before-reporting]] · CLAUDE.md §20 ·
 [[a-guard-that-refuses-is-a-detector]] · [[measure-dont-eyeball]].

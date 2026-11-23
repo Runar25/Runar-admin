@@ -1,6 +1,6 @@
 ---
 name: vocab-natvrdo-a-migrace
-description: "Jak najít natvrdo zapsané vocab/tier termíny a po přejmenování ručně grepnout staré (k CLAUDE.md §13, §15)"
+description: "Jak najít natvrdo zapsané vocab/tier termíny a po přejmenování ručně grepnout staré (k CLAUDE.md §13, §10)"
 metadata:
   type: reference
 ---
@@ -15,13 +15,13 @@ grep -n "\bold_term\b" runar-app.js runar-auth.js runar-reading.js runar-tree.js
 Hardcoded výskyty mimo translations.js / VOCAB nejsou smoke testem zachyceny — kromě větví `lang === 'is' ? '…' : '…'`:
 ty od 2026-10-09 hlídá ráčna smoke ㉸ (`scripts/verify_lang_ternary.js`, počet na soubor nesmí stoupnout; stav tam v BASELINE).
 
-## Vocab/tier termíny natvrdo — jak je najít (k CLAUDE.md §15)
+## Vocab/tier termíny natvrdo — jak je najít (k CLAUDE.md §10)
 Seznam „zbývajících míst“ se tu nevede: stav vlastní kód (§20.4). Aktuální stav dá audit:
 ```
 grep -nE "rune stones?|rúnastein|Rune (Seeker|Walker|Keeper)|rune reading" v2/*.js v2/*.html  <!-- check-docs:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
 ```
 
-**Tier jména v próze — POLICY:** v dlouhých marketingových větách OK nechat, jinde → `TIERS[x].label` (CLAUDE.md §15).
+**Tier jména v próze — POLICY:** v dlouhých marketingových větách OK nechat, jinde → `TIERS[x].label` (CLAUDE.md §10).
 
 **„cast" → „reading" — OBRÁCENO (owner 2026-08-03).** Reading→cast (2026-06-06) zrušeno.
 User-facing „cast" je PRYČ: config panely + name_modal → „rune reading" (de90bb2, ověřeno).

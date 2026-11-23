@@ -36,4 +36,4 @@ není ověřená — je vybraná. Útoky pouštěj **než** výsledek použiješ
 — Algiz 3/3 → Thurisaz, soudce to sám napsal; po zamaskování jména 2/3 správně. **V testu identity maskuj i jméno člověka.**
 
 Souvisí: [[sanity-check-measurements]] · [[falsify-by-reversing-the-lever]] · [[guard-test-the-lifecycle]].
-Pravidlo pro všechny session: `CLAUDE.md` §27.
+Pravidlo pro všechny session: `CLAUDE.md` §25 B.

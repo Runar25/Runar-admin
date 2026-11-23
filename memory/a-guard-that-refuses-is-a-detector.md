@@ -27,10 +27,10 @@ protože jsou v cestě práci, kterou zrovna děláš.
 **Jak z toho vytěžit víc:**
 1. `count != 1` **nikdy neobcházej** rozšířením kotvy, dokud nezjistíš, **proč** jsou dva.
    Rozšířit kotvu je správné až poté, co víš, co je ten druhý výskyt zač.
-2. Když je druhý výskyt mrtvý kód, **oprav u něj komentář** (§26) — nestačí ho obejít.
+2. Když je druhý výskyt mrtvý kód, **oprav u něj komentář** (§21) — nestačí ho obejít.
    Zavádějící komentář u mrtvého kódu je horší než ten mrtvý kód.
-3. Nález zapiš (§22) a **udělej z něj stálou kontrolu**, jestli to jde
+3. Nález zapiš (§20) a **udělej z něj stálou kontrolu**, jestli to jde
    (`scripts/utils/test_*.js`), ať to nezáleží na tom, jestli se toho místa zas někdo dotkne.
 
-Souvisí: [[break-your-own-work-before-reporting]] · CLAUDE.md §22 ·
+Souvisí: [[break-your-own-work-before-reporting]] · CLAUDE.md §20 ·
 [[one-patch-script-path]] · [[guard-test-the-lifecycle]].
