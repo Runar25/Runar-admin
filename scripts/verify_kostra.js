@@ -36,7 +36,8 @@ function kontrola(k, p, md, exist) {
     if (['přijato', 'v produkci', 'vyřazeno'].includes(x.stav) && !x.owner && !/bez API/.test(x.prompt || '')) vady.push('docs/kostra/pokusy.json: ' + x.id + ' je „' + x.stav + '“ bez ownerova slova (pole owner)');
     if (x.slozka && !exist(ROOT + '/' + x.slozka)) vady.push('docs/kostra/pokusy.json: ' + x.id + ' odkazuje na neexistující složku ' + x.slozka);
     if (['čeká na ownera', 'běží'].includes(x.stav) && /^v\d/.test(x.prompt || '') && x.prompt !== aktual) varov.push(x.id + ' měřeno na promptu ' + x.prompt + ', dnes ' + aktual + ' — výsledek ověřit, než se použije'); }
-  if (md !== null && md !== generuj(k, p)) vady.push('docs/kostra/KOSTRA.md: neodpovídá datům — needituj ručně, pusť node scripts/verify_kostra.js --zapis');
+  // Konce řádků sjednotit: git na Windows vybalí KOSTRA.md s CRLF (čistá kopie v protipriklady.py hlásila ruční úpravu).
+  if (md !== null && md.replace(/\r\n/g, '\n') !== generuj(k, p)) vady.push('docs/kostra/KOSTRA.md: neodpovídá datům — needituj ručně, pusť node scripts/verify_kostra.js --zapis');
   return { vady, varov };
 }
 
