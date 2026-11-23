@@ -145,10 +145,9 @@ opus-4-8 in 1889 / out 96 · sonnet-5 in 1889 / out **560** (thinking blow-up, ~
 
 ### Standard (~$28/month)
 - 50 reading-units/month limit
-- All spreads including Yggdrasil (peak window: 1 week before/after solstice = full tree weight)
-- Full Tree of Life. **Founding ritual is NOT free** — it costs its reading-units like any other
-  reading (KUKY 2026-07-18). Rune Seekers may be *gifted* founding credits as a marketing move
-  (campaign, onboarding push), but that is promotion, not a product entitlement.
+- All spreads including Yggdrasil, any time (winter solstice = more strength in the tree — intention, not built yet; `RUNAR_TREE.md`)
+- Full Tree of Life. **Founding Norns are free, once** (ritual — DECISIONS 2026-07-19, it replaced 2026-07-18 „not free“); the proxy
+  enforces it by `mode` (`isRitual`, once per `tree_founded_at`), for every signed-in user.
 - Full journal
 - Hlas: každé čtení, jednou (DECISIONS 2026-10-11 (61))
 - Životní runa: stejné čtení jako u všech, zdarma
@@ -185,7 +184,7 @@ value and returns 402 `monthly_limit` when exceeded. Guarded by smoke ⑨.)*
 | Yggdrasil | 9 | 5 | ❌ | credits | ✅ anytime* | ✅ anytime* |
 
 *Within monthly reading-unit limit (Standard: 50 units, Premium: 75 units) — a spread costs its credit value.
-*Yggdrasil: available anytime, but full branch_weight only within 1 week before/after solstice. Outside window → reading happens, reduced tree impact.
+*Yggdrasil: available anytime. Solstice = more strength in the tree is an intention — the tree does not weigh it yet (no `branch_weight` in code).
 
 **Credit cost = per reading type.** Konkrétní čísla vlastní `SPREAD_COSTS` v `v2/runar-config.js` — zde se
 neopisují (§20). Pravidlo, které je pod nimi: **platí se za hlas.** Textové čtení je zdarma, protože
@@ -304,7 +303,8 @@ Hlas má každé čtení, jednou (DECISIONS 2026-10-11 (61)). Kredity na předpl
 
 **Upgrade logic:** Stay on current plan until monthly overages + plan cost exceed next plan price (= cena dalšího plánu ÷ náklad hlasu
 na uživatele v horní mezi).
-**Start on Creator.** S hlasem ke každému čtení stačí Creator na ~8 předplatitelů v nejhorším měsíci a ~29 při vzoru; pak Pro (~39 / ~132).
+**Start on Creator.** S hlasem ke každému čtení stačí Creator na ~14 předplatitelů v nejhorším měsíci a ~48 při vzoru; pak Pro (~63 / ~217) —
+čísla tabulky výš.
 O tarifu ElevenLabs tak hlas rozhoduje dřív než o penězích — marže drží (Plan margins výš). Když kredity dojdou, brzda (DECISIONS (48))
 hlas zastaví všem; sledovat ve shrine (VOICE, TESTERS). Testování běží na Starteru (owner 2026-10-11: *„nebudeme platit nic navíc“*) — brzda kreditů DECISIONS (48).
 
@@ -353,7 +353,7 @@ One-time: Google Play $25. Annual: Apple Developer $99.
 
 | Item | $/user | Note |
 |------|--------|------|
-| Model čtení (GPT-6 sol) + hlas ElevenLabs | ~0.96 | vzor (owner 2026-10-11), blend 70/30 tarifů a IS/EN 50/50, hlas ke každému čtení (`scripts/utils/pricing_tabulka.js`); horní mez ~2.56 |
+| Model čtení (GPT-6 sol) + hlas ElevenLabs | ~0.96 | vzor (owner 2026-10-11), blend 70/30 tarifů a IS/EN 50/50, hlas ke každému čtení (`scripts/utils/pricing_tabulka.js`); horní mez ~1.97 |
 | Payment processing (Shopify ~2.9% + ~$0.30/txn) | ~0.96 | on gross revenue |
 | **Total variable** | **~$1.92** | do 2026-10-11 ~$1.88 (běžný měsíc se stropem hlasu 5), předtím ~$1.81 (Claude + hlas ~0.85) |
 
@@ -383,7 +383,7 @@ Model: revenue − VAT − payment fees − operating costs = company money; −
 - Mandatory contributions (both layers) roughly **double** the user count vs a naive gross model.
 - **Claude $100 zůstává** (owner 2026-10-12). Bez něj by break-even byl ~3.
 - 2026-10-12 přepočteno (CODE-read): fixní po spuštění $186 (Shopify nese obchod agndofa.is, Workspace a doména v ceně agndofa.is, Hetzner dnes 0) → break-even 7,0 a řádky 147 / 250 / 354 / 491 (výpočet níž beze změny).
-- Margins on revenue stay high (~88–93 % with voice on every reading); the wedge to *personal net* is what raises the counts.
+- Margins on revenue stay high (~90–95 % with voice on every reading, „Plan margins“ výš); the wedge to *personal net* is what raises the counts.
 - 2026-10-11: přepočteno týmž modelem — ověřeno, že s červnovými vstupy (fixní $202.45, variabilní $1.81) dá přesně 147 / 250 / 353 /
   490 a break-even 7,6. Nové vstupy: fixní ~$230 po spuštění, variabilní $1.88 → +1 až +3 uživatelé na řádek; s hlasem ke každému čtení (2026-10-11)
   variabilní $1.92 — řádky beze změny. Výpočet: potřebné peníze
@@ -454,5 +454,4 @@ Nativní appka tento funnel nenaruší — web verze zůstává paralelně.
 
 ---
 
-*Last updated: 2026-10-11 — náklady přepočteny na GPT-6 sol (`scripts/utils/pricing_tabulka.js`), hlas se stropem, EN hlas za skutečnou sazbu*
 *ElevenLabs sazby: `EL_PRECERPANI` ve `scripts/utils/stats.js` (zdroj a datum ověření stojí u nich)*

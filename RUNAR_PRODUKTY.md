@@ -6,7 +6,7 @@
 
 ### Philosophy
 Physical rune set → free credit inside → Rúnar user.
-Acquisition cost: volné čtení při registraci — číslo stojí jen v „Cost per Reading“ výš (§20). Marketing cost: effectively zero.
+Acquisition cost: volné čtení při registraci — číslo stojí jen v `RUNAR_PRICING.md`, „Cost per Reading“ (§20). Marketing cost: effectively zero.
 
 ### Physical products (in development — Sigrun)
 - Rune set: 25 Elder Futhark stones, pouch, design by Sigrun

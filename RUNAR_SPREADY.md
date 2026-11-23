@@ -102,14 +102,14 @@ Strom: větvená větev se sedmi body → sezónní rituál kmene.
 
 ### Yggdrasil (9 run) — všichni přihlášení, KDYKOLIV
 ```
-          [1]            koruna (1 = Ásgarðr)
+          [1]            koruna (1 = Ásgarður)
       [2]     [3]        koruna
       [4]     [5]        kmen
   [6]     [7]     [8]    kořeny
           [9]            kořeny (9 = Hel)
 ```
 Strom v appce od 2026-10-11 (KUKY: *„to má být podle toho, jak je yggdrasil spread vykládán… ok udělej strom“*, `RUNAR_DECISIONS.md`
-2026-10-11 (40)): tradiční rozložení neexistuje, runové weby kladou Ásgarðr nahoru a Hel dolů; patra jsou patra výkladu.
+2026-10-11 (40)): tradiční rozložení neexistuje, runové weby kladou Ásgarður nahoru a Hel dolů; patra jsou patra výkladu.
 **Významy pozic vlastní `RP_YGGDRASIL` v `v2/runar-character.js` — doc je NEOPISUJE** (§20;
 táž poznámka jako u Horseshoe výš).
 Nejde do větve — jde do kořenů stromu. **Kdykoliv, žádná brána na datum.**
@@ -129,12 +129,10 @@ Stará funkce (týdenní rituál, whispers-section, journal karta) odstraněna:
 - Stará DB data (area='gathering') zůstávají v DB — tichý skip při renderování
 
 Starý modul Gatheringu **odstraněn 2026-09-28** (DECISIONS 2026-07-04: ruční Gathering = mrtvý, ke smazání; 2026-09-28 (1) = provedení). Nová podoba = automatický Gathering nad deníkem, `RUNAR_TREE.md` §7. <!-- doc-links:ok 2026-09-28 soubor záměrně smazán -->
-Nová logika potřebuje tree_state DB (neexistuje). Implementace: čeká na V3.
+Čeká na `detectPatterns` → `RUNAR_BACKLOG.md` (tabulka `tree_state` smazána 2026-10-14).
 
-### UI — domluveno ✅
-Přepínač pod "DRAW YOUR RUNE":
-`[ SINGLE RUNE ]  [ NORNS ]  [ KŘÍŽ ]  [ HORSESHOE ]  [ YGGDRASIL ]`
-Stejný styl jako V2 lab v shrine.
+### UI
+Přepínač výkladů pod „DRAW YOUR RUNE“ — popisky vlastní `UI_TEXT` (`spread_mode_*`), tady se neopisují.
 
 ---
 
@@ -149,7 +147,7 @@ všechny spready — Rune Seeker za kredity (volné čtení jen na single), pře
 
 ### Tree of Life per tier
 
-Stav vlastní `RUNAR_TREE.md` a kód (kdo záložku Strom vidí: `renderLivingTree` v `runar-tree.js`);
+Stav vlastní `RUNAR_TREE.md` a kód (kdo záložku Strom vidí: `treeVisibleFor()` v `runar-tree.js`);
 životní runu (výpočet) vidí každý i bez účtu, její čtení až po přihlášení a pro všechny stejné (builder tarif nedostává —
 nepoužitý parametr `isPremium` a nečinný režim `life_rune_premium` zrušeny 2026-10-11, DECISIONS 2026-10-11 (22)); zakládací Norny i rozbor jména jsou rituály — zdarma pro každého přihlášeného, jednou (`claude-proxy`
 `isRitual`).

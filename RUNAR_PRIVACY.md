@@ -157,7 +157,7 @@ a souhlasí na pravdivém textu. Detail → `RUNAR_DECISIONS.md` 2026-09-11 (8).
      SQL ownera ho neblokuje;
   5. začerněné přepisy konverzací (výmaz výš) se neobnovují.
   Nástroj na kroky 1 a 4 zatím není — napsat a vyzkoušet na kopii při první žádosti; zápis do produkční DB pouští owner.
-  Před spuštěním to nahradí „měkké smazání“ → `RUNAR_BACKLOG.md`.
+  Před spuštěním to nahradí „měkké smazání“ → `RUNAR_BACKLOG.md`, „Údržba 2026-11“.
 
 - **Přepisy konverzací s Claudem (vývoj, od 2026-10-11 se nemažou — DECISIONS 2026-10-11 (30)):** pracovní přepisy session (CODE i Cowork)
   a jejich noční šifrovaná kopie (`~/runar-eval/zaloha-konverzaci`, 7z AES, jen na počítači ownera, ne na Drive) mohou nést osobní údaje
