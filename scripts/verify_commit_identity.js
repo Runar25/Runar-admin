@@ -97,4 +97,8 @@ if (spatne.length) {
   console.log('  Commituj jako `git -c user.name=\'CODE-<lane>\' commit …`.');
   process.exit(1);
 }
-console.log('každý commit v okně nese identitu své session');
+// 2026-11-23: jméno, které není lane ani GENERIC (např. „read“), dřív prošlo potichu jako „nese identitu“ (§19.2). Neblokuje — commity
+// už jsou na originu; nové zastaví commit_vlastni.py (lane musí začínat CODE-).
+const nezname = commity.filter((c) => c.an !== GENERIC && LANES.indexOf(c.an) === -1);
+if (nezname.length) console.log('ℹ ' + nezname.length + '× neznámé jméno autora (' + [...new Set(nezname.map((c) => c.an))].join(', ') + ') — starší, nové odmítá commit_vlastni.py');
+console.log('každý commit v okně nese identitu (generický autor žádný)');

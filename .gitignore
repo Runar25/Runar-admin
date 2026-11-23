@@ -6,6 +6,8 @@ scripts/_patch.py
 scripts/_patch_tune.py
 scripts/_patch_read.py
 scripts/_patch_web.py
+# 2026-11-23: každý další slot _patch_<session>.py (CLAUDE.md §1) — dřív jen čtyři jména výš
+scripts/_patch*.py
 
 __pycache__/
 

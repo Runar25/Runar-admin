@@ -250,5 +250,9 @@ if __name__ == '__main__':
     elif len(a) == 5 and a[0] == 'uprav': uprav(a[2], a[1], a[3], a[4])
     elif len(a) >= 2 and a[0] == 'stav': stav(a[1])
     elif len(a) >= 2 and a[0] == 'zahod': zahod(a[1])
-    elif len(a) >= 3 and a[0] == 'commit': commit(a[1], a[2])
+    elif len(a) >= 3 and a[0] == 'commit':
+        # 2026-11-23: lane = podpis commitu (CLAUDE.md „Každá session commituje pod svým jménem“); „read“ místo „CODE-read“ prošlo 2×.
+        if not a[1].startswith('CODE-'):
+            raise SystemExit('❌ lane „' + a[1] + '“ — podpis commitu musí být CODE-<lane> (CODE-tune, CODE-read, CODE-tree, CODE-web)')
+        commit(a[1], a[2])
     else: print('pouziti: uprav <lane> <soubor> <stary.txt> <novy.txt> | pridej <lane> <soubor>... | stav <lane> | commit <lane> <zprava.txt> | zahod <lane> | --test'); sys.exit(2)
