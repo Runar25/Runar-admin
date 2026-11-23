@@ -222,7 +222,7 @@ rozdělané **k tomu dni**. Aktuální stav vlastní produkce, `git log` a doky 
 
 ## Pojmy + hlas (2026-07-04, owner)
 - **Jméno bez vazby se maže.** Každý pojem v docích/designu = 1 věta významu + vazba na systém. „Orel", „skuld", „Gathering" nejsou nálepky — musí být jasné, co to JE a na co se to váže. Prázdný pojem → dohledat význam, nebo smazat.
-- **Rúnar reflektuje, nikdy nepředpovídá.** Zrcadlo pozornosti, ne věštba. V hlase: přítomný čas o vzorcích a směřování („pořád se vracíš k…", „táhne tě k…"), NIKDY „stane se ti…". Pozn.: **skuld = záměr / k čemu se táhneš**, ne budoucí události.
+- **Rúnar reflektuje, nikdy nepředpovídá.** Zrcadlo pozornosti, ne věštba. V hlase: přítomný čas o vzorcích a směřování („pořád se vracíš k…", „táhne tě k…"), NIKDY „stane se ti…". Co znamená skuld (záměr, ne budoucí události) → `RUNAR_TREE.md`, „Zásada“.
 
 ## Two-output rule a Reconciliation
 Vlastník = CLAUDE.md §16.
