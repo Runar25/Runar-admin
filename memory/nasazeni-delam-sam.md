@@ -12,5 +12,5 @@ spustím sám a hned ověřím `python -X utf8 scripts/utils/nasazene_vs_repo.py
 Owner 2026-11-23: *„vždy to nasazuješ sám. proč se mě na to ptáš?“* Zastavení hlídačem není otázka na ownera.
 
 **How to apply:** nasazuj až z pushnutého stavu (nikdy z necommitnuté práce). Když nasazení zastaví hlídač, napiš ownerovi jednou větou,
-že ho zastavil nástroj a co nasazení přinese — ne „smím?“. Ptát se má smysl jen u věci, která mění to, co owner ještě nerozhodl.
+že ho zastavil nástroj a co nasazení přinese — ne „smím?“. Kdy se přesto ptát → `working-style.md`, „Nasazení“ (jediné místo).
 Související: [[proceed-dont-ask]].

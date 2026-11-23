@@ -19,7 +19,7 @@ jsem si pak do tabulky zapsal sám a podle ní testoval.
 **Jak to aplikovat:**
 1. **Před každým testem jedna věta nahlas:** „testuju variantu X (definice: …), netestuju Y."
    Kdyby tahle věta padla, owner by omyl chytil v první zprávě.
-2. **Ta varianta musí stát v docu** (`RUNAR_BACKLOG.md`, tabulka variant Vegvísiru) — a definici
+2. **Ta varianta musí stát v docu** (`RUNAR_VEGVISIR.md`, varianty k testu) — a definici
    čti odtamtud, ne z paměti konverzace.
 3. **Varianty ≠ nálezy.** Když owner rozhodne mezi možnostmi, zapiš volbu i to, mezi čím se volilo.
 4. **Nepředkládej předpověď jako fakt.** („kdyby to padlo na rameno, střed by se rozdrolil" — neměřeno.)

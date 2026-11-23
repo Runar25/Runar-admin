@@ -10,10 +10,7 @@ BÍN NEUMÍ — a přesně tam vznikají chyby (kalk z EN, vymyšlená vazba). T
 a neřeš „pohledem"** (KUKY 2026-08-04). Ověř ji — z receptu je hotový nástroj.
 
 ## Nástroj (primární cesta)
-```
-python -X utf8 is-vazba.py <slovo>                          # rekce + vazby + příklady
-python -X utf8 is-vazba.py <slovo> --freq "<fráze>" ...     # + korpusová četnost
-```
+Příkazy → CLAUDE.md §2, bod 4 (jediné místo).
 `is-vazba.py` (repo root) obalí dva autoritativní zdroje Árnastofnunar do jednoho příkazu.
 Ověřeno 2026-08-04: `hræða` → fallstjórn **þolfall** (akuz., „děsit"); `hreyfa` má mezi významy
 fallstjórn **þágufall** s vazbou `hreyfa við <þessu>` (dativ, „dotknout se/nadhodit"); korpus

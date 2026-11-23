@@ -14,7 +14,7 @@ Udělej přesně tohle a nic navíc:
 
 2. **Aktualizuj `memory/MEMORY.md`**, pokud snapshot přibyl (jeden řádek v indexu).
 
-3. **Commitni a pushni** (`[docsync]`, pathspec na ty soubory).
+3. **Commitni a pushni** (`[docsync]`, přes `python -X utf8 scripts/utils/commit_vlastni.py commit <lane> <zprava.txt>` — CLAUDE.md §30).
 
 4. **Řekni jednou větou, že je zabaleno** a že může napsat **holé `/compact`**.
 
@@ -24,11 +24,11 @@ Pak skonči. Žádné shrnutí session, žádné návrhy, co dál.
 a KUKY na ni řekl: *„tohle mi dáváš k čemu?"* Měl pravdu — **nemá konzumenta.** Všechno, co
 nesla, už leží v commitnutém snapshotu a hook to po compactu vypíše sám; owner by ji navíc
 musel držet v hlavě do okamžiku, který nikdo netrefí. Druhá kopie téhož přes kanál, který
-nefunguje = §20. Vlastníkem tohohle zákazu je `memory/working-style.md`, sekce „Compact".
+nefunguje = §20. Vlastníkem tohohle zákazu je `memory/working-style.md`, sekce „Konverzace se neztrácí".
 
 **Proč to existuje:** `autoCompactEnabled` je na defaultu a automatický compact přijde bez
 ohlášení — instruovat ho nejde (ověřeno v dokumentaci). Jediné, co funguje bez ohledu na to,
 kdo compact spustil, je **snapshot v gitu + hook**. `/zabal` proto dělá jedinou věc: dostane
 rozdělanou práci do snapshotu dřív, než compact přijde. `SessionStart` hook
-(`~/.claude/runar-context.py`) ho po compactu vypíše sám, takže i když se automatický spustí <!-- doc-links:ok 2026-08-16 hook je uzivatelsky soubor mimo repo, do gitu nepatri -->
+(`hooks/claude/runar-context.py`) ho po compactu vypíše sám, takže i když se automatický spustí
 první, rozdělaná práce se neztratí. 

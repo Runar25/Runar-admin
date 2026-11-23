@@ -9,9 +9,7 @@ Owner řekne *„načti (si) čtení a reporty“* (nebo jen *„načti čtení�
 Jeden příkaz: nová čtení od posledního zápisu monitoru (celé řádky do souboru mimo repo — cestu vypíše), monitor ozvěn
 `--nove --zapis` a **nepřečtená hlášení** (stav `new`), která hned označí jako přečtená (`triaged`).
 
-**Hlášení — pořadí kroků (CLAUDE.md §29):** načíst → označit přečtené (dělá skript) → udělat → **hotové uzavřít**
-`node scripts/nacti_cteni.js --hotovo <id8> "<co se udělalo, commit>"` → co se neudělá, **položka v `RUNAR_BACKLOG.md`** +
-`--backlog <id8> "<položka>"`. **✦ Keep = „nechat“** — uložený text, ne úkol. Hlášení, které už není `new`, znovu neřešit.
+**Hlášení — pořadí kroků, `--hotovo` / `--backlog`, Keep → CLAUDE.md §29** (jediné místo).
 
 **Why:** KUKY 2026-10-06: *„stačí, že to uděláš automaticky, když řeknu načti si čtení a reporty. To, co je v reportech, je taky
 důležité“* a večer: *„konečně začni označovat tak, abych je kurva každá session i po compactu rozpoznala, že jsou hotová. Jak
@@ -26,7 +24,4 @@ vyřešená, jen jejich stav v DB nikdo neměnil. Rozhodnutí → `RUNAR_DECISIO
 4. Zápis do DB potřebuje povolení příkazu `node scripts/nacti_cteni.js` (automatický režim zápis do produkční DB jinak zastaví).
 5. Monitor „odkud“ je kandidát, ne důkaz — ověř obrácenou pákou ([[falsify-by-reversing-the-lever]]).
 
-⛔ **Zápis hned po načtení — hlídá stroj** (2026-10-07). KUKY: *„prostě si piš po načtení reportů, co jsme udělali, protože já se pak nechci
-zabývat tím, že vytáhneš něco 14 dní starého a myslíš, že to máme snad řešit!“* Každé načtené hlášení dostane v tomtéž tahu
-`--hotovo <id8> "<co se udělalo>"` nebo `--backlog <id8> "<položka>"`; seznam nezapsaných vede `nacti_cteni.js` a Stop-hook tah neukončí,
-dokud v něm něco zbývá (CLAUDE.md §29).
+⛔ **Zápis hned po načtení hlídá stroj** (2026-10-07; KUKY: *„prostě si piš po načtení reportů, co jsme udělali“*) — postup CLAUDE.md §29.

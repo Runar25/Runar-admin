@@ -9,7 +9,7 @@ Když máš hypotézu tvaru **„X je málo, přidej X"**, netestuj ji přidáv�
 hodiny psaní a ověřování. **Uber X ještě víc** a zkontroluj, jestli se to podle hypotézy zhorší.
 Když se nestane nic — nebo to jde opačným směrem — hypotéza padla za cenu jedné dávky.
 
-**Doloženo 2026-08-14** (IS prompt „opisuje, protože zhubl“ — zkrácení místo dolévání) → čísla v CLAUDE.md §25 a
+**Doloženo 2026-08-14** (IS prompt „opisuje, protože zhubl“ — zkrácení místo dolévání) → čísla v `docs/pravidla-duvody.md` §25 a
 `RUNAR_DECISIONS.md` 2026-08-14. (Do 2026-10-11 stála i tady, potřetí, a s prohozeným srovnáním systémových promptů.)
 
 **Proč to funguje:** hypotéza „přidej" má vždycky slabou verzi („přidal jsem málo") a dá se

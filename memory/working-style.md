@@ -10,11 +10,11 @@ Kdo s kým mluví jakým jazykem → CLAUDE.md §31. Identifikátory v kódu ang
 ### Kontext window = nejdůležitější zdroj
 - Po 2 selháních na stejném problému → /clear a začít znovu s lepším promptem
 - Akumulace neúspěšných pokusů kontaminuje kontext — Claude se stále vrací ke špatné cestě
-- `/compact` a co po nem prezije → sekce „Compact" niz v tomhle souboru
+- `/compact` a co po nem prezije → sekce „Konverzace se neztrácí" niz v tomhle souboru
 
 ### ⭐ Pořadí, ve kterém se sahá na cizí věc (KUKY 2026-08-17)
-Pravidla na tohle už existují (`CLAUDE.md` §21 kritika · §24 ověř · §26 dohledej proč to odešlo ·
-§27 zaútoč na nástroj). **Chybělo jen pořadí** — v jakém sledu je pustit, když něco vezmeš do ruky.
+Pravidla na tohle už existují (`CLAUDE.md` §21 kritika · §24 ověř · §21 dohledej proč to odešlo ·
+§25 B zaútoč na nástroj). **Chybělo jen pořadí** — v jakém sledu je pustit, když něco vezmeš do ruky.
 
 1. **Co to je a PROČ to tam je** — ne co to říká. Kdo to čte, co se rozbije, když to zmizí.
    ⭐ **Pokyn v promptu: napřed `git log -S"<věta>" -- v2/` a záznam DECISIONS ke commitu, TEPRVE pak návrh změny** — a stejný krok
@@ -67,7 +67,7 @@ Při každém tasku: co konkrétně ověří že je to hotovo? (grep, browser ch
 
 ### i18n kontrola — po VĚTŠÍCH UI / translation změnách (standing rule, owner 2026-07-06)
 Po zásahu do UI stringů / překladů / lang-switch logiky spusť **`scripts/i18n-diff.js`** — runtime detektor „uvízlé angličtiny" (přepne EN↔IS napříč taby, nahlásí texty co se nepřeložily = natvrdo bez wiringu NEBO nepřekreslené při přepnutí jazyka).
-**Jak vyvolat (Code session):** `preview_start reader` → přejdi na `runar-reader.html` → vlož obsah `scripts/i18n-diff.js` přes `preview_eval`. Vrátí `{count, items}`. (Owner ručně: vložit do dev-console prohlížeče.)
+**Jak vyvolat (Code session):** otevři `runar-reader.html` v panelu prohlížeče (`navigate` na produkční URL) → vlož obsah `scripts/i18n-diff.js` přes `javascript_tool`. Vrátí `{count, items}`. (Owner ručně: vložit do dev-console prohlížeče.)
 Caveat: transientní toasty co vyblednou = false-positive; rune názvy/gender jsou už vyfiltrované. Jsou to KANDIDÁTI, ne striktní gate — ověř vizuálně.
 
 ### Konkrétní prompty = méně oprav
@@ -130,7 +130,7 @@ Místo příkazu napiš **co ten pokus zjistí a co z něj vyjde**; když to má
 Příkaz do odpovědi patří jen tehdy, když ho owner **výslovně chce** (např. SQL, které smí
 spustit jen on — pak přesné a celé, → [[paste-sql-explicitly]]).
 
-**Táž chyba, dvakrát za den:** `/compact Zachovej: …` (zrušeno ráno, sekce „Compact" níž)
+**Táž chyba, dvakrát za den:** `/compact Zachovej: …` (zrušeno ráno, sekce „Konverzace se neztrácí" níž)
 a večer tenhle příkaz na generování dávky. První byla výjimka v pravidle, druhá byl reflex.
 
 **Potřetí 2026-10-13 (CODE-read):** na „co jsi kde udělal, ať můžu zkontrolovat“ jsem poslal `node scripts/verify_nosice.js --vypis`
@@ -167,7 +167,7 @@ Co tam není a patří sem: plochy se nezaměňují — kontrola zdrojového kó
 
 ---
 
-## Tier hodnoty (k CLAUDE.md §8)
+## Tier hodnoty (k CLAUDE.md §10)
 Při změně tier hodnoty: grep runar-app.js, runar-reader.html, runar-translations.js. (ᚱ v UI → CLAUDE.md §5.)
 
 ---
@@ -178,8 +178,7 @@ Při změně tier hodnoty: grep runar-app.js, runar-reader.html, runar-translati
 Které taby shrine má, říká `showTab(` v `runar-shrine.html`.
 
 ⭐ **`teach` NENÍ testovací plocha — píše do produkce.** `invokeRunar()` vygeneruje statické čtení
-runy a uloží ho do `runar_static_audio`; produkční reader i journal je pak servírují uživatelům
-(`runar-app.js:861`, `:1167`, `runar-journal.js:230`). Změna promptu se tedy v shrine neozkouší,
+runy a uloží ho do `runar_static_audio`; appka ho pak servíruje uživatelům v Kolekci (`loadCollection()` v `runar-app.js`). Změna promptu se tedy v shrine neozkouší,
 ale **rovnou projeví** — a jen pro ty runy, které tam někdo znovu vygeneruje.
 
 ## Konverzace se neztrácí — snapshot je dobrovolný (od 2026-10-11)
@@ -207,7 +206,7 @@ téhož přes kanál, který nefunguje (§20). Owner píše **holé `/compact`**
 na defaultu (= zapnuto), žádné nastavení summarizeru instrukce nepředá. Ruční `/compact
 Zachovej: …` účinek má, ale jen když se stihne dřív. **Proto na něm nestavět.**
 
-⚠️ **Jediné, co funguje bez ohledu na to, kdo compact spustil**, je `SessionStart` hook (`~/.claude/runar-context.py`) — spouští se i se <!-- doc-links:ok 2026-08-17 hook je uzivatelsky soubor mimo repo, do gitu nepatri -->
+⚠️ **Jediné, co funguje bez ohledu na to, kdo compact spustil**, je `SessionStart` hook (`hooks/claude/runar-context.py`) — spouští se i se
 `source: "compact"` a vypisuje poslední rozhodnutí, mapu „sáhneš na tohle → přečti tenhle doc",
 archiv čtení a pravidla, co se nejčastěji zapomínají.
 

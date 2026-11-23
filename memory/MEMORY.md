@@ -53,7 +53,7 @@ Vrstvy pravdy: kanonická = root `RUNAR_*.md`, `memory/*.md`, `CLAUDE.md` · his
 - [working-style.md](working-style.md) — workflow, Python skripty, verifikace
 - [vocab-natvrdo-a-migrace.md](vocab-natvrdo-a-migrace.md) — Jak najít natvrdo zapsané vocab/tier termíny a po přejmenování ručně grepnout staré (k CLAUDE.md §13, §15)
 - [js-unicode-escapes-python.md](js-unicode-escapes-python.md) — JS soubory s \uXXXX escapy rozbíjejí pattern matching v Python patch skriptech — jak na to
-- [cowork-bash-mount.md](cowork-bash-mount.md) — Cowork: flaky bash mount uřezává repo soubory (JS patch bezpečně); Cowork sync zrušen
+- [cowork-bash-mount.md](cowork-bash-mount.md) — Cowork: flaky bash mount uřezává repo soubory — čti z git objektu; Cowork do repa nepíše
 - [protokol-externi-dokumenty.md](protokol-externi-dokumenty.md) — Protokol pro externí dokumenty (patche, design docy): jak je přijímat a kam zapsat
 - [proveniencia-relay-neni-rozhodnuti.md](proveniencia-relay-neni-rozhodnuti.md) — Tvrzení předané jinou session (relay) není rozhodnutí ownera — dohledat zdroj (lekce 2026-07-17)
 - [adversarialni-naraz-fact-critical.md](adversarialni-naraz-fact-critical.md) — Adversariální náraz na shodu Cowork↔Code jen u fact-critical tvrzení

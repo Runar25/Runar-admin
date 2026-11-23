@@ -1,6 +1,6 @@
 ---
 name: strop-serveru-neni-narok
-description: Limit v proxy (VOICE_MONTHLY_LIMIT, MONTHLY_LIMITS…) je horní mez, ne nárok uživatele — co tier dostane, ověř průchodem appkou (co se mu nabídne), ne čtením stropu
+description: Limit v proxy (MONTHLY_LIMITS, VOICE_MONTHLY_LIMIT_TESTER…) je horní mez, ne nárok uživatele — co tier dostane, ověř průchodem appkou (co se mu nabídne), ne čtením stropu
 metadata:
   type: feedback
 ---

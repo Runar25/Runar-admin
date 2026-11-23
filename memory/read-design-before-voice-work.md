@@ -12,7 +12,7 @@ Než sáhneš na `VOICE_PROFILES`, `DEF_CHAR`, buildery v `runar-character.js` n
 co určuje **jak Rúnar mluví**, přečti **napřed**:
 
 1. `RUNAR_DESIGN.md` sekce **„Kdo je Rúnar"** (zhruba ř. 14–152) — kánon hlasu
-2. `RUNAR_BACKLOG.md` **„Nálady — specifikaci PŘEPSALY důkazy"**
+2. `docs/archive/RUNAR_BACKLOG_odlozene.md` **„Nálady — specifikaci PŘEPSALY důkazy"**
 3. `RUNAR_DECISIONS.md` — `grep -n "nálad\|hlas\|voice" RUNAR_DECISIONS.md`
 4. Píšeš **vstup do promptu nebo tip Asku** (pokyn, štítek, rámec, otázku)? → `RUNAR_DESIGN.md` sekce
    **„Slova, která dáváme modelu"** — co model se slovy udělá (sol je vrací doslova, sloveso přichází z pokynu,
@@ -20,7 +20,7 @@ co určuje **jak Rúnar mluví**, přečti **napřed**:
 
 **Why:** KUKY 2026-08-16, po tom, co jsem během jednoho dne **čtyřikrát** navrhl něco už
 rozhodnutého: *„jak tě mám donutit si nastudovat projekt Rúnar???"* Konkrétně:
-- napsal jsem `direct` jako „krátké věty" — `RUNAR_BACKLOG.md` (sekce Nálady) říká doslova
+- napsal jsem `direct` jako „krátké věty" — `docs/archive/RUNAR_BACKLOG_odlozene.md` (sekce Nálady) říká doslova
   **„`direct` NENÍ kratší věty… je to méně úkolů na jedno čtení"**
 - ptal jsem se, jestli je povolený **postoj** — `RUNAR_DESIGN.md` („Cold reading: pojmenovaný anti-vzor“) odpovídá
   **„postoj ano, radu ne"**
@@ -32,7 +32,7 @@ rozhodnutého: *„jak tě mám donutit si nastudovat projekt Rúnar???"* Konkr�
 
 **How to apply:** protokol na to existuje (`MEMORY.md`, Session Start Protocol, bod 5
 „Doc podle úkolu") — jen ho po compactu nikdo nepřipomene. Proto to hlásí i SessionStart
-hook (`~/.claude/runar-context.py`, mapa typ úkolu → povinný doc). <!-- doc-links:ok 2026-08-16 hook je uživatelský soubor mimo repo (platí pro všechny session), do gitu nepatří -->
+hook (`hooks/claude/runar-context.py`, mapa typ úkolu → povinný doc).
 
 
 ⚠️ **A žádná ukázková věta bez ověření.** Copy se píše hlasem Rúnara a **v EN nebo IS**,

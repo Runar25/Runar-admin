@@ -5,7 +5,7 @@ metadata:
   type: feedback
 ---
 
-Hlídač `~/.claude/runar-api-guard.py` hledá v příkazu `(node|python3?|py) … <soubor>.js|py` a obsah nalezeného skriptu kontroluje na <!-- doc-links:ok 2026-10-11 hook je uživatelský soubor v ~/.claude, mimo repo -->
+Hlídač `hooks/claude/runar-api-guard.py` hledá v příkazu `(node|python3?|py) … <soubor>.js|py` a obsah nalezeného skriptu kontroluje na
 API. „py“ nemá hranici slova, takže **„prvni.py druhy.py“** (dvě jména za sebou, třeba v pathspecu commitu, ve smyčce `for f in`
 nebo v `printf`) čte jako „py druhy.py“ — je-li druhý ten GPT korektor islandštiny, najde v něm API a zablokuje commit i kontrolu syntaxe.
 Stalo se 3× za 2026-10-10/11 (commit, smyčka s py_compile, printf seznamu cest).

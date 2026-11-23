@@ -38,13 +38,7 @@ souboru dvěma session neřeší nic než worktree.
   „kontrola a commit v jednom příkazu“ níž už stálo — porušeno podruhé (poprvé `c81b4da`) → CLAUDE.md §30: dělá to stroj. Test:
   `commit_vlastni.py --test` (16 stavů: cizí změna před i po mé, překryv, nový soubor, zastaralé čtení, cizí commit vzal i moje řádky).
 - **Commit úzce přes pathspec** → CLAUDE.md „Commit ÚZCE“. Když nevíš, co je staged: `git diff --cached --name-only`.
-- **Sdílený tracked soubor (DECISIONS, runar-app.js, CLAUDE.md, translations.js): `git diff --stat -- <f>`
-  PŘED commitem.** Je-li počet větší než tvoje změna, přebytek je cizí — commitni ho vědomě a řekni to,
-  nebo počkej, až to druhá session zaveze. NEopravuj, cos sebral — je to jejich lane, jejich slib.
-  `RUNAR_DECISIONS.md` tuhle kolizi GARANTUJE: připisuje do něj každá lane. Vždy `git pull` → append → pathspec.
-  **Kontrola a commit v JEDNOM příkazu** — 2026-10-10 (`c81b4da`): `git diff --stat` ukázal moje 4 řádky v BACKLOGu, o dvě
-  volání později commit sebral 7 (CODE-read mezitím dopsal 3). Hlídat těsně před commitem, např.
-  `test "$(git diff --numstat -- RUNAR_BACKLOG.md | cut -f1)" = "4" && git -c user.name=… commit …`.
+- *(2026-11-23 pryč: ruční `git diff --stat` / `test … && commit` pro sdílené soubory — od 2026-10-11 to dělá `commit_vlastni.py`, bod výš.)*
 - **Patch nástroj = vlastní slot session** → CLAUDE.md §1 / [[one-patch-script-path]].
 - **`git status -- <path>` PŘED každým sáhnutím do tracked souboru** — a znovu před Write; stav se mění
   během session (gen_batch.js se z untracked stal tracked, protože ho druhá session mezitím commitla).

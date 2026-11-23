@@ -21,7 +21,7 @@ deklarovaných metadatech, dokud prompt staví klient — server nezná pravý s
 
 **Pravidlo:** než prohlásím metering/security fix za hotový, adversariálně ověř: *dá se ten
 samý výsledek získat JINOU cestou?* (jiné pole, prototype-chain klíč `constructor`→NaN, prázdná
-hodnota→fallback, jiný endpoint). Kde jde, pusť na to Workflow s víc nezávislými útočníky (přesně
+hodnota→fallback, jiný endpoint). Kde jde, pusť na to nezávislé útočníky v mezích [[cheapest-deciding-measurement-first]] (max 3–5 agentů; přesně
 to u #4 chytlo 9 nálezů, co jsem sám přehlédl). Root příčina > tvar. Verify OUTCOME (§19/§24),
 ne že „to teď vrací 400".
 

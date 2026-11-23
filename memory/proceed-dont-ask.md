@@ -16,7 +16,7 @@ When Kuky has agreed a plan or direction, EXECUTE it to the end without asking f
 - it is a genuine product/design decision only he can make (which masters to drop, December vs year-round, tier names, retention period)
 - an action is destructive or outward-facing beyond the agreed scope (deleting data, publishing, pushing something not in the plan)
 - the request is ambiguous enough that guessing wrong wastes real work
-- it needs something only he has (SQL editor, DPA signature, DNS, a decision from Cowork)
+- it needs something only he has (DPA signature, DNS, account settings, a decision only he can make)
 
 **Why:** Kuky asked 2026-07-14 how to configure away the constant confirmations — it is not a settings problem, it is this behaviour. He works fast and jumps between threads; a mid-plan "shall I continue?" just costs him a turn.
 

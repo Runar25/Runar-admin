@@ -27,7 +27,7 @@ Jednou ti to řeknu, začneš to dělat dobře a pak zase tohle!“* Odpovídá 
 věty, a pak není jasné, na co reaguje. Platí i pro body pod tučnými nadpisy: tučný nadpis NENÍ číslo.
 Otázky a návrhy, na které má odpovědět, mají VLASTNÍ čísla (ne „Mám?“ schované uprostřed odstavce).
 
-🔒 **Od 2026-10-07 to hlídá stroj** (CLAUDE.md §30): Stop-hook `~/.claude/runar-zprava-check.py` zprávu s odrážkami na nejvyšší úrovni <!-- doc-links:ok 2026-10-07 hook je uživatelský soubor v ~/.claude, mimo repo -->
+🔒 **Od 2026-10-07 to hlídá stroj** (CLAUDE.md §30): Stop-hook `hooks/claude/runar-zprava-check.py` zprávu s odrážkami na nejvyšší úrovni
 nebo s otázkou bez čísla zastaví a nechá přepsat.
 
 ⛔ **Otázku POLOŽ, nezmiňuj** (KUKY 2026-10-14: *„pokud máš na mě dvě otázky, tak to napiš jako otázky. pokud je to nějak schované
