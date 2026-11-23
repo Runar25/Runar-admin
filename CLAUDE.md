@@ -1,6 +1,6 @@
 # CLAUDE.md — Rúnar Project
 # Přečíst na začátku KAŽDÉ session. Zdrojová pravda pro kód. Spolu s: RUNAR_DESIGN.md (hlas, stavba čtení) · RUNAR_SPREADY.md · RUNAR_MYTOLOGIE.md · RUNAR_PRICING.md (business)
-# Důvody, doklady a historie pravidel → `docs/pravidla-duvody.md` (čti, když pravidlo nedává smysl nebo ho chceš měnit). Stav systémů → `docs/projekt-mapa.md`.
+# Důvody a historie pravidel → `docs/pravidla-duvody.md` (do 2026-10-21) a `RUNAR_DECISIONS.md` (od té doby) — čti, když pravidlo nedává smysl nebo ho chceš měnit. Stav systémů → `docs/projekt-mapa.md`.
 # Sem patří jen příkazné pravidlo a past, kterou z kódu nepoznáš. Důvod nové věci → DECISIONS, ne sem (§28).
 
 ---
@@ -19,10 +19,11 @@ runar-config.js       — TIERS, RUNAR_MODES, TIER_LIMITS, SPREAD_COSTS, SPREAD_
 runar-runes.js        — 25 Elder Futhark + calcLifeRune()
 runar-names.js        — severská jména: seznam, který rozhoduje o rozboru jména (ne model) · jen reader
 runar-names-registry.js — Mannanafnaskrá (GENEROVANÉ scripts/import_mannanafnaskra.js, needitovat) · jen reader
-runar-translations.js — UI_TEXT {en, is} + t()  ← sdílený: cv.zapis / commit_vlastni.py uprav (§1)
+runar-translations.js — UI_TEXT {en, is}
 runar-character.js    — DEF_CHAR_EN/IS, buildSysPrompt(), RP_* packs + buildReadingPrompt()
                          + spread dispatchers, buildLifeRunePrompt(), getCorrPrompt()
 runar-utils.js        — t(), tp(), vn(), vl(), setText/setSt/showToast, stream, isAdmin() (seznam ADMIN_EMAILS v runar-config.js)
+runar-svgs.js         — RUNE_SVGS: kresby run (jediný zdroj kresby, §5)
 runar-journal.js      — loadJournal(), renderJournal(), filterJournal()
 runar-tree.js         — updateTreeTab(), generateLifeRuneReading(), loadLifeRuneFromDB()
 runar-auth.js         — updateAuthUI(), PWA, sign-in, redeem
@@ -43,17 +44,18 @@ runar-voice-admin.js    — shrine: záložka VOICE, stav ElevenLabs (edge fn vo
 runar-testers-admin.js  — shrine: záložka TESTERS, účty testerů a týmu — čtení, Asky, hlasy, cena (edge fn voice-usage {accounts})
 runar-payback-admin.js  — shrine: záložka PAYBACK, kalkulačka návratnosti (čte tabulky RUNAR_PRICING.md)
 runar-help.html · runar-privacy.html — statické stránky (návod, zásady soukromí)
-runar-reader.html     — produkční app  ← sdílený: commit_vlastni.py uprav (§1)
-runar-reader.css      — styly          ← sdílený: commit_vlastni.py uprav (§1)
+runar-reader.html     — produkční app
+runar-reader.css      — styly
 runar-shrine.html     — admin app      ← Edit tool OK pro HTML
 sw.js                 — Service Worker (auto-bump via git hook · hooks/pre-commit.py)
+runar-tree-prod.js    — strom v appce (GENEROVANÉ build_tree_production.py, CODE-tree, needitovat)
 ```
 
 **Kam ukládat nové soubory** → `working-style.md`, „Kde ukládat soubory“ (patch skript → §1).
 
 ### Load order
 ```
-runar-config.js → [reader: runar-client-errors.js] → runar-runes.js → [reader: runar-names.js → runar-names-registry.js] → runar-translations.js → runar-character.js
+vendor/supabase.min.js → runar-config.js → [reader: runar-client-errors.js] → runar-runes.js → [reader: runar-names.js → runar-names-registry.js] → runar-translations.js → runar-character.js
 → runar-utils.js → runar-svgs.js → [reader: runar-runakort.js → runar-znacka.js]
 → [reader]: runar-svicka.js → runar-journal.js → runar-tree.js
             → runar-auth.js → runar-reading.js → runar-app.js
@@ -71,8 +73,8 @@ z configu §10 · UI §5 §32 · islandština §2 §6 · jeden zdroj a dokumenty
 §21 §23 · provoz §29 §30 §31. Sloučené: §3→§18 · §8, §15→§10 · §9→§2 · §22→§20 · §26→§21 · §27→§25.
 
 ### §1 — JS změny = Python skripty
-Edit tool kazí apostrofy `'` → curly quotes → SyntaxError. JS soubory: VŽDY přes Python patch skript. CSS + HTML (bez inline JS) +
-translations.js: Edit tool OK — u translations.js ne na řádku s `\uXXXX` ([[edit-tool-escapes-new-text]]).
+Edit tool kazí apostrofy `'` → curly quotes → SyntaxError. JS soubory: VŽDY přes Python patch skript. Edit tool OK jen pro NESDÍLENÉ CSS a HTML bez inline JS (shrine, nápověda, soukromí,
+runakort.css).
 **Sdílené soubory** (`_SDILENE` v `hooks/pre-commit.py`): patch skript zapisuje přes `cv.zapis`, CSS/HTML/překlady přes `commit_vlastni.py uprav`,
 commit `commit_vlastni.py commit` — Edit a pathspec commit zastaví hooky.
 **Patch skript = VLASTNÍ gitignored slot session, NIKDY sdílený:** `scripts/_patch.py` = CODE-tree · `scripts/_patch_tune.py` = CODE-tune ·
@@ -138,7 +140,7 @@ Escape sekvence NIKDY — jen literal UTF-8 s `python -X utf8` (příklady → w
 NIKDY `email.split('@')[0]`. `displayName()` = jediný zdroj pravdy.
 
 ### §13 — Nová věc musí projít VŠEMI cestami (Full-path rule)
-Nový field → všechny buildXxxPromptIS/EN · startReading() · resetReader() · shrine parts[].
+Nový field → všechny buildery promptu v `runar-character.js` (`parts[]`) · startReading() · resetReader() · zápis na serveru (`claude-proxy`).
 Nový spread → readRune() · resetReader() · _setSpreadMode() · generateVoice().
 Migrace → grep starý text, aktualizovat VŠECHNY výskyty. Před commitem: „Existuje jiná cesta kódem, kde tohle chybí?“
 
@@ -166,7 +168,8 @@ Každá změna docs = malý commit + push IHNED, prefix `[docsync]`.
 3. Refaktor měnící generovaný výstup = golden-verify (`scripts/golden/`, diff = jen zamýšlené).
 4. Změny kvality čtení = MĚŘIT, ne hádat (objektivní tvrdě; subjektivní styl = human judgment).
 5. Nová věc → §13 full-path + zapsat do jednoho packu/configu.
-6. **Sdílené moduly:** `runar-character.js` a `runar-utils.js` načítají reader i shrine — NIKDY je neduplikovat do shrine.
+6. **Sdílené moduly:** `runar-character.js` a `runar-utils.js` načítají reader i shrine — NIKDY je neduplikovat do shrine. Server je
+   dostává jako balík `supabase/functions/_shared/prompt_skladani.mjs` (generuje pre-commit) — do produkce až nasazením `claude-proxy`.
 
 ### §19 — Ověřuj VÝSLEDEK, ne tvar kódu (anti-tichá-chyba)
 1. **Seed-and-assert na hranici:** kde data přechází hranici (DB→kód, zdroj→prompt, stav→reset), protlač známý vstup produkčními funkcemi a ověř
@@ -239,7 +242,8 @@ Co se má dít pokaždé, udělá skript, nebo zastaví práci, když se vynech�
 - **Kontroly:** pre-commit pustí rychlé kontroly na staged soubory; pre-push celý smoke v čisté kopii. Nová kontrola = útok v
   `scripts/protipriklady.py` (`PRIPADY`) nebo důvod v `BEZ_UTOKU` (smoke ㊵).
 - **Automatické mazání** → registr `MAZANI` (`supabase/functions/_shared/ops_souhrn.ts`) + `ops_events` purge; neviditelné běhy → `BEHY`, selhání e-mailem.
-- **Konverzace se neztrácí:** `node scripts/utils/najdi_v_konverzacich.js "<text>"`. Hooky Claude Code: zdroj `hooks/claude/` v repu.
+- **Konverzace se neztrácí:** `node scripts/utils/najdi_v_konverzacich.js "<text>"`. Hooky Claude Code: zdroj `hooks/claude/` v repu
+  (hook při dotyku: `scripts/utils/pravidla_pri_dotyku.py`).
 Pravidlo porušené podruhé → nepiš ho jen do paměti, přidej mechanismus (hook, kontrola ve smoke, krok skriptu).
 
 ### §31 — Jazyk komunikace: veřejně i pro adminy jen IS a EN, česky jen owner ↔ Claude (platí pro VŠECHNY session)
@@ -265,14 +269,14 @@ U každého ownerova pokynu dohledej, **o kom** mluví (testeři / produkce / t�
 
 ## DB — user_profiles
 Schéma vlastní DB + `sql/` migrace — neopisuje se. ⚠️ **`email` a `updated_at` v `user_profiles` NEEXISTUJÍ** (e-mail je v `auth.users`).
-Zapisovatelnou plochu vlastní `sql/2026-07-16_user_profiles_column_grants.sql` (smoke ⑩); peníze a oprávnění (`tier`, `credits_balance`,
-`free_balance`, `month_*`) píše VÝHRADNĚ server přes service_role.
+Zapisovatelnou plochu vlastní `sql/2026-07-16_user_profiles_column_grants.sql` (smoke ⑩); peníze a oprávnění (seznam `PRIVILEGED`
+v `scripts/verify_write_surface.js`) píše VÝHRADNĚ server přes service_role.
 
 ## Reading systém — stav
-Jeden plynoucí blok (žádné `|||`). `_readingMode` = `'mine'` (journal píše server v `claude-proxy` po odečtu kreditu) | `'someone'` (neukládá).
+Jeden plynoucí blok (žádné `|||`). `_readingMode` = `'mine'` (journal píše server v `claude-proxy` po odečtu kreditu) | `'someone'` (neukládá; jen testerům jako data pro shrine).
 **Délky čtení** = buildery v `runar-character.js`; měníš délku → přepočítej pricing. **Obraznost:** `_seasonalImagery` bere obraz z `RUNE_IMAGES`
-(klíčované runou); `SEASON_POOLS` se do čtení nedostane. **KLÍČ** system × user prompt: sol pravidlo v systému dodrží stejně jako v user promptu
-(RUNAR_EVAL_LOG 2026-10-16 (1)); rozpor obou neměřen. Detail → `docs/projekt-mapa.md`.
+(klíčované runou); `SEASON_POOLS` se do čtení nedostane. **KLÍČ** system × user prompt: sol pravidlo v systému dodrží stejně jako v user promptu;
+rozpor obou neměřen. Detail → `docs/projekt-mapa.md`.
 
 ### Spread systém
 Kredity = per typ čtení (`SPREAD_COSTS` / `SPREAD_CONFIG`, neopisuje se). The Gathering čeká na `detectPatterns` (BACKLOG).
@@ -280,15 +284,15 @@ Kredity = per typ čtení (`SPREAD_COSTS` / `SPREAD_CONFIG`, neopisuje se). The 
 ⭐ **Yggdrasil = KDYKOLIV, KDOKOLIV přihlášený** — slunovrat = větší síla ve stromě, ne podmínka přístupu.
 
 ## Tree of Life — stav
-Vlastní `RUNAR_TREE.md` a `git log`. ⚠️ **Past pro `[tune]`:** strom se krmí regexem přes text čtení (glyfy 0x16A0–0x16FF z `rune_glyph + short_text`)
-— změna formátu skládaného textu = CODE-tree tiše přijde o větve (smoke ⑬).
+Vlastní `RUNAR_TREE.md` a `git log`. ⚠️ **Past pro `[tune]`:** strom bere runy ze známých glyfů — jednoduché čtení jen z `rune_glyph`, výklady z `rune_glyph + short_text`
+— změna formátu `short_text` výkladů = CODE-tree tiše přijde o větve (smoke ⑬).
 
 ## Word Corrections
 Živá data: `python show_corrections.py` · nová korekce do DB přes shrine (ověří `is-corr-qa.py`); známá chyba ve zdroji → `BAD_PATTERNS`.
 
 ## Kde hledat co
 Vlastník = `memory/MEMORY.md`, „Rozcestník“. **Čísla jen v configu / builderech; 1 téma = 1 doc; délka doku ~200 řádků (250 OK)** —
-CLAUDE.md je z limitu vyňatý, platí pro něj test „způsobí jeho chybění chybu? ne → pryč“.
+CLAUDE.md je z řádkového limitu vyňatý (strop velikosti: `verify_doc_length.js`), platí pro něj test „způsobí jeho chybění chybu? ne → pryč“.
 
 ---
 
