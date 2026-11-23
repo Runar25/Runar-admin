@@ -735,6 +735,11 @@ Souběh už zčásti hotový týž den: push s commitem vzniklým během smoke (
   → **není to díra, nový mechanismus nestavím** (smazání cizích řádků chytí pre-commit 24 h, rozbitou cizí práci pre-push v čisté kopii).
   Nález jinde: soubor, který pre-commit přidá (`git add`) při pathspec commitu, hlavní index nedostane (ověřeno pokusem) → `runar-verze.js`
   ležel v indexu na v686 proti HEAD v688; post-commit a ㉞ znaly jen sw.js. ✅ 2026-10-15 oba hlídají i runar-verze.js (hook to hned uklidil).
+- [ ] **K4/8 souběh — prohozená zpráva commitu** *(CODE-web 2026-11-23)*: dva `commit_vlastni.py commit` ve stejné sekundě → 24335fe
+  (CODE-tune, paměť `nasazeni-delam-sam.md`) nese zprávu CODE-web 40137c2 (monitor sítí); obsah obou commitů sedí, špatně je jen
+  popis. Mechanismus neověřen: `git commit -F` zapisuje zprávu do sdíleného `.git/COMMIT_EDITMSG` a po hoocích ji čte zpět. Oprava
+  (vlastník nástroje): po commitu porovnat `git log -1 --format=%B` se zprávou a při neshodě nahlas ohlásit (`commit-tree` by obešel
+  hooky), případně commit v `commit_vlastni` serializovat zámkem.
 
 ## Soukromí — kontrola GDPR 2026-10-12 (CODE-read; nálezy a důvody jen v `docs/archive/2026-10-12-gdpr-kontrola.md`)
 Čísla v závorce = nález v kontrole. Nic z toho tu neopakuje důvody — ty bydlí v kontrole (§20).
