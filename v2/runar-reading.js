@@ -912,6 +912,18 @@ function _askAspect() {
   if (d.length !== 1 || _lastGen.prompt.indexOf(': ' + rnPrompt(d[0]) + ' — ') === -1) return '';
   return (_lastGen.draws || _promptDraws(_lastGen.prompt, _lastGen.lang) || {}).kws || '';   // F3b: význam z losu serveru
 }
+// Jak čtení skončilo (2026-11-23, BACKLOG 14): index losu konce z prompt_draws.ending (_lastGen.draws, F3b) — 1 dvě možnosti,
+// 2 otázka, 3 dvě věci v napětí; -1 = nevíme (spread, deník, _lastGen jiné runy). Táž kontrola „patří _lastGen tomuhle čtení“
+// jako _askAspect: neúspěšné nové čtení nechá starý _lastGen.
+function _askKonec() {
+  if (!_lastGen || _lastGen.kind !== 'single') return -1;
+  var d = (_lastDrawn || []).filter(Boolean);
+  if (d.length !== 1 || String(_lastGen.prompt || '').indexOf(': ' + rnPrompt(d[0]) + ' — ') === -1) return -1;
+  var k = (_lastGen.draws || _promptDraws(_lastGen.prompt, _lastGen.lang) || {}).ending;
+  if (!k) return -1;
+  var i = Number(String(k).slice(-1));
+  return isNaN(i) ? -1 : i;
+}
 function _askSpread() {
   return { mode: _spreadMode,
            runy: (_lastDrawn || []).filter(Boolean).map(function (r) { return rnPrompt(r); }) };   // do promptu bez glosy (2026-09-24)
@@ -952,6 +964,11 @@ function _askHints() {
   // OSOBNÍ SLOT (2026-09-25, KUKY „přidáváme další větu… nepůjdeme přes 7“): s vlastní otázkou „jak to souvisí s tím, na co jsem
   // se ptal“, bez ní „How does this reading affect me?“ — týž vzor jako časový slot níž (přesnější věta přebírá místo).
   out.push(u.question ? t('ask_h_asked') : t('ask_h_me'));
+  // KONEC ČTENÍ (2026-11-23, BACKLOG 14, owner „dej to tam“): poslední věta má vlastní tip, jen když čtení tak opravdu končí.
+  // Single má do té doby nejvýš 6 tipů → se sedmým se vejde pod strop 7 (KUKY 2026-09-25), spready konec nelosují.
+  var _ko = _askKonec();
+  if (_ko === 1 || _ko === 3) out.push(t('ask_h_two_sides'));
+  else if (_ko === 2) out.push(t('ask_h_why_question'));
   // CASOVY SLOT: jen kdyz si clovek zvolil zamer — pak veta k nemu.
   // 2026-10-06 (KUKY „odstranit“): bez záměru už žádný tip. „Why is this showing up now?“ se ptal po PŘÍČINĚ (znamení), kterou
   // NO COLD READING zakazuje — sol začal odpověď odmítnutím 9/9 („Algiz does not say why this appears now“), náhrady „Why does this

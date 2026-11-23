@@ -224,6 +224,8 @@ PRIPADY = [
  ('chyti', 'verify_tree_signals.js', 'v2/tree-lab-branch-composer/runar-branch.js', 'replace', 'purpose:0.60, career:0.70', 'purpose:0.60, karriera:0.70'),
  ('chyti', 'verify_tree_signals.js', 'v2/runar-tree.js', 'replace', "      src = row.rune_glyph || '';", "      src = (row.rune_glyph || '') + ' ' + st;"),
  # kolo 3 / 4i (2026-10-11): Ask nápověda, kolekce, páky promptu, databáze čtení. Kontroly bez útoku → BEZ_UTOKU níž.
+    # 2026-11-23 (CODE-tune): tip „Why that question?“ se přestane nabízet u čtení, které končí otázkou (BACKLOG 14) — 7b to musí poznat.
+ ('chyti', 'verify_ask_hints.js', 'v2/runar-reading.js', 'replace', "  else if (_ko === 2) out.push(t('ask_h_why_question'));", "  else if (_ko === 9) out.push(t('ask_h_why_question'));"),
  ('chyti', 'verify_ask_hints.js', 'v2/runar-reading.js', 'replace', 'var many = dr.length > 1, life = u.lifeRune;', 'var many = true, life = u.lifeRune;'),
  ('chyti', 'verify_coll_shape.js', 'v2/runar-app.js', 'replace', "document.getElementById('cd-shape').textContent    = (_tv && typeof _tv === 'object' && _tv[r.n]) || '';", "document.getElementById('cd-shape').textContent    = '';"),
  ('chyti', 'verify_prompt_levers.js', 'v2/runar-character.js', 'regex', r"    _kus\('ADDRESS', 'address \(gender\)', 'whole', _addressContext\(lang\)\),(\r?\n    // _describeRule)", r'\g<1>'),   # 2026-10-22: řádek obalený _kus

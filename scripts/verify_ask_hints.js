@@ -178,6 +178,34 @@ for (const L of ['en', 'is']) {
   rekni(max.filter((x, i) => max.indexOf(x) !== i).length === 0, L + '  všechno vybráno → žádný tip dvakrát');
 }
 
+// ── 7b) KONEC ČTENÍ (2026-11-23, BACKLOG 14) — tip podle losu konce, který čtení opravdu dostalo ─────────
+// _lastGen nastavuje produkce po čtení (draws = los serveru, F3b); `let` v readeru → přes glob, ne sandbox.X.
+const setGen = (gen) => { sandbox.__gen = gen; glob('_lastGen = __gen'); };
+for (const L of ['en', 'is']) {
+  const T = (k) => glob('UI_TEXT')[L][k];
+  const OBL = glob('AREAS')[L][2], ZAM = glob('INTENTIONS')[L];
+  const gen = (r, ending) => ({ kind: 'single', lang: L, prompt: 'X: ' + glob('rnPrompt')(r) + ' — y', draws: ending ? { ending } : {} });
+  const ma = (h, k) => h.indexOf(T(k)) !== -1;
+  setGen(gen(R('Jera'), 'open1'));  const k1 = hinty(L, [R('Jera')]);
+  setGen(gen(R('Jera'), 'heavy3')); const k3 = hinty(L, [R('Jera')]);
+  setGen(gen(R('Jera'), 'open2'));  const k2 = hinty(L, [R('Jera')]);
+  setGen(gen(R('Jera'), 'open0'));  const k0 = hinty(L, [R('Jera')]);
+  setGen(gen(R('Ansuz'), 'open2')); const kc = hinty(L, [R('Jera')]);   // _lastGen jiné runy (neúspěšné nové čtení)
+  setGen(gen(R('Jera'), ''));       const kn = hinty(L, [R('Jera')]);
+  rekni(ma(k1, 'ask_h_two_sides') && ma(k3, 'ask_h_two_sides') && !ma(k1, 'ask_h_why_question'),
+        L + '  konec dvěma možnostmi / v napětí → „' + T('ask_h_two_sides') + '“');
+  rekni(ma(k2, 'ask_h_why_question') && !ma(k2, 'ask_h_two_sides'), L + '  konec otázkou → „' + T('ask_h_why_question') + '“');
+  rekni(![k0, kc, kn].some((h) => ma(h, 'ask_h_two_sides') || ma(h, 'ask_h_why_question')),
+        L + '  jiný konec, cizí _lastGen ani chybějící los → žádný tip ke konci');
+  const sp = Object.assign(gen(R('Jera'), 'open2'), { kind: 'norns' }); setGen(sp);
+  const ks = hinty(L, [R('Jera'), R('Ansuz'), R('Mannaz')]);
+  rekni(!ma(ks, 'ask_h_why_question'), L + '  spread → žádný tip ke konci');
+  setGen(gen(R('Jera'), 'open2'));
+  const mx = hinty(L, [R('Jera')], R('Gebo'), 'Should I take it?', OBL, ZAM[1]);
+  rekni(mx.length <= 7 && ma(mx, 'ask_h_why_question'), L + '  single se vším vybraným + konec otázkou → ' + mx.length + ' tipů (strop 7)');
+  setGen(null);
+}
+
 // ── 8) INVARIANT: co nápověda NABÍZÍ, musí mít v promptu PODKLAD ─────────────
 // Tip je otázka. Když Rúnar nemá z čeho odpovědět, **domyslí si to** (§23) — a uživatel
 // nepozná, že dostal vymyšlenou odpověď na vlastní otázku. Tahle díra žila **dvakrát**:
