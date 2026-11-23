@@ -1800,7 +1800,8 @@ const UI_TEXT = {
     hero_eyebrow:         'THE RUNE KEEPER',
     voice_resting:        'The voice of Rúnar is resting — please try again in a moment.',
     shop_buy_more:      '\u2192 {card}',   // 2026-10-21: otevře okno cesty na kartě Rúnakort; „at Agndofa.is“ pryč — tam se nekupuje
-    dam_text:           'This will permanently erase your account, all rune readings, and your journal. This cannot be undone.',
+    dam_text:           'Your account, all your rune readings and your journal will be erased 30 days from now. If you sign in before then, the deletion is cancelled. After that it cannot be undone.',
+    dam_cancelled:      'Your account was due to be deleted. You signed in, so it will not be.',   // 2026-11-23 měkké smazání
     tree_intro: '<p class="tree-intro-title">THE LIFE RUNE</p><p>It is said that no tree reaches toward the sky without first sending its roots into the darkness below.<br>So it is with us.</p><p>The runes are not here to tell you who you are.<br>They are here to help you remember.</p><p>Your Life Rune is the first step.<br>To discover it, begin where your story began.</p><p>When were you born?</p>',
     sign_in_btn:      'SIGN IN',
     name_modal_title: 'BEFORE THE RUNES SPEAK',
@@ -2396,7 +2397,8 @@ const UI_TEXT = {
     hero_eyebrow:         'RÚNAVÖRÐURINN',
     voice_resting:        'Rödd Rúnars hvílir — reyndu aftur eftir andartak.',
     shop_buy_more:      '→ {card}',
-    dam_text:           'Þetta eyðir reikningi þínum, öllum spám þínum og dagbókinni að eilífu. Ekki er hægt að afturkalla þessa aðgerð.',
+    dam_text:           'Reikningi þínum, öllum lestrum og dagbókinni verður eytt eftir þrjátíu daga. Ef þú skráir þig inn fyrir þann tíma er hætt við það. Eftir það verður ekki aftur snúið.',
+    dam_cancelled:      'Til stóð að eyða reikningnum þínum. Þar sem þú skráðir þig inn er hætt við það.',   // 2026-11-23 měkké smazání
     tree_intro: '<p class="tree-intro-title">LÍFSRÚNIN</p><p>Sagt er að ekkert tré rísi til himins án þess að fyrst teygja rætur sínar niður í myrkrið.<br>Þannig er það einnig með okkur.</p><p>Rúnirnar eru ekki hér til að segja þér hver þú ert.<br>Þær eru hér til að hjálpa þér að muna.</p><p>Lífsrúnin er fyrsta skrefið.<br>Til að finna Lífsrúnina þína skaltu hefja leitina þar sem saga þín hófst.</p><p>Hvenær fæddist þú?</p>',
     sign_in_btn:      'SKR\u00c1 INN',
     name_modal_title: '\u00c1\u00d0UR EN R\u00daNIRNAR TALA',

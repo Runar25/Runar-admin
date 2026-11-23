@@ -173,7 +173,7 @@ Kolo A–I proběhlo celé (A 2026-11-23 (3), B–I DECISIONS 2026-11-23 (5)). Z
 - [x] ✅ *(CODE-tree 2026-11-23: přesunuto, index a RUNAR_TREE.md upraveny, mrtvé odkazy opraveny)* **Paměť stromu** `runar-tree-engine-lab.md`,
   `runar-tree-living-movement.md` se samy hlásí jako historie → do `memory/snapshots/` (CODE-tree, jeho paměť).
 - ✖ *(owner 2026-11-23 „kontrola asi není potřeba“ — čtení se pořád mění, dělá se s CODE-read; z metodiky vypuštěno.)* **J. Čtení**
-- [ ] **Měkké smazání účtu** (nález D: `RUNAR_PRIVACY.md` „Zálohy“ na tuhle položku odkazoval, ale nebyla nikde) — před spuštěním
+- [x] ✅ *(CODE-tune 2026-11-23, owner „udělej“, DECISIONS 2026-11-23 (6))* **Měkké smazání účtu** (nález D: `RUNAR_PRIVACY.md` „Zálohy“ na tuhle položku odkazoval, ale nebyla nikde) — před spuštěním
   nahradí ruční obnovu smazaného účtu ze zálohy (kroky 1 a 4 tam); návrh a SQL pro ownera.
 - [x] ✅ *(CODE-tune 2026-11-23, owner „udělej“: data za 90 dní, 144 čtení; vzor ~0.71, 206 ISK, break-even 6,9, mzdové řádky
   145 / 247 / 350 / 486, tabulka výnosů s fixními $186 místo $230)* **Přepočet `RUNAR_PRICING.md` z dnešních dat** (nález D): `node scripts/utils/pricing_tabulka.js` dnes dává Premium IS nejhorší $2.99

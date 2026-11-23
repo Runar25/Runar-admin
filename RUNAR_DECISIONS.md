@@ -13612,3 +13612,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Čeká:** refaktory duplicit, přepočet PRICING, měkké smazání → BACKLOG „Údržba 2026-11“.
 - Affected doc(s): CLAUDE.md, memory/, RUNAR_PRICING.md, RUNAR_SPREADY.md, RUNAR_PRODUKTY.md, RUNAR_PRIVACY.md, RUNAR_BACKLOG.md,
   docs/projekt-mapa.md, docs/pravidla-duvody.md (všechny v commitech téhož dne).
+
+## 2026-11-23 (6) — Měkké smazání účtu: „Delete Account“ účet zavře, smaže ho až za 30 dní; přihlášení v lhůtě smazání zruší
+- **Owner:** 2026-10-11 *„1. souhlas“* k návrhu (2026-10-11 (53): *„účet je 30 dní skrytý, když se uživatel v té době přihlásí, smazání se
+  zruší, a teprve potom se data skutečně vymažou“*); stavba 2026-11-23 *„11-13 udělej“* (BACKLOG „Údržba 2026-11“).
+- **Co:** tabulka `deletion_requests` (id + čas žádosti; `sql/2026-11-23_mekke_smazani.sql`). `delete-account` zapíše žádost a odhlásí
+  účet na všech zařízeních. Noční `inactive-accounts` žádost zruší, když se člověk po ní přihlásil, a po 30 dnech účet smaže přes
+  `_shared/smaz_ucet.ts` (jediná cesta smazání; kredity ani předplatné nehlídá — o smazání požádal sám). Appka po novém přihlášení
+  zruší vlastní žádost hned a řekne to (`dam_cancelled`). Pravidlo `rozhodniZadost` v `_shared/necinne_ucty.ts` (smoke: 6 případů + 2 podvrhy).
+- **Texty (EN i IS, IS Greynir + korpus):** potvrzovací dialog, zásady soukromí (oddíl 7), nápověda a FAQ — „za 30 dní, přihlášení to ruší“.
+- **Mimo:** e-mail při žádosti ani volba „smazat hned“ (nebyly v zadání); ruční obnova ze zálohy dál platí, jen po skutečném smazání.
+- Affected doc(s): RUNAR_PRIVACY.md (retence, obnova), RUNAR_BACKLOG.md.

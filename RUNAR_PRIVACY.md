@@ -78,8 +78,8 @@ a souhlasí na pravdivém textu. Detail → `RUNAR_DECISIONS.md` 2026-09-11 (8).
 > verði eytt. Við seljum gögnin þín aldrei.
 
 ## Retence + práva
-- **Retence** (owner 2026-10-19, DECISIONS 2026-10-19 (3)): čtení se drží **po dobu účtu**; smazáním účtu zmizí hned
-  (kaskáda `delete-account`), ze záloh do 30 dní (zálohy výš). **Opuštěný účet** (3 roky bez přihlášení) se smaže stejnou cestou —
+- **Retence** (owner 2026-10-19, DECISIONS 2026-10-19 (3)): čtení se drží **po dobu účtu**; „Delete Account“ účet zavře a za 30 dní smaže (**měkké smazání** od 2026-11-23,
+  `deletion_requests`: id + čas žádosti; přihlášení v lhůtě ruší; maže noční `inactive-accounts` přes `smaz_ucet.ts`), ze záloh pak do 30 dní. **Opuštěný účet** (3 roky bez přihlášení) se smaže stejnou cestou —
   napřed mu přijdou **dvě upozornění e-mailem** (EN + IS; 30 dní a týden předem); přihlášení v lhůtě smazání zruší. Účet s nevyčerpanými
   kredity nebo běžícím předplatným se nemaže (DECISIONS 2026-10-19 (6)). Úloha: edge funkce `inactive-accounts` denně, pravidla
   `supabase/functions/_shared/necinne_ucty.ts`, v registru `MAZANI` (DECISIONS 2026-11-01 (3)); stránka zásad to říká v oddílu o smazání účtu.
@@ -158,7 +158,7 @@ a souhlasí na pravdivém textu. Detail → `RUNAR_DECISIONS.md` 2026-09-11 (8).
      SQL ownera ho neblokuje;
   5. začerněné přepisy konverzací (výmaz výš) se neobnovují.
   Nástroj na kroky 1 a 4 zatím není — napsat a vyzkoušet na kopii při první žádosti; zápis do produkční DB pouští owner.
-  Před spuštěním to nahradí „měkké smazání“ → `RUNAR_BACKLOG.md`, „Údržba 2026-11“.
+  Od 2026-11-23 to platí jen po skutečném smazání — do 30 dní od žádosti stačí, aby se člověk přihlásil (měkké smazání, Retence výš).
 
 - **Přepisy konverzací s Claudem (vývoj, od 2026-10-11 se nemažou — DECISIONS 2026-10-11 (30)):** pracovní přepisy session (CODE i Cowork)
   a jejich noční šifrovaná kopie (`~/runar-eval/zaloha-konverzaci`, 7z AES, jen na počítači ownera, ne na Drive) mohou nést osobní údaje
