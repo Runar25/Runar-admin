@@ -54,7 +54,7 @@ const rekni = (ok, co) => { if (!ok) fail++; console.log((ok ? 'OK    ' : 'FAIL 
   const kl = cti('supabase/functions/_shared/klic.ts');
   rekni(/import \{[^}]*\btextKHlasu\b[^}]*\} from "\.\.\/_shared\/voice_ticket\.ts"/.test(el) &&
         /import \{[^}]*\boverServer\b[^}]*\} from "\.\.\/_shared\/klic\.ts"/.test(el) &&
-        /import \{[^}]*\bpodepis\b[^}]*\bover\b[^}]*\} from "\.\/voice_ticket\.ts"/.test(kl) && /await over\(k, listek, user, text\)/.test(kl),
+        /import \{[^}]*\bpodepis\b[^}]*\bover\b[^}]*\} from "\.\/voice_ticket\.ts"/.test(kl) && /await over\(NOVY, listek, user, text\)/.test(kl),   // 2026-11-23: jen nový klíč (staré vypnuté, krok 5)
         'elevenlabs-proxy bere podpis a text k hlasu z _shared/voice_ticket.ts (přes _shared/klic.ts)');
   rekni(!/const \{ text, lang \} = await req\.json\(\)/.test(el), 'elevenlabs-proxy už nebere holý text od klienta (stará cesta pryč)');
   rekni(/if \(text === null && ADMIN_EMAILS\.includes\(email\) && typeof body\?\.text === "string"\) text = body\.text;/.test(el) &&
