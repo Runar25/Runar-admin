@@ -302,7 +302,7 @@ PRIPADY = [
  ('nesmi', 'verify_hlas_ke_cteni.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'append', '', '\n// komentář navíc — správný kód\n'),
 # 2026-11-01: mazání účtu je ve sdíleném _shared/smaz_ucet.ts — útok na obě strany (sdílený soubor nemaže hlas / delete-account ho nevolá)
 ('chyti', 'verify_hlas_ke_cteni.js', 'supabase/functions/_shared/smaz_ucet.ts', 'replace', 'await sb.storage.from("reading-voice").remove(', 'await sb.storage.from("reading-voice").list('),
-('chyti', 'verify_hlas_ke_cteni.js', 'supabase/functions/delete-account/index.ts', 'replace', 'const vysledek = await smazUcet(sb, user.id, user.email ?? null);', 'const vysledek = { ok: true };'),
+('chyti', 'verify_hlas_ke_cteni.js', 'supabase/functions/_shared/smaz_ucet.ts', 'replace', 'await sb.storage.from("reading-voice").remove(', 'await sb.storage.from("reading-voice").list('),   # 2026-11-23: dřív delete-account (měkké smazání)
  # 2026-10-13 (CODE-tune): zámek „jednou“ zmizí → ㊸ musí spadnout; zmínka domény ElevenLabs nad zámkem (jako mazání historie) nesmí.
  ('chyti', 'verify_hlas_ke_cteni.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'replace', 'from("voice_tickets").insert({ id: zamek, user_id: userId })', 'from("voice_tickets").select("id").eq("id", zamek)'),
  ('nesmi', 'verify_hlas_ke_cteni.js', 'supabase/functions/elevenlabs-proxy/index.ts', 'replace', 'const EL_API_KEY     = Deno.env.get("ELEVENLABS_API_KEY");', 'const EL_API_KEY     = Deno.env.get("ELEVENLABS_API_KEY");   // api.elevenlabs.io (jen zmínka)'),
