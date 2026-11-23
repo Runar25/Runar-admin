@@ -166,7 +166,7 @@ function renderJournal(entries) {
   // 2026-10-20 (owner „symbol na začátku by mohla být otevřená kniha“): ikona knihy místo ✦, tenká linka jako ikony záložek (.atab-ikona)
   // kniha s řádky, do kterých píše pero (_peroVDeniku); kreslí jen při změně, ať běžící pero nepřijde o svou knihu
   if (titleEl && titleEl._knihaTxt !== String(t('journal_title'))) {
-    titleEl.innerHTML = _knihaSvg() + String(t('journal_title')).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+    titleEl.innerHTML = _knihaSvg() + escapeHtml(t('journal_title'));
     titleEl._knihaTxt = String(t('journal_title'));
   }
   // Počet: Standard vidí všechna čtení („5 lestrar“), ostatní jen posledních pár („síðustu 5“). Jedno čtení = „1 lestur“ v obou

@@ -26,14 +26,8 @@
   // Shared escapeHtml is loaded (runar-utils.js); fall back to identity-safe if not.
   function esc(s) { return (typeof escapeHtml === 'function') ? escapeHtml(s) : String(s == null ? '' : s); }
 
-  async function token() {
-    var s = await sb.auth.getSession();
-    return (s.data.session && s.data.session.access_token) || null;
-  }
-  function setErr(msg) {
-    var st = document.getElementById('st-readings');
-    if (st) { st.textContent = msg || ''; st.className = msg ? 'status err' : 'status'; }
-  }
+  function token() { return sessionToken(); }   // 2026-11-23: runar-utils.js (dřív 4 kopie)
+  function setErr(msg) { setStatusErr('st-readings', msg); }   // 2026-11-23: runar-utils.js (dřív 2 kopie)
 
   // ── Obraz čtení → řádek banky (RUNE_IMAGES: [runa, sezóna, IS, EN, aspekt IS, aspekt EN, …]) ──
   function bezTecky(s) { return String(s || '').replace(/\.\s*$/, '').trim(); }

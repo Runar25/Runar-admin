@@ -10,15 +10,9 @@
 
   function esc(s) { return escapeHtml(s); }   // 2026-11-23: dřív vlastní kopie (§18), escapeHtml je v runar-utils.js
 
-  async function token() {
-    var s = await sb.auth.getSession();
-    return (s.data.session && s.data.session.access_token) || null;
-  }
+  function token() { return sessionToken(); }   // 2026-11-23: runar-utils.js (dřív 4 kopie)
 
-  function setErr(msg) {
-    var st = document.getElementById('st-reports');
-    if (st) { st.textContent = msg || ''; st.className = msg ? 'status err' : 'status'; }
-  }
+  function setErr(msg) { setStatusErr('st-reports', msg); }   // 2026-11-23: runar-utils.js (dřív 2 kopie)
 
   window.filterReports = function (f) {
     _filter = f;

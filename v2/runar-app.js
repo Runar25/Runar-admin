@@ -956,7 +956,7 @@ var TAB_IKONY = {
 function _zalozka(tab) {
   var el = document.getElementById('atab-' + tab);
   if (!el || !TAB_IKONY[tab]) return;
-  var txt = String(t('atab_' + tab)).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  var txt = escapeHtml(t('atab_' + tab));
   el.innerHTML = '<svg class="atab-ikona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"'
     + ' stroke-linejoin="round" aria-hidden="true">' + TAB_IKONY[tab] + '</svg>' + txt;
 }
@@ -1344,10 +1344,7 @@ function toggleFormHint(k, zavrit) {
   if (otevrit) _HINTY.forEach(function (j) { if (j !== k) toggleFormHint(j, true); });
   var obal = box.closest('.hint-papir'), list = box.parentNode;
   if (otevrit && obal && !obal.getAttribute('data-bok') && typeof _svickaRnd === 'function') {
-    var rnd = _svickaRnd(k + '-hint'), bok = function () { var b = []; for (var y = 0; y <= 100; y += 5) b.push([(rnd() < .22 ? 1.5 + rnd() * 3 : rnd() * 1.2).toFixed(2), y]); return b; };
-    var Lb = bok(), Pb = bok().reverse();
-    list.style.clipPath = 'polygon(' + Lb.map(function (b) { return b[0] + 'px ' + b[1] + '%'; })
-      .concat(Pb.map(function (b) { return 'calc(100% - ' + b[0] + 'px) ' + b[1] + '%'; })).join(',') + ')';
+    _natrzenyOkraj(list, _svickaRnd(k + '-hint'), 5);
     obal.setAttribute('data-bok', '1');
   }
   box.textContent = t(k + '_hint');
@@ -1507,15 +1504,20 @@ var _PAPIRY = {
 };
 var _PAPIR_ZAVRENY = 44;   // výška zavřeného proužku (runar-reader.css .papir)
 var _PAPIR_VYSKA = 50 + 230 + 26;   // otevřený nejvýš: .svp-svisla top 50 + výška 230 (kaluž a přetékající vosk jsou uvnitř) + spodní okraj
+// Natržené boky papíru: nepravidelný ořez listu (procenta výšky → drží i při rozvíjení), z deterministického losu rnd; krok v % výšky.
+// 2026-11-23: jediné místo (dřív stejný kód v toggleFormHint a _papirS). Pořadí losu L, pak P — tvar papírů se nemění.
+function _natrzenyOkraj(list, rnd, krok) {
+  var bok = function () { var b = []; for (var y = 0; y <= 100; y += krok) b.push([(rnd() < .22 ? 1.5 + rnd() * 3 : rnd() * 1.2).toFixed(2), y]); return b; };
+  var Lb = bok(), Pb = bok().reverse();
+  list.style.clipPath = 'polygon(' + Lb.map(function (b) { return b[0] + 'px ' + b[1] + '%'; })
+    .concat(Pb.map(function (b) { return 'calc(100% - ' + b[0] + 'px) ' + b[1] + '%'; })).join(',') + ')';
+}
 function _papirS(k) {
   var c = _PAPIRY[k]; if (c.s) return c.s;
   var obal = document.getElementById(c.obal), list = obal && obal.querySelector('.papir-list'), txt = obal && obal.querySelector('.papir-text');
   if (!list || !txt) return null;
   // natržené boky: nepravidelný ořez listu (procenta výšky → drží i při rozvíjení), pro každý papír jiný a pořád stejný
-  var rnd = _svickaRnd(c.obal), bok = function () { var b = []; for (var y = 0; y <= 100; y += 2.5) b.push([(rnd() < .22 ? 1.5 + rnd() * 3 : rnd() * 1.2).toFixed(2), y]); return b; };
-  var Lb = bok(), Pb = bok().reverse();
-  list.style.clipPath = 'polygon(' + Lb.map(function (b) { return b[0] + 'px ' + b[1] + '%'; })
-    .concat(Pb.map(function (b) { return 'calc(100% - ' + b[0] + 'px) ' + b[1] + '%'; })).join(',') + ')';
+  _natrzenyOkraj(list, _svickaRnd(c.obal), 2.5);
   c.s = { obal: obal, list: list, txt: txt, h: _PAPIR_ZAVRENY, zrus: null };
   return c.s;
 }
@@ -1945,7 +1947,7 @@ function _journeyProstredi() {
 }
 // Tečka na tisíce: 3.490 (islandský zápis, i v EN jako na webu). Ručně, ne toLocaleString — prohlížeč bez dat jazyka by dal jiný zápis (smoke ㊻).
 function _jkr(n) { return String(Math.round(Number(n))).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
-function _jesc(x) { return String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+function _jesc(x) { return escapeHtml(x); }   // 2026-11-23: dřív vlastní kopie escapu (§18)
 // 2026-10-20: třetí karta „c“ = Rúnakort (owner, hlášení bd915d60: „vedle month, year jako zvlášť okno a u Rune Seekera odkaz“).
 var _jPk = 1, _jDes = 'o';   // karta Rúnakort v okně cesty: zvolený balíček (index CARD_PACKS) a vzhled (RK_DESIGNS) — 2026-10-21
 function _journeyObdobi(p) { _journeyP = (p === 'y' || p === 'c') ? p : 'm'; _journeyPaint(); }

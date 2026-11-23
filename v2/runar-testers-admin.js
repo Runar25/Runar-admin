@@ -23,10 +23,7 @@
     return s || '—';
   }
 
-  async function token() {
-    var s = await sb.auth.getSession();
-    return (s.data.session && s.data.session.access_token) || null;
-  }
+  function token() { return sessionToken(); }   // 2026-11-23: runar-utils.js (dřív 4 kopie)
 
   function tabulka(nadpis, ucty, kredit) {
     var sum = { today: 0, total: 0, types: {}, asks: 0, voices: 0, cost: 0 };

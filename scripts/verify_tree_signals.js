@@ -26,7 +26,8 @@ sandbox.window = sandbox; sandbox.self = sandbox; sandbox.globalThis = sandbox;
 
 // jen to, co readingsToTreeLog potřebuje: RUNES (glyf → element) + sama funkce
 let code = 'var lang="en"; var currentUser=null; var readerUser={}; var userTier="premium"; var sb=null;\n';
-for (const f of ['runar-runes.js', 'runar-tree.js']) {
+// 2026-11-23: + runar-utils.js — _labelIndex bydlí od údržby tam (v appce se načítá před runar-tree.js, CLAUDE.md Load order)
+for (const f of ['runar-runes.js', 'runar-utils.js', 'runar-tree.js']) {
   code += '\n/* ' + f + ' */\n' + fs.readFileSync(DIR + f, 'utf8') + '\n;\n';
 }
 

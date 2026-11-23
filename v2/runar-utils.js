@@ -23,6 +23,24 @@ if (typeof document !== 'undefined' && typeof document.addEventListener === 'fun
   }
 });
 
+// Index štítku v jazykovém balíčku {en: [...], is: [...]} — štítek může přijít v kterémkoli jazyce (DB má IS čtení s EN štítkem).
+// 2026-11-23: jediné místo (dřív 4 kopie: _seekIdx, _intentIdx, _areaIdx, _labelIndex v runar-tree.js). Chybí-li balíček → -1.
+function _labelIndex(label, pack) {
+  if (!label || !pack) return -1;
+  var i = (pack.en || []).indexOf(label);
+  if (i < 0) i = (pack.is || []).indexOf(label);
+  return i;
+}
+// Přístupový token přihlášeného pro volání edge funkcí (shrine moduly; 2026-11-23 — dřív 4 kopie). Bez přihlášení null.
+async function sessionToken() {
+  var s = await sb.auth.getSession();
+  return (s.data.session && s.data.session.access_token) || null;
+}
+// Stavový řádek s chybou (shrine): prázdná zpráva = smazat (2026-11-23 — dřív 2 kopie).
+function setStatusErr(id, msg) {
+  var st = document.getElementById(id);
+  if (st) { st.textContent = msg || ''; st.className = 'status' + (msg ? ' err' : ''); }
+}
 function isAdmin(email) {
   return !!(email && ADMIN_EMAILS.includes(email.toLowerCase()));
 }
@@ -800,9 +818,7 @@ const AREA_FACES = [
 ];
 // Index oblasti v AREA_FACES — štítek oblasti může přijít v kterémkoli jazyce (DB má IS čtení s EN štítkem).
 function _areaIdx(area) {
-  if (!area || typeof AREAS === 'undefined') return -1;
-  var i = (AREAS.en || []).indexOf(area);
-  if (i === -1) i = (AREAS.is || []).indexOf(area);
+  var i = _labelIndex(area, typeof AREAS !== 'undefined' ? AREAS : null);
   return (i >= 0 && AREA_FACES[i]) ? i : -1;
 }
 // Jeden los podoby na čtení (builder ho předá řádku oblasti i mostu). Bez známé oblasti -1.

@@ -26,10 +26,7 @@
   var SKUPINY = { admin: 'Admin', team: 'Team (owner & Sigrún)', tester: 'Testers', user: 'Users', unknown: 'No account' };
   var ZDROJ = { weekly: 'weekly', admin: 'on open', daily: 'daily', brake: 'BRAKE STOPPED VOICE' };
 
-  async function token() {
-    var s = await sb.auth.getSession();
-    return (s.data.session && s.data.session.access_token) || null;
-  }
+  function token() { return sessionToken(); }   // 2026-11-23: runar-utils.js (dřív 4 kopie)
 
   function radky(obj, popis) {
     var k = Object.keys(obj || {});
