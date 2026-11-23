@@ -287,8 +287,6 @@ async function syncFreeBalance(userId) {
 // preload="metadata" (2026-10-10, KUKY: „není vidět, jak dlouhá je stopa hlasu“): délka se načte hned, celý zvuk se nestahuje.
 function _makeCapPlayer(prefix, src, autoplay) { return svickaHtml(prefix, src, { autoplay: autoplay }); }
 function _capWire(prefix) { svickaNapoj(prefix); }   // autoplay deníku spustí <audio autoplay>, svíčka se zapálí na jeho play
-function _capPlay(p) { svickaPrepni(p); }
-function _capReset(p) { svickaReset(p); }
 function _capStop(p) { svickaStop(p); }
 
 // ─── LANGUAGE ────────────────────────────────────────────

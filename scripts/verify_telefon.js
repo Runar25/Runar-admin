@@ -189,7 +189,7 @@ const MERENI = `(() => {
       // owner 2026-10-29: ovládání na zamčené obrazovce („zamčený ok“) a hlas se při přepnutí záložky zastaví („má se zastavit“)
       // owner 2026-10-30 „6. ok“: u jedné runy je na zamčené obrazovce tažená runa naší kresbou (PNG z runeSvg), ne ikona appky
       readerRune = RUNES[0]; _spreadMode = 'single'; svickaNazev('cap', 'Fehu', function () { return _spreadMode === 'single' ? readerRune : null; });
-      _capPlay('cap'); await sl(1000);
+      svickaPrepni('cap'); await sl(1000);
       if (a.paused) v.push('hlas se po notě nerozehrál');
       var md = ('mediaSession' in navigator) ? navigator.mediaSession.metadata : undefined;
       if (md === undefined) v.push('prohlížeč kontroly nemá mediaSession — zamčená obrazovka neověřena');
@@ -200,7 +200,7 @@ const MERENI = `(() => {
         if (art.indexOf('data:image/png') !== 0 || art.length < 5000) v.push('zamčená obrazovka u jedné runy bez kresby runy (' + art.slice(0, 40) + ')'); }
       // výklad (owner „u výkladu více run mohou být všechny runy“): obraz se složí z run výkladu, je jiný než u jedné runy
       if (typeof obrRuny === 'function') { _lastDrawn = RUNES.slice(0, 5); svickaNazev('cap', 'Kriz', function () { return (_lastDrawn || []).filter(Boolean); });
-      a.pause(); await sl(300); _capPlay('cap'); await sl(600);
+      a.pause(); await sl(300); svickaPrepni('cap'); await sl(600);
       for (var k5 = 0; k5 < 30 && obrRuny() === art; k5++) await sl(100);
       if (obrRuny().indexOf('data:image/png') !== 0 || obrRuny() === art) v.push('zamčená obrazovka u výkladu bez obrazu run výkladu'); }
       readerRune = null; _lastDrawn = [];

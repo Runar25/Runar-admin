@@ -12,7 +12,7 @@
 // Zvuk řídí <audio>: svíčka čte jeho události (play/pause/ended/emptied), takže sedí i při autoplay (deník) a cizím pause().
 // Hraje vždy jen jeden přehrávač: spuštění jednoho ztiší ostatní (bez poryvu).
 //
-// API (runar-app.js ho volá přes _makeCapPlayer / _capWire / _capPlay / _capReset / _capStop):
+// API (runar-app.js ho volá přes _makeCapPlayer / _capWire / _capStop):
 //   svickaHtml(prefix, src, {autoplay, svisla}) → markup (<audio id="<prefix>-a"> + .svp); svislá = jen zvuk a nota, kresbu
 //                                                 <svg class="svp-svisla" id="<prefix>-sv"> má papír (runar-reader.html)
 //   svickaNapoj(prefix)                        → oživí přehrávač s tím prefixem (po vložení markupu do stránky)

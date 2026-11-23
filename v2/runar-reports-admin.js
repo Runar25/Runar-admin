@@ -8,11 +8,7 @@
   var _filter = 'new';
   var _wired = false;
 
-  function esc(s) {
-    return (s == null ? '' : String(s)).replace(/[&<>"]/g, function (c) {
-      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
-    });
-  }
+  function esc(s) { return escapeHtml(s); }   // 2026-11-23: dřív vlastní kopie (§18), escapeHtml je v runar-utils.js
 
   async function token() {
     var s = await sb.auth.getSession();

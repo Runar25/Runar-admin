@@ -33,12 +33,7 @@
   var btn, panel;
 
   function L(k) { try { return (typeof t === 'function') ? t(k) : k; } catch (e) { return k; } }
-  function uuid() {
-    if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-      var r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-    });
-  }
+  function uuid() { return _uuid(); }   // 2026-11-23: dřív vlastní kopie (§18), _uuid je v runar-utils.js
   function readQueue() { try { return JSON.parse(localStorage.getItem(QUEUE_KEY) || '[]'); } catch (e) { return []; } }
   function writeQueue(q) { try { localStorage.setItem(QUEUE_KEY, JSON.stringify(q)); } catch (e) {} }
 

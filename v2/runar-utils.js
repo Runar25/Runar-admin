@@ -146,14 +146,6 @@ function datumUI(iso, lng) {
   return d.toLocaleDateString(lng === 'is' ? 'is-IS' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
-// Safe for a JS single-quoted string that itself sits inside a double-quoted HTML attribute
-// (e.g. onclick="fn('<here>')"): escape backslash + JS-quote for the string, and HTML-encode
-// the double-quote/angle brackets so the attribute cannot be broken out of.
-function jsAttr(s) {
-  return String(s == null ? '' : s)
-    .replace(/\\/g, '\\\\').replace(/'/g, "\\'")
-    .replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
 
 // Translation helper — reads from UI_TEXT[lang] (runar-translations.js)
 function t(key) {

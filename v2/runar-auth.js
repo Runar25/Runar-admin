@@ -157,7 +157,7 @@ function updateBanners() {
       const cntEl = document.getElementById('free-user-count');
       if (cntEl) {
         cntEl.textContent = celkemTxt;
-        cntEl.className = 'tn-counter' + (remaining === 1 ? ' warn' : '');
+        cntEl.className = 'tn-counter';
       }
       const txtEl = document.getElementById('free-user-text');
       if (txtEl) txtEl.innerHTML = tp('rs_banner_desc', {
@@ -190,7 +190,7 @@ function updateBanners() {
       const cntEl = document.getElementById('free-user-count');
       if (cntEl) {
         cntEl.textContent = celkemTxt;
-        cntEl.className = 'tn-counter warn';
+        cntEl.className = 'tn-counter exhausted';   // 2026-11-23: dřív „warn“, které CSS nezná — nula nezčervenala (.tn-counter.exhausted)
       }
       const txtEl = document.getElementById('free-user-text');
       if (txtEl) txtEl.innerHTML = tp(FREE_REGISTERED_LIMIT === 1 ? 'rs_exhausted_one' : 'rs_exhausted_many', {

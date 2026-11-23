@@ -62,7 +62,7 @@ const html = fs.readFileSync(path.join(V2, 'runar-reader.html'), 'utf8');
 const skripty = [...html.matchAll(/<script[^>]+src="([^"?#]+)/g)].map((m) => m[1]).filter((s) => !/^https?:/.test(s));
 ['tree-lab-trunk-composer/runar-trunk.js', 'tree-lab-branch-composer/runar-branch.js', 'runar-tree-prod.js'].forEach((s) => { if (!skripty.includes(s)) skripty.push(s); });
 const vsechny = handlery(html, 'runar-reader.html');
-// komentáře v JS pryč (popis „onclick=\"fn('…')\"“ v komentáři není handler — runar-utils.js jsAttr); řádky zůstanou, ať sedí čísla
+// komentáře v JS pryč (popis „onclick=\"fn('…')\"“ v komentáři není handler — dřív runar-utils.js jsAttr); řádky zůstanou, ať sedí čísla
 const bezKomentaru = (t) => t.replace(/\/\*[\s\S]*?\*\//g, (b) => b.replace(/[^\n]/g, '')).replace(/^\s*\/\/.*$/gm, '');
 for (const s of skripty) { const f = path.join(V2, s); if (fs.existsSync(f)) vsechny.push(...handlery(bezKomentaru(fs.readFileSync(f, 'utf8')), s)); }
 const unik = [...new Set(vsechny.map((x) => x.jmeno))];
