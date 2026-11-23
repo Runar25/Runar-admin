@@ -16,7 +16,7 @@ const SRC = fs.readFileSync(path.join(ROOT, 'supabase', 'functions', '_shared', 
 function nacti(src) {
   const ctx = {};
   vm.createContext(ctx);
-  vm.runInContext(strip(src).replace(/^export\s+/gm, '') + '\n;this.M = { rozhodni, denSmazani, email, datum, terminSmazani };', ctx);
+  vm.runInContext(strip(src).replace(/^export\s+/gm, '') + '\n;this.M = { rozhodni, denSmazani, email, datum, terminSmazani, rozhodniZadost };', ctx);
   return ctx.M;
 }
 
@@ -62,6 +62,14 @@ function pripady(M) {
   chk('IS jen islandsky + poslední upozornění', /Síðasta áminning/.test(is.text) && /1\. nóvember 2029/.test(is.subject) && !/account/.test(is.text), true);
   chk('neznámý jazyk = oba', /reikningnum/.test(oba.subject) && /account/.test(oba.subject), true);
   chk('odkaz do appky', oba.html.includes('runar-reader.html'), true);
+  // Měkké smazání (2026-11-23): žádost 2026-12-01T10:00Z, lhůta 30 dní.
+  const Z = '2026-12-01T10:00:00Z';
+  chk('žádost: den 29 čeká', M.rozhodniZadost(Z, '2026-11-30T09:00:00Z', D('2026-12-30T10:00Z')), 'wait');
+  chk('žádost: po 30 dnech smazat', M.rozhodniZadost(Z, '2026-11-30T09:00:00Z', D('2026-12-31T10:00Z')), 'delete');
+  chk('žádost: přihlášení po žádosti ruší', M.rozhodniZadost(Z, '2026-12-05T08:00:00Z', D('2026-12-31T10:00Z')), 'cancel');
+  chk('žádost: přihlášení PŘED žádostí neruší', M.rozhodniZadost(Z, '2026-12-01T09:59:00Z', D('2026-12-31T10:00Z')), 'delete');
+  chk('žádost: nikdy přihlášen → po lhůtě smazat', M.rozhodniZadost(Z, null, D('2027-01-05')), 'delete');
+  chk('žádost: neplatné datum → nic nemazat', M.rozhodniZadost('nesmysl', null, D('2030-01-01')), 'wait');
   return { v, n };
 }
 
@@ -72,6 +80,8 @@ const podvrhy = [
   ['ochrana kreditů vypnutá', SRC.replace('if ((u.kredity || 0) > 0) return "credits";', '')],
   ['lhůta od prvního upozornění vypnutá', SRC.replace('&& t >= prvni + PRVNI_DNI * DEN ', '')],
   ['přihlášení po upozornění nepozná', SRC.replace('if (z && new Date(z.posledni).getTime() !== new Date(u.posledni).getTime()) return "reset";', '')],
+  ['žádost: přihlášení smazání neruší', SRC.replace('if (!isNaN(p) && p > z) return "cancel";', '')],
+  ['žádost: maže hned', SRC.replace('return ted.getTime() >= z + ZADOST_DNI * DEN ? "delete" : "wait";', 'return "delete";')],
 ];
 const slepe = [];
 for (const [jm, s] of podvrhy) {
@@ -86,4 +96,4 @@ if (vysl.v.length || slepe.length) {
   console.log('FAIL  opuštěné účty: ' + vysl.v.length + ' vad, ' + slepe.length + ' slepých míst');
   process.exit(1);
 }
-console.log('OK    opuštěné účty: ' + vysl.n + ' případů (lhůty, ochrany, přihlášení v lhůtě, pozdní start, e-mail EN/IS) + ' + podvrhy.length + ' podvrhy spadly');
+console.log('OK    opuštěné účty: ' + vysl.n + ' případů (lhůty, ochrany, přihlášení v lhůtě, pozdní start, e-mail EN/IS, žádost o smazání) + ' + podvrhy.length + ' podvrhy spadly');

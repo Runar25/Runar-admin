@@ -86,9 +86,10 @@ const rekni = (ok, co) => { if (!ok) fail++; console.log((ok ? 'OK    ' : 'FAIL 
 
   // (5) smazání účtu + SQL
   // 2026-11-01: postup smazání je ve sdíleném _shared/smaz_ucet.ts (i pro opuštěné účty) — delete-account ho musí volat a on mazat hlas.
-  const del = cti('supabase/functions/delete-account/index.ts');
+  // 2026-11-23 (měkké smazání): delete-account jen zapíše žádost, maže noční inactive-accounts — tam musí být smazUcet.
+  const del = cti('supabase/functions/inactive-accounts/index.ts');
   const smaz = cti('supabase/functions/_shared/smaz_ucet.ts');
-  rekni(/await smazUcet\(/.test(del) && /storage\.from\("reading-voice"\)\.remove\(/.test(smaz), 'delete-account maže soubory hlasu (přes _shared/smaz_ucet.ts)');
+  rekni(/await smazUcet\(/.test(del) && /storage\.from\("reading-voice"\)\.remove\(/.test(smaz), 'smazání účtu (inactive-accounts) maže soubory hlasu přes _shared/smaz_ucet.ts');
   const sql = cti('sql/2026-10-11_hlas_ke_cteni.sql');
   rekni(/create table if not exists public\.voice_tickets/.test(sql) && /\('reading-voice', 'reading-voice', false/.test(sql), 'SQL: tabulka zámků a SOUKROMÉ úložiště');
 

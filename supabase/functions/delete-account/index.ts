@@ -1,12 +1,13 @@
 // Supabase Edge Function: delete-account
-// Permanently deletes the authenticated user and all their data.
-// What goes with the account: _shared/smaz_ucet.ts (shared with inactive-accounts).
+// Closes the authenticated user's account: records a deletion request and signs the account out everywhere. The nightly
+// inactive-accounts job deletes it after ZADOST_DNI days (_shared/necinne_ucty.ts) through _shared/smaz_ucet.ts; signing in before
+// then cancels it. Soft delete since 2026-11-23 (DECISIONS 2026-10-11 (53)); until then this function deleted at once.
 // Deploy: supabase functions deploy delete-account --project-ref pmitxjvkeovijreepror --no-verify-jwt
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.117.3";
 import { SERVER_KLIC } from "../_shared/klic.ts";   // serverový klíč Supabase z jednoho místa (2026-11-01, krok 9 plánu)
-import { smazUcet } from "../_shared/smaz_ucet.ts";
+import { ZADOST_DNI } from "../_shared/necinne_ucty.ts";   // lhůta měkkého smazání (2026-11-23)
 
 const cors = {
   "Access-Control-Allow-Origin":  "*",
@@ -36,11 +37,15 @@ serve(async (req) => {
     );
     if (authErr || !user) return json({ error: "Invalid session" }, 401);
 
-    // Postup smazání je od 2026-11-01 ve sdíleném _shared/smaz_ucet.ts — tutéž cestou maže i inactive-accounts (opuštěné účty).
-    const vysledek = await smazUcet(sb, user.id, user.email ?? null);
-    if (!vysledek.ok) return json({ error: vysledek.chyba }, 500);
+    // Měkké smazání (2026-11-23): žádost (čas = teď; opakovaná žádost lhůtu začne znovu) a odhlášení všude — další relace pak znamená
+    // nové přihlášení, a to smazání zruší. Smaže až noční inactive-accounts přes _shared/smaz_ucet.ts (jediná cesta smazání).
+    const ted = new Date();
+    const { error: rqErr } = await sb.from("deletion_requests").upsert({ user_id: user.id, requested_at: ted.toISOString() });
+    if (rqErr) return json({ error: "Failed to record the request: " + rqErr.message }, 500);
+    const { error: soErr } = await sb.auth.admin.signOut(authHeader.replace("Bearer ", ""), "global");
+    if (soErr) console.error("delete-account: sign-out failed: " + soErr.message);   // žádost platí; appka se odhlásí sama
 
-    return json({ success: true });
+    return json({ success: true, delete_at: new Date(ted.getTime() + ZADOST_DNI * 86400000).toISOString() });
 
   } catch (e) {
     return json({ error: (e as Error).message }, 500);

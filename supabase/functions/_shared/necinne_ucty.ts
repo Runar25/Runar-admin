@@ -9,6 +9,9 @@
 export const ROKY_NECINNOSTI = 3;
 export const PRVNI_DNI = 30;
 export const DRUHE_DNI = 7;
+// Měkké smazání (2026-11-23, DECISIONS 2026-10-11 (53)): „Delete Account“ účet zavře, smaže se až po ZADOST_DNI dnech; přihlášení
+// po žádosti smazání zruší. Rozhoduje noční inactive-accounts (appka ruší i sama hned po přihlášení).
+export const ZADOST_DNI = 30;
 const DEN = 24 * 3600 * 1000;
 
 export type Ucet = {
@@ -115,4 +118,13 @@ export function email(lang: string | null | undefined, kdy: Date, druhe: boolean
   const html = `<div style="font-family:Georgia,'Times New Roman',serif;max-width:460px;margin:0 auto;padding:28px 24px;color:#1b1f2a;line-height:1.6">` +
     bloky.map((b) => b.html).join(`<hr style="border:0;border-top:1px solid #e6dfcc;margin:26px 0">`) + `</div>`;
   return { subject, html, text: bloky.map((b) => b.text).join("\n\n———\n\n") };
+}
+
+// Žádost o smazání: přihlásil se po ní → zrušit; uplynulo ZADOST_DNI dní → smazat; jinak čekat. Neplatné datum žádosti → čekat (nic nemazat).
+export function rozhodniZadost(pozadano: string, posledniPrihlaseni: string | null, ted: Date): "cancel" | "delete" | "wait" {
+  const z = new Date(pozadano).getTime();
+  if (isNaN(z)) return "wait";
+  const p = posledniPrihlaseni ? new Date(posledniPrihlaseni).getTime() : NaN;
+  if (!isNaN(p) && p > z) return "cancel";
+  return ted.getTime() >= z + ZADOST_DNI * DEN ? "delete" : "wait";
 }

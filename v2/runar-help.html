@@ -270,7 +270,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
       <div class="help-block-body" id="s7-body">
         <p>Sign in with a code sent to your email, or with Google — no password needed. Your readings are saved to your account.</p>
         <p>Your data is stored in Europe (Ireland). Only our encrypted backups may be kept elsewhere. Iceland is a member of the European Economic Area. GDPR applies.</p>
-        <p>To delete your account, open the menu and choose <strong>Delete Account</strong>. Your account, readings and journal are removed at once. Some data is kept, as our Privacy Policy explains, and our encrypted backups keep the data for a while longer. Read our full <a href="runar-privacy.html" style="color:var(--gold);opacity:0.85;">Privacy Policy</a>.</p>
+        <p>To delete your account, open the menu and choose <strong>Delete Account</strong>. Your account, readings and journal are removed 30 days later; signing in before then cancels it. Some data is kept, as our Privacy Policy explains, and our encrypted backups keep the data for a while longer. Read our full <a href="runar-privacy.html" style="color:var(--gold);opacity:0.85;">Privacy Policy</a>.</p>
       </div>
     </div>
   </div>
@@ -348,7 +348,7 @@ const CONTENT = {
     's7-lbl':  'YOUR ACCOUNT & PRIVACY',
     's7-body': `<p>Sign in with a code sent to your email, or with Google — no password needed. Your readings are saved to your account.</p>
       <p>Your data is stored in Europe (Ireland). Only our encrypted backups may be kept elsewhere. Iceland is a member of the European Economic Area. GDPR applies.</p>
-      <p>To delete your account, open the menu and choose <strong>Delete Account</strong>. Your account, readings and journal are removed at once. Some data is kept, as our Privacy Policy explains, and our encrypted backups keep the data for a while longer. Read our full <a href="runar-privacy.html" style="color:var(--gold);opacity:0.85;">Privacy Policy</a>.</p>`,
+      <p>To delete your account, open the menu and choose <strong>Delete Account</strong>. Your account, readings and journal are removed 30 days later; signing in before then cancels it. Some data is kept, as our Privacy Policy explains, and our encrypted backups keep the data for a while longer. Read our full <a href="runar-privacy.html" style="color:var(--gold);opacity:0.85;">Privacy Policy</a>.</p>`,
     's8-lbl':     'FREQUENTLY ASKED',
     'contact-lbl':  'QUESTIONS & FEEDBACK',
     'contact-text': 'Something feels wrong, or you want to share something. We read everything.',
@@ -359,7 +359,7 @@ const CONTENT = {
       { q: 'When do my monthly readings reset?',   a: 'They reset on the first day of every month, and the app lets you know the next time you open it.' },
       // 2026-10-09: čtení píše GPT od OpenAI, Claude jen při výpadku (DECISIONS 2026-10-09 (13)); do té doby „shaped by Claude, made by Anthropic“.
       { q: 'Is Rúnar an AI?',                      a: 'Rúnar\'s words are shaped by GPT, made by OpenAI — or by Claude, made by Anthropic, when OpenAI is unavailable. His voice is rendered by ElevenLabs. His character — the imagery, the philosophy, the way he speaks — was written by the people behind Agndofa. The intelligence is artificial. The intention is not.' },
-      { q: 'How do I delete my account?',          a: 'Open the menu in Rúnar and choose Delete Account. Your account, readings and journal are removed at once. Our encrypted backups keep the data for a while longer; the Privacy Policy has the details. This cannot be undone.' },
+      { q: 'How do I delete my account?',          a: 'Open the menu in Rúnar and choose Delete Account. Your account, readings and journal are removed 30 days later; signing in before then cancels it. Our encrypted backups keep the data for a while longer; the Privacy Policy has the details. After that it cannot be undone.' },
     ],
   },
   is: {
@@ -409,7 +409,7 @@ const CONTENT = {
     's7-lbl':  'REIKNINGUR ÞINN & PERSÓNUVERND',
     's7-body': `<p>Skráðu þig inn með kóða í tölvupósti eða með Google — það þarf ekkert lykilorð. Lestrarnir þínir eru geymdir á reikningnum þínum.</p>
       <p>Gögnin þín eru geymd í Evrópu (Írland). Aðeins dulkóðuð öryggisafrit okkar kunna að vera geymd annars staðar. Ísland er aðili að EES-samningnum. GDPR gildir.</p>
-      <p>Til að eyða reikningnum þínum, opnaðu valmyndina og veldu <strong>Eyða reikningi</strong>. Reikningur, lestrar og dagbók eru fjarlægð samstundis. Sum gögn eru þó geymd áfram, eins og fram kemur í persónuverndarstefnunni, og dulkóðuð öryggisafrit okkar geyma gögnin enn um sinn. Lestu fulla <a href="runar-privacy.html" style="color:var(--gold);opacity:0.85;">persónuverndarstefnu</a> okkar.</p>`,
+      <p>Til að eyða reikningnum þínum, opnaðu valmyndina og veldu <strong>Eyða reikningi</strong>. Reikningur, lestrar og dagbók eru fjarlægð eftir þrjátíu daga. Ef þú skráir þig inn fyrir þann tíma er hætt við það. Sum gögn eru þó geymd áfram, eins og fram kemur í persónuverndarstefnunni, og dulkóðuð öryggisafrit okkar geyma gögnin enn um sinn. Lestu fulla <a href="runar-privacy.html" style="color:var(--gold);opacity:0.85;">persónuverndarstefnu</a> okkar.</p>`,
     's8-lbl':     'ALGENGAR SPURNINGAR',
     'contact-lbl':  'SPURNINGAR & ENDURGJÖF',
     'contact-text': 'Skrifaðu okkur ef eitthvað er ekki eins og það á að vera eða ef þú vilt deila einhverju. Við lesum allt.',
@@ -419,7 +419,7 @@ const CONTENT = {
       { q: 'Kóðinn minn virkar ekki.',             a: 'Gakktu úr skugga um að þú sért skráður inn. Kóðar líta svona út: FEHU-XXXX-XXXX. Ef það virkar enn ekki, skrifaðu á runar@therunekeeper.com.' },
       { q: 'Hvenær endurnýjast mánaðarlegir lestrar?', a: 'Þeir endurnýjast á fyrsta degi hvers mánaðar og appið lætur þig vita næst þegar þú opnar það.' },
       { q: 'Er Rúnar gervigreind?',                a: 'Orð Rúnars eru mótuð af GPT frá OpenAI — eða af Claude frá Anthropic þegar OpenAI svarar ekki. ElevenLabs ljær honum rödd. Persóna hans var skrifuð af fólkinu á bak við Agndofa. Greindin er gervi. Tilgangurinn er það ekki.' },
-      { q: 'Hvernig eyði ég reikningnum mínum?',   a: 'Opnaðu valmyndina í Rúnar og veldu Eyða reikningi. Reikningur, lestrar og dagbók eru fjarlægð samstundis. Dulkóðuð öryggisafrit okkar geyma gögnin þó enn um sinn. Nánari upplýsingar eru í persónuverndarstefnunni. Þetta er óafturkræft.' },
+      { q: 'Hvernig eyði ég reikningnum mínum?',   a: 'Opnaðu valmyndina í Rúnar og veldu Eyða reikningi. Reikningur, lestrar og dagbók eru fjarlægð eftir þrjátíu daga. Ef þú skráir þig inn fyrir þann tíma er hætt við það. Dulkóðuð öryggisafrit okkar geyma gögnin þó enn um sinn. Nánari upplýsingar eru í persónuverndarstefnunni. Eftir það er eyðingin óafturkræf.' },
     ],
   },
 };

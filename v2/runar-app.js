@@ -75,7 +75,20 @@ const DURATION_SAVED     = 2500; // ms "saved" indicator stays visible
 // i toho, kdo datum i hotové čtení má, pruh nad formulářem hlásil vyčerpané volné čtení i předplatiteli a vyskočila výzva ke jménu.
 // Teď jeden druhý pokus; když selže i ten, hláška a „zkusit znovu“ (znovuNactiProfil) místo formulářů, bez výzvy ke jménu a bez
 // upozornění na obnovu; po návratu sítě se zkusí samo. Žádný řádek (nový účet) není chyba — tam onboarding zůstává. Hlídá smoke ㊽ (F).
+// Měkké smazání (2026-11-23): přihlásil se po žádosti o smazání → žádost zrušit a říct mu to. Bez tabulky / bez řádku nic.
+async function _zrusZadostOSmazani() {
+  try {
+    if (!currentUser) return;
+    const { data } = await sb.from('deletion_requests').select('requested_at').eq('user_id', currentUser.id).maybeSingle();
+    if (!data) return;
+    const prihlasen = Date.parse(currentUser.last_sign_in_at || '');
+    if (!(prihlasen > Date.parse(data.requested_at))) return;   // relace z doby před žádostí — rozhodne noční úloha
+    const { error } = await sb.from('deletion_requests').delete().eq('user_id', currentUser.id);
+    if (!error) showToast(t('dam_cancelled'));
+  } catch (e) { /* žádost zůstane, noční úloha ji podle přihlášení zruší */ }
+}
 async function fetchUserProfile(userId, _pokus) {
+  if (!_pokus) _zrusZadostOSmazani();
   profileLoaded = false;
   profileLoadFailed = false;
   let chyba = null;

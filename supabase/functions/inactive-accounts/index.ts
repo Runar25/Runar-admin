@@ -7,7 +7,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.117.3";
 import { SERVER_KLIC, klicZdroj } from "../_shared/klic.ts";   // serverový klíč Supabase z jednoho místa (2026-11-01, krok 9 plánu)
-import { rozhodni, denSmazani, email, chranen } from "../_shared/necinne_ucty.ts";
+import { rozhodni, denSmazani, email, chranen, rozhodniZadost } from "../_shared/necinne_ucty.ts";
 import type { Ucet, Zaznam } from "../_shared/necinne_ucty.ts";
 import { jeAdmin } from "../_shared/admini.ts";
 import { smazUcet } from "../_shared/smaz_ucet.ts";
@@ -47,7 +47,7 @@ serve(async (req) => {
   if (isNaN(ted.getTime())) return json({ error: "bad now" }, 400);
 
   const db = createClient(Deno.env.get("SUPABASE_URL")!, SERVER_KLIC, { auth: { persistSession: false } });
-  const vysledek = { ucty: 0, prvni: 0, druhe: 0, smazano: 0, chraneno: 0, obnoveno: 0, chyb: 0, items: [] as string[], chyby: [] as string[] };
+  const vysledek = { ucty: 0, prvni: 0, druhe: 0, smazano: 0, chraneno: 0, obnoveno: 0, zadosti: 0, zruseno: 0, chyb: 0, items: [] as string[], chyby: [] as string[] };
   try {
     // Všechny účty (stránkovaně) + profily + záznamy upozornění.
     const uzivatele: { id: string; email?: string; last_sign_in_at?: string | null; created_at: string; user_metadata?: { lang?: string } }[] = [];
@@ -64,8 +64,35 @@ serve(async (req) => {
     if (zErr) throw new Error("notices: " + zErr.message);
     const zaznam = new Map((zaznamy || []).map((z: { user_id: string }) => [z.user_id, z]));
 
+    // Žádosti o smazání (měkké smazání, 2026-11-23): přihlásil se po žádosti → zrušit; po ZADOST_DNI dnech → smazat (smazání na žádost
+    // nehlídá kredity ani předplatné — člověk o něj požádal sám). Účty s žádostí běžná pravidla opuštěných účtů níž přeskočí.
+    const { data: zadosti, error: rqErr } = await db.from("deletion_requests").select("user_id, requested_at");
+    if (rqErr) throw new Error("deletion requests: " + rqErr.message);
+    const sZadosti = new Set<string>();
+    const podleId = new Map(uzivatele.map((u) => [u.id, u]));
+    for (const r of (zadosti || []) as { user_id: string; requested_at: string }[]) {
+      sZadosti.add(r.user_id);
+      vysledek.zadosti++;
+      const u = podleId.get(r.user_id);
+      if (!u) continue;   // účet už neexistuje — řádek zmizel kaskádou, nebo zmizí
+      const id8 = u.id.slice(0, 8);
+      const co = rozhodniZadost(r.requested_at, u.last_sign_in_at ?? null, ted);
+      if (co === "cancel") {
+        vysledek.zruseno++;
+        if (!zkouska) await db.from("deletion_requests").delete().eq("user_id", u.id);
+      } else if (co === "delete") {
+        if (!zkouska) {
+          const rs = await smazUcet(db, u.id, u.email ?? null);
+          if (!rs.ok) { vysledek.chyb++; vysledek.chyby.push(id8 + " request " + rs.chyba.slice(0, 50)); continue; }
+        }
+        vysledek.smazano++;
+        vysledek.items.push(id8);
+      }
+    }
+
     for (const u of uzivatele) {
       vysledek.ucty++;
+      if (sZadosti.has(u.id)) continue;   // o smazání požádal sám — rozhodlo se výš
       // deno-lint-ignore no-explicit-any
       const p: any = profil.get(u.id) || {};
       const ucet: Ucet = { id: u.id, email: u.email ?? null, posledni: u.last_sign_in_at || u.created_at, admin: jeAdmin(u.email),
@@ -114,6 +141,7 @@ serve(async (req) => {
   if (!zkouska) {
     await db.from("ops_events").insert({ kind: "purge", detail: { job: "inactive_accounts", ok: vysledek.chyb === 0,
       deleted: vysledek.smazano, items: vysledek.items, warned: vysledek.prvni, warned_last: vysledek.druhe,
+      requests: vysledek.zadosti, cancelled: vysledek.zruseno,
       ...(vysledek.chyb ? { error: vysledek.chyby.join("; ").slice(0, 200) } : {}) } });
   }
   // key = odkud je serverový klíč (secret / legacy) — zkušební běh tak ukáže, že nový klíč opravdu dorazil (krok 9 plánu).
