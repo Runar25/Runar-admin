@@ -114,8 +114,7 @@ a souhlasí na pravdivém textu. Detail → `RUNAR_DECISIONS.md` 2026-09-11 (8).
   adresa zařízení u push služby (endpoint u Google FCM, u počítače Mozilla / Microsoft), dva veřejné klíče prohlížeče, jazyk, `user_id`.
   Upozornění odchází **bez obsahu** (text drží telefon), push služba tedy vidí jen to, že přišlo. Smaže se vypnutím, smazáním účtu
   (`on delete cascade`) nebo když služba ohlásí zánik odběru (`rune-day-push`, MAZANI `push_subs`). Appka čte a maže jen svůj řádek.
-  Ve veřejných zásadách od 2026-11-23 (tabulka + push služby mezi příjemci). **Runa dne (`rune_day`, od 2026-11-15)** — runa, text, losy
-  a deníček dne (`note`, `note_later`, klient píše jen ty dva); maže se s účtem (`on delete cascade`); v zásadách od 2026-11-23.
+  Ve veřejných zásadách od 2026-11-23 (tabulka + push služby mezi příjemci). **Runa dne (`rune_day`, od 2026-11-15)** — runa, text, losy a deníček dne (`note`, `note_later`, klient píše jen ty dva); maže se s účtem (`on delete cascade`); v zásadách od 2026-11-23.
 - **Uložený hlas čtení (úložiště `reading-voice`, od 2026-10-11, DECISIONS 2026-10-11 (61))** — když Rúnar uložené čtení přečte
   nahlas, audio (mp3) se uloží k čtení, ať se dá v deníku pustit znovu bez dalšího volání ElevenLabs. Soukromé úložiště, přehrání jen
   přes podepsaný odkaz z `elevenlabs-proxy` (hodina). Čtení pro někoho jiného, které se neukládá, se neukládá ani jako hlas. Záznam
