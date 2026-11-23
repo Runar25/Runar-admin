@@ -37,6 +37,7 @@ Druh: 🔒 externě ukotveno (etymologie, IS gramatika) · 📜 vytvořený kán
 | Strom života | `RUNAR_TREE.md` | 📜 |
 | Sítě a web — čísla v čase (monitoring, CODE-web) | `docs/monitor/site-a-web.md` | stav |
 | Otevřené úkoly | `RUNAR_BACKLOG.md` | stav |
+| Měsíční údržba — postup (oblasti, otázky, pořadí) | `RUNAR_UDRZBA.md` · `scripts/utils/udrzba.py` | 🏛 |
 | GDPR, privacy | `RUNAR_PRIVACY.md` | 🔒 |
 | Co owner řekl dřív | `node scripts/utils/najdi_v_konverzacich.js "<text>"` | stav |
 | Pravidla pro soubor (hook při dotyku) | `scripts/utils/pravidla_mapa.json` | 🏛 |

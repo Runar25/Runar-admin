@@ -113,6 +113,14 @@
     12. **Napětí a cesta z významu runy, ne z obrazu** (owner 2026-11-17 nad výkladem Gebo od Gemini podle ownerova zadání: *„toho napětí je tam víc … runar by si měl jedno dvě vylosovat nebo může i vycházet z otázek … cesty. jsou ve skutečnosti jen tři, nebo jich je pro gebo víc?“*; *„zapsal bych to“*). Co: každá runa má víc napětí a víc cest (Gebo: 7 dynamik v `docs/eval/2026-10-23-v3-charakter/krok30-gebo-katalog.md` + tři cesty Gemini: dát bez očekávání · zastavit nerovnou výměnu · dovolit si přijmout); čtení nese jedno napětí a jednu cestu (losem, nebo podle oblasti) a otázku · proč: statické texty Kolekce (`UI_TEXT.coll_rune`) napětí a otázku mají, jen jinak podané; Rúnar dnes cestu nenabízí · jak: data per runa (jako `RUNE_IMAGES`), ověřená proti `RUNAR_POPISY_RUN.md`; lab v3 bez obrazu · rizika: cesta podaná jako rada („můžeš zkusit…“) — pojmenovat, co cesta je a co stojí, ne co má člověk udělat; výmysl mimo kánon (§23).
     13. **Oblast „Crossroads & Decisions“: Rúnar nabídne rozcestník podle runy** (owner 2026-11-17: *„takže je asi potřeba opravit, jak o tom má runar mluvit“* · *„podle toho, o jakou jde runu, mu snad může runar nabídnout rozcestník … to, že si má vybrat sám, mu říkat nemusíme, stačí, že mu dáme možnosti“*). Dnes: obraz jen dosedne na podobu z `AREA_FACES` (volba ještě otevřená · co by která možnost žádala · čekání před volbou) a `_domainContext` zakazuje říct, kterou cestou půjde, leda v poslední větě jako možnost (`v2/runar-character.js` `_domainContext`). Rozcestí zadal člověk sám → Rúnar ho smí pojmenovat; hádat nesmí, co v něm cítí. Co: u rozcestí runa nabídne dvě nebo tři své cesty (z položky 12), bez doporučení a bez „vyber si sám“ · jak: lab napřed (CODE-read), pak CODE-tune · rizika: rada v přestrojení; 2026-09-23 (12) — popis rozcestí jako místa stavěl do čtení cesty, které v obrazu nebyly (9/12 → 2/12 po opravě), rozcestník musí být z významu runy, ne z krajiny.
     14. ✅ *(CODE-tune 2026-11-23, DECISIONS 2026-11-23 (2))* **Ask: dva nové tipy k větám 3 a 4 čtení → CODE-tune** (owner 2026-11-18 k návrhu CODE-read: *„3. dej to tam“*; zadání *„v ASK budou 3 nové otázky, pokud tam nějaká z nich už není, která se bude ptát na hlubší výklad vět 2, 3, 4, jelikož věta 1 je čistě obraz. všechno ale zkontroluj“*). Kontrola (CODE-read, `v2/runar-reading.js` výběr tipů, `UI_TEXT.*.ask_h_*`): věta 2 (význam) tip už má — `ask_h_rune` *„What does {rune} mean in this reading?“* a `ask_h_explain`; věta 3 jen obecně (`ask_h_me`, `ask_h_image_area`); věta 4 žádný. Co: (a) *„Tell me more about the two sides.“* — jen když čtení končí dvěma možnostmi; (b) *„Why that question?“* — jen když čtení končí otázkou; Rúnar řekne, odkud otázka v runě vychází, za člověka neodpoví. Kde: tvar konce je v `prompt_draws.ending` (`_endingShape`, `ENDING_OPEN` / `ENDING_HEAVY`) — tip se musí řídit tím, co čtení opravdu má · pozor: nabídka má strop 7 tipů (komentář KUKY 2026-09-25 u osobního slotu), dva nové musí něco vytlačit nebo se vejít · dřív vyřazené a NEvracet: „Why is this showing up now?“, „Does this confirm what I already feel?“ (DECISIONS 2026-10-06 (12), (13)) · IS znění psát islandsky a ověřit nástroji §2 · změřit jako 2026-10-06 (`docs/eval/2026-10-06-ask-otazky`): ozvěna tipu v odpovědi, odmítnutí. Lab, ze kterého to přišlo: `docs/eval/2026-11-09-v2-vyklad-z-v3/gemini-gpt-4vety/README.md`.
+    15. **Obrazy z 2026-11-19 (4) jdou proti ownerovu „chléb ne“ → CODE-read** (nález údržby CODE-tune 2026-11-23; owner téhož dne
+      *„čtení neměň … s code read děláme na čteních“* — CODE-tune jen předává). Owner 2026-09-23 u Jery *„chleba, hlavně jeho pěstování či
+      setí, se mi nelíbí“* a téhož dne nevzato žitné těsto u Ingwaz („zase chléb“, `docs/archive/2026-09-23-brana-s-popisy.md` kolo 4).
+      V produkci od 2026-11-19 přesto Jera *„You take the bread out of the oven at just the right moment…“* a Ingwaz *„The dough rises
+      under the cloth…“* (CODE-tune; `uz_vime` na „chléb“ se nepustil). Připravené náhrady (brána 3 slepí soudci, IS Greynir OK + korpus):
+      Jera *„You take the jam off the stove just as it thickens.“* / *„Þú tekur sultuna af hellunni um leið og hún þykknar.“* 3/3 ·
+      Ingwaz *„You hold a closed seed pod in your palm; everything is already inside it.“* / *„Þú heldur á lokuðu fræhylki í lófanum
+      og það geymir þegar allt.“* 3/3 (též semínko v teplé půdě 3/3; brambora s klíčkem 2/3). Zápis byl v 581a8dd, vrácen c13c60a.
 Owner 2026-10-12: *„prompt už je prakticky hotovo. takže pozor na to, co tam leží.“* Výzkum a nápady k promptu, obrazům, Asku a Vegvísiru
 (dřív „Reading quality“, nálady, HANDOFF57, audity obrazů, Vegvísir, testy „obrazy se potkávají“ a prompt z „Nálezů z workflow“) leží doslova
 v `docs/archive/RUNAR_BACKLOG_odlozene.md` jako ⏸ — nejsou to úkoly. Vrací se, až se vada objeví v nových čteních a owner na ni upozorní
@@ -152,6 +160,23 @@ v `docs/archive/RUNAR_BACKLOG_odlozene.md` jako ⏸ — nejsou to úkoly. Vrací
 `buildLifeRuneContext`, `_getLunarPhase`, `_getIcelandicSeason`, `_getTimeOfDay`. Produkce ani shrine je nevolaly; poslední volající,
 tři srovnávací skripty `compare_*` (nefunkční, 401), šly pryč s nimi. Prompty beze změny (golden); kontrola ㉦ přišla o krok, který
 hlídal jen V2 cestu.
+
+## Údržba 2026-11 — co neprošlo (CODE-tune 2026-11-23; postup `RUNAR_UDRZBA.md`)
+Owner 2026-11-23: *„údržbu jsi neudělal pořádně … kontroloval jsi claude.md, memory a další? … zapiš, co jsi neudělal“*.
+Prošlo jen: **A. provoz** (DECISIONS 2026-11-23 (3)) a z F nedefinovaná jména + duplicitní funkce a klíče UI_TEXT; z D jen
+`verify_new_duplicates` (skuld). Neúplnost je zapsaná i v `ops_events` (`udrzba.py --neuplna`), ranní souhrn ji ukazuje.
+- [ ] **B. CLAUDE.md** — každý § neprošel (platí? drží ho stroj? stojí jinde podruhé?); jen automaticky délka a nosiče.
+- [ ] **C. Paměť** — 94 souborů `memory/` ani skilly a `pravidla_mapa.json` neprošly obsahem (pravda dnes? přebité novějším
+  rozhodnutím? duplikát?); jen index (`verify_memory_index`).
+- [ ] **D. Kanonické docy × kód** — `RUNAR_DESIGN`, `SPREADY`, `MYTOLOGIE`, `PRICING`, `PRODUKTY`, `TREE` (jen čte), `PRIVACY`,
+  `VEGVISIR`, `POPISY_RUN`, `BACKLOG` (hotové bez ✅) neprošly tvrzení po tvrzení.
+- [ ] **E. Kontroly** — celý smoke prošel jen v pre-push; `protipriklady.py --vse` (všechny útoky) neběželo; kontroly hlídající
+  neexistující věc neprošly.
+- [ ] **F. Kód appky** — mrtvé funkce, soubory a styly, tatáž logika dvakrát, nepoužité klíče UI_TEXT, §5 invarianty.
+- [ ] **G. Server** — edge funkce (proměnné, kopie configu) a DB (RLS, granty, schéma repo × DB, nepoužité tabulky a funkce).
+- [ ] **H. Sliby uživateli** (zásady × kód, nápověda × appka) · **I. Peníze** (plýtvání, kvóty služeb).
+- [ ] **J. Čtení** — jen předat CODE-read (bod 15 výš je první nález).
+- [ ] **Neověřené z opravy A:** spuštění Google Drive při odpojeném Disku (`zaloha_db.js` `pripojDrive`) — naostro neodzkoušeno.
 
 ## Profil / personalizace
 

@@ -134,14 +134,14 @@ ok(smazZle.stav === 'PROBLEM' && /A deletion job failed or did not report — me
   'souhrn: otevřený problém mazání nahoře v „Needs you“ s názvem úlohy');
 // 2026-10-18: zkouška obnovy na řádku zálohy (e-mail nenaroste), bez zálohy samostatně, otevřený problém nahoře
 const obn = O.souhrn(D({ behy: { restore_test: { kdy: '2026-10-12T04:20:00.000Z', ok: true, chyba: null, info: '9/9' } } }));
-ok(/^Checks restore test OK 2026-10-12 \(9\/9\) · Greynir update no run yet · deploy vs repo no run yet$/m.test(obn.text) && /^Backup .* · 5\.0 MB$/m.test(obn.text) && obn.stav === 'OK',
+ok(/^Checks restore test OK 2026-10-12 \(9\/9\) · Greynir update no run yet · deploy vs repo no run yet · monthly maintenance no run yet$/m.test(obn.text) && /^Backup .* · 5\.0 MB$/m.test(obn.text) && obn.stav === 'OK',
   'souhrn: řádek Checks — zkouška obnovy s počtem kontrol, Greynir „no run yet“; řádek zálohy beze změny');
-ok(/^Checks restore test no run yet · Greynir update no run yet · deploy vs repo no run yet$/m.test(klid.text), 'souhrn: úlohy, které ještě neběžely — „no run yet“, řádek i v klidný den');
+ok(/^Checks restore test no run yet · Greynir update no run yet · deploy vs repo no run yet · monthly maintenance no run yet$/m.test(klid.text), 'souhrn: úlohy, které ještě neběžely — „no run yet“, řádek i v klidný den');
 // každá úloha z BEHY má zdroj, který existuje a zapisuje svůj kind (bez zápisu by ops-watch hlásil „no report“ jen podle lhůty)
 const bezZapisu = Object.entries(O.BEHY).filter(([kind, b]) => { const f = path.join(ROOT, b.zdroj); return !fs.existsSync(f) || fs.readFileSync(f, 'utf8').indexOf(kind) < 0; });
 ok(!bezZapisu.length, 'registr BEHY: zdroj každé úlohy existuje a obsahuje její kind' + (bezZapisu.length ? ' — chybí: ' + bezZapisu.map((x) => x[0]).join(', ') : ''));
 const obnBez = O.souhrn(D({ zaloha: { posledniOk: null, bajtu: null, posledniChyba: null }, behy: { restore_test: { kdy: '2026-10-12T04:20:00.000Z', ok: false, chyba: null, info: null } } }));
-ok(/^Checks restore test FAILED 2026-10-12 · Greynir update no run yet · deploy vs repo no run yet$/m.test(obnBez.text), 'souhrn: selhaná zkouška obnovy „FAILED“ i bez úspěšné zálohy');
+ok(/^Checks restore test FAILED 2026-10-12 · Greynir update no run yet · deploy vs repo no run yet · monthly maintenance no run yet$/m.test(obnBez.text), 'souhrn: selhaná zkouška obnovy „FAILED“ i bez úspěšné zálohy');
 const obnZle = O.souhrn(D({ otevrene: Object.assign(vse('ok'), { runs: 'problem' }), vadyBehu: ['Restore test: no report since 2026-09-10 04:15 UTC'] }));
 ok(obnZle.stav === 'PROBLEM' && /A scheduled check failed or did not report — Restore test: no report since/.test(obnZle.text),
   'souhrn: otevřený problém běhu nahoře v „Needs you“ s názvem úlohy');

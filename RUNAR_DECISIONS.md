@@ -13575,3 +13575,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **6. Zkouška obnovy** 11-16 „cleanup failed“ a 11-19 první pokus pád v `roles.sql`, druhý za 4 min prošel bez změny kódu — neověřená
   nestabilita, další běh 12-14.
 - Affected doc(s): — (kód, kontroly a úlohy; pravidla beze změny).
+
+## 2026-11-23 (4) — Měsíční údržba: postup `RUNAR_UDRZBA.md`, skript `udrzba.py`, připomínka v hlídání provozu
+- **Owner:** *„údržbu jsi neudělal pořádně … kontroloval jsi claude.md, memory a další? … vypracuj metodiku, jak to budeme dělat, abychom
+  udržovali systém čistý. třeba 1 za měsíc. minule jsme dělali snad 4 kola dlouhých kontrol, teď jsi to odbyl“*; *„čtení neměň … s code
+  read děláme na čteních … zapiš, co jsi neudělal“*.
+- **Co:** `RUNAR_UDRZBA.md` vlastní postup — oblasti A–J s otázkami (provoz, CLAUDE.md, paměť, docy, kontroly, kód, server, sliby,
+  peníze, čtení jen předat), zásady (napřed změněné od minula, `uz_vime` před každou změnou, ke každé vadě proč, neprošlé jmenovitě),
+  pořadí a uzavření. `scripts/utils/udrzba.py` dělá automatickou část a kostru zprávy do složky `docs/udrzba/`; `--hotovo` / `--neuplna`
+  zapíše do `ops_events`. `BEHY.udrzba` (32 dní) → hlídání provozu připomene e-mailem; neúplná = problém v ranním souhrnu.
+- **Čtení:** údržba ho nemění — nálezy jdou CODE-read (BACKLOG bod 15). Vráceno c13c60a (výměna obrazů bez chleba, 581a8dd).
+- **Stav 2026-11:** prošel jen provoz (2026-11-23 (3)); co neprošlo, stojí v BACKLOGu „Údržba 2026-11“ a v `ops_events` jako neúplná.
+- Affected doc(s): RUNAR_UDRZBA.md (nový), memory/MEMORY.md (rozcestník), RUNAR_BACKLOG.md.

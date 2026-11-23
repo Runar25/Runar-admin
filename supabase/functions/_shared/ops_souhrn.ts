@@ -95,6 +95,9 @@ export const BEHY: Record<string, { kratce: string; lhutaH: number; zdroj: strin
   // 2026-10-22 (DECISIONS 2026-10-22 (11) bod 3): nasazené edge funkce proti origin/main — pondělní krok noční zálohy; rozdíl = ok:false
   // s „Deployed ≠ repo: …“. Týden + 2 h rezerva jako Gmail.
   deploy_drift: { kratce: "deploy vs repo", lhutaH: 8 * 24 + 2, zdroj: "scripts/utils/nasazene_vs_repo.py" },
+  // 2026-11-23 (owner „metodika … třeba 1 za měsíc“, RUNAR_UDRZBA.md): měsíční údržba — 32 dní bez záznamu = e-mail;
+  // neúplná (udrzba.py --neuplna, ok:false) = problém, dokud kolo nedoběhne.
+  udrzba: { kratce: "monthly maintenance", lhutaH: 32 * 24, zdroj: "scripts/utils/udrzba.py" },
 };
 export type BehPosledni = { kdy: string | null; ok: boolean | null; chyba: string | null; info: string | null };
 // Poslední záznam úlohy (kontrola každých 15 min) a součty za 24 h (ranní souhrn).
