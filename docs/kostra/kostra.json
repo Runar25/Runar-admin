@@ -1,0 +1,134 @@
+{
+ "_co": "Kostra čtení (single) jako DATA — jediné místo, kde se popisuje, z čeho čtení vzniká, co má která část dělat, jak se to měří, jaké vady způsobila a co s čím souvisí. Čitelný přehled KOSTRA.md se z tohohle souboru GENERUJE (node scripts/verify_kostra.js --zapis); ručně se needituje. Pokusy mají vlastní rejstřík pokusy.json. Owner 2026-11-23: „každá část má svou jasnou funkci, kdy budeme vědět, že když tohle změníme, tak se stane tamhle to … nechci se točit v kruhu“. Založil CODE-read 2026-11-23 z docs/eval/2026-11-23-kostra-cteni/README.md.",
+ "verze": "K1 = produkce v2 dnes",
+ "jadro": [
+  {"id": "J1", "t": "Zrcadlo, ne orákulum: žádná předpověď ani náznak skryté znalosti", "zdroj": "RUNAR_DESIGN.md „Rúnarův rejstřík“", "od": "2026-08-14"},
+  {"id": "J2", "t": "Bez tvrzení o člověku: oznamovací věta o jeho pocitech, vědění nebo situaci je vada; otázka, nabídka, obecná pravda a to, co sám zadal, ne", "zdroj": "DECISIONS 2026-10-16 (5); 2026-09-24 (15)", "od": "2026-10-16"},
+  {"id": "J3", "t": "Bez rady: postoj ano, krok do života ne; vstup do obrazu („Look closer…“) není rada", "zdroj": "RUNAR_DESIGN.md; owner 2026-09-23", "od": "2026-09-23"},
+  {"id": "J4", "t": "Jeden obraz, jedna scéna, dnes snadno představitelná, bez archaismu a bez časové lhůty", "zdroj": "DECISIONS 2026-08-23, 2026-11-19 (4); docs/postup-obraz.md", "od": "2026-11-19"},
+  {"id": "J5", "t": "Těžká runa nikdy útěchu", "zdroj": "HEAVY_RUNES (v2/runar-config.js); DECISIONS 2026-09-20 (8)", "od": "2026-09-20"},
+  {"id": "J6", "t": "Hlas: věcný, klidný, krátké věty, bez klišé a bez vykřičníků", "zdroj": "buildSysPrompt (v2/runar-character.js)", "od": "2026-08-15"},
+  {"id": "J7", "t": "Islandština se píše islandsky od začátku a ověřuje nástroji", "zdroj": "CLAUDE.md §2", "od": "2026-10-20"}
+ ],
+ "sloty": [
+  {"id": "K1", "nazev": "Obraz", "veta": "1",
+   "funkce": "jedna scéna, ve které je napětí runy vidět; čtenář se v ní pozná jedním pohledem",
+   "ucinek": [{"t": "člověk se ve scéně pozná („to znám“)", "dukaz": "owner 2026-10-24 (sušenka posunutá sestře) · RUNAR_DESIGN.md „Co dělá čtení silným“", "typ": "owner"}],
+   "kusy": ["ANGLE", "IMAGE"], "vstupy": ["V4", "V5"],
+   "pravidla": [
+    {"id": "K1.1", "t": "jeden vlastní detail, který věta obrazu nejmenuje", "zdroj": "DECISIONS 2026-09-24 (20), 2026-10-09 (13)", "od": "2026-10-09"},
+    {"id": "K1.2", "t": "nic navíc bez funkce: nový předmět, osoba nebo děj jen když ho čtení potřebuje", "zdroj": "DECISIONS 2026-11-19 (1)", "od": "2026-11-19"},
+    {"id": "K1.3", "t": "obraz krátký (kolem 12 slov), jeden děj, přítomnost", "zdroj": "docs/postup-obraz.md", "od": "2026-11-14"},
+    {"id": "K1.4", "t": "osoba si místo v obraze musí zasloužit", "zdroj": "DECISIONS 2026-11-14 (6)", "od": "2026-11-14"},
+    {"id": "K1.5", "t": "napětí nese děj, ne přídavné jméno ani pojmenovaná emoce", "zdroj": "docs/postup-obraz.md 2.7; pokus P01", "od": "2026-11-16"}
+   ],
+   "meritka": [
+    {"id": "M1", "t": "scéna je dnes snadno představitelná a nemá předmět navíc", "nastroj": "soudce obrazu", "stav": "nekalibrováno — kalibrovat na: dveře chléva ✘, dveře horské chaty ✔, pant ✘, kráva na trhu ✘, svíčka ✔"},
+    {"id": "M2", "t": "obraz z banky se nevrací celý", "nastroj": "stroj: nejdelší doslovný úsek, podíl slov obrazu", "stav": "používá se v labech"}
+   ],
+   "vady": [
+    {"t": "pant, dveře chléva", "pricina": "úhel [3] „stays fixed“ u obrazu bez pevné věci → model si věc vyrobí", "doklad": "DECISIONS 2026-11-19 (1)", "stav": "vyřešeno: úhel [3] mimo los"},
+    {"t": "převyprávění celého obrazu (71 % slov obrazu)", "pricina": "dlouhý obraz z banky", "doklad": "docs/eval/2026-11-09-v2-vyklad-z-v3/README.md oddíl 5", "stav": "otevřené"},
+    {"t": "oheň a krb místo dnešní scény", "pricina": "z obrazu chybí slovo, které drží dobu; model doplní z runy", "doklad": "pokus P02", "stav": "poučení"}
+   ]},
+  {"id": "K2", "nazev": "Význam", "veta": "2",
+   "funkce": "co obraz ukazuje o runě — tak, aby to neplatilo o jiné runě",
+   "ucinek": [{"t": "člověk pochopí, co runa je, bez slovníku", "dukaz": "owner 2026-10-30 („chybí vysvětlení, čím runa sama je“)", "typ": "owner"}],
+   "kusy": ["RUNE-MEANING", "ESSENCE"], "vstupy": ["V6", "V9"],
+   "pravidla": [
+    {"id": "K2.1", "t": "ne slovníková definice, ne obraz znovu", "zdroj": "RUNAR_DESIGN.md (tři beaty); pokus P05", "od": "2026-08-22"},
+    {"id": "K2.2", "t": "neříct, co to znamená pro člověka", "zdroj": "ESSENCE v2/runar-character.js", "od": "2026-09-18"},
+    {"id": "K2.3", "t": "sloveso esence jen z doložených v textech o runách (los)", "zdroj": "DECISIONS 2026-10-06 (10)", "od": "2026-10-06"}
+   ],
+   "meritka": [
+    {"id": "M3", "t": "z čtení bez jména runy jde poznat runa", "nastroj": "dva slepí soudci runy", "stav": "kalibrováno 2026-11-23: 9/9, podvržená věta 3/3 (docs/eval/2026-11-23-kostra-cteni/soudci)"},
+    {"id": "M4", "t": "věta neopakuje zdroj ani slovo losu jako štítek", "nastroj": "stroj: doslovný úsek ze zdroje", "stav": "používá se v labech"}
+   ],
+   "vady": [
+    {"t": "šablona „<Runa> is …“ na stejném místě", "pricina": "pevný rámec esence", "doklad": "docs/eval/2026-10-23-v3-charakter/krok46", "stav": "vyřešeno: los sloves"},
+    {"t": "slovo významu jako štítek („Disruption can…“)", "pricina": "zdroj = jen slovo", "doklad": "pokus P06", "stav": "poučení"}
+   ]},
+  {"id": "K3", "nazev": "Dopad", "veta": "3",
+   "funkce": "přenést význam tam, kde člověk stojí (oblast, čas): možnost, napětí nebo druhá strana",
+   "ucinek": [{"t": "člověk si význam vztáhne na sebe, aniž by mu ho někdo přisoudil", "dukaz": "hypotéza (neověřeno; owner 2026-11-17 „máš to ověřené?“)", "typ": "hypotéza"}],
+   "kusy": ["AREA", "INTENTION"], "vstupy": ["V1", "V3"],
+   "pravidla": [
+    {"id": "K3.1", "t": "bez tvrzení o jeho životě; možnost s „may“", "zdroj": "jádro J2", "od": "2026-10-16"},
+    {"id": "K3.2", "t": "oblast nevyslovit jako štítek; je to vztah nebo otázka, ne místo", "zdroj": "DECISIONS 2026-09-23 (12)", "od": "2026-09-23"},
+    {"id": "K3.3", "t": "druhá strana runy uvnitř čtení, bez nálepky „stín“", "zdroj": "docs/eval/2026-10-23-v3-charakter/zadani-v3.md G55", "od": "2026-11-05"}
+   ],
+   "meritka": [
+    {"id": "M5", "t": "žádné tvrzení o člověku", "nastroj": "dva soudci tvrzení, vada jen při shodě", "stav": "kalibrováno 2026-11-23: 20/20 a 19/20"},
+    {"id": "M6", "t": "věta 3 přidá něco nového (nepřeformuluje větu 2)", "nastroj": "stroj: podíl slov věty 3 obsažených ve větě 2", "stav": "kalibrováno 2026-11-23: pravá 0,00–0,13 · přeformulování 0,75"}
+   ],
+   "vady": [
+    {"t": "cesty v krajině, které v obrazu nejsou", "pricina": "oblast rozcestí popsaná jako místo", "doklad": "DECISIONS 2026-09-23 (12)", "stav": "vyřešeno"},
+    {"t": "slovo „work“ ve čtení", "pricina": "slovo v podobě oblasti", "doklad": "DECISIONS 2026-09-26 (2)", "stav": "vyřešeno"}
+   ]},
+  {"id": "K4", "nazev": "Otevření", "veta": "4",
+   "funkce": "nechat to u člověka; tvar podle toho, co hledá",
+   "ucinek": [{"t": "otázka nebo možnost, nad kterou člověk zůstane", "dukaz": "owner 2026-11-11 („If you looked back today…“ míří přímo na člověka)", "typ": "owner"}],
+   "kusy": ["SEEKING", "ENDING"], "vstupy": ["V2", "V7", "V10"],
+   "pravidla": [
+    {"id": "K4.1", "t": "tvar podle hledání, jinak los z tvarů; střídat", "zdroj": "DECISIONS 2026-09-20 (8), 2026-09-26 (1)", "od": "2026-09-26"},
+    {"id": "K4.2", "t": "těžká runa → těžké znění", "zdroj": "jádro J5", "od": "2026-09-20"},
+    {"id": "K4.3", "t": "otázka runy z Kolekce jako zdroj, ne u konce ve tvaru otázky", "zdroj": "DECISIONS 2026-10-07 (4)", "od": "2026-10-07"},
+    {"id": "K4.4", "t": "otázka nepodsouvá problém ani motiv", "zdroj": "pokus P05 (GPT 2026-11-18)", "od": "2026-11-18"}
+   ],
+   "meritka": [
+    {"id": "M7", "t": "otázka nic nepodsouvá", "nastroj": "soudci tvrzení (bod d)", "stav": "kalibrováno 2026-11-23"},
+    {"id": "M8", "t": "neopisuje otázku runy", "nastroj": "stroj: doslovný úsek z otázky runy", "stav": "měřeno 2026-10-07"}
+   ],
+   "vady": [
+    {"t": "otázka runy opsaná skoro doslova", "pricina": "otázka runy pod pokynem „konči otázkou“", "doklad": "DECISIONS 2026-10-07 (4)", "stav": "vyřešeno"},
+    {"t": "„Where in your life …“ na začátku každé otázky", "pricina": "model si šablonu vytvoří sám", "doklad": "pokus P04", "stav": "otevřené"}
+   ]},
+  {"id": "K5", "nazev": "Myšlenka ✦", "veta": "mimo 4 věty",
+   "funkce": "jedna myšlenka na cestu",
+   "ucinek": [{"t": "věta, kterou si člověk odnese", "dukaz": "DECISIONS 2026-09-30 (8)", "typ": "owner"}],
+   "kusy": ["THOUGHT-✦"], "vstupy": [],
+   "pravidla": [
+    {"id": "K5.1", "t": "jedna věta, nejvýš 12 slov, z odstavce runy v Kolekci; smí oslovit otázkou", "zdroj": "DECISIONS 2026-09-30 (8), 2026-10-05 (2)", "od": "2026-10-05"}
+   ],
+   "meritka": [], "vady": []},
+  {"id": "K6", "nazev": "Ask", "veta": "po čtení",
+   "funkce": "rozšíří věty 2–4 na otázku člověka",
+   "ucinek": [],
+   "kusy": [], "vstupy": [],
+   "pravidla": [
+    {"id": "K6.1", "t": "tipy podle tvaru konce: dvě strany / proč ta otázka", "zdroj": "DECISIONS 2026-11-23 (2); pokus P07", "od": "2026-11-23"}
+   ],
+   "meritka": [], "vady": []}
+ ],
+ "vstupy": [
+  {"id": "V1", "nazev": "oblast", "kod": "AREAS + AREA_FACES (los podoby)", "kdo": "člověk", "do": ["K3", "výběr obrazu"]},
+  {"id": "V2", "nazev": "co hledá", "kod": "SEEKS → _registerContext, SEEK_SHAPE", "kdo": "člověk", "do": ["K4"]},
+  {"id": "V3", "nazev": "pro kdy", "kod": "INTENTIONS → _intentionContext", "kdo": "člověk", "do": ["K3", "celé čtení (čas sloves)"]},
+  {"id": "V4", "nazev": "úhel otevření", "kod": "READING_ANGLES (los, [3] mimo los)", "kdo": "los", "do": ["K1"]},
+  {"id": "V5", "nazev": "obraz", "kod": "RUNE_IMAGES (klíčovaný runou, filtr podle oblasti)", "kdo": "los", "do": ["K1"]},
+  {"id": "V6", "nazev": "slovo významu", "kod": "sloupec řádku RUNE_IMAGES", "kdo": "los (s obrazem)", "do": ["K2"]},
+  {"id": "V7", "nazev": "tvar konce", "kod": "ENDING_OPEN / ENDING_HEAVY", "kdo": "los nebo hledání", "do": ["K4", "K6"]},
+  {"id": "V8", "nazev": "jméno", "kod": "NAME_PLACEMENTS (los)", "kdo": "člověk + los", "do": ["celé čtení"]},
+  {"id": "V9", "nazev": "sloveso esence", "kod": "ESSENCE_VERBS_SOL (los)", "kdo": "los", "do": ["K2"]},
+  {"id": "V10", "nazev": "otázka runy", "kod": "UI_TEXT.coll_rune (odstavec 4)", "kdo": "runa", "do": ["K4"]},
+  {"id": "V11", "nazev": "vlastní otázka", "kod": "r-question (jen admin)", "kdo": "člověk", "do": ["celé čtení"]},
+  {"id": "V12", "nazev": "pocit", "kod": "není (nápad, pokus P10)", "kdo": "člověk", "do": ["K3"]}
+ ],
+ "zavislosti": [
+  {"id": "Z1", "kdyz": "měním obraz v bance (V5)", "tak": ["úhly V4: má obraz to, co úhel předpokládá?", "výběr podle oblasti (smoke ㉲)", "islandské znění řádku", "brána identity runy", "motivy (smoke ㉟)"]},
+  {"id": "Z2", "kdyz": "měním tvary konce nebo SEEK_SHAPE (V7, V2)", "tak": ["tipy Asku podle prompt_draws.ending (K6)", "scripts/verify_ask_hints.js"]},
+  {"id": "Z3", "kdyz": "měním esenci nebo slovesa (K2, V9)", "tak": ["tip Asku ask_h_rune", "golden (scripts/golden)"]},
+  {"id": "Z4", "kdyz": "měním délku čtení", "tak": ["RUNAR_PRICING.md (cena)", "hlas (ElevenLabs znaky)"]},
+  {"id": "Z5", "kdyz": "měním cokoli v promptu", "tak": ["RUNAR_PROMPT_VERSION", "prompt_skladani.mjs (pre-commit)", "golden-verify (CLAUDE.md §18)", "obě řeči IS i EN"]},
+  {"id": "Z6", "kdyz": "měním podoby oblasti (V1)", "tak": ["_domainContext i konec berou týž los", "scripts/utils/test_lever_maps.js (pořadí AREAS)"]},
+  {"id": "Z7", "kdyz": "měním tvar skládaného textu čtení", "tak": ["strom života čte glyfy z textu (smoke ⑬)"]}
+ ],
+ "otevrene": [
+  {"id": "R1", "t": "věta 2: definice runy ano, nebo ne", "pokus": "P05"},
+  {"id": "R2", "t": "Confirmation: končit dvěma možnostmi?", "pokus": "P17"},
+  {"id": "R3", "t": "cesta a rozcestník: věta 3 vždy, nebo jen u Crossroads", "pokus": "P08"},
+  {"id": "R4", "t": "vstup pocitu ano/ne a kam", "pokus": "P10"},
+  {"id": "R5", "t": "zdroj významu pro větu 2", "pokus": "P06"},
+  {"id": "R6", "t": "člověk v obraze („you“), nebo až v otázce", "pokus": "P05"}
+ ]
+}

@@ -44,7 +44,14 @@
         {"soubor": "docs/eval/2026-11-09-v2-vyklad-z-v3/postup.md", "nadpis": "2. Než owner uvidí ukázku"},
         {"soubor": "RUNAR_DESIGN.md", "nadpis": "Délka a tvar obrazu"}
       ],
-      "hlavicky": ["docs/eval/2026-11-09-v2-vyklad-z-v3/kontrola_ukazky.py"]
+      "hlavicky": ["docs/eval/2026-11-09-v2-vyklad-z-v3/kontrola_ukazky.py", "scripts/verify_kostra.js"]
+    },
+    {
+      "oblast": "kostra čtení a rejstřík pokusů",
+      "_proc": "KUKY 2026-11-23: „jakmile sáhneš na kostru, tak to musíš zjistit, ať tam nezapisuješ znovu … že tam máš něco napsat a kam“ · „zkouška by měla mít jméno nebo číslo“. Kostra a pokusy jsou data v docs/kostra/; při prvním dotyku se vypíše, jak hledat, kam psát a jak kontrolovat.",
+      "cesty": ["docs/kostra/**", "docs/eval/2026-11-23-kostra-cteni/**"],
+      "pravidla": ["§20", "§24", "§25"],
+      "hlavicky": ["scripts/verify_kostra.js"]
     },
     {
       "oblast": "lab V3 (prompt čtení)",
