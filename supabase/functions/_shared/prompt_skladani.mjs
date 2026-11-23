@@ -4230,8 +4230,9 @@ var RUNE_IMAGES = [
   ['Jera','bright','Síðasta heyið er komið inn og hlaðan andar hlýju endanna á milli.','The last of the hay is in and the barn breathes warm the whole way down its length.','uppskera','harvest','P'],
   ['Jera','bright','Sami akur sem var svört leðja í vor stendur gullinn og sleginn í lok sumars, eins og í fyrra og eins og hann verður næst.','The same field that was black mud in spring stands gold and cut by summer\'s end, as last year and as it will be next.','hringur','cycle','P'],
   ['Jera','any','Rjúpan verður hvít fyrir snjóinn og brún aftur fyrir lyngið, eftir klukku eldri en allt tal.','The ptarmigan turns white for the snow and brown again for the heath, on a clock older than counting.','hringur','cycle','E'],
-  // 2026-11-19 (owner: obraz, který si člověk jednoduše představí): obracení sena → chléb z trouby ve správnou chvíli, Jera 3/3.
-  ['Jera','any','Þú tekur brauðið út úr ofninum á réttu augnabliki og skorpan er gullin.','You take the bread out of the oven at just the right moment, and the crust is golden.','rétt tímasetning','right timing','D'],
+  // 2026-11-19 (owner: obraz, který si člověk jednoduše představí): obracení sena → marmeláda z plotny ve správnou chvíli, Jera 3/3 (chléb z trouby
+  // jen pár hodin — owner 2026-09-23 chléb u Jery nechce).
+  ['Jera','any','Þú tekur sultuna af hellunni um leið og hún þykknar.','You take the jam off the stove just as it thickens.','rétt tímasetning','right timing','D'],
   ['Jera','any','Þú sest niður í lok vertíðar og í þetta sinn kallar ekkert á þig að standa upp aftur.','You sit down at the end of the season and this time nothing is calling you to get up again.','umbun','reward','D', '', '', '', 'chg'],
   // 2026-09-23: chleba z Fehu — soudci ho ctou jako odmenu urody (Jera 3/3); KUKY „cim vic obrazu tim vic variant".
   // 2026-09-23 (KUKY „přepsat a otestovat“): chléb „dost pro všechny“ nesl hojnost = Fehu (brána 0/3 i s popisy 0/3).
@@ -4320,8 +4321,9 @@ var RUNE_IMAGES = [
   ['Ehwaz','cold','Þú teymir hestinn yfir snjóinn og taumurinn á milli ykkar er slakur.','You lead the horse across the snow, and the rope between you hangs slack.','traust milli tveggja','trust','P'],
   ['Ehwaz','cold','Tvö draga sleða yfir skaflana og hann rennur fyrst þegar þau leggjast á eitt.','Two haul a sled over the drifts, and it glides only once they pull together.','hreyfing','movement','P'],
   ['Ehwaz','cold','Tvö dansa vals á þorrablótinu og enginn sér lengur hvort þeirra ræður ferðinni.','Two waltz at the midwinter feast, and no one can tell anymore which of them leads.','samfylgd','partnership','D', '', '', '', 'lf'],
-  // 2026-11-19 (owner: obraz, který si člověk jednoduše představí): skyr ze starého (cizinec si ho nepředstaví) → těsto pod utěrkou, Ingwaz 3/3.
-  ['Ingwaz','any','Deigið lyftir sér undir dúknum á meðan enginn horfir.','The dough rises under the cloth while no one is watching.','möguleiki','potential','D'],
+  // 2026-11-19 (owner: obraz, který si člověk jednoduše představí): skyr ze starého (cizinec si ho nepředstaví) → uzavřená tobolka se semeny, Ingwaz 3/3
+  // (těsto pod utěrkou jen pár hodin — „zase chléb“, viz Jera).
+  ['Ingwaz','any','Þú heldur á lokuðu fræhylki í lófanum og það geymir þegar allt.','You hold a closed seed pod in your palm; everything is already inside it.','möguleiki','potential','D'],
   ['Ingwaz','cold','Fylfull hryssa krafsar í snjóinn úti í haga; folaldið fæðist ekki fyrr en með vorinu.','A mare in foal paws the snow in the pasture; her foal will not be born until spring.','nýtt líf','new life','P', '', '', 'postava'],
   ['Dagaz','any','Síðasta haftið í göngunum er sprengt og dagsbirtan skín inn hinum megin frá.','The last wall of rock in the tunnel is blasted, and daylight shines in from the other side.','bylting','breakthrough','P'],
   ['Dagaz','bright','Þú stendur uppi í skarðinu milli tveggja dala; fyrir aftan þig er enn dimmt en fram undan er orðið bjart.','You stand high in the pass between two valleys; behind you it is still dark, and ahead it has grown light.','tímamót','turning point','P'],
