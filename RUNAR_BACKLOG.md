@@ -165,16 +165,18 @@ hlídal jen V2 cestu.
 Kolo A–I proběhlo celé (A 2026-11-23 (3), B–I DECISIONS 2026-11-23 (5)). Zbylo:
 - [x] ✅ *(owner 2026-11-23 „pusť to SQL“, spuštěno a ověřeno, DECISIONS 2026-11-23 (5))* **SQL pro ownera:** `sql/2026-11-23_udrzba_db.sql` — mazání `client_error` po 90 dnech (slib zásad), politika
   nehotového audia Kolekce jen adminům, revoke TRUNCATE/TRIGGER/REFERENCES pro anon a authenticated.
-- [ ] **Refaktory duplicit v appce (F, bez vady pro uživatele):** hledání štítku v balíčku 4× (`_seekIdx`, `_intentIdx`, `_areaIdx`,
+- [x] ✅ *(CODE-tune 2026-11-23, owner „udělej“: `_labelIndex`, `sessionToken`, `setStatusErr` v runar-utils.js, `_natrzenyOkraj`,
+  `escapeHtml`; okraj papíru 10/10 shodný, prompt serveru 40/40 golden)* **Refaktory duplicit v appce (F, bez vady pro uživatele):** hledání štítku v balíčku 4× (`_seekIdx`, `_intentIdx`, `_areaIdx`,
   `_labelIndex` — ta při chybějícím balíčku dostane `null` a spadla by) · HTML escape mimo `escapeHtml` (`_jesc` v runar-app.js, inline
   v runar-app.js a runar-journal.js) · `token()` 4× a `setErr` 2× v shrine modulech · natržený okraj papíru 2× (runar-app.js).
-- [ ] **Obrázky `v2/email/tester-*.png`** — v repu na ně nic neodkazuje; vedou na ně URL v odeslaných e-mailech testerům? (owner)
+- [x] ✅ *(owner „smaž je“, d8bdb5a)* **Obrázky `v2/email/tester-*.png`** — v repu na ně nic neodkazuje; vedou na ně URL v odeslaných e-mailech testerům? (owner)
 - [x] ✅ *(CODE-tree 2026-11-23: přesunuto, index a RUNAR_TREE.md upraveny, mrtvé odkazy opraveny)* **Paměť stromu** `runar-tree-engine-lab.md`,
   `runar-tree-living-movement.md` se samy hlásí jako historie → do `memory/snapshots/` (CODE-tree, jeho paměť).
 - ✖ *(owner 2026-11-23 „kontrola asi není potřeba“ — čtení se pořád mění, dělá se s CODE-read; z metodiky vypuštěno.)* **J. Čtení**
 - [ ] **Měkké smazání účtu** (nález D: `RUNAR_PRIVACY.md` „Zálohy“ na tuhle položku odkazoval, ale nebyla nikde) — před spuštěním
   nahradí ruční obnovu smazaného účtu ze zálohy (kroky 1 a 4 tam); návrh a SQL pro ownera.
-- [ ] **Přepočet `RUNAR_PRICING.md` z dnešních dat** (nález D): `node scripts/utils/pricing_tabulka.js` dnes dává Premium IS nejhorší $2.99
+- [x] ✅ *(CODE-tune 2026-11-23, owner „udělej“: data za 90 dní, 144 čtení; vzor ~0.71, 206 ISK, break-even 6,9, mzdové řádky
+  145 / 247 / 350 / 486, tabulka výnosů s fixními $186 místo $230)* **Přepočet `RUNAR_PRICING.md` z dnešních dat** (nález D): `node scripts/utils/pricing_tabulka.js` dnes dává Premium IS nejhorší $2.99
   (doc $3.26), Standard IS $1.70 ($1.86); „Variable per paying user“ ~0.96 je stará hodnota (z tabulky vzoru vychází ~0.72) a na ní
   visí 237 ISK a break-even. Přepočítat celý řetěz najednou a ověřit `verify_payback_pricing.js`.
 - [ ] **Neověřené z opravy A:** spuštění Google Drive při odpojeném Disku (`zaloha_db.js` `pripojDrive`) — naostro neodzkoušeno.
