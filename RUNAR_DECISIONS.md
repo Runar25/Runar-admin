@@ -13543,8 +13543,9 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   v napětí → *„Tell me more about the two sides.“* / *„Segðu mér meira um báðar hliðar.“*; otázka → *„Why that question?“* / *„Hvers vegna
   þessi spurning?“*. Jen single (spready konec nelosují); u čtení z deníku a u cizího `_lastGen` nic. Stojí za osobním slotem.
   Strop 7 drží bez vytlačení: single měl nejvýš 6. Konec „v napětí“ (los 3) přidán k „dvěma možnostem“ — drží taky dvě strany.
-- **IS:** korpus — *mér meira um* 399, *um báðar hliðar* 54, *hvers vegna þessi* 1 538, *þessi spurning* 3 077. Greynir neběží (Windows
-  Application Control zablokoval jeho DLL, 2026-11-23).
+- **IS:** korpus — *mér meira um* 399, *um báðar hliðar* 54, *hvers vegna þessi* 1 538, *þessi spurning* 3 077. Greynir 0 nálezů (týž den: Smart App
+  Control blokoval parser reynir 3.10 → prostředí povýšeno na reynir 4.1 / islenska 2.1, samotest 12/12; záloha prostředí
+  `~/runar-eval/greynir-venv-zaloha-2026-11-23`).
 - **Ověřeno:** `verify_ask_hints.js` 7b (EN i IS: oba tvary, jiný konec, cizí `_lastGen`, spread, strop 7) + útok v `protipriklady.py`.
   **Neměřeno:** odpovědi modelu na nové tipy (ozvěna, odmítnutí jako 2026-10-06) — chce API; Ask má NO-COLD-READING, za člověka neodpoví.
 - Affected doc(s): RUNAR_BACKLOG.md (bod 14).
