@@ -71,6 +71,7 @@ Vrstvy pravdy: kanonická = root `RUNAR_*.md`, `memory/*.md`, `CLAUDE.md` · his
 - [vyznamy-run-historie-jen-zdroj.md](vyznamy-run-historie-jen-zdroj.md) — významy run hledáme nové; historie je zdroj, ne mez
 - [function-not-ceremony.md](function-not-ceremony.md) — nestavět proces pro uspokojení
 - [proceed-dont-ask.md](proceed-dont-ask.md) — dohodnutý plán odjeď celý, neptej se mezi kroky
+- [nasazeni-delam-sam.md](nasazeni-delam-sam.md) — edge funkce nasazuji sám po pushi, ownera se neptám
 - [one-patch-script-path.md](one-patch-script-path.md) — patch do vlastního gitignored slotu session
 - [match-existing-visual-first.md](match-existing-visual-first.md) — nové UI: napřed existující vizuál
 - [verify-agent-claims-about-code.md](verify-agent-claims-about-code.md) — handoff jiné session = žádost, ne fakt
