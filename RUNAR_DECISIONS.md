@@ -13575,12 +13575,3 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **6. Zkouška obnovy** 11-16 „cleanup failed“ a 11-19 první pokus pád v `roles.sql`, druhý za 4 min prošel bez změny kódu — neověřená
   nestabilita, další běh 12-14.
 - Affected doc(s): — (kód, kontroly a úlohy; pravidla beze změny).
-
-## 2026-11-23 (4) — Oprava obrazů z 2026-11-19 (4): bez chleba — Jera marmeláda, Ingwaz tobolka se semeny
-- **Proč:** owner 2026-09-23 u Jery *„chleba, hlavně jeho pěstování či setí, se mi nelíbí“* a týž den nevzato těsto u Ingwaz („zase chléb“,
-  `docs/archive/2026-09-23-brana-s-popisy.md`). 2026-11-19 (4) dal Jeře chléb z trouby a Ingwaz těsto — `uz_vime` na „chléb“ se nepustil.
-  Našla to údržba 2026-11-23 při čtení minulých kol kontroly.
-- **Co:** Jera *„You take the jam off the stove just as it thickens.“* · Ingwaz *„You hold a closed seed pod in your palm; everything is
-  already inside it.“* Brána 3 slepí soudci 3/3 obě (brambora s klíčkem 2/3, nevzato). IS Greynir + korpus u řádků.
-- **Mechanismus:** metodika údržby (`RUNAR_UDRZBA.md`) — změna obsahu (obraz, text) jen po `uz_vime` na podstatná slova toho obsahu.
-- Affected doc(s): — (obrazy bydlí jen v kódu).
