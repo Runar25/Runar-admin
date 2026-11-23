@@ -196,7 +196,7 @@ Sémantické mapování význam→osa z tree-of-life.md nebylo do liany zapojeno
 směr větve řídil golden alokátor harmonie. KUKY rozhodl: liana zachovat + postavit
 hybrid pro srovnání, "význam vede, harmonie uhlazuje".
 · LIANA v0.7 zmrazená: v2/tree-snapshots/v07-liana/ (golden, bez sémantiky).
-· HYBRID: v2/tree-lab-hybrid/ (build_tree_hybrid.py patchuje v0.7 model). Norns osy:
+· HYBRID: v2/tree-lab-hybrid/ (v repu už není; build_tree_hybrid.py patchuje v0.7 model). Norns osy:
   význam (intention+area+mood+heavy nebo axisHint) → elevation -1..1 (urd dolů/ven,
   verdandi strany, skuld nahoru) + laterality inner/outer (vlevo/vpravo).
   TUNING.semanticWeight slider (0 harmonie .. 1 čistý význam, default 0.8). Norns
