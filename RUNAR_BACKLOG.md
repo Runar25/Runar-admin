@@ -161,20 +161,16 @@ v `docs/archive/RUNAR_BACKLOG_odlozene.md` jako ⏸ — nejsou to úkoly. Vrací
 tři srovnávací skripty `compare_*` (nefunkční, 401), šly pryč s nimi. Prompty beze změny (golden); kontrola ㉦ přišla o krok, který
 hlídal jen V2 cestu.
 
-## Údržba 2026-11 — co neprošlo (CODE-tune 2026-11-23; postup `RUNAR_UDRZBA.md`)
-Owner 2026-11-23: *„údržbu jsi neudělal pořádně … kontroloval jsi claude.md, memory a další? … zapiš, co jsi neudělal“*.
-Prošlo jen: **A. provoz** (DECISIONS 2026-11-23 (3)) a z F nedefinovaná jména + duplicitní funkce a klíče UI_TEXT; z D jen
-`verify_new_duplicates` (skuld). Neúplnost je zapsaná i v `ops_events` (`udrzba.py --neuplna`), ranní souhrn ji ukazuje.
-- [ ] **B. CLAUDE.md** — každý § neprošel (platí? drží ho stroj? stojí jinde podruhé?); jen automaticky délka a nosiče.
-- [ ] **C. Paměť** — 94 souborů `memory/` ani skilly a `pravidla_mapa.json` neprošly obsahem (pravda dnes? přebité novějším
-  rozhodnutím? duplikát?); jen index (`verify_memory_index`).
-- [ ] **D. Kanonické docy × kód** — `RUNAR_DESIGN`, `SPREADY`, `MYTOLOGIE`, `PRICING`, `PRODUKTY`, `TREE` (jen čte), `PRIVACY`,
-  `VEGVISIR`, `POPISY_RUN`, `BACKLOG` (hotové bez ✅) neprošly tvrzení po tvrzení.
-- [ ] **E. Kontroly** — celý smoke prošel jen v pre-push; `protipriklady.py --vse` (všechny útoky) neběželo; kontroly hlídající
-  neexistující věc neprošly.
-- [ ] **F. Kód appky** — mrtvé funkce, soubory a styly, tatáž logika dvakrát, nepoužité klíče UI_TEXT, §5 invarianty.
-- [ ] **G. Server** — edge funkce (proměnné, kopie configu) a DB (RLS, granty, schéma repo × DB, nepoužité tabulky a funkce).
-- [ ] **H. Sliby uživateli** (zásady × kód, nápověda × appka) · **I. Peníze** (plýtvání, kvóty služeb).
+## Údržba 2026-11 — co zbylo (CODE-tune 2026-11-23; postup `RUNAR_UDRZBA.md`, zpráva `docs/udrzba/2026-11.md`)
+Kolo A–I proběhlo celé (A 2026-11-23 (3), B–I DECISIONS 2026-11-23 (5)). Zbylo:
+- [ ] **SQL pro ownera (čeká na ano):** `sql/2026-11-23_udrzba_db.sql` — mazání `client_error` po 90 dnech (slib zásad), politika
+  nehotového audia Kolekce jen adminům, revoke TRUNCATE/TRIGGER/REFERENCES pro anon a authenticated.
+- [ ] **Refaktory duplicit v appce (F, bez vady pro uživatele):** hledání štítku v balíčku 4× (`_seekIdx`, `_intentIdx`, `_areaIdx`,
+  `_labelIndex` — ta při chybějícím balíčku dostane `null` a spadla by) · HTML escape mimo `escapeHtml` (`_jesc` v runar-app.js, inline
+  v runar-app.js a runar-journal.js) · `token()` 4× a `setErr` 2× v shrine modulech · natržený okraj papíru 2× (runar-app.js).
+- [ ] **Obrázky `v2/email/tester-*.png`** — v repu na ně nic neodkazuje; vedou na ně URL v odeslaných e-mailech testerům? (owner)
+- [ ] **Paměť stromu** `runar-tree-engine-lab.md`, `runar-tree-living-movement.md` se samy hlásí jako historie → do `memory/snapshots/`
+  (CODE-tree, jeho paměť).
 - ✖ *(owner 2026-11-23 „kontrola asi není potřeba“ — čtení se pořád mění, dělá se s CODE-read; z metodiky vypuštěno.)* **J. Čtení**
 - [ ] **Měkké smazání účtu** (nález D: `RUNAR_PRIVACY.md` „Zálohy“ na tuhle položku odkazoval, ale nebyla nikde) — před spuštěním
   nahradí ruční obnovu smazaného účtu ze zálohy (kroky 1 a 4 tam); návrh a SQL pro ownera.

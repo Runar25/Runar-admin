@@ -13587,3 +13587,25 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Čtení:** údržba ho nemění — nálezy jdou CODE-read (BACKLOG bod 15). Vráceno c13c60a (výměna obrazů bez chleba, 581a8dd).
 - **Stav 2026-11:** prošel jen provoz (2026-11-23 (3)); co neprošlo, stojí v BACKLOGu „Údržba 2026-11“ a v `ops_events` jako neúplná.
 - Affected doc(s): RUNAR_UDRZBA.md (nový), memory/MEMORY.md (rozcestník), RUNAR_BACKLOG.md.
+
+## 2026-11-23 (5) — Údržba 2026-11, kolo B–I: co našla, proč to vzniklo, co to od teď hlídá
+- **Owner:** *„údržbu jsi neudělal pořádně … vypracuj metodiku“* → `RUNAR_UDRZBA.md` (2026-11-23 (4)); *„8. ano“*, bez oblasti J (čtení).
+  Pět agentů jen četlo (B CLAUDE.md, C paměť, D docy, F appka, G+H+I server, sliby, peníze), každý nález ověřen, pak opraven.
+- **Vážné:** (1) zásady soukromí neuváděly runu dne ani odběr upozornění (ukládá se od 15.–18. 11.) a push služby mezi příjemci →
+  doplněno EN i IS; **příčina:** nová tabulka vznikla a doc soukromí se nepohnul → nová kontrola `verify_privacy_tabulky.js` (smoke ㊛
+  i při commitu): tabulka ze `sql/` musí být v `RUNAR_PRIVACY.md`, nebo mít důvod; našla hned i `inactive_notices` a `reading_locks`.
+  (2) Nápověda slibovala „Everything is erased at once“ — kreditní účetnictví, hlášení testerů a odpojené záznamy zůstávají → sladěno
+  se zásadami. (3) Placená režie hlasu běžela před zámkem „jednou“: dvojí ťuknutí ji platilo dvakrát a nikam se nepočítala → zámek
+  napřed, brzda ho pouští, `model_usage` mode `voice_direction`. (4) Počítadlo čtení na nule nezčervenalo (třída `warn` bez stylu).
+  (5) Identita commitu „read“ prošla zeleně (§19.2) → `commit_vlastni.py` lane bez `CODE-` odmítne.
+- **Docy a pravidla:** CLAUDE.md (§1 Edit jen nesdílené, §13 buildery, §18.6 server, past stromu, 'someone' u testerů, PRIVILEGED,
+  chybějící soubory); paměť (mrtvé odkazy, přebitá pravidla, duplikáty s CLAUDE.md); PRICING (zakládací Norny zdarma od 2026-07-19,
+  slunovrat ve stromu jen záměr, zastaralá čísla), SPREADY (Ásgarður, treeVisibleFor, tree_state), projekt-mapa bez kopií pravidel.
+- **Kód:** mrtvé funkce (jsAttr, _capPlay, _capReset, openJournalFromPanel) a soubor `site.webmanifest`; esc/uuid na sdílené pomocníky;
+  shrine kreslí runy přes `runeSvg` a text bez `--dim`; `.gitignore` `scripts/_patch*.py`; schéma 7 tabulek z editoru do `sql/`.
+- **Kontroly:** smoke 112/112, útoky 255/255 na 95 kontrol. Nové stroje: ㊚ nedefinovaná jména (2026-11-23 (3)), ㊛ tabulky v zásadách.
+- **Nechané záměrně:** tabulka cen výkladů v PRICING (hlídá `verify_spread_prices.js`, čte ji kalkulačka PAYBACK); „1 free credit“ v
+  PRODUKTY (popis fyzického produktu); `runar-project.md` (prázdný záměrně, nese poučení); záměrná zrcadla limitů v edge funkcích.
+- **Čeká:** SQL pro ownera, refaktory duplicit, přepočet PRICING, měkké smazání → BACKLOG „Údržba 2026-11“.
+- Affected doc(s): CLAUDE.md, memory/, RUNAR_PRICING.md, RUNAR_SPREADY.md, RUNAR_PRODUKTY.md, RUNAR_PRIVACY.md, RUNAR_BACKLOG.md,
+  docs/projekt-mapa.md, docs/pravidla-duvody.md (všechny v commitech téhož dne).
