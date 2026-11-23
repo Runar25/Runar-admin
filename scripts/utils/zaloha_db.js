@@ -114,8 +114,30 @@ function smazStare(dnes, slozky) {
 }
 
 // Kopie na Drive; když disk není (Drive pro počítač neběží / účet odpojen), chyba → exit 1 a řádek v logu, ať to není tiché.
+// 2026-11-23: neběží-li Drive pro počítač, zkusit ho spustit a počkat (2026-11-11 až 19 nebyl připojený — 9 nocí jen lokální záloha).
+function pripojDrive() {
+  const koren = path.parse(DRIVE).root;
+  if (fs.existsSync(koren)) return true;
+  const exe = ['C:/Program Files/Google/Drive File Stream/launch.bat', 'C:/Program Files/Google/Drive File Stream/GoogleDriveFS.exe']
+    .find((f) => fs.existsSync(f));
+  if (!exe) return false;
+  try { require('child_process').spawn(exe, [], { detached: true, stdio: 'ignore', shell: exe.endsWith('.bat') }).unref(); } catch (e) { return false; }
+  const konec = Date.now() + 3 * 60 * 1000;
+  while (Date.now() < konec) {
+    Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 5000);   // 5 s
+    if (fs.existsSync(koren)) return true;
+  }
+  return false;
+}
+// Archivy, které jsou lokálně a na Disku chybí (výpadek Disku), se dokopírují — mezera se zacelí sama.
+function dokopiruj() {
+  const lok = CIL;
+  const chybi = fs.readdirSync(lok).filter((f) => /^runar-db-\d{4}-\d{2}-\d{2}\.7z$/.test(f) && !fs.existsSync(path.join(DRIVE, f)));
+  for (const f of chybi) fs.copyFileSync(path.join(lok, f), path.join(DRIVE, f));
+  return chybi;
+}
 function naDrive(soubor) {
-  if (!fs.existsSync(path.parse(DRIVE).root)) throw new Error('Google Drive není připojený (' + DRIVE + ') — lokální záloha je v ' + soubor);
+  if (!pripojDrive()) throw new Error('Google Drive není připojený (' + DRIVE + ') ani po pokusu ho spustit — lokální záloha je v ' + soubor);
   fs.mkdirSync(DRIVE, { recursive: true });
   const cil = path.join(DRIVE, path.basename(soubor));
   fs.copyFileSync(soubor, cil);
@@ -183,6 +205,8 @@ async function main() {
     const archivDb = path.join(CIL, 'runar-db-' + DEN + '.7z');
     zabal(archivDb, fs.readdirSync(tmp).map((f) => path.join(tmp, f)), h);
     naDrive(archivDb);
+    const dokop = dokopiruj();   // 2026-11-23: archivy z výpadku Disku
+    if (dokop.length) log('Drive: dokopírováno ' + dokop.length + ' archivů z výpadku: ' + dokop.join(', '));
     hlasProvoz('backup_ok', { bytes: fs.statSync(archivDb).size, tables: Object.keys(souhrn).length, pg_dump: !pgChyba });
     if (pgChyba) hlasProvoz('backup_fail', { error: 'pg_dump: ' + pgChyba });   // po backup_ok → stav „problem“ (stavy() v ops_souhrn.ts)
     log('DB ok → ' + archivDb + ' (' + fs.statSync(archivDb).size + ' B; ' + Object.entries(souhrn).map(([k, v]) => k + ' ' + v).join(', ') + ')');

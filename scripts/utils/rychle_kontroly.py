@@ -25,7 +25,9 @@ KONTROLY = ['verify_is_kontrola_jedno_misto.js', 'verify_doc_links.js', 'verify_
             # 2026-10-21 (CODE-read): střet jmen appka × web (web načítá živé soubory appky) — zastaví commit appky i webu
             'verify_web_appka_jmena.js',
             # 2026-10-22 (CODE-read): statický soubor ze Supabase Storage (egress) zastaví commit
-            'verify_bez_storage.js']
+            'verify_bez_storage.js',
+            # 2026-11-23 (CODE-tune): nedefinované jméno v appce („loadEl is not defined“ u uživatele) zastaví commit
+            'verify_nedefinovane.js']
 CESTA = re.compile(r'((?:[A-Za-z]:[\\/])?(?:[\w.@-]+[\\/])*[\w.@-]+\.(?:js|py|md|html|css|ts|json|sql|sh|toml|txt|ps1))(?::\d+)?')
 
 

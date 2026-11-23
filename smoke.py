@@ -1367,6 +1367,18 @@ radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola stranek run probehla'
 check(prvni.strip(), r.returncode == 0, '\n'.join(radky[:-1]) if r.returncode != 0 else '')
 
+# 2026-11-23 (CODE-tune, údržba): nedefinované jméno v appce — za měsíc třikrát „X is not defined“ až u uživatele
+# (tlacitkoNavstevnika, _loadingMotto, loadEl). Parser acorn z Node, deklarace ze všech v2/*.js a HTML.
+print('\n' + chr(0x329A) + ' NEDEFINOVANÁ JMÉNA V APPCE (verify_nedefinovane.js)')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_nedefinovane.js')],
+                   capture_output=True, text=True, encoding='utf-8')
+radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip()]
+prvni = radky[0] if radky else 'kontrola nedefinovanych jmen probehla'
+check(prvni.strip(), r.returncode == 0, '\n'.join(radky[1:]) if r.returncode != 0 else '')
+r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_nedefinovane.js'), '--test'],
+                   capture_output=True, text=True, encoding='utf-8')
+check(((r.stdout + r.stderr).strip().split('\n') or [''])[-1].strip() or 'samotest nedefinovanych jmen', r.returncode == 0)
+
 # ── Výsledek ─────────────────────────────────────────────────
 print()
 print('══════════════════════════════════════════')

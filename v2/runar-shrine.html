@@ -720,7 +720,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   applyLangToggle(lang);   // 2026-10-11: přepínač ukazuje skutečný jazyk obsahu (od 2026-10-10 výchozí IS), ne natvrdo EN z HTML
   updateUIText();
-  buildGrid('teach-grid', false);
+  buildGrid('teach-grid');
   await loadChar();
   loadCorrections();
   // 2026-10-11: přímý odkaz na záložku (runar-shrine.html#testers z menu appky) — owner chtěl rychlejší přístup než proklikávat shrine.
@@ -743,7 +743,7 @@ function setLang(l) {
   lang = l;
   applyLangToggle(l);
   updateUIText();
-  buildGrid('teach-grid', false);
+  buildGrid('teach-grid');
 }
 
 function applyLangToggle(l) {
@@ -937,7 +937,7 @@ async function loadBatches() {
 }
 
 // ─── RUNE GRID ──────────────────────────────────────────
-function buildGrid(gridId, isReader) {
+function buildGrid(gridId) {
   const grid = document.getElementById(gridId); if (!grid) return;
   grid.innerHTML = '';
   RUNES.forEach(r => {
@@ -947,35 +947,10 @@ function buildGrid(gridId, isReader) {
       ? `<svg viewBox="${svgData.vb}" xmlns="http://www.w3.org/2000/svg" class="rb-svg">${svgData.paths}</svg>`
       : runeSvg(r, { frame: false, cls: 'rb-svg' });   // záloha bez RUNE_SVGS — runeSvg si poradí, písmem nic (§5)
     btn.innerHTML = inner + `<span class="rb-n">${r.n}</span>`;
+    // 2026-11-23: dřív i větev isReader (čtečka V2 LAB, odstraněná c6eb89c 2026-07-10) — mrtvá, volala neexistující funkce
     btn.onclick = () => {
-      if (isReader && _spreadMode === 'spread3') {
-        const idx = _spread3Runes.indexOf(r);
-        if (idx >= 0) {
-          _spread3Runes.splice(idx, 1);
-          btn.classList.remove('on');
-        } else if (_spread3Runes.length < 3) {
-          _spread3Runes.push(r);
-          btn.classList.add('on');
-        }
-        _updateSpread3Slots();
-        document.getElementById('btn-speak').disabled = (_spread3Runes.length < 3);
-      } else {
-        grid.querySelectorAll('.rb').forEach(b => b.classList.remove('on')); btn.classList.add('on');
-        if (isReader) {
-          readerRune = r;
-          if (_spreadMode !== 'spread3') {
-            // Single mode: fill the slot
-            var _s1r = document.getElementById('s1-rune-0');
-            var _s1s = document.getElementById('s1-slot-0');
-            if (_s1r) setRuneText(_s1r, r.g + ' ' + rn(r));
-            if (_s1s) { _s1s.classList.add('filled'); _s1s.onclick = function() { _clearSingleSlot(); }; }
-          } else {
-            setRuneText('reader-rune-info', `${r.g} ${rn(r)} — ${rk(r)}`);
-          }
-          document.getElementById('btn-speak').disabled = false;
-        }
-        else          { teachRune  = r; setRuneText('teach-rune-info', `${r.g} ${rn(r)} — ${rk(r)}`); checkTeach(); loadRuneVersionCount(); }
-      }
+      grid.querySelectorAll('.rb').forEach(b => b.classList.remove('on')); btn.classList.add('on');
+      teachRune = r; setRuneText('teach-rune-info', `${r.g} ${rn(r)} — ${rk(r)}`); checkTeach(); loadRuneVersionCount();
     };
     grid.appendChild(btn);
   });

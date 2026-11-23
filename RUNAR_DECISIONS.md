@@ -13550,3 +13550,28 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno:** `verify_ask_hints.js` 7b (EN i IS: oba tvary, jiný konec, cizí `_lastGen`, spread, strop 7) + útok v `protipriklady.py`.
   **Neměřeno:** odpovědi modelu na nové tipy (ozvěna, odmítnutí jako 2026-10-06) — chce API; Ask má NO-COLD-READING, za člověka neodpoví.
 - Affected doc(s): RUNAR_BACKLOG.md (bod 14).
+
+## 2026-11-23 (3) — Údržba: selhání z provozu za 30 dní, jejich příčiny a co je od teď hlídá
+- **Owner:** *„potřebuju udělat základní údržbu všeho … vyřešit duplikáty, zjistit proč se jaký problém stal a napravit ho“*.
+- **Zdroj:** `ops_events` za 30 dní (upozornění, `client_error`, `backup_fail`, `purge`), naplánované úlohy Windows, `bug_reports`.
+- **1. „X is not defined“ u uživatelů 3× za měsíc** (`tlacitkoNavstevnika` 11-01, `_loadingMotto` 11-16, `loadEl` 11-17 a 11-19).
+  Poslední byla živá: `c61cc37` zrušil proměnné čekání ve stromu a dva řádky za `callProxy` zůstaly → životní runa se po odpovědi
+  serveru nezobrazila (dva testeři, IS; text uložil server, po obnovení stránky ho mají). Opraveno. **Příčina třídy:** žádná kontrola
+  neviděla jméno bez deklarace, prohlížečové kontroly tu cestu neprojdou → **nová `scripts/verify_nedefinovane.js`** (parser acorn
+  z Node, deklarace ze všech v2/*.js a HTML včetně `onclick`), ve smoke ㊚ i v rychlých kontrolách při commitu, 2 útoky. Hned našla
+  čtvrtý případ: shrine `buildGrid` volala `_clearSingleSlot` / `_updateSpread3Slots` — mrtvá větev čtečky V2 LAB od `c6eb89c`
+  (2026-07-10), odstraněna.
+- **2. Záloha DB:** 2026-11-11 až 19 nebyl připojený Google Drive → 9 nocí jen lokální archiv (data v bezpečí, na Disku chyběla kopie;
+  doplněna). 2026-11-20 až 22 neběžela vůbec — počítač vypnutý, úloha se dohnala 23. 11. po zapnutí. **Teď:** `zaloha_db.js` při
+  odpojeném Disku zkusí spustit Drive pro počítač a počká až 3 min (neověřeno naostro — Disk nešlo odpojit); po kopii dokopíruje
+  archivy, které na Disku chybí (ověřeno na dočasných složkách). Záloha závislá na zapnutém počítači zůstává — otázka pro ownera.
+- **3. GreynirCorrect** byl 2026-11-23 rozbitý (Smart App Control zablokoval parser reynir 3.10) a týdenní úloha přesto hlásila
+  „aktuální“ — v týdnu bez nové verze samotest nepouštěla. Prostředí povýšeno (DECISIONS 2026-11-23 (2)); **teď samotest každý týden**,
+  neprojde-li → `greynir_update` ok:false → e-mail z hlídání provozu.
+- **4. `ops-watch` nenasazený** po změně `_shared/ops_souhrn.ts` (`ee9b779`, 11-18) → deploy_drift; srovnáno nasazením všech funkcí
+  (2026-11-23 (1)). Paměť `nasazeni-delam-sam` platí i pro funkce, které sdílený soubor jen načítají.
+- **5. `inactive-accounts` 2026-11-20 neodpověděl** (cron ho spustil, záznam chybí); příčina se nedá zjistit — logy funkcí drží Free
+  plán den. Jednorázové, další noc v pořádku.
+- **6. Zkouška obnovy** 11-16 „cleanup failed“ a 11-19 první pokus pád v `roles.sql`, druhý za 4 min prošel bez změny kódu — neověřená
+  nestabilita, další běh 12-14.
+- Affected doc(s): — (kód, kontroly a úlohy; pravidla beze změny).

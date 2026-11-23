@@ -158,7 +158,13 @@ def aktualizace():
                 nove[b] = (pred[b], v)
     pozn = (' · nová hlavní verze, ručně: ' + ', '.join(hlavni_verze)) if hlavni_verze else ''
     if not nove:
-        zapis('aktualni', 'beze změny: ' + ', '.join('%s %s' % (b, pred.get(b, '?')) for b in BALICKY) + pozn, pred)
+        # 2026-11-23: samotest i bez nové verze — prostředí se rozbije i samo (Smart App Control 2026-11-23 zablokoval parser reynir
+        # 3.10; úloha do té doby hlásila „aktuální“ zeleně, zatímco nástroj nefungoval).
+        kod, vystup = samotest_v_prostredi()
+        if kod != 0:
+            zapis('chyba', 'beze změny verzí, ale samotest NEprošel — ' + (vystup or '')[-150:].strip() + pozn, pred)
+            return 1
+        zapis('aktualni', 'beze změny, samotest prošel: ' + ', '.join('%s %s' % (b, pred.get(b, '?')) for b in BALICKY) + pozn, pred)
         return 0
     # Přesné verze, ne --upgrade: --upgrade by s balíčkem povýšil i závislost na novou hlavní verzi (cesta, kterou přišla islenska-data).
     subprocess.run([VPY, '-m', 'pip', 'install', '--disable-pip-version-check', '-q'] + ['%s==%s' % (b, n) for b, (_, n) in nove.items()],
