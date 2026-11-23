@@ -13534,6 +13534,7 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   `ee9b779` (2026-11-18) změnil `_shared/ops_souhrn.ts` bez nasazení `ops-watch`; srovná ho nasazení všech funkcí v kroku 5.
 - **Krok 5:** `_shared/klic.ts` bez zálohy `SUPABASE_SERVICE_ROLE_KEY` (chybí-li nový klíč, `klicZdroj` = none + chyba v logu); podpis
   hlasu se ověřuje jen novým klíčem (starým se nepodepisuje od 2026-11-01); `KLICE_SUPABASE.vymeneno = true` (souhrn přestal odpočítávat).
+- **Přihlášený s hlasem (podpis hlasu jen novým klíčem):** owner po nasazení *„zvuk funguje“*.
 - **Návrat:** Settings → API Keys → *Re-enable JWT-based API keys* (vratné) + revert commitu a nasazení.
 - Affected doc(s): RUNAR_BACKLOG.md (Plán infrastruktury, krok 9).
 
