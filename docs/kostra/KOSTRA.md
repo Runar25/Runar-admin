@@ -32,6 +32,7 @@ Pravidla:
 - **K1.3** obraz krátký (kolem 12 slov), jeden děj, přítomnost — *docs/postup-obraz.md, od 2026-11-14*
 - **K1.4** osoba si místo v obraze musí zasloužit — *DECISIONS 2026-11-14 (6), od 2026-11-14*
 - **K1.5** napětí nese děj, ne přídavné jméno ani pojmenovaná emoce — *docs/postup-obraz.md 2.7; pokus P01, od 2026-11-16*
+- **K1.6** člověk v obraze („you“) zůstává tam, kde ho tam dá úhel; mění se jen u runy, kde by to škodilo jejímu významu — *owner 2026-11-24 (k otázce R6), od 2026-11-24*
 
 Měření:
 - **M1** scéna je dnes snadno představitelná a nemá předmět navíc — soudce obrazu · nekalibrováno — kalibrovat na: dveře chléva ✘, dveře horské chaty ✔, pant ✘, kráva na trhu ✘, svíčka ✔
@@ -218,12 +219,11 @@ Pokusy na této části: P07 (v produkci)
 
 ## Otevřené otázky pro ownera
 
-- **R1** věta 2: definice runy ano, nebo ne (P05)
+- **R1** věta 2: definice runy ano, nebo ne — obě verze připravené (K2-A produkce, K2-B bez definice), rozhodne zkouška (P05)
 - **R2** Confirmation: končit dvěma možnostmi? (P17)
 - **R3** cesta a rozcestník: věta 3 vždy, nebo jen u Crossroads (P08)
 - **R4** vstup pocitu ano/ne a kam (P10)
 - **R5** zdroj významu pro větu 2 (P06)
-- **R6** člověk v obraze („you“), nebo až v otázce (P05)
 
 ## Pokusy podle stavu
 

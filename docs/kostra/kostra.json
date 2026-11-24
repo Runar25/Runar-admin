@@ -96,6 +96,12 @@
      "t": "napětí nese děj, ne přídavné jméno ani pojmenovaná emoce",
      "zdroj": "docs/postup-obraz.md 2.7; pokus P01",
      "od": "2026-11-16"
+    },
+    {
+     "id": "K1.6",
+     "t": "člověk v obraze („you“) zůstává tam, kde ho tam dá úhel; mění se jen u runy, kde by to škodilo jejímu významu",
+     "zdroj": "owner 2026-11-24 (k otázce R6)",
+     "od": "2026-11-24"
     }
    ],
    "meritka": [
@@ -733,7 +739,7 @@
  "otevrene": [
   {
    "id": "R1",
-   "t": "věta 2: definice runy ano, nebo ne",
+   "t": "věta 2: definice runy ano, nebo ne — obě verze připravené (K2-A produkce, K2-B bez definice), rozhodne zkouška",
    "pokus": "P05"
   },
   {
@@ -755,11 +761,6 @@
    "id": "R5",
    "t": "zdroj významu pro větu 2",
    "pokus": "P06"
-  },
-  {
-   "id": "R6",
-   "t": "člověk v obraze („you“), nebo až v otázce",
-   "pokus": "P05"
   }
  ],
  "ostatni_kusy": [
