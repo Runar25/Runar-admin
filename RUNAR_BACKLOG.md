@@ -121,6 +121,20 @@
       Jera *„You take the jam off the stove just as it thickens.“* / *„Þú tekur sultuna af hellunni um leið og hún þykknar.“* 3/3 ·
       Ingwaz *„You hold a closed seed pod in your palm; everything is already inside it.“* / *„Þú heldur á lokuðu fræhylki í lófanum
       og það geymir þegar allt.“* 3/3 (též semínko v teplé půdě 3/3; brambora s klíčkem 2/3). Zápis byl v 581a8dd, vrácen c13c60a.
+    16. **Věty bez funkce a definice runy → CODE-read, doklad k pokusu P05** (hlášení cefeec76, owner 2026-11-19 s rozborem od GPT ke
+      čtení e4a5e96b Berkana): věta 2 je slovníková definice, věta 3 ji opakuje parafrází obrazu, „beyond the rim“ přidává věc bez funkce,
+      osobní věta jen přebírá slova oblasti. Návrh GPT: každá věta vlastní funkci, význam nevysvětlovat dvakrát. Rejstřík `docs/kostra/pokusy.json`.
+    17. **Slova obrazu, která model použije, a čtení, ze kterého není jasné, co obraz znázorňuje → CODE-read, k P18** (hlášení 426570dc ke
+      čtení 75b6e569 Eihwaz: obraz „roots in the dark“ — myšleno v zemi; „každé slovo, které je modelu dáno, si musí zasloužit místo …
+      použil ho model správně?“ · hlášení af3970a4 ke čtení 1bee90df Sowilo: obraz v pořádku, čtení hůř říká, co znázorňuje; ve druhém Asku
+      otázka „co se stane, když šlápnu na zmrzlou kaluž“ — od obrazu, který něco znázorňuje, čeká owner lepší odpověď).
+    18. **Runa dne: jedna kratší věta, pět různých obrazů → CODE-read návrh, texty CODE-tune** (hlášení d1dce7ef, owner 2026-11-21 s příklady
+      „Something unexpected may reveal what was never as firmly in place as it seemed.“ · Berkana „Today, pay attention to something small
+      that is quietly beginning to take shape.“ · Ansuz „A few words, spoken or heard, may stay with you longer than you expect.“; zaměření:
+      jeden symbol k zamyšlení místo odpovědi na otázku). K tomu hlášení fa0d9c40: odpověď na častý dotaz „Is the rune of the day accurate?“
+      (reflexe, ne předpověď) — kandidát do nápovědy; zdroj wayoftherunes.com (blog, rune of the day) — vlastními slovy, neopisovat.
+    19. **Motivační obrazy ze života → nápad, napřed promyslet** (hlášení a18699b4, owner 2026-11-21: „když člověk udělá něco navíc, může se
+      mu to vrátit … bude potřeba to napřed probrat a vymyslet, jestli něco podobného už nemáme a kam to umístit“). CODE-read s ownerem.
 Owner 2026-10-12: *„prompt už je prakticky hotovo. takže pozor na to, co tam leží.“* Výzkum a nápady k promptu, obrazům, Asku a Vegvísiru
 (dřív „Reading quality“, nálady, HANDOFF57, audity obrazů, Vegvísir, testy „obrazy se potkávají“ a prompt z „Nálezů z workflow“) leží doslova
 v `docs/archive/RUNAR_BACKLOG_odlozene.md` jako ⏸ — nejsou to úkoly. Vrací se, až se vada objeví v nových čteních a owner na ni upozorní
