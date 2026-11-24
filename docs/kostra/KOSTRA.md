@@ -89,7 +89,7 @@ Varianty:
 - **K3-A** obraz dosedne na podobu oblasti, kterou člověk zvolil · produkce
 - **K3-B** druhá strana runy bez nálepky · čeká na ownera (P16)
 - **K3-C** úhel pohledu z dat runy (dvě strany, bod zlomu, přehlížená stránka …), losem · připraveno (P09)
-- **K3-D** rozcestník u oblasti Crossroads · nápad (P08)
+- **K3-D** rozcestník: cesty runy (návrh pro 25 run v P19) · nápad (P19)
 - **K3-E** pocit člověka vybere stránku runy · nápad (P10)
 
 Pravidla:
@@ -107,7 +107,7 @@ Známé vady a jejich příčina:
 - tvrzení o životě čtenáře (EN 9–10/16) ← oblast zadaná jako „nech význam přistát na tom, co dělá“ (DECISIONS 2026-08-21) · vyřešeno: oblast = zdroj obrazu, ne cíl tvrzení
 - poslední věta „neither change was easy to see“ spojená s „given and received“ (Eihwaz, 2026-11-24) ← podoba oblasti + otázka runy pod koncem se složí do jedné věty (čtení 75b6c569; otázka runy Eihwaz v Kolekci) · poučení
 
-Pokusy na této části: P04 (odloženo) · P05 (čeká na ownera) · P08 (nápad) · P09 (připraveno) · P10 (nápad) · P11 (přijato) · P16 (čeká na ownera)
+Pokusy na této části: P04 (odloženo) · P05 (čeká na ownera) · P08 (nápad) · P09 (připraveno) · P10 (připraveno) · P11 (přijato) · P16 (čeká na ownera) · P19 (čeká na ownera)
 
 ### K4 Otevření (věta 4)
 
@@ -118,7 +118,7 @@ Pokusy na této části: P04 (odloženo) · P05 (čeká na ownera) · P08 (nápa
 
 Varianty:
 - **K4-A** tvar konce podle hledání, jinak los z pěti tvarů · produkce
-- **K4-B** Confirmation: tři tvary místo dvou možností · čeká na ownera (P17)
+- **K4-B** Confirmation končí podmínkou („X drží, jen pokud…“) místo dvou možností · owner: lepší směr, vyzkoušet (P17)
 
 Pravidla:
 - **K4.1** tvar podle hledání, jinak los z tvarů; střídat — *DECISIONS 2026-09-20 (8), 2026-09-26 (1), od 2026-09-26*
@@ -234,13 +234,13 @@ Jak s kterým vstupem model pracuje (kolik převezme, do které věty, co si v o
 | id | od | pokus | části | výsledek | owner | dál |
 |---|---|---|---|---|---|---|
 | P08 | 2026-11-17 | Rozcestník u oblasti Crossroads | K3 | — | 2026-11-17 (zadání) | BACKLOG 13 |
-| P10 | 2026-10-26 | Vstup pocitu („What feels closest to you right now?“) | K3 | — | 2026-10-26, 2026-11-11, 2026-11-23 | BACKLOG 10; zrcadlení × kontrast |
 
 ### připraveno
 
 | id | od | pokus | části | výsledek | owner | dál |
 |---|---|---|---|---|---|---|
 | P09 | 2026-11-23 | Úhly pohledu ve větě 3 (dvě strany, bod zlomu, přehlížená stránka …) | K3 | data pro 5 run; úhly podle Gemini jako druhy, obsah z ownerových popisů | 2026-11-23 „ano, přesně tak“ | až po krocích 1–3 plánu |
+| P10 | 2026-10-26 | Vstup pocitu („What feels closest to you right now?“) | K3 | — | 2026-10-26, 2026-11-11, 2026-11-24 „zkusme to“ | BACKLOG 10; zrcadlení × kontrast |
 
 ### čeká na ownera
 
@@ -252,7 +252,8 @@ Jak s kterým vstupem model pracuje (kolik převezme, do které věty, co si v o
 | P14 | 2026-11-14 | Obraz na jednom místě a sjednocená zdvojení v promptu | K1 K2 | pořadí vět drženo 9/9; owner „produkce zní lépe“, pak „nečetl jsem to“ | 2026-11-14 | — |
 | P15 | 2026-11-09 | Fáze runy | K2 | fáze mění řečené, ne obraz; slovo pokynu vysloveno 2/4 | 2026-11-10 „fáze vypadá dobře“ | — |
 | P16 | 2026-11-09 | Druhá strana runy ve čtení | K3 | bez nálepky 3/3 Fehu, 3/3 Raidho | 2026-11-09 „druhá strana se mi líbí“ | spojit s P09 |
-| P17 | 2026-11-10 | Konce u Reflection a Confirmation | K4 | Confirmation: (a) neobratné, (b) čisté, (c) opsalo pokyn | 2026-11-09 „zní mi zvláštně, když potvrzení má dvě možnosti“ | rozhodnutí R2 |
+| P17 | 2026-11-10 | Konce u Reflection a Confirmation | K4 | Confirmation: (a) neobratné, (b) čisté, (c) opsalo pokyn | 2026-11-24 „to Raidho zní dobře, pro Confirmation by to mělo být lepší“ (tvar podmínky) | podmínku vyzkoušet na více runách (K4-B), pak CODE-tune |
+| P19 | 2026-11-24 | Cesty pro všech 25 run (návrh z ownerových popisů) | K3 | volba 10 run, postoj 14, prázdná runa bez cest; každá cesta s citací z RUNAR_POPISY_RUN.md | 2026-11-24 „udělej návrh pro ostatní runy“ | owner posoudí; pak čtení s rozcestníkem na několika runách |
 
 ### přijato
 

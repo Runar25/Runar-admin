@@ -385,9 +385,9 @@
     },
     {
      "id": "K3-D",
-     "t": "rozcestník u oblasti Crossroads",
+     "t": "rozcestník: cesty runy (návrh pro 25 run v P19)",
      "stav": "nápad",
-     "pokus": "P08"
+     "pokus": "P19"
     },
     {
      "id": "K3-E",
@@ -499,8 +499,8 @@
     },
     {
      "id": "K4-B",
-     "t": "Confirmation: tři tvary místo dvou možností",
-     "stav": "čeká na ownera",
+     "t": "Confirmation končí podmínkou („X drží, jen pokud…“) místo dvou možností",
+     "stav": "owner: lepší směr, vyzkoušet",
      "pokus": "P17"
     }
    ]
