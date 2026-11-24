@@ -52,6 +52,21 @@ function rozloz(r) {
   return { runa: r.rune_name, uhel, obraz, n_vet: V.length, vstup, vlastni };
 }
 
+// Krátký rozbor jednoho čtení pro „načti čtení a reporty“ (owner 2026-11-24: „když dám načíst reporty, tak udělat automaticky i rozbor …
+// určíš automaticky, z čeho to složil, a dáš mi kratší analýzu“). Vrací řádky do terminálu (nesou kus obrazu a slova čtení → jen mimo repo).
+function kratky(r) {
+  const id = String(r.id || '').slice(0, 8), { z, uhel } = zdroje(r);
+  const hl = '· ' + id + ' · ' + r.rune_name + (r.lang === 'is' ? ' · IS' : '') + ' · úhel [' + (uhel === undefined ? '?' : uhel) + '] · obraz: ' + String(z['obraz'] || '—').slice(0, 80)
+    + (z['podoba oblasti'] ? ' · oblast: ' + z['podoba oblasti'].split(' in ')[0].slice(0, 40) : '');
+  if (r.lang === 'is') return [hl, '   (rozklad slov jen pro EN — islandské tvary by ho zkreslily)'];
+  const x = rozloz(r), out = [hl];
+  for (let i = 0; i < x.n_vet; i++) {
+    const kdo = Object.entries(x.vstup).filter(([, v]) => v.vety[i] > 0).map(([n, v]) => n + ' ' + v.vety[i]);
+    out.push('   věta ' + (i + 1) + ': ' + (kdo.length ? kdo.join(' · ') : 'nic ze vstupů (vlastní)') + (i === 0 && x.vlastni.length ? ' | přidal sám: ' + x.vlastni.slice(0, 10).join(', ') : ''));
+  }
+  return out;
+}
+
 function souhrn(rows) {
   const R = rows.filter((r) => r.lang !== 'is' && r.area !== 'spread' && r.short_text && /sol/.test(String(r.model || ''))).map(rozloz);
   const L = [];
@@ -95,6 +110,7 @@ function nacti(od) {
   return Array.isArray(j) ? j : j.rows;
 }
 
+if (require.main !== module) { module.exports = { rozloz, zdroje, kratky, souhrn }; return; }
 if (process.argv.includes('--test')) {
   // smyšlené čtení se známým původem: věta 1 z obrazu + vlastní slovo „hinge“, věta 2 klíčové slovo runy, věta 3 podoba oblasti
   const r = { lang: 'en', rune_name: 'Fehu', area: 'Career & Creativity', aol: 'Career & Creativity', question: '', model: 'gpt-6-sol',

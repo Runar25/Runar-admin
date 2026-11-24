@@ -85,6 +85,21 @@ if (cteni.length) {
   if (r.status !== 0) console.log('   ⚠ monitor skončil chybou: ' + kratce(r.stderr, 300));
 }
 
+// 2d) rozbor čtení — z čeho model každou větu složil a co do obrazu přidal sám (CODE-read 2026-11-24, owner: „když dám načíst reporty,
+// tak udělat automaticky i rozbor a zapíšeš čtení. určíš automaticky, z čeho to složil, a dáš mi kratší analýzu, ať vidím, o co jde“).
+// Krátký rozbor do terminálu (texty mimo repo), souhrn přes všechna čtení ze solu do docs/kostra/VSTUPY.md (jen čísla a slova).
+if (cteni.some((r) => r.area !== 'spread' && r.short_text && r.prompt_draws)) {
+  console.log('\n══ ROZBOR ČTENÍ (z čeho je každá věta; scripts/kostra_vstupy.js)');
+  try {
+    const K = require('./kostra_vstupy.js');
+    for (const r of cteni) if (r.area !== 'spread' && r.short_text && r.prompt_draws) console.log(K.kratky(r).join('\n'));
+  } catch (e) { console.log('   ⚠ rozbor se nepovedl: ' + kratce(e.message, 200)); }
+  if (!process.argv.includes('--bez-zapisu')) {
+    const k = cp.spawnSync('node', [path.join(__dirname, 'kostra_vstupy.js'), '--zapis'], { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+    console.log(k.status === 0 ? '   souhrn obnoven: docs/kostra/VSTUPY.md' : '   ⚠ souhrn VSTUPY.md se neobnovil: ' + kratce(k.stderr, 200));
+  }
+}
+
 // 2c) islandská čtení přes Greynir — owner 2026-10-14 na hlášení 6282e405 („Potřebuju najít řešení jak IS čtení analyzovat“): „zdarma ano“.
 // Smyčka ze skutečných čtení (DECISIONS 2026-09-23 (6) bod 3) tak běží při každém načtení sama, ne až si na ni někdo vzpomene.
 if (cteni.some((r) => r.lang === 'is')) {
