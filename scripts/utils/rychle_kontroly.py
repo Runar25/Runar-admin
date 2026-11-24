@@ -33,7 +33,9 @@ KONTROLY = ['verify_is_kontrola_jedno_misto.js', 'verify_doc_links.js', 'verify_
             # 2026-11-23 (CODE-read, owner „jakmile sáhneš na kostru, musíš to zjistit“): kostra čtení a rejstřík pokusů (docs/kostra/) —
             # dvojí id, neznámá část, stav bez ownera, ručně upravený přehled zastaví commit
             'verify_kostra.js']
-CESTA = re.compile(r'((?:[A-Za-z]:[\\/])?(?:[\w.@-]+[\\/])*[\w.@-]+\.(?:js|py|md|html|css|ts|json|sql|sh|toml|txt|ps1))(?::\d+)?')
+# 2026-11-24 (CODE-read): „json“ před „js“ a konec slova za příponou — dřív se z „docs/kostra/pokusy.json“ spárovalo „pokusy.js“ a vada
+# ve staged .json souboru commit nezastavila (chytil útok verify_kostra.js v verify_rychle_kontroly.py).
+CESTA = re.compile(r'((?:[A-Za-z]:[\\/])?(?:[\w.@-]+[\\/])*[\w.@-]+\.(?:json|js|py|md|html|css|ts|sql|sh|toml|txt|ps1)(?![\w]))(?::\d+)?')
 
 
 def umisteni(radek):
