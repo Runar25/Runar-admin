@@ -148,7 +148,8 @@ function generuj(k, p) {
     for (const v of k.vyznamy.zkouseno) L.push('- zkoušeno: ' + v.co + ' — ' + v.kde + ' · ' + v.stav);
     L.push('');
   }
-  L.push('## Vstupy', '', '| id | vstup | odkud v kódu | kdo ho dává | míří do |', '|---|---|---|---|---|');
+  L.push('## Vstupy', '', 'Jak s kterým vstupem model pracuje (kolik převezme, do které věty, co si v obraze přidá podle úhlu): `docs/kostra/VSTUPY.md` '
+    + '(generuje `node scripts/kostra_vstupy.js --zapis` ze skutečných čtení).', '', '| id | vstup | odkud v kódu | kdo ho dává | míří do |', '|---|---|---|---|---|');
   for (const v of k.vstupy) L.push('| ' + v.id + ' | ' + v.nazev + ' | ' + v.kod + ' | ' + v.kdo + ' | ' + v.do.join(', ') + ' |');
   L.push('', '## Co s čím souvisí (když měním X, musím zkontrolovat Y)', '');
   for (const z of k.zavislosti) L.push('- **' + z.id + '** ' + z.kdyz + ' → ' + z.tak.join(' · '));
