@@ -55,10 +55,15 @@ const m = q("select usage->>'model' model, count(*) n, " +   // opt-out:ok 2026-
 const dvoj = q("select count(*) n, max(b.drawn_at) kdy from public.readings a join public.readings b on a.user_id = b.user_id and a.rune_name = b.rune_name " +   // opt-out:ok 2026-10-10 náklady/plýtvání
   "and a.lang = b.lang and a.id <> b.id and b.drawn_at > a.drawn_at and b.drawn_at - a.drawn_at < interval '20 seconds' " +
   "where a.drawn_at >= " + OD + ";")[0];
+// Admini (2026-11-24): runa dne a admin text mluví bez uloženého čtení — do varování nepatří, počítají se zvlášť. Seznam z _shared/admini.ts.
+const ADMINI = (fs.readFileSync(path.join(ROOT, 'supabase', 'functions', '_shared', 'admini.ts'), 'utf8').match(/[\w.+-]+@[\w-]+(?:\.[\w-]+)+/g) || [])
+  .map((e) => "'" + e.toLowerCase().replace(/'/g, "''") + "'");
+const NE_ADMIN = ADMINI.length ? "v.user_id not in (select id from auth.users where lower(email) in (" + ADMINI.join(',') + "))" : 'true';
 const hlas = q("select count(*) n, coalesce(sum(chars),0) znaku, count(distinct user_id) lidi, " +
-  "count(*) filter (where not exists (select 1 from public.readings r where r.user_id = v.user_id " +   // opt-out:ok 2026-10-10 náklady/plýtvání
+  "count(*) filter (where " + NE_ADMIN + " and not exists (select 1 from public.readings r where r.user_id = v.user_id " +   // opt-out:ok 2026-10-10 náklady/plýtvání
   "and r.drawn_at between v.created_at - interval '15 minutes' and v.created_at)) bez_cteni, " +
-  "max(v.created_at) filter (where not exists (select 1 from public.readings r where r.user_id = v.user_id " +   // opt-out:ok 2026-10-11 náklady/plýtvání
+  "count(*) filter (where not (" + NE_ADMIN + ")) admin_hlasu, " +
+  "max(v.created_at) filter (where " + NE_ADMIN + " and not exists (select 1 from public.readings r where r.user_id = v.user_id " +   // opt-out:ok 2026-10-11 náklady/plýtvání
   "and r.drawn_at between v.created_at - interval '15 minutes' and v.created_at)) bez_cteni_kdy " +
   "from public.voice_usage v where v.source = 'dynamic' and v.created_at >= " + OD + ";")[0];
 
@@ -72,7 +77,7 @@ for (const r of m) {
 }
 if (!m.length) log('  žádná čtení s údaji o spotřebě');
 log('  dvojí generování (tentýž člověk, runa a jazyk do 20 s): ' + dvoj.n);
-log('  hlas: ' + hlas.n + ' × (' + hlas.znaku + ' znaků, ' + hlas.lidi + ' lidí) · bez uloženého čtení v předchozích 15 min: ' + hlas.bez_cteni +
+log('  hlas: ' + hlas.n + ' × (' + hlas.znaku + ' znaků, ' + hlas.lidi + ' lidí) · bez uloženého čtení v předchozích 15 min: ' + hlas.bez_cteni + ' (mimo adminy; hlasů adminů ' + hlas.admin_hlasu + ' — runa dne, admin text)' +
   (+hlas.bez_cteni ? ' (může být čtení „pro někoho“ — neukládá se; jinak volání mimo appku, #2b)' : ''));
 
 // ── 6. kredity ElevenLabs a brzda (2026-10-11, DECISIONS (48)) ──
@@ -114,7 +119,7 @@ if (jm((r) => +r.zaloha > 0)) varovani.push('zálohy na Claude (' + jm((r) => +r
 if (+dvoj.n > 0) varovani.push('dvojí generování ' + dvoj.n + '× — souběh/dvojklik (BACKLOG část 40)' + dat(dvoj.kdy));
 if (jm((r) => +r.premysleni > 0.3 * +r.vystup)) varovani.push('přemýšlení nad 30 % výstupu (' + jm((r) => +r.premysleni > 0.3 * +r.vystup) + ') — platí se, čtenář ho nevidí' + kdy((r) => +r.premysleni > 0.3 * +r.vystup, 'prem_kdy'));
 if (jm((r) => +r.cache_zapis > 0 && +r.cache < 0.3 * +r.cache_zapis)) varovani.push('zápis do cache se nevrací (' + jm((r) => +r.cache_zapis > 0 && +r.cache < 0.3 * +r.cache_zapis) + ') — přirážka za zápis bez čtení z cache' + kdy((r) => +r.cache_zapis > 0 && +r.cache < 0.3 * +r.cache_zapis, 'cache_kdy'));
-if (+hlas.bez_cteni > 0) varovani.push('hlas bez uloženého čtení ' + hlas.bez_cteni + '× — ověř: čtení „pro někoho“, nebo volání mimo appku (#2b)' + dat(hlas.bez_cteni_kdy));
+if (+hlas.bez_cteni > 0) varovani.push('hlas bez uloženého čtení ' + hlas.bez_cteni + '× (bez adminů) — ověř: čtení „pro někoho“, nebo volání mimo appku (#2b)' + dat(hlas.bez_cteni_kdy));
 varovani.push(...el.varovani);
 if (KRATCE) console.log('  ' + celkem + ' volání modelu · ' + hlas.n + ' × hlas · dvojí generování ' + dvoj.n);
 if (KRATCE && el.radek) console.log('  ' + el.radek);
