@@ -36,6 +36,8 @@ PRIPADY = [
     ('verify_bez_storage.js', 'v2/runar-app.js', 'append', '', "\nvar _protiImg = 'https://x.supabase.co/storage/v1/object/" + "public/a.png';\n"),
     ('verify_nic_pred_prihlasenim.js', 'supabase/functions/delete-account/index.ts', 'replace', '    if (authErr || !user) return json({ error: "Invalid session" }, 401);',
      '    await sb.from("bug_reports").insert({ x: 1 });\n    if (authErr || !user) return json({ error: "Invalid session" }, 401);'),
+    # 2026-11-24 (CODE-read): kostra čtení — neznámý stav pokusu zastaví commit rejstříku, cizí commit ne
+    ('verify_kostra.js', 'docs/kostra/pokusy.json', 'replace', '"stav": "pou' + 'čení"', '"stav": "hotovo"'),
 ]
 sys.path.insert(0, R + '/scripts/utils')
 import rychle_kontroly as rk
