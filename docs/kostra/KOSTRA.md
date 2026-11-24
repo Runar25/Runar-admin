@@ -46,7 +46,7 @@ Známé vady a jejich příčina:
 - islandské čtení opisuje obraz doslova (56 %) ← pokyn „notaðu þessa“ (použij tenhle) (DECISIONS 2026-08-14 (v2.1)) · vyřešeno: „héðan kemur myndin…“
 - „late summer“ a cizí roční doba ve scéně ← řádek sezóny v zadání (DECISIONS 2026-09-20 (3)) · vyřešeno: sezóna jen ve výběru obrazu
 
-Pokusy na této části: P01 (přijato) · P02 (poučení) · P03 (odloženo) · P05 (čeká na ownera) · P12 (čeká na ownera) · P13 (odloženo) · P14 (čeká na ownera) · P18 (v produkci)
+Pokusy na této části: P01 (přijato) · P02 (poučení) · P03 (odloženo) · P05 (čeká na ownera) · P12 (čeká na ownera) · P13 (odloženo) · P14 (čeká na ownera) · P18 (v produkci) · P21 (čeká na ownera)
 
 ### K2 Význam (věta 2)
 
@@ -255,6 +255,7 @@ Jak s kterým vstupem model pracuje (kolik převezme, do které věty, co si v o
 | P16 | 2026-11-09 | Druhá strana runy ve čtení | K3 | bez nálepky 3/3 Fehu, 3/3 Raidho | 2026-11-09 „druhá strana se mi líbí“ | spojit s P09 |
 | P17 | 2026-11-10 | Konce u Reflection a Confirmation | K4 | Confirmation: (a) neobratné, (b) čisté, (c) opsalo pokyn | 2026-11-24 „to Raidho zní dobře, pro Confirmation by to mělo být lepší“ (tvar podmínky) | podmínku vyzkoušet na více runách (K4-B), pak CODE-tune |
 | P19 | 2026-11-24 | Cesty pro všech 25 run (návrh z ownerových popisů) | K3 | v1: volba 10 run, postoj 14, prázdná runa bez cest; v2 (cesty-25-run-v2): bez rad, sousedé se nepřekrývají, cesta ≤ 12 slov, místo: věta 3 u 22 run, Perth a Dagaz věta 4, Gebo obojí; citace 131/131 z RUNAR_POPISY_RUN.md | 2026-11-24 „udělej návrh pro ostatní runy“ | owner posoudí v2; pak čtení s rozcestníkem (Gebo, Raidho, Hagalaz) — cesty podat jako zdroj, ne jako věty (sol opisuje) |
+| P21 | 2026-11-24 | Los úhlu jen z úhlů, které obraz unese (značky obraz × úhel) | K1 | past 7/25 (28 %) × kryto 1/19 (5 %) přidaných věcí; v bance kryto 39 % kombinací, 11 obrazů neunese žádný úhel | 2026-11-24 „7. ano“ (audit) · „některé obrazy potřebují možná i jiný pohled úhlu“ | owner rozhodne o návrhu; pak sol test kryto × past na stejných obrazech (potřebuje nový klíč) |
 
 ### přijato
 

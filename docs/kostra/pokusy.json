@@ -384,6 +384,25 @@
     "P16"
    ],
    "datum": "2026-11-24"
+  },
+  {
+   "id": "P21",
+   "nazev": "Los úhlu jen z úhlů, které obraz unese (značky obraz × úhel)",
+   "sloty": [
+    "K1"
+   ],
+   "hypoteza": "model přidává předměty hlavně tam, kde úhel chce něco, co obraz nejmenuje; los jen z krytých úhlů je ubere",
+   "stav": "čeká na ownera",
+   "slozka": "docs/eval/2026-11-23-kostra-cteni/obraz-uhel",
+   "prompt": "v5.24-image",
+   "n": "190 obrazů × 6 úhlů; ověřeno na 44 čteních",
+   "vysledek": "past 7/25 (28 %) × kryto 1/19 (5 %) přidaných věcí; v bance kryto 39 % kombinací, 11 obrazů neunese žádný úhel",
+   "owner": "2026-11-24 „7. ano“ (audit) · „některé obrazy potřebují možná i jiný pohled úhlu“",
+   "dalsi": "owner rozhodne o návrhu; pak sol test kryto × past na stejných obrazech (potřebuje nový klíč)",
+   "souvisi": [
+    "P18"
+   ],
+   "datum": "2026-11-24"
   }
  ]
 }

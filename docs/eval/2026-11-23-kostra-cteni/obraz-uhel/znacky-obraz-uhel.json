@@ -1,0 +1,3543 @@
+[
+ {
+  "image": "The berry-heath grows heavy with bilberries when August comes.",
+  "id": "B1",
+  "rune": "Jera",
+  "supplies": {
+   "0": "The berry-heath grows heavy with bilberries",
+   "1": "bilberries",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": "The berry-heath"
+  },
+  "likely_invention": {
+   "2": "wind through the heath or a picking hand",
+   "4": "roots or a bird hidden in the heather",
+   "5": "the heath's edge meeting a slope or a fence"
+  }
+ },
+ {
+  "image": "The bull turns in the pen and the whole fence moves with him.",
+  "id": "B4",
+  "rune": "Uruz",
+  "supplies": {
+   "0": "The bull turns in the pen and the whole fence",
+   "1": "",
+   "2": "the whole fence moves with him",
+   "4": "",
+   "5": "",
+   "6": "in the pen"
+  },
+  "likely_invention": {
+   "1": "a loose nail or a tuft of hair on a rail",
+   "4": "the farmer or a gate behind the barn",
+   "5": "the field beyond the fence"
+  }
+ },
+ {
+  "image": "The raven settles on the fencepost and waits for you to listen.",
+  "id": "B7",
+  "rune": "Ansuz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "The raven settles on the fencepost",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a field, a farm, a grey sky around the post",
+   "1": "a claw or a splinter on the fencepost",
+   "4": "a message or another bird unseen",
+   "5": "where the fence meets open land",
+   "6": "the seeker standing at the fence in a field"
+  }
+ },
+ {
+  "image": "The kettle changes its note just before it boils, and you hear it without looking.",
+  "id": "B10",
+  "rune": "Ansuz",
+  "supplies": {
+   "0": "",
+   "1": "The kettle changes its note just before it boils",
+   "2": "",
+   "4": "you hear it without looking",
+   "5": "just before it boils",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a kitchen, stove, window",
+   "2": "steam rising",
+   "6": "standing in the kitchen by the stove"
+  }
+ },
+ {
+  "image": "Someone calls your name across the crowd and every other sound drops away.",
+  "id": "B13",
+  "rune": "Ansuz",
+  "supplies": {
+   "0": "across the crowd",
+   "1": "",
+   "2": "",
+   "4": "Someone calls your name",
+   "5": "",
+   "6": "across the crowd"
+  },
+  "likely_invention": {
+   "1": "a face or a gesture in the crowd",
+   "2": "people pushing past",
+   "5": "the edge of the crowd, a square or a doorway"
+  }
+ },
+ {
+  "image": "a sheep-track winding of its own accord",
+  "id": "B16",
+  "rune": "Raidho",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": "a sheep-track"
+  },
+  "likely_invention": {
+   "0": "a hillside, heather, mountains around the track",
+   "1": "a tuft of wool on a stone",
+   "2": "sheep walking ahead",
+   "4": "sheep or a destination over the ridge",
+   "5": "where the track meets the road or the slope"
+  }
+ },
+ {
+  "image": "The embers stay alive under the ash until morning.",
+  "id": "B19",
+  "rune": "Kenaz",
+  "supplies": {
+   "0": "",
+   "1": "The embers stay alive under the ash",
+   "2": "",
+   "4": "under the ash",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a hearth, a room, a sleeping house",
+   "2": "a flicker or a breath of air",
+   "5": "the dying fire turning to cold",
+   "6": "kneeling at the hearth"
+  }
+ },
+ {
+  "image": "The sea gives and takes on the shore in the same breath.",
+  "id": "B22",
+  "rune": "Gebo",
+  "supplies": {
+   "0": "The sea gives and takes on the shore",
+   "1": "",
+   "2": "gives and takes",
+   "4": "",
+   "5": "on the shore",
+   "6": "on the shore"
+  },
+  "likely_invention": {
+   "1": "a shell or a pebble at the waterline",
+   "4": "what lies under the water"
+  }
+ },
+ {
+  "image": "On a cold evening two share one blanket, each pulling it a little less their own way so it covers both.",
+  "id": "B25",
+  "rune": "Gebo",
+  "supplies": {
+   "0": "",
+   "1": "each pulling it a little less their own way",
+   "2": "pulling it",
+   "4": "",
+   "5": "",
+   "6": "two share one blanket"
+  },
+  "likely_invention": {
+   "0": "a room, a sofa, a fire",
+   "4": "the cold outside the window",
+   "5": "dusk at the window"
+  }
+ },
+ {
+  "image": "The house fills with voices before the food is ready.",
+  "id": "B28",
+  "rune": "Wunjo",
+  "supplies": {
+   "0": "The house fills with voices",
+   "1": "",
+   "2": "fills with voices",
+   "4": "before the food is ready",
+   "5": "",
+   "6": "The house"
+  },
+  "likely_invention": {
+   "1": "a set table or a single spoon",
+   "5": "the doorway where guests arrive"
+  }
+ },
+ {
+  "image": "The squall strikes out of a clear sky and is gone just as fast.",
+  "id": "B31",
+  "rune": "Hagalaz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "strikes out of a clear sky and is gone just as fast",
+   "4": "",
+   "5": "strikes out of a clear sky",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a fjord, field or road under the sky",
+   "1": "a single blown leaf or a drop on glass",
+   "4": "what was hit, or shelter behind a wall",
+   "6": "the seeker out on a road or field"
+  }
+ },
+ {
+  "image": "You keep knitting though the yarn is almost out.",
+  "id": "B34",
+  "rune": "Nauthiz",
+  "supplies": {
+   "0": "",
+   "1": "the yarn is almost out",
+   "2": "You keep knitting",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a room, a chair, a lamp",
+   "4": "the empty basket or the unfinished garment's need",
+   "5": "the last stitch or evening light",
+   "6": "a chair by the window"
+  }
+ },
+ {
+  "image": "The flour bin scrapes empty three days before the boat is due.",
+  "id": "B37",
+  "rune": "Nauthiz",
+  "supplies": {
+   "0": "",
+   "1": "The flour bin scrapes empty",
+   "2": "",
+   "4": "three days before the boat is due",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a kitchen, a pantry, a coastal village",
+   "2": "waves, the boat on its way",
+   "5": "the harbour or the shoreline",
+   "6": "standing in the pantry or kitchen"
+  }
+ },
+ {
+  "image": "The windless snowfall comes straight down and covers everything without a sound.",
+  "id": "B40",
+  "rune": "Isa",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "comes straight down",
+   "4": "covers everything",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a farm, field or town under snow",
+   "1": "a single flake on a sleeve",
+   "5": "the edge of a field or the treeline",
+   "6": "standing outside in the yard"
+  }
+ },
+ {
+  "image": "The strawberries by the wall ripen slowly, and you wait until they are ready.",
+  "id": "B43",
+  "rune": "Jera",
+  "supplies": {
+   "0": "The strawberries by the wall",
+   "1": "The strawberries by the wall",
+   "2": "",
+   "4": "until they are ready",
+   "5": "",
+   "6": "by the wall ... you wait"
+  },
+  "likely_invention": {
+   "2": "a bee or wind in the leaves",
+   "5": "the garden edge or green turning red"
+  }
+ },
+ {
+  "image": "The potatoes come up out of the soil far more than the handful that went in.",
+  "id": "B46",
+  "rune": "Jera",
+  "supplies": {
+   "0": "",
+   "1": "the handful that went in",
+   "2": "come up out of the soil",
+   "4": "come up out of the soil",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a potato field or garden",
+   "5": "the furrow line between soil and air",
+   "6": "kneeling in the garden with a fork"
+  }
+ },
+ {
+  "image": "The ptarmigan turns white for the snow and brown again for the heath, on a clock older than counting.",
+  "id": "B49",
+  "rune": "Jera",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "",
+   "4": "",
+   "5": "turns white for the snow and brown again for the heath",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a mountain slope with snow patches",
+   "1": "a single white feather",
+   "2": "the bird flying or walking",
+   "4": "a fox hunting it unseen",
+   "6": "the seeker on the heath watching the bird"
+  }
+ },
+ {
+  "image": "The sweater you knitted all winter is finally finished.",
+  "id": "B52",
+  "rune": "Jera",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a winter room, a fire, a chair",
+   "1": "a last loose thread or a dropped stitch",
+   "2": "hands putting it on",
+   "4": "the long winter behind it",
+   "5": "winter turning to spring",
+   "6": "sitting by the fire with the sweater"
+  }
+ },
+ {
+  "image": "For a moment something glints on the lagoon bed before the silt covers it again.",
+  "id": "B55",
+  "rune": "Perth",
+  "supplies": {
+   "0": "",
+   "1": "something glints on the lagoon bed",
+   "2": "glints ... before the silt covers it again",
+   "4": "before the silt covers it again",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a lagoon, shore, mountains",
+   "5": "the shoreline of the lagoon",
+   "6": "standing on the shore or wading"
+  }
+ },
+ {
+  "image": "The wind howls across the heath, but in the shelter of the big boulder you catch your breath.",
+  "id": "B58",
+  "rune": "Algiz",
+  "supplies": {
+   "0": "The wind howls across the heath",
+   "1": "",
+   "2": "The wind howls across the heath",
+   "4": "The wind howls",
+   "5": "",
+   "6": "in the shelter of the big boulder you catch your breath"
+  },
+  "likely_invention": {
+   "1": "moss or a lichen spot on the boulder",
+   "5": "the line where wind meets the lee of the boulder"
+  }
+ },
+ {
+  "image": "The midnight sun never quite sets around Midsummer.",
+  "id": "B61",
+  "rune": "Sowilo",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a fjord, a farm, mountains at midnight",
+   "1": "a long shadow or a sleeping bird",
+   "2": "the sun sliding along the horizon",
+   "4": "sleep or night that never comes",
+   "5": "a door, or the horizon where the sun dips",
+   "6": "the seeker on a hill or at a door at midnight"
+  }
+ },
+ {
+  "image": "The pole star stands still while everything else turns.",
+  "id": "B64",
+  "rune": "Tiwaz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "stands still while everything else turns",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a night sky over a farm or sea",
+   "1": "a faint star beside it",
+   "4": "the sun below the horizon",
+   "5": "the horizon line",
+   "6": "the seeker on a ship deck or hill at night"
+  }
+ },
+ {
+  "image": "You go back out into the storm for the one sheep still missing.",
+  "id": "B67",
+  "rune": "Tiwaz",
+  "supplies": {
+   "0": "",
+   "1": "the one sheep still missing",
+   "2": "You go back out into the storm",
+   "4": "the one sheep still missing",
+   "5": "",
+   "6": "out into the storm"
+  },
+  "likely_invention": {
+   "0": "a farm, a mountain slope, a fold",
+   "5": "the farmhouse door or the fold gate"
+  }
+ },
+ {
+  "image": "The nettle grows by the door; whoever goes past too fast gets stung.",
+  "id": "B70",
+  "rune": "Thurisaz",
+  "supplies": {
+   "0": "",
+   "1": "The nettle grows by the door",
+   "2": "whoever goes past too fast",
+   "4": "",
+   "5": "by the door",
+   "6": "by the door"
+  },
+  "likely_invention": {
+   "0": "a farmhouse, a yard",
+   "4": "the nettle's roots or who is inside"
+  }
+ },
+ {
+  "image": "After the storm, only the tree with deep roots is still standing.",
+  "id": "B73",
+  "rune": "Hagalaz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "",
+   "4": "deep roots",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a field of fallen trees, a valley",
+   "1": "a broken twig or a torn leaf",
+   "2": "wind dying down",
+   "5": "the storm turning to calm",
+   "6": "the seeker walking through the fallen wood"
+  }
+ },
+ {
+  "image": "The milk spills over the brim of the pail.",
+  "id": "B76",
+  "rune": "Fehu",
+  "supplies": {
+   "0": "",
+   "1": "the brim of the pail",
+   "2": "spills over",
+   "4": "",
+   "5": "over the brim",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a cowshed, a cow, a stool",
+   "4": "the cow's udder or what lies beneath",
+   "6": "sitting on the milking stool in the byre"
+  }
+ },
+ {
+  "image": "The die still lies in the cup and no one has thrown.",
+  "id": "B79",
+  "rune": "Perth",
+  "supplies": {
+   "0": "",
+   "1": "The die still lies in the cup",
+   "2": "still lies in the cup and no one has thrown",
+   "4": "no one has thrown",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a table, a room, players",
+   "5": "the rim of the cup or the table edge",
+   "6": "seated at the gaming table"
+  }
+ },
+ {
+  "image": "The tree stands with its roots in the dark and its crown in the light.",
+  "id": "B82",
+  "rune": "Eihwaz",
+  "supplies": {
+   "0": "The tree stands with its roots in the dark and its crown in the light",
+   "1": "",
+   "2": "",
+   "4": "its roots in the dark",
+   "5": "its roots in the dark and its crown in the light",
+   "6": ""
+  },
+  "likely_invention": {
+   "1": "a bud or a crack in the bark",
+   "2": "wind in the crown",
+   "6": "standing at the foot of the trunk"
+  }
+ },
+ {
+  "image": "The smoked lamb that hung in the smokehouse all autumn is taken down for the feast.",
+  "id": "B85",
+  "rune": "Jera",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "is taken down",
+   "4": "",
+   "5": "",
+   "6": "in the smokehouse"
+  },
+  "likely_invention": {
+   "0": "a farm, a feast hall, a table",
+   "1": "the hook or the string it hung by",
+   "4": "the smoke-smell or the feast to come",
+   "5": "autumn turning to feast-time"
+  }
+ },
+ {
+  "image": "The boy arm-wrestles his big brother and wins for the first time.",
+  "id": "B88",
+  "rune": "Uruz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "arm-wrestles",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a kitchen table, family around",
+   "1": "white knuckles or a trembling wrist",
+   "4": "the watching parent or the brother's pride",
+   "5": "the moment the arm tips",
+   "6": "a seat at the table"
+  }
+ },
+ {
+  "image": "Two haul a sled over the drifts, and it glides only once they pull together.",
+  "id": "B91",
+  "rune": "Ehwaz",
+  "supplies": {
+   "0": "over the drifts",
+   "1": "",
+   "2": "haul a sled over the drifts, and it glides",
+   "4": "",
+   "5": "",
+   "6": "Two haul a sled over the drifts"
+  },
+  "likely_invention": {
+   "1": "the rope cutting into a mitten",
+   "4": "the destination beyond the drifts",
+   "5": "the line of the horizon or a frozen lake edge"
+  }
+ },
+ {
+  "image": "A mare in foal paws the snow in the pasture; her foal will not be born until spring.",
+  "id": "B94",
+  "rune": "Ingwaz",
+  "supplies": {
+   "0": "paws the snow in the pasture",
+   "1": "paws the snow",
+   "2": "paws the snow",
+   "4": "her foal will not be born until spring",
+   "5": "",
+   "6": "in the pasture"
+  },
+  "likely_invention": {
+   "5": "the pasture fence or winter turning to spring"
+  }
+ },
+ {
+  "image": "At midnight all goes quiet a moment; then the birds sing again, and a new day has dawned.",
+  "id": "B97",
+  "rune": "Dagaz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "all goes quiet a moment",
+   "4": "",
+   "5": "a new day has dawned",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a midsummer landscape, a valley",
+   "1": "a single bird on a branch",
+   "4": "birds hidden in the bushes",
+   "6": "the seeker outside the house at midnight"
+  }
+ },
+ {
+  "image": "Black sand stretches out to the horizon, and nowhere are any landmarks to be seen.",
+  "id": "B100",
+  "rune": "Blank",
+  "supplies": {
+   "0": "Black sand stretches out to the horizon",
+   "1": "",
+   "2": "",
+   "4": "",
+   "5": "to the horizon",
+   "6": "Black sand"
+  },
+  "likely_invention": {
+   "1": "a single stone or a footprint in the sand",
+   "2": "wind lifting sand",
+   "4": "what lies beyond the horizon"
+  }
+ },
+ {
+  "image": "The child's first step across the floor is unsteady but sure.",
+  "id": "B103",
+  "rune": "Berkana",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "first step across the floor",
+   "4": "",
+   "5": "",
+   "6": "across the floor"
+  },
+  "likely_invention": {
+   "0": "a living room, parents, furniture",
+   "1": "a tiny toe or a sock",
+   "4": "the parent's hands behind the child",
+   "5": "the doorway or the edge of the rug"
+  }
+ },
+ {
+  "image": "On the narrow path the one who walks with you shortens their stride to yours without a word, and the going evens out.",
+  "id": "B106",
+  "rune": "Ehwaz",
+  "supplies": {
+   "0": "",
+   "1": "shortens their stride to yours without a word",
+   "2": "walks with you",
+   "4": "",
+   "5": "",
+   "6": "On the narrow path the one who walks with you"
+  },
+  "likely_invention": {
+   "0": "a mountain or moor around the path",
+   "4": "the destination beyond the bend",
+   "5": "the path's edge, a drop or a treeline"
+  }
+ },
+ {
+  "image": "The same person laughs one way in the kitchen and another out on the field, and still the laugh is known anywhere.",
+  "id": "B109",
+  "rune": "Mannaz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": "in the kitchen and another out on the field"
+  },
+  "likely_invention": {
+   "0": "a farmhouse with field and kitchen",
+   "1": "a crinkle at the eyes",
+   "2": "the person walking between kitchen and field",
+   "4": "the laugh heard from another room",
+   "5": "the doorway between kitchen and field"
+  }
+ },
+ {
+  "image": "In the eyes of the other your face is mirrored, small and clear.",
+  "id": "B112",
+  "rune": "Mannaz",
+  "supplies": {
+   "0": "",
+   "1": "your face is mirrored, small and clear",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a room or a face close-up with surroundings",
+   "2": "a blink",
+   "4": "what the other is thinking",
+   "5": "the edge of the iris",
+   "6": "the seeker facing the other person in a room"
+  }
+ },
+ {
+  "image": "Water finds its own way down the slope, and no one shows it the path.",
+  "id": "B115",
+  "rune": "Laguz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "Water finds its own way down the slope",
+   "4": "",
+   "5": "",
+   "6": "down the slope"
+  },
+  "likely_invention": {
+   "0": "a hillside, moss, mountains",
+   "1": "a single pebble the water turns",
+   "4": "the spring or the sea below",
+   "5": "where the slope meets a river or the sea"
+  }
+ },
+ {
+  "image": "The old farmstead stands in ruins but still holds warmth in memory.",
+  "id": "B118",
+  "rune": "Othila",
+  "supplies": {
+   "0": "The old farmstead stands in ruins",
+   "1": "",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": "The old farmstead"
+  },
+  "likely_invention": {
+   "1": "a doorstone or a rusted hinge",
+   "2": "grass in the wind",
+   "4": "foundations under the turf",
+   "5": "turf walls sinking into the field"
+  }
+ },
+ {
+  "image": "Dawn comes without your noticing when night became day.",
+  "id": "B121",
+  "rune": "Dagaz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "Dawn comes",
+   "4": "",
+   "5": "when night became day",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a valley or fjord at dawn",
+   "1": "dew on a blade of grass",
+   "4": "the sun below the ridge",
+   "6": "the seeker at a window or awake outside"
+  }
+ },
+ {
+  "image": "You look up at the sky to read the weather, but it is leaden grey and tells you nothing.",
+  "id": "B124",
+  "rune": "Blank",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a farm or field under the grey sky",
+   "1": "a single bird or raindrop",
+   "2": "clouds drifting",
+   "4": "the sun behind the cloud",
+   "5": "the horizon where cloud meets land",
+   "6": "standing in the yard looking up"
+  }
+ },
+ {
+  "image": "Hail rakes the hayfield in June and is gone before the sky clears.",
+  "id": "B127",
+  "rune": "Hagalaz",
+  "supplies": {
+   "0": "Hail rakes the hayfield",
+   "1": "",
+   "2": "Hail rakes",
+   "4": "",
+   "5": "before the sky clears",
+   "6": "the hayfield"
+  },
+  "likely_invention": {
+   "1": "a flattened stalk or a hailstone in the grass",
+   "4": "the blue sky behind the cloud"
+  }
+ },
+ {
+  "image": "The sunshine on the snow is so bright that you narrow your eyes.",
+  "id": "B130",
+  "rune": "Sowilo",
+  "supplies": {
+   "0": "",
+   "1": "you narrow your eyes",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a mountain slope or field of snow",
+   "2": "glitter moving on the snow",
+   "4": "what lies under the snow",
+   "5": "the edge of shadow on the snow",
+   "6": "the seeker out on a snowfield"
+  }
+ },
+ {
+  "image": "In the sunshine you can see where you stand on the slope.",
+  "id": "B133",
+  "rune": "Sowilo",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": "you can see where you stand on the slope"
+  },
+  "likely_invention": {
+   "0": "a valley below the slope",
+   "1": "a stone or a shadow at the feet",
+   "2": "a cloud moving away",
+   "4": "what lay in shadow before",
+   "5": "the line between shade and sun"
+  }
+ },
+ {
+  "image": "Under the ice the stream can still be heard.",
+  "id": "B136",
+  "rune": "Isa",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "",
+   "4": "Under the ice the stream can still be heard",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a frozen valley or field",
+   "1": "a bubble under the ice",
+   "2": "water moving under the ice",
+   "5": "the edge of the ice where water shows",
+   "6": "the seeker standing on the bank or on the ice"
+  }
+ },
+ {
+  "image": "The egg lies whole in the nest, warm, and nothing of it shows yet.",
+  "id": "B139",
+  "rune": "Ingwaz",
+  "supplies": {
+   "0": "",
+   "1": "The egg lies whole in the nest",
+   "2": "",
+   "4": "nothing of it shows yet",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a heath, a cliff, the bird's nest site",
+   "2": "the mother bird settling or wind",
+   "5": "the shell as the edge of life",
+   "6": "the seeker crouching by the nest"
+  }
+ },
+ {
+  "image": "The ewe gives birth indoors in midwinter and the lamb finds the warmth in the dark.",
+  "id": "B142",
+  "rune": "Berkana",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "",
+   "4": "in the dark",
+   "5": "",
+   "6": "indoors in midwinter"
+  },
+  "likely_invention": {
+   "0": "a sheep shed, straw, a lantern",
+   "1": "a wet ear or a twitching hoof",
+   "2": "the lamb struggling to stand",
+   "5": "the moment of birth or the shed door"
+  }
+ },
+ {
+  "image": "The torch lights only a few steps of the way ahead.",
+  "id": "B145",
+  "rune": "Kenaz",
+  "supplies": {
+   "0": "",
+   "1": "only a few steps of the way ahead",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": "a few steps of the way ahead"
+  },
+  "likely_invention": {
+   "0": "a dark path, forest or lava field",
+   "2": "the flame flickering",
+   "4": "what waits in the dark beyond the light",
+   "5": "the rim of the torchlight"
+  }
+ },
+ {
+  "image": "Out on the heath a twig snaps, and you stand still to listen.",
+  "id": "B148",
+  "rune": "Algiz",
+  "supplies": {
+   "0": "Out on the heath",
+   "1": "a twig snaps",
+   "2": "you stand still",
+   "4": "a twig snaps, and you stand still to listen",
+   "5": "",
+   "6": "Out on the heath ... you stand still"
+  },
+  "likely_invention": {
+   "5": "the treeline or the heath's edge"
+  }
+ },
+ {
+  "image": "The sheep find their way home from the mountain by the same path as the ewes before them.",
+  "id": "B151",
+  "rune": "Othila",
+  "supplies": {
+   "0": "find their way home from the mountain",
+   "1": "",
+   "2": "find their way home",
+   "4": "",
+   "5": "",
+   "6": "the same path"
+  },
+  "likely_invention": {
+   "1": "a tuft of wool on a rock",
+   "4": "the farm still out of sight",
+   "5": "where mountain turns to home field"
+  }
+ },
+ {
+  "image": "The track bends round the lava and comes back to its line on the other side.",
+  "id": "B154",
+  "rune": "Raidho",
+  "supplies": {
+   "0": "The track bends round the lava",
+   "1": "",
+   "2": "",
+   "4": "on the other side",
+   "5": "",
+   "6": "The track"
+  },
+  "likely_invention": {
+   "1": "a moss tuft or a cairn stone",
+   "2": "a traveller walking the track",
+   "5": "where the lava field ends"
+  }
+ },
+ {
+  "image": "The brook meets the stone and simply goes round it.",
+  "id": "B157",
+  "rune": "Laguz",
+  "supplies": {
+   "0": "",
+   "1": "The brook meets the stone",
+   "2": "goes round it",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a hillside, grass, a valley",
+   "4": "what lies under the stone or downstream",
+   "5": "where the brook meets a river",
+   "6": "the seeker standing on the bank"
+  }
+ },
+ {
+  "image": "A match is struck in the power cut, and the whole room gets its shape back.",
+  "id": "B160",
+  "rune": "Kenaz",
+  "supplies": {
+   "0": "the whole room gets its shape back",
+   "1": "A match is struck",
+   "2": "A match is struck",
+   "4": "",
+   "5": "the whole room gets its shape back",
+   "6": "the whole room"
+  },
+  "likely_invention": {
+   "4": "the dark corners beyond the match light"
+  }
+ },
+ {
+  "image": "After the storm the neighbours dig out each other's doors, first one house, then the other.",
+  "id": "B163",
+  "rune": "Gebo",
+  "supplies": {
+   "0": "first one house, then the other",
+   "1": "",
+   "2": "dig out",
+   "4": "",
+   "5": "",
+   "6": "each other's doors"
+  },
+  "likely_invention": {
+   "1": "a shovel blade or a mitten",
+   "4": "the doors buried under snow",
+   "5": "the line between snowdrift and doorway"
+  }
+ },
+ {
+  "image": "A plank washes up on the beach with carving on it that no one here can read.",
+  "id": "B166",
+  "rune": "Perth",
+  "supplies": {
+   "0": "on the beach",
+   "1": "with carving on it",
+   "2": "washes up",
+   "4": "",
+   "5": "on the beach",
+   "6": "on the beach"
+  },
+  "likely_invention": {
+   "4": "the ship or land it came from"
+  }
+ },
+ {
+  "image": "At the meeting you stand up for the one who is not in the room.",
+  "id": "B169",
+  "rune": "Tiwaz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "you stand up",
+   "4": "the one who is not in the room",
+   "5": "",
+   "6": "At the meeting you stand up"
+  },
+  "likely_invention": {
+   "0": "a meeting room, table, faces",
+   "1": "a pen or a cup on the table",
+   "5": "the door of the meeting room"
+  }
+ },
+ {
+  "image": "You lean into the boulder in the home field, and it shifts.",
+  "id": "B172",
+  "rune": "Uruz",
+  "supplies": {
+   "0": "the boulder in the home field",
+   "1": "",
+   "2": "it shifts",
+   "4": "",
+   "5": "",
+   "6": "You lean into the boulder in the home field"
+  },
+  "likely_invention": {
+   "1": "moss or a worm under the boulder",
+   "4": "what lies under the boulder",
+   "5": "the field's edge or the farm wall"
+  }
+ },
+ {
+  "image": "The morning after the quarrel, you both laugh at the same thing.",
+  "id": "B175",
+  "rune": "Wunjo",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "",
+   "4": "",
+   "5": "The morning after the quarrel",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a kitchen, a breakfast table",
+   "1": "a cup or a crumb",
+   "2": "a hand reaching for coffee",
+   "4": "the quarrel still unspoken",
+   "6": "a seat at the breakfast table"
+  }
+ },
+ {
+  "image": "At the summit cairn, the sun shines straight into your face.",
+  "id": "B178",
+  "rune": "Sowilo",
+  "supplies": {
+   "0": "At the summit cairn",
+   "1": "",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": "At the summit cairn"
+  },
+  "likely_invention": {
+   "1": "a stone on the cairn or a lichen",
+   "2": "wind or clouds moving",
+   "4": "the valley hidden behind the ridge",
+   "5": "the ridge line or the horizon"
+  }
+ },
+ {
+  "image": "The sofa gets down the narrow stairs once you stop giving each other orders.",
+  "id": "B181",
+  "rune": "Ehwaz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "gets down the narrow stairs",
+   "4": "",
+   "5": "",
+   "6": "the narrow stairs"
+  },
+  "likely_invention": {
+   "0": "a stairwell, a flat, a moving van",
+   "1": "a scratch on the banister",
+   "4": "the room below or the van outside",
+   "5": "the landing or the front door"
+  }
+ },
+ {
+  "image": "On the bare wall you see a new picture each time you look at it.",
+  "id": "B184",
+  "rune": "Blank",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a room with the bare wall",
+   "1": "a crack or a nail hole in the wall",
+   "2": "light moving across the wall",
+   "4": "what was once hung there",
+   "5": "the corner where wall meets ceiling",
+   "6": "the seeker sitting facing the wall"
+  }
+ },
+ {
+  "image": "The mountain hut stands open in the blizzard for anyone who needs it.",
+  "id": "B187",
+  "rune": "Algiz",
+  "supplies": {
+   "0": "The mountain hut stands open in the blizzard",
+   "1": "",
+   "2": "",
+   "4": "for anyone who needs it",
+   "5": "",
+   "6": "The mountain hut"
+  },
+  "likely_invention": {
+   "1": "a candle or a woodpile inside",
+   "2": "snow blowing past",
+   "5": "the open door, threshold of storm and shelter"
+  }
+ },
+ {
+  "image": "On the windowsill the seedlings stretch toward the light.",
+  "id": "B190",
+  "rune": "Berkana",
+  "supplies": {
+   "0": "",
+   "1": "On the windowsill the seedlings",
+   "2": "stretch toward the light",
+   "4": "",
+   "5": "On the windowsill",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a kitchen or room around the window",
+   "4": "the roots in the pots",
+   "6": "the seeker standing at the window"
+  }
+ },
+ {
+  "image": "The sheep are down from the mountain, and the flock is bigger than it was in spring.",
+  "id": "B2",
+  "rune": "Fehu",
+  "supplies": {
+   "0": "The sheep are down from the mountain",
+   "1": "",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "1": "an ear tag or a lamb at the edge of the flock",
+   "2": "sheep streaming down a slope, a dog running",
+   "4": "sheep still missing up in the gullies",
+   "5": "the fence where the mountain pasture meets the home field",
+   "6": "standing at the gate of the sorting pen"
+  }
+ },
+ {
+  "image": "The crack in the lava waits — you cannot cross it without a jump.",
+  "id": "B5",
+  "rune": "Thurisaz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "The crack in the lava waits",
+   "4": "",
+   "5": "The crack in the lava",
+   "6": "you cannot cross it without a jump"
+  },
+  "likely_invention": {
+   "0": "a wide moss-covered lava field around the crack",
+   "1": "a tuft of moss or a loose stone on the lip",
+   "4": "the dark bottom of the crack, water deep below"
+  }
+ },
+ {
+  "image": "The letter comes with the boat at last and lies unopened on the table.",
+  "id": "B8",
+  "rune": "Ansuz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "comes with the boat at last",
+   "4": "lies unopened",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a kitchen, a window, the harbour outside",
+   "1": "the stamp, the handwriting, a crease in the envelope",
+   "5": "the pier where the boat lands",
+   "6": "sitting at the table across from the letter"
+  }
+ },
+ {
+  "image": "The old woman says a single sentence, and the whole table falls quiet.",
+  "id": "B11",
+  "rune": "Ansuz",
+  "supplies": {
+   "0": "the whole table",
+   "1": "",
+   "2": "the whole table falls quiet",
+   "4": "",
+   "5": "",
+   "6": "the whole table"
+  },
+  "likely_invention": {
+   "1": "her hands, a cup, a fork set down",
+   "4": "what she left unsaid, a family secret",
+   "5": "a doorway, the window, dusk outside"
+  }
+ },
+ {
+  "image": "Across the yard the pitch of the call alone tells whether it is bad news or only supper.",
+  "id": "B14",
+  "rune": "Ansuz",
+  "supplies": {
+   "0": "Across the yard",
+   "1": "the pitch of the call",
+   "2": "",
+   "4": "Across the yard the pitch of the call",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "2": "someone running across the yard, a door swinging",
+   "5": "the threshold of the house, the edge of the yard",
+   "6": "standing on the doorstep or in the field listening"
+  }
+ },
+ {
+  "image": "On the long walk across the snowy heath you find your rhythm and stop counting the steps.",
+  "id": "B17",
+  "rune": "Raidho",
+  "supplies": {
+   "0": "On the long walk across the snowy heath",
+   "1": "",
+   "2": "the long walk",
+   "4": "",
+   "5": "",
+   "6": "On the long walk across the snowy heath you find your rhythm"
+  },
+  "likely_invention": {
+   "1": "frost on a boot, a footprint, breath in the air",
+   "4": "the destination over the horizon, a hut not yet in sight",
+   "5": "the edge of the heath, where snow turns to rock or valley"
+  }
+ },
+ {
+  "image": "A single lamp burns over the workbench.",
+  "id": "B20",
+  "rune": "Kenaz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "burns",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a workshop with tools on the walls, a dark window",
+   "1": "wood shavings, a chisel, a half-finished piece",
+   "4": "the darkness in the corners beyond the lamp",
+   "5": "the line where the lamplight ends",
+   "6": "standing at the workbench under the lamp"
+  }
+ },
+ {
+  "image": "The shore returns one thing and keeps another with every wave.",
+  "id": "B23",
+  "rune": "Gebo",
+  "supplies": {
+   "0": "The shore returns one thing and keeps another with every wave",
+   "1": "",
+   "2": "with every wave",
+   "4": "keeps another",
+   "5": "The shore",
+   "6": ""
+  },
+  "likely_invention": {
+   "1": "a shell, a pebble, a piece of driftwood",
+   "6": "standing at the waterline with wet feet"
+  }
+ },
+ {
+  "image": "The children run barefoot onto the field the moment the grass is dry.",
+  "id": "B26",
+  "rune": "Wunjo",
+  "supplies": {
+   "0": "onto the field",
+   "1": "barefoot",
+   "2": "The children run",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "4": "the summer still to come, a mother calling from inside",
+   "5": "the doorstep or the edge where the yard meets the field",
+   "6": "standing at the field's edge watching them"
+  }
+ },
+ {
+  "image": "One voice starts the song and the room finds it line by line.",
+  "id": "B29",
+  "rune": "Wunjo",
+  "supplies": {
+   "0": "the room",
+   "1": "",
+   "2": "the room finds it line by line",
+   "4": "",
+   "5": "",
+   "6": "the room"
+  },
+  "likely_invention": {
+   "1": "a hand tapping the table, a candle, a face",
+   "4": "someone outside the door listening, the dark outside",
+   "5": "a doorway or window, the moment between speech and song"
+  }
+ },
+ {
+  "image": "The hail hammers the roof and melts in an instant.",
+  "id": "B32",
+  "rune": "Hagalaz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "hammers the roof",
+   "4": "",
+   "5": "melts in an instant",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a farmhouse, a yard, a darkening sky",
+   "1": "a single hailstone on the windowsill",
+   "4": "people under the roof, the room inside",
+   "6": "sitting inside under the roof listening"
+  }
+ },
+ {
+  "image": "You use the money you were setting aside, because the roof will not wait for spring.",
+  "id": "B35",
+  "rune": "Nauthiz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "",
+   "4": "the roof will not wait for spring",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a house with a sagging roof, a winter yard",
+   "1": "a jar of coins, a leak dripping into a bucket",
+   "2": "rain dripping through, wind lifting the roof",
+   "5": "the eaves, the season turning",
+   "6": "standing in the kitchen counting the money"
+  }
+ },
+ {
+  "image": "The plant on the sill turns itself flat to the glass, toward the one hour of light it gets.",
+  "id": "B38",
+  "rune": "Nauthiz",
+  "supplies": {
+   "0": "",
+   "1": "The plant on the sill",
+   "2": "turns itself flat to the glass",
+   "4": "",
+   "5": "flat to the glass",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a dark winter room, the window and snow outside",
+   "4": "the long dark the plant waits through, roots in the pot",
+   "6": "standing at the window beside the plant"
+  }
+ },
+ {
+  "image": "The pond has iced over and waits without asking for anything.",
+  "id": "B41",
+  "rune": "Isa",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "has iced over and waits",
+   "4": "",
+   "5": "has iced over",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "reeds, a frozen field, hills around the pond",
+   "1": "a leaf frozen into the ice, an air bubble",
+   "4": "fish or water moving under the ice",
+   "6": "standing on the bank or on the ice"
+  }
+ },
+ {
+  "image": "The day lengthens slowly toward spring.",
+  "id": "B44",
+  "rune": "Jera",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "The day lengthens slowly",
+   "4": "toward spring",
+   "5": "The day lengthens slowly toward spring",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a snowy landscape, a farm, a window",
+   "1": "a drop of melt on an icicle, a first bird",
+   "6": "standing at a window or in a yard at dusk"
+  }
+ },
+ {
+  "image": "The last of the hay is in and the barn breathes warm the whole way down its length.",
+  "id": "B47",
+  "rune": "Jera",
+  "supplies": {
+   "0": "the barn breathes warm the whole way down its length",
+   "1": "",
+   "2": "the barn breathes warm",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "1": "a stalk of hay on the floor, a cat, a lantern",
+   "4": "the winter coming outside, animals in the dark stalls",
+   "5": "the barn door where warm meets cold air",
+   "6": "standing in the barn doorway or among the bales"
+  }
+ },
+ {
+  "image": "You take the bread out of the oven at just the right moment, and the crust is golden.",
+  "id": "B50",
+  "rune": "Jera",
+  "supplies": {
+   "0": "",
+   "1": "the crust is golden",
+   "2": "You take the bread out of the oven",
+   "4": "",
+   "5": "",
+   "6": "You take the bread out of the oven"
+  },
+  "likely_invention": {
+   "0": "a kitchen, a table, a window",
+   "4": "the soft crumb inside the loaf, the oven's heat",
+   "5": "the moment dough turns to bread, the oven door"
+  }
+ },
+ {
+  "image": "The rowan by the farmhouse bends flat in the gust and rights itself the moment it drops.",
+  "id": "B53",
+  "rune": "Eihwaz",
+  "supplies": {
+   "0": "The rowan by the farmhouse",
+   "1": "",
+   "2": "bends flat in the gust",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "1": "a red berry cluster, a single leaf",
+   "4": "the roots holding under the ground",
+   "5": "the corner of the house where wind meets shelter",
+   "6": "standing at the farmhouse door watching the tree"
+  }
+ },
+ {
+  "image": "In the low sun a whole trail of footprints comes to light across the field, for a moment, before the light shifts and they are gone.",
+  "id": "B56",
+  "rune": "Perth",
+  "supplies": {
+   "0": "a whole trail of footprints comes to light across the field",
+   "1": "footprints",
+   "2": "the light shifts",
+   "4": "comes to light",
+   "5": "before the light shifts and they are gone",
+   "6": ""
+  },
+  "likely_invention": {
+   "6": "standing at the end of the trail or at the field's edge"
+  }
+ },
+ {
+  "image": "The sheepdog lies where it can see the whole flock.",
+  "id": "B59",
+  "rune": "Algiz",
+  "supplies": {
+   "0": "the whole flock",
+   "1": "",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": "where it can see the whole flock"
+  },
+  "likely_invention": {
+   "1": "the dog's ear twitching, a paw",
+   "2": "sheep grazing, the wind in the grass",
+   "4": "a fox behind the ridge, a danger not yet visible",
+   "5": "the edge of the pasture, the ridge line"
+  }
+ },
+ {
+  "image": "The sun finally breaks through and glints on the wet stones.",
+  "id": "B62",
+  "rune": "Sowilo",
+  "supplies": {
+   "0": "",
+   "1": "glints on the wet stones",
+   "2": "breaks through",
+   "4": "",
+   "5": "finally breaks through",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a beach, a path, a farm after rain",
+   "4": "the clouds still behind, the rain passed",
+   "6": "standing on the wet stones"
+  }
+ },
+ {
+  "image": "You stand by your word though it costs you your sleep.",
+  "id": "B65",
+  "rune": "Tiwaz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a bedroom at night, a house, a village",
+   "1": "an alarm clock, a crumpled pillow",
+   "2": "tossing in bed, a clock ticking",
+   "4": "the person you gave your word to, the morning to come",
+   "5": "the hour between night and dawn",
+   "6": "lying awake in a bed"
+  }
+ },
+ {
+  "image": "You take hold of the door handle — and stop.",
+  "id": "B68",
+  "rune": "Thurisaz",
+  "supplies": {
+   "0": "",
+   "1": "the door handle",
+   "2": "and stop",
+   "4": "",
+   "5": "the door handle",
+   "6": "You take hold of the door handle"
+  },
+  "likely_invention": {
+   "0": "a hallway, a closed room, a house",
+   "4": "what or who is behind the door"
+  }
+ },
+ {
+  "image": "In the night the gale tore the old fence down, and the field lies open.",
+  "id": "B71",
+  "rune": "Hagalaz",
+  "supplies": {
+   "0": "the field lies open",
+   "1": "",
+   "2": "",
+   "4": "",
+   "5": "tore the old fence down",
+   "6": ""
+  },
+  "likely_invention": {
+   "1": "a broken post, a strand of wire in the grass",
+   "2": "wind still moving the grass, sheep wandering in",
+   "4": "what may come in through the gap",
+   "6": "standing at the broken fence line in the morning"
+  }
+ },
+ {
+  "image": "The more rhubarb is pulled, the more comes up again.",
+  "id": "B74",
+  "rune": "Fehu",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "comes up again",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a garden by a house, a summer yard",
+   "1": "a red stalk, a big leaf, soil on the root",
+   "4": "the roots under the soil",
+   "5": "the garden edge, the season turning",
+   "6": "kneeling in the rhubarb bed pulling stalks"
+  }
+ },
+ {
+  "image": "The bull tears itself up out of the bog and keeps going.",
+  "id": "B77",
+  "rune": "Uruz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "tears itself up out of the bog and keeps going",
+   "4": "",
+   "5": "out of the bog",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a moor, mountains, open land around the bog",
+   "1": "mud on the flank, steam from the nostrils",
+   "4": "the bog sucking below, what lies under the mud",
+   "6": "standing at the edge of the bog watching"
+  }
+ },
+ {
+  "image": "The card lies face down and no one has turned it over.",
+  "id": "B80",
+  "rune": "Perth",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "",
+   "4": "lies face down",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a table, a room, a candle",
+   "1": "a bent corner of the card, the pattern on its back",
+   "2": "a hand hovering, a flickering candle",
+   "5": "the edge of the card, the table edge",
+   "6": "sitting at the table before the card"
+  }
+ },
+ {
+  "image": "You sit down with them and no one asks why you came.",
+  "id": "B83",
+  "rune": "Wunjo",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "You sit down",
+   "4": "",
+   "5": "",
+   "6": "You sit down with them"
+  },
+  "likely_invention": {
+   "0": "a kitchen table, a fire, a gathering",
+   "1": "a cup pushed toward you, a chair pulled out",
+   "4": "the reason you came, what was left outside",
+   "5": "the doorway you came through"
+  }
+ },
+ {
+  "image": "The reindeer stag wades through chest-deep snow and does not slow down.",
+  "id": "B86",
+  "rune": "Uruz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "wades through chest-deep snow",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a mountain slope, a white plain, a herd",
+   "1": "breath steaming, snow on the antlers",
+   "4": "the ground hidden under the snow, the herd ahead",
+   "5": "the treeline or the edge of the snowfield",
+   "6": "standing in the snow watching the stag pass"
+  }
+ },
+ {
+  "image": "The newborn lies in its mother's arms for the first time.",
+  "id": "B89",
+  "rune": "Berkana",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a bedroom, a hospital room, a window",
+   "1": "the tiny fingers, a wrinkled hand",
+   "2": "the baby's breathing, the stillness of the room",
+   "4": "the life ahead, what is still to come",
+   "5": "the threshold of birth, dawn at the window",
+   "6": "standing beside the bed"
+  }
+ },
+ {
+  "image": "Two waltz at the midwinter feast, and no one can tell anymore which of them leads.",
+  "id": "B92",
+  "rune": "Ehwaz",
+  "supplies": {
+   "0": "at the midwinter feast",
+   "1": "",
+   "2": "Two waltz",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "1": "a hand on a shoulder, a hem swinging",
+   "4": "the dark and cold outside the hall",
+   "5": "the hall door, winter outside meeting the warmth",
+   "6": "standing at the edge of the dance floor"
+  }
+ },
+ {
+  "image": "The last wall of rock in the tunnel is blasted, and daylight shines in from the other side.",
+  "id": "B95",
+  "rune": "Dagaz",
+  "supplies": {
+   "0": "The last wall of rock in the tunnel",
+   "1": "",
+   "2": "daylight shines in",
+   "4": "from the other side",
+   "5": "daylight shines in from the other side",
+   "6": ""
+  },
+  "likely_invention": {
+   "1": "dust in the light beam, a drill bit",
+   "6": "standing in the tunnel facing the light"
+  }
+ },
+ {
+  "image": "You leaf through the guestbook in the mountain hut and come to a blank page.",
+  "id": "B98",
+  "rune": "Blank",
+  "supplies": {
+   "0": "in the mountain hut",
+   "1": "a blank page",
+   "2": "You leaf through",
+   "4": "",
+   "5": "",
+   "6": "You leaf through the guestbook in the mountain hut"
+  },
+  "likely_invention": {
+   "4": "the names of those who came before, the weather outside",
+   "5": "the hut door, the last written line before the blank"
+  }
+ },
+ {
+  "image": "The birch leafs out before all the rest, though the ground is still cold.",
+  "id": "B101",
+  "rune": "Berkana",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "leafs out",
+   "4": "",
+   "5": "The birch leafs out before all the rest",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a hillside of bare trees, a valley",
+   "1": "a single new leaf, a bud breaking",
+   "4": "roots in the cold soil, the frost below",
+   "6": "standing under the birch"
+  }
+ },
+ {
+  "image": "The horse finds the ford across the glacial river though you cannot see it.",
+  "id": "B104",
+  "rune": "Ehwaz",
+  "supplies": {
+   "0": "the ford across the glacial river",
+   "1": "",
+   "2": "finds the ford across the glacial river",
+   "4": "though you cannot see it",
+   "5": "the ford",
+   "6": "though you cannot see it"
+  },
+  "likely_invention": {
+   "1": "the horse's ears, a stone under the water"
+  }
+ },
+ {
+  "image": "The reflection in the still lagoon trembles at the least breath of wind.",
+  "id": "B107",
+  "rune": "Laguz",
+  "supplies": {
+   "0": "",
+   "1": "trembles at the least breath of wind",
+   "2": "trembles",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "mountains and sky around the lagoon, a black sand shore",
+   "4": "the depth under the reflection, what lies beneath the surface",
+   "5": "the shoreline, the surface between sky and water",
+   "6": "standing on the shore looking into the water"
+  }
+ },
+ {
+  "image": "Two people look at the same mountain, and each sees their own.",
+  "id": "B110",
+  "rune": "Mannaz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a valley, a road, the mountain's slopes",
+   "1": "a patch of snow on a peak, a cloud on the summit",
+   "2": "clouds moving over the mountain",
+   "4": "the other side of the mountain",
+   "5": "the ridge line, where mountain meets sky",
+   "6": "standing beside the two people at a viewpoint"
+  }
+ },
+ {
+  "image": "The groundswell is felt in your feet before it is seen.",
+  "id": "B113",
+  "rune": "Laguz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "The groundswell is felt in your feet",
+   "4": "before it is seen",
+   "5": "",
+   "6": "in your feet"
+  },
+  "likely_invention": {
+   "0": "a beach, a cliff, the open sea",
+   "1": "a pebble shifting, foam at the toes",
+   "5": "the shoreline, the surf line"
+  }
+ },
+ {
+  "image": "The seed lies in the frozen ground and waits for its time.",
+  "id": "B116",
+  "rune": "Ingwaz",
+  "supplies": {
+   "0": "",
+   "1": "The seed",
+   "2": "waits for its time",
+   "4": "lies in the frozen ground",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a winter field, snow, a farm",
+   "5": "the thaw, the line between frost and soil",
+   "6": "standing over the frozen field"
+  }
+ },
+ {
+  "image": "From the old chest you take one thing with you and leave the rest lying.",
+  "id": "B119",
+  "rune": "Othila",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "you take one thing with you",
+   "4": "",
+   "5": "",
+   "6": "From the old chest you take"
+  },
+  "likely_invention": {
+   "0": "an attic, a farmhouse room, dust in the light",
+   "1": "a named heirloom: a ring, a knife, a letter",
+   "4": "what lies at the bottom of the chest, the past it holds",
+   "5": "the doorway as you leave, the lid closing"
+  }
+ },
+ {
+  "image": "The first glimmer returns after the blackest midwinter dark.",
+  "id": "B122",
+  "rune": "Dagaz",
+  "supplies": {
+   "0": "",
+   "1": "The first glimmer",
+   "2": "returns",
+   "4": "",
+   "5": "The first glimmer returns after the blackest midwinter dark",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a snowy valley, a horizon, a farm",
+   "4": "the sun still below the horizon",
+   "6": "standing at a window or on a hill watching the horizon"
+  }
+ },
+ {
+  "image": "New snow lies over the track and no one has stepped in it yet.",
+  "id": "B125",
+  "rune": "Blank",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "",
+   "4": "lies over the track",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a valley, fences, mountains around the track",
+   "1": "a single flake, a bird's print",
+   "2": "snow still falling, wind lifting powder",
+   "5": "the edge of the track, where the path meets the field",
+   "6": "standing at the start of the untouched track"
+  }
+ },
+ {
+  "image": "The river swells overnight and takes with it whatever stood too near the bank.",
+  "id": "B128",
+  "rune": "Hagalaz",
+  "supplies": {
+   "0": "The river swells overnight and takes with it whatever stood too near the bank",
+   "1": "",
+   "2": "swells overnight and takes with it",
+   "4": "",
+   "5": "the bank",
+   "6": ""
+  },
+  "likely_invention": {
+   "1": "a fence post, a bucket, a bit of debris spinning",
+   "4": "what was swept away, the rain upstream",
+   "6": "standing on the bank in the morning"
+  }
+ },
+ {
+  "image": "A low winter sun glints on a frozen puddle at midday.",
+  "id": "B131",
+  "rune": "Sowilo",
+  "supplies": {
+   "0": "",
+   "1": "a frozen puddle",
+   "2": "glints",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a road, a farmyard, a winter landscape",
+   "4": "the water under the ice, the dark days ahead",
+   "5": "the low horizon, the edge of the ice",
+   "6": "standing beside the puddle"
+  }
+ },
+ {
+  "image": "On the old route over the mountain heath, each cairn can be seen from the last.",
+  "id": "B134",
+  "rune": "Raidho",
+  "supplies": {
+   "0": "On the old route over the mountain heath",
+   "1": "each cairn",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": "each cairn can be seen from the last"
+  },
+  "likely_invention": {
+   "2": "wind, fog drifting, a walker moving",
+   "4": "the next cairn hidden in fog, the end of the route",
+   "5": "the edge of the heath, the pass"
+  }
+ },
+ {
+  "image": "The clock on the wall has stopped and no one has wound it.",
+  "id": "B137",
+  "rune": "Isa",
+  "supplies": {
+   "0": "",
+   "1": "The clock on the wall",
+   "2": "has stopped",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a quiet living room, a farmhouse kitchen",
+   "4": "the key lying somewhere, the mechanism inside",
+   "5": "a window with dusk outside",
+   "6": "standing in the room in front of the clock"
+  }
+ },
+ {
+  "image": "The thorn hedge lets nothing through without cost.",
+  "id": "B140",
+  "rune": "Thurisaz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "",
+   "4": "",
+   "5": "The thorn hedge",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a garden, a path, a field beyond",
+   "1": "a single thorn, a scrap of wool caught",
+   "2": "wind in the hedge, a bird slipping through",
+   "4": "what lies behind the hedge",
+   "6": "standing in front of the hedge"
+  }
+ },
+ {
+  "image": "The eider leads her ducklings down to the water on their first morning.",
+  "id": "B143",
+  "rune": "Berkana",
+  "supplies": {
+   "0": "leads her ducklings down to the water",
+   "1": "her ducklings",
+   "2": "leads her ducklings down to the water",
+   "4": "",
+   "5": "down to the water",
+   "6": ""
+  },
+  "likely_invention": {
+   "4": "the nest left behind, a gull above",
+   "6": "standing on the shore watching them"
+  }
+ },
+ {
+  "image": "The catch is sold at the harbour, and by evening the money has become new nets.",
+  "id": "B146",
+  "rune": "Fehu",
+  "supplies": {
+   "0": "at the harbour",
+   "1": "",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "1": "a coin, a fish scale on a hand",
+   "2": "boats rocking, gulls, crates moving",
+   "4": "the sea where the fish came from, tomorrow's catch",
+   "5": "the pier where land meets sea, dusk",
+   "6": "standing on the pier at the sale"
+  }
+ },
+ {
+  "image": "From the knoll you see the squall coming up the fjord long before it reaches the hayfield.",
+  "id": "B149",
+  "rune": "Algiz",
+  "supplies": {
+   "0": "the squall coming up the fjord long before it reaches the hayfield",
+   "1": "",
+   "2": "the squall coming up the fjord",
+   "4": "long before it reaches the hayfield",
+   "5": "",
+   "6": "From the knoll you see"
+  },
+  "likely_invention": {
+   "1": "a swath of cut hay, a rake",
+   "5": "the line where the squall meets calm water"
+  }
+ },
+ {
+  "image": "Four families have sat at the same table in the farmhouse, and the table has stayed where it is.",
+  "id": "B152",
+  "rune": "Othila",
+  "supplies": {
+   "0": "the same table in the farmhouse",
+   "1": "",
+   "2": "the table has stayed where it is",
+   "4": "",
+   "5": "",
+   "6": "at the same table"
+  },
+  "likely_invention": {
+   "1": "a worn spot, a knife mark in the wood",
+   "4": "the families before, the graves outside",
+   "5": "the threshold between generations, the door"
+  }
+ },
+ {
+  "image": "The rowan stands bare between the last frost and the first leaf.",
+  "id": "B155",
+  "rune": "Eihwaz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "",
+   "4": "the first leaf",
+   "5": "between the last frost and the first leaf",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a farmyard, a hillside, a garden",
+   "1": "a bud, a twig, a scrap of bark",
+   "2": "wind in the bare branches",
+   "6": "standing under the rowan"
+  }
+ },
+ {
+  "image": "The river sinks into the lava field and rises again as a spring far down the valley.",
+  "id": "B158",
+  "rune": "Laguz",
+  "supplies": {
+   "0": "the lava field and rises again as a spring far down the valley",
+   "1": "",
+   "2": "sinks into the lava field and rises again",
+   "4": "sinks into the lava field",
+   "5": "rises again as a spring",
+   "6": ""
+  },
+  "likely_invention": {
+   "1": "moss at the spring, a bubble in the water",
+   "6": "standing at the spring or where the river vanishes"
+  }
+ },
+ {
+  "image": "You switch on the lamp over the table, and only then do you see the empty chair.",
+  "id": "B161",
+  "rune": "Kenaz",
+  "supplies": {
+   "0": "",
+   "1": "the empty chair",
+   "2": "",
+   "4": "only then do you see",
+   "5": "",
+   "6": "You switch on the lamp over the table"
+  },
+  "likely_invention": {
+   "0": "a kitchen, a dark window, a house at night",
+   "2": "the lamp flickering, a moth",
+   "5": "the edge of the lamplight on the floor"
+  }
+ },
+ {
+  "image": "The boat lies frozen in at the harbour, and the fjord beyond it is open water.",
+  "id": "B164",
+  "rune": "Isa",
+  "supplies": {
+   "0": "at the harbour, and the fjord beyond it is open water",
+   "1": "",
+   "2": "lies frozen in",
+   "4": "",
+   "5": "the fjord beyond it is open water",
+   "6": ""
+  },
+  "likely_invention": {
+   "1": "a rope stiff with frost, ice on the hull",
+   "4": "the water under the ice, the hull below",
+   "6": "standing on the pier by the boat"
+  }
+ },
+ {
+  "image": "The fog lifts off the hill, and there is a sheep up there that no one knew was missing.",
+  "id": "B167",
+  "rune": "Perth",
+  "supplies": {
+   "0": "The fog lifts off the hill",
+   "1": "a sheep up there",
+   "2": "The fog lifts",
+   "4": "a sheep up there that no one knew was missing",
+   "5": "The fog lifts off the hill",
+   "6": ""
+  },
+  "likely_invention": {
+   "6": "standing in the valley looking up"
+  }
+ },
+ {
+  "image": "In the old class photo you find yourself only by the way you stand.",
+  "id": "B170",
+  "rune": "Mannaz",
+  "supplies": {
+   "0": "the old class photo",
+   "1": "the way you stand",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": "you find yourself"
+  },
+  "likely_invention": {
+   "2": "a hand turning the photo, a draught",
+   "4": "the classmates' lives since, the back of the photo",
+   "5": "the photo's edge, the years between then and now"
+  }
+ },
+ {
+  "image": "The quarrel at the table goes quiet, one word short of boiling over.",
+  "id": "B173",
+  "rune": "Thurisaz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "goes quiet",
+   "4": "",
+   "5": "one word short of boiling over",
+   "6": "at the table"
+  },
+  "likely_invention": {
+   "0": "a kitchen, a family gathering, a window",
+   "1": "a clenched hand, a cup set down hard",
+   "4": "the unspoken word, old grudges"
+  }
+ },
+ {
+  "image": "The storm breaks the window and puts out the candles on the table.",
+  "id": "B176",
+  "rune": "Hagalaz",
+  "supplies": {
+   "0": "",
+   "1": "the candles on the table",
+   "2": "breaks the window",
+   "4": "",
+   "5": "the window",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a room, a house, the storm outside",
+   "4": "the dark outside, what the storm brings next",
+   "6": "sitting at the table when the glass breaks"
+  }
+ },
+ {
+  "image": "The old dog stretches out full length in the sun on the steps.",
+  "id": "B179",
+  "rune": "Sowilo",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "stretches out",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a farmhouse, a yard, a summer day",
+   "1": "a twitching paw, grey on the muzzle",
+   "4": "the house behind the door, the shade",
+   "5": "the doorway, the line between sun and shade",
+   "6": "sitting on the steps beside the dog"
+  }
+ },
+ {
+  "image": "You open the door of the mountain hut, and the morning light floods into the darkness all at once.",
+  "id": "B182",
+  "rune": "Dagaz",
+  "supplies": {
+   "0": "the mountain hut",
+   "1": "",
+   "2": "floods into the darkness",
+   "4": "",
+   "5": "the door of the mountain hut",
+   "6": "You open the door of the mountain hut"
+  },
+  "likely_invention": {
+   "1": "dust in the light, a boot on the floor",
+   "4": "the valley below, the night just passed"
+  }
+ },
+ {
+  "image": "The boat comes in so laden with fish it sits deep in the water.",
+  "id": "B185",
+  "rune": "Fehu",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "The boat comes in",
+   "4": "sits deep in the water",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a harbour, gulls, a village",
+   "1": "a fish slipping, a coil of rope",
+   "5": "the harbour mouth, where sea meets pier",
+   "6": "standing on the pier as the boat comes in"
+  }
+ },
+ {
+  "image": "In the hot pot under the frost, everyone laughs at the same story.",
+  "id": "B188",
+  "rune": "Wunjo",
+  "supplies": {
+   "0": "In the hot pot under the frost",
+   "1": "",
+   "2": "",
+   "4": "",
+   "5": "the hot pot under the frost",
+   "6": "In the hot pot"
+  },
+  "likely_invention": {
+   "1": "steam on an eyelash, frost in hair",
+   "2": "rising steam, ripples in the water",
+   "4": "the dark winter night beyond the steam"
+  }
+ },
+ {
+  "image": "You lift the end no one else could get under, and it comes up.",
+  "id": "B3",
+  "rune": "Uruz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "it comes up",
+   "4": "",
+   "5": "",
+   "6": "You lift the end"
+  },
+  "likely_invention": {
+   "0": "a barn, yard or work crew around the load",
+   "1": "splinters, wood grain, a strap or rope on the beam",
+   "4": "what lies under the lifted end",
+   "5": "a doorway or threshold the load is carried through"
+  }
+ },
+ {
+  "image": "The breeze carries the plover's call across the moor to you.",
+  "id": "B6",
+  "rune": "Ansuz",
+  "supplies": {
+   "0": "the plover's call across the moor",
+   "1": "the plover's call",
+   "2": "The breeze carries",
+   "4": "",
+   "5": "",
+   "6": "across the moor to you"
+  },
+  "likely_invention": {
+   "4": "the bird hidden in the heather, unseen",
+   "5": "a moor edge, a hillside or shoreline where the moor ends"
+  }
+ },
+ {
+  "image": "Halfway through explaining the problem aloud, you stop, because saying it showed you the answer.",
+  "id": "B9",
+  "rune": "Ansuz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "Halfway through explaining the problem aloud, you stop",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a kitchen, office or meeting room",
+   "1": "a cup, a pen, a gesture of the hand",
+   "4": "a listener or the answer hidden behind the words",
+   "5": "a doorway, a window, dusk",
+   "6": "a table or room where the seeker is talking"
+  }
+ },
+ {
+  "image": "A church bell from across the fjord carries over the still air and you turn toward it without deciding to.",
+  "id": "B12",
+  "rune": "Ansuz",
+  "supplies": {
+   "0": "A church bell from across the fjord",
+   "1": "",
+   "2": "carries over the still air",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "1": "a ripple on the water, a gull, the bell rope",
+   "4": "the church hidden from view, the ringer unseen",
+   "5": "the shoreline, the waterline of the fjord",
+   "6": "a shore, a path or doorstep where the seeker stands"
+  }
+ },
+ {
+  "image": "Frost forms on the pane from the sleeper's breath and thaws a clear patch with each exhale.",
+  "id": "B15",
+  "rune": "Ansuz",
+  "supplies": {
+   "0": "",
+   "1": "a clear patch",
+   "2": "Frost forms on the pane from the sleeper's breath and thaws a clear patch with each exhale",
+   "4": "",
+   "5": "thaws a clear patch",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a bedroom, a bed, the winter night outside",
+   "4": "the dark yard behind the glass, the dreamer's dream",
+   "6": "a bedside or chair in the room"
+  }
+ },
+ {
+  "image": "The forge glows in the dark shed and the iron takes its shape.",
+  "id": "B18",
+  "rune": "Kenaz",
+  "supplies": {
+   "0": "The forge glows in the dark shed",
+   "1": "",
+   "2": "the iron takes its shape",
+   "4": "",
+   "5": "",
+   "6": "in the dark shed"
+  },
+  "likely_invention": {
+   "1": "a spark, a scale of slag, a hammer mark",
+   "4": "the smith unseen, the shape not yet arrived inside the iron",
+   "5": "the doorway of the shed, glow fading into dark"
+  }
+ },
+ {
+  "image": "The shavings curl away from the blade.",
+  "id": "B21",
+  "rune": "Kenaz",
+  "supplies": {
+   "0": "",
+   "1": "The shavings",
+   "2": "curl away from the blade",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a workshop, a bench, the carver",
+   "4": "the shape hidden inside the wood",
+   "5": "a workshop door, window light, bark turning into bare wood",
+   "6": "a workbench where the seeker sits carving"
+  }
+ },
+ {
+  "image": "One hand holds something out, and the other receives it.",
+  "id": "B24",
+  "rune": "Gebo",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "One hand holds something out, and the other receives it",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a doorway, a market, two people in a room",
+   "1": "a ring, a fingertip, the object being passed",
+   "4": "what is wrapped or the thing not named",
+   "5": "a threshold or table edge between the two",
+   "6": "a doorstep or table where the exchange happens"
+  }
+ },
+ {
+  "image": "Laughter carries out of the open window and no one hurries back in.",
+  "id": "B27",
+  "rune": "Wunjo",
+  "supplies": {
+   "0": "Laughter carries out of the open window",
+   "1": "",
+   "2": "Laughter carries out",
+   "4": "",
+   "5": "the open window",
+   "6": ""
+  },
+  "likely_invention": {
+   "1": "a curtain stirring, a cup on the sill",
+   "4": "the people laughing, unseen inside",
+   "6": "a yard or street outside the window"
+  }
+ },
+ {
+  "image": "You come in out of the cold and someone has lit the stove.",
+  "id": "B30",
+  "rune": "Wunjo",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "You come in",
+   "4": "",
+   "5": "come in out of the cold",
+   "6": "You come in out of the cold"
+  },
+  "likely_invention": {
+   "0": "a kitchen, a farmhouse room",
+   "1": "a crackle in the stove, a coat on a hook",
+   "4": "the person who lit the stove, now out of sight"
+  }
+ },
+ {
+  "image": "The spring cold-snap makes the lamb press close for warmth.",
+  "id": "B33",
+  "rune": "Nauthiz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "the lamb press close",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a field, a sheepfold, the ewe",
+   "1": "frost on the wool, a trembling ear",
+   "4": "the warmth under the ewe's fleece, the thaw not yet come",
+   "5": "a fence line, a field edge, late frost into spring",
+   "6": "a sheepfold or field where the seeker stands"
+  }
+ },
+ {
+  "image": "Sleep takes you mid-sentence, because the body will not be argued with any longer.",
+  "id": "B36",
+  "rune": "Nauthiz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "Sleep takes you mid-sentence",
+   "4": "",
+   "5": "Sleep takes you mid-sentence",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a room, a sofa, a table of people",
+   "1": "a half-finished word, a cup slipping",
+   "4": "the dream behind closed eyes",
+   "6": "a chair or bed where the seeker falls asleep"
+  }
+ },
+ {
+  "image": "The rope has swollen tight in the wet and the knot will not give, however you pull.",
+  "id": "B39",
+  "rune": "Nauthiz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "the knot will not give, however you pull",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a boat, a dock, a fence post in the rain",
+   "1": "a frayed fibre, a drop of water on the rope",
+   "4": "what the rope holds out of sight",
+   "5": "a dock edge or shoreline",
+   "6": "a jetty or boat where the seeker pulls"
+  }
+ },
+ {
+  "image": "The cup of coffee goes cold on the table while you wait.",
+  "id": "B42",
+  "rune": "Isa",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "goes cold on the table while you wait",
+   "4": "",
+   "5": "",
+   "6": "on the table while you wait"
+  },
+  "likely_invention": {
+   "0": "a kitchen or café",
+   "1": "a skin on the coffee, a ring on the table",
+   "4": "the person or call being waited for",
+   "5": "a window, dusk outside"
+  }
+ },
+ {
+  "image": "In the dark of winter you open a jar of the blueberry jam you made in August.",
+  "id": "B45",
+  "rune": "Jera",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "you open a jar",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a kitchen, a pantry, a snowy window",
+   "1": "a seed in the jam, a label on the jar",
+   "4": "the summer sealed inside the jar",
+   "5": "a window, winter dark against the lamp",
+   "6": "a kitchen table or pantry"
+  }
+ },
+ {
+  "image": "The same field that was black mud in spring stands gold and cut by summer's end, as last year and as it will be next.",
+  "id": "B48",
+  "rune": "Jera",
+  "supplies": {
+   "0": "The same field that was black mud in spring stands gold and cut",
+   "1": "",
+   "2": "",
+   "4": "as it will be next",
+   "5": "summer's end",
+   "6": "The same field"
+  },
+  "likely_invention": {
+   "1": "a single stalk, stubble, a beetle",
+   "2": "wind through the grain, a tractor or reaper"
+  }
+ },
+ {
+  "image": "You sit down at the end of the season and this time nothing is calling you to get up again.",
+  "id": "B51",
+  "rune": "Jera",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "You sit down ... nothing is calling you to get up again",
+   "4": "",
+   "5": "at the end of the season",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a farmhouse, a bench, a porch",
+   "1": "dirt under nails, a worn glove",
+   "4": "the work and calls that have gone quiet",
+   "6": "a bench, porch or chair"
+  }
+ },
+ {
+  "image": "When the scree starts to slide the root takes the strain and the ground above it goes nowhere.",
+  "id": "B54",
+  "rune": "Eihwaz",
+  "supplies": {
+   "0": "When the scree starts to slide ... the ground above it goes nowhere",
+   "1": "",
+   "2": "the scree starts to slide",
+   "4": "the root takes the strain and the ground above it",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "1": "a single stone, a fibre of root",
+   "5": "a slope edge, a treeline",
+   "6": "a path on the slope where the seeker stands"
+  }
+ },
+ {
+  "image": "The lid is still on the pot, but the smell says something is taking shape.",
+  "id": "B57",
+  "rune": "Perth",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "something is taking shape",
+   "4": "The lid is still on the pot ... something is taking shape",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a kitchen and stove around the pot",
+   "1": "steam at the lid's rim, a drop on the lid",
+   "5": "steam turning to air, a window",
+   "6": "a kitchen by the stove"
+  }
+ },
+ {
+  "image": "The reindeer lifts its head, on guard.",
+  "id": "B60",
+  "rune": "Algiz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "lifts its head",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a tundra, a herd, a hillside",
+   "1": "a twitching ear, breath in the cold",
+   "4": "the threat or sound not yet seen",
+   "5": "a treeline, the edge of the herd",
+   "6": "a hillside where the seeker watches"
+  }
+ },
+ {
+  "image": "At the kiosk the change comes back wrong in your favour, and you return the difference.",
+  "id": "B63",
+  "rune": "Tiwaz",
+  "supplies": {
+   "0": "",
+   "1": "the change comes back wrong",
+   "2": "you return the difference",
+   "4": "",
+   "5": "",
+   "6": "At the kiosk"
+  },
+  "likely_invention": {
+   "0": "a street, a queue, a town square",
+   "4": "the cashier's unseen loss",
+   "5": "the counter between buyer and seller"
+  }
+ },
+ {
+  "image": "The bow is drawn and the arrow points one way — and waits.",
+  "id": "B66",
+  "rune": "Tiwaz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "The bow is drawn ... and waits",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a forest, a field, an archer",
+   "1": "the fletching, a fingertip on the string",
+   "4": "the target not yet seen",
+   "5": "a treeline, a clearing edge",
+   "6": "a stance in a field or forest"
+  }
+ },
+ {
+  "image": "The ram lowers its head at the gate, and you wait before you open it.",
+  "id": "B69",
+  "rune": "Thurisaz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "The ram lowers its head",
+   "4": "",
+   "5": "at the gate",
+   "6": "at the gate, and you wait"
+  },
+  "likely_invention": {
+   "0": "a field, pasture, farmyard",
+   "1": "a horn's curl, mud on the hoof",
+   "4": "what lies beyond the gate"
+  }
+ },
+ {
+  "image": "The power goes out in the storm, and everything that runs by itself stops.",
+  "id": "B72",
+  "rune": "Hagalaz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "everything that runs by itself stops",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a house, a kitchen, a town in the dark",
+   "1": "a clock stopped, a fridge going silent",
+   "4": "the storm heard outside, unseen",
+   "5": "a window, light into dark",
+   "6": "a room or kitchen where the seeker stands"
+  }
+ },
+ {
+  "image": "The sourdough starter lives as long as it is fed.",
+  "id": "B75",
+  "rune": "Fehu",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a kitchen, a counter, a jar",
+   "1": "a bubble in the starter",
+   "2": "bubbling, rising",
+   "4": "the yeast at work inside",
+   "5": "a window, a season",
+   "6": "a kitchen counter"
+  }
+ },
+ {
+  "image": "A stranger helps push your car out of the drift and only waves as he leaves.",
+  "id": "B78",
+  "rune": "Gebo",
+  "supplies": {
+   "0": "",
+   "1": "only waves as he leaves",
+   "2": "helps push your car out of the drift",
+   "4": "",
+   "5": "",
+   "6": "push your car out of the drift"
+  },
+  "likely_invention": {
+   "0": "a snowy road, a valley",
+   "4": "the stranger's unknown life, his car going out of sight",
+   "5": "a roadside, the edge of the drift"
+  }
+ },
+ {
+  "image": "The juniper stays green under the snow all winter.",
+  "id": "B81",
+  "rune": "Eihwaz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "",
+   "4": "under the snow",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a hillside, a heath",
+   "1": "a needle, a blue berry",
+   "2": "snow falling, wind",
+   "5": "snow edge, the thaw line",
+   "6": "a hillside where the seeker stands"
+  }
+ },
+ {
+  "image": "The fish has hung on the drying rack since winter, and now it is hard and ready.",
+  "id": "B84",
+  "rune": "Jera",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a coastal farm, the sea behind the rack",
+   "1": "a salt crystal, a cord around the tail",
+   "2": "wind moving the fish",
+   "4": "the slow drying inside the flesh",
+   "5": "the shoreline, winter into spring",
+   "6": "a yard by the drying rack"
+  }
+ },
+ {
+  "image": "You drive the iron bar into the frozen ground with all your might, and it gives way.",
+  "id": "B87",
+  "rune": "Uruz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "You drive the iron bar into the frozen ground",
+   "4": "",
+   "5": "",
+   "6": "You drive the iron bar into the frozen ground"
+  },
+  "likely_invention": {
+   "0": "a field, a fence line, winter landscape",
+   "1": "a crack in the frost, breath in the air",
+   "4": "what lies under the frozen crust",
+   "5": "frost turning to soft earth, a field edge"
+  }
+ },
+ {
+  "image": "You lead the horse across the snow, and the rope between you hangs slack.",
+  "id": "B90",
+  "rune": "Ehwaz",
+  "supplies": {
+   "0": "",
+   "1": "the rope between you hangs slack",
+   "2": "You lead the horse across the snow",
+   "4": "",
+   "5": "",
+   "6": "You lead the horse across the snow"
+  },
+  "likely_invention": {
+   "0": "a valley, a farm, mountains",
+   "4": "the destination not yet arrived",
+   "5": "a treeline, a field edge, dusk"
+  }
+ },
+ {
+  "image": "The dough rises under the cloth while no one is watching.",
+  "id": "B93",
+  "rune": "Ingwaz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "The dough rises",
+   "4": "under the cloth while no one is watching",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a kitchen, a warm stove",
+   "1": "a crease in the cloth, flour on the bowl",
+   "5": "a window, dough meeting the cloth",
+   "6": "a kitchen by the bowl"
+  }
+ },
+ {
+  "image": "You stand high in the pass between two valleys; behind you it is still dark, and ahead it has grown light.",
+  "id": "B96",
+  "rune": "Dagaz",
+  "supplies": {
+   "0": "high in the pass between two valleys",
+   "1": "",
+   "2": "ahead it has grown light",
+   "4": "behind you it is still dark",
+   "5": "the pass between two valleys; behind you it is still dark, and ahead it has grown light",
+   "6": "You stand high in the pass"
+  },
+  "likely_invention": {
+   "1": "a stone, frost on a boot, breath"
+  }
+ },
+ {
+  "image": "You look for the valley's name on the map, but nothing is written there.",
+  "id": "B99",
+  "rune": "Blank",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a table, a lamp, a room with the map",
+   "1": "a fold in the map, a coffee stain",
+   "2": "a finger tracing the map",
+   "4": "the real valley out of sight",
+   "5": "the map's edge, a contour line",
+   "6": "a table where the seeker bends over the map"
+  }
+ },
+ {
+  "image": "The lambs take their first steps outside in May.",
+  "id": "B102",
+  "rune": "Berkana",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "take their first steps",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a farmyard, a field, the ewe",
+   "1": "a wobbling leg, wet wool",
+   "4": "the summer not yet arrived",
+   "5": "the barn door, inside to outside",
+   "6": "a field or barn door where the seeker stands"
+  }
+ },
+ {
+  "image": "When one horse tires on the climb the other slows unasked, and they reach the ridge together.",
+  "id": "B105",
+  "rune": "Ehwaz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "the other slows unasked",
+   "4": "",
+   "5": "they reach the ridge",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a mountain slope, a valley below",
+   "1": "sweat on a flank, a loose stone",
+   "4": "what lies beyond the ridge",
+   "6": "a rider's saddle or path on the climb"
+  }
+ },
+ {
+  "image": "The face in the rain-barrel does not move until you do.",
+  "id": "B108",
+  "rune": "Mannaz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "does not move until you do",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a yard, a house wall, the sky",
+   "1": "a leaf on the water, a ripple",
+   "4": "the depth under the reflection",
+   "5": "the water surface between face and sky",
+   "6": "a yard beside the rain-barrel"
+  }
+ },
+ {
+  "image": "When it gets dark, the room is mirrored in the window, and you see yourself there among the others.",
+  "id": "B111",
+  "rune": "Mannaz",
+  "supplies": {
+   "0": "the room is mirrored in the window",
+   "1": "",
+   "2": "",
+   "4": "",
+   "5": "When it gets dark",
+   "6": "you see yourself there among the others"
+  },
+  "likely_invention": {
+   "1": "a cup, a hand, a lamp in the glass",
+   "2": "people moving, talk",
+   "4": "the dark outside behind the glass"
+  }
+ },
+ {
+  "image": "The glacial river runs grey and heavy, full of what it carries down from above.",
+  "id": "B114",
+  "rune": "Laguz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "runs grey and heavy",
+   "4": "full of what it carries down from above",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a valley, a glacier, a bridge",
+   "1": "a single stone tumbling, silt",
+   "5": "the riverbank, glacier turning to water",
+   "6": "a riverbank or bridge"
+  }
+ },
+ {
+  "image": "The bulb readies itself underground long before it shows.",
+  "id": "B117",
+  "rune": "Ingwaz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "readies itself underground",
+   "4": "underground long before it shows",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a garden, a flower bed",
+   "1": "a root hair, a tip of green",
+   "5": "the soil surface where it will break through",
+   "6": "a garden where the seeker kneels"
+  }
+ },
+ {
+  "image": "The handle of the old ladle is worn smooth where other hands held it.",
+  "id": "B120",
+  "rune": "Othila",
+  "supplies": {
+   "0": "",
+   "1": "worn smooth where other hands held it",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a kitchen, a hearth, an old farmhouse",
+   "2": "stirring a pot",
+   "4": "the ancestors who held it, gone",
+   "5": "wood turning into polish, old into new",
+   "6": "a kitchen by the hearth"
+  }
+ },
+ {
+  "image": "You wake, and dawn has already changed the light in the room.",
+  "id": "B123",
+  "rune": "Dagaz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "dawn has already changed the light in the room",
+   "4": "",
+   "5": "dawn",
+   "6": "You wake, and dawn has already changed the light in the room"
+  },
+  "likely_invention": {
+   "0": "a bedroom, a window, the landscape outside",
+   "1": "a dust mote, a stripe of light on the wall",
+   "4": "the night that passed unseen"
+  }
+ },
+ {
+  "image": "The line runs down into dark water and nothing has touched it yet.",
+  "id": "B126",
+  "rune": "Blank",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "nothing has touched it yet",
+   "4": "into dark water and nothing has touched it yet",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a lake, a boat, a pier",
+   "1": "the float, a drop on the line",
+   "5": "the water surface where line enters",
+   "6": "a boat or pier where the seeker holds the rod"
+  }
+ },
+ {
+  "image": "The midnight sun keeps the hayfield bright long after bedtime.",
+  "id": "B129",
+  "rune": "Sowilo",
+  "supplies": {
+   "0": "the hayfield bright",
+   "1": "",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": "the hayfield"
+  },
+  "likely_invention": {
+   "1": "a single stalk, an insect in the light",
+   "2": "wind in the grass",
+   "4": "the sleepers inside the house",
+   "5": "a door or window, the night that does not come"
+  }
+ },
+ {
+  "image": "The sun finally reaches down into the valley and lights up the farm for a little while.",
+  "id": "B132",
+  "rune": "Sowilo",
+  "supplies": {
+   "0": "into the valley and lights up the farm",
+   "1": "",
+   "2": "The sun finally reaches down into the valley",
+   "4": "",
+   "5": "",
+   "6": "the valley ... the farm"
+  },
+  "likely_invention": {
+   "1": "a frost on a fence, a window glinting",
+   "4": "the long shadow months behind",
+   "5": "the shadow line moving across the slope"
+  }
+ },
+ {
+  "image": "a road vanishing round the next bend",
+  "id": "B135",
+  "rune": "Raidho",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "",
+   "4": "vanishing round the next bend",
+   "5": "round the next bend",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a landscape, hills, a valley",
+   "1": "a pebble, a tyre rut",
+   "2": "a car or walker moving",
+   "6": "a spot on the road where the seeker stands"
+  }
+ },
+ {
+  "image": "The puffin chick huddles deep in its burrow all summer where no one sees it, and does not leave until it is ready for the sea.",
+  "id": "B138",
+  "rune": "Ingwaz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "huddles deep in its burrow all summer",
+   "4": "deep in its burrow all summer where no one sees it",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a sea cliff, a colony of puffins",
+   "1": "a feather, a fish in the parent's beak",
+   "5": "the cliff edge, burrow mouth to open sea",
+   "6": "a cliff top above the burrows"
+  }
+ },
+ {
+  "image": "The thorn-bush stands bare and black in the blizzard, but the spines are still waiting.",
+  "id": "B141",
+  "rune": "Thurisaz",
+  "supplies": {
+   "0": "The thorn-bush stands bare and black in the blizzard",
+   "1": "the spines",
+   "2": "the spines are still waiting",
+   "4": "",
+   "5": "",
+   "6": "in the blizzard"
+  },
+  "likely_invention": {
+   "4": "what the thorns will meet, spring not yet arrived",
+   "5": "a field edge, the bush's outline against white"
+  }
+ },
+ {
+  "image": "The rhubarb noses up through the cold soil by the south wall.",
+  "id": "B144",
+  "rune": "Berkana",
+  "supplies": {
+   "0": "through the cold soil by the south wall",
+   "1": "The rhubarb noses up",
+   "2": "noses up through the cold soil",
+   "4": "",
+   "5": "",
+   "6": "by the south wall"
+  },
+  "likely_invention": {
+   "4": "the root under the soil",
+   "5": "the soil surface, frost into thaw"
+  }
+ },
+ {
+  "image": "The cow is sold in the autumn, and what she fetched carries the household through the winter.",
+  "id": "B147",
+  "rune": "Fehu",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a farm, a market, a barn",
+   "1": "the cow's bell, a coin",
+   "2": "the cow led away",
+   "4": "the empty stall, the winter ahead",
+   "5": "autumn turning into winter",
+   "6": "a barn or market where the seeker stands"
+  }
+ },
+ {
+  "image": "On the old farm a new house stands on old foundations.",
+  "id": "B150",
+  "rune": "Othila",
+  "supplies": {
+   "0": "On the old farm a new house stands",
+   "1": "",
+   "2": "",
+   "4": "on old foundations",
+   "5": "a new house stands on old foundations",
+   "6": "On the old farm"
+  },
+  "likely_invention": {
+   "1": "an old stone in the wall, a carved mark",
+   "2": "builders working, smoke from a chimney"
+  }
+ },
+ {
+  "image": "From the pass you look back, and your tracks in the snow make one line down the valley.",
+  "id": "B153",
+  "rune": "Raidho",
+  "supplies": {
+   "0": "your tracks in the snow make one line down the valley",
+   "1": "",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": "From the pass you look back"
+  },
+  "likely_invention": {
+   "1": "a single footprint, a dropped glove",
+   "2": "wind filling the tracks",
+   "4": "what lies ahead beyond the pass",
+   "5": "the pass between valleys, snow line"
+  }
+ },
+ {
+  "image": "The old tree in the churchyard has outlived everyone who planted it.",
+  "id": "B156",
+  "rune": "Eihwaz",
+  "supplies": {
+   "0": "The old tree in the churchyard",
+   "1": "",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": "in the churchyard"
+  },
+  "likely_invention": {
+   "1": "a name on a gravestone, moss on the bark",
+   "2": "wind in the branches",
+   "4": "the roots among the graves, the dead below",
+   "5": "churchyard wall, life and death"
+  }
+ },
+ {
+  "image": "Under the lamp the hairline crack in the cup shows, though no one saw it from across the room.",
+  "id": "B159",
+  "rune": "Kenaz",
+  "supplies": {
+   "0": "Under the lamp ... from across the room",
+   "1": "the hairline crack in the cup",
+   "2": "",
+   "4": "no one saw it from across the room",
+   "5": "",
+   "6": "Under the lamp"
+  },
+  "likely_invention": {
+   "2": "a hand turning the cup, steam",
+   "5": "the lamp's circle of light into shadow"
+  }
+ },
+ {
+  "image": "You lend the neighbour your trailer, and in the autumn a leg of lamb turns up on your step.",
+  "id": "B162",
+  "rune": "Gebo",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": "on your step"
+  },
+  "likely_invention": {
+   "0": "a farm lane, two houses, the neighbour's yard",
+   "1": "the wrapping paper, a note",
+   "2": "the neighbour driving off with the trailer",
+   "4": "the neighbour unseen leaving the gift",
+   "5": "summer into autumn, the property line"
+  }
+ },
+ {
+  "image": "In the hard frost the air is so clear that the farm across the fjord looks close enough to touch.",
+  "id": "B165",
+  "rune": "Isa",
+  "supplies": {
+   "0": "the farm across the fjord looks close enough to touch",
+   "1": "",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "1": "frost on a blade of grass, breath",
+   "2": "stillness of the water, smoke rising",
+   "4": "what the clear air still hides",
+   "5": "the shoreline, ice at the water's edge",
+   "6": "a shore or doorstep where the seeker stands"
+  }
+ },
+ {
+  "image": "At the fork you take the left track, and the right one is gone behind you in the fog.",
+  "id": "B168",
+  "rune": "Tiwaz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "you take the left track",
+   "4": "the right one is gone behind you in the fog",
+   "5": "At the fork",
+   "6": "At the fork"
+  },
+  "likely_invention": {
+   "0": "a moor, hills, a valley",
+   "1": "a signpost, a stone at the fork"
+  }
+ },
+ {
+  "image": "In the choir your voice disappears into the others and is still yours.",
+  "id": "B171",
+  "rune": "Mannaz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "your voice disappears into the others",
+   "4": "",
+   "5": "your voice disappears into the others",
+   "6": "In the choir"
+  },
+  "likely_invention": {
+   "0": "a church, rows of singers, the conductor",
+   "1": "a sheet of music, a breath",
+   "4": "the listeners in the dark of the church"
+  }
+ },
+ {
+  "image": "A thorn tears your sleeve one step short of the gully's edge.",
+  "id": "B174",
+  "rune": "Thurisaz",
+  "supplies": {
+   "0": "",
+   "1": "A thorn tears your sleeve",
+   "2": "A thorn tears your sleeve",
+   "4": "",
+   "5": "the gully's edge",
+   "6": "one step short of the gully's edge"
+  },
+  "likely_invention": {
+   "0": "a hillside, a ravine, a path",
+   "4": "the drop below, unseen"
+  }
+ },
+ {
+  "image": "In a hurry, you pack only what you cannot do without.",
+  "id": "B177",
+  "rune": "Nauthiz",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "In a hurry, you pack",
+   "4": "",
+   "5": "",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "a bedroom, a hallway, a bag on the bed",
+   "1": "a toothbrush, a photo left behind",
+   "4": "what is left behind, the reason for haste",
+   "5": "a doorway, leaving home",
+   "6": "a room by the open bag"
+  }
+ },
+ {
+  "image": "The birch sapling grows in the shelter of the older trees.",
+  "id": "B180",
+  "rune": "Berkana",
+  "supplies": {
+   "0": "in the shelter of the older trees",
+   "1": "The birch sapling",
+   "2": "",
+   "4": "",
+   "5": "",
+   "6": "in the shelter of the older trees"
+  },
+  "likely_invention": {
+   "2": "wind in the leaves, growth",
+   "4": "roots underground, light above",
+   "5": "the treeline, a forest clearing edge"
+  }
+ },
+ {
+  "image": "A sentence in the old diary breaks off, and the page below is blank.",
+  "id": "B183",
+  "rune": "Blank",
+  "supplies": {
+   "0": "",
+   "1": "A sentence in the old diary breaks off",
+   "2": "",
+   "4": "",
+   "5": "A sentence in the old diary breaks off, and the page below is blank",
+   "6": ""
+  },
+  "likely_invention": {
+   "0": "an attic, a desk, a lamp",
+   "2": "pages turning",
+   "4": "what the writer never wrote, the writer gone",
+   "6": "a desk or attic where the seeker reads"
+  }
+ },
+ {
+  "image": "The hot water runs into every house in the valley.",
+  "id": "B186",
+  "rune": "Fehu",
+  "supplies": {
+   "0": "every house in the valley",
+   "1": "",
+   "2": "The hot water runs",
+   "4": "",
+   "5": "",
+   "6": "every house in the valley"
+  },
+  "likely_invention": {
+   "1": "steam from a tap, a valve",
+   "4": "the pipes and hot spring underground",
+   "5": "steam into cold air, the valley rim"
+  }
+ },
+ {
+  "image": "The dog runs to meet you at the gate and cannot stop wagging.",
+  "id": "B189",
+  "rune": "Wunjo",
+  "supplies": {
+   "0": "",
+   "1": "",
+   "2": "runs to meet you ... cannot stop wagging",
+   "4": "",
+   "5": "at the gate",
+   "6": "at the gate"
+  },
+  "likely_invention": {
+   "0": "a farmyard, a house, the road home",
+   "1": "a muddy paw, a tag on the collar",
+   "4": "the house or people waiting inside"
+  }
+ }
+]
