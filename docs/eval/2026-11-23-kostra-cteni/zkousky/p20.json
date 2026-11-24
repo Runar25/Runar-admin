@@ -1,0 +1,8 @@
+[
+ {"id": "p20-fehu", "pokus": "P20", "runa": "Fehu", "seed": 1154, "area": "Career & Creativity", "seeking": "General Guidance", "intention": "Right now",
+  "moderni": {"tema": "wealth and resources", "siri": "value, opportunity, the fruit of work, resources in circulation", "stin": "loss, hoarding, greed, resources handled badly"}},
+ {"id": "p20-gebo", "pokus": "P20", "runa": "Gebo", "seed": 9001, "area": "Love & Relationships", "seeking": "General Guidance", "intention": "Right now",
+  "moderni": {"tema": "gift and exchange", "siri": "generosity, partnership, mutuality, trust, commitment", "stin": "imbalance, an obligation never asked for, dependence, expecting something back"}},
+ {"id": "p20-hagalaz", "pokus": "P20", "runa": "Hagalaz", "seed": 4242, "area": "Inner Growth", "seeking": "General Guidance", "intention": "Understanding the past",
+  "moderni": {"tema": "disruption and change", "siri": "a sudden event, forces of nature, the old order falling apart, circumstances beyond control", "stin": "loss of control, destruction, being unready, chaos with no renewal"}}
+]

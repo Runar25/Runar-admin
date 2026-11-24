@@ -1,0 +1,515 @@
+{
+ "_co": "Druhá verze cest (v2, CODE-read agent 2026-11-24) k v1 v cesty-25-run.json; owner ji ještě neviděl. Oprava v1: žádná cesta nezní jako rada nebo krok k udělání (cesta říká, CO je a co stojí — rozhoduje čtenář); sousední runy se nepřekrývají (Uruz/Eihwaz, Kenaz/Sowilo/Dagaz, Jera/Berkana/Ingwaz/Perth); každá cesta se vejde do jedné věty krátkého čtení (konkrétní, max ~12 slov, bez větného rámce). typ: volba = runa otevírá skutečnou volbu směru · postoj = runa se člověku děje, cesty jsou způsoby, jak se s ní setkat · žádné = popis poctivou cestu nedává. t = znění pro model (zdroj, ne text k opsání), z = doslovná citace z popisu runy (ověřeno skriptem jako přesný podřetězec její sekce). proc_lepsi = co je lepší než v1 · rozliseni = proč to nesedí na nejbližší sousední runu · misto_ve_cteni = kde ve 4 větách cesta bydlí.",
+ "Fehu": {
+  "typ": "volba",
+  "cesty": [
+   {
+    "t": "letting what is in your hands move, though it can flow out",
+    "z": "„kdybys tomu dovolil proudit?“ · „To, co proudí dovnitř, může také odtéct.“"
+   },
+   {
+    "t": "feeding the one thing that grows when it is given room",
+    "z": "„To, co živíš, roste.“ · „Něco má potenciál získat větší hodnotu, pokud tomu dáš prostor.“"
+   },
+   {
+    "t": "keeping it still and safe, at the price of its strength",
+    "z": "„To, co necháš stát, může ztratit svou sílu.“"
+   }
+  ],
+  "pozor": "Peníze jsou jen jedna z věcí v rukou („Může to být peníze, práce, energie, nápad, pozornost, vztah“) — čtení nesmí znít jako rada investuj/utrácej; popis neslibuje zisk („Fehu tedy není slib, že něco získáš.“).",
+  "proc_lepsi": "Cesty mluví o tom, co je „v rukou“ (nápad, práce, pozornost), ne o majetku; každá nese svou cenu (může odtéct · roste · ztratí sílu), takže nic nezní jako finanční rada.",
+  "rozliseni": "Fehu je hodnota v TVÝCH rukou a co s ní děláš; Gebo je to, co vzniká MEZI dvěma stranami — tady nikdo druhý není.",
+  "misto_ve_cteni": "Věta 3: jedna cesta jako dopad na to, co člověk teď drží; volba se dá podat i jako dvojice (pustit × nechat stát) v jedné větě."
+ },
+ "Uruz": {
+  "typ": "postoj",
+  "cesty": [
+   {
+    "t": "strength found in the moment it is needed, not shown to others",
+    "z": "„Uruz proto není síla, kterou člověk předvádí.“ · „Je to síla, kterou poznáš ve chvíli, kdy ji potřebuješ.“"
+   },
+   {
+    "t": "going on although the way is not comfortable",
+    "z": "„který se nezastavuje proto, že cesta není pohodlná“"
+   },
+   {
+    "t": "meeting your own raw strength, and where it ends",
+    "z": "„Nutí člověka setkat se s vlastní silou — i s jejími hranicemi.“ · „Je v ní něco syrového.“"
+   }
+  ],
+  "pozor": "Motivační 'buď silný', které popis odmítá („Neříká: buď silnější.“).",
+  "proc_lepsi": "Vypadla cesta „staré už nestačí, nové nemá tvar“ — ta je skoro doslova u Eihwaz; místo ní tělesné „jde dál, i když cesta není pohodlná“.",
+  "rozliseni": "Uruz je syrová síla těla, která tlačí dál (pratur); Eihwaz je pomalá výdrž, která stojí a drží (tis) — Uruz se nehýbe kolem překážky, jde skrz nepohodlí.",
+  "misto_ve_cteni": "Věta 3."
+ },
+ "Thurisaz": {
+  "typ": "volba",
+  "cesty": [
+   {
+    "t": "acting on it at once, before seeing what has opened",
+    "z": "„Něco v tobě chce okamžitě jednat.“ · „Podívej se, co se právě otevřelo.“"
+   },
+   {
+    "t": "not striking back this time, and seeing what is behind the edge",
+    "z": "„Co se objeví, když tentokrát neudeříš zpátky?“ · „Protože za tou ostrou hranou nemusí být nepřítel.“"
+   },
+   {
+    "t": "an obstacle as protection from a step taken too quickly",
+    "z": "„Někdy je to právě překážka, která tě ochrání před krokem, který bys udělal příliš rychle.“"
+   }
+  ],
+  "pozor": "Tvrzení, že člověka někdo zasáhl nebo má nepřítele; 'neodpovídej' jako terapeutická rada — obě cesty (jednat hned × neudeřit) musí stát vedle sebe.",
+  "proc_lepsi": "V1 nabízela jen „neudeřit“ a pauzu, tedy jednu radu dvakrát; v2 pojmenuje obě strany volby a cenu té rychlé (neuvidíš, co se otevřelo).",
+  "rozliseni": "Thurisaz je horká chvíle po nárazu (impuls × čin); Isa je chladné zastavení bez nárazu a Algiz bdělost dřív, než něco udeří.",
+  "misto_ve_cteni": "Věta 3: dvojice „hned × tentokrát ne“ v jedné větě."
+ },
+ "Ansuz": {
+  "typ": "volba",
+  "cesty": [
+   {
+    "t": "listening for the real meaning of something already said",
+    "z": "„Je také o tom naslouchat.“ · „něco, co už bylo řečeno, ale ještě jsi neslyšel jeho skutečný význam“"
+   },
+   {
+    "t": "finding the word for what is waiting inside",
+    "z": "„něco v tobě čeká na slovo, kterým to konečně dostane svůj tvar“"
+   },
+   {
+    "t": "saying it aloud, though a word can also cover what is real",
+    "z": "„Slovo může otevřít dveře.“ · „Ale může také vytvořit obraz, který skutečnost zakryje.“"
+   }
+  ],
+  "pozor": "Tvrzení, že člověku někdo něco řekl; 'pojmenovat tak přesně, že už to nejde nevidět' (v1) je jazyk Kenaz.",
+  "proc_lepsi": "Třetí cesta už nestojí na „nejde nevidět“ (kolize s Kenaz) — je to vyslovení nahlas a jeho cena (slovo může zakrýt).",
+  "rozliseni": "Ansuz je slovo slyšené nebo vyslovené; Laguz je to, co cítíš DŘÍV, než máš slova, Kenaz to, co UVIDÍŠ.",
+  "misto_ve_cteni": "Věta 3."
+ },
+ "Raidho": {
+  "typ": "volba",
+  "cesty": [
+   {
+    "t": "walking on, and learning the road's rhythm only by walking",
+    "z": "„Raidho je cesta, která už začala.“ · „rytmus cesty objevíš až tím, že po ní jdeš“"
+   },
+   {
+    "t": "only the next step in view, not the whole road",
+    "z": "„Možná právě teď není potřeba vidět celou cestu.“ · „Stačí si všimnout, kde stojíš a jaký je tvůj další krok.“"
+   },
+   {
+    "t": "keeping to a road just because it was once begun",
+    "z": "„nebo jen pokračuješ v cestě, kterou jsi už jednou začal?“"
+   }
+  ],
+  "pozor": "Výzva 'změň směr' (popis se jen ptá); doslovné čtení jako cestování.",
+  "proc_lepsi": "Místo otázky „odpovídá způsob, kterým jdeš…“ (v1, větný rámec a skrytá rada) je pojmenovaná cesta „jít dál jen proto, že už začala“ — čtenář sám pozná, jestli je jeho.",
+  "rozliseni": "Raidho je TVOJE cesta a její rytmus; Ehwaz je pohyb VE DVOU (společný krok), Tiwaz jeden směr s cenou.",
+  "misto_ve_cteni": "Věta 3."
+ },
+ "Kenaz": {
+  "typ": "volba",
+  "cesty": [
+   {
+    "t": "making or mending something now that its outline shows",
+    "z": "„Něco, co bylo nejasné, dostane obrys.“ · „možnost něco vytvořit, opravit nebo změnit“"
+   },
+   {
+    "t": "keeping a small flame fed, or letting it go out",
+    "z": "„oheň potřebuje potravu“ · „Nápad může být plamenem — ale bez péče zase zhasne.“"
+   },
+   {
+    "t": "working by the small light already there, not looking for more",
+    "z": "„Neosvítí celý svět. Jen malý prostor před tebou“ · „Možná tedy nejde o to hledat další světlo.“"
+   }
+  ],
+  "pozor": "Tvrzení, že člověk právě něco pochopil; obecné 'světlo / nový pohled' patří Sowilo a Dagaz.",
+  "proc_lepsi": "Cesty stojí na tom, co je jen Kenaz: malý plamen, ruka, která něco dělá nebo opravuje, oheň, který chce potravu — ne na „vidět“.",
+  "rozliseni": "Kenaz je malá pochodeň v ruce a řemeslo (něco s tím uděláš); Sowilo je slunce nad celou cestou, Dagaz práh mezi nocí a dnem.",
+  "misto_ve_cteni": "Věta 3."
+ },
+ "Gebo": {
+  "typ": "volba",
+  "cesty": [
+   {
+    "t": "giving something that leaves your hand, with no promise it returns",
+    "z": "„Dar má smysl právě proto, že něco opouští tvoji ruku.“ · „bez jistoty, že se ti to vrátí“"
+   },
+   {
+    "t": "receiving without having to repay at once",
+    "z": "„co dokážeš přijmout, aniž bys za to musel okamžitě něco vracet?“"
+   },
+   {
+    "t": "keeping no account of who gave how much",
+    "z": "„Není v ní účetnictví typu já jsem dal tolik, ty mi dlužíš tolik.“"
+   }
+  ],
+  "pozor": "Vztahová rada; tvrzení o konkrétním člověku. 'Ukončit výměnu' (v1) vypadlo — znělo jako rada odejít.",
+  "proc_lepsi": "Cesta „ukončit výměnu, kde jedna strana platí“ nahrazena cestou „nevést účty“ — je z popisu, nic nedoporučuje a je jen Gebo.",
+  "rozliseni": "Gebo je dar a přijetí MEZI dvěma (co opouští ruku); Fehu je hodnota, kterou máš u sebe, Ehwaz společný pohyb, ne výměna.",
+  "misto_ve_cteni": "Věta 3; dvojice dát × přijmout se hodí i jako otevřený konec (věta 4), protože ji klade sám popis."
+ },
+ "Wunjo": {
+  "typ": "postoj",
+  "cesty": [
+   {
+    "t": "letting yourself live a good thing that is already here",
+    "z": "„Kde už je ve tvém životě něco dobrého — a dovolíš si to skutečně prožít?“"
+   },
+   {
+    "t": "joy in the middle of the road, before anything is finished",
+    "z": "„radost nemusí být odměnou za to, že je všechno hotové“ · „Může existovat uprostřed cesty.“"
+   },
+   {
+    "t": "loosening your hands for a while, with nothing to prove",
+    "z": "„pocit, že můžeš na chvíli povolit ruce“ · „Okamžik, kdy nemusíš nic dokazovat.“"
+   }
+  ],
+  "pozor": "Tvrzení, že člověk je šťastný; slib trvalého stavu („Wunjo není trvalý stav“).",
+  "proc_lepsi": "Kratší a tělesnější: „povolit ruce“ místo abstraktního „radost sdílená s ostatními, okamžik…“ (v1, dvě abstrakce za sebou).",
+  "rozliseni": "Wunjo je radost NEZASLOUŽENÁ, uprostřed cesty; Jera je úroda jako důsledek a Ingwaz dokončený kruh — obojí přichází na konci.",
+  "misto_ve_cteni": "Věta 3."
+ },
+ "Hagalaz": {
+  "typ": "postoj",
+  "cesty": [
+   {
+    "t": "looking at what falls and what stays once the storm has passed",
+    "z": "„Co v mém životě právě padá — a co po tom zůstane, když bouře přejde?“"
+   },
+   {
+    "t": "not asking how to stop what no one can steer",
+    "z": "„Je to síla, kterou člověk nemůže řídit.“ · „není nejdůležitější otázka: Jak to zastavím?“"
+   },
+   {
+    "t": "seeing which things had real roots, once the hail is gone",
+    "z": "„A některé možná přežily právě proto, že měly skutečně pevné kořeny.“"
+   }
+  ],
+  "pozor": "Tvrzení, že se člověku něco rozpadlo; útěcha 'je to k dobru' i trest („Hagalaz ale není trest.“).",
+  "proc_lepsi": "Vypadla cesta „změna pod ledem“ — led je obraz Isy; místo ní kořeny, které bouři přežily.",
+  "rozliseni": "Hagalaz je náraz ZVENKU, který přijde náhle a přejde; Isa je ticho, kde se nic nehýbe, Nauthiz tlak toho, co chybí.",
+  "misto_ve_cteni": "Věta 3."
+ },
+ "Nauthiz": {
+  "typ": "postoj",
+  "cesty": [
+   {
+    "t": "listening to what the lack says before filling it",
+    "z": "„není potřeba okamžitě hledat způsob, jak nedostatek odstranit“ · „Možná je nejdřív potřeba zjistit, co ti vlastně říká.“"
+   },
+   {
+    "t": "telling what you truly need from what was only a wish",
+    "z": "„co opravdu potřebuješ a co bylo jen přáním“"
+   },
+   {
+    "t": "pushing against what cannot be, which turns the pressure inward",
+    "z": "„Když člověk příliš dlouho tlačí proti tomu, co není možné, tlak se začne obracet dovnitř.“"
+   }
+  ],
+  "pozor": "Tvrzení, co konkrétně člověku chybí (peníze, blízkost); třetí cesta je cesta s cenou, ne varování.",
+  "proc_lepsi": "Kratší a bez větného rámce; třetí cesta už nezní jako rada „přestaň“, ale jako cesta, která má cenu (tlak dovnitř).",
+  "rozliseni": "Nauthiz je tlak NEDOSTATKU, který třídí potřebu od přání; Isa je zastavení bez tlaku, Hagalaz rána zvenku.",
+  "misto_ve_cteni": "Věta 3."
+ },
+ "Isa": {
+  "typ": "postoj",
+  "cesty": [
+   {
+    "t": "letting what does not move be, and seeing what remains",
+    "z": "„Je to ticho, ve kterém se ukáže, co zůstává, když přestaneš tlačit.“ · „kdybys to tentokrát nechal být?“"
+   },
+   {
+    "t": "one thing left in front of you while the rest stands still",
+    "z": "„Když se okolní svět zastaví, zůstane před tebou jedna věc.“"
+   },
+   {
+    "t": "breaking the ice to make it move, though some things won't hurry",
+    "z": "„Rozbít led. Zatlačit.“ · „Některé věci se nedají urychlit.“"
+   }
+  ],
+  "pozor": "'Počkej' jako rada; popis sám klade volbu 'změnit — nebo vydržet', takže obě strany patří vedle sebe.",
+  "proc_lepsi": "„Jedna věc, jedna linie, jeden okamžik“ (v1, tři abstrakce) je teď jedna věc před tebou; ostatní zkráceno.",
+  "rozliseni": "Isa je zamrzlé ticho, kde NIC neroste; Jera je čas, který pracuje a nese úrodu, Nauthiz tlak toho, co chybí.",
+  "misto_ve_cteni": "Věta 3."
+ },
+ "Jera": {
+  "typ": "postoj",
+  "cesty": [
+   {
+    "t": "looking at a harvest for what was sown long before",
+    "z": "„Jera ukazuje důsledek.“ · „co jsi pro tuto úrodu zasel dávno předtím, než jsi věděl, jak bude vypadat?“"
+   },
+   {
+    "t": "seeing what you tended and what you let slide come up together",
+    "z": "„To, o co ses staral, může přinést ovoce.“ · „To, co jsi zanedbal, se může také ukázat.“"
+   },
+   {
+    "t": "not digging up the seed every day to see whether it grows",
+    "z": "„Nemusíš každý den vykopávat semeno ze země, abys zjistil, jestli roste.“"
+   }
+  ],
+  "pozor": "Slib, že výsledek přijde; úroda jako trest („Ne jako trest“).",
+  "proc_lepsi": "Vypadlo „dát čas a prostor“ (stejné jako Berkana „prostor, aby mohlo růst“); místo toho důsledek — co se staralo i co se zanedbalo vyjde najevo.",
+  "rozliseni": "Jera je SKLIZEŇ a důsledek starého setí; Berkana je první výhonek, který chce péči, Ingwaz semeno, které zraje uvnitř a nic se nepřidává.",
+  "misto_ve_cteni": "Věta 3."
+ },
+ "Eihwaz": {
+  "typ": "postoj",
+  "cesty": [
+   {
+    "t": "standing firm through the change rather than breaking through it",
+    "z": "„Nejde tedy o sílu prorazit.“ · „Spíš o sílu zůstat stát během proměny.“"
+   },
+   {
+    "t": "holding like a root that need not know the branch",
+    "z": "„Kořen nemusí vědět, jak bude vypadat větev.“ · „Stačí, že drží.“"
+   },
+   {
+    "t": "learning to pass around an obstacle as round an axis",
+    "z": "„Někdy je to osa, kolem které se musíš naučit projít.“"
+   }
+  ],
+  "pozor": "'Starý způsob už nestačí, nový nemá tvar' je skoro doslova i u Uruz — do cesty to nedávat.",
+  "proc_lepsi": "První cesta beze změny, druhá zkrácena na 10 slov; třetí bez rámce „not a thing to remove“.",
+  "rozliseni": "Eihwaz je pomalý tis, který STOJÍ a drží; Uruz síla, která jde dál, Dagaz krátká chvíle prahu.",
+  "misto_ve_cteni": "Věta 3."
+ },
+ "Perth": {
+  "typ": "postoj",
+  "cesty": [
+   {
+    "t": "leaving the vessel closed and living with not knowing yet",
+    "z": "„Možná teď není potřeba nádobu rozbíjet, abys zjistil, co je uvnitř.“ · „Možná stačí chvíli vydržet s tím, že to ještě nevíš.“"
+   },
+   {
+    "t": "the right question, which some answers wait for",
+    "z": "„Některé odpovědi se objeví až ve chvíli, kdy položíš správnou otázku.“"
+   },
+   {
+    "t": "it opening as something other than you expected",
+    "z": "„A někdy se ukáže něco úplně jiného, než jsi čekal.“"
+   }
+  ],
+  "pozor": "Předpověď skryté události („nemusí ukazovat na událost, kterou máš předvídat“).",
+  "proc_lepsi": "Vypadlo „rozdíl mezi nic nevím a ještě nevím“ (abstrakce na abstrakci); místo něj konkrétní překvapení, co se z nádoby ukáže.",
+  "rozliseni": "Perth je ZAVŘENÁ NÁDOBA s obsahem, který neznáš; Ingwaz semeno, které víš, že zraje, Prázdná runa místo, kde zatím obsah není.",
+  "misto_ve_cteni": "Spíš věta 4 (otevřený konec): „ještě nevíš“ je samo otevřené zakončení; ve větě 3 by zúžilo, co se má teprve ukázat."
+ },
+ "Algiz": {
+  "typ": "volba",
+  "cesty": [
+   {
+    "t": "saying no: a border that does not let everything in",
+    "z": "„Někdy ochrana znamená říct ne.“ · „ne všechno kolem tebe musíš pustit dovnitř“"
+   },
+   {
+    "t": "lifting your head at a sound you cannot name yet",
+    "z": "„Jako když člověk jde lesem a najednou zvedne hlavu, protože něco zaslechl.“ · „Neví ještě co.“"
+   },
+   {
+    "t": "staying open to the world, but with a clear shape",
+    "z": "„A zároveň ochrana nemusí znamenat uzavření.“ · „Je otevřené světu — ale má jasný tvar.“"
+   }
+  ],
+  "pozor": "Tvrzení o nebezpečí („nemusí říkat, že přichází nebezpečí“); 'odejít' z popisu do cest nedávat — čte se jako rada opustit člověka.",
+  "proc_lepsi": "„Odejít“ nahrazeno „otevřený, ale s jasným tvarem“; „co říká tělo“ nahrazeno zvednutou hlavou v lese (tělo a pocit jsou jazyk Laguz).",
+  "rozliseni": "Algiz je bdělost ven, k hranici (paroží, zaslechnutý zvuk); Laguz je to, co proudí uvnitř, Thurisaz reakce až po nárazu.",
+  "misto_ve_cteni": "Věta 3."
+ },
+ "Sowilo": {
+  "typ": "postoj",
+  "cesty": [
+   {
+    "t": "seeing where you stand, with no one telling you where to go",
+    "z": "„Neříká ti, kam máš jít. Prostě osvítí cestu, takže najednou vidíš, kde stojíš.“"
+   },
+   {
+    "t": "strength to be what one is without making oneself smaller",
+    "z": "„síla být tím, čím jsi, bez potřeby se zmenšovat“"
+   },
+   {
+    "t": "a brightness that can dazzle, not only comfort",
+    "z": "„Příliš ostré světlo může oslnit.“ · „Proto Sowilo není jen všechno bude dobré.“"
+   }
+  ],
+  "pozor": "Optimismus „všechno bude dobré“; 'světlo ukáže, co bychom raději neviděli' má i Kenaz — do cest to nedávat.",
+  "proc_lepsi": "Třetí cesta už nestojí na „co nemůžeš přehlédnout“ (jazyk Kenaz); oslnění je jen Sowilo. Druhá beze změny.",
+  "rozliseni": "Sowilo je slunce nad CELOU cestou a síla nezmenšovat se; Kenaz malá pochodeň pro práci rukou, Dagaz okamžik, kdy se noc láme.",
+  "misto_ve_cteni": "Věta 3."
+ },
+ "Tiwaz": {
+  "typ": "volba",
+  "cesty": [
+   {
+    "t": "taking one direction, which leaves something else behind",
+    "z": "„Když si vybereš jeden směr, automaticky něco jiného necháváš za sebou.“"
+   },
+   {
+    "t": "the drawn bow: holding the direction without acting yet",
+    "z": "„Šíp může být natažený dlouho předtím, než je vypuštěn.“ · „Drží směr. Udržuje napětí.“"
+   },
+   {
+    "t": "staying true to something when it starts to cost you",
+    "z": "„dokážeš zůstat věrný i ve chvíli, kdy tě to něco stojí“"
+   }
+  ],
+  "pozor": "Boj o vítězství („před bojem jen proto, aby člověk vyhrál“); „Rovnováha“ není směr runy.",
+  "proc_lepsi": "Dvě cesty beze změny; třetí konkrétnější („když to začne stát“ místo „what matters“).",
+  "rozliseni": "Tiwaz je JEDEN směr, který má cenu (Týrova ruka); Raidho rytmus cesty, která už běží, bez volby obětovat.",
+  "misto_ve_cteni": "Věta 3."
+ },
+ "Berkana": {
+  "typ": "postoj",
+  "cesty": [
+   {
+    "t": "caring for something small without needing it to be big",
+    "z": "„co ještě nepotřebuje být velké, aby bylo skutečné“ · „To, co je malé, nemusí být slabé.“"
+   },
+   {
+    "t": "giving it room to grow at its own pace",
+    "z": "„jaký prostor tomu můžeš dát, aby mohlo růst vlastním tempem?“"
+   },
+   {
+    "t": "letting it grow without knowing what it will become",
+    "z": "„nechat něco růst, aniž bys musel přesně vědět, čím se nakonec stane“"
+   }
+  ],
+  "pozor": "Doslovné „zrození“ jako těhotenství nebo dítě.",
+  "proc_lepsi": "Vypadlo „méně péče“ (blízko Jera „nevykopávat semeno“); místo něj „malé nemusí být slabé“ — jen Berkana.",
+  "rozliseni": "Berkana je první ZELENÁ větev po zimě, malá a viditelná, která chce péči; Jera sklizeň, Ingwaz semeno skryté v zemi.",
+  "misto_ve_cteni": "Věta 3."
+ },
+ "Ehwaz": {
+  "typ": "volba",
+  "cesty": [
+   {
+    "t": "pushing it forward by your own strength alone",
+    "z": "„Někdy se člověk snaží posunout věci vlastní silou.“ · „Tlačí, táhne, určuje směr.“"
+   },
+   {
+    "t": "loosening the reins and feeling when the other changes pace",
+    "z": "„Musíš trochu povolit otěže, aby se mohl objevit skutečný pohyb.“ · „A zároveň musíš vnímat, kdy druhá strana mění tempo.“"
+   },
+   {
+    "t": "no longer doing everything alone",
+    "z": "„Možná proto, že už nemusíš všechno dělat sám.“"
+   }
+  ],
+  "pozor": "Tvrzení o partnerovi (popis připouští i „dvou částí vlastního života“); „není slepá důvěra“.",
+  "proc_lepsi": "„Najít společný rytmus, než tlačíš“ (v1) byla rada; teď jsou obě cesty pojmenované — tlačit sám × povolit otěže.",
+  "rozliseni": "Ehwaz je pohyb VE DVOU a společné tempo; Raidho vlastní cesta, Gebo výměna darů bez pohybu.",
+  "misto_ve_cteni": "Věta 3: dvojice „tlačit sám × povolit otěže“ v jedné větě."
+ },
+ "Mannaz": {
+  "typ": "postoj",
+  "cesty": [
+   {
+    "t": "another person showing what cannot be seen from inside",
+    "z": "„Někdy proto potřebuje druhého člověka, aby uviděl něco, co sám zevnitř vidět nemůže.“"
+   },
+   {
+    "t": "seeing in someone else something of your own",
+    "z": "„Jindy v něm uvidíš někoho jiného — a teprve díky tomu si všimneš něčeho vlastního.“"
+   },
+   {
+    "t": "finding out who you are in a quarrel, or up close",
+    "z": "„Některé části sebe poznáš až tehdy, když se s někým setkáš.“ · „V rozhovoru. V konfliktu. V blízkosti. V rozdílu.“"
+   }
+  ],
+  "pozor": "Psychologizování (projekce); tvrzení, jaké slepé místo člověk má.",
+  "proc_lepsi": "„Slepé místo a obraz sebe“ (v1, dvě abstrakce) nahrazeno konkrétním: hádka, blízkost.",
+  "rozliseni": "Mannaz je ZRCADLO — druzí jako cesta k sobě; Gebo je co si dáte, Ehwaz jak se spolu pohnete.",
+  "misto_ve_cteni": "Věta 3."
+ },
+ "Laguz": {
+  "typ": "postoj",
+  "cesty": [
+   {
+    "t": "noticing what moves under the surface before it has words",
+    "z": "„Možná je potřeba chvíli poslouchat hladinu — a všimnout si, co se pod ní pohybuje.“ · „Co v sobě cítíš dřív, než pro to ještě máš slova?“"
+   },
+   {
+    "t": "finding a way between the stones, not straight",
+    "z": "„Nejde rovně. Hledá si cestu mezi kameny“"
+   },
+   {
+    "t": "water that can be deep and murky: not every feeling is truth",
+    "z": "„Ale voda může být také hluboká a kalná.“ · „Ne každý pocit je pravda.“"
+   }
+  ],
+  "pozor": "'Věř intuici', které popis odmítá („Laguz neříká slepě věř svým emocím“).",
+  "proc_lepsi": "Druhá cesta „necítit všechno hlavou“ (blízko první) nahrazena vodou mezi kameny — pohyb, ne jen pocit; třetí beze změny.",
+  "rozliseni": "Laguz je voda UVNITŘ a její okliky; Algiz bdělost ven k hranici, Ansuz slovo, které už zaznělo.",
+  "misto_ve_cteni": "Věta 3."
+ },
+ "Ingwaz": {
+  "typ": "postoj",
+  "cesty": [
+   {
+    "t": "adding nothing more, and letting it ripen inside",
+    "z": "„A pak přijde okamžik, kdy už není potřeba nic přidávat.“ · „Je čas nechat to dozrát.“"
+   },
+   {
+    "t": "closing something old as a finished circle, not a loss",
+    "z": "„Začínají uzavřením něčeho starého.“ · „Ne jako ztráta, ale jako dokončení kruhu.“"
+   },
+   {
+    "t": "something finished before you know what comes after",
+    "z": "„Něco může být dokončeno, i když ještě nevíš, co přijde potom.“"
+   }
+  ],
+  "pozor": "Semeno a zrání sdílí s Jera a Berkana — čtení musí stát na uzavření a 'nic nepřidávat'.",
+  "proc_lepsi": "Vypadla cesta „pustit ven, co dozrálo“, která šla proti „nechat dozrát“; teď tři cesty jednoho směru (dokončení).",
+  "rozliseni": "Ingwaz je DOKONČENÍ uvnitř, kdy se nic nepřidává; Jera sklizeň venku, Berkana viditelný začátek, Perth obsah, který neznáš.",
+  "misto_ve_cteni": "Věta 3; ownerova otázka „co už dozrálo natolik, že to nemusím držet uvnitř?“ patří do věty 4 jako otevřený konec, ne mezi cesty."
+ },
+ "Othila": {
+  "typ": "volba",
+  "cesty": [
+   {
+    "t": "carrying on a value or story you were handed",
+    "z": "„hodnoty, které převzal“ · „Co z nich chceš skutečně nést dál?“"
+   },
+   {
+    "t": "noticing what you still carry and have long outgrown",
+    "z": "„všechno, co si člověk nese, aniž si to vždy uvědomuje“ · „i věci, které už možná dávno přerostl“"
+   },
+   {
+    "t": "choosing which part of it to call your own",
+    "z": "„co z toho se rozhodneš skutečně nazývat svým?“"
+   }
+  ],
+  "pozor": "Tvrzení o rodině, dědictví nebo majetku („Othila není jen majetek“); nic, co zní jako rada odříznout rodinu.",
+  "proc_lepsi": "„Položit dědictví na zem a nechat ho skončit“ (v1) znělo jako rada; nahrazeno tím, co si člověk nese bez povšimnutí — rozhodnutí zůstává u čtenáře.",
+  "rozliseni": "Othila je to, co jsi ZDĚDIL a neseš dál (místo, příběh, hodnota); Fehu je hodnota, kterou máš teď a hýbe se.",
+  "misto_ve_cteni": "Věta 3."
+ },
+ "Dagaz": {
+  "typ": "postoj",
+  "cesty": [
+   {
+    "t": "already standing in a doorway, not searching for more doors",
+    "z": "„Možná tedy není potřeba hledat další dveře.“ · „Možná už stojíš v jejich prahu.“"
+   },
+   {
+    "t": "a question long asked that is no longer the same question",
+    "z": "„otázka, kterou sis dlouho kladl, už vlastně není stejná otázka“"
+   },
+   {
+    "t": "a change that comes quietly, not all at once",
+    "z": "„Proto Dagaz nemusí znamenat, že se všechno najednou změní.“ · „Může být mnohem tišší.“"
+   }
+  ],
+  "pozor": "Slib průlomu; tvrzení, že se v člověku něco změnilo; 'nový pohled' obecně patří i Kenaz a Sowilo.",
+  "proc_lepsi": "„Změna pohledu, která nevyřeší vše“ (v1, rámec „není X“) nahrazena tichou změnou — konkrétní a bez světla, které má Kenaz i Sowilo.",
+  "rozliseni": "Dagaz je OKAMŽIK prahu, kdy se noc láme; Eihwaz dlouhá výdrž ve změně, Sowilo plné slunce, Kenaz malé světlo k práci.",
+  "misto_ve_cteni": "Spíš věta 4: „už stojíš v prahu“ je samo otevřené zakončení; ve větě 3 se hodí jen tichá změna."
+ },
+ "Prázdná runa — Unknown": {
+  "typ": "žádné",
+  "cesty": [],
+  "pozor": "Popis říká, že význam nemá přijít z runy („některé věci nemohou přijít z runy. Musí přijít z tvého života.“) a varuje před rychlým zaplněním prázdného místa — nabídnuté cesty by ho zaplnily.",
+  "proc_lepsi": "beze změny",
+  "rozliseni": "Na rozdíl od Perth tu není ani zavřená nádoba — žádný obsah, k němuž by vedla cesta.",
+  "misto_ve_cteni": "Nikde: věta 3 zůstane u života člověka bez cesty; věta 4 nanejvýš otázka z popisu („dokážu to chvíli nechat otevřené?“), ne cesta."
+ }
+}

@@ -76,7 +76,7 @@ Známé vady a jejich příčina:
 - slovesa, kterými angličtina o runách nemluví (marks, exposes) ← pokyn „in a verb of your own“ (DECISIONS 2026-10-06 (10)) · vyřešeno: slovesa z korpusu
 - slovo z hlavičky doslova ve čtení („the thing whose meaning waits sealed“) ← sol bere vstup doslova (hlavička „focus on: …“) (RUNAR_DESIGN.md „Slova, která dáváme modelu“) · poučení
 
-Pokusy na této části: P04 (odloženo) · P05 (čeká na ownera) · P06 (čeká na ownera) · P11 (přijato) · P14 (čeká na ownera) · P15 (čeká na ownera)
+Pokusy na této části: P04 (odloženo) · P05 (čeká na ownera) · P06 (čeká na ownera) · P11 (přijato) · P14 (čeká na ownera) · P15 (čeká na ownera) · P20 (připraveno)
 
 ### K3 Dopad (věta 3)
 
@@ -107,7 +107,7 @@ Známé vady a jejich příčina:
 - tvrzení o životě čtenáře (EN 9–10/16) ← oblast zadaná jako „nech význam přistát na tom, co dělá“ (DECISIONS 2026-08-21) · vyřešeno: oblast = zdroj obrazu, ne cíl tvrzení
 - poslední věta „neither change was easy to see“ spojená s „given and received“ (Eihwaz, 2026-11-24) ← podoba oblasti + otázka runy pod koncem se složí do jedné věty (čtení 75b6c569; otázka runy Eihwaz v Kolekci) · poučení
 
-Pokusy na této části: P04 (odloženo) · P05 (čeká na ownera) · P08 (nápad) · P09 (připraveno) · P10 (připraveno) · P11 (přijato) · P16 (čeká na ownera) · P19 (čeká na ownera)
+Pokusy na této části: P04 (odloženo) · P05 (čeká na ownera) · P08 (nápad) · P09 (připraveno) · P10 (připraveno) · P11 (přijato) · P16 (čeká na ownera) · P19 (čeká na ownera) · P20 (připraveno)
 
 ### K4 Otevření (věta 4)
 
@@ -241,6 +241,7 @@ Jak s kterým vstupem model pracuje (kolik převezme, do které věty, co si v o
 |---|---|---|---|---|---|---|
 | P09 | 2026-11-23 | Úhly pohledu ve větě 3 (dvě strany, bod zlomu, přehlížená stránka …) | K3 | data pro 5 run; úhly podle Gemini jako druhy, obsah z ownerových popisů | 2026-11-23 „ano, přesně tak“ | až po krocích 1–3 plánu |
 | P10 | 2026-10-26 | Vstup pocitu („What feels closest to you right now?“) | K3 | — | 2026-10-26, 2026-11-11, 2026-11-24 „zkusme to“ | BACKLOG 10; zrcadlení × kontrast |
+| P20 | 2026-11-24 | Moderní význam runy v hlavičce + stín jako zdroj pro větu 3 | K2 K3 | — | 2026-11-24 „moderní významy bych chtěl vidět ve čtení a také stín“ | porovnat s produkčním čtením na stejném seedu: kam se moderní slova a stín dostanou, nebo jestli je model jen opíše |
 
 ### čeká na ownera
 
@@ -253,7 +254,7 @@ Jak s kterým vstupem model pracuje (kolik převezme, do které věty, co si v o
 | P15 | 2026-11-09 | Fáze runy | K2 | fáze mění řečené, ne obraz; slovo pokynu vysloveno 2/4 | 2026-11-10 „fáze vypadá dobře“ | — |
 | P16 | 2026-11-09 | Druhá strana runy ve čtení | K3 | bez nálepky 3/3 Fehu, 3/3 Raidho | 2026-11-09 „druhá strana se mi líbí“ | spojit s P09 |
 | P17 | 2026-11-10 | Konce u Reflection a Confirmation | K4 | Confirmation: (a) neobratné, (b) čisté, (c) opsalo pokyn | 2026-11-24 „to Raidho zní dobře, pro Confirmation by to mělo být lepší“ (tvar podmínky) | podmínku vyzkoušet na více runách (K4-B), pak CODE-tune |
-| P19 | 2026-11-24 | Cesty pro všech 25 run (návrh z ownerových popisů) | K3 | volba 10 run, postoj 14, prázdná runa bez cest; každá cesta s citací z RUNAR_POPISY_RUN.md | 2026-11-24 „udělej návrh pro ostatní runy“ | owner posoudí; pak čtení s rozcestníkem na několika runách |
+| P19 | 2026-11-24 | Cesty pro všech 25 run (návrh z ownerových popisů) | K3 | v1: volba 10 run, postoj 14, prázdná runa bez cest; v2 (cesty-25-run-v2): bez rad, sousedé se nepřekrývají, cesta ≤ 12 slov, místo: věta 3 u 22 run, Perth a Dagaz věta 4, Gebo obojí; citace 131/131 z RUNAR_POPISY_RUN.md | 2026-11-24 „udělej návrh pro ostatní runy“ | owner posoudí v2; pak čtení s rozcestníkem (Gebo, Raidho, Hagalaz) — cesty podat jako zdroj, ne jako věty (sol opisuje) |
 
 ### přijato
 

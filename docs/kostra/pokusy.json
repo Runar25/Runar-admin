@@ -185,7 +185,7 @@
    ],
    "hypoteza": "pocit vybere stránku runy pro větu 3, význam nemění",
    "stav": "připraveno",
-   "slozka": "",
+   "slozka": "docs/eval/2026-11-23-kostra-cteni/zkousky",
    "prompt": "",
    "n": "",
    "vysledek": "",
@@ -315,7 +315,7 @@
    ],
    "hypoteza": "otázka z významu runy (Reflection); tři tvary pro Confirmation",
    "stav": "čeká na ownera",
-   "slozka": "docs/eval/2026-11-09-v2-vyklad-z-v3",
+   "slozka": "docs/eval/2026-11-23-kostra-cteni/zkousky",
    "prompt": "v5.23",
    "n": "6",
    "vysledek": "Confirmation: (a) neobratné, (b) čisté, (c) opsalo pokyn",
@@ -352,13 +352,36 @@
    "slozka": "docs/eval/2026-11-23-kostra-cteni",
    "prompt": "bez API",
    "n": "25 run",
-   "vysledek": "volba 10 run, postoj 14, prázdná runa bez cest; každá cesta s citací z RUNAR_POPISY_RUN.md",
+   "vysledek": "v1: volba 10 run, postoj 14, prázdná runa bez cest; v2 (cesty-25-run-v2): bez rad, sousedé se nepřekrývají, cesta ≤ 12 slov, místo: věta 3 u 22 run, Perth a Dagaz věta 4, Gebo obojí; citace 131/131 z RUNAR_POPISY_RUN.md",
    "owner": "2026-11-24 „udělej návrh pro ostatní runy“",
-   "dalsi": "owner posoudí; pak čtení s rozcestníkem na několika runách",
+   "dalsi": "owner posoudí v2; pak čtení s rozcestníkem (Gebo, Raidho, Hagalaz) — cesty podat jako zdroj, ne jako věty (sol opisuje)",
    "souvisi": [
     "P08",
     "P04",
     "P09"
+   ],
+   "datum": "2026-11-24"
+  },
+  {
+   "id": "P20",
+   "nazev": "Moderní význam runy v hlavičce + stín jako zdroj pro větu 3",
+   "sloty": [
+    "K2",
+    "K3"
+   ],
+   "hypoteza": "moderní téma rozšíří, co věta 2 o runě řekne; stín dá větě 3 napětí bez toho, aby ho čtení nazvalo",
+   "stav": "připraveno",
+   "slozka": "docs/eval/2026-11-23-kostra-cteni/zkousky",
+   "prompt": "v5.24-image",
+   "n": "3 runy (Fehu, Gebo, Hagalaz)",
+   "vysledek": "",
+   "owner": "2026-11-24 „moderní významy bych chtěl vidět ve čtení a také stín“",
+   "dalsi": "porovnat s produkčním čtením na stejném seedu: kam se moderní slova a stín dostanou, nebo jestli je model jen opíše",
+   "souvisi": [
+    "P05",
+    "P06",
+    "P15",
+    "P16"
    ],
    "datum": "2026-11-24"
   }
