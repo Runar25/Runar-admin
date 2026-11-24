@@ -50,6 +50,12 @@ def over(d):
         ok('hlídač API zablokuje volání API bez souhlasu', r.returncode == 0 and 'RUNAR_API_ANO' in r.stdout, r.stdout[:120] + r.stderr[-120:])
         r = py(d, 'runar-api-guard.py', {'tool_name': 'Bash', 'tool_input': {'command': 'ls -la'}})
         ok('hlídač API pustí běžný příkaz', r.returncode == 0 and not r.stdout.strip(), r.stdout[:120] + r.stderr[-120:])
+        # 2026-11-24 (CODE-read, owner „zkouška by měla mít číslo“ · „7. ano“): souhlas a záměr bez čísla pokusu nestačí; neznámé číslo taky ne
+        zamer = 'RUNAR_API_ANO=3 RUNAR_API_ZAMER="rozhodne, jestli protipříklad projde hlídačem; když ano, je díra, jinak drží" '
+        r = py(d, 'runar-api-guard.py', {'tool_name': 'Bash', 'tool_input': {'command': zamer + api}})
+        ok('hlídač API chce číslo pokusu (RUNAR_POKUS)', 'RUNAR_POKUS' in r.stdout and 'deny' in r.stdout, r.stdout[:160])
+        r = py(d, 'runar-api-guard.py', {'tool_name': 'Bash', 'tool_input': {'command': 'RUNAR_POKUS=P999 ' + zamer + api}})
+        ok('hlídač API odmítne neznámé číslo pokusu', 'P999' in r.stdout and 'deny' in r.stdout, r.stdout[:160])
 
         def zprava(text):
             p = prepis(text); soubory.append(p)

@@ -1,23 +1,345 @@
 {
- "_co": "Rejstřík pokusů na čtení. Každý pokus má číslo (P..), stav a části kostry, na které sahá. Owner 2026-11-23: „zkouška by měla mít jméno nebo verzi či číslo pro lepší orientaci a s lepší možností zachovat nebo vyřadit“. Stavy: nápad · připraveno · běží · čeká na ownera · přijato · v produkci · vyřazeno · odloženo · poučení (uzavřeno, nic se nemění, ale víme něco). Před zápisem nového: node scripts/verify_kostra.js --hledej \"<slova>\" (není to už tady?).",
+ "_co": "Rejstřík pokusů na čtení. Každý pokus má číslo (P..), stav a části kostry, na které sahá. Owner 2026-11-23: „zkouška by měla mít jméno nebo verzi či číslo pro lepší orientaci a s lepší možností zachovat nebo vyřadit“. Pole datum = kdy pokus (nápad) vznikl. Stavy: nápad · připraveno · běží · čeká na ownera · přijato · v produkci · vyřazeno · odloženo · poučení (uzavřeno, nic se nemění, ale víme něco). Před zápisem nového: node scripts/verify_kostra.js --hledej \"<slova>\" (není to už tady?).",
  "pokusy": [
-  {"id": "P01", "nazev": "Obrazy s napětím (kola 1–4)", "sloty": ["K1"], "hypoteza": "obraz s napětím uvnitř děje dává silnější čtení než klidná scéna", "stav": "přijato", "slozka": "docs/eval/2026-11-09-v2-vyklad-z-v3/napeti", "prompt": "lab bez čtení", "n": "84 vět, 2 slepí soudci", "vysledek": "79/84 sedí na runu; ownerem pochválené svíčka, baterie, zpráva ráno", "owner": "2026-11-17 „jinak dobře“", "dalsi": "islandština, doložit přírodní fakta, přesun do banky přes CODE-tune; Jera/Ingwaz viz P12", "souvisi": ["P12"]},
-  {"id": "P02", "nazev": "Kenaz s telefonem a bez něj", "sloty": ["K1"], "hypoteza": "slovo „phone“ je v obraze zbytečné", "stav": "poučení", "slozka": "docs/eval/2026-11-09-v2-vyklad-z-v3/napeti/kolo4/zkouska-telefon", "prompt": "v5.23", "n": "6", "vysledek": "bez telefonu model doplní oheň a krb 3/3 — slovo drží scénu v dnešku", "owner": "2026-11-17 „zajímavé“", "dalsi": "", "souvisi": []},
-  {"id": "P03", "nazev": "Obraz jako dávkovaná slova", "sloty": ["K1"], "hypoteza": "ze slov model složí vlastní scénu", "stav": "odloženo", "slozka": "docs/eval/2026-11-09-v2-vyklad-z-v3/napeti/kolo4/zkouska-slova", "prompt": "v5.23", "n": "6", "vysledek": "scénu složí 6/6, volné místo nevyplní 0/3", "owner": "2026-11-18 „tohle teď odložíme“", "dalsi": "", "souvisi": ["P13"]},
-  {"id": "P04", "nazev": "v3 bez obrazu: Gebo popis · napětí · cesta · otázka", "sloty": ["K2", "K3", "K4"], "hypoteza": "čtení bez obrazu z dat runy (napětí, cesta) a rozcestník u Crossroads", "stav": "odloženo", "slozka": "docs/eval/2026-11-09-v2-vyklad-z-v3/v3-bez-obrazu", "prompt": "v5.23", "n": "6", "vysledek": "bez rady 6/6, rozcestník 3/3; model si vytvořil šablony „It holds the difference between“ 4/6 a „Where in your life“ 3/3", "owner": "2026-11-18 „ulož a odkládáme“", "dalsi": "", "souvisi": ["P08", "P09"]},
-  {"id": "P05", "nazev": "Čtyři pohyby bez definice runy (Gemini/GPT)", "sloty": ["K1", "K2", "K3", "K4"], "hypoteza": "čtyři věty s jasnou prací, bez definice runy", "stav": "čeká na ownera", "slozka": "docs/eval/2026-11-09-v2-vyklad-z-v3/gemini-gpt-4vety", "prompt": "v5.23", "n": "3", "vysledek": "4 věty 3/3, runa nejmenovaná 3/3, věta 2 je parafráze zdroje", "owner": "", "dalsi": "rozhodnutí R1, R6", "souvisi": ["P06"]},
-  {"id": "P06", "nazev": "Zdroj významu: jen slovo × dvě strany runy", "sloty": ["K2"], "hypoteza": "jiný tvar zdroje → model ho nepřeloží jen do jiných slov", "stav": "čeká na ownera", "slozka": "docs/eval/2026-11-09-v2-vyklad-z-v3/gemini-gpt-4vety", "prompt": "v5.23", "n": "6", "vysledek": "slovo jako štítek 3/3; dvě strany vlastnější, Hagalaz opsal stranu", "owner": "", "dalsi": "rozhodnutí R5", "souvisi": ["P05", "P11"]},
-  {"id": "P07", "nazev": "Ask: tipy k větám 3 a 4", "sloty": ["K6"], "hypoteza": "Ask nabídne rozvinout dvě strany a závěrečnou otázku", "stav": "v produkci", "slozka": "", "prompt": "v5.24-image", "n": "—", "vysledek": "nasazeno CODE-tune (d54ddb2); odpovědi na tipy neměřené", "owner": "2026-11-18 „dej to tam“", "dalsi": "", "souvisi": []},
-  {"id": "P08", "nazev": "Rozcestník u oblasti Crossroads", "sloty": ["K3"], "hypoteza": "u rozcestí runa nabídne své cesty bez doporučení", "stav": "nápad", "slozka": "", "prompt": "", "n": "", "vysledek": "", "owner": "2026-11-17 (zadání)", "dalsi": "BACKLOG 13", "souvisi": ["P04", "P09"]},
-  {"id": "P09", "nazev": "Úhly pohledu ve větě 3 (dvě strany, bod zlomu, přehlížená stránka …)", "sloty": ["K3"], "hypoteza": "losovaný úhel pohledu z dat runy přinese ve větě 3 něco, co není hned vidět", "stav": "připraveno", "slozka": "docs/eval/2026-11-23-kostra-cteni", "prompt": "", "n": "", "vysledek": "data pro 5 run; úhly podle Gemini jako druhy, obsah z ownerových popisů", "owner": "2026-11-23 „ano, přesně tak“", "dalsi": "až po krocích 1–3 plánu", "souvisi": ["P11", "P04"]},
-  {"id": "P10", "nazev": "Vstup pocitu („What feels closest to you right now?“)", "sloty": ["K3"], "hypoteza": "pocit vybere stránku runy pro větu 3, význam nemění", "stav": "nápad", "slozka": "", "prompt": "", "n": "", "vysledek": "", "owner": "2026-10-26, 2026-11-11, 2026-11-23", "dalsi": "BACKLOG 10; zrcadlení × kontrast", "souvisi": ["P09"]},
-  {"id": "P11", "nazev": "Kalibrace soudců na sadě se známou odpovědí", "sloty": ["K2", "K3", "K4"], "hypoteza": "soudci poznají to, co mají", "stav": "přijato", "slozka": "docs/eval/2026-11-23-kostra-cteni/soudci", "prompt": "bez API", "n": "20 vět + 12 čtení", "vysledek": "tvrzení 20/20 a 19/20; runa 9/9; podvrhy 3/3", "owner": "", "dalsi": "kalibrovat soudce obrazu (M1)", "souvisi": []},
-  {"id": "P12", "nazev": "Jera a Ingwaz bez chleba", "sloty": ["K1"], "hypoteza": "chléb a těsto jdou proti ownerovu odmítnutí z 2026-09-23", "stav": "čeká na ownera", "slozka": "", "prompt": "v5.24-image", "n": "", "vysledek": "náhrady od CODE-tune: marmeláda (Jera), semenná tobolka (Ingwaz)", "owner": "", "dalsi": "BACKLOG 15", "souvisi": ["P01"]},
-  {"id": "P13", "nazev": "Islandský obraz jako rozpojená slova", "sloty": ["K1"], "hypoteza": "méně opisu obrazu v islandštině", "stav": "odloženo", "slozka": "docs/eval/2026-11-09-v2-vyklad-z-v3/zkouska-1114", "prompt": "v5.23", "n": "6", "vysledek": "nejdelší opis 3,3 → 2,0 slova; neprokázáno", "owner": "", "dalsi": "", "souvisi": ["P03"]},
-  {"id": "P14", "nazev": "Obraz na jednom místě a sjednocená zdvojení v promptu", "sloty": ["K1", "K2"], "hypoteza": "méně zdvojených pokynů = čistší čtení", "stav": "čeká na ownera", "slozka": "docs/eval/2026-11-09-v2-vyklad-z-v3/zkouska-1114", "prompt": "v5.23", "n": "15", "vysledek": "pořadí vět drženo 9/9; owner „produkce zní lépe“, pak „nečetl jsem to“", "owner": "2026-11-14", "dalsi": "", "souvisi": []},
-  {"id": "P15", "nazev": "Fáze runy", "sloty": ["K2"], "hypoteza": "řádek fáze změní, co se o runě řekne", "stav": "čeká na ownera", "slozka": "docs/eval/2026-11-09-v2-vyklad-z-v3", "prompt": "v5.23", "n": "8", "vysledek": "fáze mění řečené, ne obraz; slovo pokynu vysloveno 2/4", "owner": "2026-11-10 „fáze vypadá dobře“", "dalsi": "", "souvisi": []},
-  {"id": "P16", "nazev": "Druhá strana runy ve čtení", "sloty": ["K3"], "hypoteza": "druhá strana bez nálepky prohloubí čtení", "stav": "čeká na ownera", "slozka": "docs/eval/2026-11-09-v2-vyklad-z-v3", "prompt": "v5.23", "n": "6", "vysledek": "bez nálepky 3/3 Fehu, 3/3 Raidho", "owner": "2026-11-09 „druhá strana se mi líbí“", "dalsi": "spojit s P09", "souvisi": ["P09"]},
-  {"id": "P17", "nazev": "Konce u Reflection a Confirmation", "sloty": ["K4"], "hypoteza": "otázka z významu runy (Reflection); tři tvary pro Confirmation", "stav": "čeká na ownera", "slozka": "docs/eval/2026-11-09-v2-vyklad-z-v3", "prompt": "v5.23", "n": "6", "vysledek": "Confirmation: (a) neobratné, (b) čisté, (c) opsalo pokyn", "owner": "2026-11-09 „zní mi zvláštně, když potvrzení má dvě možnosti“", "dalsi": "rozhodnutí R2", "souvisi": []},
-  {"id": "P18", "nazev": "Obraz: nic navíc bez funkce, úhel [3] mimo los", "sloty": ["K1"], "hypoteza": "model přestane přidávat předměty (pant)", "stav": "v produkci", "slozka": "docs/eval/2026-11-19-obraz-predmety", "prompt": "v5.24-image", "n": "", "vysledek": "nasazeno CODE-tune", "owner": "2026-11-19", "dalsi": "", "souvisi": []}
+  {
+   "id": "P01",
+   "nazev": "Obrazy s napětím (kola 1–4)",
+   "sloty": [
+    "K1"
+   ],
+   "hypoteza": "obraz s napětím uvnitř děje dává silnější čtení než klidná scéna",
+   "stav": "přijato",
+   "slozka": "docs/eval/2026-11-09-v2-vyklad-z-v3/napeti",
+   "prompt": "lab bez čtení",
+   "n": "84 vět, 2 slepí soudci",
+   "vysledek": "79/84 sedí na runu; ownerem pochválené svíčka, baterie, zpráva ráno",
+   "owner": "2026-11-17 „jinak dobře“",
+   "dalsi": "islandština, doložit přírodní fakta, přesun do banky přes CODE-tune; Jera/Ingwaz viz P12",
+   "souvisi": [
+    "P12"
+   ],
+   "datum": "2026-11-14"
+  },
+  {
+   "id": "P02",
+   "nazev": "Kenaz s telefonem a bez něj",
+   "sloty": [
+    "K1"
+   ],
+   "hypoteza": "slovo „phone“ je v obraze zbytečné",
+   "stav": "poučení",
+   "slozka": "docs/eval/2026-11-09-v2-vyklad-z-v3/napeti/kolo4/zkouska-telefon",
+   "prompt": "v5.23",
+   "n": "6",
+   "vysledek": "bez telefonu model doplní oheň a krb 3/3 — slovo drží scénu v dnešku",
+   "owner": "2026-11-17 „zajímavé“",
+   "dalsi": "",
+   "souvisi": [],
+   "datum": "2026-11-17"
+  },
+  {
+   "id": "P03",
+   "nazev": "Obraz jako dávkovaná slova",
+   "sloty": [
+    "K1"
+   ],
+   "hypoteza": "ze slov model složí vlastní scénu",
+   "stav": "odloženo",
+   "slozka": "docs/eval/2026-11-09-v2-vyklad-z-v3/napeti/kolo4/zkouska-slova",
+   "prompt": "v5.23",
+   "n": "6",
+   "vysledek": "scénu složí 6/6, volné místo nevyplní 0/3",
+   "owner": "2026-11-18 „tohle teď odložíme“",
+   "dalsi": "",
+   "souvisi": [
+    "P13"
+   ],
+   "datum": "2026-11-17"
+  },
+  {
+   "id": "P04",
+   "nazev": "v3 bez obrazu: Gebo popis · napětí · cesta · otázka",
+   "sloty": [
+    "K2",
+    "K3",
+    "K4"
+   ],
+   "hypoteza": "čtení bez obrazu z dat runy (napětí, cesta) a rozcestník u Crossroads",
+   "stav": "odloženo",
+   "slozka": "docs/eval/2026-11-09-v2-vyklad-z-v3/v3-bez-obrazu",
+   "prompt": "v5.23",
+   "n": "6",
+   "vysledek": "bez rady 6/6, rozcestník 3/3; model si vytvořil šablony „It holds the difference between“ 4/6 a „Where in your life“ 3/3",
+   "owner": "2026-11-18 „ulož a odkládáme“",
+   "dalsi": "",
+   "souvisi": [
+    "P08",
+    "P09"
+   ],
+   "datum": "2026-11-17"
+  },
+  {
+   "id": "P05",
+   "nazev": "Čtyři pohyby bez definice runy (Gemini/GPT)",
+   "sloty": [
+    "K1",
+    "K2",
+    "K3",
+    "K4"
+   ],
+   "hypoteza": "čtyři věty s jasnou prací, bez definice runy",
+   "stav": "čeká na ownera",
+   "slozka": "docs/eval/2026-11-09-v2-vyklad-z-v3/gemini-gpt-4vety",
+   "prompt": "v5.23",
+   "n": "3",
+   "vysledek": "4 věty 3/3, runa nejmenovaná 3/3, věta 2 je parafráze zdroje",
+   "owner": "",
+   "dalsi": "rozhodnutí R1, R6",
+   "souvisi": [
+    "P06"
+   ],
+   "datum": "2026-11-18"
+  },
+  {
+   "id": "P06",
+   "nazev": "Zdroj významu: jen slovo × dvě strany runy",
+   "sloty": [
+    "K2"
+   ],
+   "hypoteza": "jiný tvar zdroje → model ho nepřeloží jen do jiných slov",
+   "stav": "čeká na ownera",
+   "slozka": "docs/eval/2026-11-09-v2-vyklad-z-v3/gemini-gpt-4vety",
+   "prompt": "v5.23",
+   "n": "6",
+   "vysledek": "slovo jako štítek 3/3; dvě strany vlastnější, Hagalaz opsal stranu",
+   "owner": "",
+   "dalsi": "rozhodnutí R5",
+   "souvisi": [
+    "P05",
+    "P11"
+   ],
+   "datum": "2026-11-18"
+  },
+  {
+   "id": "P07",
+   "nazev": "Ask: tipy k větám 3 a 4",
+   "sloty": [
+    "K6"
+   ],
+   "hypoteza": "Ask nabídne rozvinout dvě strany a závěrečnou otázku",
+   "stav": "v produkci",
+   "slozka": "",
+   "prompt": "v5.24-image",
+   "n": "—",
+   "vysledek": "nasazeno CODE-tune (d54ddb2); odpovědi na tipy neměřené",
+   "owner": "2026-11-18 „dej to tam“",
+   "dalsi": "",
+   "souvisi": [],
+   "datum": "2026-11-18"
+  },
+  {
+   "id": "P08",
+   "nazev": "Rozcestník u oblasti Crossroads",
+   "sloty": [
+    "K3"
+   ],
+   "hypoteza": "u rozcestí runa nabídne své cesty bez doporučení",
+   "stav": "nápad",
+   "slozka": "",
+   "prompt": "",
+   "n": "",
+   "vysledek": "",
+   "owner": "2026-11-17 (zadání)",
+   "dalsi": "BACKLOG 13",
+   "souvisi": [
+    "P04",
+    "P09"
+   ],
+   "datum": "2026-11-17"
+  },
+  {
+   "id": "P09",
+   "nazev": "Úhly pohledu ve větě 3 (dvě strany, bod zlomu, přehlížená stránka …)",
+   "sloty": [
+    "K3"
+   ],
+   "hypoteza": "losovaný úhel pohledu z dat runy přinese ve větě 3 něco, co není hned vidět",
+   "stav": "připraveno",
+   "slozka": "docs/eval/2026-11-23-kostra-cteni",
+   "prompt": "",
+   "n": "",
+   "vysledek": "data pro 5 run; úhly podle Gemini jako druhy, obsah z ownerových popisů",
+   "owner": "2026-11-23 „ano, přesně tak“",
+   "dalsi": "až po krocích 1–3 plánu",
+   "souvisi": [
+    "P11",
+    "P04"
+   ],
+   "datum": "2026-11-23"
+  },
+  {
+   "id": "P10",
+   "nazev": "Vstup pocitu („What feels closest to you right now?“)",
+   "sloty": [
+    "K3"
+   ],
+   "hypoteza": "pocit vybere stránku runy pro větu 3, význam nemění",
+   "stav": "nápad",
+   "slozka": "",
+   "prompt": "",
+   "n": "",
+   "vysledek": "",
+   "owner": "2026-10-26, 2026-11-11, 2026-11-23",
+   "dalsi": "BACKLOG 10; zrcadlení × kontrast",
+   "souvisi": [
+    "P09"
+   ],
+   "datum": "2026-10-26"
+  },
+  {
+   "id": "P11",
+   "nazev": "Kalibrace soudců na sadě se známou odpovědí",
+   "sloty": [
+    "K2",
+    "K3",
+    "K4"
+   ],
+   "hypoteza": "soudci poznají to, co mají",
+   "stav": "přijato",
+   "slozka": "docs/eval/2026-11-23-kostra-cteni/soudci",
+   "prompt": "bez API",
+   "n": "20 vět + 12 čtení",
+   "vysledek": "tvrzení 20/20 a 19/20; runa 9/9; podvrhy 3/3",
+   "owner": "",
+   "dalsi": "kalibrovat soudce obrazu (M1)",
+   "souvisi": [],
+   "datum": "2026-11-23"
+  },
+  {
+   "id": "P12",
+   "nazev": "Jera a Ingwaz bez chleba",
+   "sloty": [
+    "K1"
+   ],
+   "hypoteza": "chléb a těsto jdou proti ownerovu odmítnutí z 2026-09-23",
+   "stav": "čeká na ownera",
+   "slozka": "",
+   "prompt": "v5.24-image",
+   "n": "",
+   "vysledek": "náhrady od CODE-tune: marmeláda (Jera), semenná tobolka (Ingwaz)",
+   "owner": "",
+   "dalsi": "BACKLOG 15",
+   "souvisi": [
+    "P01"
+   ],
+   "datum": "2026-11-23"
+  },
+  {
+   "id": "P13",
+   "nazev": "Islandský obraz jako rozpojená slova",
+   "sloty": [
+    "K1"
+   ],
+   "hypoteza": "méně opisu obrazu v islandštině",
+   "stav": "odloženo",
+   "slozka": "docs/eval/2026-11-09-v2-vyklad-z-v3/zkouska-1114",
+   "prompt": "v5.23",
+   "n": "6",
+   "vysledek": "nejdelší opis 3,3 → 2,0 slova; neprokázáno",
+   "owner": "",
+   "dalsi": "",
+   "souvisi": [
+    "P03"
+   ],
+   "datum": "2026-11-14"
+  },
+  {
+   "id": "P14",
+   "nazev": "Obraz na jednom místě a sjednocená zdvojení v promptu",
+   "sloty": [
+    "K1",
+    "K2"
+   ],
+   "hypoteza": "méně zdvojených pokynů = čistší čtení",
+   "stav": "čeká na ownera",
+   "slozka": "docs/eval/2026-11-09-v2-vyklad-z-v3/zkouska-1114",
+   "prompt": "v5.23",
+   "n": "15",
+   "vysledek": "pořadí vět drženo 9/9; owner „produkce zní lépe“, pak „nečetl jsem to“",
+   "owner": "2026-11-14",
+   "dalsi": "",
+   "souvisi": [],
+   "datum": "2026-11-14"
+  },
+  {
+   "id": "P15",
+   "nazev": "Fáze runy",
+   "sloty": [
+    "K2"
+   ],
+   "hypoteza": "řádek fáze změní, co se o runě řekne",
+   "stav": "čeká na ownera",
+   "slozka": "docs/eval/2026-11-09-v2-vyklad-z-v3",
+   "prompt": "v5.23",
+   "n": "8",
+   "vysledek": "fáze mění řečené, ne obraz; slovo pokynu vysloveno 2/4",
+   "owner": "2026-11-10 „fáze vypadá dobře“",
+   "dalsi": "",
+   "souvisi": [],
+   "datum": "2026-11-09"
+  },
+  {
+   "id": "P16",
+   "nazev": "Druhá strana runy ve čtení",
+   "sloty": [
+    "K3"
+   ],
+   "hypoteza": "druhá strana bez nálepky prohloubí čtení",
+   "stav": "čeká na ownera",
+   "slozka": "docs/eval/2026-11-09-v2-vyklad-z-v3",
+   "prompt": "v5.23",
+   "n": "6",
+   "vysledek": "bez nálepky 3/3 Fehu, 3/3 Raidho",
+   "owner": "2026-11-09 „druhá strana se mi líbí“",
+   "dalsi": "spojit s P09",
+   "souvisi": [
+    "P09"
+   ],
+   "datum": "2026-11-09"
+  },
+  {
+   "id": "P17",
+   "nazev": "Konce u Reflection a Confirmation",
+   "sloty": [
+    "K4"
+   ],
+   "hypoteza": "otázka z významu runy (Reflection); tři tvary pro Confirmation",
+   "stav": "čeká na ownera",
+   "slozka": "docs/eval/2026-11-09-v2-vyklad-z-v3",
+   "prompt": "v5.23",
+   "n": "6",
+   "vysledek": "Confirmation: (a) neobratné, (b) čisté, (c) opsalo pokyn",
+   "owner": "2026-11-09 „zní mi zvláštně, když potvrzení má dvě možnosti“",
+   "dalsi": "rozhodnutí R2",
+   "souvisi": [],
+   "datum": "2026-11-10"
+  },
+  {
+   "id": "P18",
+   "nazev": "Obraz: nic navíc bez funkce, úhel [3] mimo los",
+   "sloty": [
+    "K1"
+   ],
+   "hypoteza": "model přestane přidávat předměty (pant)",
+   "stav": "v produkci",
+   "slozka": "docs/eval/2026-11-19-obraz-predmety",
+   "prompt": "v5.24-image",
+   "n": "",
+   "vysledek": "nasazeno CODE-tune",
+   "owner": "2026-11-19",
+   "dalsi": "",
+   "souvisi": [],
+   "datum": "2026-11-19"
+  }
  ]
 }

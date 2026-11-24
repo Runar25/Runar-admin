@@ -79,6 +79,28 @@ def vola_api(prikaz, cwd, hloubka=0):
                     return os.path.basename(s) + ' → ' + os.path.basename(kand)
     return ''
 
+# Číslo pokusu (KUKY 2026-11-23: „zkouška by měla mít jméno nebo verzi či číslo pro lepší orientaci a s lepší možností zachovat nebo vyřadit“;
+# 2026-11-24 „7. ano“ k návrhu „povinné číslo pokusu ve skriptu, který volá sol“). Volání modelu nese RUNAR_POKUS=<Pxx> z rejstříku
+# docs/kostra/pokusy.json, nebo RUNAR_POKUS="mimo: <proč>" (volání, které není pokus na čtení — např. kontrola islandštiny).
+# Rejstřík nečitelný → pustí (hook nesmí zastavit práci kvůli vlastní chybě), ale zapíše to do logu.
+POKUSY = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'docs', 'kostra', 'pokusy.json'))
+
+def chyba_pokusu(prikaz):
+    m = re.search(r'RUNAR_POKUS=(?:"([^"]*)"|\'([^\']*)\'|(\S+))', prikaz)
+    if not m:
+        return ('Chybí RUNAR_POKUS=<Pxx> — číslo pokusu z docs/kostra/pokusy.json (owner 2026-11-23: „zkouška by měla mít číslo“). '
+                'Nový pokus napřed zapiš do rejstříku (nejdřív node scripts/verify_kostra.js --hledej "<slova>" — není už tam?). '
+                'Volání, které není pokus na čtení: RUNAR_POKUS="mimo: <proč>".')
+    hod = (m.group(1) or m.group(2) or m.group(3) or '').strip()
+    if hod.lower().startswith('mimo'):
+        return '' if len(hod) >= 15 else 'RUNAR_POKUS="mimo: <proč>" — napiš, proč to není pokus na čtení (aspoň pár slov).'
+    try:
+        with open(POKUSY, encoding='utf-8') as f:
+            znama = {x.get('id') for x in json.load(f).get('pokusy', [])}
+    except Exception:
+        return ''
+    return '' if hod in znama else ('RUNAR_POKUS=' + hod + ' v rejstříku docs/kostra/pokusy.json není — zapiš pokus napřed (číslo, části, hypotéza, stav).')
+
 def main():
     try:
         d = json.load(sys.stdin)
@@ -107,11 +129,15 @@ def main():
         elif int(ano.group(1)) > 50 and 'RUNAR_API_OWNER=' not in prikaz:
             chyba = ('Nad 50 volání jen s ownerovým výslovným ano k TÉHLE velikosti (2026-10-06: 480 bez ptaní). Začni malým vzorkem; '
                      'když owner větší vzorek schválil, přidej RUNAR_API_OWNER="<jeho slova doslova>".')
+        else:
+            chyba = chyba_pokusu(prikaz)
         if not chyba:
             try:   # stopa pro ownera: každý puštěný pokus s počtem a záměrem, ať se dá zkontrolovat bez mé paměti
                 with open(os.path.expanduser('~/.claude/runar-api-pokusy.log'), 'a', encoding='utf-8') as f:
                     import datetime
-                    f.write(datetime.datetime.now().strftime('%Y-%m-%d %H:%M') + ' | ' + ano.group(1) + ' volání | ' + co + ' | ' + zamer + '\n')
+                    _pk = re.search(r'RUNAR_POKUS=(?:"([^"]*)"|\'([^\']*)\'|(\S+))', prikaz)
+                    _pk = (_pk.group(1) or _pk.group(2) or _pk.group(3)) if _pk else '?'
+                    f.write(datetime.datetime.now().strftime('%Y-%m-%d %H:%M') + ' | ' + _pk + ' | ' + ano.group(1) + ' volání | ' + co + ' | ' + zamer + '\n')
             except Exception:
                 pass
             return
