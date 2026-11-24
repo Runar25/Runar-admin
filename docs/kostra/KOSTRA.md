@@ -76,7 +76,7 @@ Známé vady a jejich příčina:
 - slovesa, kterými angličtina o runách nemluví (marks, exposes) ← pokyn „in a verb of your own“ (DECISIONS 2026-10-06 (10)) · vyřešeno: slovesa z korpusu
 - slovo z hlavičky doslova ve čtení („the thing whose meaning waits sealed“) ← sol bere vstup doslova (hlavička „focus on: …“) (RUNAR_DESIGN.md „Slova, která dáváme modelu“) · poučení
 
-Pokusy na této části: P04 (odloženo) · P05 (čeká na ownera) · P06 (čeká na ownera) · P11 (přijato) · P14 (čeká na ownera) · P15 (čeká na ownera) · P20 (připraveno)
+Pokusy na této části: P04 (odloženo) · P05 (čeká na ownera) · P06 (čeká na ownera) · P11 (přijato) · P14 (čeká na ownera) · P15 (čeká na ownera) · P20 (čeká na ownera)
 
 ### K3 Dopad (věta 3)
 
@@ -107,7 +107,7 @@ Známé vady a jejich příčina:
 - tvrzení o životě čtenáře (EN 9–10/16) ← oblast zadaná jako „nech význam přistát na tom, co dělá“ (DECISIONS 2026-08-21) · vyřešeno: oblast = zdroj obrazu, ne cíl tvrzení
 - poslední věta „neither change was easy to see“ spojená s „given and received“ (Eihwaz, 2026-11-24) ← podoba oblasti + otázka runy pod koncem se složí do jedné věty (čtení 75b6c569; otázka runy Eihwaz v Kolekci) · poučení
 
-Pokusy na této části: P04 (odloženo) · P05 (čeká na ownera) · P08 (nápad) · P09 (připraveno) · P10 (připraveno) · P11 (přijato) · P16 (čeká na ownera) · P19 (čeká na ownera) · P20 (připraveno)
+Pokusy na této části: P04 (odloženo) · P05 (čeká na ownera) · P08 (nápad) · P09 (připraveno) · P10 (čeká na ownera) · P11 (přijato) · P16 (čeká na ownera) · P19 (čeká na ownera) · P20 (čeká na ownera)
 
 ### K4 Otevření (věta 4)
 
@@ -240,8 +240,6 @@ Jak s kterým vstupem model pracuje (kolik převezme, do které věty, co si v o
 | id | od | pokus | části | výsledek | owner | dál |
 |---|---|---|---|---|---|---|
 | P09 | 2026-11-23 | Úhly pohledu ve větě 3 (dvě strany, bod zlomu, přehlížená stránka …) | K3 | data pro 5 run; úhly podle Gemini jako druhy, obsah z ownerových popisů | 2026-11-23 „ano, přesně tak“ | až po krocích 1–3 plánu |
-| P10 | 2026-10-26 | Vstup pocitu („What feels closest to you right now?“) | K3 | — | 2026-10-26, 2026-11-11, 2026-11-24 „zkusme to“ | BACKLOG 10; zrcadlení × kontrast |
-| P20 | 2026-11-24 | Moderní význam runy v hlavičce + stín jako zdroj pro větu 3 | K2 K3 | — | 2026-11-24 „moderní významy bych chtěl vidět ve čtení a také stín“ | porovnat s produkčním čtením na stejném seedu: kam se moderní slova a stín dostanou, nebo jestli je model jen opíše |
 
 ### čeká na ownera
 
@@ -249,12 +247,14 @@ Jak s kterým vstupem model pracuje (kolik převezme, do které věty, co si v o
 |---|---|---|---|---|---|---|
 | P05 | 2026-11-18 | Čtyři pohyby bez definice runy (Gemini/GPT) | K1 K2 K3 K4 | 4 věty 3/3, runa nejmenovaná 3/3, věta 2 je parafráze zdroje | — | rozhodnutí R1, R6 |
 | P06 | 2026-11-18 | Zdroj významu: jen slovo × dvě strany runy | K2 | slovo jako štítek 3/3; dvě strany vlastnější, Hagalaz opsal stranu | — | rozhodnutí R5 |
+| P10 | 2026-10-26 | Vstup pocitu („What feels closest to you right now?“) | K3 | rozdíl malý: Raidho obě varianty téměř stejné; Hagalaz kontrast skutečně obrací pohled („the storm more readily than what it leaves untouched“), zrcadlení jen opakuje tlak; pocit pojmenován ve 4/4 ve větě 3. Okno v Hagalaz přidáno modelem (úhel „mimo dohled“, P21) | 2026-10-26, 2026-11-11, 2026-11-24 „zkusme to“ | víc run, aby šlo rozhodnout; n=1 na buňku nestačí |
 | P12 | 2026-11-23 | Jera a Ingwaz bez chleba | K1 | náhrady od CODE-tune: marmeláda (Jera), semenná tobolka (Ingwaz) | — | BACKLOG 15 |
 | P14 | 2026-11-14 | Obraz na jednom místě a sjednocená zdvojení v promptu | K1 K2 | pořadí vět drženo 9/9; owner „produkce zní lépe“, pak „nečetl jsem to“ | 2026-11-14 | — |
 | P15 | 2026-11-09 | Fáze runy | K2 | fáze mění řečené, ne obraz; slovo pokynu vysloveno 2/4 | 2026-11-10 „fáze vypadá dobře“ | — |
 | P16 | 2026-11-09 | Druhá strana runy ve čtení | K3 | bez nálepky 3/3 Fehu, 3/3 Raidho | 2026-11-09 „druhá strana se mi líbí“ | spojit s P09 |
-| P17 | 2026-11-10 | Konce u Reflection a Confirmation | K4 | Confirmation: (a) neobratné, (b) čisté, (c) opsalo pokyn | 2026-11-24 „to Raidho zní dobře, pro Confirmation by to mělo být lepší“ (tvar podmínky) | podmínku vyzkoušet na více runách (K4-B), pak CODE-tune |
+| P17 | 2026-11-10 | Konce u Reflection a Confirmation | K4 | čistá podmínka 3/5 (Raidho „That holds if the road still leads toward something you want.“, Gebo, Hagalaz); Fehu měkké „may hold value“, Berkana sklouzne k radě („give each generation room“); „This/That holds“ opsáno ze zadání 3/5 a bez jasného „co“ — člověk nevidí, k čemu se podmínka váže | 2026-11-24 „to Raidho zní dobře, pro Confirmation by to mělo být lepší“ (tvar podmínky) | přeformulovat bez slova „holds“ a s tím, co se potvrzuje (oblast); pak znovu 5 |
 | P19 | 2026-11-24 | Cesty pro všech 25 run (návrh z ownerových popisů) | K3 | v1: volba 10 run, postoj 14, prázdná runa bez cest; v2 (cesty-25-run-v2): bez rad, sousedé se nepřekrývají, cesta ≤ 12 slov, místo: věta 3 u 22 run, Perth a Dagaz věta 4, Gebo obojí; citace 131/131 z RUNAR_POPISY_RUN.md | 2026-11-24 „udělej návrh pro ostatní runy“ | owner posoudí v2; pak čtení s rozcestníkem (Gebo, Raidho, Hagalaz) — cesty podat jako zdroj, ne jako věty (sol opisuje) |
+| P20 | 2026-11-24 | Moderní význam runy v hlavičce + stín jako zdroj pro větu 3 | K2 K3 | stín ve větě 3 vlastními slovy 3/3 (Fehu „Kept close, that value may have little room to serve anyone“, Gebo „a gift can begin to feel like a debt“); moderní význam zúžil větu 2 parafrází („can pass from hand to hand“); Hagalaz opsal „old order“ a „beyond your control“ ze zadání | 2026-11-24 „moderní významy bych chtěl vidět ve čtení a také stín“ | srovnat s produkcí na stejném seedu (3 volání), pak owner |
 | P21 | 2026-11-24 | Los úhlu jen z úhlů, které obraz unese (značky obraz × úhel) | K1 | past 7/25 (28 %) × kryto 1/19 (5 %) přidaných věcí; v bance kryto 39 % kombinací, 11 obrazů neunese žádný úhel | 2026-11-24 „7. ano“ (audit) · „některé obrazy potřebují možná i jiný pohled úhlu“ | owner rozhodne o návrhu; pak sol test kryto × past na stejných obrazech (potřebuje nový klíč) |
 
 ### přijato
