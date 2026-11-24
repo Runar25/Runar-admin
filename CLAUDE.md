@@ -230,7 +230,7 @@ Stop-hook tah neukončí, dokud něco zbývá. Neřeš hlášení, které už `n
 ### §30 — Nic nesmí viset na paměti session: pravidlo, které se opakovaně porušuje, dělá stroj (platí pro VŠECHNY session)
 Co se má dít pokaždé, udělá skript, nebo zastaví práci, když se vynechá. Úplný seznam nosičů (co hlídá které pravidlo):
 `node scripts/verify_nosice.js --vypis`. Co tě zastaví a jak dál:
-- **Pokus přes API** → hook ho nepustí bez `RUNAR_API_ANO=<počet>` + `RUNAR_API_ZAMER="<co rozhodne>"` (nad 50 i `RUNAR_API_OWNER`). Napřed
+- **Pokus přes API** → hook ho nepustí bez `RUNAR_API_ANO=<počet>` + `RUNAR_API_ZAMER="<co rozhodne>"` + `RUNAR_POKUS=<Pxx>` z `docs/kostra/pokusy.json` (mimo čtení `"mimo: <proč>"`) (nad 50 i `RUNAR_API_OWNER`). Napřed
   `node scripts/utils/najdi_cteni.js` (odpověď v datech?), pak ownerovo ano, malý vzorek napřed.
 - **Zpráva ownerovi** (Stop-hook): body a otázky číslované; návrh nebo otázka na rozhodnutí jen po `node scripts/utils/uz_vime.js <pojmy>`
   v témže tahu; co čeká na ownera, polož jako otázku s otazníkem; „nejspíš/zřejmě“ o kódu jen s „neověřeno“.

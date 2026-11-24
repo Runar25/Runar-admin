@@ -13623,3 +13623,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Texty (EN i IS, IS Greynir + korpus):** potvrzovací dialog, zásady soukromí (oddíl 7), nápověda a FAQ — „za 30 dní, přihlášení to ruší“.
 - **Mimo:** e-mail při žádosti ani volba „smazat hned“ (nebyly v zadání); ruční obnova ze zálohy dál platí, jen po skutečném smazání.
 - Affected doc(s): RUNAR_PRIVACY.md (retence, obnova), RUNAR_BACKLOG.md.
+
+## 2026-11-24 (1) — Kostra čtení jako data, rejstřík pokusů s čísly; volání modelu jen s číslem pokusu
+
+- **Rozhodl:** owner 2026-11-23 *„jakmile sáhneš na kostru, tak to musíš zjistit, ať tam nezapisuješ znovu“* · *„zkouška by měla mít jméno
+  nebo verzi či číslo pro lepší orientaci a s lepší možností zachovat nebo vyřadit“* · 2026-11-24 *„5. ok udělej · 7. ano“* (k návrhu: hlídat kusy
+  zadání proti kódu, mapa příčin z rozhodnutí, povinné číslo pokusu) · *„v kostře bych chtěl také vidět, kdy která část vznikla“*. **Provedl:** CODE-read.
+- **Co:** `docs/kostra/kostra.json` (jádro J, části K1–K6 s prací, pravidly se zdrojem a datem, měřítky, variantami, vadami s příčinou; vstupy V;
+  závislosti Z; otevřené R; odkud se berou významy run) a `docs/kostra/pokusy.json` (P01–P18: stav, datum, části, verze promptu, výsledek, ownerovo slovo).
+  Přehled `docs/kostra/KOSTRA.md` se generuje. `scripts/verify_kostra.js` (rychlé kontroly při commitu, útoky v `protipriklady.py`):
+  každý kus produkčního zadání má v kostře místo a datum vzniku z gitu · pokus na starší verzi promptu se hlásí, jen když se od té doby změnily
+  kusy, kterých se týká (owner 2026-11-24: *„občas se jen něco doplní a to nemá žádný vliv na to, co zrovna testujeme“*) · `--hledej` najde
+  opakovaný nápad. Hlídač API (`hooks/claude/runar-api-guard.py`) navíc chce `RUNAR_POKUS=<Pxx>` z rejstříku, mimo čtení `"mimo: <proč>"`.
+- **Ověřeno:** útoky `--test` 14/14 · `protipriklady.py verify_kostra.js` 2/2 · `verify_hooky_claude.py` 16 případů (nové: bez čísla a s neznámým
+  číslem zastaví) · kontrola hned našla kus `NO-FILLER` (islandské zadání), který v kostře chyběl.
+- **Platí pro všechny session:** volání modelu bez čísla pokusu hlídač nepustí; CODE-tune a CODE-web dostanou zprávu.
+- Affected doc(s): CLAUDE.md §30 (řádek „Pokus přes API“).
