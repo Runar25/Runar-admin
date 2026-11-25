@@ -266,6 +266,9 @@ PRIPADY = [
  # 2026-11-25 (CODE-read, audit paměti): nový lab musí dosáhnout na RUNAR_DESIGN „Slova“ — oblast „text pro model“ bez docs/eval/** musí padnout
  ('chyti', 'verify_pravidla_mapa.js', 'scripts/utils/pravidla_mapa.json', 'replace', '"cesty": ["docs/eval/**", "docs/kostra/**"],', '"cesty": ["docs/kostra/**"],'),
  ('chyti', 'verify_hooky_claude.py', 'hooks/claude/runar-context.py', 'replace', "    for m in LRE.finditer(data):", "    for m in []:"),
+ # 2026-11-25 (CODE-read): hlídač API — dva pokusy jedním příkazem a slova se známým účinkem musí zastavit
+ ('chyti', 'verify_hooky_claude.py', 'hooks/claude/runar-api-guard.py', 'replace', "if prikaz.count('RUNAR_API_ANO=') > 1:", "if False:"),
+ ('chyti', 'verify_hooky_claude.py', 'hooks/claude/runar-api-guard.py', 'replace', "    for w in slova:", "    for w in []:"),
  # kolo 3 / 4h (2026-10-11): obrazy, kalendář, myšlenka ✦, zrcadlo parseru
  ('chyti', 'verify_compose_mirror.js', 'v2/runar-character.js', 'replace', "var reading = segs.map(function (x) { return x.text; }).join(' ').trim();", "var reading = segs.map(function (x) { return x.text; }).join('  ').trim();"),
  ('chyti', 'verify_icelandic_calendar.js', 'v2/runar-character.js', 'replace', "if (doZimy <= 90) return 'heyannir';", "if (doZimy <= 120) return 'heyannir';"),
