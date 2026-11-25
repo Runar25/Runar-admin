@@ -19,7 +19,24 @@ BACKUP_DIR = os.path.join(os.path.expanduser('~'), '.claude', 'compact-backups')
 KEEP = 30  # kolik poslednich sessions si drzet (podle mtime), zbytek smazat
 
 
+# POKYNY PRO SHRNUTI (2026-11-25, CODE-read, audit docs/audit/2026-11-25-pamet-a-pravidla/): stdout PreCompact hooku se stava pokynem
+# pro shrnuti pri compactu a na rozdil od ostatnich hooku nema strop 10 000 znaku (code.claude.com/docs/en/hooks.md, PreCompact).
+# Bez nich shrnuti ztracelo presne to, kvuli cemu owner rika „po compactu nic nevis“: jake lane session je, ownerovy cislovane
+# odpovedi a k cemu patri, co se prave dela. Karta po compactu (runar-context.py) to dopluje z prepisu, ale jen do 8 500 znaku.
+POKYNY = (
+    'Pokyny pro shrnuti (projekt Runar, hook compact-backup.py) — ZACHOVEJ doslova a uplne:\n'
+    '1. Jmeno lane teto session (CODE-tune / CODE-read / CODE-tree / CODE-web …) a pod jakym jmenem commituje.\n'
+    '2. Posledni zpravy ownera doslova a jeho cislovane odpovedi („18. ano“) VCETNE otazky, ke ktere kazda patri.\n'
+    '3. Otazky, ktere session ownerovi polozila a na ktere jeste neodpovedel — doslova s cisly.\n'
+    '4. Co owner schvalil nebo zamitl a co vytkl (chyby a co z nich plyne) — kazde jednou vetou s datem.\n'
+    '5. Co se prave dela: dohodnuty plan s poradim kroku, ktery krok je hotovy (s commitem) a ktery je dalsi.\n'
+    '6. Soubory a commity vytvorene nebo zmenene v teto session (cesty a hashe).\n'
+    'Vynech: vypisy nastroju, obsah souboru, ktery lze znovu precist, a texty cteni uzivatelu (osobni udaje).\n'
+)
+
+
 def main():
+    sys.stdout.write(POKYNY)
     try:
         data = json.load(sys.stdin)
     except Exception:

@@ -83,6 +83,29 @@ def over(d):
         r = py(d, 'runar-context.py', {'session_id': SID, 'transcript_path': p, 'source': 'startup'})
         ok('kontext po startu vrátí pravidla', r.returncode == 0 and len(r.stdout) > 500 and 'RUNAR' in r.stdout, str(len(r.stdout)) + ' zn. ' + r.stderr[-150:])
 
+        # 2026-11-25 (CODE-read, audit docs/audit/2026-11-25-pamet-a-pravidla/): karta po compactu se musí vejít pod strop Claude Code
+        # (10 000 znaků, jinak jen náhled 2 000 a soubor, který nikdo nečte), poznat lane z přepisu a nenést cizí snapshoty stromu.
+        dlouhe = [{'type': 'user', 'message': {'role': 'user', 'content': ('%d. ano, ' % i) + 'slovo ' * 900}} for i in range(14)]
+        dlouhe += [{'type': 'assistant', 'message': {'content': [{'type': 'tool_use', 'name': 'Bash', 'input': {
+                    'command': "git -c user.name='CODE-read' commit -F m.txt -- x"}}]}},
+                   {'type': 'assistant', 'message': {'content': [{'type': 'text', 'text': 'Výsledek. ' * 40 + '\n\n18. Mám to udělat takhle?'}]}}]
+        t = tempfile.NamedTemporaryFile('w', suffix='.jsonl', delete=False, encoding='utf-8')
+        t.write('\n'.join(json.dumps(z, ensure_ascii=False) for z in dlouhe)); t.close(); soubory.append(t.name)
+        r = py(d, 'runar-context.py', {'session_id': SID, 'transcript_path': t.name, 'source': 'compact'})
+        try:
+            karta = json.loads(r.stdout)['hookSpecificOutput']['additionalContext']
+        except Exception:
+            karta = ''
+        ok('karta po compactu se vejde pod strop 10 000 znaků', 0 < len(karta) <= 9000, str(len(karta)) + ' zn. ' + r.stderr[-150:])
+        ok('karta po compactu pozná lane z přepisu', 'MOJE LANE: CODE-read' in karta, karta[:120])
+        ok('karta po compactu nese otevřenou otázku ownerovi', '18. Mám to udělat takhle?' in karta, karta[-200:])
+        ok('karta nenese nedatované snapshoty stromu', 'runar-tree-' not in karta and 'ROZDELANA PRACE (memory/snapshots' not in karta, '')
+        for m in glob.glob(os.path.expanduser('~/.claude/runar-lane/' + SID + '*')):
+            try: os.remove(m)
+            except OSError: pass
+        r = py(d, 'compact-backup.py', {'transcript_path': 'C:/neexistuje-verify-hooky.jsonl', 'session_id': SID})
+        ok('před compactem dostane shrnutí pokyn zachovat lane a otevřené otázky', 'lane' in r.stdout and 'Otazky' in r.stdout, r.stdout[:120])
+
         r = sh(d, 'start', {'session_id': SID, 'transcript_path': p, 'source': 'startup'})
         ok('tree-guard start doběhne a vrátí kontext', r.returncode == 0 and len(r.stdout) > 500, str(r.returncode) + ' ' + r.stderr[-150:])
         p2 = prepis('1. Hotovo.\n' + F + 'bash\nnode x.js\n' + F + '\n'); soubory.append(p2)
@@ -113,9 +136,16 @@ if '--test' in sys.argv:
         p = os.path.join(tmp, 'runar-zprava-check.py')
         s = open(p, encoding='utf-8').read()
         open(p, 'w', encoding='utf-8').write(s.replace('def main():', 'def main():\n    raise SystemExit(0)', 1))
+        # karta bez stropů (stará vada: 16–23 tis. znaků) musí shodit případ „pod strop“ — jinak hlídá jen to, že karta existuje
+        p = os.path.join(tmp, 'runar-context.py')
+        s = open(p, encoding='utf-8').read()
+        open(p, 'w', encoding='utf-8').write(s.replace('strop=3200, per=900', 'strop=10 ** 9, per=10 ** 9', 1).replace('STROP = 8500', 'STROP = 10 ** 9', 1))
         spatne = [j for j, o, _ in over(tmp.replace('\\', '/')) if not o]
         if not any('kontrola zpráv' in j for j in spatne):
             print('FAIL  samotest: kontrola zpráv s vypnutým main() prošla — kontrola nic nehlídá')
+            sys.exit(1)
+        if not any('pod strop' in j for j in spatne):
+            print('FAIL  samotest: karta bez stropů prošla případem „pod strop“ — kontrola délku nehlídá')
             sys.exit(1)
         print('OK    samotest hooků: vypnutá kontrola zpráv padá (' + str(len(spatne)) + ' případů)')
         sys.exit(0)
