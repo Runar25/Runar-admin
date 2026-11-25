@@ -1,0 +1,770 @@
+{
+ "_co": "Běhy pokusů přes API dohledané ZPĚTNĚ z přepisů konverzací (scripts/utils/behy_zpetne.py, 2026-11-25). Jen příkazy, které hook pustil; přiřazení: RUNAR_POKUS v příkazu, jinak podle složky pokusu v cestě, jinak „—“ (nepřiřazeno). Od 2026-11-25 píše záznam každého běhu hlídač API sám do docs/kostra/behy/. Přepisy starší, než sahají soubory na disku, tu nejsou.",
+ "behy": [
+  {
+   "cas": "2026-10-07 19:23:50",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 18,
+   "zamer": "",
+   "skript": "docs/eval/2026-10-06-ask-otazky/ask_slova.js",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-07 19:23:58",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": null,
+   "zamer": "",
+   "skript": "",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-07 20:28:08",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 36,
+   "zamer": "rozhodne, která z pěti formulací otázky na oblast (s podobou oblasti v Asku) dá odpověď o oblasti bez pojistky a bez převyprávění čtení; když některá vyjde líp než dnešní tip u všech tří čtení → ukážu ji ownerovi jako kandidáta, jinak → nic se nemění a ukážu, co která formulace dělá",
+   "skript": "ask_oblast.js",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-09 20:07:16",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 15,
+   "zamer": "Rozhodne, jestli Haiku 5.5 zvládne rozbor čtení jako luna: když najde tytéž vady a nic si nevymyslí → navrhnu přepnout gpt-review na Haiku, jinak → luna zůstává (owner 9. 10.: 13. ano porovnej)",
+   "skript": "C:/Users/zkuku/AppData/Local/Temp/claude/C--Users-zkuku/12b7cce8-c1bb-4d60-afe0-c53fe2a58d0b/scratchpad/haiku_luna.js",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-09 20:09:09",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 5,
+   "zamer": "Haiku 5.5 bez přemýšlení na týchž 5 vstupech: když vyjde cenou jako luna a najde totéž → doporučím ho pro rozbor, jinak → luna zůstává (doplněk kola 1, owner 9. 10.: 13. ano porovnej)",
+   "skript": "C:/Users/zkuku/AppData/Local/Temp/claude/C--Users-zkuku/12b7cce8-c1bb-4d60-afe0-c53fe2a58d0b/scratchpad/haiku_bez.js",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-09 21:30:01",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 14,
+   "zamer": "Vrácené podoby oblastí bez délky (owner 9. 10.: 13. ano; purpose vrátit a career taky upravené): když žádné čtení netvrdí čas (years/long) a podoba se neopisuje do formule → nasadím, jinak → zkusím jiné znění",
+   "skript": "C:/Users/zkuku/AppData/Local/Temp/claude/C--Users-zkuku/12b7cce8-c1bb-4d60-afe0-c53fe2a58d0b/scratchpad/podoby_test.js",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-09 21:31:04",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 6,
+   "zamer": "Purpose [3] druhé znění blízké původnímu (an aim being pursued): když 0 tvrzení o čase a opis zní přirozeněji než an aim in view → nasadím toto, jinak → an aim in view (owner 9. 10.: 13. ano)",
+   "skript": "$D/podoby_test.js",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-10 23:02:29",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 1,
+   "zamer": "rozhodne, jestli 3 opravené IS věty zásad jsou čisté; když nález → přepíšu znovu, jinak → commit",
+   "skript": "scripts/_patch_tune.py",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-10 23:40:10",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 1,
+   "zamer": "Korektura 14 novych IS vet (hlas Rune Seekera, souhlas, denik, napoveda, zasady) jednim volanim; kdyz GPT najde jistou chybu → opravim vetu a premerim Greynirem, jinak → vety zapisu do appky.",
+   "skript": "$R/is-gpt-check.py",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-10 23:53:37",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 1,
+   "zamer": "Korektura vsech 30 IS textu napovedy (zbytek z BACKLOG casti 39: s1, s3, s7, FAQ) a prvni zapis nakladu GPT korektury; kdyz GPT najde jistou chybu → opravim ji a premerim Greynirem a korpusem, jinak → polozku v BACKLOGu zavru.",
+   "skript": "$R/is-gpt-check.py",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-10 23:56:42",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 1,
+   "zamer": "Korektura 16 opravenych IS textu napovedy (inneign misto kreditar, s1, s3, kontakt, FAQ) jednim volanim; kdyz GPT najde jistou chybu → opravim a premerim, jinak → zapisu do napovedy.",
+   "skript": "$R/is-gpt-check.py",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-10 23:57:18",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 1,
+   "zamer": "Kontrola 3 vet opravenych po minulem nalezu GPT (napoveda s1, rs_credits_desc); kdyz GPT najde jistou chybu → prepisu znovu, jinak → zapisu do napovedy a appky.",
+   "skript": "$R/is-gpt-check.py",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-11 00:26:38",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 1,
+   "zamer": "Kontrola 1 nove IS vety pro appku (hlas odpociva po dosazeni bezpecne hladiny kvoty ElevenLabs); kdyz GPT najde jistou chybu → prepisu a premerim Greynirem, jinak → zapisu do UI_TEXT.",
+   "skript": "$R/is-gpt-check.py",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-11 09:39:02",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 1,
+   "zamer": "kontrola IS šesti nových textů nápovědy (BACKLOG (o)): když GPT najde vadu → opravím a přeměřím Greynirem, jinak → patch nápovědy",
+   "skript": "is-gpt-check.py",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-11 10:48:45",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 1,
+   "zamer": "kontrola IS dvou nových vět (upozornění na obnovu čtení, FAQ): když GPT najde vadu → opravím a přeměřím, jinak → zapíšu do appky",
+   "skript": "is-gpt-check.py",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-11 16:02:25",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 1,
+   "zamer": "kontrola IS věty počítadla hlasu v menu (§2 krok 3); když OK → zapsat do UI_TEXT, jinak → přepsat",
+   "skript": "C:/Users/zkuku/Downloads/Runar-admin/is-gpt-check.py",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-11 17:31:18",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 1,
+   "zamer": "kontrola IS vet o hlasu ke kazdemu cteni (tarify, napoveda, zasady soukromi) pred commitem; kdyz najde chybu -> prepsat a overit znovu, jinak -> commit",
+   "skript": "is-gpt-check.py",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-11 17:32:40",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 1,
+   "zamer": "kontrola 2 prepsanych IS vet o hlasu (napoveda, zasady soukromi); kdyz najde chybu -> prepsat znovu, jinak -> pouzit",
+   "skript": "is-gpt-check.py",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-11 19:04:51",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 1,
+   "zamer": "kontrola IS popisku tlacitka hlasu v deniku (Hlusta a lesturinn); kdyz chyba -> jiny popisek, jinak -> pouzit",
+   "skript": "is-vazba.py",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-11 19:24:04",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 1,
+   "zamer": "kontrola IS textu okna Where to start pred commitem; kdyz chyba -> prepsat a overit znovu, jinak -> pouzit",
+   "skript": "C:/Users/zkuku/Downloads/Runar-admin/is-greynir.py",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-11 21:14:19",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 1,
+   "zamer": "korektura 7 islandských vět okna přepnutí jazyka (SPEAK AGAIN); když najde jistou chybu → přepíšu větu a ověřím znovu, jinak → texty jdou do UI_TEXT",
+   "skript": "C:/Users/zkuku/Downloads/Runar-admin/is-gpt-check.py",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-11 21:49:59",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 1,
+   "zamer": "korektura 3 islandských vět u Rúnakortu (nález CODE-read: pád po með, kalk ENTER CODE); jistá chyba → přepíšu a ověřím znovu, jinak → do UI_TEXT",
+   "skript": "C:/Users/zkuku/Downloads/Runar-admin/is-gpt-check.py",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-12 18:46:04",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 1,
+   "zamer": "korektura nových a opravených islandských odstavců zásad soukromí (18 textů, 1 volání): jistý nález → opravit před commitem, čisto → commit",
+   "skript": "is-gpt-check.py",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-12 18:46:46",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 1,
+   "zamer": "ověření přeformulované věty zásad po nálezu is-gpt-check (1 text, 1 volání): čisto → zapsat, nález → přepsat znovu",
+   "skript": "is-gpt-check.py",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-12 21:19:22",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 1,
+   "zamer": "korektura 3 novych IS textu (upozorneni u otazky, vek 13 v zasadach, ElevenLabs bez treninku) pred commitem; kdyz najde chybu -> prepsat a znovu greynir, jinak -> commit",
+   "skript": "is-gpt-check.py",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-12 21:20:05",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 1,
+   "zamer": "opakovana korektura upozorneni u otazky po prepisu hun->spurningin; kdyz najde chybu -> prepsat, jinak -> commit",
+   "skript": "is-greynir.py",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-12 21:37:23",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 1,
+   "zamer": "korektura IS hlasky u zamcene runy pred commitem; kdyz najde chybu -> prepsat a znovu greynir, jinak -> commit",
+   "skript": "is-gpt-check.py",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-12 21:58:35",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 1,
+   "zamer": "korektura 7 IS textu souhlasu s odeslanim otazky (krok 2) pred zapisem; kdyz najde chybu -> prepsat a znovu greynir, jinak -> zapsat",
+   "skript": "is-gpt-check.py",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-12 22:00:07",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 1,
+   "zamer": "islandske texty webu (landing + karta): kdyz GPT najde chybu → opravim a overim znovu, jinak → texty hotove; owner: mame mechaniku na kontrolu IS",
+   "skript": "is-gpt-check.py",
+   "session": "26aeca23"
+  },
+  {
+   "cas": "2026-10-13 18:53:49",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 1,
+   "zamer": "korektura kratkeho IS upozorneni pod plus u otazky (hlaseni ownera 564fac2a); kdyz najde chybu -> prepsat, jinak -> zapsat",
+   "skript": "is-greynir.py",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-13 18:54:18",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 1,
+   "zamer": "korektura zvolene IS varianty upozorneni pod plus (Greynir ok); kdyz najde chybu -> varianta Her skaltu, jinak -> zapsat",
+   "skript": "is-gpt-check.py",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-13 21:16:25",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 1,
+   "zamer": "korektura IS vety do zasad o mazani historie ElevenLabs; kdyz najde chybu -> prepsat, jinak -> zapsat",
+   "skript": "is-greynir.py",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-13 22:15:39",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 1,
+   "zamer": "korektura 11 IS textu zasad pro registraci z webu (zadost CODE-web); kdyz najde chybu -> prepsat a znovu greynir, jinak -> zapsat",
+   "skript": "is-gpt-check.py",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-13 22:22:59",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 1,
+   "zamer": "korektura 2 IS bunek zasad (IP pri uplatneni kodu karty); kdyz najde chybu -> prepsat, jinak -> zapsat",
+   "skript": "is-greynir.py",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-16 16:53:56",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 15,
+   "zamer": "Rozhodne, jestli sol pravidlo v systémovém promptu poslechne stejně jako v user promptu: když systém ≈ user ≫ kontrola → CLAUDE.md „systém ignoruje“ na solu neplatí, jinak → platí",
+   "skript": "scripts/utils/gen_batch.js",
+   "session": "19d97179"
+  },
+  {
+   "cas": "2026-10-22 18:21:32",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 15,
+   "zamer": "rozhodne, jestli řádek aspektu v Asku drží odpověď u skrytého místo štěstí: čekám luck/chance v (a) 0-1/5, v (c) víc; když (a) ≈ (b), aspekt váhu nemá a napíšu to ownerovi",
+   "skript": "",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-22 18:21:38",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 15,
+   "zamer": "rozhodne, jestli řádek aspektu v Asku drží odpověď u skrytého místo štěstí: čekám luck/chance v (a) 0-1/5, v (c) víc; když (a) ≈ (b), aspekt váhu nemá a napíšu to ownerovi",
+   "skript": "",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-22 19:00:58",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 15,
+   "zamer": "rozhodne, jestli řádek aspektu v Asku drží odpověď u skrytého místo štěstí: čekám luck/chance v (a) 0-1/5, v (c) víc; když (a) ≈ (b), aspekt váhu nemá a napíšu to ownerovi",
+   "skript": "",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-22 19:15:57",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 3,
+   "zamer": "rozhodne, jestli Ask potřebuje větu „Do NOT give a new divination“: když 3/3 odpovědí dál nevěští (charakter to drží), věta je nadbytečná; když věští, je potřeba",
+   "skript": "",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-24 20:56:41",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 12,
+   "zamer": "rozhodne, jestli sol 6 a sol 6.1 low staví větu 1 ze stejného vstupu jako Opus (situace, dar jako dovednost 5/6); když ano, jedeme dál na Opusu s losem položky, když ne, ladíme rovnou na solu; plus cena na čtení",
+   "skript": "C:/Users/zkuku/AppData/Local/Temp/claude/C--Users-zkuku/19d97179-39e7-4098-bebb-c437e7df8e6e/scratchpad/sol_v3k9.js",
+   "session": "19d97179"
+  },
+  {
+   "cas": "2026-10-24 21:34:54",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 14,
+   "zamer": "rozhodne, jestli sol 6 nese úhel pohledu (inside = you, watches = 3. osoba) a co s ním udělá look closer; když ano jako u Opusu, skládáme větu 1 dál pro sol, když ne, hledáme pro sol jinou formulaci",
+   "skript": "C:/Users/zkuku/AppData/Local/Temp/claude/C--Users-zkuku/19d97179-39e7-4098-bebb-c437e7df8e6e/scratchpad/sol_v3k11.js",
+   "session": "19d97179"
+  },
+  {
+   "cas": "2026-10-27 21:06:52",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 10,
+   "zamer": "Norny a3692c86: věta o detailu scény (B) proti dnešnímu promptu (A), 5+5 sol. Když B nese význam Ansuz a Sowilo detailem scény častěji (slepý soudce) → navrhnout větu do promptu výkladů; jinak → věta nepomáhá, hledat jinde.",
+   "skript": "docs/eval/2026-10-27-vyklad-detail/test.js",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-27 21:07:02",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 10,
+   "zamer": "Norny a3692c86: věta o detailu scény (B) proti dnešnímu promptu (A), 5+5 sol. Když B nese význam Ansuz a Sowilo detailem scény častěji (slepý soudce) → navrhnout větu do promptu výkladů; jinak → věta nepomáhá, hledat jinde.",
+   "skript": "docs/eval/2026-10-27-vyklad-detail/test.js",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-27 22:36:47",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 8,
+   "zamer": "Hlas rituálu: 4 varianty přednesu (A dnes, B v3 0,85 pauzy, C +značka, D v4) EN+IS k poslechu; owner vybere → ta se nahraje jako statická.",
+   "skript": "docs/eval/2026-10-27-ritual-hlas/gen.js",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-27 22:36:55",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 8,
+   "zamer": "Hlas rituálu: 4 varianty přednesu (A dnes, B v3 0,85 pauzy, C +značka, D v4) EN+IS k poslechu; owner vybere → ta se nahraje jako statická.",
+   "skript": "docs/eval/2026-10-27-ritual-hlas/gen.js",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-29 18:04:29",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 4,
+   "zamer": "hlas rituálu: v4 s nastavením C a delší pauzou (E výpustky / F [long pause]), owner vybere variantu",
+   "skript": "docs/eval/2026-10-27-ritual-hlas/gen.js",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-29 18:04:29",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 10,
+   "zamer": "rozhodne, jestli jde měnit intonaci hlasu ve čtení (v4, nastavení, značky od modelu výkladu); když R2/R3 mají víc pauz a pohybu výšky než R0, navrhnu je ownerovi k poslechu, jinak zůstane dnešek",
+   "skript": "docs/eval/2026-10-28-hlas-cteni/gen.js",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-29 18:04:29",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 10,
+   "zamer": "rozhodne, jestli jde měnit intonaci hlasu ve čtení (v4, nastavení, značky od modelu výkladu); když R2/R3 mají víc pauz a pohybu výšky než R0, navrhnu je ownerovi k poslechu, jinak zůstane dnešek",
+   "skript": "docs/eval/2026-10-28-hlas-cteni/gen.js",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-29 18:09:06",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 4,
+   "zamer": "rozhodne, jestli v4 Turbo (poloviční cena) zní u rituálu a čtení jako v4; když owner neuslyší rozdíl a pauza Turbo vyjde jako u F, navrhnu Turbo, jinak zůstane v4",
+   "skript": "scripts/_patch_tune.py",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-29 18:09:32",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 4,
+   "zamer": "rozhodne, jestli v4 Turbo (poloviční cena) zní u rituálu a čtení jako v4; když owner neuslyší rozdíl a pauza Turbo vyjde jako u F, navrhnu Turbo, jinak zůstane v4",
+   "skript": "docs/eval/2026-10-27-ritual-hlas/gen.js",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-29 19:01:45",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 4,
+   "zamer": "rozhodne, jestli v4 Turbo čte intonační značky nahlas (R5 proti R4 o víc než ~1,5 s delší = čte); když nečte, recept R3 na Turbo jde do produkce, jinak značky vypnu",
+   "skript": "scripts/_patch_tune.py",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-29 19:05:07",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 2,
+   "zamer": "rozhodne, jestli produkční hlasovyText projde se skutečným sol (model, parametry, pojistka) a jak dlouho trvá; když znacky a pod 8 s, jde do proxy, jinak opravím volání",
+   "skript": "",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-10-30 06:48:51",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 2,
+   "zamer": "hlas návodu How a reading works EN+IS receptem F (owner 2026-10-30: chci taky s hlasem, 5. B)",
+   "skript": "C:/Users/zkuku/Downloads/Runar-admin/docs/eval/2026-10-27-ritual-hlas/gen.js",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-11-05 21:44:07",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 10,
+   "zamer": "rozhodne, jestli sol na promptu testu 2 drzi scenu a stavbu jako GPT chat; kdyz ano, testy v GPT plati i pro sol, kdyz sol opisuje vstup, dalsi testy pojedou na solu",
+   "skript": "C:/Users/zkuku/AppData/Local/Temp/claude/f94609be55b8f08e/19d97179-39e7-4098-bebb-c437e7df8e6e/scratchpad/sol/test2_sol.js",
+   "session": "19d97179"
+  },
+  {
+   "cas": "2026-11-09 21:55:59",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 6,
+   "zamer": "rozhodne, jestli jeden radek vstupu s druhou stranou vyznamu dostane druhou stranu do v2 cteni Fehu bez nalepky a co z cteni ubude; kdyz ano, dalsi runy a fáze, kdyz ne, jine zneni nebo misto",
+   "skript": "C:/Users/zkuku/AppData/Local/Temp/claude/f94609be55b8f08e/19d97179-39e7-4098-bebb-c437e7df8e6e/scratchpad/sol/stin_test.js",
+   "session": "19d97179"
+  },
+  {
+   "cas": "2026-11-09 21:56:57",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 4,
+   "zamer": "rozhodne, jestli radek faze runy v produkcnim promptu v2 zmeni cteni Raidho tak, ze kazda faze ukaze jiny okamzik; kdyz ano, zkusit dalsi runy, kdyz ne, faze vynechat",
+   "skript": "C:/Users/zkuku/AppData/Local/Temp/claude/f94609be55b8f08e/19d97179-39e7-4098-bebb-c437e7df8e6e/scratchpad/sol/fazy_test.js",
+   "session": "19d97179"
+  },
+  {
+   "cas": "2026-11-10 21:05:29",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 13,
+   "zamer": "rozhodne, jak zni spojena otazka u Reflection, tri tvary konce u Confirmation, druha strana u Raidho a faze u Isa; kdyz owner tvar vybere, jde do dalsi zkousky, kdyz ne, zneni se prepise",
+   "skript": "C:/Users/zkuku/AppData/Local/Temp/claude/f94609be55b8f08e/19d97179-39e7-4098-bebb-c437e7df8e6e/scratchpad/sol/v2lab.js",
+   "session": "19d97179"
+  },
+  {
+   "cas": "2026-11-10 21:47:27",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 6,
+   "zamer": "rozhodne, jestli jeden radek drzi scenu na jedne vete a co se stane s vyznamem a delkou; kdyz scena klesne a vyznam dostane misto, zkusit dal druhou stranu do uvolneneho mista, kdyz ne, hledat jinou paku (delka obrazu, uhel)",
+   "skript": "C:/Users/zkuku/AppData/Local/Temp/claude/f94609be55b8f08e/19d97179-39e7-4098-bebb-c437e7df8e6e/scratchpad/sol/v2lab.js",
+   "session": "19d97179"
+  },
+  {
+   "cas": "2026-11-14 12:31:02",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 21,
+   "zamer": "rozhodne, jestli obraz na jednom miste, sjednocena zdvojeni a islandsky obraz jako rozpojena slova zmeni cteni; kdyz scena klesne na jednu vetu a opisovani klesne, predlozit ownerovi texty, jinak zapsat ze paka nezabrala",
+   "skript": "pust1114.js",
+   "session": "19d97179"
+  },
+  {
+   "cas": "2026-11-14 13:27:36",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 3,
+   "zamer": "rozhodne, jestli popis větve Rúnarovým hlasem na solu míří správným směrem; když owner řekne ano, ladím zadání dál, když ne, přepíšu ho podle jeho výtek",
+   "skript": "scripts/_vetev_popis.js",
+   "session": "174bab46"
+  },
+  {
+   "cas": "2026-11-14 14:04:03",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 3,
+   "zamer": "rozhodne, jestli runy jako jeden pohyb (bez popisu větve) zní líp než kolo 1; když owner řekne ano, zadání drží, jinak ho přepíšu podle výtek",
+   "skript": "/c/Users/zkuku/AppData/Local/Temp/claude/f94609be55b8f08e/174bab46-0d9e-4850-99aa-cc0917e4046f/scratchpad/kolo2.py",
+   "session": "174bab46"
+  },
+  {
+   "cas": "2026-11-14 21:42:52",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 9,
+   "zamer": "rozhodne, ktery zpusob zadani postupu (recept po vetach / vyznam napred / viditelny plan) da solu bez premysleni cteni, kde prvni veta jen neprevypravi obraz; kdyz zadny, jinak zustava produkcni zadani a resi se obraz v datech",
+   "skript": "pust1114.js",
+   "session": "19d97179"
+  },
+  {
+   "cas": "2026-11-14 22:09:30",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 1,
+   "zamer": "rozhodne, jestli prompt dá runu dne ve třech částech bez tvrzení o čtenáři; když ano, ukážu ownerovi, jinak upravím prompt",
+   "skript": "docs/eval/2026-11-14-runa-dne/lab.js",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-11-14 22:22:14",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 9,
+   "zamer": "rozhodne, jak vypada cteni solu bez obrazu ve trech zpusobech zadani (tri casti / bez poradi / viditelny plan); kdyz zadne nedrzi runu bez sceny, jinak owner vybere smer",
+   "skript": "pust1114.js",
+   "session": "19d97179"
+  },
+  {
+   "cas": "2026-11-14 22:51:33",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 4,
+   "zamer": "rozhodne, jestli los páček (význam, vstup, sloveso, čočka, zaměření) dá čtyři znatelně různé texty Berkany v tónu ownerova vzorku; když ano, ověřím páky na všech 25 runách, jinak páku, která nic nemění, vyřadím",
+   "skript": "docs/eval/2026-11-14-runa-dne/lab_los.js",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-11-16 22:18:45",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 24,
+   "zamer": "rozhodne, zda odebrání půlvěty 'speak from what the picture holds' sníží obraz v odpovědi Asku na tip 'Where does this get hard?'; když ano → ověřit i tip clearer image a navrhnout ownerovi, jinak → půlvěta zůstává",
+   "skript": "docs/eval/2026-11-16-ask-tezkost/ask_tezkost.js",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-11-17 19:04:04",
+   "pokus": "P02",
+   "prirazeno": "složka",
+   "volani": 6,
+   "zamer": "rozhodne, jestli slovo phone v obraze Kenaz cteni pomaha nebo jen prekazi; cekam, ze s telefonem ho model opise a bez nej si zdroj svetla domysli; kdyz bez telefonu cteni neztrati scenu, navrhnu obraz bez telefonu, jinak telefon zustane",
+   "skript": "../../../zkouska-1114/pust1114.js",
+   "session": "19d97179"
+  },
+  {
+   "cas": "2026-11-17 19:26:07",
+   "pokus": "P02",
+   "prirazeno": "složka",
+   "volani": 6,
+   "zamer": "rozhodne, jestli model z davkovanych slov slozi vlastni scenu nebo je jen vyjmenuje; cekam, ze slova prevezme vsechna a volbu i volne misto vyplni sam; kdyz scena drzi a cteni se mezi seedy lisi, navrhnu zkousku slov na dalsi rune, jinak zustava hotova veta",
+   "skript": "../../../zkouska-1114/pust1114.js",
+   "session": "19d97179"
+  },
+  {
+   "cas": "2026-11-17 19:51:46",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 3,
+   "zamer": "rozhodne, zda blok životní runy v runě dne dá osobní text pro placenou vrstvu; když ano → návrh ownerovi, jinak → jiné znění bloku",
+   "skript": "docs/eval/2026-11-14-runa-dne/lab_zivotni.js",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-11-17 20:27:43",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 1,
+   "zamer": "rozhodne, zda se dnešní texty runy dne převezmou do knihovny; když ano → doplním varianty, jinak → opravím import",
+   "skript": "scripts/runa_dne_knihovna.js",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-11-17 20:27:52",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 1,
+   "zamer": "rozhodne, kolik volání doplnění knihovny bude; když do 300 → spustím, jinak → zeptám se ownera",
+   "skript": "scripts/runa_dne_knihovna.js",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-11-17 20:27:57",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 292,
+   "zamer": "rozhodne, zda knihovna 3 variant na runu dá texty k přečtení a schválení; když ano → server je bude střídat, jinak → opravím prompt a doplním znovu",
+   "skript": "scripts/runa_dne_knihovna.js",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-11-17 20:36:02",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 2,
+   "zamer": "rozhodne, zda životní runa jako zbarvení celé runy dne (ne samostatná část) dá propojený text; když ano → návrh ownerovi, jinak → jiné znění",
+   "skript": "docs/eval/2026-11-14-runa-dne/lab_zivotni.js",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-11-17 21:28:48",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 1,
+   "zamer": "rozhodne, zda generátor čte knihovnu v novém formátu; když ano → commit, jinak → oprava",
+   "skript": "scripts/_patch_tune.py",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-11-17 22:00:25",
+   "pokus": "P04",
+   "prirazeno": "složka",
+   "volani": 6,
+   "zamer": "rozhodne, jestli sol bez obrazu z popisu, napeti a cesty Gebo napise ctyri vety bez hadani a bez rady a u rozcesti rozcestnik bez doporuceni; kdyz ano, ukazu ownerovi a pripravim data pro dalsi runy, kdyz radi nebo hada, upravim zneni napeti a cesty",
+   "skript": "../zkouska-1114/pust1114.js",
+   "session": "19d97179"
+  },
+  {
+   "cas": "2026-11-18 21:22:39",
+   "pokus": "P05",
+   "prirazeno": "složka",
+   "volani": 3,
+   "zamer": "rozhodne, jak sol napise ctyri pohyby bez definice runy (Berkana, Raidho, Hagalaz); cekam obraz s detailem a vyznam bez slovniku, riziko opisu strany runy a hadani; owner podle textu rozhodne, jestli definici vyradit, jinak zustava esencni radek",
+   "skript": "../zkouska-1114/pust1114.js",
+   "session": "19d97179"
+  },
+  {
+   "cas": "2026-11-18 22:18:44",
+   "pokus": "P05",
+   "prirazeno": "složka",
+   "volani": 6,
+   "zamer": "rozhodne, jestli model zdroj vyznamu jen preklada; kdyz slovo nebo dve strany daji vlastni vetu 2 bez parafraze, navrhnu ten zdroj pro ctyri pohyby, jinak zustane veta mechanismu",
+   "skript": "../zkouska-1114/pust1114.js",
+   "session": "19d97179"
+  },
+  {
+   "cas": "2026-11-19 22:07:43",
+   "pokus": "—",
+   "prirazeno": "—",
+   "volani": 4,
+   "zamer": "rozhodne, jestli instrukce runa po runě po–ne dá text mířený na člověka bez formule; když texty sednou ownerovi, stavím admin verzi, když ne, upravím instrukci",
+   "skript": "docs/eval/2026-11-19-souhrn-tydne/souhrn_lab.js",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-11-19 22:07:43",
+   "pokus": "P18",
+   "prirazeno": "složka",
+   "volani": 3,
+   "zamer": "rozhodne, jestli s v5.24 (pravidlo obrazu + výjimka úhlu 3) model ještě přidává předměty bez funkce; když ne, navrhnu nasazení, když ano, hledám páku v řádku one detail",
+   "skript": "docs/eval/2026-11-19-obraz-predmety/pokus.js",
+   "session": "12b7cce8"
+  },
+  {
+   "cas": "2026-11-24 22:02:02",
+   "pokus": "P17",
+   "prirazeno": "RUNAR_POKUS",
+   "volani": 5,
+   "zamer": "P17: když konec-podmínka u Confirmation zní jako jasná podmínka bez ano/ne a bez rady → návrh pro CODE-tune, jinak zůstává konec dvě možnosti",
+   "skript": "../../2026-11-09-v2-vyklad-z-v3/zkouska-1114/pust1114.js",
+   "session": "19d97179"
+  },
+  {
+   "cas": "2026-11-24 22:02:42",
+   "pokus": "mimo: zjištění příčiny 401 dotazem na seznam modelů, bez generování",
+   "prirazeno": "RUNAR_POKUS",
+   "volani": 1,
+   "zamer": "když seznam modelů vrátí 401 invalid_api_key → klíč je zneplatněný a řeknu ownerovi, jinak hledám chybu v dotazu",
+   "skript": "C:/Users/zkuku/AppData/Local/Temp/claude/f94609be55b8f08e/19d97179-39e7-4098-bebb-c437e7df8e6e/scratchpad/klic_test.js",
+   "session": "19d97179"
+  },
+  {
+   "cas": "2026-11-24 22:21:32",
+   "pokus": "mimo: ověření nového klíče dotazem na seznam modelů, bez generování",
+   "prirazeno": "RUNAR_POKUS",
+   "volani": 1,
+   "zamer": "když seznam modelů vrátí ok → pustím P17, P10, P20, jinak řeknu ownerovi, co klíč hlásí",
+   "skript": "C:/Users/zkuku/AppData/Local/Temp/claude/f94609be55b8f08e/19d97179-39e7-4098-bebb-c437e7df8e6e/scratchpad/klic_test.js",
+   "session": "19d97179"
+  },
+  {
+   "cas": "2026-11-24 22:21:42",
+   "pokus": "P17",
+   "prirazeno": "RUNAR_POKUS",
+   "volani": 5,
+   "zamer": "P17: když konec-podmínka u Confirmation zní jako jasná podmínka bez ano/ne a bez rady → návrh pro CODE-tune, jinak zůstává konec dvě možnosti",
+   "skript": "",
+   "session": "19d97179"
+  },
+  {
+   "cas": "2026-11-24 22:21:42",
+   "pokus": "P10",
+   "prirazeno": "RUNAR_POKUS",
+   "volani": 4,
+   "zamer": "P10: když kontrast dá čtení, které pocit nepřitakává a přesto sedí, a zrcadlení jen opakuje pocit → kontrast, jinak zrcadlení nebo ani jedno",
+   "skript": "",
+   "session": "19d97179"
+  },
+  {
+   "cas": "2026-11-24 22:21:42",
+   "pokus": "P20",
+   "prirazeno": "RUNAR_POKUS",
+   "volani": 3,
+   "zamer": "P20: když moderní význam a stín vstoupí do vět 2 a 3 vlastními slovy bez opisu → směr pro hlavičku runy, jinak opis = vada a zůstává starý význam",
+   "skript": "",
+   "session": "19d97179"
+  }
+ ]
+}

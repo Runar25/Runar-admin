@@ -22,6 +22,16 @@ const D = ROOT + '/docs/kostra/';
 const STAVY = ['nápad', 'připraveno', 'běží', 'čeká na ownera', 'přijato', 'v produkci', 'vyřazeno', 'odloženo', 'poučení'];
 const ZDROJE = ['runar-config.js', 'runar-runes.js', 'runar-translations.js', 'runar-utils.js', 'runar-character.js'];
 const nacti = () => ({ k: JSON.parse(fs.readFileSync(D + 'kostra.json', 'utf8')), p: JSON.parse(fs.readFileSync(D + 'pokusy.json', 'utf8')) });
+// Slova se známým účinkem (docs/kostra/slova.json) a záznamy běhů pokusů (docs/kostra/behy/*.json píše hlídač API při každém puštěném
+// volání; behy-zpetne.json = dohledáno zpětně z přepisů a logu). Owner 2026-11-25: „pokud něco uděláme a pak se k tomu vrátíme později,
+// tak nevíš, kdy a jak jsi to dělal“. Chybí-li soubor (čistá kopie před prvním commitem), bere se prázdný.
+const slovaData = () => { try { return JSON.parse(fs.readFileSync(D + 'slova.json', 'utf8')).slova || []; } catch (e) { return []; } };
+const behyData = () => {
+  const out = [];
+  try { for (const f of fs.readdirSync(D + 'behy')) if (f.endsWith('.json')) { try { out.push(JSON.parse(fs.readFileSync(D + 'behy/' + f, 'utf8'))); } catch (e) {} } } catch (e) {}
+  try { for (const b of JSON.parse(fs.readFileSync(D + 'behy-zpetne.json', 'utf8')).behy || []) out.push(Object.assign({ zpetne: true }, b)); } catch (e) {}
+  return out;
+};
 const verzePromptu = () => { const m = fs.readFileSync(ROOT + '/v2/runar-config.js', 'utf8').match(/RUNAR_PROMPT_VERSION\s*=\s*'([^']+)'/); return m ? m[1] : '?'; };
 
 // ── kusy produkčního zadání jedné runy (texty podle kusu, přes 25 run × 3 semínka × EN/IS × s otázkou i bez) ──
@@ -110,15 +120,37 @@ function kontrola(k, p, md, exist, kusyNyni, kusyStare) {
       const z = zmeneneKusy(st, kusyNyni).filter((n) => (kusSlot[n] || []).some((s) => x.sloty.includes(s)));
       if (z.length) varov.push(x.id + ' (' + x.sloty.join(' ') + ') měřeno na ' + x.prompt + '; od té doby se změnily kusy, kterých se týká: ' + z.join(', ') + ' — výsledek ověřit');
     } }
+  // slova se známým účinkem: vzor se musí dát přeložit, záznam má doklad, datum a stav
+  for (const w of slovaData()) { reg(w.id, 'slova.json');
+    try { new RegExp(w.vzor, 'i'); } catch (e) { vady.push('docs/kostra/slova.json: ' + w.id + ' — vzor se nedá přeložit'); }
+    if (!w.doklad || !/^\d{4}-\d{2}-\d{2}$/.test(w.datum || '') || !['platí', 'starší'].includes(w.stav)) vady.push('docs/kostra/slova.json: ' + w.id + ' bez dokladu, data nebo se stavem mimo platí/starší'); }
+  // zdroje obsahu: stav vlastní kostra.json „zdroje_stav“; pokus od 2026-11-25 je musí vyjmenovat (P20 vzal neověřenou tabulku, owner 2026-11-25)
+  const zst = {}; for (const z of k.zdroje_stav || []) { zst[z.cesta] = z.stav; if (!['ověřeno', 'neověřeno'].includes(z.stav)) vady.push('docs/kostra/kostra.json: zdroj ' + z.cesta + ' má stav mimo ověřeno/neověřeno'); if (!exist(ROOT + '/' + z.cesta)) vady.push('docs/kostra/kostra.json: zdroj ' + z.cesta + ' neexistuje'); }
+  for (const x of p.pokusy) {
+    if ((x.datum || '') >= '2026-11-25' && !Array.isArray(x.zdroje)) vady.push('docs/kostra/pokusy.json: ' + x.id + ' nemá pole zdroje (od 2026-11-25 povinné; [] = jen produkce)');
+    for (const z of x.zdroje || []) {
+      if (!(z in zst)) vady.push('docs/kostra/pokusy.json: ' + x.id + ' bere ze zdroje ' + z + ', který v kostra.json „zdroje_stav“ není — zapiš jeho stav');
+      else if (zst[z] === 'neověřeno' && ['přijato', 'v produkci'].includes(x.stav)) vady.push('docs/kostra/pokusy.json: ' + x.id + ' je „' + x.stav + '“, ale bere z neověřeného zdroje ' + z);
+    } }
   if (md !== null && md.replace(/\r\n/g, '\n') !== generuj(k, p)) vady.push('docs/kostra/KOSTRA.md: neodpovídá datům — needituj ručně, pusť node scripts/verify_kostra.js --zapis');
   return { vady, varov };
 }
 
 function generuj(k, p) {
-  const L = [];
-  L.push('# Kostra čtení — přehled (GENEROVANÉ z kostra.json a pokusy.json, needitovat; `node scripts/verify_kostra.js --zapis`)', '');
+  // Owner 2026-11-25: „uděláme pořádek v kostře, ať můžeme oddělit, co je pro nás na použití, a co je starší verze, která je pro kontrolu“.
+  // Proto tři oddíly: A platí (k použití) · B rozpracované (čeká na rozhodnutí) · C starší verze a poučení (jen pro kontrolu).
+  const L = [], slova = slovaData(), behy = behyData();
+  const vyreseno = (v) => /^vyřešeno/.test(v.stav || '');
+  const beh = (id) => { const b = behy.filter((x) => x.pokus === id).sort((x, y) => (x.cas || '').localeCompare(y.cas || ''));
+    return b.length ? b.length + '× (posl. ' + String(b[b.length - 1].cas || '').slice(0, 10) + (b.some((x) => x.zpetne) ? ', část zpětně' : '') + ')' : '—'; };
+  const tabPokusy = (po) => { L.push('| id | od | pokus | části | běhy | výsledek | owner | dál |', '|---|---|---|---|---|---|---|---|');
+    for (const x of po) L.push('| ' + x.id + ' | ' + (x.datum || '—') + ' | ' + x.nazev + ' | ' + x.sloty.join(' ') + ' | ' + beh(x.id) + ' | ' + (x.vysledek || '—') + ' | ' + (x.owner || '—') + ' | ' + (x.dalsi || '—') + ' |');
+    L.push(''); };
+  L.push('# Kostra čtení — přehled (GENEROVANÉ z kostra.json, pokusy.json, slova.json a behy/, needitovat; `node scripts/verify_kostra.js --zapis`)', '');
   L.push('Verze kostry: **' + k.verze + '** · prompt v produkci: viz `RUNAR_PROMPT_VERSION` (v2/runar-config.js). Značky: J = jádro · K = část čtení · '
-    + 'V = vstup · M = měřítko · Z = závislost · R = otevřená otázka · P = pokus · K2-A = varianta části.', '');
+    + 'V = vstup · M = měřítko · Z = závislost · R = otevřená otázka · P = pokus · S = slovo se známým účinkem · K2-A = varianta části.', '');
+  L.push('Oddíly: **A. Platí — k použití** · **B. Rozpracované — čeká na rozhodnutí** · **C. Starší verze a poučení — jen pro kontrolu**.', '');
+  L.push('# A. Platí — k použití', '');
   L.push('## Jádro (nemění se bez datovaného rozhodnutí)', '');
   for (const j of k.jadro) L.push('- **' + j.id + '** ' + j.t + ' — *' + j.zdroj + '*');
   L.push('', '## Části čtení', '');
@@ -132,9 +164,27 @@ function generuj(k, p) {
     L.push('Pravidla:');
     for (const r of s.pravidla) L.push('- **' + r.id + '** ' + r.t + ' — *' + r.zdroj + ', od ' + r.od + '*');
     if (s.meritka.length) { L.push('', 'Měření:'); for (const m of s.meritka) L.push('- **' + m.id + '** ' + m.t + ' — ' + m.nastroj + ' · ' + m.stav); }
-    if (s.vady.length) { L.push('', 'Známé vady a jejich příčina:'); for (const v of s.vady) L.push('- ' + v.t + ' ← ' + v.pricina + ' (' + v.doklad + ') · ' + v.stav); }
+    const ot = s.vady.filter((v) => !vyreseno(v));
+    if (ot.length) { L.push('', 'Známé vady a jejich příčina (otevřené a poučení; vyřešené v oddílu C):'); for (const v of ot) L.push('- ' + v.t + ' ← ' + v.pricina + ' (' + v.doklad + ') · ' + v.stav); }
     const po = p.pokusy.filter((x) => x.sloty.includes(s.id));
     if (po.length) L.push('', 'Pokusy na této části: ' + po.map((x) => x.id + ' (' + x.stav + ')').join(' · '));
+    L.push('');
+  }
+  const sp = slova.filter((w) => w.stav === 'platí');
+  if (sp.length) {
+    L.push('## Slova a obraty se známým účinkem (hlídač API je ukáže před voláním; výklad: RUNAR_DESIGN.md „Slova, která dáváme modelu“)', '',
+      '| id | vzor | kde | model | co dělá | n | doklad | od |', '|---|---|---|---|---|---|---|---|');
+    for (const w of sp) L.push('| ' + w.id + ' | `' + w.vzor.replace(/\|/g, '\\|') + '` | ' + w.kde + ' | ' + w.model + ' | ' + w.co_dela + ' | ' + w.n + ' | ' + w.doklad + ' | ' + w.datum + ' |');
+    L.push('');
+  }
+  if ((k.zdroje_stav || []).length) {
+    L.push('## Zdroje obsahu pro pokusy a jejich stav (neověřený zdroj hlídač API nepustí bez RUNAR_ZDROJ_OK)', '');
+    for (const z of k.zdroje_stav) L.push('- **' + z.stav + '** · ' + z.cesta + ' — ' + z.co + ' (' + z.proc + ')');
+    L.push('');
+  }
+  if (k.vyznamy) {
+    L.push('## Významy run: odkud je bere produkce', '');
+    for (const v of k.vyznamy.produkce) L.push('- produkce: **' + v.zdroj + '** — ' + v.kam);
     L.push('');
   }
   if ((k.ostatni_kusy || []).length) {
@@ -142,25 +192,26 @@ function generuj(k, p) {
     for (const o of k.ostatni_kusy) L.push('- **' + o.kus + '** ' + o.co + (o.dotyka.length ? ' → ' + o.dotyka.join(' ') : '') + ((k.vznik || {})[o.kus] ? ' · od ' + k.vznik[o.kus].od : ''));
     L.push('');
   }
-  if (k.vyznamy) {
-    L.push('## Významy run: odkud je bere produkce a co jsme zkoušeli', '');
-    for (const v of k.vyznamy.produkce) L.push('- produkce: **' + v.zdroj + '** — ' + v.kam);
-    for (const v of k.vyznamy.zkouseno) L.push('- zkoušeno: ' + v.co + ' — ' + v.kde + ' · ' + v.stav);
-    L.push('');
-  }
   L.push('## Vstupy', '', 'Jak s kterým vstupem model pracuje (kolik převezme, do které věty, co si v obraze přidá podle úhlu): `docs/kostra/VSTUPY.md` '
     + '(generuje `node scripts/kostra_vstupy.js --zapis` ze skutečných čtení).', '', '| id | vstup | odkud v kódu | kdo ho dává | míří do |', '|---|---|---|---|---|');
   for (const v of k.vstupy) L.push('| ' + v.id + ' | ' + v.nazev + ' | ' + v.kod + ' | ' + v.kdo + ' | ' + v.do.join(', ') + ' |');
   L.push('', '## Co s čím souvisí (když měním X, musím zkontrolovat Y)', '');
   for (const z of k.zavislosti) L.push('- **' + z.id + '** ' + z.kdyz + ' → ' + z.tak.join(' · '));
-  L.push('', '## Otevřené otázky pro ownera', '');
+  L.push('');
+  const st = (a) => p.pokusy.filter((x) => a.includes(x.stav));
+  if (st(['v produkci', 'přijato']).length) { L.push('## Pokusy přijaté a v produkci', ''); tabPokusy(st(['v produkci', 'přijato'])); }
+  L.push('# B. Rozpracované — čeká na rozhodnutí nebo běh', '');
+  for (const s of ['čeká na ownera', 'běží', 'připraveno', 'nápad']) { const po = st([s]); if (!po.length) continue; L.push('## Pokusy: ' + s, ''); tabPokusy(po); }
+  L.push('## Otevřené otázky pro ownera', '');
   for (const r of k.otevrene) L.push('- **' + r.id + '** ' + r.t + (r.pokus ? ' (' + r.pokus + ')' : ''));
-  L.push('', '## Pokusy podle stavu', '');
-  for (const st of STAVY) { const po = p.pokusy.filter((x) => x.stav === st); if (!po.length) continue;
-    L.push('### ' + st, '', '| id | od | pokus | části | výsledek | owner | dál |', '|---|---|---|---|---|---|---|');
-    for (const x of po) L.push('| ' + x.id + ' | ' + (x.datum || '—') + ' | ' + x.nazev + ' | ' + x.sloty.join(' ') + ' | ' + (x.vysledek || '—') + ' | ' + (x.owner || '—') + ' | ' + (x.dalsi || '—') + ' |');
-    L.push(''); }
-  return L.join('\n') + '\n';
+  L.push('', '# C. Starší verze a poučení — jen pro kontrolu', '');
+  for (const s of ['poučení', 'odloženo', 'vyřazeno']) { const po = st([s]); if (!po.length) continue; L.push('## Pokusy: ' + s, ''); tabPokusy(po); }
+  const vy = []; for (const s of k.sloty) for (const v of s.vady) if (vyreseno(v)) vy.push('- ' + s.id + ': ' + v.t + ' ← ' + v.pricina + ' (' + v.doklad + ') · ' + v.stav);
+  if (vy.length) L.push('## Vyřešené vady', '', ...vy, '');
+  if (k.vyznamy && k.vyznamy.zkouseno.length) { L.push('## Zkoušené zdroje významů', ''); for (const v of k.vyznamy.zkouseno) L.push('- ' + v.co + ' — ' + v.kde + ' · ' + v.stav); L.push(''); }
+  const ss = slova.filter((w) => w.stav === 'starší');
+  if (ss.length) { L.push('## Slova — starší zjištění (vyvrácená nebo nahrazená)', ''); for (const w of ss) L.push('- **' + w.id + '** `' + w.vzor + '` — ' + w.co_dela + ' (' + w.doklad + ', ' + w.datum + ')'); L.push(''); }
+  return L.join('\n').replace(/\n+$/, '') + '\n';
 }
 
 function hledej(k, p, dotaz) {
@@ -193,6 +244,10 @@ function test() {
   utok('varianta s neznámým pokusem', (c) => { c.k.sloty[1].varianty[0].pokus = 'P99'; });
   utok('kus bez data vzniku', (c) => { delete c.k.vznik.ANGLE; });
   utok('pokus bez data', (c) => { c.p.pokusy[0].datum = ''; });
+  // 2026-11-25 (owner: P20 vzal neověřenou tabulku): nový pokus bez zdrojů · zdroj mimo rejstřík · přijatý pokus z neověřeného zdroje
+  utok('nový pokus bez pole zdroje', (c) => { c.p.pokusy[0].datum = '2026-11-26'; delete c.p.pokusy[0].zdroje; });
+  utok('zdroj pokusu mimo rejstřík stavu', (c) => { c.p.pokusy[0].zdroje = ['docs/neznamy-zdroj.md']; });
+  utok('přijatý pokus z neověřeného zdroje', (c) => { const x = c.p.pokusy.find((y) => y.id === 'P20'); x.stav = 'přijato'; x.owner = 'test'; });
   // změna kusu, kterého se pokus týká, se musí ohlásit; změna kusu jiné části ne
   const c = kopie(), x = c.p.pokusy.find((y) => y.stav === 'čeká na ownera' && y.sloty.includes('K2'));
   x.prompt = 'v0.test';
@@ -202,7 +257,7 @@ function test() {
   if (r2.varov.some((v) => v.startsWith(x.id))) sel.push('změna nesouvisejícího kusu FORMAT ohlášena jako relevantní');
   if (sel.length) { console.log('FAIL scripts/verify_kostra.js --test: útok neprošel: ' + sel.join(' · ')); process.exit(1); }
   const r = kontrola(k, p, null, (f) => fs.existsSync(f), ted, kusyVerze);
-  console.log('OK  verify_kostra --test: 14 útoků chyceno; skutečná data ' + (r.vady.length ? r.vady.length + ' vad' : 'čistá'));
+  console.log('OK  verify_kostra --test: 17 útoků chyceno; skutečná data ' + (r.vady.length ? r.vady.length + ' vad' : 'čistá'));
 }
 
 const a = process.argv.slice(2);

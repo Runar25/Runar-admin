@@ -1,6 +1,10 @@
-# Kostra čtení — přehled (GENEROVANÉ z kostra.json a pokusy.json, needitovat; `node scripts/verify_kostra.js --zapis`)
+# Kostra čtení — přehled (GENEROVANÉ z kostra.json, pokusy.json, slova.json a behy/, needitovat; `node scripts/verify_kostra.js --zapis`)
 
-Verze kostry: **K1 = produkce v2 dnes** · prompt v produkci: viz `RUNAR_PROMPT_VERSION` (v2/runar-config.js). Značky: J = jádro · K = část čtení · V = vstup · M = měřítko · Z = závislost · R = otevřená otázka · P = pokus · K2-A = varianta části.
+Verze kostry: **K1 = produkce v2 dnes** · prompt v produkci: viz `RUNAR_PROMPT_VERSION` (v2/runar-config.js). Značky: J = jádro · K = část čtení · V = vstup · M = měřítko · Z = závislost · R = otevřená otázka · P = pokus · S = slovo se známým účinkem · K2-A = varianta části.
+
+Oddíly: **A. Platí — k použití** · **B. Rozpracované — čeká na rozhodnutí** · **C. Starší verze a poučení — jen pro kontrolu**.
+
+# A. Platí — k použití
 
 ## Jádro (nemění se bez datovaného rozhodnutí)
 
@@ -38,13 +42,9 @@ Měření:
 - **M1** scéna je dnes snadno představitelná a nemá předmět navíc — soudce obrazu · nekalibrováno — kalibrovat na: dveře chléva ✘, dveře horské chaty ✔, pant ✘, kráva na trhu ✘, svíčka ✔
 - **M2** obraz z banky se nevrací celý — stroj: nejdelší doslovný úsek, podíl slov obrazu · používá se v labech
 
-Známé vady a jejich příčina:
-- pant, dveře chléva ← úhel [3] „stays fixed“ u obrazu bez pevné věci → model si věc vyrobí (DECISIONS 2026-11-19 (1)) · vyřešeno: úhel [3] mimo los
+Známé vady a jejich příčina (otevřené a poučení; vyřešené v oddílu C):
 - převyprávění celého obrazu (71 % slov obrazu) ← dlouhý obraz z banky (docs/eval/2026-11-09-v2-vyklad-z-v3/README.md oddíl 5) · otevřené
 - oheň a krb místo dnešní scény ← z obrazu chybí slovo, které drží dobu; model doplní z runy (pokus P02) · poučení
-- šeď a počasí v každé scéně (8/9) ← věta „The image must be sensory…“ (DECISIONS 2026-09-19 (1)) · vyřešeno: věta pryč
-- islandské čtení opisuje obraz doslova (56 %) ← pokyn „notaðu þessa“ (použij tenhle) (DECISIONS 2026-08-14 (v2.1)) · vyřešeno: „héðan kemur myndin…“
-- „late summer“ a cizí roční doba ve scéně ← řádek sezóny v zadání (DECISIONS 2026-09-20 (3)) · vyřešeno: sezóna jen ve výběru obrazu
 
 Pokusy na této části: P01 (přijato) · P02 (poučení) · P03 (odloženo) · P05 (čeká na ownera) · P12 (čeká na ownera) · P13 (odloženo) · P14 (čeká na ownera) · P18 (v produkci) · P21 (čeká na ownera)
 
@@ -68,12 +68,8 @@ Měření:
 - **M3** z čtení bez jména runy jde poznat runa — dva slepí soudci runy · kalibrováno 2026-11-23: 9/9, podvržená věta 3/3 (docs/eval/2026-11-23-kostra-cteni/soudci)
 - **M4** věta neopakuje zdroj ani slovo losu jako štítek — stroj: doslovný úsek ze zdroje · používá se v labech
 
-Známé vady a jejich příčina:
-- šablona „<Runa> is …“ na stejném místě ← pevný rámec esence (docs/eval/2026-10-23-v3-charakter/krok46) · vyřešeno: los sloves
+Známé vady a jejich příčina (otevřené a poučení; vyřešené v oddílu C):
 - slovo významu jako štítek („Disruption can…“) ← zdroj = jen slovo (pokus P06) · poučení
-- runa přebírá cizí činnost („Gebo hands…“, 6/6) ← rámec esence „runa koná“ (DECISIONS 2026-09-26 (5)) · vyřešeno
-- „is that …“ (5/6) ← anglický rámec esence [1] (DECISIONS 2026-09-26 (6)) · vyřešeno
-- slovesa, kterými angličtina o runách nemluví (marks, exposes) ← pokyn „in a verb of your own“ (DECISIONS 2026-10-06 (10)) · vyřešeno: slovesa z korpusu
 - slovo z hlavičky doslova ve čtení („the thing whose meaning waits sealed“) ← sol bere vstup doslova (hlavička „focus on: …“) (RUNAR_DESIGN.md „Slova, která dáváme modelu“) · poučení
 
 Pokusy na této části: P04 (odloženo) · P05 (čeká na ownera) · P06 (čeká na ownera) · P11 (přijato) · P14 (čeká na ownera) · P15 (čeká na ownera) · P20 (čeká na ownera)
@@ -101,10 +97,7 @@ Měření:
 - **M5** žádné tvrzení o člověku — dva soudci tvrzení, vada jen při shodě · kalibrováno 2026-11-23: 20/20 a 19/20
 - **M6** věta 3 přidá něco nového (nepřeformuluje větu 2) — stroj: podíl slov věty 3 obsažených ve větě 2 · kalibrováno 2026-11-23: pravá 0,00–0,13 · přeformulování 0,75
 
-Známé vady a jejich příčina:
-- cesty v krajině, které v obrazu nejsou ← oblast rozcestí popsaná jako místo (DECISIONS 2026-09-23 (12)) · vyřešeno
-- slovo „work“ ve čtení ← slovo v podobě oblasti (DECISIONS 2026-09-26 (2)) · vyřešeno
-- tvrzení o životě čtenáře (EN 9–10/16) ← oblast zadaná jako „nech význam přistát na tom, co dělá“ (DECISIONS 2026-08-21) · vyřešeno: oblast = zdroj obrazu, ne cíl tvrzení
+Známé vady a jejich příčina (otevřené a poučení; vyřešené v oddílu C):
 - poslední věta „neither change was easy to see“ spojená s „given and received“ (Eihwaz, 2026-11-24) ← podoba oblasti + otázka runy pod koncem se složí do jedné věty (čtení 75b6c569; otázka runy Eihwaz v Kolekci) · poučení
 
 Pokusy na této části: P04 (odloženo) · P05 (čeká na ownera) · P08 (nápad) · P09 (připraveno) · P10 (čeká na ownera) · P11 (přijato) · P16 (čeká na ownera) · P19 (čeká na ownera) · P20 (čeká na ownera)
@@ -130,12 +123,8 @@ Měření:
 - **M7** otázka nic nepodsouvá — soudci tvrzení (bod d) · kalibrováno 2026-11-23
 - **M8** neopisuje otázku runy — stroj: doslovný úsek z otázky runy · měřeno 2026-10-07
 
-Známé vady a jejich příčina:
-- otázka runy opsaná skoro doslova ← otázka runy pod pokynem „konči otázkou“ (DECISIONS 2026-10-07 (4)) · vyřešeno
+Známé vady a jejich příčina (otevřené a poučení; vyřešené v oddílu C):
 - „Where in your life …“ na začátku každé otázky ← model si šablonu vytvoří sám (pokus P04) · otevřené
-- „You stand…“ na konci (6/6) ← tvar konce open[1] „name where the seeker stands“ (DECISIONS 2026-09-20 (1)) · vyřešeno
-- životní runa si brala závěrečnou větu (10/12) ← čočka životní runy v zadání (DECISIONS 2026-09-10, 2026-09-25 (7)) · vyřešeno: životní runa jen v Asku
-- opsané metafory Confirmation (3/15) ← řádek „ground beneath the decision … just out of frame“ (DECISIONS 2026-09-23 (12)) · vyřešeno: jen „Neither confirm nor refute.“
 
 Pokusy na této části: P04 (odloženo) · P05 (čeká na ownera) · P11 (přijato) · P17 (čeká na ownera)
 
@@ -149,9 +138,6 @@ Pokusy na této části: P04 (odloženo) · P05 (čeká na ownera) · P11 (přij
 Pravidla:
 - **K5.1** jedna věta, nejvýš 12 slov, z odstavce runy v Kolekci; smí oslovit otázkou — *DECISIONS 2026-09-30 (8), 2026-10-05 (2), od 2026-10-05*
 
-Známé vady a jejich příčina:
-- myšlenka ✦ za JSONem (Opus) ← pokyn „after everything else“ proti „nothing after“ (DECISIONS 2026-10-04 (6)) · vyřešeno: ✦ uvnitř JSONu
-
 ### K6 Ask (věta po čtení)
 
 **Práce:** rozšíří věty 2–4 na otázku člověka  
@@ -161,6 +147,39 @@ Pravidla:
 - **K6.1** tipy podle tvaru konce: dvě strany / proč ta otázka — *DECISIONS 2026-11-23 (2); pokus P07, od 2026-11-23*
 
 Pokusy na této části: P07 (v produkci)
+
+## Slova a obraty se známým účinkem (hlídač API je ukáže před voláním; výklad: RUNAR_DESIGN.md „Slova, která dáváme modelu“)
+
+| id | vzor | kde | model | co dělá | n | doklad | od |
+|---|---|---|---|---|---|---|---|
+| S01 | `\bholds?\b` | konec čtení (podmínka u Confirmation) | sol | „This/That holds…“ opsáno ze zadání 3/5 a čtení neříká, co se potvrzuje | 5 | pokus P17 (2026-11-24) | 2026-11-24 |
+| S02 | `\bnames\b` | rámec definiční věty (esence) | sol | sloveso převezme do věty: „Hagalaz names…“; sloveso má být doložené v anglických textech o runách (los z korpusu) | 56/56 převzato | RUNAR_DECISIONS.md 2026-10-06 (7), (10); RUNAR_DESIGN „Slova“ bod 2 | 2026-10-06 |
+| S03 | `in a verb of your own` | rámec definiční věty | sol | nedá pestrost, ale slovesa, kterými angličtina o runách nemluví (marks, exposes — v korpusu 0×) | — | RUNAR_DESIGN „Slova“ bod 2; docs/eval/2026-10-06-sloveso-korpus/README.md | 2026-10-06 |
+| S04 | `\bdrawn\b` | štítek nebo pokyn („Runes drawn: X“) | sol | slovo se vysloví: „Algiz is the rune drawn here… Isa was not drawn“; „of this reading“ sníží ozvěnu 11/18 → 3/18 | 18 | RUNAR_DECISIONS.md 2026-10-06 (8); RUNAR_DESIGN „Slova“ bod 3 | 2026-10-06 |
+| S05 | `why is this (showing up\|happening)` | tip k Asku | sol | ptá se po příčině (znamení), kterou pravidla zakazují → odpověď začne odmítnutím 9/9 „[runa] does not say why…“ | 9 | RUNAR_EVAL_LOG.md 2026-10-06 (4); RUNAR_DESIGN „Slova“ bod 5 | 2026-10-06 |
+| S06 | `what does (this\|it\|the reading) mean for\|how does \w+ affect` | otázka k oblasti / tip | sol | žádá závěr o životě (zakázaný) → pojistka místo odpovědi 4–5/6; zodpověditelné je „kde se to ukáže“ nebo „co je těžké“ | 6 | RUNAR_EVAL_LOG.md 2026-10-07 (2); RUNAR_DESIGN „Slova“ bod 5 | 2026-10-07 |
+| S07 | `you might notice` | tip / začátek odpovědi | sol | každé znění tipu má stálý začátek odpovědi; „You might notice…“ začínalo 6/6 | 6 | RUNAR_EVAL_LOG.md 2026-10-07 (2); RUNAR_DESIGN „Slova“ body 4–5 | 2026-10-07 |
+| S08 | `focus on:\|also known as:` | hlavička runy (význam vedle obrazu) | sol | význam z hlavičky stojí ve čtení doslova 17/33 (Opus 0/13); P20: „old order“, „beyond your control“ ze seznamu v hlavičce opsány | 33 · P20 3 | RUNAR_DESIGN „Slova“ bod 1; docs/monitor/ozveny.md; pokus P20 | 2026-10-06 |
+| S09 | `does not say\|leaves? (room\|open)\|not a promise\|never predicts\|does not guarantee` | čtení nebo charakter jako vstup Asku | sol, Opus méně | pojistka „does not say / leaves room“: nese ji tvar vstupu × zákazy verdiktu; ubraný tvar se vrátí jiným slovem (28/30) | 30 na rameno | RUNAR_EVAL_LOG.md 2026-10-06 (6)–(8), 2026-10-09 (1); RUNAR_DESIGN „Slova“ bod 6 | 2026-10-09 |
+| S10 | `use (this\|the following\|these) (text\|words\|sentence\|line)\|use it as` | pokyn kolem vloženého textu | sol i Opus | „použij tenhle text“ → model text opíše doslova; vkládaný materiál rámuj jako ZDROJ | — | memory/prompt-directive-makes-model-copy.md (2026-08-14) | 2026-08-14 |
+| S11 | `for example[:,]\|e\.g\.\|such as "\|like this:` | vzorová věta v promptu | sol | hotová věta se nebere jako vzor, ale opíše se (otázka runy pod „konči otázkou“ vrácena skoro doslova 4/14); vzorovou větu jen ověřenou | 14 | RUNAR_DECISIONS.md 2026-10-07 (4); RUNAR_DESIGN „Slova“ bod 10 | 2026-10-07 |
+| S12 | `do not (name\|say\|use\|mention)\|never (name\|say\|use\|mention)\|avoid the word` | zákaz hned vedle pojmenované hodnoty | sol | prompt pojmenuje hodnotu a zakáže ji vyslovit → hlídá slovo, které sám napsal; odeber nálepku | — | memory/prompt-nepojmenuj-co-hned-zakazes.md | 2026-09-08 |
+| S13 | `\bcolou?r\b` | pokyn k tónu (životní runa, lab) | sol | slovo „colour“ z promptu se vrátilo doslova a obarvilo celý text | — | RUNAR_BACKLOG.md (lab_zivotni.js, kolo 2) | 2026-11-17 |
+| S14 | `\bimagine\b` | vstup do scény | sol | „Imagine“ u všech čtení → formule; vstup do scény je z losu, „Imagine“ jen jedna z možností | — | docs/eval/2026-11-09-v2-vyklad-z-v3/postup.md bod 6 (owner 2026-11-14) | 2026-11-14 |
+| S15 | `\bmust\b\|make sure\|always (include\|mention\|end)` | přidaný požadavek do pokynu | sol | každý PŘIDANÝ požadavek se v textu projeví jako formule ve stejném slotu („the X you carried“ 3×); vadu raději odeber | TESTy 43–50 | memory/oprava-promptu-odebira-vadu.md (2026-08-25) | 2026-08-25 |
+
+## Zdroje obsahu pro pokusy a jejich stav (neověřený zdroj hlídač API nepustí bez RUNAR_ZDROJ_OK)
+
+- **neověřeno** · docs/eval/2026-10-23-v3-charakter/moderni-vyznamy-25-zdroj.md — moderní významy 25 run (tabulka GPT: základní téma, další významy, stín) (intake od GPT (2026-11-02), nesrovnáno s ownerovými popisy ani s anglickými texty o runách)
+- **ověřeno** · RUNAR_POPISY_RUN.md — ownerovy popisy run (kánon (owner))
+- **ověřeno** · v2/runar-runes.js — klíčová slova a data run v produkci (produkce)
+
+## Významy run: odkud je bere produkce
+
+- produkce: **v2/runar-runes.js pole k** — klíčová slova runy (seznam bez obrazu by solu vzal identitu runy)
+- produkce: **RUNE_IMAGES sloupec významu** — slovo významu, které jde s obrazem do hlavičky („focus on: …“) → K2
+- produkce: **UI_TEXT.coll_rune (Kolekce)** — otázka runy jako zdroj konce (K4) a odstavec pro myšlenku ✦ (K5)
+- produkce: **RUNAR_POPISY_RUN.md (ownerovy popisy)** — kánon významů; do promptu jde přes Kolekci, ne přímo
 
 ## Ostatní kusy zadání (nepatří jedné větě)
 
@@ -176,19 +195,6 @@ Pokusy na této části: P07 (v produkci)
 - **ADDRESS** oslovení podle rodu (islandština) → K1 K2 K3 K4 · od 2026-07-04
 - **FORMAT** tvar výstupu (JSON) · od 2026-06-17
 - **NO-FILLER** islandské zadání: vynech výplň → K1 K2 K3 K4 · od 2026-06-13
-
-## Významy run: odkud je bere produkce a co jsme zkoušeli
-
-- produkce: **v2/runar-runes.js pole k** — klíčová slova runy (seznam bez obrazu by solu vzal identitu runy)
-- produkce: **RUNE_IMAGES sloupec významu** — slovo významu, které jde s obrazem do hlavičky („focus on: …“) → K2
-- produkce: **UI_TEXT.coll_rune (Kolekce)** — otázka runy jako zdroj konce (K4) a odstavec pro myšlenku ✦ (K5)
-- produkce: **RUNAR_POPISY_RUN.md (ownerovy popisy)** — kánon významů; do promptu jde přes Kolekci, ne přímo
-- zkoušeno: moderní významy run (tabulka GPT, neověřená) — docs/eval/2026-10-23-v3-charakter/moderni-vyznamy-25-zdroj.md · neověřeno, nepoužito
-- zkoušeno: katalog lidských dynamik Gebo (7 oblastí) — docs/eval/2026-10-23-v3-charakter/krok30-gebo-katalog.md · použito v P04
-- zkoušeno: druhá strana významu — pokus P16 · čeká na ownera
-- zkoušeno: fáze runy — pokus P15 · čeká na ownera
-- zkoušeno: dvě strany runy z ownerova popisu jako zdroj věty 2 — pokus P06 · čeká na ownera
-- zkoušeno: úhly pohledu (dvě strany, bod zlomu, přehlížená stránka, záměna, cena, podmínka, časování) — pokus P09, docs/eval/2026-11-23-kostra-cteni/data-5-run.json · připraveno pro 5 run
 
 ## Vstupy
 
@@ -219,6 +225,45 @@ Jak s kterým vstupem model pracuje (kolik převezme, do které věty, co si v o
 - **Z6** měním podoby oblasti (V1) → _domainContext i konec berou týž los · scripts/utils/test_lever_maps.js (pořadí AREAS)
 - **Z7** měním tvar skládaného textu čtení → strom života čte glyfy z textu (smoke ⑬)
 
+## Pokusy přijaté a v produkci
+
+| id | od | pokus | části | běhy | výsledek | owner | dál |
+|---|---|---|---|---|---|---|---|
+| P01 | 2026-11-14 | Obrazy s napětím (kola 1–4) | K1 | — | 79/84 sedí na runu; ownerem pochválené svíčka, baterie, zpráva ráno | 2026-11-17 „jinak dobře“ | islandština, doložit přírodní fakta, přesun do banky přes CODE-tune; Jera/Ingwaz viz P12 |
+| P07 | 2026-11-18 | Ask: tipy k větám 3 a 4 | K6 | — | nasazeno CODE-tune (d54ddb2); odpovědi na tipy neměřené | 2026-11-18 „dej to tam“ | — |
+| P11 | 2026-11-23 | Kalibrace soudců na sadě se známou odpovědí | K2 K3 K4 | — | tvrzení 20/20 a 19/20; runa 9/9; podvrhy 3/3 | — | kalibrovat soudce obrazu (M1) |
+| P18 | 2026-11-19 | Obraz: nic navíc bez funkce, úhel [3] mimo los | K1 | 1× (posl. 2026-11-19, část zpětně) | nasazeno CODE-tune | 2026-11-19 | — |
+
+# B. Rozpracované — čeká na rozhodnutí nebo běh
+
+## Pokusy: čeká na ownera
+
+| id | od | pokus | části | běhy | výsledek | owner | dál |
+|---|---|---|---|---|---|---|---|
+| P05 | 2026-11-18 | Čtyři pohyby bez definice runy (Gemini/GPT) | K1 K2 K3 K4 | 2× (posl. 2026-11-18, část zpětně) | 4 věty 3/3, runa nejmenovaná 3/3, věta 2 je parafráze zdroje | — | rozhodnutí R1, R6 |
+| P06 | 2026-11-18 | Zdroj významu: jen slovo × dvě strany runy | K2 | — | slovo jako štítek 3/3; dvě strany vlastnější, Hagalaz opsal stranu | — | rozhodnutí R5 |
+| P10 | 2026-10-26 | Vstup pocitu („What feels closest to you right now?“) | K3 | 1× (posl. 2026-11-24, část zpětně) | rozdíl malý: Raidho obě varianty téměř stejné; Hagalaz kontrast skutečně obrací pohled („the storm more readily than what it leaves untouched“), zrcadlení jen opakuje tlak; pocit pojmenován ve 4/4 ve větě 3. Okno v Hagalaz přidáno modelem (úhel „mimo dohled“, P21) | 2026-10-26, 2026-11-11, 2026-11-24 „zkusme to“ | víc run, aby šlo rozhodnout; n=1 na buňku nestačí |
+| P12 | 2026-11-23 | Jera a Ingwaz bez chleba | K1 | — | náhrady od CODE-tune: marmeláda (Jera), semenná tobolka (Ingwaz) | — | BACKLOG 15 |
+| P14 | 2026-11-14 | Obraz na jednom místě a sjednocená zdvojení v promptu | K1 K2 | — | pořadí vět drženo 9/9; owner „produkce zní lépe“, pak „nečetl jsem to“ | 2026-11-14 | — |
+| P15 | 2026-11-09 | Fáze runy | K2 | — | fáze mění řečené, ne obraz; slovo pokynu vysloveno 2/4 | 2026-11-10 „fáze vypadá dobře“ | — |
+| P16 | 2026-11-09 | Druhá strana runy ve čtení | K3 | — | bez nálepky 3/3 Fehu, 3/3 Raidho | 2026-11-09 „druhá strana se mi líbí“ | spojit s P09 |
+| P17 | 2026-11-10 | Konce u Reflection a Confirmation | K4 | 2× (posl. 2026-11-24, část zpětně) | čistá podmínka 3/5 (Raidho „That holds if the road still leads toward something you want.“, Gebo, Hagalaz); Fehu měkké „may hold value“, Berkana sklouzne k radě („give each generation room“); „This/That holds“ opsáno ze zadání 3/5 a bez jasného „co“ — člověk nevidí, k čemu se podmínka váže | 2026-11-24 „to Raidho zní dobře, pro Confirmation by to mělo být lepší“ (tvar podmínky) | přeformulovat bez slova „holds“ a s tím, co se potvrzuje (oblast); pak znovu 5 |
+| P19 | 2026-11-24 | Cesty pro všech 25 run (návrh z ownerových popisů) | K3 | — | v1: volba 10 run, postoj 14, prázdná runa bez cest; v2 (cesty-25-run-v2): bez rad, sousedé se nepřekrývají, cesta ≤ 12 slov, místo: věta 3 u 22 run, Perth a Dagaz věta 4, Gebo obojí; citace 131/131 z RUNAR_POPISY_RUN.md | 2026-11-24 „udělej návrh pro ostatní runy“ | owner posoudí v2; pak čtení s rozcestníkem (Gebo, Raidho, Hagalaz) — cesty podat jako zdroj, ne jako věty (sol opisuje) |
+| P20 | 2026-11-24 | Moderní význam runy v hlavičce + stín jako zdroj pro větu 3 | K2 K3 | 1× (posl. 2026-11-24, část zpětně) | stín ve větě 3 vlastními slovy 3/3 (Fehu „Kept close, that value may have little room to serve anyone“, Gebo „a gift can begin to feel like a debt“); moderní význam zúžil větu 2 parafrází („can pass from hand to hand“); Hagalaz opsal „old order“ a „beyond your control“ ze zadání; ⚠️ moderní význam a stín vzaty z neověřené tabulky GPT (docs/eval/2026-10-23-v3-charakter/moderni-vyznamy-25-zdroj.md, intake) — výsledek platí jen pro tvar zápisu, ne pro obsah významů | 2026-11-24 „moderní významy bych chtěl vidět ve čtení a také stín“ | napřed ověřit moderní významy 25 run (owner 2026-11-25); srovnání s produkcí až potom |
+| P21 | 2026-11-24 | Los úhlu jen z úhlů, které obraz unese (značky obraz × úhel) | K1 | — | past 7/25 (28 %) × kryto 1/19 (5 %) přidaných věcí; v bance kryto 39 % kombinací, 11 obrazů neunese žádný úhel | 2026-11-24 „7. ano“ (audit) · „některé obrazy potřebují možná i jiný pohled úhlu“ | owner rozhodne o návrhu; pak sol test kryto × past na stejných obrazech (potřebuje nový klíč) |
+
+## Pokusy: připraveno
+
+| id | od | pokus | části | běhy | výsledek | owner | dál |
+|---|---|---|---|---|---|---|---|
+| P09 | 2026-11-23 | Úhly pohledu ve větě 3 (dvě strany, bod zlomu, přehlížená stránka …) | K3 | — | data pro 5 run; úhly podle Gemini jako druhy, obsah z ownerových popisů | 2026-11-23 „ano, přesně tak“ | až po krocích 1–3 plánu |
+
+## Pokusy: nápad
+
+| id | od | pokus | části | běhy | výsledek | owner | dál |
+|---|---|---|---|---|---|---|---|
+| P08 | 2026-11-17 | Rozcestník u oblasti Crossroads | K3 | — | — | 2026-11-17 (zadání) | BACKLOG 13 |
+
 ## Otevřené otázky pro ownera
 
 - **R1** věta 2: definice runy ano, nebo ne — obě verze připravené (K2-A produkce, K2-B bez definice), rozhodne zkouška (P05)
@@ -227,61 +272,46 @@ Jak s kterým vstupem model pracuje (kolik převezme, do které věty, co si v o
 - **R4** vstup pocitu ano/ne a kam (P10)
 - **R5** zdroj významu pro větu 2 (P06)
 
-## Pokusy podle stavu
+# C. Starší verze a poučení — jen pro kontrolu
 
-### nápad
+## Pokusy: poučení
 
-| id | od | pokus | části | výsledek | owner | dál |
-|---|---|---|---|---|---|---|
-| P08 | 2026-11-17 | Rozcestník u oblasti Crossroads | K3 | — | 2026-11-17 (zadání) | BACKLOG 13 |
+| id | od | pokus | části | běhy | výsledek | owner | dál |
+|---|---|---|---|---|---|---|---|
+| P02 | 2026-11-17 | Kenaz s telefonem a bez něj | K1 | 2× (posl. 2026-11-17, část zpětně) | bez telefonu model doplní oheň a krb 3/3 — slovo drží scénu v dnešku | 2026-11-17 „zajímavé“ | — |
 
-### připraveno
+## Pokusy: odloženo
 
-| id | od | pokus | části | výsledek | owner | dál |
-|---|---|---|---|---|---|---|
-| P09 | 2026-11-23 | Úhly pohledu ve větě 3 (dvě strany, bod zlomu, přehlížená stránka …) | K3 | data pro 5 run; úhly podle Gemini jako druhy, obsah z ownerových popisů | 2026-11-23 „ano, přesně tak“ | až po krocích 1–3 plánu |
+| id | od | pokus | části | běhy | výsledek | owner | dál |
+|---|---|---|---|---|---|---|---|
+| P03 | 2026-11-17 | Obraz jako dávkovaná slova | K1 | — | scénu složí 6/6, volné místo nevyplní 0/3 | 2026-11-18 „tohle teď odložíme“ | — |
+| P04 | 2026-11-17 | v3 bez obrazu: Gebo popis · napětí · cesta · otázka | K2 K3 K4 | 1× (posl. 2026-11-17, část zpětně) | bez rady 6/6, rozcestník 3/3; model si vytvořil šablony „It holds the difference between“ 4/6 a „Where in your life“ 3/3 | 2026-11-18 „ulož a odkládáme“ | — |
+| P13 | 2026-11-14 | Islandský obraz jako rozpojená slova | K1 | — | nejdelší opis 3,3 → 2,0 slova; neprokázáno | — | — |
 
-### čeká na ownera
+## Vyřešené vady
 
-| id | od | pokus | části | výsledek | owner | dál |
-|---|---|---|---|---|---|---|
-| P05 | 2026-11-18 | Čtyři pohyby bez definice runy (Gemini/GPT) | K1 K2 K3 K4 | 4 věty 3/3, runa nejmenovaná 3/3, věta 2 je parafráze zdroje | — | rozhodnutí R1, R6 |
-| P06 | 2026-11-18 | Zdroj významu: jen slovo × dvě strany runy | K2 | slovo jako štítek 3/3; dvě strany vlastnější, Hagalaz opsal stranu | — | rozhodnutí R5 |
-| P10 | 2026-10-26 | Vstup pocitu („What feels closest to you right now?“) | K3 | rozdíl malý: Raidho obě varianty téměř stejné; Hagalaz kontrast skutečně obrací pohled („the storm more readily than what it leaves untouched“), zrcadlení jen opakuje tlak; pocit pojmenován ve 4/4 ve větě 3. Okno v Hagalaz přidáno modelem (úhel „mimo dohled“, P21) | 2026-10-26, 2026-11-11, 2026-11-24 „zkusme to“ | víc run, aby šlo rozhodnout; n=1 na buňku nestačí |
-| P12 | 2026-11-23 | Jera a Ingwaz bez chleba | K1 | náhrady od CODE-tune: marmeláda (Jera), semenná tobolka (Ingwaz) | — | BACKLOG 15 |
-| P14 | 2026-11-14 | Obraz na jednom místě a sjednocená zdvojení v promptu | K1 K2 | pořadí vět drženo 9/9; owner „produkce zní lépe“, pak „nečetl jsem to“ | 2026-11-14 | — |
-| P15 | 2026-11-09 | Fáze runy | K2 | fáze mění řečené, ne obraz; slovo pokynu vysloveno 2/4 | 2026-11-10 „fáze vypadá dobře“ | — |
-| P16 | 2026-11-09 | Druhá strana runy ve čtení | K3 | bez nálepky 3/3 Fehu, 3/3 Raidho | 2026-11-09 „druhá strana se mi líbí“ | spojit s P09 |
-| P17 | 2026-11-10 | Konce u Reflection a Confirmation | K4 | čistá podmínka 3/5 (Raidho „That holds if the road still leads toward something you want.“, Gebo, Hagalaz); Fehu měkké „may hold value“, Berkana sklouzne k radě („give each generation room“); „This/That holds“ opsáno ze zadání 3/5 a bez jasného „co“ — člověk nevidí, k čemu se podmínka váže | 2026-11-24 „to Raidho zní dobře, pro Confirmation by to mělo být lepší“ (tvar podmínky) | přeformulovat bez slova „holds“ a s tím, co se potvrzuje (oblast); pak znovu 5 |
-| P19 | 2026-11-24 | Cesty pro všech 25 run (návrh z ownerových popisů) | K3 | v1: volba 10 run, postoj 14, prázdná runa bez cest; v2 (cesty-25-run-v2): bez rad, sousedé se nepřekrývají, cesta ≤ 12 slov, místo: věta 3 u 22 run, Perth a Dagaz věta 4, Gebo obojí; citace 131/131 z RUNAR_POPISY_RUN.md | 2026-11-24 „udělej návrh pro ostatní runy“ | owner posoudí v2; pak čtení s rozcestníkem (Gebo, Raidho, Hagalaz) — cesty podat jako zdroj, ne jako věty (sol opisuje) |
-| P20 | 2026-11-24 | Moderní význam runy v hlavičce + stín jako zdroj pro větu 3 | K2 K3 | stín ve větě 3 vlastními slovy 3/3 (Fehu „Kept close, that value may have little room to serve anyone“, Gebo „a gift can begin to feel like a debt“); moderní význam zúžil větu 2 parafrází („can pass from hand to hand“); Hagalaz opsal „old order“ a „beyond your control“ ze zadání; ⚠️ moderní význam a stín vzaty z neověřené tabulky GPT (docs/eval/2026-10-23-v3-charakter/moderni-vyznamy-25-zdroj.md, intake) — výsledek platí jen pro tvar zápisu, ne pro obsah významů | 2026-11-24 „moderní významy bych chtěl vidět ve čtení a také stín“ | napřed ověřit moderní významy 25 run (owner 2026-11-25); srovnání s produkcí až potom |
-| P21 | 2026-11-24 | Los úhlu jen z úhlů, které obraz unese (značky obraz × úhel) | K1 | past 7/25 (28 %) × kryto 1/19 (5 %) přidaných věcí; v bance kryto 39 % kombinací, 11 obrazů neunese žádný úhel | 2026-11-24 „7. ano“ (audit) · „některé obrazy potřebují možná i jiný pohled úhlu“ | owner rozhodne o návrhu; pak sol test kryto × past na stejných obrazech (potřebuje nový klíč) |
+- K1: pant, dveře chléva ← úhel [3] „stays fixed“ u obrazu bez pevné věci → model si věc vyrobí (DECISIONS 2026-11-19 (1)) · vyřešeno: úhel [3] mimo los
+- K1: šeď a počasí v každé scéně (8/9) ← věta „The image must be sensory…“ (DECISIONS 2026-09-19 (1)) · vyřešeno: věta pryč
+- K1: islandské čtení opisuje obraz doslova (56 %) ← pokyn „notaðu þessa“ (použij tenhle) (DECISIONS 2026-08-14 (v2.1)) · vyřešeno: „héðan kemur myndin…“
+- K1: „late summer“ a cizí roční doba ve scéně ← řádek sezóny v zadání (DECISIONS 2026-09-20 (3)) · vyřešeno: sezóna jen ve výběru obrazu
+- K2: šablona „<Runa> is …“ na stejném místě ← pevný rámec esence (docs/eval/2026-10-23-v3-charakter/krok46) · vyřešeno: los sloves
+- K2: runa přebírá cizí činnost („Gebo hands…“, 6/6) ← rámec esence „runa koná“ (DECISIONS 2026-09-26 (5)) · vyřešeno
+- K2: „is that …“ (5/6) ← anglický rámec esence [1] (DECISIONS 2026-09-26 (6)) · vyřešeno
+- K2: slovesa, kterými angličtina o runách nemluví (marks, exposes) ← pokyn „in a verb of your own“ (DECISIONS 2026-10-06 (10)) · vyřešeno: slovesa z korpusu
+- K3: cesty v krajině, které v obrazu nejsou ← oblast rozcestí popsaná jako místo (DECISIONS 2026-09-23 (12)) · vyřešeno
+- K3: slovo „work“ ve čtení ← slovo v podobě oblasti (DECISIONS 2026-09-26 (2)) · vyřešeno
+- K3: tvrzení o životě čtenáře (EN 9–10/16) ← oblast zadaná jako „nech význam přistát na tom, co dělá“ (DECISIONS 2026-08-21) · vyřešeno: oblast = zdroj obrazu, ne cíl tvrzení
+- K4: otázka runy opsaná skoro doslova ← otázka runy pod pokynem „konči otázkou“ (DECISIONS 2026-10-07 (4)) · vyřešeno
+- K4: „You stand…“ na konci (6/6) ← tvar konce open[1] „name where the seeker stands“ (DECISIONS 2026-09-20 (1)) · vyřešeno
+- K4: životní runa si brala závěrečnou větu (10/12) ← čočka životní runy v zadání (DECISIONS 2026-09-10, 2026-09-25 (7)) · vyřešeno: životní runa jen v Asku
+- K4: opsané metafory Confirmation (3/15) ← řádek „ground beneath the decision … just out of frame“ (DECISIONS 2026-09-23 (12)) · vyřešeno: jen „Neither confirm nor refute.“
+- K5: myšlenka ✦ za JSONem (Opus) ← pokyn „after everything else“ proti „nothing after“ (DECISIONS 2026-10-04 (6)) · vyřešeno: ✦ uvnitř JSONu
 
-### přijato
+## Zkoušené zdroje významů
 
-| id | od | pokus | části | výsledek | owner | dál |
-|---|---|---|---|---|---|---|
-| P01 | 2026-11-14 | Obrazy s napětím (kola 1–4) | K1 | 79/84 sedí na runu; ownerem pochválené svíčka, baterie, zpráva ráno | 2026-11-17 „jinak dobře“ | islandština, doložit přírodní fakta, přesun do banky přes CODE-tune; Jera/Ingwaz viz P12 |
-| P11 | 2026-11-23 | Kalibrace soudců na sadě se známou odpovědí | K2 K3 K4 | tvrzení 20/20 a 19/20; runa 9/9; podvrhy 3/3 | — | kalibrovat soudce obrazu (M1) |
-
-### v produkci
-
-| id | od | pokus | části | výsledek | owner | dál |
-|---|---|---|---|---|---|---|
-| P07 | 2026-11-18 | Ask: tipy k větám 3 a 4 | K6 | nasazeno CODE-tune (d54ddb2); odpovědi na tipy neměřené | 2026-11-18 „dej to tam“ | — |
-| P18 | 2026-11-19 | Obraz: nic navíc bez funkce, úhel [3] mimo los | K1 | nasazeno CODE-tune | 2026-11-19 | — |
-
-### odloženo
-
-| id | od | pokus | části | výsledek | owner | dál |
-|---|---|---|---|---|---|---|
-| P03 | 2026-11-17 | Obraz jako dávkovaná slova | K1 | scénu složí 6/6, volné místo nevyplní 0/3 | 2026-11-18 „tohle teď odložíme“ | — |
-| P04 | 2026-11-17 | v3 bez obrazu: Gebo popis · napětí · cesta · otázka | K2 K3 K4 | bez rady 6/6, rozcestník 3/3; model si vytvořil šablony „It holds the difference between“ 4/6 a „Where in your life“ 3/3 | 2026-11-18 „ulož a odkládáme“ | — |
-| P13 | 2026-11-14 | Islandský obraz jako rozpojená slova | K1 | nejdelší opis 3,3 → 2,0 slova; neprokázáno | — | — |
-
-### poučení
-
-| id | od | pokus | části | výsledek | owner | dál |
-|---|---|---|---|---|---|---|
-| P02 | 2026-11-17 | Kenaz s telefonem a bez něj | K1 | bez telefonu model doplní oheň a krb 3/3 — slovo drží scénu v dnešku | 2026-11-17 „zajímavé“ | — |
-
+- moderní významy run (tabulka GPT, neověřená) — docs/eval/2026-10-23-v3-charakter/moderni-vyznamy-25-zdroj.md · neověřeno; použito v P20 bez ověření (2026-11-24) — napřed ověřit (owner 2026-11-25)
+- katalog lidských dynamik Gebo (7 oblastí) — docs/eval/2026-10-23-v3-charakter/krok30-gebo-katalog.md · použito v P04
+- druhá strana významu — pokus P16 · čeká na ownera
+- fáze runy — pokus P15 · čeká na ownera
+- dvě strany runy z ownerova popisu jako zdroj věty 2 — pokus P06 · čeká na ownera
+- úhly pohledu (dvě strany, bod zlomu, přehlížená stránka, záměna, cena, podmínka, časování) — pokus P09, docs/eval/2026-11-23-kostra-cteni/data-5-run.json · připraveno pro 5 run

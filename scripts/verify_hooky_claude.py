@@ -56,6 +56,21 @@ def over(d):
         ok('hlídač API chce číslo pokusu (RUNAR_POKUS)', 'RUNAR_POKUS' in r.stdout and 'deny' in r.stdout, r.stdout[:160])
         r = py(d, 'runar-api-guard.py', {'tool_name': 'Bash', 'tool_input': {'command': 'RUNAR_POKUS=P999 ' + zamer + api}})
         ok('hlídač API odmítne neznámé číslo pokusu', 'P999' in r.stdout and 'deny' in r.stdout, r.stdout[:160])
+        # 2026-11-25 (CODE-read, audit paměti): jeden pokus = jeden příkaz · slova se známým účinkem · záznam běhu píše hlídač sám
+        tmpd = tempfile.mkdtemp(prefix='verify-guard-')
+        genv = dict(os.environ, RUNAR_API_LOG=os.path.join(tmpd, 'log.txt'), RUNAR_BEHY_DIR=os.path.join(tmpd, 'behy'))
+        sk = os.path.join(tmpd, 'zkouska.js')
+        open(sk, 'w', encoding='utf-8').write("const U = 'https://api.openai" + ".com/v1/responses'; const t = 'End on one line: This holds if the road leads on.';\n")
+        zam17 = 'RUNAR_API_ANO=3 RUNAR_POKUS=P17 RUNAR_API_ZAMER="rozhodne, jestli protipříklad projde hlídačem; když ano, je díra, jinak drží" '
+        r = py(d, 'runar-api-guard.py', {'tool_name': 'Bash', 'tool_input': {'command': zam17 + 'node "' + sk.replace(chr(92), '/') + '"; ' + zam17 + api}}, env=genv)
+        ok('hlídač API nepustí dva pokusy jedním příkazem', 'deny' in r.stdout and 'Jeden pokus' in r.stdout, r.stdout[:160])
+        r = py(d, 'runar-api-guard.py', {'tool_name': 'Bash', 'tool_input': {'command': zam17 + 'node "' + sk.replace(chr(92), '/') + '"'}}, env=genv)
+        ok('hlídač API ukáže slovo se známým účinkem (S01 holds)', 'deny' in r.stdout and 'S01' in r.stdout, r.stdout[:200])
+        r = py(d, 'runar-api-guard.py', {'tool_name': 'Bash', 'session_id': SID, 'tool_input': {'command': 'RUNAR_SLOVA_OK="test: slovo měřím" ' + zam17 + 'node "' + sk.replace(chr(92), '/') + '"'}}, env=genv)
+        zaz = glob.glob(os.path.join(tmpd, 'behy', '*-P17.json'))
+        ok('hlídač API s RUNAR_SLOVA_OK pustí a zapíše záznam běhu', not r.stdout.strip() and len(zaz) == 1
+           and json.load(open(zaz[0], encoding='utf-8')).get('slova_ok') == 'test: slovo měřím' if zaz else False, r.stdout[:160] + str(zaz))
+        shutil.rmtree(tmpd, ignore_errors=True)
 
         def zprava(text):
             p = prepis(text); soubory.append(p)

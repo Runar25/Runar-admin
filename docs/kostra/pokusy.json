@@ -383,7 +383,10 @@
     "P15",
     "P16"
    ],
-   "datum": "2026-11-24"
+   "datum": "2026-11-24",
+   "zdroje": [
+    "docs/eval/2026-10-23-v3-charakter/moderni-vyznamy-25-zdroj.md"
+   ]
   },
   {
    "id": "P21",
@@ -404,5 +407,6 @@
    ],
    "datum": "2026-11-24"
   }
- ]
+ ],
+ "_zdroje": "Pole zdroje (od 2026-11-25): cesty k souborům, ze kterých pokus bere obsah vstupu (významy, popisy, obrazy). Stav zdroje vlastní kostra.json „zdroje_stav“. Povinné pro pokusy vzniklé od 2026-11-25; prázdný seznam = pokus nebere obsah z žádného zdroje mimo produkci."
 }

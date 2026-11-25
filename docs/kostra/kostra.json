@@ -900,7 +900,7 @@
    {
     "co": "moderní významy run (tabulka GPT, neověřená)",
     "kde": "docs/eval/2026-10-23-v3-charakter/moderni-vyznamy-25-zdroj.md",
-    "stav": "neověřeno, nepoužito"
+    "stav": "neověřeno; použito v P20 bez ověření (2026-11-24) — napřed ověřit (owner 2026-11-25)"
    },
    {
     "co": "katalog lidských dynamik Gebo (7 oblastí)",
@@ -1059,5 +1059,26 @@
    "commit": "3e5255a",
    "znak": "uppfyllingarefni"
   }
- }
+ },
+ "_zdroje_stav": "Zdroje obsahu pro pokusy (významy, popisy, tabulky) a jejich stav. Owner 2026-11-25 (P20 vzal moderní významy z tabulky, která tu stála jako „neověřeno, nepoužito“): pokus vyjmenuje své zdroje v pokusy.json (pole zdroje) a hlídač API ho se zdrojem „neověřeno“ nepustí bez RUNAR_ZDROJ_OK=\"<proč>\". Ověřený zdroj = stav „ověřeno“ + čím (proti čemu) ověřen.",
+ "zdroje_stav": [
+  {
+   "cesta": "docs/eval/2026-10-23-v3-charakter/moderni-vyznamy-25-zdroj.md",
+   "stav": "neověřeno",
+   "co": "moderní významy 25 run (tabulka GPT: základní téma, další významy, stín)",
+   "proc": "intake od GPT (2026-11-02), nesrovnáno s ownerovými popisy ani s anglickými texty o runách"
+  },
+  {
+   "cesta": "RUNAR_POPISY_RUN.md",
+   "stav": "ověřeno",
+   "co": "ownerovy popisy run",
+   "proc": "kánon (owner)"
+  },
+  {
+   "cesta": "v2/runar-runes.js",
+   "stav": "ověřeno",
+   "co": "klíčová slova a data run v produkci",
+   "proc": "produkce"
+  }
+ ]
 }

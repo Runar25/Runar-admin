@@ -101,6 +101,156 @@ def chyba_pokusu(prikaz):
         return ''
     return '' if hod in znama else ('RUNAR_POKUS=' + hod + ' v rejstříku docs/kostra/pokusy.json není — zapiš pokus napřed (číslo, části, hypotéza, stav).')
 
+# ── 2026-11-25 (CODE-read, owner „18. ano … jde to ještě lépe? tak to udělej“; audit docs/audit/2026-11-25-pamet-a-pravidla/) ──
+# (a) JEDEN POKUS = JEDEN PŘÍKAZ. 2026-11-24 šly P17, P10 a P20 jedním příkazem (; mezi nimi): hlídač četl jen první RUNAR_API_ANO/POKUS,
+#     zapsal „P17 | 5 volání“ a 7 volání P10 a P20 v logu chybí — „kdy a jak“ se pak nedalo dohledat a strop 50 se dal obejít součtem.
+# (b) ZÁZNAM BĚHU PÍŠE STROJ: každý puštěný pokus → docs/kostra/behy/<čas>-<pokus>.json (příkaz, skripty s otiskem obsahu, úlohy, lane,
+#     HEAD, verze promptu). Owner: „pokud něco uděláme a pak se k tomu vrátíme později, tak nevíš, kdy a jak jsi to dělal“.
+# (c) ZDROJE: pokus z rejstříku se zdrojem „neověřeno“ (kostra.json zdroje_stav) neprojde bez RUNAR_ZDROJ_OK="<proč>"; pokus od
+#     2026-11-25 bez pole zdroje neprojde (P20 vzal moderní významy z tabulky vedené jako neověřená).
+# (d) SLOVA: text skriptů a úloh se porovná s docs/kostra/slova.json (slova se známým účinkem, stav „platí“); shoda → ukáže, co to slovo
+#     dělá a kdy pokus naposled běžel, a pustí až s RUNAR_SLOVA_OK="<proč to tady nevadí>" (P17: „holds“ opsáno 3/5 — bylo známo od 10-06).
+# (e) LOG jen ze skutečného repa: samotest hooků běží z dočasné kopie bez rejstříku a psal „P999“ mezi skutečné pokusy.
+REPO = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
+KOSTRA = os.path.join(REPO, 'docs', 'kostra')
+
+def _env(prikaz, jm, minimum=1):
+    m = re.search(jm + r'=(?:"([^"]*)"|\'([^\']*)\'|(\S+))', prikaz)
+    h = ((m.group(1) or m.group(2) or m.group(3) or '') if m else '').strip()
+    return h if len(h) >= minimum else ''
+
+def _json(cesta):
+    try:
+        with open(cesta, encoding='utf-8') as f:
+            return json.load(f)
+    except Exception:
+        return None
+
+def log_cesta():
+    if os.environ.get('RUNAR_API_LOG'):
+        return os.environ['RUNAR_API_LOG']
+    if os.path.isfile(POKUSY):
+        return os.path.expanduser('~/.claude/runar-api-pokusy.log')
+    import tempfile
+    return os.path.join(tempfile.gettempdir(), 'runar-api-pokusy-test.log')
+
+def ulohy(prikaz, cwd):
+    """Malé .json argumenty příkazu (úlohy pokusu) — obsah jde do záznamu běhu a do kontroly slov."""
+    out = {}
+    for m in re.finditer(r'["\']?([^\s"\';|&]+\.json)["\']?', prikaz):
+        c = m.group(1).replace('\\', '/')
+        if not re.match(r'^[A-Za-z]:/|^/', c):
+            c = os.path.join(cwd or '.', c)
+        c = os.path.normpath(c)
+        t = precti(c)
+        if t and len(t) <= 30000:
+            out[c] = t
+    return out
+
+def texty_skriptu(prikaz, cwd):
+    out = {}
+    for sk in skripty(prikaz, cwd):
+        t = precti(sk)
+        if not t:
+            continue
+        out[sk] = t
+        for m in re.finditer(r'require\(\s*["\'](\.{1,2}/[^"\']+)["\']\s*\)', t):
+            dep = os.path.normpath(os.path.join(os.path.dirname(sk), m.group(1)))
+            for kand in (dep, dep + '.js'):
+                tt = precti(kand)
+                if tt:
+                    out[kand] = tt
+                    break
+    return out
+
+def kontrola_zdroju(pokus, prikaz):
+    reg = _json(POKUSY) or {}
+    x = next((y for y in reg.get('pokusy', []) if y.get('id') == pokus), None)
+    if not x:
+        return ''
+    if (x.get('datum') or '') >= '2026-11-25' and not isinstance(x.get('zdroje'), list):
+        return ('Pokus ' + pokus + ' nemá v docs/kostra/pokusy.json pole „zdroje“ — vyjmenuj soubory, ze kterých bere obsah vstupu '
+                '(významy, popisy, obrazy; [] = jen produkce). Owner 2026-11-25: P20 vzal moderní významy z neověřené tabulky.')
+    stav = {z.get('cesta'): z for z in (_json(os.path.join(KOSTRA, 'kostra.json')) or {}).get('zdroje_stav', [])}
+    spatne = [z for z in x.get('zdroje') or [] if (stav.get(z) or {}).get('stav') != 'ověřeno']
+    if spatne and not _env(prikaz, 'RUNAR_ZDROJ_OK', 15):
+        return ('Pokus ' + pokus + ' bere obsah z neověřeného zdroje: ' + ', '.join(spatne) + ' (stav v docs/kostra/kostra.json „zdroje_stav“). '
+                'Napřed zdroj ověř a změň mu stav — nebo, je-li pokus právě o tom zdroji, přidej RUNAR_ZDROJ_OK="<proč to tady smí>".')
+    return ''
+
+def predchozi_behy(pokus):
+    out = []
+    try:
+        for f in sorted(os.listdir(os.path.join(KOSTRA, 'behy'))):
+            if f.endswith('-' + pokus + '.json'):
+                b = _json(os.path.join(KOSTRA, 'behy', f)) or {}
+                out.append(str(b.get('cas', f[:19])) + ' · ' + str(b.get('volani', '?')) + ' volání · ' + str(b.get('zamer', ''))[:90])
+    except Exception:
+        pass
+    for b in (_json(os.path.join(KOSTRA, 'behy-zpetne.json')) or {}).get('behy', []):
+        if b.get('pokus') == pokus:
+            out.append(str(b.get('cas', '?')) + ' · ' + str(b.get('volani', '?')) + ' volání (zpětně) · ' + str(b.get('zamer', ''))[:90])
+    return out[-5:]
+
+def kontrola_slov(pokus, prikaz, texty):
+    if _env(prikaz, 'RUNAR_SLOVA_OK', 10):
+        return ''
+    slova = [w for w in (_json(os.path.join(KOSTRA, 'slova.json')) or {}).get('slova', []) if w.get('stav') == 'platí']
+    nalezy = []
+    for w in slova:
+        try:
+            rx = re.compile(w['vzor'], re.I)
+        except Exception:
+            continue
+        for cesta, t in texty.items():
+            m = rx.search(t)
+            if m:
+                a = max(0, m.start() - 50)
+                ukazka = t[a:m.end() + 50].replace('\n', ' ')
+                nalezy.append(w['id'] + ' „' + m.group(0) + '“ v ' + os.path.basename(cesta) + ': …' + ukazka + '…\n    → ' + w['co_dela'] + ' (' + w['model'] + '; ' + w['doklad'] + ')')
+                break
+    if not nalezy:
+        return ''
+    pb = predchozi_behy(pokus)
+    return ('V textu, který jde modelu (skripty a úlohy pokusu ' + pokus + '), stojí slova se ZNÁMÝM účinkem (docs/kostra/slova.json):\n  '
+            + '\n  '.join(nalezy)
+            + ('\nPokus ' + pokus + ' už běžel: ' + ' | '.join(pb) if pb else '')
+            + '\nJe-li to tvoje NOVÉ znění: přepiš ho (RUNAR_DESIGN.md „Slova, která dáváme modelu“). Je-li to text produkce, kód skladače '
+              'nebo slovo, jehož účinek právě měříš: přidej RUNAR_SLOVA_OK="<proč to tady nevadí>" — důvod se zapíše do záznamu běhu.')
+
+def zapis_behu(d, prikaz, pokus, ano, zamer, co, texty, ul):
+    import datetime, hashlib, subprocess
+    cil = os.environ.get('RUNAR_BEHY_DIR') or (os.path.join(KOSTRA, 'behy') if os.path.isdir(KOSTRA) else '')
+    if not cil:
+        return
+    ted = datetime.datetime.now()
+    sid = str(d.get('session_id') or '')
+    lane = precti(os.path.join(os.path.expanduser('~'), '.claude', 'runar-lane', sid.replace('/', '_').replace('\\', '_') + '.txt')).strip()
+    def rel(c):
+        c = c.replace('\\', '/'); r = REPO.replace('\\', '/') + '/'
+        return c[len(r):] if c.lower().startswith(r.lower()) else c
+    try:
+        head = subprocess.run(['git', 'rev-parse', '--short', 'HEAD'], cwd=REPO, capture_output=True, text=True, timeout=4).stdout.strip()
+    except Exception:
+        head = ''
+    verze = re.search(r"RUNAR_PROMPT_VERSION\s*=\s*'([^']+)'", precti(os.path.join(REPO, 'v2', 'runar-config.js')))
+    zaznam = {
+        'cas': ted.strftime('%Y-%m-%d %H:%M:%S'), 'pokus': pokus, 'volani': int(ano), 'zamer': zamer, 'co_vola': co,
+        'lane': lane or '?', 'session': sid, 'head': head, 'prompt': verze.group(1) if verze else '?',
+        'prikaz': prikaz[:4000],
+        'skripty': [{'cesta': rel(c), 'sha1': hashlib.sha1(t.encode('utf-8')).hexdigest()[:12]} for c, t in texty.items()],
+        'ulohy': {rel(c): t for c, t in ul.items()},
+        'slova_ok': _env(prikaz, 'RUNAR_SLOVA_OK'), 'zdroj_ok': _env(prikaz, 'RUNAR_ZDROJ_OK'),
+        '_co': 'Zapsal hlídač API (hooks/claude/runar-api-guard.py) při puštění volání. Výsledky leží tam, kam je skript uložil (úlohy / složka pokusu).',
+    }
+    try:
+        os.makedirs(cil, exist_ok=True)
+        jm = ted.strftime('%Y-%m-%d-%H%M%S') + '-' + re.sub(r'[^A-Za-z0-9]+', '_', pokus)[:40] + '.json'
+        with open(os.path.join(cil, jm), 'w', encoding='utf-8', newline='\n') as f:
+            f.write(json.dumps(zaznam, ensure_ascii=False, indent=1) + '\n')
+    except Exception:
+        pass
+
 def main():
     try:
         d = json.load(sys.stdin)
@@ -113,6 +263,11 @@ def main():
         return
     co = vola_api(prikaz, d.get('cwd') or '')
     if not co:
+        return
+    if prikaz.count('RUNAR_API_ANO=') > 1:
+        print(json.dumps({'hookSpecificOutput': {'hookEventName': 'PreToolUse', 'permissionDecision': 'deny', 'permissionDecisionReason': (
+            'Jeden pokus = jeden příkaz. V příkazu je víc RUNAR_API_ANO — hlídač by zkontroloval a zapsal jen první (2026-11-24: P17, P10 a P20 '
+            'jedním příkazem → v logu jen „P17 | 5 volání“, 7 volání chybí). Pusť každý pokus zvlášť.')}}, ensure_ascii=False))
         return
     if 'RUNAR_API_ANO=' in prikaz:
         # KUKY 2026-10-07: „ZÁMĚR, co má z toho měření vyjít… PŘEDPOKLAD! ne jen že si udělám 480 čtení… vždycky se udělá malý vzorek.“
@@ -131,9 +286,17 @@ def main():
                      'když owner větší vzorek schválil, přidej RUNAR_API_OWNER="<jeho slova doslova>".')
         else:
             chyba = chyba_pokusu(prikaz)
+        pokus = _env(prikaz, 'RUNAR_POKUS') or '?'
+        texty, ul = {}, {}
+        if not chyba and re.match(r'^P\d+$', pokus):
+            chyba = kontrola_zdroju(pokus, prikaz)
+            if not chyba:
+                texty, ul = texty_skriptu(prikaz, d.get('cwd') or ''), ulohy(prikaz, d.get('cwd') or '')
+                chyba = kontrola_slov(pokus, prikaz, dict(list(texty.items()) + list(ul.items())))
         if not chyba:
+            zapis_behu(d, prikaz, pokus, ano.group(1), zamer, co, texty or texty_skriptu(prikaz, d.get('cwd') or ''), ul or ulohy(prikaz, d.get('cwd') or ''))
             try:   # stopa pro ownera: každý puštěný pokus s počtem a záměrem, ať se dá zkontrolovat bez mé paměti
-                with open(os.path.expanduser('~/.claude/runar-api-pokusy.log'), 'a', encoding='utf-8') as f:
+                with open(log_cesta(), 'a', encoding='utf-8') as f:
                     import datetime
                     _pk = re.search(r'RUNAR_POKUS=(?:"([^"]*)"|\'([^\']*)\'|(\S+))', prikaz)
                     _pk = (_pk.group(1) or _pk.group(2) or _pk.group(3)) if _pk else '?'
