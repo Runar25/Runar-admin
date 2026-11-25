@@ -264,7 +264,7 @@ PRIPADY = [
  ('obchazka', 'verify_ui_text_used.js', 'scripts/verify_ui_text_used.js', 'replace', " && !post.some((p) => k.endsWith(p))", ''),
  ('chyti', 'verify_pravidla_mapa.js', 'scripts/utils/pravidla_mapa.json', 'replace', '"pravidla": ["§30"],', '"pravidla": ["§99"],'),
  # 2026-11-25 (CODE-read, audit paměti): nový lab musí dosáhnout na RUNAR_DESIGN „Slova“ — oblast „text pro model“ bez docs/eval/** musí padnout
- ('chyti', 'verify_pravidla_mapa.js', 'scripts/utils/pravidla_mapa.json', 'replace', '"docs/eval/**",\n    "docs/kostra/**"', '"docs/kostra/**"'),
+ ('chyti', 'verify_pravidla_mapa.js', 'scripts/utils/pravidla_mapa.json', 'replace', '"cesty": ["docs/eval/**", "docs/kostra/**"],', '"cesty": ["docs/kostra/**"],'),
  ('chyti', 'verify_hooky_claude.py', 'hooks/claude/runar-context.py', 'replace', "    for m in LRE.finditer(data):", "    for m in []:"),
  # kolo 3 / 4h (2026-10-11): obrazy, kalendář, myšlenka ✦, zrcadlo parseru
  ('chyti', 'verify_compose_mirror.js', 'v2/runar-character.js', 'replace', "var reading = segs.map(function (x) { return x.text; }).join(' ').trim();", "var reading = segs.map(function (x) { return x.text; }).join('  ').trim();"),
