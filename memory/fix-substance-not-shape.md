@@ -26,4 +26,4 @@ to u #4 chytlo 9 nálezů, co jsem sám přehlédl). Root příčina > tvar. Ver
 ne že „to teď vrací 400".
 
 **Proč to platí:** owner opakovaně řekl, že hasty fix bez pochopení podstaty = horší než žádný.
-**Jak aplikovat:** [[decisions-are-directions-not-locks]] · [[measure-dont-eyeball]] · [[verify-agent-claims-about-code]]. Architektonický fix (server staví prompt) = rozhodnutí ownera (§21), ne rychlá záplata.
+**Jak aplikovat:** CLAUDE.md §21 · CLAUDE.md §24 · [[verify-agent-claims-about-code]]. Architektonický fix (server staví prompt) = rozhodnutí ownera (§21), ne rychlá záplata.

@@ -32,7 +32,7 @@ fallstjórn **þágufall** s vazbou `hreyfa við <þessu>` (dativ, „dotknout s
 Významový/úzový **rozdíl blízkých synonym** (např. `í senn` „po jednom/zároveň" vs `allt í einu`
 „najednou") — slovník dá glosu, korpus četnost, ale sémantický kontrast rozhodne až **věta v kontextu
 nebo rodilý mluvčí**. Kolokace podle konkrétního objektu (`fara yfir skarð`) nejsou indexované —
-korpus potvrdí jen vzácnost, ne přijatelnost. Nedomýšlet → [[dont-invent-fact-critical]], [[measure-dont-eyeball]].
+korpus potvrdí jen vzácnost, ne přijatelnost. Nedomýšlet → CLAUDE.md §23, CLAUDE.md §24.
 
 ⚠️ **`--freq` u ČTYŘ a více slov vrací vždy 0 — a je to TICHÁ nula, ne nález.** Endpoint stropuje
 na trigramech. Kontrolní vzorek: `það er ekki hægt` (běžná fráze) → **0**. Doložení delší vazby se

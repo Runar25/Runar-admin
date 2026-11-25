@@ -1,5 +1,5 @@
 // Konce čtení — PILOT nových tvarů (KUKY 2026-09-26 „začneme konci čtení“; BACKLOG „Konce čtení: víc tvarů (typy 6/7/9)“).
-// Produkční model přes API (VÝJIMKA 2 v memory cteni-generuj-tady-ne-pres-api: test, jak se model zachová na změnu promptu).
+// Produkční model přes API (VÝJIMKA 2 v memory naklady-testovani: test, jak se model zachová na změnu promptu).
 // 6 případů × 4 ramena, TÝŽ seed ve všech ramenech → týž obraz, úhel, podoba oblasti; liší se jen řádka konce
 // (rameno C navíc nese otázku tazatele, protože návrat k otázce bez otázky nejde).
 //   0 = dnešní produkce (tvar volí SEEKING, SEEK_SHAPE) · A = OBRAZ (typ 6) · B = NAPĚTÍ (typ 7) · C = NÁVRAT K OTÁZCE (typ 9)

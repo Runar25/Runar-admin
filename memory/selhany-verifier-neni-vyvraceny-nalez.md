@@ -26,4 +26,4 @@ vůbec. Bez dopočtu z `journal.jsonl` by se to četlo jako „banka je hotová"
 Táž rodina jako [[read-the-check-before-push]] (pipe do grepu zahodí exit kód) a
 [[sanity-check-measurements]] (čisté číslo = red flag): **zahozený signál se tváří jako dobrá
 zpráva.** Souvisí s [[break-your-own-work-before-reporting]] — útok na vlastní práci platí
-i na nástroj, kterým útočím ([[attack-the-metric-not-just-the-result]]).
+i na nástroj, kterým útočím (CLAUDE.md §25 B).

@@ -20,4 +20,14 @@ jsi to neodhalil, znamená, že jen slepě následuješ, a ani jsi to nezkontrol
 - Při stavbě zadání pro soudce projdi každé pole: vidí tohle uživatel v aplikaci? Pokud ne, ven. Potřebuje-li kritérium obraz
   (např. „bere runa cizí děj z obrazu?“), rozděl otázky: ta, co obraz potřebuje, zvlášť; srozumitelnost vždy BEZ obrazu.
 - Před nasazením si přečti aspoň pár výstupů z každého ramene celé, bez promptu v hlavě: dává každé „she/he/it/they“ smysl jen z textu?
-- Souvisí: [[attack-the-metric-not-just-the-result]] (útok na nástroj), [[break-your-own-work-before-reporting]], [[measure-dont-eyeball]].
+- Souvisí: CLAUDE.md §25 B (útok na nástroj), [[break-your-own-work-before-reporting]], CLAUDE.md §24.
+
+**Sloučeno 2026-11-25 z gpt-rozbor-neni-zavazny a you-neni-prohresek — nález soudce je podnět, ne vada.**
+- **Rozbor od modelu (GPT luna/sol, rubrika, slepý grader) není závazný** (KUKY 2026-09-25: *„gpt analýza není pro nás závazná bez
+  odsouhlasení! cokoliv řekne, se musí prověřit… obrazy nečte moc dobře.“*). Napřed protlač a ověř (CLAUDE.md §24), ukaž ownerovi s doklady,
+  měň až po jeho ano. Ownerův komentář v reportu je vstup, rozbor vedle něj kontext; rubriku měň podle ownerových verdiktů. (Tlačítko
+  rozboru a edge fn `gpt-review` zrušeny 2026-10-09; princip platí pro každého soudce.)
+- **„you“ ve čtení není prohřešek.** Je to postava scény, oslovení, obraz. Soudce, který hlásí „you“ bez kontextu, měří slovo, ne vadu
+  (táž past jako honba za „already“). KUKY 2026-09-30: *„soudce kouká jen na you a nekouká na kontext!! … buď s tím něco udělej, nebo mi to
+  nepiš!!!“* Takový nález ownerovi nepředávej — přečti celý text jako uživatel (je to výrok o jeho skutečném životě podaný jako fakt?), nebo
+  nástroj oprav či vyřaď. Hranice tvrzení o člověku → RUNAR_DESIGN „Cold reading“ (Definice).

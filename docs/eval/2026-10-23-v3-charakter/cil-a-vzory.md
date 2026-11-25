@@ -5,7 +5,7 @@ děláme … potřebujeme najít i vzorové věty, ať víme, k čemu míříme.
 Tenhle soubor vlastní jen **sbírku vzorových vět s ownerovým verdiktem** pro lab v3. Cíl sám vlastní `RUNAR_DESIGN.md` „Co má čtení v člověku
 vyvolat“ a „Rúnarův rejstřík — zrcadlo, ne orákulum“; znaky silného čtení memory `co-dela-cteni-silnym`; rešerši
 `docs/findings/2026-08-15-wf_a188371f-db1.md` a DECISIONS 2026-08-14. Tady se neopisují.
-⚠️ **Vzorové věty se do promptu NEDÁVAJÍ** — model hotovou větu opíše (memory `prompt-directive-makes-model-copy`; v3 krok 5: věta významu
+⚠️ **Vzorové věty se do promptu NEDÁVAJÍ** — model hotovou větu opíše (RUNAR_DESIGN „Slova“ bod 11; v3 krok 5: věta významu
 opsána 7/8; DECISIONS 2026-08-23 „žádné vzorové věty do promptu“). Slouží jako měřítko pro nás a pro slepého soudce.
 
 ## Vzorové věty — ownerem uznané (✔) a odmítnuté (✘)

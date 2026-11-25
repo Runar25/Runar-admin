@@ -13,3 +13,7 @@ Owner má Windows v angličtině. Když mu popisuješ, kam kliknout (Nastavení,
 **Why:** KUKY 2026-10-14: „mám windows v EN, piš popisky vždy EN, ať si to nemusím překládat." Český popis cesty („Upřesnit možnosti → Volitelné aktualizace") musel překládat zpátky.
 
 **How to apply:** platí pro všechny popisky UI Windows a aplikací, které owner používá v EN; v nejistotě použij anglický název, ne český překlad.
+
+**Sloučeno 2026-11-25 z nahledy-ownerovi-v-en.** Totéž pro náhledy: screenshoty a ukázky webu, appky a obrázků posílej ownerovi napřed
+v EN verzi (owner 2026-11-02: *„dávej mi ty náhledy v EN“*); islandskou jen když jde právě o islandský text — a s českým vysvětlením, co
+se v ní mění. Na IS jako primárním jazyce produktu (CLAUDE.md §2) to nic nemění.

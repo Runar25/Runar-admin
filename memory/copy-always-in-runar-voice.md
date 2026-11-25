@@ -23,4 +23,4 @@ generické „vymýšlení" — je to **Rúnarův hlas**. Postup:
 
 **Proč:** owner opakovaně narazil na generickou / naslepo psanou copy — nezajímá ho. Hlas Rúnara je
 📜 kánon (§23), drž se ho.
-**Jak aplikovat:** [[fix-substance-not-shape]] · [[dont-invent-fact-critical]]. Když si hlasem nejsi jistý, dej owner varianty + kritický pohled, nevymýšlej naslepo.
+**Jak aplikovat:** [[fix-substance-not-shape]] · CLAUDE.md §23. Když si hlasem nejsi jistý, dej owner varianty + kritický pohled, nevymýšlej naslepo.

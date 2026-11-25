@@ -30,4 +30,4 @@ ne dosazení; pořadí musí sedět s AREAS"). Nikdy jako tělo funkce, ani „p
 je vzor otevřený vedle. Platí i obráceně: **CODE nepřepisuje Coworkovy věty proto, že by se mu
 líp vešly do kontroly** — když se rozejde kontrola s textem, opraví se kontrola (doloženo týž den:
 `verify_contract_wiring` kotvil na starém znění a padl; upravila se kotva, ne věty).
-Souvisí: [[verify-agent-claims-about-code]], [[decisions-are-directions-not-locks]].
+Souvisí: [[verify-agent-claims-about-code]], CLAUDE.md §21.

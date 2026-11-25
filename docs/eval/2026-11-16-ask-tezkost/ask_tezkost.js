@@ -2,7 +2,7 @@
 // Podnět: hlášení 037966b4 (Algiz 04242…): na tip „Where does this get hard?“ odpověď přes obraz („from the sound alone“), owner musel
 // napsat „Tell me the hard part without the image!“. Owner 2026-11-16 na otázku, zda to zkusit: „5. zkus“.
 // Hypotéza (obrácená páka, CLAUDE.md §25 A): první pravidlo Asku končí „…; speak from what the picture holds“ — to táhne KAŽDOU odpověď
-// do obrazu. P0 = produkce · P1 = bez té půlvěty (vada se odebírá, nic se nepřidává — memory oprava-promptu-odebira-vadu).
+// do obrazu. P0 = produkce · P1 = bez té půlvěty (vada se odebírá, nic se nepřidává — RUNAR_DESIGN „Slova“ bod 12).
 // Rozhodne: zda P1 sníží slova obrazu v odpovědi na tip „hard“ a nezhorší ji (texty čte owner). Půlvěta vznikla 2026-10-03 kvůli
 // tipu „clearer image“ (úhel 2/4 → 0/4) — ten se tu NEměří; kdyby P1 vyhrála, napřed ověřit i ten tip.
 // Prompt PRODUKČNÍ cestou (buildSysPrompt + buildAskPrompt přes vm, vstup bez řádku ✦ jako v produkci). Volání = callSol (sol, effort none).

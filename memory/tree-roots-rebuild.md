@@ -18,7 +18,7 @@ vlastní `RUNAR_TREE.md` §3 a kód (`slotAssign` v `build_crown_composer.py`) �
 - **Po rebuildu labu tvrdý reload (Ctrl+Shift+R)** — stránka labu se necachebustuje a owner jinak vidí starou verzi („pořád je to
   stejné“). Debug: tlačítko „DEBUG zdroj“ obarví kusy podle zdroje.
 
-Jak měnit: [[runar-trunk-incremental-rule]] · měřit, ne od oka: [[measure-dont-eyeball]].
+Jak měnit: [[runar-trunk-incremental-rule]] · měřit, ne od oka: CLAUDE.md §24.
 
 **Proč zkráceno (2026-10-11, nález CODE-read):** stál tu „zákon 1 pramen = 1 runa, max 25 = 25 run“ a „můj úkol teď“. Zákon od 2026-09-28
 neplatí (stavbu vlastní `RUNAR_TREE.md` §3), úkol je dávno hotový a mechaniky kroků 1–3 drží `RUNAR_TREE.md`.

@@ -15,5 +15,5 @@ powershell -ExecutionPolicy Bypass -File .\memory\relink-memory.ps1
 ```
 
 <!-- 2026-10-10 (CODE-read, kontrola architektury — zastaralá místa): do té doby tu stálo „obě AI session" s prohozenými rolemi
-     (Code = Tree, Cowork = Main), `runar-project.md` jako sklad stacku/tierů/DB (vyprázdněn 2026-07-18) a `MEMORY.md` jako místo
+     (Code = Tree, Cowork = Main), runar-project jako sklad stacku/tierů/DB (vyprázdněn 2026-07-18, smazán 2026-11-25) a `MEMORY.md` jako místo
      pro rozhodnutí (ta vlastní RUNAR_DECISIONS.md). Mechanika junctionu byla převyprávěná z CLAUDE.md §17 → nahrazena odkazem. -->

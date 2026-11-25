@@ -51,91 +51,56 @@ Vrstvy pravdy: kanonická = root `RUNAR_*.md`, `memory/*.md`, `CLAUDE.md` · his
 
 ## Index paměti
 - [working-style.md](working-style.md) — workflow, Python skripty, verifikace
+- [shrine-admin-not-lab.md](shrine-admin-not-lab.md) — runar-shrine.html je admin, ne lab; `teach` píše do produkce
 - [vocab-natvrdo-a-migrace.md](vocab-natvrdo-a-migrace.md) — Jak najít natvrdo zapsané vocab/tier termíny a po přejmenování ručně grepnout staré (k CLAUDE.md §13, §15)
-- [js-unicode-escapes-python.md](js-unicode-escapes-python.md) — JS soubory s \uXXXX escapy rozbíjejí pattern matching v Python patch skriptech — jak na to
 - [cowork-bash-mount.md](cowork-bash-mount.md) — Cowork: flaky bash mount uřezává repo soubory — čti z git objektu; Cowork do repa nepíše
 - [protokol-externi-dokumenty.md](protokol-externi-dokumenty.md) — Protokol pro externí dokumenty (patche, design docy): jak je přijímat a kam zapsat
-- [proveniencia-relay-neni-rozhodnuti.md](proveniencia-relay-neni-rozhodnuti.md) — Tvrzení předané jinou session (relay) není rozhodnutí ownera — dohledat zdroj (lekce 2026-07-17)
-- [adversarialni-naraz-fact-critical.md](adversarialni-naraz-fact-critical.md) — Adversariální náraz na shodu Cowork↔Code jen u fact-critical tvrzení
-- [naklady-testovani.md](naklady-testovani.md) — Náklady testování: testy dělat tady (předplacené), API jen s důvodem (KUKY 2026-08-23)
-- [is-done-together-not-for-sigrun.md](is-done-together-not-for-sigrun.md) — IS rovnou hotová a ověřená, žádný draft pro Sigrún
+- [naklady-testovani.md](naklady-testovani.md) — testovací čtení píšeš sám, slepý soudce = subagent; API jen produkční model a srovnání modelů, malý vzorek
 - [handoff-text-in-code-block.md](handoff-text-in-code-block.md) — text k předání jiné session do code blocku
 - [neposilat-praci-coworku.md](neposilat-praci-coworku.md) — co umí Code, udělá sám; žádný handoff Coworku přes ownera
 - [paste-sql-explicitly.md](paste-sql-explicitly.md) — SQL pro ownera vlož celé, žádné „jako minule"
 - [read-token-from-clipboard.md](read-token-from-clipboard.md) — eval token si načti ze schránky sám
 - [runar-api-key-file.md](runar-api-key-file.md) — Anthropic klíč v `~/.claude/runar-api-key.txt`, ownera nežádat
-- [cteni-generuj-tady-ne-pres-api.md](cteni-generuj-tady-ne-pres-api.md) — testovací čtení piš sám, ne přes API; slepé souzení subagentem
 - [ukladej-cteni-a-hlasy.md](ukladej-cteni-a-hlasy.md) — každé čtení i hlas z pokusu uložit s tím, z čeho vznikl (archiv hlasů)
-- [full-path-and-numbered-lists.md](full-path-and-numbered-lists.md) — úplná cesta k souboru; VŠECHNY body a otázky ownerovi číslované
 - [ask-owner-for-checks-you-cannot-run.md](ask-owner-for-checks-you-cannot-run.md) — co Code neověří, napřed zkusit, pak vyžádat od ownera
-- [dont-invent-fact-critical.md](dont-invent-fact-critical.md) — chybí fakt/lore → zastav a flagni
 - [vyznamy-run-historie-jen-zdroj.md](vyznamy-run-historie-jen-zdroj.md) — významy run hledáme nové; historie je zdroj, ne mez
-- [function-not-ceremony.md](function-not-ceremony.md) — nestavět proces pro uspokojení
-- [proceed-dont-ask.md](proceed-dont-ask.md) — dohodnutý plán odjeď celý, neptej se mezi kroky
-- [nasazeni-delam-sam.md](nasazeni-delam-sam.md) — edge funkce nasazuji sám po pushi, ownera se neptám
-- [one-patch-script-path.md](one-patch-script-path.md) — patch do vlastního gitignored slotu session
 - [match-existing-visual-first.md](match-existing-visual-first.md) — nové UI: napřed existující vizuál
-- [verify-agent-claims-about-code.md](verify-agent-claims-about-code.md) — handoff jiné session = žádost, ne fakt
+- [verify-agent-claims-about-code.md](verify-agent-claims-about-code.md) — handoff, rozbor GPT i shoda Cowork↔Code = tvrzení k ověření na HEAD; „Cowork tvrdí“ ≠ „KUKY rozhodl“
 - [propose-content-not-code.md](propose-content-not-code.md) — Cowork dodává obsah, kód ne
 - [bash-no-cd-prefix.md](bash-no-cd-prefix.md) — NIKDY `cd … &&` ani `| tail` na Bash
-- [heredoc-mangles-backslash-escapes.md](heredoc-mangles-backslash-escapes.md) — skript s escape sekvencemi piš nástrojem Write
 - [api-guard-py-false-positive.md](api-guard-py-false-positive.md) — dvě jména `.py` v příkazu → hlídač API; cesty přes `--pathspec-from-file`
-- [edit-tool-escapes-new-text.md](edit-tool-escapes-new-text.md) — Edit na řádku s `\uXXXX` → patch skriptem
+- [edit-tool-escapes-new-text.md](edit-tool-escapes-new-text.md) — soubor s escapy u+XXXX (runar-translations.js): Edit přepíše i nový text, kotvu měň patch skriptem po celých řádcích
 - [ceske-nazvy-spreadu-v-kodu.md](ceske-nazvy-spreadu-v-kodu.md) — ve v2/ názvy spreadů anglicky
-- [guard-test-the-lifecycle.md](guard-test-the-lifecycle.md) — kontrolu testuj proti všem stavům hlídané věci
+- [guard-test-the-lifecycle.md](guard-test-the-lifecycle.md) — nová kontrola do smoke: projdi všechny stavy hlídané věci; `count != 1` v patchi = duplikát, napřed zjisti proč
 - [read-the-check-before-push.md](read-the-check-before-push.md) — pipe do grepu zahodí exit kód; čti verdikt
-- [pathspec-nesmi-byt-prazdny.md](pathspec-nesmi-byt-prazdny.md) — prázdný pathspec = commit celého indexu
 - [napred-dohledej-co-uz-je.md](napred-dohledej-co-uz-je.md) — před měřením/položkou prohledej docs a git log ostatních lane
-- [parallel-code-sessions-collision.md](parallel-code-sessions-collision.md) — víc session ve sdíleném stromě: pathspec, commit_vlastni, status
-- [test-vstup-jako-v-produkci.md](test-vstup-jako-v-produkci.md) — test formulace: napřed jeden hotový prompt porovnej s produkcí
-- [prompt-directive-makes-model-copy.md](prompt-directive-makes-model-copy.md) — „použij tenhle text“ = opíše doslova; rámuj jako zdroj
-- [falsify-by-reversing-the-lever.md](falsify-by-reversing-the-lever.md) — hypotézu „přidej X“ testuj ubráním X (§25)
+- [parallel-code-sessions-collision.md](parallel-code-sessions-collision.md) — víc session ve sdíleném stromě: commit_vlastni, pathspec nikdy prázdný, status před sáhnutím
 - [loading-a-page-proves-existence-not-authenticity.md](loading-a-page-proves-existence-not-authenticity.md) — načtená URL ≠ pravá stránka
-- [a-guard-that-refuses-is-a-detector.md](a-guard-that-refuses-is-a-detector.md) — „přepiš jen při jednom výskytu“ = detektor duplikátu
 - [break-your-own-work-before-reporting.md](break-your-own-work-before-reporting.md) — na hotový kus zaútoč sám, pak hlas
-- [attack-the-metric-not-just-the-result.md](attack-the-metric-not-just-the-result.md) — útoč na nástroj dřív než na výsledek (§25 B)
-- [soudce-vidi-jen-co-uzivatel.md](soudce-vidi-jen-co-uzivatel.md) — slepý soudce vidí jen to, co uživatel
-- [you-neni-prohresek.md](you-neni-prohresek.md) — „you“ ve čtení není prohřešek
-- [selhany-verifier-neni-vyvraceny-nalez.md](selhany-verifier-neni-vyvraceny-nalez.md) — spadlý agent ≠ vyvrácený nález
-- [test-the-lever-that-binds.md](test-the-lever-that-binds.md) — měň vazbu, která výsledek opravdu drží
+- [soudce-vidi-jen-co-uzivatel.md](soudce-vidi-jen-co-uzivatel.md) — slepý soudce dostane jen to, co vidí uživatel; nález soudce (GPT, „you“) je podnět k ověření, ne vada
+- [selhany-verifier-neni-vyvraceny-nalez.md](selhany-verifier-neni-vyvraceny-nalez.md) — agent nebo verifier, který spadl, hlas zvlášť — ne jako „vyvráceno“ (pozor na .filter(Boolean) ve workflow)
 - [rekni-kterou-variantu-testujes.md](rekni-kterou-variantu-testujes.md) — před testem řekni, kterou variantu testuješ
-- [ownerovo-slovo-neni-spec.md](ownerovo-slovo-neni-spec.md) — konverzační přídavné jméno není zadání
-- [ownerovo-hodnoceni-zapis-smysl.md](ownerovo-hodnoceni-zapis-smysl.md) — verdikt ownera zapiš srozumitelně, ne jeho slova; příklad = směr
-- [measure-dont-eyeball.md](measure-dont-eyeball.md) — dojem není nález; změř, nebo „nevím"
-- [jeden-vzorek-neni-vada.md](jeden-vzorek-neni-vada.md) — slovo z jednoho vzorku neřeš jako vadu
+- [ownerovo-slovo-neni-spec.md](ownerovo-slovo-neni-spec.md) — ownerovo hodnotící slovo („delší“) převeď na číslo, nebo se zeptej; verdikt zapiš vlastní větou, jeho příklad = směr
 - [glyph-text-vs-our-svg.md](glyph-text-vs-our-svg.md) — tvar runy ověř proti NAŠÍ kresbě
-- [sanity-check-measurements.md](sanity-check-measurements.md) — extrémní číslo = red flag; ověř protipříkladem
+- [sanity-check-measurements.md](sanity-check-measurements.md) — výsledek 0/N nebo N/N ověř protipříkladem; páka musí hýbat vazbou, která výsledek drží; slovo z jednoho vzorku není vada
 - [co-dela-cteni-silnym.md](co-dela-cteni-silnym.md) — co dělá čtení silným (ownerem potvrzeno)
-- [oprava-promptu-odebira-vadu.md](oprava-promptu-odebira-vadu.md) — vadu odeber; přidaný požadavek → formule
-- [prompt-nepojmenuj-co-hned-zakazes.md](prompt-nepojmenuj-co-hned-zakazes.md) — nepojmenuj v promptu, co hned zakážeš
-- [rozkaz-a-studene-cteni-hranice.md](rozkaz-a-studene-cteni-hranice.md) — „Look…“ ani fyzický důsledek nejsou porušení kánonu
-- [gpt-rozbor-neni-zavazny.md](gpt-rozbor-neni-zavazny.md) — rozbor soudce je podnět, ne verdikt
 - [strop-serveru-neni-narok.md](strop-serveru-neni-narok.md) — limit v proxy ≠ nárok tieru
 - [admin-ucty-nejsou-nalez.md](admin-ucty-nejsou-nalez.md) — data admin účtů nejsou nález o soukromí
-- [nacti-cteni-a-reporty.md](nacti-cteni-a-reporty.md) — „načti čtení a reporty“ → `node scripts/nacti_cteni.js`
 - [schranka-runar-gmail.md](schranka-runar-gmail.md) — schránka runar@: štítky, jen koncepty, nic neodeslat bez ano
 - [emaily-kratke.md](emaily-kratke.md) — každý e-mail na jednu obrazovku telefonu
 - [always-show-reading-samples.md](always-show-reading-samples.md) — ownerovi ukaž text čtení i instrukce, které do něj vstoupily
 - [modelove-stromy-neposilat.md](modelove-stromy-neposilat.md) — ownerovi jen jeho strom před/po
 - [testovani-jedne-runy-je-zamer.md](testovani-jedne-runy-je-zamer.md) — owner testuje jednu runu schválně
-- [write-for-owner-not-process.md](write-for-owner-not-process.md) — ownerovi výsledek, ne proces
-- [cheapest-deciding-measurement-first.md](cheapest-deciding-measurement-first.md) — ⛔ agenti max 3–5, API nad ~50 jen s ano, vždy záměr + malý vzorek
-- [work-efficiently-ask-if-simpler.md](work-efficiently-ask-if-simpler.md) — před těžkým nástrojem: nejde to jednodušeji?
-- [decisions-are-directions-not-locks.md](decisions-are-directions-not-locks.md) — rozhodnutí = směr, ne zámek
-- [find-a-gap-close-it-now.md](find-a-gap-close-it-now.md) — díru zavři v témže tahu
+- [write-for-owner-not-process.md](write-for-owner-not-process.md) — zpráva ownerovi: výsledek, ne proces; cesty od C:, každý bod a otázka s číslem, otázky neopakovat v průběžných zprávách
+- [cheapest-deciding-measurement-first.md](cheapest-deciding-measurement-first.md) — před agenty, dávkou nebo API: nejlevnější rozhodující měření, záměr + předpoklad, agenti max 3–5, API nad ~50 jen s ano; žádný proces pro uklidnění
 - [fix-substance-not-shape.md](fix-substance-not-shape.md) — security: oprav podstatu, ne tvar
 - [copy-always-in-runar-voice.md](copy-always-in-runar-voice.md) — copy vždy hlasem Rúnara
-- [read-design-before-voice-work.md](read-design-before-voice-work.md) — před hlasem/promptem RUNAR_DESIGN „Kdo je Rúnar" + „Slova, která dáváme modelu"
-- [prompt-map-artifact.md](prompt-map-artifact.md) — mapa promptu zrušena, pravda = kód
 - [cowork-handoff-quality-bar.md](cowork-handoff-quality-bar.md) — standard Cowork handoffů
 - [review-everything-first-pass.md](review-everything-first-pass.md) — revize textů: vše v obou jazycích napoprvé
 - [runar-not-public-yet.md](runar-not-public-yet.md) — Rúnar není veřejně spuštěný
 - [is-grammar-adjective-gender.md](is-grammar-adjective-gender.md) — nejdřív rod podstatného, pak přídavné
-- [en-formulace-overit-zdrojem.md](en-formulace-overit-zdrojem.md) — anglickou formulaci ověř korpusem
 - [is-vazba-check.md](is-vazba-check.md) — islandskou vazbu ověř `is-vazba.py`, nehádej
-- [windows-ui-v-en.md](windows-ui-v-en.md) — owner má Windows v EN
-- [nahledy-ownerovi-v-en.md](nahledy-ownerovi-v-en.md) — náhledy a screenshoty ownerovi v EN verzi
-- [nazvy-souboru-anglicky.md](nazvy-souboru-anglicky.md) — obrázky, podklady a jejich složky ukládat s anglickými názvy
+- [windows-ui-v-en.md](windows-ui-v-en.md) — owner má Windows v EN: popisky UI anglicky; náhledy a screenshoty webu a appky v EN verzi
 - Strom (CODE-tree): [runar-trunk-incremental-rule.md](runar-trunk-incremental-rule.md) · [tree-roots-rebuild.md](tree-roots-rebuild.md)
 
 ## Index snapshots — dobrovolné; historický záznam ke svému datu, ne popis dneška

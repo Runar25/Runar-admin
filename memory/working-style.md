@@ -1,10 +1,5 @@
 # Working Style — Kuky / Rúnar sessions
 
-## Jazyk
-Kdo s kým mluví jakým jazykem → CLAUDE.md §31. Identifikátory v kódu anglicky, komentáře česky (§31).
-
----
-
 ## Claude Code — Principy z příručky (závazné)
 
 ### Kontext window = nejdůležitější zdroj
@@ -48,61 +43,46 @@ zjistím grepem, a neukazuje *proč* — což je jediné, co mi po compactu chyb
 
 ### Explore → Plan → Implement — nikdy přeskočit (u nových věcí)
 **Plán schvaluje owner u nových funkcí a změn chování** (co uživatel uvidí, co se počítá, prompt, data). **Bez ptaní** se opravují
-rozpory doc × kód, duplikáty a chyby (CLAUDE.md §16, §20), vlastní kontroly a paměť ([[find-a-gap-close-it-now]]) — a dohodnutý
-plán se odjede celý bez ptaní mezi kroky ([[proceed-dont-ask]]). DECISIONS 2026-10-11 (15).
+rozpory doc × kód, duplikáty a chyby (CLAUDE.md §16, §20), vlastní kontroly a paměť (CLAUDE.md §20, §30) — a dohodnutý
+plán se odjede celý bez ptaní mezi kroky: kód → ověření → commit → push → docs → hlášení; co se cestou ukáže špatně, rozhodni a řekni, co
+a proč jsi změnil (KUKY 2026-07-14). DECISIONS 2026-10-11 (15). **Zastav se a zeptej jen u:** produktového či designového rozhodnutí, které
+smí udělat jen owner · akce destruktivní nebo navenek mimo dohodnutý rozsah · zadání tak nejasného, že špatný odhad spálí práci · věci,
+kterou má jen on (podpis, DNS, nastavení účtu). Technickou nebo procesní volbu rozhodni sám a jen ohlas (owner 2026-10-11: *„to je vyloženě
+technická otázka, kterou bys měl vyřešit“*). *(Sloučeno 2026-11-25 z pamětí proceed-dont-ask a nasazeni-delam-sam.)*
 **Nasazení (edge funkce, databáze) — KUKY 2026-10-14** (*„proč se mě ptáš na to, jestli můžeš nasadit? je to důležité se mě ptát?“*
 → *„ano zapiš“*): oprava už schváleného chování se zeleným smoke se **nasadí bez ptaní a ohlásí** (verze, bez přihlášení 401 /
 preflight 204, `scripts/utils/nasazene_vs_repo.py`). Ownera se ptát jen u: nového chování nebo nové funkce · čehokoli, co mění peníze
 (kredity ElevenLabs, model, ceny), soukromí nebo platby · SQL, které mění databázi (mimo zápisy, které owner session svěřil — korekce
 IS, DECISIONS 2026-09-23 (6), (7)) · nasazení, které se předem ověřit nedá. DECISIONS 2026-10-14 (7).
+Nasazuj jen z pushnutého stavu (nikdy z necommitnuté práce) a hned ověř `python -X utf8 scripts/utils/nasazene_vs_repo.py <funkce>`.
+Zastaví-li nasazení hlídač nástroje (auto mode), **není to otázka na ownera** — napiš jednou větou, že ho zastavil nástroj a co přinese
+(owner 2026-11-23: *„vždy to nasazuješ sám. proč se mě na to ptáš?“*).
 1. Ty popíšeš záměr (nemusí být technicky přesně)
 2. Claude ukáže co to znamená v praxi — kde to sáhne, co ovlivní, co je nejdřív
 3. Ty doplníš / upřesníš / zamítneš
 4. Teprve pak implementace — jeden krok najednou
 5. Po implementaci: zápis k vlastníkovi (CLAUDE.md §16, §20)
 
-### Verifikační mechanismus — VŽDY
-Claude zastaví když to "vypadá hotově" — bez verifikace se stáváš verifikační smyčkou sám.
-Při každém tasku: co konkrétně ověří že je to hotovo? (grep, browser check, python test)
-
-### i18n kontrola — po VĚTŠÍCH UI / translation změnách (standing rule, owner 2026-07-06)
-Po zásahu do UI stringů / překladů / lang-switch logiky spusť **`scripts/i18n-diff.js`** — runtime detektor „uvízlé angličtiny" (přepne EN↔IS napříč taby, nahlásí texty co se nepřeložily = natvrdo bez wiringu NEBO nepřekreslené při přepnutí jazyka).
-**Jak vyvolat (Code session):** otevři `runar-reader.html` v panelu prohlížeče (`navigate` na produkční URL) → vlož obsah `scripts/i18n-diff.js` přes `javascript_tool`. Vrátí `{count, items}`. (Owner ručně: vložit do dev-console prohlížeče.)
-Caveat: transientní toasty co vyblednou = false-positive; rune názvy/gender jsou už vyfiltrované. Jsou to KANDIDÁTI, ne striktní gate — ověř vizuálně.
-
 ### Konkrétní prompty = méně oprav
 - Vždy uvádět: soubor, funkce, řádek (kde to sáhne)
 - Vždy uvést co se NEMÁ změnit (scope boundary)
 - Příklad: "uprav line 45 v runar-app.js — POUZE tuto část, nic jiného" > "oprav bug"
 
-### Délka doků
-**Vlastník = `CLAUDE.md` „Kde hledat co“** (pravidlo) · podrobnosti `docs/projekt-mapa.md` „Doc-owner pravidla“. Sem se nekopíruje.
-Co platí pořád a co CLAUDE.md nemá: **historie „Hotovo" nepatří do doků** — vlastní ji `git log` a DECISIONS.
-
 ---
-
-## Implementační pravidla
-Vlastní je CLAUDE.md: §1 (JS přes Python skript), §4 (SW verze), §7 (commit a push). Co tam není:
-- Apostrofy v Python: přeformulovat string, aby apostrof nebyl potřeba.
-
-## Detail k CLAUDE.md §11 — IS text v Pythonu = literální znaky (NIKDY \\uXXXX)
-`\\u00faN` → JS `úN`. Velká písmena za hex sekvencí zůstanou. Vždy: `python -X utf8` + literální IS znaky.
-
-## Detail k CLAUDE.md §12 — jméno, když chybí
-Přihlášený bez jména → `'you'`/`'þú'`. Visitor (anonymous) → `'Visitor'`/`'Gestur'`. NIKDY `email.split('@')[0]`.
 
 ## Kde ukládat soubory — povinné
 
 | Typ | Umístění |
 |-----|----------|
 | Produkční JS/HTML/CSS | `Runar-admin/v2/` — vždy přes Python skript |
-| Patch skript (session) | vlastní gitignored slot dle §1 — přepisuje se, NEarchivovat ([[one-patch-script-path]]) |
+| Patch skript (session) | vlastní gitignored slot dle §1 — přepisuje se, NEarchivovat |
 | Utility skript (opakovaný) | `Runar-admin/scripts/utils/` |
 | SQL migrace | `Runar-admin/sql/` — název: `YYYY-MM-DD_popis.sql` |
 | Nový design dokument | `Runar-admin/` root (RUNAR_NAZEV.md) |  <!-- doc-links:ok 2026-07-19 legacy: vzniklo před pravidlem, důvod nedoplněn -->
 | Archivní / dočasný dokument | `Runar-admin/docs/archive/` |
 | POC / experiment HTML | `Runar-admin/docs/archive/` |
 | Živé docs (CLAUDE.md, RUNAR_DESIGN.md, RUNAR_PRICING.md) | `Runar-admin/` root — nikam se nekopírují (§17) |
+| Obrázky, podklady, exporty (i jejich složky) | anglický název, kebab-case (např. runar-icon-blue-rune.jpg) — owner 2026-11-02 *„ukládej je anglicky. všechno.“*; obsah docs zůstává česky (§31), jména skriptů a docs se nemění (owner 2026-11-03 *„nene“*) |
 
 **Aktivní utility** (v KOŘENI repa, ne v `scripts/utils/`):
 - `smoke.py` — spustit před každým commitem
@@ -117,69 +97,11 @@ Ověřovací skripty (volané ze smoke) žijí v `scripts/verify_*.js`.
 
 ---
 
-## Ownerovi se neposílají příkazy ke spuštění (KUKY 2026-08-18)
-
-*„Proč mi posíláš příkazový řádek? Nechápu, co to je!"* — o `node scripts/utils/gen_direct.js
---without lens`.
-
-**Owner není obsluha nástrojů.** Skripty pouští CODE; owner rozhoduje a čte výsledky. Řádka
-k zkopírování po něm chce, aby si ji přečetl, pochopil, uložil a v pravou chvíli si na ni
-vzpomněl — to je práce navíc za nic.
-
-Místo příkazu napiš **co ten pokus zjistí a co z něj vyjde**; když to má smysl, prostě to pusť.
-Příkaz do odpovědi patří jen tehdy, když ho owner **výslovně chce** (např. SQL, které smí
-spustit jen on — pak přesné a celé, → [[paste-sql-explicitly]]).
-
-**Táž chyba, dvakrát za den:** `/compact Zachovej: …` (zrušeno ráno, sekce „Konverzace se neztrácí" níž)
-a večer tenhle příkaz na generování dávky. První byla výjimka v pravidle, druhá byl reflex.
-
-**Potřetí 2026-10-13 (CODE-read):** na „co jsi kde udělal, ať můžu zkontrolovat“ jsem poslal `node scripts/verify_nosice.js --vypis`
-a `git log … | grep …`. Owner je spustil z `C:\Users\zkuku` v PowerShellu (bez `grep`) — obojí spadlo: *„proč mi posíláš ty funkce,
-co já s tím?“* Na „ať můžu zkontrolovat“ patří odkazy `soubor:řádek` a výsledek, který jsem pustil sám.
-🔒 **Od 2026-10-13 hlídá stroj:** Stop-hook `hooks/claude/runar-zprava-check.py` pravidlo 5 — zpráva s blokem `node`/`git`/`python`/`npm`/
-`supabase` neprojde, pokud neříká, proč to owner musí spustit sám; bloky ```sql se nepočítají.
-
----
-
 ## Co NIKDY nedělat
 - HTML mockupy (žerou tokeny, nevypadají jako originál)
 - Přidávat "vylepšení" která nebyla zadána
 - Nechávat patch skripty v rootu `Runar-admin/`
 (Commit po jedné věci → §7 · Edit na JS → §1 · kopie do Cowork → §17.)
-
-## ⚡ IS JE PRIMÁRNÍ JAZYK
-Pravidlo, tři vrstvy generování a kontrola IS → CLAUDE.md §2. Co tam není:
-- NIKDY „Respond entirely in Icelandic“ jako jediná IS instrukce.
-
-### Korekce = frázová (nese kontext) > jednoslovná (slepá) — lekce 2026-07-07
-Korekce X→Y se aplikuje VŠUDE naslepo. V silně flektivní IS: Y správné v jednom pádu/osobě/čase může být
-špatné jinde. **Fráze nese svůj kontext = bezpečná. Jednoslovná = kontextově slepá = riziko.**
-- Nová korekce → nejdřív zkus FRÁZI. Jednoslovnou jen když je Y jednoznačné ve všech kontextech.
-- Validace: `is-corr-qa.py` — BÍN ověří, že Y je reálný tvar/kompozitum + flagne jednoslovné (offline, GDPR).
-- **Mrtvá korekce** (model už chybu nedělá / kryje ji grammar guard) → SMAZAT, neschovávat.
-
-**IS QC toolkit — nástroje a jejich pořadí vlastní `CLAUDE.md` §2 („Kontrola IS“); tady se neopisují (§20).**
-Co tam není a patří sem: plochy se nezaměňují — kontrola zdrojového kódu nevidí výstup modelu a naopak (která je která, říká §2).
-**E001 = nerozparsováno → přepsat, dokud tomu nástroj nerozumí** (fronta „NATIVE EYE“ zrušena 2026-07-18, §19.2).
-
-### Islandská gramatika — rod podstatného před přídavným
-→ [[is-grammar-adjective-gender]] (postup, ověřené případy, slovník rodu).
-
----
-
-## Tier hodnoty (k CLAUDE.md §10)
-Při změně tier hodnoty: grep runar-app.js, runar-reader.html, runar-translations.js. (ᚱ v UI → CLAUDE.md §5.)
-
----
-
-## runar-shrine.html = admin, NE lab
-⚠️ **„V2 lab" NEEXISTUJE od 2026-07-10** (commit `c6eb89c`) — změny čtení se v shrine netestují; `#reader-setup`, `#reader-rune-card` ani `#reader-output` tam nejsou.
-
-Které taby shrine má, říká `showTab(` v `runar-shrine.html`.
-
-⭐ **`teach` NENÍ testovací plocha — píše do produkce.** `invokeRunar()` vygeneruje statické čtení
-runy a uloží ho do `runar_static_audio`; appka ho pak servíruje uživatelům v Kolekci (`loadCollection()` v `runar-app.js`). Změna promptu se tedy v shrine neozkouší,
-ale **rovnou projeví** — a jen pro ty runy, které tam někdo znovu vygeneruje.
 
 ## Konverzace se neztrácí — snapshot je dobrovolný (od 2026-10-11)
 **Povinnost snapshotu ZRUŠENA** (KUKY 2026-10-11 „11. zrušit povinnost“, DECISIONS 2026-10-11 (21)). Proč: hlídač blokoval „jednou za session“
@@ -206,9 +128,9 @@ téhož přes kanál, který nefunguje (§20). Owner píše **holé `/compact`**
 na defaultu (= zapnuto), žádné nastavení summarizeru instrukce nepředá. Ruční `/compact
 Zachovej: …` účinek má, ale jen když se stihne dřív. **Proto na něm nestavět.**
 
-⚠️ **Jediné, co funguje bez ohledu na to, kdo compact spustil**, je `SessionStart` hook (`hooks/claude/runar-context.py`) — spouští se i se
-`source: "compact"` a vypisuje poslední rozhodnutí, mapu „sáhneš na tohle → přečti tenhle doc",
-archiv čtení a pravidla, co se nejčastěji zapomínají.
+⚠️ **Co funguje bez ohledu na to, kdo compact spustil:** `SessionStart` hook (`hooks/claude/runar-context.py`) se spouští i se
+`source: "compact"` a od 2026-11-25 vypisuje krátkou kartu session; pravidla k souboru ukazuje od 2026-10-11 hook při dotyku
+(`scripts/utils/pravidla_pri_dotyku.py`, mapa `scripts/utils/pravidla_mapa.json`) — SessionStart mapu „sáhneš na tohle“ už nevypisuje.
 
 ⚠️ **Snapshot (je-li) NENÍ handoff a nikdy z něj neber aktuální stav** (MEMORY.md). Nese, co bylo
 rozdělané **k tomu dni**. Aktuální stav vlastní produkce, `git log` a doky dle rozcestníku.
@@ -218,10 +140,6 @@ rozdělané **k tomu dni**. Aktuální stav vlastní produkce, `git log` a doky 
 čtení se rozešly a každá session pak četla něco jiného.
 
 ---
-
-## Pojmy + hlas (2026-07-04, owner)
-- **Jméno bez vazby se maže.** Každý pojem v docích/designu = 1 věta významu + vazba na systém. „Orel", „skuld", „Gathering" nejsou nálepky — musí být jasné, co to JE a na co se to váže. Prázdný pojem → dohledat význam, nebo smazat.
-- **Rúnar reflektuje, nikdy nepředpovídá.** Zrcadlo pozornosti, ne věštba. V hlase: přítomný čas o vzorcích a směřování („pořád se vracíš k…", „táhne tě k…"), NIKDY „stane se ti…". Co znamená skuld (záměr, ne budoucí události) → `RUNAR_TREE.md`, „Zásada“.
 
 ## Two-output rule a Reconciliation
 Vlastník = CLAUDE.md §16.
@@ -243,4 +161,8 @@ který nikdo netrefí. Kontext v chatu zmizí; soubory jsou jediná paměť.
 ---
 
 ## Přesunuto do samostatných pamětí (2026-11-19, délka docu)
-[[vocab-natvrdo-a-migrace]] · [[js-unicode-escapes-python]] · [[cowork-bash-mount]] · [[protokol-externi-dokumenty]] · [[proveniencia-relay-neni-rozhodnuti]] · [[adversarialni-naraz-fact-critical]] · [[naklady-testovani]]
+[[vocab-natvrdo-a-migrace]] · [[cowork-bash-mount]] · [[protokol-externi-dokumenty]] · [[naklady-testovani]]
+2026-11-25 (audit nositelů, owner „19. ano“): sekce Jazyk, Verifikační mechanismus, Délka doků, Implementační pravidla, Ownerovi se neposílají
+příkazy zrušeny (vlastní je CLAUDE.md a hooky, doklady `docs/pravidla-duvody.md`); i18n kontrola → hlavička `scripts/i18n-diff.js`; IS
+korekce → hlavička `is-corr-qa.py`; shrine → [[shrine-admin-not-lab]]; Tier hodnoty → [[vocab-natvrdo-a-migrace]]; Pojmy + hlas →
+hlavička `RUNAR_DESIGN.md` a „Rúnarův rejstřík“; pořadí rodu v IS → [[is-grammar-adjective-gender]] (mapa při dotyku).

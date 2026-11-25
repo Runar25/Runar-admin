@@ -9,7 +9,7 @@
 // ⭐ AREAS: věta svou oblast JMENUJE („The reading is for Career & Creativity…") — stačí ověřit, že věta pro hodnotu i
 // o hodnotě i mluví. Přeskládání seznamu tím okamžitě propadne.
 // ⭐ SEEKS (od 2026-09-26): věta rejstříku své jméno NENESE — „The seeker asks for clarity —" bylo 2026-09-08 záměrně
-// odebráno (model hlídané slovo vracel; memory prompt-nepojmenuj-co-hned-zakazes). Test na to 18 dní tiše padal 9/10 a nebyl
+// odebráno (model hlídané slovo vracel; RUNAR_DESIGN „Slova“ bod 13). Test na to 18 dní tiše padal 9/10 a nebyl
 // ve smoke. Kotva je proto VÝZNAM věty — to, co rejstřík žádá (RUNAR_DESIGN, tabulka mostu). Přeskládá-li se seznam vět
 // proti SEEKS, kotva nesedí.
 //

@@ -27,5 +27,5 @@ diskusním fóru a označil je za ověřené. Audit je **vyřadil celé**:
 5. Pozor na **vymyšlené studie**: „127 účastníků, p = 0,73" z téhle rešerše neexistuje —
    je to autogenerovaná SEO stránka bez autora, časopisu i DOI.
 
-Souvisí: [[break-your-own-work-before-reporting]] · [[attack-the-metric-not-just-the-result]] ·
-[[verify-agent-claims-about-code]] · [[dont-invent-fact-critical]].
+Souvisí: [[break-your-own-work-before-reporting]] · CLAUDE.md §25 B ·
+[[verify-agent-claims-about-code]] · CLAUDE.md §23.

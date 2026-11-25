@@ -14,9 +14,20 @@ doslova). Řádek, kde se obě podoby míchají (`Engar skráðar … Dragðu`),
 
 **How to apply:** po každém Edit v souboru s `\uXXXX` přečti diff (`git diff -U0`) a hledej nové `\u0` v přidaných řádcích;
 kotvu se smíšenými escape vlož patch skriptem (raw string `r"…✦…"` pro kotvu, nový text literálním UTF-8, §11).
-Souvisí: [[heredoc-mangles-backslash-escapes]], [[one-patch-script-path]].
+Souvisí: hook „pasti v příkazech“ (CLAUDE.md §30), CLAUDE.md §1.
 
 **Opačný směr, 2026-10-11 (CODE-read, třikrát za hodinu):** `\u2028` napsané v parametru Edit/Write se už při předání (JSON) změní na
 SKUTEČNÝ znak — v `scripts/protipriklady.py` útok pak hledal znak místo textu, v regexu JS byl U+2028 konec řádku (SyntaxError), a jednou
 v komentáři, který tu vadu popisoval. Text `\uXXXX` do souboru jen skriptem: `chr(92) + 'u2028'`.
 🔒 **Neviditelný znak zastaví hook (od 2026-10-11):** `pravidla_pri_dotyku.py` zastaví Edit/Write, který vkládá neviditelný znak, jenž v souboru ještě není.
+
+**Sloučeno 2026-11-25 z js-unicode-escapes-python — totéž v Python patch skriptu.** Soubory mívají mix: hotová písmena (`RÚNAKORT`)
+i JS escape sekvence (zpětné lomítko + u00da místo Ú); Python čte escape jako 6 ASCII znaků, takže kotva s hotovým písmenem nesedí. Neznámou
+řádku nehádej — najdi ji podle jedinečného řetězce a nahraď celou:
+```python
+pos = c.find('unique-id-or-unique-string')
+line_start = c.rfind(chr(10), 0, pos) + 1
+line_end   = c.find(chr(10), pos)
+old_line = c[line_start:line_end]   # přečti repr() pro ověření
+c = c[:line_start] + new_line + c[line_end:]
+```

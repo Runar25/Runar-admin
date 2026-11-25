@@ -17,4 +17,4 @@ přijde něco nečekaného · Fehu = hojnost.
 (`RUNAR_POPISY_RUN.md`) a tvar „esence runy“ jako u Gemini (princip → oblasti → stín). Historii uváděj jen jako nápad,
 nikdy jako mez. Nové významy jsou 📜 kánon, který schvaluje owner. **Kánon děláme my, takže se smí změnit vždy, když se ukáže,
 že to zlepší čtení** (owner 2026-11-03: „kánon je pro nás něco, co se může vždy změnit“) — „stojí to v kánonu“ není argument proti změně. Nejsou to fakta, takže je §23 nezakazuje,
-jen je nepodávej jako doložené. Souvisí: [[dont-invent-fact-critical]], [[decisions-are-directions-not-locks]].
+jen je nepodávej jako doložené. Souvisí: CLAUDE.md §23, CLAUDE.md §21.

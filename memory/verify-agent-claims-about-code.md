@@ -26,7 +26,7 @@ Platí pro **jakýkoli** text, který tvrdí, jak kód funguje — handoff, krit
 
 **⭐ Poprvé vystřelilo SPRÁVNĚ (2026-07-19, handoff od CODE-readera, ne Coworka — platí i mezi CODE session).** CODE-reader předal souběhový problém s tvrzením „commit-msg hook neexistuje". Ověřil jsem to (pravda) místo abych na tom slepě stavěl. **A tady je ten nový kus:** ověření není jen „je to tvrzení pravda", ale **kontrola SOUSEDNÍCH faktů, které handoff NEŘEKL** — protože tam bydlí slepé body. Handoff mlčel o tom, že dva `tree-lab-*` dirs mají trackovaný zdroj. Kdybych ověřil jen jeho tvrzení, nasadil bych guard, který falešně blokuje CODE-tree. Chytila to až kontrola tracked/untracked, kterou žádný handoff nezmínil. **Pravdivý handoff tě může navést do pasti tím, co vynechá.** Ověřuj plochu kolem tvrzení, ne jen tvrzení.
 
-**How to apply:** before touching anything a handoff asks for, run the cheap check that would falsify it — `grep` for the caller (is this code even live?), read the function it names, `ls`/`diff` the path it claims. Then check the ADJACENT facts the handoff did not state (tracked vs untracked, callers, who else touches it). State the finding with the evidence and, when the premise is false, say so instead of implementing it. A handoff should carry `psáno proti commitu <hash>`; if it does not, compare its assumptions against HEAD myself. Related: [[proceed-dont-ask]], [[match-existing-visual-first]], [[ask-owner-for-checks-you-cannot-run]].
+**How to apply:** before touching anything a handoff asks for, run the cheap check that would falsify it — `grep` for the caller (is this code even live?), read the function it names, `ls`/`diff` the path it claims. Then check the ADJACENT facts the handoff did not state (tracked vs untracked, callers, who else touches it). State the finding with the evidence and, when the premise is false, say so instead of implementing it. A handoff should carry `psáno proti commitu <hash>`; if it does not, compare its assumptions against HEAD myself. Related: working-style „Explore → Plan → Implement“, [[match-existing-visual-first]], [[ask-owner-for-checks-you-cannot-run]].
 
 **⭐ Platí i pro tvrzení o VLASTNÍM přístupu (2026-08-16).** Cowork napsal „tohle bych měl ověřit
 islandskými nástroji, ale nemám k nim přístup" jako předpoklad zděděný z dřívějška
@@ -46,3 +46,14 @@ Je to stejné jako s handoff… pokud já něco napíšu, taky to kontroluješ.�
 jazyce nebo modelech = tvrzení k ověření proti prameni (Hávamál, runové básně, etymologie, docs výrobce), ne podklad k přímému
 použití. Doklad: 2026-10-24 v materiálu GPT k Gebo stálo „a gift may create expectations, but this is not inevitable“ — Hávamál 145
 říká opak („ey sér til gildis gjöf“); Gemini psal „prasemitské“ místo pragermánské. Tabulka ověření: `docs/eval/2026-10-23-v3-charakter/krok5-namet-sceny.md`.
+
+**Sloučeno 2026-11-25 z proveniencia-relay-neni-rozhodnuti — odkud tvrzení je (2026-07-17).** Zápis do kódu, záznamu §16 nebo commitu
+musí ukázat původ: „KUKY rozhodl / řekl“ = owner přímo v chatu · „Cowork tvrdí / navrhuje“ = relay, dokud owner nepotvrdí · „ověřeno
+na <ploše>“ = ověřil jsem sám. Nevím → zeptám se ownera. Doklad: Coworkův komentář `// Owner: jméno v každém čtení otravuje` jsem zapsal
+jako přímý citát KUKYho do kódu, §16 i commitu — náhodou pravda, ale vědět jsem to nemohl a commit už nepřepíšu. A než začneš dělat, co
+Cowork navrhuje, ověř, že to není hotové: Cowork vidí jen HEAD (2026-07-17 navrhoval konsolidaci tree doků, hotovou, jen necommitnutou).
+
+**Sloučeno 2026-11-25 z adversarialni-naraz-fact-critical — shoda dvou session není důkaz.** Doručí-li Cowork a Code SHODNÝ výstup na
+🔒 nebo 📜 položce (druh viz rozcestník v MEMORY.md), dvě session čtoucí týž doc jsou ozvěna. Proběhne JEDEN pas, který má shodu zbořit
+proti VNĚJŠÍMU měřítku: 🔒 → externí zdroj (etymologie, IS tvar) · 📜 → vnitřní konzistence kánonu · 🔄 → žádný (pravdou je ownerův
+záměr). K ownerovi jde jen otázka záměru, ne rešerše; „nenašel jsem nic, co by to zbořilo“ se zapíše taky. Chybějící fakt → CLAUDE.md §23.

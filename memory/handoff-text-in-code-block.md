@@ -11,9 +11,9 @@ Any text Kuky is meant to pass on to another session — instructions for Cowork
 
 **Why:** he is the message bus between Code, CODE-tree and several Cowork sessions, so he relays text constantly. Manually selecting multi-paragraph prose on every handoff is friction he should not be paying. His words: „davej ty instrukce pro COWORK a CODE-tree do ramecku s moznosti copy text. at to nemusim manualne selectovat."
 
-**Numbering questions** → [[full-path-and-numbered-lists]] (the one place that rule lives).
+**Numbering questions** → [[write-for-owner-not-process]] (the one place that rule lives).
 
-**How to apply:** wrap the relayed block in ``` fences. Keep my own analysis and reasoning OUTSIDE the block as normal prose — the block holds only what the other session should receive, so he can copy it whole without editing. Same for SQL he has to run (already the habit) and for anything I ask him to paste into another tool. Related: [[paste-sql-explicitly]], [[function-not-ceremony]].
+**How to apply:** wrap the relayed block in ``` fences. Keep my own analysis and reasoning OUTSIDE the block as normal prose — the block holds only what the other session should receive, so he can copy it whole without editing. Same for SQL he has to run (already the habit) and for anything I ask him to paste into another tool. Related: [[paste-sql-explicitly]], [[cheapest-deciding-measurement-first]].
 
 ⚠️ **Rozhodující je KOMU to je, ne jestli je to analýza (KUKY 2026-09-11).** Věta výš („moje
 analýza zůstává venku jako próza") mě svedla: napsal jsem handoff do bloku a POD něj pořadí

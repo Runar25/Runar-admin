@@ -5,7 +5,7 @@ FROM real native corrections during live testing. It works two ways at once — 
 (Sigrún and other Icelandic testers) reads it *while testing* to know which error-classes to
 watch, and we harvest: each confirmed correction becomes one durable rule.
 
-**This is NOT the cancelled Sigrún queue** (§19.2 · [[is-done-together-not-for-sigrun]]). We do
+**This is NOT the cancelled Sigrún queue** (CLAUDE.md §2 · §19.2). We do
 not write half-finished IS and park it for someone else to fix — that queue is gone and stays
 gone. We write IS *finished and verified*; a native then corrects it *in the flow of reading a
 real reading*; we distil each correction into a rule so Rúnar says it right next time. The work

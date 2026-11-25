@@ -1,8 +1,8 @@
 // Bod 7 (KUKY 2026-09-24 „zkus to“): otázka runy jako skrytý podklad poslední věty. PILOT, produkční model
-// (VÝJIMKA 2 v memory cteni-generuj-tady-ne-pres-api: test chování modelu na změnu promptu jede přes API).
+// (VÝJIMKA 2 v memory naklady-testovani: test chování modelu na změnu promptu jede přes API).
 // 6 run × 2 ramena, TÝŽ seed v obou ramenech → stejný obraz, úhel, tvar konce; liší se jen řádka s otázkou.
 // Otázka = 4. odstavec textu runy v Kolekci (UI_TEXT.en.coll_rune[runa][3]) — ownerem schválený, jeden zdroj.
-// Rámováno jako ZDROJ („grow out of“), ne příkaz k použití (memory prompt-directive-makes-model-copy).
+// Rámováno jako ZDROJ („grow out of“), ne příkaz k použití (RUNAR_DESIGN „Slova“ bod 11).
 // Klíč se čte ze souboru a nevypisuje.
 const vm = require('vm'), fs = require('fs'), os = require('os'), path = require('path');
 const D = 'C:/Users/zkuku/Downloads/Runar-admin/v2/';

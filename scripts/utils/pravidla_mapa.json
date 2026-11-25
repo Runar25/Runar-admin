@@ -11,13 +11,15 @@
     {
       "oblast": "JS ve v2",
       "cesty": ["v2/*.js"],
-      "pravidla": ["§1", "§10", "§13", "§18"]
+      "pravidla": ["§1", "§10", "§13", "§18"],
+      "pamet": ["ceske-nazvy-spreadu-v-kodu"]
     },
     {
       "oblast": "překlady",
       "cesty": ["v2/runar-translations.js"],
       "pravidla": ["§2", "§31"],
-      "pamet": ["edit-tool-escapes-new-text"]
+      "pamet": ["edit-tool-escapes-new-text", "is-grammar-adjective-gender", "copy-always-in-runar-voice"],
+      "hlavicky": ["scripts/i18n-diff.js"]
     },
     {
       "oblast": "prompt a hlas",
@@ -27,12 +29,13 @@
         {"soubor": "RUNAR_DESIGN.md", "nadpis": "Kdo je Rúnar"},
         {"soubor": "RUNAR_DESIGN.md", "nadpis": "Slova, která dáváme modelu"}
       ],
-      "pamet": ["oprava-promptu-odebira-vadu"]
+      "pamet": ["co-dela-cteni-silnym", "is-grammar-adjective-gender"]
     },
     {
       "oblast": "config",
       "cesty": ["v2/runar-config.js"],
-      "pravidla": ["§10"]
+      "pravidla": ["§10"],
+      "pamet": ["vocab-natvrdo-a-migrace"]
     },
     {
       "oblast": "lab výklad z V3 do v2",
@@ -72,20 +75,22 @@
       "oblast": "statické stránky",
       "cesty": ["v2/runar-help.html", "v2/runar-privacy.html"],
       "pravidla": ["§2", "§31"],
+      "pamet": ["copy-always-in-runar-voice"],
       "hlavicky": ["scripts/verify_page_copies.js"]
     },
     {
       "oblast": "web therunekeeper.com",
       "cesty": ["web/site/**"],
       "pravidla": ["§2", "§10", "§20", "§31"],
+      "pamet": ["copy-always-in-runar-voice"],
       "hlavicky": ["scripts/verify_web_hlavicky.js", "scripts/web_nasad.py"]
     },
     {
       "oblast": "UI readeru a shrine",
       "cesty": ["v2/runar-reader.html", "v2/runar-reader.css", "v2/runar-shrine.html"],
       "pravidla": ["§5", "§32", "§31"],
-      "pamet": ["match-existing-visual-first"],
-      "hlavicky": ["scripts/verify_komponenty.js"]
+      "pamet": ["match-existing-visual-first", "shrine-admin-not-lab"],
+      "hlavicky": ["scripts/verify_komponenty.js", "scripts/i18n-diff.js"]
     },
     {
       "oblast": "edge funkce",
@@ -119,7 +124,7 @@
       "cesty": ["scripts/verify_*.js", "smoke.py", "hooks/**", "scripts/protipriklady.py"],
       "pravidla": ["§30"],
       "hlavicky": ["scripts/protipriklady.py"],
-      "pamet": ["guard-test-the-lifecycle", "read-the-check-before-push"]
+      "pamet": ["guard-test-the-lifecycle", "read-the-check-before-push", "api-guard-py-false-positive", "bash-no-cd-prefix"]
     },
     {
       "oblast": "tvorba obrazů",
@@ -139,8 +144,26 @@
       "cesty": ["docs/eval/**", "docs/kostra/**"],
       "obsah": "vypis_v2|\\.postav\\(|buildReadingPrompt|buildSysPrompt|RUNAR_POKUS=|DRAWN RUNE|End on one |/v1/responses|chat/completions|messages\\.create",
       "pravidla": ["§24", "§25"],
-      "docs": [{"soubor": "RUNAR_DESIGN.md", "nadpis": "Slova, která dáváme modelu"}],
+      "docs": [
+        {"soubor": "RUNAR_DESIGN.md", "nadpis": "Kdo je Rúnar"},
+        {"soubor": "RUNAR_DESIGN.md", "nadpis": "Slova, která dáváme modelu"}
+      ],
+      "pamet": ["naklady-testovani", "rekni-kterou-variantu-testujes", "ukladej-cteni-a-hlasy"],
       "hlavicky": ["scripts/verify_kostra.js"]
+    },
+    {
+      "oblast": "runy: kresba a popisy",
+      "_proc": "Audit 2026-11-25 (docs/audit/2026-11-25-pamet-a-pravidla/, owner „19. ano“): text o tvaru runy se má ověřit proti NAŠÍ kresbě a význam runy je princip, ne předmět z historie — obojí stálo jen v paměti, kterou session píšící popis neviděla.",
+      "cesty": ["v2/runar-svgs.js", "RUNAR_POPISY_RUN.md"],
+      "pravidla": ["§5", "§23"],
+      "pamet": ["glyph-text-vs-our-svg", "vyznamy-run-historie-jen-zdroj"]
+    },
+    {
+      "oblast": "korekce IS",
+      "_proc": "Audit 2026-11-25: pravidla korekcí (fráze > jedno slovo, mrtvou smazat) stála ve working-style, kde je session přidávající korekci neviděla; teď hlavička is-corr-qa.py.",
+      "cesty": ["is-corr-qa.py", "show_corrections.py"],
+      "pravidla": ["§2"],
+      "hlavicky": ["is-corr-qa.py"]
     }
   ]
 }

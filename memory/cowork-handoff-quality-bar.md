@@ -60,7 +60,7 @@ něco v tom, co čtenář udělá dál? Ne → pryč.
    co ne — netvářit se, že to nebylo potřeba.
 
 7. **Islandský OBSAH = Cowork. IS znění INSTRUKCÍ v promptu = CODE**
-   (`is-done-together-not-for-sigrun.md`, KUKY 2026-08-14). Cowork píše islandsky obrazy,
+   (CLAUDE.md §2, KUKY 2026-08-14). Cowork píše islandsky obrazy,
    fragmenty, fasety, lore a scény — **nativně z významu (§2), ne překladem z EN**; přesně tak
    vznikly `RUNE_IMAGES` i islandské popisy světů v `rworld()` (viz `RUNAR_DECISIONS.md`:
    „obrazy jsou jen islandsky — Cowork EN verze nedodal" · „až Cowork dodá islandské popisy

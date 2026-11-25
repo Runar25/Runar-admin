@@ -1,6 +1,6 @@
 # Zdroj: GPT o tom, jak psát prompt pro GPT-6 Sol bez přemýšlení (owner vložil 2026-11-14)
 
-Intake, ne kánon. Podnět, ne verdikt (memory `gpt-rozbor-neni-zavazny`; `zadani-v3.md` bod 32: materiál od GPT ověřit).
+Intake, ne kánon. Podnět, ne verdikt (memory soudce-vidi-jen-co-uzivatel; `zadani-v3.md` bod 32: materiál od GPT ověřit).
 Owner k tomu: *„od GPT … pak se podíváme znova na ty čtení, co jsi udělal.“*
 
 ## 1. Co z toho je ověřené (CODE-read 2026-11-14, přečtené stránky výrobce)
@@ -26,7 +26,7 @@ guides/prompt-guidance, guides/reasoning/advice-on-prompting. Stránka nápověd
 - **„Jedna instrukce = jeden význam“** — sedí: sloučení zdvojených omezení čtení nezměnilo (`README.md` oddíl 8, varianty B1 a C).
 - **„Model potřebuje přesně říct, jak“** — sedí: čtení změnila až konkrétní věta o tom, čemu patří další věty (oddíl 8, B2).
 - **„Používej příklady“** — u nás **opačná zkušenost**: hotovou větu sol opíše (`RUNAR_DESIGN.md` „Slova, která dáváme modelu“ bod 1 a 10,
-  memory `prompt-directive-makes-model-copy`). GPT sám dodává, že podobné příklady vedou k opakování konstrukce. Zkoušet jen s různorodými
+  RUNAR_DESIGN „Slova“ bod 11). GPT sám dodává, že podobné příklady vedou k opakování konstrukce. Zkoušet jen s různorodými
   příklady a měřit opisování.
 - **Délka číslem** — máme (50–58 slov, dvakrát) a sol ji stejně nedrží: 5 ze 6 produkčních čtení nad 58 (oddíl 8).
 - **„Říkej, co dělat, ne co nedělat“** — v2 má zákazů mnoho; odebrání zdvojených zákazů nic nezhoršilo (C). Neměřeno: co udělá převod zákazu na kladný pokyn.

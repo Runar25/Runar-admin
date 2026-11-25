@@ -15,6 +15,9 @@
 // CAVEAT: transientní toasty (topbar-greeting apod.), co po chvíli vyblednou přes
 //   opacity, mohou dát false-positive (skryté, ale v layoutu). Ověř vizuálně.
 // Spouštěj před releasem a po každé změně UI. Levné (1 průchod DOM, žádné čtení kódu).
+// Kdy povinně (owner 2026-07-06): po zásahu do UI stringů, překladů nebo přepínání jazyka. Code session: otevři runar-reader.html
+//   v panelu prohlížeče (navigate na produkční URL) a obsah souboru vlož přes javascript_tool. Výsledek jsou KANDIDÁTI, ne brána —
+//   ověř vizuálně. (Přeneseno z working-style 2026-11-25, aby se ukázalo při dotyku překladů a UI — mapa pravidel při dotyku.)
 
 (function () {
   var ALLOW  = /^[\s\d:·.,!?…—–+×%()\/\[\]①-⑨✦◈◇⚗ᚠᚱ→←-]+$/;                 // pure symboly/čísla

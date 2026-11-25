@@ -29,4 +29,7 @@ Zbytek je jen INTERNÍ a neviditelné: VOCAB klíč `cast` (hodnota už 'rune re
 placeholdery · `vn('cast')` → renderují „reading". SERVER `countsAsCast` / claude-proxy komenty
 = PŘESNÝ pojem (čtení počítané do stropu; `ask` JE čtení, ale NENÍ cast) — nepřejmenovávat,
 ztratilo by to smysl. **Owner 2026-08-03 potvrdil: JEN user-facing; neviditelný interní kód
-(VOCAB klíč, `{casts}`, server pojem) NECHAT — nerozbíjet.** Viz [[decisions-are-directions-not-locks]].
+(VOCAB klíč, `{casts}`, server pojem) NECHAT — nerozbíjet.** Viz CLAUDE.md §21.
+
+## Tier hodnoty (sloučeno 2026-11-25 z working-style „Tier hodnoty“)
+Při změně tier hodnoty grepni `runar-app.js`, `runar-reader.html`, `runar-translations.js` (hodnoty jen z configu, CLAUDE.md §10).

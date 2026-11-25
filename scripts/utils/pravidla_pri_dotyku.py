@@ -335,7 +335,7 @@ def projdi_prepis(tp, s):
 
 # ---------- pasti v příkazech (opakovaně porušená pravidla, poznatelná z textu příkazu) ----------
 # Proč (KUKY 2026-10-11): „kritika musí být vyřešena. proto se necháváš kontrolovat, aby se ti nestávalo.“ Obě pasti stály jen v paměti
-# a padly znovu týž den: heredoc s \\n / \\\\ 2× (memory heredoc-mangles-backslash-escapes) a grep na OK|FAIL jako podmínka commitu
+# a padly znovu týž den: heredoc s \\n / \\\\ 2× (paměť zrušena 2026-11-25 — past drží tenhle hook, CLAUDE.md §30) a grep na OK|FAIL jako podmínka commitu
 # (memory read-the-check-before-push; commit prošel i při FAIL).
 def pasti(cmd):
     out = []
@@ -343,7 +343,7 @@ def pasti(cmd):
     telo = cmd[cmd.find('\n', m.end()) + 1:] if (m and '\n' in cmd[m.end():]) else ''
     if telo and chr(92) in telo:
         out.append('⛔ PAST: heredoc se zpětným lomítkem v těle — tady se z \\n stane konec řádku a escapování se rozbije (memory '
-                   'heredoc-mangles-backslash-escapes; 2026-10-11 se to stalo 2×). Skript napiš nástrojem Write do scratchpadu a spusť ho.')
+                   'CLAUDE.md §30 „Pasti v příkazech“; 2026-10-11 se to stalo 2×). Skript napiš nástrojem Write do scratchpadu a spusť ho.')
     # `cat` bez souboru čte vstup, který v neinteraktivním příkazu nikdy nepřijde → příkaz visí do vypršení (2026-10-11: zablokovalo
     # zápis i commit na 10 minut). Heredoc (`cat <<EOF`) je v pořádku — i za přesměrováním výstupu (`cat > f <<'EOF'`, falešný poplach
     # 2026-10-11): vstup v témže kusu příkazu (`<`, `<<`) cat nakrmí.
@@ -409,8 +409,8 @@ def neviditelne(inp):
 
 
 # §11 (2026-10-14, CODE-read; mapa nosičů ㊁ ukázala §11 jako „escape v Python skriptu napsaném nástrojem Write nehlídá nic“): islandský text
-# v Python skriptu se píše doslovně, nikdy jako escape — escape se při předávání mezi nástroji láme (memory heredoc-mangles-backslash-escapes,
-# edit-tool-escapes-new-text) a v kódu se nedá přečíst ani zkontrolovat (check-is ho nevidí jako slovo). Zastaví se escape islandského znaku,
+# v Python skriptu se píše doslovně, nikdy jako escape — escape se při předávání mezi nástroji láme (hook pasti výš,
+# memory edit-tool-escapes-new-text) a v kódu se nedá přečíst ani zkontrolovat (check-is ho nevidí jako slovo). Zastaví se escape islandského znaku,
 # který v souboru ještě není (úprava starého skriptu, který escapy už má, projde).
 IS_ESCAPE = re.compile(r'\\(?:u00|x)(e1|e9|ed|f3|fa|fd|fe|f0|e6|f6|c1|c9|cd|d3|da|dd|de|d0|c6|d6)', re.I)
 
@@ -579,6 +579,13 @@ def samotest():
     chk('9. dlouhá sekce: chce Read a vypíše rozsah', d and 'Read RUNAR_DESIGN.md' in d)
     chk('10. bez Read pořád zastaví', (lambda d: d and 'napřed si přečti' in d)(V('Edit', file_path=R + '/v2/runar-character.js')))
     prepis(tu('Read', file_path=R + '/RUNAR_DESIGN.md'))
+    # 2026-11-25 (audit pamětí): oblast „prompt a hlas“ ukazuje i dlouhé paměti (co-dela-cteni-silnym…) — i ty chce hook přečíst; test je
+    # čte podle živé mapy, ať nezávisí na tom, kolik dlouhých položek oblast zrovna má.
+    for _o in json.loads(cti(MAPA))['oblasti']:
+        if 'v2/runar-character.js' in _o['cesty']:
+            for _nad, _t, _soubor, _a, _b in polozky(_o):
+                if len(_t) > LIMIT and _soubor and _soubor != 'RUNAR_DESIGN.md':
+                    prepis(tu('Read', file_path=R + '/' + _soubor))
     chk('11. po Read projde', V('Edit', file_path=R + '/v2/runar-character.js') is None)
     chk('12. Bash jen čte (grep, 2>/dev/null) → projde', V('Bash', sid='s3', command='grep -n x supabase/functions/a/index.ts 2>/dev/null | head') is None)
     chk('13. Bash zapisuje do sql/ → zastaví', V('Bash', sid='s3', command='echo x > sql/2026-10-11_x.sql') is not None)

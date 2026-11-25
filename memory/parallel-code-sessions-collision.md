@@ -39,7 +39,7 @@ souboru dvěma session neřeší nic než worktree.
   `commit_vlastni.py --test` (16 stavů: cizí změna před i po mé, překryv, nový soubor, zastaralé čtení, cizí commit vzal i moje řádky).
 - **Commit úzce přes pathspec** → CLAUDE.md „Commit ÚZCE“. Když nevíš, co je staged: `git diff --cached --name-only`.
 - *(2026-11-23 pryč: ruční `git diff --stat` / `test … && commit` pro sdílené soubory — od 2026-10-11 to dělá `commit_vlastni.py`, bod výš.)*
-- **Patch nástroj = vlastní slot session** → CLAUDE.md §1 / [[one-patch-script-path]].
+- **Patch nástroj = vlastní slot session** → CLAUDE.md §1.
 - **`git status -- <path>` PŘED každým sáhnutím do tracked souboru** — a znovu před Write; stav se mění
   během session (gen_batch.js se z untracked stal tracked, protože ho druhá session mezitím commitla).
 - **Necommitnuté změny ve sdíleném tracked souboru = živé riziko sebrání** — commitni je úzce brzy.
@@ -86,3 +86,9 @@ napiš té session s výpisem a počkej.
 a opravy docs, které hlásilo, měly jít druhým commitem přes `commit_vlastni` — ten selhal. Můj pre-push push zastavil, ale commit se na
 server dostal jinou cestou (sdílené repo: cizí push vezme i mé lokální commity) a pak by pre-push padal VŠEM. **Jak:** soubor s kódem
 zapiš taky přes `cv.cti()` + `cv.zapis()` — `commit_vlastni` ho vezme spolu s docs do jednoho commitu.
+
+**Sloučeno 2026-11-25 z pathspec-nesmi-byt-prazdny — prázdný pathspec = commit celého indexu.** Vzor vady:
+`kontrola && P="…" && git add -- $P; git commit -F msg -- $P` — selže-li kontrola, `P` se nenastaví, `;` pustí commit dál a `git commit
+-F msg --` bez cest vezme CELÝ index (2026-09-24: `26db44c` nesl zprávu o nálezech, ale obsahoval jen to, co zrovna leželo v indexu).
+Pathspec přiřaď na samostatném řádku před kontrolou, nebo blok ukonči `|| exit 1`; commit nikdy za `;` po řetězci, který může spadnout;
+před pushem `git show --stat HEAD`.

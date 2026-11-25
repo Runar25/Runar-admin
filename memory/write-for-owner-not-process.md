@@ -9,7 +9,7 @@ KUKY 2026-07-30 (řečeno VÍCEKRÁT, podruhé naštvaně): „píšeš hrozně 
 
 **Why:** KUKY je netechnický founder. Když převyprávím jeho zadání a svoje interní kroky (co načtu, co ověřím), utopí to signál — nepozná, co je důležité. Interní přemýšlení patří do práce, ne do zprávy pro něj.
 
-**How to apply:** Ve zprávě ownerovi veď **co je důležité** — rozhodnutí, výsledek, jedna věc k pozornosti. Žádné „řekl jsi mi X, teď budu hledat Y". Proces (čtení souborů, workflow, ověřování) nech proběhnout tiše a ukaž až čistý závěr; když ověřuju z kódu, stačí říct „ověřuju, ať to sedí", ne vypisovat kroky. Dlouhou odpověď strukturuj, ať přeskočí k tomu, co ho zajímá. Souvisí s [[function-not-ceremony]] a [[handoff-text-in-code-block]].
+**How to apply:** Ve zprávě ownerovi veď **co je důležité** — rozhodnutí, výsledek, jedna věc k pozornosti. Žádné „řekl jsi mi X, teď budu hledat Y". Proces (čtení souborů, workflow, ověřování) nech proběhnout tiše a ukaž až čistý závěr; když ověřuju z kódu, stačí říct „ověřuju, ať to sedí", ne vypisovat kroky. Dlouhou odpověď strukturuj, ať přeskočí k tomu, co ho zajímá. Souvisí s [[cheapest-deciding-measurement-first]] a [[handoff-text-in-code-block]].
 
 **Čísla: rozepiš dominantní položku, nedávej jen totál.** KUKY 2026-09-06: *„jasně jsem napsal
 Claude a ElevenLabs. Všude je napsané, že je to největší položka! Kde je cena ElevenLabs?"* —
@@ -20,7 +20,7 @@ vlastní sloupec.**
 **A neohlašuj, co uděláš — udělej to v témže tahu.** Táž session: napsal jsem „ještě mi zbývá
 zapsat ty procesní věci, udělám to hned" místo abych to udělal. Owner na to: *„proč jsi je
 neudělal zároveň? jaká jsou tvoje pravidla, co je v memory."* Pravidlo už existovalo —
-[[find-a-gap-close-it-now]] — jen jsem ho nepoužil.
+CLAUDE.md §20 a §30 — jen jsem ho nepoužil.
 
 **KUKY 2026-09-10: „neukazuj mi, co za soubory jsi editoval. Co mi to má jako říct?"**
 Výčet souborů, commit hashů a „co jsem kde změnil" je PROCES — ownerovi neříká nic. Report
@@ -36,3 +36,14 @@ a kód. **Nikdy se ownera neptej na něco, co jmenuješ interní značkou** (č�
 verze promptu, jméno funkce). Řekni jednou větou, **co to je a co se změní**: ne „úhel [0]", ale
 *„pokyn, kterým čtení někdy začíná — ‚začni celým obrazem najednou' — a první věta pak bobtná"*.
 Otázka, které nerozumí, je ztracené kolo pro nás oba.
+
+**Sloučeno 2026-11-25 z full-path-and-numbered-lists.**
+**Úplná cesta, nebo rovnou text.** Odkaz na soubor ownerovi = celá cesta od `C:` (repo leží v `C:/Users/zkuku/Downloads/Runar-admin`,
+pracovní adresář session je `C:/Users/zkuku`) — repo-relativní odkaz se vykreslí jako klikací, ale neotevře se (2026-07-19). SQL vlož celé
+([[paste-sql-explicitly]]).
+**VŠECHNY body hlášení a VŠECHNY otázky mají číslo** (1, 2, 3… průběžně přes celé hlášení; odrážky jen uvnitř bodu; tučný nadpis není číslo).
+KUKY 2026-10-07: *„všechny tvoje podněty jsou psány jako holý text bez označení… pořád dokola!“* — odpovídá po číslech. Hlídá Stop-hook
+`hooks/claude/runar-zprava-check.py` (pravidla 1 a 6, CLAUDE.md §30).
+**Otázku POLOŽ, nezmiňuj** (KUKY 2026-10-14): co na něj čeká, napiš celé znovu jako „N. <otázka>?“, i když padlo dřív. **Ale neopakuj
+nevyřízené otázky v každé průběžné zprávě** (KUKY 2026-11-01: *„pořád mi dáváš stejné a stejné otázky… nevím, kde jsem“*) — znovu jen ve
+zprávě, která mu skutečně odpovídá (konec práce na jeho zadání); stavová zpráva (push, smoke, agent) otázky nepřipojuje.

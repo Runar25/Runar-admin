@@ -132,7 +132,7 @@ def main():
         if re.search(r'^\s*(node|git|python3?|py|npm|npx|deno|supabase)\b', blok[1], re.M) \
            and not re.search(r'(musíš|musí[šs]?)\s[^.\n]{0,40}(spustit|pustit)\s+sám|spusť (to|ho) ty|pusť (to|ho) ty', zprava, re.I):
             vady.append('PŘÍKAZY OWNEROVI: zpráva mu dává ke spuštění „' + blok[1].strip().split(chr(10))[0][:60] + '“. Owner příkazy nespouští — '
-                        'pusť to sám a ukaž výsledek nebo soubor:řádek (memory neposilej-ownerovi-prikazy / working-style). Musí-li to opravdu '
+                        'pusť to sám a ukaž výsledek nebo soubor:řádek (CLAUDE.md §30, „Zpráva ownerovi“). Musí-li to opravdu '
                         'spustit on, napiš proč („musíš spustit sám, protože …“).')
             break
     # 6) SCHOVANÁ OTÁZKA — i v krátké odpovědi (2026-10-14)
@@ -161,7 +161,7 @@ def main():
     odrazky = [l for l in radky if re.match(r'^[-*•]\s+\S', l)]
     if len(odrazky) >= 2:
         vady.append('ČÍSLOVÁNÍ: ' + str(len(odrazky)) + ' odrážek na nejvyšší úrovni (např. „' + odrazky[0][:60] + '“). Každý bod hlášení má '
-                    'číslo 1, 2, 3… průběžně přes celou zprávu; odrážky jen odsazené uvnitř bodu (memory full-path-and-numbered-lists).')
+                    'číslo 1, 2, 3… průběžně přes celou zprávu; odrážky jen odsazené uvnitř bodu (memory write-for-owner-not-process).')
     otazky = [l for l in radky if l.strip().endswith('?') and not re.match(r'^\s*(\d+[.)]|[-*•>]|\*?„|")', l) and not l.startswith(' ')]
     if otazky and len(zprava) >= 700:
         vady.append('ČÍSLOVÁNÍ: otázka ownerovi bez čísla („' + otazky[0].strip()[:70] + '“). Otázky a návrhy mají vlastní čísla.')

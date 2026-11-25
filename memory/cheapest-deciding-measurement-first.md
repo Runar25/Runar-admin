@@ -46,10 +46,10 @@ stojí za ověření. Do předávek nepsat „n ≥ 30“ bez záměru — jiná
 **How to apply:**
 1. **Nejdřív to, co už leží.** Produkční data, git, existující export, jeden grep. Nula agentů.
 2. **Napiš predikci a její cenu:** „když vyjde X, dělám A; když Y, končím." Nemáš-li druhou
-   větev, neplatíš za měření, ale za rituál ([[function-not-ceremony]]).
+   větev, neplatíš za měření, ale za rituál (bod „Nestav proces pro ownerovo uklidnění“ níž).
 3. **Teprve pak škáluj** — a jen na tu část, kterou levné měření neuzavřelo.
 4. **Padne-li hypotéza cestou, ZASTAV zbytek dávky.** Doběhnout ji „ať jsou kompletní čísla" je
-   placení za obhajobu metriky, kterou právě vyvrátila produkce ([[attack-the-metric-not-just-the-result]]).
+   placení za obhajobu metriky, kterou právě vyvrátila produkce (CLAUDE.md §25 B).
 
 5. **Pilot 3–5 agentů → ukázat → teprve se souhlasem ownera škálovat.**
 
@@ -71,6 +71,14 @@ zeptáš, pokud budeš chtít použít nesmyslný počet agentů! Napřed máš 
 jehož výsledek byl vidět na prvních pár textech — a který navíc nikdo nechtěl
 ([[rekni-kterou-variantu-testujes]], bod 5). ⚠️ Platí i při zapnutém ultracode.
 
-Souvisí: [[work-efficiently-ask-if-simpler]] (ptej se, jestli to nejde jednodušeji — tohle je jeho
-tvrdší verze: *napřed levné, které rozhodne*), [[falsify-by-reversing-the-lever]],
-[[measure-dont-eyeball]], [[sanity-check-measurements]].
+Souvisí: CLAUDE.md §25 A, CLAUDE.md §24, [[sanity-check-measurements]].
+
+**Sloučeno 2026-11-25 z work-efficiently-ask-if-simpler a function-not-ceremony.**
+**Nejde to jednodušeji?** (KUKY 2026-08-20: *„spálit milion tokenů jen na to abys vytvořil jednoduchou mapu? … pracuj efektivně!“*) Než
+spustíš workflow, dávku agentů nebo velký eval, poměr úsilí k úkolu musí sedět: máš-li podklady přečtené, napiš výsledek. Dlouhý běh navíc
+protlačí session compactem a zabije právě to, kvůli čemu běží (2026-08-20: 10 agentů, ~1,5 M tokenů místo jedné mapy → compact). Hotový
+úkol dodej i se zápisem dřív, než přijde ownerova kontrola.
+**Nestav proces pro ownerovo uklidnění** (KUKY 2026-07-17: *„pro mě uspokojení nic nedělej. jde mi o funkčnost.“*). Než navrhneš nebo
+přijmeš nové pravidlo, doc, protokol či nástroj, zkus ho proti skutečným případům: *který by tohle zabránilo?* Žádný → řekni to a nedělej
+ho. Pořadí: (1) odeber možnost chyby, (2) mechanická kontrola, která vystřelí sama, (3) pravidlo k zapamatování — až nakonec. Odpověď
+nenafukuj, aby vypadala pečlivě.

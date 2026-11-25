@@ -11,7 +11,7 @@ Příčina: rozbité escapování regexu v `node -e` uvnitř bash (`\b` se přes
 zmršilo → nematchlo NIC → falešná nula). Ještě jsem na tom číslu stavěl závěr a při
 doplňující otázce ownera ho zopakoval. Cowork to chytil protipříkladem („Fehu answering Fehu").
 
-**Proč:** „změř, nehádej" ([[measure-dont-eyeball]]) NESTAČÍ — když je měření buggy,
+**Proč:** „změř, nehádej" (CLAUDE.md §24) NESTAČÍ — když je měření buggy,
 dojem vystřídá **falešná jistota z čísla**, což je horší, protože číslu se věří. Extrémní /
 moc čistý výsledek je nejčastěji chyba měření, ne realita.
 
@@ -27,3 +27,12 @@ moc čistý výsledek je nejčastěji chyba měření, ne realita.
 screening ablation v islandštině — jenže „otevřeno definicí" i „þegar" tam byly v baseline
 **0 %**. Ty dvě metriky nemohly ukázat nic, ať páka dělá cokoli. Screenuj tam, kde má metrika
 PROSTOR (tytéž metriky měly v EN 28 % a 32 %). Nulový výsledek z podlahy není nález.
+
+**Sloučeno 2026-11-25 z test-the-lever-that-binds a jeden-vzorek-neni-vada.**
+**Třetí způsob, jak měření mlčí: páka se nedotkla vazby.** 2026-09-06 (TEST ASK2): zvedl jsem `max_tokens` 140 → 300, ale v promptu
+zůstalo „no more than about 40 words“ — model poslechl prompt, cela proběhla naprázdno. Než pustíš test páky, vytiskni sestavený prompt
+a najdi v něm vazbu, která výsledek opravdu drží (grep na číslo, „words“, „short“); měň JI. Strop tokenů je pojistka proti useknutí,
+ne délková páka. (Táž věc pro kontroly: CLAUDE.md §19.3.)
+**Jeden vzorek není vada** (owner 2026-11-14: *„proč na základě jednoho čtení řešíš ‚may‘?“*). Slovo nebo obrat z jednoho vygenerovaného
+textu nevydávej za vadu a nenavrhuj kvůli němu větu do promptu; v komentáři ke vzorkům piš o směru a obsahu. Opakuje-li se napříč vzorky,
+změř ho, než ho nazveš vadou.

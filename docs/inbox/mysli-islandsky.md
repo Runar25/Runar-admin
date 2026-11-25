@@ -36,4 +36,4 @@ Chybí-li v kánonu 🔒 FAKT nebo 📜 LORE (etymologie runy, mytologický deta
 zastav a flagni „chybí, nedomýšlím". To je JINÉ než „neumím napsat dobrý IS". Chybějící fakt =
 flag. Styl, hlas, obraz, formulace = tvoje řemeslo — to se neflaguje, to se udělá.
 
-KOTVY: §2 · §19.2 · §23 · [[is-done-together-not-for-sigrun]] · IS_NATIVE_CHECKLIST.md
+KOTVY: §2 · §19.2 · §23 · IS_NATIVE_CHECKLIST.md

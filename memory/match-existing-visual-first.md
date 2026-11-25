@@ -18,4 +18,4 @@ Before adding ANY new UI to Rúnar, FIRST read how the existing UI does that sam
 
 **Machine since 2026-10-27:** smoke ㉼ (`scripts/verify_zaklad_produkce.js`) measures every visible expander „+“ (1,35 × its text) and the ▾ under the name (drawn, rotates on its own axis) — after I broke both the same day. It cannot judge removals (icons): never remove existing UI without the owner deciding it (DECISIONS 2026-10-27 (8)).
 
-**The conventions live in `v2/runar-reader.css`, not here** (§20 — a list of radii and hex values in a memory drifts the moment someone restyles). This memory owns the METHOD only: find the nearest existing component, read its rules, copy them. The invariants that are genuinely rules rather than values are in `CLAUDE.md` §5. Related: [[proceed-dont-ask]].
+**The conventions live in `v2/runar-reader.css`, not here** (§20 — a list of radii and hex values in a memory drifts the moment someone restyles). This memory owns the METHOD only: find the nearest existing component, read its rules, copy them. The invariants that are genuinely rules rather than values are in `CLAUDE.md` §5. Related: working-style „Explore → Plan → Implement“.

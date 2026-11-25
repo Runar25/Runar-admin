@@ -8,6 +8,7 @@
 #   RUNAR_MYTOLOGIE.md — bytosti světa, katalog dvergů, islandský kalendář
 #   RUNAR_PRICING.md   — business model, tier ceny, EL kalkulace
 #   RUNAR_TREE.md      — Strom života: založení, větve, kořeny, elementy
+#   Pojem v tomto docu = 1 věta významu + vazba na systém; jméno bez vazby se maže (owner 2026-07-04).
 #   docs/archive/tree/runar-patterns.md — Pattern detection (Eagle/Níðhöggr, The Gathering) ⚠️ archiv, pracovní verze
 ---
 
@@ -165,7 +166,7 @@ Kánon zrcadla už tady je. Tohle mu dává **jméno a mechanismus** — a jedno
   2. **Neškodné povzbuzení (v pořádku):** otázka, přání, nabídka nebo obecná pravda, která o člověku nic netvrdí (*„What strength is
      already in you?“*, *„May you find…“*, *„Strength like this is often there before we name it.“*).
   3. **Konstatování faktu (v pořádku):** co člověk sám zadal (oblast, otázka), nebo fyzický důsledek v obraze (*„your knuckles have learned
-     this“*, memory `rozkaz-a-studene-cteni-hranice`).
+     this“*; vstup do obrazu „Look closer…“ není rada → `docs/kostra/kostra.json` J3).
   Rozdíl proti červencovému „already“ (v0.9, `runar-character.js:1010`): tehdy šlo o oznamovací *„you already know“* — to je bod 1 a vadou
   zůstává; otázka se stejným slovem je bod 2. Štítky pozic spreadů („what lives inside“, „subconscious“) se posuzují podle čtení, ne podle
   znění štítku (BACKLOG, potenciální vada).
@@ -809,6 +810,8 @@ to vždy musí být, ale je to určitý směr. Lepší než hádat… ať to nez
 z rámce, „drawn“ z pokynu, ozvěna otázky) měly společný kořen a žily jen v DECISIONS a EVAL_LOGu, kde je při psaní promptu nikdo nehledá.*
 *2026-10-06 večer: bod 2 opraven, bod 9 přidán — owner: „fehu exposes wealth? … pokud to nevíš, tak si to zjisti“; „in a verb of your
 own“ jsem ohlásil jako zlepšení bez ověření a v korpusu anglických textů o runách ta slovesa nejsou.*
+*2026-11-25: body 11–13 přeneseny z pamětí (audit nositelů pravidel, owner „19. ano“) — v paměti je session píšící prompt
+neviděla; „Jak se to ověřuje“ převzalo obsah paměti o vstupu jako v produkci.*
 *2026-10-07: bod 10 (vzorová věta jen ověřená) a bod 5 rozšířen o to, JAK otázku položit — owner: „plyne z toho pro tebe něco, co by mělo být
 zapsáno? … tohle teď budeme pořád řešit. Slovíčka a slovíčka.“ K tomu postup zkoušení slov níž (víc pohledů, texty čte owner).*
 
@@ -861,13 +864,30 @@ doslova — a pokaždé?* Sol bere vstup jako materiál k přepsání, Opus spí
    otázka runy z Kolekce pod pokynem „konči otázkou“ se vrátila skoro doslova (*„If you do not strike back this time, what might come
    into view?“*, 4/14). KUKY 2026-10-07: *„pokud chceš někde použít vzorovou větu, musíš zjistit, jak se píše, jinak to vypadá, že nevíš,
    co děláš.“* → `RUNAR_DECISIONS.md` 2026-10-07 (4).
+11. **Pokyn „použij tenhle text“ → model text opíše doslova; vkládaný materiál rámuj jako ZDROJ.** Rozhoduje sloveso kolem vloženého
+   textu, ne text sám: zkrácená vkládací věta obrazu `MYND — … notaðu þessa: <obraz>` („použij tenhle“) zvedla doslovné opsání celého
+   obrazu 12 % → 56 % (IS, 25 run, Fisher p = 0,002); staré znění („nech ho přijít z téhle sezóny“) rámovalo obraz jako zdroj. Piš sloveso
+   zdroje (*let it come from*, *koma héðan*), ne příkaz (*use this*, *notaðu*); po každé změně takové věty změř doslovnost
+   (`scripts/utils/measure_readings.js`, „papouškování obrazu“) — golden ani lint chování modelu nevidí. Délka promptu to nebyla (obrácená
+   páka, `docs/pravidla-duvody.md` §25). → `RUNAR_DECISIONS.md` 2026-08-14 · IS.
+12. **Vadu v promptu odeber, nepřidávej požadavek — každý přidaný požadavek se v textu projeví jako formule.** Čtyři verze carry bloku
+   (TESTy 43–47, 2026-08-25): čistá byla jen ta, která vadu zakázala; obě verze s přidaným požadavkem držely nit, ale text spadl na
+   mechanický — formule ve stejném syntaktickém slotu („the X you carried“ 3×). Hlásí-li soudce „inventura / opakovaná konstrukce“, hledej
+   v promptu, co jsi přidal. Na osmi ramenech se formulí stala i vítězná verze (TESTy 49–50): co obstojí na čtyřech, nemusí na osmi.
+13. **Nepojmenuj v promptu, co hned zakážeš vyslovit.** Prompt, který hodnotu pojmenuje („The seeker asks for clarity —“) a zakáže ji
+   vrátit, hlídá slovo, které tam sám napsal. Jméno není potřeba → smaž nálepku (hlídač jde pak taky); je potřeba (2026-09-08
+   `_lensContext`: jméno životní runy + „Never name the life rune.“) → hlídače změř. `seeking` (2026-09-08, EN+IS, 4 runy × 5 registrů
+   × 2 verze): blok 45 → 12 slov, echo nálepky 0/20 v obou verzích (hlídač nedržel nic), tvar výstupu beze změny. Dvě pasti: táž hodnota
+   bývá pojmenovaná ve víc builderech (spready nesly `seeking` 2×) — postav prompt všemi cestami (CLAUDE.md §13) a spočítej výskyty; po
+   odebrání nálepky projdi věty „the …“ bez antecedentu (model si ho domyslí = studené čtení). Oblast (`_domainContext`) vadou není — projevit
+   se smí. → `RUNAR_DECISIONS.md` 2026-09-08.
 
-**Starší body téže rodiny** (vlastní je memory, tady jen ukazatel): „použij tenhle text“ → opíše se doslova
-(`memory/prompt-directive-makes-model-copy.md`) · oprava odebírá vadu, přidaný požadavek se stane formulí
-(`memory/oprava-promptu-odebira-vadu.md`) · nepojmenuj, co hned zakážeš (`memory/prompt-nepojmenuj-co-hned-zakazes.md`).
-
-**Jak se to ověřuje:** test formulace jde produkční cestou se vstupem jako v produkci — jeden hotový prompt vytisknout a porovnat
-(`memory/test-vstup-jako-v-produkci.md`); obrácená páka (CLAUDE.md §25) dřív než přidávání. Po nasazení hlídá monitor ozvěn
+**Jak se to ověřuje:** test formulace jde produkční cestou se vstupem jako v produkci — jeden hotový prompt vytisknout (`DRY=1`) a
+porovnat s tím, co posílá produkce (`prompt_draws`, golden); test má pojistku v kódu (prompt s `[object Object]` / `undefined` → výjimka,
+vzor `docs/eval/2026-10-06-ask-otazky/ask_slova.js`); argument ve tvaru produkce (u Asku jméno runy přes `rnPrompt(dr)`, text čtení bez ✦);
+stav appky podvrhuj tam, kam ho píše produkce (cache), ne až do kreslicí funkce. Bez toho dal test třikrát falešný závěr (2026-10-06 2×,
+2026-10-11; `RUNAR_DECISIONS.md` 2026-10-06 (8), 2026-10-11 (71)); chyba vstupu nalezená po nasazení = oprav i ohlášený závěr.
+Obrácená páka (CLAUDE.md §25) dřív než přidávání. Po nasazení hlídá monitor ozvěn
 (`scripts/monitor_ozveny.js --nove --zapis`), co se vrací doslova a jak začínají odpovědi na týž tip.
 **Postup zkoušení slov (2026-10-07):** napřed data, která máme (`scripts/utils/najdi_cteni.js`); pak malý pokus — víc znění z úplně
 různých pohledů naráz (např. 5 otázek × 3 čtení × 2), se vstupem jako v produkci; spočítat pojistku, opakování slov otázky a začátky

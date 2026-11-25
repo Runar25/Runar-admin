@@ -11,7 +11,11 @@
 # BÍN is local + OFFLINE (no data leaves the machine) and domain-aware: it decomposes our
 # compounds (lífs-rún, Hermanns-andi) that GreynirCorrect mangles. Use THIS for correction
 # validity; OUTPUT quality over full readings = the IS checks in CLAUDE.md §2 (the list lives only there).
-# NEVER auto-apply — this only flags; the human decides. Sigrún for the genuinely ambiguous.
+# NEVER auto-apply — this only flags; the human decides. Genuinely ambiguous → resolve with the IS tools (CLAUDE.md §2), never defer.
+#
+# Korekce (přeneseno z working-style 2026-11-25, ukáže se při dotyku — mapa „korekce IS“): korekce X→Y se aplikuje VŠUDE naslepo;
+# v silně flektivní IS může být Y správné v jednom pádu/osobě a špatné jinde (lekce 2026-07-07). Nová korekce → napřed FRÁZE (nese
+# kontext), jednoslovnou jen když je Y jednoznačné ve všech kontextech. Mrtvou korekci (model chybu už nedělá) SMAŽ, neschovávej.
 #
 # Usage: python -X utf8 is-corr-qa.py
 

@@ -22,9 +22,15 @@ zápisy o Vegvísiru, včetně vlastního návrhu „vyčerpávající = rameno 
 **Jak to aplikovat:** než ownerovo hodnotící slovo zapíšeš, zkus ho **převést na číslo nebo na
 pozorovatelný jev** (kolik slov · kolik odstavců · co v textu být MÁ a co NESMÍ). Když to nejde,
 **zeptej se na to číslo** — jednou, konkrétně. Do docu patří to číslo; jeho slovo nanejvýš
-jako citace, proč to číslo vzniklo. Souvisí: [[measure-dont-eyeball]] · [[dont-invent-fact-critical]].
+jako citace, proč to číslo vzniklo. Souvisí: CLAUDE.md §24 · CLAUDE.md §23.
 
 **Druhý případ (2026-09-27, Vegvísir):** owner k testům řekl *„a budou jen anglicky"* a já to zapsal do DECISIONS jako
 rozhodnutí o jazyce produktu. Myslel jazyk, ve kterém TEĎ pracuje: *„vegvísir nebude jen anglicky, já ho teď jako všechno
 dělám anglicky. Ty ho budeš dělat i IS."* Věta o pracovním postupu ≠ produktové rozhodnutí — u čehokoli, co by ubralo IS
 (primární jazyk, §2), se zeptej, než to zapíšeš jako rozhodnutí.
+
+**Sloučeno 2026-11-25 z ownerovo-hodnoceni-zapis-smysl — ownerův verdikt zapiš srozumitelně.** Když owner posoudí text, zapiš do docu
+**co posoudil, verdikt a proč** vlastní větou (věc + ✔/✘ + důvod), ne jeho doslovná slova z chatu (owner 2026-10-27: *„zapisuješ tam moje
+slova místo toho, abys to zapsal tak, jak se to dá pochopit!“*). Jeho **příklad ukazuje směr, ne konečné kritérium** (*„to je právě jen ten
+příklad, abys věděl, kde dál máš hledat“*): napiš, jaký obecnější rys nese, a doplň další doklady z kánonu. V chatu mu jeho stará slova
+nevracej jako zdůvodnění (owner 2026-11-23) — řekni věc vlastní větou; citaci jen tam, kde rozhoduje spor o to, co řekl.

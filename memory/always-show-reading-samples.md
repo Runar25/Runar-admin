@@ -28,7 +28,7 @@ v promptu (`focus on: the road`), jen ji neviděl. **Jak:** user message celý (
 aspekt/focus, úhel, délka, konec, čočka — jméno NE, viz níž) + u srovnání přesně ty řádky, které se liší. Systémový prompt
 stačí pojmenovat a říct, že je shodný.
 
-Souvisí: [[write-for-owner-not-process]] · [[measure-dont-eyeball]] (měř, ale výsledek měření
+Souvisí: [[write-for-owner-not-process]] · CLAUDE.md §24 (měř, ale výsledek měření
 ownerovi nikdy nepodávej bez toho, co bylo měřeno).
 
 ⛔ **Ve vzorku NIC o uživateli — ani jméno, ani jeho otázku** (KUKY 2026-10-11): *„já u vzorků čtení nepotřebuju vidět nic ohledně

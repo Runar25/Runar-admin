@@ -83,7 +83,7 @@ commit `commit_vlastni.py commit` — Edit a pathspec commit zastaví hooky.
 ### §2 — IS je primární jazyk
 IS musí být vždy perfektní; EN je vedlejší; NIKDY IS jako „překlad“ EN. **Mysli islandsky od začátku** — kalk z EN (vazba, slovosled, obraz)
 je vada. IS se **vymýšlí, dělá hotová a ověřená** (Code i Cowork), nikdy odhadem ani odkladem na rodilého mluvčího; nesrozumitelný výstup
-se přepíše, dokud mu nástroj nerozumí (§19.2). Flaguje se **jen chybějící 🔒 fakt / 📜 lore** (§23). → [[is-done-together-not-for-sigrun]]
+se přepíše, dokud mu nástroj nerozumí (§19.2). Flaguje se **jen chybějící 🔒 fakt / 📜 lore** (§23).
 **Kontrola IS — nástroje a pořadí (JEDINÉ místo, kde to stojí; paměť a docs sem odkazují, §20):**
 1. `python -X utf8 check-is.py` — ZDROJ (kód): známé chyby z `BAD_PATTERNS`, běží i v pre-commitu. Výstup modelu nevidí. Nová známá chyba → do `BAD_PATTERNS`.
 2. `python -X utf8 is-greynir.py --text "…"` (nebo soubor, text na řádek) — GreynirCorrect lokálně, zdarma, text neodchází ven. Překlepy a neznámá
@@ -190,7 +190,7 @@ záznam v `RUNAR_DECISIONS.md`; na rozhodnutou věc se ownera neptej — dohlede
 
 ### §21 — Ownerův nápad = směr k dopracování, ne hotové zadání (platí pro VŠECHNY session)
 Nejdřív **kritický pohled + proveditelnost** (kde to drhne, riziko, „střecha před základy“), návrh korekce, teprve pak konat. Rozhodnutí = směr,
-ne zámek: mění se novým datovaným záznamem; při rozporu VAROVÁNÍ, ne tichý drift. → [[decisions-are-directions-not-locks]]
+ne zámek: mění se novým datovaným záznamem; při rozporu VAROVÁNÍ, ne tichý drift.
 **Návrat k opuštěné věci jen očištěný:** najdi záznam odchodu, pojmenuj vadu, vrať verzi bez ní, zapiš nové rozhodnutí s odkazem na staré.
 Mrtvý kód „pro historii“ nese komentář s důvodem odchodu — čti ho, než ho oživíš.
 
@@ -198,18 +198,18 @@ Mrtvý kód „pro historii“ nese komentář s důvodem odchodu — čti ho, n
 → §20, poslední odstavec.
 
 ### §23 — Nevymýšlej fakta ani lore → zastav a flagni (platí pro VŠECHNY session, Code i Cowork)
-Chybí-li v kánonu 🔒 fakt (etymologie, IS gramatika, čísla, DB) nebo 📜 lore → „nevím / chybí“, nikdy domněnka za pravdu.
-Čím lepší model, tím sebejistěji zní výmysl. → [[dont-invent-fact-critical]]
+Chybí-li v kánonu 🔒 fakt (etymologie, IS gramatika, čísla, DB, postup v cizí aplikaci) nebo 📜 lore → „nevím / chybí“, nikdy domněnka za pravdu.
+Čím lepší model, tím sebejistěji zní výmysl.
 
 ### §24 — Ověř, než tvrdíš (měř, nehádej) (platí pro VŠECHNY session, Code i Cowork)
-Nález/pravdu nejdřív **změř / protlač produkční cestou / porovnej**; dojem se nepočítá. Nejde-li změřit, řekni „nevím“. → [[measure-dont-eyeball]]
+Nález/pravdu nejdřív **změř / protlač produkční cestou / porovnej**; dojem se nepočítá. Nejde-li změřit, řekni „nevím“.
 
 ### §25 — Napřed se sám vyvrať: obrácená páka a útok na nástroj (platí pro VŠECHNY session, Code i Cowork)
 **A) Obrácená páka:** hypotézu „X je málo, přidej X“ testuj tak, že X **ubereš**; musí to zhoršit. Nevyjde-li ani obráceně, nález je „není to X“
-a zapisuje se stejně pečlivě (§16). Vždy uveď hranici nálezu (co vyloučeno, `n`, co se netvrdí). → [[falsify-by-reversing-the-lever]]
+a zapisuje se stejně pečlivě (§16). Vždy uveď hranici nálezu (co vyloučeno, `n`, co se netvrdí).
 **B) Nástroj se obhájí dřív než výsledek:** (1) půlka proti půlce — liší-li se půlky víc než srovnávané dávky, je to šum; (2) co JEŠTĚ odlišuje
 referenční dvojici; (3) nulová transformace — nepohne-li se číslo, slepota je dokázaná. Párové metriky: jackknife, nikdy bootstrap
-s opakováním. → [[attack-the-metric-not-just-the-result]]
+s opakováním.
 
 ### §26 — Opustit něco ≠ zavřít to navždy; návrat je povolený, ale JEN očištěný
 → §21, druhý odstavec.

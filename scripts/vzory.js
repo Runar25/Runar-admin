@@ -2,8 +2,8 @@
 //
 // Proč (KUKY 2026-09-15): „podíváme se na to, jak jsou napsané vzory. Kolik jich máme? Dej mi jejich znění!"
 // Vzor = text v uvozovkách uvnitř instrukce („Fehu is that warmth passed from hand to hand", not „Fehu is wealth")
-// nebo za „e.g." / „til dæmis". Model vzor často přebírá doslova nebo jeho tvar (měřeno: memory
-// `prompt-directive-makes-model-copy`, `oprava-promptu-odebira-vadu`) — proto je potřeba je vidět pohromadě.
+// nebo za „e.g." / „til dæmis". Model vzor často přebírá doslova nebo jeho tvar (měřeno:
+// RUNAR_DESIGN „Slova“ body 11 a 12) — proto je potřeba je vidět pohromadě.
 //
 // ⚠️ Nečte zdrojový kód (tam jsou i komentáře a mrtvé větve), ale PROMPTY postavené produkčními buildery:
 // systém · Single · Ask · Norns · Kříž · Horseshoe · Yggdrasil · životní runa · rozbor jména, EN i IS,

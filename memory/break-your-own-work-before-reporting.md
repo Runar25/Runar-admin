@@ -34,7 +34,7 @@ chtěl. Neověřují, jestli jsem chtěl správnou věc. Na to je jen jedna cest
 **A když útok něco najde, napiš test, který to hlídá dál** (`scripts/utils/test_spine.js`
 je z tohohle dne). Nález bez testu se vrátí.
 
-Souvisí: [[attack-the-metric-not-just-the-result]] (útok na nástroj) · [[measure-dont-eyeball]] ·
+Souvisí: CLAUDE.md §25 B (útok na nástroj) · CLAUDE.md §24 ·
 [[read-the-check-before-push]].
 
 **4. Proti ownerovým větám z posledního zadání, jedna po druhé (2026-10-03, CODE-tree).** Zóny jsem změřil

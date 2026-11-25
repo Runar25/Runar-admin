@@ -1,7 +1,7 @@
 // Lab: Rune of the Day (Rúnar dagsins) — návrh promptu, jeden vzorek produkčním modelem (sol).
 // Owner 2026-11-14 (DECISIONS 2026-11-14 (6), BACKLOG „Rune of the Day“): tři části (popis runy · co může runa v člověku
 // vyvolat · na co se dnes zaměřit), bez obrazu, bez rady, bez předpovědi, bez stropu slov. „Napřed jedno a budeme upravovat.“
-// Vzorek ownera (Berkana) do promptu NEJDE — model by ho opsal (memory prompt-directive-makes-model-copy).
+// Vzorek ownera (Berkana) do promptu NEJDE — model by ho opsal (RUNAR_DESIGN „Slova“ bod 11).
 // Brány bere z produkce (adresa, zákaz studeného čtení bez obrazu, korekce), system prompt taky — měří se, co by běželo.
 //   node docs/eval/2026-11-14-runa-dne/lab.js --rune Berkana --lang en [--dry-run]
 const fs = require('fs'), path = require('path'), vm = require('vm'), os = require('os');

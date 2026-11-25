@@ -28,4 +28,4 @@ jsem si pak do tabulky zapsal sám a podle ní testoval.
    ty jsi ji úplně ignoroval… vymyslel jsem pičovinu, kterou nikdo nechtěl."* Owner chtěl otázky z produkce
    jako VZOR formulace pro Isu a Perth; já jsem pustil produkční Ask prompt bez chůze životní runy a přidal
    otázku na práci. Věta „testuju produkční Ask" padla — ale nezkontroloval jsem ji proti RÁMCI v BACKLOGu.
-Souvisí: [[ownerovo-slovo-neni-spec]] · [[measure-dont-eyeball]] · [[find-a-gap-close-it-now]].
+Souvisí: [[ownerovo-slovo-neni-spec]] · CLAUDE.md §24 · CLAUDE.md §20 a §30.

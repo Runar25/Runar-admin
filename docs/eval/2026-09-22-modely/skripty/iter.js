@@ -28,9 +28,9 @@ const UPRAVY = {
   vecne2: [/hvort um sig ástand sem gæti átt við, honum til umhugsunar\./, 'hvort um sig ástand sem gæti átt við, sagt með orðum myndarinnar, honum til umhugsunar.', 'most: stav zustava + „sagt með orðum myndarinnar"'],
   // 2026-09-23 OPISOVANI OBRAZU (owner: „SOL presne kopiruje zneni obrazu!"). Zaklad varky: sol EN nejdelsi doslovny
   // usek 10/5/4/5/4 slov, Opus 5 3/8/3/2/3. Paka 1: ramovani za obrazem rika „your own seeing", ale ne „svymi slovy" —
-  // sol „seeing" bere jako pokyn videt, ne prevypravet. Pozitivni pokyn, zadny zakaz (pamet prompt-nepojmenuj-co-hned-zakazes).
+  // sol „seeing" bere jako pokyn videt, ne prevypravet. Pozitivni pokyn, zadny zakaz (RUNAR_DESIGN „Slova“ bod 13).
   vlastni: [/\. Let it become your own seeing in the text\./, '. Let it become your own seeing, told in your own words.', 'obraz: + „told in your own words"'],
-  // Paka 1 (vlastni) NEPOMOHLA: beh 4/3/7/7/4 proti zakladu 2/5/7/2/2/4. Paka 2 z pameti prompt-directive-makes-model-copy
+  // Paka 1 (vlastni) NEPOMOHLA: beh 4/3/7/7/4 proti zakladu 2/5/7/2/2/4. Paka 2 z RUNAR_DESIGN „Slova“ bod 11
   // („hotova veta se prenasi doslova → rozbit hotovost: fragmenty misto vety"). Tentyz obsah, jen ne jako veta. Rucne pro Algiz.
   fragmenty: [/The sheepdog lies where it can see the whole flock\./, 'a sheepdog, lying down · the flock, all of it in sight.', 'obraz: veta → fragmenty (tentyz obsah)'],
   // Paka 2 (fragmenty) NEPOMOHLA a ODHALILA SLEPOTU METRIKY: sol vetu nevidel a 3/5 si ji slozil znovu („lies down where

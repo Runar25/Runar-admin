@@ -74,7 +74,7 @@ legitimizace stavu, prompt se vzorem Fehu).
    tvrdí/předpokládá text něco o čtenáři · seděl by stejně komukoli · pojmenovává stav, nebo ukazuje postavu, předmět a čin.
 5. **Legitimizace stavu** — jako obraz („zima není selhání léta“) v pořádku; jako pokyn „dej uživateli pochopit, že jeho stav je
    přirozený“ ne: tvrdí jeho stav a utěšuje (proti povaze bod 3).
-6. **Prompt Gemini** — nepřebírat: vzor Fehu by model opsal (krok 5 7/8; memory prompt-directive-makes-model-copy); seznam zakázaných slov
+6. **Prompt Gemini** — nepřebírat: vzor Fehu by model opsal (krok 5 7/8; RUNAR_DESIGN „Slova“ bod 11); seznam zakázaných slov
    je pojmenuje (memory „nepojmenuj, co hned zakážeš“); nadpisy sekcí sol vysloví (DESIGN „Slova, která dáváme modelu“ bod 3). K testu
    z něj jen: zákaz otázek „Kde v životě…“ (lab: „Where in your life…“ se v krocích 17–18 opakuje).
 7. **„Mentor“ → „průvodce“** — slovo už je v kánonu („Je průvodce na cestě Rune Seekera“, motto „Guide, not oracle“). Cíl „aby se lidé

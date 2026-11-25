@@ -2,7 +2,7 @@
 // DŮVOD (2026-08-24): tvrdil jsem "věta 4 je Eihwaz a je v pořádku", aniž bych se na ni
 // podíval — a předtím "Isa se nesmí prochladit" o téže větě. Dvakrát v jedné analýze jsem
 // mluvil o rozdělení vět zpaměti. Tvrzení "věta N dělá X" se od teď píše proti TOMUHLE
-// výpisu, ne proti dojmu z odstavce. Rozšíření [[measure-dont-eyeball]] na prózu.
+// výpisu, ne proti dojmu z odstavce. Rozšíření CLAUDE.md §24 na prózu.
 //   node scripts/vety.js <soubor.json|soubor.txt> [pole]     (default pole: deep_text)
 'use strict';
 const fs = require('fs');

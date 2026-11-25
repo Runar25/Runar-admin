@@ -18,4 +18,4 @@ dalším běhu přepsal jen novými variantami a text R3 (značky od modelu) neb
 - Ownerovi dávej poslech jako SAMOSTATNÝ soubor s nahrávkami uvnitř: `node scripts/utils/hlas_archiv.js --samostatny eval_out/hlasy-poslech.html`,
   otevřít v jeho prohlížeči a poslat soubor. Panel prohlížeče ani stránka přes server mu nehrají (owner 2026-10-29: *„takhle to přehrávání
   nefunguje. Včera jsi to řešil a dnes mi dáš to stejné!“*).
-Souvisí: [[cteni-generuj-tady-ne-pres-api]], [[always-show-reading-samples]].
+Souvisí: [[naklady-testovani]], [[always-show-reading-samples]].

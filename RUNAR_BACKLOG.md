@@ -783,7 +783,7 @@ Souběh už zčásti hotový týž den: push s commitem vzniklým během smoke (
   Nález jinde: soubor, který pre-commit přidá (`git add`) při pathspec commitu, hlavní index nedostane (ověřeno pokusem) → `runar-verze.js`
   ležel v indexu na v686 proti HEAD v688; post-commit a ㉞ znaly jen sw.js. ✅ 2026-10-15 oba hlídají i runar-verze.js (hook to hned uklidil).
 - [ ] **K4/8 souběh — prohozená zpráva commitu** *(CODE-web 2026-11-23)*: dva `commit_vlastni.py commit` ve stejné sekundě → 24335fe
-  (CODE-tune, paměť `nasazeni-delam-sam.md`) nese zprávu CODE-web 40137c2 (monitor sítí); obsah obou commitů sedí, špatně je jen
+  (CODE-tune, working-style „Nasazení“) nese zprávu CODE-web 40137c2 (monitor sítí); obsah obou commitů sedí, špatně je jen
   popis. Mechanismus neověřen: `git commit -F` zapisuje zprávu do sdíleného `.git/COMMIT_EDITMSG` a po hoocích ji čte zpět. Oprava
   (vlastník nástroje): po commitu porovnat `git log -1 --format=%B` se zprávou a při neshodě nahlas ohlásit (`commit-tree` by obešel
   hooky), případně commit v `commit_vlastni` serializovat zámkem.
@@ -1177,7 +1177,7 @@ Opraveno hned: cec2cf1 (nápověda), 368fe85 (odkaz na Agndofa.is), 701a713 (zá
   nic pevného nemá → model si ho vyrobil (*„its hinges hold“*), pak dokreslil *„the worn edge of the manger“*. Návrh: výjimka ve větě úhlu jako
   u [2] (*„If nothing moves, open with the stillness itself“*) — změna promptu → napřed malý pokus (stejné losy, úhel 3 s výjimkou a bez,
   obrazy bez pevné věci) a ownerovo ano k API. Kolik čtení s úhlem 3 si věc vymýšlí, změřeno není. Rozbor GPT = podnět, ne verdikt;
-  „nevytvářej předměty“ jako přidaný zákaz hrozí formulí (memory `oprava-promptu-odebira-vadu`) — oprava má odebrat příčinu (úhel).
+  „nevytvářej předměty“ jako přidaný zákaz hrozí formulí (RUNAR_DESIGN „Slova“ bod 12) — oprava má odebrat příčinu (úhel).
 - [x] ✅ *(2026-11-19, DECISIONS 2026-11-19 (5))* **Přehrávač — vysvětlit v nápovědě, jak funguje** (fa9cb3e2 owner *„asi po kliknutí na helper“*): svíčka = posuvník, ťuknutí na notu,
   posun po svíčce. Copy EN + IS (§2) hlasem zrcadla nápovědy.
 - [x] ✅ *(2026-11-19, DECISIONS 2026-11-19 (6))* **Menu se skoro nevejde na obrazovku** (065a5205 owner *„bude potřeba upravit, lépe uspořádat, i vizuálně opravit, jak jsou jednotlivé

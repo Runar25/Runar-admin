@@ -15,4 +15,4 @@ bez jeho slova; regex by šel opravit lookbehindem `(?<![\w.-])`, ale to je jeho
 
 **How to apply:** seznam cest k commitu zapiš nástrojem Write do souboru a dej `--pathspec-from-file`; kontrolu syntaxe Python nástrojů
 dej do pomocného skriptu (seznam uvnitř). Do Bash příkazu nepiš dvě jména `.py` za sebou. Souvisí: [[bash-no-cd-prefix]],
-[[heredoc-mangles-backslash-escapes]].
+hook „pasti v příkazech“ (CLAUDE.md §30).

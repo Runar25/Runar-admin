@@ -46,4 +46,4 @@ jako přílohu na konec zprávy (Content-ID si vymyslí vlastní). Koncept, kter
 něj nevloží zkopírovanou stránku — 2026-10-10 to owner zjistil až v hotovém konceptu („chybí obrázky!!!“). Hned při předání konceptu
 říct, že obrázky přijdou jen vložením stránky, a stránku stavět z JEHO aktuálního konceptu (vytáhnout přes get_draft), ne ze staré kopie.
 
-Souvisí: [[copy-always-in-runar-voice]], [[is-vazba-check]], [[nacti-cteni-a-reporty]].
+Souvisí: [[copy-always-in-runar-voice]], [[is-vazba-check]], CLAUDE.md §29.

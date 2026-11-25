@@ -6,7 +6,7 @@ jestli změna zabrala** — ne hádat. Žádný drift: co se sáhlo do hlasu, st
 roztroušené po git logu a cizích sandboxech. (KUKY 2026-08-02.)
 
 ## Kontrolní mapa hlasu — co lze měnit, co ne, nad čím uvažovat (§20: jen ukazatele)
-**🗺 Vizuální mapa (snapshot):** https://claude.ai/code/artifact/e32dbd2b-5277-414a-a187-8277efe99f69 — celý oblouk vrstev (system prompt · reading stack · korekce → opus-4-8 → JSON), „kde ladit nuanci" a „co je mrtvé". Pravda = kód (character.js/config/proxy); po změnách přepublikovat na stejné URL. Detail → memory `prompt-map-artifact`.
+**🗺 Vizuální mapa (snapshot):** https://claude.ai/code/artifact/e32dbd2b-5277-414a-a187-8277efe99f69 — celý oblouk vrstev (system prompt · reading stack · korekce → opus-4-8 → JSON), „kde ladit nuanci" a „co je mrtvé". Pravda = kód (character.js/config/proxy); po změnách přepublikovat na stejné URL. Detail → RUNAR_DECISIONS.md 2026-10-11, mapa promptu zrušena.
 ✅ **Ověřeno 2026-08-07:** `runar_character` má **0 aktivních řádků** → file `DEF_CHAR` je živý hlas. Mrtvý loader (`app.js:1380`) zbývá smazat → `RUNAR_BACKLOG.md`.
 
 ⭐ **Rozhodující fakt:** model POSLECHNE **user** prompt, **system** prompt z velké části IGNORUJE.
@@ -888,7 +888,7 @@ mostu × zákaz verdiktu**.
 ## 2026-10-06 (6) — OPRAVA vstupu Asku v labu: čtení z DB nese řádek ✦, produkce ho Asku neposílá → přeměřeno
 
 **Jak se našlo:** owner po záznamu (5): *„pokud jsi jen splnil úkol… bez toho, abys to ověřil…"* → kontrola vstupu proti produkci
-(`memory/test-vstup-jako-v-produkci.md`). `ownerových readings.short_text` končí řádkem myšlenky (*„✦ When you look back, where have your steps
+(RUNAR_DESIGN „Slova“, „Jak se to ověřuje“). `ownerových readings.short_text` končí řádkem myšlenky (*„✦ When you look back, where have your steps
 led?"*), ale `askRunar` posílá `readerTexts[lang].short`, z něhož `_splitThought` (`runar-reading.js` ~451) ✦ odřízne. **Harness pokusu A
 CODE-tune (`docs/eval/2026-10-06-ask-otazky/ask_slova.js`) i můj `ask_say.js` (kolo 1) dávaly Asku čtení S ✦** — poslední řádek vstupu byla
 otázka ✦, ne most. Ostatní argumenty sedí s produkcí: korekce — všech 28 řádků je IS, EN blok je v produkci prázdný (test [] = produkce);
@@ -931,7 +931,7 @@ skoro zmizí (8 → 1, p = 0,026); zesílený rámec ji drží (Y 5, R 7). **Poj
 is happening between you"*, *„The cairns … do not tell you whether it still fits"*, 11–13/30 ve všech ramenech): ten díl odpovídá na **most čtení**
 (možnost „may be X, or Y") × zákaz verdiktu a na tip *„{area} — can you make this image clearer?"* (pojistka hlavně u něj).
 **Hranice:** EN, sol, 3 čtení, 2 tipy; X mění hlavičku i tři pravidla naráz — která z nich nese většinu, nerozlišeno; znění X je testovací
-(do produkce jen ověřené anglické znění — memory `en-formulace-overit-zdrojem`). Opus netestován.
+(do produkce jen ověřené anglické znění — RUNAR_DESIGN „Slova“ bod 9). Opus netestován.
 
 ## 2026-10-06 (8) — Ask pojistka PŘEMĚŘENA se vstupem jako v produkci (bez ✦): nese ji most čtení × zákazy verdiktu; oprava (4)
 

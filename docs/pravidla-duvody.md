@@ -11,7 +11,9 @@ commit `commit_vlastni.py commit` — Edit a pathspec commit zastaví hooky (DEC
 **Patch skript = VLASTNÍ gitignored slot session, NIKDY sdílený** (2026-07-21, po přechodu na 3 session,
 dvě v `[tune]`): `scripts/_patch.py` = CODE-tree · `scripts/_patch_tune.py` = CODE-tune ·
 `_patch_<session>.py` = další. Sdílený slot si session přepisovaly scratch pod rukama. Gitignored →
-`git add -A` ho nesebere; každý slot = jeden stabilní allowlist řádek (žádný permission-prompt treadmill).
+`git add -A` ho nesebere; každý slot = jeden stabilní allowlist řádek (žádný permission-prompt treadmill — lokální settings.local.json v .claude
+do té doby narostl na ~300 jednorázových `Bash(python … _mem.py)` řádků, každé nové jméno skriptu = nový dotaz ownera; z paměti
+one-patch-script-path, zrušena 2026-11-25).
 Kolize a předávání mezi session → sekce „N paralelních session" + memory `parallel-code-sessions-collision`.
 
 ### §2 — IS je primární jazyk
@@ -22,7 +24,10 @@ překládá. „Líp to neumím" NENÍ přípustná odpověď: styl a hlas je ř
 Flaguje se **jen chybějící 🔒 fakt / 📜 lore** (§23), NIKDY vlastní formulace. IS se dělá **hotová a ověřená** (Code i Cowork),
 nikdy odhadem ani odkladem na rodilého mluvčího: ⚠️ **fronta „NATIVE EYE / Sigrún“ je ZRUŠENÁ (KUKY 2026-07-18)** — nesrozumitelný
 výstup se přepíše, dokud mu nástroj nerozumí (§19.2). Ruší to odkládání nedodělané IS na Sigrún, NE sbírání native oprav z živého
-testování do pravidel (opačný směr, `IS_NATIVE_CHECKLIST.md`). → [[is-done-together-not-for-sigrun]]
+testování do pravidel (opačný směr, `IS_NATIVE_CHECKLIST.md`).
+*Z paměti is-done-together-not-for-sigrun (zrušena 2026-11-25, audit nositelů):* KUKY 2026-07-14 dvakrát — „IS děláme spolu“, pak
+„nic nenecháváš pro Sigrún… zapamatuj si to“. Každý nález kontroly IS se v témže tahu uzavře verdiktem (ponechat s důvodem / opravit);
+falešný poplach nástroje (lestur × lest) se uzavírá potvrzením správného tvaru, ne odkladem.
 (Do 2026-10-11 stála tahle věta v §2 dvakrát a potřetí v §19.2.)
 Korekce v DB: `is-corr-qa.py` (BÍN). Do 2026-10-10 Yfirlestur přes is-grammar-qa — API zaniklo (DECISIONS 2026-10-10 (39), (43)).
 **Vazba ≠ tvar — rekci/pád/kolokaci/idiom NEHÁDEJ (vrstva NAD BÍN).** BÍN dá jen tvary; vazbu ověř nástrojem 4 výš (`is-vazba.py`), nikdy odhadem, z Wiktionary ani „pohledem". Recept + limity + zdroje → [[is-vazba-check]].
@@ -141,7 +146,7 @@ přečte jako pravdu. **Dvě kopie nejsou riziko rozporu; jsou rozpor s odložen
 4. **Stav („hotovo/TODO/nasazeno") vlastní kód a `git log`.** Do docu nepatří SW verze, commit hash
    ani „čeká na push" — to zastará do druhého dne. `RUNAR_DECISIONS.md` vlastní *rozhodnutí*, ne stav.
 **Zakázaný druh dokumentu: „shrnutí všeho".** Nevlastní žádné téma, jen kopíruje cizí — a proto
-se NEMŮŽE nerozejít, nemá se čeho držet. Takhle umřel `memory/runar-project.md` (sám vygeneroval
+se NEMŮŽE nerozejít, nemá se čeho držet. Takhle umřel memory runar-project (smazán 2026-11-25; sám vygeneroval
 ~15 nálezů auditu; 2026-07-18 vyprázdněn, zbyl jen důvod). Nový doc musí umět odpovědět: **co vlastní
 ten a žádný jiný?** Neumí-li, nevzniká.
 **Při sporu vyhrává PRODUKCE**, pak nejnovější datovaný záznam v `RUNAR_DECISIONS.md`.
@@ -158,7 +163,10 @@ KUKY 2026-08-02: *„mám myšlenku, ale ta potřebuje korekci."* Když owner p�
 co je tautologie / riziko / „střecha před základy". Navrhnout **korekci nebo zúžení**, teprve pak konat.
 Souhlas bez kritiky ownerovi nepomáhá — výslovně ji chce slyšet. **Rozhodnutí = směr, ne zámek navždy**:
 mění se novým datovaným záznamem v `RUNAR_DECISIONS.md`; při rozporu dej **VAROVÁNÍ**, ne tichý drift.
-Detail → [[decisions-are-directions-not-locks]].
+Doklad (z paměti decisions-are-directions-not-locks, zrušena 2026-11-25): KUKY 2026-07-30 po „MODEL ZAMČEN / ZAMÍTNUTO navždy“ —
+„nic není zamknuto navždy!… jen jsme vyřešili jedno velké dilema.“ Platí i pro PRAVIDLA (KUKY 2026-09-23: „pravidla s nižším číslem
+můžou být zastaralá… pokud se testy prokáže, že pravidlo už není potřeba, tak se buď upraví, nebo vymaže“): zpochybní-li ho měření,
+napiš které, proč vzniklo a co test ukázal, a navrhni úpravu datovaným rozhodnutím — nikdy ho neobcházej potichu.
 **Opustit něco ≠ zavřít to navždy; návrat je povolený, ale JEN očištěný** (do 2026-10-11 §26). KUKY 2026-08-14: *„pokud od něčeho
 odejdeme má to v tu chvíli důvod, ale neznamená to že se k tomu nemůže v obměněné formě vrátit."* Když se od něčeho odejde, má to
 v tu chvíli **důvod**. Ten důvod nezaniká — ale ani nezakazuje návrat. Vracíš-li opuštěnou věc, **napřed dohledej, proč odešla**, a vrať
@@ -176,12 +184,22 @@ Návrat bez kroků 1–3 je recidiva, ne rozhodnutí. Mrtvý kód nechávaný �
 ### §23 — Nevymýšlej fakta ani lore → zastav a flagni (platí pro VŠECHNY session, Code i Cowork)
 Chybí-li v kánonu 🔒 **fakt** (etymologie, IS gramatika, čísla, DB) nebo 📜 **lore** (Rúnar, mytologie,
 hlas), **zastav a řekni „nevím / chybí"** — nikdy nedomýšlej a nevydávej domněnku za pravdu. ⚠️ **Riziko
-roste s chytrostí modelu:** čím lepší model, tím sebejistěji zní i výmysl. Detail → [[dont-invent-fact-critical]].
+roste s chytrostí modelu:** čím lepší model, tím sebejistěji zní i výmysl.
+*Z paměti dont-invent-fact-critical (zrušena 2026-11-25):* u 🔄 (tiery, ceny) výmysl nevadí — pravdou je ownerův záměr; u 🔒/📜 je to
+tichá vada, kterou nikdo nepozná, dokud ji nechytí externí zdroj. **Návod ke klikání v cizí aplikaci je taky 🔒 fakt:** 2026-10-13
+CODE-web 3× za sebou radil naslepo (číslo seznamu „v adrese“, šablona Brevo, „Show advanced options“) — owner: „nemáš si nic
+domýšlet, ale máš vždy přesně najít, jak to je!! vždy!!!“ → dohledej aktuální nápovědu té aplikace, nebo si vyžádej screenshot.
 
 ### §24 — Ověř, než tvrdíš (měř, nehádej) (platí pro VŠECHNY session, Code i Cowork)
 Než něco prohlásíš za nález/pravdu, **změř / protlač produkční cestou / porovnej** — dojem z obrázku
 ani „vypadá to" se nepočítá. Kód: seed-and-assert na výsledek (§19). Obsah/data (Cowork): claim o
-datech/screenshotu opři o měření, ne o dojem; nejde-li změřit, řekni „nevím". Detail → [[measure-dont-eyeball]].
+datech/screenshotu opři o měření, ne o dojem; nejde-li změřit, řekni „nevím".
+*Z paměti measure-dont-eyeball (zrušena 2026-11-25):* KUKY 2026-07-19 „na tvůj dojem nedám, sorry“ — týž den dvakrát: zpětné lomítko
+ve formátovaném výstupu Grepu ohlášené jako syntaktická chyba (artefakt zobrazení) a tři screenshoty stromu s různým ořezem a zoomem
+srovnané jako důkaz. KUKY 2026-08-24 totéž u prózy („nečteš pořádně!!!“): tvrzení „věta N dělá X“ se píše proti číslovanému výpisu
+`node scripts/vety.js`, ne proti dojmu z odstavce. *Z paměti rozkaz-a-studene-cteni-hranice (zrušena):* 2026-09-23 jsem ve várce
+počítal každé Look/See/Notice jako porušení (6 → 14 z 28) a „your knuckles have learned…“ jako studené čtení — owner obojí opravil;
+skutečná vada „look closer“ byla, že ho model opakoval doslova. Hranice kánonu → RUNAR_DESIGN „Cold reading“ (Definice) a kostra J3.
 
 ### §25 — Napřed se sám vyvrať: obrácená páka a útok na nástroj (platí pro VŠECHNY session, Code i Cowork)
 **A) Vlastní domněnku zabij obrácenou pákou.**
@@ -193,7 +211,9 @@ jestli platí obrácená předpověď. Je to o řád levnější a zabíjí to i
 - Vždy uveď **hranici nálezu**: co přesně bylo vyloučeno (velikost řezu, `n`), a co se netvrdí.
 **Doloženo 2026-08-14:** hypotéza „IS prompt opisuje, protože zhubl". Přisypat islandský obsah = hodiny psaní
 a ověřování. Místo toho zkrácení o dalších 509 znaků: 32 % → 24 %, **p = 0,75**, navíc opačným směrem.
-Hypotéza padla za tři minuty a jednu dávku. Detail → `RUNAR_DECISIONS.md` 2026-08-14, [[falsify-by-reversing-the-lever]].
+Hypotéza padla za tři minuty a jednu dávku. Detail → `RUNAR_DECISIONS.md` 2026-08-14.
+*Z paměti falsify-by-reversing-the-lever (zrušena 2026-11-25):* napiš si předpověď obou směrů dřív, než měříš — nedokážeš-li říct,
+co by hypotézu vyvrátilo, není to hypotéza, ale dojem; hypotéza „přidej“ má vždy únikovou slabou verzi („přidal jsem málo“).
 **B) Nástroj se obhájí dřív než výsledek** (do 2026-10-11 §27). Než uvěříš číslu, **zaútoč na to, čím jsi ho naměřil**. Metrika,
 která prošla jen tím testem, kvůli kterému vznikla, není ověřená — je vybraná. Tři útoky, v tomhle pořadí:
 1. **Půlka proti půlce** — rozděl JEDNU dávku na dvě a spočítej metriku zvlášť. Liší-li se
@@ -205,7 +225,10 @@ která prošla jen tím testem, kvůli kterému vznikla, není ověřená — je
 **Doloženo 2026-08-14** (metrika „stejnosti" čtení): útok 1 zabil **2 ze 3** metrik · útok 2
 odhalil, že **6 ze 7** samozřejmých signálů ukazovalo obráceně (měřily papouškování, ne
 stejnost) · útok 3 dokázal, že přeživší metrika nevidí rytmus (zamíchání slov uvnitř čtení
-změní číslo o **0,0000**). Detail → [[attack-the-metric-not-just-the-result]].
+změní číslo o **0,0000**).
+*Z paměti attack-the-metric-not-just-the-result (zrušena 2026-11-25):* bootstrap s opakováním dal bodový odhad 11,7 % MIMO vlastní
+interval 13,5–31,4 % (duplikované čtení = shoda 1,0). 2026-09-19 identitní soudce: jméno osoby v testovacím čtení („Thor“) táhlo
+slepého soudce k Thurisaz (Algiz 3/3 → Thurisaz), po zamaskování jména 2/3 správně — v testu identity maskuj i jméno člověka.
 **Párové metriky:** nikdy bootstrap s opakováním (duplikát = shoda 1,0), jen jackknife.
 
 ### §26 — Opustit něco ≠ zavřít to navždy; návrat je povolený, ale JEN očištěný
@@ -240,6 +263,9 @@ session je četla znovu jako nová.
   v tomtéž tahu `--hotovo` nebo `--backlog` (i „čeká na ownera: …“). Seznam nezapsaných vede `nacti_cteni.js`; Stop-hook tah neukončí,
   dokud v něm něco zbývá.
 - **✦ Keep = „nechat“** — uložený text, ne úkol; jen se označí přečtený.
+*Z paměti nacti-cteni-a-reporty (zrušena 2026-11-25):* „načti (si) čtení a reporty“ = `node scripts/nacti_cteni.js`. Ownerovi pak:
+kolik čtení, co monitor ozvěn hlásí s ⚠ a co říkají nová hlášení — spojit, míří-li na totéž, vždy s konkrétním textem; texty lidí do
+repa nepsat (veřejné). KUKY 2026-10-06 dostal 208 „otevřených“ hlášení, která byla dávno vyřešená.
 
 ### §30 — Nic nesmí viset na paměti session: pravidlo, které se opakovaně porušuje, dělá stroj (platí pro VŠECHNY session)
 KUKY 2026-10-07: *„nikdy nic nechci, aby záviselo na tvé paměti!! to je nejhorší, co se může stát. Ty si to prostě nepamatuješ!!“*
@@ -294,6 +320,17 @@ musí to buď **udělat skript samo**, nebo **zastavit práci**, když se to vyn
 - **Hooky Claude Code se verzují** → zdroj je `hooks/claude/` v repu; v `~/.claude` jsou jen jednořádkové odkazy, na které míří nastavení.
   Hook měň v repu a commituj (DECISIONS 2026-10-14 (2)); do té doby žily jen v `~/.claude` a změnu nikdo neviděl.
 Najdeš nové pravidlo, které se porušilo podruhé? Nepiš ho jen do paměti — přidej mechanismus (hook, kontrola ve smoke, krok skriptu).
+*Doklady ze zrušených pamětí (2026-11-25, audit nositelů, owner „19. ano“):*
+- **Mezeru zavři v témže tahu, bez ptaní** (find-a-gap-close-it-now): KUKY 2026-08-21 po pěti migracích bez bumpu
+  `RUNAR_PROMPT_VERSION` — „potřebuješ můj souhlas na to abys vylepšil svoji kontrolu, paměť…? co se řeší hned je malé“. Netvoř nové
+  pravidlo, dokud neověříš, že neexistuje — většinou existuje a nic ho nevynucuje; pak je oprava kontrola, ne věta.
+- **Ownerovi se neposílají příkazy** (working-style): KUKY 2026-08-18 „Proč mi posíláš příkazový řádek? Nechápu, co to je!“; potřetí
+  2026-10-13 (owner spustil poslaný příkaz v PowerShellu bez grep, spadl) → od té doby Stop-hook `runar-zprava-check.py` pravidlo 5.
+- **Heredoc se zpětným lomítkem** (heredoc-mangles-backslash-escapes): 2026-09-29 rozbil `smoke.py` (SyntaxError, pre-push stál),
+  2026-09-30 znovu (kotvu zachránil jen assert počtu výskytů) a 2026-10-11 2× → hook pasti v příkazech.
+- **Hook při dotyku místo „přečti DESIGN před hlasem“** (read-design-before-voice-work): KUKY 2026-08-16 „jak tě mám donutit si
+  nastudovat projekt Rúnar???“ — čtyřikrát za den navrženo rozhodnuté (`direct` ≠ kratší věty; postoj ano, radu ne; DEF_CHAR a
+  VOICE_PROFILES oddělené schválně; obecnost ≠ Barnum). Dnes to ukazuje mapa (oblasti „prompt a hlas“, „text pro model“).
 
 ### §31 — Jazyk komunikace: veřejně i pro adminy jen IS a EN, česky jen owner ↔ Claude (platí pro VŠECHNY session)
 KUKY 2026-10-10: *„komunikace všude veřejně a pro adminy bude IS a EN. Jen já a ty komunikujeme česky. Štítky musí být EN,

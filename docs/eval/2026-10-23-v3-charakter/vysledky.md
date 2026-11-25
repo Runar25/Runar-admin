@@ -26,7 +26,7 @@ z charakteru → každý obraz černá pláž); formule „Gebo asks …“ B 2/
 
 ## Hranice
 n = 3; Opus 5.5 (ne sol); EN; jedna runa; vstup bez oblasti, otázky, úhlu a zakončení; soudce jeden agent (hraniční případy u C2 jsou
-jeho; „Look at…“ jako vstup do obrazu podle kánonu porušení není — memory `rozkaz-a-studene-cteni-hranice`).
+jeho; „Look at…“ jako vstup do obrazu podle kánonu porušení není — kostra J3 a RUNAR_DESIGN „Cold reading“).
 
 ## Texty
 

@@ -2,7 +2,7 @@
 // závěr u spreadu nějakou myšlenku navíc, něco, co by Rúnar mohl čtenáři nabídnout… jako to moto, nebo kam by se měl podívat,
 // neříkat, co má dělat, ale něco nabídnout. Takové shrnutí, které má myšlenku.“). Vzor ownera z kolekce: Uruz „What in you is ready
 // to break through stone?“, „Listen closely to what speaks when you are still.“ — do promptu je NEDÁVÁM (vzor se opisuje,
-// memory prompt-directive-makes-model-copy); pokyn jen popisuje tvar.
+// RUNAR_DESIGN „Slova“ bod 11); pokyn jen popisuje tvar.
 // 3 čtení produkční cestou + jeden řádek pokynu na konec: Kříž (ownerovy losy 19:55, Opus), Norny (losy 19:45, GPT), single Uruz (Opus).
 const vm = require('vm'), fs = require('fs'), os = require('os'), path = require('path');
 const D = 'C:/Users/zkuku/Downloads/Runar-admin/v2/';
