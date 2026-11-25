@@ -269,6 +269,9 @@ PRIPADY = [
  # 2026-11-25 (CODE-read): hlídač API — dva pokusy jedním příkazem a slova se známým účinkem musí zastavit
  ('chyti', 'verify_hooky_claude.py', 'hooks/claude/runar-api-guard.py', 'replace', "if prikaz.count('RUNAR_API_ANO=') > 1:", "if False:"),
  ('chyti', 'verify_hooky_claude.py', 'hooks/claude/runar-api-guard.py', 'replace', "    for w in slova:", "    for w in []:"),
+ # 2026-11-25 (CODE-read): kniha selhání — stížnost bez záznamu a nevyplněný záznam, který konec tahu pustí, musí shodit kontrolu
+ ('chyti', 'verify_hooky_claude.py', 'hooks/claude/runar-stiznost.py', 'replace', "STIZNOST = re.compile(r\"uz jsme", "STIZNOST = re.compile(r\"qqq uz jsme"),
+ ('chyti', 'verify_hooky_claude.py', 'hooks/claude/runar-stiznost.py', 'replace', "    if chybi:", "    if False:"),
  # kolo 3 / 4h (2026-10-11): obrazy, kalendář, myšlenka ✦, zrcadlo parseru
  ('chyti', 'verify_compose_mirror.js', 'v2/runar-character.js', 'replace', "var reading = segs.map(function (x) { return x.text; }).join(' ').trim();", "var reading = segs.map(function (x) { return x.text; }).join('  ').trim();"),
  ('chyti', 'verify_icelandic_calendar.js', 'v2/runar-character.js', 'replace', "if (doZimy <= 90) return 'heyannir';", "if (doZimy <= 120) return 'heyannir';"),
