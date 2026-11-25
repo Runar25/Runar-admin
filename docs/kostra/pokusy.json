@@ -374,9 +374,9 @@
    "slozka": "docs/eval/2026-11-23-kostra-cteni/zkousky",
    "prompt": "v5.24-image",
    "n": "n=3 (Fehu, Gebo, Hagalaz; sol; bez srovnání se stejným seedem v produkci)",
-   "vysledek": "stín ve větě 3 vlastními slovy 3/3 (Fehu „Kept close, that value may have little room to serve anyone“, Gebo „a gift can begin to feel like a debt“); moderní význam zúžil větu 2 parafrází („can pass from hand to hand“); Hagalaz opsal „old order“ a „beyond your control“ ze zadání",
+   "vysledek": "stín ve větě 3 vlastními slovy 3/3 (Fehu „Kept close, that value may have little room to serve anyone“, Gebo „a gift can begin to feel like a debt“); moderní význam zúžil větu 2 parafrází („can pass from hand to hand“); Hagalaz opsal „old order“ a „beyond your control“ ze zadání; ⚠️ moderní význam a stín vzaty z neověřené tabulky GPT (docs/eval/2026-10-23-v3-charakter/moderni-vyznamy-25-zdroj.md, intake) — výsledek platí jen pro tvar zápisu, ne pro obsah významů",
    "owner": "2026-11-24 „moderní významy bych chtěl vidět ve čtení a také stín“",
-   "dalsi": "srovnat s produkcí na stejném seedu (3 volání), pak owner",
+   "dalsi": "napřed ověřit moderní významy 25 run (owner 2026-11-25); srovnání s produkcí až potom",
    "souvisi": [
     "P05",
     "P06",
