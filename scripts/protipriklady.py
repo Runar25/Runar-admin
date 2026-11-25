@@ -270,7 +270,7 @@ PRIPADY = [
  ('chyti', 'verify_hooky_claude.py', 'hooks/claude/runar-api-guard.py', 'replace', "if prikaz.count('RUNAR_API_ANO=') > 1:", "if False:"),
  ('chyti', 'verify_hooky_claude.py', 'hooks/claude/runar-api-guard.py', 'replace', "    for w in slova:", "    for w in []:"),
  # 2026-11-25 (CODE-read): kniha selhání — stížnost bez záznamu a nevyplněný záznam, který konec tahu pustí, musí shodit kontrolu
- ('chyti', 'verify_hooky_claude.py', 'hooks/claude/runar-stiznost.py', 'replace', "STIZNOST = re.compile(r\"uz jsme", "STIZNOST = re.compile(r\"qqq uz jsme"),
+ ('chyti', 'verify_hooky_claude.py', 'hooks/claude/runar-stiznost.py', 'replace', "    if txt.lstrip().startswith('<') or not STIZNOST.search(bezd(txt)):", "    if True:"),
  ('chyti', 'verify_hooky_claude.py', 'hooks/claude/runar-stiznost.py', 'replace', "    if chybi:", "    if False:"),
  # kolo 3 / 4h (2026-10-11): obrazy, kalendář, myšlenka ✦, zrcadlo parseru
  ('chyti', 'verify_compose_mirror.js', 'v2/runar-character.js', 'replace', "var reading = segs.map(function (x) { return x.text; }).join(' ').trim();", "var reading = segs.map(function (x) { return x.text; }).join('  ').trim();"),
