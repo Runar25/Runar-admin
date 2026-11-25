@@ -1,0 +1,2558 @@
+{
+ "datum": "2026-11-25",
+ "souhrn": "Inventura má 186 záznamů: 2 soubory CLAUDE.md, 32 § a 10 dalších oddílů repo CLAUDE.md, 19 oddílů working-style, 17 oblastí pravidla_mapa a 1 mezera, 6 hooků se zapojením, uz_vime, verify_nosice, 5 dokumentových nosičů a 91 souborů memory/*.md. Jen když je Claude sám otevře, se do kontextu dostane 103 nosičů — 81 z 91 pamětí (trvale v kontextu je z nich jen řádek indexu v MEMORY.md), 19 oddílů working-style, Slova mimo dvě cesty, pravidla-duvody, EVAL_LOG a výstupy uz_vime/verify_nosice; jen 8 pamětí přichází při zápisu přes mapu. Vždy v kontextu jsou jen CLAUDE.md (28,4 KB, i po compactu), MEMORY.md (14,9 KB; po compactu neověřeno) a výstup SessionStart hooku. Výstup SessionStart má změřených 17 593 B, tedy 8,6× víc než 2KB náhled; prvních 2 KB obsahuje jen datum, pravidla stromu, verze a začátek rozcestníku, takže pokyny k uz_vime, najdi_cteni, „rozbij sám“ a §21 leží za hranicí. Změřená vada v runar-context.py: výběr snapshotu max(x[:10]) řadí nedatované „runar-tree-*“ nad datované, takže ~7,5 KB (42 %) výstupu je červnová historie stromu, kterou dostane každá session při startu i po compactu. Největší shluky duplicit: měření (§24, §25 a 9 pamětí), slova v promptu (RUNAR_DESIGN „Slova“ a 5 pamětí, které ji opakují), zpráva ownerovi (Stop hook, §30 a 6 pamětí), náklady/API (§30, api-guard a 4 paměti), escape sekvence (§1, §11, working-style a 3 paměti). Osm pamětí jen opakuje §, který je v kontextu vždy (decisions-are-directions→§21, dont-invent→§23, measure-dont-eyeball→§24, falsify→§25A, attack-the-metric→§25B, is-done-together→§2, one-patch-script-path→§1, nacti-cteni-a-reporty→§29); návrh pro paměti: ponechat 42, sloučit 17, zrušit 17, přesunout k místu akce 15. Mezera u labů: Slova ukazuje touch hook jen u v2/runar-character.js a labu V3 (2026-10-23); laby 2026-11-09 (v2 z V3), kostra 2026-11-23, runa dne, ask-tezkost, obraz-predmety, souhrn týdne a prompty psané ve scratchpadu ji nespustí. Touch hook ukazuje pravidla jednou za session a po compactu znovu (stav se maže na compact_boundary, ověřeno v kódu i samotestem č. 5), ale jen při zápisu; čtení a plánování nespustí nic. Doklady zachycení mají jen stroje: Stop hook zprávy ownerovi (~711 výskytů blokace v přepisech, nejvíc návrh bez dohledání a číslování), touch hook (~228), api-guard (38 deny), tree-guard (35 + 42); u žádné paměti doklad zachycení není. Zapojení je křehké: runar-context.py a runar-zprava-check.py nejsou v settings.json, volá je tree-guard.sh; api-guard i touch hook v tomto auditu zablokovaly neškodný skript jen kvůli textu v řetězci (jméno souboru s klíčem, popsaná escape sekvence). Neověřeno: zda Claude Code znovu vkládá MEMORY.md po compactu, přesná mez náhledu výstupu hooku (2 KB přebíráno ze zadání) a počty v přepisech, které jsou hrubé (zahrnují opisy a opakované řádky).",
+ "pocty": {
+  "zaznamu": 186,
+  "jen_kdyz_otevre": 103,
+  "pameti": 91,
+  "navrh_pameti": {
+   "ponechat": 42,
+   "sloučit": 17,
+   "zrušit": 17,
+   "přesunout": 15
+  }
+ },
+ "nosice": [
+  {
+   "id": "claude-home",
+   "soubor": "C:/Users/zkuku/CLAUDE.md",
+   "vlastni": "Jen import @Downloads/Runar-admin/CLAUDE.md, aby se repo pravidla načetla při startu a po compactu.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (CLAUDE.md v pracovním adresáři)",
+   "velikost": "17 ř. / 929 B",
+   "prekryvy": [],
+   "doklad_zachytil": "funguje — v tomto audit agentovi se repo CLAUDE.md vložil celý (pozorováno)",
+   "navrh": "ponechat",
+   "duvod": "Bez importu by repo CLAUDE.md přišel až při prvním dotyku souboru v repu."
+  },
+  {
+   "id": "claude-repo",
+   "soubor": "CLAUDE.md",
+   "vlastni": "Pravidla §1–§32, mapa souborů, lanes, pasti (odkazy na stav).",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md)",
+   "velikost": "333 ř. / 28 444 B",
+   "prekryvy": [
+    "viz jednotlivé §"
+   ],
+   "doklad_zachytil": "verify_nosice: 32 § — 10 drží stroj, 13 zčásti, 2 nevynutitelné, 7 sloučené",
+   "navrh": "ponechat",
+   "duvod": "Jediný nosič pravidel, který je v kontextu vždy."
+  },
+  {
+   "id": "claude:§1",
+   "soubor": "CLAUDE.md §1",
+   "vlastni": "JS se mění jen Python patch skriptem; sdílené soubory přes cv.zapis/commit_vlastni; slot patch skriptu na session.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md); navíc vypsán touch hookem při zápisu do oblastí, které ho mají v mapě",
+   "velikost": "8 ř. / 661 B",
+   "prekryvy": [
+    "mem:one-patch-script-path",
+    "mem:js-unicode-escapes-python",
+    "mem:edit-tool-escapes-new-text",
+    "mem:working-style (Implementační pravidla)"
+   ],
+   "doklad_zachytil": "nosiče dle verify_nosice: ① JS SYNTAX · hooks/pre-commit.py · scripts/utils/pravidla_pri_dotyku.py nedrží: patch skript místo Edit u nesdíleného JS nehlídá nic — chytí jen následek (SyntaxError) v ①",
+   "navrh": "ponechat",
+   "duvod": "Vlastník pravidla; paměti, které ho opakují, jsou navrženy ke zrušení nebo sloučení."
+  },
+  {
+   "id": "claude:§2",
+   "soubor": "CLAUDE.md §2",
+   "vlastni": "IS primární, 4 nástroje kontroly IS v pořadí, vazbu neodhadovat, 3 vrstvy promptu, žádný post-processor.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md); navíc vypsán touch hookem při zápisu do oblastí, které ho mají v mapě",
+   "velikost": "16 ř. / 2054 B",
+   "prekryvy": [
+    "mem:is-done-together-not-for-sigrun",
+    "mem:is-vazba-check",
+    "mem:working-style (⚡ IS, Korekce)",
+    "docs/pravidla-duvody.md §2"
+   ],
+   "doklad_zachytil": "nosiče dle verify_nosice: check-is.py · hooks/pre-commit.py · verify_is_kontrola_jedno_misto.js nedrží: islandštinu výstupu modelu za běhu nekontroluje nic (hlavička check-is.py); jen známé chyby ze zdroje",
+   "navrh": "ponechat",
+   "duvod": "Vlastník pravidla; paměti, které ho opakují, jsou navrženy ke zrušení nebo sloučení."
+  },
+  {
+   "id": "claude:§3",
+   "soubor": "CLAUDE.md §3",
+   "vlastni": "Ukazatel → §18.6.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md)",
+   "velikost": "3 ř. / 66 B",
+   "prekryvy": [],
+   "doklad_zachytil": "nosiče dle verify_nosice: → §18",
+   "navrh": "ponechat",
+   "duvod": "Ukazatel kvůli stabilním číslům, stojí ~100 B."
+  },
+  {
+   "id": "claude:§4",
+   "soubor": "CLAUDE.md §4",
+   "vlastni": "SW verze se bumpne pre-commit hookem; install-hooks po clone.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md)",
+   "velikost": "3 ř. / 171 B",
+   "prekryvy": [],
+   "doklad_zachytil": "nosiče dle verify_nosice: hooks/pre-commit.py · ⑤ SW VERZE · verify_sw_shell.js",
+   "navrh": "ponechat",
+   "duvod": "Vlastník pravidla; paměti, které ho opakují, jsou navrženy ke zrušení nebo sloučení."
+  },
+  {
+   "id": "claude:§5",
+   "soubor": "CLAUDE.md §5",
+   "vlastni": "UI invarianty: --dim ne pro text, ᚱ značka kresbou, runové glyfy jen z RUNE_SVGS.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md); navíc vypsán touch hookem při zápisu do oblastí, které ho mají v mapě",
+   "velikost": "8 ř. / 849 B",
+   "prekryvy": [
+    "mem:glyph-text-vs-our-svg",
+    "mem:match-existing-visual-first"
+   ],
+   "doklad_zachytil": "nosiče dle verify_nosice: verify_citelnost.js · verify_rune_glyphs.js · verify_journal_glyphs.js · verify_zakazy_cesty.js",
+   "navrh": "ponechat",
+   "duvod": "Vlastník pravidla; paměti, které ho opakují, jsou navrženy ke zrušení nebo sloučení."
+  },
+  {
+   "id": "claude:§6",
+   "soubor": "CLAUDE.md §6",
+   "vlastni": "THE GATHERING a RÚNAR se nepřekládají.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md)",
+   "velikost": "3 ř. / 156 B",
+   "prekryvy": [],
+   "doklad_zachytil": "nosiče dle verify_nosice: — nevynutitelné: seznam záměrně anglických pojmů je krátký a mění se zřídka; žádná kontrola nepozná, že někdo THE GATHERING přeložil",
+   "navrh": "ponechat",
+   "duvod": "Vlastník pravidla; paměti, které ho opakují, jsou navrženy ke zrušení nebo sloučení."
+  },
+  {
+   "id": "claude:§7",
+   "soubor": "CLAUDE.md §7",
+   "vlastni": "Jeden commit = jedna věc, push ihned, smoke.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md)",
+   "velikost": "3 ř. / 102 B",
+   "prekryvy": [
+    "claude:N paralelních session (Commit ÚZCE)"
+   ],
+   "doklad_zachytil": "nosiče dle verify_nosice: hooks/pre-push.py nedrží: „jeden commit = jedna věc“ a „push ihned“ jsou úsudek; nehlídá je nic",
+   "navrh": "ponechat",
+   "duvod": "Vlastník pravidla; paměti, které ho opakují, jsou navrženy ke zrušení nebo sloučení."
+  },
+  {
+   "id": "claude:§8",
+   "soubor": "CLAUDE.md §8",
+   "vlastni": "Ukazatel → §10.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md)",
+   "velikost": "3 ř. / 54 B",
+   "prekryvy": [],
+   "doklad_zachytil": "nosiče dle verify_nosice: → §10",
+   "navrh": "ponechat",
+   "duvod": "Ukazatel kvůli stabilním číslům, stojí ~100 B."
+  },
+  {
+   "id": "claude:§9",
+   "soubor": "CLAUDE.md §9",
+   "vlastni": "Ukazatel → §2.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md)",
+   "velikost": "3 ř. / 108 B",
+   "prekryvy": [],
+   "doklad_zachytil": "nosiče dle verify_nosice: → §2",
+   "navrh": "ponechat",
+   "duvod": "Ukazatel kvůli stabilním číslům, stojí ~100 B."
+  },
+  {
+   "id": "claude:§10",
+   "soubor": "CLAUDE.md §10",
+   "vlastni": "Texty, hodnoty, jména tierů/jednotek jen z UI_TEXT/VOCAB/TIERS/configu.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md); navíc vypsán touch hookem při zápisu do oblastí, které ho mají v mapě",
+   "velikost": "11 ř. / 725 B",
+   "prekryvy": [
+    "mem:vocab-natvrdo-a-migrace",
+    "mem:working-style (Tier hodnoty)",
+    "claude:Tier systém"
+   ],
+   "doklad_zachytil": "nosiče dle verify_nosice: ② HARDCODED STRINGS · verify_lang_ternary.js · verify_en_natvrdo.js · verify_tier_features.js · verify_spread_prices.js · verify_doc_values.js",
+   "navrh": "ponechat",
+   "duvod": "Vlastník pravidla; paměti, které ho opakují, jsou navrženy ke zrušení nebo sloučení."
+  },
+  {
+   "id": "claude:§11",
+   "soubor": "CLAUDE.md §11",
+   "vlastni": "IS text v Pythonu literálně, nikdy escape.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md)",
+   "velikost": "3 ř. / 165 B",
+   "prekryvy": [
+    "mem:working-style („Detail k §11“)",
+    "mem:js-unicode-escapes-python",
+    "mem:heredoc-mangles-backslash-escapes"
+   ],
+   "doklad_zachytil": "nosiče dle verify_nosice: scripts/utils/pravidla_pri_dotyku.py · verify_pravidla_mapa.js nedrží: skript vzniklý jinak než nástrojem Write/Edit (příkazem v shellu) past nevidí",
+   "navrh": "ponechat",
+   "duvod": "Vlastník pravidla; paměti, které ho opakují, jsou navrženy ke zrušení nebo sloučení."
+  },
+  {
+   "id": "claude:§12",
+   "soubor": "CLAUDE.md §12",
+   "vlastni": "Fallback jména you/þú, displayName() jediný zdroj.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md)",
+   "velikost": "3 ř. / 128 B",
+   "prekryvy": [
+    "mem:working-style („Detail k §12“ — doplňuje Visitor/Gestur)"
+   ],
+   "doklad_zachytil": "nosiče dle verify_nosice: verify_liferune_states.js · verify_zakazy_cesty.js",
+   "navrh": "ponechat",
+   "duvod": "Vlastník pravidla; paměti, které ho opakují, jsou navrženy ke zrušení nebo sloučení."
+  },
+  {
+   "id": "claude:§13",
+   "soubor": "CLAUDE.md §13",
+   "vlastni": "Full-path: nové pole/spread projde všemi cestami; migrace grepem.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md); navíc vypsán touch hookem při zápisu do oblastí, které ho mají v mapě",
+   "velikost": "5 ř. / 438 B",
+   "prekryvy": [
+    "mem:vocab-natvrdo-a-migrace"
+   ],
+   "doklad_zachytil": "nosiče dle verify_nosice: verify_contract_wiring.js · verify_prompt_levers.js · verify_zakazy_cesty.js nedrží: výklad musí být zapsaný v _SPREAD_COST_KEY, jinak o něm ㊂ neví; nové POLE formuláře mimo prompt a shrine parts[] nehlídá nic",
+   "navrh": "ponechat",
+   "duvod": "Vlastník pravidla; paměti, které ho opakují, jsou navrženy ke zrušení nebo sloučení."
+  },
+  {
+   "id": "claude:§14",
+   "soubor": "CLAUDE.md §14",
+   "vlastni": "updateUIText jen statické překlady.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md)",
+   "velikost": "4 ř. / 294 B",
+   "prekryvy": [],
+   "doklad_zachytil": "nosiče dle verify_nosice: verify_liferune_states.js · verify_pill_lang.js · verify_citelnost.js nedrží: hlídá známé případy (okno jména, pilulky, Deník); nový stavový obsah v updateUIText nepozná",
+   "navrh": "ponechat",
+   "duvod": "Vlastník pravidla; paměti, které ho opakují, jsou navrženy ke zrušení nebo sloučení."
+  },
+  {
+   "id": "claude:§15",
+   "soubor": "CLAUDE.md §15",
+   "vlastni": "Ukazatel → §10.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md)",
+   "velikost": "3 ř. / 75 B",
+   "prekryvy": [],
+   "doklad_zachytil": "nosiče dle verify_nosice: → §10",
+   "navrh": "ponechat",
+   "duvod": "Ukazatel kvůli stabilním číslům, stojí ~100 B."
+  },
+  {
+   "id": "claude:§16",
+   "soubor": "CLAUDE.md §16",
+   "vlastni": "Změna chování = práce + DECISIONS + oprava docu v témže commitu; reconciliation.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md); navíc vypsán touch hookem při zápisu do oblastí, které ho mají v mapě",
+   "velikost": "5 ř. / 501 B",
+   "prekryvy": [
+    "mem:working-style (Two-output — jen odkaz)"
+   ],
+   "doklad_zachytil": "nosiče dle verify_nosice: verify_decisions_followthrough.js · verify_decisions_numbers.js",
+   "navrh": "ponechat",
+   "duvod": "Vlastník pravidla; paměti, které ho opakují, jsou navrženy ke zrušení nebo sloučení."
+  },
+  {
+   "id": "claude:§17",
+   "soubor": "CLAUDE.md §17",
+   "vlastni": "Paměť v repu přes junction, kanonické docy jen v repu, [docsync] commity.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md)",
+   "velikost": "6 ř. / 616 B",
+   "prekryvy": [
+    "memory/README.md"
+   ],
+   "doklad_zachytil": "nosiče dle verify_nosice: verify_memory_index.js · verify_canonical_files.js · scripts/utils/commit_vlastni.py",
+   "navrh": "ponechat",
+   "duvod": "Vlastník pravidla; paměti, které ho opakují, jsou navrženy ke zrušení nebo sloučení."
+  },
+  {
+   "id": "claude:§18",
+   "soubor": "CLAUDE.md §18",
+   "vlastni": "Jeden zdroj pravdy v kódu, varianty jako data, golden-verify, sdílené moduly.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md); navíc vypsán touch hookem při zápisu do oblastí, které ho mají v mapě",
+   "velikost": "9 ř. / 900 B",
+   "prekryvy": [
+    "claude:§20 (totéž pro docy)"
+   ],
+   "doklad_zachytil": "nosiče dle verify_nosice: verify_new_duplicates.js · verify_compose_mirror.js · verify_page_copies.js · verify_admin_emails.js nedrží: „skoro stejná funkce“ (bod 2) a golden-verify refaktoru (bod 3) jsou úsudek",
+   "navrh": "ponechat",
+   "duvod": "Vlastník pravidla; paměti, které ho opakují, jsou navrženy ke zrušení nebo sloučení."
+  },
+  {
+   "id": "claude:§19",
+   "soubor": "CLAUDE.md §19",
+   "vlastni": "Seed-and-assert na hranici, žádné tiché zelené, kontrola na ploše, kde bug žije.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md); navíc vypsán touch hookem při zápisu do oblastí, které ho mají v mapě",
+   "velikost": "7 ř. / 677 B",
+   "prekryvy": [
+    "mem:selhany-verifier-neni-vyvraceny-nalez",
+    "mem:fix-substance-not-shape"
+   ],
+   "doklad_zachytil": "nosiče dle verify_nosice: golden_contracts.js · protipriklady.py nedrží: seed-and-assert u NOVÉ hranice nikdo nevynutí",
+   "navrh": "ponechat",
+   "duvod": "Vlastník pravidla; paměti, které ho opakují, jsou navrženy ke zrušení nebo sloučení."
+  },
+  {
+   "id": "claude:§20",
+   "soubor": "CLAUDE.md §20",
+   "vlastni": "Jedna informace = jedno místo; kód > doc; při sporu produkce; duplikát hned opravit/zapsat.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md); navíc vypsán touch hookem při zápisu do oblastí, které ho mají v mapě",
+   "velikost": "10 ř. / 899 B",
+   "prekryvy": [
+    "mem:find-a-gap-close-it-now",
+    "mem:napred-dohledej-co-uz-je",
+    "mem:runar-project"
+   ],
+   "doklad_zachytil": "nosiče dle verify_nosice: verify_new_duplicates.js · verify_doc_values.js · check-docs.py · scripts/utils/pravidla_pri_dotyku.py",
+   "navrh": "ponechat",
+   "duvod": "Vlastník pravidla; paměti, které ho opakují, jsou navrženy ke zrušení nebo sloučení."
+  },
+  {
+   "id": "claude:§21",
+   "soubor": "CLAUDE.md §21",
+   "vlastni": "Ownerův nápad = směr; kritika napřed; návrat jen očištěný.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md)",
+   "velikost": "6 ř. / 651 B",
+   "prekryvy": [
+    "mem:decisions-are-directions-not-locks",
+    "hook:runar-context („DVE VECI 2)“)",
+    "mem:ownerovo-slovo-neni-spec"
+   ],
+   "doklad_zachytil": "nosiče dle verify_nosice: — nevynutitelné: kritický pohled na ownerův nápad je úsudek; stroj ho nepozná ani nevynutí",
+   "navrh": "ponechat",
+   "duvod": "Vlastník pravidla; paměti, které ho opakují, jsou navrženy ke zrušení nebo sloučení."
+  },
+  {
+   "id": "claude:§22",
+   "soubor": "CLAUDE.md §22",
+   "vlastni": "Ukazatel → §20.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md)",
+   "velikost": "3 ř. / 113 B",
+   "prekryvy": [],
+   "doklad_zachytil": "nosiče dle verify_nosice: → §20",
+   "navrh": "ponechat",
+   "duvod": "Ukazatel kvůli stabilním číslům, stojí ~100 B."
+  },
+  {
+   "id": "claude:§23",
+   "soubor": "CLAUDE.md §23",
+   "vlastni": "Nevymýšlet fakta ani lore, flagnout.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md); navíc vypsán touch hookem při zápisu do oblastí, které ho mají v mapě",
+   "velikost": "4 ř. / 333 B",
+   "prekryvy": [
+    "mem:dont-invent-fact-critical",
+    "mem:adversarialni-naraz-fact-critical"
+   ],
+   "doklad_zachytil": "nosiče dle verify_nosice: hooks/claude/runar-zprava-check.py · verify_hooky_claude.py nedrží: výmysl řečený jistě nepozná nic",
+   "navrh": "ponechat",
+   "duvod": "Vlastník pravidla; paměti, které ho opakují, jsou navrženy ke zrušení nebo sloučení."
+  },
+  {
+   "id": "claude:§24",
+   "soubor": "CLAUDE.md §24",
+   "vlastni": "Ověř, než tvrdíš; měř, nehádej.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md); navíc vypsán touch hookem při zápisu do oblastí, které ho mají v mapě",
+   "velikost": "3 ř. / 267 B",
+   "prekryvy": [
+    "mem:measure-dont-eyeball",
+    "mem:ask-owner-for-checks-you-cannot-run",
+    "mem:sanity-check-measurements",
+    "mem:jeden-vzorek-neni-vada"
+   ],
+   "doklad_zachytil": "nosiče dle verify_nosice: hooks/claude/runar-zprava-check.py nedrží: jistě znějící neověřené tvrzení nepozná nic",
+   "navrh": "ponechat",
+   "duvod": "Vlastník pravidla; paměti, které ho opakují, jsou navrženy ke zrušení nebo sloučení."
+  },
+  {
+   "id": "claude:§25",
+   "soubor": "CLAUDE.md §25",
+   "vlastni": "A) obrácená páka; B) útok na nástroj (3 testy), jackknife.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md); navíc vypsán touch hookem při zápisu do oblastí, které ho mají v mapě",
+   "velikost": "7 ř. / 804 B",
+   "prekryvy": [
+    "mem:falsify-by-reversing-the-lever",
+    "mem:attack-the-metric-not-just-the-result",
+    "mem:test-the-lever-that-binds",
+    "mem:sanity-check-measurements",
+    "mem:guard-test-the-lifecycle"
+   ],
+   "doklad_zachytil": "nosiče dle verify_nosice: protipriklady.py nedrží: B (útok na kontroly) drží ㊵; A (obrácená páka u hypotéz) je metoda, nevynutí ji nic",
+   "navrh": "ponechat",
+   "duvod": "Vlastník pravidla; paměti, které ho opakují, jsou navrženy ke zrušení nebo sloučení."
+  },
+  {
+   "id": "claude:§26",
+   "soubor": "CLAUDE.md §26",
+   "vlastni": "Ukazatel → §21.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md)",
+   "velikost": "3 ř. / 123 B",
+   "prekryvy": [],
+   "doklad_zachytil": "nosiče dle verify_nosice: → §21",
+   "navrh": "ponechat",
+   "duvod": "Ukazatel kvůli stabilním číslům, stojí ~100 B."
+  },
+  {
+   "id": "claude:§27",
+   "soubor": "CLAUDE.md §27",
+   "vlastni": "Ukazatel → §25 B.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md)",
+   "velikost": "3 ř. / 69 B",
+   "prekryvy": [],
+   "doklad_zachytil": "nosiče dle verify_nosice: → §25",
+   "navrh": "ponechat",
+   "duvod": "Ukazatel kvůli stabilním číslům, stojí ~100 B."
+  },
+  {
+   "id": "claude:§28",
+   "soubor": "CLAUDE.md §28",
+   "vlastni": "Důvod změny tam, kde změna bydlí; CLAUDE.md bez historie.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md); navíc vypsán touch hookem při zápisu do oblastí, které ho mají v mapě",
+   "velikost": "5 ř. / 556 B",
+   "prekryvy": [],
+   "doklad_zachytil": "nosiče dle verify_nosice: verify_escape_marks.js · verify_doc_length.js nedrží: jen výjimky z kontrol a historie v CLAUDE.md (i při commitu, rychle_kontroly); důvod u změny kódu nehlídá nic",
+   "navrh": "ponechat",
+   "duvod": "Vlastník pravidla; paměti, které ho opakují, jsou navrženy ke zrušení nebo sloučení."
+  },
+  {
+   "id": "claude:§29",
+   "soubor": "CLAUDE.md §29",
+   "vlastni": "Hlášení z appky: načíst → triaged → --hotovo/--backlog v témže tahu.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md)",
+   "velikost": "5 ř. / 611 B",
+   "prekryvy": [
+    "mem:nacti-cteni-a-reporty",
+    "hook:runar-zprava-check pravidlo 3"
+   ],
+   "doklad_zachytil": "nosiče dle verify_nosice: scripts/nacti_cteni.js · hooks/claude/runar-zprava-check.py",
+   "navrh": "ponechat",
+   "duvod": "Vlastník pravidla; paměti, které ho opakují, jsou navrženy ke zrušení nebo sloučení."
+  },
+  {
+   "id": "claude:§30",
+   "soubor": "CLAUDE.md §30",
+   "vlastni": "Opakovaně porušované pravidlo dělá stroj; seznam hooků a co zastaví (API, zpráva ownerovi, sdílené docy, pravidla při dotyku, pasti).",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md); navíc vypsán touch hookem při zápisu do oblastí, které ho mají v mapě",
+   "velikost": "19 ř. / 2336 B",
+   "prekryvy": [
+    "hook:* (popis všech hooků)",
+    "verify_nosice",
+    "mem:bash-no-cd-prefix",
+    "mem:heredoc-mangles-backslash-escapes"
+   ],
+   "doklad_zachytil": "nosiče dle verify_nosice: hooks/pre-commit.py · scripts/utils/pravidla_pri_dotyku.py · hooks/claude/runar-api-guard.py · verify_hooky_claude.py · verify_pravidla_mapa.js · protipriklady.py · verify_nosice.js",
+   "navrh": "ponechat",
+   "duvod": "Vlastník pravidla; paměti, které ho opakují, jsou navrženy ke zrušení nebo sloučení."
+  },
+  {
+   "id": "claude:§31",
+   "soubor": "CLAUDE.md §31",
+   "vlastni": "Jazyk: veřejně IS+EN, admin EN, česky jen owner↔Claude.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md); navíc vypsán touch hookem při zápisu do oblastí, které ho mají v mapě",
+   "velikost": "6 ř. / 649 B",
+   "prekryvy": [
+    "mem:schranka-runar-gmail",
+    "mem:working-style (Jazyk — odkaz)"
+   ],
+   "doklad_zachytil": "nosiče dle verify_nosice: verify_jazyk_ui.js nedrží: Gmail (štítky, koncepty) nevidí — postup v paměti schranka-runar-gmail",
+   "navrh": "ponechat",
+   "duvod": "Vlastník pravidla; paměti, které ho opakují, jsou navrženy ke zrušení nebo sloučení."
+  },
+  {
+   "id": "claude:§32",
+   "soubor": "CLAUDE.md §32",
+   "vlastni": "Základ produkce (fotka, záložky, 5 výkladů, 25 run) se nesmí odebrat.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md); navíc vypsán touch hookem při zápisu do oblastí, které ho mají v mapě",
+   "velikost": "7 ř. / 450 B",
+   "prekryvy": [],
+   "doklad_zachytil": "nosiče dle verify_nosice: verify_zaklad_produkce.js",
+   "navrh": "ponechat",
+   "duvod": "Vlastník pravidla; paměti, které ho opakují, jsou navrženy ke zrušení nebo sloučení."
+  },
+  {
+   "id": "claude:Soubory a jejich zodpovědnost",
+   "soubor": "CLAUDE.md „Soubory a jejich zodpovědnost“",
+   "vlastni": "Mapa souborů v2/ a jejich odpovědnost.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md)",
+   "velikost": "42 ř. / 3471 B",
+   "prekryvy": [],
+   "doklad_zachytil": "žádný doklad",
+   "navrh": "ponechat",
+   "duvod": "Pasti a mapa, které z kódu nepoznáš."
+  },
+  {
+   "id": "claude:Load order",
+   "soubor": "CLAUDE.md „Load order“",
+   "vlastni": "Pořadí načítání skriptů.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md)",
+   "velikost": "13 ř. / 748 B",
+   "prekryvy": [],
+   "doklad_zachytil": "žádný doklad",
+   "navrh": "ponechat",
+   "duvod": "Pasti a mapa, které z kódu nepoznáš."
+  },
+  {
+   "id": "claude:Tier systém",
+   "soubor": "CLAUDE.md „Tier systém“",
+   "vlastni": "Kde bydlí tiery; účty testerů a týmu.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md)",
+   "velikost": "8 ř. / 788 B",
+   "prekryvy": [
+    "mem:strop-serveru-neni-narok"
+   ],
+   "doklad_zachytil": "žádný doklad",
+   "navrh": "ponechat",
+   "duvod": "Pasti a mapa, které z kódu nepoznáš."
+  },
+  {
+   "id": "claude:DB — user_profiles",
+   "soubor": "CLAUDE.md „DB — user_profiles“",
+   "vlastni": "Past: email/updated_at v user_profiles neexistují; peníze píše jen server.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md)",
+   "velikost": "5 ř. / 391 B",
+   "prekryvy": [],
+   "doklad_zachytil": "smoke ㉛ (commit pod jménem lane), smoke ⑬ (strom), smoke ⑩ (zápis user_profiles)",
+   "navrh": "ponechat",
+   "duvod": "Pasti a mapa, které z kódu nepoznáš."
+  },
+  {
+   "id": "claude:Reading systém — stav",
+   "soubor": "CLAUDE.md „Reading systém — stav“",
+   "vlastni": "Ukazatele ke čtení, režimy mine/someone.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md)",
+   "velikost": "6 ř. / 592 B",
+   "prekryvy": [],
+   "doklad_zachytil": "žádný doklad",
+   "navrh": "ponechat",
+   "duvod": "Pasti a mapa, které z kódu nepoznáš."
+  },
+  {
+   "id": "claude:Spread systém",
+   "soubor": "CLAUDE.md „Spread systém“",
+   "vlastni": "Gating spreadů, Yggdrasil kdykoli.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md)",
+   "velikost": "5 ř. / 416 B",
+   "prekryvy": [],
+   "doklad_zachytil": "žádný doklad",
+   "navrh": "ponechat",
+   "duvod": "Pasti a mapa, které z kódu nepoznáš."
+  },
+  {
+   "id": "claude:Tree of Life — stav",
+   "soubor": "CLAUDE.md „Tree of Life — stav“",
+   "vlastni": "Past pro [tune]: formát short_text živí strom.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md)",
+   "velikost": "4 ř. / 302 B",
+   "prekryvy": [],
+   "doklad_zachytil": "smoke ㉛ (commit pod jménem lane), smoke ⑬ (strom), smoke ⑩ (zápis user_profiles)",
+   "navrh": "ponechat",
+   "duvod": "Pasti a mapa, které z kódu nepoznáš."
+  },
+  {
+   "id": "claude:Word Corrections",
+   "soubor": "CLAUDE.md „Word Corrections“",
+   "vlastni": "Kde žijí korekce.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md)",
+   "velikost": "3 ř. / 171 B",
+   "prekryvy": [],
+   "doklad_zachytil": "žádný doklad",
+   "navrh": "ponechat",
+   "duvod": "Pasti a mapa, které z kódu nepoznáš."
+  },
+  {
+   "id": "claude:Kde hledat co",
+   "soubor": "CLAUDE.md „Kde hledat co“",
+   "vlastni": "Odkaz na rozcestník v MEMORY.md.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md)",
+   "velikost": "6 ř. / 330 B",
+   "prekryvy": [
+    "memory/MEMORY.md rozcestník"
+   ],
+   "doklad_zachytil": "žádný doklad",
+   "navrh": "ponechat",
+   "duvod": "Pasti a mapa, které z kódu nepoznáš."
+  },
+  {
+   "id": "claude:N paralelních session — kdo o čem mluví",
+   "soubor": "CLAUDE.md „N paralelních session — kdo o čem mluví“",
+   "vlastni": "Lanes, commit pod jménem session, komunikace přes git.",
+   "kdy_do_kontextu": "vždy při startu i po compactu (repo CLAUDE.md importován z C:\\Users\\zkuku\\CLAUDE.md)",
+   "velikost": "370 B + 2 869 B (Vedoucí pravidlo, lanes, mechanika)",
+   "prekryvy": [
+    "mem:parallel-code-sessions-collision",
+    "mem:propose-content-not-code",
+    "mem:neposilat-praci-coworku",
+    "mem:verify-agent-claims-about-code"
+   ],
+   "doklad_zachytil": "smoke ㉛ (commit pod jménem lane), smoke ⑬ (strom), smoke ⑩ (zápis user_profiles)",
+   "navrh": "ponechat",
+   "duvod": "Pasti a mapa, které z kódu nepoznáš."
+  },
+  {
+   "id": "ws:Jazyk",
+   "soubor": "memory/working-style.md „Jazyk“",
+   "vlastni": "Odkaz na §31.",
+   "kdy_do_kontextu": "jen když Claude otevře working-style.md",
+   "velikost": "129 B",
+   "prekryvy": [
+    "claude:§31"
+   ],
+   "doklad_zachytil": "žádný doklad",
+   "navrh": "zrušit",
+   "duvod": "Jen ukazatel; §31 je v kontextu vždy."
+  },
+  {
+   "id": "ws:Kontext window",
+   "soubor": "memory/working-style.md „Kontext window“",
+   "vlastni": "Po 2 selháních /clear; neúspěchy kontaminují kontext.",
+   "kdy_do_kontextu": "jen když Claude otevře working-style.md",
+   "velikost": "332 B",
+   "prekryvy": [],
+   "doklad_zachytil": "žádný doklad",
+   "navrh": "ponechat",
+   "duvod": "Unikátní."
+  },
+  {
+   "id": "ws:⭐ Pořadí, ve kterém se sahá na cizí věc",
+   "soubor": "memory/working-style.md „⭐ Pořadí, ve kterém se sahá na cizí věc“",
+   "vlastni": "Pět kroků: co/proč, dohledat, selhal zápis či oprava, čí problém, rozbít.",
+   "kdy_do_kontextu": "jen když Claude otevře working-style.md",
+   "velikost": "3 066 B",
+   "prekryvy": [
+    "hook:runar-context („JAK SAHNOUT NA CIZI VEC“ zkrácená kopie)"
+   ],
+   "doklad_zachytil": "žádný doklad",
+   "navrh": "ponechat",
+   "duvod": "Kopie v hooku leží mimo 2 KB náhledu."
+  },
+  {
+   "id": "ws:Explore → Plan → Implement",
+   "soubor": "memory/working-style.md „Explore → Plan → Implement“",
+   "vlastni": "Kdy schvaluje owner, co se opravuje bez ptaní, kdy nasazovat bez ptaní.",
+   "kdy_do_kontextu": "jen když Claude otevře working-style.md",
+   "velikost": "1 461 B",
+   "prekryvy": [
+    "mem:proceed-dont-ask",
+    "mem:find-a-gap-close-it-now",
+    "mem:nasazeni-delam-sam",
+    "memory/MEMORY.md (⚠️ řádek)"
+   ],
+   "doklad_zachytil": "žádný doklad",
+   "navrh": "ponechat",
+   "duvod": "Vlastník „kdy se ptát“; paměti kolem jsou jeho kopie."
+  },
+  {
+   "id": "ws:Verifikační mechanismus",
+   "soubor": "memory/working-style.md „Verifikační mechanismus“",
+   "vlastni": "Co ověří, že je hotovo.",
+   "kdy_do_kontextu": "jen když Claude otevře working-style.md",
+   "velikost": "243 B",
+   "prekryvy": [
+    "claude:§19",
+    "claude:§24"
+   ],
+   "doklad_zachytil": "žádný doklad",
+   "navrh": "zrušit",
+   "duvod": "Obecné, pokryto §19/§24."
+  },
+  {
+   "id": "ws:i18n kontrola",
+   "soubor": "memory/working-style.md „i18n kontrola“",
+   "vlastni": "Po větších UI změnách pustit i18n-diff.js v prohlížeči.",
+   "kdy_do_kontextu": "jen když Claude otevře working-style.md",
+   "velikost": "798 B",
+   "prekryvy": [],
+   "doklad_zachytil": "žádný doklad",
+   "navrh": "přesunout k místu akce",
+   "duvod": "Patří do mapy (oblast „překlady“ / „UI readeru“), dnes se při dotyku neukáže."
+  },
+  {
+   "id": "ws:Konkrétní prompty",
+   "soubor": "memory/working-style.md „Konkrétní prompty“",
+   "vlastni": "Prompty se souborem/funkcí/řádkem a hranicí.",
+   "kdy_do_kontextu": "jen když Claude otevře working-style.md",
+   "velikost": "243 B",
+   "prekryvy": [],
+   "doklad_zachytil": "žádný doklad",
+   "navrh": "ponechat",
+   "duvod": "Drobné."
+  },
+  {
+   "id": "ws:Délka doků",
+   "soubor": "memory/working-style.md „Délka doků“",
+   "vlastni": "Odkaz + historie „Hotovo“ nepatří do docs.",
+   "kdy_do_kontextu": "jen když Claude otevře working-style.md",
+   "velikost": "288 B",
+   "prekryvy": [
+    "claude:Kde hledat co",
+    "claude:§20 bod 4"
+   ],
+   "doklad_zachytil": "žádný doklad",
+   "navrh": "zrušit",
+   "duvod": "Pokryto."
+  },
+  {
+   "id": "ws:Implementační pravidla / Detail §11 / §12",
+   "soubor": "memory/working-style.md „Implementační pravidla / Detail §11 / §12“",
+   "vlastni": "Apostrofy v Pythonu, past escape sekvence před velkým písmenem, Visitor/Gestur.",
+   "kdy_do_kontextu": "jen když Claude otevře working-style.md",
+   "velikost": "588 B",
+   "prekryvy": [
+    "claude:§1",
+    "claude:§11",
+    "claude:§12"
+   ],
+   "doklad_zachytil": "žádný doklad",
+   "navrh": "přesunout k místu akce",
+   "duvod": "Visitor/Gestur je fakt pro §12; ostatní pokryto §1/§11."
+  },
+  {
+   "id": "ws:Kde ukládat soubory + Naming",
+   "soubor": "memory/working-style.md „Kde ukládat soubory + Naming“",
+   "vlastni": "Tabulka umístění a pojmenování souborů.",
+   "kdy_do_kontextu": "jen když Claude otevře working-style.md",
+   "velikost": "1 473 B",
+   "prekryvy": [
+    "mem:one-patch-script-path",
+    "mem:nazvy-souboru-anglicky"
+   ],
+   "doklad_zachytil": "žádný doklad",
+   "navrh": "ponechat",
+   "duvod": "Jediné místo; sloučit sem nazvy-souboru-anglicky."
+  },
+  {
+   "id": "ws:Ownerovi se neposílají příkazy",
+   "soubor": "memory/working-style.md „Ownerovi se neposílají příkazy“",
+   "vlastni": "Owner nedostává příkazy; výjimka SQL.",
+   "kdy_do_kontextu": "jen když Claude otevře working-style.md",
+   "velikost": "1 606 B",
+   "prekryvy": [
+    "hook:runar-zprava-check pravidlo 5",
+    "mem:paste-sql-explicitly"
+   ],
+   "doklad_zachytil": "žádný doklad",
+   "navrh": "zrušit",
+   "duvod": "Stroj vynucuje (pravidlo 5, ~22 blokací v přepisech); důvod je v hlavičce hooku."
+  },
+  {
+   "id": "ws:Co NIKDY nedělat",
+   "soubor": "memory/working-style.md „Co NIKDY nedělat“",
+   "vlastni": "Žádné HTML mockupy, nezadaná vylepšení, patch skripty v rootu.",
+   "kdy_do_kontextu": "jen když Claude otevře working-style.md",
+   "velikost": "263 B",
+   "prekryvy": [],
+   "doklad_zachytil": "žádný doklad",
+   "navrh": "ponechat",
+   "duvod": "Drobné."
+  },
+  {
+   "id": "ws:⚡ IS / Korekce / Gramatika",
+   "soubor": "memory/working-style.md „⚡ IS / Korekce / Gramatika“",
+   "vlastni": "Frázová korekce > jednoslovná; E001 = přepsat.",
+   "kdy_do_kontextu": "jen když Claude otevře working-style.md",
+   "velikost": "1 369 B",
+   "prekryvy": [
+    "claude:§2",
+    "mem:is-grammar-adjective-gender"
+   ],
+   "doklad_zachytil": "žádný doklad",
+   "navrh": "přesunout k místu akce",
+   "duvod": "Korekce patří k is-corr-qa.py / shrine korekcím."
+  },
+  {
+   "id": "ws:Tier hodnoty",
+   "soubor": "memory/working-style.md „Tier hodnoty“",
+   "vlastni": "Grep tří souborů při změně tier hodnoty.",
+   "kdy_do_kontextu": "jen když Claude otevře working-style.md",
+   "velikost": "159 B",
+   "prekryvy": [
+    "claude:§10",
+    "mem:vocab-natvrdo-a-migrace"
+   ],
+   "doklad_zachytil": "žádný doklad",
+   "navrh": "sloučit s vocab-natvrdo-a-migrace",
+   "duvod": "Táž věc."
+  },
+  {
+   "id": "ws:runar-shrine.html = admin, NE lab",
+   "soubor": "memory/working-style.md „runar-shrine.html = admin, NE lab“",
+   "vlastni": "Shrine není lab; teach píše do produkce.",
+   "kdy_do_kontextu": "jen když Claude otevře working-style.md",
+   "velikost": "651 B",
+   "prekryvy": [],
+   "doklad_zachytil": "žádný doklad",
+   "navrh": "přesunout k místu akce",
+   "duvod": "Past, která by měla stát v mapě u runar-shrine.html (oblast „UI readeru a shrine“)."
+  },
+  {
+   "id": "ws:Konverzace se neztrácí",
+   "soubor": "memory/working-style.md „Konverzace se neztrácí“",
+   "vlastni": "Přepisy se nemažou, najdi_v_konverzacich.js, compact nejde instruovat, SessionStart hook jako jediná pojistka.",
+   "kdy_do_kontextu": "jen když Claude otevře working-style.md",
+   "velikost": "2 927 B",
+   "prekryvy": [
+    "hook:runar-context („ZAPOMNEL JSI…“)"
+   ],
+   "doklad_zachytil": "žádný doklad",
+   "navrh": "ponechat",
+   "duvod": "Obsahuje zastaralou větu (SessionStart prý vypisuje mapu „sáhneš na tohle“ — od 2026-10-11 to dělá touch hook)."
+  },
+  {
+   "id": "ws:Post-compact / Session Start protokol",
+   "soubor": "memory/working-style.md „Post-compact / Session Start protokol“",
+   "vlastni": "Odkaz na MEMORY.md.",
+   "kdy_do_kontextu": "jen když Claude otevře working-style.md",
+   "velikost": "214 B",
+   "prekryvy": [
+    "memory/MEMORY.md"
+   ],
+   "doklad_zachytil": "žádný doklad",
+   "navrh": "ponechat",
+   "duvod": "Ukazatel."
+  },
+  {
+   "id": "ws:Pojmy + hlas",
+   "soubor": "memory/working-style.md „Pojmy + hlas“",
+   "vlastni": "Jméno bez vazby se maže; Rúnar reflektuje, nepředpovídá.",
+   "kdy_do_kontextu": "jen když Claude otevře working-style.md",
+   "velikost": "598 B",
+   "prekryvy": [
+    "RUNAR_DESIGN.md (hlas)",
+    "docs/kostra/kostra.json J1"
+   ],
+   "doklad_zachytil": "žádný doklad",
+   "navrh": "přesunout k místu akce",
+   "duvod": "Kánon hlasu patří do DESIGN/kostry."
+  },
+  {
+   "id": "ws:Two-output / Protokol co kam / Trigger / Přesunuto",
+   "soubor": "memory/working-style.md „Two-output / Protokol co kam / Trigger / Přesunuto“",
+   "vlastni": "Odkazy na §16, rozcestník, „piš průběžně“.",
+   "kdy_do_kontextu": "jen když Claude otevře working-style.md",
+   "velikost": "872 B",
+   "prekryvy": [
+    "claude:§16",
+    "memory/MEMORY.md"
+   ],
+   "doklad_zachytil": "žádný doklad",
+   "navrh": "ponechat",
+   "duvod": "Ukazatele."
+  },
+  {
+   "id": "mapa:pravidla a docs",
+   "soubor": "scripts/utils/pravidla_mapa.json",
+   "vlastni": "Při zápisu do CLAUDE.md, memory/**/*.md, RUNAR_*.md ukáže: §20; §16; §28; hlavička scripts/utils/commit_vlastni.py; vyžaduje uz_vime.js po poslední zprávě ownera",
+   "kdy_do_kontextu": "při prvním ZÁPISU (Edit/Write/Bash/PowerShell se zápisem do cesty) v session; znovu po compactu (reset na compact_boundary). Čtení nespouští nic.",
+   "velikost": "3 cest, 4 položek",
+   "prekryvy": [],
+   "doklad_zachytil": "souhrnně viz hook:pravidla_pri_dotyku; per oblast neměřeno",
+   "navrh": "ponechat",
+   "duvod": "Neukazuje Slova."
+  },
+  {
+   "id": "mapa:JS ve v2",
+   "soubor": "scripts/utils/pravidla_mapa.json",
+   "vlastni": "Při zápisu do v2/*.js ukáže: §1; §10; §13; §18",
+   "kdy_do_kontextu": "při prvním ZÁPISU (Edit/Write/Bash/PowerShell se zápisem do cesty) v session; znovu po compactu (reset na compact_boundary). Čtení nespouští nic.",
+   "velikost": "1 cest, 4 položek",
+   "prekryvy": [],
+   "doklad_zachytil": "souhrnně viz hook:pravidla_pri_dotyku; per oblast neměřeno",
+   "navrh": "ponechat",
+   "duvod": "Neukazuje Slova."
+  },
+  {
+   "id": "mapa:překlady",
+   "soubor": "scripts/utils/pravidla_mapa.json",
+   "vlastni": "Při zápisu do v2/runar-translations.js ukáže: §2; §31; memory/edit-tool-escapes-new-text",
+   "kdy_do_kontextu": "při prvním ZÁPISU (Edit/Write/Bash/PowerShell se zápisem do cesty) v session; znovu po compactu (reset na compact_boundary). Čtení nespouští nic.",
+   "velikost": "1 cest, 3 položek",
+   "prekryvy": [],
+   "doklad_zachytil": "souhrnně viz hook:pravidla_pri_dotyku; per oblast neměřeno",
+   "navrh": "ponechat",
+   "duvod": "Neukazuje Slova."
+  },
+  {
+   "id": "mapa:prompt a hlas",
+   "soubor": "scripts/utils/pravidla_mapa.json",
+   "vlastni": "Při zápisu do v2/runar-character.js ukáže: §2; §25; RUNAR_DESIGN.md „Kdo je Rúnar“; RUNAR_DESIGN.md „Slova, která dáváme modelu“; memory/oprava-promptu-odebira-vadu",
+   "kdy_do_kontextu": "při prvním ZÁPISU (Edit/Write/Bash/PowerShell se zápisem do cesty) v session; znovu po compactu (reset na compact_boundary). Čtení nespouští nic.",
+   "velikost": "1 cest, 5 položek",
+   "prekryvy": [],
+   "doklad_zachytil": "souhrnně viz hook:pravidla_pri_dotyku; per oblast neměřeno",
+   "navrh": "ponechat",
+   "duvod": "Ukazuje Slova."
+  },
+  {
+   "id": "mapa:config",
+   "soubor": "scripts/utils/pravidla_mapa.json",
+   "vlastni": "Při zápisu do v2/runar-config.js ukáže: §10",
+   "kdy_do_kontextu": "při prvním ZÁPISU (Edit/Write/Bash/PowerShell se zápisem do cesty) v session; znovu po compactu (reset na compact_boundary). Čtení nespouští nic.",
+   "velikost": "1 cest, 1 položek",
+   "prekryvy": [],
+   "doklad_zachytil": "souhrnně viz hook:pravidla_pri_dotyku; per oblast neměřeno",
+   "navrh": "ponechat",
+   "duvod": "Neukazuje Slova."
+  },
+  {
+   "id": "mapa:lab výklad z V3 do v2",
+   "soubor": "scripts/utils/pravidla_mapa.json",
+   "vlastni": "Při zápisu do docs/eval/2026-11-09-v2-vyklad-z-v3/** ukáže: §24; §25; docs/eval/2026-11-09-v2-vyklad-z-v3/postup.md „1. Kam se dívat, v tomhle pořadí“; docs/eval/2026-11-09-v2-vyklad-z-v3/postup.md „2. Než owner uvidí ukázku“; RUNAR_DESIGN.md „Délka a tvar obrazu“; hlavička docs/eval/2026-11-09-v2-vyklad-z-v3/kontrola_ukazky.py; hlavička scripts/verify_kostra.js",
+   "kdy_do_kontextu": "při prvním ZÁPISU (Edit/Write/Bash/PowerShell se zápisem do cesty) v session; znovu po compactu (reset na compact_boundary). Čtení nespouští nic.",
+   "velikost": "1 cest, 7 položek",
+   "prekryvy": [],
+   "doklad_zachytil": "souhrnně viz hook:pravidla_pri_dotyku; per oblast neměřeno",
+   "navrh": "ponechat",
+   "duvod": "Neukazuje Slova. MEZERA: tady se píšou a zkoušejí zadání modelu, ale RUNAR_DESIGN „Slova, která dáváme modelu“ se neukáže."
+  },
+  {
+   "id": "mapa:kostra čtení a rejstřík pokusů",
+   "soubor": "scripts/utils/pravidla_mapa.json",
+   "vlastni": "Při zápisu do docs/kostra/**, docs/eval/2026-11-23-kostra-cteni/** ukáže: §20; §24; §25; hlavička scripts/verify_kostra.js",
+   "kdy_do_kontextu": "při prvním ZÁPISU (Edit/Write/Bash/PowerShell se zápisem do cesty) v session; znovu po compactu (reset na compact_boundary). Čtení nespouští nic.",
+   "velikost": "2 cest, 4 položek",
+   "prekryvy": [],
+   "doklad_zachytil": "souhrnně viz hook:pravidla_pri_dotyku; per oblast neměřeno",
+   "navrh": "ponechat",
+   "duvod": "Neukazuje Slova. MEZERA: tady se píšou a zkoušejí zadání modelu, ale RUNAR_DESIGN „Slova, která dáváme modelu“ se neukáže."
+  },
+  {
+   "id": "mapa:lab V3 (prompt čtení)",
+   "soubor": "scripts/utils/pravidla_mapa.json",
+   "vlastni": "Při zápisu do docs/eval/2026-10-23-v3-charakter/** ukáže: §24; §25; docs/eval/2026-10-23-v3-charakter/zadani-v3.md „A. Stavba čtení“; docs/eval/2026-10-23-v3-charakter/zadani-v3.md „B. Významy run“; docs/eval/2026-10-23-v3-charakter/zadani-v3.md „C. Obrazy“; docs/eval/2026-10-23-v3-charakter/zadani-v3.md „D. Postup“; docs/eval/2026-10-23-v3-charakter/zadani-v3.md „F. Starší pokyny“; docs/eval/2026-10-23-v3-charakter/definice-runara.md „6e. Oprava kola 3“; RUNAR_DESIGN.md „Slova, která dáváme modelu“",
+   "kdy_do_kontextu": "při prvním ZÁPISU (Edit/Write/Bash/PowerShell se zápisem do cesty) v session; znovu po compactu (reset na compact_boundary). Čtení nespouští nic.",
+   "velikost": "1 cest, 9 položek",
+   "prekryvy": [],
+   "doklad_zachytil": "souhrnně viz hook:pravidla_pri_dotyku; per oblast neměřeno",
+   "navrh": "ponechat",
+   "duvod": "Ukazuje Slova."
+  },
+  {
+   "id": "mapa:statické stránky",
+   "soubor": "scripts/utils/pravidla_mapa.json",
+   "vlastni": "Při zápisu do v2/runar-help.html, v2/runar-privacy.html ukáže: §2; §31; hlavička scripts/verify_page_copies.js",
+   "kdy_do_kontextu": "při prvním ZÁPISU (Edit/Write/Bash/PowerShell se zápisem do cesty) v session; znovu po compactu (reset na compact_boundary). Čtení nespouští nic.",
+   "velikost": "2 cest, 3 položek",
+   "prekryvy": [],
+   "doklad_zachytil": "souhrnně viz hook:pravidla_pri_dotyku; per oblast neměřeno",
+   "navrh": "ponechat",
+   "duvod": "Neukazuje Slova."
+  },
+  {
+   "id": "mapa:web therunekeeper.com",
+   "soubor": "scripts/utils/pravidla_mapa.json",
+   "vlastni": "Při zápisu do web/site/** ukáže: §2; §10; §20; §31; hlavička scripts/verify_web_hlavicky.js; hlavička scripts/web_nasad.py",
+   "kdy_do_kontextu": "při prvním ZÁPISU (Edit/Write/Bash/PowerShell se zápisem do cesty) v session; znovu po compactu (reset na compact_boundary). Čtení nespouští nic.",
+   "velikost": "1 cest, 6 položek",
+   "prekryvy": [],
+   "doklad_zachytil": "souhrnně viz hook:pravidla_pri_dotyku; per oblast neměřeno",
+   "navrh": "ponechat",
+   "duvod": "Neukazuje Slova."
+  },
+  {
+   "id": "mapa:UI readeru a shrine",
+   "soubor": "scripts/utils/pravidla_mapa.json",
+   "vlastni": "Při zápisu do v2/runar-reader.html, v2/runar-reader.css, v2/runar-shrine.html ukáže: §5; §32; §31; memory/match-existing-visual-first; hlavička scripts/verify_komponenty.js",
+   "kdy_do_kontextu": "při prvním ZÁPISU (Edit/Write/Bash/PowerShell se zápisem do cesty) v session; znovu po compactu (reset na compact_boundary). Čtení nespouští nic.",
+   "velikost": "3 cest, 5 položek",
+   "prekryvy": [],
+   "doklad_zachytil": "souhrnně viz hook:pravidla_pri_dotyku; per oblast neměřeno",
+   "navrh": "ponechat",
+   "duvod": "Neukazuje Slova."
+  },
+  {
+   "id": "mapa:edge funkce",
+   "soubor": "scripts/utils/pravidla_mapa.json",
+   "vlastni": "Při zápisu do supabase/functions/** ukáže: §31; §19; hlavička scripts/verify_edge_imports.js; hlavička scripts/verify_admin_emails.js",
+   "kdy_do_kontextu": "při prvním ZÁPISU (Edit/Write/Bash/PowerShell se zápisem do cesty) v session; znovu po compactu (reset na compact_boundary). Čtení nespouští nic.",
+   "velikost": "1 cest, 4 položek",
+   "prekryvy": [],
+   "doklad_zachytil": "souhrnně viz hook:pravidla_pri_dotyku; per oblast neměřeno",
+   "navrh": "ponechat",
+   "duvod": "Neukazuje Slova."
+  },
+  {
+   "id": "mapa:e-maily",
+   "soubor": "scripts/utils/pravidla_mapa.json",
+   "vlastni": "Při zápisu do supabase/functions/_shared/ops_souhrn.ts, supabase/functions/ops-watch/**, supabase/functions/waitlist-join/**, supabase/templates/** ukáže: §31; memory/emaily-kratke",
+   "kdy_do_kontextu": "při prvním ZÁPISU (Edit/Write/Bash/PowerShell se zápisem do cesty) v session; znovu po compactu (reset na compact_boundary). Čtení nespouští nic.",
+   "velikost": "4 cest, 2 položek",
+   "prekryvy": [],
+   "doklad_zachytil": "souhrnně viz hook:pravidla_pri_dotyku; per oblast neměřeno",
+   "navrh": "ponechat",
+   "duvod": "Neukazuje Slova."
+  },
+  {
+   "id": "mapa:SQL a databáze",
+   "soubor": "scripts/utils/pravidla_mapa.json",
+   "vlastni": "Při zápisu do sql/** ukáže: CLAUDE.md „DB — user_profiles“",
+   "kdy_do_kontextu": "při prvním ZÁPISU (Edit/Write/Bash/PowerShell se zápisem do cesty) v session; znovu po compactu (reset na compact_boundary). Čtení nespouští nic.",
+   "velikost": "1 cest, 1 položek",
+   "prekryvy": [],
+   "doklad_zachytil": "souhrnně viz hook:pravidla_pri_dotyku; per oblast neměřeno",
+   "navrh": "ponechat",
+   "duvod": "Neukazuje Slova."
+  },
+  {
+   "id": "mapa:strom",
+   "soubor": "scripts/utils/pravidla_mapa.json",
+   "vlastni": "Při zápisu do v2/runar-tree-prod.js, v2/runar-tree.js, v2/tree-lab-*/**, build_*composer.py, build_tree_production.py ukáže: RUNAR_TREE.md „2. IDENTITA“; RUNAR_TREE.md „3. ZÓNY“; RUNAR_TREE.md „8. STAVBA“; memory/runar-trunk-incremental-rule; memory/tree-roots-rebuild",
+   "kdy_do_kontextu": "při prvním ZÁPISU (Edit/Write/Bash/PowerShell se zápisem do cesty) v session; znovu po compactu (reset na compact_boundary). Čtení nespouští nic.",
+   "velikost": "5 cest, 5 položek",
+   "prekryvy": [],
+   "doklad_zachytil": "souhrnně viz hook:pravidla_pri_dotyku; per oblast neměřeno",
+   "navrh": "ponechat",
+   "duvod": "Neukazuje Slova."
+  },
+  {
+   "id": "mapa:kontroly a hooky",
+   "soubor": "scripts/utils/pravidla_mapa.json",
+   "vlastni": "Při zápisu do scripts/verify_*.js, smoke.py, hooks/**, scripts/protipriklady.py ukáže: §30; memory/guard-test-the-lifecycle; memory/read-the-check-before-push; hlavička scripts/protipriklady.py",
+   "kdy_do_kontextu": "při prvním ZÁPISU (Edit/Write/Bash/PowerShell se zápisem do cesty) v session; znovu po compactu (reset na compact_boundary). Čtení nespouští nic.",
+   "velikost": "4 cest, 4 položek",
+   "prekryvy": [],
+   "doklad_zachytil": "souhrnně viz hook:pravidla_pri_dotyku; per oblast neměřeno",
+   "navrh": "ponechat",
+   "duvod": "Neukazuje Slova."
+  },
+  {
+   "id": "mapa:tvorba obrazů",
+   "soubor": "scripts/utils/pravidla_mapa.json",
+   "vlastni": "Při zápisu do docs/eval/2026-09-26-obrazy/**, docs/postup-obraz.md ukáže: §23; §24; docs/postup-obraz.md „1. Než obraz napíšu“; docs/postup-obraz.md „2. Když obraz píšu“; docs/postup-obraz.md „3. Zkoušky, než obraz uvidí owner“; hlavička docs/eval/2026-09-26-obrazy/kontrola_tvaru.py",
+   "kdy_do_kontextu": "při prvním ZÁPISU (Edit/Write/Bash/PowerShell se zápisem do cesty) v session; znovu po compactu (reset na compact_boundary). Čtení nespouští nic.",
+   "velikost": "2 cest, 6 položek",
+   "prekryvy": [],
+   "doklad_zachytil": "souhrnně viz hook:pravidla_pri_dotyku; per oblast neměřeno",
+   "navrh": "ponechat",
+   "duvod": "Neukazuje Slova."
+  },
+  {
+   "id": "mapa:MEZERA docs/eval/**",
+   "soubor": "scripts/utils/pravidla_mapa.json",
+   "vlastni": "Žádná oblast nepokrývá obecné docs/eval/** ani scratchpad: laby 2026-11-14-runa-dne, 2026-11-16-ask-tezkost, 2026-11-19-obraz-predmety, 2026-11-19-souhrn-tydne a lab prompty psané do scratchpadu nespustí nic.",
+   "kdy_do_kontextu": "—",
+   "velikost": "—",
+   "prekryvy": [],
+   "doklad_zachytil": "—",
+   "navrh": "přesunout k místu akce",
+   "duvod": "Přidat oblast docs/eval/** (a lab skripty spouštěné s RUNAR_API_ANO) → RUNAR_DESIGN „Slova“ + „Kdo je Rúnar“; Slova dnes ukazují jen oblasti „prompt a hlas“ a „lab V3“ (2026-10-23)."
+  },
+  {
+   "id": "hook:runar-context",
+   "soubor": "hooks/claude/runar-context.py (volá ho tree-guard.sh start; ~/.claude/runar-context.py je jen runpy odkaz)",
+   "vlastni": "SessionStart kontext: datum, pravidla stromu, prompt/SW verze, rozcestník, git log, poslední DECISIONS, ukazatele (uz_vime, najdi_v_konverzacich, najdi_cteni), dvě nejčastěji zapomínané věci, rozdělaná práce ze snapshotů, po compactu poslední slova ownera.",
+   "kdy_do_kontextu": "vždy při startu, resume i po compactu (additionalContext)",
+   "velikost": "kód 383 ř. / 19 442 B; VÝSTUP změřen 2026-11-25: 17 593 B UTF-8 (16 596 znaků) pro startup i compact bez přepisu — 8,6× nad 2 KB náhledem; prvních 2 048 B = datum, 3 pravidla stromu, verze a začátek rozcestníku",
+   "prekryvy": [
+    "memory/MEMORY.md (rozcestník opsán celý, 2 522 B)",
+    "mem:working-style („Pořadí“, „Konverzace se neztrácí“)",
+    "mem:break-your-own-work-before-reporting",
+    "claude:§21",
+    "mem:tree-roots-rebuild (neshlukovat větve)"
+   ],
+   "doklad_zachytil": "DECISIONS ř. 3114–3160 (opravy výběru snapshotu); přímý doklad zachycení žádný",
+   "navrh": "ponechat",
+   "duvod": "VADA (změřeno): rozdelane() bere max(x[:10]) přes názvy snapshotů → nedatované „runar-tree-*“ > „2026-…“, takže do KAŽDÉ session a po každém compactu jde ~7,5 KB (42 % výstupu) červnové historie stromu s hlavičkou „2 SESSION MELA … ROZDELANOU PRACI“. Zkrátit: zrušit opis rozcestníku a snapshoty, nejdůležitější dát do prvních 2 KB."
+  },
+  {
+   "id": "hook:tree-guard",
+   "soubor": "hooks/claude/tree-guard.sh (SessionStart start / Stop stop v ~/.claude/settings.json)",
+   "vlastni": "Rozcestník hooků: start → runar-context.py; stop → záloha čtení, runar-zprava-check.py, neverzovaný soubor v memory/, změna tree engine bez zápisu do DECISIONS/RUNAR_TREE.",
+   "kdy_do_kontextu": "stroj zastaví konec tahu (Stop decision: block)",
+   "velikost": "145 ř. / 9 378 B",
+   "prekryvy": [
+    "claude:§16/§20 (zápis rozhodnutí)",
+    "mem:ukladej-cteni-a-hlasy (záloha)"
+   ],
+   "doklad_zachytil": "přepisy: „lezi neverzovany soubor“ 35 výskytů, „ale neaktualizovala jeho domov“ 42 výskytů (hrubé, i opisy); 1 510 souborů markerů v ~/.claude/tree-guard",
+   "navrh": "ponechat",
+   "duvod": "Jediné místo, kudy vedou SessionStart i Stop; runar-context a zprava-check nejsou v settings.json zapojené přímo."
+  },
+  {
+   "id": "hook:runar-zprava-check",
+   "soubor": "hooks/claude/runar-zprava-check.py (přes tree-guard.sh stop)",
+   "vlastni": "Stop hook závěrečné zprávy ownerovi: 1 číslování, 2 návrh bez uz_vime, 3 hlášení bez zápisu, 4 „nejspíš“ bez „neověřeno“, 5 příkazy ownerovi, 6 schovaná otázka.",
+   "kdy_do_kontextu": "stroj zastaví konec tahu (jednou za sebou)",
+   "velikost": "183 ř. / 14 086 B",
+   "prekryvy": [
+    "mem:full-path-and-numbered-lists",
+    "mem:napred-dohledej-co-uz-je",
+    "mem:nacti-cteni-a-reporty",
+    "ws:Ownerovi se neposílají příkazy",
+    "claude:§29",
+    "claude:§30"
+   ],
+   "doklad_zachytil": "přepisy (26 jsonl): „Zprávu ownerovi přepiš“ 711 výskytů v 10 souborech; nejčastěji NÁVRH BEZ DOHLEDÁNÍ ~220, ČÍSLOVÁNÍ ~150+, PŘÍKAZY OWNEROVI ~22, SCHOVANÁ OTÁZKA ~16 (hrubé, opakované řádky se počítají víckrát)",
+   "navrh": "ponechat",
+   "duvod": "Nejvíc doložený nosič; jeho pravidla lze z paměti odstranit."
+  },
+  {
+   "id": "hook:runar-api-guard",
+   "soubor": "hooks/claude/runar-api-guard.py (PreToolUse Bash|PowerShell; ~/.claude stub)",
+   "vlastni": "Zablokuje příkaz volající API modelu bez RUNAR_API_ANO + ZAMER + POKUS; povolené běhy loguje do ~/.claude/runar-api-pokusy.log.",
+   "kdy_do_kontextu": "stroj zastaví akci (deny)",
+   "velikost": "156 ř. / 10 625 B",
+   "prekryvy": [
+    "claude:§30 (API)",
+    "mem:naklady-testovani",
+    "mem:cteni-generuj-tady-ne-pres-api",
+    "mem:cheapest-deciding-measurement-first",
+    "mem:api-guard-py-false-positive"
+   ],
+   "doklad_zachytil": "přepisy: deny zpráva 38 řádků; log povolených běhů 19 KB. Blokace se nelogují. Falešný poplach ověřen i v tomto auditu: skript, který jen zmínil jméno souboru s klíčem v řetězci, byl zablokován jako volání API",
+   "navrh": "ponechat",
+   "duvod": "Funguje; shoda podle textu skriptu dává falešné poplachy (druhý známý typ vedle „dvou .py“)."
+  },
+  {
+   "id": "hook:compact-backup",
+   "soubor": "hooks/claude/compact-backup.py (PreCompact)",
+   "vlastni": "Před compactem zkopíruje celý přepis session do ~/.claude/compact-backups (drží 30 posledních).",
+   "kdy_do_kontextu": "nic do kontextu nedává; data čte runar-context po compactu",
+   "velikost": "56 ř. / 2 190 B",
+   "prekryvy": [],
+   "doklad_zachytil": "v ~/.claude/compact-backups 5 souborů (proč ne víc při KEEP=30 — neověřeno)",
+   "navrh": "ponechat",
+   "duvod": "Podklad pro „poslední slova ownera“ po compactu."
+  },
+  {
+   "id": "hook:pravidla_pri_dotyku",
+   "soubor": "scripts/utils/pravidla_pri_dotyku.py (PreToolUse Edit|Write|NotebookEdit|MultiEdit|Bash|PowerShell)",
+   "vlastni": "Při prvním zápisu do oblasti z mapy jednou zastaví a vypíše živé znění pravidel; uz_vime gate pro docs/paměť; kontrola nového textu proti kánonu; pasti v příkazech; zákaz Edit na sdílené docy; §11 escape v Pythonu.",
+   "kdy_do_kontextu": "stroj zastaví první zápis do oblasti v session; po compact_boundary se stav (shown, uz_vime) maže → ukáže znovu. Read/Grep nespouští. Bash vidí jen cesty v příkazu a obsah skriptů ve scratchpadu / scripts/_patch*.py",
+   "velikost": "704 ř. / 50 988 B",
+   "prekryvy": [
+    "scripts/utils/pravidla_mapa.json"
+   ],
+   "doklad_zachytil": "přepisy: „PRAVIDLA PRO OBLAST“ ve výsledku nástroje ~228 řádků; „PO poslední zprávě ownera poběží“ 135 výskytů; chyby.log 2 řádky (NameError, JSONDecodeError → fail-open). V tomto auditu zablokoval Write skriptu, který escape jen POPISOVAL v textu (falešný poplach §11).",
+   "navrh": "ponechat",
+   "duvod": "Ukazuje pravidla až při zápisu, ne při plánování/čtení — Slova se k labovému promptu dostanou pozdě nebo vůbec."
+  },
+  {
+   "id": "settings.json",
+   "soubor": "C:/Users/zkuku/.claude/settings.json",
+   "vlastni": "Zapojení: PreToolUse api-guard + pravidla_pri_dotyku; PreCompact compact-backup; SessionStart/Stop jen tree-guard.sh; cleanupPeriodDays 36500.",
+   "kdy_do_kontextu": "konfigurace, nic do kontextu",
+   "velikost": "2 720 B",
+   "prekryvy": [],
+   "doklad_zachytil": "—",
+   "navrh": "ponechat",
+   "duvod": "runar-context.py a runar-zprava-check.py nejsou zapojeny přímo — závisí na tree-guard.sh (pro start má statický fallback, pro stop ne). Mimo git."
+  },
+  {
+   "id": "uz_vime",
+   "soubor": "scripts/utils/uz_vime.js",
+   "vlastni": "Hledá pojmy (bez diakritiky) v kořenových RUNAR_*.md, CLAUDE.md, memory/*.md a bug_reports.notes; ukazuje stav ✅/✖/⏸/[ ].",
+   "kdy_do_kontextu": "výstup jen když ho Claude spustí; vynucuje ho Stop hook (pravidlo 2) a touch hook (zápis do docs/paměti)",
+   "velikost": "87 ř. / 7 332 B",
+   "prekryvy": [
+    "mem:napred-dohledej-co-uz-je",
+    "hook:runar-context („NEZ NAVRHNES…“ radí grep DECISIONS — jiná metoda než uz_vime)"
+   ],
+   "doklad_zachytil": "nepřímo: ~220 blokací NÁVRH BEZ DOHLEDÁNÍ vedlo k jeho spuštění",
+   "navrh": "ponechat",
+   "duvod": "Podle hlavičky neprohledává docs/eval/**, docs/kostra/** ani docs/pravidla-duvody.md — výsledky labů a rejstřík pokusů mimo dosah (neověřeno během)."
+  },
+  {
+   "id": "verify_nosice",
+   "soubor": "scripts/verify_nosice.js --vypis",
+   "vlastni": "Strojový seznam: který § CLAUDE.md drží která kontrola/hook a co nedrží.",
+   "kdy_do_kontextu": "jen když ho Claude spustí; smoke",
+   "velikost": "48 ř. výstupu / 3 564 B",
+   "prekryvy": [
+    "claude:§30"
+   ],
+   "doklad_zachytil": "výstup 2026-11-25: 10 § drží stroj, 13 zčásti, 2 nevynutitelné (§6, §21), 7 sloučené",
+   "navrh": "ponechat",
+   "duvod": "Mapuje jen § CLAUDE.md — paměti, oblasti mapy a „Slova“ v něm nejsou."
+  },
+  {
+   "id": "design:Slova",
+   "soubor": "RUNAR_DESIGN.md „Slova, která dáváme modelu“ (ř. 805–875)",
+   "vlastni": "Směr pro formulace v promptu: 10 číslovaných bodů s doklady (doslovné převzetí u solu, sloveso z pokynu, štítek se vysloví, …), jak se ověřuje, postup zkoušení slov.",
+   "kdy_do_kontextu": "při zápisu do v2/runar-character.js nebo docs/eval/2026-10-23-v3-charakter/** (touch hook); jinak jen když ho Claude otevře",
+   "velikost": "~71 ř. sekce; RUNAR_DESIGN.md celkem 902 ř. / 72 300 B",
+   "prekryvy": [
+    "mem:en-formulace-overit-zdrojem (bod 9)",
+    "mem:test-vstup-jako-v-produkci („Jak se to ověřuje“)",
+    "mem:prompt-directive-makes-model-copy („Starší body…“, bod 10)",
+    "mem:prompt-nepojmenuj-co-hned-zakazes",
+    "mem:oprava-promptu-odebira-vadu",
+    "docs:kostra (KOSTRA.md cituje Slova u vady)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení; sekce nemá markdown tabulku (je to číslovaný seznam) — „tabulka“ ze zadání v sekci nenalezena",
+   "navrh": "ponechat",
+   "duvod": "Vlastník rodiny pravidel o slovech v promptu; měl by se ukázat u každého labu (docs/eval/**, kostra) — dnes jen u dvou cest."
+  },
+  {
+   "id": "docs:kostra",
+   "soubor": "docs/kostra/ (kostra.json, pokusy.json; KOSTRA.md a VSTUPY.md generované)",
+   "vlastni": "Kostra čtení jako data (jádro J1–J6, části, vstupy, měřítka) a rejstřík pokusů P..; číslo pokusu vyžaduje api-guard.",
+   "kdy_do_kontextu": "při zápisu do docs/kostra/** (touch hook, hlavička verify_kostra.js); RUNAR_POKUS vynucuje api-guard",
+   "velikost": "kostra.json 1 063 ř. / 26 071 B · pokusy.json 408 ř. / 13 594 B · KOSTRA.md 287 ř. / 23 824 B · VSTUPY.md 52 ř. / 6 113 B",
+   "prekryvy": [
+    "RUNAR_DESIGN.md (J1, J3 citují)",
+    "mem:rozkaz-a-studene-cteni-hranice (= J3)",
+    "mem:co-dela-cteni-silnym",
+    "mem:rekni-kterou-variantu-testujes (číslo pokusu)"
+   ],
+   "doklad_zachytil": "verify_kostra.js v rychlých kontrolách (git 2026-11-24 „neznámý stav pokusu zastaví commit rejstříku“)",
+   "navrh": "ponechat",
+   "duvod": "Nové (2026-11-23); oblast mapy ale neukazuje Slova."
+  },
+  {
+   "id": "docs:pravidla-duvody",
+   "soubor": "docs/pravidla-duvody.md",
+   "vlastni": "Důvody, doklady a historie pravidel CLAUDE.md k 2026-10-21 (zmrazeno; nové důvody do DECISIONS).",
+   "kdy_do_kontextu": "jen když ho Claude otevře (CLAUDE.md hlavička na něj ukazuje)",
+   "velikost": "384 ř. / 42 919 B",
+   "prekryvy": [
+    "claude:§1–§32 (znění k 2026-10-21; platí CLAUDE.md)"
+   ],
+   "doklad_zachytil": "—",
+   "navrh": "ponechat",
+   "duvod": "Archiv důvodů; nenese pravidla."
+  },
+  {
+   "id": "docs:DECISIONS",
+   "soubor": "RUNAR_DECISIONS.md",
+   "vlastni": "Append-only datovaná rozhodnutí (760 denních nadpisů).",
+   "kdy_do_kontextu": "jen přes uz_vime.js / grep; SessionStart vypíše posledních ~7 nadpisů",
+   "velikost": "13 641 ř. / 1 389 187 B",
+   "prekryvy": [
+    "paměti (důvody pamětí stojí i tady)"
+   ],
+   "doklad_zachytil": "zdroj, jehož prohledání Stop hook vynucuje (uz_vime)",
+   "navrh": "ponechat",
+   "duvod": "Příliš velký na čtení; funguje jen přes hledání."
+  },
+  {
+   "id": "docs:EVAL_LOG",
+   "soubor": "RUNAR_EVAL_LOG.md",
+   "vlastni": "Deník pákových změn hlasu (prompt, pooly, pravidla) a měření.",
+   "kdy_do_kontextu": "jen když ho Claude otevře / uz_vime (je RUNAR_*.md); SessionStart odkazuje „co je o PACE změřeno“",
+   "velikost": "1 283 ř. / 129 127 B",
+   "prekryvy": [
+    "design:Slova (doklady bodů)",
+    "docs:kostra"
+   ],
+   "doklad_zachytil": "—",
+   "navrh": "ponechat",
+   "duvod": "Nosič dat, ne pravidel."
+  },
+  {
+   "id": "mem:MEMORY",
+   "soubor": "memory/MEMORY.md",
+   "vlastni": "Index paměti: Session Start Protocol, rozcestník „kde co bydlí“ a jednořádkové odkazy na 88 souborů paměti.",
+   "kdy_do_kontextu": "vždy při startu (auto-memory, ≤200 ř.); po compactu neověřeno",
+   "velikost": "147 ř. / 14917 B",
+   "prekryvy": [
+    "hook:runar-context (rozcestník opsán celý do SessionStart výstupu, ~2,5 KB dvakrát v kontextu)",
+    "mem:working-style („Post-compact / Session Start protokol“ jen odkazuje — OK)",
+    "claude:Kde hledat co (odkazuje sem)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 64×; git: 159 commitů (2026-07-04 → 2026-11-23)",
+   "navrh": "ponechat",
+   "duvod": "Jediný soubor paměti, který se načte sám; rozcestník je ale zdvojený SessionStart hookem — ten by měl jen odkázat."
+  },
+  {
+   "id": "mem:README",
+   "soubor": "memory/README.md",
+   "vlastni": "Lidský návod: složka memory je junction, jak ji opravit (relink-memory.ps1).",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře (není v indexu MEMORY.md)",
+   "velikost": "19 ř. / 1245 B",
+   "prekryvy": [
+    "claude:§17 (rozbitý junction → relink-memory.ps1)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 15×; git: 2 commitů (2026-07-04 → 2026-10-10)",
+   "navrh": "ponechat",
+   "duvod": "Pro člověka v prohlížeči souborů; Claude ho nepotřebuje, nikde se nenačítá."
+  },
+  {
+   "id": "mem:a-guard-that-refuses-is-a-detector",
+   "soubor": "memory/a-guard-that-refuses-is-a-detector.md",
+   "vlastni": "Kontrola „přepiš jen při právě jednom výskytu“ slouží i jako detektor duplikátů.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "36 ř. / 2172 B",
+   "prekryvy": [
+    "claude:§25 B (útok na nástroj)",
+    "mem:guard-test-the-lifecycle"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 5 commitů (2026-08-15 → 2026-11-23)",
+   "navrh": "sloučit s guard-test-the-lifecycle",
+   "duvod": "Obě jsou o návrhu kontrol; ta druhá má trigger v mapě (oblast „kontroly a hooky“), tahle ne.",
+   "radek_indexu": "- [a-guard-that-refuses-is-a-detector.md](a-guard-that-refuses-is-a-detector.md) — „přepiš jen při jednom výskytu“ = detektor duplikátu",
+   "index_prilis_vagni": true
+  },
+  {
+   "id": "mem:admin-ucty-nejsou-nalez",
+   "soubor": "memory/admin-ucty-nejsou-nalez.md",
+   "vlastni": "Data admin/testovacích účtů nejsou nález o soukromí.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "20 ř. / 1502 B",
+   "prekryvy": [],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 1×; git: 2 commitů (2026-10-10 → 2026-11-23)",
+   "navrh": "ponechat",
+   "duvod": "Specifický fakt bez jiného domova.",
+   "radek_indexu": "- [admin-ucty-nejsou-nalez.md](admin-ucty-nejsou-nalez.md) — data admin účtů nejsou nález o soukromí"
+  },
+  {
+   "id": "mem:adversarialni-naraz-fact-critical",
+   "soubor": "memory/adversarialni-naraz-fact-critical.md",
+   "vlastni": "Shodu Cowork↔Code zpochybňovat adversariálně jen u fact-critical tvrzení.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "19 ř. / 1145 B",
+   "prekryvy": [
+    "mem:dont-invent-fact-critical",
+    "mem:verify-agent-claims-about-code"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 1 commitů (2026-11-19 → 2026-11-19)",
+   "navrh": "sloučit s dont-invent-fact-critical",
+   "duvod": "Je to dovětek téhož pravidla (§23).",
+   "radek_indexu": "- [adversarialni-naraz-fact-critical.md](adversarialni-naraz-fact-critical.md) — Adversariální náraz na shodu Cowork↔Code jen u fact-critical tvrzení"
+  },
+  {
+   "id": "mem:always-show-reading-samples",
+   "soubor": "memory/always-show-reading-samples.md",
+   "vlastni": "Ownerovi ukazovat konkrétní texty čtení, ne jen metriky.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "37 ř. / 2677 B",
+   "prekryvy": [
+    "mem:write-for-owner-not-process (napětí: méně procesu × víc vzorků)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 3×; git: 4 commitů (2026-08-26 → 2026-10-24)",
+   "navrh": "ponechat",
+   "duvod": "Unikátní pokyn; mohl by být v hook zprávy ownerovi, nevynutitelný.",
+   "radek_indexu": "- [always-show-reading-samples.md](always-show-reading-samples.md) — ownerovi ukaž text čtení i instrukce, které do něj vstoupily"
+  },
+  {
+   "id": "mem:api-guard-py-false-positive",
+   "soubor": "memory/api-guard-py-false-positive.md",
+   "vlastni": "Vada hlídače API: dvě jména .py za sebou = falešný blok; obejít přes --pathspec-from-file.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "18 ř. / 1317 B",
+   "prekryvy": [
+    "hook:runar-api-guard (vada samotného hooku)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 3 commitů (2026-10-11 → 2026-11-23)",
+   "navrh": "přesunout k místu akce",
+   "duvod": "Patří do textu blokační zprávy hooku nebo se má hook opravit; v paměti ji session uvidí až po zásahu, a jen když ji otevře.",
+   "radek_indexu": "- [api-guard-py-false-positive.md](api-guard-py-false-positive.md) — dvě jména `.py` v příkazu → hlídač API; cesty přes `--pathspec-from-file`"
+  },
+  {
+   "id": "mem:ask-owner-for-checks-you-cannot-run",
+   "soubor": "memory/ask-owner-for-checks-you-cannot-run.md",
+   "vlastni": "Co Code neověří sám (logy, přihlášená appka), napřed zkusit, pak vyžádat od ownera; nededukovat.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "39 ř. / 2718 B",
+   "prekryvy": [
+    "claude:§24 (ověř, než tvrdíš)",
+    "mem:measure-dont-eyeball"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 3×; git: 3 commitů (2026-07-19 → 2026-10-11)",
+   "navrh": "ponechat",
+   "duvod": "Doplňuje §24 o postup, když měřit nejde.",
+   "radek_indexu": "- [ask-owner-for-checks-you-cannot-run.md](ask-owner-for-checks-you-cannot-run.md) — co Code neověří, napřed zkusit, pak vyžádat od ownera"
+  },
+  {
+   "id": "mem:attack-the-metric-not-just-the-result",
+   "soubor": "memory/attack-the-metric-not-just-the-result.md",
+   "vlastni": "Tři útoky na nástroj: půlka proti půlce, co ještě odlišuje dvojici, nulová transformace.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "39 ř. / 2634 B",
+   "prekryvy": [
+    "claude:§25 B (doslova tytéž tři body)",
+    "mem:sanity-check-measurements"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 3 commitů (2026-08-14 → 2026-11-23)",
+   "navrh": "zrušit",
+   "duvod": "§25 B nese celé pravidlo i [[odkaz]]; paměť je převyprávění + historie (ta patří do DECISIONS).",
+   "radek_indexu": "- [attack-the-metric-not-just-the-result.md](attack-the-metric-not-just-the-result.md) — útoč na nástroj dřív než na výsledek (§25 B)"
+  },
+  {
+   "id": "mem:bash-no-cd-prefix",
+   "soubor": "memory/bash-no-cd-prefix.md",
+   "vlastni": "Na Bash nikdy `cd … &&` ani `| tail` — rozbíjí allowlist.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "18 ř. / 2842 B",
+   "prekryvy": [
+    "mem:read-the-check-before-push (pipe do grep/tail zahodí exit kód)",
+    "hook:pravidla_pri_dotyku „pasti v příkazech“ (§30)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 1×; git: 5 commitů (2026-07-17 → 2026-07-19)",
+   "navrh": "přesunout k místu akce",
+   "duvod": "Opakovaná mechanická past → patří do hooku pastí v příkazech (§30), ne do paměti.",
+   "radek_indexu": "- [bash-no-cd-prefix.md](bash-no-cd-prefix.md) — NIKDY `cd … &&` ani `| tail` na Bash"
+  },
+  {
+   "id": "mem:break-your-own-work-before-reporting",
+   "soubor": "memory/break-your-own-work-before-reporting.md",
+   "vlastni": "Hotový kus napřed sám rozbij, pak ohlas.",
+   "kdy_do_kontextu": "pravidlo opsané do SessionStart výstupu (start + compact), ale až za 2 KB náhledu; soubor jen když ho Claude otevře",
+   "velikost": "77 ř. / 6697 B",
+   "prekryvy": [
+    "hook:runar-context („DVE VECI 1)“ opisuje a odkazuje)",
+    "claude:§25"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 6 commitů (2026-08-14 → 2026-10-10)",
+   "navrh": "ponechat",
+   "duvod": "Dostává se do kontextu přes SessionStart; soubor je zdroj, výstup hooku jen ukazatel — OK.",
+   "radek_indexu": "- [break-your-own-work-before-reporting.md](break-your-own-work-before-reporting.md) — na hotový kus zaútoč sám, pak hlas"
+  },
+  {
+   "id": "mem:ceske-nazvy-spreadu-v-kodu",
+   "soubor": "memory/ceske-nazvy-spreadu-v-kodu.md",
+   "vlastni": "Ve v2/ názvy spreadů anglicky, jinak check-is zastaví commit.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "19 ř. / 996 B",
+   "prekryvy": [
+    "check-is.py BAD_PATTERNS (stroj to už vynucuje)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 1 commitů (2026-09-30 → 2026-09-30)",
+   "navrh": "přesunout k místu akce",
+   "duvod": "Stroj chybu chytá; vysvětlení patří do chybové hlášky check-is, ne do paměti.",
+   "radek_indexu": "- [ceske-nazvy-spreadu-v-kodu.md](ceske-nazvy-spreadu-v-kodu.md) — ve v2/ názvy spreadů anglicky"
+  },
+  {
+   "id": "mem:cheapest-deciding-measurement-first",
+   "soubor": "memory/cheapest-deciding-measurement-first.md",
+   "vlastni": "Napřed nejlevnější rozhodující měření, dopředu říct, co který výsledek způsobí; agenti max 3–5.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "76 ř. / 7192 B",
+   "prekryvy": [
+    "claude:§30 (API: záměr, malý vzorek, nad 50 owner)",
+    "hook:runar-api-guard (RUNAR_API_ZAMER)",
+    "mem:work-efficiently-ask-if-simpler",
+    "mem:naklady-testovani"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 7 commitů (2026-09-12 → 2026-10-07)",
+   "navrh": "ponechat",
+   "duvod": "Část o API vynucuje hook; zbytek (agenti, workflow) jen tady. Kandidát na jádro sloučeného „náklady“.",
+   "radek_indexu": "- [cheapest-deciding-measurement-first.md](cheapest-deciding-measurement-first.md) — ⛔ agenti max 3–5, API nad ~50 jen s ano, vždy záměr + malý vzorek"
+  },
+  {
+   "id": "mem:co-dela-cteni-silnym",
+   "soubor": "memory/co-dela-cteni-silnym.md",
+   "vlastni": "Ownerem potvrzené znaky silného čtení (definiční věta, otázka před volbou).",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "74 ř. / 6209 B",
+   "prekryvy": [
+    "RUNAR_DESIGN.md (stavba čtení — 📜 vlastník hlasu)",
+    "docs/kostra/kostra.json (části čtení)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 1×; git: 7 commitů (2026-08-26 → 2026-10-24)",
+   "navrh": "přesunout k místu akce",
+   "duvod": "Kánon čtení patří do RUNAR_DESIGN / kostry, kde ho najde touch hook u promptu; v paměti ho session píšící prompt nevidí.",
+   "radek_indexu": "- [co-dela-cteni-silnym.md](co-dela-cteni-silnym.md) — co dělá čtení silným (ownerem potvrzeno)"
+  },
+  {
+   "id": "mem:copy-always-in-runar-voice",
+   "soubor": "memory/copy-always-in-runar-voice.md",
+   "vlastni": "Veškerá user-facing copy vždy hlasem Rúnara.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "26 ř. / 1620 B",
+   "prekryvy": [
+    "mem:read-design-before-voice-work"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 2×; git: 2 commitů (2026-08-04 → 2026-08-04)",
+   "navrh": "přesunout k místu akce",
+   "duvod": "Mělo by se ukázat při dotyku translations / help / web (mapa) — dnes ne.",
+   "radek_indexu": "- [copy-always-in-runar-voice.md](copy-always-in-runar-voice.md) — copy vždy hlasem Rúnara"
+  },
+  {
+   "id": "mem:cowork-bash-mount",
+   "soubor": "memory/cowork-bash-mount.md",
+   "vlastni": "Cowork: flaky bash mount uřezává soubory, číst z git objektu.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "18 ř. / 1023 B",
+   "prekryvy": [
+    "claude:lanes (Cowork read-only přes git show HEAD:)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 2 commitů (2026-11-19 → 2026-11-23)",
+   "navrh": "ponechat",
+   "duvod": "Týká se jen Cowork; Code ho nepotřebuje.",
+   "radek_indexu": "- [cowork-bash-mount.md](cowork-bash-mount.md) — Cowork: flaky bash mount uřezává repo soubory — čti z git objektu; Cowork do repa nepíše"
+  },
+  {
+   "id": "mem:cowork-handoff-quality-bar",
+   "soubor": "memory/cowork-handoff-quality-bar.md",
+   "vlastni": "12 návyků kvalitního Cowork handoffu.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "95 ř. / 5359 B",
+   "prekryvy": [
+    "claude:lanes (handoff začíná „psáno proti commitu“, sekce ZMĚNĚNO)",
+    "skill runar-agndofa-cowork (neověřeno, zda totéž)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 3×; git: 4 commitů (2026-08-18 → 2026-10-11)",
+   "navrh": "ponechat",
+   "duvod": "Cowork-only; možná duplicita se skillem — neověřeno.",
+   "radek_indexu": "- [cowork-handoff-quality-bar.md](cowork-handoff-quality-bar.md) — standard Cowork handoffů"
+  },
+  {
+   "id": "mem:cteni-generuj-tady-ne-pres-api",
+   "soubor": "memory/cteni-generuj-tady-ne-pres-api.md",
+   "vlastni": "Testovací čtení psát v konverzaci, slepé souzení subagentem, ne přes API.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "47 ř. / 3550 B",
+   "prekryvy": [
+    "mem:naklady-testovani (totéž: testy tady, API jen s důvodem)",
+    "hook:runar-api-guard",
+    "hook:runar-context („DATA, KTERA UZ MAME“)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 5 commitů (2026-09-10 → 2026-10-11)",
+   "navrh": "sloučit s naklady-testovani",
+   "duvod": "Dvě paměti téhož rozhodnutí o nákladech.",
+   "radek_indexu": "- [cteni-generuj-tady-ne-pres-api.md](cteni-generuj-tady-ne-pres-api.md) — testovací čtení piš sám, ne přes API; slepé souzení subagentem"
+  },
+  {
+   "id": "mem:decisions-are-directions-not-locks",
+   "soubor": "memory/decisions-are-directions-not-locks.md",
+   "vlastni": "Rozhodnutí = směr, ne zámek; při rozporu varovat.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "20 ř. / 1801 B",
+   "prekryvy": [
+    "claude:§21 (totéž + [[odkaz]])",
+    "hook:runar-context („OWNERUV NAPAD = SMER“)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 1×; git: 5 commitů (2026-07-30 → 2026-11-23)",
+   "navrh": "zrušit",
+   "duvod": "Úplně pokryto §21, který je vždy v kontextu.",
+   "radek_indexu": "- [decisions-are-directions-not-locks.md](decisions-are-directions-not-locks.md) — rozhodnutí = směr, ne zámek"
+  },
+  {
+   "id": "mem:dont-invent-fact-critical",
+   "soubor": "memory/dont-invent-fact-critical.md",
+   "vlastni": "Chybějící 🔒 fakt / 📜 lore nevymýšlet, flagnout.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "30 ř. / 2145 B",
+   "prekryvy": [
+    "claude:§23 (totéž + [[odkaz]])",
+    "mem:adversarialni-naraz-fact-critical"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 1×; git: 2 commitů (2026-07-30 → 2026-10-13)",
+   "navrh": "zrušit",
+   "duvod": "§23 je vždy v kontextu a říká totéž; příklady patří do docs/pravidla-duvody.md.",
+   "radek_indexu": "- [dont-invent-fact-critical.md](dont-invent-fact-critical.md) — chybí fakt/lore → zastav a flagni"
+  },
+  {
+   "id": "mem:edit-tool-escapes-new-text",
+   "soubor": "memory/edit-tool-escapes-new-text.md",
+   "vlastni": "Edit na řádku s \\uXXXX v translations přepíše nový text na escapy → patch skriptem.",
+   "kdy_do_kontextu": "při ZÁPISU do souboru oblasti překlady ['v2/runar-translations.js'] (touch hook: jednou za session, znovu po compactu); jinak jen řádek indexu",
+   "velikost": "22 ř. / 1809 B",
+   "prekryvy": [
+    "mem:js-unicode-escapes-python",
+    "mem:heredoc-mangles-backslash-escapes",
+    "claude:§1/§11"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 3 commitů (2026-10-10 → 2026-10-11)",
+   "navrh": "ponechat",
+   "duvod": "Je v mapě (oblast „překlady“) → ukáže se přesně při dotyku. Vzor, jak to má být.",
+   "radek_indexu": "- [edit-tool-escapes-new-text.md](edit-tool-escapes-new-text.md) — Edit na řádku s `\\uXXXX` → patch skriptem"
+  },
+  {
+   "id": "mem:emaily-kratke",
+   "soubor": "memory/emaily-kratke.md",
+   "vlastni": "Každý e-mail Rúnara se vejde na jednu obrazovku telefonu.",
+   "kdy_do_kontextu": "při ZÁPISU do souboru oblasti e-maily ['supabase/functions/_shared/ops_souhrn.ts', 'supabase/functions/ops-watch/**', 'supabase/functions/waitlist-join/**', 'supabase/templates/**'] (touch hook: jednou za session, znovu po compactu); jinak jen řádek indexu",
+   "velikost": "19 ř. / 1412 B",
+   "prekryvy": [],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 3×; git: 1 commitů (2026-10-14 → 2026-10-14)",
+   "navrh": "ponechat",
+   "duvod": "Je v mapě (oblast „e-maily“) → přichází při dotyku.",
+   "radek_indexu": "- [emaily-kratke.md](emaily-kratke.md) — každý e-mail na jednu obrazovku telefonu"
+  },
+  {
+   "id": "mem:en-formulace-overit-zdrojem",
+   "soubor": "memory/en-formulace-overit-zdrojem.md",
+   "vlastni": "Anglickou formulaci ověřit korpusem, ne pocitem.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "24 ř. / 1844 B",
+   "prekryvy": [
+    "design:Slova bod 9 (doslova totéž)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 1 commitů (2026-10-06 → 2026-10-06)",
+   "navrh": "zrušit",
+   "duvod": "RUNAR_DESIGN „Slova“ bod 9 to vlastní a touch hook ho ukazuje u promptu.",
+   "radek_indexu": "- [en-formulace-overit-zdrojem.md](en-formulace-overit-zdrojem.md) — anglickou formulaci ověř korpusem"
+  },
+  {
+   "id": "mem:falsify-by-reversing-the-lever",
+   "soubor": "memory/falsify-by-reversing-the-lever.md",
+   "vlastni": "Hypotézu „přidej X“ testovat ubráním X.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "28 ř. / 1777 B",
+   "prekryvy": [
+    "claude:§25 A (totéž + [[odkaz]])"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 1×; git: 3 commitů (2026-08-14 → 2026-11-23)",
+   "navrh": "zrušit",
+   "duvod": "Plně v §25 A.",
+   "radek_indexu": "- [falsify-by-reversing-the-lever.md](falsify-by-reversing-the-lever.md) — hypotézu „přidej X“ testuj ubráním X (§25)"
+  },
+  {
+   "id": "mem:find-a-gap-close-it-now",
+   "soubor": "memory/find-a-gap-close-it-now.md",
+   "vlastni": "Díru (kontrola, pravidlo, amnézie) zavřít v témže tahu bez ptaní.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "30 ř. / 2109 B",
+   "prekryvy": [
+    "claude:§20 poslední odstavec",
+    "claude:§30 („pravidlo porušené podruhé → mechanismus“)",
+    "mem:working-style (Explore→Plan: „bez ptaní se opravují…“)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 1×; git: 3 commitů (2026-08-21 → 2026-11-23)",
+   "navrh": "zrušit",
+   "duvod": "Pokryto §20/§30 a working-style.",
+   "radek_indexu": "- [find-a-gap-close-it-now.md](find-a-gap-close-it-now.md) — díru zavři v témže tahu"
+  },
+  {
+   "id": "mem:fix-substance-not-shape",
+   "soubor": "memory/fix-substance-not-shape.md",
+   "vlastni": "U bezpečnostní opravy opravit podstatu a ověřit, že díra nejde obejít.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "29 ř. / 1940 B",
+   "prekryvy": [
+    "claude:§19"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 2 commitů (2026-08-03 → 2026-11-23)",
+   "navrh": "ponechat",
+   "duvod": "Specifické pro security; nic jiného to neříká výslovně.",
+   "radek_indexu": "- [fix-substance-not-shape.md](fix-substance-not-shape.md) — security: oprav podstatu, ne tvar"
+  },
+  {
+   "id": "mem:full-path-and-numbered-lists",
+   "soubor": "memory/full-path-and-numbered-lists.md",
+   "vlastni": "Ownerovi úplné cesty k souborům; body a otázky číslované.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "44 ř. / 3586 B",
+   "prekryvy": [
+    "hook:runar-zprava-check pravidlo 1 a 6 (číslování vynucuje stroj)",
+    "claude:§30 („Zpráva ownerovi: body a otázky číslované“)"
+   ],
+   "doklad_zachytil": "nepřímo: Stop hook ČÍSLOVÁNÍ blokoval ~150+× (přepisy); zmíněn v DECISIONS 3×; git: 6 commitů (2026-07-19 → 2026-11-23)",
+   "navrh": "sloučit s write-for-owner-not-process",
+   "duvod": "Číslování hlídá Stop hook; v paměti zbývá jen „úplná cesta“.",
+   "radek_indexu": "- [full-path-and-numbered-lists.md](full-path-and-numbered-lists.md) — úplná cesta k souboru; VŠECHNY body a otázky ownerovi číslované"
+  },
+  {
+   "id": "mem:function-not-ceremony",
+   "soubor": "memory/function-not-ceremony.md",
+   "vlastni": "Nestavět proces pro ownerovo uklidnění.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "14 ř. / 1780 B",
+   "prekryvy": [
+    "mem:work-efficiently-ask-if-simpler"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 1×; git: 1 commitů (2026-07-18 → 2026-07-18)",
+   "navrh": "sloučit s work-efficiently-ask-if-simpler",
+   "duvod": "Obecné, index „nestavět proces pro uspokojení“ nic nespustí.",
+   "radek_indexu": "- [function-not-ceremony.md](function-not-ceremony.md) — nestavět proces pro uspokojení",
+   "index_prilis_vagni": true
+  },
+  {
+   "id": "mem:glyph-text-vs-our-svg",
+   "soubor": "memory/glyph-text-vs-our-svg.md",
+   "vlastni": "Text o tvaru runy ověřit proti naší kresbě runeSvg, ne standardu.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "21 ř. / 1341 B",
+   "prekryvy": [
+    "claude:§5 (RUNE_SVGS jediný zdroj)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 1 commitů (2026-09-30 → 2026-09-30)",
+   "navrh": "přesunout k místu akce",
+   "duvod": "Patří do mapy k runar-svgs.js / popisům run; dnes se při dotyku neukáže.",
+   "radek_indexu": "- [glyph-text-vs-our-svg.md](glyph-text-vs-our-svg.md) — tvar runy ověř proti NAŠÍ kresbě"
+  },
+  {
+   "id": "mem:gpt-rozbor-neni-zavazny",
+   "soubor": "memory/gpt-rozbor-neni-zavazny.md",
+   "vlastni": "Rozbor čtení od GPT soudce je podnět, ne nález.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "25 ř. / 1788 B",
+   "prekryvy": [
+    "mem:you-neni-prohresek",
+    "mem:soudce-vidi-jen-co-uzivatel"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 3×; git: 3 commitů (2026-09-25 → 2026-10-11)",
+   "navrh": "sloučit s soudce-vidi-jen-co-uzivatel",
+   "duvod": "Tři paměti o soudcích čtení.",
+   "radek_indexu": "- [gpt-rozbor-neni-zavazny.md](gpt-rozbor-neni-zavazny.md) — rozbor soudce je podnět, ne verdikt"
+  },
+  {
+   "id": "mem:guard-test-the-lifecycle",
+   "soubor": "memory/guard-test-the-lifecycle.md",
+   "vlastni": "Kontrolu testovat proti všem stavům hlídané věci.",
+   "kdy_do_kontextu": "při ZÁPISU do souboru oblasti kontroly a hooky ['scripts/verify_*.js', 'smoke.py', 'hooks/**', 'scripts/protipriklady.py'] (touch hook: jednou za session, znovu po compactu); jinak jen řádek indexu",
+   "velikost": "13 ř. / 2159 B",
+   "prekryvy": [
+    "claude:§25 B",
+    "scripts/protipriklady.py (útok povinný, smoke ㊵)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 5×; git: 1 commitů (2026-07-19 → 2026-07-19)",
+   "navrh": "ponechat",
+   "duvod": "V mapě (oblast „kontroly a hooky“), ukáže se při psaní kontroly.",
+   "radek_indexu": "- [guard-test-the-lifecycle.md](guard-test-the-lifecycle.md) — kontrolu testuj proti všem stavům hlídané věci"
+  },
+  {
+   "id": "mem:handoff-text-in-code-block",
+   "soubor": "memory/handoff-text-in-code-block.md",
+   "vlastni": "Text k předání jiné session dávat do code blocku.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "43 ř. / 3726 B",
+   "prekryvy": [
+    "hook:runar-zprava-check pravidlo 5 (napětí: bloky příkazů ownerovi zakázané)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 1×; git: 6 commitů (2026-07-18 → 2026-11-14)",
+   "navrh": "ponechat",
+   "duvod": "Unikátní; nevynutitelné.",
+   "radek_indexu": "- [handoff-text-in-code-block.md](handoff-text-in-code-block.md) — text k předání jiné session do code blocku"
+  },
+  {
+   "id": "mem:heredoc-mangles-backslash-escapes",
+   "soubor": "memory/heredoc-mangles-backslash-escapes.md",
+   "vlastni": "Heredoc v Git Bash mění \\\\n na konec řádku → skript psát nástrojem Write.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "23 ř. / 1401 B",
+   "prekryvy": [
+    "hook:pravidla_pri_dotyku „pasti v příkazech: heredoc se zpětným lomítkem“ (§30)",
+    "mem:js-unicode-escapes-python"
+   ],
+   "doklad_zachytil": "nepřímo: hook pastí v příkazech (počet neověřen); zmíněn v DECISIONS 1×; git: 2 commitů (2026-09-30 → 2026-10-11)",
+   "navrh": "zrušit",
+   "duvod": "Hook past už zastaví; paměť je zbytná.",
+   "radek_indexu": "- [heredoc-mangles-backslash-escapes.md](heredoc-mangles-backslash-escapes.md) — skript s escape sekvencemi piš nástrojem Write"
+  },
+  {
+   "id": "mem:is-done-together-not-for-sigrun",
+   "soubor": "memory/is-done-together-not-for-sigrun.md",
+   "vlastni": "IS dělat hotovou a ověřenou, nic nenechávat na Sigrún.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "16 ř. / 1713 B",
+   "prekryvy": [
+    "claude:§2 (doslova + [[odkaz]])"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 3×; git: 5 commitů (2026-07-18 → 2026-10-11)",
+   "navrh": "zrušit",
+   "duvod": "Plně v §2.",
+   "radek_indexu": "- [is-done-together-not-for-sigrun.md](is-done-together-not-for-sigrun.md) — IS rovnou hotová a ověřená, žádný draft pro Sigrún"
+  },
+  {
+   "id": "mem:is-grammar-adjective-gender",
+   "soubor": "memory/is-grammar-adjective-gender.md",
+   "vlastni": "Postup: rod podstatného před přídavným + slovník rodu přírodních slov.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "31 ř. / 3130 B",
+   "prekryvy": [
+    "mem:working-style (jen odkaz)",
+    "claude:§2"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 3 commitů (2026-07-04 → 2026-10-11)",
+   "navrh": "přesunout k místu akce",
+   "duvod": "Slovník je skutečný obsah; měl by se ukázat při dotyku translations/character (mapa „překlady“, „prompt a hlas“) — dnes ne.",
+   "radek_indexu": "- [is-grammar-adjective-gender.md](is-grammar-adjective-gender.md) — nejdřív rod podstatného, pak přídavné"
+  },
+  {
+   "id": "mem:is-vazba-check",
+   "soubor": "memory/is-vazba-check.md",
+   "vlastni": "Islandskou vazbu ověřit is-vazba.py, nehádat.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "49 ř. / 4016 B",
+   "prekryvy": [
+    "claude:§2 („Vazba ≠ tvar“ + [[odkaz]])"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 2×; git: 5 commitů (2026-08-04 → 2026-11-23)",
+   "navrh": "ponechat",
+   "duvod": "§2 nese pravidlo; paměť nese použití nástroje (API, příklady). Mohla by být hlavičkou is-vazba.py.",
+   "radek_indexu": "- [is-vazba-check.md](is-vazba-check.md) — islandskou vazbu ověř `is-vazba.py`, nehádej"
+  },
+  {
+   "id": "mem:jeden-vzorek-neni-vada",
+   "soubor": "memory/jeden-vzorek-neni-vada.md",
+   "vlastni": "Slovo z jednoho vzorku nevydávat za vadu.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "15 ř. / 896 B",
+   "prekryvy": [
+    "mem:sanity-check-measurements",
+    "claude:§24"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 1 commitů (2026-11-14 → 2026-11-14)",
+   "navrh": "sloučit s sanity-check-measurements",
+   "duvod": "Měřicí cluster.",
+   "radek_indexu": "- [jeden-vzorek-neni-vada.md](jeden-vzorek-neni-vada.md) — slovo z jednoho vzorku neřeš jako vadu",
+   "index_prilis_vagni": true
+  },
+  {
+   "id": "mem:js-unicode-escapes-python",
+   "soubor": "memory/js-unicode-escapes-python.md",
+   "vlastni": "JS s \\uXXXX rozbíjí pattern matching v patch skriptech — jak na to.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "20 ř. / 820 B",
+   "prekryvy": [
+    "mem:edit-tool-escapes-new-text",
+    "claude:§11",
+    "mem:working-style („Detail k §11“)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 1 commitů (2026-11-19 → 2026-11-19)",
+   "navrh": "sloučit s edit-tool-escapes-new-text",
+   "duvod": "Tři místa o escape sekvencích; to v mapě se ukáže při dotyku.",
+   "radek_indexu": "- [js-unicode-escapes-python.md](js-unicode-escapes-python.md) — JS soubory s \\uXXXX escapy rozbíjejí pattern matching v Python patch skriptech — jak na to"
+  },
+  {
+   "id": "mem:loading-a-page-proves-existence-not-authenticity",
+   "soubor": "memory/loading-a-page-proves-existence-not-authenticity.md",
+   "vlastni": "Načtená URL nedokazuje pravost zdroje.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "31 ř. / 2011 B",
+   "prekryvy": [],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 1×; git: 1 commitů (2026-08-14 → 2026-08-14)",
+   "navrh": "ponechat",
+   "duvod": "Unikátní.",
+   "radek_indexu": "- [loading-a-page-proves-existence-not-authenticity.md](loading-a-page-proves-existence-not-authenticity.md) — načtená URL ≠ pravá stránka"
+  },
+  {
+   "id": "mem:match-existing-visual-first",
+   "soubor": "memory/match-existing-visual-first.md",
+   "vlastni": "Nové UI: napřed přečíst a kopírovat existující vizuál.",
+   "kdy_do_kontextu": "při ZÁPISU do souboru oblasti UI readeru a shrine ['v2/runar-reader.html', 'v2/runar-reader.css', 'v2/runar-shrine.html'] (touch hook: jednou za session, znovu po compactu); jinak jen řádek indexu",
+   "velikost": "21 ř. / 2385 B",
+   "prekryvy": [],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 2×; git: 4 commitů (2026-07-18 → 2026-10-27)",
+   "navrh": "ponechat",
+   "duvod": "V mapě (oblast „UI readeru a shrine“).",
+   "radek_indexu": "- [match-existing-visual-first.md](match-existing-visual-first.md) — nové UI: napřed existující vizuál"
+  },
+  {
+   "id": "mem:measure-dont-eyeball",
+   "soubor": "memory/measure-dont-eyeball.md",
+   "vlastni": "Dojem není nález; změř, nebo „nevím“.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "26 ř. / 3091 B",
+   "prekryvy": [
+    "claude:§24 (totéž + [[odkaz]])",
+    "mem:sanity-check-measurements"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 5×; git: 2 commitů (2026-07-19 → 2026-08-24)",
+   "navrh": "zrušit",
+   "duvod": "Plně v §24; odkazuje na něj 25 souborů — odkazy přesměrovat na §24.",
+   "radek_indexu": "- [measure-dont-eyeball.md](measure-dont-eyeball.md) — dojem není nález; změř, nebo „nevím\""
+  },
+  {
+   "id": "mem:modelove-stromy-neposilat",
+   "soubor": "memory/modelove-stromy-neposilat.md",
+   "vlastni": "Ownerovi ukazovat jeho strom před/po, ne modelové.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "19 ř. / 1520 B",
+   "prekryvy": [],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 1×; git: 1 commitů (2026-10-11 → 2026-10-11)",
+   "navrh": "ponechat",
+   "duvod": "Unikátní, úzké.",
+   "radek_indexu": "- [modelove-stromy-neposilat.md](modelove-stromy-neposilat.md) — ownerovi jen jeho strom před/po"
+  },
+  {
+   "id": "mem:nacti-cteni-a-reporty",
+   "soubor": "memory/nacti-cteni-a-reporty.md",
+   "vlastni": "„načti čtení a reporty“ → nacti_cteni.js, --hotovo/--backlog, keep.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "27 ř. / 2187 B",
+   "prekryvy": [
+    "claude:§29 (doslova postup)",
+    "hook:runar-zprava-check pravidlo 3"
+   ],
+   "doklad_zachytil": "nepřímo: Stop hook „Než skončíš —“ (hlášení bez zápisu) ~118 výskytů v přepisech; zmíněn v DECISIONS 4×; git: 4 commitů (2026-10-06 → 2026-11-23)",
+   "navrh": "zrušit",
+   "duvod": "§29 + Stop hook to plně nesou.",
+   "radek_indexu": "- [nacti-cteni-a-reporty.md](nacti-cteni-a-reporty.md) — „načti čtení a reporty“ → `node scripts/nacti_cteni.js`"
+  },
+  {
+   "id": "mem:nahledy-ownerovi-v-en",
+   "soubor": "memory/nahledy-ownerovi-v-en.md",
+   "vlastni": "Náhledy a screenshoty ownerovi v EN.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "14 ř. / 752 B",
+   "prekryvy": [
+    "mem:windows-ui-v-en",
+    "mem:nazvy-souboru-anglicky"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 1 commitů (2026-11-02 → 2026-11-02)",
+   "navrh": "sloučit s windows-ui-v-en",
+   "duvod": "Tři paměti „owner chce EN“.",
+   "radek_indexu": "- [nahledy-ownerovi-v-en.md](nahledy-ownerovi-v-en.md) — náhledy a screenshoty ownerovi v EN verzi"
+  },
+  {
+   "id": "mem:naklady-testovani",
+   "soubor": "memory/naklady-testovani.md",
+   "vlastni": "Testy dělat tady (předplacené), API jen s důvodem.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "18 ř. / 1130 B",
+   "prekryvy": [
+    "mem:cteni-generuj-tady-ne-pres-api",
+    "mem:cheapest-deciding-measurement-first",
+    "claude:§30 (API)",
+    "hook:runar-api-guard"
+   ],
+   "doklad_zachytil": "nepřímo: api-guard blokoval ~38× (přepisy); zmíněn v DECISIONS 0×; git: 2 commitů (2026-11-19 → 2026-11-23)",
+   "navrh": "sloučit s cteni-generuj-tady-ne-pres-api",
+   "duvod": "Totéž rozhodnutí; API část vynucuje hook.",
+   "radek_indexu": "- [naklady-testovani.md](naklady-testovani.md) — Náklady testování: testy dělat tady (předplacené), API jen s důvodem (KUKY 2026-08-23)"
+  },
+  {
+   "id": "mem:napred-dohledej-co-uz-je",
+   "soubor": "memory/napred-dohledej-co-uz-je.md",
+   "vlastni": "Před měřením/položkou prohledat docs a git log ostatních lane.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "36 ř. / 3539 B",
+   "prekryvy": [
+    "scripts/utils/uz_vime.js",
+    "hook:runar-zprava-check pravidlo 2",
+    "hook:runar-context („NEZ NAVRHNES…“)",
+    "mem:working-style („Pořadí“ bod 2)",
+    "claude:§20 („dohledej ji“)"
+   ],
+   "doklad_zachytil": "nepřímo: Stop hook NÁVRH BEZ DOHLEDÁNÍ ~220 výskytů; zmíněn v DECISIONS 2×; git: 7 commitů (2026-09-24 → 2026-11-23)",
+   "navrh": "ponechat",
+   "duvod": "Část „git log ostatních lane“ nevynucuje nic; zbytek ano.",
+   "radek_indexu": "- [napred-dohledej-co-uz-je.md](napred-dohledej-co-uz-je.md) — před měřením/položkou prohledej docs a git log ostatních lane"
+  },
+  {
+   "id": "mem:nasazeni-delam-sam",
+   "soubor": "memory/nasazeni-delam-sam.md",
+   "vlastni": "Edge funkce nasazovat sám po pushi; zastavení hlídačem není otázka na ownera.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "16 ř. / 1064 B",
+   "prekryvy": [
+    "mem:working-style („Nasazení“ — vlastník kdy se ptát)",
+    "mem:proceed-dont-ask"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 1×; git: 2 commitů (2026-11-23 → 2026-11-23)",
+   "navrh": "sloučit s working-style",
+   "duvod": "Dva texty o nasazení; ws už je označen jako jediné místo.",
+   "radek_indexu": "- [nasazeni-delam-sam.md](nasazeni-delam-sam.md) — edge funkce nasazuji sám po pushi, ownera se neptám"
+  },
+  {
+   "id": "mem:nazvy-souboru-anglicky",
+   "soubor": "memory/nazvy-souboru-anglicky.md",
+   "vlastni": "Ukládané obrázky/podklady pojmenovat anglicky.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "15 ř. / 868 B",
+   "prekryvy": [
+    "mem:working-style („Naming conventions“ — skripty/docs)",
+    "mem:nahledy-ownerovi-v-en"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 2×; git: 2 commitů (2026-11-02 → 2026-11-03)",
+   "navrh": "přesunout k místu akce",
+   "duvod": "Patří do working-style „Kde ukládat soubory“ (jediné místo pro pojmenování).",
+   "radek_indexu": "- [nazvy-souboru-anglicky.md](nazvy-souboru-anglicky.md) — obrázky, podklady a jejich složky ukládat s anglickými názvy"
+  },
+  {
+   "id": "mem:neposilat-praci-coworku",
+   "soubor": "memory/neposilat-praci-coworku.md",
+   "vlastni": "Co umí Code, udělá sám, žádný handoff Coworku.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "16 ř. / 958 B",
+   "prekryvy": [
+    "claude:lanes (Cowork read-only, mluví o datech)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 1 commitů (2026-10-24 → 2026-10-24)",
+   "navrh": "ponechat",
+   "duvod": "Krátké, unikátní.",
+   "radek_indexu": "- [neposilat-praci-coworku.md](neposilat-praci-coworku.md) — co umí Code, udělá sám; žádný handoff Coworku přes ownera"
+  },
+  {
+   "id": "mem:one-patch-script-path",
+   "soubor": "memory/one-patch-script-path.md",
+   "vlastni": "Patch skript do vlastního gitignored slotu session.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "16 ř. / 2397 B",
+   "prekryvy": [
+    "claude:§1 (doslova sloty _patch.py / _patch_tune.py)",
+    "mem:working-style („Kde ukládat soubory“)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 1×; git: 6 commitů (2026-07-18 → 2026-11-23)",
+   "navrh": "zrušit",
+   "duvod": "Plně v §1.",
+   "radek_indexu": "- [one-patch-script-path.md](one-patch-script-path.md) — patch do vlastního gitignored slotu session"
+  },
+  {
+   "id": "mem:oprava-promptu-odebira-vadu",
+   "soubor": "memory/oprava-promptu-odebira-vadu.md",
+   "vlastni": "Vadu v promptu odebrat; přidaný požadavek se projeví formulí.",
+   "kdy_do_kontextu": "při ZÁPISU do souboru oblasti prompt a hlas ['v2/runar-character.js'] (touch hook: jednou za session, znovu po compactu); jinak jen řádek indexu",
+   "velikost": "24 ř. / 1409 B",
+   "prekryvy": [
+    "design:Slova (bod 4–6, formule)",
+    "mem:prompt-nepojmenuj-co-hned-zakazes"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 3×; git: 1 commitů (2026-08-26 → 2026-08-26)",
+   "navrh": "přesunout k místu akce",
+   "duvod": "Je v mapě „prompt a hlas“, ale obsahem patří jako bod do RUNAR_DESIGN „Slova“ (stejná rodina).",
+   "radek_indexu": "- [oprava-promptu-odebira-vadu.md](oprava-promptu-odebira-vadu.md) — vadu odeber; přidaný požadavek → formule"
+  },
+  {
+   "id": "mem:ownerovo-hodnoceni-zapis-smysl",
+   "soubor": "memory/ownerovo-hodnoceni-zapis-smysl.md",
+   "vlastni": "Verdikt ownera zapisovat srozumitelně, ne doslova; příklad = směr.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "24 ř. / 1922 B",
+   "prekryvy": [
+    "mem:ownerovo-slovo-neni-spec"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 2 commitů (2026-10-27 → 2026-11-23)",
+   "navrh": "sloučit s ownerovo-slovo-neni-spec",
+   "duvod": "Obě o převodu ownerových slov do docu.",
+   "radek_indexu": "- [ownerovo-hodnoceni-zapis-smysl.md](ownerovo-hodnoceni-zapis-smysl.md) — verdikt ownera zapiš srozumitelně, ne jeho slova; příklad = směr"
+  },
+  {
+   "id": "mem:ownerovo-slovo-neni-spec",
+   "soubor": "memory/ownerovo-slovo-neni-spec.md",
+   "vlastni": "Konverzační přídavné jméno ownera není zadání — převést na číslo nebo se zeptat.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "30 ř. / 2143 B",
+   "prekryvy": [
+    "mem:ownerovo-hodnoceni-zapis-smysl",
+    "claude:§21"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 2 commitů (2026-09-12 → 2026-09-27)",
+   "navrh": "ponechat",
+   "duvod": "Jádro sloučení; index „konverzační přídavné jméno není zadání“ je srozumitelný až po otevření.",
+   "radek_indexu": "- [ownerovo-slovo-neni-spec.md](ownerovo-slovo-neni-spec.md) — konverzační přídavné jméno není zadání",
+   "index_prilis_vagni": true
+  },
+  {
+   "id": "mem:parallel-code-sessions-collision",
+   "soubor": "memory/parallel-code-sessions-collision.md",
+   "vlastni": "Víc session ve stromě: pathspec commit, commit_vlastni, status před sáhnutím.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "88 ř. / 9304 B",
+   "prekryvy": [
+    "claude:N paralelních session („Commit ÚZCE“ + odkaz)",
+    "mem:pathspec-nesmi-byt-prazdny",
+    "hooks/pre-commit.py (_SDILENE)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 2×; git: 16 commitů (2026-07-21 → 2026-11-23)",
+   "navrh": "ponechat",
+   "duvod": "Nese detail a doklady; jádro v CLAUDE.md; sloučit do něj pathspec-nesmi-byt-prazdny.",
+   "radek_indexu": "- [parallel-code-sessions-collision.md](parallel-code-sessions-collision.md) — víc session ve sdíleném stromě: pathspec, commit_vlastni, status"
+  },
+  {
+   "id": "mem:paste-sql-explicitly",
+   "soubor": "memory/paste-sql-explicitly.md",
+   "vlastni": "SQL ownerovi celé, ne „jako minule“.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "20 ř. / 2470 B",
+   "prekryvy": [
+    "mem:working-style („Ownerovi se neposílají příkazy“ výjimka SQL)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 4 commitů (2026-07-18 → 2026-11-23)",
+   "navrh": "ponechat",
+   "duvod": "Unikátní.",
+   "radek_indexu": "- [paste-sql-explicitly.md](paste-sql-explicitly.md) — SQL pro ownera vlož celé, žádné „jako minule\""
+  },
+  {
+   "id": "mem:pathspec-nesmi-byt-prazdny",
+   "soubor": "memory/pathspec-nesmi-byt-prazdny.md",
+   "vlastni": "Nenastavený pathspec v proměnné = commit celého indexu.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "17 ř. / 1115 B",
+   "prekryvy": [
+    "mem:parallel-code-sessions-collision"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 1 commitů (2026-09-24 → 2026-09-24)",
+   "navrh": "sloučit s parallel-code-sessions-collision",
+   "duvod": "Táž rodina; mechanicky by to mohl hlídat hook pastí.",
+   "radek_indexu": "- [pathspec-nesmi-byt-prazdny.md](pathspec-nesmi-byt-prazdny.md) — prázdný pathspec = commit celého indexu"
+  },
+  {
+   "id": "mem:proceed-dont-ask",
+   "soubor": "memory/proceed-dont-ask.md",
+   "vlastni": "Dohodnutý plán odjet celý, neptat se mezi kroky.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "23 ř. / 1962 B",
+   "prekryvy": [
+    "mem:working-style (Explore→Plan, doslova + odkaz)",
+    "mem:MEMORY.md (⚠️ řádek Session Start)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 3 commitů (2026-07-18 → 2026-11-23)",
+   "navrh": "zrušit",
+   "duvod": "Pokryto working-style a hlavičkou MEMORY.md.",
+   "radek_indexu": "- [proceed-dont-ask.md](proceed-dont-ask.md) — dohodnutý plán odjeď celý, neptej se mezi kroky"
+  },
+  {
+   "id": "mem:prompt-directive-makes-model-copy",
+   "soubor": "memory/prompt-directive-makes-model-copy.md",
+   "vlastni": "„Použij tenhle text“ = model opíše doslova; rámovat jako zdroj.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "40 ř. / 2563 B",
+   "prekryvy": [
+    "design:Slova („Starší body téže rodiny“ + bod 10)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 1×; git: 5 commitů (2026-08-14 → 2026-11-23)",
+   "navrh": "přesunout k místu akce",
+   "duvod": "Patří jako bod do RUNAR_DESIGN „Slova“; tam ho ukáže touch hook.",
+   "radek_indexu": "- [prompt-directive-makes-model-copy.md](prompt-directive-makes-model-copy.md) — „použij tenhle text“ = opíše doslova; rámuj jako zdroj"
+  },
+  {
+   "id": "mem:prompt-map-artifact",
+   "soubor": "memory/prompt-map-artifact.md",
+   "vlastni": "Náhrobek: mapa promptu zrušena, pravda = kód.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "19 ř. / 1404 B",
+   "prekryvy": [
+    "DECISIONS (6 zmínek)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 6×; git: 8 commitů (2026-08-06 → 2026-10-11)",
+   "navrh": "zrušit",
+   "duvod": "Historie, nic neřídí.",
+   "radek_indexu": "- [prompt-map-artifact.md](prompt-map-artifact.md) — mapa promptu zrušena, pravda = kód"
+  },
+  {
+   "id": "mem:prompt-nepojmenuj-co-hned-zakazes",
+   "soubor": "memory/prompt-nepojmenuj-co-hned-zakazes.md",
+   "vlastni": "Nepojmenovat v promptu, co hned zakážeš.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "44 ř. / 3180 B",
+   "prekryvy": [
+    "design:Slova (rodina bodů o slovech v promptu)",
+    "mem:oprava-promptu-odebira-vadu"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 1×; git: 1 commitů (2026-09-08 → 2026-09-08)",
+   "navrh": "přesunout k místu akce",
+   "duvod": "Patří do „Slova“; mimo mapu ho session píšící lab prompt nevidí.",
+   "radek_indexu": "- [prompt-nepojmenuj-co-hned-zakazes.md](prompt-nepojmenuj-co-hned-zakazes.md) — nepojmenuj v promptu, co hned zakážeš"
+  },
+  {
+   "id": "mem:propose-content-not-code",
+   "soubor": "memory/propose-content-not-code.md",
+   "vlastni": "Cowork navrhuje obsah, ne hotovou funkci.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "33 ř. / 2239 B",
+   "prekryvy": [
+    "claude:lanes („CODE nerozhoduje o obsahu … Cowork kód nediagnostikuje“)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 1 commitů (2026-08-16 → 2026-08-16)",
+   "navrh": "ponechat",
+   "duvod": "Cowork-only; v CLAUDE.md jen princip.",
+   "radek_indexu": "- [propose-content-not-code.md](propose-content-not-code.md) — Cowork dodává obsah, kód ne"
+  },
+  {
+   "id": "mem:protokol-externi-dokumenty",
+   "soubor": "memory/protokol-externi-dokumenty.md",
+   "vlastni": "Jak přijímat externí patche/design docy a kam je zapsat.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "25 ř. / 1323 B",
+   "prekryvy": [
+    "memory/MEMORY.md vrstvy pravdy (intake = docs/inbox/)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 2 commitů (2026-11-19 → 2026-11-23)",
+   "navrh": "ponechat",
+   "duvod": "Unikátní postup.",
+   "radek_indexu": "- [protokol-externi-dokumenty.md](protokol-externi-dokumenty.md) — Protokol pro externí dokumenty (patche, design docy): jak je přijímat a kam zapsat"
+  },
+  {
+   "id": "mem:proveniencia-relay-neni-rozhodnuti",
+   "soubor": "memory/proveniencia-relay-neni-rozhodnuti.md",
+   "vlastni": "Tvrzení předané jinou session není rozhodnutí ownera.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "33 ř. / 1839 B",
+   "prekryvy": [
+    "mem:verify-agent-claims-about-code (handoff = žádost, ne fakt)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 1 commitů (2026-11-19 → 2026-11-19)",
+   "navrh": "sloučit s verify-agent-claims-about-code",
+   "duvod": "Totéž pravidlo z jiné strany.",
+   "radek_indexu": "- [proveniencia-relay-neni-rozhodnuti.md](proveniencia-relay-neni-rozhodnuti.md) — Tvrzení předané jinou session (relay) není rozhodnutí ownera — dohledat zdroj (lekce 2026-07-17)"
+  },
+  {
+   "id": "mem:read-design-before-voice-work",
+   "soubor": "memory/read-design-before-voice-work.md",
+   "vlastni": "Práce na hlasu začíná čtením DESIGN „Kdo je Rúnar“ + „Slova“.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "42 ř. / 2803 B",
+   "prekryvy": [
+    "pravidla_mapa „prompt a hlas“ (dělá přesně tohle při dotyku runar-character.js)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 2×; git: 8 commitů (2026-08-16 → 2026-11-23)",
+   "navrh": "zrušit",
+   "duvod": "Funkci převzal touch hook; pro laby mimo mapu je řešení rozšířit mapu, ne paměť.",
+   "radek_indexu": "- [read-design-before-voice-work.md](read-design-before-voice-work.md) — před hlasem/promptem RUNAR_DESIGN „Kdo je Rúnar\" + „Slova, která dáváme modelu\""
+  },
+  {
+   "id": "mem:read-the-check-before-push",
+   "soubor": "memory/read-the-check-before-push.md",
+   "vlastni": "Pipe do grep/tail zahodí exit kód; číst verdikt před push.",
+   "kdy_do_kontextu": "při ZÁPISU do souboru oblasti kontroly a hooky ['scripts/verify_*.js', 'smoke.py', 'hooks/**', 'scripts/protipriklady.py'] (touch hook: jednou za session, znovu po compactu); jinak jen řádek indexu",
+   "velikost": "23 ř. / 2489 B",
+   "prekryvy": [
+    "mem:bash-no-cd-prefix",
+    "hook:pravidla_pri_dotyku („grep … OK|FAIL … && jako podmínka“)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 1×; git: 5 commitů (2026-07-19 → 2026-10-11)",
+   "navrh": "ponechat",
+   "duvod": "V mapě (kontroly a hooky) + past v hooku.",
+   "radek_indexu": "- [read-the-check-before-push.md](read-the-check-before-push.md) — pipe do grepu zahodí exit kód; čti verdikt"
+  },
+  {
+   "id": "mem:read-token-from-clipboard",
+   "soubor": "memory/read-token-from-clipboard.md",
+   "vlastni": "Admin token pro eval načíst ze schránky sám.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "36 ř. / 1871 B",
+   "prekryvy": [],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 3 commitů (2026-08-16 → 2026-10-21)",
+   "navrh": "ponechat",
+   "duvod": "Unikátní provozní fakt.",
+   "radek_indexu": "- [read-token-from-clipboard.md](read-token-from-clipboard.md) — eval token si načti ze schránky sám"
+  },
+  {
+   "id": "mem:rekni-kterou-variantu-testujes",
+   "soubor": "memory/rekni-kterou-variantu-testujes.md",
+   "vlastni": "Před testem říct jednou větou, kterou variantu testuje; musí stát v docu.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "31 ř. / 2243 B",
+   "prekryvy": [
+    "docs/kostra/pokusy.json + api-guard RUNAR_POKUS (číslo pokusu)",
+    "mem:test-vstup-jako-v-produkci"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 3 commitů (2026-09-12 → 2026-11-23)",
+   "navrh": "přesunout k místu akce",
+   "duvod": "Od 2026-11-24 to z části vynucuje rejstřík pokusů + hlídač API.",
+   "radek_indexu": "- [rekni-kterou-variantu-testujes.md](rekni-kterou-variantu-testujes.md) — před testem řekni, kterou variantu testuješ"
+  },
+  {
+   "id": "mem:review-everything-first-pass",
+   "soubor": "memory/review-everything-first-pass.md",
+   "vlastni": "Revize textů: vše v obou jazycích napoprvé.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "17 ř. / 2222 B",
+   "prekryvy": [],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 2 commitů (2026-10-03 → 2026-10-03)",
+   "navrh": "ponechat",
+   "duvod": "Unikátní.",
+   "radek_indexu": "- [review-everything-first-pass.md](review-everything-first-pass.md) — revize textů: vše v obou jazycích napoprvé"
+  },
+  {
+   "id": "mem:rozkaz-a-studene-cteni-hranice",
+   "soubor": "memory/rozkaz-a-studene-cteni-hranice.md",
+   "vlastni": "„Look…“ ani fyzický důsledek nejsou porušení kánonu (rada / studené čtení).",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "35 ř. / 2855 B",
+   "prekryvy": [
+    "docs/kostra/kostra.json J3 („vstup do obrazu „Look closer…“ není rada“)",
+    "RUNAR_DESIGN (rejstřík)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 2×; git: 3 commitů (2026-09-23 → 2026-10-24)",
+   "navrh": "zrušit",
+   "duvod": "Kostra J3 to nese jako data a cituje zdroj.",
+   "radek_indexu": "- [rozkaz-a-studene-cteni-hranice.md](rozkaz-a-studene-cteni-hranice.md) — „Look…“ ani fyzický důsledek nejsou porušení kánonu"
+  },
+  {
+   "id": "mem:runar-api-key-file",
+   "soubor": "memory/runar-api-key-file.md",
+   "vlastni": "Anthropic klíč leží v souboru v ~/.claude (mimo repo), ownera o něj nežádat.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "24 ř. / 1432 B",
+   "prekryvy": [],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 2 commitů (2026-08-20 → 2026-10-11)",
+   "navrh": "ponechat",
+   "duvod": "Provozní fakt.",
+   "radek_indexu": "- [runar-api-key-file.md](runar-api-key-file.md) — Anthropic klíč v `~/.claude/runar-api-key.txt`, ownera nežádat"
+  },
+  {
+   "id": "mem:runar-not-public-yet",
+   "soubor": "memory/runar-not-public-yet.md",
+   "vlastni": "Rúnar není veřejně spuštěný; neposílat zákazníky Agndofy.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "15 ř. / 1016 B",
+   "prekryvy": [
+    "claude:§20 bod 4 (stav vlastní kód/produkce)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 2 commitů (2026-10-03 → 2026-10-03)",
+   "navrh": "ponechat",
+   "duvod": "Stavový fakt v paměti zastará; ověřit při každém použití (neověřeno, zda dnes platí).",
+   "radek_indexu": "- [runar-not-public-yet.md](runar-not-public-yet.md) — Rúnar není veřejně spuštěný"
+  },
+  {
+   "id": "mem:runar-project",
+   "soubor": "memory/runar-project.md",
+   "vlastni": "Náhrobek: vyprázdněný „sklad všeho“ s poučením, proč nesmí existovat shrnutí všeho.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře (není v indexu MEMORY.md)",
+   "velikost": "18 ř. / 1235 B",
+   "prekryvy": [
+    "DECISIONS 2026-07-18 (totéž poučení)",
+    "claude:§20 („shrnutí všeho“ nevzniká)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 10×; git: 6 commitů (2026-07-04 → 2026-10-11)",
+   "navrh": "zrušit",
+   "duvod": "Není v indexu, nic nevlastní; poučení stojí v §20 a DECISIONS 2026-07-18."
+  },
+  {
+   "id": "mem:runar-trunk-incremental-rule",
+   "soubor": "memory/runar-trunk-incremental-rule.md",
+   "vlastni": "Strom: přírůstkové změny kmene, snapshot před větší změnou.",
+   "kdy_do_kontextu": "při ZÁPISU do souboru oblasti strom ['v2/runar-tree-prod.js', 'v2/runar-tree.js', 'v2/tree-lab-*/**', 'build_*composer.py', 'build_tree_production.py'] (touch hook: jednou za session, znovu po compactu); jinak jen řádek indexu",
+   "velikost": "30 ř. / 1989 B",
+   "prekryvy": [
+    "RUNAR_TREE.md (vlastník stromu)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 2 commitů (2026-07-04 → 2026-10-11)",
+   "navrh": "ponechat",
+   "duvod": "V mapě (oblast „strom“).",
+   "radek_indexu": "- Strom (CODE-tree): [runar-trunk-incremental-rule.md](runar-trunk-incremental-rule.md) · [tree-roots-rebuild.md](tree-roots-rebuild.md)"
+  },
+  {
+   "id": "mem:sanity-check-measurements",
+   "soubor": "memory/sanity-check-measurements.md",
+   "vlastni": "Extrémně čisté číslo (0/N, 100 %) je red flag — ověřit protipříkladem.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "29 ř. / 2059 B",
+   "prekryvy": [
+    "claude:§25 B (nulová transformace)",
+    "mem:attack-the-metric-not-just-the-result",
+    "mem:jeden-vzorek-neni-vada"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 7×; git: 2 commitů (2026-08-08 → 2026-08-14)",
+   "navrh": "ponechat",
+   "duvod": "Jádro sloučeného „měření“ clusteru (jediný s konkrétním triggerem „0/N“).",
+   "radek_indexu": "- [sanity-check-measurements.md](sanity-check-measurements.md) — extrémní číslo = red flag; ověř protipříkladem"
+  },
+  {
+   "id": "mem:schranka-runar-gmail",
+   "soubor": "memory/schranka-runar-gmail.md",
+   "vlastni": "Schránka runar@: štítky, jen koncepty, nic neodeslat bez ano.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "49 ř. / 4832 B",
+   "prekryvy": [
+    "claude:§31 (odkaz)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 6×; git: 9 commitů (2026-10-10 → 2026-11-19)",
+   "navrh": "ponechat",
+   "duvod": "Unikátní; §31 na něj ukazuje. Mohl by být v mapě k zpravy_gmail.js.",
+   "radek_indexu": "- [schranka-runar-gmail.md](schranka-runar-gmail.md) — schránka runar@: štítky, jen koncepty, nic neodeslat bez ano"
+  },
+  {
+   "id": "mem:selhany-verifier-neni-vyvraceny-nalez",
+   "soubor": "memory/selhany-verifier-neni-vyvraceny-nalez.md",
+   "vlastni": "Spadlý verifier ≠ vyvrácený nález; počítat zvlášť.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "29 ř. / 1779 B",
+   "prekryvy": [
+    "claude:§19.2 (žádné tiché zelené)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 1 commitů (2026-09-22 → 2026-09-22)",
+   "navrh": "ponechat",
+   "duvod": "Konkrétní past ve workflow; vhodné k hlavičce workflow skriptů.",
+   "radek_indexu": "- [selhany-verifier-neni-vyvraceny-nalez.md](selhany-verifier-neni-vyvraceny-nalez.md) — spadlý agent ≠ vyvrácený nález",
+   "index_prilis_vagni": true
+  },
+  {
+   "id": "mem:soudce-vidi-jen-co-uzivatel",
+   "soubor": "memory/soudce-vidi-jen-co-uzivatel.md",
+   "vlastni": "Slepý soudce dostane jen to, co vidí uživatel; výstupy číst sám.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "23 ř. / 1881 B",
+   "prekryvy": [
+    "mem:gpt-rozbor-neni-zavazny",
+    "mem:you-neni-prohresek"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 1 commitů (2026-09-29 → 2026-09-29)",
+   "navrh": "ponechat",
+   "duvod": "Jádro sloučeného „soudci“.",
+   "radek_indexu": "- [soudce-vidi-jen-co-uzivatel.md](soudce-vidi-jen-co-uzivatel.md) — slepý soudce vidí jen to, co uživatel"
+  },
+  {
+   "id": "mem:strop-serveru-neni-narok",
+   "soubor": "memory/strop-serveru-neni-narok.md",
+   "vlastni": "Limit v proxy je horní mez, ne nárok tieru.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "23 ř. / 1959 B",
+   "prekryvy": [
+    "claude:Tier systém"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 3 commitů (2026-10-10 → 2026-11-23)",
+   "navrh": "ponechat",
+   "duvod": "Unikátní.",
+   "radek_indexu": "- [strop-serveru-neni-narok.md](strop-serveru-neni-narok.md) — limit v proxy ≠ nárok tieru"
+  },
+  {
+   "id": "mem:test-the-lever-that-binds",
+   "soubor": "memory/test-the-lever-that-binds.md",
+   "vlastni": "Než změříš páku, ověř, že výsledek opravdu drží.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "26 ř. / 1628 B",
+   "prekryvy": [
+    "claude:§25 A",
+    "mem:falsify-by-reversing-the-lever"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 2 commitů (2026-09-06 → 2026-09-06)",
+   "navrh": "sloučit s sanity-check-measurements",
+   "duvod": "Měřicí cluster; index „měň vazbu, která výsledek opravdu drží“ je bez otevření nesrozumitelný.",
+   "radek_indexu": "- [test-the-lever-that-binds.md](test-the-lever-that-binds.md) — měň vazbu, která výsledek opravdu drží",
+   "index_prilis_vagni": true
+  },
+  {
+   "id": "mem:test-vstup-jako-v-produkci",
+   "soubor": "memory/test-vstup-jako-v-produkci.md",
+   "vlastni": "Před testem formulace vytisknout jeden hotový prompt a porovnat s produkcí.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "32 ř. / 2539 B",
+   "prekryvy": [
+    "design:Slova („Jak se to ověřuje“ — doslova)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 3 commitů (2026-10-06 → 2026-10-11)",
+   "navrh": "zrušit",
+   "duvod": "„Slova“ to vlastní.",
+   "radek_indexu": "- [test-vstup-jako-v-produkci.md](test-vstup-jako-v-produkci.md) — test formulace: napřed jeden hotový prompt porovnej s produkcí"
+  },
+  {
+   "id": "mem:testovani-jedne-runy-je-zamer",
+   "soubor": "memory/testovani-jedne-runy-je-zamer.md",
+   "vlastni": "Owner testuje jednu runu opakovaně záměrně.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "22 ř. / 1553 B",
+   "prekryvy": [],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 1 commitů (2026-10-05 → 2026-10-05)",
+   "navrh": "ponechat",
+   "duvod": "Unikátní kontext.",
+   "radek_indexu": "- [testovani-jedne-runy-je-zamer.md](testovani-jedne-runy-je-zamer.md) — owner testuje jednu runu schválně"
+  },
+  {
+   "id": "mem:tree-roots-rebuild",
+   "soubor": "memory/tree-roots-rebuild.md",
+   "vlastni": "Strom: větve nikdy neshlukovat, kořen dev:0, tvrdý reload.",
+   "kdy_do_kontextu": "při ZÁPISU do souboru oblasti strom ['v2/runar-tree-prod.js', 'v2/runar-tree.js', 'v2/tree-lab-*/**', 'build_*composer.py', 'build_tree_production.py'] (touch hook: jednou za session, znovu po compactu); jinak jen řádek indexu",
+   "velikost": "24 ř. / 1698 B",
+   "prekryvy": [
+    "hook:runar-context pravidlo 1 („NIKDY neshlukovat vetve“)",
+    "RUNAR_TREE.md"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 1×; git: 3 commitů (2026-08-05 → 2026-10-11)",
+   "navrh": "ponechat",
+   "duvod": "V mapě (strom); SessionStart to opisuje všem session zbytečně.",
+   "radek_indexu": "- Strom (CODE-tree): [runar-trunk-incremental-rule.md](runar-trunk-incremental-rule.md) · [tree-roots-rebuild.md](tree-roots-rebuild.md)"
+  },
+  {
+   "id": "mem:ukladej-cteni-a-hlasy",
+   "soubor": "memory/ukladej-cteni-a-hlasy.md",
+   "vlastni": "Každé čtení i hlas z pokusu uložit s tím, z čeho vznikl.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "21 ř. / 1651 B",
+   "prekryvy": [
+    "hook:tree-guard stop → zaloha_cteni.js (automaticky)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 2 commitů (2026-10-29 → 2026-10-29)",
+   "navrh": "přesunout k místu akce",
+   "duvod": "Zálohu čtení dělá Stop hook; hlasy a „z čeho vzniklo“ neověřeno, zda stroj nese.",
+   "radek_indexu": "- [ukladej-cteni-a-hlasy.md](ukladej-cteni-a-hlasy.md) — každé čtení i hlas z pokusu uložit s tím, z čeho vznikl (archiv hlasů)"
+  },
+  {
+   "id": "mem:verify-agent-claims-about-code",
+   "soubor": "memory/verify-agent-claims-about-code.md",
+   "vlastni": "Handoff jiné session je žádost, ne fakt — ověřit každé tvrzení o kódu.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "48 ř. / 6288 B",
+   "prekryvy": [
+    "mem:proveniencia-relay-neni-rozhodnuti",
+    "claude:lanes („zastaralý CODE odmítne sám“)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 1×; git: 8 commitů (2026-07-18 → 2026-11-23)",
+   "navrh": "ponechat",
+   "duvod": "Jádro sloučení.",
+   "radek_indexu": "- [verify-agent-claims-about-code.md](verify-agent-claims-about-code.md) — handoff jiné session = žádost, ne fakt"
+  },
+  {
+   "id": "mem:vocab-natvrdo-a-migrace",
+   "soubor": "memory/vocab-natvrdo-a-migrace.md",
+   "vlastni": "Jak grepnout natvrdo zapsané vocab/tier termíny po přejmenování.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "32 ř. / 2071 B",
+   "prekryvy": [
+    "claude:§10, §13 („Migrace → grep starý text“)",
+    "mem:working-style („Tier hodnoty“)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 2 commitů (2026-11-19 → 2026-11-23)",
+   "navrh": "přesunout k místu akce",
+   "duvod": "Patří do mapy k runar-config.js (oblast „config“), kde se přejmenovává.",
+   "radek_indexu": "- [vocab-natvrdo-a-migrace.md](vocab-natvrdo-a-migrace.md) — Jak najít natvrdo zapsané vocab/tier termíny a po přejmenování ručně grepnout staré (k CLAUDE.md §13, §15)"
+  },
+  {
+   "id": "mem:vyznamy-run-historie-jen-zdroj",
+   "soubor": "memory/vyznamy-run-historie-jen-zdroj.md",
+   "vlastni": "Významy run hledáme nové; historie je zdroj, ne mez.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "20 ř. / 1587 B",
+   "prekryvy": [
+    "docs/kostra/kostra.json (významy run)",
+    "RUNAR_POPISY_RUN.md"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 2 commitů (2026-11-02 → 2026-11-03)",
+   "navrh": "přesunout k místu akce",
+   "duvod": "Obsahový kánon — k popisům run / kostře.",
+   "radek_indexu": "- [vyznamy-run-historie-jen-zdroj.md](vyznamy-run-historie-jen-zdroj.md) — významy run hledáme nové; historie je zdroj, ne mez"
+  },
+  {
+   "id": "mem:windows-ui-v-en",
+   "soubor": "memory/windows-ui-v-en.md",
+   "vlastni": "Owner má Windows v EN — názvy nabídek anglicky.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "15 ř. / 1033 B",
+   "prekryvy": [
+    "mem:nahledy-ownerovi-v-en"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 1 commitů (2026-10-14 → 2026-10-14)",
+   "navrh": "ponechat",
+   "duvod": "Jádro sloučení EN preferencí.",
+   "radek_indexu": "- [windows-ui-v-en.md](windows-ui-v-en.md) — owner má Windows v EN"
+  },
+  {
+   "id": "mem:work-efficiently-ask-if-simpler",
+   "soubor": "memory/work-efficiently-ask-if-simpler.md",
+   "vlastni": "Před těžkým nástrojem zvážit jednodušší cestu.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "30 ř. / 1807 B",
+   "prekryvy": [
+    "mem:cheapest-deciding-measurement-first",
+    "mem:function-not-ceremony"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 1×; git: 1 commitů (2026-08-20 → 2026-08-20)",
+   "navrh": "sloučit s cheapest-deciding-measurement-first",
+   "duvod": "Obecné; index nic konkrétního nespustí.",
+   "radek_indexu": "- [work-efficiently-ask-if-simpler.md](work-efficiently-ask-if-simpler.md) — před těžkým nástrojem: nejde to jednodušeji?",
+   "index_prilis_vagni": true
+  },
+  {
+   "id": "mem:working-style",
+   "soubor": "memory/working-style.md",
+   "vlastni": "Workflow ownera a Claude: pořadí sahání na cizí věc, Explore→Plan→Implement + kdy se ptát (nasazení), kam ukládat soubory, owner nedostává příkazy, konverzace se neztrácí.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře (MEMORY Session Start Protocol krok 2 je ruční); části opsané v SessionStart hooku",
+   "velikost": "246 ř. / 17379 B",
+   "prekryvy": [
+    "hook:runar-context („JAK SAHNOUT NA CIZI VEC“ = sekce „Pořadí“; „ZAPOMNEL JSI…“ = „Konverzace se neztrácí“)",
+    "mem:nasazeni-delam-sam (nasazení bez ptaní — ws je vlastník „kdy se ptát“)",
+    "mem:proceed-dont-ask, mem:find-a-gap-close-it-now (shrnuté v Explore→Plan)",
+    "hook:runar-zprava-check pravidlo 5 (= sekce „Ownerovi se neposílají příkazy“)",
+    "claude:§1/§11/§12 (sekce „Detail k §11/§12“)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 45×; git: 49 commitů (2026-07-04 → 2026-11-23)",
+   "navrh": "ponechat",
+   "duvod": "Nese věci, které CLAUDE.md nemá; ale není v kontextu (MEMORY krok 2 je ruční). Zastaralá věta: „SessionStart hook vypisuje mapu sáhneš na tohle“ — mapa se od 2026-10-11 přesunula do touch hooku (neopraveno).",
+   "radek_indexu": "- [working-style.md](working-style.md) — workflow, Python skripty, verifikace"
+  },
+  {
+   "id": "mem:write-for-owner-not-process",
+   "soubor": "memory/write-for-owner-not-process.md",
+   "vlastni": "Ownerovi výsledek a rozhodnutí, ne proces.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "38 ř. / 3253 B",
+   "prekryvy": [
+    "mem:full-path-and-numbered-lists",
+    "hook:runar-zprava-check (forma zprávy)"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 0×; git: 6 commitů (2026-07-30 → 2026-10-24)",
+   "navrh": "ponechat",
+   "duvod": "Jádro sloučeného „zpráva ownerovi“.",
+   "radek_indexu": "- [write-for-owner-not-process.md](write-for-owner-not-process.md) — ownerovi výsledek, ne proces"
+  },
+  {
+   "id": "mem:you-neni-prohresek",
+   "soubor": "memory/you-neni-prohresek.md",
+   "vlastni": "„you“ ve čtení není prohřešek; soudce, který ho hlásí, je vadný.",
+   "kdy_do_kontextu": "jen když ho Claude sám otevře; v kontextu je vždy jen řádek indexu v MEMORY.md (start; po compactu neověřeno)",
+   "velikost": "25 ř. / 1700 B",
+   "prekryvy": [
+    "mem:soudce-vidi-jen-co-uzivatel",
+    "mem:gpt-rozbor-neni-zavazny"
+   ],
+   "doklad_zachytil": "žádný doklad zachycení (paměť nic nevynutí); zmíněn v DECISIONS 1×; git: 2 commitů (2026-09-30 → 2026-10-24)",
+   "navrh": "sloučit s soudce-vidi-jen-co-uzivatel",
+   "duvod": "Soudcovský cluster.",
+   "radek_indexu": "- [you-neni-prohresek.md](you-neni-prohresek.md) — „you“ ve čtení není prohřešek"
+  }
+ ]
+}
