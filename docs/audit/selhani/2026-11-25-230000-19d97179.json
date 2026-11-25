@@ -1,0 +1,11 @@
+{
+ "cas": "2026-11-25 23:00:00",
+ "session": "19d97179-39e7-4098-bebb-c437e7df8e6e",
+ "lane": "CODE-read",
+ "citace": "4. velka chyba. hodne velka. vsechno musi byt usporadane tak aby se v tom dalo vyznat a ne nahodne. … ja to mam zapsane, ale pak mi to nic nerekne tak to ignorujes. porad dokola.",
+ "co": "P17 dostal znění s „holds“ (model ho opsal 3/5) a P20 vzal moderní významy z tabulky GPT vedené v kostře jako „neověřeno, nepoužito“; kdy a jak pokusy běžely, nešlo dohledat (P10 a P20 chyběly v logu).",
+ "kde_bydlelo": "RUNAR_DESIGN.md „Slova, která dáváme modelu“ bod 1 a 3 (od 2026-10-06); docs/kostra/kostra.json vyznamy.zkouseno (2026-11-24 20:57)",
+ "trida": "zapsáno-neukázáno",
+ "zabrani": "oblast „text pro model“ podle činnosti (pravidla_mapa.json, 40e3518), slova.json v hlídači API, zdroje_stav + pole zdroje u pokusu, záznam běhu docs/kostra/behy/ a jeden pokus = jeden příkaz (24c34d1)",
+ "_co": "Založeno ručně jako první záznam knihy selhání (hook runar-stiznost.py vznikl v témže tahu); rozbor příčin: docs/audit/2026-11-25-pamet-a-pravidla/."
+}

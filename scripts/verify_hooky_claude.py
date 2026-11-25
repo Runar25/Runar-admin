@@ -127,6 +127,24 @@ def over(d):
         r = sh(d, 'stop', {'session_id': SID, 'transcript_path': p2, 'stop_hook_active': False})
         ok('tree-guard stop předá zastavení z kontroly zpráv', r.returncode == 0 and 'PŘÍKAZY OWNEROVI' in r.stdout, r.stdout[:150] + r.stderr[-150:])
 
+        # 2026-11-25 (CODE-read, audit paměti, bod 12): kniha selhání — stížnost ownera se zapíše sama a nevyplněná zastaví konec tahu
+        tmps = tempfile.mkdtemp(prefix='verify-stiznost-')
+        senv = dict(os.environ, RUNAR_SELHANI_DIR=tmps)
+        r = py(d, 'runar-stiznost.py', {'prompt': 'tohle uz jsme delali, mas to zapsane a porad dokola', 'session_id': SID}, env=senv)
+        zaz = glob.glob(os.path.join(tmps, '*.json'))
+        ok('kniha selhání založí záznam ze stížnosti ownera', len(zaz) == 1 and 'KNIHA SELHÁNÍ' in r.stdout, r.stdout[:120] + str(zaz))
+        r = py(d, 'runar-stiznost.py', {'prompt': '18. ano 19. ano', 'session_id': SID + 'x'}, env=senv)
+        ok('kniha selhání nechá běžnou zprávu být', len(glob.glob(os.path.join(tmps, '*.json'))) == 1 and not r.stdout.strip(), r.stdout[:120])
+        stp = subprocess.run([sys.executable, '-X', 'utf8', d + '/runar-stiznost.py', 'stop'], input=json.dumps({'session_id': SID}), capture_output=True,
+                             text=True, encoding='utf-8', env=senv, timeout=60)
+        ok('nevyplněný záznam zastaví konec tahu', '"block"' in stp.stdout, stp.stdout[:120])
+        if zaz:
+            z = json.load(open(zaz[0], encoding='utf-8')); z.update(co='test', kde_bydlelo='nikde', trida='jiné', zabrani='test')
+            open(zaz[0], 'w', encoding='utf-8').write(json.dumps(z, ensure_ascii=False))
+        stp = subprocess.run([sys.executable, '-X', 'utf8', d + '/runar-stiznost.py', 'stop'], input=json.dumps({'session_id': SID}), capture_output=True,
+                             text=True, encoding='utf-8', env=senv, timeout=60)
+        ok('vyplněný záznam konec tahu pustí', not stp.stdout.strip(), stp.stdout[:120])
+        shutil.rmtree(tmps, ignore_errors=True)
         r = py(d, 'compact-backup.py', {'transcript_path': 'C:/neexistuje-verify-hooky.jsonl', 'session_id': SID})
         ok('záloha přepisu bez přepisu nespadne', r.returncode == 0, r.stderr[-150:])
     except Exception as e:
