@@ -56,9 +56,14 @@ def rel(p):
     return p[len(rlo):] if lo.startswith(rlo) else None
 
 
-def oblasti_pro(cesty_rel, text_volny, mapa):
+def oblasti_pro(cesty_rel, text_volny, mapa, obsah=''):
+    # "obsah" (regex v mapě, od 2026-11-25): oblast podle ČINNOSTI, ne složky — text pro model se píše v kterémkoli labu i ve scratchpadu.
+    # Audit docs/audit/2026-11-25-pamet-a-pravidla/: pojistky po složkách nechaly každý nový lab bez pravidel (V3 11-04 → v2-z-V3 11-11 →
+    # kostra 11-25: „This holds“ opsáno, ačkoli RUNAR_DESIGN „Slova“ bod 1 to říká od 2026-10-06).
     hit = []
     for o in mapa['oblasti']:
+        if o.get('obsah') and obsah and re.search(o['obsah'], obsah):
+            hit.append(o); continue
         for g in o['cesty']:
             if any(glob_re(g).match(c) for c in cesty_rel) or (text_volny and glob_re(g, True).search(text_volny)):
                 hit.append(o); break
@@ -451,6 +456,7 @@ def rozhodni(vstup):
     if tool in PISE:
         r = rel(inp.get('file_path') or inp.get('notebook_path'))
         cesty, volny = ([r] if r else []), ''
+        obsah = str(inp.get('content') or inp.get('new_string') or inp.get('new_source') or '')
     elif tool in SHELL:
         pp = pasti(str(inp.get('command', '')))
         if pp: return '\n\n'.join(pp) + '\n\n(Hook pravidla_pri_dotyku.py — pasti v příkazech)'
@@ -463,11 +469,11 @@ def rozhodni(vstup):
                     'sdílené soubory jen přes commit_vlastni, ten bere jen zápisy ze zapis()), a vracet ji `git checkout` by smazalo i cizí\n'
                     'necommitnuté kusy. Místo open(…, "w") v skriptu: s = cv.cti(soubor, R); …; cv.zapis(soubor, s, "<CODE-lane>", R).\n\n'
                     '(Hook pravidla_pri_dotyku.py — sdílené soubory; nahlásil CODE-tree 2026-10-11)')
-        if not volny: return None
+        obsah = KOD_SKRIPTU + chr(10) + str(inp.get('command', ''))
     else:
         return None
     mapa = json.loads(cti(MAPA))
-    hit = oblasti_pro(cesty, volny, mapa)
+    hit = oblasti_pro(cesty, volny, mapa, obsah)
     if not hit: return None
     p, s = nacti_stav(vstup.get('session_id') or 'nosid')
     projdi_prepis(vstup.get('transcript_path'), s)
@@ -696,6 +702,14 @@ def samotest():
     js11 = os.path.join(STAV, 'p11.js')
     chk('57. escape v .js (ne Python) → §11 nezastaví',
         (lambda d: d is None or '§11' not in d)(V('Write', sid='p11c', file_path=js11, content='s = "' + B + 'u00feetta"' + chr(10))))
+    # 58–61 (2026-11-25, audit docs/audit/2026-11-25-pamet-a-pravidla/): oblast podle ČINNOSTI — text pro model kdekoli (i scratchpad, nový lab)
+    sk = os.path.join(STAV, 'Temp', 'claude', 'zkouska.js')
+    chk('58. Write skládače promptu do scratchpadu → ukáže „Slova, která dáváme modelu“',
+        (lambda d: d and 'text pro model' in d and 'Slova, která dáváme modelu' in d)(V('Write', sid='t1', file_path=sk, content="const v = require('vypis_v2'); v.postav({runa:'Fehu'})")))
+    chk('59. Write obyčejného skriptu do scratchpadu → projde', V('Write', sid='t2', file_path=sk, content='console.log(1)') is None)
+    chk('60. zápis do nového labu docs/eval/ → oblast text pro model',
+        (lambda d: d and 'text pro model' in d)(V('Edit', sid='t3', file_path=R + '/docs/eval/2099-01-01-novy/x.md', new_string='a')))
+    chk('61. příkaz s RUNAR_POKUS= → oblast text pro model', (lambda d: d and 'text pro model' in d)(V('Bash', sid='t4', command='RUNAR_POKUS=P17 node x.js')))
     for jm, v in ok: print(('OK    ' if v else 'FAIL  ') + jm)
     return 0 if all(v for _, v in ok) else 1
 

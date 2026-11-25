@@ -1,137 +1,353 @@
 {
-  "_proc": "Jediná mapa „sáhneš na tohle → platí tahle pravidla“. Čte ji hook pravidla_pri_dotyku.py (ukáže pravidla při prvním dotyku v session) a kontroluje smoke (verify_pravidla_mapa.js). Jen odkazy (§, nadpis, paměť, hlavička kontroly) — žádný opsaný text, ten hook čte živě. KUKY 2026-10-11: „žádná session nekontroluje, jestli to pravidlo existuje, takže si ty pravidla ani na začátku nečtou… ať je automaticky čtou, jakmile se jich dotknou.“ DECISIONS 2026-10-11.",
-  "oblasti": [
+ "_proc": "Jediná mapa „sáhneš na tohle → platí tahle pravidla“. Čte ji hook pravidla_pri_dotyku.py (ukáže pravidla při prvním dotyku v session) a kontroluje smoke (verify_pravidla_mapa.js). Jen odkazy (§, nadpis, paměť, hlavička kontroly) — žádný opsaný text, ten hook čte živě. KUKY 2026-10-11: „žádná session nekontroluje, jestli to pravidlo existuje, takže si ty pravidla ani na začátku nečtou… ať je automaticky čtou, jakmile se jich dotknou.“ DECISIONS 2026-10-11.",
+ "oblasti": [
+  {
+   "oblast": "pravidla a docs",
+   "cesty": [
+    "CLAUDE.md",
+    "memory/**/*.md",
+    "RUNAR_*.md"
+   ],
+   "pravidla": [
+    "§20",
+    "§16",
+    "§28"
+   ],
+   "hlavicky": [
+    "scripts/utils/commit_vlastni.py"
+   ],
+   "uz_vime": true
+  },
+  {
+   "oblast": "JS ve v2",
+   "cesty": [
+    "v2/*.js"
+   ],
+   "pravidla": [
+    "§1",
+    "§10",
+    "§13",
+    "§18"
+   ]
+  },
+  {
+   "oblast": "překlady",
+   "cesty": [
+    "v2/runar-translations.js"
+   ],
+   "pravidla": [
+    "§2",
+    "§31"
+   ],
+   "pamet": [
+    "edit-tool-escapes-new-text"
+   ]
+  },
+  {
+   "oblast": "prompt a hlas",
+   "cesty": [
+    "v2/runar-character.js"
+   ],
+   "pravidla": [
+    "§2",
+    "§25"
+   ],
+   "docs": [
     {
-      "oblast": "pravidla a docs",
-      "cesty": ["CLAUDE.md", "memory/**/*.md", "RUNAR_*.md"],
-      "pravidla": ["§20", "§16", "§28"],
-      "hlavicky": ["scripts/utils/commit_vlastni.py"],
-      "uz_vime": true
+     "soubor": "RUNAR_DESIGN.md",
+     "nadpis": "Kdo je Rúnar"
     },
     {
-      "oblast": "JS ve v2",
-      "cesty": ["v2/*.js"],
-      "pravidla": ["§1", "§10", "§13", "§18"]
-    },
-    {
-      "oblast": "překlady",
-      "cesty": ["v2/runar-translations.js"],
-      "pravidla": ["§2", "§31"],
-      "pamet": ["edit-tool-escapes-new-text"]
-    },
-    {
-      "oblast": "prompt a hlas",
-      "cesty": ["v2/runar-character.js"],
-      "pravidla": ["§2", "§25"],
-      "docs": [
-        {"soubor": "RUNAR_DESIGN.md", "nadpis": "Kdo je Rúnar"},
-        {"soubor": "RUNAR_DESIGN.md", "nadpis": "Slova, která dáváme modelu"}
-      ],
-      "pamet": ["oprava-promptu-odebira-vadu"]
-    },
-    {
-      "oblast": "config",
-      "cesty": ["v2/runar-config.js"],
-      "pravidla": ["§10"]
-    },
-    {
-      "oblast": "lab výklad z V3 do v2",
-      "_proc": "KUKY 2026-11-14: ukázky čtení porušily věci dávno změřené a zapsané (Imagine u všech, Fehu jako dávání, nevěrohodné obrazy) — „něco otestujeme, zapíšeme a ty to ignoruješ“. Při prvním dotyku labu se vypíše postup (kam se dívat napřed, v2 skládání obrazu první) a kontroly před ukázkou.",
-      "cesty": ["docs/eval/2026-11-09-v2-vyklad-z-v3/**"],
-      "pravidla": ["§24", "§25"],
-      "docs": [
-        {"soubor": "docs/eval/2026-11-09-v2-vyklad-z-v3/postup.md", "nadpis": "1. Kam se dívat, v tomhle pořadí"},
-        {"soubor": "docs/eval/2026-11-09-v2-vyklad-z-v3/postup.md", "nadpis": "2. Než owner uvidí ukázku"},
-        {"soubor": "RUNAR_DESIGN.md", "nadpis": "Délka a tvar obrazu"}
-      ],
-      "hlavicky": ["docs/eval/2026-11-09-v2-vyklad-z-v3/kontrola_ukazky.py", "scripts/verify_kostra.js"]
-    },
-    {
-      "oblast": "kostra čtení a rejstřík pokusů",
-      "_proc": "KUKY 2026-11-23: „jakmile sáhneš na kostru, tak to musíš zjistit, ať tam nezapisuješ znovu … že tam máš něco napsat a kam“ · „zkouška by měla mít jméno nebo číslo“. Kostra a pokusy jsou data v docs/kostra/; při prvním dotyku se vypíše, jak hledat, kam psát a jak kontrolovat.",
-      "cesty": ["docs/kostra/**", "docs/eval/2026-11-23-kostra-cteni/**"],
-      "pravidla": ["§20", "§24", "§25"],
-      "hlavicky": ["scripts/verify_kostra.js"]
-    },
-    {
-      "oblast": "lab V3 (prompt čtení)",
-      "_proc": "KUKY 2026-11-04: lab V3 opakovaně zapomínal ownerova rozhodnutí (moderní významy, Agndofa, povaha) — ležela jen v chatu. Platné zadání a rozhodnutí o znění charakteru se vypíšou při prvním dotyku labu.",
-      "cesty": ["docs/eval/2026-10-23-v3-charakter/**"],
-      "pravidla": ["§24", "§25"],
-      "docs": [
-        {"soubor": "docs/eval/2026-10-23-v3-charakter/zadani-v3.md", "nadpis": "A. Stavba čtení"},
-        {"soubor": "docs/eval/2026-10-23-v3-charakter/zadani-v3.md", "nadpis": "B. Významy run"},
-        {"soubor": "docs/eval/2026-10-23-v3-charakter/zadani-v3.md", "nadpis": "C. Obrazy"},
-        {"soubor": "docs/eval/2026-10-23-v3-charakter/zadani-v3.md", "nadpis": "D. Postup"},
-        {"soubor": "docs/eval/2026-10-23-v3-charakter/zadani-v3.md", "nadpis": "F. Starší pokyny"},
-        {"soubor": "docs/eval/2026-10-23-v3-charakter/definice-runara.md", "nadpis": "6e. Oprava kola 3"},
-        {"soubor": "RUNAR_DESIGN.md", "nadpis": "Slova, která dáváme modelu"}
-      ]
-    },
-    {
-      "oblast": "statické stránky",
-      "cesty": ["v2/runar-help.html", "v2/runar-privacy.html"],
-      "pravidla": ["§2", "§31"],
-      "hlavicky": ["scripts/verify_page_copies.js"]
-    },
-    {
-      "oblast": "web therunekeeper.com",
-      "cesty": ["web/site/**"],
-      "pravidla": ["§2", "§10", "§20", "§31"],
-      "hlavicky": ["scripts/verify_web_hlavicky.js", "scripts/web_nasad.py"]
-    },
-    {
-      "oblast": "UI readeru a shrine",
-      "cesty": ["v2/runar-reader.html", "v2/runar-reader.css", "v2/runar-shrine.html"],
-      "pravidla": ["§5", "§32", "§31"],
-      "pamet": ["match-existing-visual-first"],
-      "hlavicky": ["scripts/verify_komponenty.js"]
-    },
-    {
-      "oblast": "edge funkce",
-      "cesty": ["supabase/functions/**"],
-      "pravidla": ["§31", "§19"],
-      "hlavicky": ["scripts/verify_edge_imports.js", "scripts/verify_admin_emails.js"]
-    },
-    {
-      "oblast": "e-maily",
-      "cesty": ["supabase/functions/_shared/ops_souhrn.ts", "supabase/functions/ops-watch/**", "supabase/functions/waitlist-join/**", "supabase/templates/**"],
-      "pravidla": ["§31"],
-      "pamet": ["emaily-kratke"]
-    },
-    {
-      "oblast": "SQL a databáze",
-      "cesty": ["sql/**"],
-      "docs": [{"soubor": "CLAUDE.md", "nadpis": "DB — user_profiles"}]
-    },
-    {
-      "oblast": "strom",
-      "cesty": ["v2/runar-tree-prod.js", "v2/runar-tree.js", "v2/tree-lab-*/**", "build_*composer.py", "build_tree_production.py"],
-      "docs": [
-        {"soubor": "RUNAR_TREE.md", "nadpis": "2. IDENTITA"},
-        {"soubor": "RUNAR_TREE.md", "nadpis": "3. ZÓNY"},
-        {"soubor": "RUNAR_TREE.md", "nadpis": "8. STAVBA"}
-      ],
-      "pamet": ["runar-trunk-incremental-rule", "tree-roots-rebuild"]
-    },
-    {
-      "oblast": "kontroly a hooky",
-      "cesty": ["scripts/verify_*.js", "smoke.py", "hooks/**", "scripts/protipriklady.py"],
-      "pravidla": ["§30"],
-      "hlavicky": ["scripts/protipriklady.py"],
-      "pamet": ["guard-test-the-lifecycle", "read-the-check-before-push"]
-    },
-    {
-      "oblast": "tvorba obrazů",
-      "_proc": "KUKY 2026-11-14: „proč je teda tvoříme špatně? jak je máme tvořit lépe?“ — obrazy vznikaly z věty popisu a kontrola „která runa“ je pouštěla (Isa: padající sníh jako nehybnost). Pravidla ležela na pěti místech; při prvním dotyku nástrojů brány nebo postupu se vypíše pořadí kroků a zkoušek.",
-      "cesty": ["docs/eval/2026-09-26-obrazy/**", "docs/postup-obraz.md"],
-      "pravidla": ["§23", "§24"],
-      "docs": [
-        {"soubor": "docs/postup-obraz.md", "nadpis": "1. Než obraz napíšu"},
-        {"soubor": "docs/postup-obraz.md", "nadpis": "2. Když obraz píšu"},
-        {"soubor": "docs/postup-obraz.md", "nadpis": "3. Zkoušky, než obraz uvidí owner"}
-      ],
-      "hlavicky": ["docs/eval/2026-09-26-obrazy/kontrola_tvaru.py"]
+     "soubor": "RUNAR_DESIGN.md",
+     "nadpis": "Slova, která dáváme modelu"
     }
-  ]
+   ],
+   "pamet": [
+    "oprava-promptu-odebira-vadu"
+   ]
+  },
+  {
+   "oblast": "config",
+   "cesty": [
+    "v2/runar-config.js"
+   ],
+   "pravidla": [
+    "§10"
+   ]
+  },
+  {
+   "oblast": "lab výklad z V3 do v2",
+   "_proc": "KUKY 2026-11-14: ukázky čtení porušily věci dávno změřené a zapsané (Imagine u všech, Fehu jako dávání, nevěrohodné obrazy) — „něco otestujeme, zapíšeme a ty to ignoruješ“. Při prvním dotyku labu se vypíše postup (kam se dívat napřed, v2 skládání obrazu první) a kontroly před ukázkou.",
+   "cesty": [
+    "docs/eval/2026-11-09-v2-vyklad-z-v3/**"
+   ],
+   "pravidla": [
+    "§24",
+    "§25"
+   ],
+   "docs": [
+    {
+     "soubor": "docs/eval/2026-11-09-v2-vyklad-z-v3/postup.md",
+     "nadpis": "1. Kam se dívat, v tomhle pořadí"
+    },
+    {
+     "soubor": "docs/eval/2026-11-09-v2-vyklad-z-v3/postup.md",
+     "nadpis": "2. Než owner uvidí ukázku"
+    },
+    {
+     "soubor": "RUNAR_DESIGN.md",
+     "nadpis": "Délka a tvar obrazu"
+    }
+   ],
+   "hlavicky": [
+    "docs/eval/2026-11-09-v2-vyklad-z-v3/kontrola_ukazky.py",
+    "scripts/verify_kostra.js"
+   ]
+  },
+  {
+   "oblast": "kostra čtení a rejstřík pokusů",
+   "_proc": "KUKY 2026-11-23: „jakmile sáhneš na kostru, tak to musíš zjistit, ať tam nezapisuješ znovu … že tam máš něco napsat a kam“ · „zkouška by měla mít jméno nebo číslo“. Kostra a pokusy jsou data v docs/kostra/; při prvním dotyku se vypíše, jak hledat, kam psát a jak kontrolovat.",
+   "cesty": [
+    "docs/kostra/**",
+    "docs/eval/2026-11-23-kostra-cteni/**"
+   ],
+   "pravidla": [
+    "§20",
+    "§24",
+    "§25"
+   ],
+   "hlavicky": [
+    "scripts/verify_kostra.js"
+   ]
+  },
+  {
+   "oblast": "lab V3 (prompt čtení)",
+   "_proc": "KUKY 2026-11-04: lab V3 opakovaně zapomínal ownerova rozhodnutí (moderní významy, Agndofa, povaha) — ležela jen v chatu. Platné zadání a rozhodnutí o znění charakteru se vypíšou při prvním dotyku labu.",
+   "cesty": [
+    "docs/eval/2026-10-23-v3-charakter/**"
+   ],
+   "pravidla": [
+    "§24",
+    "§25"
+   ],
+   "docs": [
+    {
+     "soubor": "docs/eval/2026-10-23-v3-charakter/zadani-v3.md",
+     "nadpis": "A. Stavba čtení"
+    },
+    {
+     "soubor": "docs/eval/2026-10-23-v3-charakter/zadani-v3.md",
+     "nadpis": "B. Významy run"
+    },
+    {
+     "soubor": "docs/eval/2026-10-23-v3-charakter/zadani-v3.md",
+     "nadpis": "C. Obrazy"
+    },
+    {
+     "soubor": "docs/eval/2026-10-23-v3-charakter/zadani-v3.md",
+     "nadpis": "D. Postup"
+    },
+    {
+     "soubor": "docs/eval/2026-10-23-v3-charakter/zadani-v3.md",
+     "nadpis": "F. Starší pokyny"
+    },
+    {
+     "soubor": "docs/eval/2026-10-23-v3-charakter/definice-runara.md",
+     "nadpis": "6e. Oprava kola 3"
+    },
+    {
+     "soubor": "RUNAR_DESIGN.md",
+     "nadpis": "Slova, která dáváme modelu"
+    }
+   ]
+  },
+  {
+   "oblast": "statické stránky",
+   "cesty": [
+    "v2/runar-help.html",
+    "v2/runar-privacy.html"
+   ],
+   "pravidla": [
+    "§2",
+    "§31"
+   ],
+   "hlavicky": [
+    "scripts/verify_page_copies.js"
+   ]
+  },
+  {
+   "oblast": "web therunekeeper.com",
+   "cesty": [
+    "web/site/**"
+   ],
+   "pravidla": [
+    "§2",
+    "§10",
+    "§20",
+    "§31"
+   ],
+   "hlavicky": [
+    "scripts/verify_web_hlavicky.js",
+    "scripts/web_nasad.py"
+   ]
+  },
+  {
+   "oblast": "UI readeru a shrine",
+   "cesty": [
+    "v2/runar-reader.html",
+    "v2/runar-reader.css",
+    "v2/runar-shrine.html"
+   ],
+   "pravidla": [
+    "§5",
+    "§32",
+    "§31"
+   ],
+   "pamet": [
+    "match-existing-visual-first"
+   ],
+   "hlavicky": [
+    "scripts/verify_komponenty.js"
+   ]
+  },
+  {
+   "oblast": "edge funkce",
+   "cesty": [
+    "supabase/functions/**"
+   ],
+   "pravidla": [
+    "§31",
+    "§19"
+   ],
+   "hlavicky": [
+    "scripts/verify_edge_imports.js",
+    "scripts/verify_admin_emails.js"
+   ]
+  },
+  {
+   "oblast": "e-maily",
+   "cesty": [
+    "supabase/functions/_shared/ops_souhrn.ts",
+    "supabase/functions/ops-watch/**",
+    "supabase/functions/waitlist-join/**",
+    "supabase/templates/**"
+   ],
+   "pravidla": [
+    "§31"
+   ],
+   "pamet": [
+    "emaily-kratke"
+   ]
+  },
+  {
+   "oblast": "SQL a databáze",
+   "cesty": [
+    "sql/**"
+   ],
+   "docs": [
+    {
+     "soubor": "CLAUDE.md",
+     "nadpis": "DB — user_profiles"
+    }
+   ]
+  },
+  {
+   "oblast": "strom",
+   "cesty": [
+    "v2/runar-tree-prod.js",
+    "v2/runar-tree.js",
+    "v2/tree-lab-*/**",
+    "build_*composer.py",
+    "build_tree_production.py"
+   ],
+   "docs": [
+    {
+     "soubor": "RUNAR_TREE.md",
+     "nadpis": "2. IDENTITA"
+    },
+    {
+     "soubor": "RUNAR_TREE.md",
+     "nadpis": "3. ZÓNY"
+    },
+    {
+     "soubor": "RUNAR_TREE.md",
+     "nadpis": "8. STAVBA"
+    }
+   ],
+   "pamet": [
+    "runar-trunk-incremental-rule",
+    "tree-roots-rebuild"
+   ]
+  },
+  {
+   "oblast": "kontroly a hooky",
+   "cesty": [
+    "scripts/verify_*.js",
+    "smoke.py",
+    "hooks/**",
+    "scripts/protipriklady.py"
+   ],
+   "pravidla": [
+    "§30"
+   ],
+   "hlavicky": [
+    "scripts/protipriklady.py"
+   ],
+   "pamet": [
+    "guard-test-the-lifecycle",
+    "read-the-check-before-push"
+   ]
+  },
+  {
+   "oblast": "tvorba obrazů",
+   "_proc": "KUKY 2026-11-14: „proč je teda tvoříme špatně? jak je máme tvořit lépe?“ — obrazy vznikaly z věty popisu a kontrola „která runa“ je pouštěla (Isa: padající sníh jako nehybnost). Pravidla ležela na pěti místech; při prvním dotyku nástrojů brány nebo postupu se vypíše pořadí kroků a zkoušek.",
+   "cesty": [
+    "docs/eval/2026-09-26-obrazy/**",
+    "docs/postup-obraz.md"
+   ],
+   "pravidla": [
+    "§23",
+    "§24"
+   ],
+   "docs": [
+    {
+     "soubor": "docs/postup-obraz.md",
+     "nadpis": "1. Než obraz napíšu"
+    },
+    {
+     "soubor": "docs/postup-obraz.md",
+     "nadpis": "2. Když obraz píšu"
+    },
+    {
+     "soubor": "docs/postup-obraz.md",
+     "nadpis": "3. Zkoušky, než obraz uvidí owner"
+    }
+   ],
+   "hlavicky": [
+    "docs/eval/2026-09-26-obrazy/kontrola_tvaru.py"
+   ]
+  },
+  {
+   "oblast": "text pro model (zkoušky, laby, pokusy)",
+   "_proc": "Audit 2026-11-25 (docs/audit/2026-11-25-pamet-a-pravidla/): 52 ze 116 ownerových stížností „máš to zapsané“ = zapsáno, ale ve chvíli práce neukázáno; pojistky po složkách nechaly každý nový lab bez pravidel (V3 → v2-z-V3 → kostra). Tahle oblast se najde podle ČINNOSTI: zápis do kteréhokoli labu, kostry, i skript ve scratchpadu, který skládá prompt nebo volá model. Owner 2026-11-25 „18. ano“.",
+   "cesty": [
+    "docs/eval/**",
+    "docs/kostra/**"
+   ],
+   "obsah": "vypis_v2|\\.postav\\(|buildReadingPrompt|buildSysPrompt|RUNAR_POKUS=|DRAWN RUNE|End on one |/v1/responses|chat/completions|messages\\.create",
+   "pravidla": [
+    "§24",
+    "§25"
+   ],
+   "docs": [
+    {
+     "soubor": "RUNAR_DESIGN.md",
+     "nadpis": "Slova, která dáváme modelu"
+    }
+   ],
+   "hlavicky": [
+    "scripts/verify_kostra.js"
+   ]
+  }
+ ]
 }

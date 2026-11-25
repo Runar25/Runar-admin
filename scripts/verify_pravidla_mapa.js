@@ -30,6 +30,14 @@ for (const o of mapa.oblasti) {
   for (const p of o.pamet || []) if (!fs.existsSync(path.join(R, 'memory', p + '.md'))) vady.push(jm + ': paměť memory/' + p + '.md neexistuje');
   for (const h of o.hlavicky || []) if (!fs.existsSync(path.join(R, h))) vady.push(jm + ': hlavička ' + h + ' neexistuje');
 }
+// 2026-11-25 (CODE-read, audit docs/audit/2026-11-25-pamet-a-pravidla/): každý NOVÝ lab musí dosáhnout na RUNAR_DESIGN „Slova, která dáváme
+// modelu“ — pojistky po složkách nechávaly nový lab bez pravidel. Zkouší se vymyšlená složka, kterou žádná oblast nevyjmenovává.
+{
+  const novy = 'docs/eval/2099-01-01-novy-lab/zkouska.js';
+  const kryje = mapa.oblasti.filter((o) => o.cesty.some((g) => globRe(g).test(novy)) && (o.docs || []).some((d) => d.nadpis.startsWith('Slova, která dáváme modelu')));
+  if (!kryje.length) vady.push('nový lab (' + novy + ') nedosáhne na RUNAR_DESIGN „Slova, která dáváme modelu“ — chybí oblast pro docs/eval/**');
+  for (const o of mapa.oblasti) if (o.obsah) { try { new RegExp(o.obsah); } catch (e) { vady.push('„' + o.oblast + '“: regex obsah se nedá přeložit'); } }
+}
 let test = '';
 try { test = cp.execFileSync('python', ['-X', 'utf8', process.env.PRAVIDLA_HOOK || path.join(R, 'scripts/utils/pravidla_pri_dotyku.py'), '--test'], { cwd: R, encoding: 'utf8', env: Object.assign({}, process.env, { RUNAR_ROOT: R }) }); }
 catch (e) { test = String(e.stdout || '') + '\nFAIL  samotest hooku spadl'; }
