@@ -39,8 +39,12 @@ def _rel(R, path):
     return os.path.relpath(os.path.abspath(os.path.join(R, path)), R).replace(os.sep, '/')
 
 def _store(R, lane):
+    # 2026-11-26 (CODE-read): záznam je per SESSION, ne jen per lane. Dvě session pod CODE-read (read + Rúnar V4) sdílely
+    # .git/runar-vlastni/CODE-read/ a commit jedné vzal i zápisy druhé (e2ae58f → cef2446). Claude Code dává každé session
+    # CLAUDE_CODE_SESSION_ID; bez něj (ruční spuštění, test) zůstává klíč jen lane. RUNAR_VLASTNI_SID přebije (test).
+    sid = (os.environ.get('RUNAR_VLASTNI_SID') or os.environ.get('CLAUDE_CODE_SESSION_ID') or '').strip()
     gd = git(['rev-parse', '--git-dir'], R).stdout.decode().strip()
-    d = os.path.join(gd if os.path.isabs(gd) else os.path.join(R, gd), 'runar-vlastni', lane)
+    d = os.path.join(gd if os.path.isabs(gd) else os.path.join(R, gd), 'runar-vlastni', lane, *([sid[:8]] if sid else []))
     os.makedirs(d, exist_ok=True)
     return d
 
@@ -239,6 +243,19 @@ def _test():
                 uprav('u.md', 'T', st, nv, R); check(False, 'uprav měl odmítnout (' + co + ' výskyt)')
             except SystemExit as e:
                 check('nic nezměněno' in str(e) and rd('u.md') == 'V1\nU2\nV3\nU2x U2x\n', 'uprav: ' + co + ' výskyt → odmítnut, soubor beze změny')
+        # 9) dvě session v JEDNÉ lane (2026-11-26, read + Rúnar V4): commit session A nese jen zápisy A, zápis B zůstane B
+        puvodni = os.environ.get('RUNAR_VLASTNI_SID')
+        try:
+            os.environ['RUNAR_VLASTNI_SID'] = 'sessionA'; zapis('sa.md', 'A' + NL_, 'T', R)
+            os.environ['RUNAR_VLASTNI_SID'] = 'sessionB'; zapis('sb.md', 'B' + NL_, 'T', R)
+            os.environ['RUNAR_VLASTNI_SID'] = 'sessionA'; commit('T', msg, R)
+            zm = sh('diff-tree', '--no-commit-id', '--name-only', '-r', 'HEAD').stdout.decode().split()
+            check(zm == ['sa.md'], 'dvě session v jedné lane: commit A nese jen sa.md (ne zápis B)')
+            os.environ['RUNAR_VLASTNI_SID'] = 'sessionB'
+            check(len(_load(_store(R, 'T'))) == 1, 'zápis session B zůstal v jejím záznamu')
+        finally:
+            if puvodni is None: os.environ.pop('RUNAR_VLASTNI_SID', None)
+            else: os.environ['RUNAR_VLASTNI_SID'] = puvodni
     finally:
         shutil.rmtree(R, ignore_errors=True)
     print('✅ commit_vlastni --test: ' + str(len(ok)) + ' kontrol' + NL_ + NL_.join('   · ' + x for x in ok))
