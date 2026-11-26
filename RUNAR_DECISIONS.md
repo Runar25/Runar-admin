@@ -13760,3 +13760,12 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   (`docs/eval/2026-11-26-v4-sfery/runa-dne.md`); rozhovor ownera s Gemini o runě dne přeposílá CODE-tune do V4; CODE-tune hotové věty
   nasadí do `runa_dne_knihovna.mjs`. Ukázku Kenaz podle (7) a poznámku k *kaun* (neověřeno) dostal lab V4 zprávou.
 - Affected doc(s): žádný další — runa-dne.md v labu V4 podle (8) neměl být měněn; byl-li, vrátí ho V4 (předáno zprávou).
+
+## 2026-11-26 (10) — V4: runa dne začíná třetí osobou; Kenaz bez sféry vředu / horečky; sféry v Kolekci až podle ukázky
+
+- **Rozhodl:** owner 2026-11-26 k otázkám labu V4: *„1. ano, začneme 3. osobou. 2. koukneme na to, jak to bude vypadat. 3. vředu nebo horečky —
+  obojí mi zní divně. Máš to správně.“*
+- **Co:** (1) věty runy dne V4 se píšou ve třetí osobě (start; varianty s „you/today“ zatím ne); (2) Kolekce run jako hlubší vrstva se sférami —
+  napřed ukázka, pak rozhodnutí; (3) Kenaz nedostane sféru *kaun* (vřed, horečka; návrh Gemini Fever & Exposure) — o sféře rozhoduje owner,
+  ne historický zdroj (paměť `vyznamy-run-historie-jen-zdroj`).
+- Affected doc(s): `docs/eval/2026-11-26-v4-sfery/kostra-v4.md`, `runa-dne.md` — v témže commitu.
