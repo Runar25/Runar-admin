@@ -13667,4 +13667,5 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno:** `verify_hooky_claude.py` 28 případů + samotest · `pravidla_pri_dotyku.py --test` 62 · `verify_kostra.js --test` 17 ·
   protipříklady 263/96 · karta na skutečném přepisu (300 MB) 6 880 znaků, 1,6 s, lane CODE-read poznána.
 - **Platí pro všechny session:** karta, pravidla podle činnosti, hlídač API a kniha selhání běží v každé session (CODE-tune, tree, web).
-- Affected doc(s): CLAUDE.md §30, memory/MEMORY.md, memory/working-style.md, RUNAR_DESIGN.md („Slova“), docs/pravidla-duvody.md.
+- Affected doc(s): CLAUDE.md §30 (v tomtéž commitu). Docy úklidu (index paměti, working-style, „Slova“, důvody pravidel) změnil už
+  220ed63 o den dřív, v rámci téhož auditu.
