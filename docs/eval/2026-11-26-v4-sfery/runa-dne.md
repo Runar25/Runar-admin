@@ -9,6 +9,10 @@ Budeš to předávat Code V4“*).
 - **2026-11-26:** *„vidím to tak, že Land a Craft by pro nás měly být směry, kudy se vydat“* → režimy obrazu **Land** (islandská příroda) a
   **Craft** (práce rukou); **Current** (město, technologie) zatím ne. Varianty runy dne = sféra × režim (otázka CODE-tune 16, owner potvrdil
   vlastním slovem Land + Craft).
+- **2026-11-26 (přes CODE-tune, otázka 13):** *„obraz i význam v jedné větě“* → věta runy dne není čistý obraz; nese obraz i význam a je kratší.
+  Důvod otázky: věta stojí sama a nic pod ní význam nevysvětlí (hlášení af3970a4, Sowilo: *„obraz je v pohodě, ale … hůř chápe, co má
+  znázorňovat“*); vzor d1dce7ef. Věty Gemini v oddílu 3 a 4b (čistý obraz, 19–20 slov) proto v té podobě neprojdou.
+- **Otevřené — kdo píše a kontroluje věty runy dne** (otázka CODE-tune 15): V4, nebo CODE-tune.
 - **Otevřené — sféry jako jediný zdroj významů runy dne** (otázka CODE-tune 15): „ano“ řekl Gemini, owner vložil jeho text, vlastním slovem
   nepotvrdil. Směr, ne rozhodnutí.
 - **Dřívější, platí dál:** knihovna bez API, varianty se člověku neopakují (DECISIONS 2026-11-17 (1)); jedna kratší věta (BACKLOG 18,
