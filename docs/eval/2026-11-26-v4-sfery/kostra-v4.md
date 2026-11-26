@@ -44,7 +44,7 @@ Počet a pořadí 4K1–4K4 je návrh Gemini (4 věty); owner chce pestřejší 
 | 4V4 | minulé sféry té runy | data člověka | nabídka sfér (paměť) |
 | 4V5 | otázka / čip v Asku | člověk | 4K6 |
 | 4V6 | životní runa | data člověka | jen 4K5–4K6 |
-| 4V7 | čočka obrazů (Land / Craft / Current) | člověk nebo výchozí Land | 4K1 — nápad k testu |
+| 4V7 | režim obrazu: Land (islandská příroda) · Craft (práce rukou: výheň, dřevo, vlna, nůž, loď, provaz) | člověk nebo výchozí Land | 4K1 |
 | 4V8 | jméno, jazyk, rod oslovení | člověk | jako v2 |
 
 Ve V4 **nejsou** vstupy v2 V1 oblast, V2 co hledá, V3 pro kdy, V4 úhel otevření, V5 banka obrazů, V9 sloveso esence (předpoklad Gemini;
@@ -67,7 +67,7 @@ oblast a hledání → 4R2).
 - **4R4** pojmenovat emoci? ([emoce.md](emoce.md))
 - **4R5** pestrost: kolik obrazů na runu × sféru, aby se čtení neopakovalo?
 - **4R6** Norny ve V4 (owner: *„ze spreadu jsme se bavili o Nornách“*)
-- **4R7** čočky Land / Craft / Current — test, nebo jen Land?
+- ~~**4R7** čočky Land / Craft / Current — test, nebo jen Land?~~ → owner 2026-11-26: Land a Craft, Current zatím ne ([runa-dne.md](runa-dne.md))
 - **4R8** runy ven × dovnitř — ověřit proti ownerovým popisům run
 
 ## 7. Srovnání s kostrou v2 a doporučení: **nechat odděleně**

@@ -31,6 +31,8 @@ celé čtení pokaždé znovu. V4 mění, KDO text píše: pevný předem napsan
 3. *„Je to úplně jiný pohled na výklad … koukat z nového pohledu než na předchozí verze. Rúnar zůstává a uvidíme, jestli bude potřeba, aby se
    proměnil.“*
 4. *„Sfér bude tolik, kolik runa dovolí. Někde víc, někde míň.“*
+5. *„Land a Craft by pro nás měly být směry, kudy se vydat“* (přes CODE-tune) → režim Current zatím ne. Obsah runy dne se řeší ve V4 —
+   [runa-dne.md](runa-dne.md); CODE-tune ji jen nasadí do knihovny.
 
 **Dokumenty V4:** [kostra-v4.md](kostra-v4.md) (stavba čtení + srovnání s kostrou v2) · [emoce.md](emoce.md) (Gemini × P10, návrh devíti) ·
 [zasady-pusobeni.md](zasady-pusobeni.md) (co owner řekl s Gemini a co Gemini navrhl o působení na člověka) ·
