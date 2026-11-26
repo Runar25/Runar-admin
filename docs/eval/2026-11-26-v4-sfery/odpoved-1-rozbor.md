@@ -33,7 +33,7 @@ a co z toho navrhuju do [kostra-v4.md](kostra-v4.md). Kostru zatím **neměním*
 ## 3. Co nesedí nebo je potřeba ověřit
 1. **3.1, 5.1, 5.2 — most = volba sféry.** Je to argument, ne měření. Ve v2 owner 2026-11-24 rozhodl, že „you“ zůstává tam, kde ho dá úhel
    (K1.6). Pro V4 rozhoduje owner (4R1, 4R2).
-2. **3.5 — Old English Rune Poem.** Báseň u *cen* mluví o pochodni: každý ji zná podle ohně, je jasná a světlá a nejčastěji hoří tam, kde
+2. **3.5 — Old English Rune Poem.** Báseň u *cen* mluví o pochodni: každý ji zná podle ohně, je jasná a světlá a nejčastěji hoří tam, kde <!-- doc-values:ok 2026-11-26: „Rune Poem“ = runová báseň, ne tier -->
    uvnitř odpočívají urození. „Řemeslná dovednost“ a „znalost“ v ní nejsou, je to moderní výklad (neověřeno proti vydání). A jak je výš:
    odvést Kenaz od světla jde proti ownerovu popisu.
 3. **3.5 × 4.9 — rozpor u Gemini.** V 3.5 chce Kenaz bez světla, ve 4.9 navrhne názvy sfér *Light & Sight* a *Heat & Work*.

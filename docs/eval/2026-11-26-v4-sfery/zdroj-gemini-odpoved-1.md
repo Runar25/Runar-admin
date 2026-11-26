@@ -17,7 +17,7 @@ Ahoj Claude. Díky za precizní shrnutí stavu laboratoře V4 a zátěžovou opo
 
 3.4: Tik „X does not Y; it simply Z“ Naprostý souhlas. Je to známý syntaktický tik jazykových modelů (tzv. contrastive negation), který při generování desítek textů okamžitě prozradí AI. Do kontrolního linteru pro V4 je nutné přidat tvrdé negativní pravidlo na konstrukce typu „does not X; it simply Y“ / „is not X, it is Y“.
 
-3.5: Kenaz pořád jako světlo a oheň Kritika ownera je přesná. Pokud Kenaz zredukujeme jen na oheň a světlo, splývá se Sowilo (slunce/světlo) a Dagaz (úsvit). Etymologicky i významově je Kenaz spojená nejen s pochodní, ale především se schopností, znalostí, dovedností a odhalením tvaru (staroanglická runová báseň spojuje cen s pochodní, ale také s místem, kde sedí urození — tedy s kultivovaným prostorem a řemeslnou dovedností; zdroj: Old English Rune Poem, sloka 6). Pro odlišení od Sowilo by Kenaz měla pracovat se směrovaným nástrojem, dovedností ruky, ostřím nebo teplem potřebným ke změně skupenství, nikoli s přírodním světlem na obloze.
+3.5: Kenaz pořád jako světlo a oheň Kritika ownera je přesná. Pokud Kenaz zredukujeme jen na oheň a světlo, splývá se Sowilo (slunce/světlo) a Dagaz (úsvit). Etymologicky i významově je Kenaz spojená nejen s pochodní, ale především se schopností, znalostí, dovedností a odhalením tvaru (staroanglická runová báseň spojuje cen s pochodní, ale také s místem, kde sedí urození — tedy s kultivovaným prostorem a řemeslnou dovedností; zdroj: Old English Rune Poem, sloka 6). Pro odlišení od Sowilo by Kenaz měla pracovat se směrovaným nástrojem, dovedností ruky, ostřím nebo teplem potřebným ke změně skupenství, nikoli s přírodním světlem na obloze. <!-- doc-values:ok 2026-11-26: „Rune Poem“ = runová báseň, ne tier -->
 
 3.6: Překryv sfér s jinými runami Vaše intuice při čtení byla správná, v mých ukázkách byly překryvy:
 
@@ -27,7 +27,7 @@ Ahoj Claude. Díky za precizní shrnutí stavu laboratoře V4 a zátěžovou opo
 
 3.7: Fakta bez zdroje Uznávám a čistím:
 
-* Kenaz jako horečka/vřed (sféra Fever & Exposure): Má historický zdroj — v Norské a Islandské runové básni se tato runa jmenuje kaun (vřed, bolák, zánět; islandsky kaun er barna böl — „vřed je neštěstí dětí“; zdroj: Icelandic Rune Poem a Norwegian Rune Poem, sloka 6). Nejde tedy o můj výmysl, ale o doložený historický význam odlišný od staroanglické pochodně (cen). Pokud však owner chce runu držet věcně a bez nemoci, můžeme tuto sféru vypustit nebo nahradit.
+* Kenaz jako horečka/vřed (sféra Fever & Exposure): Má historický zdroj — v Norské a Islandské runové básni se tato runa jmenuje kaun (vřed, bolák, zánět; islandsky kaun er barna böl — „vřed je neštěstí dětí“; zdroj: Icelandic Rune Poem a Norwegian Rune Poem, sloka 6). Nejde tedy o můj výmysl, ale o doložený historický význam odlišný od staroanglické pochodně (cen). Pokud však owner chce runu držet věcně a bez nemoci, můžeme tuto sféru vypustit nebo nahradit. <!-- doc-values:ok 2026-11-26: „Rune Poem“ = runová báseň, ne tier -->
 * Blank jako „Wyrd / Odin“: Bez historického zdroje. Prázdná runa je moderní vynález Ralpha Bluma z roku 1982 (The Book of Runes). Ve V4 nesmí nést falešnou mytologickou nálepku „Odinova runa“ — má zůstat čistě jako Blank (nepotištěný kámen/dřevo, prostor bez znaku).
 * Rozdělení run ven × dovnitř, „tři ověřené psychologické principy“, „10× přirozenější“: Bez zdroje — šlo o moje pracovní designové heuristiky a odhady, ne o citovaná fakta. Vyřadit ze specifikace.
 
@@ -118,10 +118,10 @@ Ahoj Claude. Díky za precizní shrnutí stavu laboratoře V4 a zátěžovou opo
 
 5.6: Na jakém zdroji stojí Kenaz jako horečka/vřed a Blank jako „Wyrd / Odin“?
 
-* Kenaz jako vřed/zánět: Stojí na Islandské runové básni („Kaun er barna böl ok bardaga [för] ok holdfúa hús“ — „Vřed je neštěstí dětí a [cesta] zkázy a dům hnijícího masa“) a Norské runové básni („Kaun er barna bǫlvan; gøyr gørvir nán fǫlvan“ — „Vřed je prokletí dětí; nemoc činí mrtvolu bledou“; zdroj: The Old Norwegian and Icelandic Rune Poems, ed. Bruce Dickins, 1915). Staroanglická báseň má naopak cen = pochodeň. Oba významy jsou tedy historicky doložené, jde o rozdíl mezi kontinentální/anglosaskou a severskou tradicí.
+* Kenaz jako vřed/zánět: Stojí na Islandské runové básni („Kaun er barna böl ok bardaga [för] ok holdfúa hús“ — „Vřed je neštěstí dětí a [cesta] zkázy a dům hnijícího masa“) a Norské runové básni („Kaun er barna bǫlvan; gøyr gørvir nán fǫlvan“ — „Vřed je prokletí dětí; nemoc činí mrtvolu bledou“; zdroj: The Old Norwegian and Icelandic Rune Poems, ed. Bruce Dickins, 1915). Staroanglická báseň má naopak cen = pochodeň. Oba významy jsou tedy historicky doložené, jde o rozdíl mezi kontinentální/anglosaskou a severskou tradicí. <!-- doc-values:ok 2026-11-26: „Rune Poems“ = runové básně, ne tier -->
 * Blank jako „Wyrd / Odin“: Bez historického zdroje. Jde o novodobý komerční přídavek (Ralph Blum, The Book of Runes, 1982). Ve V4 tento přívlastek nepoužívejte.
 
-5.7: Jak by vypadaly sféry pro těžkou runu (Nauthiz nebo Hagalaz), aby se nepřekrývaly s Kenaz? Vezměme NAUTHIZ (historicky nauðr = nutnost, tíseň, tření dřeva o dřevo při rozdělávání ohně nouze — nauðeld; zdroj: Icelandic/Norwegian Rune Poem, sloka 10). Odlišení od Kenaz: Kenaz je řízené řemeslo a nástroj (mám dílnu, tvaruji materiál). Nauthiz je holé přežití a odpor (nemám nic, musím třít dvě suchá dřeva o sebe, dokud nezahoří, jinak zmrznu).
+5.7: Jak by vypadaly sféry pro těžkou runu (Nauthiz nebo Hagalaz), aby se nepřekrývaly s Kenaz? Vezměme NAUTHIZ (historicky nauðr = nutnost, tíseň, tření dřeva o dřevo při rozdělávání ohně nouze — nauðeld; zdroj: Icelandic/Norwegian Rune Poem, sloka 10). Odlišení od Kenaz: Kenaz je řízené řemeslo a nástroj (mám dílnu, tvaruji materiál). Nauthiz je holé přežití a odpor (nemám nic, musím třít dvě suchá dřeva o sebe, dokud nezahoří, jinak zmrznu). <!-- doc-values:ok 2026-11-26: „Rune Poem“ = runová báseň, ne tier -->
 
 Sféry pro NAUTHIZ (3 sféry — víc nepotřebuje):
 
