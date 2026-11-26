@@ -13639,3 +13639,32 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   číslem zastaví) · kontrola hned našla kus `NO-FILLER` (islandské zadání), který v kostře chyběl.
 - **Platí pro všechny session:** volání modelu bez čísla pokusu hlídač nepustí; CODE-tune a CODE-web dostanou zprávu.
 - Affected doc(s): CLAUDE.md §30 (řádek „Pokus přes API“).
+
+## 2026-11-26 (1) — Paměť a pravidla: karta session, pravidla podle činnosti, záznam běhů strojem, kniha selhání, úklid nositelů
+
+- **Rozhodl:** owner 2026-11-25 *„velká chyba… já to mám zapsané, ale pak mi to nic neřekne, tak to ignoruješ. pořád dokola… mas v tom velky
+  bordel, takže než začneme něco dělat dál, tak pořádný hluboký audit“* · *„14. ano 15. ano, napřed mi to ukaž“* · *„18. ano 19. ano 20. ano jde to
+  ještě lépe? tak to udělej“*. **Provedl:** CODE-read.
+- **Audit (měřeno, `docs/audit/2026-11-25-pamet-a-pravidla/`):** 116 ownerových stížností „máš to zapsané“ z přepisů: zapsáno, ale ve chvíli práce
+  neukázáno 52 · nezapsáno 24 · ukázáno a přejito 14 · utopeno 10 · nejasné 16; opakovalo se 48 ze 72 (do 10-20). Pojistky vznikaly po složkách,
+  každý nový lab chybu zopakoval. Text pravidel v kontextu chování neměnil (DECISIONS 2026-08-17), měnil ho stroj, který práci zastaví.
+  SessionStart dával 16–23 tis. znaků, Claude Code pouští 10 000 a zbytek ukáže jen jako náhled 2 000 (code.claude.com/docs/en/hooks.md);
+  42 % byla červnová práce stromu (`rozdelane()` řadilo nedatované snapshoty nad datované). 81 z 91 pamětí se dostalo do kontextu, jen když
+  je session sama otevřela; u žádné doklad, že něco zachytila.
+- **Co (stavba, commity de1aaa7 … 9ee24b7 a další ze dne):**
+  1. **Karta session** (`hooks/claude/runar-context.py`): pod 8 500 znaků, lane z přepisu (`~/.claude/runar-lane/`), ownerovy poslední zprávy
+     a moje otevřené otázky, úkoly a commity lane; PreCompact (`compact-backup.py`) dává shrnutí pokyn, co zachovat.
+  2. **Pravidla podle činnosti** (`pravidla_mapa.json` klíč `obsah`, oblast „text pro model“): zápis do kteréhokoli labu, kostry nebo skriptu ve
+     scratchpadu, který skládá prompt nebo volá model, ukáže RUNAR_DESIGN „Slova, která dáváme modelu“; smoke hlídá, že na ně dosáhne i nový lab.
+  3. **Pokusy:** hlídač API zapíše každý puštěný běh do `docs/kostra/behy/`, nepustí víc pokusů jedním příkazem, pokus se zdrojem „neověřeno“
+     (`kostra.json` `zdroje_stav`) jen s `RUNAR_ZDROJ_OK`, slova se známým účinkem (`docs/kostra/slova.json`) ukáže před voláním
+     (`RUNAR_SLOVA_OK`). Minulé běhy zpětně: `docs/kostra/behy-zpetne.json` (85 běhů 10-07 až 11-24).
+  4. **Kostra** (`KOSTRA.md`) ve třech oddílech: A platí · B rozpracované · C starší verze a poučení.
+  5. **Kniha selhání** (`hooks/claude/runar-stiznost.py`, zapojeno v `~/.claude/settings.json`): stížnost ownera se zapíše sama do
+     `docs/audit/selhani/`, session ji zařadí (třída jako v auditu, co tomu zabrání), jinak ji Stop hook nepustí.
+  6. **Úklid nositelů** podle `nositele.json` (owner „19. ano“, 220ed63 + 122c2e1): paměti 91 → 55; „Slova“ body 11–13; paměti k místu práce v mapě pravidel; doklady do `docs/pravidla-duvody.md`.
+- **Pravidlo pro další mechanismy:** nový nosič musí něco nahradit, ne přidat; účinnost se měří knihou selhání (stejná třída se nesmí vracet).
+- **Ověřeno:** `verify_hooky_claude.py` 28 případů + samotest · `pravidla_pri_dotyku.py --test` 62 · `verify_kostra.js --test` 17 ·
+  protipříklady 263/96 · karta na skutečném přepisu (300 MB) 6 880 znaků, 1,6 s, lane CODE-read poznána.
+- **Platí pro všechny session:** karta, pravidla podle činnosti, hlídač API a kniha selhání běží v každé session (CODE-tune, tree, web).
+- Affected doc(s): CLAUDE.md §30, memory/MEMORY.md, memory/working-style.md, RUNAR_DESIGN.md („Slova“), docs/pravidla-duvody.md.

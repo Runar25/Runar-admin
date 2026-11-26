@@ -232,6 +232,10 @@ Co se má dít pokaždé, udělá skript, nebo zastaví práci, když se vynech�
 `node scripts/verify_nosice.js --vypis`. Co tě zastaví a jak dál:
 - **Pokus přes API** → hook ho nepustí bez `RUNAR_API_ANO=<počet>` + `RUNAR_API_ZAMER="<co rozhodne>"` + `RUNAR_POKUS=<Pxx>` z `docs/kostra/pokusy.json` (mimo čtení `"mimo: <proč>"`) (nad 50 i `RUNAR_API_OWNER`). Napřed
   `node scripts/utils/najdi_cteni.js` (odpověď v datech?), pak ownerovo ano, malý vzorek napřed.
+  Běh zapíše hlídač sám do `docs/kostra/behy/`; jeden pokus = jeden příkaz; slova z `docs/kostra/slova.json` a zdroj „neověřeno“
+  (`kostra.json` `zdroje_stav`) zastaví, dokud nenapíšeš důvod (`RUNAR_SLOVA_OK` / `RUNAR_ZDROJ_OK`).
+- **Karta session a kniha selhání** (hooky): po startu a compactu karta „kde jsem“ (lane, ownerovy zprávy, otevřené otázky);
+  ownerova stížnost „máš to zapsané“ se zapíše do `docs/audit/selhani/` — zařaď ji, jinak tě Stop hook nepustí.
 - **Zpráva ownerovi** (Stop-hook): body a otázky číslované; návrh nebo otázka na rozhodnutí jen po `node scripts/utils/uz_vime.js <pojmy>`
   v témže tahu; co čeká na ownera, polož jako otázku s otazníkem; „nejspíš/zřejmě“ o kódu jen s „neověřeno“.
 - **Sdílené docy** (`RUNAR_*.md`, `CLAUDE.md`, `memory/`, `_SDILENE`) commituje jen `commit_vlastni.py`; Edit na ně zastaví hook →
