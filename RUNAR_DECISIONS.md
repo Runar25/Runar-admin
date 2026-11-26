@@ -13722,3 +13722,14 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   Samotest `commit_vlastni.py --test` (nově případ „dvě session v jedné lane“) do té doby nepouštělo nic → smoke ㊜.
 - **Platí pro všechny session:** víc session v jedné lane už se v commit_vlastni nepletou; pathspec commit dál úzce (CLAUDE.md „Git“).
 - Affected doc(s): žádný — CLAUDE.md lanes beze změny (V4 je lane read), postup commit_vlastni v jeho hlavičce.
+
+## 2026-11-26 (6) — Režimy obrazu V4: Land a Craft, Current zatím ne; obsah runy dne se řeší v labu V4
+
+- **Rozhodl:** owner 2026-11-26 (přes CODE-tune): *„vidím to tak, že Land a Craft by pro nás měly být směry, kudy se vydat“* · *„předej to pdf
+  Code V4, ať ho má, když s ním má stejně pracovat. Zatím ti sem budu vkládat, co řešíme kolem denní runy s Gemini. Budeš to předávat Code V4“*.
+- **Co:** varianty obrazu = sféra × režim; **Land** = islandská příroda, **Craft** = práce rukou a tradiční materiál (výheň, dřevo, vlna, nůž,
+  loď, provaz — Gemini Craft předefinoval proti PDF, kde byl ocel a beton). **Current** (město, technologie) zatím ne. Obsah runy dne
+  (sféry, varianty) navrhuje a kontroluje lab V4 (`docs/eval/2026-11-26-v4-sfery/runa-dne.md`), CODE-tune ho nasadí do knihovny
+  (`runa_dne_knihovna.mjs`, DECISIONS 2026-11-17 (1) platí dál).
+- **Neodsouhlaseno:** sféry V4 jako jediný zdroj významů runy dne — řekl Gemini, owner vlastním slovem ne.
+- Affected doc(s): `docs/eval/2026-11-26-v4-sfery/` (README, kostra-v4 4V7 a 4R7, runa-dne.md) — v témže commitu.
