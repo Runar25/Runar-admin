@@ -277,6 +277,11 @@ PRIPADY = [
  # 2026-11-25 (CODE-read): kniha selhání — stížnost bez záznamu a nevyplněný záznam, který konec tahu pustí, musí shodit kontrolu
  ('chyti', 'verify_hooky_claude.py', 'hooks/claude/runar-stiznost.py', 'replace', "    if txt.lstrip().startswith('<') or not STIZNOST.search(bezd(txt)):", "    if True:"),
  ('chyti', 'verify_hooky_claude.py', 'hooks/claude/runar-stiznost.py', 'replace', "    if chybi:", "    if False:"),
+ # 2026-11-26 (CODE-read, owner „ostatní session o tom vždy také musí vědět“): oznámení změn systému — opakované i vlastní musí mlčet
+ ('chyti', 'verify_hooky_claude.py', 'hooks/claude/runar-oznameni.py', 'replace', "    if videno == head:", "    if False:"),
+ ('chyti', 'verify_hooky_claude.py', 'hooks/claude/runar-oznameni.py', 'replace', "        if lane and an == lane:", "        if False:"),
+ # 2026-11-26 (CODE-read): odkaz [[paměť]] na zrušenou paměť v živém docu (zkrácení CLAUDE.md jich vrátilo 6) musí spadnout
+ ('chyti', 'verify_doc_links.js', 'CLAUDE.md', 'append', '', '\nViz [[' + 'zrusena-pamet-xyz' + ']].\n'),
  # kolo 3 / 4h (2026-10-11): obrazy, kalendář, myšlenka ✦, zrcadlo parseru
  ('chyti', 'verify_compose_mirror.js', 'v2/runar-character.js', 'replace', "var reading = segs.map(function (x) { return x.text; }).join(' ').trim();", "var reading = segs.map(function (x) { return x.text; }).join('  ').trim();"),
  ('chyti', 'verify_icelandic_calendar.js', 'v2/runar-character.js', 'replace', "if (doZimy <= 90) return 'heyannir';", "if (doZimy <= 120) return 'heyannir';"),

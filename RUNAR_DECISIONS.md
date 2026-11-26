@@ -13681,3 +13681,19 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   pravidla beze změny. Strop `verify_doc_length.js`: CLAUDE.md nejvýš 200 řádků (dřív z řádkového limitu vyňatý).
 - **Platí pro všechny session:** nové pravidlo do CLAUDE.md jen za něco, co z něj odejde, nebo na místo práce (mapa pravidel, hook).
 - Affected doc(s): žádný další — projekt-mapa a kontroly změnil tentýž úkol v 2dd93aa.
+
+## 2026-11-26 (3) — Změny systému se ostatním session oznamují samy (hook při každé zprávě ownera)
+
+- **Rozhodl:** owner 2026-11-26 *„ostatní session o tom vždy také musí vědět, pokud dochází k těmto úpravám“*. **Provedl:** CODE-read.
+- **Proč:** session běží souběžně nad jedním stromem; o změně pravidel, hooků nebo paměti se jiná session dozvěděla jen při startu
+  nebo compactu (karta ukazuje nadpisy DECISIONS). Zpráva přes SendMessage visí na paměti autora a na tom, jestli příjemce běží
+  (2026-11-25 Runar-tune nedosažitelná) — to je přesně „pravidlo na paměti session“ (§30).
+- **Co:** `hooks/claude/runar-oznameni.py` (UserPromptSubmit, zapojeno v `~/.claude/settings.json`): při každé zprávě ownera porovná HEAD
+  s tím, co session už viděla (`~/.claude/runar-lane/<session>.videno`; bez něj čas startu session), a vypíše commity cizích lane do
+  systémových cest (CLAUDE.md, hooks, memory, DECISIONS, mapa pravidel, commit_vlastni, slova a kostra.json, projekt-mapa) + nové nadpisy
+  DECISIONS. Zdroj je `git log`, žádný zvláštní seznam oznámení (§20). Vlastní lane se vynechá. Cowork hooky nemá → krok v protokolu MEMORY.md.
+- **Nález při stavbě:** zkrácení CLAUDE.md (2dd93aa) vzniklo nad starším základem a tiše vrátilo 220ed63 (6 odkazů na zrušené paměti,
+  „postup v cizí aplikaci“ v §23) a řádky §30 z 5ba675e. Vráceno; `verify_doc_links.js` nově kontroluje i `[[paměť]]` (mimo DECISIONS).
+- **Ověřeno:** `verify_hooky_claude.py` 31 případů (cizí změna se ukáže · podruhé mlčí · vlastní lane mlčí) + útoky v protipříkladech.
+- **Platí pro všechny session** (CODE-tune, tree, web; Cowork přes protokol MEMORY.md).
+- Affected doc(s): CLAUDE.md §30, memory/MEMORY.md (Session Start Protocol).

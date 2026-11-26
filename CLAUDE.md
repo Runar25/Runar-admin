@@ -26,7 +26,7 @@ Edit tool kazí apostrofy `'` → curly quotes → SyntaxError. JS soubory: VŽD
 ### §2 — IS je primární jazyk
 IS musí být vždy perfektní; EN je vedlejší; NIKDY IS jako „překlad“ EN. **Mysli islandsky od začátku** — kalk z EN (vazba, slovosled, obraz)
 je vada. IS se **vymýšlí, dělá hotová a ověřená** (Code i Cowork), nikdy odhadem ani odkladem na rodilého mluvčího; nesrozumitelný výstup
-se přepíše, dokud mu nástroj nerozumí (§19.2). Flaguje se **jen chybějící 🔒 fakt / 📜 lore** (§23). → [[is-done-together-not-for-sigrun]]
+se přepíše, dokud mu nástroj nerozumí (§19.2). Flaguje se **jen chybějící 🔒 fakt / 📜 lore** (§23).
 **Kontrola IS — nástroje a pořadí (JEDINÉ místo, kde to stojí; paměť a docs sem odkazují, §20):**
 1. `python -X utf8 check-is.py` — ZDROJ (kód): známé chyby z `BAD_PATTERNS`, běží i v pre-commitu. Výstup modelu nevidí. Nová známá chyba → do `BAD_PATTERNS`.
 2. `python -X utf8 is-greynir.py --text "…"` (nebo soubor, text na řádek) — GreynirCorrect lokálně, zdarma, text neodchází ven. Překlepy a neznámá
@@ -100,20 +100,20 @@ záznam v `RUNAR_DECISIONS.md`; na rozhodnutou věc se ownera neptej — dohlede
 **Najdeš duplikát nebo chybu, i mimo zadání → hned oprav, nebo zapiš do `RUNAR_BACKLOG.md`** (s kontextem); nikdy tiše přejít.
 ### §21 — Ownerův nápad = směr k dopracování, ne hotové zadání (platí pro VŠECHNY session)
 Nejdřív **kritický pohled + proveditelnost** (kde to drhne, riziko, „střecha před základy“), návrh korekce, teprve pak konat. Rozhodnutí = směr,
-ne zámek: mění se novým datovaným záznamem; při rozporu VAROVÁNÍ, ne tichý drift. → [[decisions-are-directions-not-locks]]
+ne zámek: mění se novým datovaným záznamem; při rozporu VAROVÁNÍ, ne tichý drift.
 **Návrat k opuštěné věci jen očištěný:** najdi záznam odchodu, pojmenuj vadu, vrať verzi bez ní, zapiš nové rozhodnutí s odkazem na staré.
 Mrtvý kód „pro historii“ nese komentář s důvodem odchodu — čti ho, než ho oživíš.
 ### §23 — Nevymýšlej fakta ani lore → zastav a flagni (platí pro VŠECHNY session, Code i Cowork)
-Chybí-li v kánonu 🔒 fakt (etymologie, IS gramatika, čísla, DB) nebo 📜 lore → „nevím / chybí“, nikdy domněnka za pravdu.
-Čím lepší model, tím sebejistěji zní výmysl. → [[dont-invent-fact-critical]]
+Chybí-li v kánonu 🔒 fakt (etymologie, IS gramatika, čísla, DB, postup v cizí aplikaci) nebo 📜 lore → „nevím / chybí“, nikdy domněnka za pravdu.
+Čím lepší model, tím sebejistěji zní výmysl.
 ### §24 — Ověř, než tvrdíš (měř, nehádej) (platí pro VŠECHNY session, Code i Cowork)
-Nález/pravdu nejdřív **změř / protlač produkční cestou / porovnej**; dojem se nepočítá. Nejde-li změřit, řekni „nevím“. → [[measure-dont-eyeball]]
+Nález/pravdu nejdřív **změř / protlač produkční cestou / porovnej**; dojem se nepočítá. Nejde-li změřit, řekni „nevím“.
 ### §25 — Napřed se sám vyvrať: obrácená páka a útok na nástroj (platí pro VŠECHNY session, Code i Cowork)
 **A) Obrácená páka:** hypotézu „X je málo, přidej X“ testuj tak, že X **ubereš**; musí to zhoršit. Nevyjde-li ani obráceně, nález je „není to X“
-a zapisuje se stejně pečlivě (§16). Vždy uveď hranici nálezu (co vyloučeno, `n`, co se netvrdí). → [[falsify-by-reversing-the-lever]]
+a zapisuje se stejně pečlivě (§16). Vždy uveď hranici nálezu (co vyloučeno, `n`, co se netvrdí).
 **B) Nástroj se obhájí dřív než výsledek:** (1) půlka proti půlce — liší-li se půlky víc než srovnávané dávky, je to šum; (2) co JEŠTĚ odlišuje
 referenční dvojici; (3) nulová transformace — nepohne-li se číslo, slepota je dokázaná. Párové metriky: jackknife, nikdy bootstrap
-s opakováním. → [[attack-the-metric-not-just-the-result]]
+s opakováním.
 ### §28 — Každá změna nese svůj DŮVOD tam, kde bydlí (platí pro VŠECHNY session)
 Důvod se píše k té změně, ne do zvláštního seznamu: **kód** → komentář na místě (u obrany i doklad) · **doc** → changelog daného docu ·
 **rozhodnutí** → datovaný záznam (§16) + věta v commitu · **výjimka z kontroly** → důvod + datum ve značce. Důvod NENÍ převyprávěný diff.
@@ -127,6 +127,11 @@ Co se má dít pokaždé, udělá skript, nebo zastaví práci, když se vynech�
 `node scripts/verify_nosice.js --vypis`. Co tě zastaví a jak dál:
 - **Pokus přes API** → hook ho nepustí bez `RUNAR_API_ANO=<počet>` + `RUNAR_API_ZAMER="<co rozhodne>"` + `RUNAR_POKUS=<Pxx>` z `docs/kostra/pokusy.json` (mimo čtení `"mimo: <proč>"`) (nad 50 i `RUNAR_API_OWNER`). Napřed
   `node scripts/utils/najdi_cteni.js` (odpověď v datech?), pak ownerovo ano, malý vzorek napřed.
+  Běh zapíše hlídač sám do `docs/kostra/behy/`; jeden pokus = jeden příkaz; slova z `docs/kostra/slova.json` a zdroj „neověřeno“
+  (`kostra.json` `zdroje_stav`) zastaví, dokud nenapíšeš důvod (`RUNAR_SLOVA_OK` / `RUNAR_ZDROJ_OK`).
+- **Karta session, oznámení a kniha selhání** (hooky): po startu a compactu karta „kde jsem“ (lane, ownerovy zprávy, otevřené
+  otázky); při každé zprávě ownera oznámení změn systému (pravidla, hooky, paměť, DECISIONS) od jiné session — přečti, co se tě
+  týká; ownerova stížnost „máš to zapsané“ se zapíše do `docs/audit/selhani/` — zařaď ji, jinak tě Stop hook nepustí.
 - **Zpráva ownerovi** (Stop-hook): body a otázky číslované; návrh nebo otázka na rozhodnutí jen po `node scripts/utils/uz_vime.js <pojmy>`
   v témže tahu; co čeká na ownera, polož jako otázku s otazníkem; „nejspíš/zřejmě“ o kódu jen s „neověřeno“.
 - **Sdílené docy** (`RUNAR_*.md`, `CLAUDE.md`, `memory/`, `_SDILENE`) commituje jen `commit_vlastni.py`; Edit na ně zastaví hook →

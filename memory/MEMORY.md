@@ -10,6 +10,7 @@ Přidáváš sem fakt? Nepřidávej — patří k vlastníkovi; sem nanejvýš j
 1. Tento soubor · 2. [working-style.md](working-style.md) (Explore→Plan→Implement) · 3. `CLAUDE.md` (pravidla §1+) ·
 4. `RUNAR_DECISIONS.md` — při sporu vyhrává novější záznam; celý se nečte, hledá se `node scripts/utils/uz_vime.js <pojmy>` ·
 5. doc podle úkolu (rozcestník) + cílový soubor. Pak: „Mám kontext — jsem připraven."
+🔔 Změny systému od jiných session: Code je ukáže hook při každé zprávě ownera. **Cowork** (hooky nemá) při startu: `git log --since=3.days --format="%h %an %s" -- CLAUDE.md hooks memory RUNAR_DECISIONS.md`.
 ⚠️ Nová funkce nebo změna chování → napřed ownerem schválený plán; rozpory, duplikáty a vlastní kontroly oprav bez ptaní (working-style).
 ⭐ Rozejdou-li se zdroje nebo jde-li o rozhodnutou věc → CLAUDE.md §20 (vyhrává produkce; dohledat, neptat se).
 
