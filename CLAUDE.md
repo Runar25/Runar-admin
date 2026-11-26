@@ -182,6 +182,7 @@ Cowork kód nediagnostikuje, CODE nerozhoduje o obsahu a designu; o kódu se Cow
 - **CODE-tune** `[tune]`: reading systém, prompty, config, pricing, translations, reader UI/CSS, reporter, auth, app, journal, eval-implementace, copy
   (vše kromě tree vizuálu). Do produkce jen **malé ověřené opravy, po jedné**; velké zásahy do promptu a jiné modely napřed v labu CODE-read.
 - **CODE-read** `[read]`: čte, testuje, měří — **produkční kód nesahá**; nálezy do `RUNAR_EVAL_LOG.md` / `RUNAR_DESIGN.md`, změny předává CODE-tune.
+  Pod read běží i session **Rúnar V4** (lab `docs/eval/2026-11-26-v4-sfery/`, vstup README): commit jako `CODE-read`, předmět zmíní V4.
 - **CODE-tree** `[tree]`: vizuální engine stromu (`runar-tree-prod.js` z `build_tree_production.py`, tree-lab composery, `tree_state`); doc `RUNAR_TREE.md`.
 - **CODE-web** `[web]`: therunekeeper.com (`web/`), registrace, nákup Rúnakortu; appku (`v2/`) jen ČTE, změny předává vlastníkovi.
 - **`dverg-tarot/`** `[dverg]`: Dverg Tarot, samostatný produkt mimo Rúnara; Rúnarovy session nesahají (`dverg-tarot/README.md`) · **Cowork** `[cowork]`: design, docs, eval-obsah, copy, handoffy; repo READ-ONLY přes `git show HEAD:`.
