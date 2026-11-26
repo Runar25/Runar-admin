@@ -37,7 +37,7 @@ celé čtení pokaždé znovu. V4 mění, KDO text píše: pevný předem napsan
 **Dokumenty V4:** [kostra-v4.md](kostra-v4.md) (stavba čtení + srovnání s kostrou v2) · [emoce.md](emoce.md) (Gemini × P10, návrh devíti) ·
 [zasady-pusobeni.md](zasady-pusobeni.md) (co owner řekl s Gemini a co Gemini navrhl o působení na člověka) ·
 [inventura-aspekty-sfery.md](inventura-aspekty-sfery.md) · [pro-gemini-1.md](pro-gemini-1.md) (podklad ke konzultaci s Gemini, owner
-2026-11-26; odpověď Gemini se uloží vedle něj).
+2026-11-26; odpověď [zdroj-gemini-odpoved-1.md](zdroj-gemini-odpoved-1.md), rozbor [odpoved-1-rozbor.md](odpoved-1-rozbor.md)).
 
 ## 3. Co už máme v datech (nepsat znovu)
 - **Emoce:** pokus P10 (`docs/kostra/pokusy.json`, BACKLOG 10 „How I feel“): *What feels closest to you right now?* — Uncertainty · Pressure ·
