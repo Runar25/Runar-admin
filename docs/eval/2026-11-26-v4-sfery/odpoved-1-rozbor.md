@@ -1,8 +1,15 @@
 # Rozbor odpovědi Gemini 1 (2026-11-26)
 
 **Vlastní jen:** posouzení [zdroj-gemini-odpoved-1.md](zdroj-gemini-odpoved-1.md) bod po bodu — co sedí s rozhodnutími ownera a kánonem, co ne,
-a co z toho navrhuju do [kostra-v4.md](kostra-v4.md). Kostru zatím **neměním**; změny čekají na ownera. Bez API; islandštinu nešlo ověřit
-(GreynirCorrect na tomto počítači není nainstalovaný).
+a co z toho navrhuju do [kostra-v4.md](kostra-v4.md). Kostru zatím **neměním**; změny čekají na ownera. Bez API.
+
+**Islandština Gemini — GreynirCorrect (lokálně, 2026-11-26; první běh spadl, protože jsem ho pustil jiným Pythonem, ne prostředím nástroje):**
+| věta (Gemini) | výsledek |
+|---|---|
+| 4.8 *Lífsrún þín er grunnþunginn sem þú berð inn í hvern lestur — festan sem dregna rúnin hreyfist gagnvart.* | **E001** věta nerozebraná; „Lífsrún“ → „Lífbrún“ je planý poplach (slovo appky), „grunnþunginn“ nástroj nezná → přepsat, dokud jí nástroj nerozumí (§19.2) |
+| 5.7 původní *Tveir þurrir spýtur sem nuddaðir eru…* | **E001** — potvrzuje chybu v rodě, kterou Gemini sám přiznal |
+| 5.7 opravená *Tvær þurrar spýtur sem nuddaðar eru saman í köldu lofti gefa engan loga…* | nástroj navrhuje dativ *Tveimur þurrum spýtum* — nejisté (u „gefa“ čekám nominativ), ověřit korpusem vazeb; nepoužít |
+| 5.7 *Hitinn kemur aðeins úr þrálátu viðnámi flata sem þrýstast saman.* | OK |
 
 ## 1. Moje oprava vlastního podkladu
 1. **Zdroj není měřítko.** V podkladu (pro-gemini-1 3.7, otázka 6) jsem psal „bez zdroje nepoužijeme“. To jde proti ownerovi: historie je
@@ -50,13 +57,13 @@ a co z toho navrhuju do [kostra-v4.md](kostra-v4.md). Kostru zatím **neměním*
      namáhavá práce — neověřeno proti vydání). Je to lidová tradice. Jako nápad je dobrý, ale zdroj má přiřazený špatně.
    - Sféra **Endurance** (kámen v proudu) se kryje s Eihwazem (aspekty *resilience, endurance* v bance v2) a s Isou.
    - Sedí s ownerovým popisem: Nauthiz = *„pocit, že něco chybí … potřeba, omezení, nedostatek a nutnost“* → Scarcity & Constraint ano.
-   - Gemini v islandské ukázce sám našel dvě chyby v rodě („tveir þurrir … nuddaðir“ → „tvær þurrar … nuddaðar“). Opravenou větu jsem
-     nástrojem neověřil. Islandštinu od modelu bez kontroly nelze brát.
+   - Gemini v islandské ukázce sám našel dvě chyby v rodě („tveir þurrir … nuddaðir“ → „tvær þurrar … nuddaðar“). I opravenou větu
+     Greynir nepustil (navrhuje jiný pád, viz tabulka nahoře). Islandštinu od modelu bez kontroly nelze brát.
 8. **4.2, 5.8 — Norny.** Tři obrazy z knihovny a jeden Ask na celý rozklad. Co spojí tři runy pro toho, kdo Ask nepoužije (Standard má 1)?
    Ve v2 je spojuje model. Buď V4 Norny potřebují model i mimo Ask (pak islandština od modelu), nebo jsou bez spojení.
 9. **4.4 — „opakovaná volba Hollow“ jako signál krize** znamená ukládat a vyhodnocovat stavy člověka v čase → RUNAR_PRIVACY (emoce jako
    osobní údaj už je v riziku P10). Textové pravidlo pro Hollow (prázdno jako nádoba, ne propast) sedí.
-10. **4.8 — věta o životní runě.** *Lífsrún* sedí s appkou. *„festan sem dregna rúnin hreyfist gagnvart“* neověřeno (nástroj chybí). EN věta
+10. **4.8 — věta o životní runě.** *Lífsrún* sedí s appkou. Celou větu Greynir nerozebral (E001, tabulka nahoře) → přepsat. EN věta
     „baseline weight you carry“ je v UI, tam „you“ smí.
 11. **5.3 — počet textů.** 24 × 3,5 × 4 ≈ 336 je **jeden jazyk**. S islandštinou ~670 textů a každý islandský projde kontrolou nástroji.
 
