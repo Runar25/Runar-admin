@@ -380,7 +380,7 @@ atomický upsert, úklid starších než hodina; stejně tak `use_credit` (atomi
 ### 🔵 COWORK
 
 ### 🟢 Dlouhý ocas (kód, nízká priorita)
-- [ ] **Pro CODE-tune** (CODE-read 2026-11-26, úklid pamětí 122c2e1): komentáře `v2/runar-character.js` (~ř. 1851) a `v2/runar-utils.js`
+- [x] ✅ *(CODE-tune 2026-11-26)* **Pro CODE-tune** (CODE-read 2026-11-26, úklid pamětí 122c2e1): komentáře `v2/runar-character.js` (~ř. 1851) a `v2/runar-utils.js`
   (~ř. 876) odkazují na smazanou paměť „prompt-directive-makes-model-copy“ — přepiš na RUNAR_DESIGN.md „Slova, která dáváme modelu“ bod 11.
   Nové hooky a strop CLAUDE.md 200 řádků: DECISIONS 2026-11-26 (1) a (2) (session Runar-tune nebyla dosažitelná zprávou).
 - [ ] **Před spuštěním: viditelnost + sklad dobrých vět** (KUKY 2026-09-29 bod 6: *„některá čtení jsou fakt dobrá, popřípadě vyjde dobrý
