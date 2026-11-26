@@ -13733,3 +13733,12 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   (`runa_dne_knihovna.mjs`, DECISIONS 2026-11-17 (1) platí dál).
 - **Neodsouhlaseno:** sféry V4 jako jediný zdroj významů runy dne — řekl Gemini, owner vlastním slovem ne.
 - Affected doc(s): `docs/eval/2026-11-26-v4-sfery/` (README, kostra-v4 4V7 a 4R7, runa-dne.md) — v témže commitu.
+
+## 2026-11-26 (7) — Věta runy dne nese obraz i význam v jedné kratší větě (ne čistý obraz)
+
+- **Rozhodl:** owner 2026-11-26 (přes CODE-tune, odpověď na otázku 13): *„obraz i význam v jedné větě“*.
+- **Proč:** věta runy dne stojí sama, nic pod ní význam nevysvětlí; owner u Sowilo (hlášení af3970a4, 2026-11-24): *„obraz je v pohodě, ale čtení
+  je takové, že se hůř chápe, co má znázorňovat“*. Vzor ownera d1dce7ef (2026-11-21) je kratší věta s významem; BACKLOG čtení bod 18.
+- **Co:** návrhy Gemini pro Kenaz Land (čistý obraz, 19–20 slov) v té podobě neprojdou; přepisují se na obraz + význam, kratší.
+  Lab: `docs/eval/2026-11-26-v4-sfery/runa-dne.md`. Otevřené: kdo věty píše a kontroluje (V4, nebo CODE-tune).
+- Affected doc(s): `docs/eval/2026-11-26-v4-sfery/runa-dne.md` — v témže commitu.
