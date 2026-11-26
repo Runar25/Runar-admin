@@ -280,6 +280,8 @@ PRIPADY = [
  # 2026-11-26 (CODE-read, owner „ostatní session o tom vždy také musí vědět“): oznámení změn systému — opakované i vlastní musí mlčet
  ('chyti', 'verify_hooky_claude.py', 'hooks/claude/runar-oznameni.py', 'regex', r"    zapis\(videno_p, head\)\r?\n(    if not radky:)", r"\g<1>"),
  ('chyti', 'verify_hooky_claude.py', 'hooks/claude/runar-oznameni.py', 'replace', "        if lane and an == lane:", "        if False:"),
+ # karta nezapíše „viděno“ → obnovená session dostane stovky starých commitů (stalo se 2026-11-26) — musí spadnout
+ ('chyti', 'verify_hooky_claude.py', 'hooks/claude/runar-context.py', 'replace', "    if SID:   # „viděno“", "    if False:   # „viděno“"),
  # 2026-11-26 (CODE-read): odkaz [[paměť]] na zrušenou paměť v živém docu (zkrácení CLAUDE.md jich vrátilo 6) musí spadnout
  ('chyti', 'verify_doc_links.js', 'CLAUDE.md', 'append', '', '\nViz [[' + 'zrusena-pamet-xyz' + ']].\n'),
  # kolo 3 / 4h (2026-10-11): obrazy, kalendář, myšlenka ✦, zrcadlo parseru

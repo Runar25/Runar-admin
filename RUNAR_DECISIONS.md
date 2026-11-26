@@ -13697,3 +13697,18 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Ověřeno:** `verify_hooky_claude.py` 31 případů (cizí změna se ukáže · podruhé mlčí · vlastní lane mlčí) + útoky v protipříkladech.
 - **Platí pro všechny session** (CODE-tune, tree, web; Cowork přes protokol MEMORY.md).
 - Affected doc(s): CLAUDE.md §30, memory/MEMORY.md (Session Start Protocol).
+
+## 2026-11-26 (4) — Rúnar V4: nový lab výkladu (sféry runy, pevná kotva, emoce, dveře Asku); V3 zůstává k ledu
+
+- **Rozhodl:** owner 2026-11-26: *„dostaneš projekt, na kterém pracujeme s Gemini. Úplně nový pohled na výklad od Rúnara. S V3 toho nebude
+  mít možná až tak společného. Tak pokud usoudíš, budeš jiná vyšší verze“* · *„ano, ulož a začni“* · lane: *„může spadat pod read, ale jeho
+  úkol bude pracovat na Rúnar V4“* (předal CODE-read).
+- **Proč V4, ne V3:** V3 přestavovala prompt, ale model psal celé čtení pokaždé znovu; návrh Gemini mění, KDO text píše — pevný obraz pro
+  runu a sféru, model jen zasahuje (věty 1 a 3 podle emoce). Je to jiný princip, ne další verze téhož promptu.
+- **Co:** složka `docs/eval/2026-11-26-v4-sfery/` (zdroj od ownera doslova jako PDF + text, README = vstupní bod, krok 1 inventura aspektů
+  `RUNE_IMAGES` × sféry). Produkce beze změny. V3 se nemaže a nepřebírá.
+- **Owner k rizikům (2026-11-26):** opakování a pevné 4 věty → *„budeme zkoušet to udělat pestřejší“*; islandština → *„musí se to testovat“*;
+  spready → *„zkusit na single; ze spreadu jsme se bavili o Nornách“*; vstup → *„budou to emoce“* (= P10).
+- ⚠️ **VAROVÁNÍ, otevřené:** čtení bez „you“ jde proti registru `direct` a mostu k člověku; puštění AREA a SEEKING ruší most
+  (RUNAR_DESIGN „Stavba Single čtení“, 2026-09-20). Rozhodne owner, než se napíše prompt V4.
+- Affected doc(s): žádný další — vstupní bod je README složky.

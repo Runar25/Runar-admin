@@ -1,0 +1,1003 @@
+Architektura runového výkladu Kenaz
+
+https://gemini.google.com/app/2a8d29c7b45f7243
+
+User prompt: Muzeme to vylepsit tim, ze napriklad u remesla nechame uzivatele zadat o co je presne to co
+ho zajima. Nekdo muze treba byt art painter, jeste me napada ze treba muze hledat inspiraci. Jak dat tyhle
+kazdodeni podnety jelikoz chveme aby lide s nami zustali a hledali u nas to co sami treba nevidi.
+Response: Tohle je klíčový moment pro retenci (udržení uživatele). Pokud chceš, aby se lidé do Rúnara
+vraceli denně kvůli novým podnětům – a zároveň si udržel nekompromisní autenticitu bez esoterického
+balastu – musíš vyřešit jednu architektonickou past:
+Pokud necháš AI přepisovat základní text runy podle zadání uživatele (např. „jsem malíř a hledám
+inspiraci“), AI velmi rychle sklouzne k frázím typu „Jako malíř bys měl vzít štětec a...“ – a tím
+okamžitě porušíš své hlavní pravidlo (žádné „you“, žádné rady, ztráta runového otisku).
+Místo toho potřebuješ dvouvrstvý systém (Kotva + Zrcadlo), který spojí pevnou syrovost runy s osobním
+kontextem uživatele.
+
+Jak to navrhnout, aby to fungovalo a lidi to vtáhlo
+
+1. Vrstva A: Pevná Kotva (Neměnný obraz runy)
+Uživatel vytáhne runu (např. Kenaz) a klikne na sféru Craft & Shaping. Okamžitě dostane náš pevný, mistrně
+napsaný 4větný obraz o výhni a surovém železe. Ten se nikdy nemění. Tvoří páteř aplikace.
+2. Vrstva B: Volitelný Fokus („Where does the fire land?“)
+Pod tímto 4větným textem (ne před ním!) je jedno nenápadné, volitelné pole. Neptáš se v něm „Jaký máš
+problém?“, ale:
+Focus this lens (optional): What are you working on, building, or trying to see?
+(Placeholder: e.g., painting a canvas, finding creative direction, finishing a difficult project...)
+Pokud uživatel nic nevyplní, odchází s čistým 4větným obrazem. Pokud tam napíše "art painter, looking for
+inspiration", AI vygeneruje pouze 2 dodatečné věty (cca 25–30 slov) jako Odraz (The Reflection).
+3. Jak musí znít Odraz (The Reflection), aby neporušil Rúnarův hlas?
+AI dostane přísný příkaz: Přelož fyzikální princip runy do materiálu/řemesla uživatele, stále ve 3. osobě,
+bez „you“ a bez rad.
+
+   ●​ Zadání uživatele: Art painter, looking for inspiration.
+   ●​ Runa + Sféra: Kenaz – Craft & Shaping.
+   ●​ Vygenerovaný Odraz (2 věty):Pigment stays inert on the palette until friction and heat force a first
+
+        mark onto raw canvas. Inspiration rarely arrives before the brush meets the surface; it gathers around
+        the movement already started.
+   ●​ Zadání uživatele: Programátor zaseklý na architektuře kódu.
+   ●​ Vygenerovaný Odraz (2 věty):Complex code remains rigid until unnecessary layers are burned
+        away to expose the core logic. Clarity in structure emerges not from staring at an empty screen, but
+        from testing where the system breaks under load.
+
+Proč je tohle pro uživatele návykové:
+
+   1.​ Žádná laciná pochvala ani rada: Rúnar mu neříká „Věř si, malíři!“, ale mluví jazykem jeho vlastního
+        materiálu (pigment, plátno, štětec / kód, struktura, zátěž) skrze oheň Kenaz.
+
+   2.​ Okamžitý „Aha!“ moment: Člověk má pocit, že ten systém vidí přímo do jeho dílny, aniž by ho
+        poučoval.
+
+Jak do toho dostat „každodenní podněty“ (aby lidé našli to, co sami nevidí)?
+
+Lidé často nevědí, na co se zeptat – mají jen neurčitý pocit (proto je skvělá ta tvoje mřížka 9 emocí/stavů).
+Aby u tebe našli podněty, které sami nevidí, přidej do výběru sfér jednu speciální mechaniku:
+
+Mechanika „Blind Spot“ (Slepé místo)
+
+Když uživatel vytáhne Kenaz, má na výběr její 4 přirozené sféry:
+
+   1.​ Insight & Clarity (Když je něco skryté)
+   2.​ Craft & Shaping (Když něco vzniká)
+   3.​ Drive & Friction (Když hoří energie)
+   4.​ Fever & Exposure (Když něco pálí zevnitř)
+
+Přidej k nim nenápadné 5. tlačítko: „Unseen / Let the rune choose“ (Nech vybrat runu).
+
+   ●​ Co se stane: Systém vezme uživatelův aktuální stav z těch 9 emocí (např. Foggy nebo Heavy) a
+        záměrně mu naservíruje tu sféru runy, která tvoří největší kontrast (např. u Heavy + Kenaz mu
+        naservíruje Fever & Exposure – tedy že jeho únava není lenost, ale vnitřní horečka, která spaluje něco,
+        co už tam nepatří).
+
+   ●​ Proč to udrží uživatele: Lidé si vědomě vybírají sféry, které chtějí slyšet (třeba Tvorbu). Tlačítko Let
+        the rune choose jim ukáže úhel pohledu, který by si sami nikdy neklikli.
+
+Shrnutí uživatelského toku (UX) pro Single Reading
+
+   1.​ Vstup (2 sekundy): Uživatel klikne na svůj vnitřní stav z 9 možností (např. Restless, Foggy, Heavy) –
+        nebo přeskočí.
+
+   2.​ Los: Vytáhne runu (např. Kenaz).
+   3.​ Volba čočky: Uvidí 4 přirozené sféry runy + možnost Let the rune choose.
+   4.​ Čtyřvětný obraz: Přečte si pevný 60slovný obraz vybrané sféry.
+   5.​ Prohloubení (volitelné): Pokud chce, napíše do jednoho řádku své téma/řemeslo („malování, hledám
+        inspiraci“) a Rúnar pod obraz dopíše 2 věty, které spojí fyziku runy s jeho konkrétním materiálem.
+
+Chceš teď vyzkoušet napsat tento systém (4 sféry po 4 větách) pro další runu – třeba pro Isu (led – úplný
+protiklad Kenaz), abys viděl, jak ostře se od sebe budou lišit a že tenhle systém opravdu brání
+zaměnitelnosti run?
+
+User prompt: Vyborne. To daba smysl. Takhle uz mame polozku AslSK runar kde se na to cteni muze uzivatel
+zeptat. Mame predpripravene otazky ktere se i meni podle toho co muze byt ve cteni zajimave, ale prave
+tohle doptani, ale tohle jak to rikas je jeste lepsi. Skoro dokonale. Uzivatel si necha udelat runu. Dostane
+vyklad s nametem na co se ptat jelikoz mu runa da jasne moznosti. Mi ho muzeme nasmerovat stejne jako to
+nechat na nem, spis mu ukazat cestu co delat dal, na co se ptata tim mu otevirat dvere do poznani run.
+
+Response: To je přesně ten chybějící článek, který z Rúnara dělá živý průvodcovský systém, a ne jen
+generátor náhodných textů. Když propojíš sféru vylosované runy s tlačítkem Ask Rúnar, přestane být
+Rúnar pasivní knihou a stane se průvodcem, který uživatele nenásilně učí jazyku run.
+
+Tady je návrh, jak propojit tenhle systém s funkcí Ask Rúnar, aby to fungovalo jako organická cesta (ne jako
+vyčerpávající chat):
+
+Jak propojit Výklad (4 sféry) -> Ask Rúnar (Dveře do poznání)
+
+Když uživatel dostane svůj 4větný obraz (např. Kenaz – Craft & Shaping o surovém železe a výhni), nesmí
+pod ním viset jen prázdné chatovací okno „Zeptej se na cokoliv“ (to vede k triviálním otázkám typu „Co mám
+dnes dělat?“).
+
+Místo toho Rúnar otevře 3 konkrétní dveře (předpřipravené podněty k doptání), které přímo navazují na
+fyzikální princip dané sféry a nutí uživatele podívat se hlouběji do sebe nebo do podstaty runy:
+
+1. Dveře: Hloubka materiálu (Pochopení principu runy)
+
+Otázka míří na samotnou podstatu dané runy v praxi. Učí uživatele, jak tato síla funguje v reálném světě.
+
+   ●​ Příklad pro Kenaz (Craft & Shaping): „How is the right heat recognized before the metal turns to
+        slag?“ (Jak poznat správný žár dřív, než se kov změní ve strusku?)
+
+   ●​ Co Rúnar odpoví (vždy 3. osoba, bez rad): Vysvětlí rozdíl mezi kontrolovaným žárem (řemeslo) a
+        slepým spálením (vyhoření/zbrklost) – skrze barvu železa a trpělivost kováře.
+
+2. Dveře: Stín a třecí bod (Kde to drhne)
+
+Otázka míří na cenu, kterou za tuto sílu platíme, nebo na její nedostatek.
+
+   ●​ Příklad pro Kenaz (Craft & Shaping): „What happens when the hammer strikes cold iron without
+        fire?“ (Co se stane, když kladivo udeří do studeného železa bez ohně?)
+
+   ●​ Co Rúnar odpoví: Popíše únavu materiálu, zbytečnou dřinu a praskliny, které vznikají, když člověk tlačí
+        silou bez vnitřního zápalu nebo přípravy.
+3. Dveře: Vlastní dílna (Přenos do konkrétní situace uživatele)
+
+Tady se aktivuje to, o čem jsme mluvili dřív – uživatel dosadí svůj obor, projekt nebo situaci („jsem malíř“,
+„stavím aplikaci“, „řeším vztah“), nebo vybere z rychlých kontextů, a Rúnar přeloží fyziku výhně do jeho
+materiálu.
+
+Jak to celé funguje jako ucelený systém (Architektura pro vývoj)
+
+Aby ses v tom neztratil a systém se dal čistě naprogramovat i rozšiřovat pro všech 25 run, rozděl každou
+runu v databázi do této jednotné struktury:
+
+RUNA (např. KENAZ)​
+
+├── Základní otisk (1 věta - Daily Rune)​
+
+├── Fyzikální kotva (Oheň, výheň, světlo ve tmě, horečka)​
+
+└── SFÉRY (4 až 5 unikátních čoček pro tuto runu):​
+
+├── Sféra 1: Insight & Clarity​
+
+│  ├── Obraz (4 věty / ~60 slov - pevný text)​
+
+│  └── 2 předpřipravené dveře pro Ask Rúnar (Princip + Stín)​
+
+├── Sféra 2: Craft & Shaping​
+
+│  ├── Obraz (4 věty / ~60 slov - pevný text)​
+
+│  └── 2 předpřipravené dveře pro Ask Rúnar (Princip + Stín)​
+
+├── Sféra 3: Drive & Friction​
+
+│  └── ...​
+
+└── Sféra 4: Fever & Exposure​
+
+   └── ...​
+
+Co tím získáš?
+
+   1.​ Žádné slepé uličky: Uživatel nikdy nekouká na blikající kurzor s pocitem „A na co se mám teď
+        zeptat?“. Runa mu sama položí dvě ostré otázky, které ho vtáhnou do přemýšlení.
+
+   2.​ Postupné vzdělávání bez učebnice: Uživatel se nemusí šprtat významy run. Tím, že kliká na sféry a
+        otevírá dveře v Ask Rúnar, přirozeně chápe, že Kenaz není jen „štěstí v práci“, ale nebezpečný a
+        přesný nástroj ohně.
+
+   3.​ Konzistence tónu: Protože hlavní 4větný obraz i výchozí otázky v Ask Rúnar jsou pevně dané (nebo
+        generované z přísné šablony), Rúnar nikdy nesklouzne k lacinému ezoterickému koučování.
+
+Chceš teď na zkoušku postavit tuhle kompletní kartu pro druhou runu – ISA (led, nehybnost, ticho) – včetně
+jejích 4 sfér a otázek do Ask Rúnar, abychom si ověřili, jak ten systém drží pohromadě na dvou úplně
+opačných živlech?
+
+User prompt: Ano
+
+Response: Tady je kompletní architektonická karta pro runu ISA (led, nehybnost, ticho, soustředění),
+postavená jako přímý protiklad k ohnivé KENAZ.
+
+Všimni si, jak ISA sama diktuje úplně jiné sféry než Kenaz – tady není žádné řemeslo ani oheň, ale zastavení,
+křehkost, izolace a čistota. Všechny texty drží Rúnarův styl: 3. osoba, nula rad, nula „you/your“, hmotné
+obrazy ledu a nehybné vody, přesně 4 věty (cca 60 slov).
+
+ISA (Led / Nehybnost / Koncentrace)
+
+   ●​ Základní otisk (Daily Rune): Still water becomes strong enough to hold weight only when every
+        ripple gives way to winter.
+
+   ●​ Fyzikální kotva: Mráz, zamrzlá hladina, ticho, krystalická struktura, nebezpečí tenkého ledu,
+        zastavení pohybu.
+
+1. Sféra: Stillness & Pause (Zastavení a přestávka)
+
+A river locked beneath winter ice has not vanished; it has simply pulled its current out of sight. Surface
+movement stops so that the weight below can settle without disturbance. Fighting against a frozen channel
+only dulls the blade and wastes the strength of the arm. What appears as dead weight on the surface is
+often the quiet gathering of depth underneath. (64 slov)
+
+   ●​ Dveře pro Ask Rúnar (Princip): „How does stillness differ from stagnation beneath a frozen
+        surface?“
+
+   ●​ Dveře pro Ask Rúnar (Stín): „What happens when force is used to break ice before the thaw
+        arrives?“
+
+2. Sféra: Clarity & Focus (Ostrá koncentrace a chladný odstup)
+
+Cold air strips away the mist, leaving every distant ridge sharp and stripped of illusion. Without warmth to
+blur the edges, shapes stand in their exact proportions, unadorned and silent. Emotion clouds the water
+like stirred silt, while frost forces every particle to sink to the bottom. In pure stillness, the eye sees what is
+actually there rather than what it wished to find. (65 slov)
+
+   ●​ Dveře pro Ask Rúnar (Princip): „Why does cold distance reveal proportions that heat obscures?“
+   ●​ Dveře pro Ask Rúnar (Stín): „Where is the line between clear sight and cold detachment?“
+
+3. Sféra: Fragility & Thin Ice (Křehkost a skryté napětí)
+
+Clear ice looks solid from the shore, yet its strength depends entirely on the unseen temperature beneath
+it. A sudden shift in weight or a warm current underneath can fracture a wide sheet in a single sharp crack.
+Walking across frozen water requires reading the texture of the surface rather than trusting its stillness.
+What holds a light step easily can give way without warning under a heavy burden. (69 slov)
+
+   ●​ Dveře pro Ask Rúnar (Princip): „What signs reveal whether frozen ground can carry real weight?“
+   ●​ Dveře pro Ask Rúnar (Stín): „Why does a sudden fracture happen without any warning on the
+
+        surface?“
+
+4. Sféra: Isolation & Preservation (Izolace a uchování)
+
+Deep frost seals a seed inside the earth, protecting its core from rotting in premature warmth. Isolation
+cuts off noise and outside contact, leaving only what is dense enough to survive the cold. Yet a winter that
+never breaks turns preservation into permanent dormancy. Whatever is kept safe inside the ice remains
+unchanged, unable to grow until the grip finally loosens. (62 slov)
+
+   ●​ Dveře pro Ask Rúnar (Princip): „What needs to be sealed away from outside noise to survive?“
+   ●​ Dveře pro Ask Rúnar (Stín): „When does protection inside the ice turn into being trapped?“
+
+Kontrolní srovnání: Kenaz vs. Isa (Ověření systému)
+
+   ●​ Nezaměnitelnost: Ani jednu větu z Isa nelze omylem přiřadit ke Kenaz nebo jiné runě. Fyzika ledu,
+        ticha a mrazu drží každý odstavec.
+
+   ●​ Dynamika pro uživatele: Pokud uživatel zadal před losováním emoci Restless (Neklidný) a vytáhne
+        Isu, systém mu přes tlačítko Let the rune choose naservíruje sféru Stillness & Pause (narazí na zeď
+        klidu). Pokud zadal Foggy (Zamlžený), dostane Clarity & Focus (mráz rozpustí mlhu).
+
+   ●​ Otázky v Ask Rúnar: Jsou napsané tak, aby se na ně uživatel chtěl zeptat, ale Rúnar na ně opět
+        odpoví neosobním pohledem na svět a přírodu.
+
+Jak se ti tenhle kontrast mezi Kenaz a Isou čte? Chceš doplnit i tu chybějící kartičku pro Kenaz (přidat k ní ty
+stejné 2 otázky pro Ask Rúnar ke každé ze 4 sfér, abys měl první dvě runy kompletně sjednocené), nebo
+chceš zkusit třetí runu z jiného živlu (např. Ansuz – dech/slovo nebo Raidho – cesta/kolo)?
+
+User prompt: Spis bych chtel aby jsi prosel u nas vsech 25 run a proveril ze je nas system.aplikovatelny na
+vsechny runy. Pak napriklad pro ISA jestli jsme schopni vytvorit i jine obrazy nez jen zamrzla puda nebo voda
+tedy led. Vic si s tou runou pohrát. Dat ji i moderni vzhled. Jak.by to vypadalo.a jestli by to fungovalo?
+
+Response: Tady je zátěžový test celého systému na všech 25 runách (24 Elder Futhark + Wyrd/Odin) a
+odpověď na to, jak Isu (a ostatní runy) osvobodit od klišé přírodních scenérií a posunout je do moderního,
+hmatatelného světa.
+
+1. Zátěžový test: Funguje systém „Fyzikální kotva + 4 unikátní sféry“ pro všech
+25 run?
+
+Krátká odpověď: Ano, funguje pro všech 25, ale u 3 skupin run narazíš na architektonické riziko, které
+musíš ohlídat.
+
+Tady je rozpad všech 25 run podle toho, jak snadno se z nich dělají hmotné obrazy (bez ezoterické vaty):
+
+Skupina run          Které runy sem         Jak dobře systém     Kritické riziko při
+                     patří                  sedí                 psaní
+
+1. Živly a přírodní  Fehu, Uruz, Thurisaz,  10/10 – Přirozená    Opakování kulis.
+síly (7 run)         Hagalaz, Isa, Jera,    doména. Mají jasnou  Hrozí, že Isa bude
+                     Sowilo                 fyziku (mráz,        pořád jen zamrzlý
+                                            krupobití, slunce,   rybník a Sowilo jen
+                                            sklizeň).            slunce na obloze.
+Skupina run          Které runy sem       Jak dobře systém     Kritické riziko při
+                     patří                sedí                 psaní
+
+2. Lidské nástroje,  Ansuz, Raidho,       9/10 – Skvělý        Perthro (losovací
+řemeslo a pohyb (9   Kenaz, Gebo, Wunjo,  potenciál. Kolo,     pohár/tajemství) a
+run)                 Nauthiz, Eihwaz,     pochodeň, pohár,     Wunjo
+                     Perthro, Dagaz       luk/tis, práh dne a  (radost/soulad)
+                                          noci.                snadno sklouznou do
+                                                               abstrakce, pokud je
+                                                               neukotvíš do
+                                                               mechaniky (např.
+                                                               Wunjo = rezonance
+                                                               struny, Perthro =
+                                                               kostky v uzavřené
+                                                               dlani).
+
+3. Vztahové,         Algiz, Tiwaz,        8/10 – Vyžadují      Mannaz (lidství/mysl)
+obranné a            Berkano, Ehwaz,      disciplínu.          a Othala
+společenské          Mannaz, Laguz,                            (dědictví/hranice)
+principy (8 run)     Ingwaz, Othala                            nemají čistý přírodní
+                                                               živel. Musíš je stavět
+                                                               na architektuře,
+                                                               paměti materiálu a
+                                                               lidské interakci (zeď
+                                                               pozemku, zrcadlo,
+                                                               stopa v kameni).
+
+4. Prázdná runa (1   Wyrd (Odin)          Specifická výjimka.  Nemá vlastní sféry –
+runa)                                                          je to prázdné
+                                                               plátno. Neměla by
+                                                               mít 4 sféry, ale 1
+                                                               obraz nepopsaného
+                                                               papíru nebo ticha
+                                                               před prvním tónem.
+
+Verdikt ze zátěžového testu: Systém je 100% životaschopný pro celou sadu. Jediné, co ho může zabít, je
+stereotypizace – tedy když Isa bude pořád jen zamrzlá řeka.
+
+2. Jak hrát s runou ISA moderně (bez zamrzlé vody a půdy)
+
+Runa Isa neznamená „led“ jako turistickou pohlednici. Isa je fyzikální princip zastavení pohybu, udržení
+tvaru pod tlakem, nulové tření nebo ztuhnutí hmoty.
+
+Pokud chceš Isu posunout do moderního světa (aby to oslovilo dnešního člověka v dílně, u počítače nebo
+ve městě) a přitom zachoval 100 % Rúnarových pravidel (3. osoba, nula „you/your“, nula rad, hmotný
+obraz), můžeš použít tyhle obrazy:
+
+A. Moderní obraz: Zaseknutý mechanismus / Nulová vůle (Mechanika)
+A heavy steel bearing locked by cold grease refuses to turn, no matter how much torque is applied to the
+shaft. Force does not restore rotation; it only strips the teeth of the gears trying to drive it. Movement
+returns only when the friction ceases and the metal is allowed to rest without load. What looks like
+resistance in the machine is often a safeguard against tearing itself apart. (68 slov)
+
+B. Moderní obraz: Prázdná místnost / Akustické ticho (Architektura a prostor)
+
+Concrete walls in an empty room absorb every sound until even a single footstep drops dead in the air.
+Without clutter or noise to bounce against, there is nowhere for distraction to hide. Silence feels
+uncomfortable at first because it removes the background hum that usually masks restlessness. Yet only
+inside an uncrowded space can a single clear note be heard at its true pitch. (66 slov)
+
+C. Moderní obraz: Nevypálená hlína / Tuhnoucí beton (Materiál a čas)
+
+Fresh concrete poured into a wooden frame must stand completely untouched while chemical bonds lock
+the aggregate into stone. Vibrating the mold too early or stripping the boards before the cure finishes
+leaves cracks that no surface patch can fix. Nothing appears to happen on the outside during the wait, yet
+the entire load-bearing strength is decided in that stillness. (63 slov)
+
+D. Moderní obraz: Zamrzlý displej / Zastavený signál (Současný rytmus)
+
+A screen frozen mid-frame holds a single expression still long after the voice behind it has gone silent.
+Rapid tapping on the glass produces no response; the system has simply stopped accepting new input until
+the backlog clears. Pausing the stream is not the end of the transmission, only a hard boundary against
+overload. (56 slov)
+
+3. Bude „moderní Rúnar“ fungovat, nebo to ztratí kouzlo?
+
+Z pohledu uživatelského zážitku a konzistence značky je to obrovský posun vpřed, pokud dodržíš jednu
+hranici:
+
+   ●​ Co funguje skvěle: Nadčasové řemeslo a fyzika materiálu (ložisko, beton, akustika prázdné
+        místnosti, sklo, kov, struna). Tyto věci jsou 100% moderní, každý si je dokáže představit, ale zároveň
+        mají váhu a syrovost starého světa. Nepůsobí trapně ani levně.
+
+   ●​ Na co si dát pozor (Digitální klišé): Obrazy jako „zamrzlý displej mobilu“ (ukázka D) sice fungují, ale
+        rychle stárnou a mohou působit až moc technicistně oproti názvu Rúnar. Lepší je držet se moderního
+        fyzického světa (architektura, dílna, nástroje, zvuk, světlo, tělo) než obrazovek a softwaru – ledaže
+        by šlo o tu volitelnou 2větnou vrstvu Ask Rúnar, kdy si uživatel sám řekne, že je programátor.
+
+Shrnutí: Když u každé runy nakombinuješ 2 sféry z přírody (řeka, mráz) a 2 sféry z materiálu/prostoru
+(beton, akustika místnosti, ocelové ložisko), dostaneš systém, který působí neskutečně svěže, chytře a
+neokoukaně.
+
+Chceš teď zkusit jednu z těch „těžších“ run ze skupiny 3 (např. MANNAZ nebo PERTHRO), abychom ověřili,
+že i abstraktní runu dokážeme takhle ostře ukotvit do moderní hmoty?
+
+User prompt: Premyslim jestli by jsme tohle nadcasove nemohli udelat na miru uzivatele. Nekdo bude chtit
+treba vic prirodni obrazy jiny vice moderni s telefonem atd. Tohle je vsechno testovani takze spis je to o
+objevovani moznosti, limitu a ovirani vsech moznuch dveri. Nechi z toho udelat uplny nesmysl, ale spis
+premyslim ze ne kazdy clovek ma vkus pro neco co by jsme si mohli stanovit jako nas zaklad, ale dat mu i
+tuhle moznost muze byt zajimave. Jinak jsme primarne pro IS a Eng ale pouzivame celkem ISlandskou
+prirodu a tim nabizime neco zajimaveho.
+
+Response: Myšlenka nechat uživatele vybrat si „vizuální filtr“ (přírodní vs. moderní/městský) je skvělý
+experiment – obzvlášť pokud cílíte na Island a anglicky mluvící publikum. Islandská příroda je obrovská
+konkurenční výhoda (černý písek, čedič, geotermální pára, ledovcové řeky, mech na lávě), protože má sama
+o sobě syrovost a váhu, kterou běžné esoterické aplikace nemají.
+
+Zároveň ale hrozí jedna zásadní past: pokud uživateli dáš moc možností (příroda vs. mobilní telefon),
+rozmělníš identitu aplikace a uděláš z Rúnara jen další generický AI wrapper.
+
+Tady je kritický pohled na to, kde jsou limity a jak to otestovat, aniž bys ztratil duši projektu:
+
+1. Past „telefonu a displejů“ (Proč technologie v runách stárne)
+
+Pokud dáš uživateli přepínač „Moderní svět (telefony, práce, město)“, AI začne chrlit metafory typu „vybitá
+baterie“, „zamrzlá obrazovka“ nebo „přeplněná e-mailová schránka“.
+
+   ●​ Proč je to problém: Tyhle obrazy jsou ploché a stresující. Člověk otevírá runovou aplikaci právě
+        proto, aby na 2 minuty vypadl ze svého mobilu a e-mailů. Když mu runa ukáže další displej, zabiješ
+        atmosféru.
+
+   ●​ Jaký je limit: Moderní svět ano, ale hmotný a nadčasový (architektura, beton, sklo, zvuk, doprava,
+        nástroje, světlo ve městě), ne digitální haraburdí.
+
+2. Islandská příroda jako „výchozí DNA“ (Default)
+
+To, že stavíte na islandské přírodě, je vaše největší zbraň. Pro Islanďany je to domov a syrová realita, pro
+cizince (EN trh) je to exotika a magnet.
+
+   ●​ Kenaz na Islandu není jen „pochodeň“ – je to láva pod tenkou krustou, geotermální vrt, nebo
+        maják ve vánici.
+
+   ●​ Isa na Islandu není jen „zamrzlý rybník“ – je to modrý ledovec pod tlakem tisíců tun, nebo prázdná
+        silnice č. 1 uzavřená sněhem.
+
+Pokud bys dal přírodu a „moderní svět“ na stejnou úroveň jako rovnocenné volby (50/50), oslabíš tím to
+nejsilnější, co máte.
+
+3. Jak otestovat „čočku na míru“, aniž bys zabil identitu (Architektura testu)
+
+Místo abys přepisoval všechny texty dvakrát (jednou pro přírodu, podruhé pro město), můžeš otestovat
+přepínač perspektivy (Lens / Texture) na úrovni promptu nebo v nastavení profilu.
+
+Doporučuji otestovat 3 jasně vymezené režimy, mezi kterými si uživatel může přepnout (a ty na datech
+uvidíš, co lidé reálně používají a u čeho zůstávají):
+Režim 1: The Land (Výchozí – Islandská příroda a živly)
+
+   ●​ Obrazy: Čedič, láva, ledovcová voda, vítr, mech, oceán, surové dřevo.
+   ●​ Pro koho: Lidé hledající klid, odstup, syrovost a spojení se severem.
+   ●​ Ukázka (Kenaz – Insight):A single flare dropped into a lava tube exposes the jagged basalt walls
+
+        long hidden in pitch darkness. Light does not smooth the rock; it simply reveals where the ground
+        drops away.
+
+Režim 2: The Craft (Hmotný svět, dílna, architektura, tělo)
+
+   ●​ Obrazy: Ocel, beton, akustika, sklo, struna, jizva, dech, stavba. (Moderní, ale nadčasové a fyzické –
+        žádné mobily).
+
+   ●​ Pro koho: Tvůrci, praktici, lidé, kterým přírodní lyrika nic neříká, ale rozumí materiálu a mechanice.
+   ●​ Ukázka (Kenaz – Insight):A sharp beam of light across a raw concrete floor exposes every grain of
+
+        dust and hairline crack left behind. Brightness does not fix the surface; it simply removes the shadow
+        where flaws could hide.
+
+Režim 3: The Current (Současný rytmus, město, technologie, komunikace)
+
+   ●​ Obrazy: Signál, šum, prázdná ulice v noci, skleněná fasáda, přetížená síť, ticho po vypnutí proudu.
+   ●​ Pro koho: Lidé žijící čistě v digitálním a městském tempu (tady otestuješ ten „telefon“ a moderní
+
+        civilizaci v Rúnarově chladném, neosobním tónu).
+   ●​ Ukázka (Kenaz – Insight):A sudden cut in background noise leaves a single notification glowing on a
+
+        dark screen in an empty room. Silence does not create the message; it simply strips away the static
+        that kept it unseen.
+
+Jak to prakticky otestovat v aplikaci (Minimum práce, maximum dat)
+
+Nemusíš hned přepisovat databázi pro 25 run × 3 režimy. Udělej to jako A/B test přímo v rozhraní:
+
+   1.​ Výchozí stav (Default): Nech běžet The Land (islandskou přírodu) jako hlavní tvář Rúnara – je to
+        vaše nejunikátnější karta.
+
+   2.​ Skrytý / volitelný přepínač u výkladu: Pod vygenerovaným čtením dej nenápadnou volbu: „Shift
+        perspective: [Land] · [Craft] · [Modern]“ (nebo to dej do nastavení Rúnar's Voice).
+
+   3.​ Sleduj chování uživatelů:
+           ○​ Klikají lidé na Modern, nebo zůstávají u Land a Craft?
+           ○​ U kterého režimu častěji pokračují do Ask Rúnar (tedy u kterého režimu je text zasáhne natolik,
+                že chtějí jít hlouběji)?
+
+Tímhle způsobem neztratíš autenticitu, neuděláš z aplikace kočkopsa, ale zároveň si v reálném provozu
+ověříš, jestli „moderní telefonní Rúnar“ lidi přitahuje, nebo je spíš ruší.
+
+Chceš zkusit nastavit přesná systémová pravidla (prompt) pro generování těchto tří režimů, abys to mohl
+rovnou nasadit do testování?
+
+User prompt: Zbi to vyborne. Obzvlast se mi libi to ze diky sferam ma uzivatel moznost cidet ze je toho vic
+na prozkoumani a jelikoz mu nenabidneme vsechno naraz tak ma duvod se vratit. Maximum ASKu je 2 pro
+premium uzivatele. Standard ma a ASK. Cteni ma za ukol zaujmout, zaujmout na tolik ze se chces vratit v
+cemz mu pomaha ASK. AsK ma v sobe i volnou otazku, ale tam zalezi jak se umi clovek zeptat. To ze se ale
+az v ASKu ptal na osobni otazku ve stylu kde muzu hledat inspiraci a vlastne podstata runy by mela jen
+ukazat kde clovek podle vyznamu runy ma hledat odpodev. Nekdy je cenku nekdy uvnitr, ale navedeme
+uzivatele po testech na to jak se na to muze zeptat az oberime jak na to model reaguje. Ale to cele
+prehozeni otazek dava hodne smysl. U sreadu to pak bude asi trochu jinak, system muzeme upravit.
+
+Response: To omezení na 1 ASK pro Standard a 2 ASKy pro Premium z toho dělá geniální byznysovou i
+herní mechaniku (tzv. curiosity gap – mezera zvědavosti). Když uživateli nedáš všechno najednou a ukážeš
+mu jen obrys (4 sféry), ale on si může otevřít jen jednu čočku a k ní má 1 nebo 2 „klíče“ (ASKy), přirozeně se
+mu v hlavě vytvoří tah vrátit se zítra nebo přejít na Premium.
+
+Zároveň jsi pojmenoval strašně důležitou věc: jak odpovídat na osobní otázky v ASKu (např. „Kde mám
+hledat inspiraci?“), aniž by Rúnar sklouzl do rad („Jdi na procházku“), a přitom nezklamal uživatele
+prázdnou frází.
+
+Tady je návrh, jak vyřešit přesně tenhle bod – směřování pohledu (ven vs. dovnitř) podle podstaty runy –
+a jak na to připravit model i rozhraní.
+
+1. Mechanika „Kde leží odpověď“ (Směr pohledu runy)
+
+Píšeš: „Podstata runy by měla jen ukazat, kde člověk podle významu runy má hledat odpověď. Někdy je
+venku, někdy uvnitř.“
+
+Tohle je klíčové pravidlo pro AI v ASK Rúnar. Každá runa má v sobě zabudovaný vektor směru (Direction
+Vector) – kam obrací pozornost:
+
+   ●​ Runy směřující VEN (do hmoty, akce, prostředí, střetu): např. Kenaz (tření materiálu, světlo na
+        stěně), Raidho (pohyb, cesta), Fehu (zdroje v oběhu), Thurisaz (odpor zvenčí).
+           ○​ Jak odpoví na „Kde hledat inspiraci?“ (Kenaz): Neřekne „Zkus malovat“. Ukáže ven do
+                materiálu: „Jiskra nevzniká v prázdné hlavě před plátnem, ale až ve chvíli, kdy surový nástroj
+                narazí na odpor povrchu a začne ho měnit.“ (Odpověď je v kontaktu s hmotou.)
+
+   ●​ Runy směřující DOVNITŘ (do ticha, struktury, paměti, klidu): např. Isa (zamrzlá hladina, ticho),
+        Laguz (hluboký proud pod povrchem), Perthro (to, co je ještě skryté v dlani), Othala (kořeny, minulá
+        zkušenost).
+           ○​ Jak odpoví na „Kde hledat inspiraci?“ (Isa): Ukáže dovnitř do zastavení: „Nový tvar se neobjeví
+                uprostřed hluku a neustálého přidávání dalších podnětů; vynoří se až tehdy, když se hladina
+                úplně zastaví a kal klesne ke dnu.“ (Odpověď je v ubrání podnětů.)
+
+Proč tohle u uživatele zabere: Uživatel se zeptal na konkrétní věc (inspirace), Rúnar mu neporadil jako
+kouč, ale otočil mu hlavu správným směrem (buď „sáhni na materiál a začni třít“, nebo „zastav hluk a nech
+to sednout“) čistě skrze fyziku té runy.
+
+2. Jak vyřešit „volnou otázku“ v ASKu (aby lidé neuměli/nemuseli složitě
+formulovat)
+
+Píšeš, že u volné otázky záleží, jak se člověk umí zeptat, a že je po testech navedete. Už teď jim ale můžeš
+dát konstrukční berličku (Prompt Scaffolds) přímo v poli pro volnou otázku, aby nepsali triviální věci typu
+„Co bude zítra?“.
+V ASKu (kde má Standard 1 pokus a Premium 2 pokusy) jim nabídni:
+
+   1.​ 2 předpřipravené dveře navázané na vybranou sféru (jak jsme si ukázali u Kenaz a Isa – klikne a
+        okamžitě dostane hloubku bez přemýšlení).
+
+   2.​ 1 pole pro vlastní otázku, ale s dynamickým placeholderem (nápovědou uvnitř řádku), který se
+        mění podle vylosované runy a ukazuje jim jak se ptát:
+           ○​ Pro Kenaz: Ask where the heat is needed (e.g., "Where to look for inspiration in my painting?")
+           ○​ Pro Isu: Ask what needs to be paused (e.g., "Why does my current project feel frozen?")
+
+Tím uživatele nenápadně učíš správně se ptát (neptat se na věštbu budoucnosti, ale na to, kam se podívat
+v konkrétní situaci).
+
+3. Jak se bude lišit Single Reading vs. Spread (Výhled do další fáze)
+
+Máš naprostou pravdu, že Spread (rozklad o více runách) bude muset fungovat trochu jinak, aby se to
+nezahltilo:
+
+   ●​ Single Reading (1 runa): Hluboký ponor. Nejdřív los -> pak výběr ze 4 sfér té runy -> 60slovný obraz
+        -> 1 až 2 ASKy. Tady jde o detail a chirurgickou přesnost.
+
+   ●​ Spread (např. 3 runy – Situace / Tření / Směr): Tady nemůžeš u každé ze tří run nutit uživatele
+        vybírat ze 4 sfér (to by bylo 12 voleb a ztratilo by se napětí mezi runami). U Spreadu určuje „sféru“
+        samotná pozice ve výkladu a AI propojí fyziku těch tří run dohromady (např. Isa na pozici Situace +
+        Kenaz na pozici Tření = led pod tlakem plamene). A teprve na ten celek pak uživatel použije svůj 1
+        nebo 2 ASKy.
+
+Další logický krok pro testování
+
+Než začneš upravovat kód nebo UI, vyplatí se teď udělat test systémového promptu pro ASK Rúnar.
+Chceš zkusit napsat přesnou instrukci (system prompt) pro model, která mu zadá:
+
+   1.​ Fyzikální kotvu a směr pohledu (ven vs. dovnitř) dané runy,
+   2.​ Zákaz 2. osoby („you/your“) a zákaz rad,
+   3.​ Překlad osobní otázky uživatele (např. „kde hledat inspiraci“) do obrazu dané runy v max. 3 větách,
+
+abys to mohl rovnou otestovat v playgroundu na 3–4 různých otázkách a viděl, jak spolehlivě model drží
+roli?
+
+User prompt: Jak velky problem je s pouzivanim you, your? Jak jenlepe vyuzit psychologii v runovem cteni a
+je to pro nas vibec cesta kterou jit?
+
+Response: 1. Jak velký problém je používání „you / your“?
+
+Záleží na tom, v jaké vrstvě aplikace se nacházíš. Pokud uděláš zákaz „you/your“ jako dogmatické
+náboženství úplně všude, zničíš si konverzi v ASK Rúnar a budeš s AI neustále bojovat.
+
+Tady je realistické rozdělení, kde je „you/your“ smrtelné a kde naopak potřebné:
+   ●​ Kde je „you/your“ zakázané (Denní karta a 4větný obraz runy): Tady stavíš Rúnarův hlas a
+        identitu značky. Jakmile tam pustíš „you“, Rúnar okamžitě začne znít jako generický horoskop nebo
+        levný kouč („You need to find your inner fire...“). Třetí osoba tady vytváří odstup a váhu – runa mluví o
+        světě a uživatel se v tom pozná sám.
+
+   ●​ Kde je „you“ v pořádku (Rozhraní / UI a navigace): Tlačítka, popisky a instrukce („Draw your rune“,
+        „Where do you stand?“) mluví k uživateli přímo, protože to je obsluha aplikace, ne hlas runy.
+
+   ●​ Šedá zóna – ASK Rúnar (odpověď na konkrétní dotaz): Tady je přísný zákaz „you“ technicky
+        nejrizikovější. Když se uživatel zeptá „Mám vzít tuhle práci?“ a AI má zákaz použít „you“, často začne
+        psát krkolomné, pasivní věty, které působí vyhýbavě nebo roboticky.
+           ○​ Řešení: V ASK Rúnar nezakazuj slovo „you“ tvrdě v promptu, ale zakaž slovesa rozkazu a
+                hodnocení (should, must, need to, try to). Místo „You should take the risk“ model napíše:
+                „When the hammer strikes cold iron, the metal either shapes or cracks — the weight in your
+                hand already knows which one it is.“ To drží atmosféru, neuráží inteligenci a přitom se to
+                uživatele dotkne přímo.
+
+2. Jak nejlépe využít psychologii v runovém čtení (a je to vůbec správná cesta?)
+
+Ano, je to nejen správná cesta, ale jediná cesta, která má dlouhodobou hodnotu. Kdybys dělal jen
+„věštění budoucnosti“, budeš bojovat proti tisícům ezoterických aplikací a uživatelé odejdou hned, jak jim
+nevyjde předpověď. Psychologický přístup (zrcadlo) z Rúnara dělá nástroj pro sebereflexi, ke kterému se
+lidé vrací roky.
+
+Aby to fungovalo psychologicky a nepůsobilo to jako terapie, využij 3 ověřené psychologické principy:
+
+A. Projekce (Rorschachův efekt skrze hmotný obraz)
+
+Lidský mozek nedokáže číst popis fyzikálního jevu bez toho, aby ho okamžitě nepromítl do svého
+aktuálního problému.
+
+   ●​ Když napíšeš přesný obraz („Tenký led vypadá ze břehu pevně, ale praskne pod náhlou vahou“),
+        mozek uživatele si sám dosadí: „To je můj vztah“ nebo „To je můj rozpočet na tenhle projekt“.
+
+   ●​ Pravidlo: Čím méně runa vysvětluje, co to znamená, tím silněji si to uživatel vztáhne na sebe. V
+        momentě, kdy mu to AI dovysvětlí, kouzlo projekce mizí.
+
+B. Kognitivní přerámování (Reframing bez moralizování)
+
+Lidé přicházejí k výkladu většinou v úzkosti nebo zmatku (proto máš mřížku 9 stavů). Psychologie nefunguje
+tak, že jim řekneš „Bude to dobré“ (toxická pozitivita), ale že změníš úhel pohledu na jejich nepohodlí.
+
+   ●​ Příklad: Uživatel cítí vyhoření nebo zlost (stav Burning) a padne mu Kenaz. Runa mu neřekne „Uklidni
+        se“, ale ukáže mu oheň jako katalyzátor, který spaluje zbytečnosti. Člověk najednou nevnímá svůj
+        vztek jako selhání, ale jako tření, které něco čistí. To okamžitě snižuje úzkost.
+
+C. Kontrola a autonomie (Locus of Control)
+
+Esoterika bere lidem kontrolu („Osud rozhodl, že nastane změna“). Dobrá psychologie vrací kontrolu zpět
+člověku.
+
+   ●​ Tím, že po vylosování runy dáš uživateli vybrat ze 4 sfér a pak mu dáš 1 nebo 2 vlastní otázky (ASK),
+        neděláš z něj pasivního příjemce věštby, ale aktivního pozorovatele. Uživatel odchází s pocitem:
+        „Sám jsem si vybral, kam se podívám, a sám jsem si v tom našel odpověď.“ To vytváří nejsilnější návyk
+        a důvěru v aplikaci.
+
+Kde je hranice, kterou nesmíš překročit?
+
+Psychologie v Rúnarovi musí zůstat skrytá pod kapotou.
+
+   ●​ Nikdy nepoužívej terapeutický slovník (trauma, uzdravení, vnitřní dítě, mindset, bloky, toxický).
+        Jakmile Rúnar začne mluvit jako psycholog z Instagramu, ztratí severskou syrovost.
+
+   ●​ Mluv jazykem řemesla a přírody, mysli jako psycholog: Struktura textu je psychologická (projekce
+        -> třecí bod -> vrácení kontroly), ale slovník zůstává 100% hmotný (kámen, mráz, oheň, ostří, mlha).
+
+Praktický verdikt pro další krok
+
+Netrap se tím, jestli v ASK Rúnar občas padne zájmeno „you“. Hlídání tónu postav na dvou mnohem
+důležitějších věcech:
+
+   1.​ Zákaz rad a imperativů (Rúnar nikdy neříká, co se má udělat).
+   2.​ Povinnost fyzického obrazu (každá odpověď musí obsahovat hmotný mechanismus dané runy).
+
+Chceš teď na tomto základě otestovat 3 reálné uživatelské dotazy v ASK Rúnar (např. na práci, vztah a
+tvůrčí blok) pro Kenaz a Isu, abys viděl naživo, jak model odpovídá bez rad a bez esoterického balastu?
+
+User prompt: Dodatek ze když si člověk zvolí, jednu sferu priste u stjne runy se mu musi ukazat kterou si
+predtim vybral aby si molh vybrat jinak. Vsechno musi byt postaveno tak aby to dokazal ovladat kazdy. Chce
+se mi rict i dite. Musi to byt maximalne intuitivni. My uz mame zaklad ale chce to se posunout dal. Tenhle
+smer se mi.libi. na co jsme jeste mohli zapomenout a hodilo by se to do runoveho vykladu?
+
+Response: Z těchto dvou nových screenshotů (výběr z 25 run a samotný výsledek čtení Wunjo s Isa jako Life
+Rune) je naprosto jasné, jak ten systém teď drží pohromadě. Vizuálně je to čisté, přehledné a uživatelská
+cesta má jasnou strukturu.
+
+Když se ale podívám na detaily současného výstupu (screenshot 3) a na tvůj požadavek „musí to
+zvládnout ovládat i dítě, musí to být maximálně intuitivní“, vyplave na povrch několik věcí, které se dají
+vylepšit, a pár míst, na která se při návrhu často zapomíná:
+
+1. Co bije do očí na současném výsledku (Screenshot 3)
+
+   ●​ Rozpor se stylem v textu Wunjo: Text na obrazovce začíná „You stand in a house...“ a končí otázkou
+        „Could belonging in your life sometimes look this ordinary?“ a zlatou větou „Do you notice when...“.
+        Tady je vidět, jak se starý styl (druhá osoba „you“ a přímé otázky na tělo) bije s novým směrem
+        (neosobní 3. osoba a syrový fyzikální obraz). Když to přepneš do nového stylu, text okamžitě zvážní a
+        získá mnohem větší sílu.
+
+   ●​ Skrytá role Your Life Rune (ISA): Nahoře máš lištu ISA | YOUR LIFE RUNE, a dole v poli Ask Rúnar máš
+        placeholder „How does my life rune Isa affect Wunjo in th...“. Pro nováčka (nebo to „dítě“ v
+        intuitivnosti) není na první pohled jasné, proč tam ta Isa nahoře visí a jaký má vztah k vylosovanému
+        Wunjo.
+2. Paměť sfér (Co jsi doplnil) – jak to udělat vizuálně „blbuvzdorné“
+
+Tvůj nápad, že při opakovaném vytažení stejné runy uživatel uvidí, kterou sféru už minule zkoumal, je pro
+pocit pokroku a objevování klíčový. Aby to pochopil každý na první dobrou bez vysvětlování:
+
+   ●​ Vizuální stav tlačítek (4 sféry):
+           ○​ Neprozkoumané sféry: Plný zlatý rámeček (stejný styl jako aktivní prvky v UI).
+           ○​ Již dříve otevřená sféra: Tlumenější kontrast + malý symbol fajfky nebo oka + drobný popisek
+                „Explored“ (nebo datum „Last seen 12 Nov“). Nezamykat ji – nechat ji klikatelnou, kdyby se k ní
+                chtěl vrátit, ale vizuálně hned vidí, kde ještě nebyl.
+
+   ●​ Progres runy (Gamifikace bez kýče): Když uživatel postupně otevře všechny 4 sféry jedné runy
+        (např. Kenaz 4/4), může se mu u té runy v Runes Collection rozsvítit plný zlatý okraj. Dává mu to
+        přirozený důvod se vracet a „odemykat“ si znalost všech 25 run.
+
+3. Na co jsme ještě mohli zapomenout (Co v runovém výkladu chybí)
+
+A. Co s prázdnou runou (BLANK v pravém dolním rohu mřížky)?
+
+Na screenshotu 2 máš 25. pozici pojmenovanou BLANK. Pokud si ji uživatel vytáhne (nebo ji vybere Let the
+runes decide), systém se nesmí zaseknout na 4 sférách, protože prázdná runa žádné sféry nemá.
+
+   ●​ Řešení pro BLANK: Jakmile padne Blank, přeskočí se výběr sfér a rovnou se zobrazí jeden pevný
+        4větný obraz o nepředvídatelnosti, prázdném plátně a tichu před prvním tahem – a rovněž to
+        rovnou otevře možnost zeptat se v Ask Rúnar na věc, kterou uživatel drží v tajnosti nebo se jí vyhýbá.
+
+B. Reverzní / Stínová poloha runy (Merkstave) vs. Sféry
+
+V klasickém runovém čtení se řeší, jestli runa padla obráceně (hlavou dolů). Protože máš pevnou mřížku 25
+run, kde jsou všechny runy otočené správně, nepotřebuješ obrácené runy – a je to dobře, začátečníky to
+jen mate. Místo toho jsi ten „stín“ chytře schoval přímo do 3. věty každé sféry (třecí bod / cena). Tím je
+rozhraní čisté a nepřehlcené.
+
+C. „Rychlý překlad“ do reality po přečtení (One-tap Reality Check)
+
+Když uživatel dočte 4větný obraz runy, občas si řekne „Hezký obraz, ale co teď?“ – a nechce se mu nic psát
+do Ask Rúnar.
+
+   ●​ Místo dlouhého chatu mu můžeš v Ask Rúnar nabídnout 3 rychlé „kontextové čočky“ na jedno
+        kliknutí (žádné psaní na klávesnici, čistá intuice):
+           ○​ [ In my work ]
+           ○​ [ With another person ]
+           ○​ [ Inside myself ]
+
+   ●​ Klikne na jednu z nich (spotřebuje svůj 1 ASK) a Rúnar přeloží ten 4větný fyzikální obraz do dané
+        roviny (stále bez rad, jen ukáže, kde v práci / ve vztahu / v něm samotném ten samý fyzikální zákon
+        právě působí). Pro uživatele na mobilu je kliknutí na čip 10× přirozenější než psaní věty na malé
+        klávesnici.
+
+D. Záchranný kruh pro Your Life Rune (ISA)
+Na screenshotu 3 máš v Ask Rúnar předvyplněný dotaz na propojení Life Rune (Isa) a vylosované runy
+(Wunjo). To je skvělá funkce, ale aby to působilo intuitivně:
+
+   ●​ Pokud uživatel klikne na ISA | YOUR LIFE RUNE v horní liště, měl by se mu rozbalit jednořádkový
+        tahák (např. „Your baseline filter: Stillness, clear boundaries, weight under pressure“), aby hned
+        chápal, proč se v Ask Rúnar nabízí kombinace Isa + Wunjo.
+
+E. Uložení jednoho vlastního postřehu (Micro-Journal)
+
+V horním menu už máš záložku JOURNAL. Aby se ten kruh uzavřel, po přečtení výkladu (nebo odpovědi z
+Ask Rúnar) by pod textem mělo být jedno nenápadné tlačítko „Save with a note“ (uložit do deníku s jednou
+vlastní větou). Když si pak uživatel za měsíc znovu vytáhne stejnou runu a uvidí označenou sféru, kterou už
+minule zkoumal, může si jedním kliknutím připomenout, co u ní tehdy řešil.
+
+Shrnutí nového, maximálně intuitivního toku (5 kroků bez přemýšlení)
+
+   1.​ Volitelný stav (3×3 mřížka emocí) – uživatel klepne, jak se cítí (nebo přeskočí).
+   2.​ Los runy – klepne na Let the runes decide (nebo si vybere sám).
+   3.​ Výběr ze 4 sfér dané runy – vidí, které už dříve otevřel (Explored), a vybere si novou (nebo nechá
+
+        vybrat runu).
+   4.​ 4větný obraz (60 slov) – syrový, neosobní obraz runy + tlačítko Hear Rúnar Speak.
+   5.​ Ask Rúnar (1–2 kliknutí) – buď klepne na jednu z předpřipravených dveří / kontextových čipů (Work /
+
+        People / Self / Life Rune), nebo napíše vlastní otázku.
+
+Chceš teď na ukázku připravit kompletní strukturu (4 sféry + otázky do Ask Rúnar) pro WUNJO ze
+screenshotu 3, abys viděl přímé srovnání starého textu na obrázku vs. nového stylu?
+
+User prompt: Ano.
+
+Response: Tady je přímé srovnání starého stylu (ze screenshotu) s novou architekturou Rúnara na runě
+WUNJO (soulad, rezonance, uvolnění napětí, společný prostor).
+
+Proč starý text ze screenshotu nefungoval naplno
+
+Na obrázku znělo Wunjo takto: „You stand in a house where voices fill the room... Could belonging in your
+life sometimes look this ordinary?“
+
+   ●​ Slabina: Používá 2. osobu (You stand, your life), doslovně vysvětluje význam („Wunjo stands for...“) a
+        končí návodnou otázkou („Could belonging...“), což tlačí uživatele k určité odpovědi.
+
+Nová architektura: WUNJO (Soulad / Rezonance / Úleva)
+
+   ●​ Základní otisk (Daily Rune): Two strings tuned to the same pitch stop fighting the air and carry a
+        single clear note.
+
+   ●​ Fyzikální kotva: Akustická rezonance, dosednutí čepu do dlabu, teplo společného ohniště, uvolnění
+        napětí po tahu, křehkost souladu.
+1. Sféra: Resonance & Alignment (Soulad a naladění)
+
+Two wooden beams cut to the exact same angle lock together without needing iron nails to hold the joint.
+Harmony is not the absence of weight; it is the precise distribution of load where every piece supports the
+next. When tension is balanced across the frame, the entire structure settles into quiet strength. A single
+warped timber, however, throws the whole roof out of true. (66 slov)
+
+   ●​ Dveře pro Ask Rúnar (Princip): „How is true alignment recognized without forcing the pieces
+        together?“
+
+   ●​ Dveře pro Ask Rúnar (Stín): „What happens to a structure when one part carries all the tension
+        alone?“
+
+2. Sféra: Shared Hearth & Belonging (Společný prostor a přijetí)
+
+Voices gather naturally around a lit stove long before the meal is set on the table. Warmth in a room does
+not come from grand speeches, but from the quiet ease of people sharing the same roof without guarding
+their words. Yet comfort can dull the edge when everyone agrees only to keep the peace. True shelter
+holds space for honest weight, not just pleasant noise. (68 slov)
+
+   ●​ Dveře pro Ask Rúnar (Princip): „What creates real ease in a shared space without words?“
+   ●​ Dveře pro Ask Rúnar (Stín): „When does keeping the peace turn into hiding what is real?“
+
+3. Sféra: Release & Ease (Uvolnění tahu a úleva)
+
+A drawn bowstring hums with sharp strain until the arrow leaves the rest and the wood returns to its natural
+curve. Relief is not laziness; it is the necessary slack that keeps ash wood from snapping under constant
+pull. Holding tension after the work is done wastes strength on an empty target. Knowing when to let the
+string go is half of the archer's craft. (67 slov)
+
+   ●​ Dveře pro Ask Rúnar (Princip): „Why does strength depend on releasing tension once the work is
+        done?“
+
+   ●​ Dveře pro Ask Rúnar (Stín): „What breaks when a bow stays strung long after the shot?“
+
+4. Sféra: Fragile Peace (Křehkost radosti a iluze trvalosti)
+
+Morning light on calm fjord water turns the entire surface into a mirror without a single ripple. Such stillness
+feels permanent while the air stays warm, yet it depends on every wind holding its breath at once. Trying to
+clutch the reflection in closed hands only shatters the glass into cold drops. Clarity in calm weather is
+meant to be witnessed, not locked inside a jar. (67 slov)
+
+   ●​ Dveře pro Ask Rúnar (Princip): „Why does trying to hold onto a peaceful moment break its
+        stillness?“
+
+   ●​ Dveře pro Ask Rúnar (Stín): „What remains on the surface once the wind returns to the water?“
+
+Co se tímto přepisem změnilo (Srovnání 1:1)
+
+   1.​ Zmizelo „You“ i vysvětlování: Rúnar už neříká „Wunjo stands for...“ ani „You stand in a house...“. Místo
+        toho postaví před uživatele tesařský spoj, napnutý luk, kamna v místnosti nebo hladinu fjordu.
+
+   2.​ Přirozené rozdělení pro volbu uživatele: Když teď uživateli padne Wunjo, nevidí jen neurčitou
+        „radost“. Vidí 4 přesné polohy:
+           ○​ Resonance & Alignment (když něco do sebe zapadá v práci/tvorbě)
+           ○​ Shared Hearth & Belonging (když jde o lidi a vztahy)
+           ○​ Release & Ease (když jde o úlevu po námaze)
+           ○​ Fragile Peace (když je klid křehký a pomíjivý)
+   3.​ Propojení s Life Rune (Isa) ze screenshotu: Pokud má uživatel nahoře jako Life Rune Isu (led) a
+        padne mu Wunjo (teplo ohniště / uvolnění tahu), otázky v Ask Rúnar automaticky vytvoří ostrý dialog
+        mezi ledem a teplem – aniž by Rúnar sklouzl k terapeutickým frázím.
+
+Chceš teď na tomto základě otestovat systémový prompt pro ASK Rúnar (včetně napojení na Life Rune a
+kontextové čipy), abys ho mohl rovnou nasadit a vyzkoušet s modelem?
+
+User prompt: My ted resime skladani promptu tak ze mame vytvorene obrazy runy. Jelikoz to mame tady
+rozdelene na sfery tak obraz bude asi muset byt primo delany na sferu. Podle dalsich vstupu je schopny
+model menit obraz ale spis jen jemne podle toho jake dostava vtupy pro kazdou ze 4 cet, ale tady ted v
+tomhle systemu dojde k zmene. Pokud are,seeking, intention prijdou az pozdeji skrze ask treba. Ne vsechno
+je to na devatu co zachovat a co pustit. Plus na zacatku je vstup jak se uzivatel citi coz musi model neka.
+Zasadit. Co navrhujes?
+
+Response: Tady je architektonický řez pro tvůj nový systém skládání promptu. Protože staré vstupy (Area of
+Life, Seeking, Intention) přesouváš až do ASK Rúnar (nebo je nahrazuješ výběrem sféry), celý generovací
+pipeline se ti radikálně vyčistí, zrychlí a zlevní.
+
+Tady je přesný návrh, co pustit, co zachovat a jak do 4větného obrazu zapracovat počáteční emoci
+uživatele, aniž by se obraz rozbil.
+
+1. Co pustit a co zachovat (Inventura starého systému)
+
+Starý prvek (ze            Verdikt  Proč a kam s ním
+screenshotu 1)             PUSTIT
+                                    Nahrazeno 4 přirozenými
+Area of Life (8 tlačítek)           sférami runy. Už runu
+                                    neohýbáš do cizích šablon.
+What are you seeking (5    PUSTIT
+tlačítek)                           Odstraníš tím rozhodovací
+                                    paralýzu na začátku. Záměr
+This reading is for (Časová PUSTIT  se řeší až v ASK Rúnar (nebo
+rovina)                             výberem sféry).
+
+                                    Rúnar nečte
+                                    minulost/budoucnost jako
+                                    kartářka, ale přítomnou
+                                    fyziku situace.
+Starý prvek (ze         Verdikt                Proč a kam s ním
+screenshotu 1)
+
+The Situation (textové pole PŘESUNOUT          Přesouvá se až do ASK
+před losem)                                    Rúnar (jako volná otázka
+                                               nebo kontextové čipy Work /
+                                               People / Self).
+
+4větný obraz runy       ZACHOVAT + ZPEVNIT     Každá sféra runy má svůj
+                                               pevný, mistrně napsaný
+                                               4větný základ (Anchor
+                                               Image), který AI jen jemně
+                                               doladí podle emoce.
+
+Life Rune (např. ISA)   PŘESUNOUT DO ASK       V hlavním 4větném obraze ji
+                                               neřeš (pletla by se tam).
+                                               Zapoj ji až v ASK Rúnar, kde
+                                               dělá skvělý kontrast.
+
+NOVÉ: Vstupní emoce (9  ZAPOJIT DO VĚTY 1 & 3  Slouží jako světelný filtr /
+stavů)                                         počasí, pod kterým se obraz
+                                               runy odehrává.
+
+2. Jak dostat vstupní emoci uživatele do 4větného obrazu (bez ztráty stylu)
+
+Tohle je nejdůležitější technická část. Máš pevný 4větný obraz pro konkrétní sféru (např. Kenaz – Craft &
+Shaping) a na vstupu ti přijde emoce uživatele (např. Heavy, Restless, Foggy, Burning).
+
+Zlaté pravidlo pro model: Emoce nemění samotný objekt (výheň je pořád výheň, kámen je pořád
+kámen), ale mění atmosféru a třecí plochu (jak těžce se kladivo zvedá, jak hustý je kouř, jak moc kov pálí).
+
+Aby model obraz nerozbil a nezačal psát terapeutické fráze („Protože se cítíš těžce...“), rozdělíš 4 věty do
+jasných slotů:
+
+   ●​ Věta 1 (Hmotný obraz + Atmosféra emoce): Pevný obraz sféry, jemně zabarvený vstupní emocí
+        (počasím/světlem).
+
+   ●​ Věta 2 (Mechanika runy): Čistý neměnný fyzikální zákon té sféry. (Zde emoce nemá žádný vliv –
+        fyzika platí stejně, ať se člověk cítí jakkoliv.)
+
+   ●​ Věta 3 (Třecí bod / Stín): Tady se emoce uživatele srazí s principem runy (kde vzniká největší tlak).
+   ●​ Věta 4 (Otevřený dozvuk): Neměnná závěrečná věta sféry, která nechá ticho.
+
+Praktická ukázka: Jak stejná sféra (Kenaz – Craft & Shaping) vypadá při dvou různých
+emocích
+
+Pevný základ sféry (bez emoce):
+
+Raw iron resists the hammer until the forge brings it to a dull red glow. Heat does not do the work of the
+hand, yet without it, every strike only bruises the cold metal. Too little fire leaves the ore brittle, while too
+much turns the edge to slag. Between ash and flame lies the brief window where hard matter becomes
+willing to take a new form.
+
+Varianta A: Uživatel zadal emoci HEAVY (Těžký / Unavený) (Model jemně upraví jen Větu 1 a Větu 3 –
+přidá váhu kladiva a pomalost rozhořívání):
+
+Cold iron feels twice as heavy on the anvil before the forge reaches a dull red glow. Heat does not do the
+work of the hand, yet without it, every strike only bruises the metal. When strength is low, forcing the
+hammer against unheated ore only leaves cracks and exhaustion. Between ash and flame lies the brief
+window where hard matter becomes willing to take a new form.
+
+Varianta B: Uživatel zadal emoci RESTLESS (Neklidný / Zbrklý) (Model jemně upraví Větu 1 a Větu 3 –
+přidá netrpělivost a riziko spálení):
+
+Sparks fly fast from the bellows before the iron inside the forge has even reached a steady red glow. Heat
+does not do the work of the hand, yet without it, every strike only bruises the cold metal. Rushing the blade
+into white-hot coals out of impatience turns a sharp edge into useless slag. Between ash and flame lies the
+brief window where hard matter becomes willing to take a new form.
+
+Všimni si toho výsledku:
+
+   ●​ Věta 2 a Věta 4 zůstaly 100% identické (drží páteř runy a zaručují konzistenci).
+   ●​ Věta 1 a 3 se chirurgicky přizpůsobily vnitřnímu stavu člověka, aniž by zaznělo slovo „you“,
+
+        „heavy“ nebo „restless“. Uživatel má okamžitě pocit, že obraz mluví přímo k jeho situaci.
+
+3. Nová struktura systémového promptu (Fáze 1: Hlavní čtení)
+
+Takhle čistě můžeš poskládat vstupní data do modelu ve chvíli, kdy si uživatel vylosuje runu a klikne na jednu
+ze 4 sfér:
+
+ROLE: You are Rúnar, a grounded, unsentimental observer of physical laws and
+human craft.​
+​
+INPUTS:​
+- Rune: {{RUNE_NAME}} (e.g., Kenaz)​
+- Selected Sphere: {{SPHERE_NAME}} (e.g., Craft & Shaping)​
+- Base 4-Sentence Anchor: "{{FIXED_4_SENTENCE_TEXT}}"​
+- User's Current State (Atmosphere): {{EMOTION_TAG}} (e.g., Heavy / Restless /
+Foggy / None)​
+- Perspective Lens: {{LENS}} (Default: Icelandic Nature & Raw Craft)​
+​
+TASK:​
+Deliver the 4-sentence reading (~60-70 words).​
+- If User's Current State is "None", output the Base 4-Sentence Anchor
+unchanged.​
+- If User's Current State is provided, subtly weave its physical atmosphere
+(weight, fog, friction, stillness, heat) ONLY into Sentence 1 and Sentence 3.
+Keep Sentence 2 and Sentence 4 close to the Base Anchor.​
+​
+HARD RULES:​
+1. STRICTLY NO second person ("you", "your", "yourself"). Speak only in the
+third person about materials, nature, and craft.​
+2. NO advice, imperatives, or moralizing ("should", "must", "try to").​
+3. NO explicit naming of the user's emotion word (do not write "When feeling
+heavy..."). Show the state through physical resistance or movement.​
+4. Keep exact 4-sentence structure.​
+
+4. Co přijde ve Fázi 2 (Prompt pro ASK Rúnar)
+
+Jakmile uživatel dočte tyto 4 věty a klikne na ASK Rúnar (má 1 nebo 2 pokusy), tam teprve pošleš:
+
+   1.​ Právě vygenerovaný 4větný obraz (aby na něj Rúnar navázal a nezačal od nuly),
+   2.​ Life Rune uživatele (např. Isa),
+   3.​ Konkrétní dotaz (buď kliknutí na jednu ze 2 předpřipravených dveří sféry, kontextový čip Work /
+
+        People / Self, nebo vlastní textovou otázku uživatele).
+
+Dává ti tahle dvoufázová architektura promptu (1. pevný obraz + jemný emoční filtr -> 2. osobní kontext až v
+ASKu) technicky i obsahově smysl?
+
