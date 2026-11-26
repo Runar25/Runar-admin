@@ -13742,3 +13742,13 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Co:** návrhy Gemini pro Kenaz Land (čistý obraz, 19–20 slov) v té podobě neprojdou; přepisují se na obraz + význam, kratší.
   Lab: `docs/eval/2026-11-26-v4-sfery/runa-dne.md`. Otevřené: kdo věty píše a kontroluje (V4, nebo CODE-tune).
 - Affected doc(s): `docs/eval/2026-11-26-v4-sfery/runa-dne.md` — v témže commitu.
+
+## 2026-11-26 (8) — Věty runy dne píše a kontroluje CODE-tune; lab V4 drží kostru V4
+
+- **Rozhodl:** owner 2026-11-26, odpověď na otázku CODE-tune 5 („mám věty runy dne dotáhnout já, nebo V4?“): *„no já chci mít hlavně hotovou
+  srozumitelnou kostru V4. Test čtení se tam počítá, ale žádný chaos ve V4.“*
+- **Co:** mění dělbu z (6) a uzavírá otevřenou otázku z (7). Věty runy dne (návrhy, zkouška překryvu s jinými runami, IS od základu, fakta)
+  dělá CODE-tune ve svém labu runy dne (`docs/eval/2026-11-14-runa-dne/`) a nasadí je do `runa_dne_knihovna.mjs`. Rozhovor ownera s Gemini
+  o runě dne už se do V4 nepřeposílá. Lab V4 dělá kostru a test čtení; z runy dne dostane jen to, co se kostry týká (sféry runy, které
+  owner určí, a rozhodnutí o podobě věty). Platí dál: Land + Craft, Current zatím ne (6); obraz i význam v jedné kratší větě (7).
+- Affected doc(s): `docs/eval/2026-11-26-v4-sfery/runa-dne.md` — upraví lab V4 (předáno zprávou; jeho doména, aktivně v něm pracuje).
