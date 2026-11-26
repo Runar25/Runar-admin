@@ -92,6 +92,11 @@ def over(d):
             open(os.path.join(tmpl, SID + '.videno'), 'w', encoding='utf-8').write(predtim)
             r = ozn(autor)
             ok('oznámení vynechá vlastní lane', hsys not in r.stdout, r.stdout[:160])
+            # 2026-11-26: obnovená session bez „viděno“ dostala 840 commitů od vzniku přepisu → karta při startu/resume píše „viděno“ = HEAD
+            open(os.path.join(tmpl, SID + '.videno'), 'w', encoding='utf-8').write(predtim)
+            py(d, 'runar-context.py', {'session_id': SID, 'source': 'resume'}, env=oenv)
+            r = ozn('CODE-cizi-test')
+            ok('po kartě (resume) oznámení mlčí — karta zapsala „viděno“', not r.stdout.strip(), r.stdout[:160])
         else:
             ok('oznámení: v repu se našel commit do CLAUDE.md', False, 'git log nic nevrátil — bez historie nejde oznámení ověřit')
         shutil.rmtree(tmpl, ignore_errors=True)

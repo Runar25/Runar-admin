@@ -19,7 +19,7 @@ import datetime, io, json, os, re, subprocess, sys
 
 REPO = os.environ.get('RUNAR_ROOT') or r'C:\Users\zkuku\Downloads\Runar-admin'
 STROP = 8500          # tvrdy strop celeho textu (limit Claude Code 10 000; rezerva na JSON a hlavicky)
-LANE_DIR = os.path.join(os.path.expanduser('~'), '.claude', 'runar-lane')
+LANE_DIR = os.environ.get('RUNAR_LANE_DIR') or os.path.join(os.path.expanduser('~'), '.claude', 'runar-lane')
 
 HOOK = {}
 try:
@@ -252,6 +252,9 @@ def sestav():
     lane = p.get('lane') or lane_z_cache()
     if p.get('lane') and SID:
         lane_uloz(p['lane'])
+    if SID:   # „viděno“ pro oznámení změn systému (runar-oznameni.py): karta ukazuje poslední rozhodnutí → od teď hlásí jen novější
+        bezpecne(lambda: (os.makedirs(LANE_DIR, exist_ok=True),
+                          io.open(os.path.join(LANE_DIR, SID + '.videno'), 'w', encoding='utf-8').write(git('rev-parse', 'HEAD').strip())))
     dnes = datetime.date.today().isoformat()
     hlava = 'RUNAR — KARTA SESSION (' + ZDROJ + '). DNES JE ' + dnes + ' (datovany zaznam nese TOHLE datum).'
     if ZDROJ in ('compact', 'resume'):

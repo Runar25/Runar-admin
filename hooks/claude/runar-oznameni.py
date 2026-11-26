@@ -11,7 +11,7 @@
 # Viděno: ~/.claude/runar-lane/<session>.videno (hash HEAD). Bez něj (session běží od dřív) se bere čas startu session (vznik přepisu).
 # Vlastní lane (z ~/.claude/runar-lane/<session>.txt, píše karta runar-context.py) se vynechá — své změny session zná.
 # Hook nesmí spadnout ani zdržet: cokoli selže → prázdný výstup.
-import io, json, os, subprocess, sys, datetime
+import io, json, os, subprocess, sys, datetime, time
 
 REPO = os.environ.get('RUNAR_ROOT') or r'C:\Users\zkuku\Downloads\Runar-admin'
 LANE_DIR = os.environ.get('RUNAR_LANE_DIR') or os.path.join(os.path.expanduser('~'), '.claude', 'runar-lane')
@@ -55,9 +55,12 @@ def oznameni(hook):
     if videno and git('cat-file', '-t', videno).strip() == 'commit':
         rozsah = [videno + '..' + head]
     else:
+        # Bez „viděno“ (session běží z doby před kartou, která ho píše) se bere start session, ale nejvýš 6 h zpět: obnovená session má
+        # přepis starý týdny a 2026-11-26 tak dostala 840 commitů (všechno od vzniku přepisu) místo oznámení.
         tp = hook.get('transcript_path')
         try:
-            start = datetime.datetime.fromtimestamp(os.path.getctime(tp)).isoformat(timespec='seconds') if tp and os.path.isfile(tp) else None
+            t0 = os.path.getctime(tp) if tp and os.path.isfile(tp) else None
+            start = datetime.datetime.fromtimestamp(max(t0, time.time() - 6 * 3600)).isoformat(timespec='seconds') if t0 else None
         except Exception:
             start = None
         if not start:
