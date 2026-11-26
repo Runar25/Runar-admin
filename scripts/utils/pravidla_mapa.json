@@ -12,6 +12,7 @@
       "oblast": "JS ve v2",
       "cesty": ["v2/*.js"],
       "pravidla": ["§1", "§10", "§13", "§18"],
+      "docs": [{"soubor": "docs/projekt-mapa.md", "nadpis": "Soubory a jejich zodpovědnost"}],
       "pamet": ["ceske-nazvy-spreadu-v-kodu"]
     },
     {

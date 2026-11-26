@@ -37,8 +37,10 @@ POSLEDNI_VYSTUP = ''
 APP = 'v2/runar-app.js'
 
 PRIPADY = [
- # ㊉ mapa souborů (CODE-read 2026-10-15): nový modul appky bez řádku v CLAUDE.md → musí spadnout
+ # ㊉ mapa souborů (CODE-read 2026-10-15): nový modul appky bez řádku v mapě → musí spadnout; od 2026-11-26 mapa v docs/projekt-mapa.md —
+ # řádek z ní zmizí (soubor v v2/ zůstal) → musí spadnout
  ('chyti', 'verify_soubory_claude.js', 'v2/runar-protipriklad-modul.js', 'create', '', '// modul bez řádku v mapě\n'),
+ ('chyti', 'verify_soubory_claude.js', 'docs/projekt-mapa.md', 'replace', 'runar-payback-admin.js  — shrine', 'payback-x.js  — shrine'),
  # ㉽ landing (CODE-read 2026-10-14, kolo 4): web/site čte klíč, který v UI_TEXT není (přejmenování v appce) → prázdné místo na webu
  ('chyti', 'verify_ui_text_used.js', 'web/site/index.html', 'replace', 'data-k="hero_eyebrow"', 'data-k="hero_eyebrow_v2"'),
  # ㉽ od 2026-10-21 (CODE-web) čte i podstránky webu (/ferdin/, /heim/, /kort/) a jejich U.klíč / tp('klíč'): podstránka čte klíč, který v appce není
@@ -91,6 +93,8 @@ PRIPADY = [
  # ㊁ mapa nosičů (CODE-read 2026-10-13): nové pravidlo bez nosiče; nosič, který smoke přestal pouštět (nadpis i volání; ㉹ — ne
  # předspuštěná kontrola, ta má jméno i v seznamu predem)
  ('chyti', 'verify_nosice.js', 'CLAUDE.md', 'append', '', '\n### §' + '99 — pravidlo bez nosiče\nText.\n'),
+ # 2026-11-26: sloučená § žijí jen v řádku „Sloučené:“ indexu — přesměrování v něm (mapa říká jinak) → musí spadnout
+ ('chyti', 'verify_nosice.js', 'CLAUDE.md', 'replace', '§27→§25', '§27→§21'),
  ('chyti', 'verify_nosice.js', 'smoke.py', 'regex',
   r"(JAZYK KOMUNIKACE \(verify_)jazyk_ui(\.js\)'\)\r?\nr = subprocess\.run\(\['node', os\.path\.join\(ROOT, 'scripts', 'verify_)jazyk_ui(\.js'\)\],\r?\n[^\n]*\r?\nr2 = subprocess\.run\(\['node', os\.path\.join\(ROOT, 'scripts', 'verify_)jazyk_ui", r'\g<1>x\g<2>x\g<3>x'),
  # kolo 3 / 4a (2026-10-11)
@@ -123,7 +127,8 @@ PRIPADY = [
  ('chyti', 'verify_doc_length.js', 'RUNAR_PRIVACY.md', 'append', '', ''.join('\nřádek %d navíc' % i for i in range(300))),
  # 2026-10-21 (DECISIONS 2026-10-21 (4)): CLAUDE.md — historie a strop v bajtech; odkaz na záznam s datem historie není
  ('chyti', 'verify_doc_length.js', 'CLAUDE.md', 'append', '', '\nZ historie: do 2026-01-01 tu st' + 'álo něco jiného.\n'),
- ('chyti', 'verify_doc_length.js', 'CLAUDE.md', 'append', '', '\nPravidlo: ' + 'x' * 6000 + '\n'),
+ ('chyti', 'verify_doc_length.js', 'CLAUDE.md', 'append', '', '\nPravidlo: ' + 'x' * 10000 + '\n'),   # 2026-11-26: CLAUDE.md ~23 KB, 6000 už strop nepřelezlo
+ ('chyti', 'verify_doc_length.js', 'CLAUDE.md', 'append', '', ''.join('\nřádek pravidla %d' % i for i in range(25))),   # 2026-11-26: strop 200 řádků
  ('chyti', 'verify_doc_length.js', 'CLAUDE.md', 'append', '', '\nJak řekl KUKY 2026' + '-01-01: tohle.\n'),
  ('nesmi', 'verify_doc_length.js', 'CLAUDE.md', 'append', '', '\nDůvod → RUNAR_DECISIONS.md 2026-10-21 (4).\n'),
  # kolo 3 / 4c (2026-10-11): jednorázové mutace z hlaviček kontrol převedené na opakované útoky (oprava (45))

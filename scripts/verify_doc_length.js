@@ -18,6 +18,10 @@ const DLUH_DNI = 30;        // dluh starsi nez tohle uz neni dluh, ale stav
 // (12,8 KB 2026-07-01 → 59 KB 2026-10-21, zkráceno na 27 KB). Drží ho strop v bajtech a zákaz historie — „do X tu stálo“, „Doloženo“,
 // citace ownera s datem. Ty pravidlo nevynucují, jen ho ředí; patří do RUNAR_DECISIONS.md nebo docs/pravidla-duvody.md (§28).
 // Řádky začínají „FAIL  CLAUDE.md“, aby commit s vadou zastavil už pre-commit (scripts/utils/rychle_kontroly.py), ne až pre-push.
+// 2026-11-26 (CODE-read, owner 2026-11-25 „20. ano“): CLAUDE.md nejvýš 200 řádků (wc -l) — oficiální doporučení Claude Code, delší soubor
+// snižuje dodržování. Do té doby byl z limitu řádků vyňatý (výjimka ve VYJIMKY smazána); zkrácení přesunulo tabulku souborů a popis
+// systémů do docs/projekt-mapa.md. Strop v bajtech zůstává: chytí obejití řádkového stropu dlouhými řádky.
+const CLAUDE_STROP_RADKY = 200;
 const CLAUDE_STROP_B = 32000;
 const CLAUDE_HISTORIE = [
   [/\bdo 20\d\d-\d\d-\d\d\b[^\n]{0,60}?\bst(á|a)l/i, '„do <datum> tu stálo“'],
@@ -28,6 +32,9 @@ function kontrolaClaude() {
   const f = path.join(ROOT, 'CLAUDE.md');
   if (!fs.existsSync(f)) return [];
   const buf = fs.readFileSync(f), vady = [];
+  const radku = (buf.toString('utf8').match(/\n/g) || []).length;   // jako wc -l
+  if (radku > CLAUDE_STROP_RADKY)
+    vady.push('FAIL  CLAUDE.md má ' + radku + ' řádků, strop ' + CLAUDE_STROP_RADKY + ' — zkrať: detail k vlastníkovi (docs/projekt-mapa.md, pravidla-duvody.md, paměť), tady pravidlo + odkaz');
   if (buf.length > CLAUDE_STROP_B)
     vady.push('FAIL  CLAUDE.md má ' + buf.length + ' B, strop ' + CLAUDE_STROP_B + ' B — zkrať: důvody a historii do docs/pravidla-duvody.md, stav do docs/projekt-mapa.md');
   buf.toString('utf8').split('\n').forEach((l, i) => {
@@ -42,7 +49,6 @@ function kontrolaClaude() {
 // zkratit jednostranne: DESIGN/PRICING ceka na ownera, EVAL_LOG na CODE-read, BACKLOG na
 // uzavirani polozek). Ownerovi ohlaseno v konverzaci CODE-tune 2026-09-20.
 const VYJIMKY = {
-  'CLAUDE.md': { typ: 'trvala', duvod: 'Vyňat z limitu řádků (KUKY 2026-08-17): pravidla přesahují 200 řádků a jsou důvod, proč ten soubor existuje. Drží ho strop CLAUDE_STROP_B a zákaz historie níž (2026-10-21).' },
   'RUNAR_DECISIONS.md': { typ: 'trvala', duvod: 'Append-only log rozhodnutí (§16). Rozdělením by se rozbilo pravidlo „při sporu vyhrává nejnovější datovaný záznam" — hledá se v jednom souboru.' },
   'RUNAR_DESIGN.md': { typ: 'dluh', datum: '2026-11-19', duvod: 'Hlas, stavba čtení a obraz, strom. Zkracováno přesunem celých témat do vlastních doců: spready a mytologie 2026-10-24 (owner „7. ano“), Vegvísir 2026-11-19 do RUNAR_VEGVISIR.md (1012 → 902; owner „udělej, co je potřeba“). Obnoveno 2026-11-19 se zkrácením — další obnova jen se zkrácením.' },
   'RUNAR_BACKLOG.md': { typ: 'dluh', datum: '2026-11-19', duvod: 'Roste s otevřenými úkoly. Zkrátí se uzavíráním položek, ne rozdělením. Obnoveno 2026-11-19 po vypršení se zkrácením (backlog_uklid.py, 1341 → 1143 řádků) — položka BACKLOGu „Délka živých doců“, další obnova bez zkrácení ne.' },
@@ -86,7 +92,7 @@ if (vadyClaude.length) {
 }
 
 if (!fail) {
-  console.log('  OK    živé docy: nic bez výjimky nepřesahuje ' + LIMIT + ' řádků; CLAUDE.md pod ' + CLAUDE_STROP_B + ' B a bez historie');
+  console.log('  OK    živé docy: nic bez výjimky nepřesahuje ' + LIMIT + ' řádků; CLAUDE.md do ' + CLAUDE_STROP_RADKY + ' řádků, pod ' + CLAUDE_STROP_B + ' B a bez historie');
   pres.forEach((p) => console.log('       ℹ  ' + String(p.n).padStart(5) + '  ' + p.rel + '  — ' + p.stav));
   process.exit(0);
 }

@@ -565,6 +565,13 @@ def samotest():
         io.open(sk, 'w', encoding='utf-8').write("s = cv.cti('" + relp + "', R)" + chr(10) + "cv.zapis('" + relp + "', s + 'a', 'CODE-read', R)" + chr(10))
         return (vol or V)('Bash', sid, command='python -X utf8 "' + sk.replace(chr(92), '/') + '"')
     chk('1. první dotyk v2/*.js zastaví a vypíše §1', (lambda d: d and 'PRAVIDLA PRO OBLAST „JS ve v2“' in d and '### §1' in d)(V('Edit', file_path=js)))
+    # 2026-11-26 (zkrácení CLAUDE.md): oblast „JS ve v2“ ukazuje i tabulku souborů z docs/projekt-mapa.md; přeroste-li LIMIT, hook chce
+    # nejdřív Read — test ho udělá podle živé mapy (jako u 11), ať nový řádek v tabulce neshodí samotest.
+    for _o in json.loads(cti(MAPA))['oblasti']:
+        if 'v2/*.js' in _o['cesty']:
+            for _nad, _t, _soubor, _a, _b in polozky(_o):
+                if len(_t) > LIMIT and _soubor:
+                    prepis(tu('Read', file_path=R + '/' + _soubor))
     chk('2. druhý dotyk projde', V('Edit', file_path=js) is None)
     chk('3. soubor mimo mapu projde', V('Edit', file_path=R + '/docs/x.txt') is None)
     chk('4. jiná session dostane pravidla znovu', V('Edit', sid='s2', file_path=js) is not None)

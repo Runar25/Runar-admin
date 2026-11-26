@@ -1209,9 +1209,9 @@ radky = [l for l in (r.stdout + r.stderr).strip().split('\n') if l.strip() and '
 posl = [l for l in radky if l.startswith(('OK', 'FAIL'))]
 check((posl[-1] if posl else 'web push: bez verdiktu').strip(), r.returncode == 0 and bool(posl) and posl[-1].startswith('OK'), '\n'.join(radky))
 
-# ㊉ Mapa souborů v CLAUDE.md (CODE-read 2026-10-15, kolo 4): každý v2/runar-* v „Soubory a jejich zodpovědnost“, nic navíc — chyběly
-# v ní dva moduly shrine od dvou session a nic to nehlídalo.
-print('\n' + chr(0x3289) + ' MAPA SOUBORŮ V CLAUDE.MD (verify_soubory_claude.js)')
+# ㊉ Mapa souborů (CODE-read 2026-10-15, kolo 4): každý v2/runar-* v „Soubory a jejich zodpovědnost“, nic navíc — chyběly
+# v ní dva moduly shrine od dvou session a nic to nehlídalo. Od 2026-11-26 bydlí v docs/projekt-mapa.md (CLAUDE.md jen odkaz).
+print('\n' + chr(0x3289) + ' MAPA SOUBORŮ APPKY (verify_soubory_claude.js)')
 r = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_soubory_claude.js')], capture_output=True, text=True, encoding='utf-8')
 r2 = subprocess.run(['node', os.path.join(ROOT, 'scripts', 'verify_soubory_claude.js'), '--test'], capture_output=True, text=True, encoding='utf-8')
 passed = r.returncode == 0 and r2.returncode == 0

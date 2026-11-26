@@ -11,6 +11,8 @@
 //                hook    = hook v repu (hooks/, scripts/utils/pravidla_pri_dotyku.py) — zastaví čin
 //                nastroj = skript, kterým se to dělá (jediná cesta), v repu
 //                mimo    = uživatelský hook v ~/.claude (mimo repo; chybí-li, jen varování — v cizí kopii repa být nemusí)
+// Sloučená § (2026-11-26, zkrácení CLAUDE.md na 200 řádků, owner „20. ano“) nemají vlastní nadpis — žijí jen v řádku „Sloučené: §3→§18 · …“
+// indexu „Podle témat“. Mapa {slouceno} musí sedět s tím řádkem; sloučené § s nadpisem nebo cíl, který není živé pravidlo, padne.
 //   node scripts/verify_nosice.js        · --test = kontrola sama sebe · --vypis = celá mapa
 'use strict';
 const fs = require('fs'), path = require('path'), os = require('os');
@@ -80,6 +82,19 @@ function najdi(jmeno) {
   return false;
 }
 
+// Řádek „Sloučené: §3→§18 · §8, §15→§10 · …“ → { '§3': '§18', '§8': '§10', '§15': '§10', … }
+function slouceneZIndexu(claude) {
+  const out = {};
+  const m = claude.match(/Sloučené:([^\n]*)/);
+  if (!m) return out;
+  for (const kus of m[1].split('·')) {
+    const c = kus.match(/→\s*(§\d+)/);
+    if (!c) continue;
+    for (const s of kus.split('→')[0].match(/§\d+/g) || []) out[s] = c[1];
+  }
+  return out;
+}
+
 // claude = text CLAUDE.md, smoke = text smoke.py, jeSoubor(rel) a jeMimo(cesta) = existence
 function over(mapa, claude, smoke, jeSoubor, jeMimo) {
   const vady = [], varovani = [];
@@ -91,15 +106,20 @@ function over(mapa, claude, smoke, jeSoubor, jeMimo) {
     const i = poradi.indexOf(s), doo = i + 1 < poradi.length ? nadpisy[poradi[i + 1]] : claude.length;
     return claude.slice(nadpisy[s], doo).split('\n').slice(1, 3).join('\n');   // první dvě řádky pod nadpisem
   };
+  const sl = slouceneZIndexu(claude);
   for (const s of poradi) if (!mapa[s]) vady.push(s + ': pravidlo v CLAUDE.md nemá v mapě nosič — dopiš ho, nebo „nevynutitelne: <proč>“');
+  for (const s of Object.keys(sl)) if (!mapa[s]) vady.push(s + ': CLAUDE.md ho vede jako sloučené do ' + sl[s] + ', v mapě řádek není');
   for (const s of Object.keys(mapa)) {
     const z = mapa[s];
-    if (!(s in nadpisy)) { vady.push(s + ': v mapě je, v CLAUDE.md nadpis „### ' + s + ' —“ není (zrušené nebo přečíslované pravidlo)'); continue; }
     if (z.slouceno) {
-      if (!new RegExp('^→ ' + z.slouceno + '\\b', 'm').test(telo(s))) vady.push(s + ': mapa říká „sloučeno do ' + z.slouceno + '“, CLAUDE.md to neříká');
+      if (sl[s] !== z.slouceno) vady.push(s + ': mapa říká „sloučeno do ' + z.slouceno + '“, řádek „Sloučené:“ v CLAUDE.md ' + (sl[s] ? 'říká ' + sl[s] : 'ho nejmenuje'));
+      if (s in nadpisy) vady.push(s + ': sloučené pravidlo má v CLAUDE.md vlastní nadpis — sloučené žije jen v řádku „Sloučené:“, nadpis smaž');
+      if (!(z.slouceno in nadpisy)) vady.push(s + ': cíl sloučení ' + z.slouceno + ' v CLAUDE.md jako živé pravidlo („### ' + z.slouceno + ' —“) není');
       continue;
     }
-    if (/^→ §\d+/m.test(telo(s))) vady.push(s + ': CLAUDE.md ho vede jako sloučené, mapa ne');
+    if (!(s in nadpisy)) { vady.push(s + ': v mapě je, v CLAUDE.md nadpis „### ' + s + ' —“ není (zrušené nebo přečíslované pravidlo)'); continue; }
+    if (sl[s]) vady.push(s + ': CLAUDE.md ho vede jako sloučené do ' + sl[s] + ', mapa ne');
+    if (/^→ §\d+/m.test(telo(s))) vady.push(s + ': nadpis v CLAUDE.md je jen odkaz „→ §…“ — sloučené patří do řádku „Sloučené:“, mapa ho vede jako živé');
     const drzi = z.drzi || [];
     if (!drzi.length && !(z.nevynutitelne && z.nevynutitelne.length >= 20)) vady.push(s + ': žádný nosič a chybí „nevynutitelne“ s důvodem');
     for (const n of drzi) {
@@ -114,14 +134,16 @@ function over(mapa, claude, smoke, jeSoubor, jeMimo) {
       } else vady.push(s + ': neznámý druh nosiče ' + JSON.stringify(n));
     }
   }
-  return { vady, varovani, pocet: poradi.length };
+  return { vady, varovani, pocet: poradi.length + Object.keys(sl).length };
 }
 
 function jeSouborRepo(rel) { return /\//.test(rel) ? fs.existsSync(path.join(R, rel)) : najdi(rel); }
 function jeMimoDomov(p) { return fs.existsSync(p.replace(/^~/, os.homedir())); }
 
 if (process.argv.includes('--test')) {
-  const C = '### §1 — a\nx\n### §2 — b\n→ §1 (sloučeno)\n### §3 — c\ny\n';
+  const C = 'Podle témat: … Sloučené: §2→§1.\n### §1 — a\nx\n### §3 — c\ny\n';
+  const C_PAHYL = C + '### §2 — b\n→ §1 (sloučeno)\n';                 // sloučené s nadpisem-pahýlem (stará podoba)
+  const C_CIL = 'Sloučené: §2→§7.\n### §1 — a\nx\n### §3 — c\ny\n';     // cíl sloučení není živé pravidlo
   const S = 'verify_a.js ① JS';
   const ano = () => true, ne = () => false;
   const D = 'úsudek, který stroj nepozná nikdy';
@@ -135,10 +157,14 @@ if (process.argv.includes('--test')) {
     ['sloučení, které CLAUDE.md neříká, padne', { '§1': { slouceno: '§3' }, '§2': { slouceno: '§1' }, '§3': { nevynutitelne: D } }, ano, 1],
     ['sloučené v CLAUDE.md, v mapě s nosičem, padne', { '§1': { drzi: [{ smoke: 'verify_a.js' }] }, '§2': { drzi: [{ smoke: 'verify_a.js' }] }, '§3': { nevynutitelne: D } }, ano, 1],
     ['bez nosiče i bez důvodu padne', { '§1': { drzi: [{ smoke: 'verify_a.js' }] }, '§2': { slouceno: '§1' }, '§3': {} }, ano, 1],
+    ['sloučení do jiného cíle, než říká index, padne', { '§1': { drzi: [{ smoke: 'verify_a.js' }] }, '§2': { slouceno: '§3' }, '§3': { nevynutitelne: D } }, ano, 1],
+    ['sloučené s vlastním nadpisem padne', { '§1': { drzi: [{ smoke: 'verify_a.js' }] }, '§2': { slouceno: '§1' }, '§3': { nevynutitelne: D } }, ano, 1, C_PAHYL],
+    ['sloučení do zrušeného pravidla padne', { '§1': { drzi: [{ smoke: 'verify_a.js' }] }, '§2': { slouceno: '§7' }, '§3': { nevynutitelne: D } }, ano, 1, C_CIL],
+    ['sloučené v indexu bez řádku v mapě padne', { '§1': { drzi: [{ smoke: 'verify_a.js' }] }, '§3': { nevynutitelne: D } }, ano, 1],
   ];
   let spatne = 0;
-  for (const [jmeno, mapa, je, cekam] of pripady) {
-    const r = over(mapa, C, S, je, ne);
+  for (const [jmeno, mapa, je, cekam, text] of pripady) {
+    const r = over(mapa, text || C, S, je, ne);
     const ok = cekam ? r.vady.length > 0 : r.vady.length === 0;
     if (!ok) { spatne++; console.log('FAIL  samotest: ' + jmeno + ' — vady: ' + JSON.stringify(r.vady)); }
   }
