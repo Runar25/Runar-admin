@@ -83,6 +83,16 @@ for (const doc of docs) {
       if (onDisk(ref)) continue;
       dead.push({ at, ref, kind: 'odkaz v textu' });
     }
+
+    // 3) [[paměť]] — musí existovat memory/<jméno>.md (nebo snapshot). 2026-11-26 (CODE-read): zkrácení CLAUDE.md (2dd93aa) vrátilo
+    //    6 odkazů na paměti zrušené v 122c2e1 a žádná kontrola to neviděla — kontrola znala jen [text](cesta) a `cesta`.
+    //    DECISIONS je append-only historie: odkaz na zrušenou paměť tam je záznam toho, co platilo tehdy.
+    if (doc !== 'RUNAR_DECISIONS.md') {
+      for (const m of line.matchAll(/\[\[([^\]|#]+)\]\]/g)) {
+        const n = m[1].trim();
+        if (!onDisk('memory/' + n + '.md') && !onDisk('memory/snapshots/' + n + '.md')) dead.push({ at, ref: '[[' + n + ']]', kind: 'odkaz na paměť' });
+      }
+    }
   });
 }
 

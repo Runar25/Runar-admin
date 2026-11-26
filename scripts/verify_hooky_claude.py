@@ -72,6 +72,30 @@ def over(d):
            and json.load(open(zaz[0], encoding='utf-8')).get('slova_ok') == 'test: slovo měřím' if zaz else False, r.stdout[:160] + str(zaz))
         shutil.rmtree(tmpd, ignore_errors=True)
 
+        # 2026-11-26 (CODE-read, owner „ostatní session o tom vždy také musí vědět“): oznámení změn systému od cizí lane
+        # Stavy: cizí změna od posledního pohledu → ukáže · podruhé (viděno) → mlčí · změna mé vlastní lane → mlčí.
+        tmpl = tempfile.mkdtemp(prefix='verify-ozn-')
+        oenv = dict(os.environ, RUNAR_LANE_DIR=tmpl, RUNAR_ROOT=R)
+        sysc = subprocess.run(['git', 'log', '-1', '--no-merges', '--format=%h\t%an', '--', 'CLAUDE.md'], cwd=R, capture_output=True, text=True,
+                              encoding='utf-8').stdout.strip().split('\t')
+        if len(sysc) == 2:
+            hsys, autor = sysc
+            predtim = subprocess.run(['git', 'rev-parse', hsys + '~1'], cwd=R, capture_output=True, text=True).stdout.strip()
+            def ozn(lane):
+                open(os.path.join(tmpl, SID + '.txt'), 'w', encoding='utf-8').write(lane)
+                return py(d, 'runar-oznameni.py', {'session_id': SID, 'hook_event_name': 'UserPromptSubmit'}, env=oenv)
+            open(os.path.join(tmpl, SID + '.videno'), 'w', encoding='utf-8').write(predtim)
+            r = ozn('CODE-cizi-test')
+            ok('oznámení ukáže cizí změnu systému (CLAUDE.md ' + hsys + ')', 'ZMĚNA SYSTÉMU' in r.stdout and hsys in r.stdout, r.stdout[:160] + r.stderr[-160:])
+            r = ozn('CODE-cizi-test')
+            ok('oznámení podruhé mlčí (viděno)', not r.stdout.strip(), r.stdout[:160])
+            open(os.path.join(tmpl, SID + '.videno'), 'w', encoding='utf-8').write(predtim)
+            r = ozn(autor)
+            ok('oznámení vynechá vlastní lane', hsys not in r.stdout, r.stdout[:160])
+        else:
+            ok('oznámení: v repu se našel commit do CLAUDE.md', False, 'git log nic nevrátil — bez historie nejde oznámení ověřit')
+        shutil.rmtree(tmpl, ignore_errors=True)
+
         def zprava(text):
             p = prepis(text); soubory.append(p)
             return py(d, 'runar-zprava-check.py', {'transcript_path': p, 'session_id': SID})
