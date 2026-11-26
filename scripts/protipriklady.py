@@ -278,7 +278,7 @@ PRIPADY = [
  ('chyti', 'verify_hooky_claude.py', 'hooks/claude/runar-stiznost.py', 'replace', "    if txt.lstrip().startswith('<') or not STIZNOST.search(bezd(txt)):", "    if True:"),
  ('chyti', 'verify_hooky_claude.py', 'hooks/claude/runar-stiznost.py', 'replace', "    if chybi:", "    if False:"),
  # 2026-11-26 (CODE-read, owner „ostatní session o tom vždy také musí vědět“): oznámení změn systému — opakované i vlastní musí mlčet
- ('chyti', 'verify_hooky_claude.py', 'hooks/claude/runar-oznameni.py', 'replace', "    if videno == head:", "    if False:"),
+ ('chyti', 'verify_hooky_claude.py', 'hooks/claude/runar-oznameni.py', 'regex', r"    zapis\(videno_p, head\)\r?\n(    if not radky:)", r"\g<1>"),
  ('chyti', 'verify_hooky_claude.py', 'hooks/claude/runar-oznameni.py', 'replace', "        if lane and an == lane:", "        if False:"),
  # 2026-11-26 (CODE-read): odkaz [[paměť]] na zrušenou paměť v živém docu (zkrácení CLAUDE.md jich vrátilo 6) musí spadnout
  ('chyti', 'verify_doc_links.js', 'CLAUDE.md', 'append', '', '\nViz [[' + 'zrusena-pamet-xyz' + ']].\n'),
