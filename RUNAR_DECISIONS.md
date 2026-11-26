@@ -13712,3 +13712,13 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - ⚠️ **VAROVÁNÍ, otevřené:** čtení bez „you“ jde proti registru `direct` a mostu k člověku; puštění AREA a SEEKING ruší most
   (RUNAR_DESIGN „Stavba Single čtení“, 2026-09-20). Rozhodne owner, než se napíše prompt V4.
 - Affected doc(s): žádný další — vstupní bod je README složky.
+
+## 2026-11-26 (5) — Session Rúnar V4 pod lane read; commit_vlastni drží záznam per session, ne per lane
+
+- **Rozhodl:** owner 2026-11-26 *„může spadat pod read, ale jeho úkol bude pracovat na Rúnar V4“*. **Provedl:** CODE-read.
+- **Co:** V4 commituje jako `CODE-read` (prefix `[read]`, předmět zmíní V4); lab žije v `docs/eval/2026-11-26-v4-sfery/` (DECISIONS (4)).
+- **Nález:** dvě session pod jednou lane sdílely záznam `commit_vlastni` (`.git/runar-vlastni/CODE-read/`) → commit jedné vzal zápisy
+  druhé (cef2446 nese i práci V4). Oprava: záznam je `.git/runar-vlastni/<lane>/<session>` podle `CLAUDE_CODE_SESSION_ID` (bez něj jen lane).
+  Samotest `commit_vlastni.py --test` (nově případ „dvě session v jedné lane“) do té doby nepouštělo nic → smoke ㊜.
+- **Platí pro všechny session:** víc session v jedné lane už se v commit_vlastni nepletou; pathspec commit dál úzce (CLAUDE.md „Git“).
+- Affected doc(s): žádný — CLAUDE.md lanes beze změny (V4 je lane read), postup commit_vlastni v jeho hlavičce.

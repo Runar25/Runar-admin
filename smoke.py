@@ -1158,6 +1158,15 @@ radky = [l for l in output.split('\n') if l.strip()]
 prvni = radky[-1] if radky else 'kontrola hooku probehla'
 check(prvni.strip(), passed, '\n'.join(radky[:-1]) if not passed else '')
 
+# Commit vlastních kusů (commit_vlastni.py --test, CODE-read 2026-11-26): samotest v dočasném repu (cizí změny venku, překryv, dvě
+# session v jedné lane …). Do 2026-11-26 ho nepouštělo nic — dvě session pod CODE-read sdílely záznam a commit jedné vzal práci druhé.
+print('\n' + chr(0x329C) + ' COMMIT VLASTNÍCH KUSŮ (commit_vlastni.py --test)')
+r = subprocess.run([sys.executable, '-X', 'utf8', os.path.join(ROOT, 'scripts', 'utils', 'commit_vlastni.py'), '--test'],
+                   capture_output=True, text=True, encoding='utf-8')
+_cv = [l for l in (r.stdout + r.stderr).split('\n') if l.strip()]
+_sh = [l.strip().lstrip('✅ ') for l in _cv if '--test:' in l]
+check((_sh[0] if r.returncode == 0 and _sh else 'commit_vlastni samotest SELHAL'), r.returncode == 0, '\n'.join(_cv[-8:]) if r.returncode else '')
+
 # ㊅ Mazání z historie ElevenLabs (CODE-tune 2026-10-14): zásady slibují smazání hlasu z historie ElevenLabs hned po vygenerování
 # (DECISIONS 2026-10-13 (6)); první skutečný hlas po nasazení tam zůstal — hledalo se jen podle přesného textu a ~5 s. Kontrola protlačí
 # skutečný kód úklidu (smazHistorii) podvrženými odpověďmi ElevenLabs a ověří, kterou položku smaže a co zaloguje.
