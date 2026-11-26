@@ -74,6 +74,27 @@ Gemini nabízí stejně Isa, Uruz, Ansuz a ptá se na přesné názvy sfér V4 p
   věta s významem: *„Something unexpected may reveal what was never as firmly in place as it seemed.“* → rozhodnuto (7): obraz i význam
   v jedné kratší větě.
 - m) *(V4)* Kenaz Fever & Exposure stojí dál na tvrzení „Kenaz = horečka / vřed“ bez zdroje (zasady-pusobeni oddíl 4, pro-gemini-1 otázka 6).
+  ⚠️ Oprava 2026-11-26: zdroj není měřítko (paměť `vyznamy-run-historie-jen-zdroj`); sféru *kaun* schvaluje owner — [odpoved-1-rozbor.md](odpoved-1-rozbor.md) 1.1.
+
+## 6. Návrh Gemini „Architektura a pravidla tvorby: Denní runa“ (vložil owner 2026-11-26) — rozbor
+Doslova: [zdroj-gemini-runa-dne-architektura.md](zdroj-gemini-runa-dne-architektura.md). Neměřeno, jen proti zapsaným rozhodnutím.
+
+**Sedí:** oddělení denní karty (jedna věta) od hlubší vrstvy · Land priorita 1, Craft 2, Current odložen (DECISIONS (6)) · nezaměnitelnost
+runy · zákaz „does not … it simply“ · islandština psaná islandsky a ověřená (§2) · výrobní postup Land → Craft → kontrola záměny → IS.
+
+**Nesedí:**
+1. **„Ověřený pilotní vzorek KENAZ“ ověřený není.** Jsou to beze změny věty z odpovědi 2 (oddíl 4b): fakta jen od Gemini (h), Craft & Shaping
+   je střet lávy a ledu, který Gemini sám v odpovědi 1 (3.6) přiřadil Hagalazu, tři ze čtyř vět jsou láva (k), islandská verze chybí.
+2. **Proti rozhodnutí (7)** (obraz i význam v jedné kratší větě): všechny čtyři věty jsou čistý obraz o 19–20 slovech. Pravidla v oddílu 3
+   význam ve větě vůbec nežádají.
+3. **Proti ownerovým vzorům** (BACKLOG čtení 18, 2026-11-21): *„Something unexpected may reveal what was never as firmly in place as it seemed.“*
+   · Berkana *„Today, pay attention to something small that is quietly beginning to take shape.“* · Ansuz *„A few words, spoken or heard, may
+   stay with you longer than you expect.“* Dva ze tří mají „you“ nebo „Today“. Pravidla 2 a 3 („třetí osoba“, ne „Today notice…“) by vzory
+   ownera vyřadila. Podle CODE-tune owner chtěl zkusit varianty **s „you/today“ i bez** — to je otevřené, ne zakázané.
+4. **Sféry jako jediný zdroj významů (2A)** — to owner nepotvrdil (oddíl 1). A sféry Kenaz (vč. Fever & Exposure) owner neschválil.
+5. **Kolekce run jako studijní vrstva se sférami (oddíl 1.2)** je změna Kolekce: dnes nese ownerův text runy (`coll_rune`) a popis tvaru.
+   To je samostatné rozhodnutí, ne součást runy dne.
+6. Drobné: oddíl 3 slibuje „pět pravidel“ a vypisuje šest; jméno runy Perth je v návrhu psané jinak než v kódu.
 
 ## 5. Další krok
 Sféry Kenaz projít na překryv s ostatními 24 runami (slepý soudce: věta + seznam run, kolikrát trefí Kenaz) — měřítko 4M1 v
