@@ -76,4 +76,4 @@ a co z toho navrhuju do [kostra-v4.md](kostra-v4.md). Kostru zatím **neměním*
 6. Test sféry: popis ownera nebo jeho schválení · záměna · odlišnost uvnitř runy.
 7. Blank podle 4.7.
 8. Kontrola knihovny na „does not … it simply“.
-9. Norny: otevřené (bod 3.8).
+9. Norny: odloženo, až bude single (owner 2026-11-26).

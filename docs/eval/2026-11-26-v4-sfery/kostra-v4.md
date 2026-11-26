@@ -66,7 +66,7 @@ oblast a hledání → 4R2).
 - **4R3** stavba textu: pevné 4 části, nebo pestřejší (owner)?
 - **4R4** pojmenovat emoci? ([emoce.md](emoce.md))
 - **4R5** pestrost: kolik obrazů na runu × sféru, aby se čtení neopakovalo?
-- **4R6** Norny ve V4 (owner: *„ze spreadu jsme se bavili o Nornách“*)
+- **4R6** Norny ve V4 — **odloženo** (owner 2026-11-26: *„Norns budeme řešit, až budeme mít aspoň single“*)
 - ~~**4R7** čočky Land / Craft / Current — test, nebo jen Land?~~ → owner 2026-11-26: Land a Craft, Current zatím ne ([runa-dne.md](runa-dne.md))
 - **4R8** runy ven × dovnitř — ověřit proti ownerovým popisům run
 
