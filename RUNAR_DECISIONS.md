@@ -13669,3 +13669,15 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
 - **Platí pro všechny session:** karta, pravidla podle činnosti, hlídač API a kniha selhání běží v každé session (CODE-tune, tree, web).
 - Affected doc(s): CLAUDE.md §30 (v tomtéž commitu). Docy úklidu (index paměti, working-style, „Slova“, důvody pravidel) změnil už
   220ed63 o den dřív, v rámci téhož auditu.
+
+## 2026-11-26 (2) — CLAUDE.md nejvýš 200 řádků: mapa souborů do projekt-mapy, sloučená § jen v indexu, stav systémů jen jako pasti
+
+- **Rozhodl:** owner 2026-11-25 *„20. ano jde to ještě lépe? tak to udělej“* (k návrhu zkrátit CLAUDE.md pod 200 řádků). **Provedl:** CODE-read (2dd93aa).
+- **Proč:** oficiální doporučení Claude Code (code.claude.com/docs/en/memory.md): CLAUDE.md pod 200 řádků — delší se méně dodržuje a import
+  velikost nesnižuje. CLAUDE.md měl 337 řádků; audit 2026-11-25 ukázal, že text pravidel v kontextu sám chování nemění (DECISIONS 2026-11-26 (1)).
+- **Co:** 337 → 189 řádků. Tabulka souborů a load order → `docs/projekt-mapa.md` (smoke ㊉ ji hlídá tam; hook ji ukáže při úpravě JS ve v2).
+  Sloučená § (§3 §8 §9 §15 §22 §26 §27) bez vlastních nadpisů — žijí jen v řádku „Sloučené:“ (kontrola nosičů to ověřuje). Tier, čtení,
+  spready a strom → sekce „Pasti systémů“ (jen příkazy a pasti; popis stavu v projekt-mapě). Paralelní session zhuštěny na 20 řádků,
+  pravidla beze změny. Strop `verify_doc_length.js`: CLAUDE.md nejvýš 200 řádků (dřív z řádkového limitu vyňatý).
+- **Platí pro všechny session:** nové pravidlo do CLAUDE.md jen za něco, co z něj odejde, nebo na místo práce (mapa pravidel, hook).
+- Affected doc(s): žádný další — projekt-mapa a kontroly změnil tentýž úkol v 2dd93aa.
