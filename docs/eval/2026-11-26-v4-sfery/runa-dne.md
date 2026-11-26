@@ -12,7 +12,8 @@ Budeš to předávat Code V4“*).
 - **2026-11-26 (přes CODE-tune, otázka 13):** *„obraz i význam v jedné větě“* → věta runy dne není čistý obraz; nese obraz i význam a je kratší.
   Důvod otázky: věta stojí sama a nic pod ní význam nevysvětlí (hlášení af3970a4, Sowilo: *„obraz je v pohodě, ale … hůř chápe, co má
   znázorňovat“*); vzor d1dce7ef. Věty Gemini v oddílu 3 a 4b (čistý obraz, 19–20 slov) proto v té podobě neprojdou.
-- **Otevřené — kdo píše a kontroluje věty runy dne** (otázka CODE-tune 15): V4, nebo CODE-tune.
+- **2026-11-26 (9):** *„sorry. změna. bude to řešit V4. všechno.“* → věty runy dne (návrhy, překryv s jinými runami, IS od základu, fakta)
+  navrhuje a kontroluje lab V4; CODE-tune přeposílá rozhovor s Gemini a hotové věty nasadí do knihovny. (8) neplatí.
 - **Otevřené — sféry jako jediný zdroj významů runy dne** (otázka CODE-tune 15): „ano“ řekl Gemini, owner vložil jeho text, vlastním slovem
   nepotvrdil. Směr, ne rozhodnutí.
 - **Dřívější, platí dál:** knihovna bez API, varianty se člověku neopakují (DECISIONS 2026-11-17 (1)); jedna kratší věta (BACKLOG 18,
@@ -70,8 +71,8 @@ Gemini nabízí stejně Isa, Uruz, Ansuz a ptá se na přesné názvy sfér V4 p
 - k) *(CODE-tune)* tři ze čtyř vět jsou láva nebo magma → kulisa se opakuje. *(V4)* Proti ownerovu „rozmanitost je nutná“ a proti
   měřítku 4M3 (sféry téže runy se mají rozlišit): čtyři sféry v jedné kulise se slejí.
 - l) *(CODE-tune)* všechny čtyři věty jsou čistý obraz bez významu, 19–20 slov. Ownerův vzor runy dne (hlášení d1dce7ef, 2026-11-21) je kratší
-  věta s významem: *„Something unexpected may reveal what was never as firmly in place as it seemed.“* Obraz × význam v jedné větě —
-  otázka u ownera otevřená.
+  věta s významem: *„Something unexpected may reveal what was never as firmly in place as it seemed.“* → rozhodnuto (7): obraz i význam
+  v jedné kratší větě.
 - m) *(V4)* Kenaz Fever & Exposure stojí dál na tvrzení „Kenaz = horečka / vřed“ bez zdroje (zasady-pusobeni oddíl 4, pro-gemini-1 otázka 6).
 
 ## 5. Další krok
