@@ -1,7 +1,7 @@
 # Gemini — návrh architektury a pravidel pro denní runu V4 (vložil owner 2026-11-26, doslova)
 
 Soubor od ownera ze složky Downloads, beze změny obsahu. Tvrzení jiného modelu, ne
-rozhodnutí ownera; rozbor → [runa-dne.md](runa-dne.md) oddíl 6. Značky `check-docs:ok` / `doc-values:ok` na koncích řádků přidal lab
+rozhodnutí ownera; rozbor → [runa-dne.md](../runa-dne.md) oddíl 6. Značky `check-docs:ok` / `doc-values:ok` na koncích řádků přidal lab
 (jména z citace, která se v kódu jmenují jinak).
 
 ---

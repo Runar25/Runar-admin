@@ -1,7 +1,7 @@
 # Jak má V4 na člověka působit — co owner řekl s Gemini a co Gemini navrhl (2026-11-26)
 
 **Vlastní jen:** výtah z rozhovoru ownera s Gemini o tom, co a jak má Rúnar člověku říct a jak na něj má zapůsobit. Rozlišuje
-**owner** (jeho slova = směr, §21) a **Gemini** (návrh, neměřeno). Zdroj doslova: [zdroj-gemini-architektura.txt](zdroj-gemini-architektura.txt)
+**owner** (jeho slova = směr, §21) a **Gemini** (návrh, neměřeno). Zdroj doslova: [zdroj-gemini-architektura.txt](konzultace/zdroj-gemini-architektura.txt)
 (čísla stran PDF v závorce). Kde to naráží na platnou kostru v2, je to u bodu (K = `docs/kostra/KOSTRA.md`). Owner 2026-11-26:
 *„zapsat to, co jsem si řekl s Gemini ohledně jak a co by měl model člověku říct, jak by na něj měl zapůsobit“*.
 

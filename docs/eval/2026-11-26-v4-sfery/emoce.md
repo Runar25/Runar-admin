@@ -1,7 +1,7 @@
 # Emoce na vstupu V4 — Gemini × naše P10 a návrh (2026-11-26)
 
 **Vlastní jen:** porovnání dvou sad emocí a návrh sady pro V4. Pokus P10 a jeho výsledky vlastní `docs/kostra/pokusy.json`; zdroj Gemini
-[zdroj-gemini-architektura.txt](zdroj-gemini-architektura.txt). Owner 2026-11-26: *„celkem je jedno, jestli to bude mřížka, ale budou to emoce“* ·
+[zdroj-gemini-architektura.txt](konzultace/zdroj-gemini-architektura.txt). Owner 2026-11-26: *„celkem je jedno, jestli to bude mřížka, ale budou to emoce“* ·
 *„jaké emoce by mohl člověk zanést do čtení … porovnej s našima. Co je jinak a jak to nejlépe udělat?“*
 
 ## 1. Co máme

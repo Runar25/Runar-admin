@@ -1,7 +1,7 @@
 # Rozbor odpovědi Gemini 1 (2026-11-26)
 
 **Vlastní jen:** posouzení [zdroj-gemini-odpoved-1.md](zdroj-gemini-odpoved-1.md) bod po bodu — co sedí s rozhodnutími ownera a kánonem, co ne,
-a co z toho navrhuju do [kostra-v4.md](kostra-v4.md). Kostru zatím **neměním**; změny čekají na ownera. Bez API.
+a co z toho navrhuju do [kostra-v4.md](../kostra-v4.md). Kostru zatím **neměním**; změny čekají na ownera. Bez API.
 
 **Islandština Gemini — GreynirCorrect (lokálně, 2026-11-26; první běh spadl, protože jsem ho pustil jiným Pythonem, ne prostředím nástroje):**
 | věta (Gemini) | výsledek |
