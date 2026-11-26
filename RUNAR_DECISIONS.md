@@ -13752,3 +13752,11 @@ Drží v každém kole zvlášť (cesty 3/3/3 → 1/0/1). Ostatní oblasti beze 
   o runě dne už se do V4 nepřeposílá. Lab V4 dělá kostru a test čtení; z runy dne dostane jen to, co se kostry týká (sféry runy, které
   owner určí, a rozhodnutí o podobě věty). Platí dál: Land + Craft, Current zatím ne (6); obraz i význam v jedné kratší větě (7).
 - Affected doc(s): `docs/eval/2026-11-26-v4-sfery/runa-dne.md` — upraví lab V4 (předáno zprávou; jeho doména, aktivně v něm pracuje).
+
+## 2026-11-26 (9) — Runa dne celá v labu V4; (8) neplatí
+
+- **Rozhodl:** owner 2026-11-26, chvíli po (8): *„sorry. změna. bude to řešit V4. všechno.“*
+- **Co:** ruší (8), platí dělba z (6). Obsah runy dne (věty, překryv s jinými runami, IS od základu, fakta) navrhuje a kontroluje lab V4
+  (`docs/eval/2026-11-26-v4-sfery/runa-dne.md`); rozhovor ownera s Gemini o runě dne přeposílá CODE-tune do V4; CODE-tune hotové věty
+  nasadí do `runa_dne_knihovna.mjs`. Ukázku Kenaz podle (7) a poznámku k *kaun* (neověřeno) dostal lab V4 zprávou.
+- Affected doc(s): žádný další — runa-dne.md v labu V4 podle (8) neměl být měněn; byl-li, vrátí ho V4 (předáno zprávou).
