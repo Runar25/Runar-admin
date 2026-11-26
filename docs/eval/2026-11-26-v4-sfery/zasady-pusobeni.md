@@ -29,7 +29,7 @@
 | 7 | **Přerámování bez moralizování:** nepohodlí ukázat jako tření, které něco čistí; žádná toxická pozitivita | 13 | blízko J5 |
 | 8 | **Kontrola u člověka:** volí sféru a otázky, je aktivní pozorovatel, ne příjemce věštby | 13–14 | = J1 |
 | 9 | **Psychologie pod kapotou:** žádný terapeutický slovník (trauma, healing, inner child, mindset, blocks, toxic); stavba psychologická, slova hmotná | 14 | nové (dnes není pravidlo) |
-| 10 | **Směr pohledu runy:** runa ven (Kenaz, Raidho, Fehu, Thurisaz) → odpověď v kontaktu s hmotou; runa dovnitř (Isa, Laguz, Perthro, Othala) → v ubrání podnětů | 11 | nové; zařazení run neověřeno |
+| 10 | **Směr pohledu runy:** runa ven (Kenaz, Raidho, Fehu, Thurisaz) → odpověď v kontaktu s hmotou; runa dovnitř (Isa, Laguz, Perth, Othila) → v ubrání podnětů | 11 | nové; zařazení run neověřeno |
 | 11 | **Emoce mění atmosféru, ne objekt**; nepojmenovat ji | 19–21 | ⚠️ P10 pojmenovává → [emoce.md](emoce.md) |
 | 12 | **Stín uvnitř sféry** místo obrácené runy (merkstave) | 15 | = K3.3 |
 
