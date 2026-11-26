@@ -40,6 +40,36 @@ IS podle Gemini psát od základu (slova *hraun, sprunga, hver, hrafntinna*), ne
 - g) Měřítko: slepí soudci CODE-tune s podstatou run z `RUNAR_POPISY_RUN.md` zamítnou každý význam, který v ownerově popisu runy nestojí.
   Sféra, která popis rozšiřuje, potřebuje ownerovo slovo dřív, než ji soudci budou posuzovat — jinak propadne vždy.
 
+## 4b. Gemini, odpověď 2 na kontrolu e–f (přeposlal CODE-tune 2026-11-26, owner bez komentáře)
+**Gemini k e):** gejzír má v sobě čekání na skrytý okamžik výstřelu — to je podle něj čistě Perth; Kenaz je kontinuální žár a tření, které si
+razí cestu nebo taví odpor. → Gemini výhradu e) přijal, gejzír u Kenaz nahradil.
+
+**Gemini k f) — tvrzení, ne zdroj:** obsidián (*hrafntinna*) vzniká rychlým ochlazením ryolitové lávy při styku s vodou nebo ledem, u čedičové
+lávy spíš sklovitá kůra nebo hyaloklastit; žár proti ledu pod ledovci (Katla, Grímsvötn); fumaroly (Námafjall / Hverir) mají u ústí kolem
+100 °C i víc. **Stav: neověřeno** — jiný model není zdroj.
+
+**Opravené věty Kenaz Land (doslova):**
+| sféra | věta | změna |
+|---|---|---|
+| Insight & Clarity | A fresh crack in the black lava crust reveals the bright orange glow that has been moving underneath all along. | beze změny (Gemini: Krafla, Fagradalsfjall) |
+| Craft & Shaping | Where glacial meltwater meets advancing lava, clouds of steam rise as molten rock cools into sharp, glassy stone. | obsidián → „glassy stone“ |
+| Drive & Friction | Magma forcing its way upward through solid basalt melts the rock along its edges until a new fissure opens at the surface. | gejzír → trhlinová erupce |
+| Fever & Exposure | Steam rising from a sulfur vent warms the freezing air around it, yet scalds any bare skin that comes too close. | „burns the hand“ → „scalds bare skin“ |
+
+Gemini nabízí stejně Isa, Uruz, Ansuz a ptá se na přesné názvy sfér V4 pro ně — názvy sfér owner zatím neurčil.
+
+**Kontrola odpovědi 2 (neměřeno, jen čtení):**
+- h) *(CODE-tune)* Drive & Friction: magmatická žíla se podle CODE-tune šíří hlavně lámáním horniny tlakem, tavení stěn je vedlejší →
+  „melts the rock along its edges“ doložit. Průnik na povrch se může krýt s Hagalaz (rozbíjející síla) nebo Thurisaz (síla, která prorazí).
+- i) *(CODE-tune)* výhrada b) nevyřešená: Insight zůstal žár a světlo.
+- j) *(CODE-tune)* Craft & Shaping je dál příroda, ne lidská ruka; řemeslo patří do režimu Craft — název sféry a režim se pletou.
+- k) *(CODE-tune)* tři ze čtyř vět jsou láva nebo magma → kulisa se opakuje. *(V4)* Proti ownerovu „rozmanitost je nutná“ a proti
+  měřítku 4M3 (sféry téže runy se mají rozlišit): čtyři sféry v jedné kulise se slejí.
+- l) *(CODE-tune)* všechny čtyři věty jsou čistý obraz bez významu, 19–20 slov. Ownerův vzor runy dne (hlášení d1dce7ef, 2026-11-21) je kratší
+  věta s významem: *„Something unexpected may reveal what was never as firmly in place as it seemed.“* Obraz × význam v jedné větě —
+  otázka u ownera otevřená.
+- m) *(V4)* Kenaz Fever & Exposure stojí dál na tvrzení „Kenaz = horečka / vřed“ bez zdroje (zasady-pusobeni oddíl 4, pro-gemini-1 otázka 6).
+
 ## 5. Další krok
 Sféry Kenaz projít na překryv s ostatními 24 runami (slepý soudce: věta + seznam run, kolikrát trefí Kenaz) — měřítko 4M1 v
 [kostra-v4.md](kostra-v4.md). Bez API, v session.
