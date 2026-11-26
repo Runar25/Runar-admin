@@ -24,6 +24,18 @@ celé čtení pokaždé znovu. V4 mění, KDO text píše: pevný předem napsan
 7. **Pustit:** AREA OF LIFE, WHAT ARE YOU SEEKING, THIS READING IS FOR. **Přesunout do Asku:** THE SITUATION, životní runa.
 8. **Čočka obrazů:** Land (islandská příroda, výchozí) · Craft (materiál, dílna) · Current (město, technologie) — k A/B testu.
 
+## 2b. Ownerova rozhodnutí 2026-11-26 (druhá zpráva)
+1. *„Obrazy budou úplně nové. Začneme od začátku s jedním pro každou runu. Gemini měl obrazy jinak poskládané, takže tady to budeme muset ještě
+   pilovat.“* → banka v2 (190 obrazů) zdrojem obrazů V4 není; aspekty z inventury jsou jen vodítko pro světlé sféry.
+2. *„Budeme určitě potřebovat rozmanitost ve čtení, aby nebyla čtení stejná.“*
+3. *„Je to úplně jiný pohled na výklad … koukat z nového pohledu než na předchozí verze. Rúnar zůstává a uvidíme, jestli bude potřeba, aby se
+   proměnil.“*
+4. *„Sfér bude tolik, kolik runa dovolí. Někde víc, někde míň.“*
+
+**Dokumenty V4:** [kostra-v4.md](kostra-v4.md) (stavba čtení + srovnání s kostrou v2) · [emoce.md](emoce.md) (Gemini × P10, návrh devíti) ·
+[zasady-pusobeni.md](zasady-pusobeni.md) (co owner řekl s Gemini a co Gemini navrhl o působení na člověka) ·
+[inventura-aspekty-sfery.md](inventura-aspekty-sfery.md).
+
 ## 3. Co už máme v datech (nepsat znovu)
 - **Emoce:** pokus P10 (`docs/kostra/pokusy.json`, BACKLOG 10 „How I feel“): *What feels closest to you right now?* — Uncertainty · Pressure ·
   Conflict · Loss · Frustration · Hope · Relief · Something is changing · I don't know (9 voleb). Pocit vybere stránku runy pro větu 3, význam nemění.
@@ -54,9 +66,10 @@ Norny pozor: Gemini navrhl pozice Situace / Tření / Směr; naše Norny jsou �
 
 ## 6. Kroky
 1. ✅ Inventura aspektů × sféry (bez API) — [inventura-aspekty-sfery.md](inventura-aspekty-sfery.md).
-2. Sféry pro 3 runy (Kenaz, Isa, Wunjo): světlé z aspektů v2, stínové nové; owner vybírá. Pak všech 25.
-3. Kotva jedné sféry EN + IS (islandsky od začátku, Greynir + korpus) — psaná v session, ne přes API (paměť naklady-testovani).
-4. Pokus „kotva × emoce“: věty 1 a 3 podle emoce, 2 a 4 drží; zrcadlení × kontrast (navazuje na P10). Číslo pokusu do `pokusy.json`
-   a ownerovo ano dřív, než poběží model.
-5. Pestrost (bod 4.3): kolik variant kotvy na sféru, aby se text neopakoval — jako knihovna runy dne.
-6. Rozhodnutí ownera k bodům 4.1 a 4.2 (osoba, AREA/SEEKING) — bez nich se nepíše prompt.
+2. ✅ Emoce Gemini × P10 a návrh devíti — [emoce.md](emoce.md); zásady působení — [zasady-pusobeni.md](zasady-pusobeni.md);
+   kostra V4 a doporučení „odděleně“ — [kostra-v4.md](kostra-v4.md).
+3. Sféry pro všech 25 run — tolik, kolik runa dovolí (owner); owner vybírá.
+4. Jeden nový obraz pro každou runu (owner), EN + IS islandsky od začátku — psaný v session, ne přes API (paměť naklady-testovani).
+5. Pestrost: jak se čtení téže runy a sféry neopakuje (owner: rozmanitost nutná) — počet obrazů, nebo jiná stavba textu (4R3, 4R5).
+6. Pokus „obraz × emoce“ (navazuje na P10): číslo pokusu do `pokusy.json` a ownerovo ano dřív, než poběží model.
+7. Rozhodnutí ownera 4R1 (osoba) a 4R2 (oblast, hledání) — bez nich se nepíše prompt.

@@ -59,6 +59,7 @@ kterým obraz soudci přečetli, ne definice sféry.
    není ani jeden obraz. Je to totéž, co ve v2 chybí jako „druhá strana významu“ (DECISIONS 2026-11-09 (1), pokusy P16 a P20).
 3. **Počet aspektů kolísá 2–5 na runu** (Algiz 2, Ansuz 5). Pevné „4 sféry na runu“ by u části run znamenalo aspekty slučovat a u jiných
    psát nové. Gemini sám píše „4 až 5“ a u Blank žádnou sféru.
-4. **Kotva Gemini je 4 věty, obraz v bance 1 věta.** Obraz z banky tedy kotvou být nemůže, jen jejím zdrojem (scéna věty 1).
+4. **Kotva Gemini je 4 věty, obraz v bance 1 věta.** ~~Obraz z banky může být zdrojem scény.~~ Owner 2026-11-26: *„obrazy budou úplně
+   nové“* — banka zdrojem obrazů V4 není; z inventury platí jen bod 1–3 (které sféry má runa a co chybí).
 5. Fakta v návrhu Gemini, která kánon nemá (§23, neověřeno): Kenaz jako horečka/vřed (sféra Fever & Exposure); Blank jako „Wyrd / Odin“.
    Do RUNAR_MYTOLOGIE.md ani RUNAR_DESIGN.md nejsou zapsaná. Před použitím ověřit zdroj.
