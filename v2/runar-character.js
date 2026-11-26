@@ -1848,7 +1848,7 @@ function _parseSegments(raw) {
 // Jeden krátký řádek po čtení: myšlenka z toho, co runa JE (zdroj = odstavec jejího textu v Kolekci, UI_TEXT.coll_rune —
 // 1. nebo 3. podle THOUGHT_ODSTAVEC níž), ne
 // z obrazu. SMÍ se obrátit k člověku otázkou nebo tichým pozváním — POVOLENO, neopravovat (RUNAR_DESIGN.md, Cold reading;
-// DECISIONS 2026-09-30 (8)). Zdroj v uvozovkách + „vlastními slovy“ = zdroj, ne text k opsání (memory prompt-directive-makes-model-copy).
+// DECISIONS 2026-09-30 (8)). Zdroj v uvozovkách + „vlastními slovy“ = zdroj, ne text k opsání (RUNAR_DESIGN.md „Slova, která dáváme modelu“ bod 11).
 // Kdo a kde rozhoduje _promptKonec (níž, u _splitThought): tarif TIERS.*.reading_thought, druh čtení podle _THOUGHT_SOURCE.
 // Testy: EVAL_LOG 2026-09-30 (4) a (6). Znění EN = otestované slovo od slova; IS psáno islandsky (is-grammar-qa, korpus).
 // 2026-10-04 (KUKY „1 a 2, jeď“; audit promptu × návody výrobců, BACKLOG „Prompt × návody výrobců“ bod 1): do té doby

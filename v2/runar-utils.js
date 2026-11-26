@@ -873,7 +873,7 @@ function _endingShape(drawn, lang, seeking, area, face, hasQ) {
 
 // ── OTÁZKA RUNY POD POSLEDNÍ VĚTOU (2026-09-24, KUKY „7. zkus to“) ─────────────────
 // Každý ownerův popis runy končí otázkou jen té runy. Konec čtení ji dostane jako ZDROJ, ze kterého
-// vyroste, ne jako text k vyslovení (memory prompt-directive-makes-model-copy: sloveso zdroje, ne „použij“).
+// vyroste, ne jako text k vyslovení (RUNAR_DESIGN.md „Slova, která dáváme modelu“ bod 11: sloveso zdroje, ne „použij“).
 // Důvod: konec občas vyzněl naprázdno (Algiz 2026-09-23 „cesta se váží“ — tautologie, ani jedna strana
 // ownerovy otázky). Pilot na produkčním modelu, týž los s otázkou a bez ní, slepý soudce: konec nese
 // otázku runy víc ve 12 z 12 dvojic (EN 6/6, IS 6/6), délka beze změny → RUNAR_DECISIONS 2026-09-24.

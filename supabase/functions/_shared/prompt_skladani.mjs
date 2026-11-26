@@ -3300,7 +3300,7 @@ function _endingShape(drawn, lang, seeking, area, face, hasQ) {
 
 // ── OTÁZKA RUNY POD POSLEDNÍ VĚTOU (2026-09-24, KUKY „7. zkus to“) ─────────────────
 // Každý ownerův popis runy končí otázkou jen té runy. Konec čtení ji dostane jako ZDROJ, ze kterého
-// vyroste, ne jako text k vyslovení (memory prompt-directive-makes-model-copy: sloveso zdroje, ne „použij“).
+// vyroste, ne jako text k vyslovení (RUNAR_DESIGN.md „Slova, která dáváme modelu“ bod 11: sloveso zdroje, ne „použij“).
 // Důvod: konec občas vyzněl naprázdno (Algiz 2026-09-23 „cesta se váží“ — tautologie, ani jedna strana
 // ownerovy otázky). Pilot na produkčním modelu, týž los s otázkou a bez ní, slepý soudce: konec nese
 // otázku runy víc ve 12 z 12 dvojic (EN 6/6, IS 6/6), délka beze změny → RUNAR_DECISIONS 2026-09-24.
@@ -5628,7 +5628,7 @@ function _parseSegments(raw) {
 // Jeden krátký řádek po čtení: myšlenka z toho, co runa JE (zdroj = odstavec jejího textu v Kolekci, UI_TEXT.coll_rune —
 // 1. nebo 3. podle THOUGHT_ODSTAVEC níž), ne
 // z obrazu. SMÍ se obrátit k člověku otázkou nebo tichým pozváním — POVOLENO, neopravovat (RUNAR_DESIGN.md, Cold reading;
-// DECISIONS 2026-09-30 (8)). Zdroj v uvozovkách + „vlastními slovy“ = zdroj, ne text k opsání (memory prompt-directive-makes-model-copy).
+// DECISIONS 2026-09-30 (8)). Zdroj v uvozovkách + „vlastními slovy“ = zdroj, ne text k opsání (RUNAR_DESIGN.md „Slova, která dáváme modelu“ bod 11).
 // Kdo a kde rozhoduje _promptKonec (níž, u _splitThought): tarif TIERS.*.reading_thought, druh čtení podle _THOUGHT_SOURCE.
 // Testy: EVAL_LOG 2026-09-30 (4) a (6). Znění EN = otestované slovo od slova; IS psáno islandsky (is-grammar-qa, korpus).
 // 2026-10-04 (KUKY „1 a 2, jeď“; audit promptu × návody výrobců, BACKLOG „Prompt × návody výrobců“ bod 1): do té doby
