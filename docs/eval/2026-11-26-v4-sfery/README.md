@@ -23,11 +23,11 @@ a ověřený obraz runy a sféry; model jen v Asku (zatím návrh). Vzniklo z ro
 **Konzultace s Gemini (pořadí):** [zdroj-gemini-architektura.pdf](konzultace/zdroj-gemini-architektura.pdf) (výchozí rozhovor) →
 [pro-gemini-1.md](konzultace/pro-gemini-1.md) (náš podklad) → [zdroj-gemini-odpoved-1.md](konzultace/zdroj-gemini-odpoved-1.md) →
 [odpoved-1-rozbor.md](konzultace/odpoved-1-rozbor.md) → [zdroj-gemini-odpoved-2.md](konzultace/zdroj-gemini-odpoved-2.md) ·
-runa dne: [zdroj-gemini-runa-dne-architektura.md](konzultace/zdroj-gemini-runa-dne-architektura.md). Další kolo: owner předá Gemini
-[kostra-v4.md](kostra-v4.md) (oddíl 9 jsou otázky a úkoly).
+runa dne: [zdroj-gemini-runa-dne-architektura.md](konzultace/zdroj-gemini-runa-dne-architektura.md) · kolo 3 na kostru (oddíl 9):
+[zdroj-gemini-odpoved-3.md](konzultace/zdroj-gemini-odpoved-3.md) → [odpoved-3-rozbor.md](konzultace/odpoved-3-rozbor.md).
 
 ## Co dál
-1. Odpověď Gemini na kostru (oddíl 9) uložit do `konzultace/` a rozebrat.
+1. ✅ Odpověď Gemini na kostru (kolo 3) uložena a rozebrána. Další kolo: opravit sféry proti ownerovým popisům (rozbor oddíl 8).
 2. Owner rozhodne otevřené otázky (kostra oddíl 8).
 3. Sféry pro prvních pět run → test záměny (4M1, 4M3) → owner schválí.
 4. Runa dne Kenaz: věty ve tvaru obraz + význam, třetí osoba, islandsky od začátku, Greynir.

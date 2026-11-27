@@ -72,6 +72,8 @@ emoce (volitelná) → tah runy → volba sféry (nebo „Let the rune choose“
 
 - Mimo devítku **Skip**. **Conflict** je situace s druhým → čip v Asku. 🔶 (devítku navrhl lab, Gemini doporučuje beze změny; owner neschválil)
 - **Emoce vybírá variantu** obrazu podle řady, nepíše text 🔶. Smí vybrat i **kontrast** (přehlíženou stránku), nejen shodu 🔶.
+- **Emoce je přednost, ne filtr** 🔶 (2026-11-27): když člověk varianty své řady u téže sféry už četl, přijde nečtená varianta jiné řady
+  (jinak by se počítadlo z 4.3 a výběr podle emoce popřely). Minimum na sféru: jedna varianta na řadu + jedna bez zabarvení (Skip) = 4.
 - **Emoci ve čtení nejmenovat** 🔶 (lab i Gemini; owner nerozhodl).
 - **Těžká runa + světlá emoce = jasnost pohledu, ne úleva** 🔶.
 - **Hollow:** obraz prázdna jako nádoby nebo ticha, nikdy propast nebo pád 🔶. Krize (112) jen z toho, co člověk napíše v Asku; emoce se v čase
@@ -122,7 +124,7 @@ a ledu (spíš Hagalaz). Podrobně: [runa-dne.md](runa-dne.md).
 | 4M1 | z textu bez jména runy jde poznat runa | slepí soudci (kalibrovaní ve v2) |
 | 4M2 | žádné tvrzení o člověku, žádná rada | dva soudci, vada jen při shodě (kalibrovaní ve v2) |
 | 4M3 | z textu jde poznat sféra; sféry téže runy se neslévají | slepý soudce: text + seznam sfér runy (nový) |
-| 4M4 | emoce je v obrazu cítit, ale nepojmenovaná | stroj + soudce (nový) |
+| 4M4 | varianta v knihovně nese atmosféru své řady emocí a emoci nejmenuje (měří značení knihovny, ne model — obraz model nepíše) | stroj + slepý soudce: text → řada (nový) |
 | 4M5 | varianty téže sféry se neopakují | stroj: nejdelší společný úsek |
 | 4M6 | islandština | GreynirCorrect + korpus vazeb |
 | 4M7 | žádný tik („does not … it simply“, „is not X, it is Y“) | stroj nad knihovnou |
@@ -136,8 +138,12 @@ a ledu (spíš Hagalaz). Podrobně: [runa-dne.md](runa-dne.md).
 6. **4R6** Sféry runy dne = jediný zdroj jejích významů?
 7. **4R7** Norny bez Asku: spojovací text od modelu, nebo jen tři obrazy?
 8. **4R8** Sféry všech 25 run — kdo navrhne první sadu a podle čeho (ownerovy popisy run)?
+9. **4R9** Režim obrazu (Land, Craft): volí ho člověk, nebo ho knihovna střídá sama? (Gemini počítá s volbou člověka; kostra to dosud neříkala.)
 
 ## 9. Názory labu V4 (Claude) a co je potřeba pro úpravu — ke konzultaci s Gemini
+
+> **Kolo 3 proběhlo 2026-11-27** — odpověď a rozbor v `konzultace/` (odpověď 3). Výsledek: z 16 sfér 7 stojí na ownerově popisu, dvě jdou
+> proti němu (Isa Stillness, Wunjo Slack String); věty runy dne jsou potřetí čistý obraz bez významu (proti 2.7). Zadání níž platí dál.
 
 **Názory:**
 1. **Sféry jsou teď hlavní práce.** Bez schválených sfér nejde napsat obraz, emoci ani runu dne. První krok je sada sfér pro pár run různé povahy

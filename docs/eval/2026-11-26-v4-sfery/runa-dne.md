@@ -101,6 +101,10 @@ runy · zákaz „does not … it simply“ · islandština psaná islandsky a o
    To je samostatné rozhodnutí, ne součást runy dne.
 6. Drobné: oddíl 3 slibuje „pět pravidel“ a vypisuje šest; jméno runy Perth je v návrhu psané jinak než v kódu.
 
+## 7. Kolo 3 (2026-11-27)
+Gemini poslal věty Kenaz Land pro Clear Sight, Shaping a Kindling: 15 slov, třetí osoba, tři kulisy — ale zase čistý obraz bez významu
+(proti (7)). Rozbor a ukázka věty podle (7): [odpoved-3-rozbor.md](konzultace/odpoved-3-rozbor.md) oddíl 4.
+
 ## 5. Další krok
 Sféry Kenaz projít na překryv s ostatními 24 runami (slepý soudce: věta + seznam run, kolikrát trefí Kenaz) — měřítko 4M1 v
 [kostra-v4.md](kostra-v4.md). Bez API, v session.
