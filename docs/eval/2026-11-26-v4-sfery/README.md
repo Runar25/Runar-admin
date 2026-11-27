@@ -18,6 +18,7 @@ a ověřený obraz runy a sféry; model jen v Asku (zatím návrh). Vzniklo z ro
 | [emoce.md](emoce.md) | odkud je devítka emocí (naše P10 × Gemini) a proč takhle |
 | [emoce-ve-cteni-resers.md](emoce-ve-cteni-resers.md) | kam emoce dosedá ve výkladu podle praxe a výzkumu (runy, tarot, astrologie, aplikace) |
 | [zasady-pusobeni.md](zasady-pusobeni.md) | co owner řekl s Gemini o tom, jak má Rúnar na člověka působit, a co Gemini navrhl |
+| [v4-v2-mapa.md](v4-v2-mapa.md) | co z V4 už máme ve v2 pod jiným jménem, co je opravdu nové |
 | [inventura-aspekty-sfery.md](inventura-aspekty-sfery.md) | které stránky run už má banka obrazů v2 (vodítko pro sféry; obrazy V4 jsou nové) |
 | [konzultace/](konzultace/) | rozhovor s Gemini doslova a jeho rozbory — historie, ne platný stav |
 | [skripty/](skripty/) | skript inventury (bez API) |
