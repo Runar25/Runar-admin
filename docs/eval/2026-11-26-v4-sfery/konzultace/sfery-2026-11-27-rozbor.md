@@ -92,3 +92,27 @@ Všechno níž je **návrh labu** 🔶, ne rozhodnutí.
    popisům run · tvrzení bez zdroje.
 4. Ownerovi krátce: co je nové, co je v rozporu, co navrhuji vyhodit, otázky.
 5. Co owner rozhodne, přejde do oblasti a kostry.
+
+## 5. Odpověď ownera 2026-11-27 (večer) — co z kritiky platí a co ne
+1. **K 2.3:** *„sféry jsme ještě netestovali, takže těžko říct. Návrhů bylo víc“* — test záměny měřil věty Gemini z odpovědi 3, ne tuhle
+   architekturu. Oprava labu: 2.3 je nanejvýš náznak, ne doklad.
+2. **K 3.1 (proklouzlo):** nebylo to proklouznutí, je to ownerův směr: *„střídání losem, podobně jako máme ve v2“*; *„počet emocí je
+   náčrt“*; *„model píše, kde mu řekneme“*; Gemini měl dobrou pointu *„mluvit k uživateli, pokud se na něco zeptá — to by mohl být spíš ten
+   Ask“*. Bod 3.1 tedy neplatí v tom, co tvrdí o obsahu; platí jen to, že zadání mluví jako o hotovém.
+3. **K 3.2:** *„jde o pochopení, jak mají sféry fungovat … návrhy se budou hodit, je na čem stavět.“*
+4. **K 3.3:** překryvy *„určitě tam budou“*.
+5. **K 3.4:** *„obraz pořád dodáváme my. Model ho jen upravuje podle toho, co mu tam chybí pro výklad.“* Lab to četl jako návrat k modelu,
+   který obraz píše — špatně.
+6. **K 3.5 — lab se mýlil v úvaze, ne jen v závěru.** Owner: *„na tom nesejde, jelikož se sféry zobrazí až po tom, co si člověk vybere runu.
+   Sféra je vlastně podnět, na který člověk reaguje čistě emocionálně nebo kuriozitou … pokud si některé sféry jiných run budou podobné, to je
+   v pořádku … koukat z jiného úhlu.“* Lab převzal kritérium „nesmí jít přiřadit jiné runě“ (kostra 4.2, původně Gemini) a použil ho na název
+   sféry, aniž se zeptal, co chrání. Chrání to, aby **text** nesl tuto runu (jako ve v2 generické čtení); u **názvu** sféry člověk runu už zná,
+   takže záměna s jinou runou mu nevadí. Měřítko názvu je, jestli táhne (emoce, zvědavost); podobné sféry dvou run jsou v pořádku, když se
+   dívají z jiného úhlu.
+7. **K 3.6:** volné čtení *„ještě není hotové“*; emoce se budou testovat, *„jak posednou do čtení a kam je vůbec umístit … podívat se na to
+   psychologicky, kdy je dobré se na to člověka zeptat a jak“*; most runa dne → single a výběr sféry *„či žádnou, či nechat Rúnara vybrat“*
+   se musí dopracovat. Otázky k sebepoznání: owner chce vysvětlit (vysvětleno v chatu).
+8. **K 3.10:** jeden obraz jako jednotka a výběr emocí a počítadlem — owner *„zajímavé, rozveď“*.
+9. **K oddílu 4 (třídění):** owner chce napřed **jeden výchozí dokument pro GPT i Gemini**, *„aby se naše cesty sjednotily … budeme mít
+   stejný výchozí bod. GPT a Gemini mají tendenci říkat ‚takhle to bude‘, ale ve skutečnosti dávají podněty.“* →
+   [../vychozi-bod-gpt-gemini.md](../vychozi-bod-gpt-gemini.md). Přesun do `docs/v4/` owner neschválil ani nezamítl.

@@ -26,6 +26,19 @@ podívá; osobní rovina přichází až v Asku. Rúnar jako postava zůstává.
 9. **Sféry v Kolekci run** (hlubší vrstva) — napřed ukázka, pak rozhodnutí.
 10. Ask: Standard 1, Premium 2 na čtení (config). Ovládne to každý, „i dítě“; u runy je vidět, kterou sféru už člověk otevřel.
 
+**Směr ownera 2026-11-27** (směr, ne zákon — owner: *„pravidla se pořád mění, je to směr“*; zdroj [konzultace/sfery-2026-11-27-rozbor.md](konzultace/sfery-2026-11-27-rozbor.md)):
+11. **V4 je nový ekosystém**, jiný než v2; spoustu věcí může být lepší postavit znovu. Základ je **runa dne**: má v člověku vyvolat něco, co
+    bude chtít **ten den prozkoumat hlouběji v single čtení**. Odkaz z runy dne na single; rituály na spready (později). Hledáme, jak člověka
+    u appky udržet.
+12. **Sféra je směr runy z jejího napětí** a **podnět, na který člověk reaguje emocí nebo zvědavostí**; má ho vtáhnout do světa run a zaujmout
+    jménem, aby chtěl zkusit všechny — vždy jen jednu, příště další. Zobrazí se až po výběru runy; **podobné sféry u různých run jsou
+    v pořádku**, když se dívají z jiného úhlu.
+13. **Sféra ≠ obraz:** člověk volí sféru (nebo žádnou, nebo nechá Rúnara), obraz pod ní vybírá Rúnar.
+14. **Obraz dodáváme my; model ho jen upravuje** podle toho, co mu chybí pro výklad. Model píše tam, kde mu řekneme, a dostává vstupy, ne
+    volnost (jinak opakuje favority). **Střídání losem**, podobně jako ve v2. K člověku mluví, když se na něco zeptá — spíš v Asku.
+15. **Emoce:** počet je náčrt; kam je dát a kdy a jak se člověka zeptat, se teprve zkoumá (psychologicky) a testuje. **Volné čtení** (bez sféry)
+    není hotové.
+
 ## 3. Jádro (platí pro všechno ve V4)
 | id | zásada |
 |---|---|
@@ -47,9 +60,11 @@ emoce (volitelná) → tah runy → volba sféry (nebo „Let the rune choose“
 
 ### 4.2 Sféry runy (4K0)
 - Sféra = stránka runy, kterou jde runu číst (Kenaz: odhalení, tvarování…). **Počet podle runy** ✅. Blank sféry nemá.
-- **Test sféry** 🔶: (1) stojí na ownerově popisu runy, nebo ji owner schválí; (2) **záměna** — obraz bez jména runy nesmí slepý soudce
-  přiřadit jiné runě; (3) **odlišnost** — dvě sféry téže runy nesdílí jeden mechanismus.
-- **Název v UI** 🔶: jedno až dvě konkrétní slova (děj nebo stav), žádné abstraktní pojmy; jen název + značka „otevřeno“.
+- **Test sféry** 🔶: (1) stojí na ownerově popisu runy, nebo ji owner schválí; (2) **záměna** — platí pro **text obrazu** (musí nést tuto
+  runu), **ne pro název sféry**: název člověk vidí až u vybrané runy a podobná sféra jiné runy je v pořádku (owner 2026-11-27, bod 2.12);
+  (3) **odlišnost** — dvě sféry téže runy nesdílí jeden mechanismus.
+- **Název v UI** 🔶: měřítko je, jestli **táhne** (emoce, zvědavost); jen název + značka „otevřeno“. Pracovní podoba (GPT): srozumitelný směr
+  (*Finding Direction*), silný obraz (*Stone Cairn*) jako titulek obrazu pod ním.
 - **Stav:** žádná runa nemá schválené sféry. Kenaz pracovně: Insight & Clarity · Craft & Shaping · Drive & Friction (Fever & Exposure ✅ pryč).
   Kenaz je **směrované světlo ve tmě** (pochodeň, jiskra, ohniště), které odhalí tvar — tím se liší od Sowilo (slunce, denní jas).
 - **Test záměny 2026-11-27** (4M1, věta o mechanice sféry, čtyři slepí soudci s ownerovými popisy; [test-zameny/](test-zameny/README.md)):
@@ -60,8 +75,8 @@ emoce (volitelná) → tah runy → volba sféry (nebo „Let the rune choose“
 ### 4.3 Obraz sféry (4K1)
 - **Přísady, ne osnova** 🔶: scéna · mechanika runy · třecí bod (kde síla tlačí nebo co stojí) · dozvuk. Text má **2–4 věty**, délka podle scény;
   pevné pořadí čtyř vět ne (dělalo by šablonu).
-- **Odkud** 🔶: jen z předem napsané a ověřené knihovny; model do obrazu nezasahuje. Důvod: islandština — dvě ze čtyř islandských vět od Gemini
-  neprošly kontrolou.
+- **Odkud:** obraz dodáváme my z knihovny; **model ho jen upravuje** podle toho, co mu chybí pro výklad (owner 2026-11-27, bod 2.14).
+  ❓ Co přesně smí model v obraze změnit — a jak se úprava ověří islandsky (dvě ze čtyř islandských vět od Gemini neprošly kontrolou).
 - **Varianty** 🔶: 3–5 na sféru, v režimech Land a Craft; liší se osou (děj · detail · vztah dvou věcí), délkou a stavbou věty.
   Počítadlo jako u runy dne: člověk dostane variantu, kterou ještě nečetl.
 - **Jazyky** 🔶: jedna předloha scény (co je v obraze · jaká síla působí · kde je třecí bod) → islandský text a anglický text zvlášť.
@@ -134,6 +149,9 @@ a ledu (spíš Hagalaz). Podrobně: [runa-dne.md](runa-dne.md).
 | 4M7 | žádný tik („does not … it simply“, „is not X, it is Y“) | stroj nad knihovnou |
 
 ## 8. Otevřené otázky (❓) a návrhy čekající na ownera
+> **2026-11-27:** 4R3 a 4R9 odpověděl owner směrem v bodě 2.14 (obraz dodáváme my, model ho upravuje; střídání losem); k 4R1 řekl, že
+> k člověku se mluví spíš v Asku, když se zeptá. 4R4: počet emocí je náčrt (2.15).
+
 1. **4R1** Single: obraz jen ve třetí osobě (jako runa dne), nebo místy „you“?
 2. **4R2** Oblast a hledání z v2 (AREA OF LIFE, WHAT ARE YOU SEEKING): pryč úplně, nebo jako čipy v Asku?
 3. **4R3** Obraz single čtení jen z ověřené knihovny a model jen v Asku?

@@ -13,6 +13,7 @@ a ověřený obraz runy a sféry; model jen v Asku (zatím návrh). Vzniklo z ro
 | soubor | co vlastní |
 |---|---|
 | [kostra-v4.md](kostra-v4.md) | **jediná kostra V4** — co platí, co je návrh, otevřené otázky, názory labu a co je potřeba od Gemini |
+| [vychozi-bod-gpt-gemini.md](vychozi-bod-gpt-gemini.md) | společný výchozí bod pro GPT a Gemini — přepisuje se z kostry, ne naopak |
 | [runa-dne.md](runa-dne.md) | pracovní záznam runy dne: rozhodnutí v pořadí, návrhy vět Kenaz a jejich kontrola |
 | [emoce.md](emoce.md) | odkud je devítka emocí (naše P10 × Gemini) a proč takhle |
 | [zasady-pusobeni.md](zasady-pusobeni.md) | co owner řekl s Gemini o tom, jak má Rúnar na člověka působit, a co Gemini navrhl |
