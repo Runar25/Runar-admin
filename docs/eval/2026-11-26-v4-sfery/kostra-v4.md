@@ -44,6 +44,13 @@ podívá; osobní rovina přichází až v Asku. Rúnar jako postava zůstává.
     **některé runy mohou mít i jiné prostředí**. Co dělat, když člověk přečte všechny obrazy sféry: *„najdeme řešení“*.
 18. **Model ve V4:** zábrany z v2 (cold reading a další, co model usměrňuje) zůstávají; mění se hlavně **způsob výkladu** — ve v2 dostává každá
     věta pokyn, co se v ní má objevit, ve V4 se to pravděpodobně změní (oddíl 11).
+19. **Hledání (seeking) jde do Asku** — *„což bylo od vzniku Asku stejně lepší“*.
+20. **Každá věta čtení má mít vstup, který ji mírně pozmění.**
+21. **Emoce se modelu nepopisuje**; řídí, jak Rúnar k člověku promlouvá — podobně jako ve v2 hledání mění tvar závěrečné věty. Za volbou
+    člověka („I'm feeling down“) stojí pro model jiný text, který nejde doslova převzít. Možná i humor (dřív zkoušen v labu v3: *„to by šlo“*,
+    jen občas, ne u těžkých run, ne na účet čtenáře). 🔶 návrh, zkusí se.
+22. **Emoce na obou místech** (před tahem i po čtení); kde zůstane a jestli vůbec, rozhodnou testy. Pojmenovat pocit má smysl spíš jako
+    symbolickou otázku; emoce ve čtení jako **čočka** ([emoce-ve-cteni-resers.md](emoce-ve-cteni-resers.md)).
 
 ## 3. Jádro (platí pro všechno ve V4)
 | id | zásada |
@@ -198,22 +205,25 @@ a ledu (spíš Hagalaz). Podrobně: [runa-dne.md](runa-dne.md).
 Kostra v2 (`docs/kostra/`) je napojená na produkční kód; V4 v kódu není, proto **zůstávají oddělené**. V4 si z v2 bere jen odkazem: jádro,
 kalibrované soudce (4M1, 4M2) a slova se známým účinkem. Až V4 půjde do produkce, stane se z ní nová verze kostry.
 
-## 11. Model ve V4 — co se bere z v2 a co se mění (lab, 2026-11-27)
-Jak model ve v2 pracuje se vstupy: [docs/eval/2026-11-27-jak-model-pracuje/pro-gpt-gemini.md](../2026-11-27-jak-model-pracuje/pro-gpt-gemini.md);
-části čtení a jejich pravidla: `docs/kostra/KOSTRA.md` (K1–K6).
+## 11. Čtení V4 a model (lab, 2026-11-27)
+**Podoba čtení V4 se nestaví z vět v2** (owner 2026-11-27 k prvnímu návrhu tohoto oddílu: *„tím neděláš V4, ale v2“*). Výchozí ukázky jsou
+v rozhovoru s Gemini ([konzultace/zdroj-gemini-architektura.txt](konzultace/zdroj-gemini-architektura.txt), Kenaz Craft & Shaping, Heavy ×
+Restless): **pevný obraz sféry o čtyřech větách** — scéna · mechanika runy · třecí bod · dozvuk; emoce u Gemini mění jemně věty 1 a 3,
+věty 2 a 4 drží. Owner 2026-11-27 jde dál: **každá věta má mít vstup, který ji mírně pozmění** (bod 2.20).
 
-| ve v2 (vstup → věta) | ve V4 | stav |
-|---|---|---|
-| obraz z banky runy, oblast vyřadí obrazy, které k ní nepatří → věta 1 | obraz z knihovny sféry; vybírá kód (nečtený, přednost podle značky emoce) — stejný mechanismus jako filtr oblasti | 🔶 |
-| slovo významu + rámec věty → věta 2 | stránku runy nese sféra | 🔶 |
-| úhel otevření (los) → věta 1 | ❓ zůstane, nebo ho nese obraz sám | ❓ |
-| oblast, co hledá, pro kdy → věta 3 a 4 | spíš v Asku (owner 2026-11-26: osobní kontext *„přijde až později skrze Ask“*) | 🔶 |
-| tvar konce, otázka runy → věta 4 | ❓ podle testu otázek (bod 2.16) | ❓ |
-| pocit (pokus P10, jen lab) → věta 3 | emoce | ❓ kde dosedne |
-| jádro J1–J7, NO COLD READING, slova se známým účinkem (S01–S15) | **zůstává** (owner 2026-11-27) | ✅ |
+| věta (Gemini) | co drží | vstup, který ji mírně pozmění | stav |
+|---|---|---|---|
+| 1 scéna | obraz z knihovny sféry | ❓ emoce, nebo vstup do scény (los) | ❓ |
+| 2 mechanika runy | sféra | ❓ | ❓ |
+| 3 třecí bod | sféra | emoce (u Gemini) | 🔶 |
+| 4 dozvuk | sféra | ❓ tvar konce podle emoce (jako hledání ve v2, bod 2.21) | 🔶 |
 
-**Co z měření v2 platí i pro V4** (hranice: sol, EN):
+Zábrany modelu z v2 zůstávají ✅ (owner 2026-11-27): jádro J1–J7, NO COLD READING, slova se známým účinkem S01–S15 (`docs/kostra/KOSTRA.md`).
+Jak model ve v2 pracuje se vstupy: [docs/eval/2026-11-27-jak-model-pracuje/pro-gpt-gemini.md](../2026-11-27-jak-model-pracuje/pro-gpt-gemini.md).
+
+**Co z měření v2 platí o chování modelu** (hranice: sol, EN):
 - Model bere vstup doslova (obraz z banky ve 2/3 čtení aspoň tři slova za sebou) → **obraz v knihovně musí být napsaný tak, jak má zaznít**;
   model ho rozvine o 5–7 vlastních slov, hlavně podle úhlu.
 - Co v zadání stojí jako slovo, model vysloví (S08, S12). V P10 dostal pocit jako slovo a **pojmenoval ho ve 4/4 čteních** (n = 4) → emoci
-  je bezpečnější nést **výběrem obrazu** (značka v knihovně, kód) než slovem v zadání. Neověřeno pro V4.
+  modelu nepojmenovávat; skrytý text za volbou (bod 2.21) musí být napsaný tak, aby nevadil ani doslova, a mít víc znění na los (jinak
+  formule ve stejném místě, S15). Neověřeno pro V4.

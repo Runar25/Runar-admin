@@ -91,8 +91,12 @@ Pracovní tok 🔶 (pořadí emoce je otevřené, viz 6):
 | otvírá | Shifting · Hopeful · Light |
 
   Mimo devítku *Skip*.
-- ❓ **Kam emoci ve čtení umístit a kdy a jak se člověka zeptat** — má se podívat psychologicky a otestovat.
-- 🔶 Emoce mění atmosféru obrazu, ne jeho předmět; ve čtení se nejmenuje.
+- ❓ **Kam emoci ve čtení umístit a kdy a jak se člověka zeptat** — má se podívat psychologicky a otestovat. Zkusí se obě místa: před
+  tahem i po čtení ✅; testy rozhodnou, kde zůstane a jestli vůbec.
+- 🔶 **Emoce se modelu nepopisuje.** Řídí, jak Rúnar k člověku promlouvá — podobně jako dnes volba „co hledáš“ mění tvar závěrečné věty.
+  Za volbou člověka stojí pro model jiný text, který nejde doslova převzít. Možná i suchý humor (jen občas, ne u těžkých run).
+- 🔶 Emoce nemění význam runy ani sféry; ve čtení se nejmenuje.
+- ✅ Volba „co hledáš“ (seeking) patří do Asku.
 
 ## 7. Obraz a knihovna
 1. **Obraz dodáváme my; model ho jen upravuje** podle toho, co mu chybí pro výklad ✅. Model **nedostává volnost** (jinak opakuje své
@@ -100,10 +104,12 @@ Pracovní tok 🔶 (pořadí emoce je otevřené, viz 6):
 2. **Režimy obrazu:** Land (islandská příroda, přednost) a Craft (práce rukou, tradiční materiál) ✅; Current (město, technologie) zatím ne ✅.
    Některé runy mohou mít i jiné prostředí ✅.
 3. **Střídání losem**, podobně jako v dnešní produkci ✅. Rozmanitost je nutná — čtení téže runy nesmí být stejná ✅.
-4. 🔶 Návrh labu: **jeden obraz = jedna jednotka knihovny** (jedna situace, jeden text na jazyk). Když člověk vybere sféru, Rúnar mezi jejími
-   obrazy vybere ten, který člověk ještě nečetl, a podle emoce dá přednost obrazu, jehož atmosféra k ní sedí. Emoce je přednost, ne filtr.
+4. ✅ **Jeden obraz = jedna jednotka knihovny** (jedna situace, jeden text na jazyk), podobně jako dnešní banka obrazů. Když člověk vybere
+   sféru, Rúnar mezi jejími obrazy vybere ten, který člověk ještě nečetl. ❓ Jestli má obraz nést i atmosféru podle emoce, nebo emoce
+   působí jen na to, jak Rúnar promlouvá (viz 6).
 5. ❓ Co přesně smí model v obraze upravit, a jak se úprava ověří v islandštině.
-6. Zábrany modelu z dnešní produkce zůstávají (žádné studené čtení — model nesmí člověku říkat, co v něm je; a další pravidla, která ho
+6. **Každá věta čtení má mít vstup, který ji mírně pozmění** ✅ (owner). Jaký vstup ke které větě — ❓.
+7. Zábrany modelu z dnešní produkce zůstávají (žádné studené čtení — model nesmí člověku říkat, co v něm je; a další pravidla, která ho
    usměrňují) ✅. Mění se hlavně způsob výkladu: dnes dostává každá věta čtení pokyn, co se v ní má objevit; ve V4 se to pravděpodobně změní.
 
 ## 8. Na čem se teď pracuje (otevřené otázky)
