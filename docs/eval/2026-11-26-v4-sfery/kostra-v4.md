@@ -38,6 +38,12 @@ podívá; osobní rovina přichází až v Asku. Rúnar jako postava zůstává.
     volnost (jinak opakuje favority). **Střídání losem**, podobně jako ve v2. K člověku mluví, když se na něco zeptá — spíš v Asku.
 15. **Emoce:** počet je náčrt; kam je dát a kdy a jak se člověka zeptat, se teprve zkoumá (psychologicky) a testuje. **Volné čtení** (bez sféry)
     není hotové.
+16. **Otázky k sebepoznání:** vyzkoušet všechny tři cesty (pevná otázka ke sféře · dvě připravené otázky jako dveře do Asku · otázky tvoří
+    model v Asku) a pak rozhodnout; *„co není otestované, je složité říct“*. Občas je dobré mít statické, a mají odrážet čtení.
+17. **Obraz = jednotka knihovny** pod sférou, jako dnes v bance; Rúnar vybírá nečtený, model ho upraví pro výklad. Prostředí Land a Craft;
+    **některé runy mohou mít i jiné prostředí**. Co dělat, když člověk přečte všechny obrazy sféry: *„najdeme řešení“*.
+18. **Model ve V4:** zábrany z v2 (cold reading a další, co model usměrňuje) zůstávají; mění se hlavně **způsob výkladu** — ve v2 dostává každá
+    věta pokyn, co se v ní má objevit, ve V4 se to pravděpodobně změní (oddíl 11).
 
 ## 3. Jádro (platí pro všechno ve V4)
 | id | zásada |
@@ -191,3 +197,23 @@ a ledu (spíš Hagalaz). Podrobně: [runa-dne.md](runa-dne.md).
 ## 10. Vztah ke kostře v2
 Kostra v2 (`docs/kostra/`) je napojená na produkční kód; V4 v kódu není, proto **zůstávají oddělené**. V4 si z v2 bere jen odkazem: jádro,
 kalibrované soudce (4M1, 4M2) a slova se známým účinkem. Až V4 půjde do produkce, stane se z ní nová verze kostry.
+
+## 11. Model ve V4 — co se bere z v2 a co se mění (lab, 2026-11-27)
+Jak model ve v2 pracuje se vstupy: [docs/eval/2026-11-27-jak-model-pracuje/pro-gpt-gemini.md](../2026-11-27-jak-model-pracuje/pro-gpt-gemini.md);
+části čtení a jejich pravidla: `docs/kostra/KOSTRA.md` (K1–K6).
+
+| ve v2 (vstup → věta) | ve V4 | stav |
+|---|---|---|
+| obraz z banky runy, oblast vyřadí obrazy, které k ní nepatří → věta 1 | obraz z knihovny sféry; vybírá kód (nečtený, přednost podle značky emoce) — stejný mechanismus jako filtr oblasti | 🔶 |
+| slovo významu + rámec věty → věta 2 | stránku runy nese sféra | 🔶 |
+| úhel otevření (los) → věta 1 | ❓ zůstane, nebo ho nese obraz sám | ❓ |
+| oblast, co hledá, pro kdy → věta 3 a 4 | spíš v Asku (owner 2026-11-26: osobní kontext *„přijde až později skrze Ask“*) | 🔶 |
+| tvar konce, otázka runy → věta 4 | ❓ podle testu otázek (bod 2.16) | ❓ |
+| pocit (pokus P10, jen lab) → věta 3 | emoce | ❓ kde dosedne |
+| jádro J1–J7, NO COLD READING, slova se známým účinkem (S01–S15) | **zůstává** (owner 2026-11-27) | ✅ |
+
+**Co z měření v2 platí i pro V4** (hranice: sol, EN):
+- Model bere vstup doslova (obraz z banky ve 2/3 čtení aspoň tři slova za sebou) → **obraz v knihovně musí být napsaný tak, jak má zaznít**;
+  model ho rozvine o 5–7 vlastních slov, hlavně podle úhlu.
+- Co v zadání stojí jako slovo, model vysloví (S08, S12). V P10 dostal pocit jako slovo a **pojmenoval ho ve 4/4 čteních** (n = 4) → emoci
+  je bezpečnější nést **výběrem obrazu** (značka v knihovně, kód) než slovem v zadání. Neověřeno pro V4.

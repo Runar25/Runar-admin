@@ -98,18 +98,22 @@ Pracovní tok 🔶 (pořadí emoce je otevřené, viz 6):
 1. **Obraz dodáváme my; model ho jen upravuje** podle toho, co mu chybí pro výklad ✅. Model **nedostává volnost** (jinak opakuje své
    oblíbené motivy), dostává vstupy; **píše tam, kde mu řekneme** ✅.
 2. **Režimy obrazu:** Land (islandská příroda, přednost) a Craft (práce rukou, tradiční materiál) ✅; Current (město, technologie) zatím ne ✅.
+   Některé runy mohou mít i jiné prostředí ✅.
 3. **Střídání losem**, podobně jako v dnešní produkci ✅. Rozmanitost je nutná — čtení téže runy nesmí být stejná ✅.
 4. 🔶 Návrh labu: **jeden obraz = jedna jednotka knihovny** (jedna situace, jeden text na jazyk). Když člověk vybere sféru, Rúnar mezi jejími
    obrazy vybere ten, který člověk ještě nečetl, a podle emoce dá přednost obrazu, jehož atmosféra k ní sedí. Emoce je přednost, ne filtr.
 5. ❓ Co přesně smí model v obraze upravit, a jak se úprava ověří v islandštině.
+6. Zábrany modelu z dnešní produkce zůstávají (žádné studené čtení — model nesmí člověku říkat, co v něm je; a další pravidla, která ho
+   usměrňují) ✅. Mění se hlavně způsob výkladu: dnes dostává každá věta čtení pokyn, co se v ní má objevit; ve V4 se to pravděpodobně změní.
 
 ## 8. Na čem se teď pracuje (otevřené otázky)
 1. **Most runa dne → single:** jak věta runy dne pozve do single čtení a jak potom člověk volí sféru (jednu, žádnou, nebo nechá Rúnara).
 2. **Volné čtení bez sféry:** co člověk dostane — není hotové.
 3. **Emoce:** kam a kdy (viz 6).
-4. **Otázky k sebepoznání:** mají být předem připravené ke každé sféře (nabídnuté jako dveře do Asku), nebo je tvoří model až v Asku podle
-   obrazu a otázky člověka?
+4. **Otázky k sebepoznání:** vyzkoušíme všechny tři cesty a pak rozhodneme ✅ — pevná otázka ke sféře · dvě připravené otázky jako dveře
+   do Asku · otázky tvoří model v Asku. Statické mají místo, ale mají odrážet čtení.
 5. **Sféry pro všech 25 run.**
+6. **Co když člověk přečte všechny obrazy sféry** — řešení se hledá.
 
 ## 9. Slovník (aby se pojmy nepletly)
 | pojem | význam ve V4 |
