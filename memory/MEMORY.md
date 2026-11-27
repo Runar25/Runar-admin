@@ -111,3 +111,4 @@ Vrstvy pravdy: kanonická = root `RUNAR_*.md`, `memory/*.md`, `CLAUDE.md` · his
 - [snapshots/2026-10-05-tree-proporce-strany-spicka.md](snapshots/2026-10-05-tree-proporce-strany-spicka.md) — strom: proporce, strany, špička
 - [snapshots/2026-10-07-tune-audit-zaloha.md](snapshots/2026-10-07-tune-audit-zaloha.md) — §30 hooky, v5.04, lab otázek v Asku
 - [snapshots/runar-tree-engine-lab.md](snapshots/runar-tree-engine-lab.md) · [snapshots/runar-tree-living-movement.md](snapshots/runar-tree-living-movement.md) — strom: lab enginu a živý pohyb (červen–srpen 2026)
+- [Bez okna s otázkou](bez-okna-s-otazkou.md) — na konci tahu wrap_up jen s recapem; otázky číslovaně do zprávy (owner 2026-11-27)
