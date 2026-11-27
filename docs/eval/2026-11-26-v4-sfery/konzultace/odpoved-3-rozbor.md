@@ -47,7 +47,7 @@ Wunjo Slack String). U Isy, Nauthiz a Ansuz chybí stránka, kterou owner v popi
    stránku, kterou druhá runa nemá.
 
 ## 3. Zdroje u tvrzení (9.1)
-- Nauthiz „Icelandic/Norwegian Rune Poem, sloka 10“: v obou severských básních (16 run) je nauð podle mé znalosti 8. sloka; 10. je ve
+- Nauthiz „islandská a norská runová báseň, sloka 10“ (Gemini): v obou severských básních (16 run) je nauð podle mé znalosti 8. sloka; 10. je ve
   staroanglické. Citát „nahý mrzne“ odpovídá norské. Text básní v repu není → **neověřeno nástrojem**, jen upozornění.
 - Ansuz „ansuz / óss = ústa“: ansuz je bůh (áss); „ústa“ je latinské *os*, jak se čte staroanglická sloka 4. Gemini slévá dvě slova.
 - Kenaz „zdroj: kostra-v4.md 4.2“ — to je náš vlastní text, ne zdroj.

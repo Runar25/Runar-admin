@@ -2,7 +2,6 @@
 
 **Vlastní jen:** text odpovědi Gemini beze změny. Rozbor: [odpoved-3-rozbor.md](odpoved-3-rozbor.md). Gemini neměl přiložené ownerovy popisy run.
 <!-- check-docs:ok 2026-11-27: doslovná citace Gemini, jména run i básní nechávám v jeho znění -->
-<!-- doc-values:ok 2026-11-27: doslovná citace Gemini — „Rune Poem“ a „Runes Collection“ jsou jeho slova, ne tier -->
 
 ---
 
@@ -44,14 +43,14 @@ Níže jsou návrhy sfér bez historického významu vředu/horečky u Kenaz. U 
 * Hard Friction: Dva tvrdé povrchy tlačené proti sobě vytvářejí žár teprve skrze vytrvalý odpor.
    * Odlišení od Kenaz: Kenaz pracuje s připraveným ohněm a nástrojem; Nauthiz je vykřesání tepla z holého odporu bez zásob (zdroj: lidová tradice nauðeld / vlastní návrh — bez opory v runových básních).
 * Narrow Ration: Nedostatek zásob nebo úzký průchod odřízne vše zbytné a ponechá jen to, co unese váhu.
-   * Odlišení od Isa: Isa zastaví veškerý pohyb; Nauthiz pohyb nezastaví, ale sevře ho do jediného nutného směru (zdroj: význam slova nauðr = nutnost/tíseň, Icelandic/Norwegian Rune Poem, sloka 10).
+   * Odlišení od Isa: Isa zastaví veškerý pohyb; Nauthiz pohyb nezastaví, ale sevře ho do jediného nutného směru (zdroj: význam slova nauðr = nutnost/tíseň, Icelandic/Norwegian Rune Poem, sloka 10). <!-- doc-values:ok 2026-11-27: „Rune Poem“ = runová báseň, ne tier -->
 * Bare Exposure: Chlad a vítr v otevřeném prostoru odhalí, co postrádá skutečnou ochranu.
-   * Odlišení od Hagalaz: Hagalaz je náhlý úder zvenčí (krupobití), který ničí; Nauthiz je trvalý tlak nedostatku, kterému nelze uhnout (zdroj: Norwegian Rune Poem, sloka 10: „nouze nechá málo volby, nahý mrzne“).
+   * Odlišení od Hagalaz: Hagalaz je náhlý úder zvenčí (krupobití), který ničí; Nauthiz je trvalý tlak nedostatku, kterému nelze uhnout (zdroj: Norwegian Rune Poem, sloka 10: „nouze nechá málo volby, nahý mrzne“). <!-- doc-values:ok 2026-11-27: „Rune Poem“ = runová báseň, ne tier -->
 
 5. ANSUZ (Dech, hlas, zvuk nesený vzduchem, naslouchání, stopa sdělení)
 
 * Open Breath: Proud vzduchu projde hrdlem nebo píšťalou a změní ticho ve slyšitelný tón.
-   * Odlišení od Wunjo: Wunjo je souzvuk a klid po doznívání; Ansuz je samotný dech a vznik hlasu/signálu (zdroj: etymologie ansuz / óss = ústa, zdroj, Old English Rune Poem, sloka 4).
+   * Odlišení od Wunjo: Wunjo je souzvuk a klid po doznívání; Ansuz je samotný dech a vznik hlasu/signálu (zdroj: etymologie ansuz / óss = ústa, zdroj, Old English Rune Poem, sloka 4). <!-- doc-values:ok 2026-11-27: „Rune Poem“ = runová báseň, ne tier -->
 * Carried Sound: Zvuk se šíří údolím nebo nad vodou jen potud, pokud mu nestojí v cestě hluk nebo vítr.
    * Odlišení od Raidho: Raidho je pohyb hmoty a směru po dráze; Ansuz je přenos signálu a významu vzduchem (zdroj: vlastní návrh / bez zdroje).
 * Listening Ear: Ticho před odpovědí dovolí zachytit tón, který zaniká v rychlé řeči.
