@@ -1,0 +1,317 @@
+[
+ {
+  "id": "K1",
+  "runa": "Kenaz",
+  "sfera": "Clear Sight",
+  "zdroj": "gemini",
+  "sada": "G",
+  "stav": "projde",
+  "volby": "Kenaz/Sowilo (3) · Kenaz/Sowilo (3)"
+ },
+ {
+  "id": "K1",
+  "runa": "Kenaz",
+  "sfera": "Clear Sight",
+  "zdroj": "gemini",
+  "sada": "L",
+  "stav": "projde",
+  "volby": "Kenaz/Sowilo (3) · Kenaz/Sowilo (3)"
+ },
+ {
+  "id": "K2",
+  "runa": "Kenaz",
+  "sfera": "Shaping",
+  "zdroj": "gemini",
+  "sada": "G",
+  "stav": "projde",
+  "volby": "Kenaz/Uruz (2) · Kenaz/Uruz (2)"
+ },
+ {
+  "id": "K2L",
+  "runa": "Kenaz",
+  "sfera": "Shaping",
+  "zdroj": "lab",
+  "sada": "L",
+  "stav": "projde",
+  "volby": "Kenaz/Sowilo (3) · Kenaz/Sowilo (3)"
+ },
+ {
+  "id": "K3",
+  "runa": "Kenaz",
+  "sfera": "Kindling",
+  "zdroj": "gemini",
+  "sada": "G",
+  "stav": "projde",
+  "volby": "Kenaz/Fehu (3) · Kenaz/Fehu (3)"
+ },
+ {
+  "id": "K3",
+  "runa": "Kenaz",
+  "sfera": "Kindling",
+  "zdroj": "gemini",
+  "sada": "L",
+  "stav": "projde",
+  "volby": "Kenaz/Fehu (3) · Kenaz/Fehu (3)"
+ },
+ {
+  "id": "I1",
+  "runa": "Isa",
+  "sfera": "Stillness",
+  "zdroj": "gemini",
+  "sada": "G",
+  "stav": "projde",
+  "volby": "Isa/Laguz (3) · Isa/Ingwaz (3)"
+ },
+ {
+  "id": "I1L",
+  "runa": "Isa",
+  "sfera": "Stillness",
+  "zdroj": "lab",
+  "sada": "L",
+  "stav": "projde",
+  "volby": "Isa/Laguz (3) · Isa/Laguz (3)"
+ },
+ {
+  "id": "I2",
+  "runa": "Isa",
+  "sfera": "Sharp Air",
+  "zdroj": "gemini",
+  "sada": "G",
+  "stav": "projde",
+  "volby": "Isa/Sowilo (2) · Isa/Kenaz (2)"
+ },
+ {
+  "id": "I2",
+  "runa": "Isa",
+  "sfera": "Sharp Air",
+  "zdroj": "gemini",
+  "sada": "L",
+  "stav": "projde",
+  "volby": "Isa/Sowilo (1) · Isa/Sowilo (2)"
+ },
+ {
+  "id": "I3",
+  "runa": "Isa",
+  "sfera": "Thin Ice",
+  "zdroj": "gemini",
+  "sada": "G",
+  "stav": "projde",
+  "volby": "Isa/Laguz (2) · Isa/Laguz (2)"
+ },
+ {
+  "id": "I3",
+  "runa": "Isa",
+  "sfera": "Thin Ice",
+  "zdroj": "gemini",
+  "sada": "L",
+  "stav": "projde",
+  "volby": "Isa/Laguz (1) · Isa/Laguz (1)"
+ },
+ {
+  "id": "I4L",
+  "runa": "Isa",
+  "sfera": "Not Yet",
+  "zdroj": "lab",
+  "sada": "L",
+  "stav": "projde",
+  "volby": "Isa/Nauthiz (3) · Isa/Nauthiz (3)"
+ },
+ {
+  "id": "W1",
+  "runa": "Wunjo",
+  "sfera": "Clean Joint",
+  "zdroj": "gemini",
+  "sada": "G",
+  "stav": "neprojde",
+  "volby": "Gebo/Ehwaz (1) · Ehwaz/Gebo (1)"
+ },
+ {
+  "id": "W1",
+  "runa": "Wunjo",
+  "sfera": "Clean Joint",
+  "zdroj": "gemini",
+  "sada": "L",
+  "stav": "neprojde",
+  "volby": "Gebo/Ehwaz (1) · Ehwaz/Gebo (1)"
+ },
+ {
+  "id": "W2",
+  "runa": "Wunjo",
+  "sfera": "Slack String",
+  "zdroj": "gemini",
+  "sada": "G",
+  "stav": "projde",
+  "volby": "Wunjo/Tiwaz (1) · Wunjo/Tiwaz (1)"
+ },
+ {
+  "id": "W2L",
+  "runa": "Wunjo",
+  "sfera": "Slack Rope",
+  "zdroj": "lab",
+  "sada": "L",
+  "stav": "projde",
+  "volby": "Wunjo/Raidho (3) · Wunjo/Raidho (3)"
+ },
+ {
+  "id": "W3",
+  "runa": "Wunjo",
+  "sfera": "Shared Hearth",
+  "zdroj": "gemini",
+  "sada": "G",
+  "stav": "projde",
+  "volby": "Wunjo/Othila (2) · Wunjo/Othila (2)"
+ },
+ {
+  "id": "W3L",
+  "runa": "Wunjo",
+  "sfera": "Shared Table",
+  "zdroj": "lab",
+  "sada": "L",
+  "stav": "projde",
+  "volby": "Wunjo/Mannaz (3) · Wunjo/Mannaz (3)"
+ },
+ {
+  "id": "N1",
+  "runa": "Nauthiz",
+  "sfera": "Hard Friction",
+  "zdroj": "gemini",
+  "sada": "G",
+  "stav": "projde",
+  "volby": "Nauthiz/Kenaz (1) · Nauthiz/Thurisaz (1)"
+ },
+ {
+  "id": "N1",
+  "runa": "Nauthiz",
+  "sfera": "Hard Friction",
+  "zdroj": "gemini",
+  "sada": "L",
+  "stav": "sporná",
+  "volby": "Kenaz/Thurisaz (1) · Nauthiz/Kenaz (1)"
+ },
+ {
+  "id": "N2",
+  "runa": "Nauthiz",
+  "sfera": "Narrow Ration",
+  "zdroj": "gemini",
+  "sada": "G",
+  "stav": "projde",
+  "volby": "Nauthiz/Hagalaz (3) · Nauthiz/Hagalaz (3)"
+ },
+ {
+  "id": "N2",
+  "runa": "Nauthiz",
+  "sfera": "Narrow Ration",
+  "zdroj": "gemini",
+  "sada": "L",
+  "stav": "projde",
+  "volby": "Nauthiz/Hagalaz (3) · Nauthiz/Hagalaz (3)"
+ },
+ {
+  "id": "N3",
+  "runa": "Nauthiz",
+  "sfera": "Bare Exposure",
+  "zdroj": "gemini",
+  "sada": "G",
+  "stav": "neprojde",
+  "volby": "Hagalaz/Algiz (2) · Hagalaz/Algiz (2)"
+ },
+ {
+  "id": "N3",
+  "runa": "Nauthiz",
+  "sfera": "Bare Exposure",
+  "zdroj": "gemini",
+  "sada": "L",
+  "stav": "neprojde",
+  "volby": "Hagalaz/Algiz (2) · Hagalaz/Algiz (2)"
+ },
+ {
+  "id": "N4L",
+  "runa": "Nauthiz",
+  "sfera": "Pressure Inward",
+  "zdroj": "lab",
+  "sada": "L",
+  "stav": "projde",
+  "volby": "Nauthiz/Isa (3) · Nauthiz/Isa (3)"
+ },
+ {
+  "id": "A1",
+  "runa": "Ansuz",
+  "sfera": "Open Breath",
+  "zdroj": "gemini",
+  "sada": "G",
+  "stav": "projde",
+  "volby": "Ansuz/Dagaz (3) · Ansuz/Kenaz (3)"
+ },
+ {
+  "id": "A2",
+  "runa": "Ansuz",
+  "sfera": "Carried Sound",
+  "zdroj": "gemini",
+  "sada": "G",
+  "stav": "projde",
+  "volby": "Ansuz/Laguz (2) · Ansuz/Laguz (2)"
+ },
+ {
+  "id": "A12L",
+  "runa": "Ansuz",
+  "sfera": "Breath and Sound",
+  "zdroj": "lab",
+  "sada": "L",
+  "stav": "projde",
+  "volby": "Ansuz/Laguz (3) · Ansuz/Algiz (3)"
+ },
+ {
+  "id": "A3",
+  "runa": "Ansuz",
+  "sfera": "Listening Ear",
+  "zdroj": "gemini",
+  "sada": "G",
+  "stav": "projde",
+  "volby": "Ansuz/Isa (2) · Ansuz/Isa (2)"
+ },
+ {
+  "id": "A3",
+  "runa": "Ansuz",
+  "sfera": "Listening Ear",
+  "zdroj": "gemini",
+  "sada": "L",
+  "stav": "projde",
+  "volby": "Ansuz/Isa (2) · Ansuz/Algiz (2)"
+ },
+ {
+  "id": "A4",
+  "runa": "Ansuz",
+  "sfera": "Spoken Weight",
+  "zdroj": "gemini",
+  "sada": "G",
+  "stav": "projde",
+  "volby": "Ansuz/Gebo (3) · Ansuz/Kenaz (3)"
+ },
+ {
+  "id": "A4",
+  "runa": "Ansuz",
+  "sfera": "Spoken Weight",
+  "zdroj": "gemini",
+  "sada": "L",
+  "stav": "projde",
+  "volby": "Ansuz/Gebo (3) · Ansuz/Gebo (2)"
+ },
+ {
+  "id": "A5L",
+  "runa": "Ansuz",
+  "sfera": "Naming",
+  "zdroj": "lab",
+  "sada": "L",
+  "stav": "projde",
+  "volby": "Ansuz/Kenaz (3) · Ansuz/Kenaz (3)"
+ },
+ {
+  "id": "A6L",
+  "runa": "Ansuz",
+  "sfera": "Veiling Word",
+  "zdroj": "lab",
+  "sada": "L",
+  "stav": "projde",
+  "volby": "Ansuz/Laguz (3) · Ansuz/Perth (3)"
+ }
+]

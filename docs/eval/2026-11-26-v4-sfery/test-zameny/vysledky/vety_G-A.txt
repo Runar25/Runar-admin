@@ -1,0 +1,16 @@
+V001: Nedostatek zásob nebo úzký průchod odřízne vše zbytné a ponechá jen to, co unese váhu.
+V002: Malá jiskra zachycená v suchém troudu rozběhne proces hoření, který vyžaduje stálé přikládání.
+V003: Ticho před odpovědí dovolí zachytit tón, který zaniká v rychlé řeči.
+V004: Povrchový pohyb se zastaví a hladina ztuhne, zatímco hloubka pod ní zůstává nehybná.
+V005: Zvuk se šíří údolím nebo nad vodou jen potud, pokud mu nestojí v cestě hluk nebo vítr.
+V006: Řízený žár změkčí pevný materiál natolik, aby mu ruka nebo nástroj daly nový tvar.
+V007: Dva přesně opracované kusy materiálu do sebe zapadnou bez násilí a nesou zátěž společně.
+V008: Směrované světlo ve tmě odhalí obrys i nedokonalost předmětu, který zůstal ve stínu.
+V009: Vyslovené slovo opustí ústa a zanechá ve vzduchu stopu, kterou nelze vzít zpět.
+V010: Chlad a vítr v otevřeném prostoru odhalí, co postrádá skutečnou ochranu.
+V011: Hladký povrch vypadá pevně, ale jeho únosnost závisí na neviditelném napětí a teplotě pod ním.
+V012: Přítomnost u jednoho ohniště vytváří klid, ve kterém slova nemusí vyplňovat každé ticho.
+V013: Proud vzduchu projde hrdlem nebo píšťalou a změní ticho ve slyšitelný tón.
+V014: Po uvolnění tahu se napnutá tětiva i dřevo luku vrátí do svého přirozeného klidového tvaru.
+V015: Mráz stáhne vlhkost ze vzduchu a nechá vzdálené hrany krajiny vystoupit bez rozmazání.
+V016: Dva tvrdé povrchy tlačené proti sobě vytvářejí žár teprve skrze vytrvalý odpor.

@@ -19,6 +19,7 @@ a ověřený obraz runy a sféry; model jen v Asku (zatím návrh). Vzniklo z ro
 | [inventura-aspekty-sfery.md](inventura-aspekty-sfery.md) | které stránky run už má banka obrazů v2 (vodítko pro sféry; obrazy V4 jsou nové) |
 | [konzultace/](konzultace/) | rozhovor s Gemini doslova a jeho rozbory — historie, ne platný stav |
 | [skripty/](skripty/) | skript inventury (bez API) |
+| [test-zameny/](test-zameny/README.md) | slepý test záměny sfér pěti run (4M1), 2026-11-27 |
 
 **Konzultace s Gemini (pořadí):** [zdroj-gemini-architektura.pdf](konzultace/zdroj-gemini-architektura.pdf) (výchozí rozhovor) →
 [pro-gemini-1.md](konzultace/pro-gemini-1.md) (náš podklad) → [zdroj-gemini-odpoved-1.md](konzultace/zdroj-gemini-odpoved-1.md) →
@@ -29,7 +30,8 @@ runa dne: [zdroj-gemini-runa-dne-architektura.md](konzultace/zdroj-gemini-runa-d
 ## Co dál
 1. ✅ Odpověď Gemini na kostru (kolo 3) uložena a rozebrána. Další kolo: opravit sféry proti ownerovým popisům (rozbor oddíl 8).
 2. Owner rozhodne otevřené otázky (kostra oddíl 8).
-3. Sféry pro prvních pět run → test záměny (4M1, 4M3) → owner schválí.
+3. Sféry pro prvních pět run → test záměny (4M1, 4M3) → owner schválí. 4M1 na větách o mechanice proběhl 2026-11-27:
+   [test-zameny/](test-zameny/README.md). Zbývá 4M3 a test na hotových obrazech.
 4. Runa dne Kenaz: věty ve tvaru obraz + význam, třetí osoba, islandsky od začátku, Greynir.
 5. Ukázka sfér v Kolekci run (owner: *„koukneme na to, jak to bude vypadat“*).
 6. Až bude single: Norny.

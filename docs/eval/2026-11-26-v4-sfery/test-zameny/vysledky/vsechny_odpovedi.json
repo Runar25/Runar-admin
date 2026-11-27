@@ -1,0 +1,702 @@
+[
+ {
+  "soudce": "G-A",
+  "maska": "V001",
+  "id": "V001",
+  "runa": "Nauthiz",
+  "prvni": "Nauthiz",
+  "druha": "Hagalaz",
+  "jistota": 3,
+  "proc": "Nedostatek a omezení oddělí potřebu od touhy a zaostří, co je skutečně důležité."
+ },
+ {
+  "soudce": "G-A",
+  "maska": "V002",
+  "id": "V002",
+  "runa": "Kenaz",
+  "prvni": "Kenaz",
+  "druha": "Fehu",
+  "jistota": 3,
+  "proc": "Tvořivý oheň potřebuje potravu, bez péče zase zhasne."
+ },
+ {
+  "soudce": "G-A",
+  "maska": "V003",
+  "id": "V003",
+  "runa": "Ansuz",
+  "prvni": "Ansuz",
+  "druha": "Isa",
+  "jistota": 2,
+  "proc": "Ansuz není jen mluvit, ale naslouchat a uslyšet skutečný význam."
+ },
+ {
+  "soudce": "G-A",
+  "maska": "V004",
+  "id": "V004",
+  "runa": "Isa",
+  "prvni": "Isa",
+  "druha": "Laguz",
+  "jistota": 3,
+  "proc": "Voda ztuhne, pohyb se zastaví, pod ledem voda stále existuje."
+ },
+ {
+  "soudce": "G-A",
+  "maska": "V005",
+  "id": "V005",
+  "runa": "Ansuz",
+  "prvni": "Ansuz",
+  "druha": "Laguz",
+  "jistota": 2,
+  "proc": "Zvuk a slovo, které k člověku dorazí jen tehdy, když ho nic nepřehluší."
+ },
+ {
+  "soudce": "G-A",
+  "maska": "V006",
+  "id": "V006",
+  "runa": "Kenaz",
+  "prvni": "Kenaz",
+  "druha": "Uruz",
+  "jistota": 2,
+  "proc": "Tvořivý oheň přináší možnost něco vytvořit, opravit nebo změnit."
+ },
+ {
+  "soudce": "G-A",
+  "maska": "V007",
+  "id": "V007",
+  "runa": "Wunjo",
+  "prvni": "Gebo",
+  "druha": "Ehwaz",
+  "jistota": 1,
+  "proc": "Dvě strany se setkají a vznikne spojení, prostor, který patří oběma, bez vynucení."
+ },
+ {
+  "soudce": "G-A",
+  "maska": "V008",
+  "id": "V008",
+  "runa": "Kenaz",
+  "prvni": "Kenaz",
+  "druha": "Sowilo",
+  "jistota": 3,
+  "proc": "Světlo osvítí jen malý prostor a ukáže i to, co bychom raději neviděli."
+ },
+ {
+  "soudce": "G-A",
+  "maska": "V009",
+  "id": "V009",
+  "runa": "Ansuz",
+  "prvni": "Ansuz",
+  "druha": "Gebo",
+  "jistota": 3,
+  "proc": "Vyslovené slovo, které něco změní a už nejde nevidět."
+ },
+ {
+  "soudce": "G-A",
+  "maska": "V010",
+  "id": "V010",
+  "runa": "Nauthiz",
+  "prvni": "Hagalaz",
+  "druha": "Algiz",
+  "jistota": 2,
+  "proc": "Nepřivolaná síla z nebe odhalí, co nemělo skutečně pevné kořeny."
+ },
+ {
+  "soudce": "G-A",
+  "maska": "V011",
+  "id": "V011",
+  "runa": "Isa",
+  "prvni": "Isa",
+  "druha": "Laguz",
+  "jistota": 2,
+  "proc": "Led vypadá pevně, ale pod ním je skrytý, neviditelný stav."
+ },
+ {
+  "soudce": "G-A",
+  "maska": "V012",
+  "id": "V012",
+  "runa": "Wunjo",
+  "prvni": "Wunjo",
+  "druha": "Othila",
+  "jistota": 2,
+  "proc": "Sdílená chvíle u stolu, kdy nemusíš nic dokazovat a někam patříš."
+ },
+ {
+  "soudce": "G-A",
+  "maska": "V013",
+  "id": "V013",
+  "runa": "Ansuz",
+  "prvni": "Ansuz",
+  "druha": "Dagaz",
+  "jistota": 3,
+  "proc": "Ansuz je runa dechu a hlasu, který dává věcem tvar."
+ },
+ {
+  "soudce": "G-A",
+  "maska": "V014",
+  "id": "V014",
+  "runa": "Wunjo",
+  "prvni": "Wunjo",
+  "druha": "Tiwaz",
+  "jistota": 1,
+  "proc": "Po napětí přijde chvíle, kdy můžeš povolit ruce a něco zapadne na své místo."
+ },
+ {
+  "soudce": "G-A",
+  "maska": "V015",
+  "id": "V015",
+  "runa": "Isa",
+  "prvni": "Isa",
+  "druha": "Sowilo",
+  "jistota": 2,
+  "proc": "V zastavení a tichu zůstane před tebou jedna linie a ukáže se, co zůstává."
+ },
+ {
+  "soudce": "G-A",
+  "maska": "V016",
+  "id": "V016",
+  "runa": "Nauthiz",
+  "prvni": "Nauthiz",
+  "druha": "Kenaz",
+  "jistota": 1,
+  "proc": "Tlak a omezení, které vytrvalým odporem vytvářejí něco podstatného."
+ },
+ {
+  "soudce": "G-B",
+  "maska": "V101",
+  "id": "V101",
+  "runa": "Nauthiz",
+  "prvni": "Nauthiz",
+  "druha": "Hagalaz",
+  "jistota": 3,
+  "proc": "Nedostatek a omezení zaostří, co je skutečně potřeba, a oddělí to od zbytného."
+ },
+ {
+  "soudce": "G-B",
+  "maska": "V102",
+  "id": "V102",
+  "runa": "Wunjo",
+  "prvni": "Wunjo",
+  "druha": "Tiwaz",
+  "jistota": 1,
+  "proc": "Povolení po napětí a návrat na své místo odpovídá Wunjo jako chvíli, kdy můžeš povolit ruce."
+ },
+ {
+  "soudce": "G-B",
+  "maska": "V103",
+  "id": "V103",
+  "runa": "Ansuz",
+  "prvni": "Ansuz",
+  "druha": "Kenaz",
+  "jistota": 3,
+  "proc": "Slovo, které zazní a zůstane, je jádro Ansuz."
+ },
+ {
+  "soudce": "G-B",
+  "maska": "V104",
+  "id": "V104",
+  "runa": "Nauthiz",
+  "prvni": "Hagalaz",
+  "druha": "Algiz",
+  "jistota": 2,
+  "proc": "Nepřivolaná síla počasí ukáže, co mělo pevné kořeny a co ne."
+ },
+ {
+  "soudce": "G-B",
+  "maska": "V105",
+  "id": "V105",
+  "runa": "Isa",
+  "prvni": "Isa",
+  "druha": "Kenaz",
+  "jistota": 2,
+  "proc": "Mráz a ztišení nechají vystoupit jednu jasnou linii, soustředění Isy."
+ },
+ {
+  "soudce": "G-B",
+  "maska": "V106",
+  "id": "V106",
+  "runa": "Ansuz",
+  "prvni": "Ansuz",
+  "druha": "Laguz",
+  "jistota": 2,
+  "proc": "Jde o zvuk, který dojde jen tam, kde je ticho k naslouchání."
+ },
+ {
+  "soudce": "G-B",
+  "maska": "V107",
+  "id": "V107",
+  "runa": "Wunjo",
+  "prvni": "Ehwaz",
+  "druha": "Gebo",
+  "jistota": 1,
+  "proc": "Dvě části se spojí bez násilí a nesou pohyb či váhu společně, souhra dvou."
+ },
+ {
+  "soudce": "G-B",
+  "maska": "V108",
+  "id": "V108",
+  "runa": "Isa",
+  "prvni": "Isa",
+  "druha": "Laguz",
+  "jistota": 2,
+  "proc": "Led vypadá pevně, ale pod ním skrytě existuje voda a napětí."
+ },
+ {
+  "soudce": "G-B",
+  "maska": "V109",
+  "id": "V109",
+  "runa": "Kenaz",
+  "prvni": "Kenaz",
+  "druha": "Uruz",
+  "jistota": 2,
+  "proc": "Tvořivý oheň dává možnost něco vytvořit, opravit nebo změnit."
+ },
+ {
+  "soudce": "G-B",
+  "maska": "V110",
+  "id": "V110",
+  "runa": "Kenaz",
+  "prvni": "Kenaz",
+  "druha": "Fehu",
+  "jistota": 3,
+  "proc": "Plamen nápadu, který bez péče a potravy zhasne."
+ },
+ {
+  "soudce": "G-B",
+  "maska": "V111",
+  "id": "V111",
+  "runa": "Kenaz",
+  "prvni": "Kenaz",
+  "druha": "Sowilo",
+  "jistota": 3,
+  "proc": "Světlo osvítí malý prostor a dá obrys i tomu, co bychom raději neviděli."
+ },
+ {
+  "soudce": "G-B",
+  "maska": "V112",
+  "id": "V112",
+  "runa": "Wunjo",
+  "prvni": "Wunjo",
+  "druha": "Othila",
+  "jistota": 2,
+  "proc": "Sdílený klid u stolu, kde nemusíš nic dokazovat, je Wunjo."
+ },
+ {
+  "soudce": "G-B",
+  "maska": "V113",
+  "id": "V113",
+  "runa": "Nauthiz",
+  "prvni": "Nauthiz",
+  "druha": "Thurisaz",
+  "jistota": 1,
+  "proc": "Tlak a odpor, z nichž teprve vzniká něco nutného, odpovídá Nauthiz."
+ },
+ {
+  "soudce": "G-B",
+  "maska": "V114",
+  "id": "V114",
+  "runa": "Isa",
+  "prvni": "Isa",
+  "druha": "Ingwaz",
+  "jistota": 3,
+  "proc": "Voda ztuhne a pohyb se zastaví, ticho a nehybnost Isy."
+ },
+ {
+  "soudce": "G-B",
+  "maska": "V115",
+  "id": "V115",
+  "runa": "Ansuz",
+  "prvni": "Ansuz",
+  "druha": "Isa",
+  "jistota": 2,
+  "proc": "Naslouchání a zaslechnutí skutečného významu řečeného patří Ansuz."
+ },
+ {
+  "soudce": "G-B",
+  "maska": "V116",
+  "id": "V116",
+  "runa": "Ansuz",
+  "prvni": "Ansuz",
+  "druha": "Kenaz",
+  "jistota": 3,
+  "proc": "Dech a hlas, kterým něco dostane slyšitelný tvar, je Ansuz."
+ },
+ {
+  "soudce": "L-A",
+  "maska": "V201",
+  "id": "V201",
+  "runa": "Isa",
+  "prvni": "Isa",
+  "druha": "Sowilo",
+  "jistota": 1,
+  "proc": "Mráz a ztišení, ve kterém před člověkem zůstane jedna ostrá linie, odpovídá soustředění v Ise."
+ },
+ {
+  "soudce": "L-A",
+  "maska": "V202",
+  "id": "V202",
+  "runa": "Wunjo",
+  "prvni": "Gebo",
+  "druha": "Ehwaz",
+  "jistota": 1,
+  "proc": "Dvě strany se setkají bez vynucení a vznikne spojení, které patří oběma."
+ },
+ {
+  "soudce": "L-A",
+  "maska": "V203",
+  "id": "V203",
+  "runa": "Kenaz",
+  "prvni": "Kenaz",
+  "druha": "Sowilo",
+  "jistota": 3,
+  "proc": "Malé světlo ve tmě dá obrys věci a ukáže i to, co bychom raději neviděli."
+ },
+ {
+  "soudce": "L-A",
+  "maska": "V204",
+  "id": "V204",
+  "runa": "Wunjo",
+  "prvni": "Wunjo",
+  "druha": "Mannaz",
+  "jistota": 3,
+  "proc": "Smích u stolu a chvíle, kdy nemusíš nic dokazovat, je doslovný obraz Wunjo."
+ },
+ {
+  "soudce": "L-A",
+  "maska": "V205",
+  "id": "V205",
+  "runa": "Kenaz",
+  "prvni": "Kenaz",
+  "druha": "Fehu",
+  "jistota": 3,
+  "proc": "Tvořivý oheň potřebuje potravu, bez péče zhasne."
+ },
+ {
+  "soudce": "L-A",
+  "maska": "V206",
+  "id": "V206",
+  "runa": "Isa",
+  "prvni": "Isa",
+  "druha": "Nauthiz",
+  "jistota": 3,
+  "proc": "Led, který nejde urychlit, a ticho, v němž se ukáže, co zůstává, když přestaneš tlačit."
+ },
+ {
+  "soudce": "L-A",
+  "maska": "V207",
+  "id": "V207",
+  "runa": "Nauthiz",
+  "prvni": "Nauthiz",
+  "druha": "Hagalaz",
+  "jistota": 3,
+  "proc": "Nedostatek zaostří a oddělí skutečnou potřebu od toho, co bylo jen přáním."
+ },
+ {
+  "soudce": "L-A",
+  "maska": "V208",
+  "id": "V208",
+  "runa": "Ansuz",
+  "prvni": "Ansuz",
+  "druha": "Kenaz",
+  "jistota": 3,
+  "proc": "Slovo pojmenuje věc tak přesně, že už to nejde nevidět."
+ },
+ {
+  "soudce": "L-A",
+  "maska": "V209",
+  "id": "V209",
+  "runa": "Ansuz",
+  "prvni": "Ansuz",
+  "druha": "Isa",
+  "jistota": 2,
+  "proc": "Ansuz není jen mluvit, ale naslouchat a uslyšet skutečný význam."
+ },
+ {
+  "soudce": "L-A",
+  "maska": "V210",
+  "id": "V210",
+  "runa": "Nauthiz",
+  "prvni": "Hagalaz",
+  "druha": "Algiz",
+  "jistota": 2,
+  "proc": "Nepřivolaná síla počasí ukáže, co mělo pevné kořeny a co ne."
+ },
+ {
+  "soudce": "L-A",
+  "maska": "V211",
+  "id": "V211",
+  "runa": "Ansuz",
+  "prvni": "Ansuz",
+  "druha": "Laguz",
+  "jistota": 3,
+  "proc": "Slovo může vytvořit obraz, který skutečnost zakryje."
+ },
+ {
+  "soudce": "L-A",
+  "maska": "V212",
+  "id": "V212",
+  "runa": "Nauthiz",
+  "prvni": "Nauthiz",
+  "druha": "Isa",
+  "jistota": 3,
+  "proc": "Zavřené dveře a tlak proti nemožnému, který se začne obracet dovnitř."
+ },
+ {
+  "soudce": "L-A",
+  "maska": "V213",
+  "id": "V213",
+  "runa": "Kenaz",
+  "prvni": "Kenaz",
+  "druha": "Sowilo",
+  "jistota": 3,
+  "proc": "Co dostane obrys ve světle, lze vytvořit, opravit nebo změnit."
+ },
+ {
+  "soudce": "L-A",
+  "maska": "V214",
+  "id": "V214",
+  "runa": "Wunjo",
+  "prvni": "Wunjo",
+  "druha": "Raidho",
+  "jistota": 3,
+  "proc": "Na chvíli povolit ruce uprostřed cesty, i když není všechno hotové."
+ },
+ {
+  "soudce": "L-A",
+  "maska": "V215",
+  "id": "V215",
+  "runa": "Nauthiz",
+  "prvni": "Kenaz",
+  "druha": "Thurisaz",
+  "jistota": 1,
+  "proc": "Vznik ohně a žáru ukazuje na tvořivý oheň Kenaz, tření a odpor připomíná náraz Thurisaz."
+ },
+ {
+  "soudce": "L-A",
+  "maska": "V216",
+  "id": "V216",
+  "runa": "Isa",
+  "prvni": "Isa",
+  "druha": "Laguz",
+  "jistota": 1,
+  "proc": "Ztuhlý povrch, pod nímž dál existuje skrytý pohyb, který není vidět."
+ },
+ {
+  "soudce": "L-A",
+  "maska": "V217",
+  "id": "V217",
+  "runa": "Ansuz",
+  "prvni": "Ansuz",
+  "druha": "Laguz",
+  "jistota": 3,
+  "proc": "Ansuz je runa dechu, hlasu a toho, co přichází skrze zvuk."
+ },
+ {
+  "soudce": "L-A",
+  "maska": "V218",
+  "id": "V218",
+  "runa": "Isa",
+  "prvni": "Isa",
+  "druha": "Laguz",
+  "jistota": 3,
+  "proc": "Voda ztuhne, ale pod ledem dál existuje, jen její pohyb není vidět."
+ },
+ {
+  "soudce": "L-A",
+  "maska": "V219",
+  "id": "V219",
+  "runa": "Ansuz",
+  "prvni": "Ansuz",
+  "druha": "Gebo",
+  "jistota": 3,
+  "proc": "Vyslovené slovo mění skutečnost a v posluchači zůstane déle, než by mělo."
+ },
+ {
+  "soudce": "L-B",
+  "maska": "V301",
+  "id": "V301",
+  "runa": "Nauthiz",
+  "prvni": "Nauthiz",
+  "druha": "Kenaz",
+  "jistota": 1,
+  "proc": "Žár vzniká z tlaku a odporu, což odpovídá Nauthiz jako tlaku a nutnosti; oheň sám by ukazoval na Kenaz."
+ },
+ {
+  "soudce": "L-B",
+  "maska": "V302",
+  "id": "V302",
+  "runa": "Ansuz",
+  "prvni": "Ansuz",
+  "druha": "Kenaz",
+  "jistota": 3,
+  "proc": "Ansuz výslovně: slovo může něco pojmenovat tak přesně, že už to nejde nevidět."
+ },
+ {
+  "soudce": "L-B",
+  "maska": "V303",
+  "id": "V303",
+  "runa": "Kenaz",
+  "prvni": "Kenaz",
+  "druha": "Fehu",
+  "jistota": 3,
+  "proc": "Kenaz připomíná, že oheň potřebuje potravu a bez péče zhasne."
+ },
+ {
+  "soudce": "L-B",
+  "maska": "V304",
+  "id": "V304",
+  "runa": "Kenaz",
+  "prvni": "Kenaz",
+  "druha": "Sowilo",
+  "jistota": 3,
+  "proc": "Kenaz je světlo, které osvítí jen malý prostor a ukáže obrys i to, co bychom raději neviděli."
+ },
+ {
+  "soudce": "L-B",
+  "maska": "V305",
+  "id": "V305",
+  "runa": "Nauthiz",
+  "prvni": "Nauthiz",
+  "druha": "Hagalaz",
+  "jistota": 3,
+  "proc": "Nedostatek a omezení oddělují potřebu od touhy a ukazují, co je skutečně důležité."
+ },
+ {
+  "soudce": "L-B",
+  "maska": "V306",
+  "id": "V306",
+  "runa": "Isa",
+  "prvni": "Isa",
+  "druha": "Sowilo",
+  "jistota": 2,
+  "proc": "Mráz a zastavení přinášejí soustředění, kdy zůstane jedna jasná linie; jasnost by mohla ukazovat i na Sowilo."
+ },
+ {
+  "soudce": "L-B",
+  "maska": "V307",
+  "id": "V307",
+  "runa": "Nauthiz",
+  "prvni": "Nauthiz",
+  "druha": "Isa",
+  "jistota": 3,
+  "proc": "Nauthiz varuje, že když člověk dlouho tlačí proti nemožnému, tlak se obrací dovnitř; dveře jsou zavřené."
+ },
+ {
+  "soudce": "L-B",
+  "maska": "V308",
+  "id": "V308",
+  "runa": "Wunjo",
+  "prvni": "Wunjo",
+  "druha": "Raidho",
+  "jistota": 3,
+  "proc": "Wunjo je chvíle, kdy můžeš povolit ruce, radost uprostřed cesty, ne až v cíli."
+ },
+ {
+  "soudce": "L-B",
+  "maska": "V309",
+  "id": "V309",
+  "runa": "Isa",
+  "prvni": "Isa",
+  "druha": "Laguz",
+  "jistota": 3,
+  "proc": "Isa výslovně: pod ledem může voda stále existovat, jen její pohyb není vidět."
+ },
+ {
+  "soudce": "L-B",
+  "maska": "V310",
+  "id": "V310",
+  "runa": "Nauthiz",
+  "prvni": "Hagalaz",
+  "druha": "Algiz",
+  "jistota": 2,
+  "proc": "Živelné narušení zvenčí odhalí, co mělo skutečně pevné kořeny a co ne."
+ },
+ {
+  "soudce": "L-B",
+  "maska": "V311",
+  "id": "V311",
+  "runa": "Ansuz",
+  "prvni": "Ansuz",
+  "druha": "Algiz",
+  "jistota": 3,
+  "proc": "Ansuz je runa dechu, hlasu a zvuku, který k někomu dolétne."
+ },
+ {
+  "soudce": "L-B",
+  "maska": "V312",
+  "id": "V312",
+  "runa": "Ansuz",
+  "prvni": "Ansuz",
+  "druha": "Algiz",
+  "jistota": 2,
+  "proc": "Ansuz není jen mluvit, ale také naslouchat a skutečně uslyšet, co přichází."
+ },
+ {
+  "soudce": "L-B",
+  "maska": "V313",
+  "id": "V313",
+  "runa": "Ansuz",
+  "prvni": "Ansuz",
+  "druha": "Gebo",
+  "jistota": 2,
+  "proc": "Ansuz nese moc vysloveného slova, které něco změní a už nejde vzít zpět."
+ },
+ {
+  "soudce": "L-B",
+  "maska": "V314",
+  "id": "V314",
+  "runa": "Wunjo",
+  "prvni": "Wunjo",
+  "druha": "Mannaz",
+  "jistota": 3,
+  "proc": "Wunjo výslovně: smích u stolu, okamžik, kdy nemusíš nic dokazovat."
+ },
+ {
+  "soudce": "L-B",
+  "maska": "V315",
+  "id": "V315",
+  "runa": "Wunjo",
+  "prvni": "Ehwaz",
+  "druha": "Gebo",
+  "jistota": 1,
+  "proc": "Dvě části se spojí bez násilí a nesou pohyb či váhu společně, což je souhra Ehwaz; vzájemnost by mohla ukazovat i na Gebo."
+ },
+ {
+  "soudce": "L-B",
+  "maska": "V316",
+  "id": "V316",
+  "runa": "Isa",
+  "prvni": "Isa",
+  "druha": "Nauthiz",
+  "jistota": 3,
+  "proc": "Isa: některé věci se nedají urychlit, ticho ukáže, co zůstává, když přestaneš tlačit."
+ },
+ {
+  "soudce": "L-B",
+  "maska": "V317",
+  "id": "V317",
+  "runa": "Kenaz",
+  "prvni": "Kenaz",
+  "druha": "Sowilo",
+  "jistota": 3,
+  "proc": "Kenaz: když věc dostane obrys, přichází možnost něco vytvořit, opravit nebo změnit."
+ },
+ {
+  "soudce": "L-B",
+  "maska": "V318",
+  "id": "V318",
+  "runa": "Isa",
+  "prvni": "Isa",
+  "druha": "Laguz",
+  "jistota": 1,
+  "proc": "Hladký pevný povrch s neviditelným děním pod ním odpovídá ledu Isa; skrytý proud pod hladinou by mohl ukazovat na Laguz."
+ },
+ {
+  "soudce": "L-B",
+  "maska": "V319",
+  "id": "V319",
+  "runa": "Ansuz",
+  "prvni": "Ansuz",
+  "druha": "Perth",
+  "jistota": 3,
+  "proc": "Ansuz výslovně: slovo může vytvořit obraz, který skutečnost zakryje."
+ }
+]

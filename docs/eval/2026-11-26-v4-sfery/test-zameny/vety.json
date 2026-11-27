@@ -1,0 +1,34 @@
+{
+  "_popis": "Test záměny sfér (4M1), 2026-11-27. Mechanika sféry v jedné větě (česky). gemini = doslova z odpovědi 3; lab = oprava nebo doplnění labu V4 podle ownerových popisů run (rozbor odpovědi 3, oddíl 8). Soudce vidí jen text, ne runu ani sféru.",
+  "vety": [
+    {"id": "K1", "runa": "Kenaz", "sfera": "Clear Sight", "zdroj": "gemini", "text": "Směrované světlo ve tmě odhalí obrys i nedokonalost předmětu, který zůstal ve stínu."},
+    {"id": "K2", "runa": "Kenaz", "sfera": "Shaping", "zdroj": "gemini", "text": "Řízený žár změkčí pevný materiál natolik, aby mu ruka nebo nástroj daly nový tvar."},
+    {"id": "K2L", "runa": "Kenaz", "sfera": "Shaping", "zdroj": "lab", "text": "Když se věc jednou ukáže ve světle, dá se s ní pracovat: opravit ji, přetvořit, dát jí nový tvar."},
+    {"id": "K3", "runa": "Kenaz", "sfera": "Kindling", "zdroj": "gemini", "text": "Malá jiskra zachycená v suchém troudu rozběhne proces hoření, který vyžaduje stálé přikládání."},
+
+    {"id": "I1", "runa": "Isa", "sfera": "Stillness", "zdroj": "gemini", "text": "Povrchový pohyb se zastaví a hladina ztuhne, zatímco hloubka pod ní zůstává nehybná."},
+    {"id": "I1L", "runa": "Isa", "sfera": "Stillness", "zdroj": "lab", "text": "Hladina ztuhne a pohyb na povrchu ustane, ale voda pod ledem dál teče, jen ji není vidět."},
+    {"id": "I2", "runa": "Isa", "sfera": "Sharp Air", "zdroj": "gemini", "text": "Mráz stáhne vlhkost ze vzduchu a nechá vzdálené hrany krajiny vystoupit bez rozmazání."},
+    {"id": "I3", "runa": "Isa", "sfera": "Thin Ice", "zdroj": "gemini", "text": "Hladký povrch vypadá pevně, ale jeho únosnost závisí na neviditelném napětí a teplotě pod ním."},
+    {"id": "I4L", "runa": "Isa", "sfera": "Not Yet", "zdroj": "lab", "text": "Led drží, dokud nepřijde jeho čas; kdo do něj tluče, nic neurychlí, jen uvidí, co zůstane, když přestane tlačit."},
+
+    {"id": "W1", "runa": "Wunjo", "sfera": "Clean Joint", "zdroj": "gemini", "text": "Dva přesně opracované kusy materiálu do sebe zapadnou bez násilí a nesou zátěž společně."},
+    {"id": "W2", "runa": "Wunjo", "sfera": "Slack String", "zdroj": "gemini", "text": "Po uvolnění tahu se napnutá tětiva i dřevo luku vrátí do svého přirozeného klidového tvaru."},
+    {"id": "W2L", "runa": "Wunjo", "sfera": "Slack Rope", "zdroj": "lab", "text": "Ruce, které celý den svíraly lano, na chvíli povolí uprostřed cesty; tah zmizí, i když cíl ještě není na dohled."},
+    {"id": "W3", "runa": "Wunjo", "sfera": "Shared Hearth", "zdroj": "gemini", "text": "Přítomnost u jednoho ohniště vytváří klid, ve kterém slova nemusí vyplňovat každé ticho."},
+    {"id": "W3L", "runa": "Wunjo", "sfera": "Shared Table", "zdroj": "lab", "text": "U jednoho stolu se lidé smějí a nikdo nemusí nic dokazovat; ticho mezi slovy nikoho netíží."},
+
+    {"id": "N1", "runa": "Nauthiz", "sfera": "Hard Friction", "zdroj": "gemini", "text": "Dva tvrdé povrchy tlačené proti sobě vytvářejí žár teprve skrze vytrvalý odpor."},
+    {"id": "N2", "runa": "Nauthiz", "sfera": "Narrow Ration", "zdroj": "gemini", "text": "Nedostatek zásob nebo úzký průchod odřízne vše zbytné a ponechá jen to, co unese váhu."},
+    {"id": "N3", "runa": "Nauthiz", "sfera": "Bare Exposure", "zdroj": "gemini", "text": "Chlad a vítr v otevřeném prostoru odhalí, co postrádá skutečnou ochranu."},
+    {"id": "N4L", "runa": "Nauthiz", "sfera": "Pressure Inward", "zdroj": "lab", "text": "Kdo dlouho tlačí do zavřených dveří, ucítí nakonec ten tlak ve vlastních ramenou, ne v pantech."},
+
+    {"id": "A1", "runa": "Ansuz", "sfera": "Open Breath", "zdroj": "gemini", "text": "Proud vzduchu projde hrdlem nebo píšťalou a změní ticho ve slyšitelný tón."},
+    {"id": "A2", "runa": "Ansuz", "sfera": "Carried Sound", "zdroj": "gemini", "text": "Zvuk se šíří údolím nebo nad vodou jen potud, pokud mu nestojí v cestě hluk nebo vítr."},
+    {"id": "A12L", "runa": "Ansuz", "sfera": "Breath and Sound", "zdroj": "lab", "text": "Dech projde hrdlem, stane se tónem a nese se údolím tak daleko, dokud mu nestojí v cestě hluk."},
+    {"id": "A3", "runa": "Ansuz", "sfera": "Listening Ear", "zdroj": "gemini", "text": "Ticho před odpovědí dovolí zachytit tón, který zaniká v rychlé řeči."},
+    {"id": "A4", "runa": "Ansuz", "sfera": "Spoken Weight", "zdroj": "gemini", "text": "Vyslovené slovo opustí ústa a zanechá ve vzduchu stopu, kterou nelze vzít zpět."},
+    {"id": "A5L", "runa": "Ansuz", "sfera": "Naming", "zdroj": "lab", "text": "Jedno přesné slovo dá věci jméno a od té chvíle ji už nejde přehlédnout."},
+    {"id": "A6L", "runa": "Ansuz", "sfera": "Veiling Word", "zdroj": "lab", "text": "Slovo může položit přes skutečnost obraz tak hladký, že pod ním věc sama zmizí."}
+  ]
+}

@@ -1,0 +1,16 @@
+V101: Nedostatek zásob nebo úzký průchod odřízne vše zbytné a ponechá jen to, co unese váhu.
+V102: Po uvolnění tahu se napnutá tětiva i dřevo luku vrátí do svého přirozeného klidového tvaru.
+V103: Vyslovené slovo opustí ústa a zanechá ve vzduchu stopu, kterou nelze vzít zpět.
+V104: Chlad a vítr v otevřeném prostoru odhalí, co postrádá skutečnou ochranu.
+V105: Mráz stáhne vlhkost ze vzduchu a nechá vzdálené hrany krajiny vystoupit bez rozmazání.
+V106: Zvuk se šíří údolím nebo nad vodou jen potud, pokud mu nestojí v cestě hluk nebo vítr.
+V107: Dva přesně opracované kusy materiálu do sebe zapadnou bez násilí a nesou zátěž společně.
+V108: Hladký povrch vypadá pevně, ale jeho únosnost závisí na neviditelném napětí a teplotě pod ním.
+V109: Řízený žár změkčí pevný materiál natolik, aby mu ruka nebo nástroj daly nový tvar.
+V110: Malá jiskra zachycená v suchém troudu rozběhne proces hoření, který vyžaduje stálé přikládání.
+V111: Směrované světlo ve tmě odhalí obrys i nedokonalost předmětu, který zůstal ve stínu.
+V112: Přítomnost u jednoho ohniště vytváří klid, ve kterém slova nemusí vyplňovat každé ticho.
+V113: Dva tvrdé povrchy tlačené proti sobě vytvářejí žár teprve skrze vytrvalý odpor.
+V114: Povrchový pohyb se zastaví a hladina ztuhne, zatímco hloubka pod ní zůstává nehybná.
+V115: Ticho před odpovědí dovolí zachytit tón, který zaniká v rychlé řeči.
+V116: Proud vzduchu projde hrdlem nebo píšťalou a změní ticho ve slyšitelný tón.

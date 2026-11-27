@@ -1,0 +1,18 @@
+[
+{"id":"V001","prvni":"Nauthiz","druha":"Hagalaz","jistota":3,"proc":"Nedostatek a omezení oddělí potřebu od touhy a zaostří, co je skutečně důležité."},
+{"id":"V002","prvni":"Kenaz","druha":"Fehu","jistota":3,"proc":"Tvořivý oheň potřebuje potravu, bez péče zase zhasne."},
+{"id":"V003","prvni":"Ansuz","druha":"Isa","jistota":2,"proc":"Ansuz není jen mluvit, ale naslouchat a uslyšet skutečný význam."},
+{"id":"V004","prvni":"Isa","druha":"Laguz","jistota":3,"proc":"Voda ztuhne, pohyb se zastaví, pod ledem voda stále existuje."},
+{"id":"V005","prvni":"Ansuz","druha":"Laguz","jistota":2,"proc":"Zvuk a slovo, které k člověku dorazí jen tehdy, když ho nic nepřehluší."},
+{"id":"V006","prvni":"Kenaz","druha":"Uruz","jistota":2,"proc":"Tvořivý oheň přináší možnost něco vytvořit, opravit nebo změnit."},
+{"id":"V007","prvni":"Gebo","druha":"Ehwaz","jistota":1,"proc":"Dvě strany se setkají a vznikne spojení, prostor, který patří oběma, bez vynucení."},
+{"id":"V008","prvni":"Kenaz","druha":"Sowilo","jistota":3,"proc":"Světlo osvítí jen malý prostor a ukáže i to, co bychom raději neviděli."},
+{"id":"V009","prvni":"Ansuz","druha":"Gebo","jistota":3,"proc":"Vyslovené slovo, které něco změní a už nejde nevidět."},
+{"id":"V010","prvni":"Hagalaz","druha":"Algiz","jistota":2,"proc":"Nepřivolaná síla z nebe odhalí, co nemělo skutečně pevné kořeny."},
+{"id":"V011","prvni":"Isa","druha":"Laguz","jistota":2,"proc":"Led vypadá pevně, ale pod ním je skrytý, neviditelný stav."},
+{"id":"V012","prvni":"Wunjo","druha":"Othila","jistota":2,"proc":"Sdílená chvíle u stolu, kdy nemusíš nic dokazovat a někam patříš."},
+{"id":"V013","prvni":"Ansuz","druha":"Dagaz","jistota":3,"proc":"Ansuz je runa dechu a hlasu, který dává věcem tvar."},
+{"id":"V014","prvni":"Wunjo","druha":"Tiwaz","jistota":1,"proc":"Po napětí přijde chvíle, kdy můžeš povolit ruce a něco zapadne na své místo."},
+{"id":"V015","prvni":"Isa","druha":"Sowilo","jistota":2,"proc":"V zastavení a tichu zůstane před tebou jedna linie a ukáže se, co zůstává."},
+{"id":"V016","prvni":"Nauthiz","druha":"Kenaz","jistota":1,"proc":"Tlak a omezení, které vytrvalým odporem vytvářejí něco podstatného."}
+]

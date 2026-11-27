@@ -52,6 +52,10 @@ emoce (volitelná) → tah runy → volba sféry (nebo „Let the rune choose“
 - **Název v UI** 🔶: jedno až dvě konkrétní slova (děj nebo stav), žádné abstraktní pojmy; jen název + značka „otevřeno“.
 - **Stav:** žádná runa nemá schválené sféry. Kenaz pracovně: Insight & Clarity · Craft & Shaping · Drive & Friction (Fever & Exposure ✅ pryč).
   Kenaz je **směrované světlo ve tmě** (pochodeň, jiskra, ohniště), které odhalí tvar — tím se liší od Sowilo (slunce, denní jas).
+- **Test záměny 2026-11-27** (4M1, věta o mechanice sféry, čtyři slepí soudci s ownerovými popisy; [test-zameny/](test-zameny/README.md)):
+  - propadly Wunjo Clean Joint (čte se jako Gebo nebo Ehwaz) a Nauthiz Bare Exposure (čte se jako Hagalaz),
+  - slabé jsou Hard Friction, Slack String, Thin Ice a Sharp Air,
+  - věty psané z ownerových popisů prošly všechny, ale z části díky shodě slov s popisem.
 
 ### 4.3 Obraz sféry (4K1)
 - **Přísady, ne osnova** 🔶: scéna · mechanika runy · třecí bod (kde síla tlačí nebo co stojí) · dozvuk. Text má **2–4 věty**, délka podle scény;
